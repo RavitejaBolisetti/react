@@ -33,7 +33,7 @@ describe('ManufacturerAdminstrativeHierarchyMain', () => {
             data: {
                 ManufacturerOrgHierarchy: { isLoaded: true, data: manufacturerAdminHierarchyData },
                 ManufacturerAdmin: {
-                    ManufacturerAdminHierarchy: { isLoaded: true, data: manufacturerAdminHierarchyData }
+                    ManufacturerAdminHierarchy: { data: ['Tax Test', 'Charges Test'] }
                 },
             },
         })
@@ -58,7 +58,6 @@ describe('ManufacturerAdminstrativeHierarchyMain', () => {
         );
         const organizationSelect = screen.getByRole("combobox", { name: '' });
         fireEvent.change(organizationSelect, { target: { value: 'some value' } });
-
     });
 
 });

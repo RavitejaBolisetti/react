@@ -83,37 +83,12 @@ describe('Manufacture Admin Hierarchy Upload view components', () => {
                 ManufacturerAdmin: {
                     ManufacturerAdminUpload: {
                         isLoaded: true, data: [{
-                            "id": "99b54277-31e2-4acd-aa34-bd248703989a",
-                            "attributeKey": null,
-                            "status": true,
-                            "manufactureAdminShortName": "TEST",
-                            "manufactureAdminLongName": "TEST",
-                            "manufactureAdminParntId": "null",
-                            "manufactureAdminCode": "24650be8-10f5-4d71-a5eb-721a4ebf1a1d",
-                            "manufactureOrganizationId": "d96bf0fe-7e17-4538-a5ad-553d777baa6f",
-                            "subManufactureAdmin": [],
-                            "docId": "82f02568-84f8-4c42-a919-f216cdbf97ee"
+                            "docId": "106"
                         }]
                     }
                 },
             },
-        })
-
-        const res = {
-            data: [
-                {
-                    "id": "99b54277-31e2-4acd-aa34-bd248703989a",
-                    "attributeKey": null,
-                    "status": true,
-                    "manufactureAdminShortName": "TEST",
-                    "manufactureAdminLongName": "TEST",
-                    "manufactureAdminParntId": "null",
-                    "manufactureAdminCode": "24650be8-10f5-4d71-a5eb-721a4ebf1a1d",
-                    "manufactureOrganizationId": "d96bf0fe-7e17-4538-a5ad-553d777baa6f",
-                    "subManufactureAdmin": [],
-                    "docId": "82f02568-84f8-4c42-a919-f216cdbf97ee"
-                }]
-        };
+        }) 
 
         const buttonData = {
             cancelBtn: true,
@@ -131,22 +106,21 @@ describe('Manufacture Admin Hierarchy Upload view components', () => {
         const authorityShowLoading = jest.fn();
         const fetchDetailList = jest.fn()
 
-        const formActionType={
+        const formActionType = {
             viewMode: false
         }
 
         customRender(
             <Provider store={mockStore}>
-                <ManufactureAdminHierarchyUpload saveAuthorityData={saveAuthorityData} 
-                resetData={resetData} fetchDocumentFileDocId={fetchDocumentFileDocId} setButtonData={jest.fn()} isVisible={true} handleButtonClick={jest.fn()} fetchList={jest.fn()} buttonData={buttonData} 
-                setFileList={jest.fn()}
-                setEmptyList={jest.fn()}
-                setUploadedFileName={jest.fn()}
-                handleUpload={jest.fn()} isReplacing={false} base64Img={false}
-                formActionType={formActionType}
-                authorityShowLoading={authorityShowLoading}
-                fetchDetailList={fetchDetailList}
-                docId={"82f02568-84f8-4c42-a919-f216cdbf97ee"}
+                <ManufactureAdminHierarchyUpload saveAuthorityData={saveAuthorityData}
+                    resetData={resetData} fetchDocumentFileDocId={fetchDocumentFileDocId} setButtonData={jest.fn()} isVisible={true} handleButtonClick={jest.fn()} fetchList={jest.fn()} buttonData={buttonData}
+                    setFileList={jest.fn()}
+                    setEmptyList={jest.fn()}
+                    setUploadedFileName={jest.fn()}
+                    handleUpload={jest.fn()} isReplacing={false} base64Img={false}
+                    formActionType={formActionType}
+                    authorityShowLoading={authorityShowLoading}
+                    fetchDetailList={fetchDetailList}
                 />
             </Provider>
         )
@@ -158,13 +132,60 @@ describe('Manufacture Admin Hierarchy Upload view components', () => {
 
         const saveBtn = screen.getByRole('button', { name: "Save", exact: false });
         fireEvent.click(saveBtn)
-
-        // await waitFor(() => expect(saveAuthorityData).toHaveBeenCalled());
-        saveAuthorityData.mock.calls[0][0].onSuccess(res);
-        // saveAuthorityData.mock.calls[0][0].onError();
-
-        screen.debug()
-        screen.getByRole('')
     })
 
+    it('Should render  Manufacture Admin Hierarchy cancel components', async () => {
+        const file = new File(['(⌐□_□)'], 'kai.png', { type: 'image/png' });
+
+        const mockStore = createMockStore({
+            auth: { userId: 1232 },
+            data: {
+                ManufacturerAdmin: {
+                    ManufacturerAdminUpload: {
+                        isLoaded: true, data: [{
+                            "docId": "106"
+                        }]
+                    }
+                },
+            },
+        }) 
+        
+        const buttonData = {
+            cancelBtn: true,
+            childBtn: true,
+            editBtn: false,
+            enable: false,
+            saveAndNewBtn: false,
+            saveBtn: true,
+            siblingBtn: true,
+        }
+
+        const saveAuthorityData = jest.fn()
+        const fetchDocumentFileDocId = jest.fn();
+        const resetData = jest.fn()
+        const authorityShowLoading = jest.fn();
+        const fetchDetailList = jest.fn()
+
+        const formActionType = {
+            viewMode: false
+        }
+
+        customRender(
+            <Provider store={mockStore}>
+                <ManufactureAdminHierarchyUpload saveAuthorityData={saveAuthorityData}
+                    resetData={resetData} fetchDocumentFileDocId={fetchDocumentFileDocId} setButtonData={jest.fn()} isVisible={true} handleButtonClick={jest.fn()} fetchList={jest.fn()} buttonData={buttonData}
+                    setFileList={jest.fn()}
+                    setEmptyList={jest.fn()}
+                    setUploadedFileName={jest.fn()}
+                    handleUpload={jest.fn()} isReplacing={false} base64Img={false}
+                    formActionType={formActionType}
+                    authorityShowLoading={authorityShowLoading}
+                    fetchDetailList={fetchDetailList}
+                />
+            </Provider>
+        )
+
+        const saveBtn = screen.getByRole('button', { name: "Cancel", exact: false });
+        fireEvent.click(saveBtn)
+    })
 })
