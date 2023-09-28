@@ -15,7 +15,7 @@ import styles from 'assets/sass/app.module.scss';
 const { Option } = Select;
 
 export const AdvancedSearchFrom = (props) => {
-    const { setAdvanceSearchVisible, filteredStateData, filteredCityData, productHierarchyList, handleFilterChange} = props;
+    const { setAdvanceSearchVisible, filteredStateData, filteredCityData, productHierarchyList, handleFilterChange, setFilteredCityData, isProductLoading, isStateLoading } = props;
     const {
         filterString,
         setFilterString,
@@ -37,6 +37,8 @@ export const AdvancedSearchFrom = (props) => {
             advanceFilter: true,
         });
         setAdvanceSearchVisible(false);
+        resetFields();
+        setFilteredCityData([]);
     };
 
     const onFinishFailed = () => {
@@ -54,7 +56,7 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item label="State" initialValue={filterString?.stateCode} name="stateCode" rules={[validateRequiredSelectField('state')]}>
-                        <Select placeholder={preparePlaceholderSelect(`State`)} {...selectProps} onChange={handleFilterChange('stateCode')}>
+                        <Select placeholder={preparePlaceholderSelect(`State`)} {...selectProps} onChange={handleFilterChange('stateCode')} loading={isStateLoading}>
                             {filteredStateData?.map((item) => (
                                 <Option value={item?.key}>{item?.value}</Option>
                             ))}
@@ -75,7 +77,7 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={filterString?.modelCode} label="Product Hierarchy" name="modelCode" rules={[validateRequiredSelectField('Product Hierarchy')]}>
-                        <Select placeholder={preparePlaceholderSelect(`Product Hierarchy`)} {...selectProps}>
+                        <Select placeholder={preparePlaceholderSelect(`Product Hierarchy`)} {...selectProps} loading={isProductLoading}>
                             {productHierarchyList?.map((item) => (
                                 <Option key={'ph' + item.prodctCode} value={item.prodctCode}>
                                     {item.prodctShrtName}
