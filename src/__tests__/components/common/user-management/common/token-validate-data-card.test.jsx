@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import TokenValidateDataCard  from '@components/common/UserManagementMaster/common/TokenValidateDataCard';
+import TokenValidateDataCard from '@components/common/UserManagement/common/TokenValidateDataCard';
 import customRender from '@utils/test-utils';
 
 afterEach(() => {
