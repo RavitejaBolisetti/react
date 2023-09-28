@@ -217,8 +217,10 @@ describe('Role Master components', () => {
                 />
             </Provider>
         )
+        await waitFor(() => { expect(screen.getByText('kai')).toBeInTheDocument() });
         const refreshbutton = screen.getByRole('button', { name: '', exact: false });
         fireEvent.click(refreshbutton);
+        fetchList.mock.calls[0][0].onSuccessAction();
     });
 
 
@@ -277,8 +279,310 @@ describe('Role Master components', () => {
     });
 
 
-    it('Should render filter clear button', () =>{
-        
+    it('Should render add edit close button', () => {
+        const props = {
+            formActionType: { viewMode: false, editMode: false },
+        }
+
+        const roleData = [
+            {
+                departmentCode
+                    : "DC98",
+                departmentName
+                    : "kai",
+                divisionCode
+                    : "C",
+                divisionName
+                    : "COMMON",
+                roleCode
+                    : "RL0011",
+                roleDescription
+                    : "dealer roless",
+                status
+                    : true
+            }
+        ]
+
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                DealerManpower: {
+                    RoleMaster: { isLoaded: false, data: roleData },
+                    DealerDivisionMaster: { divisionData: [{ code: "234567", name: "sdfghjkwertyu", status: true }] },
+                    DealerEmployeeDepartmentMaster: { filteredDepartmentData: [] },
+                },
+            },
+        });
+
+        const fetchList = jest.fn();
+        const fetchDivisionLovList = jest.fn()
+        const fetchDepartmentLovList = jest.fn()
+
+        customRender(
+            <Provider store={mockStore}>
+                <ListRoleMaster isVisible={true}
+                    {...props}
+                    fetchList={fetchList}
+                    fetchDivisionLovList={fetchDivisionLovList}
+                    fetchDepartmentLovList={fetchDepartmentLovList}
+                />
+            </Provider>
+        )
+
+        const addBtn = screen.getByRole('button', { name: 'plus Add', exact: false });
+        fireEvent.click(addBtn);
+
+        const closeBtn = screen.getByRole('button', { name: 'Close', exact: false });
+        fireEvent.click(closeBtn);
+    })
+
+
+    it('Should render add edit cancel button', () => {
+        const props = {
+            formActionType: { viewMode: false, editMode: false },
+        }
+
+        const roleData = [
+            {
+                departmentCode
+                    : "DC98",
+                departmentName
+                    : "kai",
+                divisionCode
+                    : "C",
+                divisionName
+                    : "COMMON",
+                roleCode
+                    : "RL0011",
+                roleDescription
+                    : "dealer roless",
+                status
+                    : true
+            }
+        ]
+
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                DealerManpower: {
+                    RoleMaster: { isLoaded: false, data: roleData },
+                    DealerDivisionMaster: { divisionData: [{ code: "234567", name: "sdfghjkwertyu", status: true }] },
+                    DealerEmployeeDepartmentMaster: { filteredDepartmentData: [] },
+                },
+            },
+        });
+
+        const fetchList = jest.fn();
+        const fetchDivisionLovList = jest.fn()
+        const fetchDepartmentLovList = jest.fn()
+
+        customRender(
+            <Provider store={mockStore}>
+                <ListRoleMaster isVisible={true}
+                    {...props}
+                    fetchList={fetchList}
+                    fetchDivisionLovList={fetchDivisionLovList}
+                    fetchDepartmentLovList={fetchDepartmentLovList}
+                />
+            </Provider>
+        )
+
+        const addBtn = screen.getByRole('button', { name: 'plus Add', exact: false });
+        fireEvent.click(addBtn);
+
+        const closeBtn = screen.getByRole('button', { name: 'Cancel', exact: false });
+        fireEvent.click(closeBtn);
+    })
+
+    it('Should render add edit form save button', () => {
+        const props = {
+            formActionType: { viewMode: false, editMode: false },
+        }
+
+        const roleData = [
+            {
+                departmentCode
+                    : "DC98",
+                departmentName
+                    : "kai",
+                divisionCode
+                    : "C",
+                divisionName
+                    : "COMMON",
+                roleCode
+                    : "RL0011",
+                roleDescription
+                    : "dealer roless",
+                status
+                    : true
+            }
+        ]
+
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                DealerManpower: {
+                    RoleMaster: { isLoaded: false, data: roleData },
+                    DealerDivisionMaster: { divisionData: [{ code: "234567", name: "sdfghjkwertyu", status: true }] },
+                    DealerEmployeeDepartmentMaster: { filteredDepartmentData: [] },
+                },
+            },
+        });
+
+        const fetchList = jest.fn();
+        const fetchDivisionLovList = jest.fn()
+        const fetchDepartmentLovList = jest.fn()
+
+        customRender(
+            <Provider store={mockStore}>
+                <ListRoleMaster isVisible={true}
+                    {...props}
+                    fetchList={fetchList}
+                    fetchDivisionLovList={fetchDivisionLovList}
+                    fetchDepartmentLovList={fetchDepartmentLovList}
+                    setIsFormVisible={jest.fn()}
+                    handleButtonClick={jest.fn()}
+                    resetData={jest.fn()} buttonData={buttonData}
+                    setButtonData={jest.fn()}
+                />
+            </Provider>
+        )
+
+        const addBtn = screen.getByRole('button', { name: 'plus Add', exact: false });
+        fireEvent.click(addBtn);
+
+        const departmentName = screen.getByRole('combobox', { name: "Department Name" });
+        fireEvent.change(departmentName, { target: { value: 'hello testing for search1' } });
+
+        const saveBtn = screen.getByRole('button', { name: 'Save', exact: false });
+        fireEvent.click(saveBtn);
+
+        const saveAddNewBtn = screen.getByRole('button', { name: 'Save & Add New', exact: false });
+        fireEvent.click(saveAddNewBtn);
+    })
+
+    it('Should render filter button', () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                DealerManpower: {
+                    DealerDivisionMaster: { filteredDepartmentData: [{ departmentCode: "testing", divisionCode: "sdfghjkwertyu", keyword: "extraParams" }] },
+                    DealerEmployeeDepartmentMaster: { filteredDepartmentData:  [{ departmentCode: "testing", divisionCode: "sdfghjkwertyu", keyword: "extraParams" }] },
+                },
+            },
+        });
+
+        const fetchList = jest.fn();
+        const fetchDivisionLovList = jest.fn()
+        const fetchDepartmentLovList = jest.fn()
+        const filterString = { departmentCode: "testing", divisionCode: "sdfghjkwertyu", keyword: true, advanceFilter: true }
+        const extraParams = [
+            {
+                key: 'divisionCode',
+                title: 'Division Name',
+                value: "test",
+                name: "test",
+                canRemove: true,
+            }
+           
+        ];
+
+        const setFilterString = jest.fn()
+        customRender(
+            <Provider store={mockStore}>
+                <ListRoleMaster isVisible={true} 
+                 fetchList={fetchList}
+                 fetchDivisionLovList={fetchDivisionLovList}
+                 fetchDepartmentLovList={fetchDepartmentLovList}
+                 data={"test"}
+                 userId={"test"}
+                 setFilterString={setFilterString}
+                 filterString={filterString}
+                 extraParams={extraParams}
+                />
+            </Provider>
+        )
+
+        const roleName = screen.getByRole('textbox', { name: 'Role Name'})
+        fireEvent.change(roleName, { target: { value: 'testing' } })
+
+        const searchImg = screen.getByRole('img', { name: 'search' });
+        fireEvent.click(searchImg);
+
+        const removeFilter = screen.getByTestId('removeFilter');
+        fireEvent.click(removeFilter);     
+    })
+
+
+    it('Should render filter clear button', () => {
+        const roleData = [
+            {
+                departmentCode
+                    : "DC98",
+                departmentName
+                    : "kai",
+                divisionCode
+                    : "C",
+                divisionName
+                    : "COMMON",
+                roleCode
+                    : "RL0011",
+                roleDescription
+                    : "dealer roless",
+                status
+                    : true
+            }
+        ]
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                DealerManpower: {
+                    RoleMaster: { isLoaded: false, data: roleData },
+                    DealerDivisionMaster: { filteredDepartmentData: [{ departmentCode: "testing", divisionCode: "sdfghjkwertyu", keyword: "extraParams" }] },
+                    DealerEmployeeDepartmentMaster: { filteredDepartmentData:  [{ departmentCode: "testing", divisionCode: "sdfghjkwertyu", keyword: "extraParams" }] },
+                },
+            },
+        });
+
+        const fetchList = jest.fn();
+        const fetchDivisionLovList = jest.fn()
+        const fetchDepartmentLovList = jest.fn()
+        const filterString = { departmentCode: "testing", divisionCode: "sdfghjkwertyu", keyword: true, advanceFilter: true }
+        const extraParams = [
+            {
+                key: 'divisionCode',
+                title: 'Division Name',
+                value: "test",
+                name: "test",
+                canRemove: true,
+            }
+           
+        ];
+
+        const setFilterString = jest.fn()
+        customRender(
+            <Provider store={mockStore}>
+                <ListRoleMaster isVisible={true} 
+                 fetchList={fetchList}
+                 fetchDivisionLovList={fetchDivisionLovList}
+                 fetchDepartmentLovList={fetchDepartmentLovList}
+                 data={"test"}
+                 userId={"test"}
+                 setFilterString={setFilterString}
+                 filterString={filterString}
+                 extraParams={extraParams}
+                />
+            </Provider>
+        )
+
+        const roleName = screen.getByRole('textbox', { name: 'Role Name'})
+        fireEvent.change(roleName, { target: { value: 'testing' } })
+
+        const searchImg = screen.getByRole('img', { name: 'search' });
+        fireEvent.click(searchImg);      
+
+        const clearBtn = screen.getByRole('button', { name: 'Clear' });
+        fireEvent.click(clearBtn);        
     })
 
 

@@ -16,7 +16,7 @@ const { Panel } = Collapse;
 const ViewDetailMain = (props) => {
     const { formData, isLoading, handleButtonClick, typeData, formActionType, tableData } = props;
 
-    const viewProps = {
+    const viewOneColProps = {
         bordered: false,
         colon: false,
         layout: 'vertical',
@@ -24,9 +24,9 @@ const ViewDetailMain = (props) => {
     };
 
     return (
-        <div className={styles.viewContainer}>
+        <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
             <>
-                <Descriptions {...viewProps}>
+                <Descriptions {...viewOneColProps}>
                     <Descriptions.Item label="Dealer Name">{checkAndSetDefaultValue(formData?.dealerName, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Employee Name">{checkAndSetDefaultValue(formData?.employeeName, isLoading)}</Descriptions.Item>
                 </Descriptions>

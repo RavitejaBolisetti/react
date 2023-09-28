@@ -28,7 +28,9 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { DisableParent } from 'components/common/ProductHierarchy/ProductHierarchyUtils';
 
 import LeftPanel from 'components/common/LeftPanel';
-import styles from 'components/common/Common.module.css';
+//import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+
 
 import { LANGUAGE_EN } from 'language/en';
 

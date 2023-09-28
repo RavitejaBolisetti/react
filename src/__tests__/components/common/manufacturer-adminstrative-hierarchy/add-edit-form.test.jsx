@@ -32,80 +32,66 @@ describe('Manufacturer Adminstrative Hierarchy add edit form components', () => 
             setFormBtnActive={jest.fn()}
         />)
 
-        const close = screen.getByRole('button', { name: "Close", exact: false });
-        act(() => {
-            fireEvent.click(close)
-        })
+        const attributeLevel = screen.getByRole("combobox", { name: 'Attribute Level', exact: false })
+        fireEvent.change(attributeLevel, { target: { value: "Attribute level" } })
 
-        const cancelBtn = screen.getByRole('button', { name: "Cancel", exact: false });
-        act(() => {
-            fireEvent.click(cancelBtn)
-        })
+        const code = screen.getByRole("textbox", { name: 'Code', exact: false })
+        fireEvent.change(code, { target: { value: "Attribute level" } })
+
+        const shortDesc = screen.getByRole("textbox", { name: 'Short Description', exact: false })
+        fireEvent.change(shortDesc, { target: { value: "test4342552" } })
+
+        const longDesc = screen.getByRole("textbox", { name: 'Long Description', exact: false })
+        fireEvent.change(longDesc, { target: { value: "test4342552" } })
+
+        const status = screen.getByRole("switch", { name: 'Status', exact: false })
+        fireEvent.click(status)
 
         const saveBtn = screen.getByRole('button', { name: "Save", exact: false });
-        act(() => {
-            fireEvent.click(saveBtn)
-        })
-
-        const authorityBtn = screen.getByRole('button', { name: "Authority Details", exact: false });
-        act(() => {
-            fireEvent.click(authorityBtn)
-        })
-
-        const searchBtn = screen.getByRole('button', { name: "search", exact: false });
-        act(() => {
-            fireEvent.click(searchBtn)
-        })
-
-        const plusAddBtn = screen.getByRole('button', { name: "plus Add", exact: false });
-        act(() => {
-            fireEvent.click(plusAddBtn)
-        })
-
-        const closeImg = screen.getByRole('img', { name: "close", exact: false });
-        act(() => {
-            fireEvent.click(closeImg)
-        })
-
-        const searchImg = screen.getByRole('img', { name: "search", exact: false });
-        act(() => {
-            fireEvent.click(searchImg)
-        })
-
-        const plusImg = screen.getByRole('img', { name: "plus", exact: false });
-        act(() => {
-            fireEvent.click(plusImg)
-        })
-
-        const status = screen.getByRole('switch', { name: "Status", exact: false });
-        act(() => {
-            fireEvent.click(status)
-        })
-
-        const code = screen.getByRole('textbox', { name: "Code", exact: false });
-        fireEvent.change(code, { target: { value: 'test' } })
-
+        fireEvent.click(saveBtn)
     })
 
-    it('Should render add edit form action type child', () => {
-        customRender(<FormWrapper
-            isVisible={true}
-            formActionType={"child"}
-            selectedTreeKey={"test"}
-            setSelectedTreeSelectKey={jest.fn()}
-        />)
-    })
-
-    it('Should render add edit form action type sibling', () => {
+    it('Should render close components', async () => {
         const flatternData = [{ id: 1, value: 'test', key: 1 }, { id: 2, value: 'test', key: 2 }]
-        const selectedTreeKey = [1]
-        customRender(<FormWrapper
-            isVisible={true}
+        customRender(<FormWrapper isVisible={true}
+            setattributeDataOptions={jest.fn()}
+            attributeDataOptions={attributeData}
+            setSelectedTreeSelectKey={jest.fn()}
+            formData={formData}
+            attributeData={attributeData}
+            handleFormValueChange={jest.fn()}
+            handleFormFieldChange={jest.fn()}
+            onFinish={jest.fn()}
+            onFinishFailed={jest.fn()}
             formActionType={"sibling"}
             flatternData={flatternData}
-            selectedTreeKey={selectedTreeKey}
-            setSelectedTreeSelectKey={jest.fn()}
-            treeCodeId={null}
+            selectedTreeKey={flatternData}
+            setFormBtnActive={jest.fn()}
         />)
+
+        const attributeLevel = screen.getByRole("combobox", { name: 'Attribute Level', exact: false })
+        fireEvent.change(attributeLevel, { target: { value: "Attribute level" } })
+
+        const close = screen.getByRole('button', { name: "Close", exact: false });
+        fireEvent.click(close)
+
+    })
+
+    it('Should render close components', async () => {
+        customRender(<FormWrapper isVisible={true}
+            setattributeDataOptions={jest.fn()}
+            attributeDataOptions={attributeData}
+            setSelectedTreeSelectKey={jest.fn()}
+            formData={formData}
+            attributeData={attributeData}
+            handleFormValueChange={jest.fn()}
+            handleFormFieldChange={jest.fn()}
+            onFinish={jest.fn()}
+            formActionType={"child"}
+            setFormBtnActive={jest.fn()}
+        />)
+
+        const cancelBtn = screen.getByRole('button', { name: "Cancel", exact: false });
+        fireEvent.click(cancelBtn)
     })
 })
