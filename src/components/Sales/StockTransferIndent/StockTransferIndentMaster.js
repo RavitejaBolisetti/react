@@ -31,7 +31,7 @@ import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
 
 import { IssueIndentMaster } from 'components/Sales/StockTransferIndent/IssueIndent';
-import { ISSUE_ACTION_LIST } from './constants'
+import { ISSUE_ACTION_LIST } from './constants';
 import { INDENT_ACTION_LIST } from './constants';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { defaultPageProps } from 'utils/defaultPageProps';
