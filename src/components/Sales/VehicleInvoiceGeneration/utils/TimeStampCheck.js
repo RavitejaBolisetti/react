@@ -9,5 +9,6 @@ export const timeStampCheck = (time1, time2) => {
     let hours = dayjs(time1).diff(dayjs(time2), 'hours');
     const days = Math.floor(hours / 24);
     hours = hours - days * 24;
+    //console.log('🚀 ~ file: TimeStampCheck.js:13 ~ timeStampCheck ~ hours:', hours);
     if (hours < 24) return true;
 };

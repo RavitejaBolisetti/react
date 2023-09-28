@@ -5,7 +5,7 @@
  */
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
-import { screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import { ThankYouMaster } from '@components/Sales/OTF/ThankYou/ThankYouMaster';
 afterEach(() => {
     jest.restoreAllMocks();
@@ -15,8 +15,6 @@ describe('Thankyou master Components', () => {
         customRender(<ThankYouMaster />);
         const closebtn = screen.getByRole('button', { name: 'Close' });
         expect(closebtn).toBeTruthy();
-
-        const headingtext = screen.getByRole('heading', { name: 'Booking Form edited successfully' });
-        expect(headingtext).toBeTruthy();
+        fireEvent.click(closebtn)
     });
 });

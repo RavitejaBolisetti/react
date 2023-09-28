@@ -123,3 +123,5 @@ export const ROUTING_DIGITAL_SIGNATURE_MAPPING = ROUTING_SALES.concat('digital-s
 export const ROUTING_HO_PRICE_MAPPING = ROUTING_SALES.concat('ho-price-mapping');
 export const STOCK_TRANSFER_INDENT = ROUTING_SALES.concat('stock-transfer-indent');
 export const ROUTING_SO_MAPPING_UNMAPPING = ROUTING_SALES.concat('booking-so-mapping');
+
+export const ROUTING_VIN_BLOCK_MASTER = ROUTING_SALES.concat('vin-block-master');

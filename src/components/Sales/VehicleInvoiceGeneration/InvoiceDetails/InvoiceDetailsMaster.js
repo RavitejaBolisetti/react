@@ -19,7 +19,7 @@ const InvoiceDetailsMasterBase = (props) => {
     const { userId, buttonData, setButtonData, section, isDataLoaded, isLoading, invoiceDetailForm } = props;
     const { formActionType, selectedOtfNumber, setSelectedOtfNumber } = props;
 
-    const { FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch, CustomerForm, showGlobalNotification } = props;
+    const { FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch, CustomerForm, showGlobalNotification, salesConsultantLovData } = props;
 
     const [activeKey, setActiveKey] = useState([3]);
     useEffect(() => {
@@ -93,6 +93,7 @@ const InvoiceDetailsMasterBase = (props) => {
         isLoading,
         wrapForm: false,
         selectedOrderId,
+        salesConsultantLovData,
     };
     const CustomerDetailsMasterProps = {
         ...formProps,

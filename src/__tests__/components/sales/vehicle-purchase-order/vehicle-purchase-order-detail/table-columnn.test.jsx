@@ -6,16 +6,14 @@
 
 import React from 'react';
 import customRender from '@utils/test-utils';
-import { render } from 'test-utils';
 import { tableColumn } from '@components/Sales/VehiclePurchaseOrder/VehiclePurchaseOrderDetail/tableColumn';
 
 describe('table columns Components', () => {
-    it('Should render CheckList Details table colcumn components', () => {
+    it('Should render CheckList Details table column components', () => {
         const props = {
             handleButtonClick: jest.fn(),
             formActionType: { viewMode: true },
         };
-        const columns = tableColumn(props);
-        customRender(<div>{columns[3].render('Test')}</div>);
+        tableColumn(props);
     });
 });

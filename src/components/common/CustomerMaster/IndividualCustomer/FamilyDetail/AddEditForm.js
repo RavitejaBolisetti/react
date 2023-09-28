@@ -55,6 +55,7 @@ const AddEditFormMain = (props) => {
         setEditedMode(true);
         setactiveKey(index);
         setShowForm(false);
+        //console.log('values',values)
         setInitialVal(values?.mnmCustomer);
 
         const Val = {

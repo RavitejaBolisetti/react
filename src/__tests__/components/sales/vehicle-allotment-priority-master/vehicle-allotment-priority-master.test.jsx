@@ -118,10 +118,140 @@ describe('vehicle allotment priority master component', () => {
         });
         customRender(
             <Provider store={mockStore}>
-                <VehicleAllotmentPriorityMaster typeData={typeData} showAddButton={true} FROM_ACTION_TYPE={FROM_ACTION_TYPE} buttonData={buttonData} />
+                <VehicleAllotmentPriorityMaster typeData={typeData} fetchList={jest.fn()} showAddButton={true} FROM_ACTION_TYPE={FROM_ACTION_TYPE} buttonData={buttonData} />
             </Provider>
         );
         const search = screen.getByPlaceholderText('Search');
         fireEvent.change(search, { target: { value: 'test' } });
+        const searchBtn = screen.getByRole('img', { name: 'search' });
+        fireEvent.click(searchBtn);
+        const closeCircle = screen.getByRole('img', { name: 'close-circle' });
+        fireEvent.click(closeCircle);
+    });
+
+    it('close button should work', () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                Vehicle: {
+                    VehicleAllotPriorDetail: {
+                        data: [{ effectiveFromDate: '2023-09-08', effectiveToDate: '2023-09-18', id: '123', newModelGroup: 'ALTSMM81813337450', oldModelGroup: 'ALTSMM81813337441' }],
+                    },
+                },
+            },
+        });
+        const saveData = jest.fn();
+
+        customRender(
+            <Provider store={mockStore}>
+                <VehicleAllotmentPriorityMaster saveData={saveData} setIsFormVisible={jest.fn()} handleButtonClick={jest.fn()} fetchList={jest.fn()} resetData={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} />
+            </Provider>
+        );
+        const plusAdd = screen.getByRole('button', { name: 'plus Add' });
+        fireEvent.click(plusAdd);
+        const saveBtn = screen.getAllByRole('button', { name: 'Close' });
+        fireEvent.click(saveBtn[0]);
+        fireEvent.click(saveBtn[1]);
+    });
+
+    it('save button should work', () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                Vehicle: {
+                    VehicleAllotPriorDetail: {
+                        data: [{ effectiveFromDate: '2023-09-08', effectiveToDate: '2023-09-18', id: '123', newModelGroup: 'ALTSMM81813337450', oldModelGroup: 'ALTSMM81813337441' }],
+                    },
+                },
+            },
+        });
+
+        customRender(
+            <Provider store={mockStore}>
+                <VehicleAllotmentPriorityMaster setIsFormVisible={jest.fn()} handleButtonClick={jest.fn()} fetchList={jest.fn()} resetData={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} />
+            </Provider>
+        );
+        const plusAdd = screen.getByRole('button', { name: 'plus Add' });
+        fireEvent.click(plusAdd);
+        const newModel = screen.getByRole('combobox', { name: 'New Model(Booking)' });
+        fireEvent.change(newModel, { target: { value: 'test' } });
+        const saveBtn = screen.getByRole('button', { name: 'Save' });
+        fireEvent.click(saveBtn);
+    });
+
+    it('should be able to search value', () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                Vehicle: {
+                    VehicleAllotPriorDetail: {
+                        data: [{ effectiveFromDate: '2023-09-08', effectiveToDate: '2023-09-18', id: '123', newModelGroup: 'ALTSMM81813337450', oldModelGroup: 'ALTSMM81813337441' }],
+                    },
+                },
+            },
+        });
+        customRender(
+            <Provider store={mockStore}>
+                <VehicleAllotmentPriorityMaster fetchList={jest.fn()} showAddButton={true} buttonData={buttonData} />
+            </Provider>
+        );
+        const search = screen.getByPlaceholderText(/Search/i);
+        fireEvent.change(search, { target: { value: 'test' } });
+
+        const searchBtn = screen.getByRole('img', { name: 'search' });
+        fireEvent.click(searchBtn);
+
+        const closeCircle = screen.getByRole('img', { name: 'close-circle' });
+        fireEvent.click(closeCircle);
+    });
+
+    it('should render advanced filters search', () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                Vehicle: {
+                    VehicleAllotPriorDetail: {
+                        data: [{ effectiveFromDate: '2023-09-08', effectiveToDate: '2023-09-18', id: '123', newModelGroup: 'ALTSMM81813337450', oldModelGroup: 'ALTSMM81813337441' }],
+                        filter: [{ advanceFilter: 'Test', fromDate: '06/06/2022' }],
+                    },
+                },
+            },
+        });
+
+        customRender(
+            <Provider store={mockStore}>
+                <VehicleAllotmentPriorityMaster fetchList={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} />
+            </Provider>
+        );
+        const advanceFilter = screen.getByPlaceholderText(/Search/i);
+        fireEvent.change(advanceFilter, { target: { value: 'Test' } });
+
+        const removeFilter = screen.getByTestId('removeFilter');
+        fireEvent.click(removeFilter);
+    });
+
+    it('should render advanced filters search clear', () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                Vehicle: {
+                    VehicleAllotPriorityDetail: {
+                        data: [{ effectiveFromDate: '2023-09-08', effectiveToDate: '2023-09-18', id: '123', newModelGroup: 'ALTSMM81813337450', oldModelGroup: 'ALTSMM81813337441' }],
+                        filter: [{ advanceFilter: 'Test', fromDate: '06/06/2022' }],
+                    },
+                },
+            },
+        });
+        customRender(
+            <Provider store={mockStore}>
+                <VehicleAllotmentPriorityMaster fetchList={jest.fn()} setFilterString={jest.fn()} />
+            </Provider>
+        );
+
+        const advanceFilter = screen.getByPlaceholderText(/Search/i);
+        fireEvent.change(advanceFilter, { target: { value: 'Test' } });
+
+        const clearBtn = screen.getByRole('button', { name: 'Clear' });
+        fireEvent.click(clearBtn);
     });
 });

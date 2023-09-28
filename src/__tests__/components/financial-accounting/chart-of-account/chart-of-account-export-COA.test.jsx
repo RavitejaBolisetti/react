@@ -3,6 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
+import { fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { ExportCOA } from '@components/FinancialAccounting/ChartOfAccount/ExportCOA';
 import customRender from '@utils/test-utils';
@@ -31,6 +32,22 @@ describe("ExportCOA component render", ()=>{
             onFinishFailed:jest.fn(),
             setModalOpen:jest.fn(),
         }
-        customRender(<FormWrapper {...props} />);
+        customRender(<ExportCOA  {...props}/>);
+        
+        const cancelBtn = screen.getByRole('button', {name:'Cancel'});
+        fireEvent.click(cancelBtn)
+    });
+
+    it("component render", ()=>{
+        const props = {
+            modalOpen:true,
+            onCoaFinish:jest.fn(),
+            onFinishFailed:jest.fn(),
+            setModalOpen:jest.fn(),
+        }
+        customRender(<ExportCOA  {...props}/>);
+        
+        const downloadBtn = screen.getByRole('button', {name:'Download'});
+        fireEvent.click(downloadBtn)
     });
 });

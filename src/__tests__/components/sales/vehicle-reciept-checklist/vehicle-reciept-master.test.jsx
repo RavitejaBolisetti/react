@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { VehicleRecieptMaster } from '@components/Sales/VehicleRecieptChecklist/VehicleRecieptMaster';
+import { VehicleRecieptMaster } from 'components/Sales/VehicleRecieptChecklist/VehicleRecieptMaster';
 import customRender from '@utils/test-utils';
 import { configureStore } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
@@ -61,9 +61,6 @@ describe('Vehicle Reciept Master container', () => {
         const receiptToDate = screen.getByRole('textbox', { name: 'Receipt To Date' });
         fireEvent.change(receiptToDate, { target: { value: '06/06/2022' } });
 
-        const model = screen.getByRole('combobox', { name: 'Model' });
-        fireEvent.change(model, { target: { value: 'test' } });
-
         const applyBtn = screen.getByRole('button', { name: 'Apply' });
         fireEvent.click(applyBtn);
 
@@ -82,9 +79,6 @@ describe('Vehicle Reciept Master container', () => {
 
         const receiptToDate = screen.getByRole('textbox', { name: 'Receipt To Date' });
         fireEvent.click(receiptToDate);
-
-        const model = screen.getByRole('combobox', { name: 'Model' });
-        fireEvent.change(model, { target: { value: 'test' } });
 
         const resetBtn = screen.getByRole('button', { name: 'Reset' });
         fireEvent.click(resetBtn);

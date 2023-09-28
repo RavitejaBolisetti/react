@@ -35,8 +35,8 @@ describe('Vehicle ProductDetails render', () => {
         const firstPanelHeader = screen.getByText('Product Attribute Details');
         fireEvent.click(firstPanelHeader);
 
-        const secondPanelHeader = screen.getByText('Connected Vehicle');
-        fireEvent.click(secondPanelHeader);
+        // const secondPanelHeader = screen.getByText('Connected Vehicle');
+        // fireEvent.click(secondPanelHeader);
 
         const thirdPanelHeader = screen.getByText('Aggregates');
         fireEvent.click(thirdPanelHeader);

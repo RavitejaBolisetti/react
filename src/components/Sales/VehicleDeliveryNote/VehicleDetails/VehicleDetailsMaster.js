@@ -63,7 +63,7 @@ const mapDispatchToProps = (dispatch) => ({
 const VehicleDetailsMasterBase = (props) => {
     const { typeData, partySegmentType, vehicleChallanData } = props;
     const { userId, selectedOrderId, selectedInvoiceId, soldByDealer, setFormActionType, showGlobalNotification, listShowLoading, isDataLoaded, isLoading, requestPayload } = props;
-    const { form, formActionType, fetchChallanList, listChallanShowLoading, handleButtonClick, handleFormValueChange, section, openAccordian, setOpenAccordian, fetchList, vehicleData, NEXT_ACTION, chassisNoValue, record, engineChallanNumber, setEngineChallanNumber } = props;
+    const { form, formActionType, fetchChallanList, listChallanShowLoading, handleButtonClick, handleFormValueChange, section, openAccordian, setOpenAccordian, fetchList, vehicleData, NEXT_ACTION, chassisNoValue, record, engineChallanNumber, setEngineChallanNumber, setSelectedOrder } = props;
     const [regNumber, setRegNumber] = useState();
     const [activeKey, setActiveKey] = useState([]);
     const [otfNumber, setOtfNumber] = useState();
@@ -100,7 +100,7 @@ const VehicleDetailsMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vehicleData]);
-    
+
     useEffect(() => {
         if (userId && selectedOrderId && selectedInvoiceId && soldByDealer) {
             const extraParams = [
@@ -154,11 +154,14 @@ const VehicleDetailsMasterBase = (props) => {
         if (vehicleData && selectedOrderId && selectedInvoiceId) {
             form.setFieldsValue({ ...vehicleData });
             setFormData({ ...vehicleData });
+            setSelectedOrder((prev) => ({ ...prev, vin: vehicleData?.vinNumber }));
         }
         if (vehicleChallanData && !soldByDealer) {
             form.setFieldsValue({ ...vehicleChallanData });
             setFormData({ ...vehicleChallanData });
+            setSelectedOrder((prev) => ({ ...prev, vin: vehicleChallanData?.vinNumber }));
         }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vehicleData, vehicleChallanData, soldByDealer]);
 

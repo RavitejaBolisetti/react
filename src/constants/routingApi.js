@@ -208,6 +208,7 @@ export const BASE_URL_VEHICLE_VARIANT = BASE_URL_VEHICLE + 'variant';
 export const BASE_URL_VEHICLE_MAKE = BASE_URL_VEHICLE + 'make';
 export const BASE_URL_VEHICLE_MODEL = BASE_URL_VEHICLE + 'model';
 export const BASE_URL_VEHICLE_TRACKING = BASE_URL_VEHICLE + 'tracking';
+export const BASE_URL_VEHICLE_CHECKLIST = BASE_URL_VEHICLE + 'checklist';
 
 export const BASE_URL_ACCOUNT_HEAD = BASE_URL + 'finance/financialaccountheads';
 export const BASE_URL_DOCUMENT_DESCRIPTION_SEARCH = BASE_URL + 'applications/documenttypes/search';
@@ -336,3 +337,8 @@ export const BASE_URL_VEHICLE_CHALLAN_CANCEL_NOTE = BASE_URL + 'otf/delivery/cha
 export const BASE_URL_RELATIONSHIP_MANAGER = BASE_URL_USER_MANAGEMENT_APPLICATIONS_DEALER + '/employees';
 export const BASE_URL_DELIVERY_NOTE_VEHICLE_DETAILS = BASE_URL_OTF_VEHICLE_DETAILS + '/search/registrationnumber';
 export const BASE_URL_VEHICLE_INVOICE_GENERATION_PROFILE_CARD = BASE_URL_OTF + 'vehicleinvoice/profile';
+
+
+export const BASE_URL_VIN_BLOCK_MASTER = BASE_URL_VEHICLE + 'vinbolckmaster/search';
+export const BASE_URL_VIN_BLOCK_VIEWMASTER = BASE_URL_VEHICLE + 'vinbolckmaster';
+
