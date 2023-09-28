@@ -143,7 +143,6 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
         setshowDataLoading(false);
     };
 
-
     useEffect(() => {
         if (filterString) {
             setPage({ ...page, current: 1 });
@@ -193,9 +192,7 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isProductHierarchyDataLoaded, isAccountDataLoaded, VehicleModelTaxChargesCategoryDataLoaded, isTaxCategoryDataLoaded, userId]);
 
-console.log('ProductHierarchyData', ProductHierarchyData)
     useEffect(() => {
-        console.log('line-206')
         if (isProductHierarchyDataLoaded && ProductHierarchyData) {
             setModelOptions(ProductHierarchyData);
         }
