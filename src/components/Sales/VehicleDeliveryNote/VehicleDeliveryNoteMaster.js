@@ -33,6 +33,7 @@ import { CancelDeliveryNote } from './CancelDeliveryNote';
 import { challanCancelVehicleDeliveryNoteDataActions } from 'store/actions/data/vehicleDeliveryNote/challanCancel';
 import { infoCancelVehicleDeliveryNoteDataActions } from 'store/actions/data/vehicleDeliveryNote/infoCancelDeliveryNote';
 import { infoChallanVehicleDeliveryNoteDataActions } from 'store/actions/data/vehicleDeliveryNote/infoChallanCancel';
+import { DELIVERY_TYPE } from 'constants/modules/vehicleDetailsNotes.js/deliveryType';
 
 const mapStateToProps = (state) => {
     const {
@@ -145,6 +146,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     const [isReportVisible, setReportVisible] = useState();
     const [chassisNoValue, setChassisNoValue] = useState();
     const [engineChallanNumber, setEngineChallanNumber] = useState('');
+    const [deliveryType, setDeliveryType] = useState(DELIVERY_TYPE.NOTE.key);
 
     const dynamicPagination = true;
 
@@ -168,6 +170,10 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
     const [formData, setFormData] = useState([]);
+
+    const onDeliveryTabChange = (key) => {
+        setDeliveryType(key);
+    };
 
     const onSuccessAction = () => {
         // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -277,6 +283,13 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
                 filter: false,
             },
             {
+                key: 'deliveryNoteType',
+                title: 'Delivery Status',
+                value: deliveryType,
+                canRemove: false,
+                filter: false,
+            },
+            {
                 key: 'pageNumber',
                 title: 'Value',
                 value: filterString?.current,
@@ -306,7 +319,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [deliveryStatus, filterString]);
+    }, [deliveryStatus, filterString, deliveryType]);
 
     useEffect(() => {
         if (userId) {
@@ -314,7 +327,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, deliveryStatus, filterString]);
+    }, [userId, deliveryStatus, filterString, deliveryType]);
 
     useEffect(() => {
         const defaultSection = VEHICLE_DELIVERY_NOTE_SECTION.INVOICE_DETAILS.id;
@@ -527,7 +540,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
             // showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             setButtonData({ ...buttonData, formBtnActive: false });
-            setSelectedOrder((prev) => ({ ...prev, responseMessage: res?.responseMessage }));   
+            setSelectedOrder((prev) => ({ ...prev, responseMessage: res?.responseMessage }));
             section && setCurrentSection(VEHICLE_DELIVERY_NOTE_SECTION.THANK_YOU_PAGE.id);
         };
         const onError = (message) => {
@@ -688,6 +701,8 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         typeData,
         searchForm,
         onFinishSearch,
+        onDeliveryTabChange,
+        deliveryType,
     };
 
     const advanceFilterProps = {
