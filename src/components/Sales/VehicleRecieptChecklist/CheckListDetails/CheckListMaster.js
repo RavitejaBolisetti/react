@@ -75,7 +75,6 @@ const VehicleRecieptCheckListMain = (props) => {
     };
 
     const onErrorAction = (message) => {
-
         showGlobalNotification({ message: message });
     };
     const makeExtraParams = ({ key, title, value, name }) => {

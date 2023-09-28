@@ -43,7 +43,6 @@ const mapStateToProps = (state) => {
     } = state;
 
     const moduleTitle = 'On Road Price Master';
-
     let returnValue = {
         userId,
         accessToken,
@@ -82,7 +81,6 @@ const mapDispatchToProps = (dispatch) => ({
             fetchOnRoadPriceList: onRoadPriceMasterAction.fetchList,
             listVehiclePriceShowLoading: onRoadPriceMasterAction.listShowLoading,
             setFilterString: onRoadPriceMasterAction.setFilter,
-
             fetchOnRoadViewPriceDetail: viewOnRoadPriceDetailAction.fetchDetail,
             listOnRoadViewPriceShowLoading: viewOnRoadPriceDetailAction.listShowLoading,
             saveData: viewOnRoadPriceDetailAction.saveData,
@@ -400,7 +398,6 @@ export const OnRoadPriceMasterBase = (props) => {
         titleOverride: 'Advance Filters',
         isCityDataLoaded,
         cityData,
-
         filterString,
         setFilterString,
         advanceFilterForm,
@@ -408,7 +405,6 @@ export const OnRoadPriceMasterBase = (props) => {
         handleResetFilter,
         onSearchHandle,
         setAdvanceSearchVisible,
-
         typeData,
     };
 

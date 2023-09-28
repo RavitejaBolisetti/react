@@ -11,11 +11,12 @@ import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/prepareP
 import { customSelectBox } from 'utils/customSelectBox';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { prepareCaption } from 'utils/prepareCaption';
+import { getCodeValue } from 'utils/getCodeValue';
 
 const { Search } = Input;
 
 const OtfDetailsForm = (props) => {
-    const { formName, invoiceDetailForm, formData, typeData, selectedOtfNumber, handleBookingNumberSearch, isVehicleInvoiceDataLoading, handleBookingChange } = props;
+    const { formName, invoiceDetailForm, formData, typeData, selectedOtfNumber, handleBookingNumberSearch, isVehicleInvoiceDataLoading, handleBookingChange, salesConsultantLovData } = props;
 
     useEffect(() => {
         if (formData) {
@@ -24,6 +25,7 @@ const OtfDetailsForm = (props) => {
                     ...formData,
                     otfNumber: formData?.bookingNumber || formData?.otfNumber,
                     orderDate: formattedCalendarDate(formData?.orderDate),
+                    saleConsultantName: getCodeValue(salesConsultantLovData, formData?.saleConsultant),
                 },
             });
         }
@@ -72,9 +74,10 @@ const OtfDetailsForm = (props) => {
                     </Row>
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formData?.saleConsultant} label="Sales Consultant Name" name={[formName, 'saleConsultant']}>
+                            <Form.Item initialValue={formData?.saleConsultant} label="Sales Consultant Name" name={[formName, 'saleConsultantName']}>
                                 <Input placeholder={preparePlaceholderText('Sales Consultant Name')} disabled={true} />
                             </Form.Item>
+                            <Form.Item hidden name={[formName, 'saleConsultant']} />
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item initialValue={formData?.mitraType} label="Influence/Mitra Type" name={[formName, 'mitraType']}>

@@ -3,90 +3,59 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
+import React, { useEffect } from 'react';
 import { Button, Row, Col, Form } from 'antd';
-import { FilterIcon } from 'Icons';
 import { RxCross2 } from 'react-icons/rx';
 import { SearchBox } from 'components/utils/SearchBox';
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { PlusOutlined } from '@ant-design/icons';
-
 import styles from 'assets/sass/app.module.scss';
-export default function AdvanceVehicleAllotMasterFilter(props) {
+
+export default function AdvanceVinBlockMasterFilter(props) {
     const {
         extraParams,
         removeFilter,
         handleResetFilter,
         advanceFilter = false,
-        otfFilter = false,
+        onRoadFilter = false,
         title,
         filterString,
         setFilterString,
-        typeData,
-        setAdvanceSearchVisible,
         searchForm,
         searchForm: { setFieldsValue },
-        // handleOnClick,
-        // tableData = [],
-        showAddButton = true,
-        // handleRefresh,
-        handleButtonClick,
-        // showChangeHistoryList,
-        // handleChangeHistory,
-        // buttonData,
     } = props;
 
-    const serachBoxProps = {
+    
+    const searchBoxProps = {
+        singleField: true,
         searchForm,
         filterString,
-        optionType: typeData,
         setFilterString,
-        maxLength: '50'
+        placeholder: 'Search By VIN',
+        singleFieldKey: 'vin',
     };
 
-    // useEffect(() => {
-    //     setFieldsValue({ searchParam: filterString?.searchParam, searchType: filterString?.searchType });
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [filterString]);
+    useEffect(() => {
+        setFieldsValue({ searchParam: filterString?.searchParam, searchType: filterString?.searchType });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filterString]);
 
     return (
         <div className={styles.contentHeaderBackground}>
             <Row gutter={20}>
-                {/* <span className={styles.headerText}>{title}</span> */}
                 <Col xs={24} sm={24} md={18} lg={18} xl={18}>
                     <Form autoComplete="off" colon={false} className={styles.masterListSearchForm}>
                         <Form.Item label={`${title}`}>
                             <Row gutter={20}>
-                                {otfFilter && (
+                                {onRoadFilter && (
                                     <Col xs={24} sm={24} md={14} lg={14} xl={14}>
-                                        <SearchBox {...serachBoxProps} />
+                                        <SearchBox {...searchBoxProps} />
                                     </Col>
                                 )}
-                                {advanceFilter && (
-                                    <Col xs={24} sm={24} md={10} lg={10} xl={10} className={styles.verticallyCentered}>
-                                        <Button
-                                            icon={<FilterIcon />}
-                                            type="link"
-                                            className={styles.verticallyCentered}
-                                            onClick={() => {
-                                                setAdvanceSearchVisible(true);
-                                            }}
-                                        >
-                                            Advanced Filters
-                                        </Button>
-                                    </Col>
-                                )}
+                                
                             </Row>
                         </Form.Item>
                     </Form>
                 </Col>
-
-                {showAddButton && (
-                    <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.buttonsGroupRight}>
-                        <Button icon={<PlusOutlined />} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                            Add
-                        </Button>
-                    </Col>
-                )}
+ 
             </Row>
             {advanceFilter && filterString?.advanceFilter && extraParams.find((i) => i.name) && (
                 <Row gutter={20}>
@@ -102,7 +71,7 @@ export default function AdvanceVehicleAllotMasterFilter(props) {
                                                 {filter?.name}
                                                 {filter?.canRemove && (
                                                     <span>
-                                                        <RxCross2 onClick={() => removeFilter(filter?.key)} data-testid="removeBtn" />
+                                                        <RxCross2 onClick={() => removeFilter(filter?.key)} />
                                                     </span>
                                                 )}
                                             </div>

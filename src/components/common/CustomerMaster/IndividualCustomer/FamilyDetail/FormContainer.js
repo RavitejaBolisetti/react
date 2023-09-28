@@ -8,7 +8,7 @@ import { Input, Select, DatePicker, Row, Col, Button, Form } from 'antd';
 
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
-
+import { YES_NO_FLAG } from 'constants/yesNoFlag'
 import { GetAge } from 'utils/getAge';
 import { disableFutureDate } from 'utils/disableDate';
 import { dateFormat, formatDate } from 'utils/formatDateTime';
@@ -25,7 +25,7 @@ const FormBase = (props) => {
     const onDateChange = (prop) => {
         let dateString = formatDate(prop);
         let calAge1 = GetAge(dateString);
-        if(prop === null){
+        if (prop === null) {
             form.setFieldsValue({
                 relationAge: null,
             });
@@ -59,9 +59,9 @@ const FormBase = (props) => {
             });
         }
 
-        if (customerType === 'Yes') {
+        if (customerType === YES_NO_FLAG?.YES?.key) {
             setCustomer(true);
-        } else if (customerType === 'No') {
+        } else if (customerType === YES_NO_FLAG?.NO?.key) {
             setCustomer(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
