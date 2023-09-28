@@ -796,10 +796,27 @@
             float: left;
         }
     }
-   
 }
 .fieldcontentData {
     width: 90%;
+}
+.navTab {
+    & :global {
+        .ant-tabs.ant-tabs-top {
+            .ant-tabs-nav {
+                margin: 0 0 8px 0;
+                .ant-tabs-tab {
+                    padding: 0 0 8px 0;
+                    + .ant-tabs-tab {
+                        margin: 0 0 0 20px;
+                    }
+                }
+                &::before {
+                    border-bottom: 1px solid $neutralGrey1;
+                }
+            }
+        }
+    }
 }
 
 /*--------------form Footer Section Strat--------------*/
