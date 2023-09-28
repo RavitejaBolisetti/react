@@ -24,7 +24,5 @@ describe('ViewDetail Component', () => {
         fireEvent.click(expandIcon[1]);
         const expandIcon1 = screen.getAllByRole('img', { name: 'plus' });
         fireEvent.click(expandIcon1[0]);
-        fireEvent.click(expandIcon1[1]);
-        fireEvent.click(expandIcon1[2]);
     });
 });

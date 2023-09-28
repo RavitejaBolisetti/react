@@ -39,27 +39,28 @@ describe('Inovice Generation Main Cotainer component render', () => {
         const currentSection = 2;
         customRender(<FormWrapper isVisible={true} currentSection={currentSection} handleFormValueChange={jest.fn()} setButtonData={jest.fn()} typeData={'FNC_ARNGD'} />);
     });
-    it('should render vehicle details component', () => {
+    it('should render vehicle details component 1', () => {
         const currentSection = 3;
         customRender(<FormWrapper isVisible={true} currentSection={currentSection} handleFormValueChange={jest.fn()} setButtonData={jest.fn()} />);
     });
-    it('should render vehicle details component', () => {
+    it('should render vehicle details component 2', () => {
         const currentSection = 4;
         customRender(<FormWrapper typeData={'FNC_ARNGD'} isVisible={true} currentSection={currentSection} handleFormValueChange={jest.fn()} setButtonData={jest.fn()} />);
     });
-    it('should render vehicle details component', () => {
+    it('should render vehicle details component 3', () => {
         const currentSection = 5;
-        customRender(<FormWrapper isVisible={true} currentSection={currentSection} handleFormValueChange={jest.fn()} setButtonData={jest.fn()} />);
+        const typeData={ FNC_ARNGD: [{ name: 'Kai' }] }
+        customRender(<FormWrapper isVisible={true} typeData={typeData} currentSection={currentSection} handleFormValueChange={jest.fn()} setButtonData={jest.fn()} />);
     });
-    it('should render vehicle details component', () => {
+    it('should render vehicle details component 4', () => {
         const currentSection = 6;
         customRender(<FormWrapper isVisible={true} currentSection={currentSection} handleFormValueChange={jest.fn()} setButtonData={jest.fn()} />);
     });
-    it('should render vehicle details component', () => {
+    it('should render vehicle details component 5', () => {
         const currentSection = 7;
         customRender(<FormWrapper isVisible={true} currentSection={currentSection} handleFormValueChange={jest.fn()} setButtonData={jest.fn()} />);
     });
-    it('should render vehicle details component', () => {
+    it('should render vehicle details component 6', () => {
         const currentSection = 8;
         customRender(<FormWrapper isVisible={true} currentSection={currentSection} handleFormValueChange={jest.fn()} setButtonData={jest.fn()} />);
     });

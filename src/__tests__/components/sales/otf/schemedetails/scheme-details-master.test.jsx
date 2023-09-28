@@ -6,7 +6,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { screen, fireEvent } from '@testing-library/react';
-import { SchemeDetailsMaster } from '@components/Sales/Common/SchemeDetails/SchemeDetailsMaster';
+import { SchemeDetailsMaster } from 'components/Sales/OTF/SchemeDetails';
 
 import { Form, Button } from 'antd';
 

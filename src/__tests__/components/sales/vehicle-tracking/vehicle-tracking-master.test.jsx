@@ -29,7 +29,7 @@ describe('Vehicle Tracking Component', () => {
         );
 
         const searchBox=screen.getByRole('textbox', { name: 'Search' });
-        fireEvent.change(searchBox, { target: { value: '' } });
+        fireEvent.change(searchBox, { target: { value: 'Kai' } });
 
         const searchBtn=screen.getByRole('button', { name: 'search' });
         fireEvent.click(searchBtn);
