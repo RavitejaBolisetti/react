@@ -16,7 +16,7 @@ jest.mock('store/actions/data/vehicleAllotment/VehicleAllotment', ()=> ({
 describe('OTFAllotmentMaster Component', () => {
 
     it('should render OTFAllotmentMaster component UI', () => {
-        customRender(<OTFAllotmentMaster />)
+        customRender(<OTFAllotmentMaster setFilterString={jest.fn()} />)
     });
 
     it('allot should work', async () => {
@@ -26,7 +26,7 @@ describe('OTFAllotmentMaster Component', () => {
           ConfigurableParameterEditing: { filteredListData: { ALT_ACTN: [{ id: 106 }], VEHCL_STATS: [{ id: 106 }], PD_DONE: [{ id: 106 }] } },
           ProductHierarchy: { filteredListData: [{ prodctCode: 106 }] },
           vehicleAllotmentData: {
-              vehicleAllotment: { data: { paginationData: [{ vehicleIdentificationNumber: 106, modelCode: 106, ageInDays: 106, pdiIndicator: 'PDI Indicator Done', invoiceId: 106, vehicleStatus: 'Actove'  }] }},
+              vehicleAllotment: { data: { paginationData: [{ vehicleIdentificationNumber: 106, modelCode: 106, ageInDays: 106, pdiIndicator: 'PDI Indicator Done', invoiceId: 106, vehicleStatus: 'Actove'  }] }, filter: { current: 10 }},
           },
         },
       });

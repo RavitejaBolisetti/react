@@ -6,6 +6,14 @@
 /* Global AntD CSS Overrides Throughout the Web Application */
 /*Global AntD section Start*/
 
+:global {
+    .ant-tag-default {
+        color: $primaryRed;
+        background: $neutralGrey0;
+        border-color: $neutralGrey2;
+    }
+}
+
 :global .ant-descriptions .ant-descriptions-header {
     margin-bottom: 0px;
 }
@@ -998,6 +1006,19 @@
 
         .ant-select-arrow {
             color: $primaryRed;
+        }
+    }
+
+    .ant-select.ant-select-multiple {
+        .ant-select-selector {
+            .ant-select-selection-overflow {
+                .ant-select-selection-overflow-item.ant-select-selection-overflow-item-suffix {
+                    .ant-select-selection-search {
+                        width: 0 !important;
+                        margin-inline-start: 0;
+                    }
+                }
+            }
         }
     }
 
@@ -2102,6 +2123,76 @@
                 span {
                     &:first-child {
                         padding-left: 2px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*--------------Scroll - ant Description--------------*/
+:global {
+    .ant-descriptions {
+        .ant-descriptions-view {
+            &::-webkit-scrollbar-track {
+                background-color: $primaryWhite;
+            }
+
+            &::-webkit-scrollbar {
+                background-color: $primaryWhite;
+                width: 8px;
+                height: 8px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background-color: $neutralGrey1;
+                border-radius: 10px;
+                border: 2px solid $primaryWhite;
+
+                &:hover {
+                    border: 2px solid $neutralGrey1;
+                }
+            }
+        }
+    }
+}
+
+/*--------------Scroll - ant table--------------*/
+:global {
+    .ant-table-wrapper {
+        .ant-table {
+            .ant-table-content {
+                &::-webkit-scrollbar-track {
+                    background-color: $primaryWhite;
+                }
+
+                &::-webkit-scrollbar {
+                    background-color: $primaryWhite;
+                    width: 8px;
+                    height: 8px;
+                }
+
+                &::-webkit-scrollbar-thumb {
+                    background-color: $neutralGrey1;
+                    border-radius: 10px;
+                    border: 2px solid $primaryWhite;
+
+                    &:hover {
+                        border: 2px solid $neutralGrey1;
+                    }
+                }
+            }
+
+            table {
+                thead {
+                    tr {
+                        th.ant-table-selection-column {
+                            background: $neutralGrey0;
+                        }
+
+                        td.ant-table-selection-column {
+                            background: $neutralGrey0;
+                        }
                     }
                 }
             }

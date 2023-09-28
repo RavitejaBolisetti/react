@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent, screen, act } from '@testing-library/react';
-import { AdvancedSearch }  from 'components/Sales/HoPriceMappingDealer/AdvancedSearch';
+import { AdvancedSearch } from 'components/Sales/HoPriceMappingDealer/AdvancedSearch';
 import customRender from '@utils/test-utils';
 import { Form } from 'antd';
 
@@ -19,13 +19,12 @@ const FormWrapper = (props) => {
 };
 
 describe('Advanced Search Component', () => {
-
     it('should render advanced search component', () => {
-        customRender(<FormWrapper isVisible={true} />);
+        customRender(<FormWrapper isVisible={true} handleFilterChange={jest.fn()} />);
     });
 
     it('search should work on click apply', () => {
-        const filterString={
+        const filterString = {
             products: 'Kai',
             areaOfficeName: 'Kai',
             state: 'Kai',
@@ -33,10 +32,9 @@ describe('Advanced Search Component', () => {
             productHierarchy: 'Kai',
         };
 
-        customRender(<FormWrapper isVisible={true} filterString={filterString} setAdvanceSearchVisible={jest.fn()} setFilterString={jest.fn()} />);
+        customRender(<FormWrapper isVisible={true} handleFilterChange={jest.fn()} filterString={filterString} setAdvanceSearchVisible={jest.fn()} setFilterString={jest.fn()} />);
 
-        const applyBtn=screen.getByRole('button', { name: 'Apply' });
+        const applyBtn = screen.getByRole('button', { name: 'Apply' });
         fireEvent.click(applyBtn);
     });
-
 });

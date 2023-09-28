@@ -4,13 +4,12 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Button, Row, Col } from 'antd';
+import { Button, Row, Col, Popover } from 'antd';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'assets/sass/app.module.scss';
 
 export const VehicleInvoiceFormButton = ({ formActionType, record, onCloseAction, onCancelInvoice, onApproveCancel, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection, onPrintInvoice, onPrintForm21 }) => {
-    //console.log('formActionType', formActionType);
     return (
         <div className={styles.formFooter}>
             <Row gutter={20}>
@@ -47,38 +46,21 @@ export const VehicleInvoiceFormButton = ({ formActionType, record, onCloseAction
                     )}
 
                     {buttonData?.rejectCancelBtn && (
-                        <Button onClick={onApproveCancel} danger>
-                            Reject
-                        </Button>
+                        <Popover content={'Coming Soon'} trigger="hover">
+                            <Button onClick={onApproveCancel} type="primary">
+                                Reject
+                            </Button>
+                        </Popover>
                     )}
 
                     {buttonData?.approveCancelBtn && (
-                        <Button onClick={onApproveCancel} danger>
-                            Approve
-                        </Button>
+                        <Popover content={'Coming Soon'} trigger="hover">
+                            <Button onClick={onApproveCancel} type="primary">
+                                Approve
+                            </Button>
+                        </Popover>
                     )}
-                    {/* {buttonData?.editBtn && (
-            <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.footerBtnRight}>
-                {buttonData?.printInvoiceBtn && (
-                    <Button onClick={() => onPrintInvoice(record)} type="primary">
-                        Print Invoice
-                    </Button>
-                )}
-                {buttonData?.cancelInvoiceBtn && (
-                    <Button onClick={onCancelInvoice} type="primary">
-                        Cancel Invoice
-                    </Button>
-                )}
-                {buttonData?.approveCancelBtn && (
-                    <Button onClick={onApproveCancel} type="primary">
-                        Approve
-                    </Button>
-                )}
-                {/* {buttonData?.editBtn && (
-                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
-                        Edit
-                    </Button>
-                )} */}
+
                     {buttonData?.nextBtn && !isLastSection && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
                             Next

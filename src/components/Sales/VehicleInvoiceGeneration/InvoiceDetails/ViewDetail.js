@@ -15,7 +15,7 @@ import { getCodeValue } from 'utils/getCodeValue';
 const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading, typeData } = props;
+    const { formData, isLoading, typeData, salesConsultantLovData } = props;
     const [activeKey, setactiveKey] = useState([]);
     const viewProps = {
         bordered: false,
@@ -55,7 +55,7 @@ const ViewDetailMain = (props) => {
                                 <Descriptions.Item label="Tax Payable On Reverse Charges?">{checkAndSetDefaultValue(getCodeValue(typeData?.RFRL, formData?.taxPayableOnReverseCharges), isLoading)}</Descriptions.Item>
                             </Descriptions>
                             <Descriptions {...viewProps} title={prepareCaption('Sales Details')}>
-                                <Descriptions.Item label="Sales Consultant Name">{checkAndSetDefaultValue(formData?.saleConsultant, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Sales Consultant Name">{checkAndSetDefaultValue(getCodeValue(salesConsultantLovData, formData?.saleConsultant), isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Influence/Mitra Type">{checkAndSetDefaultValue(formData?.mitraType, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Influence/Mitra Name">{checkAndSetDefaultValue(formData?.mitraName, isLoading)}</Descriptions.Item>
                             </Descriptions>

@@ -155,8 +155,6 @@ describe('Qualification Master Test', () => {
     });
 
     it('test for onSuccess', async () => {
-        const fetchList = jest.fn();
-
         const mockStore = createMockStore({
             auth: { userId: 106 },
             data: {
@@ -165,6 +163,8 @@ describe('Qualification Master Test', () => {
         });
 
         const saveData = jest.fn();
+        const fetchList = jest.fn();
+
         const res = { data: [{ id: '106', status: 0 }] };
 
         customRender(

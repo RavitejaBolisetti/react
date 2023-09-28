@@ -63,7 +63,7 @@ const CardAccountAndDocumentMapping = (props) => {
                 setFormEdit(false);
                 forceUpdate();
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {});
     };
 
     const onAccAndMapDelete = (val) => {

@@ -9,7 +9,7 @@ import { Row, Col, Form, Button, Space } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import { PARAM_MASTER } from 'constants/paramMaster';
-import { UploadUtil } from 'utils/Upload';
+import { UploadUtil } from 'utils/Upload'; 
 import styles from 'assets/sass/app.module.scss';
 
 const OnRoadPriceMasterUploadMain = (uploadProps) => {

@@ -77,9 +77,8 @@ describe('CreditDebitNoteFormButton components', () => {
         const buttonData = {
             printBtn:true
         }
-        const handlePrintDownload = jest.fn();
-        const record={id:'123'}
-        customRender(<CreditDebitNoteFormButton buttonData={buttonData} handleButtonClick={jest.fn(() => handlePrintDownload(record))}  />);
+        
+        customRender(<CreditDebitNoteFormButton buttonData={buttonData} handleButtonClick={jest.fn()}  handlePrintDownload={jest.fn()} />);
         
         const printBtn = screen.getByRole('button', {name:'Print Receipt'})
         fireEvent.click(printBtn);

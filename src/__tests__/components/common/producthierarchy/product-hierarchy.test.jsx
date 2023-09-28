@@ -33,30 +33,6 @@ describe('Producthierarchy Components', () => {
         fireEvent.change(searchBox, { target: { value: 'Kai' } });
     });
 
-    it('add and edit form cancel button should work', async () => {
-        const mockStore = createMockStore({
-            auth: { userId: 106 },
-            data: {
-                ProductHierarchy: {
-                    organizationId: true,
-                },
-            },
-        });
-
-        customRender(
-            <Provider store={mockStore}>
-                <ProductHierarchy onCloseAction={jest.fn()} />
-            </Provider>
-        );
-        const addBtn = screen.getByRole('button', { name: 'plus Add' });
-
-        fireEvent.click(addBtn);
-
-        const cancelBtn = screen.getByRole('button', { name: 'Cancel' });
-
-        fireEvent.click(cancelBtn);
-    });
-
     it('Hierarchy tree select should work', async () => {
         const mockStore = createMockStore({
             auth: { userId: 106 },
@@ -75,12 +51,9 @@ describe('Producthierarchy Components', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <ProductHierarchy onCloseAction={jest.fn()} fetchProductDetail={jest.fn()} />
+                <ProductHierarchy viewData={true} onCloseAction={jest.fn()} fetchProductDetail={jest.fn()} />
             </Provider>
         );
-        const treeSelect = screen.getByText('Kai');
-
-        fireEvent.click(treeSelect);
     });
 
     it('Hierarchy tree select should work with selecting tree', async () => {

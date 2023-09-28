@@ -165,10 +165,10 @@ const AddEditFormMain = (props) => {
                                         <Input loading={isVariantLoading} maxLength={15} placeholder={preparePlaceholderText('model variant')} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
-                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.modelTooltip}>
-                                    {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.modelTooltipView}>
+                                    {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={15} />)}
                                     <Form.Item label="Model Description" name="model">
-                                        <Input maxLength={15} placeholder={preparePlaceholderText('model ')} {...disabledProps} />
+                                        <Input title={formData?.productAttributeDetail?.model} maxLength={15} placeholder={preparePlaceholderText('model ')} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -252,12 +252,12 @@ const AddEditFormMain = (props) => {
                                                 'No product Attribute Details Present',
                                                 'bottom'
                                             )(
-                                                <Button data-testid="addBtn" onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly || !formData?.productAttributeDetail}>
+                                                <Button className={styles.marL10} data-testid="addBtn" onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly || !formData?.productAttributeDetail}>
                                                     Add
                                                 </Button>
                                             )}
                                         {formData?.productAttributeDetail && (
-                                            <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly || !formData?.productAttributeDetail}>
+                                            <Button className={styles.marL10} onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly || !formData?.productAttributeDetail}>
                                                 Add
                                             </Button>
                                         )}

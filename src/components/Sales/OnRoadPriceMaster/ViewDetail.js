@@ -19,7 +19,6 @@ const ViewDetailMain = (props) => {
         layout: 'vertical',
         column: { xxl: 4, xl: 4, lg: 4, md: 4, sm: 4, xs: 4 },
     };
-
     return (
         <>
             <Row gutter={20} className={styles.drawerBody}>

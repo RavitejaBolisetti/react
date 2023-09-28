@@ -15,7 +15,7 @@ jest.mock('store/actions/data/productHierarchy', () => ({
 
 const data={
   ManufacturerOrgHierarchy: { data: [{ id: 106, manufactureOrgShrtName: 'Manu-Kai' }], organizationId: 109  },
-  ProductHierarchy: { data: [{ prodctCode: 106, prodctShrtName: 'Kai', subProdct: [{prodctShrtName: 'Test', prodctCode: 107}] }], organizationId: 109 },
+  ProductHierarchy: { data: [{ prodctCode: 106, prodctShrtName: 'Kai'}], organizationId: 109 },
   OTF: {
       OtfSoMapping: { data: { orgManufactureId: 106 } },
       OtfSoUserMapping: { data: [{ key: 106, value: 'KaiOption' }] },

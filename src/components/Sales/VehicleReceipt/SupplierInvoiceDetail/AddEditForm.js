@@ -15,7 +15,7 @@ const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { formData, form, buttonData, setButtonData, supplierTypeData } = props;
-    console.log('🚀 ~ file: AddEditForm.js:18 ~ AddEditFormMain ~ supplierTypeData:', supplierTypeData);
+    //console.log('🚀 ~ file: AddEditForm.js:18 ~ AddEditFormMain ~ supplierTypeData:', supplierTypeData);
 
     const selectProps = {
         optionFilterProp: 'children',
