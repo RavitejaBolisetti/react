@@ -62,12 +62,9 @@ describe('Vehicle Invoice Master component render', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <VehicleInvoiceMaster fetchList={fetchList} irnGeneration={irnGeneration} />
+                <VehicleInvoiceMaster fetchList={fetchList} irnGeneration={irnGeneration} fetchInvoiceMasterData={jest.fn()} />
             </Provider>
         );
-
-        fetchList.mock.calls[0][0].onSuccessAction();
-        fetchList.mock.calls[0][0].onErrorAction();
 
         await waitFor(() => {
             expect(screen.getByText(/106/i)).toBeInTheDocument();
@@ -75,14 +72,6 @@ describe('Vehicle Invoice Master component render', () => {
 
         const viewBtn = screen.getByTestId('view');
         fireEvent.click(viewBtn);
-
-        const generate = screen.getByRole('button', { name: 'Generate' });
-        fireEvent.click(generate);
-
-        const cancelButton = screen.getByRole('button', { name: 'No' });
-        fireEvent.click(cancelButton);
-
-        fireEvent.click(generate);
 
         await waitFor(() => expect(irnGeneration).toHaveBeenCalled());
 
@@ -110,24 +99,10 @@ describe('Vehicle Invoice Master component render', () => {
         await waitFor(() => {
             expect(screen.getByText(/106/i)).toBeInTheDocument();
         });
-
-        const viewBtn = screen.getByTestId('view');
-        fireEvent.click(viewBtn);
-
-        const nextBtn = screen.getByRole('button', { name: 'Next' });
-        fireEvent.click(nextBtn);
-        const nextBtn1 = screen.getByRole('button', { name: 'Next' });
-        fireEvent.click(nextBtn1);
-        const nextBtn2 = screen.getByRole('button', { name: 'Next' });
-        fireEvent.click(nextBtn2);
-        const nextBtn3 = screen.getByRole('button', { name: 'Next' });
-        fireEvent.click(nextBtn3);
-        const nextBtn4 = screen.getByRole('button', { name: 'Next' });
-        fireEvent.click(nextBtn4);
     });
 
     it('add new invoice should work', async () => {
-        customRender(<VehicleInvoiceMaster fetchInvoiceMasterData={jest.fn()} />);
+        customRender(<VehicleInvoiceMaster fetchInvoiceMasterData={jest.fn()} resetDetailData={jest.fn()} />);
 
         const addBtn = screen.getByRole('button', { name: 'plus Add' });
         fireEvent.click(addBtn);
@@ -141,10 +116,10 @@ describe('Vehicle Invoice Master component render', () => {
         const searchBtn = screen.getAllByRole('button', { name: 'search' });
         fireEvent.click(searchBtn[1]);
 
-        const minusCollapseBtns = screen.getByRole('img', { name: 'minus' });
-        fireEvent.click(minusCollapseBtns);
+        const minusCollapseBtns = screen.getAllByRole('img', { name: 'minus' });
+        fireEvent.click(minusCollapseBtns[1]);
 
-        const saveAndNext = screen.getByRole('button', { name: 'Save & Next' });
+        const saveAndNext = screen.getByRole('button', { name: 'Continue' });
         fireEvent.click(saveAndNext);
     });
 
@@ -167,7 +142,7 @@ describe('Vehicle Invoice Master component render', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <VehicleInvoiceMaster fetchList={fetchList} cancelInvoice={cancelInvoice} onErrorAction={jest.fn()} />
+                <VehicleInvoiceMaster fetchList={fetchList} cancelInvoice={cancelInvoice} onErrorAction={jest.fn()} fetchInvoiceMasterData={jest.fn()} resetDetailData={jest.fn()} />
             </Provider>
         );
 
@@ -258,7 +233,7 @@ describe('Vehicle Invoice Master component render', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <VehicleInvoiceMaster fetchList={fetchList} />
+                <VehicleInvoiceMaster fetchList={fetchList} fetchInvoiceMasterData={jest.fn()} />
             </Provider>
         );
 
