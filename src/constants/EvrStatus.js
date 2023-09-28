@@ -5,13 +5,15 @@
  */
 export const EVR_STATUS = {
     DUE_FOR_CHARGING: {
-        id: 1,
+        id: 'due for charging',
         title: 'Due for Charging',
         key: 'D',
+        active: true,
     },
     CHARGED: {
-        id: 2,
+        id: 'charged',
         title: 'Charged',
         key: 'C',
+        active: false,
     },
 };

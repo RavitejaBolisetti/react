@@ -10,7 +10,7 @@ import { bindActionCreators } from 'redux';
 import { Col, Form, Row } from 'antd';
 import { tableColumn } from './tableColumn';
 import EvrDetailsCapturingFilter from './EvrDetailsCapturingFilter';
-import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, btnVisiblity } from 'utils/btnVisiblity';
+import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, btnVisiblity, NEXT_ACTION } from 'utils/btnVisiblity';
 import { MODEL_TYPE } from 'constants/modules/hoPricingMapping/index';
 
 import { AddEditForm } from './AddEditForm';
@@ -36,11 +36,6 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             ProductHierarchy: { data: productHierarchyData = [] },
-            Geo: {
-                State: { isFilteredListLoaded: isStateDataLoaded = false, isLoading: isStateLoading, filteredListData: stateData },
-                District: { isFilteredListLoaded: isDistrictDataLoaded = false, isLoading: isDistrictLoading, filteredListData: districtData },
-                City: { isFilteredListLoaded: isCityDataLoaded = false, isLoading: isCityLoading, filteredListData: cityData },
-            },
             TermCondition: {
                 ProductHierarchyData: { isLoaded: isProductHierarchyDataLoaded = false, data: productHierarchyList },
             },
@@ -55,15 +50,6 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         typeData,
-        isStateDataLoaded,
-        isStateLoading,
-        filteredStateData: stateData,
-        isDistrictDataLoaded,
-        isDistrictLoading,
-        districtData,
-        isCityDataLoaded,
-        isCityLoading,
-        cityData,
         isProductHierarchyDataLoaded,
         productHierarchyList,
         data: data?.paginationData,
@@ -86,15 +72,6 @@ const mapDispatchToProps = (dispatch) => ({
             fetchProductList: productHierarchyDataActions.fetchList,
             listProductMainShowLoading: productHierarchyDataActions.listShowLoading,
 
-            fetchStateLovList: geoStateDataActions.fetchFilteredList,
-            listStateShowLoading: geoStateDataActions.listShowLoading,
-
-            fetchDistrictLovList: geoDistrictDataActions.fetchFilteredList,
-            listDistrictShowLoading: geoDistrictDataActions.listShowLoading,
-
-            fetchCityLovList: geoCityDataActions.fetchFilteredList,
-            listCityShowLoading: geoCityDataActions.listShowLoading,
-
             fetchProductLovList: tncProductHierarchyDataActions.fetchList,
             listProductShowLoading: tncProductHierarchyDataActions.listShowLoading,
 
@@ -114,8 +91,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const EvrDetailsCapturingMasterBase = (props) => {
-    const { filterString, setFilterString, fetchList, saveData, listShowLoading, userId, fetchStateLovList, fetchDistrictLovList, fetchProductLovList, data, fetchDetail, listProductMainShowLoading, fetchProductList, listDetailShowLoading } = props;
-    const { typeData, listStateShowLoading, listDistrictShowLoading, listProductShowLoading, filteredStateData, districtData, productHierarchyList, productHierarchyData, totalRecords, showGlobalNotification, hoPriceDetailData, isHoPriceDetaiLoading } = props;
+    const { filterString, setFilterString, fetchList, saveData, listShowLoading, userId, fetchProductLovList, data, fetchDetail, listProductMainShowLoading, fetchProductList, listDetailShowLoading } = props;
+    const { typeData, listProductShowLoading, filteredStateData, districtData, productHierarchyList, productHierarchyData, totalRecords, showGlobalNotification, hoPriceDetailData, isHoPriceDetaiLoading } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [filteredCityData, setFilteredCityData] = useState([]);
     const [editProductData, setEditProductData] = useState([]);
@@ -148,13 +125,15 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         cancelReceiptBtn: false,
     };
 
+    const actionBtns = { canAdd: false, canView: false, canEdit: true };
+    const [actionButtonVisiblity, setActionButtonVisiblity] = useState({ ...actionBtns });
+
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
     const [formData, setFormData] = useState([]);
-    // const [responseData, setResponseData] = useState([]);
 
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -246,32 +225,46 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pricingType, filterString, page]);
 
-    useEffect(() => {
-        if (userId) {
-            fetchProductList({ setIsLoading: listProductMainShowLoading, userId, onCloseAction, extraParams: [{ key: 'manufactureOrgCode', value: `LMM` }], onErrorAction });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
+    // useEffect(() => {
+    //     if (userId) {
+    //         fetchProductList({ setIsLoading: listProductMainShowLoading, userId, onCloseAction, extraParams: [{ key: 'manufactureOrgCode', value: `LMM` }], onErrorAction });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [userId]);
 
-    useEffect(() => {
-        if (userId) {
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, pricingType, page, filterString]);
+    // useEffect(() => {
+    //     if (userId) {
+    //         fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [userId, pricingType, page, filterString]);
 
-    useEffect(() => {
-        if (userId) {
-            fetchStateLovList({ setIsLoading: listStateShowLoading, userId });
-            fetchDistrictLovList({ setIsLoading: listDistrictShowLoading, userId });
-            fetchProductLovList({ setIsLoading: listProductShowLoading, userId });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
+    // useEffect(() => {
+    //     if (userId) {
+    //
+    //         fetchProductLovList({ setIsLoading: listProductShowLoading, userId });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [userId]);
 
-    const handlePricingTypeChange = (key) => {
-        setPricingType(key);
+    const handlePricingTypeChange = (buttonName) => {
+        setPricingType(buttonName?.key);
         searchForm.resetFields();
+        switch (buttonName?.key) {
+            case EVR_STATUS?.DUE_FOR_CHARGING?.key: {
+                setActionButtonVisiblity({ canAdd: false, canView: false, canEdit: true });
+                break;
+            }
+            case EVR_STATUS?.CHARGED?.key: {
+                setActionButtonVisiblity({ canAdd: false, canView: true, canEdit: false });
+                setButtonData({ ...buttonData });
+                break;
+            }
+
+            default: {
+                setActionButtonVisiblity({ canAdd: false, canView: false, canEdit: true });
+            }
+        }
     };
 
     const handleFilterChange =
@@ -316,12 +309,31 @@ export const EvrDetailsCapturingMasterBase = (props) => {
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
         setFormData([]);
-
-        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction, saveAndNewBtn: false }));
-
         record && setFormData(record);
         setIsFormVisible(true);
+
+        if (buttonAction !== NEXT_ACTION && !(buttonAction === VIEW_ACTION)) {
+            setFormActionType({
+                addMode: buttonAction === ADD_ACTION,
+                editMode: buttonAction === EDIT_ACTION,
+                viewMode: buttonAction === VIEW_ACTION,
+            });
+            setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
+        } else if (pricingType === EVR_STATUS?.DUE_FOR_CHARGING?.key && buttonAction === EDIT_ACTION) {
+            setFormActionType({
+                addMode: buttonAction === ADD_ACTION,
+                editMode: buttonAction === EDIT_ACTION,
+                viewMode: buttonAction === VIEW_ACTION,
+            });
+            setButtonData({ nextBtn: true, closeBtn: true, saveBtn: true });
+        } else if (pricingType === EVR_STATUS?.CHARGED?.key && buttonAction === VIEW_ACTION) {
+            setFormActionType({
+                addMode: buttonAction === ADD_ACTION,
+                editMode: buttonAction === EDIT_ACTION,
+                viewMode: buttonAction === VIEW_ACTION,
+            });
+            setButtonData({ nextBtn: true, closeBtn: true });
+        }
 
         // if (buttonAction !== ADD_ACTION) {
         //     const extraParams = [
@@ -372,23 +384,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
     const onFinish = (values) => {
         const { city, dealerBranch, dealerParent, productCode, state, ...rest } = values;
 
-        let arr = [];
-        for (let i = 0; i < checkedKeys?.length; i++) {
-            let ifFind = hoPriceDetailData?.modelDealerMapResponse?.findIndex((e) => e?.modelGroupCode === checkedKeys[i]);
-            if (ifFind > -1) {
-                arr.push({ ...hoPriceDetailData?.modelDealerMapResponse[ifFind], status: true });
-            } else {
-                arr.push({ id: '', modelGroupCode: checkedKeys[i], status: true });
-            }
-        }
-
-        for (let i = 0; i < hoPriceDetailData?.modelDealerMapResponse?.length; i++) {
-            let ifFind = checkedKeys?.findIndex((e) => e === hoPriceDetailData?.modelDealerMapResponse[i]?.modelGroupCode);
-            if (ifFind === -1) {
-                arr.push({ ...hoPriceDetailData?.modelDealerMapResponse[i], status: false });
-            }
-        }
-        const data = { ...rest, id: formData?.id, modelDetails: arr };
+        const data = { ...rest, id: formData?.id };
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
@@ -438,7 +434,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         totalRecords,
         page,
         setPage,
-        tableColumn: tableColumn(handleButtonClick),
+        tableColumn: tableColumn({ handleButtonClick, actionButtonVisiblity }),
         tableData: tempdata,
         showAddButton: false,
         typeData,
@@ -497,6 +493,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         handleButtonClick,
         handleSearch,
         pricingType,
+        setPricingType,
         handlePricingTypeChange,
         title,
         data,
