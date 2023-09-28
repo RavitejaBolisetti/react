@@ -36,6 +36,7 @@ export const FORMTYPE_CONSTANTS = {
 };
 export const MakeCheckResult = (props) => {
     const { type, data } = props;
+
     let checkResult = '';
     const UniqueAnsType = type && type?.toLowerCase();
     switch (UniqueAnsType) {
@@ -156,7 +157,7 @@ export const BindFormItems = ({ AdvanceformData, aggregateForm, data }) => {
             return (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item label="Check Result" name="answerBoolean" rules={[validateRequiredInputField('checkResult')]}>
+                        <Form.Item label="Check Result" name="answerBoolean" rules={[validateRequiredSelectField('checkResult')]}>
                             <Select
                                 optionFilterProp="children"
                                 options={[

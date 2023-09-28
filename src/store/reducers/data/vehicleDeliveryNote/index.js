@@ -22,6 +22,7 @@ import { InsuranceDetailChallan } from './challanInsurance';
 import { ChallanCancelDeliveryNote } from './challanCancel';
 import { CancelInfoDeliveryNote } from './infoCancelDeliveryNote';
 import { CancelInfoChallanDeliveryNote } from './infoChallanCancel';
+import { DeliverableChecklistMain } from './deliverableChecklistMain';
 
 export const VehicleDeliveryNote = combineReducers({
     VehicleDeliveryNoteSearchList,
@@ -41,4 +42,5 @@ export const VehicleDeliveryNote = combineReducers({
     ChallanCancelDeliveryNote,
     CancelInfoDeliveryNote,
     CancelInfoChallanDeliveryNote,
+    DeliverableChecklistMain,
 });
