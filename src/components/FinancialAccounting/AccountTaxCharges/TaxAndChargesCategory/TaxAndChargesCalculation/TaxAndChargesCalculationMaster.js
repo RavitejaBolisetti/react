@@ -16,20 +16,16 @@ export const TaxAndChargesCalculationMaster = (props) => {
     const [mainFomEdit, setMainFormEdit] = useState(false);
 
     const addTaxChargeCal = (val) => {
-        taxChargeCalForm
-            .validateFields()
-            .then(() => {
-                let data = taxChargeCalForm.getFieldsValue();
-                //console.log('tData', data);
+        taxChargeCalForm.validateFields().then(() => {
+            let data = taxChargeCalForm.getFieldsValue();
 
-                let updateData = { ...data, internalId: Math.floor(Math.random() * 100000000 + 1), id: '' };
-                setTaxChargeCalList((item) => [updateData, ...item]);
-                taxChargeCalForm.resetFields();
-                forceUpdate();
-                setButtonData({ ...buttonData, formBtnActive: true });
-                handleCodeFunction();
-            })
-            .catch((error) => console.log(error));
+            let updateData = { ...data, internalId: Math.floor(Math.random() * 100000000 + 1), id: '' };
+            setTaxChargeCalList((item) => [updateData, ...item]);
+            taxChargeCalForm.resetFields();
+            forceUpdate();
+            setButtonData({ ...buttonData, formBtnActive: true });
+            handleCodeFunction();
+        });
     };
 
     const handleDescriptionChange = (taxCode) => {

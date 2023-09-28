@@ -18,7 +18,7 @@ const ViewDetailMain = ({ formData, styles, parameterType, isLoading = false }) 
 
     return (
         <>
-            <div className={styles.viewContainer}>
+            <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
                     <Descriptions.Item label="State Name">{checkAndSetDefaultValue(formData?.stateName, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="District Name">{checkAndSetDefaultValue(formData?.districtName, isLoading)}</Descriptions.Item>

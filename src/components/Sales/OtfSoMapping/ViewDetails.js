@@ -20,7 +20,7 @@ export const ViewMain = (props) => {
 
     return (
         <>
-            <div className={styles.viewContainer}>
+            <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
                     <Descriptions.Item label="Variant Code">{viewData?.productAttributeCode}</Descriptions.Item>
                     <Descriptions.Item label="Product Variant">{viewData?.productAttributeValue}</Descriptions.Item>

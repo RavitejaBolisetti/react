@@ -30,7 +30,7 @@ export const ViewProductDetailMain = ({ typeData, setSKUAttributes, viewTitle, s
     }, [selectedTreeData]);
 
     return (
-        <div className={styles.viewContainer}>
+        <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
             <Descriptions {...viewOneColProps}>
                 <Descriptions.Item label="Attribute Level"> {checkAndSetDefaultValue(getCodeValue(typeData?.PRD_HIER, viewData?.attributeType), false)}</Descriptions.Item>
                 <Descriptions.Item label="Parent">{viewData?.parentName}</Descriptions.Item>

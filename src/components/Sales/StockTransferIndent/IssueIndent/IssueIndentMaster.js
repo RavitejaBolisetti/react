@@ -16,6 +16,7 @@ import { converDateDayjs } from 'utils/formatDateTime';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
 import styles from 'assets/sass/app.module.scss';
 import { InputSkeleton } from 'components/common/Skeleton';
+import { FiDownload } from 'react-icons/fi';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -207,24 +208,26 @@ const IssueIndentMasterMain = (props) => {
                                         header={
                                             <Row justify="space-between">
                                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                    <Space size="middle" style={{ display: 'flex' }}>
-                                                        <Text> {`ST issue Note No. ${element?.issueNumber ? element?.issueNumber : 'NA'} `}</Text>
-                                                        <Text>|</Text>
-                                                        <Text> VIN: {element?.vin ? element?.vin : 'NA'}</Text>
-                                                        {handleBtnVisibility({ toggleButton, checkKey: element?.issueStatus, defaultVisibility })?.canCancel && (
-                                                            <Button type="primary" onClick={() => handleRequest(element, ISSUE_ACTION_LIST?.CANCEL)}>
-                                                                {BUTTON_NAME_CONSTANTS?.CANCEL?.name}
-                                                            </Button>
-                                                        )}
+                                                    <Space size="middle">
+                                                        <Space size="small" direction="vertical">
+                                                            <div>
+                                                                <Text> {`ST issue Note No. ${element?.issueNumber ? element?.issueNumber : 'NA'} `}</Text>
+                                                                <Text>|</Text>
+                                                                <Text> VIN: {element?.vin ? element?.vin : 'NA'}</Text>
+                                                            </div>
+                                                            <Text type="secondary">{`Status: ${typeData[PARAM_MASTER?.ISS_STS?.id]?.find((i) => i?.key === element?.issueStatus)?.value} `}</Text>
+                                                        </Space>
                                                         {handleBtnVisibility({ toggleButton, checkKey: element?.issueStatus, defaultVisibility })?.canPrint && (
-                                                            <Button danger onClick={() => handlePrintDownload(element)}>
+                                                            <Button danger icon={<FiDownload />} onClick={() => handlePrintDownload(element)}>
                                                                 {BUTTON_NAME_CONSTANTS?.PRINT?.name}
                                                             </Button>
                                                         )}
+                                                        {handleBtnVisibility({ toggleButton, checkKey: element?.issueStatus, defaultVisibility })?.canCancel && (
+                                                            <Button danger onClick={() => handleRequest(element, ISSUE_ACTION_LIST?.CANCEL)}>
+                                                                {BUTTON_NAME_CONSTANTS?.CANCEL?.name}
+                                                            </Button>
+                                                        )}
                                                     </Space>
-                                                    <Row>
-                                                        <Text type="secondary">{`Status: ${typeData[PARAM_MASTER?.ISS_STS?.id]?.find((i) => i?.key === element?.issueStatus)?.value} `}</Text>
-                                                    </Row>
                                                 </Col>
                                             </Row>
                                         }

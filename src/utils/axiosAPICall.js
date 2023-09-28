@@ -17,7 +17,7 @@ const baseAPICall = (params) => {
         timeout: process.env.REACT_APP_API_CALL_TIMEOUT,
         method,
         url,
-        onUploadProgress: (progressEvent) => console.log('progressEvent', progressEvent.loaded),
+        // onUploadProgress: (progressEvent) => console.log('progressEvent', progressEvent.loaded),
     };
     if (data) {
         axiosConfig = {
@@ -35,7 +35,6 @@ const baseAPICall = (params) => {
         };
     }
 
-    // const unAuthorizedTtitle = LANGUAGE_EN.GENERAL.AUTHORIZED_REQUEST.TITLE;
     const unAuthorizedMessage = LANGUAGE_EN.GENERAL.AUTHORIZED_REQUEST.MESSAGE;
 
     const handleErrorMessage = ({ onError, displayErrorTitle, errorData = false, errorSection = undefined, errorTitle, errorMessage }) => {
@@ -84,7 +83,6 @@ const baseAPICall = (params) => {
                 // onUnAuthenticated();
                 // The following code is mostly copy/pasted from axios documentation at https://github.com/axios/axios#handling-errors
                 // Added support for handling timeout errors separately, dont use this code in production
-                //console.log('🚀 ~ file: axiosAPICall.js:84 ~ baseAPICall ~ error:', error);
                 if (error.response) {
                     handleErrorMessage({ onError, displayErrorTitle, errorTitle: LANGUAGE_EN.GENERAL.ERROR.TITLE, errorMessage: LANGUAGE_EN.GENERAL.ERROR.MESSAGE });
                 } else if (error.code) {

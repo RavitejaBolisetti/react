@@ -109,18 +109,8 @@ export const EmbeddedReportMasterMain = (props) => {
 
     // Map of event handlers to be applied to the embedding report
     const eventHandlersMap = new Map([
-        [
-            'loaded',
-            function () {
-                // console.log('Report has loaded');
-            },
-        ],
-        [
-            'rendered',
-            function () {
-                //console.log('Report has rendered');
-            },
-        ],
+        ['loaded', function () {}],
+        ['rendered', function () {}],
         [
             'error',
             function (event) {

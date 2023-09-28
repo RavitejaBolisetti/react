@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Descriptions, Collapse, Divider, Space, Typography } from 'antd';
+import { Row, Col, Descriptions, Collapse, Divider, Space, Typography } from 'antd';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { addToolTip } from 'utils/customMenuLink';
@@ -55,12 +55,22 @@ const ViewDetailMain = (props) => {
                         <Panel
                             header={
                                 <>
-                                    <Space>
-                                        <Text className={styles.headText}> Model: {checkAndSetDefaultValue(item?.modelDescription, isLoading)} </Text>
-                                        <Text className={styles.headText}> {`|`}</Text>
-                                        <Text className={styles.headText}> VIN: {checkAndSetDefaultValue(item?.vin, isLoading)}</Text>
-                                    </Space>
-                                    <Text className={styles.subSection}> Vehicle Status: {checkAndSetDefaultValue(getCodeValue(vehicleStatusType, item?.vehicleStatus), isLoading)}</Text>
+                                    <Row>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                            <Space size="small">
+                                                <Text className={styles.headText}> Model: {checkAndSetDefaultValue(item?.modelDescription, isLoading)} </Text>
+                                                <Text className={styles.headText}> {`|`}</Text>
+                                                <Text className={styles.headText}> VIN: {checkAndSetDefaultValue(item?.vin, isLoading)}</Text>
+                                            </Space>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                            <Text type="secondary" className={styles.subSection}>
+                                                Vehicle Status: {checkAndSetDefaultValue(getCodeValue(vehicleStatusType, item?.vehicleStatus), isLoading)}
+                                            </Text>
+                                        </Col>
+                                    </Row>
                                 </>
                             }
                             key={index}
@@ -71,8 +81,10 @@ const ViewDetailMain = (props) => {
                                     {isLoading ? (
                                         <InputSkeleton width={'100px'} height={20} theme={'card'} />
                                     ) : (
-                                        <div className={styles.tooltipAlign}>
-                                            {item?.modelDescription}
+                                        <div className={styles?.tooltipAlign}>
+                                            <div title={item?.modelDescription} className={`${styles.contentData} ${styles.txtEllipsis}`}>
+                                                {item?.modelDescription}
+                                            </div>
                                             {!item?.modelDescription
                                                 ? 'NA'
                                                 : addToolTip(
