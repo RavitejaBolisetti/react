@@ -5,12 +5,11 @@
  */
 import React, { useEffect } from 'react';
 import { Button, Row, Col, Form } from 'antd';
-import { FilterIcon } from 'Icons';
 import { RxCross2 } from 'react-icons/rx';
 import { SearchBox } from 'components/utils/SearchBox';
 import styles from 'assets/sass/app.module.scss';
 
-export default function AdvanceOnRoadPriceMasterFilter(props) {
+export default function AdvanceVinBlockMasterFilter(props) {
     const {
         extraParams,
         removeFilter,
@@ -20,19 +19,18 @@ export default function AdvanceOnRoadPriceMasterFilter(props) {
         title,
         filterString,
         setFilterString,
-        setAdvanceSearchVisible,
         searchForm,
         searchForm: { setFieldsValue },
-        handleOnClick,
     } = props;
 
+    
     const searchBoxProps = {
         singleField: true,
         searchForm,
         filterString,
         setFilterString,
-        placeholder: 'Search By Model',
-        singleFieldKey: 'model',
+        placeholder: 'Search By VIN',
+        singleFieldKey: 'vin',
     };
 
     useEffect(() => {
@@ -52,30 +50,12 @@ export default function AdvanceOnRoadPriceMasterFilter(props) {
                                         <SearchBox {...searchBoxProps} />
                                     </Col>
                                 )}
-                                {advanceFilter && (
-                                    <Col xs={24} sm={24} md={10} lg={10} xl={10} className={styles.verticallyCentered}>
-                                        <Button
-                                            icon={<FilterIcon />}
-                                            type="link"
-                                            className={styles.verticallyCentered}
-                                            onClick={() => {
-                                                setAdvanceSearchVisible(true);
-                                            }}
-                                        >
-                                            Advanced Filters
-                                        </Button>
-                                    </Col>
-                                )}
+                                
                             </Row>
                         </Form.Item>
                     </Form>
                 </Col>
-
-                <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.buttonsGroupRight}>
-                    <Button type="primary" onClick={handleOnClick}>
-                        Upload
-                    </Button>
-                </Col>
+ 
             </Row>
             {advanceFilter && filterString?.advanceFilter && extraParams.find((i) => i.name) && (
                 <Row gutter={20}>
