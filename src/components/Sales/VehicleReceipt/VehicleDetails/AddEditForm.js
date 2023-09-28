@@ -163,7 +163,7 @@ const AddEditFormMain = (props) => {
                                                     'bottom',
                                                     '#FFFFFF',
                                                     styles.toolTip
-                                                )(<AiOutlineInfoCircle size={13} />)}
+                                                )(<AiOutlineInfoCircle size={15} />)}
                                             </div>
                                         )}
                                     </Col>
