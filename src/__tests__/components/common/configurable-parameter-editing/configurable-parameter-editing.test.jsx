@@ -6,7 +6,7 @@
 
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
-import { fireEvent, screen, act } from '@testing-library/react';
+import { fireEvent, screen, act, waitFor } from '@testing-library/react';
 import { ConfigurableParameterEditing } from '@components/common/ConfigurableParameterEditing/ConfigurableParameterEditing';
 import { Form } from 'antd';
 import { Provider } from 'react-redux';
@@ -27,6 +27,10 @@ afterEach(() => {
     jest.restoreAllMocks();
 });
 
+jest.mock('store/actions/data/configurableParamterEditing', () => ({
+    configParamEditActions: {},
+}));
+
 const mockStore = createMockStore({
     auth: { userId: 123 },
     data: {
@@ -45,7 +49,7 @@ describe('Render ConfigurableParameterEditing Component', () => {
             setSearchdata: jest.fn(),
         };
 
-        customRender(<ConfigurableParameterEditing {...props} />);
+        customRender(<ConfigurableParameterEditing {...props} fetchList={jest.fn()} />);
 
         const searchImg = screen.getByRole('img', { name: 'search' });
         act(() => {
@@ -65,7 +69,7 @@ describe('Render ConfigurableParameterEditing Component', () => {
             setSaveAndAddNewBtnClicked: jest.fn(true),
         };
 
-        customRender(<FormWrapper {...props} />);
+        customRender(<FormWrapper {...props} fetchList={jest.fn()} />);
 
         const plusAddBtn = screen.getByRole('button', { name: 'plus Add' });
         act(() => {
@@ -79,7 +83,7 @@ describe('Render ConfigurableParameterEditing Component', () => {
     });
 
     it('should render table', () => {
-        customRender(<ConfigurableParameterEditing isVisible={true} />);
+        customRender(<ConfigurableParameterEditing isVisible={true} fetchList={jest.fn()} />);
 
         const srl = screen.getByRole('columnheader', { name: 'Srl.' });
         expect(srl).toBeTruthy();
@@ -114,7 +118,7 @@ describe('Render ConfigurableParameterEditing Component', () => {
                 CTRL_GRP: [{ parentKey: 'CTRL_GRP' }],
             },
         };
-        customRender(<ConfigurableParameterEditing {...props} />);
+        customRender(<ConfigurableParameterEditing {...props} fetchList={jest.fn()} />);
     });
 });
 
@@ -137,7 +141,7 @@ describe('ConfigurableParameterEditing component button should work', () => {
     it('click should work on edit and close button', () => {
         customRender(
             <Provider store={mockStore}>
-                <ConfigurableParameterEditing {...props} />
+                <ConfigurableParameterEditing {...props} fetchList={jest.fn()} fetchDataList={jest.fn()} />
             </Provider>
         );
 
@@ -160,7 +164,7 @@ describe('ConfigurableParameterEditing component button should work', () => {
     it('click should work on cancel and save button', () => {
         customRender(
             <Provider store={mockStore}>
-                <ConfigurableParameterEditing {...props} handleEditBtn={jest.fn()} setSaveAndAddNewBtnClicked={jest.fn(false)} />
+                <ConfigurableParameterEditing {...props} fetchDataList={jest.fn()} fetchList={jest.fn()} handleEditBtn={jest.fn()} setSaveAndAddNewBtnClicked={jest.fn(false)} />
             </Provider>
         );
 
@@ -169,7 +173,7 @@ describe('ConfigurableParameterEditing component button should work', () => {
             fireEvent.click(editBtn);
         });
 
-        const saveBtn = screen.getByRole('button', { name: 'loading Save' });
+        const saveBtn = screen.getByRole('button', { name: 'Save' });
         act(() => {
             fireEvent.click(saveBtn);
         });
@@ -196,7 +200,7 @@ describe('ConfigurableParameterEditing component button should work', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <ConfigurableParameterEditing />
+                <ConfigurableParameterEditing fetchList={jest.fn()} fetchDataList={jest.fn()} />
             </Provider>
         );
 
@@ -213,5 +217,48 @@ describe('ConfigurableParameterEditing component button should work', () => {
 
         const saveBtn = screen.getByRole('button', { name: /save & add new/i });
         fireEvent.click(saveBtn);
+    });
+
+    it('test for onSuccess', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                ConfigurableParameterEditing: { isLoaded: true, data: [{ booleanValue: false, configurableParameterType: 'B', controlDescription: 'Time (in minutes) for which OTP is valid', controlGroup: 'CMN', controlGroupName: 'Common', controlId: 'OTPEX', fromDate: '12/12/2000', fromNumber: 5, id: '106', isActive: true, textValue: null, toDate: '12/12/2000', toNumber: 5 }] },
+            },
+        });
+
+        const saveData = jest.fn();
+        const fetchList = jest.fn();
+
+        const res = { data: [{ configurableParameterType: 'B', fromDate: '12/12/2000', fromNumber: 5, id: '106', isActive: true, toDate: '12/12/2000' }] };
+
+        customRender(
+            <Provider store={mockStore}>
+                <ConfigurableParameterEditing footerEdit={true} hanndleEditData={jest.fn()} saveData={saveData} fetchList={fetchList} fetchDataList={jest.fn()} />
+            </Provider>
+        );
+
+        const editBtn = screen.getByRole('button', { name: 'fa-edit' });
+        act(() => {
+            fireEvent.click(editBtn);
+        });
+
+        const control = screen.getByRole('combobox', { name: 'Control ID' });
+        fireEvent.change(control, { target: { value: 'Kai' } });
+
+        const values = screen.getByRole('combobox', { name: 'Configurable Parameter Values' });
+        fireEvent.change(values, { target: { value: 'Yes' } });
+
+        const controlDes = screen.getByRole('textbox', { name: 'Control Description' });
+        fireEvent.change(controlDes, { target: { value: 'Kai' } });
+
+        const controlGrp = screen.getByRole('combobox', { name: 'Control Group' });
+        fireEvent.change(controlGrp, { target: { value: 'Kai' } });
+
+        const saveBtn = screen.getByRole('button', { name: 'Save' });
+        fireEvent.click(saveBtn);
+
+        await waitFor(() => expect(saveData).toHaveBeenCalled());
+        saveData.mock.calls[0][0].onSuccess(res);
     });
 });

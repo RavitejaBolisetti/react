@@ -160,8 +160,8 @@ describe('OtfMaster component render', () => {
         const allotBtn=screen.getByRole('button', { name: 'Allot' })
         fireEvent.click(allotBtn);
 
-        const cancelBtn=screen.getAllByRole('button', { name: 'Cancel' });
-        fireEvent.click(cancelBtn[1]);
+        const cancelBtn=screen.getByRole('button', { name: 'Cancel' });
+        fireEvent.click(cancelBtn);
 
     });
 

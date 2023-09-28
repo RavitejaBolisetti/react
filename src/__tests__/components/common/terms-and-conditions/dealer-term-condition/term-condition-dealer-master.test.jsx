@@ -108,6 +108,7 @@ describe('Term Condition Dealer Master components', () => {
         fetchTermCondition.mock.calls[0][0].onSuccessAction();
         fetchTermCondition.mock.calls[0][0].onErrorAction();
     });
+
     it('test for onSuccess', async () => {
         const mockStore = createMockStore({
             auth: { userId: 106 },
@@ -117,12 +118,12 @@ describe('Term Condition Dealer Master components', () => {
                 },
             },
         });
-        const fetchTermCondition = jest.fn();
         const saveData = jest.fn();
+        const fetchTermCondition = jest.fn();
 
         customRender(
             <Provider store={mockStore}>
-                <TermConditionDealerMaster fetchTermCondition={fetchTermCondition} saveData={saveData} />
+                <TermConditionDealerMaster saveData={saveData} fetchTermCondition={fetchTermCondition} />
             </Provider>
         );
 
