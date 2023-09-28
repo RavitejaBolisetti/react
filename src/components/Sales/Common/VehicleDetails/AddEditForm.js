@@ -111,7 +111,7 @@ const AddEditFormMain = (props) => {
         // loading: isProductDataLoading,
         treeDisabled: viewOnly,
     };
-    
+
     return (
         <Row gutter={20}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -119,11 +119,11 @@ const AddEditFormMain = (props) => {
                     <Panel header="Vehicle Information" key="1">
                         <Divider />
                         <Row gutter={20}>
-                            <Col xs={24} sm={24} md={12} lg={12} xl={12} >
+                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                 <Form.Item label="Model Description" name="model" data-testid="model">
                                     <TreeSelectField {...treeSelectFieldProps} />
                                 </Form.Item>
-                                {toolTipContent && productModelCode && <div className={styles.modelTooltip}>{addToolTip(toolTipContent, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle size={13} />)}</div>}
+                                {toolTipContent && productModelCode && <div className={styles.modelTooltip}>{addToolTip(toolTipContent, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle size={15} />)}</div>}
                             </Col>
 
                             <Col xs={24} sm={24} md={12} lg={12} xl={12}>
