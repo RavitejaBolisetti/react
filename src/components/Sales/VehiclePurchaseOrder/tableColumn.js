@@ -34,7 +34,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             title: 'Status',
             dataIndex: 'purchaseOrderStatus',
             width: '14%',
-            render: (_, record) => VechilePurchaseOrderStatusTag(record.purchaseOrderStatusCode),
+            render: (_, record) => VechilePurchaseOrderStatusTag(record?.purchaseOrderStatusCode),
         }),
 
         tblActionColumn({ handleButtonClick, styles, width: '8%', canEdit: false }),

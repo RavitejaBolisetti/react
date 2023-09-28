@@ -36,6 +36,7 @@ import { validateOTFMenu } from './LeftSidebar/MenuNav';
 import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
 import { ReportModal } from 'components/common/ReportModal/ReportModal';
 import { OTF_STATUS } from 'constants/OTFStatus';
+import { salesConsultantActions } from 'store/actions/data/otf/salesConsultant';
 
 const mapStateToProps = (state) => {
     const {
@@ -51,6 +52,7 @@ const mapStateToProps = (state) => {
             },
             OTF: {
                 OtfSearchList: { isDetailLoaded: isDataLoaded, detailData: otfData = [] },
+                salesConsultantLov: { isLoaded: isSalesConsultantDataLoaded, data: salesConsultantLovData = [] },
             },
         },
     } = state;
@@ -82,6 +84,8 @@ const mapStateToProps = (state) => {
         vehicleDetail,
         vehicleInvoiceMasterData,
         isInVoiceMasterDetailDataLoaded,
+        isSalesConsultantDataLoaded,
+        salesConsultantLovData,
     };
     return returnValue;
 };
@@ -103,6 +107,8 @@ const mapDispatchToProps = (dispatch) => ({
 
             // fetchVehicleDetail: vehicleInvoiceDetailDataActions.fetchList,
             // fetchVehicleInvoiceDetail: vehicleDetailsDataActions.fetchList,
+            fetchSalesConsultant: salesConsultantActions.fetchList,
+            listConsultantShowLoading: salesConsultantActions.listShowLoading,
 
             fetchList: vehicleInvoiceDataActions.fetchList,
             fetchInvoiceMasterData: vehicleInvoiceDataActions.fetchDetail,
@@ -121,6 +127,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const { typeData, receiptType, partySegmentType, listInvoiceShowLoading, saveData, paymentModeType, documentType, moduleTitle, totalRecords } = props;
     const { filterString, setFilterString, invoiceStatusList, otfData, vehicleInvoiceMasterData, resetDetailData, resetOtfData } = props;
     const { isInVoiceMasterDetailDataLoaded, fetchOTFDetail, isDataLoaded } = props;
+    const { isSalesConsultantDataLoaded, fetchSalesConsultant, salesConsultantLovData, listConsultantShowLoading } = props;
 
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [invoiceStatus, setInvoiceStatus] = useState(QUERY_BUTTONS_CONSTANTS.INVOICED.key);
@@ -154,6 +161,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [cancelInvoiceVisible, setCancelInvoiceVisible] = useState(false);
     const [additionalReportParams, setAdditionalReportParams] = useState();
+    //console.log('🚀 ~ file: VehicleInvoiceMaster.js:159 ~ VehicleInvoiceMasterBase ~ additionalReportParams:', additionalReportParams);
     const [isReportVisible, setReportVisible] = useState();
     const [confirmRequest, setConfirmRequest] = useState(false);
     const [previousSection, setpreviousSection] = useState(1);
@@ -292,18 +300,33 @@ export const VehicleInvoiceMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, invoiceStatus, filterString, page]);
+    useEffect(() => {
+        if (!isSalesConsultantDataLoaded && userId) {
+            fetchSalesConsultant({ setIsLoading: listConsultantShowLoading, userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isSalesConsultantDataLoaded, userId]);
+
+    // useEffect(() => {
+    //     if (otfData && formActionType?.viewMode) {
+    //         console.log('otfData', otfData);
+    //         setSelectedOrder({ ...otfData, ...vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest, ...vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.billingCustomer, ...vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.bookingCustomer });
+    //     } else if (vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest?.orderStatus === OTF_STATUS?.ALLOTED?.key && formActionType?.addMode) {
+    //         setSelectedOrder({ ...vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest, ...vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.billingCustomer, ...vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.bookingCustomer });
+    //     } else {
+    //         setSelectedOrder('');
+    //     }
+
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [otfData, formActionType, isInVoiceMasterDetailDataLoaded]);
 
     useEffect(() => {
-        if (isDataLoaded && formActionType?.viewMode) {
-            setSelectedOrder({ ...otfData, ...vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest, ...vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.billingCustomer, ...vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.bookingCustomer });
-        } else if (vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest?.orderStatus === OTF_STATUS?.ALLOTED?.key && formActionType?.addMode) {
-            setSelectedOrder({ ...vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest, ...vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.billingCustomer, ...vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.bookingCustomer });
-        } else {
-            setSelectedOrder('');
+        if (otfData && formActionType?.viewMode && isDataLoaded && vehicleInvoiceMasterData) {
+            setSelectedOrder({ ...vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest, ...vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.billingCustomer, ...vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.bookingCustomer, ...otfData });
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, formActionType, isInVoiceMasterDetailDataLoaded]);
+    }, [otfData, formActionType, isDataLoaded, vehicleInvoiceMasterData]);
 
     useEffect(() => {
         if (!isInVoiceMasterDetailDataLoaded) {
@@ -395,6 +418,7 @@ export const VehicleInvoiceMasterBase = (props) => {
                 } else {
                     setButtonData((prev) => ({ ...prev, formBtnActive: true }));
                     setSelectedOtfNumber(otfNumber);
+                    setSelectedOrder({ ...otfData, ...res?.data?.invoiceDetails?.otfDetailsRequest, ...res?.data?.invoiceDetails?.bookingAndBillingCustomerDto?.billingCustomer, ...res?.data?.invoiceDetails?.bookingAndBillingCustomerDto?.bookingCustomer });
                 }
             };
 
@@ -420,11 +444,18 @@ export const VehicleInvoiceMasterBase = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             const extraParam = [
                 {
+                    key: 'otfNumber',
+                    title: 'otfNumber',
+                    value: selectedOtfNumber,
+                    name: 'Booking Number',
+                },
+                {
                     key: 'invoiceNumber',
                     value: selectedOrderId,
                     name: 'Invoice Number',
                 },
             ];
+
             fetchOTFDetail({ customURL, setIsLoading: listShowLoading, userId, extraParams: extraParam, onErrorAction });
         };
         const onError = (message) => {
@@ -467,6 +498,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
+                resetOtfData();
                 invoiceDetailForm.resetFields();
                 setpreviousSection(1);
                 setSelectedOrderId('');
@@ -799,6 +831,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         showGlobalNotification,
         isDataLoaded,
         isInVoiceMasterDetailDataLoaded,
+        salesConsultantLovData,
     };
 
     const cancelInvoiceProps = {

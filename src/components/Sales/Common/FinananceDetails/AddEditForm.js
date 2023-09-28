@@ -92,7 +92,7 @@ const AddEditFormMain = (props) => {
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                 <Form.Item label="Financier" name="financier" placeholder={preparePlaceholderSelect('Select')}>
-                                                    <Select placeholder="Select" options={FinanceLovData} fieldNames={{ label: 'value', value: 'key' }} {...selectProps}></Select>
+                                                    {customSelectBox({ data: FinanceLovData, onChange: handleDOChange })}
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>

@@ -11,31 +11,8 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
 import { rootReducer } from 'store/reducers';
-import { Form } from 'antd';
 
 const accountCategoryData = {totalRecords:'89',paginationData:[{accountCategoryCode: 'A001', accountCategoryDescription: 'Parts Account', status: true}]};
-const applicationMenuData = [{ 
-        accessType: "R",
-        deviceType: "W",
-        displayOrder: 1,
-        isFavourite: "0",
-        menuIconUrl: "icon",
-        menuId: "HR",
-        menuTitle: "HR & MILE",
-        parentMenuId: "Web",
-        action: [{actionId: "U01", actionMasterId: "123",actionName:  "update",applicationActionId: "324",status: true}],
-        subMenu:[{accessType: "R",action:[],deviceType: "W",displayOrder: 1,isFavourite: "0",menuIconUrl: "icon",menuId: "SACT-04",menuTitle: "Vehicle Stock",parentMenuId: "Sales",
-        }]
-    },]
-
-const financialAccountData = [{id: "123",key: "UDAII", parentKey: null,value: "UDAII"}];
-const accountCategoryDocumentDescription = [{accountCategoryCode: "A001",accountCategoryDescription: "Parts Account",accountDocumentMaps:[],status: true}];
-
-const fetchAccountCategory = jest.fn();
-const fetchApplicationMenu = jest.fn();
-const fetchFinancialAccountHead = jest.fn();
-const fetchDocumentDescription = jest.fn();
-const fetchAccountCategoryDetail = jest.fn()
 
 export const createMockStore = (initialState) => {
     const mockStore = configureStore({
@@ -47,26 +24,11 @@ export const createMockStore = (initialState) => {
     return mockStore;
 };
 
-
-const FormWrapper = (props) => {
-    const [accDocMapForm] = Form.useForm();
-
-    const myFormMock = {
-        ...accDocMapForm,
-        setFieldsValue: jest.fn(),
-    };
-    return <AccountCategory accDocMapForm={myFormMock} {...props} />;
-};
-
 afterEach(() => {
     jest.restoreAllMocks();
 });
 
 describe('AccountCategory components', () => {
-
-    it('should render table header', () => {
-        customRender(<AccountCategory />);
-    });
 
     it('should render search input',()=>{
         customRender(<AccountCategory setPage={jest.fn()} setFilterString={jest.fn()} handleClearInSearch={jest.fn()} />);
@@ -99,7 +61,7 @@ describe('AccountCategory components', () => {
         });
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper />
+                <AccountCategory />
             </Provider>
         )
     
@@ -110,26 +72,22 @@ describe('AccountCategory components', () => {
         fireEvent.click(cancelBtn);
     });
 
-    it("view and edit button should render", ()=>{
-        const formData={accountCategoryCode:"A001"};
-
+    it("view and edit icon", async()=>{
+        const tableColumn  = jest.fn()
         const mockStore = createMockStore({
             auth: { userId: 123 },
             data: {
                 FinancialAccounting: {
-                    AccountCategory: { isLoading: false, data: accountCategoryData },
-                    ApplicationMenu: { isLoaded: false, data: applicationMenuData},
-                    FinancialAccountHead: { isLoaded:false, data: financialAccountData },
-                    AccountCategoryDocumentDescription: { isLoaded: false, data: accountCategoryDocumentDescription },
+                    AccountCategory: { isLoading:false, data:[{accountCategoryCode: "CPA12",accountCategoryDescription:"Central GST 6%",status: true}] },
                 },
             },
         });
         customRender(
-            <Provider store={mockStore}>
-                <FormWrapper fetchAccountCategory={fetchAccountCategory} fetchApplicationMenu={fetchApplicationMenu} fetchFinancialAccountHead={fetchFinancialAccountHead} fetchDocumentDescription={fetchDocumentDescription} />
+            <Provider store={mockStore} >
+                <AccountCategory totalRecords={100} buttonAction={'add'} tableColumn={tableColumn} canEdit={true} canView={true} />
             </Provider>
         );
-    });
+    })
     
 });
 

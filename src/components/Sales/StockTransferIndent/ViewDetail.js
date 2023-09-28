@@ -64,7 +64,7 @@ const ViewDetailMain = (props) => {
                 setIsEditVehicleDetailsVisible(true);
                 break;
             case VIEW_ACTION:
-                setCancellationData({ ...record, indentDetailId: record?.id, ...formData });
+                setCancellationData({ ...record, indentDetailId: record?.id, ...formData, modelCode: record?.modelCode });
                 setCancellationIssueVisible(true);
                 break;
 
@@ -98,8 +98,8 @@ const ViewDetailMain = (props) => {
                         <Descriptions {...viewProps}>
                             <Descriptions.Item label="Indent Number">{checkAndSetDefaultValue(formData?.indentNumber, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Indent Date">{checkAndSetDefaultValue(formData?.indentDate ? formData?.indentDate : undefined, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                            {/* <Descriptions.Item label="Indent Status">{checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.INDNT_RAS.id], formData?.indentStatus), isLoading)}</Descriptions.Item> */}
-                            <Descriptions.Item label="Indent Status">{checkAndSetDefaultValue(formData?.indentStatus, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Indent Status">{checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER?.INDNT_RAS?.id], formData?.indentStatus), isLoading)}</Descriptions.Item>
+                            {/* <Descriptions.Item label="Indent Status">{checkAndSetDefaultValue(formData?.indentStatus, isLoading)}</Descriptions.Item> */}
                             <Descriptions.Item label="Indent To Parent">{checkAndSetDefaultValue(formData?.indentToParent, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Indent To Location">{checkAndSetDefaultValue(formData?.indentToLocation, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Requested By">{checkAndSetDefaultValue(formData?.requestedBy, isLoading)}</Descriptions.Item>

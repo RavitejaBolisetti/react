@@ -37,10 +37,15 @@ export const ChecklistModalForms = (props) => {
             .validateFields()
             .then(() => {
                 const values = aggregateForm.getFieldsValue();
-                const data = { ...AdvanceformData, ...values, ismodified: true, checkResult: MakeCheckResult({ type: AdvanceformData?.checklistType, data: { ...values, answerToDate: convertDateTimedayjs(values?.answerToDate), answerFromDate: convertDateTimedayjs(values?.answerFromDate) } }) };
-                const newarr = [...checkListDataModified];
-                newarr[AdvanceformData?.index] = data;
-                setcheckListDataModified(newarr);
+                const data = { ...AdvanceformData, ...values, ismodified: true, checkResult: MakeCheckResult({ type: AdvanceformData?.answerType, data: { ...values, checklistAnswerResponses: AdvanceformData?.checklistAnswerResponses, answerToDate: convertDateTimedayjs(values?.answerToDate), answerFromDate: convertDateTimedayjs(values?.answerFromDate) } }) };
+                setcheckListDataModified(
+                    [...checkListDataModified]?.map((element) => {
+                        if (element?.ansMstId === AdvanceformData?.ansMstId) {
+                            return data;
+                        }
+                        return element;
+                    })
+                );
                 setAdvanceSearchVisible(false);
                 handleFormValueChange();
                 setisEditing(false);

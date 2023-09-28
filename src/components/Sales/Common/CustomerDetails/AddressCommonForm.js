@@ -16,7 +16,7 @@ import { customSelectBox } from 'utils/customSelectBox';
 import { CustomerListMaster } from 'components/utils/CustomerListModal';
 
 export const AddressCommonForm = (props) => {
-    const { formType, formData, disabledProps, handleOnChange, fnSetData, typeData, sameAsBookingCustomer, viewOnly = false, showAgeGroup = true } = props;
+    const { formType, formData, disabledProps, handleOnChange, fnSetData, typeData, sameAsBookingCustomer, viewOnly = false, showAgeGroup = true, buttonData, setButtonData } = props;
     const canUpdate = ((formType === 'bookingCustomer' && !formData?.billingCustomer?.customerId) || formType === 'billingCustomer') && !viewOnly;
 
     const alternateNumberCheck = (value) => {
@@ -31,7 +31,7 @@ export const AddressCommonForm = (props) => {
             {formType === 'billingCustomer' && canUpdate && (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <CustomerListMaster disabled={sameAsBookingCustomer} fnSetData={fnSetData} defaultOption={'customerName'} />
+                        <CustomerListMaster disabled={sameAsBookingCustomer} fnSetData={fnSetData} defaultOption={'customerName'} buttonData={buttonData} setButtonData={setButtonData} />
                     </Col>
                 </Row>
             )}

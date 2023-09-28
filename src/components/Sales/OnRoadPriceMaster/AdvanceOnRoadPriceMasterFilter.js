@@ -73,7 +73,7 @@ export default function AdvanceOnRoadPriceMasterFilter(props) {
 
                 <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.buttonsGroupRight}>
                     <Button type="primary" onClick={handleOnClick}>
-                        Download/Upload
+                        Upload
                     </Button>
                 </Col>
             </Row>

@@ -40,6 +40,7 @@ export default function AdvanceVehicleAllotMasterFilter(props) {
         filterString,
         optionType: typeData,
         setFilterString,
+        maxLength: '50'
     };
 
     // useEffect(() => {

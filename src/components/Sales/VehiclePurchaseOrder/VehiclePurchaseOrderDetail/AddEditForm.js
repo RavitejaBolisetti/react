@@ -33,6 +33,7 @@ const AddEditFormMain = (props) => {
     };
 
     const handleChangeOrderType = (value) => {
+        
         if (value === 'CDLR') {
             setDealerFlag(value);
         } else {

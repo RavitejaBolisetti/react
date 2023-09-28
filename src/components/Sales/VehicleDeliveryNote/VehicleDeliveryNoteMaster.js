@@ -33,6 +33,7 @@ import { CancelDeliveryNote } from './CancelDeliveryNote';
 import { challanCancelVehicleDeliveryNoteDataActions } from 'store/actions/data/vehicleDeliveryNote/challanCancel';
 import { infoCancelVehicleDeliveryNoteDataActions } from 'store/actions/data/vehicleDeliveryNote/infoCancelDeliveryNote';
 import { infoChallanVehicleDeliveryNoteDataActions } from 'store/actions/data/vehicleDeliveryNote/infoChallanCancel';
+import { DeliverableChecklistMaindataActions } from 'store/actions/data/vehicleDeliveryNote';
 import { DELIVERY_TYPE } from 'constants/modules/vehicleDetailsNotes.js/deliveryType';
 
 const mapStateToProps = (state) => {
@@ -91,6 +92,8 @@ const mapDispatchToProps = (dispatch) => ({
             listChallanCancelInfoShowLoading: infoChallanVehicleDeliveryNoteDataActions.listShowLoading,
             resetChallanInfoData: infoChallanVehicleDeliveryNoteDataActions.reset,
 
+            resetCheckListData: DeliverableChecklistMaindataActions.reset,
+
             showGlobalNotification,
         },
         dispatch
@@ -100,7 +103,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const VehicleDeliveryNoteMasterBase = (props) => {
     const { data, receiptDetailData, userId, resetData, fetchList, listShowLoading, saveData } = props;
     const { typeData, receiptType, partySegmentType, paymentModeType, documentType, moduleTitle, totalRecords, showGlobalNotification } = props;
-    const { filterString, setFilterString, deliveryStatusList, cancelDeliveryNote, cancelShowLoading, cancelChallan, isCancelInfoDataLoaded, isCancelInfoLoading, cancelInfo, fetchCancelInfoList, listCancelInfoShowLoading, isCancelChallanInfoDataLoaded, isCancelChallanInfoLoading, cancelChallanInfo, fetchChallanCancelInfoList, listChallanCancelInfoShowLoading, resetChallanInfoData, resetInfoData } = props;
+    const { filterString, setFilterString, deliveryStatusList, cancelDeliveryNote, cancelShowLoading, cancelChallan, isCancelInfoDataLoaded, isCancelInfoLoading, cancelInfo, fetchCancelInfoList, listCancelInfoShowLoading, isCancelChallanInfoDataLoaded, isCancelChallanInfoLoading, cancelChallanInfo, fetchChallanCancelInfoList, listChallanCancelInfoShowLoading, resetChallanInfoData, resetInfoData, resetCheckListData } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [deliveryStatus, setDeliveryStatus] = useState(QUERY_BUTTONS_CONSTANTS.PENDING.key);
 
@@ -135,8 +138,8 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     const [cancelDeliveryNoteVisible, setCancelDeliveryNoteVisible] = useState(false);
     const [previousSection, setpreviousSection] = useState(1);
     const [actionButtonVisiblity, setActionButtonVisiblity] = useState({ canAdd: true, canView: false, canEdit: false });
-    const [requestPayload, setRequestPayload] = useState({ deliveryNoteInvoiveDetails: {}, financeDetails: {}, insuranceDto: {}, deliveryNoteAddOnDetails: {}, deliveryNoteCheckListDetails: [''] });
-    const [challanRequestPayload, setChallanRequestPayload] = useState({ deliveryNoteInvoiveDetails: {}, insuranceDto: {}, deliveryNoteAddOnDetails: {}, deliveryNoteCheckListDetails: [''] });
+    const [requestPayload, setRequestPayload] = useState({ deliveryNoteInvoiveDetails: {}, financeDetails: {}, insuranceDto: {}, deliveryNoteAddOnDetails: {}, vehicleDeliveryChecklist: {} });
+    const [challanRequestPayload, setChallanRequestPayload] = useState({ deliveryNoteInvoiveDetails: {}, insuranceDto: {}, deliveryNoteAddOnDetails: {}, vehicleDeliveryChecklist: {} });
     const [toolTipContent, setToolTipContent] = useState();
 
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
@@ -170,7 +173,6 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
     const [formData, setFormData] = useState([]);
-
     const onDeliveryTabChange = (key) => {
         setDeliveryType(key);
     };
@@ -533,7 +535,6 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
 
     const onFinish = () => {
         const data = { ...requestPayload, invoiceNumber: selectedOrderId };
-
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
@@ -587,6 +588,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         setIsFormVisible(false);
         setCancelDeliveryNoteVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
+        resetCheckListData();
     };
 
     const tableProps = {
