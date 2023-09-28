@@ -331,7 +331,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
 
     useEffect(() => {
         const defaultSection = VEHICLE_DELIVERY_NOTE_SECTION.INVOICE_DETAILS.id;
-        setDefaultSection(defaultSection);
+        setDefaultSection(8);
         setSetionName(VEHICLE_DELIVERY_NOTE_SECTION);
         setSection(defaultSection);
         // eslint-disable-next-line react-hooks/exhaustive-deps
