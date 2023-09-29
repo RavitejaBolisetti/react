@@ -19,13 +19,12 @@ import { OtpVerification } from '../../Common/Contacts/OtpVerfication';
 const AddEditFormMain = (props) => {
     const { numbValidatedSuccess, setNumbValidatedSuccess} = props;
     const { whatsAppConfiguration, setWhatsAppConfiguration, handleFormFieldChange } = props;
-    const { form, typeData, formData, corporateLovData, formActionType: { editMode } = undefined, data, customerType, selectedCustomer, validateOTP, sendOTP, userId, showGlobalNotification, fetchContactMobileNoDetails, listContactMobileNoShowLoading, mobNoVerificationData, resetContactMobileNoData, continueWithOldMobNo, setContinueWithOldMobNo, RESEND_OTP_TIME, handleSendOTP, otpInput, setOTPInput, setDisableVerifyOTP, disableVerifyOTP, counter, setCounter, otpMessage, setOTPMessage } = props;
+    const { form, typeData, formData, corporateLovData, formActionType: { editMode } = undefined, data, customerType, selectedCustomer, validateOTP, sendOTP, userId, showGlobalNotification, fetchContactMobileNoDetails, listContactMobileNoShowLoading, mobNoVerificationData, resetContactMobileNoData, continueWithOldMobNo, setContinueWithOldMobNo, RESEND_OTP_TIME, handleSendOTP, otpInput, setOTPInput, setDisableVerifyOTP, disableVerifyOTP, counter, setCounter, otpMessage, setOTPMessage, setInValidOTP, inValidOTP } = props;
     const { contactOverWhatsApp, contactOverWhatsAppActive, sameMobileNoAsWhatsApp, sameMobileNoAsWhatsAppActive } = whatsAppConfiguration;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileNumber, setMobileNumber] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
     const [otpVerified, setOtpVerified] = useState(false);
-    const [inValidOTP, setInValidOTP] = useState(false);
 
 
     const [otpValue, setOtpValue] = useState('');

@@ -342,37 +342,50 @@ const CustomerDetailMasterBase = (props) => {
             }
         }
     };
-    const handleSendOTP = (values = '') => {
-        setOTPInput();
+    const handleSendOTP = () => {
+        // setDisableVerifyOTP(true);
+        setCounter(RESEND_OTP_TIME);
         setInValidOTP(false);
-        setDisableVerifyOTP(true);
+        setOTPInput('');
+        if(selectedCustomer){
+            const onSuccess = (res) => {
+                showGlobalNotification({ notificationType: 'warning', title: 'OTP Sent', message: res?.responseMessage });
+                setOTPMessage(res?.data?.message);
+            };
+            const requestData = {
+                data: data,
+                setIsLoading: () => {},
+                onSuccess,
+            };
+            sendOTP(requestData);
+        }
+
         // handleSendOTP(values);
 
-        let otpSentOnMobile = '';
-        // let otpSentOnEmail = '';
+        // let otpSentOnMobile = '';
+        // // let otpSentOnEmail = '';
 
-        // if (values) {
-        //     otpSentOnMobile = values?.otpSentOn.includes('sentOnMobile');
-        //     // otpSentOnEmail = values?.otpSentOn?.includes('sentOnEmail');
-        // } else {
-        //     otpSentOnMobile = form.getFieldValue('otpSentOn').includes('sentOnMobile');
-        //     // otpSentOnEmail = form.getFieldValue('otpSentOn')?.includes('sentOnEmail');
+        // // if (values) {
+        // //     otpSentOnMobile = values?.otpSentOn.includes('sentOnMobile');
+        // //     // otpSentOnEmail = values?.otpSentOn?.includes('sentOnEmail');
+        // // } else {
+        // //     otpSentOnMobile = form.getFieldValue('otpSentOn').includes('sentOnMobile');
+        // //     // otpSentOnEmail = form.getFieldValue('otpSentOn')?.includes('sentOnEmail');
+        // // }
+
+        // if (otpSentOnMobile === true) {
+        // const data = { userId: selectedCustomer?.customerId, sentOnMobile: true};
+        // const onSuccess = (res) => {
+        //     showGlobalNotification({ notificationType: 'warning', title: 'OTP Sent', message: res?.responseMessage });
+        //     setOTPMessage(res?.data?.message);
+        // };
+        // const requestData = {
+        //     data: data,
+        //     setIsLoading: () => {},
+        //     onSuccess,
+        // };
+        // sendOTP(requestData);
         // }
-
-        if (otpSentOnMobile === true) {
-        const data = { userId: selectedCustomer?.customerId, sentOnMobile: true};
-        const onSuccess = (res) => {
-            setCounter(RESEND_OTP_TIME);
-            showGlobalNotification({ notificationType: 'warning', title: 'OTP Sent', message: res?.responseMessage });
-            setOTPMessage(res?.data?.message);
-        };
-        const requestData = {
-            data: data,
-            setIsLoading: () => {},
-            onSuccess,
-        };
-        sendOTP(requestData);
-        }
     };
 
 
