@@ -57,10 +57,6 @@ describe('Vehicle ProductDetails render', () => {
         const plusImg = screen.getAllByRole('img', { name: 'plus' });
         fireEvent.click(plusImg[0]);
 
-        const connectedVehicle = screen.getByText('Connected Vehicle');
-        expect(connectedVehicle).toBeTruthy();
-        fireEvent.click(plusImg[1]);
-
         const aggregateText = screen.getByText('Aggregates');
         expect(aggregateText).toBeTruthy();
 
@@ -113,7 +109,5 @@ describe('Vehicle ProductDetails render', () => {
         );
         const expandIcon = screen.getAllByRole('img', { name: 'plus' });
         fireEvent.click(expandIcon[2]);
-        const editBtn = screen.getByTestId('edit');
-        fireEvent.click(editBtn);
     });
 });

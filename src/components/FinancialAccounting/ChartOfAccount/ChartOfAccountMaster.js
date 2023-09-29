@@ -320,8 +320,6 @@ export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, chartOfA
 
                 setModalOpen(false);
             })
-
-            .catch((error) => console.log(error));
     };
 
     const onFinishFailed = (errorInfo) => {

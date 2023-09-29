@@ -29,11 +29,16 @@ export const FORMTYPE_CONSTANTS = {
         id: 'text',
         name: 'Input',
     },
+    FIXED: {
+        id: 'fixed',
+        name: 'Select',
+    },
 };
 export const MakeCheckResult = (props) => {
     const { type, data } = props;
     let checkResult = '';
-    switch (type) {
+    const UniqueAnsType = type && type?.toLowerCase();
+    switch (UniqueAnsType) {
         case FORMTYPE_CONSTANTS?.DATE?.id: {
             if (data?.answerFromDate && data?.answerToDate) {
                 checkResult = checkResult.concat(data?.answerFromDate ? convertDateTimedayjs(data?.answerFromDate, dateFormatView) : 'NA');
@@ -64,6 +69,14 @@ export const MakeCheckResult = (props) => {
                 return 'NA';
             }
         }
+        case FORMTYPE_CONSTANTS?.FIXED?.id: {
+            if (data?.answerText) {
+                checkResult = data?.checklistAnswerResponses?.find((i) => i?.answerCode === data?.answerText)?.answerDescription;
+                return checkResult;
+            } else {
+                return 'NA';
+            }
+        }
         case FORMTYPE_CONSTANTS?.INPUT?.id: {
             return data?.answerText ?? 'NA';
         }
@@ -76,9 +89,10 @@ export const setCheckresultValue = (props) => {
     const { form, data } = props;
     form.setFieldsValue({ ...data, answerFromDate: formatDateToCalenderDate(data?.answerFromDate), answerToDate: formatDateToCalenderDate(data?.answerToDate), answerBoolean: data?.answerBoolean });
 };
-export const BindFormItems = ({ AdvanceformData, aggregateForm }) => {
+export const BindFormItems = ({ AdvanceformData, aggregateForm, data }) => {
     const { answerType } = AdvanceformData;
-    switch (answerType) {
+    const UniqueAnsType = answerType && answerType?.toLowerCase();
+    switch (UniqueAnsType) {
         case FORMTYPE_CONSTANTS?.INPUT?.id: {
             return (
                 <Row gutter={20}>
@@ -155,6 +169,17 @@ export const BindFormItems = ({ AdvanceformData, aggregateForm }) => {
                                 showSearch
                                 filterOption={(input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
                             />
+                        </Form.Item>
+                    </Col>
+                </Row>
+            );
+        }
+        case FORMTYPE_CONSTANTS?.FIXED?.id: {
+            return (
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Form.Item label="Check Result" name="answerText" rules={[validateRequiredSelectField('Check Result')]}>
+                            <Select optionFilterProp="answerDescription" options={data?.checklistAnswerResponses} placeholder={preparePlaceholderSelect('Check Result')} fieldNames={{ label: 'answerDescription', value: 'answerCode' }} allowClear showSearch />
                         </Form.Item>
                     </Col>
                 </Row>

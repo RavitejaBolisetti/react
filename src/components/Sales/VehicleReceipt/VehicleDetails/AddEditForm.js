@@ -82,17 +82,14 @@ const AddEditFormMain = (props) => {
     };
 
     const handleSave = (indexId) => {
-        vehicleDetailForm
-            .validateFields()
-            .then(() => {
-                const vehicleDetailData = vehicleDetailForm?.getFieldsValue();
-                const filteredFormData = formData?.filter((element, i) => i !== indexId);
-                const finalData = { ...filteredFormData, ...vehicleDetailData };
-                setFinalData(finalData);
-                setButtonData({ ...buttonData, formBtnActive: true });
-                setactiveKey([]);
-            })
-            .catch((err) => console.log(err));
+        vehicleDetailForm.validateFields().then(() => {
+            const vehicleDetailData = vehicleDetailForm?.getFieldsValue();
+            const filteredFormData = formData?.filter((element, i) => i !== indexId);
+            const finalData = { ...filteredFormData, ...vehicleDetailData };
+            setFinalData(finalData);
+            setButtonData({ ...buttonData, formBtnActive: true });
+            setactiveKey([]);
+        });
     };
 
     const handleCancelFormEdit = () => {
@@ -117,27 +114,34 @@ const AddEditFormMain = (props) => {
                             <Panel
                                 header={
                                     <>
-                                        <Space size="small">
-                                            <Text className={styles.headText}> Model: {item?.modelDescription} </Text>
-                                            <Text className={styles.headText}> {`|`}</Text>
-                                            <Text className={styles.headText}> VIN: {item?.vin}</Text>
-                                        </Space>
-                                        <Text className={styles.subSection}> Vehicle Status: {getCodeValue(vehicleStatusType, item?.vehicleStatus)}</Text>
+                                        <Row>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                                <Space size="small">
+                                                    <Text className={styles.headText}> Model: {item?.modelDescription} </Text>
+                                                    <Text className={styles.headText}> {`|`}</Text>
+                                                    <Text className={styles.headText}> VIN: {item?.vin}</Text>
+                                                </Space>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                                <Text type="secondary" className={styles.subSection}>
+                                                    Vehicle Status: {getCodeValue(vehicleStatusType, item?.vehicleStatus)}
+                                                </Text>
+                                            </Col>
+                                        </Row>
                                     </>
                                 }
                                 key={index}
                             >
-                                {/* <AccessoriesInformationCard formData={element} /> */}
-                                {/* </Panel> */}
-                                {/* <Panel header="Model: Scorpio | VIN: 234254543453" key="1"> */}
                                 <Divider />
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.infoWrapper}>
                                         <Form.Item initialValue={item?.modelDescription} label="Model Description" name={[index, 'modelDescription']}>
-                                            <Input maxLength={10} placeholder={preparePlaceholderText('Model Description')} disabled={true} />
+                                            <Input title={item?.modelDescription} maxLength={10} placeholder={preparePlaceholderText('Model Description')} disabled={true} />
                                         </Form.Item>
                                         {item?.modelDescription && (
-                                            <div className={styles.modelTooltip}>
+                                            <div className={styles.modelTooltipView}>
                                                 {addToolTip(
                                                     <div>
                                                         <p>
@@ -159,7 +163,7 @@ const AddEditFormMain = (props) => {
                                                     'bottom',
                                                     '#FFFFFF',
                                                     styles.toolTip
-                                                )(<AiOutlineInfoCircle size={13} />)}
+                                                )(<AiOutlineInfoCircle size={15} />)}
                                             </div>
                                         )}
                                     </Col>

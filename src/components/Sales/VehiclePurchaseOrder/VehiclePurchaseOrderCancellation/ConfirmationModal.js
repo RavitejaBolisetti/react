@@ -26,7 +26,7 @@ export const ConfirmationModalFrom = (props) => {
     };
     const handleCloseModal = () => {
         setIsCancelVisible(false);
-        vpoCancellationForm.resetFields();
+        vpoCancellationForm?.resetFields();
     };
 
     return (

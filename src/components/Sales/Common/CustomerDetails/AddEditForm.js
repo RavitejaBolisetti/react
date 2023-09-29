@@ -23,12 +23,11 @@ const AddEditFormBase = (props) => {
         if (formData) {
             form?.setFieldsValue({
                 bookingCustomer: { ...formData?.bookingCustomer, birthDate: formattedCalendarDate(formData?.bookingCustomer?.birthDate) },
-                billingCustomer: { ...formData?.billingCustomer, birthDate: formattedCalendarDate(formData?.billingCustomer?.birthDate) },
+                billingCustomer: { ...formData?.billingCustomer, birthDate: formattedCalendarDate(formData?.billingCustomer?.birthDate), sameAsBookingCustomer: formData?.bookingCustomer?.sameAsBookingCustomer },
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData, selectedOrderId]);
-
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
 
@@ -51,7 +50,7 @@ const AddEditFormBase = (props) => {
     };
 
     const handleOnChange = (e) => {
-        let bookingCustomer = form.getFieldsValue()?.bookingCustomer;
+        let bookingCustomer = form.getFieldsValue()?.bookingCustomer || formData?.bookingCustomer;
         const data = { ...bookingCustomer, birthDate: formattedCalendarDate(bookingCustomer?.birthDate) };
         if (e.target.checked) {
             setSameAsBookingCustomer(true);

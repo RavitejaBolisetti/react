@@ -12,9 +12,7 @@ afterEach(() => {
 });
 
 describe('Success Page Component', () => {
-
     it('should render left panel', async () => {
         customRender(<SuccessPage />);
     });
-
 });

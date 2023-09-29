@@ -58,9 +58,7 @@ const UploadUtilsMain = (props) => {
         setIsLoading(false);
     };
 
-    const onDrop = (e) => {
-        // console.log('Dropped files', e.dataTransfer.files);
-    };
+    const onDrop = (e) => {};
 
     const onReplaceClick = () => {
         setIsReplacing(true);
@@ -105,8 +103,8 @@ const UploadUtilsMain = (props) => {
         showUploadList: {
             showRemoveIcon: true,
             showDownloadIcon: true,
-            previewIcon: <FiEye onClick={(e) => console.log(e, 'custom removeIcon event')} />,
-            removeIcon: <AiOutlineCloseCircle onClick={(e) => console.log(e, 'custom removeIcon event')} />,
+            previewIcon: <FiEye />,
+            removeIcon: <AiOutlineCloseCircle />,
             showProgress: true,
         },
         beforeUpload: (file) => {

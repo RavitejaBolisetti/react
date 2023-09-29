@@ -23,7 +23,7 @@ const ViewDetailMain = (props) => {
     const checkFinanceType = (type, key) => (type ? type === key : false);
 
     return (
-        <Card className={styles?.drawerCardView}>
+        <Card>
             <Descriptions {...viewProps}>
                 <Descriptions.Item label="Finance Arranged By">{checkAndSetDefaultValue(getCodeValue(typeData?.FNC_ARNGD, formData?.financeArrangedBy), isLoading)}</Descriptions.Item>
                 {formData?.financeArrangedBy && !checkFinanceType(formData?.financeArrangedBy, FINANCE_ARRANGED_BY?.CASH?.key) && (

@@ -28,7 +28,7 @@ describe('advance vehicle purchase order filter render', () => {
         };
         const extraParams = [{ name: 'Kai', value: 'Kai', filter: 'Kai', key: 1, canRemove: true }];
         customRender(<AppliedAdvanceFilter removeFilter={jest.fn()} filterString={filterString} advanceFilter={true} extraParams={extraParams} />);
-        const removeBtn = screen.getByTestId('removeBtn');
+        const removeBtn = screen.getByTestId('removeFilter');
         fireEvent.click(removeBtn);
     });
 
@@ -46,5 +46,15 @@ describe('advance vehicle purchase order filter render', () => {
 
         const undefine = screen.getByText('undefined');
         fireEvent.click(undefine);
+    });
+    it('clear button should work', async () => {
+        const filterString = {
+            advanceFilter: true,
+        };
+        const extraParams = [{ name: 'Kai', value: 'Kai', filter: 'Kai', key: 1 }];
+
+        customRender(<AppliedAdvanceFilter handleResetFilter={jest.fn()} filterString={filterString} advanceFilter={true} extraParams={extraParams} />);
+        const clearBtn = screen.getByRole('button', { name: 'Clear' });
+        fireEvent.click(clearBtn);
     });
 });

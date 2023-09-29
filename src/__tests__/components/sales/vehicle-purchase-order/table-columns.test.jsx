@@ -18,6 +18,6 @@ describe('table columns Components', () => {
             purchaseOrderStatusCode: 'test1',
         };
         customRender(<div>{columns[1].render('Test')}</div>);
-        customRender(<div>{columns[3].render(data)}</div>);
+        customRender(<div>{columns[3].render(null, data)}</div>);
     });
 });

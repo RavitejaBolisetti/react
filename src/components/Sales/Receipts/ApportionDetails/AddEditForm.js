@@ -88,7 +88,7 @@ const AddEditFormMain = (props) => {
                 setApportionTableFormData();
                 setShowApportionForm();
             })
-            .catch((err) => console.log(err));
+          
     };
 
     const handleCancel = () => {

@@ -41,14 +41,6 @@ describe('Customer Details Master', () => {
         const collapseBillingCustomerDetails=collapseItems[1];
         fireEvent.click(collapseBillingCustomerDetails);
 
-        const collapseKeyAccountDetails=collapseItems[2];
-        fireEvent.click(collapseKeyAccountDetails);
-
-        const collapseLoyaltyDetails=collapseItems[3];
-        fireEvent.click(collapseLoyaltyDetails);
-
-        const collapseOwnershipChange=collapseItems[4];
-        fireEvent.click(collapseOwnershipChange);
     });
 
     it('collapse buttons of view detail should work', () => {
@@ -62,15 +54,6 @@ describe('Customer Details Master', () => {
 
         const collapseBillingCustomerDetails=collapseItems[1];
         fireEvent.click(collapseBillingCustomerDetails);
-
-        const collapseKeyAccountDetails=collapseItems[2];
-        fireEvent.click(collapseKeyAccountDetails);
-
-        const collapseLoyaltyDetails=collapseItems[3];
-        fireEvent.click(collapseLoyaltyDetails);
-
-        const collapseOwnershipChange=collapseItems[4];
-        fireEvent.click(collapseOwnershipChange);
 
         const collapseItemsMinus=screen.getAllByRole('img', { name: 'minus' });
         fireEvent.click(collapseItemsMinus[0]);

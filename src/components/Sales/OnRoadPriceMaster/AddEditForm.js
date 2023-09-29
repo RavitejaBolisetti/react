@@ -67,6 +67,7 @@ const AddEditFormMain = (props) => {
                                 <Input maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
+
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
                             <Form.Item name="pricingCityCode" label="City Code" initialValue={vehiclePrice?.pricingCityCode}>
                                 <Input maxLength={50} {...disabledProps} />
@@ -93,7 +94,6 @@ const AddEditFormMain = (props) => {
                                 <Input maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
-
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
                             <Form.Item name="registrationCharges" label="Registration Charges" initialValue={vehiclePrice?.registrationCharges}>
                                 <Input maxLength={50} {...disabledProps} />
@@ -104,7 +104,6 @@ const AddEditFormMain = (props) => {
                                 <Input maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
-
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
                             <Form.Item name="insurancePremiunm" label="Insurance Premium(1+3yr TP)" initialValue={vehiclePrice?.insurancePremiunm}>
                                 <Input maxLength={50} {...disabledProps} />
@@ -120,6 +119,7 @@ const AddEditFormMain = (props) => {
                                 <Input maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
+
 
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
                             <Form.Item name="basicOnRoadPrice" label="Basic on Road Price" initialValue={vehiclePrice?.basicOnRoadPrice}>

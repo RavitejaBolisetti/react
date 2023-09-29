@@ -407,7 +407,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     };
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
-        if (!record?.chassisNumber) {
+        if (!record?.chassisNumber && buttonAction !== NEXT_ACTION) {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Vehicle details not present' });
             return;
         }

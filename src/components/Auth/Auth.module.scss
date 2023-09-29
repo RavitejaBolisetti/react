@@ -334,7 +334,6 @@
                     h1 {
                         @include font-style(32, 48, 600, $primaryWhite, $fontfamily, center);
                         margin: 0;
-                        // margin-bottom: 30px;
                     }
                     .h3 {
                         text-align: center;
@@ -432,7 +431,7 @@
                         }
 
                         &::placeholder {
-                            color: $neutralGrey4-dark;
+                            color: $neutralGrey3-dark;
                             font-size: 16px !important;
                             font-weight: 400 !important;
                             line-height: 24px;
@@ -586,7 +585,6 @@
                 //         margin-bottom: 0px !important;
                 //     }
                 // }
-
                 .loginForm {
                     .loginHeading {
                         h1 {

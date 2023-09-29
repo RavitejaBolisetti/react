@@ -72,7 +72,7 @@ export default function AdvanceOTFFilter(props) {
 
                 {toggleButton === STOCK_TRANSFER?.RAISED.key && (
                     <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.buttonsGroupRight}>
-                        <Button type="primary" icon={<FiPlus />} onClick={handleOnAddIndentClick}>
+                        <Button type="primary" icon={<FiPlus />} className={styles.verticallyCentered} onClick={handleOnAddIndentClick}>
                             Add Indent
                         </Button>
                     </Col>

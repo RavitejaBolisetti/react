@@ -32,7 +32,7 @@ export default function DataTable({ filterString, isLoading, rowSelection = unde
         if (dynamicPagination) {
             const sortBy = sorter?.column?.dataIndex || undefined;
             const sortType = sorter && sorter.order ? (sorter.order === 'descend' ? 'DESC' : 'ASC') : undefined;
-            setPage({ ...pagination, sortBy, sortType });
+            setPage({ ...filterString, ...pagination, sortBy, sortType });
         } else {
             setPage({ ...pagination });
         }

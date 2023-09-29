@@ -1,13 +1,25 @@
 import '@testing-library/jest-dom/extend-expect';
 import { ManufactureAdminHierarchyUpload } from '@components/common/ManufacturerAdminstrativeHierarchy/ManufactureAdminHierarchyUpload';
 import customRender from '@utils/test-utils';
-import { screen, fireEvent, act } from '@testing-library/react';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { Form } from 'antd';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import thunk from 'redux-thunk';
+import { rootReducer } from 'store/reducers';
 
-const FormWrapper = (props) => {
-    const [form] = Form.useForm();
-    return <ManufactureAdminHierarchyUpload form={form} {...props} />;
+export const createMockStore = (initialState) => {
+    const mockStore = configureStore({
+        reducer: rootReducer,
+        preloadedState: initialState,
+        middleware: [thunk],
+    });
+    return mockStore;
 };
+
+jest.mock('store/actions/data/manufacturerAdminHierarchy/manufacturerAdminUpload', () => ({
+    manufacturerAdminUploadDataActions: {},
+}));
 
 describe('Manufacture Admin Hierarchy Upload view components', () => {
 
@@ -15,9 +27,27 @@ describe('Manufacture Admin Hierarchy Upload view components', () => {
         customRender(<ManufactureAdminHierarchyUpload isVisible={true} />)
     })
 
+    it('Should render  Manufacture Admin Hierarchy download components', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 1232 },
+            data: {
+                ManufacturerAdmin: {
+                    ManufacturerAdminUpload: {
+                        isLoaded: true, data: [{
+                            attributeKey: null,
+                            id: "19ec8958-f007-4835-be24-4bc9bd332719",
+                            manufactureAdminCode: "6e85eee5-4cfc-40cf-90e7-0dce9acbc2e4",
+                            manufactureAdminLongName: "testing1234532",
+                            manufactureAdminParntId: "null",
+                            manufactureAdminShortName: "test",
+                            manufactureOrganizationId: "91398ed9-9128-4a8d-8165-9dac67e91f61",
+                            status: true
+                        }]
+                    }
+                },
+            },
+        })
 
-    it('Should render  Manufacture Admin Hierarchy Upload components', async () => {
-        const file = new File(['(⌐□_□)'], 'kai.png', { type: 'image/png' });
         const buttonData = {
             cancelBtn: true,
             childBtn: true,
@@ -27,35 +57,99 @@ describe('Manufacture Admin Hierarchy Upload view components', () => {
             saveBtn: true,
             siblingBtn: true,
         }
-        customRender(<FormWrapper setButtonData={jest.fn()} setEmptyList={jest.fn()} downloadForm={true} setFileList={jest.fn()} uploadedFile={true} isVisible={true} buttonData={buttonData} fetchDocumentFileDocId={jest.fn()} handleFormFieldChange={jest.fn()} getDocIdFromOrgId={jest.fn()} handleFormValueChange={jest.fn()} uploadButtonName={"Upload Authority Form"} />)
+
+        const fetchDocumentFileDocId = jest.fn();
+        const showGlobalNotification = jest.fn();
+
+        customRender(
+            <Provider store={mockStore}>
+                <ManufactureAdminHierarchyUpload showGlobalNotification={showGlobalNotification} downloadFile={jest.fn()} fetchDocumentFileDocId={fetchDocumentFileDocId} setButtonData={jest.fn()} setEmptyList={jest.fn()} downloadForm={true} setFileList={jest.fn()} uploadedFile={true} isVisible={true} buttonData={buttonData} resetData={jest.fn()} handleFormFieldChange={jest.fn()} getDocIdFromOrgId={jest.fn()} handleFormValueChange={jest.fn()} uploadButtonName={"Upload Authority Form"} />
+            </Provider>
+        )
 
         const downloadBtn = screen.getByRole('button', { name: "Download Template", exact: false });
-        act(() => {
-            fireEvent.click(downloadBtn)
-        })
+        fireEvent.click(downloadBtn)
+        fetchDocumentFileDocId.mock.calls[0][0].onSuccessAction();
+        fetchDocumentFileDocId.mock.calls[0][0].onErrorAction();
 
-        const closeBtn = screen.getByRole('button', { name: "Close", exact: false });
-        act(() => {
-            fireEvent.click(closeBtn)
-        })
+    })
+
+    it('Should render  Manufacture Admin Hierarchy submit components', async () => {
+        const file = new File(['(⌐□_□)'], 'kai.png', { type: 'image/png' });
+
+        const mockStore = createMockStore({
+            auth: { userId: 1232 },
+            data: {
+                ManufacturerAdmin: {
+                    ManufacturerAdminUpload: {
+                        isLoaded: true, data: [{
+                            "docId": "106"
+                        }]
+                    }
+                },
+            },
+        }) 
+
+        const buttonData = {
+            cancelBtn: true,
+            childBtn: true,
+            editBtn: false,
+            enable: false,
+            saveAndNewBtn: false,
+            saveBtn: true,
+            siblingBtn: true,
+        }
+
+        const saveAuthorityData = jest.fn()
+        const fetchDocumentFileDocId = jest.fn();
+        const resetData = jest.fn()
+        const authorityShowLoading = jest.fn();
+        const fetchDetailList = jest.fn()
+
+        const formActionType = {
+            viewMode: false
+        }
+
+        customRender(
+            <Provider store={mockStore}>
+                <ManufactureAdminHierarchyUpload saveAuthorityData={saveAuthorityData}
+                    resetData={resetData} fetchDocumentFileDocId={fetchDocumentFileDocId} setButtonData={jest.fn()} isVisible={true} handleButtonClick={jest.fn()} fetchList={jest.fn()} buttonData={buttonData}
+                    setFileList={jest.fn()}
+                    setEmptyList={jest.fn()}
+                    setUploadedFileName={jest.fn()}
+                    handleUpload={jest.fn()} isReplacing={false} base64Img={false}
+                    formActionType={formActionType}
+                    authorityShowLoading={authorityShowLoading}
+                    fetchDetailList={fetchDetailList}
+                />
+            </Provider>
+        )
 
         const uploadFile = screen.getByRole('button', { name: "Upload Authority Form", exact: false });
         fireEvent.drop(uploadFile, {
             dataTransfer: { files: [file] },
         });
 
-        const dropBtn = screen.getByRole('heading', { name: "Click or drop your file here to upload", exact: false });
-        act(() => {
-            fireEvent.click(dropBtn)
-        })
-
-        const closeImg = screen.getByRole('img', { name: 'close' });
-        fireEvent.click(closeImg);
+        const saveBtn = screen.getByRole('button', { name: "Save", exact: false });
+        fireEvent.click(saveBtn)
     })
 
+    it('Should render  Manufacture Admin Hierarchy cancel components', async () => {
+        const file = new File(['(⌐□_□)'], 'kai.png', { type: 'image/png' });
 
-    it('Should render Submit components', async () => {
-
+        const mockStore = createMockStore({
+            auth: { userId: 1232 },
+            data: {
+                ManufacturerAdmin: {
+                    ManufacturerAdminUpload: {
+                        isLoaded: true, data: [{
+                            "docId": "106"
+                        }]
+                    }
+                },
+            },
+        }) 
+        
         const buttonData = {
             cancelBtn: true,
             childBtn: true,
@@ -64,57 +158,34 @@ describe('Manufacture Admin Hierarchy Upload view components', () => {
             saveAndNewBtn: false,
             saveBtn: true,
             siblingBtn: true,
-            formBtnActive: true
-        }
-        
-
-        const buttonProps = {
-            buttonData: buttonData,
-            setButtonData: jest.fn()
-        };
-
-        customRender(<FormWrapper
-            isVisible={true}
-            {...buttonProps}
-            saveButtonName={"Save"}
-            onFinish={jest.fn()}
-            handleUpload={jest.fn()}
-            setFileList={jest.fn()}
-            onFinishFailed={jest.fn()}
-            setIsLoading={true}
-            onError={jest.fn()}
-            onSuccess={jest.fn()}
-            fetchDocumentFileDocId={jest.fn()}
-            onSuccessAction={jest.fn()}
-            showGlobalNotification={jest.fn()}
-        />)
-
-        const saveBtn = screen.getByRole('button', { name: "Save", exact: false });
-        act(() => {
-            fireEvent.click(saveBtn)
-        })
-    })
-
-    it('Should render Submit error components', async () => {
-
-        const buttonData = {
-            cancelBtn: true,
         }
 
-        const buttonProps = {
-            buttonData: buttonData,
-        };
+        const saveAuthorityData = jest.fn()
+        const fetchDocumentFileDocId = jest.fn();
+        const resetData = jest.fn()
+        const authorityShowLoading = jest.fn();
+        const fetchDetailList = jest.fn()
 
-        customRender(<FormWrapper
-            isVisible={true}
-            {...buttonProps}
+        const formActionType = {
+            viewMode: false
+        }
 
-        />)
+        customRender(
+            <Provider store={mockStore}>
+                <ManufactureAdminHierarchyUpload saveAuthorityData={saveAuthorityData}
+                    resetData={resetData} fetchDocumentFileDocId={fetchDocumentFileDocId} setButtonData={jest.fn()} isVisible={true} handleButtonClick={jest.fn()} fetchList={jest.fn()} buttonData={buttonData}
+                    setFileList={jest.fn()}
+                    setEmptyList={jest.fn()}
+                    setUploadedFileName={jest.fn()}
+                    handleUpload={jest.fn()} isReplacing={false} base64Img={false}
+                    formActionType={formActionType}
+                    authorityShowLoading={authorityShowLoading}
+                    fetchDetailList={fetchDetailList}
+                />
+            </Provider>
+        )
 
-        const cancelBtn = screen.getByRole('button', { name: "Cancel", exact: false });
-        act(() => {
-            fireEvent.click(cancelBtn)
-        })
-
+        const saveBtn = screen.getByRole('button', { name: "Cancel", exact: false });
+        fireEvent.click(saveBtn)
     })
 })
