@@ -32,7 +32,7 @@ const { Text } = Typography;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { productHierarchyData, toolTipContent, handleFormValueChange, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, formData, openAccordian, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, typeData, formActionType, vehicleServiceData } = props;
+    const { productHierarchyData, toolTipContent, handleFormValueChange, optionsServicesMapping, setoptionsServicesMapping, optionalServices, setOptionalServices, formData, openAccordian, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, typeData, formActionType, vehicleServiceData } = props;
     const { productModelCode, setProductModelCode, viewOnly, handlePriceChange, handleDiscountChange = () => {}, showPrintDiscount = false, ShowPOandSOdetails = true, showAvailaibleStock = true } = props;
 
     const [optionForm] = Form.useForm();
@@ -44,6 +44,7 @@ const AddEditFormMain = (props) => {
 
     const disabledProp = { disabled: true };
     useEffect(() => {
+        console.log('formData', formData, selectedOrderId, 'selectedOrderId');
         if (formData) {
             form.setFieldsValue({
                 ...formData,
@@ -53,7 +54,7 @@ const AddEditFormMain = (props) => {
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData?.otfNumber]);
+    }, [formData]);
 
     const handleCollapse = (key) => {
         if (key !== 3 && isReadOnly) {
@@ -87,8 +88,8 @@ const AddEditFormMain = (props) => {
         formData,
         setOpenAccordian,
         addContactHandeler,
-        optionsServiceModified,
-        setoptionsServiceModified,
+        optionalServices,
+        setOptionalServices,
         handleFormValueChange,
         vehicleServiceData,
     };
@@ -108,7 +109,7 @@ const AddEditFormMain = (props) => {
             onSubmitAction: () => {
                 setProductModelCode(value);
                 handleFormValueChange(true);
-                handleDiscountChange();
+                form.setFieldValue('modalCode', value);
                 setConfirmRequest({
                     ...confirmRequest,
                     isVisible: false,
@@ -127,7 +128,7 @@ const AddEditFormMain = (props) => {
         treeFieldNames,
         treeData: productHierarchyData,
         defaultParent: false,
-        selectedTreeSelectKey: productModelCode,
+        selectedTreeSelectKey: formData?.model,
         handleSelectTreeClick,
         defaultValue: null,
         placeholder: preparePlaceholderSelect('Model'),
@@ -237,7 +238,7 @@ const AddEditFormMain = (props) => {
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item label="Dealer Discount with TAX" name="discountAmount" rules={[validateNumberWithTwoDecimalPlaces('Dealer Discount with TAX')]}>
-                                        <Input placeholder={preparePlaceholderText('Dealer Discount with TAX')} onChange={handleDiscountChange} />
+                                        <Input placeholder={preparePlaceholderText('Dealer Discount with TAX')} onBlur={handleDiscountChange} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
@@ -281,7 +282,7 @@ const AddEditFormMain = (props) => {
                                     <OptionServicesForm {...OptionServicesFormProps} />
                                 </>
                             )}
-                            <DataTable tableColumn={optionalServicesColumns()} tableData={optionsServiceModified} pagination={false} />
+                            <DataTable tableColumn={optionalServicesColumns()} tableData={optionalServices} pagination={false} />
                         </Panel>
                     </Collapse>
                 </Col>

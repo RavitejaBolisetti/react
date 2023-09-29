@@ -11,13 +11,13 @@ import { validateRequiredInputField, validateNumberWithTwoDecimalPlaces, validat
 import styles from 'assets/sass/app.module.scss';
 
 const OptionServicesFormMain = (props) => {
-    const { typeData, vehicleServiceData, handleCancel, handleFormValueChange, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, selectedOrderId, formData, optionForm } = props;
+    const { typeData, vehicleServiceData, handleCancel, handleFormValueChange, optionsServicesMapping, setoptionsServicesMapping, optionalServices, setOptionalServices, selectedOrderId, formData, optionForm } = props;
     const [serviceOptions, setserviceOptions] = useState(vehicleServiceData);
 
     useEffect(() => {
         const arr = [];
         if (serviceOptions && serviceOptions?.length) {
-            optionsServiceModified?.map((element) => {
+            optionalServices?.map((element) => {
                 arr.push(element?.taxId);
             });
 
@@ -33,7 +33,7 @@ const OptionServicesFormMain = (props) => {
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [optionsServiceModified]);
+    }, [optionalServices]);
 
     const onFinish = () => {
         optionForm
@@ -42,7 +42,7 @@ const OptionServicesFormMain = (props) => {
                 const values = optionForm.getFieldsValue();
 
                 const data = { ...values, id: '' };
-                setoptionsServiceModified([data, ...optionsServiceModified]);
+                setOptionalServices([data, ...optionalServices]);
                 setoptionsServicesMapping([...optionsServicesMapping, data]);
                 optionForm.resetFields();
                 handleFormValueChange();

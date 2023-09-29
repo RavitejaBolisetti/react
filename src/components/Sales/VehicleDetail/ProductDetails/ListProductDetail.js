@@ -98,7 +98,7 @@ const ProductDetailMasterMain = (props) => {
     const { isModelDataLoaded, isModelLoading, modelData, isVariantDataLoaded, isVariantLoading, variantData, isModelFamilyDataLoaded, isModelFamilyLoading, modelFamilyData, fetchModelFamilyLovList, listFamilyShowLoading, resetFamily } = props;
 
     const [formData, setformData] = useState({});
-    const [optionsServiceModified, setoptionsServiceModified] = useState([]);
+    const [optionalServices, setOptionalServices] = useState([]);
     const [openAccordian, setOpenAccordian] = useState([]);
     const [tooltTipText, settooltTipText] = useState();
     const [isReadOnly, setIsReadOnly] = useState(false);
@@ -184,7 +184,7 @@ const ProductDetailMasterMain = (props) => {
             fetchVariantLovList({ setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams({ key: 'variantCode', title: 'variantCode', value: ProductDetailsData?.productAttributeDetail?.modelVariant, name: 'variantCode' }) });
             fetchModelFamilyLovList({ setIsLoading: listFamilyShowLoading, userId, extraParams: makeExtraParams({ key: 'familyCode', title: 'familyCode', value: ProductDetailsData?.productAttributeDetail?.modelFamily, name: 'familyCode' }) });
 
-            ProductDetailsData?.aggregates && setoptionsServiceModified(ProductDetailsData?.aggregates);
+            ProductDetailsData?.aggregates && setOptionalServices(ProductDetailsData?.aggregates);
             settooltTipText(
                 <div>
                     <p>
@@ -244,9 +244,9 @@ const ProductDetailMasterMain = (props) => {
     };
 
     const onFinish = (values) => {
-        const data = { ...formData, vehicleIdentificationNumber: selectedRecordId, aggregates: optionsServiceModified };
+        const data = { ...formData, vehicleIdentificationNumber: selectedRecordId, aggregates: optionalServices };
         const onSuccess = (res) => {
-            setoptionsServiceModified([]);
+            setOptionalServices([]);
             setformData();
             setIsReadOnly(false);
             form.resetFields();
@@ -255,7 +255,7 @@ const ProductDetailMasterMain = (props) => {
 
         const onError = (message) => {
             // showGlobalNotification({ message });
-            setoptionsServiceModified([]);
+            setOptionalServices([]);
         };
 
         const requestData = {
@@ -285,8 +285,8 @@ const ProductDetailMasterMain = (props) => {
         form,
         openAccordian,
         setOpenAccordian,
-        optionsServiceModified,
-        setoptionsServiceModified,
+        optionalServices,
+        setOptionalServices,
         handleFormValueChange,
         tooltTipText,
         isReadOnly,
@@ -315,7 +315,7 @@ const ProductDetailMasterMain = (props) => {
         tooltTipText,
         settooltTipText,
         isLoading,
-        optionsServiceModified,
+        optionalServices,
         formActionType,
         typeData,
         bindCodeValue,

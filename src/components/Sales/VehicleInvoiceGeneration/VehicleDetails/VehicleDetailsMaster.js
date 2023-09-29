@@ -91,7 +91,7 @@ const VehicleDetailsMasterMain = (props) => {
 
     const [activeKey, setactiveKey] = useState([1]);
     const [formData, setFormData] = useState({});
-    const [optionsServiceModified, setoptionsServiceModified] = useState([]);
+    const [optionalServices, setOptionalServices] = useState([]);
     const [optionsServicesMapping, setoptionsServicesMapping] = useState([]);
     const [openAccordian, setOpenAccordian] = useState('1');
 
@@ -197,7 +197,7 @@ const VehicleDetailsMasterMain = (props) => {
 
     useEffect(() => {
         if (vehicleDetailData) {
-            vehicleDetailData?.optionalServices && setoptionsServiceModified(vehicleDetailData?.optionalServices);
+            vehicleDetailData?.optionalServices && setOptionalServices(vehicleDetailData?.optionalServices);
             setFormData(vehicleDetailData);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -238,7 +238,7 @@ const VehicleDetailsMasterMain = (props) => {
                     model: vehicleDetailData?.model,
                     modelCode: vehicleDetailData?.modelCode,
                     discountAmount: vehicleDetailData?.discountAmount,
-                    optionalServices: optionsServiceModified,
+                    optionalServices: optionalServices,
                 };
             } else {
                 data = { ...values, otfNumber: selectedOrderId, OtfId: formData?.id || '', id: formData?.id || '', optionalServices: optionsServicesMapping, model: productAttributeData['0']['prodctShrtName'] };
@@ -246,7 +246,7 @@ const VehicleDetailsMasterMain = (props) => {
 
             const onSuccess = (res) => {
                 setoptionsServicesMapping([]);
-                setoptionsServiceModified([]);
+                setOptionalServices([]);
                 setFormData({});
                 setOpenAccordian('1');
                 setIsReadOnly(false);
@@ -303,8 +303,8 @@ const VehicleDetailsMasterMain = (props) => {
         setOpenAccordian,
         isReadOnly,
         setIsReadOnly,
-        optionsServiceModified,
-        setoptionsServiceModified,
+        optionalServices,
+        setOptionalServices,
         optionsServicesMapping,
         setoptionsServicesMapping,
         handleFormValueChange,
