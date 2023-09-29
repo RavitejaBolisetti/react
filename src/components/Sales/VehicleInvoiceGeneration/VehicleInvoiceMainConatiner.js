@@ -18,6 +18,7 @@ import { FinananceDetailsMaster } from 'components/Sales/VehicleInvoiceGeneratio
 import { ExchangeVehiclesMaster } from 'components/Sales/VehicleInvoiceGeneration/ExchangeVehicles';
 import { LoyaltySchemeMaster } from 'components/Sales/VehicleInvoiceGeneration/LoyaltyScheme';
 import { ReferralsMaster } from 'components/Sales/VehicleInvoiceGeneration/Referrals';
+import { ThankYouMaster } from 'components/Sales/VehicleInvoiceGeneration/ThankYou';
 
 import { VehicleInvoiceFormButton } from './VehicleInvoiceFormButton';
 
@@ -65,6 +66,9 @@ const VehicleInvoiceMainConatinerMain = (props) => {
             }
             case VEHICLE_INVOICE_SECTION.REFERRALS.id: {
                 return <ReferralsMaster {...myProps} referralData={requestPayload?.referrals} formKey={'referrals'} />;
+            }
+            case VEHICLE_INVOICE_SECTION.THANK_YOU_PAGE.id: {
+                return <ThankYouMaster {...myProps} />;
             }
             default: {
                 return <InvoiceDetailsMaster {...myProps} />;

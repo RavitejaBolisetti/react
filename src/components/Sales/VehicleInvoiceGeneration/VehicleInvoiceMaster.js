@@ -360,7 +360,8 @@ export const VehicleInvoiceMasterBase = (props) => {
     }, [selectedOrderId, selectedOtfNumber, formActionType]);
 
     useEffect(() => {
-        const defaultSection = VEHICLE_INVOICE_SECTION.INVOICE_DETAILS.id;
+        const defaultSection = VEHICLE_INVOICE_SECTION.THANK_YOU_PAGE.id;
+        // const defaultSection = VEHICLE_INVOICE_SECTION.INVOICE_DETAILS.id;
         setDefaultSection(defaultSection);
         setSetionName(VEHICLE_INVOICE_SECTION);
         setSection(defaultSection);

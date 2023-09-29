@@ -6,7 +6,6 @@
 
 import { Row, Col, Space, Avatar, Typography } from 'antd';
 
-import { VehicleReceiptFormButton } from '../VehicleInvoiceFormButton';
 import { LANGUAGE_EN } from 'language/en';
 import { HiCheck } from 'react-icons/hi';
 
@@ -15,8 +14,14 @@ import styles from 'assets/sass/app.module.scss';
 const { Title, Text } = Typography;
 
 export const ThankYouMaster = (props) => {
+    const { FormActionButton, selectedOrderId } = props;
     const title = LANGUAGE_EN.GENERAL.THANK_YOU_PAGE_OTF.TITLE;
-    const message = LANGUAGE_EN.GENERAL.THANK_YOU_PAGE_OTF.MESSAGE.replace('{ORDER_ID}', props?.selectedOrderId);
+    const message = LANGUAGE_EN.GENERAL.THANK_YOU_PAGE_OTF.MESSAGE.replace('{ORDER_ID}', selectedOrderId);
+
+    const myProps = {
+        ...props,
+        buttonData: { ...props.defaultBtnVisiblity, closeBtn: true },
+    };
 
     return (
         <>
@@ -31,7 +36,7 @@ export const ThankYouMaster = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <VehicleReceiptFormButton {...props} />
+                    <FormActionButton {...myProps} />
                 </Col>
             </Row>
         </>
