@@ -21,7 +21,6 @@ const AddEditFormMain = (props) => {
     const { formData, relationshipManagerData, typeData, form, soldByDealer, handleChassisNoSearch, handleOnChange, chassisNoValue, fetchEngineNumber, listEngineNumberShowLoading, engineNumberData, userId } = props;
     const { vinData } = props;
 
-
     useEffect(() => {
         if (soldByDealer) {
             form.setFieldsValue({
@@ -89,7 +88,7 @@ const AddEditFormMain = (props) => {
                                     {!soldByDealer && (
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                             <Form.Item initialValue={formData?.chassisNumber} label="Chassis No." name="chassisNumber">
-                                                <AutoComplete  fieldNames={fieldNames} label="Chasiss No" options={vinData} backfill={false} onSelect={handleSelectVinNo} onSearch={debounce(handleChassisNoSearch, 400)} allowSearch>
+                                                <AutoComplete fieldNames={fieldNames} label="Chasiss No" options={vinData} backfill={false} onSelect={handleSelectVinNo} onSearch={debounce(handleChassisNoSearch, 400)} allowSearch>
                                                     <Input.Search size="large" allowClear placeholder={preparePlaceholderAutoComplete('')} />
                                                 </AutoComplete>
                                             </Form.Item>
@@ -126,7 +125,7 @@ const AddEditFormMain = (props) => {
                                                     <DatePicker format={dateFormat} placeholder={preparePlaceholderSelect('Customer Promise Date')} disabled={true} />
                                                 </Form.Item>
                                             </Col>
-                                            {disableFieldsOnFutureDate(dayjs(formData?.customerPromiseDate)) && (
+                                            {formData?.customerPromiseDate && disableFieldsOnFutureDate(dayjs(formData?.customerPromiseDate)) && (
                                                 <>
                                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                         <Form.Item initialValue={formData?.reasonForDelay} label="Reasons For Delay" name="reasonForDelay" rules={[validateRequiredSelectField('reasons for delay')]}>

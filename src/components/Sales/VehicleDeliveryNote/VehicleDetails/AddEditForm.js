@@ -16,7 +16,7 @@ const { Panel } = Collapse;
 const AddEditFormMain = (props) => {
     const { activeKey, setActiveKey, formData, form } = props;
 
-    const vehicleDetailsProps = { ...props, form, formType: 'vehicle', formData: formData?.vehicleDetails };
+    const vehicleDetailsProps = { ...props, form, formType: 'vehicle', formData };
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);

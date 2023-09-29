@@ -42,7 +42,7 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         isLoaded,
-        invoiceData,
+        // invoiceData,
         isLoading,
         moduleTitle,
         isRelationshipManagerLoaded,
@@ -93,10 +93,8 @@ export const InvoiceDetailsMasterBase = (props) => {
     const { fetchList, userId, vinData, listvinNumberShowLoading, fetchEngineNumber, listEngineNumberShowLoading, fetchvinNumber, listShowLoading, relationshipManagerData, invoiceData, isRelationshipManagerLoaded, setFormActionType, fetchRelationshipManger, listRelationshipMangerShowLoading, isLoading, record } = props;
 
     const { typeData, form, selectedOrderId, selectedInvoiceId, requestPayload, setRequestPayload, soldByDealer, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section, resetData, engineNumberData, chassisNoValue, setChassisNoValue, challanInvoiceDetailsDataLoaded, challanInvoiceDetailsLoading, challanInvoiceDetail, fetchInvoiceChallan, listChallanInvoiceShowLoading } = props;
-
+    const { buttonData, setButtonData } = props;
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
-    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -104,70 +102,66 @@ export const InvoiceDetailsMasterBase = (props) => {
 
     const [formData, setFormData] = useState();
 
+    const onErrorAction = (message) => {
+        showGlobalNotification({ message });
+    };
+    console.log('invoiceDatainvoiceData', invoiceData, buttonData);
     useEffect(() => {
-        if (invoiceData && selectedInvoiceId && soldByDealer) {
+        if (invoiceData && soldByDealer) {
             form.setFieldsValue({ ...invoiceData, invoiceDate: formattedCalendarDate(invoiceData?.invoiceDate), customerPromiseDate: formattedCalendarDate(invoiceData?.customerPromiseDate) });
             setFormData({ ...invoiceData });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [invoiceData]);
-
+    }, [invoiceData, section]);
     useEffect(() => {
-        return () => {
-            setFormData();
-            resetData();
-        };
+        setButtonData({ ...buttonData, formBtnActive: true });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-    useEffect(() => {
-        setButtonData({ ...buttonData, formBtnActive: false });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [buttonData]);
+    }, [section]);
 
-    const extraParams = [
-        {
-            key: 'invoiceNumber',
-            title: 'invoiceNumber',
-            value: selectedInvoiceId,
-            name: 'Invoice Number',
-        },
-    ];
+    // const extraParams = [
+    //     {
+    //         key: 'invoiceNumber',
+    //         title: 'invoiceNumber',
+    //         value: selectedInvoiceId,
+    //         name: 'Invoice Number',
+    //     },
+    // ];
 
-    useEffect(() => {
-        if (userId && selectedInvoiceId && soldByDealer) {
-            fetchList({ setIsLoading: listShowLoading, extraParams, userId });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedInvoiceId, soldByDealer]);
+    // useEffect(() => {
+    //     if (userId && selectedInvoiceId && soldByDealer) {
+    //         fetchList({ setIsLoading: listShowLoading, extraParams, userId });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [userId, selectedInvoiceId, soldByDealer]);
 
-    useEffect(() => {
-        if (userId && selectedInvoiceId && !soldByDealer) {
-            const challanExtraParams = [
-                {
-                    key: 'invoiceNumber',
-                    title: 'invoiceNumber',
-                    value: selectedInvoiceId,
-                    name: 'Invoice Number',
-                },
-                {
-                    key: 'deliveryNoteId',
-                    title: 'deliveryNoteId',
-                    value: record?.vehicleDeliveryNote,
-                    name: 'Delivery Note',
-                },
-            ];
-            fetchInvoiceChallan({ setIsLoading: listChallanInvoiceShowLoading, extraParams: challanExtraParams, userId });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedInvoiceId, soldByDealer]);
+    // useEffect(() => {
+    //     if (userId && selectedInvoiceId && !soldByDealer) {
+    //         const challanExtraParams = [
+    //             {
+    //                 key: 'invoiceNumber',
+    //                 title: 'invoiceNumber',
+    //                 value: selectedInvoiceId,
+    //                 name: 'Invoice Number',
+    //             },
+    //             {
+    //                 key: 'deliveryNoteId',
+    //                 title: 'deliveryNoteId',
+    //                 value: record?.vehicleDeliveryNote,
+    //                 name: 'Delivery Note',
+    //             },
+    //         ];
+    //         fetchInvoiceChallan({ setIsLoading: listChallanInvoiceShowLoading, extraParams: challanExtraParams, userId });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [userId, selectedInvoiceId, soldByDealer]);
 
-    useEffect(() => {
-        if (challanInvoiceDetailsDataLoaded && challanInvoiceDetail && !soldByDealer) {
-            setFormData({ ...challanInvoiceDetail });
-            setChassisNoValue(challanInvoiceDetail?.chassisNumber);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [challanInvoiceDetail, soldByDealer]);
+    // useEffect(() => {
+    //     if (challanInvoiceDetailsDataLoaded && challanInvoiceDetail && !soldByDealer) {
+    //         setFormData({ ...challanInvoiceDetail });
+    //         setChassisNoValue(challanInvoiceDetail?.chassisNumber);
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [challanInvoiceDetail, soldByDealer]);
 
     useEffect(() => {
         const extraParams = [
@@ -179,7 +173,7 @@ export const InvoiceDetailsMasterBase = (props) => {
             },
         ];
         if (userId && soldByDealer) {
-            fetchRelationshipManger({ setIsLoading: listRelationshipMangerShowLoading, userId, extraParams });
+            fetchRelationshipManger({ setIsLoading: listRelationshipMangerShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, soldByDealer]);
@@ -197,9 +191,6 @@ export const InvoiceDetailsMasterBase = (props) => {
         const onSuccessAction = (res) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         };
-        const onErrorAction = (message) => {
-            showGlobalNotification({ message });
-        };
         const searchParams = [
             {
                 key: 'chassisNumber',
@@ -211,10 +202,6 @@ export const InvoiceDetailsMasterBase = (props) => {
         fetchvinNumber({ setIsLoading: listvinNumberShowLoading, userId, extraParams: searchParams, onSuccessAction, onErrorAction });
     };
 
-    const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-    };
-
     const onFinish = (values) => {
         const invoiceDetailsRequest = { ...values };
         setRequestPayload({ ...requestPayload, deliveryNoteInvoiveDetails: { ...invoiceDetailsRequest, invoiceDate: convertDate(invoiceData?.invoiceDate), customerPromiseDate: convertDate(invoiceData?.customerPromiseDate) } });
@@ -223,12 +210,11 @@ export const InvoiceDetailsMasterBase = (props) => {
         setButtonData({ ...buttonData, formBtnActive: false });
     };
 
-    const onFinishFailed = () => { };
+    const onFinishFailed = () => {};
 
     const onCloseAction = () => {
         form.resetFields();
         setIsFormVisible(false);
-        setButtonData({ ...defaultBtnVisiblity });
     };
 
     const formProps = {
@@ -290,7 +276,7 @@ export const InvoiceDetailsMasterBase = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <VehicleDeliveryNoteFormButton {...props} />
+                    <VehicleDeliveryNoteFormButton {...formProps} />
                 </Col>
             </Row>
         </Form>
