@@ -135,7 +135,6 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [sectionName, setSetionName] = useState();
     const [isLastSection, setLastSection] = useState(false);
     const [receipt, setReceipt] = useState('');
-
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
@@ -143,7 +142,7 @@ export const VehicleInvoiceMasterBase = (props) => {
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [cancelInvoiceVisible, setCancelInvoiceVisible] = useState(false);
+    const [addRequestVisible, setAddRequestVisible] = useState(false);
     const [irnStatusData, setIrnStatusData] = useState();
     const [additionalReportParams, setAdditionalReportParams] = useState();
     const [isReportVisible, setReportVisible] = useState();
@@ -454,14 +453,14 @@ export const VehicleInvoiceMasterBase = (props) => {
                 if (buttonAction === VIEW_ACTION) {
                     //chargerStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility, editBtn: false, cancelInvoiceBtn: false, printInvoiceBtn: true }) : chargerStatus === QUERY_BUTTONS_CONSTANTS.CANCELLATION_REQUEST.key ? setButtonData({ ...Visibility, editBtn: false, cancelInvoiceBtn: false, printInvoiceBtn: true }) : setButtonData({ ...Visibility, editBtn: true, cancelInvoiceBtn: true, printInvoiceBtn: true });
 
-                    chargerStatus === QUERY_BUTTONS_CONSTANTS.SITE_SURVEY.key && (!otfData?.irnStatus || (otfData?.irnStatus)) ? setButtonData({ ...Visibility, cancelInvoiceBtn: true, printInvoiceBtn: true, approveCancelBtn: false }) : setButtonData({ ...Visibility, cancelInvoiceBtn: false, approveCancelBtn: false, printInvoiceBtn: true });
+                    chargerStatus === QUERY_BUTTONS_CONSTANTS.SITE_SURVEY.key && (!otfData?.irnStatus || otfData?.irnStatus) ? setButtonData({ ...Visibility, cancelInvoiceBtn: true, printInvoiceBtn: true, approveCancelBtn: false }) : setButtonData({ ...Visibility, cancelInvoiceBtn: false, approveCancelBtn: false, printInvoiceBtn: true });
                 }
             }
         }
         setIsFormVisible(true);
     };
 
-    const onFinishSearch = (values) => { };
+    const onFinishSearch = (values) => {};
 
     const handleResetFilter = (e) => {
         setShowDataLoading(false);
@@ -514,7 +513,6 @@ export const VehicleInvoiceMasterBase = (props) => {
 
         setSelectedOrder();
         setIsFormVisible(false);
-        setCancelInvoiceVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
     };
 
@@ -535,11 +533,6 @@ export const VehicleInvoiceMasterBase = (props) => {
         setAdvanceSearchVisible(false);
     };
 
-    const onCancelCloseAction = () => {
-        setCancelInvoiceVisible(false);
-        cancelInvoiceForm.resetFields();
-    };
-
     const removeFilter = (key) => {
         if (key === 'searchParam') {
             const { searchType, searchParam, ...rest } = filterString;
@@ -553,10 +546,6 @@ export const VehicleInvoiceMasterBase = (props) => {
         }
     };
 
-    const onCancelInvoice = () => {
-        setCancelInvoiceVisible(true);
-    };
-
     const onPrintInvoice = (record) => {
         setReportVisible(true);
 
@@ -566,37 +555,6 @@ export const VehicleInvoiceMasterBase = (props) => {
                 value: record?.id,
             },
         ]);
-    };
-
-    const handleCloseReceipt = () => {
-        setCancelInvoiceVisible(false);
-        cancelInvoiceForm.resetFields();
-    };
-
-    const handleCancelReceipt = () => {
-        const recordId = selectedOrderId;
-        const cancelReason = cancelInvoiceForm.getFieldValue().cancelReason;
-        const data = { id: recordId ?? '', invoiceNumber: selectedOrder?.invoiceNumber, cancelReason: cancelReason };
-        const onSuccess = (res) => {
-            setShowDataLoading(true);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
-            setButtonData({ ...buttonData, formBtnActive: false });
-            setIsFormVisible(false);
-            setCancelInvoiceVisible(false);
-        };
-        const onError = (message) => {
-            showGlobalNotification({ message });
-        };
-        const requestData = {
-            data: data,
-            method: 'put',
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-        cancelInvoice(requestData);
     };
 
     const title = 'Invoice Generation';
@@ -704,15 +662,15 @@ export const VehicleInvoiceMasterBase = (props) => {
         partySegmentType,
         paymentModeType,
         documentType,
-        onCancelInvoice,
         onPrintInvoice,
         saveButtonName: isLastSection ? 'Submit' : 'Save & Next',
         setLastSection,
         handleIRNGeneration,
         handleBookingNumberSearch,
         vehicleInvoiceMasterData,
+        addRequestVisible,
+        setAddRequestVisible,
     };
-
 
     const reportDetail = EMBEDDED_REPORTS?.INVOICE_DOCUMENT;
     const reportProps = {
