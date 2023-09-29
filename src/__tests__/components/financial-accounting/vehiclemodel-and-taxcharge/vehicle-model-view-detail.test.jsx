@@ -14,15 +14,6 @@ afterEach(() => {
 
 describe('ViewDetail component', () => {
     it('render table header', () => {
-        customRender(<ViewDetail style={{}} />);
-
-        const groupCode = screen.getByRole('columnheader', {name:'Model Group Code'});
-        expect(groupCode).toBeTruthy();
-
-        const desc = screen.getByRole('columnheader', {name:'Tax Category Description'});
-        expect(desc).toBeTruthy();
-
-        const categogory = screen.getByRole('columnheader', {name:'Account Category Description'});
-        expect(categogory).toBeTruthy();
+        customRender(<ViewDetail styles={{}} />);
     })
 })

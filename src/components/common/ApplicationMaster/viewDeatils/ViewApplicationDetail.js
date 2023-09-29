@@ -34,7 +34,7 @@ const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = 'Applicatio
 
     return (
         <>
-            <div className={styles.viewContainer}>
+            <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
                     <Descriptions.Item label="Application ID">{rest?.applicationId}</Descriptions.Item>
                     <Descriptions.Item label="Application Name">{rest?.applicationName || 'NA'}</Descriptions.Item>

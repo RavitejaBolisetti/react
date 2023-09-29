@@ -43,9 +43,11 @@ describe('Notification Detail Master component', () => {
     it('it should click when user click on button', () => {
         const docTypeHeadMappingList = [{ internalId: '123', roleCode: '12', id: '66', designationCode: '124', financialAccountHeadId: '2345' }];
 
-        customRender(<FormWrapper buttonData={buttonData} formData={formData} setDocTypeHeadMappingList={jest.fn()} docTypeHeadMappingList={docTypeHeadMappingList} isLoading={true} setButtonData={jest.fn()} validateFields={jest.fn()} />);
+        customRender(<FormWrapper buttonData={buttonData} setFilterDesignationList={jest.fn()} formData={formData} setDocTypeHeadMappingList={jest.fn()} docTypeHeadMappingList={docTypeHeadMappingList} isLoading={true} setButtonData={jest.fn()} validateFields={jest.fn()} />);
         const addBtn = screen.getByRole('button', { name: 'Add' });
         fireEvent.click(addBtn);
+        const iconBtn = screen.getByRole('button', { name: '' });
+        fireEvent.click(iconBtn);
         const roleName = screen.getByRole('combobox', { name: 'Role Name' });
         fireEvent.click(roleName);
         const designationName = screen.getByRole('combobox', { name: 'Designation Name' });

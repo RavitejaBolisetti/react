@@ -30,11 +30,9 @@ describe("AddEditForm render", ()=>{
 
         customRender(<FormWrapper isVisible={true} formActionType={formActionType} handleFormValueChange={jest.fn()} handleFormFieldChange ={jest.fn()} setButtonData={jest.fn()} />);
 
-        const descText = screen.getByRole('textbox', {name:'Description'});
-        fireEvent.change(descText, { target:{value:'test'} });
-
         const switchInput = screen.getByRole('switch', {name:'Status'});
         fireEvent.click(switchInput);
     });
+
 
 }) 

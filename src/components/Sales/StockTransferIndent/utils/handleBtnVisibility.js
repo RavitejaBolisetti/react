@@ -14,7 +14,7 @@ export const handleBtnVisibility = ({ toggleButton = undefined, checkKey = undef
                     return { canReceive: false, canCancel: false, canReturn: false, canPrint: true };
                 }
                 case ISSUE_ACTION_LIST?.RECEIVED?.key: {
-                    return { canReceive: false, canCancel: false, canReturn: true, canPrint: true };
+                    return { canReceive: false, canCancel: false, canReturn: false, canPrint: true };
                 }
                 case ISSUE_ACTION_LIST?.RETURNED?.key: {
                     return { canReceive: false, canCancel: false, canReturn: false, canPrint: true };

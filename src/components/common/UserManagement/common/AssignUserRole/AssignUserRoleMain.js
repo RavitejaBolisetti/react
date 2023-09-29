@@ -18,7 +18,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'assets/sass/app.module.scss';
 
 const { Text } = Typography;
-const defaultBtnVisiblity = { editBtn: false, saveBtn: false, next: false, nextBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, formBtnActive: false };
+const defaultBtnVisiblity = { editBtn: false, saveBtn: true, next: false, nextBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, formBtnActive: false };
 
 const APPLICATION_WEB = DEVICE_TYPE?.WEB?.key;
 const APPLICATION_MOBILE = DEVICE_TYPE?.MOBILE?.key;
@@ -57,11 +57,12 @@ const AssignUserRole = (props) => {
     const [checkedKeys, setCheckedKeys] = useState([]);
     const [webApplications, setWebApplications] = useState([]);
     const [mobileApplications, setMobileApplications] = useState([]);
-    const [deviceType, setDeviceType] = useState(DEVICE_TYPE.WEB.id);
+    const [deviceType, setDeviceType] = useState(DEVICE_TYPE.WEB.key);
     const [defaultCheckedKeysMangement, setdefaultCheckedKeysMangement] = useState([]);
 
     const [isModalVisible, setisModalVisible] = useState(false);
     const [record, setRecord] = useState({});
+    //console.log("🚀 ~ file: AssignUserRoleMain.js:65 ~ AssignUserRole ~ record:", record)
     const [selectedRoleId, setSelectedRoleId] = useState('');
     const [disableMdlSaveBtn, setDisableMdlSaveBtn] = useState(true);
 
@@ -206,6 +207,7 @@ const AssignUserRole = (props) => {
     };
     const handleCancelModal = () => {
         setisModalVisible(false);
+        form.resetFields();
         setRecord({});
         setSelectedRoleId('');
         setWebApplications([]);
@@ -216,6 +218,8 @@ const AssignUserRole = (props) => {
     };
 
     const handleButtonClickModal = ({ buttonAction, record }) => {
+        setSelectedRoleId('')
+        mainform.resetFields();
         setisModalVisible(true);
         setRecord(record);
     };
@@ -258,8 +262,9 @@ const AssignUserRole = (props) => {
     }, [dlrAppList?.employeeCode, mnmAppList?.employeeCode, deviceType]);
 
     const handleShowRoleAppModal = (data) => {
-        // setRecord(data);
-        // setSelectedRoleId('');
+        setRecord({});
+        setSelectedRoleId('');
+        mainform.resetFields();
         form.resetFields();
         setisModalVisible(true);
     };
@@ -296,6 +301,8 @@ const AssignUserRole = (props) => {
         userRoleDataList,
         roleListdata,
         handleSelectRole,
+        setSelectedRoleId,
+        selectedRoleId,
 
         dlrAppList,
         mnmAppList,

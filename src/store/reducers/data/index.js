@@ -41,11 +41,13 @@ import { Report } from './report';
 import { UserManagement } from './userManagement';
 import { VehicleReceiptChecklist } from './VehicleReceiptCheckList';
 import { vehicleAllotmentData } from './vehicleAllotment';
+import { HoPriceMapping } from './hoPriceMapping';
 import { VehicleInvoiceGeneration } from './invoiceGeneration';
 import { UserAccess } from './userAccess';
 import { OTFSoMapping } from './otfSoMappingUnmapping';
 import { OTFBlockMaster } from './otfBlockMaster';
 import { VehicleDeliveryNote } from './vehicleDeliveryNote';
+import { DealerBlockMaster } from './dealerBlockMaster'
 
 import { stockTransferIndentData } from './stockTransferIndent';
 
@@ -88,10 +90,12 @@ export const data = combineReducers({
     Report,
     VehicleReceiptChecklist,
     vehicleAllotmentData,
+    HoPriceMapping,
     VehicleInvoiceGeneration,
     UserAccess,
     stockTransferIndentData,
     OTFSoMapping,
     OTFBlockMaster,
     VehicleDeliveryNote,
+    DealerBlockMaster,
 });

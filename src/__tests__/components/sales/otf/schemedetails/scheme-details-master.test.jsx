@@ -6,10 +6,24 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { screen, fireEvent } from '@testing-library/react';
-import { SchemeDetailsMaster } from '@components/Sales/Common/SchemeDetails/SchemeDetailsMaster';
+import { SchemeDetailsMaster } from 'components/Sales/OTF/SchemeDetails';
+
+import { Form, Button } from 'antd';
+
 afterEach(() => {
     jest.restoreAllMocks();
 });
+
+const StatusBar = () => <div>No Status Bar</div>;
+
+const FormActionButton = () => (
+    <div>
+        <Button htmlType="submit" type="primary">
+            Save
+        </Button>
+    </div>
+);
+
 const props = {
     defaultFormActionType: { addMode: false, editMode: false, viewMode: false },
     userId: undefined,
@@ -44,11 +58,11 @@ const props = {
 
 describe('Scheme Details master Components', () => {
     it('it should render SchemeDetailsMaster components', () => {
-        customRender(<SchemeDetailsMaster />);
+        customRender(<SchemeDetailsMaster StatusBar={StatusBar} FormActionButton={FormActionButton} />);
     });
 
     it('it should click when user click on next button', () => {
-        customRender(<SchemeDetailsMaster {...props} handleButtonClick={jest.fn()} />);
+        customRender(<SchemeDetailsMaster {...props} handleButtonClick={jest.fn()} StatusBar={StatusBar} FormActionButton={FormActionButton} />);
         const nextBtn = screen.getByRole('button', { Name: 'Next' });
         fireEvent.click(nextBtn);
     });

@@ -5,33 +5,42 @@
  */
 import React from 'react';
 import { Timeline } from 'antd';
-import { BsRecordCircleFill } from 'react-icons/bs';
-import { FaCheckCircle } from 'react-icons/fa';
 
 import { VEHICLE_DELIVERY_NOTE_SECTION } from 'constants/vehicleDeliveryNoteSection';
-
+import { validateDeliveryNote } from 'components/Sales/VehicleDeliveryNote/utils/validateDeliveryNote';
+import { getSelectedMenuAttribute } from 'utils/getSelectedMenuAttribute';
 import styles from 'assets/sass/app.module.scss';
 
 const MenuNav = (props) => {
-    const { currentSection, setCurrentSection, receipt, formActionType: { addMode } = undefined, selectedOrder: { orderStatus = false } = {} } = props;
-    const receiptSectionList = Object.values(VEHICLE_DELIVERY_NOTE_SECTION);
+    const { currentSection, setCurrentSection, previousSection, formActionType, selectedOrder, soldByDealer, deliveryStatus } = props;
+    const deliveryNoteSectionList = Object.values(VEHICLE_DELIVERY_NOTE_SECTION);
 
-    const onHandle = (key) => {
-        setCurrentSection(key);
+    const className = (id) => {
+        if (currentSection === VEHICLE_DELIVERY_NOTE_SECTION.THANK_YOU_PAGE.id) return styles.cursorNotAllowed;
+        return formActionType?.addMode && id > previousSection ? styles.cursorNotAllowed : styles.cursorPointer;
     };
 
-    const items = receiptSectionList
-        ?.filter((i) => i?.displayOnList)
-        ?.map((item) => ({
-            // validateReceiptMenu({ item, receipt }) && {
-            dot: item?.id === currentSection ? <BsRecordCircleFill className={styles.activeForm} /> : <FaCheckCircle />,
-            children: <p onClick={() => onHandle(item?.id)}>{item?.title}</p>,
-            className: item?.id === currentSection ? 'active' : 'noactive',
-            // }
-        }));
-    const finalItem = items?.filter((i) => i);
+    const onHandle = (key) => {
+        selectedOrder && setCurrentSection(key);
+    };
 
-    return finalItem && <Timeline items={finalItem} />;
+    const items = deliveryNoteSectionList
+        ?.filter((i) => i?.displayOnList)
+        ?.map(
+            (item) =>
+                validateDeliveryNote({ item, soldByDealer }) && {
+                    dot: getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType })?.menuNavIcon,
+                    children: (
+                        <div className={className(item?.id)} onClick={() => ((!formActionType?.addMode || (formActionType?.addMode && item?.id <= previousSection)) && currentSection !== VEHICLE_DELIVERY_NOTE_SECTION.THANK_YOU_PAGE.id ? onHandle(item?.id) : '')}>
+                            {item.title}
+                        </div>
+                    ),
+                    className: getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType })?.activeClassName,
+                }
+        )
+        .filter((i) => i);
+
+    return items && <Timeline items={items} />;
 };
 
 export default MenuNav;

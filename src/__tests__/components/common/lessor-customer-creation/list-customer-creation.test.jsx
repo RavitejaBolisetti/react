@@ -1,31 +1,19 @@
 import '@testing-library/jest-dom/extend-expect';
 import { ListCustomerCreation } from '@components/common/LessorCustomerCreation/ListCustomerCreation';
 import customRender from '@utils/test-utils';
-import { fireEvent, screen } from '@testing-library/react';
+import { fireEvent, screen, act } from '@testing-library/react';
 import React from 'react';
 import { configureStore } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
 import { rootReducer } from 'store/reducers';
-// import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
-// import createMockStore from 'redux-mock-store';
 
-
-// jest.mock('ListCustomerCreation', () => {
-//     return Object.assing({}, jest.requireActual('ListCustomerCreation'), {
-//       __esModule: true,
-//       ListCustomerCreation: jest.fn(),
-//     })
-// });
-
-export const AvailableThemesContext = React.createContext();
 export const createMockStore = (initialState) => {
     const mockStore = configureStore({
         reducer: rootReducer,
         preloadedState: initialState,
         middleware: [thunk],
     });
-
     return mockStore;
 };
 
@@ -33,104 +21,142 @@ afterEach(() => {
     jest.restoreAllMocks();
 });
 
+const fetchStateLovList = jest.fn();
+const fetchViewDocument = jest.fn();
+const fetchList = jest.fn();
+
 
 describe('ListCustomerCreation components', () => {
-    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
 
-    it('should render fetchStateLovList func',()=>{
+    it('isStateDataLoaded', () => {
         const mockStore = createMockStore({
             auth: { userId: 123 },
-            data:{
-                ConfigurableParameterEditing:{typeData:[]},
-                SupportingDocument:{isSupportingDataLoaded:false},
-                Geo:{State:{isStateDataLoaded:false}}
+            data: {
+                Geo: { State: { isStateDataLoaded: false } }
             },
         });
 
         customRender(
-            // <AvailableThemesContext.Provider value={mockStore}>
-            //     <ListCustomerCreation fetchStateLovList={jest.fn()} />
-            // </AvailableThemesContext.Provider>
 
             <Provider store={mockStore}>
-              <ListCustomerCreation fetchStateLovList={jest.fn()} />
+                <ListCustomerCreation fetchStateLovList={jest.fn()} />
             </Provider>
         );
     })
 
     it('should render upload button', () => {
-        const props = {
-            handleOnClick:jest.fn(),
-            setButtonData:jest.fn({ ...defaultBtnVisiblity, saveAndNewBtn: false, cancelBtn: true, saveBtn: true }),
-            setDownLoadForm:jest.fn(false),
-            setIsFormVisible:jest.fn(true),
-            onCloseAction:jest.fn(),
-            resetData:jest.fn(),
-            resetViewData:jest.fn(),
-            setFileList:jest.fn([]),
-        }
-        customRender(<ListCustomerCreation {...props} />);
+        customRender(<ListCustomerCreation />);
 
-        const uploadBtn = screen.getByRole('button', {name:'Upload'});
+        const uploadBtn = screen.getByRole('button', { name: 'Upload' });
         fireEvent.click(uploadBtn);
 
-        const headingUpload = screen.getByRole('heading', {name:'Click or drop your file here to upload'});
-        expect(headingUpload).toBeTruthy();
-
-        const cancelBtn = screen.getByRole('button', {name:'Cancel'});
+        const cancelBtn = screen.getByRole('button', { name: 'Cancel' });
         fireEvent.click(cancelBtn)
     });
 
-    it('should render download template button', () => {
-        const props = {
-            handleOnClick:jest.fn(),
-            // setButtonData:jest.fn({ ...defaultBtnVisiblity, saveAndNewBtn: false, cancelBtn: true, saveBtn: true }),
-            setDownLoadForm:jest.fn(),
-            setIsFormVisible:jest.fn(),
-            handleTemplateDownLoad:jest.fn(),
-            // onSuccessAction:jest.fn(),
-            // onErrorAction:jest.fn(),
-            // showGlobalNotification:jest.fn(),
-            // downloadFile:jest.fn(),
-            // resetData:jest.fn(),
-            // onFinish:jest.fn(),
-            // onSuccess:jest.fn(),
-            // onError:jest.fn(),
-        }
+    it('should render Save button', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 123 },
+            data: {
+                ConfigurableParameterEditing: { filteredListData: { FILE_DOWNLOAD_TMPLT: [{ key: 'VCLPRCMSTTMPLT' }] } },
+                LessorCustomerCreation: { isLoaded: false, data: { docId: '1234' } },
+                SupportingDocument: { isLoaded: false, data:{ docId: '1234' }  },
+                CustomerMaster: {ViewDocument: { isLoaded: false, data: { docId: '1234' } },},
+                Geo: {State: { isFilteredListLoaded: false, isLoading: false, filteredListData: { docId: '1234' }  },},
+            },
+        });
 
-        const typeData = [{
-            FILE_DOWNLOAD_TMPLT:[{
-                id: "123",
-                key: "ADMINAUTHTMPLT",
-                parentKey: "FILE_DOWNLOAD_TMPLT"}]
-        }]
+        const saveData = jest.fn();        
+        customRender(
+            <Provider store={mockStore}>
+                <ListCustomerCreation saveData={saveData} fetchList={fetchList} fetchViewDocument={fetchViewDocument} fetchStateLovList={fetchStateLovList} uploadButtonName={'Upload Lessor Form'} />
+            </Provider>
+        );
 
-        customRender(<ListCustomerCreation {...props} typeData={typeData}/>);
-
-        const uploadBtn = screen.getByRole('button', {name:'Upload'});
+        const uploadBtn = screen.getByRole('button', { name: 'Upload' });
         fireEvent.click(uploadBtn);
 
-        
+        const downloadTemplate = screen.getByRole('button', { name: 'Download Template' });
+        fireEvent.click(downloadTemplate);
 
-        // const saveBtn = screen.getByRole('button', {name:'Save'});
-        // fireEvent.click(saveBtn)
+        const uploadLessor = screen.getByRole('button', { name: 'Upload Lessor Form' });
+        fireEvent.click(uploadLessor);
 
-        
-
-        // const downloadTemplateBtn = screen.getByRole('button', {name:'Download Template'});
-        // fireEvent.click(downloadTemplateBtn)
+        const saveBtn = screen.getByRole('button', { name: 'Save' });
+        fireEvent.click(saveBtn)
     });
 
     it('should render download button', () => {
-        const props = {
-            handleDownload:jest.fn(),
-            setButtonData:jest.fn({ ...defaultBtnVisiblity, cancelBtn: true, saveAndNewBtn: false, saveBtn: false }),
-            setDownLoadForm:jest.fn(true),
-            setIsFormVisible:jest.fn(true)
-        }
-        customRender(<ListCustomerCreation {...props} />);
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                ConfigurableParameterEditing: {
+                    filteredListData: {
+                        FILE_DOWNLOAD_TMPLT: [{ key: 'VCLPRCMSTTMPLT' }],
+                    },
+                },
+            },
+        });
+        customRender(
+            <Provider store={mockStore}>
+                <ListCustomerCreation />
+            </Provider>
+        );
 
-        const downloadBtn = screen.getByRole('button', {name:'Download'});
-        fireEvent.click(downloadBtn);
+        const downloadBtn = screen.getAllByRole('button', { name: 'Download' });
+        fireEvent.click(downloadBtn[0]);
+
+        const download = screen.getAllByRole('button', { name: 'Download' });
+        fireEvent.click(download[1]);
     });
+
+    it("Download Template", () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                ConfigurableParameterEditing: { filteredListData: { FILE_DOWNLOAD_TMPLT: [{ key: 'VCLPRCMSTTMPLT' }], }, },
+            },
+        });
+        customRender(
+            <Provider store={mockStore}>
+                <ListCustomerCreation />
+            </Provider>
+        );
+        const uploadBtn = screen.getByRole('button', { name: 'Upload' });
+        fireEvent.click(uploadBtn);
+
+        const downloadTemplate = screen.getByRole('button', { name: 'Download Template' });
+        fireEvent.click(downloadTemplate);
+    })
+
+    it("State Name", () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                ConfigurableParameterEditing: { filteredListData: { FILE_DOWNLOAD_TMPLT: [{ key: 'VCLPRCMSTTMPLT' }] } },
+                LessorCustomerCreation: { isLoaded: false, data: { docId: '106' } },
+                Geo: {
+                    State: { isFilteredListLoaded: false, isLoading: false, filteredListData: [{ key: '26', parentKey: 'IND', value: "Delhi" }] },
+                },
+            },
+        });
+        customRender(
+            <Provider store={mockStore}>
+                <ListCustomerCreation />
+            </Provider>
+        );
+
+        const downloadBtn = screen.getAllByRole('button', { name: 'Download' });
+        fireEvent.click(downloadBtn[0]);
+
+        const stateBox = screen.getByRole('combobox', { name: 'State Name' });
+        act(async () => {
+            fireEvent.change(stateBox, { target: { value: 'Delhi' } });
+            const delhiState = screen.getByText(/Delhi/i);
+            fireEvent.click(delhiState);
+        });
+
+        const download = screen.getAllByRole('button', { name: 'Download' });
+        fireEvent.click(download[1]);
+    })
 });

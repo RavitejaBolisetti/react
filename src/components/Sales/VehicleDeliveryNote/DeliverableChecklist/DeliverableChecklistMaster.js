@@ -3,52 +3,155 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
-import { Row, Col } from 'antd';
+import React, { useState, useEffect, useMemo } from 'react';
+import { Form, Row, Col } from 'antd';
 
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { showGlobalNotification } from 'store/actions/notification';
+import { DeliverableChecklistMaindataActions } from 'store/actions/data/vehicleDeliveryNote';
 
-import { tableColumn } from './tableColumn';
-import styles from 'assets/sass/app.module.scss';
-import { ListDataTable } from 'utils/ListDataTable';
+import { AddEditForm } from './AddEditForm';
+import { ViewDetail } from './ViewDetails';
 import { VehicleDeliveryNoteFormButton } from '../VehicleDeliveryNoteFormButton';
+import { tableColumn } from './tableCoulmn';
 
-export const DeliverableChecklistMasterBase = (props) => {
-    const { section } = props;
-    // const [selectionType, setSelectionType] = useState('checkbox');
+import styles from 'assets/sass/app.module.scss';
 
-    // const extraParams = [
-    //     {
-    //         key: 'vin',
-    //         title: 'vin',
-    //         value: selectedRecordId,
-    //         name: 'VIN ',
-    //     },
-    // ];
-    // const errorAction = (message) => {
-    //     showGlobalNotification(message);
-    // };
+const mapStateToProps = (state) => {
+    const {
+        auth: { userId },
+        data: {
+            VehicleDeliveryNote: {
+                DeliverableChecklistMain: { isLoaded: isChecklistDataLoaded = false, isLoading: isChecklistDataLoading, data: ChecklistData = [] },
+            },
+            ConfigurableParameterEditing: { filteredListData: typeData = [] },
+        },
+    } = state;
 
-    // const onSuccessAction = (res) => {
-    //     showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-    // };
+    let returnValue = {
+        userId,
+        isChecklistDataLoaded,
+        isChecklistDataLoading,
+        ChecklistData,
+        typeData,
+    };
+    return returnValue;
+};
 
-    // useEffect(() => {
-    //     if (userId && selectedRecordId) {
-    //         fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction, userId });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [userId, selectedRecordId]);
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    ...bindActionCreators(
+        {
+            fetchList: DeliverableChecklistMaindataActions.fetchList,
+            saveData: DeliverableChecklistMaindataActions.saveData,
+            listShowLoading: DeliverableChecklistMaindataActions.listShowLoading,
+            resetData: DeliverableChecklistMaindataActions.reset,
+            showGlobalNotification,
+        },
+        dispatch
+    ),
+});
 
-    const myProps = {
-        ...props,
-        buttonData: { ...props.buttonData, editBtn: false, nextBtn: true, saveBtn: false },
+const DeliverableChecklistMain = (props) => {
+    const { userId, isChecklistDataLoaded, isChecklistDataLoading, ChecklistData, deliveryNoteOnFinish } = props;
+    const { selectedOrder, handleButtonClick } = props;
+    const { fetchList, listShowLoading, showGlobalNotification } = props;
+    const { form, selectedCheckListId, section, formActionType, handleFormValueChange, NEXT_ACTION, requestPayload, setRequestPayload } = props;
+
+    const [isReadOnly, setIsReadOnly] = useState(false);
+    const [aggregateForm] = Form.useForm();
+    const [AdvanceformData, setAdvanceformData] = useState([]);
+    const [isEditing, setisEditing] = useState();
+    const [checkListDataModified, setcheckListDataModified] = useState([]);
+    const onSuccessAction = (res) => {
+        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
-    const tableData = [{}];
+    const onErrorAction = (message) => {
+        showGlobalNotification({ message: message });
+    };
+    const extraParams = useMemo(() => {
+        return [
+            { key: 'checklistType', title: 'checklistType', value: 'VDCL', name: 'Checklist Type' },
+            { key: 'modelGroupCode', title: 'modelGroupCode', value: selectedOrder?.modelGroup, name: 'Model Group Code' },
+        ];
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedOrder]);
+
+    useEffect(() => {
+        if (userId && selectedOrder?.modelGroup && !isChecklistDataLoaded) {
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, selectedOrder, isChecklistDataLoaded]);
+
+    useEffect(() => {
+        if (isChecklistDataLoaded && ChecklistData?.length > 0) {
+            setcheckListDataModified(
+                ChecklistData?.map((element) => {
+                    return { ...element, ismodified: false };
+                })
+            );
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isChecklistDataLoaded, ChecklistData, formActionType]);
+
+    const onFinish = (values) => {
+        deliveryNoteOnFinish();
+    };
+    const onFinishFailed = () => {
+        form.validateFields()
+            .then(() => {})
+            .catch(() => {});
+    };
+    const handleCheckListClick = ({ buttonAction, record, index }) => {
+        setAdvanceformData({ ...record, index: index });
+        aggregateForm.resetFields();
+        setisEditing(true);
+        setIsReadOnly(true);
+    };
+
+    const tableProps = {
+        isLoading: isChecklistDataLoading,
+        tableColumn: tableColumn({ handleButtonClick: handleCheckListClick, formActionType }),
+        tableData: checkListDataModified,
+        showAddButton: false,
+    };
+
+    const formProps = {
+        selectedOrder,
+        formActionType,
+        showGlobalNotification,
+        selectedCheckListId,
+        form,
+        checkListDataModified,
+        setcheckListDataModified,
+        handleFormValueChange,
+        isReadOnly,
+        setIsReadOnly,
+        aggregateForm,
+        tableProps,
+        AdvanceformData,
+        setAdvanceformData,
+        isEditing,
+        setisEditing,
+        requestPayload,
+        setRequestPayload,
+    };
+
+    const viewProps = {
+        styles,
+        isChecklistDataLoading,
+        checkListDataModified,
+        setcheckListDataModified,
+        formActionType,
+        tableProps,
+    };
 
     return (
-        <>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>
@@ -56,17 +159,15 @@ export const DeliverableChecklistMasterBase = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                     </Row>
-
-                    <ListDataTable pagination={false} tableColumn={tableColumn()} tableData={tableData} />
+                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
                 </Col>
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <VehicleDeliveryNoteFormButton {...myProps} />
+                    <VehicleDeliveryNoteFormButton {...props} />
                 </Col>
             </Row>
-        </>
+        </Form>
     );
 };
-
-export const DeliverableChecklistMaster = connect(null, null)(DeliverableChecklistMasterBase);
+export const DeliverableChecklistMaster = connect(mapStateToProps, mapDispatchToProps)(DeliverableChecklistMain);

@@ -16,19 +16,16 @@ export const DocTypeAcMappingMaster = (props) => {
     const [mainFomEdit, setMainFormEdit] = useState(false);
 
     const addDocHeadMapping = (val) => {
-        docTypeHeadMappingForm
-            .validateFields()
-            .then(() => {
-                let data = docTypeHeadMappingForm.getFieldsValue();
+        docTypeHeadMappingForm.validateFields().then(() => {
+            let data = docTypeHeadMappingForm.getFieldsValue();
 
-                let updateData = { ...data, internalId: Math.floor(Math.random() * 100000000 + 1), id: '' };
-                setDocTypeHeadMappingList((item) => [updateData, ...item]);
-                docTypeHeadMappingForm.resetFields();
-                forceUpdate();
-                setButtonData({ ...buttonData, formBtnActive: true });
-                // handleCodeFunction();
-            })
-            .catch((error) => console.log(error));
+            let updateData = { ...data, internalId: Math.floor(Math.random() * 100000000 + 1), id: '' };
+            setDocTypeHeadMappingList((item) => [updateData, ...item]);
+            docTypeHeadMappingForm.resetFields();
+            forceUpdate();
+            setButtonData({ ...buttonData, formBtnActive: true });
+            // handleCodeFunction();
+        });
     };
 
     const cardAttributeProps = {

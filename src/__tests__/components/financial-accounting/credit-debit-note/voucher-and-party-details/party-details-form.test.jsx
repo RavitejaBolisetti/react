@@ -33,7 +33,9 @@ describe('PartyDetailsForm components', () => {
     }];
 
     it('Party ID textbox, search img', () => {
-        customRender(<FormWrapper typeData={typeData} handlePartyIdChange={jest.fn()} handleSearchParamSearch={jest.fn()} />);
+        const formActionType = {addMode: true, editMode: false, viewMode: false};
+        
+        customRender(<FormWrapper typeData={typeData} handlePartyIdChange={jest.fn()} handleSearchParamSearch={jest.fn()} formActionType={formActionType} />);
 
         const partyId = screen.getByRole('textbox', {name:'Party ID'});
         fireEvent.change(partyId, {target:{name:'test'}});

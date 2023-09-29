@@ -10,7 +10,7 @@ import { doLogout, unAuthenticateUser } from '../../actions/auth';
 import { LANGUAGE_EN } from 'language/en';
 
 export const dataActions = (params) => {
-    const { baseURL: inBaseURL, RECEIVE_DATA_LOADING_ACTION_CONSTANT, RECEIVE_DATA_ACTION_CONSTANT, RECEIVE_DATA_ACTION_APPLY_FILTER_CONSTANT, RECEIVE_FILTERED_DATA_ACTION_CONSTANT, RECIEVE_DATA_DETAIL_ACTION_CONSTANT, RESET_DATA_ACTION_CONSTANT, SAVE_FORM_DATA_LOADING_CONSTANT, RECEIVE_CHANGE_HISTORY_DATA_ACTION_CONSTANT, RECEIVE_CHANGE_HISTORY_DATA_LOADING_ACTION_CONSTANT } = params;
+    const { baseURL: inBaseURL, RECEIVE_DATA_LOADING_ACTION_CONSTANT, RECEIVE_DATA_ACTION_CONSTANT, RECEIVE_DATA_ACTION_APPLY_FILTER_CONSTANT, RECEIVE_FILTERED_DATA_ACTION_CONSTANT, RECIEVE_DATA_DETAIL_ACTION_CONSTANT, RESET_DATA_ACTION_CONSTANT, SAVE_FORM_DATA_LOADING_CONSTANT, RECEIVE_CHANGE_HISTORY_DATA_ACTION_CONSTANT, RECEIVE_CHANGE_HISTORY_DATA_LOADING_ACTION_CONSTANT, RESET_DETAIL_DATA_ACTION_CONSTANT } = params;
 
     const saveFormShowLoading = (isLoading) => ({
         type: SAVE_FORM_DATA_LOADING_CONSTANT,
@@ -54,6 +54,9 @@ export const dataActions = (params) => {
 
     const resetData = () => ({
         type: RESET_DATA_ACTION_CONSTANT,
+    });
+    const resetDetailData = () => ({
+        type: RESET_DETAIL_DATA_ACTION_CONSTANT,
     });
 
     const innerDataActions = {
@@ -103,7 +106,7 @@ export const dataActions = (params) => {
         }),
 
         fetchFilteredList: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-            const { setIsLoading, data } = params;
+            const { setIsLoading, data, extraParams = [] } = params;
             setIsLoading(true);
 
             const onError = (errorMessage) => {
@@ -119,10 +122,16 @@ export const dataActions = (params) => {
                 }
             };
 
+            let sExtraParamsString = '?';
+            extraParams?.forEach((item, index) => {
+                sExtraParamsString += item?.value && item?.key ? item?.value && item?.key + '=' + item?.value + '&' : '';
+            });
+
+            sExtraParamsString = sExtraParamsString.substring(0, sExtraParamsString.length - 1);
             const apiCallParams = {
                 data,
                 method: 'get',
-                url: inBaseURL + '/lov',
+                url: inBaseURL + '/lov' + (sExtraParamsString ? sExtraParamsString : ''),
                 token,
                 accessToken,
                 userId,
@@ -302,7 +311,6 @@ export const dataActions = (params) => {
             };
 
             const onSuccess = (response) => {
-                //console.log('res', response.blob());
                 // if (response) {
                 //     response.blob().then((blob) => {
                 //         let url = window.URL.createObjectURL(blob.blob());
@@ -312,28 +320,21 @@ export const dataActions = (params) => {
                 //         a.click();
                 //     });
                 // }
-
                 // if (data) {
-
                 //     const blob = new Blob([data], { type: 'text/csv' });
-
                 //     // Creating an object for downloading url
                 //     const href = window.URL.createObjectURL(blob)
-
                 //     // console.log('res?.data', data);
                 //     // onSuccessAction && onSuccessAction(res);
                 //     // dispatch(recieveData(type ? res?.data?.hierarchyAttribute : res?.data));
-
                 //     // create file link in browser's memory
                 //     // const href = URL.createObjectURL(res);
-
                 //     // create "a" HTML element with href to file & click
                 //     const link = document.createElement('a');
                 //     link.href = href;
                 //     link.setAttribute('download', 'file.csv'); //or any other extension
                 //     document.body.appendChild(link);
                 //     link.click();
-
                 //     // clean up "a" element & remove ObjectURL
                 //     document.body.removeChild(link);
                 //     URL.revokeObjectURL(href);
@@ -408,6 +409,9 @@ export const dataActions = (params) => {
 
         reset: () => (dispatch) => {
             dispatch(resetData());
+        },
+        resetDetail: () => (dispatch) => {
+            dispatch(resetDetailData());
         },
         setFilter: (filter) => (dispatch) => {
             dispatch(setFilter(filter));

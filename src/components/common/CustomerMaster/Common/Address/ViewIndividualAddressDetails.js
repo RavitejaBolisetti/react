@@ -25,6 +25,7 @@ const ViewIndividualAddressDetailsBase = (props) => {
                     <Descriptions.Item label="Address Type">{checkAndSetDefaultValue(getCodeValue(addData, formData?.addressType), isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Address Line 1">{checkAndSetDefaultValue(formData?.addressLine1, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Address Line 2">{checkAndSetDefaultValue(formData?.addressLine2, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Address Line 3">{checkAndSetDefaultValue(formData?.addressLine3, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Pincode">{checkAndSetDefaultValue(formData?.pinCode, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Tehsil">{checkAndSetDefaultValue(formData?.tehsilName, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="City">{checkAndSetDefaultValue(formData?.cityName, isLoading)}</Descriptions.Item>

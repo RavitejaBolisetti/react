@@ -12,33 +12,34 @@ import { AddEditForm } from './AddEditForm';
 import { CustomerDetailsMaster } from 'components/Sales/VehicleInvoiceGeneration/CustomerDetails';
 
 import styles from 'assets/sass/app.module.scss';
+import { formattedCalendarDate } from 'utils/formatDateTime';
 
 const InvoiceDetailsMasterBase = (props) => {
-    const { typeData, selectedOrder, fetchInvoiceDetail, listShowLoading, vehicleInvoiceMasterData, selectedOrderId } = props;
-    const { userId, buttonData, setButtonData, showGlobalNotification, section, isDataLoaded, isLoading, invoiceDetailForm } = props;
-    const { form, formActionType, handleFormValueChange, selectedOtfNumber, setSelectedOtfNumber } = props;
-    const { FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch } = props;
+    const { typeData, vehicleInvoiceMasterData, selectedOrderId } = props;
+    const { userId, buttonData, setButtonData, section, isDataLoaded, isLoading, invoiceDetailForm } = props;
+    const { formActionType, selectedOtfNumber, setSelectedOtfNumber } = props;
 
-    const [activeKey, setActiveKey] = useState([]);
+    const { FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch, CustomerForm, showGlobalNotification, salesConsultantLovData } = props;
 
-    const onErrorAction = (message) => {
-        showGlobalNotification({ message });
-    };
-
+    const [activeKey, setActiveKey] = useState([3]);
     useEffect(() => {
-        if (userId && selectedOrder?.invoiceNumber) {
-            const extraParams = [
-                {
-                    key: 'invoiceNumber',
-                    title: 'invoiceNumber',
-                    value: selectedOrder?.invoiceNumber,
-                    name: 'Invoice Number',
-                },
-            ];
-            fetchInvoiceDetail({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+        if (!selectedOrderId) {
+            CustomerForm.resetFields();
+        } else if (vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto) {
+            CustomerForm.setFieldsValue({
+                bookingCustomer: { ...vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.bookingCustomer, birthDate: formattedCalendarDate(vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.bookingCustomer?.birthDate) },
+                billingCustomer: { ...vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.billingCustomer, birthDate: formattedCalendarDate(vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.billingCustomer?.birthDate) },
+            });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOrder?.invoiceNumber]);
+    }, [vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto, selectedOrderId]);
+
+    useEffect(() => {
+        if (selectedOtfNumber) {
+            setButtonData({ ...buttonData, formBtnActive: true });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedOtfNumber]);
 
     const handleChange = (e) => {
         setButtonData({ ...buttonData, formBtnActive: false });
@@ -47,9 +48,17 @@ const InvoiceDetailsMasterBase = (props) => {
     const onFinish = (values) => {
         const { otfDetailsRequest, ...bookingAndBillingCustomerDto } = values;
         if (!Object?.keys(bookingAndBillingCustomerDto)?.length) {
-            setRequestPayload({ ...requestPayload, invoiceDetails: { otfDetailsRequest, bookingAndBillingCustomerDto: { ...vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto } } });
+            if (!requestPayload?.invoiceDetails?.bookingAndBillingCustomerDto?.billingCustomer) {
+                showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please provide billing customer details' });
+                setActiveKey([3, 2]);
+                return false;
+            } else if (!requestPayload?.invoiceDetails?.bookingAndBillingCustomerDto?.bookingCustomer) {
+                showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please provide booking customer details' });
+                setActiveKey([3, 1]);
+                return false;
+            } else setRequestPayload({ ...requestPayload, invoiceDetails: { otfDetailsRequest, bookingAndBillingCustomerDto: { ...requestPayload?.invoiceDetails?.bookingAndBillingCustomerDto } } });
         } else {
-            setRequestPayload({ ...requestPayload, invoiceDetails: { otfDetailsRequest, bookingAndBillingCustomerDto: { ...bookingAndBillingCustomerDto } } });
+            setRequestPayload({ ...requestPayload, invoiceDetails: { otfDetailsRequest, bookingAndBillingCustomerDto: CustomerForm.getFieldsValue() } });
         }
         handleButtonClick({ buttonAction: NEXT_ACTION });
         setButtonData({ ...buttonData, formBtnActive: false });
@@ -60,7 +69,7 @@ const InvoiceDetailsMasterBase = (props) => {
     const formProps = {
         ...props,
         formName: 'otfDetailsRequest',
-        form,
+        form: CustomerForm,
         typeData,
         handleChange,
         formActionType,
@@ -74,6 +83,7 @@ const InvoiceDetailsMasterBase = (props) => {
         wrapForm: false,
         handleBookingNumberSearch,
         selectedOrderId,
+        styles,
     };
 
     const viewProps = {
@@ -83,10 +93,14 @@ const InvoiceDetailsMasterBase = (props) => {
         isLoading,
         wrapForm: false,
         selectedOrderId,
+        salesConsultantLovData,
     };
-
+    const CustomerDetailsMasterProps = {
+        ...formProps,
+        formData: vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto,
+    };
     return (
-        <Form layout="vertical" autoComplete="off" form={invoiceDetailForm} onValuesChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={invoiceDetailForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>
@@ -94,17 +108,11 @@ const InvoiceDetailsMasterBase = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                     </Row>
-                    {formActionType?.viewMode ? (
-                        <>
-                            <ViewDetail {...viewProps} formData={vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest} />
-                            <CustomerDetailsMaster {...viewProps} formData={vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto} />
-                        </>
-                    ) : (
-                        <>
-                            <AddEditForm {...formProps} formData={vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest} />
-                            <CustomerDetailsMaster {...formProps} formData={vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto} />
-                        </>
-                    )}
+                    {formActionType?.viewMode ? <ViewDetail {...viewProps} formData={vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest} /> : <AddEditForm {...formProps} formData={vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest} />}
+
+                    <Form layout="vertical" autoComplete="off" form={CustomerForm}>
+                        <CustomerDetailsMaster {...CustomerDetailsMasterProps} />
+                    </Form>
                 </Col>
             </Row>
             <Row>

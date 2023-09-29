@@ -16,6 +16,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { convertDateToCalender } from 'utils/formatDateTime';
+import { PAGE_TYPE } from 'components/Sales/VehicleDeliveryNote/utils/pageType';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -66,7 +67,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const FinananceDetailsMasterBase = (props) => {
     const { saveData, resetData, fetchList, userId, listShowLoading, financeData, isFinanceLovDataLoaded, setFormActionType, isFinanceLovLoading, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, section, isLoading } = props;
     const { typeData, form, selectedOrderId, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION } = props;
-    const { formKey, onFinishCustom = undefined, FormActionButton, StatusBar, pageType } = props;
+    const { formKey, onFinishCustom = undefined, onFinishDeliveryNoteCustom = undefined, FormActionButton, StatusBar, pageType } = props;
 
     const [isFormVisible, setIsFormVisible] = useState(false);
 
@@ -127,6 +128,7 @@ export const FinananceDetailsMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
+        // if (pageType === PAGE_TYPE?.OTF_PAGE_TYPE?.key) {
         const recordId = financeData?.id || '';
         const data = { ...values, id: recordId, otfNumber: selectedOrderId, doDate: values?.doDate };
 
@@ -153,6 +155,11 @@ export const FinananceDetailsMasterBase = (props) => {
 
             saveData(requestData);
         }
+        // } else {
+        //     const financeDetailsRequest = { ...values };
+        //     handleButtonClick({ buttonAction: NEXT_ACTION });
+        //     setRequestPayload({ ...requestPayload, financeDetails: financeDetailsRequest });
+        // }
     };
 
     const onFinishFailed = () => {};

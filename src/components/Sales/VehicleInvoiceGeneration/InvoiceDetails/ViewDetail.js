@@ -10,11 +10,12 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import styles from 'assets/sass/app.module.scss';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { prepareCaption } from 'utils/prepareCaption';
+import { getCodeValue } from 'utils/getCodeValue';
 
 const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading } = props;
+    const { formData, isLoading, typeData, salesConsultantLovData } = props;
     const [activeKey, setactiveKey] = useState([]);
     const viewProps = {
         bordered: false,
@@ -49,12 +50,12 @@ const ViewDetailMain = (props) => {
                             <Divider />
                             <Descriptions {...viewProps} title={prepareCaption('Price Information')}>
                                 <Descriptions.Item label="Booking Number">{checkAndSetDefaultValue(formData?.bookingNumber || formData?.otfNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Booking Date">{checkAndSetDefaultValue(formData?.otfDate, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Tax Calculation">{checkAndSetDefaultValue(formData?.taxCalculationType, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Tax Payable On Reverse Charges?">{checkAndSetDefaultValue(formData?.taxPayableOnReverseCharges, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Booking Date">{checkAndSetDefaultValue(formData?.otfDate ? formData?.otfDate : formData?.orderDate, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Tax Calculation">{checkAndSetDefaultValue(getCodeValue(typeData?.TAX_CALCLTN_TYPE, formData?.taxCalculationType), isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Tax Payable On Reverse Charges?">{checkAndSetDefaultValue(getCodeValue(typeData?.RFRL, formData?.taxPayableOnReverseCharges), isLoading)}</Descriptions.Item>
                             </Descriptions>
                             <Descriptions {...viewProps} title={prepareCaption('Sales Details')}>
-                                <Descriptions.Item label="Sales Consultant Name">{checkAndSetDefaultValue(formData?.saleConsultant, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Sales Consultant Name">{checkAndSetDefaultValue(getCodeValue(salesConsultantLovData, formData?.saleConsultant), isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Influence/Mitra Type">{checkAndSetDefaultValue(formData?.mitraType, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Influence/Mitra Name">{checkAndSetDefaultValue(formData?.mitraName, isLoading)}</Descriptions.Item>
                             </Descriptions>

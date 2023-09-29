@@ -9,7 +9,7 @@ import CardDocTypeAcMapping from './DocTypeAcHeadMapping/CardDocTypeAcMapping';
 import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
 const { Panel } = Collapse;
 
-const expandIcon = ({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />);
+const expandIcon = ({ isActive             }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />);
 const ViewDetailBase = ({ formData, styles, parameterType, typeData, docTypeLedger, setDisabledEdit }) => {
     const viewOneColProps = {
         bordered: false,
@@ -19,7 +19,7 @@ const ViewDetailBase = ({ formData, styles, parameterType, typeData, docTypeLedg
     };
     return (
         <>
-            <div className={styles.viewContainer}>
+            <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
                     <Descriptions.Item label="Application Menu">{docTypeLedger?.applicationName}</Descriptions.Item>
                     <Descriptions.Item label="Document Name">{docTypeLedger?.documentTypeName}</Descriptions.Item>

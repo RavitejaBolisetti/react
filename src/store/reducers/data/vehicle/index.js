@@ -21,8 +21,15 @@ import { VehiclePurchaseOrderDetail } from './vehiclePurchaseOrderDetails';
 import { ViewVPODetail } from './viewVPODetails';
 import { SaveVPODetail } from './vehiclePurchaseOrder';
 import { DealerLocationDetail } from './dealerLocation';
+import { OnRoadPriceMasterDetails } from './onRoadPriceMasterDetails';
+
+import { ViewOnRoadPriceDetails } from './viewOnRoadPriceDetails';
+
 import { VehicleAllotPriorityDetail } from './vehicleAllotmentPriorityDetails';
 import { VehicleAllotPriorDetail } from './vehicleAllotPriorityDetails'; 
+
+import { VinBlockMasterDetails } from './vinBlockMasterDetails';
+import { VinBlockDetails } from './vinBlockDetails';
 
 
 export const Vehicle = combineReducers({
@@ -42,6 +49,10 @@ export const Vehicle = combineReducers({
     ViewVPODetail,
     SaveVPODetail,
     DealerLocationDetail,
+    OnRoadPriceMasterDetails,
+    ViewOnRoadPriceDetails,
     VehicleAllotPriorityDetail,
     VehicleAllotPriorDetail,
+    VinBlockMasterDetails,
+    VinBlockDetails,
 });

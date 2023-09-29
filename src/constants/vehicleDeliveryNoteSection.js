@@ -42,8 +42,14 @@ export const VEHICLE_DELIVERY_NOTE_SECTION = {
     },
     DELIVERABLE_CHECKLIST: {
         id: 7,
-        title: 'Deleverable Checklist',
+        title: 'Deliverable Checklist',
         advance: false,
         displayOnList: true,
+    },
+    THANK_YOU_PAGE: {
+        id: 8,
+        title: 'Thank You',
+        advance: false,
+        displayOnList: false,
     },
 };

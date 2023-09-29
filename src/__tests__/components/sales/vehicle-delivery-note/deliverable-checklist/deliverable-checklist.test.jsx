@@ -8,6 +8,6 @@ afterEach(() => {
 
 describe('Deliverable checklist Master components', () => {
     it('should render components', () => {
-        customRender(<DeliverableChecklistMaster />);
+        customRender(<DeliverableChecklistMaster setButtonData={jest.fn()} />);
     });
 });

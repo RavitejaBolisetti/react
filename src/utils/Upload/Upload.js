@@ -205,7 +205,7 @@ const UploadBase = (props) => {
         onDownload,
         showUploadList: {
             showRemoveIcon,
-            showDownloadIcon,
+            showDownloadIcon: uploadTime ? false : true,
             removeIcon: removeIcon,
             downloadIcon: <AiOutlineEye className={styles.iconSize} />,
             showProgress,

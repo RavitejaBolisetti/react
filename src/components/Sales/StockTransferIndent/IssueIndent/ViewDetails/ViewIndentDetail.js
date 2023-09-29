@@ -26,7 +26,7 @@ const ViewIndentDetailMain = (props) => {
     };
 
     return (
-        <Card className={styles.drawerCardView}>
+        <Card>
             <Descriptions {...viewProps}>
                 <Descriptions.Item label="Indent Number">{checkAndSetDefaultValue(viewData?.indentNumber, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Indent Date">{checkAndSetDefaultValue(viewData?.indentDate, isLoading)}</Descriptions.Item>

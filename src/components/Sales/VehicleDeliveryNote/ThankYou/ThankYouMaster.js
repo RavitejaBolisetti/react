@@ -4,19 +4,45 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 
-import { Row, Col, Space, Avatar, Typography } from 'antd';
+import { Row, Col, Space, Avatar, Typography, Card, Divider, Button } from 'antd';
 
-import { VehicleReceiptFormButton } from '../VehicleDeliveryNoteFormButton';
+import { VehicleDeliveryNoteFormButton } from '../VehicleDeliveryNoteFormButton';
 import { LANGUAGE_EN } from 'language/en';
 import { HiCheck } from 'react-icons/hi';
 
 import styles from 'assets/sass/app.module.scss';
+import { CopytoClipboard } from 'utils/CopytoClipboard';
 
 const { Title, Text } = Typography;
 
 export const ThankYouMaster = (props) => {
-    const title = LANGUAGE_EN.GENERAL.THANK_YOU_PAGE_OTF.TITLE;
-    const message = LANGUAGE_EN.GENERAL.THANK_YOU_PAGE_OTF.MESSAGE.replace('{ORDER_ID}', props?.selectedOrderId);
+    const { handlePrintDownload, record, selectedOrder } = props;
+    const invoiceType = props?.soldByDealer ? 'Note' : 'Challan';
+
+    const message = selectedOrder?.responseMessage?.split('.')?.[0];
+    const deliveryNoteNo = selectedOrder?.responseMessage?.split('. ')?.[1];
+
+    const defaultBtnVisiblity = {
+        editBtn: false,
+        saveBtn: false,
+        cancelBtn: false,
+        saveAndNewBtn: false,
+        saveAndNewBtnClicked: false,
+        closeBtn: true,
+        formBtnActive: false,
+        cancelOTFBtn: false,
+        transferOTFBtn: false,
+        allotBtn: false,
+        unAllotBtn: false,
+        invoiceBtn: false,
+        deliveryNote: false,
+        changeHistory: false,
+        otfSoMappingHistoryBtn: false,
+    };
+    const thankProp = {
+        ...props,
+        buttonData: { ...defaultBtnVisiblity },
+    };
 
     return (
         <>
@@ -24,14 +50,31 @@ export const ThankYouMaster = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.fullyCentered}>
                     <Space direction="vertical">
                         <Avatar size={180} icon={<HiCheck />} />
-                        <Title level={5}>{title}</Title>
-                        <Text>{message}</Text>
+                        <Title level={5}>{message}</Title>
+                        <Card>
+                            <Row>
+                                <Col xs={16} sm={16} md={16} lg={16} xl={16} style={{ padding: '2px', border: '1px solid grey', borderRadius: '4px', width: '64%' }}>
+                                    <Text>Delivery Note No.:</Text>
+                                    <Text strong> {deliveryNoteNo}</Text>
+                                </Col>
+                                <Col>
+                                    <CopytoClipboard type={'primary'} buttonText={'Copy'} text={deliveryNoteNo} />
+                                </Col>
+                            </Row>
+                            <Divider />
+                            <Space direction="vertical">
+                                <Text>Do you want to Print or download this Delivery Note</Text>
+                                <Button onClick={() => handlePrintDownload(record)} className={styles.marB20} danger>
+                                    {`Download/Print ${invoiceType} Note`}
+                                </Button>
+                            </Space>
+                        </Card>
                     </Space>
                 </Col>
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <VehicleReceiptFormButton {...props} />
+                    <VehicleDeliveryNoteFormButton {...thankProp} />
                 </Col>
             </Row>
         </>

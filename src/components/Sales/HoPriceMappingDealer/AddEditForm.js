@@ -3,33 +3,20 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useState } from 'react';
 import { Row, Col, Input, Form, Switch } from 'antd';
-
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
-
-import { tableColumnAddEdit } from './tableColumnAddEdit';
-import { ViewDetail } from './ViewDetail';
-
-import { DataTable } from 'utils/dataTable';
+import LeftPanel from 'components/common/LeftPanel';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import { ViewDetail } from './ViewDetail';
 
 import styles from 'assets/sass/app.module.scss';
 
 const AddEditFormMain = (props) => {
-    const { form, formData, buttonData, setButtonData, typeData, handleButtonClick, onCloseAction, formActionType, onFinish, onFinishFailed } = props;
-
-    const tableData = [
-        {
-            productHierarchy: 'Product01',
-            dealerFlag: 'Y',
-        },
-        {
-            productHierarchy: 'Product02',
-            dealerFlag: 'N',
-        },
-    ];
+    const { form, formData, buttonData, setButtonData, typeData, fieldNames, editProductData, handleButtonClick, onCloseAction, formActionType, onFinish, onFinishFailed, viewProductData, modelGroupArr, setViewProductData, responseData } = props;
+    const { hoPriceDetailData, checkedKeys, setCheckedKeys } = props;
+    const [searchValue, setSearchValue] = useState('');
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -52,8 +39,28 @@ const AddEditFormMain = (props) => {
         formData,
         styles,
         typeData,
-        tableData,
         formActionType,
+        viewProductData,
+        modelGroupArr,
+        setViewProductData,
+        hoPriceDetailData,
+        responseData,
+    };
+
+    const onCheck = (checkedKeysValue) => {
+        setCheckedKeys(checkedKeysValue);
+        setButtonData((prev) => ({ ...prev, formBtnActive: true }));
+    };
+
+    const myProps = {
+        checkable: true,
+        isTreeViewVisible: true,
+        fieldNames,
+        treeData: editProductData,
+        searchValue,
+        setSearchValue,
+        onCheck,
+        checkedKeys,
     };
 
     return (
@@ -67,58 +74,49 @@ const AddEditFormMain = (props) => {
                             <>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                        <h2>Dealer List</h2>
+                                        <h4>Dealer List</h4>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
-                                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item initialValue={formData?.areaOffice} label="Area Office" name="areaOffice">
-                                            <Input placeholder={preparePlaceholderText('Area Office')} />
-                                        </Form.Item>
-                                    </Col>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                         <Form.Item initialValue={formData?.state} label="State" name="state">
-                                            <Input placeholder={preparePlaceholderText('State Code')} />
+                                            <Input placeholder={preparePlaceholderText('State Code')} disabled={true} />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                        <Form.Item initialValue={formData?.city} label="City" name="city">
+                                            <Input placeholder={preparePlaceholderText('City')} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item initialValue={formData?.pricingCityCode} label="Pricing City Code" name="pricingCityCode">
-                                            <Input placeholder={preparePlaceholderText('Pricing City Code')} />
+                                        <Form.Item initialValue={formData?.dealerParent} label="Dealer Parent" name="dealerParent">
+                                            <Input placeholder={preparePlaceholderText('Dealer Parent')} disabled={true} />
                                         </Form.Item>
                                     </Col>
-
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item initialValue={formData?.dealerName} label="Dealer Name" name="dealerName">
-                                            <Input placeholder={preparePlaceholderText('Dealer Name')} />
+                                        <Form.Item initialValue={formData?.dealerBranch} label="Dealer Location" name="dealerBranch">
+                                            <Input placeholder={preparePlaceholderText('Dealer Branch')} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
 
                                 <Row gutter={16}>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item initialValue={formData?.dealerBranch} label="Dealer Branch" name="dealerBranch">
-                                            <Input placeholder={preparePlaceholderText('Dealer Branch')} />
-                                        </Form.Item>
-                                    </Col>
-
-                                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item initialValue={formData?.dealerName} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="statusDealerSelected" label="Dealer Selected for On Road Price?">
+                                        <Form.Item initialValue={formData?.dealerSelectOnRoadPrice} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="dealerSelectOnRoadPrice" label="Dealer Selected for On Road Price?">
                                             <Switch checkedChildren="Yes" unCheckedChildren="No" onChange={(checked) => (checked ? 1 : 0)} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                        <h2>Model Details</h2>
+                                        <h4>Model Details</h4>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        {/* <Form.Item initialValue={formData?.areaOffice} label="Area Office" name="areaOffice"> */}
-                                        <DataTable tableColumn={tableColumnAddEdit({ handleButtonClick, typeData, formActionType })} tableData={tableData} pagination={false} />
-                                        {/* </Form.Item> */}
+                                        <LeftPanel {...myProps} />
                                     </Col>
                                 </Row>
                             </>
@@ -132,4 +130,4 @@ const AddEditFormMain = (props) => {
     );
 };
 
-export const AddEditForm = withDrawer(AddEditFormMain, {});
+export const AddEditForm = withDrawer(AddEditFormMain, { width: '90%' });

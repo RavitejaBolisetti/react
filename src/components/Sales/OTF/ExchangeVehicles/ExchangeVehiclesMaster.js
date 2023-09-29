@@ -8,8 +8,7 @@ import { Row, Col, Form } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { ViewDetail } from './ViewDetail';
-import { AddEditForm } from './AddEditForm';
+import { AddEditForm, ViewDetail } from 'components/Sales/Common/ExchangeVehicles';
 import VehiclePriorityAllotmentAlert from './VehiclePriorityAllotmentAlert';
 
 import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
@@ -232,6 +231,12 @@ const ExchangeVehiclesBase = (props) => {
                     value: selectedOrder?.modelCode,
                     name: 'Booking Number',
                 },
+                {
+                    key: 'module',
+                    title: 'module',
+                    value: 'EX',
+                    name: 'Module',
+                },
             ];
             fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction, userId });
             fetchFinanceLovList({ setIsLoading: listFinanceLovShowLoading, userId });
@@ -315,7 +320,6 @@ const ExchangeVehiclesBase = (props) => {
         if (VehicleLovCodeData && isProductHierarchyDataLoaded) {
             setModelGroup((prev) => ({ ...prev, newModelGroup: VehicleLovCodeData?.[0]?.modelGroupCode }));
         }
-        console.log('VehicleLovCodeData');
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [VehicleLovCodeData]);
 

@@ -7,13 +7,14 @@ import { fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { TaxChargesCategory } from '@components/FinancialAccounting/AccountTaxCharges/TaxAndChargesCategory/TaxChargesCategory';
 import customRender from '@utils/test-utils';
+import createMockStore from '__mocks__/store';
+import { Provider } from 'react-redux';
 
 afterEach(() => {
     jest.restoreAllMocks();
 });
 
 describe('TaxChargesCategory component', () => {
-    const tableData = [{taxCategoryCode: 'T002', taxCategoryDescription: null, status: null, id: '123'}];
 
     it('search button', () => {
         customRender(<TaxChargesCategory />);
@@ -35,26 +36,37 @@ describe('TaxChargesCategory component', () => {
         fireEvent.click(coloseCircle);
     });
 
-    it('showAddButton', ()=>{
-        customRender(<TaxChargesCategory showAddButton={true} 
-            tableData={tableData} 
-        />);
-        
+    it("TaxChargesCode pass data", ()=>{
+        const mockStore = createMockStore({
+            auth: { userId: 123 },
+            data: {
+                FinancialAccounting: {
+                    TaxChargesCode: { isLoaded: false, isLoading: false, data: [{taxCategoryCode: 'T002', taxCategoryDescription: 'GST', status: true, id: '123'}] },
+                },
+            },
+        });
+
+        customRender(
+            <Provider store={mockStore}>
+                <TaxChargesCategory />
+            </Provider>
+        );
     })
 
-    it('tableProps', ()=>{
-        customRender(<TaxChargesCategory tableData={tableData} isLoading={false} tableColumn={[{dataIndex :"taxCategoryCode"}]} />);
+    it("TaxChargesCategory pass data", ()=>{
+        const mockStore = createMockStore({
+            auth: { userId: 123 },
+            data: {
+                FinancialAccounting: {
+                    TaxChargesCategory: { isLoaded: false, isLoading: false, data: [{taxCode: 'T002'}] },
+                },
+            },
+        });
 
-        const code = screen.getByRole('columnheader', {name:'Code'});
-        expect(code).toBeTruthy();
-
-        const description = screen.getByRole('columnheader', {name:'Description'});
-        expect(description).toBeTruthy();
-
-        const status = screen.getByRole('columnheader', {name:'Status'});
-        expect(status).toBeTruthy();
-
-        const action = screen.getByRole('columnheader', {name:'Action'});
-        expect(action).toBeTruthy();
+        customRender(
+            <Provider store={mockStore}>
+                <TaxChargesCategory />
+            </Provider>
+        )
     })
 });

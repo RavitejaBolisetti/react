@@ -137,13 +137,17 @@ export const VoucherAndPartyDetailsMasterMain = (props) => {
     const constomerContant = 'CUS';
 
     const handleSearchParamSearch = (value) => {
+        if (!form.getFieldsValue()?.partyDetails?.partySegment) {
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please select party segment' });
+            return;
+        }
         const onSuccessAction = (res) => {
-            if (form.getFieldsValue()?.partyDetails?.partySegment === res?.data[0]?.partyCategory) {
-                form.setFieldsValue({ partyDetails: res?.data[0] });
-                setButtonData({ ...buttonData, formBtnActive: true });
-            } else {
-                showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Party ID doesnt match with the party segment' });
+            if (res?.data?.length === 0) {
+                showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Details not available for this party id with selected party segment' });
+                setButtonData({ ...buttonData, formBtnActive: false });
             }
+            form.setFieldsValue({ partyDetails: res?.data[0] });
+            setButtonData({ ...buttonData, formBtnActive: true });
         };
         const onSuccessCustomerAction = (res) => {
             form.setFieldsValue({ partyDetails: { ...res?.data, partyName: res?.data?.customerName } });
@@ -159,7 +163,18 @@ export const VoucherAndPartyDetailsMasterMain = (props) => {
                 value: value,
             },
         ];
-        form.getFieldsValue()?.partyDetails?.partySegment === constomerContant ? fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction: onSuccessCustomerAction }) : fetchDetail({ setIsLoading: listPartyShowLoading, userId, partyCode: value, onErrorAction, onSuccessAction });
+        const extraParamsParty = [
+            {
+                key: 'partyCode',
+                value: value,
+            },
+            {
+                key: 'partyType',
+                value: form.getFieldsValue()?.partyDetails?.partySegment,
+            },
+        ];
+
+        form.getFieldsValue()?.partyDetails?.partySegment === constomerContant ? fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction: onSuccessCustomerAction }) : fetchDetail({ setIsLoading: listPartyShowLoading, extraParams: extraParamsParty, userId, onErrorAction, onSuccessAction });
     };
 
     const handleCollapse = (key) => {

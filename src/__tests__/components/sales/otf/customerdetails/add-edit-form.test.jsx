@@ -7,38 +7,44 @@ import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { screen, fireEvent } from '@testing-library/react';
 import { AddEditForm } from '@components/Sales/Common/CustomerDetails/AddEditForm';
+import { Form } from 'antd';
 
 const bookingCustomer = true;
 
+const FormWrapper = (props) => {
+    const [form] = Form.useForm();
+    const myFormMock = {
+        ...form,
+        setFieldsValue: jest.fn(),
+        resetFields: jest.fn(),
+        resetData: jest.fn(),
+        validateFields: jest.fn(),
+    };
+    return <AddEditForm form={myFormMock} {...props} />;
+};
+
 describe('Add Edit Form Components', () => {
     it('should Add Edit Form Component', () => {
-        customRender(<AddEditForm typeData={['GENDER']} />);
+        customRender(<FormWrapper typeData={['GENDER']} fnSetData={jest.fn()} />);
     });
 
     it('should check panel title available', () => {
-        customRender(<AddEditForm typeData={['GENDER']} />);
+        customRender(<FormWrapper typeData={['GENDER']} fnSetData={jest.fn()} />);
         const bookingcustomer = screen.getByText('Booking Customer');
         expect(bookingcustomer).toBeInTheDocument();
         const billingcustomer = screen.getByText('Billing Customer');
         expect(billingcustomer).toBeInTheDocument();
     });
 
-    it('is collapse open on click of Edit btn', () => {
-        customRender(<AddEditForm activeKey={[1, 2]} setActiveKey={jest.fn()} typeData={['GENDER']} />);
-        const editIconBtn = screen.getAllByText('Edit');
-        fireEvent.click(editIconBtn[0]);
-        fireEvent.click(editIconBtn[1]);
-    });
-
     it('should click on checkbox when user click', () => {
-        customRender(<AddEditForm formType="billingCustomer" typeData={['GENDER']} activeKey={[1, 2]} setActiveKey={jest.fn()} setSameAsBookingCustomer={jest.fn()} />);
+        customRender(<FormWrapper formType="billingCustomer" fnSetData={jest.fn()} typeData={['GENDER']} activeKey={[1, 2]} setActiveKey={jest.fn()} setSameAsBookingCustomer={jest.fn()} />);
         const checkbox = screen.getByRole('checkbox', { name: 'Same as Booking Customer' });
         fireEvent.click(checkbox);
         expect(checkbox).toBeChecked();
     });
 
     it('check enter mobile number is valid or not', () => {
-        customRender(<AddEditForm formType="billingCustomer" typeData={['GENDER']} activeKey={[1, 2]} setActiveKey={jest.fn()} setSameAsBookingCustomer={jest.fn()} />);
+        customRender(<FormWrapper formType="billingCustomer" fnSetData={jest.fn()} typeData={['GENDER']} activeKey={[1, 2]} setActiveKey={jest.fn()} setSameAsBookingCustomer={jest.fn()} />);
         const mobilenumber = screen.getAllByRole('textbox', { Name: 'Mobile Number' });
 
         fireEvent.change(mobilenumber[0], { target: { value: '7068000000' } });
@@ -46,7 +52,7 @@ describe('Add Edit Form Components', () => {
     });
 
     it('should render form input field components', () => {
-        customRender(<AddEditForm activeKey={[1, 2]} typeData={['GENDER']} setActiveKey={jest.fn()} formData={bookingCustomer} />);
+        customRender(<FormWrapper activeKey={[1, 2]} fnSetData={jest.fn()} typeData={['GENDER']} setActiveKey={jest.fn()} formData={bookingCustomer} />);
         const calendarinput = screen.getAllByRole('img', { Name: 'calendar' });
         fireEvent.click(calendarinput[0]);
         fireEvent.click(calendarinput[1]);

@@ -12,7 +12,7 @@ import LeftPanel from 'components/common/LeftPanel';
 import { LANGUAGE_EN } from 'language/en';
 import { NoDataFound } from 'utils/noDataFound';
 
-import styles from 'assets/sass/app.module.scss';
+import styles from '../../../TreeView.module.scss';
 
 const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
 
@@ -72,6 +72,7 @@ const ApplicationTreeMain = (props) => {
     const onCheck =
         (currentKey) =>
         (checkedKeysValue, { halfCheckedKeys }) => {
+            if (viewMode) return;
             setDisableMdlSaveBtn(false);
             const selectedKeys = [...checkedKeysValue, ...halfCheckedKeys] || [];
             const deviceTypePrev = checkedKeys || {};
@@ -117,6 +118,7 @@ const ApplicationTreeMain = (props) => {
                                 searchValue,
                                 setSearchValue,
                                 checkable: true,
+                                selectable: false,
                                 isTreeViewVisible: true,
                                 onCheck: onCheck(el?.value),
                                 disableCheckbox: viewMode,

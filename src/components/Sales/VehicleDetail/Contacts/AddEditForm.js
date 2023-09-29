@@ -12,7 +12,7 @@ import { customSelectBox } from 'utils/customSelectBox';
 import styles from 'assets/sass/app.module.scss';
 
 const AddEditForm = (props) => {
-    const { onSaveFormData, contactform, setShowAddEditForm, setIsEditing, typeData, formActionType, handleFormValueChange, setIsAdding } = props;
+    const { onSaveFormData, contactform, setShowAddEditForm, setIsEditing, typeData, isEditing, formActionType, handleFormValueChange, setIsAdding, showAddEditForm } = props;
     const handleCancelFormEdit = () => {
         contactform.resetFields();
         setIsAdding(false);
@@ -30,57 +30,55 @@ const AddEditForm = (props) => {
     return (
         <>
             <Form form={contactform} autoComplete="off" onFinish={onSaveFormData} onFieldsChange={handleFormValueChange} layout="vertical">
-                <Space direction="vertical">
-                    <Row gutter={[20, 0]}>
-                        <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Contact Type" name="contactType" rules={[validateRequiredSelectField('contact type')]}>
-                                <Select {...selectProps} placeholder={preparePlaceholderSelect('contact type')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} allowClear options={typeData['VH_CONTACT_TYPE']}></Select>
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={12} md={8} lg={8} xl={8} className={styles.contactDays}>
-                            <Form.Item label="Preferred Days For Contact" name="preferredDayForContact" rules={[validateRequiredSelectField('preferred days for contact')]}>
-                                {customSelectBox({ data: typeData['VH_CONTACT_DAYS'], mode: 'multiple', placeholder: preparePlaceholderSelect('preferred days for contact') })}
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Mobile Number" name="mobileNumber" rules={[validateRequiredInputField('mobile number'), validateMobileNoField('mobile number')]}>
-                                <Input maxLength={10} placeholder={preparePlaceholderText('mobile number')} allowClear size="small" />
-                            </Form.Item>
-                        </Col>
-                    </Row>
+                <Row gutter={[20, 0]}>
+                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+                        <Form.Item label="Contact Type" name="contactType" rules={[validateRequiredSelectField('contact type')]}>
+                            <Select {...selectProps} placeholder={preparePlaceholderSelect('contact type')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} allowClear options={typeData['VH_CONTACT_TYPE']}></Select>
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+                        <Form.Item label="Preferred Days For Contact" name="preferredDayForContact" rules={[validateRequiredSelectField('preferred days for contact')]}>
+                            {customSelectBox({ data: typeData['VH_CONTACT_DAYS'], mode: 'multiple', placeholder: preparePlaceholderSelect('preferred days for contact') })}
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+                        <Form.Item label="Mobile Number" name="mobileNumber" rules={[validateRequiredInputField('mobile number'), validateMobileNoField('mobile number')]}>
+                            <Input maxLength={10} placeholder={preparePlaceholderText('mobile number')} allowClear size="small" />
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Row gutter={20}>
+                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+                        <Form.Item label="Name" name="name" rules={[validateRequiredInputField('Name'), validateLettersWithWhitespaces('Name')]}>
+                            <Input placeholder={preparePlaceholderText('name')} disabled={isEditing} />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+                        <Form.Item label="E-mail" initialValue={''} name="emailId" rules={[validateRequiredEmailField('E-mail')]}>
+                            <Input placeholder={preparePlaceholderText('email id')} disabled={isEditing} />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+                        <Form.Item label="Preferred Contact Time" name={'preferredContactTime'} rules={[validateRequiredInputField('contact time')]}>
+                            <TimePicker.RangePicker use12Hours size="small" format="h:mm A" />
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Form.Item hidden initialValue={''} name="id">
+                    <Input />
+                </Form.Item>
+                {!formActionType?.viewMode && (
                     <Row gutter={20}>
-                        <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Name" name="name" rules={[validateRequiredInputField('Name'), validateLettersWithWhitespaces('Name')]}>
-                                <Input placeholder={preparePlaceholderText('name')} />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="E-mail" initialValue={''} name="emailId" rules={[validateRequiredEmailField('E-mail')]}>
-                                <Input placeholder={preparePlaceholderText('email id')} />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={12} md={8} lg={8} xl={8} style={{ display: 'flex' }}>
-                            <Form.Item label="Preferred Contact Time" name={'preferredContactTime'} rules={[validateRequiredInputField('contact time')]}>
-                                <TimePicker.RangePicker use12Hours size="small" format="h:mm A" />
-                            </Form.Item>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={`${styles.buttonsGroup} ${styles.marB20}`}>
+                            <Button onClick={onSaveFormData} type="primary">
+                                Save
+                            </Button>
+                            <Button onClick={handleCancelFormEdit} danger>
+                                Cancel
+                            </Button>
                         </Col>
                     </Row>
-                    <Form.Item hidden initialValue={''} name="id">
-                        <Input />
-                    </Form.Item>
-                    {!formActionType?.viewMode && (
-                        <Row gutter={20}>
-                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                <Button className={styles.marR20} onClick={onSaveFormData} type="primary">
-                                    Save
-                                </Button>
-                                <Button className={styles.marB20} onClick={handleCancelFormEdit} danger>
-                                    Cancel
-                                </Button>
-                            </Col>
-                        </Row>
-                    )}
-                </Space>
+                )}
             </Form>
         </>
     );

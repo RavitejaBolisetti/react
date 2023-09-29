@@ -9,8 +9,8 @@ describe('tableColumn', () => {
         const page = 1;
         const pageSize = 10;
         const columns = tableColumn(handleButtonClick, page, pageSize);
-        expect(columns).toHaveLength(8);
+        expect(columns).toHaveLength(7);
 
-        render(<div>{columns[5].render('Text')}</div>);
+        render(<div>{columns[4].render('Text')}</div>);
     });
 });

@@ -25,7 +25,7 @@ const mapStateToProps = (state) => {
             OTF: {
                 InsuranceDetail: { isLoaded: isDataLoaded = false, isLoading, data: insuranceData = [] },
             },
-            PartyMaster: { isFilteredListLoaded: isInsuranceCompanyDataLoaded = false, detailData: insuranceCompanies },
+            PartyMaster: { isFilteredListLoaded: isInsuranceCompanyDataLoaded = false, filteredListData: insuranceCompanies },
         },
     } = state;
 
@@ -47,7 +47,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchInsuranceCompanyList: partyMasterDataActions.fetchDetail,
+            fetchInsuranceCompanyList: partyMasterDataActions.fetchFilteredList,
             listInsuranceShowLoading: partyMasterDataActions.listShowLoading,
             showGlobalNotification,
         },
@@ -73,7 +73,7 @@ const ViewDetailMain = (props) => {
             fetchInsuranceCompanyList({ setIsLoading: listInsuranceShowLoading, userId, extraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, !isInsuranceCompanyDataLoaded]);
+    }, [userId, isInsuranceCompanyDataLoaded]);
 
     const viewProps = {
         bordered: false,
@@ -83,7 +83,7 @@ const ViewDetailMain = (props) => {
     };
 
     return (
-        <Card className={styles.drawerCardView}>
+        <Card>
             <Descriptions {...viewProps}>
                 <Descriptions.Item label="Insurance Company">{checkAndSetDefaultValue(getCodeValue(insuranceCompanies, formData?.insuranceCompany), isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Insurance Cover Note">{checkAndSetDefaultValue(formData?.insuranceCoverNote, isLoading)}</Descriptions.Item>

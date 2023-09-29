@@ -50,7 +50,7 @@ const AddEditFormMain = (props) => {
     // const onFinishFailed = () => {};
 
     return (
-        <Card className={styles.drawerCardView}>
+        <Card>
             {/* <Form form={partyDetailForm} id="myAdd" onFinish={handleSave} autoComplete="off" layout="vertical" onFinishFailed={onFinishFailed}> */}
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>

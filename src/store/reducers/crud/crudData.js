@@ -72,9 +72,14 @@ const saveDataCF = (state, action) => ({
 const resetDataCF = (state, action) => ({
     initialState,
 });
+const resetDetailDataCF = (state, action) => ({
+    ...state,
+    detailData: [],
+    isDetailLoaded: false,
+});
 
 export const crudDataReducer =
-    ({ RECEIVE_DATA_LOADING_ACTION_CONSTANT, RECEIVE_DATA_ACTION_CONSTANT, RECEIVE_DATA_ACTION_APPLY_FILTER_CONSTANT, RECEIVE_FILTERED_DATA_ACTION_CONSTANT, RECIEVE_DATA_DETAIL_ACTION_CONSTANT, SAVE_DATA_ACTION_CONSTANT, RESET_DATA_ACTION_CONSTANT, SAVE_FORM_DATA_LOADING_CONSTANT, RECEIVE_CHANGE_HISTORY_DATA_ACTION_CONSTANT, RECEIVE_CHANGE_HISTORY_DATA_LOADING_ACTION_CONSTANT, myInitialState = initialState }) =>
+    ({ RECEIVE_DATA_LOADING_ACTION_CONSTANT, RECEIVE_DATA_ACTION_CONSTANT, RECEIVE_DATA_ACTION_APPLY_FILTER_CONSTANT, RECEIVE_FILTERED_DATA_ACTION_CONSTANT, RECIEVE_DATA_DETAIL_ACTION_CONSTANT, SAVE_DATA_ACTION_CONSTANT, RESET_DATA_ACTION_CONSTANT, RESET_DETAIL_DATA_ACTION_CONSTANT, SAVE_FORM_DATA_LOADING_CONSTANT, RECEIVE_CHANGE_HISTORY_DATA_ACTION_CONSTANT, RECEIVE_CHANGE_HISTORY_DATA_LOADING_ACTION_CONSTANT, myInitialState = initialState }) =>
     (state = myInitialState, action) => {
         switch (action.type) {
             case RECEIVE_DATA_LOADING_ACTION_CONSTANT:
@@ -97,6 +102,8 @@ export const crudDataReducer =
                 return recieveChangeHistoryDataLoadingCF(state, action);
             case RESET_DATA_ACTION_CONSTANT:
                 return resetDataCF(state, action);
+            case RESET_DETAIL_DATA_ACTION_CONSTANT:
+                return resetDetailDataCF(state, action);
 
             default:
                 return state;

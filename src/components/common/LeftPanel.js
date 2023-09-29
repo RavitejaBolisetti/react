@@ -94,19 +94,22 @@ const LeftPanel = (props) => {
                 if (item[fieldNames?.children]) {
                     return {
                         title,
-                        disabled,
+                        // this is used to perform specific nodes checkable disable 
+                        disabled: disabled || item?.disabled,
+                        checkable: item?.checkable,
+                        selectable: item?.selectable,
                         key: item[fieldNames?.key],
                         children: loop(item[fieldNames?.children]),
                     };
                 }
                 return {
                     title,
-                    disabled,
+                    disabled: item?.disabled ? true : false,
                     key: item[fieldNames?.key],
                 };
             });
         return loop(treeData);
-    }, [searchValue, fieldNames, treeData, disabled]);
+    }, [searchValue, fieldNames, treeData]);
 
     const mainClass = callOnForm ? styles.scrollTreeDataInner : styles.scrollTreeData;
 

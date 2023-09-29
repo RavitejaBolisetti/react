@@ -138,7 +138,7 @@ describe('Booking transfer master render', () => {
 
         const transferBooking = screen.getByRole('button', { name: 'Transfer Booking', exact: false });
 
-        fireEvent.click(transferOtf);
+        fireEvent.click(transferBooking);
 
         const closeImg = screen.getByRole('img', { name: 'close', exact: false });
         expect(closeImg).toBeTruthy();

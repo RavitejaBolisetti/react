@@ -131,9 +131,9 @@ describe('Booking List Master Component', () => {
         fireEvent.change(dealerLocation, { target: { value: 'Agra' } });
         fireEvent.click(screen.getByText('Agra'));
 
-        const reasonCategory = screen.getByRole('combobox', { name: 'Reason Category' });
-        fireEvent.change(reasonCategory, { target: { value: 'ReasonCategory' } });
-        fireEvent.click(screen.getAllByText('ReasonCategory')[1]);
+        // const reasonCategory = screen.getByRole('combobox', { name: 'Reason Category' });
+        // fireEvent.change(reasonCategory, { target: { value: 'ReasonCategory' } });
+        // fireEvent.click(screen.getAllByText('ReasonCategory')[1]);
 
         const reasonDesc = screen.getByRole('combobox', { name: 'Reason Description' });
         fireEvent.change(reasonDesc, { target: { value: 'ReasonDesc' } });

@@ -93,7 +93,7 @@ export const VehicleAllotmentMasterBase = (props) => {
 
     const [filterStringOTFSearch, setFilterStringOTFSearch] = useState('');
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
-    const [toggleButton, settoggleButton] = useState(VEHICLE_TYPE?.ALLOTED.key);
+    const [toggleButton, settoggleButton] = useState(VEHICLE_TYPE?.UNALLOTED.key);
     const [searchParamValue, setSearchParamValue] = useState('');
     const [confirmRequest, setConfirmRequest] = useState();
 
@@ -362,7 +362,7 @@ export const VehicleAllotmentMasterBase = (props) => {
             setShowDataLoading(true);
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            fetchVehicleAllotmentSearchedList({ customURL: customURL + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
 
             setButtonData({ ...buttonData, formBtnActive: false });
 
@@ -392,7 +392,7 @@ export const VehicleAllotmentMasterBase = (props) => {
     const onCloseAction = () => {
         form.resetFields();
         form.setFieldsValue();
-
+        searchForm.resetFields();
         advanceFilterForm.resetFields();
         advanceFilterForm.setFieldsValue();
 

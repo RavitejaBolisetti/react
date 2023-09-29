@@ -173,7 +173,7 @@ const HeaderMain = (props) => {
         const onSuccess = (res) => {
             fetchData({ setIsLoading: listShowLoading, userId });
             if (roleId) {
-                // fetchMenuList({ setIsLoading: listShowMenuLoading, userId });
+                fetchMenuList({ setIsLoading: listShowMenuLoading, userId });
                 navigate(routing.ROUTING_DASHBOARD);
             }
         };
@@ -279,7 +279,6 @@ const HeaderMain = (props) => {
         setCollapsed(!collapsed);
     };
 
-    // const onSearch = (value) => console.log(value);
     const isDashboard = false; //pagePath === routing.ROUTING_DASHBOARD;
 
     return (
@@ -393,7 +392,7 @@ const HeaderMain = (props) => {
                 </div>
             )}
             <div style={{ clear: 'both' }}></div>
-            <ChangePassword title="Change Password" setModalOpen={setChangePasswordModalOpen} isOpen={isChangePasswordModalOpen} onOk={() => setChangePasswordModalOpen(false)} onCancel={() => console.log('onCancel', isChangePasswordModalOpen) || setChangePasswordModalOpen(false)} />
+            <ChangePassword title="Change Password" setModalOpen={setChangePasswordModalOpen} isOpen={isChangePasswordModalOpen} onOk={() => setChangePasswordModalOpen(false)} onCancel={() => setChangePasswordModalOpen(false)} />
         </>
     );
 };

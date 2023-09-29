@@ -6,9 +6,21 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { ProductHierarchyPage } from '@pages/common/ProductHierarchy/ProductHierarchyPage';
+import { screen, fireEvent } from '@testing-library/react';
+
+jest.mock('pages/common/PageHeader', () => {
+    const PageHeader = ({ handleSample }) => <div><button onClick={handleSample}>Handle Sample</button></div>;
+    return {
+        __esModule: true,
+        PageHeader,
+    };
+});
 
 describe('ProductHierarchyPage Components', () => {
+
     it('should render Product Hierarchy Page components', () => {
         customRender(<ProductHierarchyPage />);
+        fireEvent.click(screen.getByRole('button', { name: 'Handle Sample'}));
     });
+
 });

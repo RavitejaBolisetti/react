@@ -19,7 +19,7 @@ const AddEditFormMain = (props) => {
     const { formData, disabledProps, formActionType, typeData, salesConsultantLov,handleDeliveryChange } = props;
 
     return (
-        <Card className={styles.drawerCardView}>
+        <Card>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     {prepareCaption('Order Details')}
@@ -70,10 +70,10 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.deliveryAt} label="Delivery At" name="deliveryAt">
+                    <Form.Item initialValue={formData?.deliveryAt} label="Delivery At" name="deliveryAt" rules={[validateRequiredSelectField('delivery at')]}>
                         {customSelectBox({ data: typeData['DELIVERYAT_IND'], onChange : handleDeliveryChange })}
                     </Form.Item>
-                </Col>
+                </Col>  
             </Row>
 
             <Row gutter={20}>
