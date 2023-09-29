@@ -16,8 +16,9 @@ import { ValidateMobileNumberModal } from './ValidateMobileNumberModal';
 import { OtpVerification } from './OtpVerfication';
 
 const AddEditForm = (props) => {
-    const { userId,isReadOnly = false, onSaveFormData, contactform, setShowAddEditForm, setIsEditing, typeData, customerType, uploadImgDocId, formActionType, handleFormValueChange, setIsAdding, contactData, editingData,setContinueWithOldMobNo, continueWithOldMobNo } = props;
-    const { fetchContactMobileNoDetails,selectedCustomer, listContactMobileNoShowLoading, mobNoVerificationData, resetContactMobileNoData, showGlobalNotification, sendOTP, validateOTP } = props;
+    const { userId,isReadOnly = false, onSaveFormData, contactform, form,setShowAddEditForm, setIsEditing, typeData, customerType, uploadImgDocId, formActionType, handleFormValueChange, setIsAdding, contactData, editingData,setContinueWithOldMobNo, continueWithOldMobNo } = props;
+    const { fetchContactMobileNoDetails,selectedCustomer, listContactMobileNoShowLoading, mobNoVerificationData, resetContactMobileNoData, showGlobalNotification, sendOTP, validateOTP,otpMessage,
+        setOTPMessage, } = props;
     const RESEND_OTP_TIME = 60;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [continueWithPreModalOpen, setContinueWithPreModalOpen] = useState(false);
@@ -30,6 +31,7 @@ const AddEditForm = (props) => {
     const disabledProps = { disabled: isReadOnly || formActionType?.viewMode };
     useEffect(() => {
         if (mobNoVerificationData?.customerMasterDetails?.length && mobileNumber?.length) {
+            sendOTPVerificationCode()
             setContinueWithPreModalOpen(true);
         } else if ((!mobNoVerificationData?.customerMasterDetails?.length && !mobileLoader && mobileNumber) || continueWithOldMobNo) {
             sendOTPVerificationCode()
@@ -128,10 +130,11 @@ const AddEditForm = (props) => {
         }
     };
     const sendOTPVerificationCode = () => {
-        const data = { userId: selectedCustomer?.customerId, mobileNumber: selectedCustomer?.mobileNumber, sentOnMobile: true, sentOnEmail: false, functionality: 'CUST' };
+        const data = { userId: selectedCustomer?.customerId, mobileNumber:form.getFieldValue('mobileNumber'), sentOnMobile: true, sentOnEmail: false, functionality: 'CUST' };
         const onSuccess = (res) => {
             setCounter(RESEND_OTP_TIME);
             showGlobalNotification({ notificationType: 'warning', title: 'OTP Sent', message: res?.responseMessage });
+            setOTPMessage(res?.data?.message);
         };
         const onError = (message) => {
             showGlobalNotification({ title: 'ERROR', message: Array.isArray(message[0]) || message });
@@ -153,10 +156,12 @@ const AddEditForm = (props) => {
     const handleVerifyOTP = () => {
         if (userId) {
             // hideGlobalNotification();
-            const data = { userId: selectedCustomer?.customerId, mobileNumber: selectedCustomer?.mobileNumber, otp: otpInput };
+            const data = { userId: selectedCustomer?.customerId,  mobileNumber:contactform.getFieldValue('mobileNumber'), sentOnMobile: true, sentOnEmail: false, functionality: 'CUST'};
             const onSuccess = (res) => {
                 // setValidationKey(res?.data?.validationKey);
                 showGlobalNotification({ notificationType: 'successBeforeLogin', title: 'OTP Verified', message: res?.responseMessage });
+                setIsModalOpen(false);
+                setNumbValidatedSuccess(true);
             };
             const requestData = {
                 data: data,
@@ -171,9 +176,9 @@ const AddEditForm = (props) => {
         isVisible: isModalOpen,
         icon: <BiLockAlt />,
         titleOverride: 'Mobile Number Validation',
-        closable: false,
+        closable: true,
         onCloseAction: handleCancel,
-        // onOnContinueWithOldMobNo,
+        onOnContinueWithOldMobNo,
         handleVerifyOTP,
         sendOTPVerificationCode,
         otpInput,
@@ -182,6 +187,8 @@ const AddEditForm = (props) => {
         validateOTP,
         userId,
         counter,
+        otpMessage,
+        setOTPMessage,
     };
     const modalContinueProps = {
         isVisible: continueWithPreModalOpen,
@@ -215,11 +222,11 @@ const AddEditForm = (props) => {
                                     suffix={
                                         <>
                                             {!numbValidatedSuccess ? (
-                                                <Button loading={mobileLoader} onClick={handleNumberValidation} type="link">
-                                                    Validate
+                                                <Button loading={mobileLoader} onClick={handleNumberValidation} type="link" style={{ transform: 'scale(-1,1)' }}>
+                                                    Verify
                                                 </Button>
                                             ) : (
-                                                <CheckOutlined style={{ color: '#70c922', fontSize: '16px', fotWeight: 'bold' }} />
+                                                <CheckOutlined style={{ color: '#70c922', fontSize: '16px', fotWeight: 'bold',transform: 'scale(-1,1)' }} />
                                             )}
                                         </>
                                     }

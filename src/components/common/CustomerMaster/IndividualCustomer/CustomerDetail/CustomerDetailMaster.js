@@ -120,6 +120,14 @@ const CustomerDetailMasterBase = (props) => {
     const [nameChangeRequested, setNameChangeRequested] = useState(false);
     const [whatsAppConfiguration, setWhatsAppConfiguration] = useState({ contactOverWhatsApp: null, contactOverWhatsAppActive: null, sameMobileNoAsWhatsApp: null, sameMobileNoAsWhatsAppActive: null });
     const [numbValidatedSuccess, setNumbValidatedSuccess] = useState(false);
+    const [otpInput, setOTPInput] = useState('');
+    const [disableVerifyOTP, setDisableVerifyOTP] = useState(true);
+    const RESEND_OTP_TIME = 60;
+
+    const [counter, setCounter] = useState(RESEND_OTP_TIME);
+    const [otpMessage, setOTPMessage] = useState();
+
+
     
 
     const onErrorAction = (message) => {
@@ -227,6 +235,10 @@ const CustomerDetailMasterBase = (props) => {
             showGlobalNotification({message: 'Please verify mobile number to proceed.'});
             return;
         }
+        if (values) {
+            hideGlobalNotification();
+            handleSendOTP(values);
+        }
         setFileList([]);
         setEmptyList(false);
         setUploadedFile();
@@ -330,6 +342,39 @@ const CustomerDetailMasterBase = (props) => {
             }
         }
     };
+    const handleSendOTP = (values = '') => {
+        setOTPInput();
+        setInValidOTP(false);
+        setDisableVerifyOTP(true);
+        // handleSendOTP(values);
+
+        let otpSentOnMobile = '';
+        // let otpSentOnEmail = '';
+
+        // if (values) {
+        //     otpSentOnMobile = values?.otpSentOn.includes('sentOnMobile');
+        //     // otpSentOnEmail = values?.otpSentOn?.includes('sentOnEmail');
+        // } else {
+        //     otpSentOnMobile = form.getFieldValue('otpSentOn').includes('sentOnMobile');
+        //     // otpSentOnEmail = form.getFieldValue('otpSentOn')?.includes('sentOnEmail');
+        // }
+
+        if (otpSentOnMobile === true) {
+        const data = { userId: selectedCustomer?.customerId, sentOnMobile: true};
+        const onSuccess = (res) => {
+            setCounter(RESEND_OTP_TIME);
+            showGlobalNotification({ notificationType: 'warning', title: 'OTP Sent', message: res?.responseMessage });
+            setOTPMessage(res?.data?.message);
+        };
+        const requestData = {
+            data: data,
+            setIsLoading: () => {},
+            onSuccess,
+        };
+        sendOTP(requestData);
+        }
+    };
+
 
     const formProps = {
         ...props,
@@ -406,6 +451,16 @@ const CustomerDetailMasterBase = (props) => {
         hideGlobalNotification,
         numbValidatedSuccess,
         setNumbValidatedSuccess,
+        otpInput,
+        setOTPInput,
+        setDisableVerifyOTP,
+        disableVerifyOTP,
+        counter,
+        setCounter,
+        RESEND_OTP_TIME,
+        otpMessage,
+        setOTPMessage,
+        handleSendOTP,
     };
 
     const viewProps = {

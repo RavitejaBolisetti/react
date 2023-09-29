@@ -19,25 +19,19 @@ import { OtpVerification } from '../../Common/Contacts/OtpVerfication';
 const AddEditFormMain = (props) => {
     const { numbValidatedSuccess, setNumbValidatedSuccess} = props;
     const { whatsAppConfiguration, setWhatsAppConfiguration, handleFormFieldChange } = props;
-    const { form, typeData, formData, corporateLovData, formActionType: { editMode } = undefined, data, customerType, selectedCustomer, validateOTP, sendOTP, userId, showGlobalNotification, fetchContactMobileNoDetails, listContactMobileNoShowLoading, mobNoVerificationData, resetContactMobileNoData, continueWithOldMobNo, setContinueWithOldMobNo } = props;
+    const { form, typeData, formData, corporateLovData, formActionType: { editMode } = undefined, data, customerType, selectedCustomer, validateOTP, sendOTP, userId, showGlobalNotification, fetchContactMobileNoDetails, listContactMobileNoShowLoading, mobNoVerificationData, resetContactMobileNoData, continueWithOldMobNo, setContinueWithOldMobNo, RESEND_OTP_TIME, handleSendOTP, otpInput, setOTPInput, setDisableVerifyOTP, disableVerifyOTP, counter, setCounter, otpMessage, setOTPMessage } = props;
     const { contactOverWhatsApp, contactOverWhatsAppActive, sameMobileNoAsWhatsApp, sameMobileNoAsWhatsAppActive } = whatsAppConfiguration;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileNumber, setMobileNumber] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
     const [otpVerified, setOtpVerified] = useState(false);
     const [inValidOTP, setInValidOTP] = useState(false);
-    const [disableVerifyOTP, setDisableVerifyOTP] = useState(true);
 
 
     const [otpValue, setOtpValue] = useState('');
-    const RESEND_OTP_TIME = 60;
-
-    const [otpMessage, setOTPMessage] = useState();
-    const [otpInput, setOTPInput] = useState('');
     const [continueWithPreModalOpen, setContinueWithPreModalOpen] = useState(false);
     // const [numbValidatedSuccess, setNumbValidatedSuccess] = useState(false);
     const [validationKey, setValidationKey] = useState();
-    const [counter, setCounter] = useState(RESEND_OTP_TIME);
 
     
 
@@ -248,12 +242,15 @@ const AddEditFormMain = (props) => {
         inValidOTP,
         disableVerifyOTP,
         setDisableVerifyOTP,
-        setInValidOTP
+        setInValidOTP,
+        setDisableVerifyOTP,
+        disableVerifyOTP,
+        handleSendOTP,
     };
     const modalContinueProps = {
         isVisible: continueWithPreModalOpen,
         icon: <BiLockAlt />,
-        titleOverride: 'Mobile Number Validation',
+        titleOverride: 'Mobile Number Verification',
         closable: false,
         onCloseAction: handleCancel,
         onOnContinueWithOldMobNo,

@@ -104,6 +104,8 @@ const ContactMain = (props) => {
     const [continueWithOldMobNo, setContinueWithOldMobNo] = useState(false);
     const [isAdding, setIsAdding] = useState(false);
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
+    const [otpMessage, setOTPMessage] = useState();
+
 
     const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
     const addDataTitle = (
@@ -249,6 +251,8 @@ const ContactMain = (props) => {
         sendOTP,
         validateOTP,
         selectedCustomer,
+        otpMessage,
+        setOTPMessage,
     };
 
     const onFinish = () => {

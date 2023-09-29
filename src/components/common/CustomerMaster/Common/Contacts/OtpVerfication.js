@@ -17,10 +17,11 @@ import { withModal } from 'components/withModal';
 
 // import styles from 'components/common/Common.module.css';
 // import style from './../../../Auth/Auth.module.css';
+import style from 'components/Auth/Auth.module.scss';
 import styles from 'components/Auth/Auth.module.scss'
 const OtpVarificationModalMain = (props) => {
     const { userId, sendOTP, selectedUserId, validateOTP, isLoading, onCloseAction, titleOverride, icon = '', closable = true, onOk = () => {}, otpInput, setOTPInput } = props;
-    const { showGlobalNotification, onError, setInValidOTP, inValidOTP, counter, setCounter, sendOTPVerificationCode, handleVerifyOTP, RESEND_OTP_TIME, selectedCustomer, otpMessage, setOTPMessage, disableVerifyOTP, setDisableVerifyOTP,hideGlobalNotification } = props;
+    const { showGlobalNotification, onError, setInValidOTP, inValidOTP, counter, setCounter, sendOTPVerificationCode, handleVerifyOTP, RESEND_OTP_TIME, selectedCustomer, otpMessage, setOTPMessage, disableVerifyOTP, setDisableVerifyOTP, hideGlobalNotification, handleSendOTP } = props;
 
     const [form] = Form.useForm();
 
@@ -35,38 +36,38 @@ const OtpVarificationModalMain = (props) => {
 
 
 
-    const handleSendOTP = (values = '') => {
-        setOTPInput();
-        setInValidOTP(false);
-        setDisableVerifyOTP(true);
-        handleSendOTP(values);
+    // const handleSendOTP = (values = '') => {
+    //     setOTPInput();
+    //     setInValidOTP(false);
+    //     setDisableVerifyOTP(true);
+    //     // handleSendOTP(values);
 
-        let otpSentOnMobile = '';
-        // let otpSentOnEmail = '';
+    //     let otpSentOnMobile = '';
+    //     // let otpSentOnEmail = '';
 
-        if (values) {
-            otpSentOnMobile = values?.otpSentOn.includes('sentOnMobile');
-            // otpSentOnEmail = values?.otpSentOn?.includes('sentOnEmail');
-        } else {
-            otpSentOnMobile = form.getFieldValue('otpSentOn').includes('sentOnMobile');
-            // otpSentOnEmail = form.getFieldValue('otpSentOn')?.includes('sentOnEmail');
-        }
+    //     // if (values) {
+    //     //     otpSentOnMobile = values?.otpSentOn.includes('sentOnMobile');
+    //     //     // otpSentOnEmail = values?.otpSentOn?.includes('sentOnEmail');
+    //     // } else {
+    //     //     otpSentOnMobile = form.getFieldValue('otpSentOn').includes('sentOnMobile');
+    //     //     // otpSentOnEmail = form.getFieldValue('otpSentOn')?.includes('sentOnEmail');
+    //     // }
 
-        if (otpSentOnMobile) {
-        const data = { userId: selectedCustomer?.customerId, sentOnMobile: true};
-        const onSuccess = (res) => {
-            setCounter(RESEND_OTP_TIME);
-            showGlobalNotification({ notificationType: 'warning', title: 'OTP Sent', message: res?.responseMessage });
-            setOTPMessage(res?.data?.message);
-        };
-        const requestData = {
-            data: data,
-            setIsLoading: () => {},
-            onSuccess,
-        };
-        sendOTP(requestData);
-        }
-    };
+    //     if (otpSentOnMobile === true) {
+    //     const data = { userId: selectedCustomer?.customerId, sentOnMobile: true};
+    //     const onSuccess = (res) => {
+    //         setCounter(RESEND_OTP_TIME);
+    //         showGlobalNotification({ notificationType: 'warning', title: 'OTP Sent', message: res?.responseMessage });
+    //         setOTPMessage(res?.data?.message);
+    //     };
+    //     const requestData = {
+    //         data: data,
+    //         setIsLoading: () => {},
+    //         onSuccess,
+    //     };
+    //     sendOTP(requestData);
+    //     }
+    // };
     const handleOTPInput = (value) => {
         setOTPInput(value);
         setInValidOTP(false);
@@ -115,7 +116,7 @@ const OtpVarificationModalMain = (props) => {
                                 )}
                             </Col>
                             <Col xs={10} sm={10} md={8} lg={8} xl={8}>
-                                <div onClick={() => handleSendOTP()} className={counter ? styles.resendDisabled : styles.resendEnabled} type="radio">
+                                <div onClick={() => handleSendOTP()} className={counter ? style.resendDisabled : style.resendEnabled} type="radio">
                                     <TbRefresh /> Resend OTP
                                 </div>
                             </Col>
