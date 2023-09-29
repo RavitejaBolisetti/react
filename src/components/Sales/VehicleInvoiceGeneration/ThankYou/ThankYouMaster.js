@@ -23,6 +23,18 @@ export const ThankYouMaster = (props) => {
         buttonData: { ...props.defaultBtnVisiblity, closeBtn: true },
     };
 
+    const data = [
+        {
+            id: `AMC Registration`,
+        },
+        {
+            id: `RSA Registration`,
+        },
+        {
+            id: `Shield Registration`,
+        },
+    ];
+
     return (
         <>
             <Row gutter={20} className={styles.drawerBodyRight}>
@@ -49,6 +61,13 @@ export const ThankYouMaster = (props) => {
                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                         <Card>
                             <Text>Would you like to take Addons?</Text>
+                            <Space direction="vertical">
+                                {data?.map((e) => (
+                                    <Row>
+                                        <Text>{e?.id}</Text>
+                                    </Row>
+                                ))}
+                            </Space>
                         </Card>
                     </Col>
                 </Row>
