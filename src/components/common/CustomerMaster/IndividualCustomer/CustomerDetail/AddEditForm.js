@@ -19,10 +19,9 @@ import { OtpVerification } from '../../Common/Contacts/OtpVerfication';
 const AddEditFormMain = (props) => {
     const { numbValidatedSuccess, setNumbValidatedSuccess} = props;
     const { whatsAppConfiguration, setWhatsAppConfiguration, handleFormFieldChange } = props;
-    const { form, typeData, formData, corporateLovData, formActionType: { editMode } = undefined, data, customerType, selectedCustomer, validateOTP, sendOTP, userId, showGlobalNotification, fetchContactMobileNoDetails, listContactMobileNoShowLoading, mobNoVerificationData, resetContactMobileNoData, continueWithOldMobNo, setContinueWithOldMobNo, RESEND_OTP_TIME, handleSendOTP, otpInput, setOTPInput, setDisableVerifyOTP, disableVerifyOTP, counter, setCounter, otpMessage, setOTPMessage, setInValidOTP, inValidOTP } = props;
+    const { form, typeData, formData, corporateLovData, formActionType: { editMode } = undefined, data, customerType, selectedCustomer, validateOTP, sendOTP, userId, showGlobalNotification, fetchContactMobileNoDetails, listContactMobileNoShowLoading, mobNoVerificationData, resetContactMobileNoData, continueWithOldMobNo, setContinueWithOldMobNo, RESEND_OTP_TIME, handleSendOTP, otpInput, setOTPInput, setDisableVerifyOTP, disableVerifyOTP, counter, setCounter, otpMessage, setOTPMessage, setInValidOTP, inValidOTP, handleOnchangeMobNoInput ,mobileNumber,setMobileNumber} = props;
     const { contactOverWhatsApp, contactOverWhatsAppActive, sameMobileNoAsWhatsApp, sameMobileNoAsWhatsAppActive } = whatsAppConfiguration;
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [mobileNumber, setMobileNumber] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
     const [otpVerified, setOtpVerified] = useState(false);
 
@@ -40,9 +39,7 @@ const AddEditFormMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData?.corporateType]);
     useEffect(() => {
-        if (mobNoVerificationData?.customerMasterDetails?.length && mobileNumber?.length) {
-            setContinueWithPreModalOpen(true);
-        } else if ((!mobNoVerificationData?.customerMasterDetails?.length && mobileNumber) || continueWithOldMobNo) {
+    if ((!mobNoVerificationData?.customerMasterDetails?.length && mobileNumber?.length)) {
             sendOTPVerificationCode()
             setIsModalOpen(true);
         }
@@ -145,13 +142,7 @@ const AddEditFormMain = (props) => {
         // resetContactMobileNoData();
         setOTPInput('');
     };
-    const handleOnchangeMobNoInput = (event) => {
-        const Mno = event.target.value;
-        const regex = new RegExp('^([5-9]){1}([0-9]){9}$');
-        if (Mno?.length === 10 && regex.test(Mno)) {
-            setMobileNumber(Mno);
-        }
-    };
+  
     const handleNumberValidation = () => {
         if (mobileNumber) {
             const mobNoParam = [

@@ -20,54 +20,7 @@ import { withModal } from 'components/withModal';
 import style from 'components/Auth/Auth.module.scss';
 import styles from 'components/Auth/Auth.module.scss'
 const OtpVarificationModalMain = (props) => {
-    const { userId, sendOTP, selectedUserId, validateOTP, isLoading, onCloseAction, titleOverride, icon = '', closable = true, onOk = () => {}, otpInput, setOTPInput } = props;
-    const { showGlobalNotification, onError, setInValidOTP, inValidOTP, counter, setCounter, sendOTPVerificationCode, handleVerifyOTP, RESEND_OTP_TIME, selectedCustomer, otpMessage, setOTPMessage, disableVerifyOTP, setDisableVerifyOTP, hideGlobalNotification, handleSendOTP } = props;
-
-    const [form] = Form.useForm();
-
-    // const [cou; nter, setCounter] = useState(RESEND_OTP_TIME);
-    // const [otpInput, setOTPInput] = useState();
-    // const onSentOTP = (values) => {
-    //     if (values) {
-    //         hideGlobalNotification();
-    //         handleSendOTP(values);
-    //     }
-    // };
-
-
-
-    // const handleSendOTP = (values = '') => {
-    //     setOTPInput();
-    //     setInValidOTP(false);
-    //     setDisableVerifyOTP(true);
-    //     // handleSendOTP(values);
-
-    //     let otpSentOnMobile = '';
-    //     // let otpSentOnEmail = '';
-
-    //     // if (values) {
-    //     //     otpSentOnMobile = values?.otpSentOn.includes('sentOnMobile');
-    //     //     // otpSentOnEmail = values?.otpSentOn?.includes('sentOnEmail');
-    //     // } else {
-    //     //     otpSentOnMobile = form.getFieldValue('otpSentOn').includes('sentOnMobile');
-    //     //     // otpSentOnEmail = form.getFieldValue('otpSentOn')?.includes('sentOnEmail');
-    //     // }
-
-    //     if (otpSentOnMobile === true) {
-    //     const data = { userId: selectedCustomer?.customerId, sentOnMobile: true};
-    //     const onSuccess = (res) => {
-    //         setCounter(RESEND_OTP_TIME);
-    //         showGlobalNotification({ notificationType: 'warning', title: 'OTP Sent', message: res?.responseMessage });
-    //         setOTPMessage(res?.data?.message);
-    //     };
-    //     const requestData = {
-    //         data: data,
-    //         setIsLoading: () => {},
-    //         onSuccess,
-    //     };
-    //     sendOTP(requestData);
-    //     }
-    // };
+    const { setInValidOTP, inValidOTP, counter, handleVerifyOTP, otpMessage, disableVerifyOTP, setDisableVerifyOTP, handleSendOTP, otpInput, setOTPInput } = props;
     const handleOTPInput = (value) => {
         setOTPInput(value);
         setInValidOTP(false);
@@ -77,9 +30,6 @@ const OtpVarificationModalMain = (props) => {
             setDisableVerifyOTP(true);
         }
     };
-   
-
-
     return (
         <div className={styles.centerInner}>
             <div className={styles.loginForm}>

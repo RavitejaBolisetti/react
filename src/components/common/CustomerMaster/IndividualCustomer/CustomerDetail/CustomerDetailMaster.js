@@ -31,8 +31,7 @@ const mapStateToProps = (state) => {
                 CustomerDetailsIndividual: { isLoaded: isDataLoaded = false, isLoading, data },
                 Corporate: { isFilteredListLoaded: isCorporateLovDataLoaded = false, isLoading: isCorporateLovLoading, filteredListData: corporateLovData },
                 ViewDocument: { isLoaded: isViewDataLoaded = false, data: viewDocument },
-                customerMobileDetail: {isLoaded: isMoblieDataLoaded = false, isMobileLoading, data: mobNoVerificationData, filter: filterString = {} }
-
+                customerMobileDetail: { data: mobNoVerificationData },
             },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             SupportingDocument: { isLoaded: isSupportingDocumentDataLoaded = false, isSupportingDocumentLoading, data: supportingData },
@@ -126,6 +125,9 @@ const CustomerDetailMasterBase = (props) => {
 
     const [counter, setCounter] = useState(RESEND_OTP_TIME);
     const [otpMessage, setOTPMessage] = useState();
+    const [mobileNumber, setMobileNumber] = useState(false);
+    const [mobileChange, setMobileChange] = useState(false);
+
 
 
     
@@ -220,6 +222,15 @@ const CustomerDetailMasterBase = (props) => {
         ];
         const supportingDocument = uploadedFileName;
         fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, supportingDocument });
+    };
+
+    const handleOnchangeMobNoInput = (event) => {
+        
+        const Mno = event.target.value;
+        const regex = new RegExp('^([5-9]){1}([0-9]){9}$');
+        if (Mno?.length === 10 && regex.test(Mno)) {
+            setMobileNumber(Mno);
+        }
     };
 
     const changeHistoryClose = () => {
@@ -343,49 +354,27 @@ const CustomerDetailMasterBase = (props) => {
         }
     };
     const handleSendOTP = () => {
-        // setDisableVerifyOTP(true);
         setCounter(RESEND_OTP_TIME);
         setInValidOTP(false);
         setOTPInput('');
-        if(selectedCustomer){
+        if (selectedCustomer?.customerId) {
+            const data = { userId: selectedCustomer?.customerId, mobileNumber: form.getFieldValue('mobileNumber'), sentOnMobile: true, sentOnEmail: false, functionality: 'CUST' };
             const onSuccess = (res) => {
                 showGlobalNotification({ notificationType: 'warning', title: 'OTP Sent', message: res?.responseMessage });
                 setOTPMessage(res?.data?.message);
             };
+            const onError = (message) => {
+                showGlobalNotification({ message });
+            };
             const requestData = {
                 data: data,
+                userId,
                 setIsLoading: () => {},
+                onError,
                 onSuccess,
             };
             sendOTP(requestData);
         }
-
-        // handleSendOTP(values);
-
-        // let otpSentOnMobile = '';
-        // // let otpSentOnEmail = '';
-
-        // // if (values) {
-        // //     otpSentOnMobile = values?.otpSentOn.includes('sentOnMobile');
-        // //     // otpSentOnEmail = values?.otpSentOn?.includes('sentOnEmail');
-        // // } else {
-        // //     otpSentOnMobile = form.getFieldValue('otpSentOn').includes('sentOnMobile');
-        // //     // otpSentOnEmail = form.getFieldValue('otpSentOn')?.includes('sentOnEmail');
-        // // }
-
-        // if (otpSentOnMobile === true) {
-        // const data = { userId: selectedCustomer?.customerId, sentOnMobile: true};
-        // const onSuccess = (res) => {
-        //     showGlobalNotification({ notificationType: 'warning', title: 'OTP Sent', message: res?.responseMessage });
-        //     setOTPMessage(res?.data?.message);
-        // };
-        // const requestData = {
-        //     data: data,
-        //     setIsLoading: () => {},
-        //     onSuccess,
-        // };
-        // sendOTP(requestData);
-        // }
     };
 
 
@@ -474,6 +463,9 @@ const CustomerDetailMasterBase = (props) => {
         otpMessage,
         setOTPMessage,
         handleSendOTP,
+        handleOnchangeMobNoInput,
+        mobileNumber,
+        setMobileNumber,
     };
 
     const viewProps = {
