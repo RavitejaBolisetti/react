@@ -4,6 +4,8 @@ import { tableColumnSearchOTF } from 'components/Sales/VehicleAllotment/tableCol
 import customRender from '@utils/test-utils';
 import { screen, fireEvent, render } from "@testing-library/react";
 import { Form } from 'antd';
+import { Provider } from 'react-redux';
+import createMockStore from '__mocks__/store';
 
 const FormWrapper = (props) => {
     const [searchForm] = Form.useForm();
@@ -23,9 +25,18 @@ describe('Vehicle Allotment Master Component', () => {
         }
         const tableDataItem = [{key: 1, value: 'test'}, {key: 2, value: 'test'}]
 
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                ConfigurableParameterEditing: { filteredListData: { OTF_SER: [{ name: 'Kai' }] } },
+            },
+        });
+
         customRender(
-            <FormWrapper isVisible={true} handleButtonClick={jest.fn()} tableData={tableDataItem} buttonData={buttonData} setFilterStringOTFSearch={jest.fn()} setSelectedOrderOTFDetails={jest.fn()} formData={formData} />
-        )
+            <Provider store={mockStore}>
+                <FormWrapper isVisible={true} handleButtonClick={jest.fn()} tableData={tableDataItem} buttonData={buttonData} setFilterStringOTFSearch={jest.fn()} setSelectedOrderOTFDetails={jest.fn()} formData={formData} />
+            </Provider>
+        );
 
         const searchBtn = screen.getByRole("button", { name: 'search' })
         fireEvent.click(searchBtn)

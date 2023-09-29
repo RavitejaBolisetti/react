@@ -28,7 +28,7 @@ const AddEditFormMain = (props) => {
         setFormBtnActive(true);
     };
 
-    const onChange = (props) => {   
+    const onChange = (props) => {
         setAccountTyp(props);
 
         form.setFieldsValue({
@@ -76,7 +76,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item label="Code" name="accountCode" rules={[validateRequiredInputField('code')]}>
-                                <Input placeholder={preparePlaceholderText('code')} maxLength={9} disabled={!disable} />
+                                <Input placeholder={preparePlaceholderText('code')} maxLength={36} disabled={!disable} />
                             </Form.Item>
                         </Col>
                     </Row>

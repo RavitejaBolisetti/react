@@ -19,7 +19,7 @@ const AddEditFormMain = (props) => {
     const { formData, disabledProps, formActionType, typeData, salesConsultantLov,handleDeliveryChange } = props;
 
     return (
-        <Card className={styles.drawerCardView}>
+        <Card>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     {prepareCaption('Order Details')}

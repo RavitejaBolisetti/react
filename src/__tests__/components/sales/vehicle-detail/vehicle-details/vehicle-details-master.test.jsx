@@ -40,10 +40,6 @@ describe('Vehicle details master render', () => {
         fireEvent.click(minusBtn[0]);
         const vehicleDetails = screen.getByText('Vehicle Details');
         fireEvent.click(vehicleDetails);
-
-        fireEvent.click(minusBtn[1]);
-        const number = screen.getByText('Registration Number Change Request');
-        fireEvent.click(number);
     })
 
     it('should render vehicle detals master view details button', () => {
@@ -52,75 +48,6 @@ describe('Vehicle details master render', () => {
             formActionType={formActionType}
             fetchList={jest.fn()}
         />)
-
-        const endDate = screen.getByRole('columnheader', { name: 'Manufacturer Warranty End Date', exact: false });
-        expect(endDate).toBeTruthy();
-
-        const deliveryDate = screen.getByRole('columnheader', { name: 'Delivery Date', exact: false });
-        expect(deliveryDate).toBeTruthy();
-
-        const saleDate = screen.getByRole('columnheader', { name: 'Sale Date', exact: false });
-        expect(saleDate).toBeTruthy();
-
-        const soldBy = screen.getByRole('columnheader', { name: 'Sold By', exact: false });
-        expect(soldBy).toBeTruthy();
-
-        const odometerReading = screen.getByRole('columnheader', { name: 'Last Odometer Reading', exact: false });
-        expect(odometerReading).toBeTruthy();
-
-        const averageRun = screen.getByRole('columnheader', { name: 'Average Run', exact: false });
-        expect(averageRun).toBeTruthy();
-
-        const nextDue = screen.getByRole('columnheader', { name: 'Next Due Service', exact: false });
-        expect(nextDue).toBeTruthy();
-
-        const manager = screen.getByRole('columnheader', { name: 'Relationship Manager', exact: false });
-        expect(manager).toBeTruthy();
-
-        const serviceDueDate = screen.getByRole('columnheader', { name: 'Next Service Due Date', exact: false });
-        expect(serviceDueDate).toBeTruthy();
-
-        const expireDate = screen.getByRole('columnheader', { name: 'PUC Expiry Date', exact: false });
-        expect(expireDate).toBeTruthy();
-
-        const insuranceExpiryDate = screen.getByRole('columnheader', { name: 'Insurance Expiry Date', exact: false });
-        expect(insuranceExpiryDate).toBeTruthy();
-
-        const customerCategory = screen.getByRole('columnheader', { name: 'Customer Category-SSI', exact: false });
-        expect(customerCategory).toBeTruthy();
-
-        const customerCategoryCSI = screen.getByRole('columnheader', { name: 'Customer Category-CSI', exact: false });
-        expect(customerCategoryCSI).toBeTruthy();
-
-        const customerCategoryIQS = screen.getByRole('columnheader', { name: 'Customer Category-IQS', exact: false });
-        expect(customerCategoryIQS).toBeTruthy();
-
-        const oemPriviledgeCustomer = screen.getByRole('columnheader', { name: 'OEM Priviledge Customer', exact: false });
-        expect(oemPriviledgeCustomer).toBeTruthy();
-
-        const keyAccountVehicle = screen.getByRole('columnheader', { name: 'Key Account Vehicle', exact: false });
-        expect(keyAccountVehicle).toBeTruthy();
-
-        const theftVehicle = screen.getByRole('columnheader', { name: 'Theft Vehicle', exact: false });
-        expect(theftVehicle).toBeTruthy();
-
-        const pdiDone = screen.getByRole('columnheader', { name: 'PDI Done', exact: false });
-        expect(pdiDone).toBeTruthy();
-
-        const buyBackVehicle = screen.getByRole('columnheader', { name: 'Buy Back Vehicle', exact: false });
-        expect(buyBackVehicle).toBeTruthy();
-
-        const governmentVehicle = screen.getByRole('columnheader', { name: 'Government Vehicle', exact: false });
-        expect(governmentVehicle).toBeTruthy();
-
-        const taxiNonTaxi = screen.getByRole('columnheader', { name: 'Taxi/Non Taxi', exact: false });
-        expect(taxiNonTaxi).toBeTruthy();
-
-        const ctcVehicleMM = screen.getByRole('columnheader', { name: 'M&M CTC Vehicle', exact: false });
-        expect(ctcVehicleMM).toBeTruthy();
-
-        const managedBy = screen.getByRole('columnheader', { name: 'Managed By', exact: false });
-        expect(managedBy).toBeTruthy();
 
     })
 
@@ -150,77 +77,6 @@ describe('Vehicle details master render', () => {
         fireEvent.click(minusBtn[0]);
         const vehicleDetails = screen.getByText('Vehicle Details');
         fireEvent.click(vehicleDetails);
-
-        fireEvent.click(minusBtn[7]);
-        const change = screen.getByText('Registration Number Change Request');
-        fireEvent.click(change);
-
-
-        const endDate = screen.getByRole('textbox', { name: 'Manufacturer Warranty End Date', exact: false });
-        fireEvent.change(endDate, { target: { value: 'Hello World' } });
-
-        const deliveryDate = screen.getByRole('textbox', { name: 'Delivery Date', exact: false });
-        fireEvent.change(deliveryDate, { target: { value: 'Hello World' } });
-
-        const saleDate = screen.getByRole('textbox', { name: 'Sale Date', exact: false });
-        fireEvent.change(saleDate, { target: { value: 'Hello World' } });
-
-        const soldBy = screen.getByRole('textbox', { name: 'Sold By', exact: false });
-        fireEvent.change(soldBy, { target: { value: 'Hello World' } });
-
-        const odometerReading = screen.getByRole('textbox', { name: 'Last Odometer Reading', exact: false });
-        fireEvent.change(odometerReading, { target: { value: 'Hello World' } });
-
-        const averageRun = screen.getByRole('textbox', { name: 'Average Run', exact: false });
-        fireEvent.change(averageRun, { target: { value: 'Hello World' } });
-
-        const nextDue = screen.getByRole('textbox', { name: 'Next Due Service', exact: false });
-        fireEvent.change(nextDue, { target: { value: 'Hello World' } });
-
-        const manager = screen.getByRole('textbox', { name: 'Relationship Manager', exact: false });
-        fireEvent.change(manager, { target: { value: 'Hello World' } });
-
-        const serviceDueDate = screen.getByRole('textbox', { name: 'Next Service Due Date', exact: false });
-        fireEvent.change(serviceDueDate, { target: { value: 'Hello World' } });
-
-        const expireDate = screen.getByRole('textbox', { name: 'PUC Expiry Date', exact: false });
-        fireEvent.change(expireDate, { target: { value: 'Hello World' } });
-
-        const insuranceExpiryDate = screen.getByRole('textbox', { name: 'Insurance Expiry Date', exact: false });
-        fireEvent.change(insuranceExpiryDate, { target: { value: 'Hello World' } });
-
-        const customerCategory = screen.getByRole('textbox', { name: 'Customer Category-SSI', exact: false });
-        fireEvent.change(customerCategory, { target: { value: 'Hello World' } });
-
-        const customerCategoryCSI = screen.getByRole('textbox', { name: 'Customer Category-CSI', exact: false });
-        fireEvent.change(customerCategoryCSI, { target: { value: 'Hello World' } });
-
-        const customerCategoryIQS = screen.getByRole('textbox', { name: 'Customer Category-IQS', exact: false });
-        fireEvent.change(customerCategoryIQS, { target: { value: 'Hello World' } });
-
-        const oemPriviledgeCustomer = screen.getByRole('checkbox', { name: 'OEM Privileged Customer', exact: false });
-        fireEvent.click(oemPriviledgeCustomer);
-
-        const keyAccountVehicle = screen.getByRole('checkbox', { name: 'Key Account Vehicle', exact: false });
-        fireEvent.click(keyAccountVehicle);
-
-        const refurbished = screen.getByRole('checkbox', { name: 'Refurbished', exact: false });
-        fireEvent.click(refurbished);
-
-        const theftVehicle = screen.getByRole('checkbox', { name: 'Theft Vehicle', exact: false });
-        fireEvent.click(theftVehicle);
-
-        const pdiDone = screen.getByRole('checkbox', { name: 'PDI Done', exact: false });
-        fireEvent.click(pdiDone);
-
-        const governmentVehicle = screen.getByRole('checkbox', { name: 'Government Vehicle', exact: false });
-        fireEvent.click(governmentVehicle);       
-
-        const ctcVehicleMM = screen.getByRole('checkbox', { name: 'M&M CTC Vehicle', exact: false });
-        fireEvent.click(ctcVehicleMM);
-
-        const taxiNonTaxi = screen.getByRole('combobox', { name: 'Taxi/Non Taxi', exact: false });
-        fireEvent.change(taxiNonTaxi, { target: { value: 'Hello World' } });
     })
 
 

@@ -47,11 +47,11 @@ describe('AddEdit Component render', () => {
         changeHistory: true,
     };
     it('should render addedit page', async () => {
-        customRender(<OtfDetailsMaster {...props} typeData={('SALE_TYP', 'PRC_TYP')} buttonData={defaultBtnVisiblity} />);
+        customRender(<OtfDetailsMaster {...props} typeData={('SALE_TYP', 'PRC_TYP')} buttonData={defaultBtnVisiblity} setWorkFlowDetails={jest.fn()} />);
     });
 
     it('should render text components', async () => {
-        customRender(<OtfDetailsMaster {...props} typeData={('SALE_TYP', 'PRC_TYP')} />);
+        customRender(<OtfDetailsMaster {...props} typeData={('SALE_TYP', 'PRC_TYP')} setWorkFlowDetails={jest.fn()} />);
         const otfDetails = screen.getByText('Booking Details');
         expect(otfDetails).toBeTruthy();
 
@@ -63,7 +63,7 @@ describe('AddEdit Component render', () => {
     });
 
     it('should render text', async () => {
-        customRender(<OtfDetailsMaster {...props} typeData={('SALE_TYP', 'PRC_TYP')} buttonData={defaultBtnVisiblity} />);
+        customRender(<OtfDetailsMaster {...props} typeData={('SALE_TYP', 'PRC_TYP')} buttonData={defaultBtnVisiblity} setWorkFlowDetails={jest.fn()} />);
         const editBtn = screen.getByRole('button', { name: 'Change History' });
         fireEvent.click(editBtn);
         expect(editBtn).toBeTruthy();
@@ -106,7 +106,7 @@ describe('AddEdit Component render', () => {
     });
 
     it('should render buttons', async () => {
-        customRender(<OtfDetailsMaster {...props} typeData={('SALE_TYP', 'PRC_TYP')} buttonData={defaultBtnVisiblity} />);
+        customRender(<OtfDetailsMaster {...props} typeData={('SALE_TYP', 'PRC_TYP')} buttonData={defaultBtnVisiblity} setWorkFlowDetails={jest.fn()} />);
         const editBtn = screen.getByRole('button', { name: 'Edit' });
         fireEvent.click(editBtn);
 
@@ -134,7 +134,7 @@ describe('AddEdit Component render', () => {
         });
         customRender(
             <Provider store={mockStore}>
-                <OtfDetailsMaster {...props} typeData="SALE_TYP" buttonData={defaultBtnVisiblity} onCloseAction={jest.fn()} />
+                <OtfDetailsMaster {...props} typeData="SALE_TYP" buttonData={defaultBtnVisiblity} onCloseAction={jest.fn()} setWorkFlowDetails={jest.fn()} />
             </Provider>
         );
 
@@ -148,7 +148,7 @@ describe('AddEdit Component render', () => {
         });
         customRender(
             <Provider store={mockStore}>
-                <OtfDetailsMaster {...props} typeData="SALE_TYP" buttonData={defaultBtnVisiblity} setButtonData={jest.fn()} onCloseAction={jest.fn()} onSuccess={jest.fn()} handleFormValueChange={jest.fn()} handleFieldsChange={jest.fn()} onFinish={jest.fn()} onFinishFailed={jest.fn()} />
+                <OtfDetailsMaster {...props} typeData="SALE_TYP" buttonData={defaultBtnVisiblity} setButtonData={jest.fn()} onCloseAction={jest.fn()} onSuccess={jest.fn()} handleFormValueChange={jest.fn()} handleFieldsChange={jest.fn()} onFinish={jest.fn()} onFinishFailed={jest.fn()} setWorkFlowDetails={jest.fn()} />
             </Provider>
         );
         const addBtn = screen.getByRole('button', { name: 'Edit', exact: false });
@@ -164,7 +164,7 @@ describe('AddEdit Component render', () => {
         });
         customRender(
             <Provider store={mockStore}>
-                <OtfDetailsMaster {...props} typeData="SALE_TYP" buttonData={defaultBtnVisiblity} setButtonData={jest.fn()} onCloseAction={jest.fn()} onSuccess={jest.fn()} handleFormValueChange={jest.fn()} handleFieldsChange={jest.fn()} onFinish={jest.fn()} onFinishFailed={jest.fn()} />
+                <OtfDetailsMaster {...props} typeData="SALE_TYP" buttonData={defaultBtnVisiblity} setButtonData={jest.fn()} onCloseAction={jest.fn()} onSuccess={jest.fn()} handleFormValueChange={jest.fn()} handleFieldsChange={jest.fn()} onFinish={jest.fn()} onFinishFailed={jest.fn()} setWorkFlowDetails={jest.fn()} />
             </Provider>
         );
         const addBtn = screen.getByRole('button', { name: 'Edit', exact: false });
@@ -180,6 +180,6 @@ describe('AddEdit Component render', () => {
 describe('AddEdit Component render when viewmode is false', () => {
     const formActionType = { addMode: false, editMode: false, viewMode: false };
     it('should render addedit page', async () => {
-        customRender(<OtfDetailsMaster {...formActionType} typeData={('SALE_TYP', 'PRC_TYP')} />);
+        customRender(<OtfDetailsMaster {...formActionType} typeData={('SALE_TYP', 'PRC_TYP')} setWorkFlowDetails={jest.fn()} />);
     });
 });

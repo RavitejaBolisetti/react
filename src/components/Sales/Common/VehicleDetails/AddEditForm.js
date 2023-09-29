@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Col, Input, Form, Row, Button, Collapse, Typography, Divider, Switch } from 'antd';
 import { validateRequiredSelectField, validateNumberWithTwoDecimalPlaces, validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -26,6 +26,7 @@ import TreeSelectField from 'components/common/TreeSelectField';
 import { customSelectBox } from 'utils/customSelectBox';
 import { prepareCaption } from 'utils/prepareCaption';
 import styles from 'assets/sass/app.module.scss';
+import { ConfirmationModal } from 'utils/ConfirmationModal';
 
 const { Text } = Typography;
 const { Panel } = Collapse;
@@ -35,6 +36,7 @@ const AddEditFormMain = (props) => {
     const { productModelCode, setProductModelCode, viewOnly, handlePriceChange, handleDiscountChange = () => {}, showPrintDiscount = false, ShowPOandSOdetails = true, showAvailaibleStock = true } = props;
 
     const [optionForm] = Form.useForm();
+    const [confirmRequest, setConfirmRequest] = useState();
     const findUsageType = (usage) => {
         const foundVal = typeData[PARAM_MASTER.VEHCL_TYPE.id]?.find((element, index) => element?.value === usage);
         return foundVal?.key;
@@ -92,9 +94,30 @@ const AddEditFormMain = (props) => {
     };
 
     const handleSelectTreeClick = (value) => {
-        setProductModelCode(value);
-        handleFormValueChange(true);
-        handleDiscountChange();
+        setConfirmRequest({
+            isVisible: true,
+            titleOverride: 'Confirmation',
+            closable: true,
+            icon: false,
+            onCloseAction: () => {
+                setConfirmRequest({
+                    ...confirmRequest,
+                    isVisible: false,
+                });
+            },
+            onSubmitAction: () => {
+                setProductModelCode(value);
+                handleFormValueChange(true);
+                handleDiscountChange();
+                setConfirmRequest({
+                    ...confirmRequest,
+                    isVisible: false,
+                });
+            },
+            submitText: 'Yes',
+            text: 'Are you sure want to change modal',
+            content: value,
+        });
     };
 
     const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
@@ -111,157 +134,160 @@ const AddEditFormMain = (props) => {
         // loading: isProductDataLoading,
         treeDisabled: viewOnly,
     };
-    
+
     return (
-        <Row gutter={20}>
-            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} activeKey={openAccordian} collapsible="icon">
-                    <Panel header="Vehicle Information" key="1">
-                        <Divider />
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                <Form.Item label="Model Description" name="model" data-testid="model">
-                                    <TreeSelectField {...treeSelectFieldProps} />
-                                </Form.Item>
-                                {toolTipContent && productModelCode && <div className={styles.modelTooltip}>{addToolTip(toolTipContent, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle size={13} />)}</div>}
-                            </Col>
-
-                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                <Form.Item label="Model Code" name="modelCode" data-testid="vehicleVariant" rules={[validateRequiredInputField('Model Code')]}>
-                                    <Input {...disabledProp} placeholder={preparePlaceholderText('Model Code')} />
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                        <Divider />
-
-                        <Row gutter={20}>
-                            {showAvailaibleStock && (
-                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item label="Available Stock" name="availableStock" data-testid="availableStock">
-                                        <Input {...disabledProp} placeholder={preparePlaceholderText('Available Stock')} />
-                                    </Form.Item>
-                                </Col>
-                            )}
-                            {ShowPOandSOdetails && (
-                                <>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item label="PO Number" name="poNumber">
-                                            <Input {...disabledProp} placeholder={preparePlaceholderText('PO Number')} />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item label="PO Date" name="poDate">
-                                            <Input {...disabledProp} placeholder={preparePlaceholderText('PO Date')} />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item label="PO Status" name="poStatus">
-                                            {customSelectBox({ data: typeData?.PO_STATS, disabled: true })}
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item label="SO Number" name="soNumber">
-                                            <Input {...disabledProp} placeholder={preparePlaceholderText('SO Number')} />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item label="SO Status" name="soStatus">
-                                            <Input {...disabledProp} placeholder={preparePlaceholderText('SO Status')} />
-                                        </Form.Item>
-                                    </Col>
-                                </>
-                            )}
-
-                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="VIN Number" name="vinNumber">
-                                    <Input {...disabledProp} placeholder={preparePlaceholderText('VIN number')} />
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                {prepareCaption('Price Information')}
-                            </Col>
-                        </Row>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item initialValue={formData?.saleType} name="saleType" label="Sale Type" rules={[validateRequiredSelectField('Sale Type')]}>
-                                    {customSelectBox({ data: typeData['SALE_TYPE'], disabled: viewOnly })}
-                                </Form.Item>
-                            </Col>
-                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item initialValue={formData?.priceType} label="Price Type" name="priceType">
-                                    {customSelectBox({ data: typeData['PRC_TYP'], disabled: viewOnly, onChange: handlePriceChange })}
-                                </Form.Item>
-                            </Col>
-                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="Vehicle Selling Price" name="vehicleSellingPrice">
-                                    <Input {...disabledProp} placeholder={preparePlaceholderText('Vehicle Selling Price')} />
-                                </Form.Item>
-                            </Col>
-                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="Vehicle Amount" name="vehicleAmount">
-                                    <Input {...disabledProp} placeholder={preparePlaceholderText('Vehicle Amount')} />
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                {prepareCaption('Benefits')}
-                            </Col>
-                        </Row>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="Dealer Discount with TAX" name="discountAmount" rules={[validateNumberWithTwoDecimalPlaces('Dealer Discount with TAX')]}>
-                                    <Input placeholder={preparePlaceholderText('Dealer Discount with TAX')} onChange={handleDiscountChange} />
-                                </Form.Item>
-                            </Col>
-                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="Consumer Scheme with TAX" name="taxAmount">
-                                    <Input {...disabledProp} placeholder={preparePlaceholderText('Consumer Scheme with TAX')} />
-                                </Form.Item>
-                            </Col>
-                            {showPrintDiscount && (
-                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item initialValue={false} labelAlign="left" wrapperCol={{ span: 24 }} name="printDiscount" label="Print Discount?" valuePropName="checked">
-                                        <Switch checkedChildren="Yes" unCheckedChildren="No" />
-                                    </Form.Item>
-                                </Col>
-                            )}
-                        </Row>
-                    </Panel>
-                </Collapse>
-                <Collapse onChange={() => handleCollapse(2)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} collapsible="icon">
-                    <Panel header="Tax Details" key="2">
-                        <Divider />
-                        <DataTable tableColumn={taxDetailsColumn()} tableData={formData['taxDetails']} pagination={false} />
-                    </Panel>
-                </Collapse>
-                <Collapse onChange={() => handleCollapse(3)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} collapsible="icon">
-                    <Panel
-                        header={
-                            <Row>
+        <>
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} activeKey={openAccordian} collapsible="icon">
+                        <Panel header="Vehicle Information" key="1">
+                            <Divider />
+                            <Row gutter={20}>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                    <Text strong>Optional Services</Text>
-                                    <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly}>
-                                        Add
-                                    </Button>
+                                    <Form.Item label="Model Description" name="model" data-testid="model">
+                                        <TreeSelectField {...treeSelectFieldProps} />
+                                    </Form.Item>
+                                    {toolTipContent && productModelCode && <div className={styles.modelTooltip}>{addToolTip(toolTipContent, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle size={13} />)}</div>}
+                                </Col>
+
+                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                    <Form.Item label="Model Code" name="modelCode" data-testid="vehicleVariant" rules={[validateRequiredInputField('Model Code')]}>
+                                        <Input {...disabledProp} placeholder={preparePlaceholderText('Model Code')} />
+                                    </Form.Item>
                                 </Col>
                             </Row>
-                        }
-                        key="3"
-                    >
-                        {isReadOnly && (
-                            <>
-                                <Divider />
-                                <OptionServicesForm {...OptionServicesFormProps} />
-                            </>
-                        )}
-                        <DataTable tableColumn={optionalServicesColumns()} tableData={optionsServiceModified} pagination={false} />
-                    </Panel>
-                </Collapse>
-            </Col>
-        </Row>
+                            <Divider />
+
+                            <Row gutter={20}>
+                                {showAvailaibleStock && (
+                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                        <Form.Item label="Available Stock" name="availableStock" data-testid="availableStock">
+                                            <Input {...disabledProp} placeholder={preparePlaceholderText('Available Stock')} />
+                                        </Form.Item>
+                                    </Col>
+                                )}
+                                {ShowPOandSOdetails && (
+                                    <>
+                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                            <Form.Item label="PO Number" name="poNumber">
+                                                <Input {...disabledProp} placeholder={preparePlaceholderText('PO Number')} />
+                                            </Form.Item>
+                                        </Col>
+                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                            <Form.Item label="PO Date" name="poDate">
+                                                <Input {...disabledProp} placeholder={preparePlaceholderText('PO Date')} />
+                                            </Form.Item>
+                                        </Col>
+                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                            <Form.Item label="PO Status" name="poStatus">
+                                                {customSelectBox({ data: typeData?.PO_STATS, disabled: true })}
+                                            </Form.Item>
+                                        </Col>
+                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                            <Form.Item label="SO Number" name="soNumber">
+                                                <Input {...disabledProp} placeholder={preparePlaceholderText('SO Number')} />
+                                            </Form.Item>
+                                        </Col>
+                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                            <Form.Item label="SO Status" name="soStatus">
+                                                <Input {...disabledProp} placeholder={preparePlaceholderText('SO Status')} />
+                                            </Form.Item>
+                                        </Col>
+                                    </>
+                                )}
+
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label="VIN Number" name="vinNumber">
+                                        <Input {...disabledProp} placeholder={preparePlaceholderText('VIN number')} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                    {prepareCaption('Price Information')}
+                                </Col>
+                            </Row>
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item initialValue={formData?.saleType} name="saleType" label="Sale Type" rules={[validateRequiredSelectField('Sale Type')]}>
+                                        {customSelectBox({ data: typeData['SALE_TYPE'], disabled: viewOnly })}
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item initialValue={formData?.priceType} label="Price Type" name="priceType">
+                                        {customSelectBox({ data: typeData['PRC_TYP'], disabled: viewOnly, onChange: handlePriceChange })}
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label="Vehicle Selling Price" name="vehicleSellingPrice">
+                                        <Input {...disabledProp} placeholder={preparePlaceholderText('Vehicle Selling Price')} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label="Vehicle Amount" name="vehicleAmount">
+                                        <Input {...disabledProp} placeholder={preparePlaceholderText('Vehicle Amount')} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                    {prepareCaption('Benefits')}
+                                </Col>
+                            </Row>
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label="Dealer Discount with TAX" name="discountAmount" rules={[validateNumberWithTwoDecimalPlaces('Dealer Discount with TAX')]}>
+                                        <Input placeholder={preparePlaceholderText('Dealer Discount with TAX')} onChange={handleDiscountChange} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label="Consumer Scheme with TAX" name="taxAmount">
+                                        <Input {...disabledProp} placeholder={preparePlaceholderText('Consumer Scheme with TAX')} />
+                                    </Form.Item>
+                                </Col>
+                                {showPrintDiscount && (
+                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                        <Form.Item initialValue={false} labelAlign="left" wrapperCol={{ span: 24 }} name="printDiscount" label="Print Discount?" valuePropName="checked">
+                                            <Switch checkedChildren="Yes" unCheckedChildren="No" />
+                                        </Form.Item>
+                                    </Col>
+                                )}
+                            </Row>
+                        </Panel>
+                    </Collapse>
+                    <Collapse onChange={() => handleCollapse(2)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} collapsible="icon">
+                        <Panel header="Tax Details" key="2">
+                            <Divider />
+                            <DataTable tableColumn={taxDetailsColumn()} tableData={formData['taxDetails']} pagination={false} />
+                        </Panel>
+                    </Collapse>
+                    <Collapse onChange={() => handleCollapse(3)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} collapsible="icon">
+                        <Panel
+                            header={
+                                <Row>
+                                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                        <Text strong>Optional Services</Text>
+                                        <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly}>
+                                            Add
+                                        </Button>
+                                    </Col>
+                                </Row>
+                            }
+                            key="3"
+                        >
+                            {isReadOnly && (
+                                <>
+                                    <Divider />
+                                    <OptionServicesForm {...OptionServicesFormProps} />
+                                </>
+                            )}
+                            <DataTable tableColumn={optionalServicesColumns()} tableData={optionsServiceModified} pagination={false} />
+                        </Panel>
+                    </Collapse>
+                </Col>
+            </Row>
+            <ConfirmationModal {...confirmRequest} />
+        </>
     );
 };
 

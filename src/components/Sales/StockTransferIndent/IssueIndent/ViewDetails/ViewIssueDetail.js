@@ -33,7 +33,7 @@ export const ViewIssueDetail = ({ formData, isLoading = false, typeData, handleR
 
     const buttonVisibility = handleBtnVisibility({ toggleButton, checkKey: formData?.issueStatus });
     return (
-        <Card className={styles.drawerCardView}>
+        <Card>
             <Descriptions {...viewProps}>
                 <Descriptions.Item label="ST Issue Note No.">{checkAndSetDefaultValue(viewData?.issueNumber, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="ST Issue Note Date">{checkAndSetDefaultValue(viewData?.issueDate, isLoading)}</Descriptions.Item>
@@ -55,9 +55,9 @@ export const ViewIssueDetail = ({ formData, isLoading = false, typeData, handleR
                 <Descriptions.Item label="Net Dealer Price">{checkAndSetDefaultValue(viewData?.netDealerPrice, isLoading)}</Descriptions.Item>
             </Descriptions>
             <Row gutter={20} className={styles.marB20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ display: 'flex' }}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={`${styles.buttonsGroup} ${styles.marB20}`}>
                     {buttonVisibility?.canReceive && (
-                        <Button className={styles.marR10} type="primary" onClick={() => handleRequest(formData, ISSUE_ACTION_LIST?.RECEIVED)}>
+                        <Button type="primary" onClick={() => handleRequest(formData, ISSUE_ACTION_LIST?.RECEIVED)}>
                             {BUTTON_NAME_CONSTANTS?.RECEIEVED?.name}
                         </Button>
                     )}

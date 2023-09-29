@@ -38,7 +38,7 @@ const mapStateToProps = (state) => {
 
         isFamilyLoaded,
         isFamilyLoading,
-        relationData: relationData && relationData[PARAM_MASTER.REL_TYPE.id],
+        relationData,
         familyData,
         familySearchData,
         isSearchLoading,

@@ -33,7 +33,7 @@ describe('AddOn Detail Common Form components', () => {
         customRender(<AddEditForm setformDataSetter={jest.fn()} />);
     });
     it('should click on buttons', () => {
-        customRender(<FormWrapper setformDataSetter={jest.fn()} typeData={typeData} />);
+        customRender(<FormWrapper setformDataSetter={jest.fn()} typeData={typeData} setOpenAccordian={jest.fn()} />);
 
         const plusBtn = screen.getAllByRole('img', { name: /plus/i });
         fireEvent.click(plusBtn[0]);

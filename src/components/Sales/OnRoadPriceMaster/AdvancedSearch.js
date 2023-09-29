@@ -32,7 +32,6 @@ const mapStateToProps = (state) => {
     } = state;
 
     const moduleTitle = 'OnRoad Price Master';
-
     let returnValue = {
         userId,
         accessToken,
@@ -62,7 +61,6 @@ const mapDispatchToProps = (dispatch) => ({
             fetchOnRoadPriceList: onRoadPriceMasterAction.fetchList,
             listVehiclePriceShowLoading: onRoadPriceMasterAction.listShowLoading,
             setFilterString: onRoadPriceMasterAction.setFilter,
-
             showGlobalNotification,
         },
         dispatch
@@ -82,7 +80,6 @@ export const AdvancedSearchFrom = (props) => {
         if (!isProductHierarchyDataLoaded) {
             fetchProductLovList({ setIsLoading: listProductShowLoading, userId });
         }
-
         if (!isCityDataLoaded && !isCityLoading) {
             fetchCityLovList({ setIsLoading: listCityShowLoading, userId });
         }

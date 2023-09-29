@@ -55,7 +55,9 @@ const ViewDetailMain = (props) => {
                                 <InputSkeleton width={'100px'} height={20} theme={'card'} />
                             ) : (
                                 <div className={styles?.tooltipAlign}>
-                                    {productAttributeDetail?.model}
+                                    <div title={productAttributeDetail?.model} className={`${styles.fieldcontentData} ${styles.txtEllipsis}`}>
+                                        {productAttributeDetail?.model}
+                                    </div>
                                     {!productAttributeDetail?.model ? 'NA' : addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles?.toolTip)(<AiOutlineInfoCircle className={styles?.infoIconColor} size={13} />)}
                                 </div>
                             )}

@@ -113,7 +113,7 @@ const VehicleInvoiceCard = (props) => {
                         <Divider />
                     </>
                 )}
-                {formActionType?.viewMode && (selectedOrder?.irnStatus || (selectedOrder?.invoiceNumber && !selectedOrder?.irnStatus && selectedOrder?.invoiceStatus === QUERY_BUTTONS_CONSTANTS.INVOICED.key)) && (
+                {formActionType?.viewMode && selectedOrder?.gstin && (selectedOrder?.irnStatus || (selectedOrder?.invoiceNumber && !selectedOrder?.irnStatus && selectedOrder?.invoiceStatus === QUERY_BUTTONS_CONSTANTS.INVOICED.key)) && (
                     <>
                         <div className={styles.detailCardText}>
                             IRN Status:

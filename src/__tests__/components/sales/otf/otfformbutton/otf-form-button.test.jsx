@@ -4,7 +4,7 @@ import { screen, fireEvent } from '@testing-library/react';
 import { OTFFormButton } from 'components/Sales/OTF/OTFFormButton';
 afterEach(() => {
     jest.restoreAllMocks();
-  }); 
+}); 
 const buttonData = {
     closeBtn: true,
     cancelBtn: true,
@@ -50,7 +50,7 @@ describe('Booking Form Button Component', () => {
         fireEvent.click(changeHistory);
         const nextBtn = screen.getByRole('button', { name: 'Next' });
         fireEvent.click(nextBtn);
-        const saveBtn = screen.getByRole('button', { name: 'Save & Next' });
+        const saveBtn = screen.getByRole('button', { name: 'Save' });
         fireEvent.click(saveBtn);
     });
 });

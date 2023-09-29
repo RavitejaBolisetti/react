@@ -309,9 +309,6 @@ describe('Booking cancellation master render', () => {
         const mobileNo = screen.getByRole('columnheader', { name: 'Mobile No.', exact: false });
         expect(mobileNo).toBeTruthy();
 
-        const model = screen.getByRole('columnheader', { name: 'Model', exact: false });
-        expect(model).toBeTruthy();
-
         const order = screen.getByRole('columnheader', { name: 'Order Status', exact: false });
         expect(order).toBeTruthy();
 

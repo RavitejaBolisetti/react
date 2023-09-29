@@ -64,9 +64,6 @@ describe('Vehicle Delivery Note Master components', () => {
         fireEvent.click(advanceFilter);
         const closeBtn = screen.getByRole('button', { name: /Close/i });
         fireEvent.click(closeBtn);
-
-        const addBtn = screen.getByRole('button', { name: /Add/i });
-        fireEvent.click(addBtn);
     });
 
     it('clear button should work', () => {

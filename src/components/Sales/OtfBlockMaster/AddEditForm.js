@@ -20,7 +20,9 @@ import { debounce } from 'utils/debounce';
 
 import { withDrawer } from 'components/withDrawer';
 
-import styles from 'components/common/Common.module.css';
+//import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+
 const { Search } = Input;
 
 const mapStateToProps = (state) => {
@@ -89,7 +91,7 @@ const AddEditFormMain = (props) => {
     //     }
     //     // eslint-disable-next-line react-hooks/exhaustive-deps
     // }, [dealerDataList]);
-
+    
     useEffect(() => {
         if (attributeKey && selectedValue && userId) {
             const extraParams = [
@@ -133,7 +135,7 @@ const AddEditFormMain = (props) => {
     let treeCodeReadOnly = false;
     if (formActionType === EDIT_ACTION || formActionType === VIEW_ACTION) {
         treeCodeId = formData?.parntProdctId;
-    }
+    } 
 
     const treeSelectFieldProps = {
         treeFieldNames,
