@@ -40,9 +40,8 @@ const OptionServicesFormMain = (props) => {
             .validateFields()
             .then(() => {
                 const values = optionForm.getFieldsValue();
-
                 const data = { ...values, id: '' };
-                setOptionalServices([data, ...optionalServices]);
+                setOptionalServices([...optionalServices, data]);
                 setoptionsServicesMapping([...optionsServicesMapping, data]);
                 optionForm.resetFields();
                 handleFormValueChange();

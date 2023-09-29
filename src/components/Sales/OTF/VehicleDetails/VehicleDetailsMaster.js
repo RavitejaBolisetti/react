@@ -88,13 +88,12 @@ const VehicleDetailsMasterMain = (props) => {
     const { vehicleDetailData, isVehicleLovDataLoading, resetProductLov, productAttributeData, fetchProductLovCode, isLoading, saveData, ProductLovLoading } = props;
     const { isProductHierarchyDataLoaded, typeData, fetchList, resetData, userId, listShowLoading, showGlobalNotification } = props;
     const { form, selectedOrderId, section, buttonData, setButtonData, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
-    const { refreshData, setRefreshData, vehicleServiceData, fetchServiceLov, serviceLoading, selectedOrder, setSelectedOrder } = props;
+    const { refreshData, setRefreshData, isVehicleServiceLoaded, vehicleServiceData, fetchServiceLov, serviceLoading, selectedOrder, setSelectedOrder } = props;
     const { formKey, onFinishCustom = undefined, FormActionButton, StatusBar } = props;
     const { isProductDataLoaded, fetchProductList, productCode, productHierarchyDataList } = props;
 
     const [productModelCode, setProductModelCode] = useState();
     const [discountValue, setDiscountValue] = useState();
-    console.log('🚀 ~ file: VehicleDetailsMaster.js:97 ~ discountValue:', discountValue);
     const [activeKey, setactiveKey] = useState([1]);
     const [formData, setFormData] = useState({});
     const [optionalServices, setOptionalServices] = useState([]);
@@ -113,19 +112,27 @@ const VehicleDetailsMasterMain = (props) => {
         resetData();
         showGlobalNotification({ message: message });
     };
-    const extraParams = [
-        {
-            key: 'otfNumber',
-            title: 'otfNumber',
-            value: selectedOrderId,
-            name: 'Booking Number',
-        },
-    ];
 
-    const loadDependependentData = () => {
-        fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
-        fetchServiceLov({ setIsLoading: serviceLoading, userId, onErrorAction });
-    };
+    // const extraParams = [
+    //     {
+    //         key: 'otfNumber',
+    //         title: 'otfNumber',
+    //         value: selectedOrderId,
+    //         name: 'Booking Number',
+    //     },
+    // ];
+
+    // const loadDependependentData = () => {
+    //     fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+    //     fetchServiceLov({ setIsLoading: serviceLoading, userId, onErrorAction });
+    // };
+
+    useEffect(() => {
+        if (!isVehicleServiceLoaded) {
+            fetchServiceLov({ setIsLoading: serviceLoading, userId, onErrorAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isVehicleServiceLoaded]);
 
     useEffect(() => {
         setProductHierarchyData(productHierarchyDataList?.map((i) => DisableParent(i, 'subProdct')));
@@ -170,13 +177,6 @@ const VehicleDetailsMasterMain = (props) => {
     };
 
     useEffect(() => {
-        if (userId && selectedOrderId) {
-            loadDependependentData();
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOrderId]);
-
-    useEffect(() => {
         return () => {
             resetData();
             resetProductLov();
@@ -217,27 +217,31 @@ const VehicleDetailsMasterMain = (props) => {
             vehicleDetailData?.optionalServices && setOptionalServices(vehicleDetailData?.optionalServices);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [vehicleDetailData]);
+    }, [vehicleDetailData, discountValue]);
 
     useEffect(() => {
-        if (productModelCode) {
-            const discountExtraParams = [
+        if (selectedOrderId) {
+            const extraParams = [
                 {
                     key: 'otfNumber',
                     value: selectedOrderId,
-                },
-                {
-                    key: 'modelCode',
-                    value: productModelCode,
                 },
                 {
                     key: 'discountAmount',
                     value: discountValue,
                 },
             ];
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams: discountExtraParams, onErrorAction });
 
-            const extraParams = [
+            // if (productModelCode) {
+            //     extraParams.push({
+            //         key: 'modelCode',
+            //         value: productModelCode,
+            //     });
+            // }
+
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams: extraParams, onErrorAction });
+
+            const lovExtraParams = [
                 {
                     key: 'prodctCode',
                     value: productModelCode,
@@ -248,11 +252,10 @@ const VehicleDetailsMasterMain = (props) => {
                 resetProductLov();
             };
 
-            setFormData({ ...formData, modelCode: productModelCode });
-            fetchProductLovCode({ setIsLoading: ProductLovLoading, userId, onErrorAction: onErrorActionProduct, extraParams });
+            fetchProductLovCode({ setIsLoading: ProductLovLoading, userId, onErrorAction: onErrorActionProduct, lovExtraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [productModelCode, discountValue]);
+    }, [selectedOrderId, productModelCode, discountValue]);
 
     const handleDiscountChange = (e) => {
         debounce(setDiscountValue(e?.target?.value), 1000);
@@ -283,7 +286,7 @@ const VehicleDetailsMasterMain = (props) => {
                 showGlobalNotification({ message: 'Model selected is not valid' });
                 return;
             } else {
-                data = { ...values, otfNumber: selectedOrderId, otfId: formData?.otfId || '', id: formData?.id || '', optionalServices: optionsServicesMapping, model: productAttributeData['0']['prodctShrtName'] };
+                data = { ...values, taxDetails: formData?.taxDetails, otfNumber: selectedOrderId, otfId: formData?.otfId || '', id: formData?.id || '', optionalServices: optionsServicesMapping, model: productAttributeData['0']['prodctShrtName'] };
             }
 
             const onSuccess = (res) => {

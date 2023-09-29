@@ -221,12 +221,13 @@ const VehicleDetailsMasterMain = (props) => {
     }, [vehicleDetailData?.modelCode]);
 
     const onFinish = (values) => {
+        let data;
         if (onFinishCustom) {
-            onFinishCustom({ key: formKey, values: { ...values, optionalServices: optionsServicesMapping, taxDetails: vehicleDetailData?.taxDetails, otfNumber: selectedOrderId || '', discountAmount: values?.discountAmount != '' ? values?.discountAmount : 0 } });
+            data = { ...values, taxDetails: formData?.taxDetails, otfNumber: selectedOrderId, otfId: formData?.otfId || '', id: formData?.id || '', optionalServices: optionsServicesMapping, model: productAttributeData['0']['prodctShrtName'] };
+            onFinishCustom({ key: formKey, values: data });
             handleButtonClick({ buttonAction: NEXT_ACTION });
             setButtonData({ ...buttonData, formBtnActive: false });
         } else {
-            let data;
             if (!values.hasOwnProperty('vehicleUsageType')) {
                 data = {
                     ...values,

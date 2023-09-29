@@ -116,8 +116,7 @@ const AddEditFormMain = (props) => {
                 });
             },
             submitText: 'Yes',
-            text: 'Are you sure want to change modal',
-            content: value,
+            text: 'Are you sure want to change modal, If you change the modal, price will be canculated as per the selected modal',
         });
     };
 
@@ -268,7 +267,7 @@ const AddEditFormMain = (props) => {
                                 <Row>
                                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                         <Text strong>Optional Services</Text>
-                                        <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly}>
+                                        <Button className={styles.marL10} onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly}>
                                             Add
                                         </Button>
                                     </Col>
