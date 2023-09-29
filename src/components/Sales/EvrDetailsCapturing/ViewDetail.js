@@ -31,9 +31,9 @@ const ViewDetailMain = (props) => {
                     <Descriptions.Item label="GRN Status">{checkAndSetDefaultValue(formData?.grnStatus, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Vehicle Status">{checkAndSetDefaultValue(formData?.vehicleStatus, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Age In Days">{checkAndSetDefaultValue(formData?.ageInDays, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Date of Last Charge">{checkAndSetDefaultValue(formData?.dateOfLastCharge, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Date of Last Charge">{checkAndSetDefaultValue(formData?.lastChargeDate, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Charging Due Date">{checkAndSetDefaultValue(formData?.chargingDueDate, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Charging Status">{checkAndSetDefaultValue(formData?.chargingStatus, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Charging Status">{checkAndSetDefaultValue(formData?.chargeIndicator, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Remarks">{checkAndSetDefaultValue(formData?.remarks)}</Descriptions.Item>
                     <Descriptions.Item label="Status">{formData?.status ? 'Charged' : 'UnCharged'}</Descriptions.Item>
                 </Descriptions>

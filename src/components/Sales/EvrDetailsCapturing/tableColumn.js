@@ -11,7 +11,7 @@ export const tableColumn = ({ handleButtonClick, actionButtonVisiblity }) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'Model',
-            dataIndex: 'model',
+            dataIndex: 'modelCode',
             width: '18%',
         }),
 
@@ -23,7 +23,7 @@ export const tableColumn = ({ handleButtonClick, actionButtonVisiblity }) => {
 
         tblPrepareColumns({
             title: 'Status',
-            dataIndex: 'status',
+            dataIndex: 'chargingStatus',
             width: '22%',
         }),
 

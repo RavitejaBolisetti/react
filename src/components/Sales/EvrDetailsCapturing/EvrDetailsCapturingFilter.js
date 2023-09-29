@@ -26,15 +26,6 @@ export default function EvrDetailsCapturingFilter(props) {
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={20} lg={20} xl={20} className={styles.verticallyCentered}>
                                     <QueryButtons currentItem={pricingType} items={EVR_STATUS} onClick={handlePricingTypeChange} />
-                                    {/* <div className={`${styles.userManagement} ${styles.headingToggle}`}>
-                                        {Object.values(EVR_STATUS)?.map((item) => {
-                                            return (
-                                                <Button type={pricingType === item?.key ? 'primary' : 'link'} onClick={() => handlePricingTypeChange(item?.key)}>
-                                                    {item?.title}
-                                                </Button>
-                                            );
-                                        })}
-                                    </div> */}
                                     <div className={styles.fullWidth}>
                                         <Search placeholder="Search Model" onSearch={handleSearch} allowClear className={styles.headerSearchField} />
                                     </div>

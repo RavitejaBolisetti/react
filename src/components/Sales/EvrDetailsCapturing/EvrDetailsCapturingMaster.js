@@ -19,9 +19,6 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
 import { EVR_STATUS } from 'constants/EvrStatus';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
-import { geoStateDataActions } from 'store/actions/data/geo/states';
-import { geoDistrictDataActions } from 'store/actions/data/geo/districts';
-import { geoCityDataActions } from 'store/actions/data/geo/cities';
 import { tncProductHierarchyDataActions } from 'store/actions/data/termsConditions/tncProductHierarchy';
 import { hoPriceMappingDataActions } from 'store/actions/data/hoPriceMapping/hoPriceMapping';
 import { hoPriceMappingDetailDataActions } from 'store/actions/data/hoPriceMapping/hoPriceMappingDetails';
@@ -165,15 +162,15 @@ export const EvrDetailsCapturingMasterBase = (props) => {
             {
                 key: 'searchType',
                 title: 'Type',
-                value: 'Pricing_Type',
+                value: 'chargingStatus',
             },
             {
-                key: 'dealerParent',
-                title: 'Dealer Parent',
-                value: filterString?.dealerParent,
+                key: 'modelCode',
+                title: 'Model Code',
+                value: filterString?.modelCode,
                 canRemove: true,
                 filter: true,
-                name: filterString?.dealerParent ?? null,
+                name: filterString?.modelCode ?? null,
             },
             {
                 key: 'pageNumber',
@@ -382,13 +379,13 @@ export const EvrDetailsCapturingMasterBase = (props) => {
     // }, [hoPriceDetailData, formActionType]);
 
     const onFinish = (values) => {
-        const { city, dealerBranch, dealerParent, productCode, state, ...rest } = values;
-
+        const { vin, modelGroup, modelCode, modelDescription, grnId, grnDate, grnStatus, vehicleStatus, ageInDays, chargingStatus, ...rest } = values;
         const data = { ...rest, id: formData?.id };
+
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage + 'Receipt No.:' + res?.data?.receiptsDetails?.receiptNumber });
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             setButtonData({ ...buttonData, formBtnActive: false });
             setIsFormVisible(false);
@@ -427,7 +424,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         setAdvanceSearchVisible(false);
     };
 
-    const tempdata = [{ model: 'model', modelDescription: 'description', status: 'charged' }];
+    const tempdata = [{ modelCode: 'model', modelDescription: 'description', chargingStatus: 'charged' }];
 
     const tableProps = {
         dynamicPagination,
@@ -468,7 +465,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         }
     };
 
-    const title = 'HO Price Upload Mapping for Dealer';
+    const title = 'EVR Details Capturing';
 
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {

@@ -109,7 +109,7 @@ const AddEditFormMain = (props) => {
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                                        <Form.Item label="Date of Last Charge" name="dateOfLastCharge">
+                                        <Form.Item label="Date of Last Charge" name="lastChargeDate">
                                             <DatePicker format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} disabled={true} />
                                         </Form.Item>
                                     </Col>
@@ -133,7 +133,7 @@ const AddEditFormMain = (props) => {
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={formActionType?.editMode ? false : formData.status} labelAlign="left" wrapperCol={{ span: 24 }} name="charged" valuePropName="checked">
+                                        <Form.Item initialValue={formActionType?.editMode ? false : formData.status} labelAlign="left" wrapperCol={{ span: 24 }} name="chargeIndicator" valuePropName="checked">
                                             <Switch checkedChildren="Charged" unCheckedChildren="UnCharged" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} />
                                         </Form.Item>
                                     </Col>
