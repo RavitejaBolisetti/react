@@ -65,7 +65,7 @@ export const ThankYouMaster = (props) => {
                     </Col>
 
                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                        <Card className={'cardStyle'} style={{ backgroundColor: '#fff' }}>
+                        <Card style={{ backgroundColor: '#fff' }}>
                             <Text>Would you like to take Addons?</Text>
 
                             <Space direction="vertical" style={{ border: '1px solid #E6E6E6', borderRadius: '6px', margin: '16px 0 32px 0', padding: '6px 0 0 0' }}>
