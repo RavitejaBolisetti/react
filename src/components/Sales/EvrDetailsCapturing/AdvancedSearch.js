@@ -14,11 +14,13 @@ import { validateRequiredSelectField } from 'utils/validation';
 import dayjs from 'dayjs';
 
 import styles from 'assets/sass/app.module.scss';
+import TreeSelectField from 'components/common/TreeSelectField';
+import { customSelectBox } from 'utils/customSelectBox';
 
 const { Option } = Select;
 
 export const AdvancedSearchFrom = (props) => {
-    const { setAdvanceSearchVisible,  productHierarchyList, handleFilterChange } = props;
+    const { setAdvanceSearchVisible, productHierarchyList, productHierarchyData, selectedTreeSelectKey, handleSelectTreeClick } = props;
     const {
         filterString,
         setFilterString,
@@ -27,7 +29,6 @@ export const AdvancedSearchFrom = (props) => {
         handleResetFilter,
     } = props;
 
-    
     const onFinish = (values) => {
         setFilterString({
             ...filterString,
@@ -35,7 +36,7 @@ export const AdvancedSearchFrom = (props) => {
             dueFromDate: formatDate(values?.dueFromDate),
             dueToDate: formatDate(values?.dueToDate),
             modelCode: values?.modelCode,
-            modelCodeName: productHierarchyList?.find((i) => i?.prodctCode === values?.modelCode)?.prodctShrtName,
+            // modelCodeName: productHierarchyList?.find((i) => i?.prodctCode === values?.modelCode)?.prodctShrtName,
             advanceFilter: true,
         });
         setAdvanceSearchVisible(false);
@@ -51,6 +52,17 @@ export const AdvancedSearchFrom = (props) => {
         showSearch: true,
         allowClear: true,
     };
+    const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
+    const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
+
+    const treeSelectFieldProps = {
+        treeFieldNames,
+        treeData: productHierarchyData,
+        handleSelectTreeClick,
+        selectedTreeSelectKey,
+        defaultParent: false,
+        placeholder: preparePlaceholderSelect('Product Hierarchy'),
+    };
 
     const CheckDateEffectiveTo = (value, effectiveFrom) => {
         const bool = dayjs(value).format('YYYY-MM-DD') >= dayjs(effectiveFrom).format('YYYY-MM-DD');
@@ -63,15 +75,9 @@ export const AdvancedSearchFrom = (props) => {
     return (
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={filterString?.modelCode} label="Product Hierarchy" name="modelCode" rules={[validateRequiredSelectField('Product Hierarchy')]}>
-                        <Select placeholder={preparePlaceholderSelect(`Product Hierarchy`)} {...selectProps}>
-                            {productHierarchyList?.map((item) => (
-                                <Option key={'ph' + item.prodctCode} value={item.prodctCode}>
-                                    {item.prodctShrtName}
-                                </Option>
-                            ))}
-                        </Select>
+                <Col xs={0} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Form.Item initialValue={filterString?.modelCode} label="Product Hierarchy" name="model" rules={[validateRequiredSelectField('Product Hierarchy')]}>
+                        <TreeSelectField {...treeSelectFieldProps} />
                     </Form.Item>
                 </Col>
             </Row>

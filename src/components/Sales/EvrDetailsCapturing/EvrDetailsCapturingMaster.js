@@ -20,8 +20,8 @@ import { AdvancedSearch } from './AdvancedSearch';
 import { EVR_STATUS } from 'constants/EvrStatus';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { tncProductHierarchyDataActions } from 'store/actions/data/termsConditions/tncProductHierarchy';
-import { hoPriceMappingDataActions } from 'store/actions/data/hoPriceMapping/hoPriceMapping';
-import { hoPriceMappingDetailDataActions } from 'store/actions/data/hoPriceMapping/hoPriceMappingDetails';
+import { evrDetailsCapturingDataActions } from 'store/actions/data/evrDetailsCapturing/evrDetailsCapturing';
+import { evrDetailsCapturingDetailDataActions } from 'store/actions/data/evrDetailsCapturing/evrDetailsCapturingDetails';
 
 import { showGlobalNotification } from 'store/actions/notification';
 
@@ -33,12 +33,12 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             ProductHierarchy: { data: productHierarchyData = [] },
-            TermCondition: {
-                ProductHierarchyData: { isLoaded: isProductHierarchyDataLoaded = false, data: productHierarchyList },
+            OTF: {
+                VehicleDetails: { isLoaded: isVehicleDataLoaded = false, isLoading: isVehicleDataLoading, data: vehicleDetailData = [] },
             },
-            HoPriceMapping: {
-                HoPriceMappingSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString },
-                HoPriceDetailList: { isLoading: isHoPriceDetaiLoading, data: hoPriceDetailData = [] },
+            EvrDetailsCapturing: {
+                EvrDetailsCapturingSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString },
+                EvrDetailsCapturingDetailList: { isLoading: isHoPriceDetaiLoading, data: hoPriceDetailData = [] },
             },
         },
     } = state;
@@ -47,8 +47,6 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         typeData,
-        isProductHierarchyDataLoaded,
-        productHierarchyList,
         data: data?.paginationData,
         totalRecords: data?.totalRecords || [],
         moduleTitle,
@@ -58,6 +56,9 @@ const mapStateToProps = (state) => {
         productHierarchyData,
         hoPriceDetailData,
         isHoPriceDetaiLoading,
+        vehicleDetailData,
+        isVehicleDataLoaded,
+        isVehicleDataLoading,
     };
     return returnValue;
 };
@@ -69,17 +70,14 @@ const mapDispatchToProps = (dispatch) => ({
             fetchProductList: productHierarchyDataActions.fetchList,
             listProductMainShowLoading: productHierarchyDataActions.listShowLoading,
 
-            fetchProductLovList: tncProductHierarchyDataActions.fetchList,
-            listProductShowLoading: tncProductHierarchyDataActions.listShowLoading,
+            fetchList: evrDetailsCapturingDataActions.fetchList,
+            listShowLoading: evrDetailsCapturingDataActions.listShowLoading,
+            setFilterString: evrDetailsCapturingDataActions.setFilter,
+            resetData: evrDetailsCapturingDataActions.reset,
 
-            fetchList: hoPriceMappingDataActions.fetchList,
-            listShowLoading: hoPriceMappingDataActions.listShowLoading,
-            setFilterString: hoPriceMappingDataActions.setFilter,
-            resetData: hoPriceMappingDataActions.reset,
-
-            fetchDetail: hoPriceMappingDetailDataActions.fetchList,
-            listDetailShowLoading: hoPriceMappingDetailDataActions.listShowLoading,
-            saveData: hoPriceMappingDetailDataActions.saveData,
+            fetchDetail: evrDetailsCapturingDetailDataActions.fetchList,
+            listDetailShowLoading: evrDetailsCapturingDetailDataActions.listShowLoading,
+            saveData: evrDetailsCapturingDetailDataActions.saveData,
 
             showGlobalNotification,
         },
@@ -88,8 +86,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const EvrDetailsCapturingMasterBase = (props) => {
-    const { filterString, setFilterString, fetchList, saveData, listShowLoading, userId, fetchProductLovList, data, fetchDetail, listProductMainShowLoading, fetchProductList, listDetailShowLoading } = props;
-    const { typeData, listProductShowLoading, filteredStateData, districtData, productHierarchyList, productHierarchyData, totalRecords, showGlobalNotification, hoPriceDetailData, isHoPriceDetaiLoading } = props;
+    const { filterString, setFilterString, vehicleDetailData, fetchList, saveData, listShowLoading, userId, fetchProductLovList, data, fetchDetail, listProductMainShowLoading, fetchProductList, listDetailShowLoading } = props;
+    const { typeData, listProductShowLoading, filteredStateData, districtData, productHierarchyData, totalRecords, showGlobalNotification, hoPriceDetailData, isHoPriceDetaiLoading } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [filteredCityData, setFilteredCityData] = useState([]);
     const [editProductData, setEditProductData] = useState([]);
@@ -129,6 +127,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
+    const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState(null);
 
     const [formData, setFormData] = useState([]);
 
@@ -222,27 +221,34 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pricingType, filterString, page]);
 
-    // useEffect(() => {
-    //     if (userId) {
-    //         fetchProductList({ setIsLoading: listProductMainShowLoading, userId, onCloseAction, extraParams: [{ key: 'manufactureOrgCode', value: `LMM` }], onErrorAction });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [userId]);
+    useEffect(() => {
+        if (userId) {
+            const extraParams = [
+                {
+                    key: 'unit',
+                    value: 'Sales',
+                },
+                {
+                    key: 'prodctCode',
+                    value: vehicleDetailData?.modelCode,
+                },
+                {
+                    key: 'hierarchyNode',
+                    value: 'MV',
+                },
+            ];
+            //  [{ key: 'manufactureOrgCode', value: `LMM` }]
+            fetchProductList({ setIsLoading: listProductMainShowLoading, userId, onCloseAction, extraParams, onErrorAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId]);
 
-    // useEffect(() => {
-    //     if (userId) {
-    //         fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [userId, pricingType, page, filterString]);
-
-    // useEffect(() => {
-    //     if (userId) {
-    //
-    //         fetchProductLovList({ setIsLoading: listProductShowLoading, userId });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [userId]);
+    useEffect(() => {
+        if (userId) {
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, pricingType, page, filterString]);
 
     const handlePricingTypeChange = (buttonName) => {
         setPricingType(buttonName?.key);
@@ -296,6 +302,20 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         searchForm.resetFields();
     };
 
+    const handleSelectTreeClick = (value, treeObj) => {
+        // setUserApplicationId(value);
+        // setAppSelectName(treeObj?.[0]);
+
+        let obj = {
+            model: value,
+            // applicationName: treeObj?.[0],
+            // documentTypeCode: null,
+        };
+
+        advanceFilterForm.setFieldsValue(obj);
+        setSelectedTreeSelectKey(value);
+    };
+
     const handleResetFilter = () => {
         setShowDataLoading(false);
         setFilterString();
@@ -332,17 +352,17 @@ export const EvrDetailsCapturingMasterBase = (props) => {
             setButtonData({ nextBtn: true, closeBtn: true });
         }
 
-        // if (buttonAction !== ADD_ACTION) {
-        //     const extraParams = [
-        //         {
-        //             key: 'id',
-        //             title: 'id',
-        //             value: record?.id,
-        //             name: 'id',
-        //         },
-        //     ];
-        //     fetchDetail({ setIsLoading: listDetailShowLoading, userId, extraParams });
-        // }
+        if (buttonAction !== ADD_ACTION) {
+            const extraParams = [
+                {
+                    key: 'id',
+                    title: 'id',
+                    value: record?.id,
+                    name: 'id',
+                },
+            ];
+            fetchDetail({ setIsLoading: listDetailShowLoading, userId, extraParams });
+        }
     };
 
     const onFinishSearch = (values) => {};
@@ -364,14 +384,14 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         return node;
     };
 
-    useEffect(() => {
-        if (!formActionType?.addMode && productHierarchyData?.length) {
-            //&& hoPriceDetailData?.modelDealerMapResponse?.length
-            setCheckedKeys([]);
-            setEditProductData(productHierarchyData?.map((i) => disableExceptModelGroup(i)));
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [hoPriceDetailData, productHierarchyData, formActionType]);
+    // useEffect(() => {
+    //     if (!formActionType?.addMode && productHierarchyData?.length) {
+    //         //&& hoPriceDetailData?.modelDealerMapResponse?.length
+    //         setCheckedKeys([]);
+    //         setEditProductData(productHierarchyData?.map((i) => disableExceptModelGroup(i)));
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [hoPriceDetailData, productHierarchyData, formActionType]);
 
     // useEffect(() => {
     //     if (formActionType?.viewMode && hoPriceDetailData?.modelDealerMapResponse?.length) setResponseData(hoPriceDetailData?.modelDealerMapResponse);
@@ -506,7 +526,6 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         titleOverride: 'Advance Filters',
         filteredStateData,
         filteredCityData,
-        productHierarchyList,
         handleFilterChange,
 
         onCloseAction: onAdvanceSearchCloseAction,
@@ -517,6 +536,8 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         setAdvanceSearchVisible,
         typeData,
         onFinishSearch,
+        productHierarchyData,
+        handleSelectTreeClick,
     };
 
     const formProps = {
@@ -542,6 +563,9 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         checkedKeys,
         setCheckedKeys,
         isHoPriceDetaiLoading,
+        selectedTreeSelectKey,
+        setSelectedTreeSelectKey,
+        productHierarchyData,
     };
 
     return (
@@ -565,4 +589,4 @@ export const EvrDetailsCapturingMasterBase = (props) => {
     );
 };
 
-export const EvrDetailsCapturingMaster = connect(null, null)(EvrDetailsCapturingMasterBase);
+export const EvrDetailsCapturingMaster = connect(mapStateToProps, mapDispatchToProps)(EvrDetailsCapturingMasterBase);

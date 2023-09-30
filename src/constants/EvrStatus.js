@@ -7,7 +7,7 @@ export const EVR_STATUS = {
     DUE_FOR_CHARGING: {
         id: 'due for charging',
         title: 'Due for Charging',
-        key: 'D',
+        key: 'DFC',
         active: true,
     },
     CHARGED: {
