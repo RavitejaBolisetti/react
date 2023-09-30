@@ -9,6 +9,7 @@ import { LANGUAGE_EN } from 'language/en';
 import { HiCheck } from 'react-icons/hi';
 import styles from 'assets/sass/app.module.scss';
 import './thankYou.module.scss';
+import { REGISTRATION } from 'constants/modules/vehicleInvoiceGeneration';
 
 const { Title, Text } = Typography;
 
@@ -22,20 +23,6 @@ export const ThankYouMaster = (props) => {
 
         buttonData: { ...props.defaultBtnVisiblity, closeBtn: true },
     };
-
-    const data = [
-        {
-            id: `AMC Registration`,
-        },
-
-        {
-            id: `RSA Registration`,
-        },
-
-        {
-            id: `Shield Registration`,
-        },
-    ];
 
     return (
         <>
@@ -70,6 +57,7 @@ export const ThankYouMaster = (props) => {
                                                 />
                                             </svg>
                                         }
+                                        onClick={''}
                                     >
                                         Copy
                                     </Button>
@@ -98,10 +86,10 @@ export const ThankYouMaster = (props) => {
                             <Text>Would you like to take Addons?</Text>
 
                             <Space direction="vertical" style={{ border: '1px solid #E6E6E6', borderRadius: '6px', margin: '16px 0 32px 0', padding: '6px 0 0 0' }}>
-                                {data?.map((e) => (
+                                {REGISTRATION?.map((e) => (
                                     <>
                                         <Row style={{ margin: '0 16px' }} justify="space-between" align="middle">
-                                            <Text style={{ color: '#545454', fontWeight: '400' }}>{e?.id}</Text>
+                                            <Text style={{ color: '#545454', fontWeight: '400' }}>{e?.title}</Text>
                                             <Button type="secondary">Register Now</Button>
                                         </Row>
                                         <Divider style={{ margin: '0' }} />
