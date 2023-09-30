@@ -161,7 +161,6 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [cancelInvoiceVisible, setCancelInvoiceVisible] = useState(false);
     const [additionalReportParams, setAdditionalReportParams] = useState();
-    //console.log('🚀 ~ file: VehicleInvoiceMaster.js:159 ~ VehicleInvoiceMasterBase ~ additionalReportParams:', additionalReportParams);
     const [isReportVisible, setReportVisible] = useState();
     const [confirmRequest, setConfirmRequest] = useState(false);
     const [previousSection, setpreviousSection] = useState(1);
@@ -300,25 +299,13 @@ export const VehicleInvoiceMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, invoiceStatus, filterString, page]);
+
     useEffect(() => {
         if (!isSalesConsultantDataLoaded && userId) {
             fetchSalesConsultant({ setIsLoading: listConsultantShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isSalesConsultantDataLoaded, userId]);
-
-    // useEffect(() => {
-    //     if (otfData && formActionType?.viewMode) {
-    //         console.log('otfData', otfData);
-    //         setSelectedOrder({ ...otfData, ...vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest, ...vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.billingCustomer, ...vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.bookingCustomer });
-    //     } else if (vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest?.orderStatus === OTF_STATUS?.ALLOTED?.key && formActionType?.addMode) {
-    //         setSelectedOrder({ ...vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest, ...vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.billingCustomer, ...vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.bookingCustomer });
-    //     } else {
-    //         setSelectedOrder('');
-    //     }
-
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [otfData, formActionType, isInVoiceMasterDetailDataLoaded]);
 
     useEffect(() => {
         if (otfData && formActionType?.viewMode && isDataLoaded && vehicleInvoiceMasterData) {

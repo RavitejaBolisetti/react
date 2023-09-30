@@ -452,7 +452,6 @@ export const OtfBlockMasterMain = (props) => {
             !value && resetData();
         },
         handleSelectTreeClick: (value) => {
-            //console.log(value);
             setSelectedTreeKey();
             setSelectedTreeSelectKey();
             setSelectedOrganizationId(value);
