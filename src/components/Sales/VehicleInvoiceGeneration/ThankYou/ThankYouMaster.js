@@ -7,7 +7,6 @@ import { Row, Col, Space, Avatar, Typography, Card, Button, Divider } from 'antd
 import { LANGUAGE_EN } from 'language/en';
 import { HiCheck } from 'react-icons/hi';
 import styles from 'assets/sass/app.module.scss';
-import './thankYou.module.scss';
 import { REGISTRATION } from 'constants/modules/vehicleInvoiceGeneration';
 import { CopytoClipboard } from 'utils/CopytoClipboard';
 
