@@ -22,7 +22,7 @@ export const CustomerListBase = (props) => {
         handleSelectedData();
         setSelectedRows([]);
         setFormBtnActive(true);
-        setButtonData({ ...buttonData, formBtnActive: true });
+        // setButtonData({ ...buttonData, formBtnActive: true });
     };
 
     const rowSelection = {

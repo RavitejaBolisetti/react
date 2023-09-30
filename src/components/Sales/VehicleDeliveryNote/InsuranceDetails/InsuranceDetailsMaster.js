@@ -66,7 +66,7 @@ const mapDispatchToProps = (dispatch) => ({
 const InsuranceDetailsMasterBase = (props) => {
     const { insuranceData, onCloseAction, fetchList, formActionType, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
     const { form, selectedOrderId, handleFormValueChange, section, isLoading, NEXT_ACTION, handleButtonClick, onFinishFailed, saveData } = props;
-    const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar, pageType, isInsuranceLoaded, isInsuranceDataLoading, fetchChallanInsuranceList, insuranceChallanData,listChallanInsuranceShowLoading, soldByDealer, record } = props;
+    const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar, pageType, isInsuranceLoaded, isInsuranceDataLoading, fetchChallanInsuranceList, insuranceChallanData, listChallanInsuranceShowLoading, soldByDealer, record } = props;
 
     const [formData, setFormData] = useState();
 
@@ -95,7 +95,6 @@ const InsuranceDetailsMasterBase = (props) => {
 
     useEffect(() => {
         if (userId && selectedOrderId && soldByDealer) {
-
             const extraParams = [
                 {
                     key: 'otfNumber',
@@ -114,7 +113,7 @@ const InsuranceDetailsMasterBase = (props) => {
             const extraParams = [
                 {
                     key: 'invoiceNumber',
-                    title: 'invoiceNumber', 
+                    title: 'invoiceNumber',
                     value: record?.invoiceId,
                     name: 'Invoice ID',
                 },
@@ -170,7 +169,7 @@ const InsuranceDetailsMasterBase = (props) => {
             };
 
             const onError = (message) => {
-                // showGlobalNotification({ message });
+                showGlobalNotification({ message });
             };
 
             const requestData = {

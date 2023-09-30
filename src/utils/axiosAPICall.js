@@ -17,7 +17,6 @@ const baseAPICall = (params) => {
         timeout: process.env.REACT_APP_API_CALL_TIMEOUT,
         method,
         url,
-        // onUploadProgress: (progressEvent) => console.log('progressEvent', progressEvent.loaded),
     };
     if (data) {
         axiosConfig = {
@@ -42,6 +41,7 @@ const baseAPICall = (params) => {
     };
 
     const onUnAuthenticated = (message = '') => {
+        console.log('onUnAuthenticated', onUnAuthenticated);
         window.location.href = '/login';
         clearLocalStorageData();
         onError && onError(message);

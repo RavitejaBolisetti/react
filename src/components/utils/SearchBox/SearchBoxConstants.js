@@ -16,4 +16,10 @@ export const SearchConstants = {
     CUSTOMERNAME: {
         id: 'customerName',
     },
+    NEWMODELGROUP: {
+        id: 'NMGR',
+    },
+    OLDMODELGROUP: {
+        id: 'OMGR',
+    },
 };

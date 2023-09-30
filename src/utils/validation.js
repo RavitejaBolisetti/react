@@ -232,7 +232,6 @@ export const validateMacId = (fieldName) => ({
     message: 'Please enter valid MAC id',
 });
 
-
 export const compareAmountValidator = (amount1, amount2, fieldName) => {
     if (parseFloat(amount1) < parseFloat(amount2)) {
         return Promise.reject(fieldName + ' should not be greater than ' + amount1);

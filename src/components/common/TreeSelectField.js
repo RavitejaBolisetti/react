@@ -7,7 +7,7 @@ import React from 'react';
 import { TreeSelect } from 'antd';
 import { HIERARCHY_DEFAULT_PARENT } from 'constants/constants';
 
-export default function TreeSelectField({ loading = false, treeFieldNames, treeData, defaultValue, selectedTreeSelectKey, handleSelectTreeClick = () => {}, onSelects = () => {}, placeholder, treeDisabled = false, defaultParent = true, HandleClear }) {
+export default function TreeSelectField({ loading = false, treeFieldNames, treeData, defaultValue, treeExpandedKeys = null, selectedTreeSelectKey, handleSelectTreeClick = () => {}, onSelects = () => {}, placeholder, treeDisabled = false, defaultParent = true, HandleClear }) {
     return (
         <TreeSelect
             treeLine={true}
@@ -32,6 +32,7 @@ export default function TreeSelectField({ loading = false, treeFieldNames, treeD
             disabled={treeDisabled}
             onClear={HandleClear}
             loading={loading}
+            treeDefaultExpandedKeys={treeExpandedKeys}
         />
     );
 }
