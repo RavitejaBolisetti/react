@@ -203,7 +203,7 @@ export const InvoiceDetailsMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        const invoiceDetailsRequest = { ...values };
+        const invoiceDetailsRequest = { ...values, relationShipManagerCode: values?.relationShipManager, relationShipManager: values?.relationShipManagerCode };
         setRequestPayload({ ...requestPayload, deliveryNoteInvoiveDetails: { ...invoiceDetailsRequest, invoiceDate: convertDate(invoiceData?.invoiceDate), customerPromiseDate: convertDate(invoiceData?.customerPromiseDate) } });
         delete invoiceDetailsRequest?.deliveryNoteFor;
         handleButtonClick({ buttonAction: NEXT_ACTION });
@@ -211,6 +211,9 @@ export const InvoiceDetailsMasterBase = (props) => {
     };
 
     const onFinishFailed = () => {};
+    const handleRelationShipManagerChange = (__, value) => {
+        form.setFieldValue('relationShipManagerCode', value?.children);
+    };
 
     const onCloseAction = () => {
         form.resetFields();
@@ -250,6 +253,7 @@ export const InvoiceDetailsMasterBase = (props) => {
         listEngineNumberShowLoading,
         engineNumberData,
         userId,
+        handleRelationShipManagerChange,
     };
 
     const viewProps = {
