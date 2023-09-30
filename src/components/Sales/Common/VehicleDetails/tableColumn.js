@@ -30,7 +30,8 @@ export const taxDetailsColumn = () => {
 
     return tableColumn;
 };
-export const optionalServicesColumns = () => {
+
+export const optionalServicesColumns = ({ formActionType, handleButtonClick, styles }) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'Service Name',
@@ -46,6 +47,10 @@ export const optionalServicesColumns = () => {
             width: '25%',
         }),
     ];
+
+    // if (!formActionType?.viewMode) {
+    //     tableColumn.push(tblActionColumn({ handleButtonClick, styles, width: '15%', canEdit: true, canView: false, canDelete: true }));
+    // }
 
     return tableColumn;
 };

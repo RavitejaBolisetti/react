@@ -5,7 +5,7 @@
  */
 import React, { useState, useEffect } from 'react';
 import { Col, Input, Form, Row, Button, Collapse, Typography, Divider, Switch } from 'antd';
-import { validateRequiredSelectField, validateNumberWithTwoDecimalPlaces, validateRequiredInputField } from 'utils/validation';
+import { validateRequiredSelectField, validateNumberWithTwoDecimalPlaces, validateRequiredInputField, compareAmountValidator } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { PlusOutlined } from '@ant-design/icons';
 import { FiEdit } from 'react-icons/fi';
@@ -32,11 +32,12 @@ const { Text } = Typography;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { productHierarchyData, toolTipContent, handleFormValueChange, optionsServicesMapping, setoptionsServicesMapping, optionalServices, setOptionalServices, formData, openAccordian, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, typeData, formActionType, vehicleServiceData } = props;
-    const { productModelCode, setProductModelCode, viewOnly, handlePriceChange, handleDiscountChange = () => {}, showPrintDiscount = false, ShowPOandSOdetails = true, showAvailaibleStock = true } = props;
+    const { isProductDataLoading, productHierarchyData, toolTipContent, handleFormValueChange, optionalServices, setOptionalServices, formData, openAccordian, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, typeData, vehicleServiceData } = props;
+    const { formActionType, productModelCode, setProductModelCode, viewOnly, handlePriceTypeChange, handleSaleTypeChange, handleDiscountChange = () => {}, showPrintDiscount = false, ShowPOandSOdetails = true, showAvailaibleStock = true } = props;
 
     const [optionForm] = Form.useForm();
     const [confirmRequest, setConfirmRequest] = useState();
+
     const findUsageType = (usage) => {
         const foundVal = typeData[PARAM_MASTER.VEHCL_TYPE.id]?.find((element, index) => element?.value === usage);
         return foundVal?.key;
@@ -44,8 +45,8 @@ const AddEditFormMain = (props) => {
 
     const disabledProp = { disabled: true };
     useEffect(() => {
-        console.log('formData', formData, selectedOrderId, 'selectedOrderId');
         if (formData) {
+            console.log('🚀 ~ file: AddEditForm.js:49 ~ useEffect ~ formData:', formData);
             form.setFieldsValue({
                 ...formData,
                 poDate: dayjs(formData?.poDate?.substr(0, 10)).format('DD/MM/YYYY'),
@@ -68,15 +69,15 @@ const AddEditFormMain = (props) => {
         setOpenAccordian('3');
         setIsReadOnly(true);
     };
+
     const handleCancel = () => {
         setIsReadOnly(false);
     };
+
     const OptionServicesFormProps = {
         typeData,
         handleCancel,
         optionForm,
-        optionsServicesMapping,
-        setoptionsServicesMapping,
         showGlobalNotification,
         fetchList,
         userId,
@@ -116,7 +117,7 @@ const AddEditFormMain = (props) => {
                 });
             },
             submitText: 'Yes',
-            text: 'Are you sure want to change modal, If you change the modal, price will be canculated as per the selected modal',
+            text: 'If you change the modal, price will be canculated as per the selected modal',
         });
     };
 
@@ -130,8 +131,9 @@ const AddEditFormMain = (props) => {
         selectedTreeSelectKey: formData?.model,
         handleSelectTreeClick,
         defaultValue: null,
+        treeExpandedKeys: [formData?.model],
         placeholder: preparePlaceholderSelect('Model'),
-        // loading: isProductDataLoading,
+        loading: isProductDataLoading,
         treeDisabled: viewOnly,
     };
 
@@ -210,12 +212,12 @@ const AddEditFormMain = (props) => {
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item initialValue={formData?.saleType} name="saleType" label="Sale Type" rules={[validateRequiredSelectField('Sale Type')]}>
-                                        {customSelectBox({ data: typeData['SALE_TYPE'], disabled: viewOnly })}
+                                        {customSelectBox({ data: typeData['SALE_TYPE'], disabled: viewOnly, onChange: handleSaleTypeChange })}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item initialValue={formData?.priceType} label="Price Type" name="priceType">
-                                        {customSelectBox({ data: typeData['PRC_TYP'], disabled: viewOnly, onChange: handlePriceChange })}
+                                        {customSelectBox({ data: typeData['PRC_TYP'], disabled: viewOnly, onChange: handlePriceTypeChange })}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
@@ -236,7 +238,16 @@ const AddEditFormMain = (props) => {
                             </Row>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item label="Dealer Discount with TAX" name="discountAmount" rules={[validateNumberWithTwoDecimalPlaces('Dealer Discount with TAX')]}>
+                                    <Form.Item
+                                        label="Dealer Discount with TAX"
+                                        name="discountAmount"
+                                        rules={[
+                                            validateNumberWithTwoDecimalPlaces('Dealer Discount with TAX'),
+                                            {
+                                                validator: () => compareAmountValidator(form.getFieldValue('vehicleSellingPrice'), form.getFieldValue('discountAmount'), 'Discount'),
+                                            },
+                                        ]}
+                                    >
                                         <Input placeholder={preparePlaceholderText('Dealer Discount with TAX')} onBlur={handleDiscountChange} />
                                     </Form.Item>
                                 </Col>
@@ -281,7 +292,7 @@ const AddEditFormMain = (props) => {
                                     <OptionServicesForm {...OptionServicesFormProps} />
                                 </>
                             )}
-                            <DataTable tableColumn={optionalServicesColumns()} tableData={optionalServices} pagination={false} />
+                            <DataTable tableColumn={optionalServicesColumns({ formActionType })} tableData={optionalServices} pagination={false} />
                         </Panel>
                     </Collapse>
                 </Col>

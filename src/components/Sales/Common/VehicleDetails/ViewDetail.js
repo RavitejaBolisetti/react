@@ -20,7 +20,7 @@ import { prepareCaption } from 'utils/prepareCaption';
 
 const { Panel } = Collapse;
 const ViewDetailMain = (props) => {
-    const { typeData, isLoading, activeKey, onChange, toolTipContent, styles, formData, showPrintDiscount = false, ShowPOandSOdetails = true, showAvailaibleStock = true } = props;
+    const { typeData, isLoading, formActionType, activeKey, onChange, toolTipContent, styles, formData, showPrintDiscount = false, ShowPOandSOdetails = true, showAvailaibleStock = true } = props;
     const viewProps = {
         bordered: false,
         colon: false,
@@ -80,7 +80,7 @@ const ViewDetailMain = (props) => {
                     <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end" className={styles?.collapseContainer} collapsible="icon">
                         <Panel header="Optional Services" key="3">
                             <Divider />
-                            <DataTable tableColumn={optionalServicesColumns()} tableData={formData['optionalServices']} pagination={false} />
+                            <DataTable tableColumn={optionalServicesColumns({ formActionType })} tableData={formData['optionalServices']} pagination={false} />
                         </Panel>
                     </Collapse>
                 </Col>

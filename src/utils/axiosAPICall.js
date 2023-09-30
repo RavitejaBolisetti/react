@@ -41,6 +41,7 @@ const baseAPICall = (params) => {
     };
 
     const onUnAuthenticated = (message = '') => {
+        console.log('onUnAuthenticated', onUnAuthenticated);
         window.location.href = '/login';
         clearLocalStorageData();
         onError && onError(message);

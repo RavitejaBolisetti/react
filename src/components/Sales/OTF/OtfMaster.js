@@ -339,7 +339,7 @@ export const OtfMasterBase = (props) => {
         };
 
         const onError = (message) => {
-            // showGlobalNotification({ message });
+            showGlobalNotification({ message });
         };
 
         const requestData = {
@@ -468,7 +468,7 @@ export const OtfMasterBase = (props) => {
         };
 
         const onError = (message) => {
-            // showGlobalNotification({ message });
+            showGlobalNotification({ message });
         };
 
         const requestData = {
