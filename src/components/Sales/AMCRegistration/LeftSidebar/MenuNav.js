@@ -10,18 +10,14 @@ import { AMC_REGISTRATION_SECTION } from 'constants/AMCRegistrationSection';
 import { getSelectedMenuAttribute } from 'utils/getSelectedMenuAttribute';
 import styles from 'assets/sass/app.module.scss';
 
-// export const validateOTFMenu = ({ item, status, otfData }) => {
-//     switch (item?.id) {
-//         case AMC_REGISTRATION_SECTION.EXCHANGE_DETAILS.id:
-//             return otfData?.loyaltyScheme !== 1;
-//         case AMC_REGISTRATION_SECTION.REFERRALS.id:
-//             return otfData?.referral === 'Y';
-//         case AMC_REGISTRATION_SECTION.LOYALTY_SCHEME.id:
-//             return otfData?.exchange !== 1 && otfData?.loyaltyScheme === 1;
-//         default:
-//             return true;
-//     }
-// };
+export const validateAMCRegistrationMenu = ({ item, status, formActionType }) => {
+    switch (item?.id) {
+        case AMC_REGISTRATION_SECTION.REQUEST_DETAILS.id:
+            return formActionType?.viewMode;
+        default:
+            return true;
+    }
+};
 
 const MenuNav = (props) => {
     const { currentSection, setCurrentSection, formActionType, selectedOrder: { orderStatus = false } = {}, previousSection = 1 } = props;
@@ -38,21 +34,23 @@ const MenuNav = (props) => {
 
     const items = Object.values(AMC_REGISTRATION_SECTION)
         ?.filter((i) => i?.displayOnList)
-        ?.map((item) => {
-            return {
-                dot: getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType })?.menuNavIcon,
-                children: (
-                    <div
-                        className={className(item?.id)}
-                        onClick={() => (!formActionType?.addMode || (formActionType?.addMode && item?.id <= previousSection) ? onHandle(item?.id) : '')}
-                        // onClick={onHandle(item.id)}
-                    >
-                        {item.title}
-                    </div>
-                ),
-                className: getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType })?.activeClassName,
-            };
-        });
+        ?.map(
+            (item) =>
+                validateAMCRegistrationMenu({ item, status: orderStatus, formActionType }) && {
+                    dot: getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType })?.menuNavIcon,
+                    children: (
+                        <div
+                            className={className(item?.id)}
+                            onClick={() => (!formActionType?.addMode || (formActionType?.addMode && item?.id <= previousSection) ? onHandle(item?.id) : '')}
+                             // onClick={onHandle(item.id)}
+                        >
+                            {item.title}
+                        </div>
+                    ),
+                    className: getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType })?.activeClassName,
+                }
+        )
+        ?.filter((i) => i);
 
     return items && <Timeline items={items} />;
 };

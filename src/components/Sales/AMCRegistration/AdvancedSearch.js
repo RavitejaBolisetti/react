@@ -5,19 +5,19 @@
  */
 import React, { useEffect } from 'react';
 import { Col, Form, Row, Button, DatePicker } from 'antd';
+import dayjs from 'dayjs';
 
 import { withModal } from 'components/withModal';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
-
-import dayjs from 'dayjs';
+import { customSelectBox } from 'utils/customSelectBox';
+import { validateRequiredInputField } from 'utils/validation';
 import { dateFormat, formatDate, formatDateToCalenderDate } from 'utils/formatDateTime';
 import { disableFutureDate } from 'utils/disableDate';
 
 import styles from 'assets/sass/app.module.scss';
-import { validateRequiredInputField } from 'utils/validation';
 
 export const AdvancedSearchFrom = (props) => {
-    const { setAdvanceSearchVisible, typeData } = props;
+    const { setAdvanceSearchVisible, typeData, userType } = props;
     const {
         filterString,
         setFilterString,
@@ -57,6 +57,20 @@ export const AdvancedSearchFrom = (props) => {
 
     return (
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            {userType === 'MNM' && (
+                <Row gutter={16}>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item initialValue={filterString?.dealerParent} label="Dealer Parent" name="dealerParent">
+                            {customSelectBox({ data: typeData, placeholder: preparePlaceholderSelect('Dealer Parent') })}
+                        </Form.Item>
+                    </Col>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item initialValue={filterString?.dealerLocation} label="Dealer Location" name="dealerLocation">
+                            {customSelectBox({ data: typeData, placeholder: preparePlaceholderSelect('Dealer Location') })}
+                        </Form.Item>
+                    </Col>
+                </Row>
+            )}
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="AMC Registration From Date" name="fromDate" className={styles?.datePicker} rules={[validateRequiredInputField('invoice from date')]}>

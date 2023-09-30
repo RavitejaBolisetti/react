@@ -16,7 +16,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import styles from 'assets/sass/app.module.scss';
 
 export default function RegistrationFilter(props) {
-    const { extraParams, removeFilter, typeData, invoiceStatusList, searchForm, filterString, setFilterString, handleResetFilter, advanceFilter = false, handleInvoiceTypeChange, setAdvanceSearchVisible, handleButtonClick, invoiceStatus } = props;
+    const { extraParams, removeFilter, typeData, invoiceStatusList, searchForm, filterString, setFilterString, handleResetFilter, advanceFilter = false, handleInvoiceTypeChange, setAdvanceSearchVisible, handleButtonClick, invoiceStatus, showAddButton } = props;
 
     const serachBoxProps = {
         searchForm,
@@ -54,11 +54,13 @@ export default function RegistrationFilter(props) {
                         </Row>
                     </Form>
                 </Col>
-                <Col xs={24} sm={4} md={4} lg={4} xl={4} className={styles.buttonsGroupRight}>
-                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                        Add
-                    </Button>
-                </Col>
+                {!showAddButton && (
+                    <Col xs={24} sm={4} md={4} lg={4} xl={4} className={styles.buttonsGroupRight}>
+                        <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                            Add
+                        </Button>
+                    </Col>
+                )}
             </Row>
             {advanceFilter && filterString?.advanceFilter && extraParams.find((i) => i.name) && (
                 <Row gutter={20}>

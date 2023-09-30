@@ -17,7 +17,7 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
 // import { CancelInvoice } from './CancelInvoice';
 // import { VEHICLE_INVOICE_SECTION } from 'constants/VehicleInvoiceSection';
-import { QUERY_BUTTONS_CONSTANTS } from 'components/Sales/CommonScheme/QueryButtons';
+import { QUERY_BUTTONS_CONSTANTS, QUERY_BUTTONS_MNM_USER } from 'components/Sales/CommonScheme/QueryButtons';
 import { BASE_URL_VEHICLE_INVOICE_GENERATION_PROFILE_CARD as customURL, BASE_URL_INVOICE_DETAIL as InvoiceDetailsURL } from 'constants/routingApi';
 import { otfDataActions } from 'store/actions/data/otf/otf';
 
@@ -53,20 +53,24 @@ const mapStateToProps = (state) => {
                 VehicleDetails: { isLoaded: isVehicleDataLoaded = false, isLoading: isVehicleDataLoading, data: vehicleDetail = [] },
                 VehicleInvoice: { isLoaded: isInvoiceDataLoaded = false, isLoading: isInvoiceDataLoading, data: invoiceData = [] },
             },
+
             OTF: {
                 OtfSearchList: { isDetailLoaded: isDataLoaded, detailData: otfData = [] },
                 salesConsultantLov: { isLoaded: isSalesConsultantDataLoaded, data: salesConsultantLovData = [] },
             },
         },
+        common: {
+            Header: { data: loginUserData = [], isLoading, isLoaded: isLoginUserDataLoaded = false },
+        },
     } = state;
 
-    const moduleTitle = 'AMC Registration';
+    const moduleTitle = 'AMC Registration Details';
     let returnValue = {
         userId,
         typeData,
         data: data?.paginationData,
         totalRecords: data?.totalRecords || [],
-        invoiceStatusList: Object.values(QUERY_BUTTONS_CONSTANTS),
+        invoiceStatusList: loginUserData?.userType === 'DLR' ? Object.values(QUERY_BUTTONS_CONSTANTS) : Object.values(QUERY_BUTTONS_MNM_USER),
         moduleTitle,
         isSearchLoading,
         isSearchDataLoaded,
@@ -89,6 +93,7 @@ const mapStateToProps = (state) => {
         isInVoiceMasterDetailDataLoaded,
         isSalesConsultantDataLoaded,
         salesConsultantLovData,
+        loginUserData,
     };
     return returnValue;
 };
@@ -130,10 +135,10 @@ export const AMCRegistrationMasterBase = (props) => {
     const { typeData, receiptType, partySegmentType, listInvoiceShowLoading, saveData, paymentModeType, documentType, moduleTitle, totalRecords } = props;
     const { filterString, setFilterString, invoiceStatusList, otfData, vehicleInvoiceMasterData, resetDetailData, resetOtfData } = props;
     const { isInVoiceMasterDetailDataLoaded, fetchOTFDetail, isDataLoaded } = props;
-    const { isSalesConsultantDataLoaded, fetchSalesConsultant, salesConsultantLovData, listConsultantShowLoading } = props;
+    const { isSalesConsultantDataLoaded, fetchSalesConsultant, salesConsultantLovData, listConsultantShowLoading, loginUserData } = props;
 
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
-    const [invoiceStatus, setInvoiceStatus] = useState(QUERY_BUTTONS_CONSTANTS.PENDING.key);
+    const [invoiceStatus, setInvoiceStatus] = useState(loginUserData?.userType === 'DLR' ? QUERY_BUTTONS_CONSTANTS.PENDING.key : QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.key);
     const [requestPayload, setRequestPayload] = useState({});
 
     const [listFilterForm] = Form.useForm();
@@ -166,10 +171,19 @@ export const AMCRegistrationMasterBase = (props) => {
     const [additionalReportParams, setAdditionalReportParams] = useState();
     const [isReportVisible, setReportVisible] = useState();
     const [confirmRequest, setConfirmRequest] = useState(false);
+    // const [userType, setUserType] = useState('DLR'); to be changed after developement
+    const [userType, setUserType] = useState('MNM');
     const [previousSection, setpreviousSection] = useState(1);
 
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
+
+    useEffect(() => {
+        if (userType !== 'DLR') {
+            setUserType('MNM');
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -533,7 +547,11 @@ export const AMCRegistrationMasterBase = (props) => {
                 setButtonData(Visibility);
                 // setButtonData({ ...Visibility, cancelReceiptBtn: true });
                 if (buttonAction === VIEW_ACTION) {
-                    invoiceStatus === QUERY_BUTTONS_CONSTANTS.PENDING.key ? setButtonData({ ...Visibility, printForm21Btn: true, printInvoiceBtn: true, cancelInvoiceBtn: true, approveCancelBtn: false, rejectCancelBtn: false }) : invoiceStatus === QUERY_BUTTONS_CONSTANTS.CANCELLATION_REQUEST.key ? setButtonData({ ...Visibility, cancelInvoiceBtn: false, approveCancelBtn: true, rejectCancelBtn: true }) : setButtonData({ ...Visibility, cancelInvoiceBtn: false, approveCancelBtn: false, rejectCancelBtn: false });
+                    if (userType === 'DLR') {
+                        invoiceStatus === QUERY_BUTTONS_CONSTANTS.PENDING.key ? setButtonData({ ...Visibility, printForm21Btn: true, printInvoiceBtn: true, cancelInvoiceBtn: true, approveCancelBtn: false, rejectCancelBtn: false }) : invoiceStatus === QUERY_BUTTONS_CONSTANTS.CANCELLATION_REQUEST.key ? setButtonData({ ...Visibility, cancelInvoiceBtn: false, approveCancelBtn: true, rejectCancelBtn: true }) : setButtonData({ ...Visibility, cancelInvoiceBtn: false, approveCancelBtn: false, rejectCancelBtn: false });
+                    } else {
+                        invoiceStatus === QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.key ? setButtonData({ ...Visibility, cancelInvoiceBtn: true, approveCancelBtn: false, rejectCancelBtn: false }) : invoiceStatus === QUERY_BUTTONS_MNM_USER.PENDING_FOR_CANCELLATION.key ? setButtonData({ ...Visibility, cancelInvoiceBtn: false, approveCancelBtn: true, rejectCancelBtn: true }) : setButtonData({ ...Visibility, cancelInvoiceBtn: false, approveCancelBtn: false, rejectCancelBtn: false });
+                    }
                     // (!otfData?.irnStatus || otfData?.irnStatus && timeStampCheck(otfData?.irnDate, otfData?.invoiceDate))
                 }
             }
@@ -609,7 +627,7 @@ export const AMCRegistrationMasterBase = (props) => {
         totalRecords,
         setPage,
         tableColumn: tableColumn(handleButtonClick),
-        tableData: data || [{amcRegistrationNumber : '456789',dealerLocation : 'ertyui',vin:'fcgvhbjn'}],
+        tableData: data || [{ amcRegistrationNumber: '456789', dealerLocation: 'ertyui', vin: 'fcgvhbjn' }],
         showAddButton: false,
         typeData,
     };
@@ -730,6 +748,8 @@ export const AMCRegistrationMasterBase = (props) => {
         typeData,
         searchForm,
         onFinishSearch,
+        userType,
+        showAddButton: userType === 'DLR' ? true : false,
     };
 
     const advanceFilterProps = {
@@ -749,6 +769,7 @@ export const AMCRegistrationMasterBase = (props) => {
         invoiceStatusList,
         typeData,
         onFinishSearch,
+        userType,
     };
 
     const drawerTitle = useMemo(() => {
@@ -826,6 +847,7 @@ export const AMCRegistrationMasterBase = (props) => {
         isDataLoaded,
         isInVoiceMasterDetailDataLoaded,
         salesConsultantLovData,
+        userType,
     };
 
     const cancelInvoiceProps = {

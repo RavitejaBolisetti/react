@@ -23,4 +23,10 @@ export const AMC_REGISTRATION_SECTION = {
         advance: true,
         displayOnList: true,
     },
+    REQUEST_DETAILS: {
+        id: 4,
+        title: 'Request Details',
+        advance: true,
+        displayOnList: true,
+    },
 };

@@ -35,3 +35,20 @@ export const QUERY_BUTTONS = {
     //     active: false,
     // },
 };
+ 
+export const QUERY_BUTTONS_MNM_USER = {
+    PENDING_FOR_APPROVAL: {
+        id: 'pendingApproval',
+        title: 'Pending for Approval',
+        key: 'PA',
+        active: true,
+    },
+  
+    PENDING_FOR_CANCELLATION: {
+        id: 'pendingCancellation',
+        title: 'Pending for Cancellation',
+        key: 'PC',
+        active: true,
+    },
+  
+};

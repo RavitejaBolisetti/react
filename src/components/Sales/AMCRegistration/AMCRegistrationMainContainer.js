@@ -18,6 +18,7 @@ import styles from 'assets/sass/app.module.scss';
 const AMCRegistrationDetailsMaster = React.lazy(() => import('./AMCRegistrationDetails'));
 const CustomerDetailsMaster = React.lazy(() => import('./CustomerDetails'));
 const VehicleDetailsMaster = React.lazy(() => import('./VehicleDetails'));
+const RequestDetailsMaster = React.lazy(() => import('./RequestDetails'));
 
 const AMCRegistrationMainContainerMain = (props) => {
     const { currentSection, handleIRNGeneration, selectedOtfNumber, requestPayload, setRequestPayload } = props;
@@ -46,6 +47,9 @@ const AMCRegistrationMainContainerMain = (props) => {
             }
             case AMC_REGISTRATION_SECTION.VEHICLE_DETAILS.id: {
                 return <VehicleDetailsMaster {...myProps} formData={requestPayload?.vehicleDetails} formKey={'vehicleDetails'} />;
+            }
+            case AMC_REGISTRATION_SECTION.REQUEST_DETAILS.id: {
+                return <RequestDetailsMaster {...myProps} formData={requestPayload?.requestDetails} formKey={'requestDetails'} />;
             }
             default: {
                 return <AMCRegistrationDetailsMaster {...myProps} />;
