@@ -98,7 +98,6 @@ const VehicleDetailsMasterMain = (props) => {
     const [discountValue, setDiscountValue] = useState();
     const [activeKey, setactiveKey] = useState([1]);
     const [formData, setFormData] = useState({});
-    console.log('🚀 ~ file: VehicleDetailsMaster.js:99 ~ modelCode:', formData, formData?.modelCode);
     const [optionalServices, setOptionalServices] = useState([]);
     const [openAccordian, setOpenAccordian] = useState('1');
 

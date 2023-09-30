@@ -46,7 +46,6 @@ const AddEditFormMain = (props) => {
     const disabledProp = { disabled: true };
     useEffect(() => {
         if (formData) {
-            console.log('🚀 ~ file: AddEditForm.js:49 ~ useEffect ~ formData:', formData);
             form.setFieldsValue({
                 ...formData,
                 poDate: dayjs(formData?.poDate?.substr(0, 10)).format('DD/MM/YYYY'),
@@ -117,7 +116,7 @@ const AddEditFormMain = (props) => {
                 });
             },
             submitText: 'Yes',
-            text: 'If you change the modal, price will be canculated as per the selected modal',
+            text: 'If you proceed with model change, the price will be calculated as per the selected model. Do you wish to continue?',
         });
     };
 
