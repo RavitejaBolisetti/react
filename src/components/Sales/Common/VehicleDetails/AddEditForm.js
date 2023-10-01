@@ -257,8 +257,8 @@ const AddEditFormMain = (props) => {
                                 </Col>
                                 {showPrintDiscount && (
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={false} labelAlign="left" wrapperCol={{ span: 24 }} name="printDiscount" label="Print Discount?" valuePropName="checked">
-                                            <Switch checkedChildren="Yes" unCheckedChildren="No" />
+                                        <Form.Item initialValue={formActionType?.editMode ? (formData?.printDiscount === 'Y' ? true : false) : false} labelAlign="left" wrapperCol={{ span: 24 }} name="printDiscount" label="Print Discount?" valuePropName="checked">
+                                            <Switch checkedChildren="Yes" unCheckedChildren="No" valuePropName="checked" onChange={(checked) => (checked ? 'Y' : 'N')} />
                                         </Form.Item>
                                     </Col>
                                 )}
