@@ -14,6 +14,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import styles from 'assets/sass/app.module.scss';
 import { DELIVERY_TYPE } from 'constants/modules/vehicleDetailsNotes.js/deliveryType';
 
+
 export default function VehicleDeliveryNoteFilter(props) {
     const { deliveryType, extraParams, removeFilter, searchForm, typeData, filterString, deliveryStatusList, onDeliveryTabChange, setFilterString, handleResetFilter, advanceFilter = false, handleDeliveryNoteTypeChange, setAdvanceSearchVisible, handleButtonClick, deliveryStatus } = props;
 
@@ -27,6 +28,17 @@ export default function VehicleDeliveryNoteFilter(props) {
     return (
         <div className={styles.contentHeaderBackground}>
             <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.navTab}>
+                    <Tabs
+                        defaultActiveKey={DELIVERY_TYPE.NOTE.key}
+                        activeKey={deliveryType}
+                        onChange={onDeliveryTabChange}
+                        items={Object.values(DELIVERY_TYPE)?.map((item) => ({
+                            key: item?.key,
+                            label: <>{item?.title}</>,
+                        }))}
+                    />
+                </Col>
                 <Col xs={24} sm={20} md={20} lg={20} xl={20}>
                     <Form autoComplete="off" colon={false} className={styles.masterListSearchForm}>
                         <Row gutter={20}>

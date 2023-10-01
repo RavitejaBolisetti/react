@@ -41,7 +41,7 @@ const mapStateToProps = (state) => {
         filterString,
         isvinInfoLoading,
         isVinDataLoaded,
-        vinData: vinData.vinBlockMasterResponseList, //vinData?.paginationData,
+        vinData: vinData?.paginationData,
         totalRecords: vinData?.totalRecords,
         detailData,
     };
@@ -284,8 +284,9 @@ export const VinBlockMasterBase = (props) => {
             setFilterString({ ...rest });
         }
     };
+    
     const title = 'Vin Block Master';
-    console.log('searchForm', searchForm);
+
     const advanceFilterResultProps = {
         extraParams,
         removeFilter,

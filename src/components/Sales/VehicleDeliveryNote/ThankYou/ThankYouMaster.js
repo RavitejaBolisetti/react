@@ -48,27 +48,27 @@ export const ThankYouMaster = (props) => {
         <>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.fullyCentered}>
-                    <Space direction="vertical">
-                        <Avatar size={180} icon={<HiCheck />} />
+                    <Space size='middle' className={styles.deliveryNoteSuccess} direction="vertical" >
+                        <Avatar size={150} icon={<HiCheck />} />
                         <Title level={5}>{message}</Title>
-                        <Card>
-                            <Row>
-                                <Col xs={16} sm={16} md={16} lg={16} xl={16} style={{ padding: '2px', border: '1px solid grey', borderRadius: '4px', width: '64%' }}>
-                                    <Text>Delivery Note No.:</Text>
-                                    <Text strong> {deliveryNoteNo}</Text>
-                                </Col>
-                                <Col>
-                                    <CopytoClipboard type={'primary'} buttonText={'Copy'} text={deliveryNoteNo} />
-                                </Col>
-                            </Row>
+                        <div className={styles.deliveryNoteSuccessInfo}>
+                            <Space className={styles.marB20}>
+                                <div className={styles.deliveryNoteSuccessText}>
+                                    <Text>
+                                        Delivery Note No.: <span>{deliveryNoteNo}</span>
+                                    </Text>
+                                </div>
+                                <CopytoClipboard type={'primary'} buttonText={'Copy'} text={deliveryNoteNo} />
+                            </Space>
+
                             <Divider />
-                            <Space direction="vertical">
+                            <Space size='middle' direction="vertical">
                                 <Text>Do you want to Print or download this Delivery Note</Text>
-                                <Button onClick={() => handlePrintDownload(record)} className={styles.marB20} danger>
+                                <Button onClick={() => handlePrintDownload(record)} danger>
                                     {`Download/Print ${invoiceType} Note`}
                                 </Button>
                             </Space>
-                        </Card>
+                        </div>
                     </Space>
                 </Col>
             </Row>

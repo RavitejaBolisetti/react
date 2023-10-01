@@ -97,6 +97,21 @@ const InsuranceDetailsMasterBase = (props) => {
     ];
 
     useEffect(() => {
+        if (userId && selectedOrderId && soldByDealer) {
+            const extraParams = [
+                {
+                    key: 'otfNumber',
+                    title: 'otfNumber',
+                    value: selectedOrderId,
+                    name: 'Booking Number',
+                },
+            ];
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, selectedOrderId]);
+
+    useEffect(() => {
         if (userId && record && !soldByDealer) {
             const extraParams = [
                 {
@@ -157,7 +172,7 @@ const InsuranceDetailsMasterBase = (props) => {
             };
 
             const onError = (message) => {
-                // showGlobalNotification({ message });
+                showGlobalNotification({ message });
             };
 
             const requestData = {

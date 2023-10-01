@@ -29,7 +29,7 @@ const { Text } = Typography;
 const AddEditFormMain = (props) => {
     const { isReadOnly, setIsReadOnly, typeData } = props;
     const { itemOptions, setitemOptions, makeOptions, setmakeOptions } = props;
-    const { formData, formActionType, handleCollapse, showGlobalNotification, selectedRecordId, form, openAccordian, setOpenAccordian, optionsServiceModified, setoptionsServiceModified, handleFormValueChange, tooltTipText, isVariantLoading, isModelFamilyLoading, isModelLoading } = props;
+    const { formData, formActionType, handleCollapse, showGlobalNotification, selectedRecordId, form, openAccordian, setOpenAccordian, optionalServices, setOptionalServices, handleFormValueChange, tooltTipText, isVariantLoading, isModelFamilyLoading, isModelLoading } = props;
     const { MakefieldNames, ItemFieldNames, bindCodeValue } = props;
     const { collapseProps, disabledProps, bindStatus } = props;
 
@@ -103,8 +103,8 @@ const AddEditFormMain = (props) => {
         setitemOptions,
         makeOptions,
         setmakeOptions,
-        optionsServiceModified,
-        setoptionsServiceModified,
+        optionalServices,
+        setOptionalServices,
     };
 
     const handleEdit = ({ record, index }) => {
@@ -116,7 +116,7 @@ const AddEditFormMain = (props) => {
     };
 
     const handleDelete = ({ record, index }) => {
-        setoptionsServiceModified(optionsServiceModified.filter((element, i) => i !== index));
+        setOptionalServices(optionalServices.filter((element, i) => i !== index));
     };
 
     const handleButtonClick = ({ buttonAction, record, index }) => {
@@ -267,7 +267,7 @@ const AddEditFormMain = (props) => {
                             key="Aggregates"
                         >
                             <Divider />
-                            <DataTable tableColumn={tableColumn({ handleButtonClick, formActionType, bindCodeValue })} tableData={optionsServiceModified} pagination={false} />
+                            <DataTable tableColumn={tableColumn({ handleButtonClick, formActionType, bindCodeValue })} tableData={optionalServices} pagination={false} />
                         </Panel>
                     </Collapse>
                 </Col>

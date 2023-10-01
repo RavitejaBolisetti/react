@@ -19,20 +19,19 @@ export const tableColumnSearchOTF = (sorter) => {
             title: 'Booking Date',
             dataIndex: 'otfDate',
             render: (text) => (text ? convertDateMonthYear(text) : ''),
-            width: '15%',
+            width: '20%',
             sorter,
         }),
         tblPrepareColumns({
             title: 'Customer Name',
             dataIndex: 'customerName',
-            width: '20%',
             sorter,
         }),
         tblPrepareColumns({
             title: 'CPD',
             dataIndex: 'cpd',
             render: (text) => (text ? convertDateMonthYear(text) : ''),
-            width: '40%',
+            width: '20%',
             sorter,
         }),
     ];
