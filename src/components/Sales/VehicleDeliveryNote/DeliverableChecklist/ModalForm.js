@@ -46,7 +46,7 @@ export const ChecklistModalForms = (props) => {
                     return element;
                 });
                 setcheckListDataModified(newArr);
-                setRequestPayload((prev) => ({ ...prev, vehicleDeliveryChecklist: { vin: selectedOrder?.vin, deliveryChecklistDtos: newArr?.filter((i) => i?.ismodified) } }));
+                setRequestPayload((prev) => ({ ...prev, vehicleDeliveryCheckList: { vin: prev?.vehicleDeliveryCheckList?.vin, deliveryChecklistDtos: newArr?.filter((i) => i?.ismodified) } }));
                 setAdvanceSearchVisible(false);
                 handleFormValueChange();
                 setisEditing(false);

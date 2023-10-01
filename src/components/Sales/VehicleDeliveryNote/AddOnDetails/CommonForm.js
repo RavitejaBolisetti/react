@@ -12,24 +12,12 @@ import { customSelectBox } from 'utils/customSelectBox';
 import styles from 'assets/sass/app.module.scss';
 
 const { Search } = Input;
-const CommonForm = ({ formData, typeData, formKey = 'Shield', addOnForm, openAccordian, formActionType, onSingleFormFinish, schemeDescriptionData, shieldForm, rsaForm, amcForm, handleEmployeeSearch, handleOnChange, relationshipManagerData }) => {
-    let disabled = formData?.schemeType || formData?.schemeDescription || formData?.schemeAmount;
-
+const CommonForm = ({ formData, typeData, formKey = 'Shield', addOnForm, openAccordian, formActionType, onSingleFormFinish, schemeDescriptionData, shieldForm, rsaForm, amcForm, registerDisabled, handleOnChange, relationshipManagerData, schemeDescriptionDatamain }) => {
     const handleChange = (values) => {
-        const code = schemeDescriptionData?.find((item) => item?.schemeDescription === values);
+        const code = openAccordian && schemeDescriptionDatamain.hasOwnProperty(openAccordian) && schemeDescriptionDatamain[openAccordian]?.find((item) => item?.schemeDescription === values);
         if (code) {
-            let schemeId = code?.id;
-            let schemeAmount = code?.schemeAmount;
-            if (openAccordian === 'Shield') {
-                shieldForm.setFieldValue('schemeCode', schemeId);
-                shieldForm.setFieldValue('schemeAmount', schemeAmount);
-            } else if (openAccordian === 'RSA') {
-                rsaForm.setFieldValue('schemeCode', schemeId);
-                rsaForm.setFieldValue('schemeAmount', schemeAmount);
-            } else if (openAccordian === 'AMC') {
-                amcForm.setFieldValue('schemeCode', schemeId);
-                amcForm.setFieldValue('schemeAmount', schemeAmount);
-            }
+            addOnForm.setFieldValue('schemeCode', code?.id);
+            addOnForm.setFieldValue('schemeAmount', code?.schemeAmount);
         }
     };
 
@@ -39,18 +27,18 @@ const CommonForm = ({ formData, typeData, formKey = 'Shield', addOnForm, openAcc
                 {openAccordian === 'AMC' && (
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item initialValue={formData?.schemeType} label="Scheme Type" name="schemeType" rules={[validateRequiredSelectField('Scheme Type')]}>
-                            {customSelectBox({ data: schemeDescriptionData, disabled: disabled, placeholder: preparePlaceholderText('Scheme Type'), fieldNames: { key: 'schemeType', value: 'schemeType' } })}
+                            {customSelectBox({ data: typeData['DLVR_AMC_SCH_TYP'], placeholder: preparePlaceholderText('Scheme Type'), fieldNames: { key: 'schemeType', value: 'schemeType' } })}
                         </Form.Item>
                     </Col>
                 )}
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.schemeDescription} label="Scheme Description" name="schemeDescription" rules={[validateRequiredSelectField('Scheme Description')]}>
-                        {customSelectBox({ data: schemeDescriptionData, disabled: disabled, fieldNames: { key: 'schemeDescription', value: 'schemeDescription' }, placeholder: preparePlaceholderText('Scheme Description'), onChange: handleChange })}
+                        {customSelectBox({ data: schemeDescriptionDatamain[openAccordian], fieldNames: { key: 'schemeDescription', value: 'schemeDescription' }, placeholder: preparePlaceholderText('Scheme Description'), onChange: handleChange })}
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.saleType} label="Sale Type" name="saleType" rules={[validateRequiredInputField('Sale Type')]}>
-                        {customSelectBox({ data: typeData['DLVR_SALE_TYP'], disabled: disabled, placeholder: preparePlaceholderText('Sale Type') })}
+                        {customSelectBox({ data: typeData['DLVR_SALE_TYP'], placeholder: preparePlaceholderText('Sale Type') })}
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -62,7 +50,7 @@ const CommonForm = ({ formData, typeData, formKey = 'Shield', addOnForm, openAcc
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.employeeCode} label="Employee Name" name="employeeCode">
                         {/* <Search  onSearch={handleEmployeeSearch}  onChange={handleOnChange} placeholder={preparePlaceholderText('scheme amount')} allowClear /> */}
-                        {customSelectBox({ data: relationshipManagerData, disabled: disabled, fieldNames: { key: 'key', value: 'value' }, placeholder: preparePlaceholderSelect('Relationship Manager') })}
+                        {customSelectBox({ data: relationshipManagerData, fieldNames: { key: 'key', value: 'value' }, placeholder: preparePlaceholderSelect('Relationship Manager') })}
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -80,7 +68,7 @@ const CommonForm = ({ formData, typeData, formKey = 'Shield', addOnForm, openAcc
             {!formActionType?.viewMode && (
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Button className={styles.marB20} type="primary" disabled={disabled} onClick={() => onSingleFormFinish(formKey, addOnForm)}>
+                        <Button className={styles.marB20} type="primary" disabled={registerDisabled[openAccordian]} onClick={() => onSingleFormFinish(formKey, addOnForm)}>
                             Register
                         </Button>
                     </Col>

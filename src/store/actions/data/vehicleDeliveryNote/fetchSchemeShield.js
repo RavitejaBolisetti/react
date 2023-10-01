@@ -4,10 +4,10 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { dataActions } from 'store/actions/crud/dataAction';
-import { BASE_URL_VEHICLE_DELIVERY_NOTE_SEARCH as baseURL } from 'constants/routingApi';
+import { BASE_URL_VEHICLE_ADD_ON_SCHEME_DESCRIPTION as baseURL } from 'constants/routingApi';
 
-const PREFIX = 'VEHICLE_DELIVERY_NOTE_SEARCH_';
-const moduleName = 'Vehicle Delivery Note Search';
+const PREFIX = 'SCHEME_DESCRIPTION_SHIELD_';
+const moduleName = 'Scheme Description';
 
 export const RECEIVE_DATA_LOADING_ACTION_CONSTANT = PREFIX + 'LOADING_DATA';
 export const RECEIVE_DATA_ACTION_CONSTANT = PREFIX + 'LIST_RECIEVE_DATA';
@@ -15,9 +15,8 @@ export const RECEIVE_DATA_ACTION_APPLY_FILTER_CONSTANT = PREFIX + 'LIST_APPLY_FI
 export const RECIEVE_DATA_DETAIL_ACTION_CONSTANT = PREFIX + 'RECIEVE_DETAIL_DATA';
 export const SAVE_DATA_ACTION_CONSTANT = PREFIX + 'SAVE_DATA';
 export const RESET_DATA_ACTION_CONSTANT = PREFIX + 'RESET_DATA';
-export const RESET_DETAIL_DATA_ACTION_CONSTANT = PREFIX + 'RESET_DETAIL_DATA';
 
-export const vehicleDeliveryNoteDataActions = dataActions({
+export const schemeDescriptionShieldDataActions = dataActions({
     baseURL,
     moduleName,
     RECEIVE_DATA_LOADING_ACTION_CONSTANT,
@@ -26,5 +25,4 @@ export const vehicleDeliveryNoteDataActions = dataActions({
     RECIEVE_DATA_DETAIL_ACTION_CONSTANT,
     SAVE_DATA_ACTION_CONSTANT,
     RESET_DATA_ACTION_CONSTANT,
-    RESET_DETAIL_DATA_ACTION_CONSTANT,
 });

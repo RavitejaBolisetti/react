@@ -35,7 +35,6 @@ export default function AdvanceVinBlockMasterFilter(props) {
 
     useEffect(() => {
         setFieldsValue({ searchParam: filterString?.searchParam, searchType: filterString?.searchType });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
 
     return (

@@ -11,43 +11,25 @@ import { validateRequiredInputField, validateNumberWithTwoDecimalPlaces, validat
 import styles from 'assets/sass/app.module.scss';
 
 const OptionServicesFormMain = (props) => {
-    const { typeData, vehicleServiceData, handleCancel, handleFormValueChange, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, selectedOrderId, formData, optionForm } = props;
-    const [serviceOptions, setserviceOptions] = useState(vehicleServiceData);
+    const { vehicleServiceData, handleCancel, handleFormValueChange, optionalServices, setOptionalServices, selectedOrderId, formData, optionForm } = props;
+    const [uniqueServiceOptions, setUniqueServiceOptions] = useState(vehicleServiceData);
 
     useEffect(() => {
-        const arr = [];
-        if (serviceOptions && serviceOptions?.length) {
-            optionsServiceModified?.map((element) => {
-                arr.push(element?.taxId);
-            });
-
-            setserviceOptions(
-                serviceOptions?.map((element) => {
-                    if (arr?.includes(element?.id) || arr?.includes(element?.value)) {
-                        return { ...element, disabled: true };
-                    } else {
-                        return { ...element, disabled: false };
-                    }
-                })
-            );
+        if (optionalServices && optionalServices?.length) {
+            const serviceNameList = optionalServices.map((i) => i.serviceName);
+            setUniqueServiceOptions(uniqueServiceOptions?.map((element) => ({ ...element, disabled: serviceNameList.includes(element.value) })));
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [optionsServiceModified]);
+    }, [optionalServices]);
 
     const onFinish = () => {
-        optionForm
-            .validateFields()
-            .then(() => {
-                const values = optionForm.getFieldsValue();
-
-                const data = { ...values, id: '' };
-                setoptionsServiceModified([data, ...optionsServiceModified]);
-                setoptionsServicesMapping([...optionsServicesMapping, data]);
-                optionForm.resetFields();
-                handleFormValueChange();
-            })
-            .catch((err) => {});
+        optionForm.validateFields().then(() => {
+            const values = optionForm.getFieldsValue();
+            const data = { serviceName: values?.serviceName, amount: values?.amount, taxId: values?.taxId, id: '' };
+            setOptionalServices([...optionalServices, data]);
+            optionForm.resetFields();
+            handleFormValueChange();
+        });
     };
 
     return (
@@ -58,7 +40,7 @@ const OptionServicesFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8} xxl={8}>
                                 <Form.Item name="taxId" label="Service Name" rules={[validateRequiredSelectField('Service Name')]}>
-                                    <Select onChange={(value, selectedObj) => optionForm.setFieldsValue({ serviceName: selectedObj?.value })} options={serviceOptions} fieldNames={{ label: 'value', value: 'id' }} placeholder={preparePlaceholderSelect('Service Name')} allowClear />
+                                    <Select onChange={(value, selectedObj) => optionForm.setFieldsValue({ serviceName: selectedObj?.value })} options={uniqueServiceOptions} fieldNames={{ label: 'value', value: 'id' }} placeholder={preparePlaceholderSelect('Service Name')} allowClear />
                                 </Form.Item>
                                 <Form.Item hidden name="otfNumber" initialValue={selectedOrderId} />
                                 <Form.Item hidden name="otfId" initialValue={formData?.otfId ?? ''} />

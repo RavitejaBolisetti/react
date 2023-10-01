@@ -15,7 +15,7 @@ import styles from 'assets/sass/app.module.scss';
 
 export const AdvanceForm = (props) => {
     const { AdvanceformData, setAdvanceformData } = props;
-    const { handleCancel, handleFormValueChange, optionsServiceModified, setoptionsServiceModified, aggregateForm } = props;
+    const { handleCancel, handleFormValueChange, optionalServices, setOptionalServices, aggregateForm } = props;
     const { setAdvanceSearchVisible } = props;
     const { isVisible, setisEditing, isEditing } = props;
     const { itemOptions, setitemOptions, makeOptions, MakefieldNames, ItemFieldNames } = props;
@@ -34,7 +34,7 @@ export const AdvanceForm = (props) => {
     useEffect(() => {
         const arr = [];
         if (itemOptions && itemOptions?.length) {
-            optionsServiceModified?.map((element) => {
+            optionalServices?.map((element) => {
                 arr.push(element?.item);
                 return false;
             });
@@ -50,7 +50,7 @@ export const AdvanceForm = (props) => {
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [optionsServiceModified]);
+    }, [optionalServices]);
 
     const onFinish = () => {
         aggregateForm
@@ -59,16 +59,16 @@ export const AdvanceForm = (props) => {
                 const values = aggregateForm.getFieldsValue();
                 if (!isEditing) {
                     const data = { ...values, id: '' };
-                    setoptionsServiceModified([data, ...optionsServiceModified]); //Adding data to table
+                    setOptionalServices([data, ...optionalServices]); //Adding data to table
 
                     aggregateForm.resetFields();
                     handleFormValueChange();
                     setAdvanceSearchVisible(false);
                 } else {
                     const data = { ...values };
-                    const newarr = [...optionsServiceModified];
+                    const newarr = [...optionalServices];
                     newarr[AdvanceformData?.index] = data;
-                    setoptionsServiceModified(newarr);
+                    setOptionalServices(newarr);
                     setAdvanceSearchVisible(false);
                     handleFormValueChange();
                     setisEditing(false);

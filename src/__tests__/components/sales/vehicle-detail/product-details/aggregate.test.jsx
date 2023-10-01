@@ -23,7 +23,7 @@ describe('AdvanceForm', () => {
     });
 
     it('should render fields', async () => {
-        customRender(<FormWrapper AdvanceformData={true} isVisible={true} itemOptions={[{ name: 'Test' }]} setitemOptions={jest.fn()} optionsServiceModified={[{ name: 'Kai' }]} />);
+        customRender(<FormWrapper AdvanceformData={true} isVisible={true} itemOptions={[{ name: 'Test' }]} setitemOptions={jest.fn()} optionalServices={[{ name: 'Kai' }]} />);
     });
 
     it('Save button should work', async () => {

@@ -18,9 +18,8 @@ import { debounce } from 'utils/debounce';
 
 const { TextArea } = Input;
 const AddEditFormMain = (props) => {
-    const { formData, relationshipManagerData, typeData, form, soldByDealer, handleChassisNoSearch, handleOnChange, chassisNoValue, fetchEngineNumber, listEngineNumberShowLoading, engineNumberData, userId } = props;
+    const { formData, relationshipManagerData, typeData, form, soldByDealer, handleChassisNoSearch, handleOnChange, chassisNoValue, fetchEngineNumber, listEngineNumberShowLoading, engineNumberData, userId, handleRelationShipManagerChange } = props;
     const { vinData } = props;
-
 
     useEffect(() => {
         if (soldByDealer) {
@@ -89,7 +88,7 @@ const AddEditFormMain = (props) => {
                                     {!soldByDealer && (
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                             <Form.Item initialValue={formData?.chassisNumber} label="Chassis No." name="chassisNumber">
-                                                <AutoComplete  fieldNames={fieldNames} label="Chasiss No" options={vinData} backfill={false} onSelect={handleSelectVinNo} onSearch={debounce(handleChassisNoSearch, 400)} allowSearch>
+                                                <AutoComplete fieldNames={fieldNames} label="Chasiss No" options={vinData} backfill={false} onSelect={handleSelectVinNo} onSearch={debounce(handleChassisNoSearch, 400)} allowSearch>
                                                     <Input.Search size="large" allowClear placeholder={preparePlaceholderAutoComplete('')} />
                                                 </AutoComplete>
                                             </Form.Item>
@@ -111,7 +110,10 @@ const AddEditFormMain = (props) => {
 
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                 <Form.Item initialValue={formData?.relationShipManager} label="Relationship Manager" name="relationShipManager">
-                                                    {customSelectBox({ data: relationshipManagerData, fieldNames: { key: 'value', value: 'value' }, placeholder: preparePlaceholderSelect('Relationship Manager') })}
+                                                    {customSelectBox({ data: relationshipManagerData, fieldNames: { key: 'key', value: 'value' }, placeholder: preparePlaceholderSelect('Relationship Manager'), onChange: handleRelationShipManagerChange })}
+                                                </Form.Item>
+                                                <Form.Item hidden initialValue={formData?.relationShipManagerCode} label="Relationship Manager Code" name="relationShipManagerCode">
+                                                    <Input />
                                                 </Form.Item>
                                             </Col>
                                         </>
@@ -126,7 +128,7 @@ const AddEditFormMain = (props) => {
                                                     <DatePicker format={dateFormat} placeholder={preparePlaceholderSelect('Customer Promise Date')} disabled={true} />
                                                 </Form.Item>
                                             </Col>
-                                            {disableFieldsOnFutureDate(dayjs(formData?.customerPromiseDate)) && (
+                                            {formData?.customerPromiseDate && disableFieldsOnFutureDate(dayjs(formData?.customerPromiseDate)) && (
                                                 <>
                                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                         <Form.Item initialValue={formData?.reasonForDelay} label="Reasons For Delay" name="reasonForDelay" rules={[validateRequiredSelectField('reasons for delay')]}>

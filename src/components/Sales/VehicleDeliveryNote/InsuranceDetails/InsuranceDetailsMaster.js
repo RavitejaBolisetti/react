@@ -32,7 +32,7 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         isDataLoaded,
-        insuranceData,
+        // insuranceData,
         isLoading,
         moduleTitle,
         isInsuranceCompanyDataLoaded,
@@ -66,8 +66,7 @@ const mapDispatchToProps = (dispatch) => ({
 const InsuranceDetailsMasterBase = (props) => {
     const { insuranceData, onCloseAction, fetchList, formActionType, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
     const { form, selectedOrderId, handleFormValueChange, section, isLoading, NEXT_ACTION, handleButtonClick, onFinishFailed, saveData } = props;
-    const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar, pageType, isInsuranceLoaded, isInsuranceDataLoading, fetchChallanInsuranceList, insuranceChallanData,listChallanInsuranceShowLoading, soldByDealer, record } = props;
-
+    const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar, pageType, isInsuranceLoaded, isInsuranceDataLoading, fetchChallanInsuranceList, insuranceChallanData, listChallanInsuranceShowLoading, soldByDealer, record } = props;
     const [formData, setFormData] = useState();
 
     useEffect(() => {
@@ -75,7 +74,7 @@ const InsuranceDetailsMasterBase = (props) => {
             setFormData(insuranceData);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [insuranceData]);
+    }, [insuranceData, section]);
 
     useEffect(() => {
         if (insuranceChallanData) {
@@ -83,6 +82,10 @@ const InsuranceDetailsMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [insuranceChallanData]);
+    useEffect(() => {
+        setButtonData({ ...buttonData, formBtnActive: true });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [section]);
 
     const extraParams = [
         {
@@ -95,7 +98,6 @@ const InsuranceDetailsMasterBase = (props) => {
 
     useEffect(() => {
         if (userId && selectedOrderId && soldByDealer) {
-
             const extraParams = [
                 {
                     key: 'otfNumber',
@@ -114,7 +116,7 @@ const InsuranceDetailsMasterBase = (props) => {
             const extraParams = [
                 {
                     key: 'invoiceNumber',
-                    title: 'invoiceNumber', 
+                    title: 'invoiceNumber',
                     value: record?.invoiceId,
                     name: 'Invoice ID',
                 },
@@ -170,7 +172,7 @@ const InsuranceDetailsMasterBase = (props) => {
             };
 
             const onError = (message) => {
-                // showGlobalNotification({ message });
+                showGlobalNotification({ message });
             };
 
             const requestData = {
