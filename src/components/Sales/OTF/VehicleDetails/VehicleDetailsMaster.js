@@ -211,11 +211,13 @@ const VehicleDetailsMasterMain = (props) => {
         if (vehicleDetailData) {
             setFormData(vehicleDetailData);
             setProductModelCode(vehicleDetailData?.modelCode);
-            // setDiscountValue(vehicleDetailData?.discountAmount);
+            setDiscountValue(vehicleDetailData?.discountAmount);
+            setSaleType(vehicleDetailData?.saleType);
+            setPriceType(vehicleDetailData?.priceType);
             vehicleDetailData?.optionalServices && setOptionalServices(vehicleDetailData?.optionalServices);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [vehicleDetailData, discountValue]);
+    }, [vehicleDetailData]);
 
     useEffect(() => {
         if (selectedOrderId && (productModelCode || discountValue || saleType || priceType)) {
