@@ -326,7 +326,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     }, [vehicleInvoiceMasterData, isInVoiceMasterDetailDataLoaded]);
 
     useEffect(() => {
-        if (selectedOrderId && !formActionType?.addMode) {
+        if (selectedOrderId || selectedOtfNumber) {
             const extraParams = [
                 {
                     key: 'otfNumber',
@@ -340,7 +340,6 @@ export const VehicleInvoiceMasterBase = (props) => {
                     name: 'Invoice Number',
                 },
             ];
-
             fetchOTFDetail({ customURL, setIsLoading: listShowLoading, userId, extraParams: extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -845,12 +844,7 @@ export const VehicleInvoiceMasterBase = (props) => {
             <VehicleInvoiceFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable
-                        // handleButtonClick={handleButtonClick}
-                        isLoading={showDataLoading}
-                        {...tableProps}
-                        showAddButton={false}
-                    />
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} showAddButton={false} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />
