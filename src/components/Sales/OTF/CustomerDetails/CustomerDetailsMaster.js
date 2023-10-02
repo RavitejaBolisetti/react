@@ -162,8 +162,7 @@ export const CustomerDetailsMain = (props) => {
                 const onError = (message) => {
                     showGlobalNotification({ message });
                 };
-                console.log('data', data);
-                return false;
+              
                 const requestData = {
                     data: data,
                     method: 'put',
@@ -172,7 +171,7 @@ export const CustomerDetailsMain = (props) => {
                     onError,
                     onSuccess,
                 };
-                // saveData(requestData);
+                saveData(requestData);
             }
         }
     };
