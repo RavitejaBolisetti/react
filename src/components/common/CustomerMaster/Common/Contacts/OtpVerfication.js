@@ -21,6 +21,8 @@ import style from 'components/Auth/Auth.module.scss';
 import styles from 'components/Auth/Auth.module.scss'
 const OtpVarificationModalMain = (props) => {
     const { setInValidOTP, inValidOTP, counter, handleVerifyOTP, otpMessage, disableVerifyOTP, setDisableVerifyOTP, handleSendOTP, otpInput, setOTPInput, onSentOTP } = props;
+    const [form] = Form.useForm();
+
     const handleOTPInput = (value) => {
         setOTPInput(value);
         setInValidOTP(false);
@@ -36,52 +38,54 @@ const OtpVarificationModalMain = (props) => {
                 <div className={styles.loginHeading}>
                     <div className={styles.loginSubHeading}>{otpMessage}</div>
                 </div>
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <div className={styles.otpTitle}>Enter OTP</div>
-                    </Col>
-                </Row>
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <OTPInput className={`${styles.changer} ${inValidOTP ? styles.otpFilled : styles.otpEmpty}`} otpType="number" value={otpInput} onChange={handleOTPInput} autoFocus OTPLength={6} disabled={false} />
-                    </Col>
-                </Row>
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Row gutter={20} className={styles.otpVerificationContainer}>
-                            <Col xs={14} sm={14} md={16} lg={16} xl={16}>
-                                {counter ? (
-                                    <div className={styles.otpCounter}>{`${counter >= 10 ? `00:${counter}` : `00:0${counter}`}s`}</div>
-                                ) : (
-                                    <div className={styles.otpNotReceive}>
-                                        {inValidOTP ? (
-                                            <span>
-                                                <RxCrossCircled />
-                                                {'Incorrect OTP'}
-                                            </span>
-                                        ) : (
-                                            <span>{"Didn't receive an OTP?"}</span>
-                                        )}
+                <Form form={form} id="sendOTP" autoComplete="off" onFinish={onSentOTP}>
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <div className={styles.otpTitle}>Enter OTP</div>
+                        </Col>
+                    </Row>
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <OTPInput className={`${styles.changer} ${inValidOTP ? styles.otpFilled : styles.otpEmpty}`} otpType="number" value={otpInput} onChange={handleOTPInput} autoFocus OTPLength={6} disabled={false} />
+                        </Col>
+                    </Row>
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <Row gutter={20} className={styles.otpVerificationContainer}>
+                                <Col xs={14} sm={14} md={16} lg={16} xl={16}>
+                                    {counter ? (
+                                        <div className={styles.otpCounter}>{`${counter >= 10 ? `00:${counter}` : `00:0${counter}`}s`}</div>
+                                    ) : (
+                                        <div className={styles.otpNotReceive}>
+                                            {inValidOTP ? (
+                                                <span>
+                                                    <RxCrossCircled />
+                                                    {'Incorrect OTP'}
+                                                </span>
+                                            ) : (
+                                                <span>{"Didn't receive an OTP?"}</span>
+                                            )}
+                                        </div>
+                                    )}
+                                </Col>
+                                <Col xs={10} sm={10} md={8} lg={8} xl={8}>
+                                    <div onClick={() => handleSendOTP()} className={counter ? style.resendDisabled : style.resendEnabled} type="radio">
+                                        <TbRefresh /> Resend OTP
                                     </div>
-                                )}
-                            </Col>
-                            <Col xs={10} sm={10} md={8} lg={8} xl={8}>
-                                <div onClick={() => onSentOTP()} className={counter ? style.resendDisabled : style.resendEnabled} type="radio">
-                                    <TbRefresh /> Resend OTP
-                                </div>
-                            </Col>
-                        </Row>
-                    </Col>
-                </Row>
-                <Button   onClick={handleVerifyOTP} disabled={disableVerifyOTP} loading={false} className={styles.button} type="primary">
-                    Verify OTP 
-                </Button>
+                                </Col>
+                            </Row>
+                        </Col>
+                    </Row>
+                    <Button onClick={handleVerifyOTP} disabled={disableVerifyOTP} loading={false} className={styles.button} type="primary">
+                        Verify OTP
+                    </Button>
 
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <div className={styles.loginFooter} type="radio"></div>
-                    </Col>
-                </Row>
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <div className={styles.loginFooter} type="radio"></div>
+                        </Col>
+                    </Row>
+                </Form>
             </div>
         </div>
     );

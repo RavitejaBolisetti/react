@@ -38,9 +38,6 @@ const mapStateToProps = (state) => {
         },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            CustomerMaster: {
-                customerMobileDetail: {isLoaded: isMoblieDataLoaded = false, isLoading, data: mobNoVerificationData, filter: filterString = {} }
-            }
         },
        
     } = state;
@@ -56,7 +53,6 @@ const mapStateToProps = (state) => {
         isCustomerIndDataLoading,
         customerIndData,
         
-        mobNoVerificationData,
     };
     return returnValue;
 };
@@ -76,14 +72,6 @@ const mapDispatchToProps = (dispatch) => ({
             resetIndividualData: customerDetailIndividualDataActions.reset,
 
 
-            fetchContactMobileNoDetails: customerMobileDetailsDataActions.fetchList,
-            listContactMobileNoShowLoading: customerMobileDetailsDataActions.listShowLoading,
-            resetContactMobileNoData: customerMobileDetailsDataActions.reset,
-            verifyUser: forgotPasswordActions.verifyUser,
-            sendOTP: forgotPasswordActions.sendOTP,
-            validateOTP: forgotPasswordActions.validateOTP,
-
-
             showGlobalNotification,
         },
         dispatch
@@ -94,17 +82,14 @@ const ContactMain = (props) => {
     const { form, section, userId, customerType, resetData, fetchContactDetailsList, customerData, customerIndData, listContactDetailsShowLoading, saveData, showGlobalNotification, typeData } = props;
     const { isCustomerIndDataLoading, isCustomerDataLoading, selectedCustomer, fetchContactIndividualDetailsList, saveIndividualData, resetIndividualData } = props;
     const { buttonData, setButtonData, formActionType, handleButtonClick, NEXT_ACTION } = props;
-    const { fetchContactMobileNoDetails, listContactMobileNoShowLoading, mobNoVerificationData, resetContactMobileNoData, sendOTP, validateOTP } = props;
 
     const [contactform] = Form.useForm();
     const [contactData, setContactData] = useState([]);
     const [showAddEditForm, setShowAddEditForm] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [editingData, setEditingData] = useState({});
-    const [continueWithOldMobNo, setContinueWithOldMobNo] = useState(false);
     const [isAdding, setIsAdding] = useState(false);
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
-    const [otpMessage, setOTPMessage] = useState();
 
 
     const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
@@ -198,7 +183,7 @@ const ContactMain = (props) => {
     const onCheckdefaultAddClick = (e, value) => {
         e.stopPropagation();
         setContactData((prev) => {
-            let updetedData = prev?.map((contact) => ({ ...contact, status: true, defaultContactIndicator: false, continueWith: continueWithOldMobNo }));
+            let updetedData = prev?.map((contact) => ({ ...contact, status: true, defaultContactIndicator: false, continueWith: false }));
             const index = updetedData?.findIndex((el) => el?.purposeOfContact === value?.purposeOfContact && el?.firstName === value?.firstName && el?.mobileNumber === value?.mobileNumber);
             updetedData.splice(index, 1, { ...value, defaultContactIndicator: e.target.checked });
             return [...updetedData];
@@ -236,7 +221,6 @@ const ContactMain = (props) => {
         onCheckdefaultAddClick,
         setButtonData,
         handleFormValueChange,
-        setContinueWithOldMobNo,
 
         customerType,
         isAdding,
@@ -244,15 +228,7 @@ const ContactMain = (props) => {
         buttonData,
 
         showGlobalNotification,
-        fetchContactMobileNoDetails,
-        listContactMobileNoShowLoading,
-        mobNoVerificationData,
-        resetContactMobileNoData,
-        sendOTP,
-        validateOTP,
         selectedCustomer,
-        otpMessage,
-        setOTPMessage,
     };
 
     const onFinish = () => {

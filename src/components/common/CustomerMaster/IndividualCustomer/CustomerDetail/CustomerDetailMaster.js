@@ -52,7 +52,7 @@ const mapStateToProps = (state) => {
         isCorporateLovDataLoaded,
         isCorporateLovLoading,
         corporateLovData,
-        mobNoVerificationData
+        mobNoVerificationData,
     };
     return returnValue;
 };
@@ -79,7 +79,6 @@ const mapDispatchToProps = (dispatch) => ({
             sendOTP: forgotPasswordActions.sendOTP,
             validateOTP: forgotPasswordActions.validateOTP,
 
-
             fetchList: customerDetailsIndividualDataActions.fetchList,
             listShowLoading: customerDetailsIndividualDataActions.listShowLoading,
             saveData: customerDetailsIndividualDataActions.saveData,
@@ -95,10 +94,10 @@ const mapDispatchToProps = (dispatch) => ({
 const CustomerDetailMasterBase = (props) => {
     const { setRefreshCustomerList, handleResetFilter, typeData, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData, fetchContactMobileNoDetails, listContactMobileNoShowLoading, resetContactMobileNoData } = props;
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, data, saveData, isLoading, resetData, form, handleFormValueChange, onFinishFailed } = props;
-    const { selectedCustomer, selectedCustomerId, setSelectedCustomerId,mobNoVerificationData } = props;
+    const { selectedCustomer, selectedCustomerId, setSelectedCustomerId, mobNoVerificationData } = props;
     const { buttonData, setButtonData, formActionType, setFormActionType, handleButtonClick, NEXT_ACTION } = props;
     const { fetchViewDocument, viewListShowLoading, listSupportingDocumentShowLoading, isSupportingDocumentDataLoaded, supportingData, isViewDataLoaded, viewDocument, hideGlobalNotification } = props;
-    const {sendOTP,validateOTP} = props;
+    const { sendOTP, validateOTP } = props;
     const [refreshData, setRefreshData] = useState(false);
     const [showForm, setShowForm] = useState(false);
     const [status, setStatus] = useState(null);
@@ -109,7 +108,6 @@ const CustomerDetailMasterBase = (props) => {
     const [editedMode, setEditedMode] = useState(false);
     const [uploadedFile, setUploadedFile] = useState();
     const [formData, setFormData] = useState();
-    const [continueWithOldMobNo, setContinueWithOldMobNo] = useState(false);
     const [uploadImgDocId, setUploadImgDocId] = useState('');
     const [customerNameList, setCustomerNameList] = useState({});
     const [supportingDataView, setSupportingDataView] = useState();
@@ -126,11 +124,6 @@ const CustomerDetailMasterBase = (props) => {
     const [counter, setCounter] = useState(RESEND_OTP_TIME);
     const [otpMessage, setOTPMessage] = useState();
     const [mobileNumber, setMobileNumber] = useState(false);
-    const [mobileChange, setMobileChange] = useState(false);
-
-
-
-    
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -225,7 +218,6 @@ const CustomerDetailMasterBase = (props) => {
     };
 
     const handleOnchangeMobNoInput = (event) => {
-        
         const Mno = event.target.value;
         const regex = new RegExp('^([5-9]){1}([0-9]){9}$');
         if (Mno?.length === 10 && regex.test(Mno)) {
@@ -247,7 +239,7 @@ const CustomerDetailMasterBase = (props) => {
         }
     };
     const onFinish = (values) => {
-        if(!numbValidatedSuccess && data?.mobileNumber !== values?.mobileNumber){
+        if (!numbValidatedSuccess && data?.mobileNumber !== values?.mobileNumber) {
             showGlobalNotification({ message: 'Please verify mobile number to proceed.' });
             return;
         }
@@ -255,7 +247,7 @@ const CustomerDetailMasterBase = (props) => {
         setEmptyList(false);
         setUploadedFile();
         let reqdata = { ...values, customerId: selectedCustomer?.customerId };
-        console.log(reqdata,'reqdata')
+        console.log(reqdata, 'reqdata');
 
         if (formActionType?.editMode) {
             const customerCurrentName = {
@@ -283,7 +275,6 @@ const CustomerDetailMasterBase = (props) => {
             setRefreshCustomerList(true);
             handleResetFilter();
             setNumbValidatedSuccess(false);
-
 
             if (res.data) {
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
@@ -379,7 +370,6 @@ const CustomerDetailMasterBase = (props) => {
         }
     };
 
-
     const formProps = {
         ...props,
         formActionType,
@@ -447,7 +437,6 @@ const CustomerDetailMasterBase = (props) => {
         fetchContactMobileNoDetails,
         listContactMobileNoShowLoading,
         selectedCustomer,
-        setContinueWithOldMobNo,
         resetContactMobileNoData,
         mobNoVerificationData,
         setInValidOTP,
