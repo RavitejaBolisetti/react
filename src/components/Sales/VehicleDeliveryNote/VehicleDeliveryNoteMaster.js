@@ -371,7 +371,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, deliveryStatus,filterString,  deliveryType, page]);
+    }, [userId, deliveryStatus, filterString, deliveryType, page]);
 
     useEffect(() => {
         const defaultSection = VEHICLE_DELIVERY_NOTE_SECTION.INVOICE_DETAILS.id;
@@ -841,7 +841,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         invoiceDetailForm,
         formActionType,
         setFormActionType,
-        deliveryNoteOnFinish: soldByDealer ? onFinish : onFinishChallan,
+        deliveryNoteOnFinish: onFinish,
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
