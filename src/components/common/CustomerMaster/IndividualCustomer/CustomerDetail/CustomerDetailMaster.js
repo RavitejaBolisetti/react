@@ -240,20 +240,22 @@ const CustomerDetailMasterBase = (props) => {
     const onViewHistoryChange = () => {
         setIsHistoryVisible(true);
     };
-
-    const onFinish = (values) => {
-        if(!numbValidatedSuccess){
-            showGlobalNotification({message: 'Please verify mobile number to proceed.'});
-            return;
-        }
+    const onSentOTP = (values) => {
         if (values) {
             hideGlobalNotification();
             handleSendOTP(values);
         }
+    };
+    const onFinish = (values) => {
+        if(!numbValidatedSuccess && data?.mobileNumber !== values?.mobileNumber){
+            showGlobalNotification({ message: 'Please verify mobile number to proceed.' });
+            return;
+        }
         setFileList([]);
         setEmptyList(false);
         setUploadedFile();
-        let data = { ...values, customerId: selectedCustomer?.customerId };
+        let reqdata = { ...values, customerId: selectedCustomer?.customerId };
+        console.log(reqdata,'reqdata')
 
         if (formActionType?.editMode) {
             const customerCurrentName = {
@@ -262,14 +264,14 @@ const CustomerDetailMasterBase = (props) => {
                 middleName: formData?.middleName,
                 lastName: formData?.lastName,
             };
-            data = { ...data, ...customerCurrentName, editMode: formActionType?.editMode };
+            reqdata = { ...reqdata, ...customerCurrentName, editMode: formActionType?.editMode };
 
             if (nameChangeRequested) {
-                data = { ...data, customerNameChangeRequest: customerNameList };
-                delete data.titleCodeNew;
-                delete data.firstNameNew;
-                delete data.middleNameNew;
-                delete data.lastNameNew;
+                reqdata = { ...reqdata, customerNameChangeRequest: customerNameList };
+                delete reqdata.titleCodeNew;
+                delete reqdata.firstNameNew;
+                delete reqdata.middleNameNew;
+                delete reqdata.lastNameNew;
             }
         }
 
@@ -309,7 +311,7 @@ const CustomerDetailMasterBase = (props) => {
         };
 
         const requestData = {
-            data: data,
+            data: reqdata,
             method: selectedCustomerId ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
@@ -466,6 +468,7 @@ const CustomerDetailMasterBase = (props) => {
         handleOnchangeMobNoInput,
         mobileNumber,
         setMobileNumber,
+        onSentOTP,
     };
 
     const viewProps = {

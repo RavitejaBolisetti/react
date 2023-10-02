@@ -20,7 +20,7 @@ import { withModal } from 'components/withModal';
 import style from 'components/Auth/Auth.module.scss';
 import styles from 'components/Auth/Auth.module.scss'
 const OtpVarificationModalMain = (props) => {
-    const { setInValidOTP, inValidOTP, counter, handleVerifyOTP, otpMessage, disableVerifyOTP, setDisableVerifyOTP, handleSendOTP, otpInput, setOTPInput } = props;
+    const { setInValidOTP, inValidOTP, counter, handleVerifyOTP, otpMessage, disableVerifyOTP, setDisableVerifyOTP, handleSendOTP, otpInput, setOTPInput, onSentOTP } = props;
     const handleOTPInput = (value) => {
         setOTPInput(value);
         setInValidOTP(false);
@@ -66,7 +66,7 @@ const OtpVarificationModalMain = (props) => {
                                 )}
                             </Col>
                             <Col xs={10} sm={10} md={8} lg={8} xl={8}>
-                                <div onClick={() => handleSendOTP()} className={counter ? style.resendDisabled : style.resendEnabled} type="radio">
+                                <div onClick={() => onSentOTP()} className={counter ? style.resendDisabled : style.resendEnabled} type="radio">
                                     <TbRefresh /> Resend OTP
                                 </div>
                             </Col>

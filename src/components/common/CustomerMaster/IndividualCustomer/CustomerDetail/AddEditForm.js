@@ -19,7 +19,7 @@ import { OtpVerification } from '../../Common/Contacts/OtpVerfication';
 const AddEditFormMain = (props) => {
     const { numbValidatedSuccess, setNumbValidatedSuccess} = props;
     const { whatsAppConfiguration, setWhatsAppConfiguration, handleFormFieldChange } = props;
-    const { form, typeData, formData, corporateLovData, formActionType: { editMode } = undefined, data, customerType, selectedCustomer, validateOTP, sendOTP, userId, showGlobalNotification, fetchContactMobileNoDetails, listContactMobileNoShowLoading, mobNoVerificationData, resetContactMobileNoData, continueWithOldMobNo, setContinueWithOldMobNo, RESEND_OTP_TIME, handleSendOTP, otpInput, setOTPInput, setDisableVerifyOTP, disableVerifyOTP, counter, setCounter, otpMessage, setOTPMessage, setInValidOTP, inValidOTP, handleOnchangeMobNoInput ,mobileNumber,setMobileNumber} = props;
+    const { form, typeData, formData, corporateLovData, formActionType: { editMode } = undefined, data, customerType, selectedCustomer, validateOTP, sendOTP, userId, showGlobalNotification, fetchContactMobileNoDetails, listContactMobileNoShowLoading, mobNoVerificationData, resetContactMobileNoData, continueWithOldMobNo, setContinueWithOldMobNo, RESEND_OTP_TIME, handleSendOTP, otpInput, setOTPInput, setDisableVerifyOTP, disableVerifyOTP, counter, setCounter, otpMessage, setOTPMessage, setInValidOTP, inValidOTP, handleOnchangeMobNoInput ,mobileNumber,setMobileNumber,onSentOTP} = props;
     const { contactOverWhatsApp, contactOverWhatsAppActive, sameMobileNoAsWhatsApp, sameMobileNoAsWhatsAppActive } = whatsAppConfiguration;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
@@ -236,6 +236,7 @@ const AddEditFormMain = (props) => {
         setDisableVerifyOTP,
         disableVerifyOTP,
         handleSendOTP,
+        onSentOTP,
     };
     const modalContinueProps = {
         isVisible: continueWithPreModalOpen,
