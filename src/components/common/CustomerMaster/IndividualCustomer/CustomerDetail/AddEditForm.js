@@ -169,7 +169,6 @@ const AddEditFormMain = (props) => {
                 }
                 setInValidOTP(true);
                 setDisableVerifyOTP(true);
-                // setSubmitButtonActive(true);
             };
             const requestData = {
                 data: data,
@@ -184,7 +183,7 @@ const AddEditFormMain = (props) => {
     const modalProps = {
         isVisible: isModalOpen,
         icon: <BiLockAlt />,
-        titleOverride: 'Mobile Number Validation',
+        titleOverride: 'Mobile Number Verification',
         closable: true,
         onCloseAction: handleCancel,
         handleVerifyOTP,

@@ -127,7 +127,6 @@ const AddEditFormMain = (props) => {
     };
     const handleVerifyOTP = () => {
         if (userId) {
-            // hideGlobalNotification();
             const data = { userId: selectedCustomer?.customerId,  mobileNumber:form.getFieldValue('mobileNumber'), otp: otpInput };
             const onSuccess = (res) => {
                 setValidationKey(res?.data?.validationKey);
@@ -158,10 +157,9 @@ const AddEditFormMain = (props) => {
     const modalProps = {
         isVisible: isModalOpen,
         icon: <BiLockAlt />,
-        titleOverride: 'Mobile Number Validation',
+        titleOverride: 'Mobile Number Verification',
         closable: true,
         onCloseAction: handleCancel,
-        // onOnContinueWithOldMobNo,
         handleVerifyOTP,
         sendOTPVerificationCode,
         otpInput,
@@ -182,34 +180,6 @@ const AddEditFormMain = (props) => {
         onSentOTP,
     };
 
-    // const handleNumberValidation = (event) => {
-    //     const Mno = event.target.value;
-    //     const regex = new RegExp('^([5-9]){1}([0-9]){9}$');
-    //     if (Mno?.length === 10 && regex.test(Mno)) {
-    //         setmobileLoader(true);
-    //         setTimeout(() => {
-    //             setIsModalOpen(true);
-    //         }, 1000);
-    //     } else {
-    //         setmobileLoader(false);
-    //     }
-    // };
-    // const showModal = () => {
-    //     setIsModalOpen(true);
-    // };
-
-    // const handleCancel = () => {
-    //     setIsModalOpen(false);
-    //     setmobileLoader(false);
-    // };
-
-    // const modalProps = {
-    //     isVisible: isModalOpen,
-    //     icon: <BiLockAlt />,
-    //     titleOverride: 'Mobile Number Validation',
-    //     closable: false,
-    //     onCloseAction: handleCancel,
-    // };
     return (
         <Space direction="vertical" size="small" style={{ display: 'flex' }}>
             <Card style={{ backgroundColor: '#F2F2F2' }}>
