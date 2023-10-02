@@ -77,7 +77,7 @@ const InsuranceDetailsMasterBase = (props) => {
     }, [insuranceData, section]);
 
     // useEffect(() => {
-    //     if (insuranceChallanData) {
+    //     if (insuranceChallanData && formActionType?.addMode && !soldByDealer) {
     //         setFormData(insuranceChallanData);
     //     }
     //     // eslint-disable-next-line react-hooks/exhaustive-deps

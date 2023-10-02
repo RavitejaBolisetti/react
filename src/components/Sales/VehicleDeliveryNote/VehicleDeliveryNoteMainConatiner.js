@@ -30,7 +30,7 @@ const VehicleDeliveryNoteConatinerMain = (props) => {
     const { requestPayload, setRequestPayload, challanRequestPayload, setChallanRequestPayload, deliveryType } = props;
 
     const onFinishCustom = ({ key, values }) => {
-        deliveryType === DELIVERY_TYPE?.NOTE?.key ? setRequestPayload({ ...requestPayload, [key]: values }) : setChallanRequestPayload({ ...requestPayload, [key]: values });
+        setRequestPayload({ ...requestPayload, [key]: values });
     };
     const requestData = deliveryType === DELIVERY_TYPE?.NOTE?.key ? requestPayload : challanRequestPayload;
     const myProps = {

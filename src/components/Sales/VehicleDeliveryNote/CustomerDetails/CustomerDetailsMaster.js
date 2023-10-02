@@ -26,7 +26,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             VehicleDeliveryNote: {
-                CustomerDetailsDeliveryNote: { isLoaded, isLoading, data: customerDetailsData = [] },
+                CustomerDetailsDeliveryNote: { isLoaded, isLoading, data: customerDetailsDataSearched = [] },
             },
         },
     } = state;
@@ -37,6 +37,7 @@ const mapStateToProps = (state) => {
         userId,
         isLoaded,
         // customerDetailsData,
+        customerDetailsDataSearched,
         isLoading,
         moduleTitle,
     };
@@ -57,9 +58,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const CustomerDetailsMasterBase = (props) => {
-    const { fetchList, customerDetailsData, setFormActionType, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, isLoading } = props;
+    const { fetchList, customerDetailsDataSearched, customerDetailsData, setFormActionType, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, isLoading } = props;
     const { requestPayload, setRequestPayload } = props;
-    const { listShowLoading, userId, typeData, form, selectedOrder, selectedCustomerId, soldByDealer, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section, customerIdValue, setCustomerIdValue, resetData } = props;
+    const { listShowLoading, userId, typeData, form, selectedOrder, selectedCustomerId, soldByDealer, challanRequestPayload, setChallanRequestPayload, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section, customerIdValue, setCustomerIdValue, resetData } = props;
     const { buttonData, setButtonData } = props;
 
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -71,12 +72,14 @@ export const CustomerDetailsMasterBase = (props) => {
     const [formData, setFormData] = useState();
 
     useEffect(() => {
-        if (customerDetailsData) {
-            form.setFieldsValue({ ...customerDetailsData, customerType: typeData?.[PARAM_MASTER?.CUST_TYPE?.id]?.find((customer) => customer?.key === customerDetailsData?.customerType)?.value });
-            setFormData({ ...customerDetailsData });
+        if (customerDetailsData || customerDetailsDataSearched) {
+            customerDetailsData && form.setFieldsValue({ ...customerDetailsData, customerType: typeData?.[PARAM_MASTER?.CUST_TYPE?.id]?.find((customer) => customer?.key === customerDetailsData?.customerType)?.value });
+            customerDetailsData && setFormData({ ...customerDetailsData });
+            customerDetailsDataSearched && form.setFieldsValue({ ...customerDetailsDataSearched, customerType: typeData?.[PARAM_MASTER?.CUST_TYPE?.id]?.find((customer) => customer?.key === customerDetailsDataSearched?.customerType)?.value });
+            customerDetailsDataSearched && setFormData({ ...customerDetailsDataSearched });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [customerDetailsData, section]);
+    }, [customerDetailsData, section, customerDetailsDataSearched]);
     useEffect(() => {
         setButtonData({ ...buttonData, formBtnActive: true });
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -146,7 +149,14 @@ export const CustomerDetailsMasterBase = (props) => {
         showGlobalNotification(message);
     };
     const onFinish = (values) => {
-        setRequestPayload({ ...requestPayload, customerDetails: customerDetailsData });
+        if (soldByDealer) {
+            setRequestPayload({ ...requestPayload, customerDetails: customerDetailsData });
+        } else {
+            setRequestPayload({ ...requestPayload, customerDetails: customerDetailsDataSearched });
+        }
+
+        setChallanRequestPayload({ ...challanRequestPayload, customerDetails: customerDetailsDataSearched });
+
         handleButtonClick({ buttonAction: NEXT_ACTION });
         setButtonData({ ...buttonData, formBtnActive: false });
     };

@@ -612,7 +612,16 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
 
     const onFinish = () => {
         const { insuranceDetails: insuranceDto, ...rest } = requestPayload;
-        const data = { ...rest, insuranceDto, vehicleDeliveryChecklist: { ...rest?.vehicleDeliveryCheckList }, invoiceNumber: selectedOrder?.invoicehdrId };
+        let data;
+        if (soldByDealer) {
+            data = { ...rest, insuranceDto, vehicleDeliveryChecklist: { ...rest?.vehicleDeliveryCheckList }, invoiceNumber: selectedOrder?.invoicehdrId };
+        } else {
+            data = { ...rest, insuranceDto, vehicleDeliveryChecklist: { ...rest?.vehicleDeliveryCheckList }, invoiceNumber: selectedOrder?.invoicehdrId, customerId: customerIdValue };
+            delete data?.vehicleDeliveryCheckList;
+            delete data?.deliveryNoteAddOnDetails;
+            delete data?.financeDetails;
+            delete data?.vehicleInformationDeliveyNoteDto;
+        }
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
@@ -631,7 +640,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
             userId,
             onError,
             onSuccess,
-            customURL,
+            customURL: soldByDealer ? customURL : customChallanURL,
         };
         saveData(requestData);
     };
