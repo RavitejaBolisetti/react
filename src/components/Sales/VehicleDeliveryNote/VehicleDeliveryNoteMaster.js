@@ -199,8 +199,14 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
     const [formData, setFormData] = useState([]);
+
     const onDeliveryTabChange = (key) => {
         setDeliveryType(key);
+        setPage((prev) => ({ ...prev, current: 1 }));
+        setFilterString({});
+        setFilterString((prev) => ({ ...prev, searchParam: '', current: 1 }));
+        advanceFilterForm.resetFields();
+        searchForm.resetFields();
     };
 
     const onSuccessAction = () => {
@@ -320,34 +326,34 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: filterString?.current,
+                value: filterString?.current || page?.current,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: filterString?.pageSize,
+                value: filterString?.pageSize || page?.pageSize,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'sortBy',
                 title: 'Sort By',
-                value: filterString?.sortBy,
+                value: page?.sortBy,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'sortIn',
                 title: 'Sort Type',
-                value: filterString?.sortType,
+                value: page?.sortType,
                 canRemove: true,
                 filter: false,
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [deliveryStatus, filterString, deliveryType]);
+    }, [deliveryStatus, filterString, deliveryType, page]);
 
     useEffect(() => {
         if (deliveryNoteMasterData && typeof deliveryNoteMasterData === 'object' && Object?.keys(deliveryNoteMasterData)?.length && isDeliveryDataLoaded) {
@@ -365,7 +371,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, deliveryStatus, filterString, deliveryType]);
+    }, [userId, deliveryStatus,filterString,  deliveryType, page]);
 
     useEffect(() => {
         const defaultSection = VEHICLE_DELIVERY_NOTE_SECTION.INVOICE_DETAILS.id;
@@ -500,7 +506,6 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     };
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
-        console.log('Delivery Note record', record);
         form.resetFields();
         form.setFieldsValue(undefined);
         switch (buttonAction) {
@@ -572,7 +577,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
 
     const handleResetFilter = (e) => {
         setShowDataLoading(false);
-        setFilterString();
+        setFilterString({});
         advanceFilterForm.resetFields();
     };
 
@@ -581,11 +586,9 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
-            // showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             setButtonData({ ...buttonData, formBtnActive: false });
             section && setCurrentSection(VEHICLE_DELIVERY_NOTE_SECTION.THANK_YOU_PAGE.id);
-            // setIsFormVisible(false);
             setSelectedOrder((prev) => ({ ...prev, responseMessage: res?.responseMessage }));
         };
         const onError = (message) => {
@@ -606,11 +609,9 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     const onFinish = () => {
         const { insuranceDetails: insuranceDto, ...rest } = requestPayload;
         const data = { ...rest, insuranceDto, vehicleDeliveryChecklist: { ...rest?.vehicleDeliveryCheckList }, invoiceNumber: selectedOrder?.invoicehdrId };
-        console.log('daaata', data);
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
-            // showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             setButtonData({ ...buttonData, formBtnActive: false });
             setSelectedOrder((prev) => ({ ...prev, responseMessage: res?.responseMessage }));
@@ -640,7 +641,6 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     };
 
     const onCloseAction = () => {
-        // resetData();
         resetDeliveryNoteMasterData();
         resetChallanInfoData();
         resetInfoData();
@@ -668,6 +668,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         dynamicPagination,
         totalRecords,
         setPage,
+        page,
         tableColumn: tableColumn({ handleButtonClick, actionButtonVisiblity }),
         tableData: data,
         showAddButton: false,
