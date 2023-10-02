@@ -91,6 +91,7 @@ export const CustomerDetailsMain = (props) => {
     useEffect(() => {
         if (userId && customerFormData) {
             setFormData(customerFormData);
+            setButtonData({ ...buttonData, formBtnActive: false });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, customerFormData]);
@@ -161,7 +162,8 @@ export const CustomerDetailsMain = (props) => {
                 const onError = (message) => {
                     showGlobalNotification({ message });
                 };
-
+                console.log('data', data);
+                return false;
                 const requestData = {
                     data: data,
                     method: 'put',
@@ -170,7 +172,7 @@ export const CustomerDetailsMain = (props) => {
                     onError,
                     onSuccess,
                 };
-                saveData(requestData);
+                // saveData(requestData);
             }
         }
     };
