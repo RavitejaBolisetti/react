@@ -65,7 +65,7 @@ const ViewDetailMain = (props) => {
                             <Descriptions {...viewProps} title={prepareCaption('Benefits')}>
                                 <Descriptions.Item label="Dealer Discount with TAX">{checkAndSetDefaultValue(formData?.discountAmount, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Consumer Scheme with TAX">{checkAndSetDefaultValue(formData?.taxAmount, isLoading)}</Descriptions.Item>
-                                {showPrintDiscount && <Descriptions.Item label="Print Discount">{formData?.printDiscount ? 'Yes' : 'No'}</Descriptions.Item>}
+                                {showPrintDiscount && <Descriptions.Item label="Print Discount">{formData?.printDiscount === 'Y' ? 'Yes' : 'No'}</Descriptions.Item>}
                             </Descriptions>
                         </Panel>
                     </Collapse>

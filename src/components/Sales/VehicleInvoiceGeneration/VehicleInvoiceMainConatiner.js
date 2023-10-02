@@ -12,7 +12,7 @@ import { LeftSidebar } from './LeftSidebar';
 import { InvoiceDetailsMaster } from './InvoiceDetails';
 
 import { InsuranceDetailsMaster } from 'components/Sales/VehicleInvoiceGeneration/InsuranceDetails';
-import { VehicleDetailsMaster } from 'components/Sales/VehicleInvoiceGeneration/VehicleDetails';
+import { VehicleDetailsMaster } from 'components/Sales/Common/VehicleDetails';
 import { SchemeDetailsMaster } from 'components/Sales/VehicleInvoiceGeneration/SchemeDetails';
 import { FinananceDetailsMaster } from 'components/Sales/VehicleInvoiceGeneration/FinananceDetails';
 import { ExchangeVehiclesMaster } from 'components/Sales/VehicleInvoiceGeneration/ExchangeVehicles';
@@ -23,6 +23,7 @@ import { ThankYouMaster } from 'components/Sales/VehicleInvoiceGeneration/ThankY
 import { VehicleInvoiceFormButton } from './VehicleInvoiceFormButton';
 
 import styles from 'assets/sass/app.module.scss';
+import { SALES_MODULE_TYPE } from 'constants/salesModuleType';
 
 const VehicleInvoiceMainConatinerMain = (props) => {
     const { currentSection, handleIRNGeneration, selectedOtfNumber, requestPayload, setRequestPayload } = props;
@@ -34,6 +35,7 @@ const VehicleInvoiceMainConatinerMain = (props) => {
     const myProps = {
         ...props,
         wrapForm: false,
+        salesModuleType: SALES_MODULE_TYPE.INVOICE.KEY,
         handleIRNGeneration,
         onFinishCustom,
         selectedOrderId: selectedOtfNumber,
@@ -47,7 +49,7 @@ const VehicleInvoiceMainConatinerMain = (props) => {
                 return <InvoiceDetailsMaster {...myProps} />;
             }
             case VEHICLE_INVOICE_SECTION.VEHICLE_DETAILS.id: {
-                return <VehicleDetailsMaster {...myProps} formData={requestPayload?.vehicleDetails} formKey={'vehicleDetails'} />;
+                return <VehicleDetailsMaster {...myProps} showPrintDiscount={true} vehicleDetailDataPass={requestPayload?.vehicleDetails} formKey={'vehicleDetails'} />;
             }
             case VEHICLE_INVOICE_SECTION.SCHEME_OFFER_DETAILS.id: {
                 return <SchemeDetailsMaster {...myProps} formData={requestPayload?.schemeOfferDetails} formKey={'schemeOfferDetails'} />;

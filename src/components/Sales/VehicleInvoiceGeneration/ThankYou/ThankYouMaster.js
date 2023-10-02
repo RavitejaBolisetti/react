@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { Row, Col, Space, Avatar, Typography, Card, Button, Divider } from 'antd';
+import { Row, Col, Space, Avatar, Typography, Card, Button, Divider, Popover } from 'antd';
 import { LANGUAGE_EN } from 'language/en';
 import { HiCheck } from 'react-icons/hi';
 import styles from 'assets/sass/app.module.scss';
@@ -13,14 +13,12 @@ import { CopytoClipboard } from 'utils/CopytoClipboard';
 const { Title, Text } = Typography;
 
 export const ThankYouMaster = (props) => {
-    const { FormActionButton, selectedOrderId, onPrintInvoice } = props;
-
+    const { FormActionButton, selectedOrder, onPrintInvoice, defaultBtnVisiblity } = props;
     const title = LANGUAGE_EN.GENERAL.THANK_YOU_PAGE_INVOICE.TITLE;
 
     const myProps = {
         ...props,
-
-        buttonData: { ...props.defaultBtnVisiblity, closeBtn: true },
+        buttonData: { ...defaultBtnVisiblity, closeBtn: true },
     };
 
     return (
@@ -41,9 +39,9 @@ export const ThankYouMaster = (props) => {
                             <Col className={styles.fullyCentered} style={{ flexDirection: 'column', height: '222px' }}>
                                 <Space align="center" justify="center">
                                     <Space style={{ backgroundColor: '#F2F2F2', padding: '10px 16px', color: '#858585', borderRadius: '4px' }}>
-                                        Invoice No.:<span style={{ color: '#0B0B0C' }}>{selectedOrderId}</span>
+                                        Invoice No.:<span style={{ color: '#0B0B0C' }}>{selectedOrder?.invoiceNumber}</span>
                                     </Space>
-                                    <CopytoClipboard type={'primary'} buttonText={'Copy'} text={selectedOrderId} />
+                                    <CopytoClipboard type={'primary'} buttonText={'Copy'} text={selectedOrder?.invoiceNumber} />
                                 </Space>
                                 <Divider style={{ margin: '18px 0' }} />
                                 <Text style={{ color: '#858585', fontWeight: '500' }}>Do you want to Print or download this invoice </Text>
@@ -56,7 +54,7 @@ export const ThankYouMaster = (props) => {
                                             <path d="M7.64062 1.75V5.425H11.3156" stroke="#FF3E5B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                         </svg>
                                     }
-                                    onClick={onPrintInvoice}
+                                    onClick={() => onPrintInvoice(selectedOrder)}
                                 >
                                     Download/Print Invoices
                                 </Button>
@@ -73,7 +71,9 @@ export const ThankYouMaster = (props) => {
                                     <>
                                         <Row style={{ margin: '0 16px' }} justify="space-between" align="middle">
                                             <Text style={{ color: '#545454', fontWeight: '400' }}>{name?.title}</Text>
-                                            <Button type="secondary">Register Now</Button>
+                                            <Popover content={'Coming Soon'}>
+                                                <Button type="secondary">Register Now</Button>
+                                            </Popover>
                                         </Row>
                                         <Divider style={{ margin: '0' }} />
                                     </>

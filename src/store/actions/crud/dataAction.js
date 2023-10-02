@@ -61,12 +61,12 @@ export const dataActions = (params) => {
 
     const innerDataActions = {
         fetchList: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-            const { customURL = '', setIsLoading, data, type = '', mytype = '', tempRespone = false, onSuccessAction = undefined, onErrorAction = undefined, extraParams = [] } = params;
+            const { customURL = '', setIsLoading, data, type = '', mytype = '', tempRespone = false, onSuccessAction = undefined, onErrorAction = undefined, extraParams = [], resetOnError = true } = params;
             setIsLoading(true);
 
             const onError = (message) => {
                 onErrorAction && onErrorAction(message);
-                dispatch(recieveData([]));
+                resetOnError && dispatch(recieveData([]));
             };
 
             const onSuccess = (res) => {
@@ -74,7 +74,7 @@ export const dataActions = (params) => {
                     onSuccessAction && onSuccessAction(res);
                     dispatch(recieveData(type ? res?.data?.hierarchyAttribute : res?.data));
                 } else {
-                    dispatch(recieveData([]));
+                    resetOnError && dispatch(recieveData([]));
                     // onErrorAction(res?.responseMessage || LANGUAGE_EN.INTERNAL_SERVER_ERROR);
                 }
             };
