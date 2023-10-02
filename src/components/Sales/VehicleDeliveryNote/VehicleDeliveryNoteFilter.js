@@ -43,17 +43,6 @@ export default function VehicleDeliveryNoteFilter(props) {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form autoComplete="off" colon={false} className={styles.masterListSearchForm}>
                         <Row gutter={20}>
-                            {/* <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.verticallyCentered}>
-                                <Tabs
-                                    defaultActiveKey={DELIVERY_TYPE.NOTE.key}
-                                    activeKey={deliveryType}
-                                    onChange={onDeliveryTabChange}
-                                    items={Object.values(DELIVERY_TYPE)?.map((item) => ({
-                                        key: item?.key,
-                                        label: <>{item?.title}</>,
-                                    }))}
-                                />
-                            </Col> */}
                             <Col xs={24} sm={24} md={18} lg={18} xl={18} className={styles.verticallyCentered}>
                                 <QueryButtons currentItem={deliveryStatus} items={deliveryStatusList} onClick={handleDeliveryNoteTypeChange} />
                                 <div className={styles.fullWidth}>

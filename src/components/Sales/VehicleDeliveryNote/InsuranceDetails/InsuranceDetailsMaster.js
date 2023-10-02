@@ -76,12 +76,12 @@ const InsuranceDetailsMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [insuranceData, section]);
 
-    useEffect(() => {
-        if (insuranceChallanData) {
-            setFormData(insuranceChallanData);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [insuranceChallanData]);
+    // useEffect(() => {
+    //     if (insuranceChallanData && formActionType?.addMode && !soldByDealer) {
+    //         setFormData(insuranceChallanData);
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [insuranceChallanData]);
     useEffect(() => {
         setButtonData({ ...buttonData, formBtnActive: true });
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -111,20 +111,20 @@ const InsuranceDetailsMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);
 
-    useEffect(() => {
-        if (userId && record && !soldByDealer) {
-            const extraParams = [
-                {
-                    key: 'invoiceNumber',
-                    title: 'invoiceNumber',
-                    value: record?.invoiceId,
-                    name: 'Invoice ID',
-                },
-            ];
-            fetchChallanInsuranceList({ setIsLoading: listChallanInsuranceShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, record?.invoiceId]);
+    // useEffect(() => {
+    //     if (userId && record && !soldByDealer) {
+    //         const extraParams = [
+    //             {
+    //                 key: 'invoiceNumber',
+    //                 title: 'invoiceNumber',
+    //                 value: record?.invoiceId,
+    //                 name: 'Invoice ID',
+    //             },
+    //         ];
+    //         fetchChallanInsuranceList({ setIsLoading: listChallanInsuranceShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [userId, record?.invoiceId]);
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message: message });
