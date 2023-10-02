@@ -66,7 +66,7 @@ const mapDispatchToProps = (dispatch) => ({
 const OTFAllotmentMasterBase = (props) => {
     const { listShowLoading, userId } = props;
     const { fetchVehicleAllotmentSearchedList, allotmentSearchedList, productHierarchyData } = props;
-    const { typeData, showGlobalNotification, saveData, setIsAllotVisible, setRefreshData, setIsFormVisible } = props;
+    const { typeData, showGlobalNotification, saveData, setIsAllotVisible, refreshData, setRefreshData, setIsFormVisible, setShowDataLoading: setShowOTFDataLoading } = props;
     const { filterString, setFilterString } = props;
 
     const { selectedOrder, moduleTitle } = props;
@@ -201,30 +201,20 @@ const OTFAllotmentMasterBase = (props) => {
             updatedStatus = VEHICLE_TYPE?.UNALLOTED.key;
         }
 
-        // let data = { ...allotmentSummaryDetails, vehicleOTFDetails: selectedOTFDetails, allotmentStatus: updatedStatus };
-
-        const { otfId, otfNumber } = selectedOrder;
+        const { otfId, otfNumber, bookingNumber = undefined } = selectedOrder;
         const { vehicleIdentificationNumber } = selectedVINDetails;
 
-        // let data = { ...allotmentSummaryDetails, vehicleOTFDetails: selectedOTFDetails, allotmentStatus: updatedStatus };
-        let data = { otfId, otfNumber, allotmentStatus: updatedStatus, vehicleIdentificationNumber };
+        let data = { otfId, otfNumber, bookingNumber, allotmentStatus: updatedStatus, vehicleIdentificationNumber };
 
         const onSuccess = (res) => {
-            handleResetFilter();
-            setShowDataLoading(true);
-            setIsAllotVisible(false);
-            setSelectedOrderVINDetails();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            //fetchVehicleAllotmentSearchedList({ customURL: customURL + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-            setButtonData({ ...buttonData, formBtnActive: false });
+            setShowOTFDataLoading(true);
+            setRefreshData(!refreshData);
+            setIsAllotVisible(false);
             setIsFormVisible(false);
-            setRefreshData();
-            //setIsFormVisible(false);
-
-            // setConfirmRequest({
-            //     ...confirmRequest,
-            //     isVisible: false,
-            // });
+            handleResetFilter();
+            setSelectedOrderVINDetails();
+            setButtonData({ ...buttonData, formBtnActive: false });
         };
 
         const onError = (message) => {
@@ -245,10 +235,9 @@ const OTFAllotmentMasterBase = (props) => {
     };
 
     const handleResetFilter = (e) => {
-        const { pageSize } = filterString;
         setSearchParamValue();
         setShowDataLoading(true);
-        setFilterString({ pageSize, current: 1 });
+        setFilterString({ pageSize: 10, current: 1 });
         setSelectedOrderVINDetails();
     };
 

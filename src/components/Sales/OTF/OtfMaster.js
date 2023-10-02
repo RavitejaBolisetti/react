@@ -321,14 +321,13 @@ export const OtfMasterBase = (props) => {
             return false;
         }
 
-        const { otfId, otfNumber } = record;
-        //const { vinnumber } = VehicleDetailsData;
+        const { otfId, otfNumber, bookingNumber = undefined } = record;
+        let data = { otfId, otfNumber, bookingNumber, allotmentStatus: updatedStatus, vehicleIdentificationNumber: vinNumber };
 
-        let data = { otfId, otfNumber, allotmentStatus: updatedStatus, vehicleIdentificationNumber: vinNumber };
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
-            setRefreshData(true);
+            setRefreshData(!refreshData);
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             setButtonData({ ...buttonData, formBtnActive: false });
             setIsFormVisible(false);
@@ -340,7 +339,7 @@ export const OtfMasterBase = (props) => {
         };
 
         const onError = (message) => {
-            // showGlobalNotification({ message });
+            showGlobalNotification({ message });
         };
 
         const requestData = {
@@ -469,7 +468,7 @@ export const OtfMasterBase = (props) => {
         };
 
         const onError = (message) => {
-            // showGlobalNotification({ message });
+            showGlobalNotification({ message });
         };
 
         const requestData = {
@@ -772,8 +771,10 @@ export const OtfMasterBase = (props) => {
         isVisible: isAllotVisible,
         setIsAllotVisible,
         onCloseAction: onCancelCloseAction,
+        refreshData,
         setRefreshData,
         setIsFormVisible,
+        setShowDataLoading,
     };
 
     return (

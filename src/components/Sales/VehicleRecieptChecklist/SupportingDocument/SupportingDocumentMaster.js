@@ -206,6 +206,7 @@ const SupportingDocumentBase = (props) => {
     const myProps = {
         ...props,
         buttonData: { ...props.buttonData, formBtnActive: true },
+        saveButtonName: 'Submit',
     };
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>

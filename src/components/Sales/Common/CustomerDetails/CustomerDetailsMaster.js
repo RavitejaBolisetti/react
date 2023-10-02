@@ -153,7 +153,7 @@ export const CustomerDetailsMain = (props) => {
                 };
 
                 const onError = (message) => {
-                    // showGlobalNotification({ message });
+                    showGlobalNotification({ message });
                 };
 
                 const requestData = {

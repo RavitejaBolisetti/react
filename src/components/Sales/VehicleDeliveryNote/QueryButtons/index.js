@@ -3,6 +3,6 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { QUERY_BUTTONS as QUERY_BUTTONS_CONSTANTS } from './QueryButtonConstants';
+import { QUERY_BUTTONS as QUERY_BUTTONS_CONSTANTS, DELIVERY_NOTE_MESSAGE_CONSTANTS } from './QueryButtonConstants';
 
-export { QUERY_BUTTONS_CONSTANTS };
+export { QUERY_BUTTONS_CONSTANTS, DELIVERY_NOTE_MESSAGE_CONSTANTS };
