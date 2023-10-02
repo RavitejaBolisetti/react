@@ -18,15 +18,14 @@ import styles from 'assets/sass/app.module.scss';
 import { validateRequiredInputField } from 'utils/validation';
 
 export const AddRequestModalForm = (props) => {
-    const { setAddRequestVisible, typeData } = props;
+    const { setAddRequestVisible, onAdvanceSearchCloseAction } = props;
     const { filterString, setFilterString, advanceFilterForm, handleResetFilter } = props;
 
-    useEffect(() => {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString]);
+    // useEffect(() => {
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [filterString]);
 
     const onFinish = (values) => {
-        console.log('values', values);
         setFilterString({
             ...filterString,
             ...values,
@@ -79,15 +78,18 @@ export const AddRequestModalForm = (props) => {
             </Row>
 
             <Row gutter={20}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
+                {/* <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.alignRight}>
                     <Button onClick={handleResetFilter} danger>
                         Reset
                     </Button>
-                </Col>
+                </Col> */}
 
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.alignRight}>
+                    <Button onClick={onAdvanceSearchCloseAction} danger>
+                        Cancel
+                    </Button>
                     <Button htmlType="submit" type="primary">
-                        Apply
+                        Add
                     </Button>
                 </Col>
             </Row>

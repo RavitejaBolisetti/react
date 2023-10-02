@@ -19,20 +19,10 @@ const { Search } = Input;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { formData, invoiceDetailForm, formActionType, setAddRequestVisible, addRequestVisible } = props;
+    const { formData, invoiceDetailForm, formActionType } = props;
     const [chargerDetails, setChargerDetails] = useState(false);
     const [activeKey, setActiveKey] = useState([]);
-
-    useEffect(() => {
-        if (formData) {
-            invoiceDetailForm?.setFieldsValue({
-                formData: formData,
-                bookingCustomer: { ...formData?.bookingCustomer, birthDate: convertDateToCalender(formData?.bookingCustomer?.birthDate) },
-                billingCustomer: { ...formData?.billingCustomer, birthDate: convertDateToCalender(formData?.billingCustomer?.birthDate) },
-            });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData]);
+    const [addRequestVisible, setAddRequestVisible] = useState(false);
 
     const viewProps = {
         bordered: false,
@@ -68,8 +58,13 @@ const AddEditFormMain = (props) => {
     const addRequestProps = {
         isVisible: addRequestVisible,
         icon: <FilterIcon size={20} />,
-        titleOverride: 'Advance Filters',
-        onCloseAction: onAdvanceSearchCloseAction(),
+        titleOverride: 'Add Request',
+        onCloseAction: onAdvanceSearchCloseAction,
+        onAdvanceSearchCloseAction,
+    };
+
+    const handleAddRequestChange = () => {
+        setAddRequestVisible(true);
     };
 
     return (
@@ -116,13 +111,7 @@ const AddEditFormMain = (props) => {
                                                     <Typography>Add Request</Typography>
 
                                                     {!formActionType?.viewMode && (
-                                                        <Button
-                                                            type="primary"
-                                                            onClick={() => {
-                                                                setAddRequestVisible(true);
-                                                            }}
-                                                            icon={<PlusOutlined />}
-                                                        >
+                                                        <Button type="primary" onClick={handleAddRequestChange} icon={<PlusOutlined />}>
                                                             Add
                                                         </Button>
                                                     )}

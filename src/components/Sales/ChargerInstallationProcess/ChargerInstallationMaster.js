@@ -142,7 +142,6 @@ export const VehicleInvoiceMasterBase = (props) => {
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [addRequestVisible, setAddRequestVisible] = useState(false);
     const [irnStatusData, setIrnStatusData] = useState();
     const [additionalReportParams, setAdditionalReportParams] = useState();
     const [isReportVisible, setReportVisible] = useState();
@@ -271,11 +270,11 @@ export const VehicleInvoiceMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, chargerStatus, filterString, page]);
-    useEffect(() => {
-        if (Object?.keys(vehicleInvoiceMasterData)?.length) {
-            setRequestPayload({ invoiceDetails: { bookingAndBillingCustomerDto: { ...vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto }, otfDetailsRequest: vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest }, vehicleDetails: vehicleInvoiceMasterData?.vehicleDetails, financeDetails: vehicleInvoiceMasterData?.financeDetails, insuranceDetails: vehicleInvoiceMasterData?.insuranceDetails });
-        }
-    }, [vehicleInvoiceMasterData]);
+    // useEffect(() => {
+    //     if (Object?.keys(vehicleInvoiceMasterData)?.length) {
+    //         setRequestPayload({ invoiceDetails: { bookingAndBillingCustomerDto: { ...vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto }, otfDetailsRequest: vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest }, vehicleDetails: vehicleInvoiceMasterData?.vehicleDetails, financeDetails: vehicleInvoiceMasterData?.financeDetails, insuranceDetails: vehicleInvoiceMasterData?.insuranceDetails });
+    //     }
+    // }, [vehicleInvoiceMasterData]);
 
     useEffect(() => {
         const defaultSection = CHARGER_INSTALLATION_SECTION.CHARGER_DETAILS.id;
@@ -668,8 +667,6 @@ export const VehicleInvoiceMasterBase = (props) => {
         handleIRNGeneration,
         handleBookingNumberSearch,
         vehicleInvoiceMasterData,
-        addRequestVisible,
-        setAddRequestVisible,
     };
 
     const reportDetail = EMBEDDED_REPORTS?.INVOICE_DOCUMENT;

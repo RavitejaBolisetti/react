@@ -51,7 +51,7 @@ const InvoiceDetailsMasterBase = (props) => {
         setButtonData({ ...buttonData, formBtnActive: false });
     };
 
-    const onFinishFailed = () => { };
+    const onFinishFailed = () => {};
 
     const formProps = {
         ...props,
