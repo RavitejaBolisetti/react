@@ -26,7 +26,7 @@ import styles from 'assets/sass/app.module.scss';
 import { ThankYouMaster } from './ThankYou';
 
 const VehicleDeliveryNoteConatinerMain = (props) => {
-    const { currentSection, selectedOtfNumber, selectedOrderId } = props;
+    const { currentSection, selectedOtfNumber, selectedOrderId, soldByDealer } = props;
     const { requestPayload, setRequestPayload, challanRequestPayload, setChallanRequestPayload, deliveryType } = props;
 
     const onFinishCustom = ({ key, values }) => {
@@ -41,16 +41,18 @@ const VehicleDeliveryNoteConatinerMain = (props) => {
         selectedInvoiceId: selectedOrderId,
     };
 
+    console.log('requestData', requestData);
+
     const renderElement = () => {
         switch (currentSection) {
             case VEHICLE_DELIVERY_NOTE_SECTION.INVOICE_DETAILS.id: {
-                return <InvoiceDetailsMaster {...myProps} invoiceData={requestData?.deliveryNoteInvoiveDetails} />;
+                return <InvoiceDetailsMaster {...myProps} invoiceData={soldByDealer ? requestData?.deliveryNoteInvoiveDetails : requestData?.engineDetailDto} />;
             }
             case VEHICLE_DELIVERY_NOTE_SECTION.CUSTOMER_DETAILS.id: {
                 return <CustomerDetailsMaster {...myProps} customerDetailsData={requestData?.customerDetails} />;
             }
             case VEHICLE_DELIVERY_NOTE_SECTION.VEHICLE_DETAILS.id: {
-                return <VehicleDetailsMaster {...myProps} vehicleData={requestData?.vehicleDetails} />;
+                return <VehicleDetailsMaster {...myProps} vehicleData={soldByDealer ? requestData?.vehicleDetails : requestData?.vehicleInformationDto} />;
             }
 
             case VEHICLE_DELIVERY_NOTE_SECTION.FINANCE_DETAILS.id: {

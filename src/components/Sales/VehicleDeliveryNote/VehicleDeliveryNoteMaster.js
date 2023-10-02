@@ -24,7 +24,7 @@ import { cancelVehicleDeliveryNoteDataActions } from 'store/actions/data/vehicle
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { VEHICLE_DELIVERY_NOTE_SECTION } from 'constants/vehicleDeliveryNoteSection';
-import { BASE_URL_VEHICLE_DELIVERY_NOTE_GENERATE as customURL, BASE_URL_VEHICLE_DELIVERY_NOTE_CHALLAN_GENERATE as customChallanURL, BASE_URL_VEHICE_DELIVERY_NOTE_MASTER_DATA } from 'constants/routingApi';
+import { BASE_URL_VEHICLE_DELIVERY_NOTE_GENERATE as customURL, BASE_URL_VEHICLE_DELIVERY_NOTE_CHALLAN_GENERATE as customChallanURL, BASE_URL_VEHICE_DELIVERY_NOTE_MASTER_DATA, BASE_URL_VEHICE_DELIVERY_NOTE_CHALLAN_MASTER_DATA } from 'constants/routingApi';
 
 import { FilterIcon } from 'Icons';
 import VehicleDeliveryNoteFilter from './VehicleDeliveryNoteFilter';
@@ -467,7 +467,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     const handleSearch = (value) => {
         setFilterString({ ...filterString, searchParam: value });
     };
-    const handleDeliveryNoteDataCall = (invoicehdrId = '', deliveryHdrId = '', buttonAction = ADD_ACTION) => {
+    const handleDeliveryNoteDataCall = (invoicehdrId = '', deliveryHdrId = '', buttonAction = ADD_ACTION, soldByDealer = true) => {
         switch (buttonAction) {
             case ADD_ACTION: {
                 if (!invoicehdrId) {
@@ -484,6 +484,10 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
                 break;
             }
         }
+        let deliveryURL = BASE_URL_VEHICE_DELIVERY_NOTE_MASTER_DATA;
+        if (!soldByDealer) {
+            deliveryURL = BASE_URL_VEHICE_DELIVERY_NOTE_CHALLAN_MASTER_DATA;
+        }
         const deliveryParams = [
             {
                 key: 'invoiceHdrId',
@@ -496,11 +500,10 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
                 name: 'Delivery note id',
             },
         ];
-        fetchDeliveryNoteMasterData({ customURL: BASE_URL_VEHICE_DELIVERY_NOTE_MASTER_DATA, setIsLoading: listShowLoading, userId, onSuccessAction, extraParams: deliveryParams, onErrorAction });
+        fetchDeliveryNoteMasterData({ customURL: deliveryURL, setIsLoading: listShowLoading, userId, onSuccessAction, extraParams: deliveryParams, onErrorAction });
     };
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
-        console.log('Delivery Note record', record);
         form.resetFields();
         form.setFieldsValue(undefined);
         switch (buttonAction) {
@@ -508,7 +511,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
                 defaultSection && setCurrentSection(defaultSection);
                 invoiceDetailForm.resetFields();
                 setpreviousSection(1);
-                handleDeliveryNoteDataCall(record?.invoicehdrId);
+                record?.vehicleSoldByDealer && handleDeliveryNoteDataCall(record?.invoicehdrId, '', ADD_ACTION, record?.vehicleSoldByDealer);
                 record && setSelectedOrderId(record?.invoiceId);
                 record && setSelectedOtfNumber(record?.otfNumber);
                 record && setSelectedCustomerId(record?.customerId);
@@ -517,7 +520,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
                 break;
             case EDIT_ACTION:
                 setSelectedOrder(record);
-                handleDeliveryNoteDataCall(record?.invoicehdrId, record?.deliveryHdrId, EDIT_ACTION);
+                handleDeliveryNoteDataCall(record?.invoicehdrId, record?.deliveryHdrId, EDIT_ACTION, record?.vehicleSoldByDealer);
                 record && setSelectedOrderId(record?.invoiceId);
                 record && setSelectedOtfNumber(record?.otfNumber);
                 openDefaultSection && setCurrentSection(defaultSection);
@@ -525,7 +528,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
                 break;
             case VIEW_ACTION:
                 setSelectedOrder(record);
-                handleDeliveryNoteDataCall(record?.invoicehdrId, record?.deliveryHdrId, EDIT_ACTION);
+                handleDeliveryNoteDataCall(record?.invoicehdrId, record?.deliveryHdrId, VIEW_ACTION, record?.vehicleSoldByDealer);
                 record && setSoldByDealer(record?.vehicleSoldByDealer);
                 record && setSelectedOrderId(record?.invoiceId);
                 record && setSelectedOtfNumber(record?.otfNumber);
@@ -840,7 +843,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(moduleTitle),
+        titleOverride: drawerTitle.concat(soldByDealer ? moduleTitle : 'Challan'),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,

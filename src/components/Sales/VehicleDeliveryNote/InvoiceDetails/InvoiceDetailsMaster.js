@@ -94,7 +94,6 @@ export const InvoiceDetailsMasterBase = (props) => {
 
     const { typeData, form, selectedOrderId, selectedInvoiceId, requestPayload, setRequestPayload, soldByDealer, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section, resetData, engineNumberData, chassisNoValue, setChassisNoValue, challanInvoiceDetailsDataLoaded, challanInvoiceDetailsLoading, challanInvoiceDetail, fetchInvoiceChallan, listChallanInvoiceShowLoading } = props;
     const { buttonData, setButtonData } = props;
-    const [isFormVisible, setIsFormVisible] = useState(false);
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -107,7 +106,7 @@ export const InvoiceDetailsMasterBase = (props) => {
     };
     console.log('invoiceDatainvoiceData', invoiceData, buttonData);
     useEffect(() => {
-        if (invoiceData && soldByDealer) {
+        if (invoiceData) {
             form.setFieldsValue({ ...invoiceData, invoiceDate: formattedCalendarDate(invoiceData?.invoiceDate), customerPromiseDate: formattedCalendarDate(invoiceData?.customerPromiseDate) });
             setFormData({ ...invoiceData });
         }
@@ -156,7 +155,7 @@ export const InvoiceDetailsMasterBase = (props) => {
     // }, [userId, selectedInvoiceId, soldByDealer]);
 
     // useEffect(() => {
-    //     if (challanInvoiceDetailsDataLoaded && challanInvoiceDetail && !soldByDealer) {
+    //     if (!soldByDealer) {
     //         setFormData({ ...challanInvoiceDetail });
     //         setChassisNoValue(challanInvoiceDetail?.chassisNumber);
     //     }
@@ -215,11 +214,6 @@ export const InvoiceDetailsMasterBase = (props) => {
         form.setFieldValue('relationShipManagerCode', value?.children);
     };
 
-    const onCloseAction = () => {
-        form.resetFields();
-        setIsFormVisible(false);
-    };
-
     const formProps = {
         ...props,
         typeData,
@@ -230,12 +224,9 @@ export const InvoiceDetailsMasterBase = (props) => {
         setFormActionType,
         onFinish,
         onFinishFailed,
-        isVisible: isFormVisible,
-        onCloseAction,
         isRelationshipManagerLoaded,
         fetchRelationshipManger,
         listRelationshipMangerShowLoading,
-
         ADD_ACTION,
         EDIT_ACTION,
         VIEW_ACTION,

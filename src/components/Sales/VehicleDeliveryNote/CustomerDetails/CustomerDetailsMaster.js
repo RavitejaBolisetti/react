@@ -71,7 +71,7 @@ export const CustomerDetailsMasterBase = (props) => {
     const [formData, setFormData] = useState();
 
     useEffect(() => {
-        if (customerDetailsData && soldByDealer) {
+        if (customerDetailsData) {
             form.setFieldsValue({ ...customerDetailsData, customerType: typeData?.[PARAM_MASTER?.CUST_TYPE?.id]?.find((customer) => customer?.key === customerDetailsData?.customerType)?.value });
             setFormData({ ...customerDetailsData });
         }

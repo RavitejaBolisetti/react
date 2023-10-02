@@ -156,13 +156,9 @@ const VehicleDetailsMasterBase = (props) => {
             form.setFieldsValue({ ...vehicleData });
             setFormData({ ...vehicleData });
         }
-        if (vehicleChallanData && !soldByDealer) {
-            form.setFieldsValue({ ...vehicleChallanData });
-            setFormData({ ...vehicleChallanData });
-        }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [vehicleData, vehicleChallanData, soldByDealer]);
+    }, [vehicleData, soldByDealer]);
     useEffect(() => {
         setButtonData({ ...buttonData, formBtnActive: true });
         // eslint-disable-next-line react-hooks/exhaustive-deps
