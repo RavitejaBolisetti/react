@@ -6,11 +6,10 @@
 import React, { useState } from 'react';
 import { Col, Row, Collapse, Card, Divider, Typography, Descriptions } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-
-import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { NoDataFound } from 'utils/noDataFound';
+
+import styles from 'assets/sass/app.module.scss';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
