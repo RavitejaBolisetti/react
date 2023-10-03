@@ -80,7 +80,6 @@ const CancellationMasterBase = (props) => {
 
     const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
     const handleButtonClick = ({ record = null, buttonAction }) => {};
-
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
@@ -121,6 +120,10 @@ const CancellationMasterBase = (props) => {
                 {
                     key: 'searchParam',
                     value: searchDealerValue,
+                },
+                {
+                    key: 'modelCode',
+                    value: selectedOrder?.modelCode,
                 },
             ];
             fetchDealerList({ customURL, setIsLoading: listShowLoading, extraParams, onErrorAction });

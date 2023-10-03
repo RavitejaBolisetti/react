@@ -339,3 +339,4 @@ export const BASE_URL_VEHICLE_INVOICE_GENERATION_PROFILE_CARD = BASE_URL_OTF + '
 export const BASE_URL_VIN_BLOCK_MASTER = BASE_URL_VEHICLE + 'vinbolckmaster/search';
 export const BASE_URL_VIN_BLOCK_VIEWMASTER = BASE_URL_VEHICLE + 'vinbolckmaster';
 export const BASE_URL_VEHICE_DELIVERY_NOTE_MASTER_DATA = BASE_URL_OTF + 'deliverynote/dealer/detail';
+export const BASE_URL_VEHICE_DELIVERY_NOTE_CHALLAN_MASTER_DATA = BASE_URL_OTF + 'delivery/challan/detail';

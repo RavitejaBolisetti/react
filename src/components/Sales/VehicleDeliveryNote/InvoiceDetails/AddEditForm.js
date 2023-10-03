@@ -21,19 +21,6 @@ const AddEditFormMain = (props) => {
     const { formData, relationshipManagerData, typeData, form, soldByDealer, handleChassisNoSearch, handleOnChange, chassisNoValue, fetchEngineNumber, listEngineNumberShowLoading, engineNumberData, userId, handleRelationShipManagerChange } = props;
     const { vinData } = props;
 
-    useEffect(() => {
-        if (soldByDealer) {
-            form.setFieldsValue({
-                deliveryNoteFor: 'Vehicle Sold By Dealer',
-            });
-        } else {
-            form.setFieldsValue({
-                deliveryNoteFor: 'Directly Billed Vehicle',
-            });
-        }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [soldByDealer]);
 
     useEffect(() => {
         if (engineNumberData) {
