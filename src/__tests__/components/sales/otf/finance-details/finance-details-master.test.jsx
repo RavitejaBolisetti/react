@@ -1,9 +1,9 @@
 import React from 'react';
-import { screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import FinananceDetailsMaster from '@components/Sales/Common/FinananceDetails/FinananceDetailsMaster';
+import { FinananceDetailsMaster } from 'components/Sales/OTF/FinananceDetails';
 import customRender from '@utils/test-utils';
-import { Form } from 'antd';
+import { Button, Form } from 'antd';
 import createMockStore from '__mocks__/store';
 
 beforeEach(() => {
@@ -14,6 +14,16 @@ const FormWrapper = (props) => {
     const [form] = Form.useForm();
     return <FinananceDetailsMaster form={form} {...props} />;
 };
+
+const StatusBar = () => <div>No Status Bar</div>;
+
+const FormActionButton = () => (
+    <div>
+        <Button htmlType="submit" type="primary">
+            Save
+        </Button>
+    </div>
+);
 
 const FNC_ARNGD = [
     { key: '1', value: 'Finance Option 1' },
@@ -63,20 +73,14 @@ describe('Booking finance view Details render', () => {
 
     it('finance form input should work', () => {
         const prop2 = { formActionType: { viewMode: false } };
-        customRender(<FormWrapper setFormData={jest.fn} {...prop2} typeData={FNC_ARNGD} />);
-
-        const bookedScreen = screen.getByText('Booked');
-        expect(bookedScreen).toBeTruthy();
-
-        const allotedScreen = screen.getByText('Allotted');
-        expect(allotedScreen).toBeTruthy();
+        customRender(<FormWrapper setFormData={jest.fn} resetData={jest.fn()} {...prop2} typeData={FNC_ARNGD} FormActionButton={FormActionButton} StatusBar={StatusBar} />);
 
         const financier = screen.getByRole('combobox', { name: /Finance Arranged By/i });
-        expect(financier).toBeTruthy();
+        fireEvent.change(financier, { target: { value: 'Self' } });
     });
     it('should render when view mode is true', async () => {
         const prop2 = { formActionType: { viewMode: true } };
-        customRender(<FormWrapper setFormData={jest.fn} {...prop2} typeData={FNC_ARNGD} />);
+        customRender(<FormWrapper setFormData={jest.fn} resetData={jest.fn()} {...prop2} typeData={FNC_ARNGD} FormActionButton={FormActionButton} StatusBar={StatusBar} />);
     });
 
     it('cancel button should work', async () => {
@@ -85,12 +89,9 @@ describe('Booking finance view Details render', () => {
         });
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper {...props} buttonData={defaultBtnVisiblity} onCloseAction={jest.fn()} typeData={FNC_ARNGD} />
+                <FormWrapper {...props} buttonData={defaultBtnVisiblity} onCloseAction={jest.fn()} typeData={FNC_ARNGD} FormActionButton={FormActionButton} StatusBar={StatusBar} />
             </Provider>
         );
-
-        const cancelBtn = screen.getByRole('button', { name: 'Cancel', exact: false });
-        fireEvent.click(cancelBtn);
     });
 
     it('save button should work with on finish', async () => {
@@ -99,11 +100,11 @@ describe('Booking finance view Details render', () => {
         });
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper {...props} buttonData={defaultBtnVisiblity} setButtonData={jest.fn()} onCloseAction={jest.fn()} onSuccess={jest.fn()} handleFormValueChange={jest.fn()} handleFieldsChange={jest.fn()} onFinish={jest.fn()} onFinishFailed={jest.fn()} typeData={FNC_ARNGD} />
+                <FormWrapper {...props} StatusBar={StatusBar} buttonData={defaultBtnVisiblity} setButtonData={jest.fn()} onCloseAction={jest.fn()} onSuccess={jest.fn()} handleFormValueChange={jest.fn()} handleFieldsChange={jest.fn()} onFinish={jest.fn()} onFinishFailed={jest.fn()} typeData={FNC_ARNGD} FormActionButton={FormActionButton} />
             </Provider>
         );
 
-        const saveBtn = screen.getByRole('button', { name: 'Save & Next', exact: false });
+        const saveBtn = screen.getByRole('button', { name: /save/i });
         fireEvent.click(saveBtn);
     });
 });

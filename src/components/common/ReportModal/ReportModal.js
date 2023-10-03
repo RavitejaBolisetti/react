@@ -90,8 +90,7 @@ export const EmbeddedReportMasterBase = (props) => {
     }, [userId, reportDetail]);
 
     useEffect(() => {
-       
-        let sExtraParamsString = '?rp:';
+        let sExtraParamsString = '&rp:';
         additionalParams?.forEach((item, index) => {
             sExtraParamsString += item?.value && item?.key ? item?.value && item?.key + '=' + item?.value + '&' : '';
         });
@@ -118,18 +117,8 @@ export const EmbeddedReportMasterBase = (props) => {
 
     // Map of event handlers to be applied to the embedding report
     const eventHandlersMap = new Map([
-        [
-            'loaded',
-            function () {
-                // console.log('Report has loaded');
-            },
-        ],
-        [
-            'rendered',
-            function () {
-                //console.log('Report has rendered');
-            },
-        ],
+        ['loaded', function () {}],
+        ['rendered', function () {}],
         [
             'error',
             function (event) {
@@ -142,7 +131,7 @@ export const EmbeddedReportMasterBase = (props) => {
 
     return (
         <div>
-            {sampleReportConfig?.accessToken && (
+            {sampleReportConfig?.accessToken && sampleReportConfig?.embedUrl && (
                 <PowerBIEmbed
                     embedConfig={sampleReportConfig}
                     eventHandlers={eventHandlersMap}
@@ -152,6 +141,10 @@ export const EmbeddedReportMasterBase = (props) => {
                     }}
                 />
             )}
+            {/* PDF VIEWER */}
+            {/* <object width="100%" height="90vh" data="http://www.africau.edu/images/default/sample.pdf" type="application/pdf">
+                {' '}
+            </object> */}
         </div>
     );
 };

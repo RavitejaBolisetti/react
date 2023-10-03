@@ -23,7 +23,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             VehicleReceiptChecklist: {
-                VehicleReceiptMaster: { isLoaded: isChecklistDataLoaded = false, isLoading: isChecklistDataLoading = true, data: ChecklistData = [] },
+                VehicleReceiptMaster: { isLoaded: isChecklistDataLoaded = false, isLoading: isChecklistDataLoading, data: ChecklistData = [] },
             },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
         },

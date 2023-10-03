@@ -9,13 +9,14 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 
 import VehicleInfoForm from './VehicleInfoForm';
 import BatteryInfoForm from './BatteryInfoForm';
+import { NoDataFound } from 'utils/noDataFound';
 
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
     const { activeKey, setActiveKey, formData, form } = props;
 
-    const vehicleDetailsProps = { ...props, form, formType: 'vehicle', formData: formData?.vehicleDetails };
+    const vehicleDetailsProps = { ...props, form, formType: 'vehicle', formData };
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
@@ -46,9 +47,7 @@ const AddEditFormMain = (props) => {
                 <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
                     <Panel header="Battery Details" key="2">
                         <Divider />
-                        {formData?.batteryDetail?.map((battery) => (
-                            <BatteryInfoForm battery={battery} {...props} />
-                        ))}
+                        {formData?.batteryDetail?.length ? formData?.batteryDetail?.map((battery) => <BatteryInfoForm battery={battery} {...props} />) : <NoDataFound />}
                     </Panel>
                 </Collapse>
             </Col>

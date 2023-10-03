@@ -29,7 +29,7 @@ const { Text } = Typography;
 const AddEditFormMain = (props) => {
     const { isReadOnly, setIsReadOnly, typeData } = props;
     const { itemOptions, setitemOptions, makeOptions, setmakeOptions } = props;
-    const { formData, formActionType, handleCollapse, showGlobalNotification, selectedRecordId, form, openAccordian, setOpenAccordian, optionsServiceModified, setoptionsServiceModified, handleFormValueChange, tooltTipText, isVariantLoading, isModelFamilyLoading, isModelLoading } = props;
+    const { formData, formActionType, handleCollapse, showGlobalNotification, selectedRecordId, form, openAccordian, setOpenAccordian, optionalServices, setOptionalServices, handleFormValueChange, tooltTipText, isVariantLoading, isModelFamilyLoading, isModelLoading } = props;
     const { MakefieldNames, ItemFieldNames, bindCodeValue } = props;
     const { collapseProps, disabledProps, bindStatus } = props;
 
@@ -103,8 +103,8 @@ const AddEditFormMain = (props) => {
         setitemOptions,
         makeOptions,
         setmakeOptions,
-        optionsServiceModified,
-        setoptionsServiceModified,
+        optionalServices,
+        setOptionalServices,
     };
 
     const handleEdit = ({ record, index }) => {
@@ -116,7 +116,7 @@ const AddEditFormMain = (props) => {
     };
 
     const handleDelete = ({ record, index }) => {
-        setoptionsServiceModified(optionsServiceModified.filter((element, i) => i !== index));
+        setOptionalServices(optionalServices.filter((element, i) => i !== index));
     };
 
     const handleButtonClick = ({ buttonAction, record, index }) => {
@@ -165,10 +165,10 @@ const AddEditFormMain = (props) => {
                                         <Input loading={isVariantLoading} maxLength={15} placeholder={preparePlaceholderText('model variant')} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
-                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.modelTooltip}>
-                                    {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.modelTooltipView}>
+                                    {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={15} />)}
                                     <Form.Item label="Model Description" name="model">
-                                        <Input maxLength={15} placeholder={preparePlaceholderText('model ')} {...disabledProps} />
+                                        <Input title={formData?.productAttributeDetail?.model} maxLength={15} placeholder={preparePlaceholderText('model ')} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -252,12 +252,12 @@ const AddEditFormMain = (props) => {
                                                 'No product Attribute Details Present',
                                                 'bottom'
                                             )(
-                                                <Button data-testid="addBtn" onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly || !formData?.productAttributeDetail}>
+                                                <Button className={styles.marL10} data-testid="addBtn" onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly || !formData?.productAttributeDetail}>
                                                     Add
                                                 </Button>
                                             )}
                                         {formData?.productAttributeDetail && (
-                                            <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly || !formData?.productAttributeDetail}>
+                                            <Button className={styles.marL10} onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly || !formData?.productAttributeDetail}>
                                                 Add
                                             </Button>
                                         )}
@@ -267,7 +267,7 @@ const AddEditFormMain = (props) => {
                             key="Aggregates"
                         >
                             <Divider />
-                            <DataTable tableColumn={tableColumn({ handleButtonClick, formActionType, bindCodeValue })} tableData={optionsServiceModified} pagination={false} />
+                            <DataTable tableColumn={tableColumn({ handleButtonClick, formActionType, bindCodeValue })} tableData={optionalServices} pagination={false} />
                         </Panel>
                     </Collapse>
                 </Col>

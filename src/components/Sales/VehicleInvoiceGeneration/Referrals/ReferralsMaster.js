@@ -73,7 +73,6 @@ const ReferralsMasterBase = (props) => {
     const { filterString, setFilterString } = props;
 
     const [customerList, setCustomerList] = useState();
-    console.log('referralDatareferralData',referralData)
 
     useEffect(() => {
         setFilterString();

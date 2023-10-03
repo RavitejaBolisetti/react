@@ -1,13 +1,18 @@
-import { server } from './mockServiceWorker'
-import { randomFillSync } from "crypto";
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
+import { server } from './mockServiceWorker';
+import { randomFillSync } from 'crypto';
 
-Object.defineProperty(globalThis, "crypto", {
-  value: { getRandomValues: randomFillSync },
-})
+Object.defineProperty(globalThis, 'crypto', {
+    value: { getRandomValues: randomFillSync },
+});
 beforeAll(() => {
-    Object.defineProperty(window, "matchMedia", {
+    Object.defineProperty(window, 'matchMedia', {
         writable: true,
-        value: jest.fn().mockImplementation(query => ({
+        value: jest.fn().mockImplementation((query) => ({
             matches: false,
             media: query,
             onchange: null,
@@ -21,12 +26,12 @@ beforeAll(() => {
 });
 
 global.console = {
-    log: jest.fn(),    // Mock console.log
-    error: jest.fn(),  // Mock console.error
-    warn: jest.fn()    // Mock console.warn
+    log: jest.fn(), // Mock console.log
+    error: jest.fn(), // Mock console.error
+    warn: jest.fn(), // Mock console.warn
     // You can add more methods as needed
-  };
-  
+};
+
 // Establish API mocking before all tests.
 beforeAll(() => server.listen());
 

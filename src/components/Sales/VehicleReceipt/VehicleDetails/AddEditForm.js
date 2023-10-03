@@ -27,6 +27,7 @@ const AddEditFormMain = (props) => {
     const { formData, setFinalData, buttonData, setButtonData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailForm, receiptType } = props;
 
     const [activeKey, setactiveKey] = useState([]);
+    const [statusType, setstatusType] = useState([]);
     // const [vehicleDetailList, setVehicleDetailList] = useState([]);
 
     useEffect(() => {
@@ -35,6 +36,29 @@ const AddEditFormMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
+    useEffect(() => {
+        if (vehicleStatusType?.length) {
+            setstatusType(
+                vehicleStatusType?.map((item) => {
+                    if (receiptType === VEHICLE_RECEIPT_STATUS?.RECEIVED?.key) {
+                        if (item?.key === VEHICLE_RECEIPT_STATUS?.IN_TRANSIT?.key) {
+                            return { ...item, disabled: true };
+                        } else {
+                            return { ...item, disabled: false };
+                        }
+                    } else if (receiptType === VEHICLE_RECEIPT_STATUS?.RETURNED?.key) {
+                        if (item?.key === VEHICLE_RECEIPT_STATUS?.IN_TRANSIT?.key || item?.key === VEHICLE_RECEIPT_STATUS?.RECEIVED?.key) {
+                            return { ...item, disabled: true };
+                        } else {
+                            return { ...item, disabled: false };
+                        }
+                    }
+                    return { ...item, disabled: false };
+                })
+            );
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [vehicleStatusType]);
 
     const onChange = (values) => {
         const isPresent = activeKey?.includes(values);
@@ -58,17 +82,14 @@ const AddEditFormMain = (props) => {
     };
 
     const handleSave = (indexId) => {
-        vehicleDetailForm
-            .validateFields()
-            .then(() => {
-                const vehicleDetailData = vehicleDetailForm?.getFieldsValue();
-                const filteredFormData = formData?.filter((element, i) => i !== indexId);
-                const finalData = { ...filteredFormData, ...vehicleDetailData };
-                setFinalData(finalData);
-                setButtonData({ ...buttonData, formBtnActive: true });
-                setactiveKey([]);
-            })
-            .catch((err) => console.log(err));
+        vehicleDetailForm.validateFields().then(() => {
+            const vehicleDetailData = vehicleDetailForm?.getFieldsValue();
+            const filteredFormData = formData?.filter((element, i) => i !== indexId);
+            const finalData = { ...filteredFormData, ...vehicleDetailData };
+            setFinalData(finalData);
+            setButtonData({ ...buttonData, formBtnActive: true });
+            setactiveKey([]);
+        });
     };
 
     const handleCancelFormEdit = () => {
@@ -83,22 +104,6 @@ const AddEditFormMain = (props) => {
         showSearch: true,
         allowClear: true,
     };
-    const handleDisableList = (item) => {
-        if (receiptType === VEHICLE_RECEIPT_STATUS?.RECEIVED?.key) {
-            if (item?.key === VEHICLE_RECEIPT_STATUS?.IN_TRANSIT?.key) {
-                return true;
-            } else {
-                return false;
-            }
-        } else if (receiptType === VEHICLE_RECEIPT_STATUS?.RETURNED?.key) {
-            if (item?.key === VEHICLE_RECEIPT_STATUS?.IN_TRANSIT?.key || item?.key === VEHICLE_RECEIPT_STATUS?.RECEIVED?.key) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-        return false;
-    };
 
     return (
         <>
@@ -109,27 +114,34 @@ const AddEditFormMain = (props) => {
                             <Panel
                                 header={
                                     <>
-                                        <Space size="small">
-                                            <Text className={styles.headText}> Model: {item?.modelDescription} </Text>
-                                            <Text className={styles.headText}> {`|`}</Text>
-                                            <Text className={styles.headText}> VIN: {item?.vin}</Text>
-                                        </Space>
-                                        <Text className={styles.subSection}> Vehicle Status: {getCodeValue(vehicleStatusType, item?.vehicleStatus)}</Text>
+                                        <Row>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                                <Space size="small">
+                                                    <Text className={styles.headText}> Model: {item?.modelDescription} </Text>
+                                                    <Text className={styles.headText}> {`|`}</Text>
+                                                    <Text className={styles.headText}> VIN: {item?.vin}</Text>
+                                                </Space>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                                <Text type="secondary" className={styles.subSection}>
+                                                    Vehicle Status: {getCodeValue(vehicleStatusType, item?.vehicleStatus)}
+                                                </Text>
+                                            </Col>
+                                        </Row>
                                     </>
                                 }
                                 key={index}
                             >
-                                {/* <AccessoriesInformationCard formData={element} /> */}
-                                {/* </Panel> */}
-                                {/* <Panel header="Model: Scorpio | VIN: 234254543453" key="1"> */}
                                 <Divider />
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.infoWrapper}>
                                         <Form.Item initialValue={item?.modelDescription} label="Model Description" name={[index, 'modelDescription']}>
-                                            <Input maxLength={10} placeholder={preparePlaceholderText('Model Description')} disabled={true} />
+                                            <Input title={item?.modelDescription} maxLength={10} placeholder={preparePlaceholderText('Model Description')} disabled={true} />
                                         </Form.Item>
                                         {item?.modelDescription && (
-                                            <div className={styles.modelTooltip}>
+                                            <div className={styles.modelTooltipView}>
                                                 {addToolTip(
                                                     <div>
                                                         <p>
@@ -151,7 +163,7 @@ const AddEditFormMain = (props) => {
                                                     'bottom',
                                                     '#FFFFFF',
                                                     styles.toolTip
-                                                )(<AiOutlineInfoCircle size={13} />)}
+                                                )(<AiOutlineInfoCircle size={15} />)}
                                             </div>
                                         )}
                                     </Col>
@@ -198,8 +210,8 @@ const AddEditFormMain = (props) => {
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item initialValue={item?.vehicleStatus ?? VEHICLE_RECEIPT_STATUS.RECEIVED.key} label="Vehicle Status" name={[index, 'vehicleStatus']} rules={[validateRequiredSelectField('Vehicle Status')]}>
                                             <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps}>
-                                                {vehicleStatusType?.map((item) => (
-                                                    <Option disabled={() => handleDisableList(item)} key={'vs' + item.key} value={item.key}>
+                                                {statusType?.map((item) => (
+                                                    <Option disabled={item?.disabled} key={'vs' + item.key} value={item.key}>
                                                         {item.value}
                                                     </Option>
                                                 ))}
@@ -237,6 +249,9 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                     <Form.Item hidden initialValue={item?.id} name={[index, 'id']}>
+                                        <Input />
+                                    </Form.Item>
+                                    <Form.Item hidden initialValue={item?.modelCode} name={[index, 'modelCode']}>
                                         <Input />
                                     </Form.Item>
                                 </Row>

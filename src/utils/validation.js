@@ -227,6 +227,10 @@ export const noWhiteSpaceinBeginning = (fieldName) => ({
     pattern: /^[^\s]+(\s+[^\s]+)*$/,
     message: 'Please dont enter spaces ',
 });
+export const validateMacId = (fieldName) => ({
+    pattern: /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})|([0-9a-fA-F]{4}.[0-9a-fA-F]{4}.[0-9a-fA-F]{4})$/,
+    message: 'Please enter valid MAC id',
+});
 
 export const compareAmountValidator = (amount1, amount2, fieldName) => {
     if (parseFloat(amount1) < parseFloat(amount2)) {

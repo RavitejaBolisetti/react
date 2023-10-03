@@ -9,6 +9,7 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
 import { DATA_TYPE } from 'constants/dataType';
 import { FINANCE_ARRANGED_BY } from 'constants/financeArrangedBy';
+import { YES_NO_FLAG } from 'constants/yesNoFlag';
 
 const ViewDetailMain = (props) => {
     const { styles, formData, isLoading, typeData } = props;
@@ -22,7 +23,7 @@ const ViewDetailMain = (props) => {
     const checkFinanceType = (type, key) => (type ? type === key : false);
 
     return (
-        <Card className={styles?.drawerCardView}>
+        <Card>
             <Descriptions {...viewProps}>
                 <Descriptions.Item label="Finance Arranged By">{checkAndSetDefaultValue(getCodeValue(typeData?.FNC_ARNGD, formData?.financeArrangedBy), isLoading)}</Descriptions.Item>
                 {formData?.financeArrangedBy && !checkFinanceType(formData?.financeArrangedBy, FINANCE_ARRANGED_BY?.CASH?.key) && (
@@ -36,8 +37,12 @@ const ViewDetailMain = (props) => {
                                 {/* <Descriptions.Item label="Loan Amount">{checkAndSetDefaultValue(formData?.loanAmount, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="EMI">{checkAndSetDefaultValue(formData?.emi, isLoading)}</Descriptions.Item> */}
                                 <Descriptions.Item label="D.O. Received">{checkAndSetDefaultValue(getCodeValue(typeData?.YES_NO_FLG, formData?.doReceived), isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="D.O. Number">{checkAndSetDefaultValue(formData?.doNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="D.O. Date">{checkAndSetDefaultValue(formData?.doDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                                {YES_NO_FLAG.YES.key === formData?.doReceived && (
+                                    <>
+                                        <Descriptions.Item label="D.O. Number">{checkAndSetDefaultValue(formData?.doNumber, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label="D.O. Date">{checkAndSetDefaultValue(formData?.doDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                                    </>
+                                )}
                             </>
                         )}
                     </>

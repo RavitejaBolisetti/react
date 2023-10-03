@@ -4,20 +4,18 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Button, Row, Col, Form } from 'antd';
+import { Button, Row, Col, Form, Tabs } from 'antd';
 import { FilterIcon } from 'Icons';
-import { PlusOutlined } from '@ant-design/icons';
 import { RxCross2 } from 'react-icons/rx';
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { QueryButtons } from 'components/Sales/VehicleRecieptChecklist/QueryButtons';
 import { SearchBox } from 'components/utils/SearchBox';
 import { PARAM_MASTER } from 'constants/paramMaster';
-import { QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
 
 import styles from 'assets/sass/app.module.scss';
+import { DELIVERY_TYPE } from 'constants/modules/vehicleDetailsNotes.js/deliveryType';
 
 export default function VehicleDeliveryNoteFilter(props) {
-    const { extraParams, removeFilter, searchForm, typeData, filterString, deliveryStatusList, setFilterString, handleResetFilter, advanceFilter = false, handleDeliveryNoteTypeChange, setAdvanceSearchVisible, handleButtonClick, deliveryStatus } = props;
+    const { deliveryType, extraParams, removeFilter, searchForm, typeData, filterString, deliveryStatusList, onDeliveryTabChange, setFilterString, handleResetFilter, advanceFilter = false, handleDeliveryNoteTypeChange, setAdvanceSearchVisible, handleButtonClick, deliveryStatus } = props;
 
     const serachBoxProps = {
         searchForm,
@@ -29,7 +27,20 @@ export default function VehicleDeliveryNoteFilter(props) {
     return (
         <div className={styles.contentHeaderBackground}>
             <Row gutter={20}>
-                <Col xs={24} sm={20} md={20} lg={20} xl={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.navTab}>
+                    <Tabs
+                        defaultActiveKey={DELIVERY_TYPE.NOTE.key}
+                        activeKey={deliveryType}
+                        onChange={onDeliveryTabChange}
+                        items={Object.values(DELIVERY_TYPE)?.map((item) => ({
+                            key: item?.key,
+                            label: <>{item?.title}</>,
+                        }))}
+                    />
+                </Col>
+            </Row>
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form autoComplete="off" colon={false} className={styles.masterListSearchForm}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={18} lg={18} xl={18} className={styles.verticallyCentered}>
@@ -53,11 +64,6 @@ export default function VehicleDeliveryNoteFilter(props) {
                         </Row>
                     </Form>
                 </Col>
-                {/* <Col xs={24} sm={4} md={4} lg={4} xl={4} className={styles.buttonsGroupRight}>
-                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                        Add
-                    </Button>
-                </Col> */}
             </Row>
             {advanceFilter && filterString?.advanceFilter && extraParams.find((i) => i.name) && (
                 <Row gutter={20}>

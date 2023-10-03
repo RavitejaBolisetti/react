@@ -10,47 +10,59 @@ export const VEHICLE_INVOICE_SECTION = {
         advance: true,
         displayOnList: true,
     },
+
     VEHICLE_DETAILS: {
         id: 2,
         title: 'Vehicle Details',
         advance: true,
         displayOnList: true,
     },
+
     SCHEME_OFFER_DETAILS: {
         id: 3,
         title: 'Scheme and Offer Details',
         advance: false,
         displayOnList: true,
     },
-    FINANACE_DETAILS: {
+
+    INSURANCE_DETAILS: {
         id: 4,
+        title: 'Insurance Details',
+        advance: false,
+        displayOnList: true,
+    },
+
+    FINANACE_DETAILS: {
+        id: 5,
         title: 'Finance Details',
         advance: false,
         displayOnList: true,
     },
 
-    INSURANCE_DETAILS: {
-        id: 5,
-        title: 'Insurance Details',
-        advance: false,
-        displayOnList: true,
-    },
     EXCHANGE_DETAILS: {
         id: 6,
         title: 'Exchange Details',
         advance: false,
         displayOnList: true,
     },
-    LOYALTY_SCHEME: {
+
+    REFERRALS: {
         id: 7,
+        title: 'Referrals',
+        advance: false,
+        displayOnList: true,
+    },
+
+    LOYALTY_SCHEME: {
+        id: 8,
         title: 'Loyalty Scheme Details',
         advance: false,
         displayOnList: true,
     },
-    REFERRALS: {
-        id: 8,
-        title: 'Referrals',
-        advance: false,
-        displayOnList: true,
+
+    THANK_YOU_PAGE: {
+        id: 12,
+        title: 'Thank You',
+        displayOnList: false,
     },
 };

@@ -263,7 +263,6 @@ export const DealerCompanyBase = (props) => {
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick),
         tableData: searchData,
-        showAddButton,
     };
 
     const title = 'Company Name';
@@ -281,7 +280,6 @@ export const DealerCompanyBase = (props) => {
         handleButtonClick,
         title,
         tableData: searchData,
-        showAddButton,
     };
 
     return (

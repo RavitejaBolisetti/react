@@ -38,7 +38,7 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         isLoading,
         moduleTitle,
-        vehicleData,
+        // vehicleData,
         isChallanDataLoaded,
         isChallanLoading,
         vehicleChallanData,
@@ -61,9 +61,11 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const VehicleDetailsMasterBase = (props) => {
-    const { typeData, partySegmentType } = props;
-    const { userId, selectedOrderId, selectedInvoiceId, soldByDealer, setFormActionType, showGlobalNotification, listShowLoading, isDataLoaded, isLoading } = props;
-    const { form, formActionType, fetchChallanList, listChallanShowLoading, handleButtonClick, handleFormValueChange, section, openAccordian, setOpenAccordian, fetchList, vehicleData, NEXT_ACTION } = props;
+    const { typeData, partySegmentType, vehicleChallanData } = props;
+    const { userId, selectedOrderId, selectedInvoiceId, soldByDealer, setFormActionType, showGlobalNotification, listShowLoading, isDataLoaded, isLoading, requestPayload } = props;
+    const { form, formActionType, fetchChallanList, listChallanShowLoading, handleButtonClick, handleFormValueChange, section, openAccordian, setOpenAccordian, fetchList, vehicleData, NEXT_ACTION, chassisNoValue, record, engineChallanNumber, setEngineChallanNumber, setSelectedOrder, setRequestPayload } = props;
+    const { buttonData, setButtonData } = props;
+
     const [regNumber, setRegNumber] = useState();
     const [activeKey, setActiveKey] = useState([]);
     const [otfNumber, setOtfNumber] = useState();
@@ -71,8 +73,6 @@ const VehicleDetailsMasterBase = (props) => {
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
     const [formData, setFormData] = useState();
-    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
-    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [toolTipContent, setToolTipContent] = useState();
 
@@ -100,52 +100,83 @@ const VehicleDetailsMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vehicleData]);
+    console.log('vehicleData--->', vehicleData);
 
     useEffect(() => {
         if (userId && selectedOrderId && selectedInvoiceId && soldByDealer) {
+            // const extraParams = [
+            //     {
+            //         key: 'invoicenumber',
+            //         title: 'invoicenumber',
+            //         value: selectedInvoiceId,
+            //         name: 'Invoice Number',
+            //     },
+            //     {
+            //         key: 'otfNumber',
+            //         title: 'otfNumber',
+            //         value: selectedOrderId,
+            //         name: 'Invoice Number',
+            //     },
+            // ];
+            // fetchList({ setIsLoading: listShowLoading, extraParams, userId, onErrorAction });
+        } else if (!soldByDealer && !formActionType?.viewMode) {
             const extraParams = [
                 {
-                    key: 'invoicenumber',
-                    title: 'invoicenumber',
-                    value: selectedInvoiceId,
-                    name: 'Invoice Number',
+                    key: 'chassisNumber',
+                    title: 'chassisNumber',
+                    value: requestPayload?.deliveryNoteInvoiveDetails?.chassisNumber,
+                    name: 'Chassis Number',
                 },
                 {
-                    key: 'otfNumber',
-                    title: 'otfNumber',
-                    value: selectedOrderId,
-                    name: 'Invoice Number',
-                },
-            ];
-            fetchList({ setIsLoading: listShowLoading, extraParams, userId, onErrorAction });
-        } else if (!soldByDealer) {
-            const extraParams = [
-                {
-                    key: 'invoiceNumber',
-                    title: 'invoiceNumber',
-                    value: selectedInvoiceId,
-                    name: 'Invoice Number',
+                    key: 'engineNumber',
+                    title: 'engineNumber',
+                    value: requestPayload?.deliveryNoteInvoiveDetails?.engineNumber,
+                    name: 'Engine Number',
                 },
             ];
 
             fetchChallanList({ setIsLoading: listChallanShowLoading, extraParams, userId, onErrorAction });
         }
+        // } else if (!soldByDealer && formActionType?.viewMode) {
+        //     const extraParams = [
+        //         {
+        //             key: 'chassisNumber',
+        //             title: 'chassisNumber',
+        //             value: chassisNoValue,
+        //             name: 'Chassis Number',
+        //         },
+        //     ];
+
+        //     fetchChallanList({ setIsLoading: listChallanShowLoading, extraParams, userId, onErrorAction });
+        // }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOrderId, selectedInvoiceId, soldByDealer]);
+    }, [userId, selectedOrderId, selectedInvoiceId, soldByDealer, requestPayload?.deliveryNoteInvoiveDetails]);
 
     useEffect(() => {
-        if (vehicleData && selectedOrderId && selectedInvoiceId) {
+        if (vehicleData) {
             form.setFieldsValue({ ...vehicleData });
             setFormData({ ...vehicleData });
         }
+        if (!soldByDealer && vehicleChallanData) {
+            form.setFieldsValue({ ...vehicleChallanData });
+            setFormData({ ...vehicleChallanData });
+        }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [vehicleData]);
+    }, [vehicleData, vehicleChallanData, soldByDealer]);
+    useEffect(() => {
+        setButtonData({ ...buttonData, formBtnActive: true });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [section]);
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
 
     const onFinish = (values) => {
+        if (!soldByDealer) {
+            setRequestPayload({ ...requestPayload, vehicleDetails: { ...values } });
+        }
         handleButtonClick({ buttonAction: NEXT_ACTION });
         setButtonData({ ...buttonData, formBtnActive: false });
     };
@@ -153,7 +184,6 @@ const VehicleDetailsMasterBase = (props) => {
     const onCloseAction = () => {
         form.resetFields();
         setIsFormVisible(false);
-        setButtonData({ ...defaultBtnVisiblity });
     };
 
     const onFinishFailed = () => {};
@@ -174,7 +204,7 @@ const VehicleDetailsMasterBase = (props) => {
         VIEW_ACTION,
         isVisible: isFormVisible,
         isDataLoaded,
-        formData: vehicleData,
+        formData,
         isLoading,
         setActiveKey,
         activeKey,
@@ -190,7 +220,7 @@ const VehicleDetailsMasterBase = (props) => {
 
     const viewProps = {
         typeData,
-        formData: vehicleData,
+        formData,
         styles,
         partySegmentType,
         isLoading,

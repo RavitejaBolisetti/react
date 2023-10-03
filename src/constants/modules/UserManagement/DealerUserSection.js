@@ -8,21 +8,21 @@ export const DEALER_USER_SECTION = {
     ASSIGN_USER_ROLES: {
         id: 1,
         title: 'Assign User Roles',
-        enableOnAdd: false,
+        displayOnList: true,
     },
     BRANCH_MAPPING: {
         id: 2,
         title: 'Branch Mapping',
-        enableOnAdd: false,
+        displayOnList: true,
     },
     PRODUCT_MAPPING: {
         id: 3,
         title: 'Product Mapping',
-        enableOnAdd: false,
+        displayOnList: true,
     },
     MAC_ID: {
         id: 4,
-        title: 'MAC ID',
-        enableOnAdd: false,
+        title: 'MAC Id',
+        displayOnList: true,
     },
 };

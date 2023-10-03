@@ -163,7 +163,7 @@ const UploadBase = (props) => {
     const onDrop = (e) => {};
 
     const onDownload = (file) => {
-        const onSuccessAction = (res) => {                      
+        const onSuccessAction = (res) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage || 'Your download will start soon' });
         };
         const extraParams = [
@@ -205,7 +205,7 @@ const UploadBase = (props) => {
         onDownload,
         showUploadList: {
             showRemoveIcon,
-            showDownloadIcon,
+            showDownloadIcon: uploadTime ? false : true,
             removeIcon: removeIcon,
             downloadIcon: <AiOutlineEye className={styles.iconSize} />,
             showProgress,

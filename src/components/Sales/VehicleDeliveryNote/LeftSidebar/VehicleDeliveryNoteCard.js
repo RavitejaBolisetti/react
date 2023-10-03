@@ -11,6 +11,9 @@ import { DATA_TYPE } from 'constants/dataType';
 import { getCodeValue } from 'utils/getCodeValue';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import styles from 'assets/sass/app.module.scss';
+import { addToolTip } from 'utils/customMenuLink';
+
+import { AiOutlineInfoCircle } from 'react-icons/ai';
 
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
@@ -29,11 +32,11 @@ const expandIcon = ({ isActive }) =>
     );
 
 const VehicleDeliveryNoteCard = (props) => {
-    const { selectedOrder, typeData, isLoading } = props;
+    const { selectedOrder, typeData, isLoading, toolTipContent, formActionType } = props;
     const fullName = selectedOrder?.customerName?.split(' ');
     const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1].slice(0, 1) : '') : '';
     return (
-        <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon} collapsible="icon">
+        <Collapse bordered={true} expandIcon={expandIcon} collapsible="icon">
             <Panel
                 header={
                     <>
@@ -62,8 +65,13 @@ const VehicleDeliveryNoteCard = (props) => {
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Status: <span>{checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.DLVR_NT_STS.id], selectedOrder?.deliveryNoteStatus, isLoading))}</span>
+                    Status:
+                    <div className={styles.tooltipAlign}>
+                        {checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.DLVR_NT_STS.id], selectedOrder?.deliveryNoteStatus, isLoading))}
+                        {formActionType?.viewMode && selectedOrder?.deliveryNoteStatus === 'cancelled' && <span className={styles.marL5}>{toolTipContent && selectedOrder?.deliveryNoteStatus && <div className={styles.toolTip}>{addToolTip(toolTipContent, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}</div>}</span>}
+                    </div>
                 </div>
+
                 <Divider />
                 <div className={styles.detailCardText}>
                     Invoice Number: <span> {checkAndSetDefaultValue(selectedOrder?.invoiceId)}</span>

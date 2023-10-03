@@ -22,4 +22,10 @@ describe('FMS Form Component', () => {
         const fmsInput=screen.getByRole('textbox', { name: 'FMS'});
         fireEvent.change(fmsInput, { target: { value: 'Test' }})
     });
+
+    it('fields can be editable', () => {
+        const formData={ id: 106, };
+        const formActionType={ viewMode: true, }
+        customRender(<FormWrapper formData={formData} formActionType={formActionType} />);
+    });
 });

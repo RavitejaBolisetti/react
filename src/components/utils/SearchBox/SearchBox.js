@@ -17,10 +17,10 @@ const { Option } = Select;
 const { Search } = Input;
 
 const SearchBox = (props) => {
-    const { selectWide, searchForm, optionType, searchParamRule, filterString, setFilterString, handleChange, disabled = false, isLoading, handleSearchWithoutParameter = undefined } = props;
+    const { maxLength = 25, selectWide, searchForm, optionType, searchParamRule, filterString, setFilterString, handleChange, disabled = false, isLoading, handleSearchWithoutParameter = undefined } = props;
     const { allowClear = true, singleField = false, label = '', placeholder = 'Search', singleFieldKey = 'searchParam', defaultOption = undefined, captilized = undefined, valueReset = true } = props;
 
-    const [validationRules, setValidationRules] = useState([validateRequiredInputField('searchType')]);
+    const [validationRules, setValidationRules] = useState([validateRequiredInputField('input')]);
 
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();
@@ -28,17 +28,17 @@ const SearchBox = (props) => {
 
     const handleValidation = (value, ValueObj) => {
         if (!value) {
-            setValidationRules([validateRequiredInputField('searchType')]);
+            setValidationRules([validateRequiredInputField('input')]);
             return;
         }
         const { value: fieldName } = ValueObj;
         switch (fieldName) {
             case SearchConstants?.MOBILENUMBER?.id: {
-                setValidationRules([validateMobileNoField('Mobile Number'), validateRequiredInputField('searchType')]);
+                setValidationRules([validateMobileNoField('Mobile Number'), validateRequiredInputField('mobile number')]);
                 break;
             }
             case SearchConstants?.REGISTRATIONUMBER?.id: {
-                setValidationRules([validateRequiredInputField('searchType')]);
+                setValidationRules([validateRequiredInputField('input')]);
                 break;
             }
             case SearchConstants?.CHASSISNUMBER?.id: {
@@ -49,8 +49,16 @@ const SearchBox = (props) => {
                 setValidationRules([validateLettersWithWhitespaces('customer name')]);
                 break;
             }
+            case SearchConstants?.NEWMODELGROUP?.id: {
+                setValidationRules([validateRequiredInputField('new modal group')]);
+                break;
+            }
+            case SearchConstants?.OLDMODELGROUP?.id: {
+                setValidationRules([validateRequiredInputField('old modal group')]);
+                break;
+            }
             default: {
-                setValidationRules([validateRequiredInputField('searchType')]);
+                setValidationRules([validateRequiredInputField('input')]);
                 break;
             }
         }
@@ -60,7 +68,7 @@ const SearchBox = (props) => {
         searchForm
             .validateFields()
             .then((values) => {
-                valueReset && setValidationRules([validateRequiredInputField('searchType')]);
+                valueReset && setValidationRules([validateRequiredInputField('input')]);
                 setFilterString({ ...values, pageSize: filterString?.pageSize, current: 1, advanceFilter: true });
                 valueReset && searchForm.resetFields();
             })
@@ -90,7 +98,7 @@ const SearchBox = (props) => {
                     </Form.Item>
                 )}
                 <Form.Item label={label} {...searchParamRule} name={singleField && singleFieldKey ? singleFieldKey : 'searchParam'} rules={validationRules} validateTrigger={['onChange', 'onSearch']} className={selectWide ? styles.headerSearchFieldWide : ''}>
-                    <Search onInput={captilized ? convertToUpperCase : undefined} loading={isLoading} disabled={disabled} placeholder={placeholder} maxLength={25} value={filterString?.searchParam} allowClear onChange={handleChange} onSearch={singleField && handleSearchWithoutParameter ? handleSearchWithoutParameter : handleSearchParamSearch} className={styles.headerSearchField} />
+                    <Search onInput={captilized ? convertToUpperCase : undefined} loading={isLoading} disabled={disabled} placeholder={placeholder} maxLength={maxLength} value={filterString?.searchParam} allowClear onChange={handleChange} onSearch={singleField && handleSearchWithoutParameter ? handleSearchWithoutParameter : handleSearchParamSearch} className={styles.headerSearchField} />
                 </Form.Item>
             </Form>
         </div>

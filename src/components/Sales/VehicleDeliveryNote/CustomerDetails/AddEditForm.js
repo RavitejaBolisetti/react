@@ -5,16 +5,20 @@
  */
 import React, { useState, useEffect } from 'react';
 import { Col, Input, Form, Row, Card, Space } from 'antd';
-
-import { validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-
 import styles from 'assets/sass/app.module.scss';
 
 const { Search } = Input;
 const AddEditFormMain = (props) => {
-    const { formData, handleCustomerIdSearch, handleOnChange, soldByDealer } = props;
+    const { form, formData, handleCustomerIdSearch, handleOnChange, soldByDealer } = props;
     const [customer, setCustomer] = useState();
+
+    useEffect(() => {
+        if (formData) {
+            form.setFieldsValue({ ...formData });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData]);
 
     const handleCustomerId = () => {
         setCustomer(true);

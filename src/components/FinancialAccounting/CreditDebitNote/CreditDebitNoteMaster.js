@@ -115,6 +115,7 @@ export const CreditDebitNoteMasterBase = (props) => {
         invoiceBtn: false,
         deliveryNote: false,
         cancelOtfBtn: false,
+        printBtn: false,
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -127,6 +128,13 @@ export const CreditDebitNoteMasterBase = (props) => {
 
     const [transactionType, setTransactionType] = useState(TRANSACTION_TYPE?.Credit?.value);
     const [selectedVoucher, setSelectedVoucher] = useState('');
+
+    useEffect(() => {
+        if (formActionType?.viewMode) {
+            setButtonData({ ...buttonData, printBtn: true });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formActionType]);
 
     useEffect(() => {
         if (creditDebitData && isDetailLoaded && formActionType?.addMode) {
@@ -343,16 +351,16 @@ export const CreditDebitNoteMasterBase = (props) => {
 
     const onFinishSearch = (values) => {};
 
-      const handlePrintDownload = (record) => {
-          setReportVisible(true);
+    const handlePrintDownload = (record) => {
+        setReportVisible(true);
 
-          setAdditionalReportParams([
-              {
-                  key: 'fn_vc_debit_credit_note_hdr_id',
-                  value: record?.id,
-              },
-          ]);
-      };
+        setAdditionalReportParams([
+            {
+                key: 'fn_vc_debit_credit_note_hdr_id',
+                value: record?.id,
+            },
+        ]);
+    };
 
     const onFinish = () => {
         const recordId = selectedRecord?.id;
@@ -406,7 +414,7 @@ export const CreditDebitNoteMasterBase = (props) => {
         totalRecords,
         page,
         setPage,
-        tableColumn: tableColumn(handleButtonClick),
+        tableColumn: tableColumn({ handleButtonClick, typeData }),
         tableData: data,
         showAddButton: false,
         handleButtonClick,

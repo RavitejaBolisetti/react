@@ -32,23 +32,13 @@ const MenuNav = (props) => {
                     TimeLineClass[i].lastChild.firstChild.style.color = '#0b0b0c';
                 }
             }
-            // console.log('TimeLineClass', TimeLineClass);
             TimeLineClass[TimeLineClass?.length - 1].firstChild.style.display = 'none';
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection]);
 
     const onHandle = (item) => {
-    
-        if (selectedCustomerId && !buttonData.formBtnActive) {
-            console.log('not wanted');
-            setCurrentSection(item?.id);
-            setButtonData({ ...buttonData, formBtnActive: false });
-        } else if (buttonData.formBtnActive) {
-            console.log('wanted');
-            setNextCurrentSection(item?.id)
-            setIsUnsavedDataPopup(true);
-        }
+        setCurrentSection(item?.id);
     };
 
     const className = (item) => {

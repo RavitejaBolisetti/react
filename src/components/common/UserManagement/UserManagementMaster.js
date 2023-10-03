@@ -15,6 +15,7 @@ import { DealerAppDataActions } from 'store/actions/data/userManagement/dealerAp
 import { RoleApplicationDataActions } from 'store/actions/data/userManagement/roleApplication';
 import { UserDealerListDataActions } from 'store/actions/data/userManagement/dealersList';
 import { UserRolesDataActions } from 'store/actions/data/userManagement/userRoleList';
+import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 
 import { UserDealerBranchLocationDataActions } from 'store/actions/data/userManagement/userDealerBranchLocation';
 import { DealerBranchLocationDataActions } from 'store/actions/data/userManagement/dealerBranchLocation';
@@ -39,7 +40,7 @@ import { tableColumn } from './Dealer/tableColumn';
 import { tableColumn as manufacturerTableColumn } from './Manufacturer/tableColumn';
 
 import styles from 'assets/sass/app.module.scss';
-
+import { DealerProductActions } from 'store/actions/data/userManagement/dealerProduct';
 const { Option } = Select;
 
 const mapStateToProps = (state) => {
@@ -56,7 +57,10 @@ const mapStateToProps = (state) => {
                 UserRoleList: { isLoaded: isUserRoleListLoaded, isLoading: isUserRoleListLoding, data: userRoleDataList },
                 DealerBranchLocation: { isLoaded: isdlrBrLocationsLoaded, isLoading: isDlrBrLocationLoding, data: dlrBranchLocationDataList },
                 UserDealerBranchLocation: { isLoaded: isUsrdlrBrLocationsLoaded, isLoading: isUsrDlrBrLocationLoding, data: usrdlrBranchLocationDataList },
+                // UserDealerBranchLocation: { isLoaded: isUserDlrProductListLoaded, isLoading: isUserDlrProductListLoding, data: userDlrProductList },
+                DealerProduct: { isLoaded: isProductLoaded, data: userProductListData, isLoading: isProductLoading },
             },
+            ProductHierarchy: { isLoading: isProductHierarchyLoading = false, data: productHierarchyData = [] },
         },
     } = state;
 
@@ -98,6 +102,17 @@ const mapStateToProps = (state) => {
         usrdlrBranchLocationDataList,
         isUsrDlrBrLocationLoding,
         isUsrdlrBrLocationsLoaded,
+
+        isProductHierarchyLoading,
+        productHierarchyData,
+
+        // userDlrProductList,
+        // isUserDlrProductListLoding,
+        // isUserDlrProductListLoaded,
+
+        isProductLoaded,
+        userProductListData,
+        isProductLoading,
     };
     return returnValue;
 };
@@ -147,6 +162,13 @@ const mapDispatchToProps = (dispatch) => ({
             userUsrDlrBrLoactionShowLoading: UserDealerBranchLocationDataActions.listShowLoading,
             saveUsrDlrBrLoactionRoleDataList: UserDealerBranchLocationDataActions.saveData,
 
+            fetchDealerProduct: DealerProductActions.fetchList,
+            dealerProductShowLoading: DealerProductActions.listShowLoading,
+            saveDealerProduct: DealerProductActions.saveData,
+
+            fetchProductHierarchyList: productHierarchyDataActions.fetchList,
+            productShowLoding: productHierarchyDataActions.listShowLoading,
+
             showGlobalNotification,
         },
         dispatch
@@ -156,10 +178,10 @@ const mapDispatchToProps = (dispatch) => ({
 const typeData = [{ key: 'employeeCode', value: 'Token No.' }];
 
 const UserManagementMain = (props) => {
-    const { userId, fetchUserDataList, listShowLoading, isDataLoading, userDataList } = props;
+    const { userId, fetchUserDataList, listShowLoading, isDataLoading, userDataList, resetUserDetails } = props;
     const { fetchRoleDataList, rolelistShowLoading, isRoleListLoaded } = props;
     const { fetchDealersList, rolelDealersListShowLoading, dealerDataList, isDealerListLoaded } = props;
-    const { moduleTitle, productHierarchyData } = props;
+    const { moduleTitle, productHierarchyData, isProductHierarchyLoading } = props;
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, next: false, nextBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, formBtnActive: false };
 
@@ -167,13 +189,14 @@ const UserManagementMain = (props) => {
     const [searchForm] = Form.useForm();
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-    const [filterString, setFilterString] = useState();
+    const [filterString, setFilterString] = useState({ pageSize: 10 });
     const [userType, setUserType] = useState(USER_TYPE_USER?.MANUFACTURER?.id);
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
     const [currentSection, setCurrentSection] = useState(MANUFACTURER_USER_SECTION.ASSIGN_USER_ROLES);
     const [isLastSection, setLastSection] = useState(false);
     const [sectionName, setSetionName] = useState();
     const [section, setSection] = useState();
+    const [previousSection, setPreviousSection] = useState(1);
 
     const [disableSearch, setDisabledSearch] = useState(true);
     const [isReadOnly, setIsReadOnly] = useState(false);
@@ -217,7 +240,7 @@ const UserManagementMain = (props) => {
             setDisabledSearch(userType === USER_TYPE_USER.DEALER.id ? true : false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userType]);
+    }, [userType, isFormVisible]);
 
     useEffect(() => {
         if (currentSection && sectionName) {
@@ -287,17 +310,29 @@ const UserManagementMain = (props) => {
         setError(res);
     };
     const onSuccessAction = (res) => {
-        setselectedDealerCode('');
+        // setselectedDealerCode('');
         setError('');
     };
 
     useEffect(() => {
-        if (userId && userType && !isFormVisible) {
+        return () => {
+            resetUserDetails();
+        };
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userType]);
+
+    useEffect(() => {
+        if (userId && !isFormVisible) {
             const params = filterString?.searchParam ? extraParams : [...defaultExtraParam, ...extraParams];
-            fetchUserDataList({ setIsLoading: listShowLoading, extraParams: params, userId, onErrorAction, onSuccessAction });
+            if (userType === USER_TYPE_USER?.DEALER?.id && selectedDealerCode) {
+                fetchUserDataList({ setIsLoading: listShowLoading, extraParams: params, userId, onErrorAction, onSuccessAction });
+            } else if (userType === USER_TYPE_USER?.MANUFACTURER?.id) {
+                fetchUserDataList({ setIsLoading: listShowLoading, extraParams: params, userId, onErrorAction, onSuccessAction });
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, userType, page?.pageSize, page?.current, filterString?.searchParam, isFormVisible]);
+    }, [userId, userType, page?.pageSize, page?.current, filterString?.searchParam, isFormVisible, selectedDealerCode]);
 
     const onFinish = (values, e) => {};
 
@@ -310,6 +345,7 @@ const UserManagementMain = (props) => {
             case FROM_ACTION_TYPE?.ADD:
                 setFormActionType((prev) => ({ ...prev, viewMode: false, editMode: false, addMode: true }));
                 setButtonData({ editBtn: true, nextBtn: true, cancelBtn: true });
+                setPreviousSection(1);
                 setIsReadOnly(false);
                 record && setSelectedRecord(record);
                 record && setFormData(record);
@@ -361,14 +397,18 @@ const UserManagementMain = (props) => {
 
     const onChangeSearchHandler = (event) => {
         setError('');
+        if (!event.target.value) {
+            setFilterString((prev) => ({ ...prev, searchParam: '', pageSize: filterString?.pageSize, current: 1 }));
+        }
     };
 
-    const handleDealseChange = (selectedvalue) => {
+    const handleDealerChange = (selectedvalue) => {
         if (selectedvalue) {
             setDisabledSearch(false);
         } else {
             setDisabledSearch(true);
         }
+        setFilterString({ searchParam: '', pageSize: filterString?.pageSize, current: 1 });
         setselectedDealerCode(selectedvalue);
         setError('');
     };
@@ -376,7 +416,7 @@ const UserManagementMain = (props) => {
     const onCloseAction = () => {
         setIsFormVisible(false);
         setSelectedRecord([]);
-        setDisabledSearch(true);
+        // setDisabledSearch(true);
         setFilterString('');
         setselectedDealerCode('');
     };
@@ -429,11 +469,15 @@ const UserManagementMain = (props) => {
         handleButtonClick,
         setIsFormVisible,
         isLastSection,
+
+        previousSection,
+        setPreviousSection,
     };
+    const tableData = userDataList?.userSearchResponse?.userDetails && !userDataList?.userSearchResponse?.userDetails?.[0]?.dmsUserNotExist ? userDataList?.userSearchResponse?.userDetails : [];
 
     const tableProps = {
         isLoading: isDataLoading,
-        tableData: userDataList?.userSearchResponse?.userDetails && !userDataList?.userSearchResponse?.userDetails?.[0]?.dmsUserNotExist ? userDataList?.userSearchResponse?.userDetails : [],
+        tableData: tableData,
         tableColumn: userType === USER_TYPE_USER?.DEALER?.id ? tableColumn(handleButtonClick) : manufacturerTableColumn(handleButtonClick),
         page,
         setPage,
@@ -462,6 +506,7 @@ const UserManagementMain = (props) => {
         optionType: typeData,
         defaultValue: 'employeeCode',
         handleChange: onChangeSearchHandler,
+        valueReset: false,
     };
 
     return (
@@ -485,9 +530,11 @@ const UserManagementMain = (props) => {
                                                     })}
                                                 </div>
                                                 {userType === USER_TYPE_USER?.DEALER?.id && (
-                                                    <Select className={styles.marR20} style={{ width: '60%' }} onChange={handleDealseChange} placeholder="Select" showSearch allowClear>
+                                                    <Select className={styles.marR20} style={{ width: '60%' }} onChange={handleDealerChange} optionFilterProp="children" placeholder="Select dealer" showSearch allowClear>
                                                         {dealerDataList?.map((item) => (
-                                                            <Option value={item?.dealerCode}>{item?.dealerName}</Option>
+                                                            <Option key={item?.dealerCode} value={item?.dealerCode}>
+                                                                {item?.dealerName}
+                                                            </Option>
                                                         ))}
                                                     </Select>
                                                 )}
@@ -516,7 +563,7 @@ const UserManagementMain = (props) => {
                                 imageStyle={{
                                     height: 60,
                                 }}
-                                description={<span> No record found.</span>}
+                                description={<span>{userType === USER_TYPE_USER?.DEALER?.id && !selectedDealerCode && !tableData?.length ? 'Select dealer to fetch data.' : 'No record found.'}</span>}
                             ></Empty>
                         )}
                     >

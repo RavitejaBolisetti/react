@@ -93,7 +93,7 @@ export const VehicleAllotmentMasterBase = (props) => {
 
     const [filterStringOTFSearch, setFilterStringOTFSearch] = useState('');
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
-    const [toggleButton, settoggleButton] = useState(VEHICLE_TYPE?.ALLOTED.key);
+    const [toggleButton, settoggleButton] = useState(VEHICLE_TYPE?.UNALLOTED.key);
     const [searchParamValue, setSearchParamValue] = useState('');
     const [confirmRequest, setConfirmRequest] = useState();
 
@@ -158,6 +158,23 @@ export const VehicleAllotmentMasterBase = (props) => {
             setSelectedOrderOTFDetails();
             allotmentSummaryDetails?.allotmentStatus === VEHICLE_TYPE.ALLOTED.key && setSelectedOrderOTFDetails(allotmentSummaryDetails?.vehicleOTFDetails);
             setButtonData(allotmentSummaryDetails?.allotmentStatus === VEHICLE_TYPE.ALLOTED.key ? { cancelBtn: true, unAllot: true } : { cancelBtn: true, allotBtn: true });
+            // switch (allotmentSummaryDetails?.allotmentStatus) {
+            //     case VEHICLE_TYPE.ALLOTED.key: {
+            //         setButtonData({ cancelBtn: true, unAllot: true });
+            //         break;
+            //     }
+            //     case VEHICLE_TYPE.UNALLOTED.key: {
+            //         setButtonData({ cancelBtn: true, allotBtn: true });
+            //         break;
+            //     }
+            //     case OTF_STATUS.INVOICED.key: {
+            //         setButtonData({ cancelBtn: true });
+            //         break;
+            //     }
+            //     default: {
+            //         setButtonData({ cancelBtn: true });
+            //     }
+            // }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [allotmentSummaryDetails]);
@@ -317,11 +334,11 @@ export const VehicleAllotmentMasterBase = (props) => {
             updatedStatus = VEHICLE_TYPE?.UNALLOTED.key;
         }
 
-        const { otfId, otfNumber } = selectedOTFDetails;
+        const { otfId, otfNumber, bookingNumber } = selectedOTFDetails;
         const { vehicleIdentificationNumber } = allotmentSummaryDetails;
 
         // let data = { ...allotmentSummaryDetails, vehicleOTFDetails: selectedOTFDetails, allotmentStatus: updatedStatus };
-        let data = { otfId, otfNumber, allotmentStatus: updatedStatus, vehicleIdentificationNumber };
+        let data = { otfId, otfNumber, bookingNumber, allotmentStatus: updatedStatus, vehicleIdentificationNumber };
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
@@ -362,7 +379,7 @@ export const VehicleAllotmentMasterBase = (props) => {
             setShowDataLoading(true);
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            fetchVehicleAllotmentSearchedList({ customURL: customURL + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
 
             setButtonData({ ...buttonData, formBtnActive: false });
 
@@ -408,7 +425,7 @@ export const VehicleAllotmentMasterBase = (props) => {
     const fixedWith = toggleButton === VEHICLE_TYPE.ALLOTED.key;
     const tableProps = {
         dynamicPagination,
-        filterString,   
+        filterString,
         setPage: setFilterString,
         isLoading: showDataLoading,
         tableColumn: tableColumn(handleButtonClick, toggleButton, fixedWith),

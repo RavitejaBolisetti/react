@@ -21,7 +21,7 @@ import * as routing from 'constants/routing';
 import { getMenuValue } from 'utils/menuKey';
 import { getHierarchyParents } from 'utils/getHierarchyParents';
 import { MenuConstant } from 'constants/MenuConstant';
-import { ListSkeleton } from '../Skeleton';
+import { InputSkeleton } from '../Skeleton';
 
 import styles from './LeftSideBar.module.scss';
 
@@ -216,7 +216,7 @@ const LeftSideBarMain = (props) => {
                             </Link>
                         </Col>
                         <Col xs={2} sm={2} md={0} lg={0} xl={0} className={styles.closeButton}>
-                            <RxCross2 onClick={onMenuCollapsed} />
+                            <RxCross2 onClick={onMenuCollapsed} data-testid="menuCollapsed" />
                         </Col>
                     </Row>
                     <Row gutter={20}>
@@ -262,12 +262,9 @@ const LeftSideBarMain = (props) => {
                         </Menu>
                     </>
                 ) : (
-                    <ListSkeleton border={'none'} height={30} count={5} color={'#e2dfdf'} />
+                    <InputSkeleton border={'none'} height={30} count={5} padding="10px 15px 15px" />
                 )}
-                <div
-                    className={styles.changeTheme}
-                    // onClick={handleThemeChange}
-                >
+                <div className={styles.changeTheme}>
                     <div className={styles.changeThemeBorder} style={{ padding: collapsed ? '9px 10px' : '5px' }}>
                         {collapsed ? (
                             theme === 'light' ? (

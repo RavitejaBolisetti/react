@@ -24,6 +24,7 @@ export default function VehicleInvoiceFilter(props) {
         optionType: typeData?.[PARAM_MASTER.INV_SER.id],
         setFilterString,
         allowClear: false,
+        defaultOption: 'customerName',
     };
 
     return (
@@ -73,7 +74,7 @@ export default function VehicleInvoiceFilter(props) {
                                                 {filter?.name}
                                                 {filter?.canRemove && (
                                                     <span>
-                                                        <RxCross2 onClick={() => removeFilter(filter?.key)} />
+                                                        <RxCross2 onClick={() => removeFilter(filter?.key)} data-testid="removeFilter" />
                                                     </span>
                                                 )}
                                             </div>

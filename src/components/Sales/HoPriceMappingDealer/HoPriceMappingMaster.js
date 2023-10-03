@@ -12,6 +12,7 @@ import { tableColumn } from './tableColumn';
 import HoPriceMappingFilter from './HoPriceMappingFilter';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 import { MODEL_TYPE } from 'constants/modules/hoPricingMapping/index';
+import { ATTRIBUTE_TYPE } from 'constants/modules/hoPricingMapping/index';
 
 import { AddEditForm } from './AddEditForm';
 
@@ -42,7 +43,7 @@ const mapStateToProps = (state) => {
                 City: { isFilteredListLoaded: isCityDataLoaded = false, isLoading: isCityLoading, filteredListData: cityData },
             },
             TermCondition: {
-                ProductHierarchyData: { isLoaded: isProductHierarchyDataLoaded = false, data: productHierarchyList },
+                ProductHierarchyData: { isLoaded: isProductHierarchyDataLoaded = false, isLoading: isProductLoading, data: productHierarchyList },
             },
             HoPriceMapping: {
                 HoPriceMappingSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString },
@@ -75,6 +76,7 @@ const mapStateToProps = (state) => {
         productHierarchyData,
         hoPriceDetailData,
         isHoPriceDetaiLoading,
+        isProductLoading,
     };
     return returnValue;
 };
@@ -114,8 +116,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const HoPriceMappingMasterBase = (props) => {
-    const { filterString, setFilterString, fetchList, saveData, listShowLoading, userId, fetchStateLovList, fetchDistrictLovList, fetchProductLovList, data, fetchDetail, listProductMainShowLoading, fetchProductList, listDetailShowLoading } = props;
-    const { typeData, listStateShowLoading, listDistrictShowLoading, listProductShowLoading, filteredStateData, districtData, productHierarchyList, productHierarchyData, totalRecords, showGlobalNotification, hoPriceDetailData, isHoPriceDetaiLoading } = props;
+    const { filterString, setFilterString, fetchList, saveData, listShowLoading, userId, fetchStateLovList, fetchDistrictLovList, fetchProductLovList, data, fetchDetail, listProductMainShowLoading, fetchProductList, listDetailShowLoading, isProductLoading } = props;
+    const { typeData, listStateShowLoading, listDistrictShowLoading, listProductShowLoading, filteredStateData, districtData, productHierarchyList, productHierarchyData, totalRecords, showGlobalNotification, hoPriceDetailData, isHoPriceDetaiLoading, isStateLoading } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [filteredCityData, setFilteredCityData] = useState([]);
     const [editProductData, setEditProductData] = useState([]);
@@ -130,7 +132,8 @@ export const HoPriceMappingMasterBase = (props) => {
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [pricingType, setPricingType] = useState(PRICING_TYPE?.RSO_PLANT.key);
-    const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
+    const [flatternData, setFlatternData] = useState();
+    const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const [modelDetails, setModelDetails] = useState([]);
     const dynamicPagination = true;
@@ -154,7 +157,6 @@ export const HoPriceMappingMasterBase = (props) => {
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
     const [formData, setFormData] = useState([]);
-    const [responseData, setResponseData] = useState([]);
 
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -310,6 +312,7 @@ export const HoPriceMappingMasterBase = (props) => {
         setShowDataLoading(false);
         setFilterString();
         advanceFilterForm.resetFields();
+        setFilteredCityData([]);
     };
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
@@ -338,10 +341,10 @@ export const HoPriceMappingMasterBase = (props) => {
     const onFinishSearch = (values) => {};
 
     const disableExceptModelGroup = (node) => {
-        if (node?.attributeType === MODEL_TYPE.MODAL_GROUP.key) {
+        if (node?.attributeType === MODEL_TYPE.MODAL_GROUP.key && (node?.parntProdctCode !== ATTRIBUTE_TYPE.SERVICE.key || node?.parntProdctCode === null)) {
             node[`disabled`] = false;
             let key = hoPriceDetailData?.modelDealerMapResponse?.find((e) => e?.modelGroupCode === node?.prodctCode);
-            if (key && Object.values(key) && key?.status === true) setCheckedKeys((prev) => [...prev, node?.prodctCode]);
+            if (key && Object.values(key) && key?.status === true) setCheckedKeys((prev) => [...prev, node?.id]);
             setModelGroupArr((prev) => [...prev, node]);
         } else {
             node[`disabled`] = true;
@@ -351,11 +354,12 @@ export const HoPriceMappingMasterBase = (props) => {
                 disableExceptModelGroup(child);
             });
         }
+
         return node;
     };
 
     useEffect(() => {
-        if (!formActionType?.addMode && hoPriceDetailData?.modelDealerMapResponse?.length && productHierarchyData?.length) {
+        if (!formActionType?.addMode && productHierarchyData?.length) {
             setCheckedKeys([]);
             setEditProductData(productHierarchyData?.map((i) => disableExceptModelGroup(i)));
         }
@@ -363,25 +367,48 @@ export const HoPriceMappingMasterBase = (props) => {
     }, [hoPriceDetailData, productHierarchyData, formActionType]);
 
     useEffect(() => {
-        if (formActionType?.viewMode && hoPriceDetailData?.modelDealerMapResponse?.length) setResponseData(hoPriceDetailData?.modelDealerMapResponse);
+        if (productHierarchyData?.length) {
+            const dataList = [];
+            const generateList = (data) => {
+                for (let i = 0; i < data?.length; i++) {
+                    const node = data[i];
+                    const { [fieldNames?.key]: key } = node;
+                    dataList.push({
+                        key,
+                        data: node,
+                    });
+                    if (node[fieldNames?.children]) {
+                        generateList(node[fieldNames?.children]);
+                    }
+                }
+                return dataList;
+            };
+
+            setFlatternData(generateList(productHierarchyData));
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [hoPriceDetailData, formActionType]);
+    }, [productHierarchyData]);
 
     const onFinish = (values) => {
         const { city, dealerBranch, dealerParent, productCode, state, ...rest } = values;
 
-        let arr = [];
+        let checkedKeysCd = [];
         for (let i = 0; i < checkedKeys?.length; i++) {
-            let ifFind = hoPriceDetailData?.modelDealerMapResponse?.findIndex((e) => e?.modelGroupCode === checkedKeys[i]);
+            checkedKeysCd.push(flatternData?.find((e) => e?.key === checkedKeys[i])?.data?.prodctCode);
+        }
+
+        let arr = [];
+        for (let i = 0; i < checkedKeysCd?.length; i++) {
+            let ifFind = hoPriceDetailData?.modelDealerMapResponse?.findIndex((e) => e?.modelGroupCode === checkedKeysCd[i]);
             if (ifFind > -1) {
-                arr.push(hoPriceDetailData?.modelDealerMapResponse[ifFind]);
+                arr.push({ ...hoPriceDetailData?.modelDealerMapResponse[ifFind], status: true });
             } else {
-                arr.push({ id: '', modelGroupCode: checkedKeys[i], status: true });
+                arr.push({ id: '', modelGroupCode: checkedKeysCd[i], status: true });
             }
         }
 
         for (let i = 0; i < hoPriceDetailData?.modelDealerMapResponse?.length; i++) {
-            let ifFind = checkedKeys?.findIndex((e) => e === hoPriceDetailData?.modelDealerMapResponse[i]?.modelGroupCode);
+            let ifFind = checkedKeysCd?.findIndex((e) => e === hoPriceDetailData?.modelDealerMapResponse[i]?.modelGroupCode);
             if (ifFind === -1) {
                 arr.push({ ...hoPriceDetailData?.modelDealerMapResponse[i], status: false });
             }
@@ -390,7 +417,7 @@ export const HoPriceMappingMasterBase = (props) => {
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage + 'Receipt No.:' + res?.data?.receiptsDetails?.receiptNumber });
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             setButtonData({ ...buttonData, formBtnActive: false });
             setIsFormVisible(false);
@@ -519,6 +546,9 @@ export const HoPriceMappingMasterBase = (props) => {
         setAdvanceSearchVisible,
         typeData,
         onFinishSearch,
+        setFilteredCityData,
+        isProductLoading,
+        isStateLoading,
     };
 
     const formProps = {
@@ -540,7 +570,6 @@ export const HoPriceMappingMasterBase = (props) => {
         editProductData,
         setViewProductData,
         hoPriceDetailData,
-        responseData,
         checkedKeys,
         setCheckedKeys,
         isHoPriceDetaiLoading,

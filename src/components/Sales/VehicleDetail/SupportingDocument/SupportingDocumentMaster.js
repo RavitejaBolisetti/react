@@ -152,6 +152,14 @@ const SupportingDocumentBase = (props) => {
     };
 
     const onFinish = () => {
+        if ((form.getFieldValue('documentTitle') || form.getFieldValue('documentTypeCd')) && payload?.length === 0) {
+            showGlobalNotification({ notificationType: 'warning', title: 'Warning', message: 'Please upload file to submit' });
+            return false;
+        }
+        if ((!form.getFieldValue('documentTitle') || !form.getFieldValue('documentTypeCd')) && payload?.length === 0) {
+            form.resetFields();
+        }
+
         const data = { vehicleIdentificationNumber: selectedRecordId, supportingDocuments: payload, technicalDocuments: null };
 
         if (fileList.length > 0) {

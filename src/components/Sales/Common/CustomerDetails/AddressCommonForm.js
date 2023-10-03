@@ -16,7 +16,7 @@ import { customSelectBox } from 'utils/customSelectBox';
 import { CustomerListMaster } from 'components/utils/CustomerListModal';
 
 export const AddressCommonForm = (props) => {
-    const { formType, formData, disabledProps, handleOnChange, fnSetData, typeData, sameAsBookingCustomer, viewOnly = false } = props;
+    const { formType, formData, disabledProps, handleOnChange, fnSetData, typeData, sameAsBookingCustomer, viewOnly = false, showAgeGroup = true, buttonData, setButtonData } = props;
     const canUpdate = ((formType === 'bookingCustomer' && !formData?.billingCustomer?.customerId) || formType === 'billingCustomer') && !viewOnly;
 
     const alternateNumberCheck = (value) => {
@@ -31,7 +31,7 @@ export const AddressCommonForm = (props) => {
             {formType === 'billingCustomer' && canUpdate && (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <CustomerListMaster disabled={sameAsBookingCustomer} fnSetData={fnSetData} defaultOption={'customerName'} />
+                        <CustomerListMaster disabled={sameAsBookingCustomer} fnSetData={fnSetData} defaultOption={'customerName'} buttonData={buttonData} setButtonData={setButtonData} />
                     </Col>
                 </Row>
             )}
@@ -39,7 +39,7 @@ export const AddressCommonForm = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item name={[formType, 'sameAsBookingCustomer']} label="" initialValue={formData?.sameAsBookingCustomer}>
-                            <Checkbox valuePropName="checked" style={{ margin: '5px 0px 15px 0px' }} onClick={handleOnChange} name="sameAsBookingCustomer">
+                            <Checkbox valuePropName="checked" onClick={handleOnChange} name="sameAsBookingCustomer">
                                 Same as Booking Customer
                             </Checkbox>
                         </Form.Item>
@@ -82,11 +82,13 @@ export const AddressCommonForm = (props) => {
                         {customSelectBox({ data: typeData['GENDER'], disabled: true })}
                     </Form.Item>
                 </Col>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'ageGroup']} label="Age Group" initialValue={formData?.ageGroup}>
-                        {customSelectBox({ data: typeData['AGE_RANGE'], disabled: true })}
-                    </Form.Item>
-                </Col>
+                {showAgeGroup && (
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item name={[formType, 'ageGroup']} label="Age Group" initialValue={formData?.ageGroup}>
+                            {customSelectBox({ data: typeData['AGE_RANGE'], disabled: true })}
+                        </Form.Item>
+                    </Col>
+                )}
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>

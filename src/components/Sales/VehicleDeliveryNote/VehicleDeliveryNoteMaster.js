@@ -17,19 +17,24 @@ import { ReportModal } from 'components/common/ReportModal/ReportModal';
 import { VehicleDeliveryNoteMainConatiner } from './VehicleDeliveryNoteMainConatiner';
 import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
-import { QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
+import { QUERY_BUTTONS_CONSTANTS, DELIVERY_NOTE_MESSAGE_CONSTANTS } from './QueryButtons';
 import { showGlobalNotification } from 'store/actions/notification';
 import { vehicleDeliveryNoteDataActions } from 'store/actions/data/vehicleDeliveryNote/vehicleDeliveryNote';
 import { cancelVehicleDeliveryNoteDataActions } from 'store/actions/data/vehicleDeliveryNote/cancelDeliveryNote';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { VEHICLE_DELIVERY_NOTE_SECTION } from 'constants/vehicleDeliveryNoteSection';
-import { BASE_URL_VEHICLE_DELIVERY_NOTE_GENERATE as customURL, BASE_URL_VEHICLE_DELIVERY_NOTE_CHALLAN_GENERATE as customChallanURL } from 'constants/routingApi';
+import { BASE_URL_VEHICLE_DELIVERY_NOTE_GENERATE as customURL, BASE_URL_VEHICLE_DELIVERY_NOTE_CHALLAN_GENERATE as customChallanURL, BASE_URL_VEHICE_DELIVERY_NOTE_MASTER_DATA, BASE_URL_VEHICE_DELIVERY_NOTE_CHALLAN_MASTER_DATA } from 'constants/routingApi';
 
 import { FilterIcon } from 'Icons';
 import VehicleDeliveryNoteFilter from './VehicleDeliveryNoteFilter';
 import { validateDeliveryNote } from 'components/Sales/VehicleDeliveryNote/utils/validateDeliveryNote';
 import { CancelDeliveryNote } from './CancelDeliveryNote';
+import { challanCancelVehicleDeliveryNoteDataActions } from 'store/actions/data/vehicleDeliveryNote/challanCancel';
+import { infoCancelVehicleDeliveryNoteDataActions } from 'store/actions/data/vehicleDeliveryNote/infoCancelDeliveryNote';
+import { infoChallanVehicleDeliveryNoteDataActions } from 'store/actions/data/vehicleDeliveryNote/infoChallanCancel';
+import { DeliverableChecklistMaindataActions } from 'store/actions/data/vehicleDeliveryNote';
+import { DELIVERY_TYPE } from 'constants/modules/vehicleDetailsNotes.js/deliveryType';
 
 const mapStateToProps = (state) => {
     const {
@@ -37,7 +42,9 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             VehicleDeliveryNote: {
-                VehicleDeliveryNoteSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString },
+                VehicleDeliveryNoteSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString, isDetailLoaded: isDeliveryDataLoaded = false, detailData: deliveryNoteMasterData = [] },
+                CancelInfoDeliveryNote: { isLoaded: isCancelInfoDataLoaded = false, isLoading: isCancelInfoLoading, data: cancelInfo = {} },
+                CancelInfoChallanDeliveryNote: { isLoaded: isCancelChallanInfoDataLoaded = false, isLoading: isCancelChallanInfoLoading, data: cancelChallanInfo = {} },
             },
         },
     } = state;
@@ -52,9 +59,19 @@ const mapStateToProps = (state) => {
         isSearchLoading,
         isSearchDataLoaded,
         filterString,
+
+        isCancelInfoDataLoaded,
+        isCancelInfoLoading,
+        cancelInfo,
+
+        isCancelChallanInfoDataLoaded,
+        isCancelChallanInfoLoading,
+        cancelChallanInfo,
+
+        deliveryNoteMasterData,
+        isDeliveryDataLoaded,
     };
     return returnValue;
-    // console.log('data?.invoiceId', data?.invoiceId);
 };
 
 const mapDispatchToProps = (dispatch) => ({
@@ -62,12 +79,25 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             fetchList: vehicleDeliveryNoteDataActions.fetchList,
+            fetchDeliveryNoteMasterData: vehicleDeliveryNoteDataActions.fetchDetail,
+            resetDeliveryNoteMasterData: vehicleDeliveryNoteDataActions.resetDetail,
             saveData: vehicleDeliveryNoteDataActions.saveData,
-
             listShowLoading: vehicleDeliveryNoteDataActions.listShowLoading,
             setFilterString: vehicleDeliveryNoteDataActions.setFilter,
+
             cancelDeliveryNote: cancelVehicleDeliveryNoteDataActions.saveData,
             cancelShowLoading: cancelVehicleDeliveryNoteDataActions.listShowLoading,
+            cancelChallan: challanCancelVehicleDeliveryNoteDataActions.saveData,
+
+            fetchCancelInfoList: infoCancelVehicleDeliveryNoteDataActions.fetchList,
+            resetInfoData: infoCancelVehicleDeliveryNoteDataActions.reset,
+            listCancelInfoShowLoading: infoCancelVehicleDeliveryNoteDataActions.listShowLoading,
+
+            fetchChallanCancelInfoList: infoChallanVehicleDeliveryNoteDataActions.fetchList,
+            listChallanCancelInfoShowLoading: infoChallanVehicleDeliveryNoteDataActions.listShowLoading,
+            resetChallanInfoData: infoChallanVehicleDeliveryNoteDataActions.reset,
+
+            resetCheckListData: DeliverableChecklistMaindataActions.reset,
 
             showGlobalNotification,
         },
@@ -78,15 +108,37 @@ const mapDispatchToProps = (dispatch) => ({
 export const VehicleDeliveryNoteMasterBase = (props) => {
     const { data, receiptDetailData, userId, resetData, fetchList, listShowLoading, saveData } = props;
     const { typeData, receiptType, partySegmentType, paymentModeType, documentType, moduleTitle, totalRecords, showGlobalNotification } = props;
-    const { filterString, setFilterString, deliveryStatusList, cancelDeliveryNote, cancelShowLoading } = props;
+    const { filterString, setFilterString, deliveryStatusList, cancelDeliveryNote, cancelShowLoading, cancelChallan, isCancelInfoDataLoaded, isCancelInfoLoading, cancelInfo, fetchCancelInfoList, listCancelInfoShowLoading, isCancelChallanInfoDataLoaded, isCancelChallanInfoLoading, cancelChallanInfo, fetchChallanCancelInfoList, listChallanCancelInfoShowLoading, resetChallanInfoData, resetInfoData, resetCheckListData } = props;
+    const { fetchDeliveryNoteMasterData, resetDeliveryNoteMasterData, deliveryNoteMasterData, isDeliveryDataLoaded } = props;
+
+    const defaultRequestPayload = {
+        deliveryNoteInvoiveDetails: {},
+        deliveryNoteAddOnDetails: {},
+        financeDetails: {},
+        insuranceDetails: {},
+        vehicleDeliveryCheckList: {},
+        vehicleInformationDeliveyNoteDto: {},
+        customerDetails: {},
+        vehicleDetails: {},
+    };
+    const defaultchallanRequestPayload = {
+        deliveryNoteInvoiveDetails: {},
+        insuranceDto: {},
+        deliveryNoteAddOnDetails: {},
+        vehicleDeliveryCheckList: {},
+        customerDetails: {},
+        vehicleDetails: {},
+    };
+
+    const [requestPayload, setRequestPayload] = useState({ ...defaultRequestPayload });
+    const [challanRequestPayload, setChallanRequestPayload] = useState({ ...defaultchallanRequestPayload });
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [deliveryStatus, setDeliveryStatus] = useState(QUERY_BUTTONS_CONSTANTS.PENDING.key);
 
     const [listFilterForm] = Form.useForm();
     const [cancelDeliveryNoteForm] = Form.useForm();
 
-    const [searchValue, setSearchValue] = useState();
-
+    const [searchValue, setSearchValue] = useState('');
     const [selectedOrder, setSelectedOrder] = useState();
     const [selectedOrderId, setSelectedOrderId] = useState();
     const [soldByDealer, setSoldByDealer] = useState();
@@ -99,7 +151,6 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     const [isLastSection, setLastSection] = useState(false);
     const [retailMonth, setRetailMonth] = useState(false);
     const [yesRetailMonth, setYesRetailMonth] = useState(false);
-    const [receipt, setReceipt] = useState('');
 
     const [apportionList, setApportionList] = useState([]);
 
@@ -113,17 +164,18 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [cancelDeliveryNoteVisible, setCancelDeliveryNoteVisible] = useState(false);
     const [previousSection, setpreviousSection] = useState(1);
-    const [statusBar, setStatusBar] = useState(false);
     const [actionButtonVisiblity, setActionButtonVisiblity] = useState({ canAdd: true, canView: false, canEdit: false });
-    const [requestPayload, setRequestPayload] = useState({ deliveryNoteInvoiveDetails: {}, financeDetails: {}, insuranceDto: {}, deliveryNoteAddOnDetails: {}, deliveryNoteCheckListDetails: [''] });
-    const [challanRequestPayload, setChallanRequestPayload] = useState({ deliveryNoteInvoiveDetails: {}, insuranceDto: {}, deliveryNoteAddOnDetails: {}, deliveryNoteCheckListDetails: [''] });
 
-    // console.log('final requestPayload', requestPayload);
+    const [toolTipContent, setToolTipContent] = useState();
+
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const [selectedOtfNumber, setSelectedOtfNumber] = useState();
     const [customerIdValue, setCustomerIdValue] = useState();
     const [additionalReportParams, setAdditionalReportParams] = useState();
     const [isReportVisible, setReportVisible] = useState();
+    const [chassisNoValue, setChassisNoValue] = useState();
+    const [engineChallanNumber, setEngineChallanNumber] = useState('');
+    const [deliveryType, setDeliveryType] = useState(DELIVERY_TYPE.NOTE.key);
 
     const dynamicPagination = true;
 
@@ -148,6 +200,15 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
 
     const [formData, setFormData] = useState([]);
 
+    const onDeliveryTabChange = (key) => {
+        setDeliveryType(key);
+        setPage((prev) => ({ ...prev, current: 1 }));
+        setFilterString({});
+        setFilterString((prev) => ({ ...prev, searchParam: '', current: 1 }));
+        advanceFilterForm.resetFields();
+        searchForm.resetFields();
+    };
+
     const onSuccessAction = () => {
         // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
@@ -159,6 +220,44 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         showGlobalNotification({ message });
         setShowDataLoading(false);
     };
+
+    useEffect(() => {
+        if (soldByDealer) {
+            if (userId && isCancelInfoDataLoaded && cancelInfo) {
+                setToolTipContent(
+                    <div>
+                        <p>
+                            Cancelled Date - <span>{cancelInfo?.cancelledDate ? dayjs(cancelInfo?.cancelledDate)?.format('DD MMM YYYY') : 'Na'}</span>
+                        </p>
+                        <p>
+                            Cancelled By - <span>{cancelInfo?.cancelledBy ?? 'Na'}</span>
+                        </p>
+                        <p>
+                            Remarks for Cancellation - <span>{cancelInfo?.remarks ?? 'Na'}</span>
+                        </p>
+                    </div>
+                );
+            }
+        } else {
+            if (userId && isCancelChallanInfoDataLoaded && cancelChallanInfo) {
+                setToolTipContent(
+                    <div>
+                        <p>
+                            Cancelled Date - <span>{dayjs(cancelChallanInfo?.cancelledDate)?.format('DD MMM YYYY') ?? 'Na'}</span>
+                        </p>
+                        <p>
+                            Cancelled By - <span>{cancelChallanInfo?.cancelledBy ?? 'Na'}</span>
+                        </p>
+                        <p>
+                            Remarks for Cancellation - <span>{cancelChallanInfo?.remarks ?? 'Na'}</span>
+                        </p>
+                    </div>
+                );
+            }
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [cancelInfo, isCancelInfoDataLoaded, isCancelChallanInfoDataLoaded, cancelChallanInfo, userId]);
 
     const extraParams = useMemo(() => {
         return [
@@ -218,44 +317,53 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
                 filter: false,
             },
             {
+                key: 'deliveryNoteType',
+                title: 'Delivery Status',
+                value: deliveryType,
+                canRemove: false,
+                filter: false,
+            },
+            {
                 key: 'pageNumber',
                 title: 'Value',
-                value: filterString?.current,
+                value: filterString?.current || page?.current,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: filterString?.pageSize,
+                value: filterString?.pageSize || page?.pageSize,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'sortBy',
                 title: 'Sort By',
-                value: filterString?.sortBy,
+                value: page?.sortBy,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'sortIn',
                 title: 'Sort Type',
-                value: filterString?.sortType,
+                value: page?.sortType,
                 canRemove: true,
                 filter: false,
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [deliveryStatus, filterString]);
+    }, [deliveryStatus, filterString, deliveryType, page]);
 
-    // useEffect(() => {
-    //     return () => {
-    //         resetData();
-    //         setFilterString();
-    //     };
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, []);
+    useEffect(() => {
+        if (deliveryNoteMasterData && typeof deliveryNoteMasterData === 'object' && Object?.keys(deliveryNoteMasterData)?.length && isDeliveryDataLoaded) {
+            deliveryType === DELIVERY_TYPE.NOTE.key ? setRequestPayload((prev) => ({ ...prev, ...deliveryNoteMasterData })) : setChallanRequestPayload((prev) => ({ ...prev, ...deliveryNoteMasterData }));
+        } else {
+            setRequestPayload({ ...defaultRequestPayload });
+            setChallanRequestPayload({ ...defaultchallanRequestPayload });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [deliveryNoteMasterData, isDeliveryDataLoaded]);
 
     useEffect(() => {
         if (userId) {
@@ -263,7 +371,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, deliveryStatus, filterString]);
+    }, [userId, deliveryStatus, filterString, deliveryType, page]);
 
     useEffect(() => {
         const defaultSection = VEHICLE_DELIVERY_NOTE_SECTION.INVOICE_DETAILS.id;
@@ -272,6 +380,45 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         setSection(defaultSection);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    useEffect(() => {
+        if (userId && selectedOrder) {
+            if (soldByDealer) {
+                const cancelInfoExtraParams = [
+                    {
+                        key: 'invoiceNumber',
+                        title: 'invoiceNumber',
+                        value: selectedOrder?.invoiceId,
+                        name: 'Invoice Number',
+                    },
+                    {
+                        key: 'deliveryNoteNumber',
+                        title: 'deliveryNoteNumber',
+                        value: selectedOrder?.vehicleDeliveryNote,
+                        name: 'Delivery Note Number',
+                    },
+                ];
+                fetchCancelInfoList({ setIsLoading: listCancelInfoShowLoading, userId, extraParams: cancelInfoExtraParams });
+            } else {
+                const cancelChallanInfoExtraParams = [
+                    {
+                        key: 'invoiceNumber',
+                        title: 'invoiceNumber',
+                        value: selectedOrder?.invoiceId,
+                        name: 'Invoice Number',
+                    },
+                    {
+                        key: 'deliveryNoteId',
+                        title: 'deliveryNoteId',
+                        value: selectedOrder?.vehicleDeliveryNote,
+                        name: 'Delivery Note Number',
+                    },
+                ];
+                fetchChallanCancelInfoList({ setIsLoading: listChallanCancelInfoShowLoading, userId, extraParams: cancelChallanInfoExtraParams });
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedOrder, formActionType?.viewMode, soldByDealer]);
 
     useEffect(() => {
         if (currentSection && sectionName) {
@@ -311,11 +458,10 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
 
     const handlePrintDownload = (record) => {
         setReportVisible(true);
-
         setAdditionalReportParams([
             {
                 key: 'sa_od_invoice_hdr_id',
-                value: record?.id,
+                value: selectedOrder?.vehicleDeliveryNote,
             },
         ]);
     };
@@ -326,7 +472,41 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
 
     const handleSearch = (value) => {
         setFilterString({ ...filterString, searchParam: value });
-        // setSearchValue(value);
+    };
+    const handleDeliveryNoteDataCall = (invoicehdrId = '', deliveryHdrId = '', buttonAction = ADD_ACTION, soldByDealer = true) => {
+        switch (buttonAction) {
+            case ADD_ACTION: {
+                if (!invoicehdrId) {
+                    showGlobalNotification({ ...DELIVERY_NOTE_MESSAGE_CONSTANTS?.DELIVERY_NOTE_DETAILS_NOT_PRESENT });
+                    return;
+                }
+                break;
+            }
+            default: {
+                if (!invoicehdrId || !deliveryHdrId) {
+                    showGlobalNotification({ ...DELIVERY_NOTE_MESSAGE_CONSTANTS?.DELIVERY_NOTE_DETAILS_NOT_PRESENT });
+                    return;
+                }
+                break;
+            }
+        }
+        let deliveryURL = BASE_URL_VEHICE_DELIVERY_NOTE_MASTER_DATA;
+        if (!soldByDealer) {
+            deliveryURL = BASE_URL_VEHICE_DELIVERY_NOTE_CHALLAN_MASTER_DATA;
+        }
+        const deliveryParams = [
+            {
+                key: 'invoiceHdrId',
+                value: invoicehdrId,
+                name: 'Invoice id',
+            },
+            {
+                key: 'deliverynoteId',
+                value: deliveryHdrId,
+                name: 'Delivery note id',
+            },
+        ];
+        fetchDeliveryNoteMasterData({ customURL: deliveryURL, setIsLoading: listShowLoading, userId, onSuccessAction, extraParams: deliveryParams, onErrorAction });
     };
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
@@ -337,6 +517,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
                 defaultSection && setCurrentSection(defaultSection);
                 invoiceDetailForm.resetFields();
                 setpreviousSection(1);
+                record?.vehicleSoldByDealer && handleDeliveryNoteDataCall(record?.invoicehdrId, '', ADD_ACTION, record?.vehicleSoldByDealer);
                 record && setSelectedOrderId(record?.invoiceId);
                 record && setSelectedOtfNumber(record?.otfNumber);
                 record && setSelectedCustomerId(record?.customerId);
@@ -345,6 +526,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
                 break;
             case EDIT_ACTION:
                 setSelectedOrder(record);
+                handleDeliveryNoteDataCall(record?.invoicehdrId, record?.deliveryHdrId, EDIT_ACTION, record?.vehicleSoldByDealer);
                 record && setSelectedOrderId(record?.invoiceId);
                 record && setSelectedOtfNumber(record?.otfNumber);
                 openDefaultSection && setCurrentSection(defaultSection);
@@ -352,6 +534,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
                 break;
             case VIEW_ACTION:
                 setSelectedOrder(record);
+                handleDeliveryNoteDataCall(record?.invoicehdrId, record?.deliveryHdrId, VIEW_ACTION, record?.vehicleSoldByDealer);
                 record && setSoldByDealer(record?.vehicleSoldByDealer);
                 record && setSelectedOrderId(record?.invoiceId);
                 record && setSelectedOtfNumber(record?.otfNumber);
@@ -398,20 +581,19 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
 
     const handleResetFilter = (e) => {
         setShowDataLoading(false);
-        setFilterString();
+        setFilterString({});
         advanceFilterForm.resetFields();
     };
 
     const onFinishChallan = () => {
-        const data = { ...requestPayload, invoiceNumber: selectedOrderId, customerId: customerIdValue };
-
+        const data = { ...requestPayload, ...requestPayload?.deliveryNoteInvoiveDetails, invoiceNumber: selectedOrderId, customerId: customerIdValue };
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage + 'Delivery Note no.:' + res?.data?.deliveryNoteDetails?.vehicleDeliveryNote });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             setButtonData({ ...buttonData, formBtnActive: false });
-            setIsFormVisible(false);
+            section && setCurrentSection(VEHICLE_DELIVERY_NOTE_SECTION.THANK_YOU_PAGE.id);
+            setSelectedOrder((prev) => ({ ...prev, responseMessage: res?.responseMessage }));
         };
         const onError = (message) => {
             showGlobalNotification({ message });
@@ -429,15 +611,24 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     };
 
     const onFinish = () => {
-        const data = { ...requestPayload, invoiceNumber: selectedOrderId };
-
+        const { insuranceDetails: insuranceDto, ...rest } = requestPayload;
+        let data;
+        if (soldByDealer) {
+            data = { ...rest, insuranceDto, vehicleDeliveryChecklist: { ...rest?.vehicleDeliveryCheckList }, invoiceNumber: selectedOrder?.invoicehdrId };
+        } else {
+            data = { ...rest, insuranceDto, vehicleDeliveryChecklist: { ...rest?.vehicleDeliveryCheckList }, invoiceNumber: selectedOrder?.invoicehdrId, customerId: customerIdValue };
+            delete data?.vehicleDeliveryCheckList;
+            delete data?.deliveryNoteAddOnDetails;
+            delete data?.financeDetails;
+            delete data?.vehicleInformationDeliveyNoteDto;
+        }
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             setButtonData({ ...buttonData, formBtnActive: false });
-            setIsFormVisible(false);
+            setSelectedOrder((prev) => ({ ...prev, responseMessage: res?.responseMessage }));
+            section && setCurrentSection(VEHICLE_DELIVERY_NOTE_SECTION.THANK_YOU_PAGE.id);
         };
         const onError = (message) => {
             showGlobalNotification({ message });
@@ -449,7 +640,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
             userId,
             onError,
             onSuccess,
-            customURL,
+            customURL: soldByDealer ? customURL : customChallanURL,
         };
         saveData(requestData);
     };
@@ -463,7 +654,9 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     };
 
     const onCloseAction = () => {
-        // resetData();
+        resetDeliveryNoteMasterData();
+        resetChallanInfoData();
+        resetInfoData();
         form.resetFields();
         form.setFieldsValue();
         setSelectedOrderId();
@@ -473,7 +666,6 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         setSoldByDealer();
 
         invoiceDetailForm.resetFields();
-        // setReceipt();
         advanceFilterForm.resetFields();
         advanceFilterForm.setFieldsValue();
         setAdvanceSearchVisible(false);
@@ -482,12 +674,14 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         setIsFormVisible(false);
         setCancelDeliveryNoteVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
+        resetCheckListData();
     };
 
     const tableProps = {
         dynamicPagination,
         totalRecords,
         setPage,
+        page,
         tableColumn: tableColumn({ handleButtonClick, actionButtonVisiblity }),
         tableData: data,
         showAddButton: false,
@@ -519,18 +713,19 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         const isSameMonth = dayjs(selectedOrder?.invoiceDate)?.isSame(selectedOrder?.deliveryNoteDate, 'month');
         setRetailMonth(isSameMonth);
         setYesRetailMonth(true);
+        cancelDeliveryNoteForm.resetFields();
     };
-
-    // const handleCloseReceipt = () => {
-    //     setCancelDeliveryNoteVisible(false);
-    //     cancelDeliveryNoteForm.resetFields();
-    // };
 
     const onCancelFormFinish = (values) => {
         cancelDeliveryNoteForm
             .validateFields()
             .then((values) => {
-                const data = { ...values, deliveryNoteNumber: selectedOrder?.vehicleDeliveryNote, status: selectedOrder?.deliveryNoteStatus, cancellationReason: cancelDeliveryNoteForm.getFieldValue('cancellationReason') || '' };
+                let data;
+                if (soldByDealer) {
+                    data = { ...values, invoiceHdrId: selectedOrder?.invoicehdrId, deliveryNoteId: selectedOrder?.deliveryHdrId, status: selectedOrder?.deliveryNoteStatus, cancellationReason: cancelDeliveryNoteForm.getFieldValue('cancellationReason') || '' };
+                } else {
+                    data = { ...values, oemNumber: selectedOrder?.invoiceId, status: selectedOrder?.deliveryNoteStatus, cancellationReason: cancelDeliveryNoteForm.getFieldValue('cancellationReason') || '' };
+                }
                 const onSuccess = (res) => {
                     setShowDataLoading(true);
                     showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
@@ -538,6 +733,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
                     setButtonData({ ...buttonData, formBtnActive: false });
                     setIsFormVisible(false);
                     setCancelDeliveryNoteVisible(false);
+                    cancelDeliveryNoteForm.resetFields();
                 };
                 const onError = (message) => {
                     showGlobalNotification({ message });
@@ -550,7 +746,11 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
                     onError,
                     onSuccess,
                 };
-                cancelDeliveryNote(requestData);
+                if (!soldByDealer) {
+                    cancelChallan(requestData);
+                } else {
+                    cancelDeliveryNote(requestData);
+                }
             })
             .catch((err) => {
                 return;
@@ -584,6 +784,8 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         typeData,
         searchForm,
         onFinishSearch,
+        onDeliveryTabChange,
+        deliveryType,
     };
 
     const advanceFilterProps = {
@@ -633,18 +835,26 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         setYesRetailMonth,
         typeData,
     };
+    const payloadRequestProps = {
+        requestPayload,
+        setRequestPayload,
+        challanRequestPayload,
+        setChallanRequestPayload,
+        deliveryType,
+    };
 
     const containerProps = {
+        ...payloadRequestProps,
         record: selectedOrder,
         form,
         invoiceDetailForm,
         formActionType,
         setFormActionType,
-        deliveryNoteOnFinish: soldByDealer ? onFinish : onFinishChallan,
+        deliveryNoteOnFinish: onFinish,
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(moduleTitle),
+        titleOverride: drawerTitle.concat(soldByDealer ? moduleTitle : 'Challan'),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,
@@ -657,12 +867,6 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         setpreviousSection,
         apportionList,
         setApportionList,
-        requestPayload,
-        setRequestPayload,
-        challanRequestPayload,
-        setChallanRequestPayload,
-        receipt,
-        setReceipt,
         deliveryStatus,
         selectedOtfNumber,
         setSelectedOtfNumber,
@@ -691,10 +895,15 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         paymentModeType,
         documentType,
         onCancelDeliveryNote,
-        saveButtonName: isLastSection ? 'Submit' : 'Save & Next',
+        saveButtonName: isLastSection ? 'Submit' : 'Continue',
         setLastSection,
         customerIdValue,
         setCustomerIdValue,
+        chassisNoValue,
+        setChassisNoValue,
+        engineChallanNumber,
+        setEngineChallanNumber,
+        toolTipContent,
     };
 
     const reportDetail = EMBEDDED_REPORTS?.DELIVERY_NOTE_DOCUMENT;

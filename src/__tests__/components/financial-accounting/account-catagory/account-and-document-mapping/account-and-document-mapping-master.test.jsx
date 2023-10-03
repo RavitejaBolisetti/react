@@ -20,52 +20,26 @@ const FormWrapper = (props) =>{
     return <AccountAndDocumentMappingMaster accDocMapForm={myMoock} {...props} />
 }
 
-const EditFormWrapper = (props) =>{
-    const [editForm] = Form.useForm();
-    const myMoock = {
-        ...editForm,
-        setFieldsValue:jest.fn(),
-    }
-    return <AccountAndDocumentMappingMaster editForm={myMoock} {...props} />
-}
-
 afterEach(() => {
     jest.restoreAllMocks();
 });
 
 describe('Render AccountAndDocumentMappingMaster component', () => {
-    const formProductAttributeProps = {
-        formActionType: {addMode: false, editMode: true, viewMode: false},
-        isVisible: true,
-        viewMode: false,
-        disableSaveButton: false,
-        buttonData: {cancelBtn: true, formBtnActive: false, editBtn: false, saveBtn: true, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false,},
-    }
-
-    const cardAttributeProps = {
-        buttonData: {cancelBtn: true, formBtnActive: false, editBtn: false, saveBtn: true, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false}, //
-        disableSaveButton: false, // 
-        formActionType: {addMode: false, editMode: true, viewMode: false}, // 
-        viewMode:false, // 
-        isVisible:true, // 
-        formEdit: false, // 
-        handleSelectTreeClick:jest.fn()
-    }
 
     const accountDocumentMaps = [{
         internalId:'123', accountDocumentMapId:'45', applicationId:'23',applicationMenu:'op', documentTypeCode:'xy00',documentDescription:'desc', financialAccountHeadCode:'ac00', financialAccountHead:'fgh', selectedTreeSelectKey:'ac', applicationName:'tst'
     }]
 
     it('pass formProductAttributeProps and formEdit = false', () => {
-        customRender(<FormWrapper mainFomEdit={false}  {...formProductAttributeProps} formEdit={false}  />);
+        customRender(<AccountAndDocumentMappingMaster isVisible={true} formEdit={false}  />);
     });
 
     it('pass formProductAttributeProps and formEdit = true', () => {
-        customRender(<FormWrapper mainFomEdit={false}  {...formProductAttributeProps} formEdit={true}  />);
+        customRender(<AccountAndDocumentMappingMaster isVisible={true} formEdit={true} />);
     });
 
     it('should render docTypeHeadMappingList', () => {
-        customRender(<FormWrapper accountDocumentMaps={accountDocumentMaps}/>);
+        customRender(<FormWrapper accountDocumentMaps={accountDocumentMaps} />);
     });
     
 });

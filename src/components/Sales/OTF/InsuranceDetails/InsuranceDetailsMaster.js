@@ -136,7 +136,7 @@ const InsuranceDetailsMasterBase = (props) => {
             };
 
             const onError = (message) => {
-                // showGlobalNotification({ message });
+                showGlobalNotification({ message });
             };
 
             const requestData = {

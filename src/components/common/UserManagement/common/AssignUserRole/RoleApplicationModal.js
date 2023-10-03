@@ -14,17 +14,14 @@ import { ModalButtons } from 'components/common/Button';
 import { customSelectBox } from 'utils/customSelectBox';
 
 import { ListSkeleton } from 'components/common/Skeleton';
-import { USER_TYPE_USER } from 'constants/modules/UserManagement/userType';
+import styles from 'assets/sass/app.module.scss';
 
 const RoleApplicationModalrMain = (props) => {
     const { form, formActionType, handleFormFieldChange, onFinishFailed, isLoading, roleListdata, handleSaveUserRoleAppliactions, handleCancelModal, handleSelectRole } = props;
-    const { dlrAppList, mnmAppList, userType, userRoleDataList, disableMdlSaveBtn, setDisableMdlSaveBtn, record } = props;
+    const { dlrAppList, mnmAppList, selectedRoleId, userRoleDataList, disableMdlSaveBtn, setDisableMdlSaveBtn, record } = props;
 
     useEffect(() => {
-        let defaultRoleID = userType === USER_TYPE_USER?.MANUFACTURER?.id ? mnmAppList?.role?.roleId : dlrAppList?.role?.roleId;
-        form.setFieldsValue({ roleId: defaultRoleID });
-        // setDisableSelect(defaultRoleID ? true : false);
-
+        selectedRoleId || record?.roleId ? form.setFieldsValue({ roleId: selectedRoleId || record?.roleId }) : form.setFieldsValue({ roleId: '' });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [mnmAppList, dlrAppList]);
 
@@ -39,7 +36,6 @@ const RoleApplicationModalrMain = (props) => {
         onClickAction: handleSaveUserRoleAppliactions,
         handleResetFilter: handleCancelModal,
     };
-
     return (
         <>
             <Row gutter={20}>
@@ -55,7 +51,13 @@ const RoleApplicationModalrMain = (props) => {
                     </Form>
                 </Col>
             </Row>
-            {isLoading ? <ListSkeleton count={4} height={30} /> : <ApplicationTree {...props} setDisableMdlSaveBtn={setDisableMdlSaveBtn} />}
+            {isLoading ? (
+                <div className={styles.marB20}>
+                    <ListSkeleton count={4} height={30} />
+                </div>
+            ) : (
+                <ApplicationTree {...props} setDisableMdlSaveBtn={setDisableMdlSaveBtn} />
+            )}
 
             <ModalButtons {...modalBtnProps} />
         </>

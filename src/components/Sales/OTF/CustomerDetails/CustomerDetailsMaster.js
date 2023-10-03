@@ -91,6 +91,7 @@ export const CustomerDetailsMain = (props) => {
     useEffect(() => {
         if (userId && customerFormData) {
             setFormData(customerFormData);
+            setButtonData({ ...buttonData, formBtnActive: false });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, customerFormData]);
@@ -128,17 +129,24 @@ export const CustomerDetailsMain = (props) => {
     }, [userId, selectedOrderId]);
 
     const onFinish = (values) => {
-        if (!values?.bookingCustomer?.customerId) {
+        let data;
+        if (!values?.bookingCustomer?.customerId && !formData?.bookingCustomer?.customerId) {
             showGlobalNotification({ message: 'Please provide booking customer' });
             setActiveKey([...activeKey, !values?.bookingCustomer?.customerId ? 1 : '']);
             return false;
-        } else if (!values?.billingCustomer?.customerId) {
+        } else if (!values?.billingCustomer?.customerId && !formData?.billingCustomer?.customerId) {
             showGlobalNotification({ message: 'Please provide billing customer' });
             setActiveKey([...activeKey, !values?.billingCustomer?.customerId ? 2 : '']);
             return false;
         } else {
             form.getFieldsValue();
-            const data = { bookingCustomer: { ...values?.bookingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BOOKING', id: customerFormData?.bookingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer }, billingCustomer: { ...values?.billingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer } };
+            if (!values?.bookingCustomer?.customerId && formData?.bookingCustomer?.customerId) {
+                data = { bookingCustomer: { ...formData?.bookingCustomer, otfNumber: selectedOrderId }, billingCustomer: { ...values?.billingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer } };
+            } else if (!values?.billingCustomer?.customerId && formData?.billingCustomer?.customerId) {
+                data = { bookingCustomer: { ...values?.bookingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BOOKING', id: customerFormData?.bookingCustomer?.id }, billingCustomer: { ...formData?.billingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: formData?.billingCustomer?.sameAsBookingCustomer } };
+            } else {
+                data = { bookingCustomer: { ...values?.bookingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BOOKING', id: customerFormData?.bookingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer }, billingCustomer: { ...values?.billingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer } };
+            }
 
             if (onFinishCustom) {
                 onFinishCustom({ key: formKey, values: data });
@@ -152,9 +160,9 @@ export const CustomerDetailsMain = (props) => {
                 };
 
                 const onError = (message) => {
-                    // showGlobalNotification({ message });
+                    showGlobalNotification({ message });
                 };
-
+              
                 const requestData = {
                     data: data,
                     method: 'put',
@@ -185,6 +193,7 @@ export const CustomerDetailsMain = (props) => {
                 userId,
                 onSuccessAction: (response) => {
                     setFormData({ ...formData, [type]: { ...response?.data, birthDate: response?.data?.dateOfBirth } });
+                    setButtonData({ ...buttonData, formBtnActive: true });
                 },
                 onErrorAction,
             });

@@ -15,7 +15,7 @@ export const ViewDetail = ({ formData, styles, parameterType }) => {
     };
     return (
         <>
-            <div className={styles.viewContainer}>
+            <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
                     <Descriptions.Item label="PIN Code">{formData?.pinCode}</Descriptions.Item>
                     <Descriptions.Item label="PIN Category">{formData?.pinCategoryName || 'NA'}</Descriptions.Item>

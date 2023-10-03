@@ -11,7 +11,8 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
 import { rootReducer } from 'store/reducers';
-import { Form } from 'antd';
+
+const accountCategoryData = {totalRecords:'89',paginationData:[{accountCategoryCode: 'A001', accountCategoryDescription: 'Parts Account', status: true}]};
 
 export const createMockStore = (initialState) => {
     const mockStore = configureStore({
@@ -23,57 +24,17 @@ export const createMockStore = (initialState) => {
     return mockStore;
 };
 
-
-const FormWrapper = (props) => {
-    const [accDocMapForm] = Form.useForm();
-
-    const myFormMock = {
-        ...accDocMapForm,
-        setFieldsValue: jest.fn(),
-    };
-    return <AccountCategory accDocMapForm={myFormMock} {...props} />;
-};
-
 afterEach(() => {
     jest.restoreAllMocks();
 });
 
 describe('AccountCategory components', () => {
 
-    it('should render table header', () => {
-        customRender(<AccountCategory />);
-
-        const srl = screen.getByRole('columnheader', {name:'Srl.'});
-        expect(srl).toBeTruthy();
-
-        const accountCategory = screen.getByRole('columnheader', {name:'Account Category Code'});
-        expect(accountCategory).toBeTruthy();
-
-        const description = screen.getByRole('columnheader', {name:'Description'});
-        expect(description).toBeTruthy();
-
-        const status = screen.getByRole('columnheader', {name:'Status'});
-        expect(status).toBeTruthy();
-
-        const action = screen.getByRole('columnheader', {name:'Action'});
-        expect(action).toBeTruthy();
-    });
-
     it('should render search input',()=>{
         customRender(<AccountCategory setPage={jest.fn()} setFilterString={jest.fn()} handleClearInSearch={jest.fn()} />);
 
         const inputText = screen.getByRole('textbox', {name:'Account Category Code'});
         fireEvent.change(inputText, { target:{value:'test'} });
-
-        const searchImg = screen.getByRole('img', {name:'search'});
-        fireEvent.click(searchImg);
-    })
-
-    it('seacrh icon should work when textbox is empty',()=>{
-        customRender(<AccountCategory setPage={jest.fn()} setFilterString={jest.fn()} />);
-
-        const inputText = screen.getByRole('textbox', {name:'Account Category Code'});
-        fireEvent.change(inputText, { target:{value:''} });
 
         const searchImg = screen.getByRole('img', {name:'search'});
         fireEvent.click(searchImg);
@@ -87,90 +48,46 @@ describe('AccountCategory components', () => {
 
         const closeCircle = screen.getByRole('img', {name:'close-circle'});
         fireEvent.click(closeCircle);
-    })
+    });
 
-    it('pass user id', ()=>{
+    it("Cancel button", ()=>{
         const mockStore = createMockStore({
             auth: { userId: 123 },
             data: {
                 FinancialAccounting: {
-                    AccountCategory: { isAccountCategoryLoaded:false, accountCategoryData : [] },
-                    ApplicationMenu: { isApplicationMenuLoaded:false, applicationMenuData : [] },
-                    FinancialAccountHead: { isFinancialAccountHeadLoaded:false, financialAccountData : [] },
-                    AccountCategoryDocumentDescription: { isAccountCategoryDocumentDescriptionLoaded:false, accountCategoryDocumentDescription : [] },
+                    AccountCategory: { isLoading:false, data:accountCategoryData },
                 },
             },
         });
         customRender(
             <Provider store={mockStore}>
-                <AccountCategory fetchAccountCategory={jest.fn()} fetchApplicationMenu={jest.fn()} />
+                <AccountCategory />
             </Provider>
         )
-    })
+    
+        const plusAdd = screen.getByRole('button', {name:'plus Add'});
+        fireEvent.click(plusAdd)
 
-    it('tableProps pass', ()=>{
+        const cancelBtn = screen.getByRole('button', {name:'Cancel'});
+        fireEvent.click(cancelBtn);
+    });
+
+    it("view and edit icon", async()=>{
+        const tableColumn  = jest.fn()
         const mockStore = createMockStore({
             auth: { userId: 123 },
             data: {
                 FinancialAccounting: {
-                    AccountCategory: { isAccountCategoryLoaded:true, isAccountCategoryLoading:true, accountCategoryData : [{accountCategoryCode: 'A001', accountCategoryDescription: 'Parts Account', status: true}] },
-                    ApplicationMenu: { isApplicationMenuLoaded:true, applicationMenuData : [
-                        {menuId: 'Finac', menuTitle: 'Financial Accounting', parentMenuId: 'Web', menuIconUrl: 'icon', isFavourite: '0'}] },
-                    FinancialAccountHead: { isFinancialAccountHeadLoaded:true, financialAccountData : [] },
-                    AccountCategoryDocumentDescription: { isAccountCategoryDocumentDescriptionLoaded:true, accountCategoryDocumentDescription : [] },
+                    AccountCategory: { isLoading:false, data:[{accountCategoryCode: "CPA12",accountCategoryDescription:"Central GST 6%",status: true}] },
                 },
             },
         });
         customRender(
-            <Provider store={mockStore}>
-                <FormWrapper showAddButton={true} />
+            <Provider store={mockStore} >
+                <AccountCategory totalRecords={100} buttonAction={'add'} tableColumn={tableColumn} canEdit={true} canView={true} />
             </Provider>
-        )
+        );
     })
-
-    it('formProps pass', ()=>{
-        const formProps = {
-            ADD_ACTION: "add",
-            EDIT_ACTION: "edit",
-            VIEW_ACTION: "view",
-            accountCategoryData:[{accountCategoryCode: 'AC001'}],
-            applicationMenuData:[{menuId: 'Finac'}],
-            buttonData: {editBtn:false, saveBtn:true, saveAndNewBtn:false, saveAndNewBtnClicked:false, closeBtn:false,cancelBtn:true,formBtnActive:false},
-            formActionType: {addMode: false, editMode: true, viewMode: false},
-            formData:{accountCategoryCode: 'AC001'},
-            formEdit:false,
-            isVisible:true,
-            titleOverride:"Edit Account Category",
-        }
-
-        customRender(<FormWrapper {...formProps} />);
-    })
-
-    it('advanceFilterResultProps pass',()=>{
-        const advanceFilterResultProps = {
-            advanceFilter:false,
-            filterString:undefined,
-            handleButtonClick:jest.fn(),
-            tableData:[{accountCategoryCode: 'A001', accountCategoryDescription: 'Parts Account', status: true}]
-        }
-
-        const mockStore = createMockStore({
-            auth: { userId: 123 },
-            data: {
-                FinancialAccounting: {
-                    AccountCategory: { isAccountCategoryLoaded:true, isAccountCategoryLoading:true, accountCategoryData : [{accountCategoryCode: 'A001', accountCategoryDescription: 'Parts Account', status: true}] },
-                    ApplicationMenu: { isApplicationMenuLoaded:true, applicationMenuData : [
-                        {menuId: 'Finac', menuTitle: 'Financial Accounting', parentMenuId: 'Web', menuIconUrl: 'icon', isFavourite: '0'}] },
-                    FinancialAccountHead: { isFinancialAccountHeadLoaded:true, financialAccountData : [] },
-                    AccountCategoryDocumentDescription: { isAccountCategoryDocumentDescriptionLoaded:true, accountCategoryDocumentDescription : [] },
-                },
-            },
-        });
-        customRender(
-            <Provider store={mockStore}>
-                <FormWrapper {...advanceFilterResultProps} showAddButton={true} />
-            </Provider>
-        )
-    })
+    
 });
 

@@ -20,7 +20,7 @@ import { NoDataFound } from 'utils/noDataFound';
 const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
-    const { styles, bindCodeValue, bindStatus, formData, collapseProps, tooltTipText, isLoading, optionsServiceModified, formActionType, modelData, variantData, modelFamilyData } = props;
+    const { styles, bindCodeValue, bindStatus, formData, collapseProps, tooltTipText, isLoading, optionalServices, formActionType, modelData, variantData, modelFamilyData } = props;
     const [openAccordian, setOpenAccordian] = useState([]);
     const [InnerCollapse, setInnerCollapse] = useState([]);
 
@@ -55,7 +55,9 @@ const ViewDetailMain = (props) => {
                                 <InputSkeleton width={'100px'} height={20} theme={'card'} />
                             ) : (
                                 <div className={styles?.tooltipAlign}>
-                                    {productAttributeDetail?.model}
+                                    <div title={productAttributeDetail?.model} className={`${styles.fieldcontentData} ${styles.txtEllipsis}`}>
+                                        {productAttributeDetail?.model}
+                                    </div>
                                     {!productAttributeDetail?.model ? 'NA' : addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles?.toolTip)(<AiOutlineInfoCircle className={styles?.infoIconColor} size={13} />)}
                                 </div>
                             )}
@@ -95,7 +97,7 @@ const ViewDetailMain = (props) => {
             <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse(3)} expandIconPosition="end" collapsible="icon" {...collapseProps}>
                 <Panel header="Aggregates" key="3">
                     <Divider />
-                    <DataTable tableColumn={tableColumn({ formActionType, bindCodeValue })} tableData={optionsServiceModified} pagination={false} />
+                    <DataTable tableColumn={tableColumn({ formActionType, bindCodeValue })} tableData={optionalServices} pagination={false} />
                 </Panel>
             </Collapse>
         </div>

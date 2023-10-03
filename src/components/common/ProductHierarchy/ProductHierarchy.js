@@ -136,7 +136,7 @@ export const ProductHierarchyMain = ({
     const [disabledEdit, setDisabledEdit] = useState(false);
     const [viewData, setViewData] = useState([]);
     const organizationFieldNames = { title: 'manufactureOrgShrtName', key: 'manufactureOrgCode', children: 'subManufactureOrg' };
-    const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
+    const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
 
     const onCloseAction = () => {
         form.resetFields();
@@ -217,10 +217,9 @@ export const ProductHierarchyMain = ({
             const extraParams = [
                 {
                     key: 'prodctCode',
-                    value: keys,
+                    value: selectedProductData?.prodctCode,
                 },
             ];
-
             fetchProductDetail({ setIsLoading: () => {}, userId, onCloseAction, extraParams, onErrorAction });
         } else {
             const parentName = selectedProductData && selectedProductData?.parntProdctCode && flatternData?.find((e) => e?.key === selectedProductData?.parntProdctCode)?.data?.prodctShrtName;

@@ -20,7 +20,7 @@ const ViewDetailBase = ({ styles, accountCategory, setDisabledEdit, financialAcc
 
     return (
         <>
-            <div className={styles.viewContainer}>
+            <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
                     <Descriptions.Item label="Account Category Code">{accountCategory?.[0]?.accountCategoryCode}</Descriptions.Item>
                     <Descriptions.Item label="Description">{accountCategory?.[0]?.accountCategoryDescription}</Descriptions.Item>

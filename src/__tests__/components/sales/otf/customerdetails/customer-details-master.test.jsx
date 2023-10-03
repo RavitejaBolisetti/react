@@ -9,13 +9,23 @@ import { screen, fireEvent, cleanup } from '@testing-library/react';
 import { CustomerDetailsMaster } from '@components/Sales/Common/CustomerDetails/CustomerDetailsMaster';
 import { Provider } from 'react-redux';
 import createMockStore from '__mocks__/store';
-import { Form } from 'antd';
+import { Button, Form } from 'antd';
 
 beforeEach(cleanup);
 const FormWrapper = (props) => {
     const [form] = Form.useForm();
     return <CustomerDetailsMaster form={form} {...props} />;
 };
+
+const StatusBar = () => <div>No Status Bar</div>;
+
+const FormActionButton = () => (
+    <div>
+        <Button htmlType="submit" type="primary">
+            Save
+        </Button>
+    </div>
+);
 
 describe('CustomerDetailsMaster Components', () => {
     const mockProps = {
@@ -59,22 +69,10 @@ describe('CustomerDetailsMaster Components', () => {
         },
     });
 
-    it('should check CustomerDetailsMaster screen render ', () => {
-        customRender(<CustomerDetailsMaster />);
-        const allotted = screen.getByText('Allotted');
-        expect(allotted).toBeInTheDocument();
-        const booked = screen.getByText('Booked');
-        expect(booked).toBeInTheDocument();
-        const invoiced = screen.getByText('Invoiced');
-        expect(invoiced).toBeInTheDocument();
-        const delivered = screen.getByText('Delivered');
-        expect(delivered).toBeInTheDocument();
-    });
-
     it('it should render success and otfnumber heading when user click', async () => {
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper {...mockProps} />
+                <FormWrapper {...mockProps} StatusBar={StatusBar} FormActionButton={FormActionButton} />
             </Provider>
         );
         const successOtfNumber = screen.getByRole('heading', { name: 'Success And otfNumber' });

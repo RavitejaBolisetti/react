@@ -13,9 +13,24 @@ jest.mock('store/actions/data/termsConditions/tncDealerSave', () => ({
     tncDealerSaveActions: {},
 }));
 
+jest.mock('components/common/TermsAndConditions/DealerTermCondition/AddEditForm', () => {
+    const values = {
+        termConditionDescription: 'Hello',
+    };
+    const AddEditForm = ({ onFinish }) => (
+        <div>
+            <button onClick={onFinish(values)}>Save</button>
+        </div>
+    );
+    return {
+        __esModule: true,
+        AddEditForm,
+    };
+});
+
 describe('Term Condition Dealer Master components', () => {
     it('should render Term Condition Dealer Master components', () => {
-        customRender(<TermConditionDealerMaster />);
+        customRender(<TermConditionDealerMaster saveData={jest.fn()} />);
     });
     it('should validate fields', async () => {
         const defaultBtnVisiblity = { editBtn: true, saveBtn: true, saveAndNewBtn: true, saveAndNewBtnClicked: false, closeBtn: true, cancelBtn: true, formBtnActive: true };
@@ -38,7 +53,7 @@ describe('Term Condition Dealer Master components', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <TermConditionDealerMaster buttonData={defaultBtnVisiblity} onSuccessAction={jest.fn()} isVisible={true} onCloseAction={jest.fn()} isHistoryVisible={true} setIsHistoryVisible={true} showChangeHistoryList={jest.fn()} showAddButton={true} onSuccess={jest.fn()} setRefershData={jest.fn()} showDataLoading={false} handleButtonClick={jest.fn()} setIsFormVisible={true} setIsViewModeVisible={true} fetchTermCondition={fetchTermCondition} />
+                <TermConditionDealerMaster saveData={jest.fn()} buttonData={defaultBtnVisiblity} onSuccessAction={jest.fn()} isVisible={true} onCloseAction={jest.fn()} isHistoryVisible={true} setIsHistoryVisible={true} showChangeHistoryList={jest.fn()} showAddButton={true} onSuccess={jest.fn()} setRefershData={jest.fn()} showDataLoading={false} handleButtonClick={jest.fn()} setIsFormVisible={true} setIsViewModeVisible={true} fetchTermCondition={fetchTermCondition} />
             </Provider>
         );
         const searchBox = screen.getByRole('textbox', { name: 'Term & Condition' });
@@ -92,5 +107,44 @@ describe('Term Condition Dealer Master components', () => {
         fireEvent.click(refreshBtn);
         fetchTermCondition.mock.calls[0][0].onSuccessAction();
         fetchTermCondition.mock.calls[0][0].onErrorAction();
+    });
+
+    it('test for onSuccess', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                TermCondition: {
+                    DealerTermsConditions: { isLoaded: true, data: [{ id: '1', productName: 'Sample Product', documentTypeCode: 'Doc Type 1', language: 'English', effectiveFrom: '2023-08-15', effectiveTo: '2023-08-31', version: '1.0', termConditionDescription: 'Sample' }] },
+                },
+            },
+        });
+        const saveData = jest.fn();
+        const fetchTermCondition = jest.fn();
+
+        customRender(
+            <Provider store={mockStore}>
+                <TermConditionDealerMaster saveData={saveData} fetchTermCondition={fetchTermCondition} />
+            </Provider>
+        );
+
+        fetchTermCondition.mock.calls[0][0].onSuccessAction();
+        fetchTermCondition.mock.calls[0][0].onErrorAction();
+
+        await waitFor(() => {
+            expect(screen.getByText('Sample Product')).toBeInTheDocument();
+        });
+
+        const editBtn = screen.getByTestId('edit');
+        fireEvent.click(editBtn);
+
+        const saveBtn = screen.getByRole('button', { name: 'Save' });
+        fireEvent.click(saveBtn);
+
+        await waitFor(() => {
+            expect(saveData).toHaveBeenCalled();
+        });
+
+        saveData.mock.calls[0][0].onSuccess();
+        saveData.mock.calls[0][0].onError();
     });
 });

@@ -30,7 +30,7 @@ export const CreditDebitNoteFormButton = ({ record, onCloseAction, buttonData, s
 
                 <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.footerBtnRight}>
                     {buttonData?.printBtn && (
-                        <Button onClick={() => handleButtonClick(() => handlePrintDownload(record))} type="primary">
+                        <Button onClick={() => handlePrintDownload(record)} type="primary">
                             Print Receipt
                         </Button>
                     )}

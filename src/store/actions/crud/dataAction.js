@@ -61,12 +61,12 @@ export const dataActions = (params) => {
 
     const innerDataActions = {
         fetchList: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-            const { customURL = '', setIsLoading, data, type = '', mytype = '', tempRespone = false, onSuccessAction = undefined, onErrorAction = undefined, extraParams = [] } = params;
+            const { customURL = '', setIsLoading, data, type = '', mytype = '', tempRespone = false, onSuccessAction = undefined, onErrorAction = undefined, extraParams = [], resetOnError = true } = params;
             setIsLoading(true);
 
             const onError = (message) => {
                 onErrorAction && onErrorAction(message);
-                dispatch(recieveData([]));
+                resetOnError && dispatch(recieveData([]));
             };
 
             const onSuccess = (res) => {
@@ -74,7 +74,7 @@ export const dataActions = (params) => {
                     onSuccessAction && onSuccessAction(res);
                     dispatch(recieveData(type ? res?.data?.hierarchyAttribute : res?.data));
                 } else {
-                    dispatch(recieveData([]));
+                    resetOnError && dispatch(recieveData([]));
                     // onErrorAction(res?.responseMessage || LANGUAGE_EN.INTERNAL_SERVER_ERROR);
                 }
             };
@@ -106,7 +106,7 @@ export const dataActions = (params) => {
         }),
 
         fetchFilteredList: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-            const { setIsLoading, data } = params;
+            const { setIsLoading, data, extraParams = [] } = params;
             setIsLoading(true);
 
             const onError = (errorMessage) => {
@@ -122,10 +122,16 @@ export const dataActions = (params) => {
                 }
             };
 
+            let sExtraParamsString = '?';
+            extraParams?.forEach((item, index) => {
+                sExtraParamsString += item?.value && item?.key ? item?.value && item?.key + '=' + item?.value + '&' : '';
+            });
+
+            sExtraParamsString = sExtraParamsString.substring(0, sExtraParamsString.length - 1);
             const apiCallParams = {
                 data,
                 method: 'get',
-                url: inBaseURL + '/lov',
+                url: inBaseURL + '/lov' + (sExtraParamsString ? sExtraParamsString : ''),
                 token,
                 accessToken,
                 userId,
@@ -305,7 +311,6 @@ export const dataActions = (params) => {
             };
 
             const onSuccess = (response) => {
-                //console.log('res', response.blob());
                 // if (response) {
                 //     response.blob().then((blob) => {
                 //         let url = window.URL.createObjectURL(blob.blob());

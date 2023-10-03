@@ -23,3 +23,12 @@ export const QUERY_BUTTONS = {
         active: false,
     },
 };
+export const DELIVERY_NOTE_MESSAGE_CONSTANTS ={
+    DELIVERY_NOTE_DETAILS_NOT_PRESENT:{
+        id: 1,
+        notificationType: 'error',
+        title: 'Error',
+        message: 'delivery note details not present',
+    }
+}
+
