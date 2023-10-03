@@ -8,8 +8,9 @@ import { Row, Col, Input, Form, Switch, DatePicker } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-import { dateFormat } from 'utils/formatDateTime';
+import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
 import { disableFutureDate } from 'utils/disableDate';
+
 import { ViewDetail } from './ViewDetail';
 
 import styles from 'assets/sass/app.module.scss';
@@ -22,7 +23,7 @@ const AddEditFormMain = (props) => {
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
-    
+
     const buttonProps = {
         formData,
         onCloseAction,
@@ -55,71 +56,71 @@ const AddEditFormMain = (props) => {
                             <>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={formData?.state} label="VIN" name="vin">
+                                        <Form.Item initialValue={formData?.vin} label="VIN" name="vin">
                                             <Input placeholder={preparePlaceholderText('vin')} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={formData?.city} label="Model Group" name="modelGroup">
+                                        <Form.Item initialValue={formData?.modelGroupCode} label="Model Group" name="modelGroupCode">
                                             <Input placeholder={preparePlaceholderText('Model Group')} disabled={true} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={formData?.dealerParent} label="Model Code" name="modelCode">
+                                        <Form.Item initialValue={formData?.modelCode} label="Model Code" name="modelCode">
                                             <Input placeholder={preparePlaceholderText('Model Code')} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={formData?.state} label="Model Description" name="modelDescription">
+                                        <Form.Item initialValue={formData?.modelDescription} label="Model Description" name="modelDescription">
                                             <Input placeholder={preparePlaceholderText('Model Description')} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={formData?.city} label="GRN ID" name="grnId">
+                                        <Form.Item initialValue={formData?.grnId} label="GRN ID" name="grnId">
                                             <Input placeholder={preparePlaceholderText('GRN ID')} disabled={true} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                                        <Form.Item label="GRN Date" name="grnDate">
+                                        <Form.Item initialValue={formattedCalendarDate(formData?.grnDate)} label="GRN Date" name="grnDate">
                                             <DatePicker format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={formData?.state} label="GRN Status" name="grnStatus">
+                                        <Form.Item initialValue={formData?.grnStatus} label="GRN Status" name="grnStatus">
                                             <Input placeholder={preparePlaceholderText('GRN Status')} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={formData?.city} label="Vehicle Status" name="vehicleStatus">
+                                        <Form.Item initialValue={formData?.vehicleStatus} label="Vehicle Status" name="vehicleStatus">
                                             <Input placeholder={preparePlaceholderText('Vehicle Status')} disabled={true} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={formData?.dealerParent} label="Age In Days" name="ageInDays">
+                                        <Form.Item initialValue={formData?.ageInDays} label="Age In Days" name="ageInDays">
                                             <Input placeholder={preparePlaceholderText('Age In Days')} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                                        <Form.Item label="Date of Last Charge" name="lastChargeDate">
+                                        <Form.Item initialValue={formattedCalendarDate(formData?.lastChargeDate)} label="Date of Last Charge" name="lastChargeDate">
                                             <DatePicker format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                                        <Form.Item label="Charging Due Date" name="chargingDueDate">
+                                        <Form.Item initialValue={formattedCalendarDate(formData?.chargingDueDate)} label="Charging Due Date" name="chargingDueDate">
                                             <DatePicker format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={formData?.city} label="Charging Status" name="chargingStatus">
+                                        <Form.Item initialValue={formData?.chargingStatus} label="Charging Status" name="chargingStatus">
                                             <Input placeholder={preparePlaceholderText('Charging Status')} disabled={true} />
                                         </Form.Item>
                                     </Col>
@@ -133,7 +134,7 @@ const AddEditFormMain = (props) => {
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={formActionType?.editMode ? false : formData.status} labelAlign="left" wrapperCol={{ span: 24 }} name="chargeIndicator" valuePropName="checked">
+                                        <Form.Item initialValue={formActionType?.editMode ? false : formData.chargeIndicator} labelAlign="left" wrapperCol={{ span: 24 }} name="chargeIndicator" valuePropName="checked">
                                             <Switch checkedChildren="Charged" unCheckedChildren="UnCharged" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} />
                                         </Form.Item>
                                     </Col>
