@@ -156,7 +156,6 @@ const AddEditFormMain = (props) => {
    
     const modalProps = {
         isVisible: isModalOpen,
-        icon: <BiLockAlt />,
         titleOverride: 'Mobile Number Verification',
         closable: true,
         onCloseAction: handleCancel,
