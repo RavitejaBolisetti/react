@@ -17,11 +17,11 @@ const { Search } = Input;
 const { TextArea } = Input;
 
 const RegistrationForm = (props) => {
-    const { formName, invoiceDetailForm, formData, typeData, selectedOtfNumber, handleBookingNumberSearch, handleEmployeeNameSearch, isVehicleInvoiceDataLoading, handleBookingChange, salesConsultantLovData } = props;
+    const { formName, registrationForm, formData, typeData, selectedOtfNumber, handleBookingNumberSearch, handleEmployeeNameSearch, isVehicleInvoiceDataLoading, handleBookingChange, salesConsultantLovData } = props;
 
     useEffect(() => {
         if (formData) {
-            invoiceDetailForm?.setFieldsValue({
+            registrationForm?.setFieldsValue({
                 [formName]: {
                     ...formData,
                     otfNumber: formData?.bookingNumber || formData?.otfNumber,
@@ -33,12 +33,16 @@ const RegistrationForm = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
+    const handleSaleTypeChange = () => {
+        registrationForm.setFieldsValue({ bookingNumber: '67KLGYH90', vin: 'MK7867878KL' });
+    };
+
     return (
         <>
             <Row gutter={16}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.saleType} label="Sale Type" name="saleType" rules={[validateRequiredSelectField('Sale Type')]}>
-                        {customSelectBox({ data: typeData?.[PARAM_MASTER.TAX_CALCLTN_TYPE.id], placeholder: preparePlaceholderSelect('Sale Type') })}
+                        {customSelectBox({ data: typeData?.[PARAM_MASTER.TAX_CALCLTN_TYPE.id], placeholder: preparePlaceholderSelect('Sale Type'), onChange: handleSaleTypeChange })}
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>

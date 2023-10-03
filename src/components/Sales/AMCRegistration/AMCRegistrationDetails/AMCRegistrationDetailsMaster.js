@@ -14,7 +14,7 @@ import { formattedCalendarDate } from 'utils/formatDateTime';
 
 const AMCRegistrationDetailsMasterBase = (props) => {
     const { typeData, vehicleInvoiceMasterData, selectedOrderId } = props;
-    const { userId, buttonData, setButtonData, section, isDataLoaded, isLoading, invoiceDetailForm } = props;
+    const { userId, buttonData, setButtonData, section, isDataLoaded, isLoading, registrationForm } = props;
     const { formActionType, selectedOtfNumber, setSelectedOtfNumber } = props;
 
     const { FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch, CustomerForm, showGlobalNotification, salesConsultantLovData } = props;
@@ -98,7 +98,7 @@ const AMCRegistrationDetailsMasterBase = (props) => {
         formData: vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto,
     };
     return (
-        <Form layout="vertical" autoComplete="off" form={invoiceDetailForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={registrationForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

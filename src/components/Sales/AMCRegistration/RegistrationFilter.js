@@ -54,7 +54,7 @@ export default function RegistrationFilter(props) {
                         </Row>
                     </Form>
                 </Col>
-                {!showAddButton && (
+                {showAddButton && (
                     <Col xs={24} sm={4} md={4} lg={4} xl={4} className={styles.buttonsGroupRight}>
                         <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                             Add

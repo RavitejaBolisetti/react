@@ -40,7 +40,7 @@ const SchemeDetailsForm = (props) => {
                 </Form.Item>
             </Col>
             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                <Form.Item label="Scheme Description" name="bookingNumber" rules={[validateRequiredSelectField('Scheme Description')]}>
+                <Form.Item label="Scheme Description" name="schemeDescription" rules={[validateRequiredSelectField('Scheme Description')]}>
                     {customSelectBox({ data: typeData?.[PARAM_MASTER.TAX_CALCLTN_TYPE.id], placeholder: preparePlaceholderSelect('Scheme Description') })}
                 </Form.Item>
             </Col>

@@ -163,7 +163,7 @@ export const AMCRegistrationMasterBase = (props) => {
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
-    const [invoiceDetailForm] = Form.useForm();
+    const [registrationForm] = Form.useForm();
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -172,7 +172,7 @@ export const AMCRegistrationMasterBase = (props) => {
     const [isReportVisible, setReportVisible] = useState();
     const [confirmRequest, setConfirmRequest] = useState(false);
     // const [userType, setUserType] = useState('DLR'); to be changed after developement
-    const [userType, setUserType] = useState('MNM');
+    const [userType, setUserType] = useState('DLR');
     const [previousSection, setpreviousSection] = useState(1);
 
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
@@ -193,13 +193,7 @@ export const AMCRegistrationMasterBase = (props) => {
         closeBtn: false,
         cancelBtn: false,
         formBtnActive: false,
-        deliveryNote: false,
         nextBtn: false,
-        cancelInvoiceBtn: false,
-        approveCancelBtn: false,
-        rejectCancelBtn: false,
-        printInvoiceBtn: false,
-        printForm21Btn: false,
     };
     const DefaultPayload = {
         invoiceDetails: {},
@@ -413,7 +407,7 @@ export const AMCRegistrationMasterBase = (props) => {
             const onSuccessAction = (res) => {
                 if (!selectedOrderId && res?.data?.invoiceDetails?.otfDetailsRequest?.orderStatus === OTF_STATUS?.INVOICED?.key) {
                     setSelectedOtfNumber('');
-                    invoiceDetailForm.setFieldValue();
+                    registrationForm.setFieldValue();
                     setSelectedOrder('');
                     resetDetailData();
                     setButtonData((prev) => ({ ...prev, formBtnActive: false }));
@@ -436,7 +430,7 @@ export const AMCRegistrationMasterBase = (props) => {
 
     const handleBookingChange = () => {
         setSelectedOtfNumber('');
-        invoiceDetailForm.setFieldValue();
+        registrationForm.setFieldValue();
         setSelectedOrder('');
         resetDetailData();
         setButtonData((prev) => ({ ...prev, formBtnActive: false }));
@@ -498,16 +492,12 @@ export const AMCRegistrationMasterBase = (props) => {
         form.resetFields();
         form.setFieldsValue(undefined);
 
-        if (isLastSection) {
-            generateInvoice();
-            return false;
-        }
 
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
                 resetOtfData();
-                invoiceDetailForm.resetFields();
+                registrationForm.resetFields();
                 setpreviousSection(1);
                 setSelectedOrderId('');
                 setSelectedOtfNumber('');
@@ -548,9 +538,9 @@ export const AMCRegistrationMasterBase = (props) => {
                 // setButtonData({ ...Visibility, cancelReceiptBtn: true });
                 if (buttonAction === VIEW_ACTION) {
                     if (userType === 'DLR') {
-                        invoiceStatus === QUERY_BUTTONS_CONSTANTS.PENDING.key ? setButtonData({ ...Visibility, printForm21Btn: true, printInvoiceBtn: true, cancelInvoiceBtn: true, approveCancelBtn: false, rejectCancelBtn: false }) : invoiceStatus === QUERY_BUTTONS_CONSTANTS.CANCELLATION_REQUEST.key ? setButtonData({ ...Visibility, cancelInvoiceBtn: false, approveCancelBtn: true, rejectCancelBtn: true }) : setButtonData({ ...Visibility, cancelInvoiceBtn: false, approveCancelBtn: false, rejectCancelBtn: false });
+                        invoiceStatus === QUERY_BUTTONS_CONSTANTS.PENDING.key ? setButtonData({ ...Visibility }) : invoiceStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility }) : setButtonData({ ...Visibility });
                     } else {
-                        invoiceStatus === QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.key ? setButtonData({ ...Visibility, cancelInvoiceBtn: true, approveCancelBtn: false, rejectCancelBtn: false }) : invoiceStatus === QUERY_BUTTONS_MNM_USER.PENDING_FOR_CANCELLATION.key ? setButtonData({ ...Visibility, cancelInvoiceBtn: false, approveCancelBtn: true, rejectCancelBtn: true }) : setButtonData({ ...Visibility, cancelInvoiceBtn: false, approveCancelBtn: false, rejectCancelBtn: false });
+                        invoiceStatus === QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.key ? setButtonData({ ...Visibility }) : invoiceStatus === QUERY_BUTTONS_MNM_USER.PENDING_FOR_CANCELLATION.key ? setButtonData({ ...Visibility }) : setButtonData({ ...Visibility });
                     }
                     // (!otfData?.irnStatus || otfData?.irnStatus && timeStampCheck(otfData?.irnDate, otfData?.invoiceDate))
                 }
@@ -607,7 +597,7 @@ export const AMCRegistrationMasterBase = (props) => {
         setSelectedOrderId('');
         setSelectedOtfNumber('');
         setSelectedOrder('');
-        invoiceDetailForm.resetFields();
+        registrationForm.resetFields();
 
         advanceFilterForm.resetFields();
         advanceFilterForm.setFieldsValue();
@@ -785,7 +775,7 @@ export const AMCRegistrationMasterBase = (props) => {
     const containerProps = {
         record: selectedOrder,
         form,
-        invoiceDetailForm,
+        registrationForm,
         formActionType,
         setFormActionType,
         // onFinish,

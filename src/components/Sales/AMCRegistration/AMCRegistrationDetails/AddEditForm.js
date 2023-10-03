@@ -14,12 +14,12 @@ import SchemeDetailsForm from './SchemeDetailsForm';
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { formData, invoiceDetailForm } = props;
+    const { formData, registrationForm } = props;
     const { activeKey, setActiveKey } = props;
 
     useEffect(() => {
         if (formData) {
-            invoiceDetailForm?.setFieldsValue({
+            registrationForm?.setFieldsValue({
                 formData: formData,
                 bookingCustomer: { ...formData?.bookingCustomer, birthDate: convertDateToCalender(formData?.bookingCustomer?.birthDate) },
                 billingCustomer: { ...formData?.billingCustomer, birthDate: convertDateToCalender(formData?.billingCustomer?.birthDate) },
@@ -49,14 +49,14 @@ const AddEditFormMain = (props) => {
         <Row gutter={20}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                 <Space style={{ display: 'flex' }} size="middle" direction="vertical">
-                    <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end">
-                        <Panel header="Registration Information" key="3">
+                    <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
+                        <Panel header="Registration Information" key="1">
                             <Divider />
                             <RegistrationForm {...props} />
                         </Panel>
                     </Collapse>
-                    <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end">
-                        <Panel header="Scheme Details" key="3">
+                    <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
+                        <Panel header="Scheme Details" key="2">
                             <Divider />
                             <SchemeDetailsForm {...props} />
                         </Panel>
