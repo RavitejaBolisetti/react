@@ -101,7 +101,7 @@ const AddEditFormMain = (props) => {
             <>
                 <Text strong> {headerText}</Text>
                 {!formActionType?.viewMode && toShowAddButton() && (
-                    <Button disabled={addButtonDisabled[dataKey] || isEditing} onClick={(event) => handleCollapseAdd(openKey, dataKey, event)} icon={<PlusOutlined />} type="primary">
+                    <Button style={{ marginLeft: '10px' }} disabled={addButtonDisabled[dataKey] || isEditing} onClick={(event) => handleCollapseAdd(openKey, dataKey, event)} icon={<PlusOutlined />} type="primary">
                         Add
                     </Button>
                 )}

@@ -32,7 +32,7 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         isDataLoaded,
-        insuranceData,
+        // insuranceData,
         isLoading,
         moduleTitle,
         isInsuranceCompanyDataLoaded,
@@ -67,7 +67,6 @@ const InsuranceDetailsMasterBase = (props) => {
     const { insuranceData, onCloseAction, fetchList, formActionType, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
     const { form, selectedOrderId, handleFormValueChange, section, isLoading, NEXT_ACTION, handleButtonClick, onFinishFailed, saveData } = props;
     const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar, pageType, isInsuranceLoaded, isInsuranceDataLoading, fetchChallanInsuranceList, insuranceChallanData, listChallanInsuranceShowLoading, soldByDealer, record } = props;
-
     const [formData, setFormData] = useState();
 
     useEffect(() => {
@@ -75,14 +74,18 @@ const InsuranceDetailsMasterBase = (props) => {
             setFormData(insuranceData);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [insuranceData]);
+    }, [insuranceData, section]);
 
+    // useEffect(() => {
+    //     if (insuranceChallanData && formActionType?.addMode && !soldByDealer) {
+    //         setFormData(insuranceChallanData);
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [insuranceChallanData]);
     useEffect(() => {
-        if (insuranceChallanData) {
-            setFormData(insuranceChallanData);
-        }
+        setButtonData({ ...buttonData, formBtnActive: true });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [insuranceChallanData]);
+    }, [section]);
 
     const extraParams = [
         {
@@ -108,20 +111,20 @@ const InsuranceDetailsMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);
 
-    useEffect(() => {
-        if (userId && record && !soldByDealer) {
-            const extraParams = [
-                {
-                    key: 'invoiceNumber',
-                    title: 'invoiceNumber',
-                    value: record?.invoiceId,
-                    name: 'Invoice ID',
-                },
-            ];
-            fetchChallanInsuranceList({ setIsLoading: listChallanInsuranceShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, record?.invoiceId]);
+    // useEffect(() => {
+    //     if (userId && record && !soldByDealer) {
+    //         const extraParams = [
+    //             {
+    //                 key: 'invoiceNumber',
+    //                 title: 'invoiceNumber',
+    //                 value: record?.invoiceId,
+    //                 name: 'Invoice ID',
+    //             },
+    //         ];
+    //         fetchChallanInsuranceList({ setIsLoading: listChallanInsuranceShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [userId, record?.invoiceId]);
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message: message });

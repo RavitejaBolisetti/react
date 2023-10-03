@@ -23,6 +23,9 @@ import { ChallanCancelDeliveryNote } from './challanCancel';
 import { CancelInfoDeliveryNote } from './infoCancelDeliveryNote';
 import { CancelInfoChallanDeliveryNote } from './infoChallanCancel';
 import { DeliverableChecklistMain } from './deliverableChecklistMain';
+import { SchemeDescriptionShield } from './fetchSchemeShield';
+import { SchemeDescriptionRsa } from './fetchSchemeRsa';
+import { SchemeDescriptionAmc } from './fetchSchemeAmc';
 
 export const VehicleDeliveryNote = combineReducers({
     VehicleDeliveryNoteSearchList,
@@ -43,4 +46,7 @@ export const VehicleDeliveryNote = combineReducers({
     CancelInfoDeliveryNote,
     CancelInfoChallanDeliveryNote,
     DeliverableChecklistMain,
+    SchemeDescriptionShield,
+    SchemeDescriptionRsa,
+    SchemeDescriptionAmc,
 });

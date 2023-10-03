@@ -74,7 +74,7 @@ const DeliverableChecklistMain = (props) => {
     const extraParams = useMemo(() => {
         return [
             { key: 'checklistType', title: 'checklistType', value: 'VDCL', name: 'Checklist Type' },
-            { key: 'modelGroupCode', title: 'modelGroupCode', value: selectedOrder?.modelGroup, name: 'Model Group Code' },
+            { key: 'modelGroupCode', title: 'modelGroupCode', value: '4' || selectedOrder?.modelGroup, name: 'Model Group Code' },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedOrder]);
@@ -88,11 +88,22 @@ const DeliverableChecklistMain = (props) => {
 
     useEffect(() => {
         if (isChecklistDataLoaded && ChecklistData?.length > 0) {
-            setcheckListDataModified(
-                ChecklistData?.map((element) => {
-                    return { ...element, ismodified: false };
-                })
-            );
+            if (requestPayload?.vehicleDeliveryCheckList?.deliveryChecklistDtos?.length) {
+                const newArr = requestPayload?.vehicleDeliveryCheckList?.deliveryChecklistDtos;
+                setcheckListDataModified(
+                    ChecklistData?.map((element) => {
+                        const found = newArr?.find((i) => i?.id === element?.id);
+                        if (found?.id) return { ...found };
+                        return { ...element };
+                    })
+                );
+            } else {
+                setcheckListDataModified(
+                    ChecklistData?.map((element) => {
+                        return { ...element, ismodified: false };
+                    })
+                );
+            }
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -148,6 +159,7 @@ const DeliverableChecklistMain = (props) => {
         setcheckListDataModified,
         formActionType,
         tableProps,
+        requestPayload,
     };
 
     return (

@@ -20,3 +20,11 @@ export const QUERY_BUTTONS = {
         key: 'C',
     },
 };
+export const CHECKLIST_MESSAGE_CONSTANTS = {
+    CHASSIS_NOT_PRESENT: {
+        id: 1,
+        notificationType: 'error',
+        title: 'Error',
+        message: 'Vehicle details not present',
+    },
+};
