@@ -16,8 +16,6 @@ import { VehicleDeliveryNoteFormButton } from '../VehicleDeliveryNoteFormButton'
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
-import { PARAM_MASTER } from 'constants/paramMaster';
-import { getCodeValue } from 'utils/getCodeValue';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -77,8 +75,6 @@ export const CustomerDetailsMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [customerDetailsData]);
-
-    console.log('section', section);
 
     // useEffect(() => {
     //     if (customerDetailsData || customerDetailsDataSearched) {
