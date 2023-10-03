@@ -122,7 +122,6 @@ export const InvoiceDetailsMasterBase = (props) => {
     // }, []);
     useEffect(() => {
         if (formActionType.addMode && !soldByDealer) {
-
             form.setFieldsValue({
                 deliveryNoteFor: 'Directly Billed Vehicle',
             });
@@ -135,7 +134,6 @@ export const InvoiceDetailsMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [section]);
 
-    console.log('invoiceDatainvoiceData', invoiceData, buttonData);
     useEffect(() => {
         if (invoiceData) {
             form.setFieldsValue({ ...invoiceData, invoiceDate: formattedCalendarDate(invoiceData?.invoiceDate), customerPromiseDate: formattedCalendarDate(invoiceData?.customerPromiseDate) });
@@ -143,6 +141,7 @@ export const InvoiceDetailsMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [invoiceData, section]);
+
     useEffect(() => {
         setButtonData({ ...buttonData, formBtnActive: true });
         // eslint-disable-next-line react-hooks/exhaustive-deps
