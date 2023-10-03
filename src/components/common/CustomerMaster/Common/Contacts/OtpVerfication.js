@@ -14,10 +14,7 @@ import { RxCrossCircled } from 'react-icons/rx';
 //import { FiLock } from 'react-icons/fi';
 import { withModal } from 'components/withModal';
 
-
-// import styles from 'components/common/Common.module.css';
-// import style from './../../../Auth/Auth.module.css';
-import style from 'components/Auth/Auth.module.scss';
+import styles1 from 'assets/sass/app.module.scss';
 import styles from 'components/Auth/Auth.module.scss'
 const OtpVarificationModalMain = (props) => {
     const { setInValidOTP, inValidOTP, counter, handleVerifyOTP, otpMessage, disableVerifyOTP, setDisableVerifyOTP, handleSendOTP, otpInput, setOTPInput, onSentOTP } = props;
@@ -34,9 +31,9 @@ const OtpVarificationModalMain = (props) => {
     };
     return (
         <div className={styles.centerInner}>
-            <div className={styles.loginForm}>
-                <div className={styles.loginHeading}>
-                    <div className={styles.loginSubHeading}>{otpMessage}</div>
+            <div className={styles1.otpCustomerForm}>
+                <div className={styles1.otpCustomerHeading}>
+                    <div className={styles1.otpCustomerSubHeading}>{otpMessage}</div>
                 </div>
                 <Form form={form} id="sendOTP" autoComplete="off" onFinish={onSentOTP}>
                     <Row gutter={20}>
@@ -69,7 +66,7 @@ const OtpVarificationModalMain = (props) => {
                                     )}
                                 </Col>
                                 <Col xs={10} sm={10} md={8} lg={8} xl={8}>
-                                    <div onClick={() => handleSendOTP()} className={counter ? style.resendDisabled : style.resendEnabled} type="radio">
+                                    <div onClick={() => handleSendOTP()} className={counter ? styles.resendDisabled : styles.resendEnabled} type="radio">
                                         <TbRefresh /> Resend OTP
                                     </div>
                                 </Col>
