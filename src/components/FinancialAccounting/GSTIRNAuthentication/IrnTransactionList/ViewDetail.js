@@ -4,124 +4,58 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Descriptions, Collapse, Divider, Space, Typography } from 'antd';
-import { expandIcon } from 'utils/accordianExpandIcon';
-import { AiOutlineInfoCircle } from 'react-icons/ai';
-import { addToolTip } from 'utils/customMenuLink';
-import { InputSkeleton } from 'components/common/Skeleton';
-import styles from 'components/common/Common.module.css';
-import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-import { getCodeValue } from 'utils/getCodeValue';
-import { DATA_TYPE } from 'constants/dataType';
+import { Descriptions, Typography, Collapse, Divider } from 'antd';
+import { ACCESSIBLE_LOCATION_INDICATOR } from 'constants/modules/applicationMaster';
 
-const { Panel } = Collapse;
+// import CardDocument from './CardDocument';
+// import CardLocation from './CardLocation';
+// import CardAction from './CardAction';
+
+import { accordianExpandIcon } from 'utils/accordianExpandIcon';
+
 const { Text } = Typography;
+const { Panel } = Collapse;
 
-const ViewDetailMain = (props) => {
-    const { formData, isLoading, physicalStatusType, vehicleStatusType, shortageType } = props;
+const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = 'Application Details', styles }) => {
+    const { applicationAction, documentType, accessibleLocation, ...rest } = applicationDetailsData[0];
+    const [openAccordian, setOpenAccordian] = useState('');
 
-    const [activeKey, setactiveKey] = useState([]);
-
-    const onChange = (values) => {
-        const isPresent = activeKey.includes(values);
-
-        if (isPresent) {
-            const newActivekeys = [];
-
-            activeKey.forEach((item) => {
-                if (item !== values) {
-                    newActivekeys.push(item);
-                }
-            });
-            setactiveKey(newActivekeys);
-        } else {
-            setactiveKey([...activeKey, values]);
-        }
-    };
-
-    const viewProps = {
+    const viewOneColProps = {
         bordered: false,
         colon: false,
         layout: 'vertical',
-        column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
+        title: <div className={styles.viewContainerHeader}>{viewTitle}</div>,
+        column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
+    };
+
+    const handleCollapse = (key) => {
+        setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
     return (
         <>
-            {formData?.map((item, index) => (
-                <div className={styles.accessInfo}>
-                    <div className={styles.drawerCardView}>
-                        <Collapse defaultActiveKey={index} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(index)} expandIconPosition="end">
-                            <Panel
-                                header={
-                                    <Space direction="vertical">
-                                        <Space>
-                                            <Text className={styles.headText}> Model: {checkAndSetDefaultValue(item?.modelDescription, isLoading)} </Text>
-                                            <Text className={styles.headText}> {`|`}</Text>
-                                            <Text className={styles.headText}> VIN: {checkAndSetDefaultValue(item?.vin, isLoading)}</Text>
-                                        </Space>
-                                        <Text className={styles.subSection}> Vehicle Status: {checkAndSetDefaultValue(getCodeValue(vehicleStatusType, item?.vehicleStatus), isLoading)}</Text>
-                                    </Space>
-                                }
-                                key={index}
-                            >
-                                <Divider />
-                                <Descriptions {...viewProps}>
-                                    <Descriptions.Item label="Model Description">
-                                        {isLoading ? (
-                                            <InputSkeleton width={'100px'} height={20} theme={'card'} />
-                                        ) : (
-                                            <div className={styles.tooltipAlign}>
-                                                {item?.modelDescription}
-                                                {!item?.modelDescription
-                                                    ? 'NA'
-                                                    : addToolTip(
-                                                          <div>
-                                                              <p>
-                                                                  Model Name: <span>{item?.name ?? 'Na'}</span>
-                                                              </p>
-                                                              <p>
-                                                                  Color: <span>{item?.color ?? 'Na'}</span>
-                                                              </p>
-                                                              <p>
-                                                                  Seating Capacity: <span>{item?.seatingCapacity ?? 'Na'}</span>
-                                                              </p>
-                                                              <p>
-                                                                  Fuel: <span>{item?.fuel ?? 'Na'}</span>
-                                                              </p>
-                                                              <p>
-                                                                  Variants: <span>{item?.variant ?? 'Na'}</span>
-                                                              </p>
-                                                          </div>,
-                                                          'bottom',
-                                                          '#FFFFFF',
-                                                          styles.toolTip
-                                                      )(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
-                                            </div>
-                                        )}
-                                    </Descriptions.Item>
-                                    <Descriptions.Item label="VIN">{checkAndSetDefaultValue(item?.vin, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Key Number">{checkAndSetDefaultValue(item?.keyNumber, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="MFG Date">{checkAndSetDefaultValue(item?.mfgdate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                                    <Descriptions.Item label="Received On">{checkAndSetDefaultValue(item?.receivedOn, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                                    <Descriptions.Item label="Vehicle Cost">{checkAndSetDefaultValue(item?.vehicleCost, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Demo Vehicle">{checkAndSetDefaultValue(getCodeValue(shortageType, item?.demoVehicle), isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Vehicle Status">{checkAndSetDefaultValue(getCodeValue(vehicleStatusType, item?.vehicleStatus), isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Physical Status">{checkAndSetDefaultValue(getCodeValue(physicalStatusType, item?.physicalStatus), isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Shortage">{checkAndSetDefaultValue(getCodeValue(shortageType, item?.shortage), isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Vehicle Receipt Checklist No.">
-                                        {/* <a style={{ color: 'ff3e5b' }} href={item?.vehicleReceiptChecklistNumber} target="_blank" rel="noreferrer"> */}
-                                        {checkAndSetDefaultValue(item?.vehicleReceiptChecklistNumber, isLoading)}
-                                        {/* </a> */}
-                                    </Descriptions.Item>
-                                </Descriptions>
-                            </Panel>
-                        </Collapse>
-                    </div>
-                </div>
-            ))}
+            <div className={styles.viewContainer}>
+                <Descriptions {...viewOneColProps}>
+                    <Descriptions.Item label="Application ID">{rest?.applicationId}</Descriptions.Item>
+                    <Descriptions.Item label="Application Name/Reports">{rest?.applicationName || 'NA'}</Descriptions.Item>
+                    {/* <Descriptions.Item label="Application Title">{rest?.applicationTitle || 'NA'}</Descriptions.Item> */}
+                    <Descriptions.Item label="Application Type">{rest.applicationType || 'NA'}</Descriptions.Item>
+                    <Descriptions.Item label="Accessible Location">{ACCESSIBLE_LOCATION_INDICATOR[rest?.accessableIndicator] || 'NA'}</Descriptions.Item>
+                    <Descriptions.Item label="IRN Integration">{rest?.irnIntegrationRequired ? <Text type="success"> Yes </Text> : <Text>No</Text>}</Descriptions.Item>
+
+                    {/* <Descriptions.Item label="Parent Application ID">{rest?.parentApplicationId || 'NA'}</Descriptions.Item>
+                    <Descriptions.Item label="Status">{rest?.status ? <Text type="success">Active</Text> : <Text>Inactive</Text>}</Descriptions.Item>
+                    <Descriptions.Item label="Application Criticality Group">{rest?.criticalityGroupName || 'NA'}</Descriptions.Item>
+                    <Descriptions.Item label="Document number to be generated">{rest?.documentNumRequired ? <Text type="success"> Yes </Text> : <Text>No</Text>}</Descriptions.Item>
+                    <Descriptions.Item label="T&C Required">{rest?.termAndConRequired ? <Text type="success"> Yes </Text> : <Text>No</Text>}</Descriptions.Item>
+                    <Descriptions.Item label="Digital Signature Required">{rest?.digitalSignatureRequired ? <Text type="success"> Yes </Text> : <Text>No</Text>}</Descriptions.Item>
+                    <Descriptions.Item label="Is Finance Related">{rest?.isFinanceRelated ? <Text type="success"> Yes </Text> : <Text>No</Text>}</Descriptions.Item> */}
+
+                    
+                </Descriptions>
+            </div>
         </>
     );
 };
 
-export const ViewDetail = ViewDetailMain;
+export default ViewDealerDetailsMain;

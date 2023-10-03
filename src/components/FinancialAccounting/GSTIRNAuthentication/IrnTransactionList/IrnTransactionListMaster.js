@@ -15,7 +15,8 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import LeftPanel from 'components/common/LeftPanel';
 import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
 import { menuDataActions } from 'store/actions/data/menu';
-import ViewApplicationDetailMain from 'components/common/ApplicationMaster/viewDeatils/ViewApplicationDetail';
+// import ViewApplicationDetailMain from 'components/common/ApplicationMaster/viewDeatils/ViewApplicationDetail';
+import ViewDetailMain from './ViewDetail';
 
 import { gstIrnTransactionAction } from 'store/actions/data/financialAccounting/gstIrnTransactionAction';
 
@@ -31,10 +32,7 @@ const mapStateToProps = (state) => {
             FinancialAccounting: {
                 GstIrnTransactionDetails: { data: gstIrnTreeData = [] },
             },
-
-            // VehicleReceipt: {
-            // VehicleDetails: { isLoaded: isDataLoaded = false, isLoading, data: vehicleDetailData = [] },
-            // },
+ 
         },
     } = state;
 
@@ -61,11 +59,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            // fetchList: vehicleDetailDataActions.fetchList,
-            // saveData: vehicleDetailDataActions.saveData,
-            // resetData: vehicleDetailDataActions.reset,
-            // listShowLoading: vehicleDetailDataActions.listShowLoading,
-
+          
             fetchApplication: applicationMasterDataActions.fetchApplicationDetails,
             applicationDetailListShowLoading: applicationMasterDataActions.detailListShowLoading,
             // fetchApplicationCriticality: applicationMasterDataActions.fetchApplicationCriticalityGroup,
@@ -240,7 +234,10 @@ const IrnTransactionListMasterBase = (props) => {
                         <Spin spinning={isApplicationDeatilsLoading}>
                             {selectedTreeKey?.length && applicationDetailsData?.length ? (
                                 <>
-                                    <ViewApplicationDetailMain applicationDetailsData={applicationDetailsData} styles={styles} />
+                                    <ViewDetailMain applicationDetailsData={applicationDetailsData} styles={styles} />
+                                    
+                                    {/* <ViewApplicationDetailMain applicationDetailsData={applicationDetailsData} styles={styles} /> */}
+
                                     {/* <div className={styles.viewContainerFooter}>
                                     <HierarchyFormButton buttonData={buttonData} handleButtonClick={handleButtonClick} />
                                 </div> */}
