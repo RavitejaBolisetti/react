@@ -10,7 +10,8 @@ import { FaCheckCircle } from 'react-icons/fa';
 
 import { GST_IRN_SECTION } from 'constants/GSTIRNSection';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+
 
 const MenuNav = (props) => {
      const { currentSection, setCurrentSection, } = props; 

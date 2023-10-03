@@ -20,7 +20,8 @@ import ViewDetailMain from './ViewDetail';
 
 import { gstIrnTransactionAction } from 'store/actions/data/financialAccounting/gstIrnTransactionAction';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+
 
 const mapStateToProps = (state) => {
     const {

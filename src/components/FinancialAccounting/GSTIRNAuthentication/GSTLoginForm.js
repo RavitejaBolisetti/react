@@ -11,7 +11,8 @@ import { FiLock } from 'react-icons/fi';
 import { BiUser } from 'react-icons/bi';
 import { AiOutlineEyeInvisible, AiOutlineEye, } from 'react-icons/ai';  // AiOutlineWarning
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+
 export function GSTLoginForm(props) {
     const { onFinish, onFinishFailed } = props;
     const { form, isReadOnly = true } = props;

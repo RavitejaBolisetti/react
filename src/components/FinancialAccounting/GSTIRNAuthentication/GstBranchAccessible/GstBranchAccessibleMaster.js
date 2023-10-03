@@ -13,7 +13,8 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { showGlobalNotification } from 'store/actions/notification';
 import { dealerBranchAccessAction } from 'store/actions/data/financialAccounting/dealerBranchAccessAction';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+
 
 const mapStateToProps = (state) => {
     const {

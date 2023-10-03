@@ -18,7 +18,8 @@ import { GSTLoginForm } from './GSTLoginForm';
 // import { FilterIcon } from 'Icons';
 import { dealerGstAction } from 'store/actions/data/financialAccounting/dealerGstAction';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+
 
 const mapStateToProps = (state) => {
     const {

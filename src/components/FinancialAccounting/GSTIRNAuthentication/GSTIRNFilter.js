@@ -10,7 +10,8 @@ import { RxCross2 } from 'react-icons/rx';
 import { customSelectBox } from 'utils/customSelectBox';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+
 
 export default function GSTIRNFilter(props) {
     const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, filterString, dealerGstData,  } = props;
