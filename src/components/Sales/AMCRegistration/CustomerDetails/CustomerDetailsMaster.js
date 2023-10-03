@@ -16,7 +16,7 @@ import AddEditForm from './AddEditForm';
 const CustomerDetailsMasterBase = (props) => {
     const { typeData, vehicleInvoiceMasterData, selectedOrderId } = props;
     const { userId, buttonData, setButtonData, section, isDataLoaded, isLoading, invoiceDetailForm } = props;
-    const { formActionType, selectedOtfNumber, setSelectedOtfNumber } = props;
+    const { formActionType, selectedOtfNumber, setSelectedOtfNumber, handleFormValueChange } = props;
 
     const { FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch, CustomerForm, showGlobalNotification, salesConsultantLovData } = props;
 
@@ -100,7 +100,7 @@ const CustomerDetailsMasterBase = (props) => {
         formData: vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto,
     };
     return (
-        <Form layout="vertical" autoComplete="off" form={invoiceDetailForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={invoiceDetailForm} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

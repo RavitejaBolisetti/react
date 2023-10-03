@@ -229,10 +229,6 @@ const VehicleDetailsMasterBase = (props) => {
     };
 
     const onFinish = () => {
-        if (contactData.findIndex((i) => i?.defaultContactIndicator) === -1) {
-            return showGlobalNotification({ message: 'At least one contact should have default contact' });
-        }
-
         let data = { customerId: selectedCustomer?.customerId, customerContact: contactData };
 
         const onSuccess = (res) => {
