@@ -2777,6 +2777,89 @@
         font-weight: 400;
         line-height: 24px;
     }
+
+.changer {
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+    input {
+        background: $primaryWhite;
+        border: $neutralGrey2 1px solid !important;
+        border-radius: 5px;
+        margin-right: 15px !important;
+        padding: 6px;
+        font-size: 20px;
+        color: $primaryBlack;
+    }
+
+    > input {
+        &:focus-visible {
+            margin-right: 10px;
+        }
+    }
+}
+.otpVerificationContainer {
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+.otpCounter {
+    color: $primaryBlack;
+    letter-spacing: 0.8px;
+}
+.otpNotReceive {
+    color: $DarkPink-dark;
+    letter-spacing: 0.8px;
+
+    svg {
+        margin-right: 5px;
+        vertical-align: unset;
+    }
+}
+.resendEnabled {
+    color: $semanticError;
+    float: right;
+    cursor: pointer;
+
+    svg {
+        transform: scaleX(-1);
+        vertical-align: unset;
+    }
+}
+
+.resendDisabled {
+    color: $neutralGrey2-dark;
+    float: right;
+    cursor: pointer;
+    pointer-events: none;
+
+    svg {
+        transform: scaleX(-1);
+        vertical-align: unset;
+    }
+}
+.button {
+    width: 100%;
+    font-size: 16px;
+    line-height: 24px !important;
+    font-weight: 600 !important;
+    text-align: center;
+    color: $primaryWhite-dark;
+    padding: 7px 16px !important;
+    background-color: $primaryRed-dark;
+    &:disabled {
+        background-color: $neutralGrey1 !important;
+        border: 1px solid $neutralGrey2 !important;
+        opacity: 1;
+        @include font-style(16, 24, 600, $neutralGrey2 !important, $fontfamily, center);
+
+        &:hover {
+            background-color: $neutralGrey2-dark !important;
+            border: 1px solid $neutralGrey2-dark !important;
+            opacity: 1;
+            @include font-style(16, normal, 600, $neutralGrey3-dark, $fontfamily, center);
+        }
+    }
+}
     .fielderror {
         background: $neutralGrey1-dark;
         margin-bottom: 10px !important;

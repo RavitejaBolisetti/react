@@ -14,8 +14,8 @@ import { RxCrossCircled } from 'react-icons/rx';
 //import { FiLock } from 'react-icons/fi';
 import { withModal } from 'components/withModal';
 
-import styles1 from 'assets/sass/app.module.scss';
-import styles from 'components/Auth/Auth.module.scss'
+import styles from 'assets/sass/app.module.scss';
+// import styles from 'components/Auth/Auth.module.scss'
 const OtpVarificationModalMain = (props) => {
     const { setInValidOTP, inValidOTP, counter, handleVerifyOTP, otpMessage, disableVerifyOTP, setDisableVerifyOTP, handleSendOTP, otpInput, setOTPInput, onSentOTP } = props;
     const [form] = Form.useForm();
@@ -31,9 +31,9 @@ const OtpVarificationModalMain = (props) => {
     };
     return (
         <div className={styles.centerInner}>
-            <div className={styles1.otpCustomerForm}>
-                <div className={styles1.otpCustomerHeading}>
-                    <div className={styles1.otpCustomerSubHeading}>{otpMessage}</div>
+            <div className={styles.otpCustomerForm}>
+                <div className={styles.otpCustomerHeading}>
+                    <div className={styles.otpCustomerSubHeading}>{otpMessage}</div>
                 </div>
                 <Form form={form} id="sendOTP" autoComplete="off" onFinish={onSentOTP}>
                     <Row gutter={20}>
