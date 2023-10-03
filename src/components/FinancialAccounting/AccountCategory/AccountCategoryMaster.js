@@ -180,10 +180,10 @@ export const AccountCategoryMain = (props) => {
     useEffect(() => {
         const extraParams = [
             {
-                key: 'sid',
-                title: 'sid',
+                key: 'screenId',
+                title: 'screenId',
                 value: 'APPMST',
-                name: 'sid',
+                name: 'screenId',
             },
             {
                 key: 'moduleName',
