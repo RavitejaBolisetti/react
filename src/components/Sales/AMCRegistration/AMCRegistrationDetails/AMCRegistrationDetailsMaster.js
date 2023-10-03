@@ -43,6 +43,13 @@ const AMCRegistrationDetailsMasterBase = (props) => {
         setButtonData({ ...buttonData, formBtnActive: false });
     };
 
+    const handleEmployeeNameSearch = () => {
+        registrationForm.setFieldsValue({ managerName: 'Rajendra Prasad' });
+    };
+    const handleSchemeDescriptionChange = () => {
+        registrationForm.setFieldsValue({ schemeCode: '5678', schemeBasicAmount: '1000', schemeTaxAmount: '5000' });
+    };
+
     const onFinish = (values) => {
         const { otfDetailsRequest, ...bookingAndBillingCustomerDto } = values;
         if (!Object?.keys(bookingAndBillingCustomerDto)?.length) {
@@ -82,6 +89,8 @@ const AMCRegistrationDetailsMasterBase = (props) => {
         handleBookingNumberSearch,
         selectedOrderId,
         styles,
+        handleEmployeeNameSearch,
+        handleSchemeDescriptionChange,
     };
 
     const viewProps = {

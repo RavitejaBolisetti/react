@@ -57,7 +57,7 @@ const RegistrationForm = (props) => {
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Employee Name" name="employeeName" rules={[validateRequiredInputField('Employee Name')]}>
-                        <Search maxLength={50} placeholder={preparePlaceholderText('Employee Name')} loading={isVehicleInvoiceDataLoading} onSearch={(value) => handleEmployeeNameSearch(value)} allowClear onChange={handleBookingChange} />
+                        <Search maxLength={50} placeholder={preparePlaceholderText('Employee Name')} loading={isVehicleInvoiceDataLoading} onSearch={(value) => handleEmployeeNameSearch(value)} allowClear />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>

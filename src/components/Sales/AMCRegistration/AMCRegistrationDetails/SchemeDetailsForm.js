@@ -16,7 +16,7 @@ import { getCodeValue } from 'utils/getCodeValue';
 const { Search } = Input;
 
 const SchemeDetailsForm = (props) => {
-    const { formName, invoiceDetailForm, formData, typeData, selectedOtfNumber, handleBookingNumberSearch, isVehicleInvoiceDataLoading, handleBookingChange, salesConsultantLovData } = props;
+    const { formName, invoiceDetailForm, formData, typeData, selectedOtfNumber, handleBookingNumberSearch, isVehicleInvoiceDataLoading, handleBookingChange,handleSchemeDescriptionChange, salesConsultantLovData } = props;
 
     useEffect(() => {
         if (formData) {
@@ -41,7 +41,7 @@ const SchemeDetailsForm = (props) => {
             </Col>
             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                 <Form.Item label="Scheme Description" name="schemeDescription" rules={[validateRequiredSelectField('Scheme Description')]}>
-                    {customSelectBox({ data: typeData?.[PARAM_MASTER.TAX_CALCLTN_TYPE.id], placeholder: preparePlaceholderSelect('Scheme Description') })}
+                    {customSelectBox({ data: typeData?.[PARAM_MASTER.TAX_CALCLTN_TYPE.id], placeholder: preparePlaceholderSelect('Scheme Description'), onChange : handleSchemeDescriptionChange })}
                 </Form.Item>
             </Col>
             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
