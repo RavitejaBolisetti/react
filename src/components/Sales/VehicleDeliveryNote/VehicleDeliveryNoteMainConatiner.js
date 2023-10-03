@@ -27,7 +27,7 @@ import { ThankYouMaster } from './ThankYou';
 
 const VehicleDeliveryNoteConatinerMain = (props) => {
     const { currentSection, selectedOtfNumber, selectedOrderId, soldByDealer } = props;
-    const { requestPayload, setRequestPayload, challanRequestPayload, setChallanRequestPayload, deliveryType } = props;
+    const { requestPayload, setRequestPayload, challanRequestPayload, deliveryType } = props;
 
     const onFinishCustom = ({ key, values }) => {
         setRequestPayload({ ...requestPayload, [key]: values });

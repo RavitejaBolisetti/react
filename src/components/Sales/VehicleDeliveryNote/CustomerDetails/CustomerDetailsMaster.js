@@ -72,14 +72,24 @@ export const CustomerDetailsMasterBase = (props) => {
     const [formData, setFormData] = useState();
 
     useEffect(() => {
-        if (customerDetailsData || customerDetailsDataSearched) {
-            customerDetailsData && form.setFieldsValue({ ...customerDetailsData, customerType: typeData?.[PARAM_MASTER?.CUST_TYPE?.id]?.find((customer) => customer?.key === customerDetailsData?.customerType)?.value });
-            customerDetailsData && setFormData({ ...customerDetailsData });
-            customerDetailsDataSearched && form.setFieldsValue({ ...customerDetailsDataSearched, customerType: typeData?.[PARAM_MASTER?.CUST_TYPE?.id]?.find((customer) => customer?.key === customerDetailsDataSearched?.customerType)?.value });
-            customerDetailsDataSearched && setFormData({ ...customerDetailsDataSearched });
+        if (customerDetailsData) {
+            setFormData({ ...customerDetailsData });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [customerDetailsData, section, customerDetailsDataSearched]);
+    }, [customerDetailsData]);
+
+    console.log('section', section);
+
+    // useEffect(() => {
+    //     if (customerDetailsData || customerDetailsDataSearched) {
+    //         customerDetailsData && form.setFieldsValue({ ...customerDetailsData, customerType: typeData?.[PARAM_MASTER?.CUST_TYPE?.id]?.find((customer) => customer?.key === customerDetailsData?.customerType)?.value });
+    //         customerDetailsData && setFormData({ ...customerDetailsData });
+    //         customerDetailsDataSearched && form.setFieldsValue({ ...customerDetailsDataSearched, customerType: typeData?.[PARAM_MASTER?.CUST_TYPE?.id]?.find((customer) => customer?.key === customerDetailsDataSearched?.customerType)?.value });
+    //         customerDetailsDataSearched && setFormData({ ...customerDetailsDataSearched });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [customerDetailsData, section, customerDetailsDataSearched]);
+
     useEffect(() => {
         setButtonData({ ...buttonData, formBtnActive: true });
         // eslint-disable-next-line react-hooks/exhaustive-deps

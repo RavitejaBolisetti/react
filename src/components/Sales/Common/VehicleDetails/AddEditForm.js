@@ -33,7 +33,7 @@ const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
     const { isProductDataLoading, productHierarchyData, toolTipContent, handleFormValueChange, optionalServices, setOptionalServices, formData, openAccordian, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, typeData, vehicleServiceData } = props;
-    const { formActionType, filterVehicleData, handleVehicleDetailChange, setProductModelCode, viewOnly, showPrintDiscount = false, ShowPOandSOdetails = true, showAvailaibleStock = true } = props;
+    const { formActionType, filterVehicleData, handleVehicleDetailChange, viewOnly, showPrintDiscount = false, ShowPOandSOdetails = true, showAvailaibleStock = true } = props;
 
     const [optionForm] = Form.useForm();
     const [confirmRequest, setConfirmRequest] = useState();
@@ -109,7 +109,6 @@ const AddEditFormMain = (props) => {
             onSubmitAction: () => {
                 handleVehicleDetailChange({ ...filterVehicleData, modalCode: value });
                 form.setFieldValue('modalCode', value);
-                setProductModelCode(value);
                 handleFormValueChange(true);
                 setConfirmRequest({
                     ...confirmRequest,
