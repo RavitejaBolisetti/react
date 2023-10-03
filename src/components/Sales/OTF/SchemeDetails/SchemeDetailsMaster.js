@@ -49,7 +49,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const SchemeDetailsMasterBase = (props) => {
     const { schemeData, resetData, onCloseAction, fetchList, formActionType, userId, listShowLoading, showGlobalNotification } = props;
-    const { form, selectedOrderId, section, isLoading, NEXT_ACTION, handleButtonClick } = props;
+    const { form, selectedRecordId, section, isLoading, NEXT_ACTION, handleButtonClick } = props;
     const { FormActionButton, StatusBar } = props;
 
     const [formData, setFormData] = useState();
@@ -78,19 +78,17 @@ const SchemeDetailsMasterBase = (props) => {
     };
 
     useEffect(() => {
-        if (!isLoading && userId && selectedOrderId) {
+        if (!isLoading && userId && selectedRecordId) {
             const extraParams = [
                 {
-                    key: 'otfNumber',
-                    title: 'otfNumber',
-                    value: selectedOrderId,
-                    name: 'Booking Number',
+                    key: 'otfId',
+                    value: selectedRecordId,
                 },
             ];
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOrderId]);
+    }, [userId, selectedRecordId]);
 
     const viewProps = {
         styles,
