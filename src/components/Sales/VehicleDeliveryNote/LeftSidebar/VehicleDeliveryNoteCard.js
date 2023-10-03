@@ -82,7 +82,7 @@ const VehicleDeliveryNoteCard = (props) => {
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Booking Number: <span> {checkAndSetDefaultValue(selectedOrder?.otfNumber)}</span>
+                    Booking Number: <span> {checkAndSetDefaultValue(selectedOrder?.bookingNumber || selectedOrder?.otfNumber)}</span>
                 </div>
             </Panel>
         </Collapse>
