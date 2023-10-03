@@ -10,4 +10,8 @@ describe('Deliverable checklist Master components', () => {
     it('should render components', () => {
         customRender(<DeliverableChecklistMaster setButtonData={jest.fn()} />);
     });
+    it('should render view components', () => {
+        const formActionType = { viewMode: true };
+        customRender(<DeliverableChecklistMaster setButtonData={jest.fn()} formActionType={formActionType} />);
+    });
 });
