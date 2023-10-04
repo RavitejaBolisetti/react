@@ -20,17 +20,11 @@ import { customSelectBox } from 'utils/customSelectBox';
 const { Option } = Select;
 
 export const AdvancedSearchFrom = (props) => {
-    const { setAdvanceSearchVisible, productHierarchyList, productHierarchyData, selectedTreeSelectKey, handleSelectTreeClick } = props;
-    const {
-        filterString,
-        setFilterString,
-        advanceFilterForm,
-        advanceFilterForm: { resetFields },
-        handleResetFilter,
-    } = props;
+    const { setAdvanceSearchVisible, setSelectedTreeSelectKey, productHierarchyList, productHierarchyData, selectedTreeSelectKey, handleSelectTreeClick, modelCodeName } = props;
+    const { filterString, setFilterString, advanceFilterForm, handleResetFilter } = props;
 
     useEffect(() => {
-        resetFields();
+        advanceFilterForm.resetFields();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
 
@@ -41,11 +35,12 @@ export const AdvancedSearchFrom = (props) => {
             dueFromDate: formatDate(values?.dueFromDate),
             dueToDate: formatDate(values?.dueToDate),
             model: values?.model,
-            // modelCodeName: productHierarchyData?.find((i) => i?.prodctShrtName === values?.model)?.prodctShrtName,
+            modelCodeName: modelCodeName,
             advanceFilter: true,
         });
+        setSelectedTreeSelectKey(null);
+        advanceFilterForm.resetFields();
         setAdvanceSearchVisible(false);
-        // resetFields();
     };
 
     const onFinishFailed = () => {
@@ -77,11 +72,13 @@ export const AdvancedSearchFrom = (props) => {
         return Promise.reject(new Error('Date cant be less than Effective from date'));
     };
 
+    //formatDateToCalenderDate
+
     return (
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={0} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Form.Item initialValue={filterString?.model} label="Product Hierarchy" name="model" rules={[validateRequiredSelectField('Product Hierarchy')]}>
+                    <Form.Item label="Product Hierarchy" name="model" rules={[validateRequiredSelectField('Product Hierarchy')]}>
                         <TreeSelectField {...treeSelectFieldProps} />
                     </Form.Item>
                 </Col>
