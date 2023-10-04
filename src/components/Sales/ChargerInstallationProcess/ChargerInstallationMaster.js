@@ -22,7 +22,7 @@ import { BASE_URL_OTF_DETAILS as customURL, BASE_URL_INVOICE_DETAIL as InvoiceDe
 import { otfDataActions } from 'store/actions/data/otf/otf';
 import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
 
-import { vehicleInvoiceDataActions } from 'store/actions/data/invoiceGeneration/vehicleInvoiceGeneration';
+import { chargerInstallationDataActions } from 'store/actions/data/chargerInstallation/chargerInstallation';
 import { vehicleIrnGenerationDataActions } from 'store/actions/data/invoiceGeneration/irnGeneration';
 
 import { vehicleInvoiceGenerationDataActions } from 'store/actions/data/invoiceGeneration/vehicleInvoice';
@@ -41,15 +41,8 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            VehicleInvoiceGeneration: {
-                VehicleInvoiceSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString, detailData: vehicleInvoiceMasterData = [] },
-                VehicleIrnGeneration: { isLoaded: isIrnDataLoaded = false, isLoading: isIrnDataLoading, data: irnData = [] },
-                VehicleInvoiceDetail: { isLoaded: isVehicleInvoiceDataLoaded = false, isLoading: isVehicleInvoiceDataLoading, data: vehicleInvoiceData = [] },
-                VehicleDetails: { isLoaded: isVehicleDataLoaded = false, isLoading: isVehicleDataLoading, data: vehicleDetail = [] },
-                VehicleInvoice: { isLoaded: isInvoiceDataLoaded = false, isLoading: isInvoiceDataLoading, data: invoiceData = [] },
-            },
-            OTF: {
-                OtfSearchList: { isDetailLoaded: isDataLoaded, detailData: otfData = [] },
+            ChargerInstallation: {
+                ChargerInstallationList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString, detailData: chargerInstallationMasterData = [] },
             },
         },
     } = state;
@@ -63,22 +56,8 @@ const mapStateToProps = (state) => {
         moduleTitle,
         isSearchLoading,
         isSearchDataLoaded,
-        isInvoiceDataLoaded,
-        isInvoiceDataLoading,
-        invoiceData,
-        isDataLoaded,
-        otfData,
         filterString,
-        isIrnDataLoaded,
-        isIrnDataLoading,
-        isVehicleInvoiceDataLoaded,
-        isVehicleInvoiceDataLoading,
-        isVehicleDataLoaded,
-        isVehicleDataLoading,
-        irnData,
-        vehicleInvoiceData,
-        vehicleDetail,
-        vehicleInvoiceMasterData,
+        chargerInstallationMasterData,
     };
     return returnValue;
 };
@@ -87,23 +66,23 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchOTFDetail: otfDataActions.fetchDetail,
-            saveData: vehicleInvoiceGenerationDataActions.saveData,
-            cancelInvoice: vehicleInvoiceGenerationDataActions.saveData,
-            listShowLoading: otfDataActions.listShowLoading,
-            // saveData: vehicleInvoiceDetailDataActions.saveData,
-            listInvoiceShowLoading: vehicleInvoiceDetailDataActions.listShowLoading,
+            // fetchOTFDetail: otfDataActions.fetchDetail,
+            // saveData: vehicleInvoiceGenerationDataActions.saveData,
+            // cancelInvoice: vehicleInvoiceGenerationDataActions.saveData,
+            // listShowLoading: otfDataActions.listShowLoading,
+            // // saveData: vehicleInvoiceDetailDataActions.saveData,
+            // listInvoiceShowLoading: vehicleInvoiceDetailDataActions.listShowLoading,
 
-            irnGeneration: vehicleIrnGenerationDataActions.saveData,
-            listIrnShowLoading: vehicleIrnGenerationDataActions.listShowLoading,
+            // irnGeneration: vehicleIrnGenerationDataActions.saveData,
+            // listIrnShowLoading: vehicleIrnGenerationDataActions.listShowLoading,
 
-            fetchVehicleDetail: vehicleInvoiceDetailDataActions.fetchList,
-            fetchVehicleInvoiceDetail: vehicleDetailsDataActions.fetchList,
+            // fetchVehicleDetail: vehicleInvoiceDetailDataActions.fetchList,
+            // fetchVehicleInvoiceDetail: vehicleDetailsDataActions.fetchList,
 
-            fetchList: vehicleInvoiceDataActions.fetchList,
-            fetchInvoiceMasterData: vehicleInvoiceDataActions.fetchDetail,
-            listInvoiceDetailShowLoading: vehicleInvoiceDataActions.listInvoiceDetailShowLoading,
-            setFilterString: vehicleInvoiceDataActions.setFilter,
+            fetchList: chargerInstallationDataActions.fetchList,
+            fetchInvoiceMasterData: chargerInstallationDataActions.fetchDetail,
+            listShowLoading: chargerInstallationDataActions.listShowLoading,
+            setFilterString: chargerInstallationDataActions.setFilter,
             showGlobalNotification,
         },
         dispatch
@@ -217,14 +196,6 @@ export const VehicleInvoiceMasterBase = (props) => {
                 filter: true,
             },
             {
-                key: 'digitalSignature',
-                title: 'Digital Signature',
-                value: filterString?.digitalSignature,
-                name: typeData?.[PARAM_MASTER.YES_NO_FLG.id]?.find((i) => i?.key === filterString?.digitalSignature)?.value,
-                canRemove: true,
-                filter: true,
-            },
-            {
                 key: 'pageNumber',
                 title: 'Value',
                 value: page?.current,
@@ -239,8 +210,8 @@ export const VehicleInvoiceMasterBase = (props) => {
                 filter: false,
             },
             {
-                key: 'chargerStatus',
-                title: 'Invoice Status',
+                key: 'stage',
+                title: 'Stage',
                 value: chargerStatus,
                 canRemove: false,
                 filter: false,
@@ -352,38 +323,38 @@ export const VehicleInvoiceMasterBase = (props) => {
     //     // eslint-disable-next-line react-hooks/exhaustive-deps
     // }, [userId, selectedOrder?.invoiceNumber]);
 
-    const handleIRNGeneration = () => {
-        const data = { otfNumber: selectedOtfNumber, invoiceNumber: selectedOrder?.invoiceNumber };
-        const onSuccess = (res) => {
-            setShowDataLoading(true);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
+    // const handleIRNGeneration = () => {
+    //     const data = { otfNumber: selectedOtfNumber, invoiceNumber: selectedOrder?.invoiceNumber };
+    //     const onSuccess = (res) => {
+    //         setShowDataLoading(true);
+    //         showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+    //         fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
 
-            const extraParam = [
-                {
-                    key: 'otfNumber',
-                    title: 'otfNumber',
-                    value: selectedOtfNumber,
-                    name: 'Booking Number',
-                },
-            ];
-            fetchOTFDetail({ customURL, setIsLoading: listShowLoading, userId, extraParams: extraParam, onErrorAction });
-        };
+    //         const extraParam = [
+    //             {
+    //                 key: 'otfNumber',
+    //                 title: 'otfNumber',
+    //                 value: selectedOtfNumber,
+    //                 name: 'Booking Number',
+    //             },
+    //         ];
+    //         fetchOTFDetail({ customURL, setIsLoading: listShowLoading, userId, extraParams: extraParam, onErrorAction });
+    //     };
 
-        const onError = (message) => {
-            showGlobalNotification({ message });
-        };
+    //     const onError = (message) => {
+    //         showGlobalNotification({ message });
+    //     };
 
-        const requestData = {
-            data: data,
-            method: 'post',
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-        irnGeneration(requestData);
-    };
+    //     const requestData = {
+    //         data: data,
+    //         method: 'post',
+    //         setIsLoading: listShowLoading,
+    //         userId,
+    //         onError,
+    //         onSuccess,
+    //     };
+    //     irnGeneration(requestData);
+    // };
 
     const handleChargerTypeChange = (buttonName) => {
         setchargerStatus(buttonName?.key);
@@ -664,7 +635,6 @@ export const VehicleInvoiceMasterBase = (props) => {
         onPrintInvoice,
         saveButtonName: isLastSection ? 'Submit' : 'Save & Next',
         setLastSection,
-        handleIRNGeneration,
         handleBookingNumberSearch,
         vehicleInvoiceMasterData,
     };

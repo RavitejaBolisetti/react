@@ -47,10 +47,10 @@ import { UserAccess } from './userAccess';
 import { OTFSoMapping } from './otfSoMappingUnmapping';
 import { OTFBlockMaster } from './otfBlockMaster';
 import { VehicleDeliveryNote } from './vehicleDeliveryNote';
-import { DealerBlockMaster } from './dealerBlockMaster'
+import { DealerBlockMaster } from './dealerBlockMaster';
 
 import { stockTransferIndentData } from './stockTransferIndent';
-
+import { ChargerInstallation } from './chargerInstallation';
 export const data = combineReducers({
     Menu,
     ProductHierarchy,
@@ -98,4 +98,5 @@ export const data = combineReducers({
     OTFBlockMaster,
     VehicleDeliveryNote,
     DealerBlockMaster,
+    ChargerInstallation,
 });

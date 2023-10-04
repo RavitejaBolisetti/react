@@ -3,6 +3,6 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { InsuranceDetailsMaster } from './InsuranceDetailsMaster';
+import { InstallationAddressDetailsMaster } from './InstallationAddressDetails';
 
-export { InsuranceDetailsMaster };
+export { InstallationAddressDetailsMaster };

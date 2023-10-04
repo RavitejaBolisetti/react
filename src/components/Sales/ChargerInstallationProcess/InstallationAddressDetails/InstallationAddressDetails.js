@@ -57,7 +57,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const InsuranceDetailsMasterBase = (props) => {
+const InstallationAddressDetailsMasterBase = (props) => {
     const { insuranceData, onCloseAction, fetchList, formActionType, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
     const { form, selectedOrderId, handleFormValueChange, section, isLoading, NEXT_ACTION, handleButtonClick, onFinishFailed, saveData } = props;
     const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar, pageType } = props;
@@ -200,4 +200,4 @@ const InsuranceDetailsMasterBase = (props) => {
     );
 };
 
-export const InsuranceDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(InsuranceDetailsMasterBase);
+export const InstallationAddressDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(InstallationAddressDetailsMasterBase);

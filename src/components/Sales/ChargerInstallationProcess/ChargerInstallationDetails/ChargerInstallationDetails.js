@@ -13,7 +13,7 @@ import { CustomerDetailsMaster } from 'components/Sales/VehicleInvoiceGeneration
 
 import styles from 'assets/sass/app.module.scss';
 
-const InvoiceDetailsMasterBase = (props) => {
+const ChargerInstallatioDetailsMasterBase = (props) => {
     const { typeData, selectedOrder, fetchInvoiceDetail, listShowLoading, vehicleInvoiceMasterData } = props;
     const { userId, buttonData, setButtonData, showGlobalNotification, section, isDataLoaded, isLoading, invoiceDetailForm } = props;
     const { form, formActionType, handleFormValueChange, selectedOtfNumber, setSelectedOtfNumber } = props;
@@ -108,4 +108,4 @@ const InvoiceDetailsMasterBase = (props) => {
     );
 };
 
-export const InvoiceDetailsMaster = InvoiceDetailsMasterBase;
+export const ChargerInstallatioDetailsMaster = ChargerInstallatioDetailsMasterBase;

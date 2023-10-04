@@ -197,6 +197,7 @@ export const BASE_URL_RSM_APPROVAL_SEARCH = BASE_URL_RSM_APPROVAL + '/search';
 export const BASE_URL_INVOICE_DETAILS = BASE_URL_INVOICE + 'details';
 
 export const BASE_URL_VEHICLE = BASE_URL + 'vehicle/';
+export const BASE_URL_CHARGER_INSTALLATION_SEARCH = BASE_URL_VEHICLE + 'charger/installation/search';
 export const BASE_URL_VEHICLE_SEARCH = BASE_URL_VEHICLE + 'search';
 export const BASE_URL_VIEW_VEHICLE_DETAILS = BASE_URL_VEHICLE + 'details';
 export const BASE_URL_VEHICLE_CONTACTS = BASE_URL_VEHICLE + 'contacts';
@@ -289,9 +290,7 @@ export const BASE_URL_VEHICLE_DETAILS_SERVICE = BASE_URL + 'otf/vehicledetails/o
 
 export const BASE_URL_ON_ROAD_PRICE_MASTER_SEARCH = BASE_URL + 'vehicle/onroad/pricemaster/search';
 
-
 export const BASE_URL_VIEWON_ROAD_PRICE_MASTER = BASE_URL + 'vehicle/onroad/pricemaster';
-
 
 export const BASE_URL_MILE_SKILL = BASE_URL + 'dealer/mileskills';
 
@@ -338,7 +337,5 @@ export const BASE_URL_RELATIONSHIP_MANAGER = BASE_URL_USER_MANAGEMENT_APPLICATIO
 export const BASE_URL_DELIVERY_NOTE_VEHICLE_DETAILS = BASE_URL_OTF_VEHICLE_DETAILS + '/search/registrationnumber';
 export const BASE_URL_VEHICLE_INVOICE_GENERATION_PROFILE_CARD = BASE_URL_OTF + 'vehicleinvoice/profile';
 
-
 export const BASE_URL_VIN_BLOCK_MASTER = BASE_URL_VEHICLE + 'vinbolckmaster/search';
 export const BASE_URL_VIN_BLOCK_VIEWMASTER = BASE_URL_VEHICLE + 'vinbolckmaster';
-

@@ -3,6 +3,9 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { InvoiceDetailsMaster } from './InvoiceDetailsMaster';
+import { combineReducers } from 'redux';
+import { ChargerInstallationList } from './chargerInstallation';
 
-export { InvoiceDetailsMaster };
+export const ChargerInstallation = combineReducers({
+    ChargerInstallationList,
+});

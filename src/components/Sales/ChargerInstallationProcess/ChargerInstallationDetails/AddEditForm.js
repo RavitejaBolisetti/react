@@ -8,12 +8,13 @@ import { Row, Col, Form, Input, Collapse, Typography, Divider, Button, Descripti
 import styles from 'assets/sass/app.module.scss';
 import { expandIcon } from 'utils/accordianExpandIcon';
 
-import { convertDateToCalender } from 'utils/formatDateTime';
+import { DataTable } from 'utils/dataTable';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredSelectField } from 'utils/validation';
 import { PlusOutlined } from '@ant-design/icons';
 import { AddRequestModal } from './AddRequestModal';
 import { FilterIcon } from 'Icons';
+import { optionalServicesColumns } from './tableColumn';
 
 const { Search } = Input;
 const { Panel } = Collapse;
@@ -23,6 +24,8 @@ const AddEditFormMain = (props) => {
     const [chargerDetails, setChargerDetails] = useState(false);
     const [activeKey, setActiveKey] = useState([]);
     const [addRequestVisible, setAddRequestVisible] = useState(false);
+    const [addRequestData, setAddRequestData] = useState([]);
+    const [addRequestForm] = Form.useForm();
 
     const viewProps = {
         bordered: false,
@@ -55,18 +58,21 @@ const AddEditFormMain = (props) => {
     const onAdvanceSearchCloseAction = () => {
         setAddRequestVisible(false);
     };
+
     const addRequestProps = {
         isVisible: addRequestVisible,
         icon: <FilterIcon size={20} />,
         titleOverride: 'Add Request',
         onCloseAction: onAdvanceSearchCloseAction,
         onAdvanceSearchCloseAction,
+        addRequestForm,
+        setAddRequestData,
+        setAddRequestVisible,
     };
 
     const handleAddRequestChange = () => {
         setAddRequestVisible(true);
     };
-
     return (
         <>
             <div className={styles.drawerCustomerMaster}>
@@ -119,7 +125,9 @@ const AddEditFormMain = (props) => {
                                             </Row>
                                         }
                                         key="1"
-                                    ></Panel>
+                                    >
+                                        <DataTable tableColumn={optionalServicesColumns()} tableData={addRequestData} pagination={false} />
+                                    </Panel>
                                 </Collapse>
                             )}
                         </Space>
