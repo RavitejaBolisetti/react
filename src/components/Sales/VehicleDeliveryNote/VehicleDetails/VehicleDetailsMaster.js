@@ -100,7 +100,6 @@ const VehicleDetailsMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vehicleData]);
-    console.log('vehicleData--->', vehicleData);
 
     useEffect(() => {
         if (userId && selectedOrderId && selectedInvoiceId && soldByDealer) {

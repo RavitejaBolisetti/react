@@ -41,8 +41,6 @@ const VehicleDeliveryNoteConatinerMain = (props) => {
         selectedInvoiceId: selectedOrderId,
     };
 
-    console.log('requestData', requestData);
-
     const renderElement = () => {
         switch (currentSection) {
             case VEHICLE_DELIVERY_NOTE_SECTION.INVOICE_DETAILS.id: {

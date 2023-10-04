@@ -65,7 +65,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const FinananceDetailsMasterBase = (props) => {
     const { saveData, resetData, fetchList, userId, listShowLoading, financeData, isFinanceLovDataLoaded, setFormActionType, isFinanceLovLoading, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, section, isLoading } = props;
-    const { typeData, form, selectedOrderId, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION } = props;
+    const { typeData, form, selectedRecordId, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION } = props;
     const { formKey, onFinishCustom = undefined, FormActionButton, StatusBar, pageType } = props;
 
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -97,19 +97,17 @@ export const FinananceDetailsMasterBase = (props) => {
 
     const extraParams = [
         {
-            key: 'otfNumber',
-            title: 'otfNumber',
-            value: selectedOrderId,
-            name: 'Booking Number',
+            key: 'otfId',
+            value: selectedRecordId,
         },
     ];
 
     useEffect(() => {
-        if (userId && selectedOrderId) {
+        if (userId && selectedRecordId) {
             fetchList({ setIsLoading: listShowLoading, extraParams, onErrorAction, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOrderId]);
+    }, [userId, selectedRecordId]);
 
     useEffect(() => {
         if (userId && !isFinanceLovDataLoaded) {
@@ -128,7 +126,7 @@ export const FinananceDetailsMasterBase = (props) => {
 
     const onFinish = (values) => {
         const recordId = financeData?.id || '';
-        const data = { ...values, id: recordId, otfNumber: selectedOrderId, doDate: values?.doDate };
+        const data = { ...values, id: recordId, otfId: selectedRecordId, doDate: values?.doDate };
 
         if (onFinishCustom) {
             onFinishCustom({ key: formKey, values: data });

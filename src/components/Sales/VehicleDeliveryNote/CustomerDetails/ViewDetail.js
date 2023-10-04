@@ -10,7 +10,8 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { getCodeValue } from 'utils/getCodeValue';
 
 const ViewDetailMain = (props) => {
-    const { styles, formData, isLoading, typeData } = props;
+    const { formData, isLoading, typeData } = props;
+
     const viewProps = {
         bordered: false,
         colon: false,

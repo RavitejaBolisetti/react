@@ -460,7 +460,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         setReportVisible(true);
         setAdditionalReportParams([
             {
-                key: 'sa_od_invoice_hdr_id',
+                key: 'delivery_note_id',
                 value: selectedOrder?.vehicleDeliveryNote,
             },
         ]);

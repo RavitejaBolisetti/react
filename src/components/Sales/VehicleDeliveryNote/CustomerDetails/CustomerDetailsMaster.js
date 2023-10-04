@@ -58,7 +58,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const CustomerDetailsMasterBase = (props) => {
     const { fetchList, customerDetailsDataSearched, customerDetailsData, setFormActionType, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, isLoading } = props;
     const { requestPayload, setRequestPayload } = props;
-    const { listShowLoading, userId, typeData, form, selectedOrder, selectedCustomerId, soldByDealer, challanRequestPayload, setChallanRequestPayload, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section, customerIdValue, setCustomerIdValue, resetData } = props;
+    const { listShowLoading, userId, typeData, form, soldByDealer, challanRequestPayload, setChallanRequestPayload, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section, customerIdValue, setCustomerIdValue } = props;
     const { buttonData, setButtonData } = props;
 
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -90,22 +90,6 @@ export const CustomerDetailsMasterBase = (props) => {
         setButtonData({ ...buttonData, formBtnActive: true });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [section]);
-
-    // const extraParams = [
-    //     {
-    //         key: 'customerId',
-    //         title: 'customerId',
-    //         value: selectedCustomerId,
-    //         name: 'Customer Id',
-    //     },
-    // ];
-
-    // useEffect(() => {
-    //     if (userId && selectedCustomerId) {
-    //         fetchList({ setIsLoading: listShowLoading, extraParams, onErrorAction, userId });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [userId, selectedCustomerId]);
 
     const handleOnChange = (e) => {
         form.setFieldsValue({
@@ -140,20 +124,6 @@ export const CustomerDetailsMasterBase = (props) => {
         fetchList({ setIsLoading: listShowLoading, userId, extraParams: searchParams, onSuccessAction, onErrorAction });
     };
 
-    // useEffect(() => {
-    //     if (userId && !isFinanceLovDataLoaded) {
-    //         fetchFinanceLovList({ setIsLoading: listFinanceLovShowLoading, userId });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [userId, isFinanceLovDataLoaded]);
-
-    const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-    };
-
-    const onErrorAction = (message) => {
-        showGlobalNotification(message);
-    };
     const onFinish = (values) => {
         if (soldByDealer) {
             setRequestPayload({ ...requestPayload, customerDetails: customerDetailsData });

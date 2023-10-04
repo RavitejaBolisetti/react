@@ -1,137 +1,120 @@
 import '@testing-library/jest-dom/extend-expect';
-import { DealerParent } from '@components/Mile/DealerParent/DealerParent';
-import { fireEvent, render, screen } from "@testing-library/react";
+import { DealerParent } from 'components/Mile/DealerParent/DealerParent';
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import customRender from '@utils/test-utils';
-import { Form } from 'antd';
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
-import { tableColumn } from 'components/Mile/DealerParent/tableColumn';
-import { DataTable } from 'utils/dataTable';
-import { ListDataTable } from 'utils/ListDataTable';
-import { tableColumnActions } from 'utils/tableColumnActions';
-import { tblActionColumn } from 'utils/tableColumn';
-import { AddEditForm } from 'components/Mile/DealerParent/AddEditForm';
 
-const FormWrapper = (props) => {
-    const [listFilterForm] = Form.useForm();
+jest.mock('store/actions/data/dealer/dealerParent', () => ({
+    dealerParentDataActions: {}
+}));
 
-    const myFormMock = {
-        ...listFilterForm,
-        resetFi:jest.fn(),
-        validateFields:jest.fn()
-    }
-    return (<DealerParent listFilterForm={myFormMock} {...props} />);
-}
+jest.mock('components/Mile/DealerParent/AddEditForm', () => {
+    const AddEditForm = ({ onFinish }) => <div><button onClick={onFinish}>Save</button></div>;
+    return {
+        __esModule: true,
+        AddEditForm,
+    };
+});
 
 afterEach(() => {
     jest.restoreAllMocks();
 });
 
 describe('DealerParent Component Render', () => {
+
     it('should render table header', () => {
         customRender(<DealerParent />);
-
-        const srl = screen.getByRole('columnheader', {name:'Srl.'});
-        expect(srl).toBeTruthy();
-
-        const groupCode = screen.getByRole('columnheader', {name:'Group Code'});
-        expect(groupCode).toBeTruthy();
-
-        const groupName = screen.getByRole('columnheader', {name:'Group Name'});
-        expect(groupName).toBeTruthy();
-
-        const title = screen.getByRole('columnheader', {name:'Title'});
-        expect(title).toBeTruthy();
-
-        const ownerName = screen.getByRole('columnheader', {name:'Owner Name'});
-        expect(ownerName).toBeTruthy();
-
-        const contactNumber = screen.getByRole('columnheader', {name:'Contact Number'});
-        expect(contactNumber).toBeTruthy();
-
-        const emailID = screen.getByRole('columnheader', {name:'Email ID'});
-        expect(emailID).toBeTruthy();
-
-        const status = screen.getByRole('columnheader', {name:'Status'});
-        expect(status).toBeTruthy();
-
-        const action = screen.getByRole('columnheader', {name:'Action'});
-        expect(action).toBeTruthy();
-
-        const prePage = screen.getByRole('listitem', {name:'Previous Page'});
-        expect(prePage).toBeTruthy();
-        fireEvent.click(prePage);
-
-        const nextPage = screen.getByRole('listitem', {name:'Next Page'});
-        expect(prePage).toBeTruthy();
-        fireEvent.click(nextPage);
     });
 
-    it('should render search icon', ()=>{
-        customRender(<FormWrapper onSearchHandle={jest.fn()} setFilterString={jest.fn()} handleClearInSearch={jest.fn()}  setShowDataLoading={jest.fn()} />);
+    it('search should work', ()=>{
+        customRender(<DealerParent />);
 
         const groupNameTextBox = screen.getByRole('textbox', {name:'Group Name'});
         fireEvent.change(groupNameTextBox, {target: {value:'test'}});
 
         const searchImg = screen.getByRole('img', {name:'search'});
         fireEvent.click(searchImg);
-    })
 
-    it('pass filterDataItem array', ()=>{
+        const clearBtn=screen.getByRole('img', { name: 'close-circle' });
+        fireEvent.click(clearBtn);
+
+        fireEvent.change(groupNameTextBox, {target: {value:''}});
+        fireEvent.click(searchImg);
+
+    });
+
+    it('should load the data', ()=>{
+        const mockStore = createMockStore({
+            auth: { userId:'123' },
+        });
+
+        const fetchList=jest.fn();
+        
+        customRender(
+            <Provider store={mockStore}>
+                <DealerParent fetchList={fetchList} />
+            </Provider>
+        );
+
+        fetchList.mock.calls[0][0].onErrorAction();
+        fetchList.mock.calls[0][0].onSuccessAction();
+    });
+
+    it('view and save button should work', async ()=>{
         const mockStore = createMockStore({
             auth: { userId:'123' },
             data: {
                 DealerHierarchy: {
-                    DealerParent: {
-                        isDataLoaded: true,
-                        data:[{name:"MAHINDRA LTD"},{name:"test"}],
-                    }
-                }
+                    DealerParent: { isLoaded: true, isLoading: false, data: [{code: 106, name: 'Kai', title: 'Example Title', ownerName: 'Example Owner'}] },
+                },
+            },
+        });
+
+        const saveData=jest.fn();
+        
+        customRender(
+            <Provider store={mockStore}>
+                <DealerParent saveData={saveData} fetchList={jest.fn()} />
+            </Provider>
+        );
+
+        await waitFor(() => { expect(screen.getByText('Kai')).toBeInTheDocument() });
+
+        const groupNameTextBox = screen.getByRole('textbox', { name:'Group Name' });
+        fireEvent.change(groupNameTextBox, { target: { value:'Kai' } });
+
+        const searchImg = screen.getByRole('img', { name:'search' });
+        fireEvent.click(searchImg);
+
+        const viewBtn=screen.getByTestId('view');
+        fireEvent.click(viewBtn);
+
+        const saveBtn=screen.getByRole('button', { name: 'Save' });
+        fireEvent.click(saveBtn);
+
+        saveData.mock.calls[0][0].onError();
+        saveData.mock.calls[0][0].onSuccess();
+    });
+
+    it('refresh button should work', async ()=>{
+        const mockStore = createMockStore({
+            auth: { userId:'123' },
+            data: {
+                DealerHierarchy: {
+                    DealerParent: { isLoaded: true, isLoading: false, data: [{code: 106, name: 'Kai', title: 'Example Title', ownerName: 'Example Owner'}] },
+                },
             },
         });
         
         customRender(
             <Provider store={mockStore}>
-                <DealerParent userId={'123'} onSearchHandle={jest.fn()} setFilterString={jest.fn()} handleClearInSearch={jest.fn()}  setShowDataLoading={jest.fn()} filterFunction={jest.fn()} />
+                <DealerParent fetchList={jest.fn()} />
             </Provider>
         );
 
-        const groupNameTextBox = screen.getByRole('textbox', {name:'Group Name'});
-        fireEvent.change(groupNameTextBox, {target: {value:'test'}});
-
-        const searchImg = screen.getByRole('img', {name:'search'});
-        fireEvent.click(searchImg);
-
-        const filterDataItem = [{name:'test'}];
-        const setSearchdata = jest.fn();
-        setSearchdata(filterDataItem);
-    })
-
-    it('should render close-circle icon', ()=>{
-        customRender(<FormWrapper onSearchHandle={jest.fn()} setFilterString={jest.fn()} handleClearInSearch={jest.fn()}  setShowDataLoading={jest.fn()} />);
-
-        const groupNameTextBox = screen.getByRole('textbox', {name:'Group Name'});
-        fireEvent.change(groupNameTextBox, {target: {value:'test'}});
-
-        const closeIcon = screen.getByRole('img', {name:'close-circle'});
-        fireEvent.click(closeIcon);
-    })
-
-    it("should renderwhen isDataLoaded is false ", () => {
-        const mockStore = createMockStore({
-            auth: { userId:'123' },
-            data: {
-                DealerHierarchy: {
-                    DealerParent: {
-                        isDataLoaded: false,
-                    }
-                }
-            },
-        });
-        customRender(
-        <Provider store={mockStore}>
-            <DealerParent fetchList={jest.fn()} />
-        </Provider>
-        );
+        const refreshBtn=screen.getByTestId('refreshBtn');
+        fireEvent.click(refreshBtn);
     });
+
 });

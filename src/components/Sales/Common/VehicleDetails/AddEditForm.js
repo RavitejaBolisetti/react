@@ -33,7 +33,7 @@ const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
     const { isProductDataLoading, productHierarchyData, toolTipContent, handleFormValueChange, optionalServices, setOptionalServices, formData, openAccordian, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, typeData, vehicleServiceData } = props;
-    const { formActionType, filterVehicleData, handleVehicleDetailChange, viewOnly, showPrintDiscount = false, ShowPOandSOdetails = true, showAvailaibleStock = true } = props;
+    const { formActionType, filterVehicleData, handleVehicleDetailChange, viewOnly, showPrintDiscount = false, isOTFModule } = props;
 
     const [optionForm] = Form.useForm();
     const [confirmRequest, setConfirmRequest] = useState();
@@ -107,8 +107,8 @@ const AddEditFormMain = (props) => {
                 });
             },
             onSubmitAction: () => {
-                handleVehicleDetailChange({ ...filterVehicleData, modalCode: value });
-                form.setFieldValue('modalCode', value);
+                const finalData = { ...filterVehicleData, productModelCode: value };
+                handleVehicleDetailChange(finalData);
                 handleFormValueChange(true);
                 setConfirmRequest({
                     ...confirmRequest,
@@ -160,15 +160,13 @@ const AddEditFormMain = (props) => {
                             <Divider />
 
                             <Row gutter={20}>
-                                {showAvailaibleStock && (
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item label="Available Stock" name="availableStock" data-testid="availableStock">
-                                            <Input {...disabledProp} placeholder={preparePlaceholderText('Available Stock')} />
-                                        </Form.Item>
-                                    </Col>
-                                )}
-                                {ShowPOandSOdetails && (
+                                {isOTFModule && (
                                     <>
+                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                            <Form.Item label="Available Stock" name="availableStock" data-testid="availableStock">
+                                                <Input {...disabledProp} placeholder={preparePlaceholderText('Available Stock')} />
+                                            </Form.Item>
+                                        </Col>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                             <Form.Item label="PO Number" name="poNumber">
                                                 <Input {...disabledProp} placeholder={preparePlaceholderText('PO Number')} />
