@@ -87,9 +87,9 @@ const IrnTransactionListMasterBase = (props) => {
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, isLoading } = props;
     const { form, selectedId, finalData, setFinalData, onFinish, onFinishFailed, menuData, applicationMasterDataShowLoading } = props;
     const { applicationDetailsData, isApplicationDeatilsLoading, fetchApplication, applicationDetailListShowLoading, fetchListGstIrnTree, listShowLoadingTree } = props;
-    const { gstIrnTreeData } = props;
+    const { gstIrnTreeData, nextBtn } = props;
     const [vehicleDetailForm] = Form.useForm();
-    console.log('gstIrnTreeData', gstIrnTreeData);
+
     const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
@@ -152,39 +152,27 @@ const IrnTransactionListMasterBase = (props) => {
         }
     }, [userId]);
 
-    const formProps = {
-        ...props,
-        form,
-        onFinish,
-        onFinishFailed,
-        typeData,
-        vehicleStatusType,
-        physicalStatusType,
-        shortageType,
-        userId,
-        isDataLoaded,
-        formData: vehicleDetailData,
-        isLoading,
-        vehicleDetailForm,
-        finalData,
-        setFinalData,
-        setButtonData,
-        buttonData,
-    };
+    // const formProps = {
+    //     ...props,
+    //     form,
+    //     onFinish,
+    //     onFinishFailed,
+    //     typeData,
+    //     vehicleStatusType,
+    //     physicalStatusType,
+    //     shortageType,
+    //     userId,
+    //     isDataLoaded,
+    //     formData: vehicleDetailData,
+    //     isLoading,
+    //     vehicleDetailForm,
+    //     finalData,
+    //     setFinalData,
+    //     setButtonData,
+    //     buttonData,
+    // };
 
-    const viewProps = {
-        typeData,
-        vehicleStatusType,
-        physicalStatusType,
-        shortageType,
-        formData: vehicleDetailData,
-        styles,
-        isLoading,
-    };
-
-    const onChange = (e) => {
-        setSearchValue(e.target.value);
-    };
+    
     const applicationCall = (key) => {
         fetchApplication({ setIsLoading: applicationDetailListShowLoading, id: key });
     };
@@ -211,8 +199,6 @@ const IrnTransactionListMasterBase = (props) => {
         searchValue,
     };
 
-    // const leftCol = menuData?.length > 0 ? 14 : 24;
-    // const rightCol = menuData?.length > 0 ? 10 : 24;
     return (
         <>
             <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -223,7 +209,6 @@ const IrnTransactionListMasterBase = (props) => {
                                 <h2>{section?.title}</h2>
                             </Col>
                         </Row>
-                        {/* {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />} */}
                     </Col>
                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                         <div className={` ${styles.leftPanelScroll}`} style={{ marginRight: '50px' }}>

@@ -21,17 +21,20 @@ const GSTIRNMainConatinerMain = (props) => {
 
     const myProps = {
         ...props,
+        nextBtn:true,
     };
-
+    const myPropsIrnTrans = {
+        ...props,
+        nextBtn:false
+    };
     const renderElement = () => {
-        console.log('currentSection',currentSection);
         switch (currentSection) {
             
             case GST_IRN_SECTION.BRANCH_ACCESSIBLE.id: {
                 return <GstBranchAccessibleMaster {...myProps} />;
             }
             case GST_IRN_SECTION.IRN_TRANSACTION.id: {
-                return <IrnTransactionListMaster {...myProps} />;
+                return <IrnTransactionListMaster {...myPropsIrnTrans} />;
             }
             default: {
                 return <GstBranchAccessibleMaster {...myProps} />;

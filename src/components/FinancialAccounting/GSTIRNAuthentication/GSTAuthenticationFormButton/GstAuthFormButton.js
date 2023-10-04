@@ -10,7 +10,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'assets/sass/app.module.scss';
 
 
-export const GstAuthFormButton = ({ record, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
+export const GstAuthFormButton = ({ record, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection, nextBtn }) => {
     return (
         <div className={styles.formFooter}>
             <Row gutter={20}>
@@ -21,21 +21,22 @@ export const GstAuthFormButton = ({ record, onCloseAction, buttonData, setButton
                         </Button>
                     )}
 
-                    {buttonData?.cancelBtn && (
+                    {/* {buttonData?.cancelBtn && ( */}
                         <Button danger onClick={onCloseAction}>
                             Cancel
                         </Button>
-                    )}
+                    {/* )} */}
                 </Col>
 
                 <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.buttonsGroupRight}>
-                    {buttonData?.editBtn && (
+                    {/* {buttonData?.editBtn && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
                             Edit
                         </Button>
-                    )}
+                    )} */}
 
-                    {buttonData?.nextBtn && !isLastSection && (
+                    {/* {buttonData?.nextBtn && !isLastSection && ( */}
+                    {nextBtn && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
                             Next
                         </Button>

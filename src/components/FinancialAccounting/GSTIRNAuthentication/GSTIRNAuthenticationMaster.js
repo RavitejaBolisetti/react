@@ -7,36 +7,49 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Card, Col, Form, Row } from 'antd';
+import { FiEye, FiTrash } from 'react-icons/fi';
 import GSTIRNFilter from './GSTIRNFilter';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
- import { GSTIRNMainConatiner } from './GSTIRNMainConatiner';
+import { GSTIRNMainConatiner } from './GSTIRNMainConatiner';
 import { GST_IRN_SECTION } from 'constants/GSTIRNSection';
 import { showGlobalNotification } from 'store/actions/notification';
 import { UploadUtil } from 'utils/Upload';
 import { ViewSupportingDocDetail } from './ViewSupportingDocDetail';
 import { GSTLoginForm } from './GSTLoginForm';
-// import { FilterIcon } from 'Icons';
 import { dealerGstAction } from 'store/actions/data/financialAccounting/dealerGstAction';
+import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
+import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
+import { gstIrnLoginAction } from 'store/actions/data/financialAccounting/gstIrnLoginAction';
 
 import styles from 'assets/sass/app.module.scss';
 
-
 const mapStateToProps = (state) => {
     const {
-        auth: { userId },
+        auth: { userId, accessToken, token },
         data: {
             // ConfigurableParameterEditing: { filteredListData: typeData = [] },
             FinancialAccounting: {
-                DealerGstDetails: {  data: dealerGstData = [] },
-            },            
+                DealerGstDetails: { data: dealerGstData = [] },
+            },
+            CustomerMaster: {
+                ViewDocument: { isLoaded: isViewDataLoaded = false, data: viewDocument },
+            },
+            SupportingDocument: { isLoaded: isSupportingDataLoaded = false, isSupportingDataLoading, data: supportingData },
         },
     } = state;
 
     const moduleTitle = 'GST IRN Authentication';
     let returnValue = {
-        userId,        
+        userId,
+        accessToken,
+        token,
         moduleTitle,
         dealerGstData,
+        viewDocument,
+        isViewDataLoaded,
+        isSupportingDataLoaded,
+        isSupportingDataLoading,
+        supportingData,
     };
     return returnValue;
 };
@@ -47,6 +60,17 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchList: dealerGstAction.fetchList,
             listShowLoadingGst: dealerGstAction.listShowLoading,
+
+            fetchViewDocument: documentViewDataActions.fetchList,
+            viewListShowLoading: documentViewDataActions.listShowLoading,
+            resetViewData: documentViewDataActions.reset,
+
+            downloadFile: supportingDocumentDataActions.downloadFile,
+            listShowLoading: supportingDocumentDataActions.listShowLoading,     
+            
+            // fetchListGstLogin: gstIrnLoginAction.fetchList,
+            // listShowLoadingGstLogin: gstIrnLoginAction.listShowLoading,
+            
             showGlobalNotification,
         },
         dispatch
@@ -57,6 +81,10 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
     const { userId, data, showGlobalNotification } = props;
     const { typeData, moduleTitle } = props;
     const { filterString, setFilterString, listShowLoadingGst, fetchList, dealerGstData } = props;
+    const { accessToken, token, viewDocument, isViewDataLoaded, viewListShowLoading, resetViewData, fetchViewDocument } = props;
+
+    const { resetData, isSupportingDataLoaded, isSupportingDataLoading, supportingData, downloadFile, listShowLoading } = props;
+
     const { ...viewProps } = props;
 
     const [listFilterForm] = Form.useForm();
@@ -74,6 +102,11 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
 
     // const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [uploadedFile, setUploadedFile] = useState();
+    const [emptyList, setEmptyList] = useState(true);
+    const [uploadedFileName, setUploadedFileName] = useState('');
+    const [fileList, setFileList] = useState([]);
+    const [singleDisabled, setSingleDisabled] = useState(false);
 
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -102,12 +135,11 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         // setShowDataLoading(false);
     };
 
-   
     useEffect(() => {
-        if(userId){
-          fetchList({setIsLoading: listShowLoadingGst, userId, onSuccessAction, onErrorAction });
+        if (userId) {
+            fetchList({ setIsLoading: listShowLoadingGst, userId, onSuccessAction, onErrorAction });
         }
-    },[userId]);
+    }, [userId]);
 
     useEffect(() => {
         const defaultSection = GST_IRN_SECTION.BRANCH_ACCESSIBLE.id;
@@ -177,15 +209,24 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         advanceFilterForm.resetFields();
     };
 
+    console.log('p uploadedFile',uploadedFile);
+
     const onFinish = (values) => {
-        console.log('values',values);
+        // const data = {
+        //     gstinNumber: values?.gstinNumber,
+        //     userName: values?.userId,
+        //     secretId: values?.clientId,
+        //     password: values?.password,
+        //     docId: 'ee1438de-9571-4c9f-9a3e-e16c2741e04d',
+        //     clientId: values?.clientId,
+        // };
+        console.log('req values', values);
+        console.log('uploadedFile',uploadedFile);
+
         setCurrentSection(1);
-        handleButtonClick({record:values, VIEW_ACTION, openDefaultSection:false, currentSection:1, });    
+        handleButtonClick({ record: values, VIEW_ACTION, openDefaultSection: false, currentSection: 1 });
     };
 
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
-    };
     // const onFinish = (values) => {
     //     const data = { supplierInvoiceNumber: selectedId };
     //     const onSuccess = (res) => {
@@ -210,9 +251,10 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
     //     saveData(requestData);
     // };
 
-    // const onFinishFailed = (errorInfo) => {
-    //     return;
-    // };
+    const onFinishFailed = (errorInfo) => {
+        // form.validateFields().then((values) => {});
+        return;
+    };
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -231,7 +273,6 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
-  
     const removeFilter = (key) => {
         if (key === 'searchParam') {
             const { searchType, searchParam, ...rest } = filterString;
@@ -242,20 +283,9 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         }
     };
 
-    
-    // const handleChange = (e) => {
-    //     setSearchValue(e.target.value);
-    // };
-
-    // const handleSearch = (value) => {
-    //     setFilterString({ ...filterString, grnNumber: value });
-    //     setSearchValue(value);
-    // };
-
     const advanceFilterResultProps = {
         removeFilter,
         advanceFilter: true,
-        otfFilter: true,
         filterString,
         setFilterString,
         from: listFilterForm,
@@ -270,21 +300,6 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         userId,
         dealerGstData,
     };
-
-    // const advanceFilterProps = {
-    //     isVisible: isAdvanceSearchVisible,
-    //     icon: <FilterIcon size={20} />,
-    //     titleOverride: 'Advance Filters',
-    //     onCloseAction: onAdvanceSearchCloseAction,
-    //     handleResetFilter,
-    //     filterString,
-    //     setFilterString,
-    //     advanceFilterForm,
-    //     setAdvanceSearchVisible,
-    //     // vehicleReceiptStatusList,
-    //     grnTypeData,
-    //     onFinishSearch,
-    // };
 
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
@@ -341,40 +356,67 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         onFinish,
         onFinishFailed,
     };
-    const uploadProps = {         
-        // uploadedFile,
-        // setUploadedFile,
-        // fileList,
-        // setFileList,
-        uploadButtonName: 'Upload File',
+
+    const onDrop = (e) => {};
+    const onDownload = (file) => {
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
+        // handlePreview(file?.response);
+        let a = document.createElement('a');
+        a.href = `data:image/png;base64,${viewDocument?.base64}`;
+        a.download = viewDocument?.fileName;
+        a.click();
+    };
+    const uploadProps = {
         messageText: 'Click or drop your file here to upload',
         validationText: 'File type should be .pem and max file size to be 5Mb',
-        supportedFileTypes: ['image/.pem'],
+        fileList,
+        setFileList,
+        setEmptyList,
+        multiple: false,
+        supportedFileTypes: ['image/png', 'image/jpeg', 'application/pdf'],
         maxSize: 5,
-        supportingDocs: true,
-        // setMandatoryFields,
-        // onRemove,
+        accept: 'image/png, image/jpeg, application/pdf',
+        showUploadList: {
+            showRemoveIcon: true,
+            showDownloadIcon: true,
+            removeIcon: <FiTrash />,
+            downloadIcon: <FiEye onClick={(e) => onDownload(e)} style={{ color: '#ff3e5b' }} />,
+            showProgress: true,
+        },
+        progress: { strokeWidth: 3, showInfo: true },
+        onDrop,
+        uploadedFile,
+        setUploadedFile,
+        uploadedFileName,
+        setUploadedFileName,
+        single: true,
+        singleDisabled,
+        setSingleDisabled,
+        isReplaceEnabled: false,
+         
     };
     return (
         <>
-            <GSTIRNFilter {...advanceFilterResultProps} />
-            <Row gutter={20}>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Card>
-                        <div className={styles.marB20}>
-                            <UploadUtil {...uploadProps} handleFormValueChange={handleFormValueChange} />
-                            <ViewSupportingDocDetail {...viewProps} />
-                        </div>
-                    </Card>
-                </Col>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Card>
-                        <div style={{ background: '#ffffff', marginBottom: '20px', padding: '15px' }}>
-                            <GSTLoginForm {...loginProps} />
-                        </div>
-                    </Card>
-                </Col>
-            </Row>
+            <Form form={form} name="login_from" layout="vertical" autocomplete="off" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                <GSTIRNFilter {...advanceFilterResultProps} />
+                <Row gutter={20}>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Card>
+                            <div className={styles.marB20}>
+                                <UploadUtil {...uploadProps} handleFormValueChange={handleFormValueChange} />
+                                {/* <ViewSupportingDocDetail {...viewProps} /> */}
+                            </div>
+                        </Card>
+                    </Col>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Card>
+                            <div style={{ background: '#ffffff', marginBottom: '20px', padding: '15px' }}>
+                                <GSTLoginForm {...loginProps} />
+                            </div>
+                        </Card>
+                    </Col>
+                </Row>
+            </Form>
             <GSTIRNMainConatiner {...containerProps} />
         </>
     );
