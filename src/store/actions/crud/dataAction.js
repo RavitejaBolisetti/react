@@ -3,7 +3,6 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { message } from 'antd';
 import { axiosAPICall } from 'utils/axiosAPICall';
 import { withAuthToken } from 'utils/withAuthToken';
 import { doLogout, unAuthenticateUser } from '../../actions/auth';
@@ -109,8 +108,7 @@ export const dataActions = (params) => {
             const { setIsLoading, data, extraParams = [] } = params;
             setIsLoading(true);
 
-            const onError = (errorMessage) => {
-                message.error(errorMessage);
+            const onError = () => {
                 dispatch(filteredRecieveData([]));
             };
 
