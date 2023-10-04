@@ -30,13 +30,14 @@ const expandIcon = ({ isActive }) =>
 
 const GstAuthenticationDetailCard = (props) => {
     const { selectedRecord, typeData, isLoading } = props;
+
     return (
         <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon} collapsible="icon">
             <Panel
                 header={
                     <>
                         <div className={`${styles.detailCardText} ${styles.marB5}`} style={{ fontSize: '14px' }}>
-                            Dealer Name:
+                            Dealer Name:<span> {checkAndSetDefaultValue(props?.userId, isLoading)} </span> 
                             {/* <span>
                                 {checkAndSetDefaultValue(selectedRecord?.grnNumber, isLoading)}
                                 <a className={`${styles.floatRight} ${styles.marL5}`}>
@@ -50,7 +51,10 @@ const GstAuthenticationDetailCard = (props) => {
             >
                 <Divider />
                 <div className={styles.detailCardText}>
-                    GSTIN: <span>{selectedRecord && checkAndSetDefaultValue(selectedRecord?.grnType, isLoading)}</span>
+                    GSTIN: <span>{checkAndSetDefaultValue(props?.currentGst, isLoading)}</span>
+                    {/* GSTIN: <span>{selectedRecord && checkAndSetDefaultValue(selectedRecord?.grnType, isLoading)}</span> */}
+
+                    
                 </div>
                 {/* <Divider />
                 <div className={styles.detailCardText}>

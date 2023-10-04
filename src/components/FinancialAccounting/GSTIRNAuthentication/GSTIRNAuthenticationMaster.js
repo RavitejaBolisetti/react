@@ -107,6 +107,7 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
     const [uploadedFileName, setUploadedFileName] = useState('');
     const [fileList, setFileList] = useState([]);
     const [singleDisabled, setSingleDisabled] = useState(false);
+    const [currentGst, setCurrentGst] = useState();
 
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -209,9 +210,8 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         advanceFilterForm.resetFields();
     };
 
-    console.log('p uploadedFile',uploadedFile);
-
     const onFinish = (values) => {
+        setCurrentGst(values?.gstinNumber);
         // const data = {
         //     gstinNumber: values?.gstinNumber,
         //     userName: values?.userId,
@@ -350,6 +350,10 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         saveButtonName: isLastSection ? 'Submit' : 'Next',
         addMode: formActionType?.addMode,
         editMode: formActionType?.editMode,
+        userId,
+        currentGst,
+        setCurrentGst,
+
     };
 
     const loginProps = {

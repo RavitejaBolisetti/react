@@ -17,7 +17,7 @@ import styles from 'assets/sass/app.module.scss';
 
 
 const GSTIRNMainConatinerMain = (props) => {
-    const { currentSection } = props;
+    const { currentSection, currentGst, setCurrentGst, } = props;
 
     const myProps = {
         ...props,
