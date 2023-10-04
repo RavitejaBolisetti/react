@@ -3,13 +3,15 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { tblPrepareColumns, tblStatusColumn, tblApprovalStatusColumn, tblActionColumn } from 'utils/tableColumn';
+import { tblPrepareColumns, tblStatusColumn, tblApprovalStatusColumn, tblActionColumn, tblSerialNumberColumn } from 'utils/tableColumn';
 
 import styles from 'assets/sass/app.module.scss';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [];
     tableColumn.push(
+        tblSerialNumberColumn({ width: '7%', page, pageSize }),
+
         tblPrepareColumns({
             title: 'PIN Code',
             dataIndex: 'pinCode',

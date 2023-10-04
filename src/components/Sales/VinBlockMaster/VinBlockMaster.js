@@ -41,7 +41,7 @@ const mapStateToProps = (state) => {
         filterString,
         isvinInfoLoading,
         isVinDataLoaded,
-        vinData: vinData.vinBlockMasterResponseList, //vinData?.paginationData,
+        vinData: vinData?.paginationData,
         totalRecords: vinData?.totalRecords,
         detailData,
     };
@@ -68,7 +68,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const VinBlockMasterBase = (props) => {
     const { filterString, setFilterString, saveData, userId, showGlobalNotification, fetchOnRoadViewPriceDetail } = props;
     const { typeData, fetchVinBlockList, listVinShowLoading } = props;
-    const { moduleTitle, vinData, totalRecords, fetchVinDetailList, listVinDetailsShowLoading } = props;
+    const { moduleTitle, vinData, totalRecords, fetchVinDetailList, listVinDetailsShowLoading,  } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
@@ -97,7 +97,7 @@ export const VinBlockMasterBase = (props) => {
     const dynamicPagination = true;
 
     const onSuccessAction = (res) => {
-        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setRefershData(false);
@@ -257,7 +257,7 @@ export const VinBlockMasterBase = (props) => {
 
     const handleResetFilter = () => {
         setFilterString();
-        advanceFilterForm.resetFields();
+        searchForm.resetFields();
         setShowDataLoading(false);
     };
 
@@ -273,6 +273,12 @@ export const VinBlockMasterBase = (props) => {
     const handleOnClick = () => {
         setButtonData({ ...defaultBtnVisiblity, saveAndNewBtn: false, cancelBtn: false, saveBtn: true });
         // setIsUploadFormVisible(true);
+
+    };
+
+    const handleSearch = (value) => {
+        setFilterString({ ...filterString, vin: value, advanceFilter: true, current: 1 });
+        searchForm.resetFields();
     };
 
     const removeFilter = (key) => {
@@ -284,13 +290,14 @@ export const VinBlockMasterBase = (props) => {
             setFilterString({ ...rest });
         }
     };
+    
     const title = 'Vin Block Master';
-    console.log('searchForm', searchForm);
+
     const advanceFilterResultProps = {
         extraParams,
         removeFilter,
         advanceFilter: true,
-        onRoadFilter: true,
+        vinFilter: true,
         filterString,
         setFilterString,
         from: listFilterForm,
@@ -300,6 +307,7 @@ export const VinBlockMasterBase = (props) => {
         typeData,
         searchForm,
         handleOnClick,
+        handleSearch,
     };
 
     const buttonProps = {

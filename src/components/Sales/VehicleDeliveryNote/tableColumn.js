@@ -25,6 +25,7 @@ export const tableColumn = ({ handleButtonClick, page, pageSize, actionButtonVis
             title: 'Booking No.',
             dataIndex: 'otfNumber',
             width: '14%',
+            render: (_, record) => record?.bookingNumber || record?.otfNumber,
         }),
         tblPrepareColumns({
             title: 'Delivery Note No. & Date',

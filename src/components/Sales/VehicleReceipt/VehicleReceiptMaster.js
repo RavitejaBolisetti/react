@@ -429,10 +429,10 @@ export const VehicleReceiptMasterBase = (props) => {
     };
 
     const handleSearch = (value) => {
-        setFilterString({ ...filterString, grnNumber: value, advanceFilter: true });
+        setFilterString({ ...filterString, grnNumber: value, advanceFilter: true, current: 1 });
         setSearchValue(value);
+        searchForm.resetFields();
     };
-
     const advanceFilterResultProps = {
         extraParams,
         removeFilter,

@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { vehicleAddOnDetailDataActions } from 'store/actions/data/vehicleDeliveryNote/addOnDetails';
 import { relationshipManagerDataActions } from 'store/actions/data/vehicleDeliveryNote/relationshipManager';
-import { schemeDescriptionDataActions } from 'store/actions/data/vehicleDeliveryNote/schemeDescription';
+import { schemeDescriptionAmcDataActions, schemeDescriptionRsaDataActions, schemeDescriptionShieldDataActions } from 'store/actions/data/vehicleDeliveryNote';
 import { showGlobalNotification } from 'store/actions/notification';
 import { BASE_URL_VEHICLE_ADD_ON_SCHEME_RSA_DESCRIPTION as customRsaURL, BASE_URL_VEHICLE_ADD_ON_SCHEME_AMC_DESCRIPTION as customAmcURL } from 'constants/routingApi';
 
@@ -26,7 +26,12 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             VehicleDeliveryNote: {
                 AddOnDetails: { isLoaded: isDataLoaded = false, isLoading, data: AddonDetailsData = [] },
-                SchemeDescription: { isLoaded: isSchemeDataLoaded = false, isSchemeLoading, data: schemeDescriptionData = [] },
+                // SchemeDescription: { isLoaded: isSchemeDataLoaded = false, isSchemeLoading, data: schemeDescriptionData = [] },
+
+                SchemeDescriptionAmc: { isLoaded: isAmcLoaded = false, isLoading: isAmcLoading, data: schemeAmcData = [] },
+                SchemeDescriptionRsa: { isLoaded: isRsaLoaded = false, isLoading: isRsaLoading, data: schemeRsaData = [] },
+                SchemeDescriptionShield: { isLoaded: isShieldLoaded = false, isLoading: isShieldLoading, data: schemeShieldData = [] },
+
                 RelationshipManager: { isLoaded: isRelationshipManagerLoaded = false, isloading: isRelationshipManagerLoading, data: relationshipManagerData = [] },
             },
         },
@@ -39,11 +44,16 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         isLoading,
         moduleTitle,
-        AddonDetailsData,
+        // AddonDetailsData,
         typeData,
-        isSchemeDataLoaded,
-        isSchemeLoading,
-        schemeDescriptionData,
+
+        isAmcLoaded,
+        schemeAmcData,
+        isRsaLoaded,
+        schemeRsaData,
+        isShieldLoaded,
+        schemeShieldData,
+
         isRelationshipManagerLoaded,
         isRelationshipManagerLoading,
         relationshipManagerData,
@@ -55,16 +65,21 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchScheme: schemeDescriptionDataActions.fetchList,
-            listSchemeShowLoading: schemeDescriptionDataActions.listShowLoading,
+            fetchAmc: schemeDescriptionAmcDataActions.fetchList,
+            listAmcLoading: schemeDescriptionAmcDataActions.listShowLoading,
+            resetAmc: schemeDescriptionAmcDataActions.reset,
+
+            fetchRsa: schemeDescriptionRsaDataActions.fetchList,
+            listRsaLoading: schemeDescriptionRsaDataActions.listShowLoading,
+            resetRsa: schemeDescriptionRsaDataActions.reset,
+
+            fetchSheild: schemeDescriptionShieldDataActions.fetchList,
+            listSheildLoaing: schemeDescriptionShieldDataActions.listShowLoading,
+            resetSheild: schemeDescriptionShieldDataActions.reset,
 
             fetchRelationshipManger: relationshipManagerDataActions.fetchList,
             listRelationshipMangerShowLoading: relationshipManagerDataActions.listShowLoading,
 
-            fetchList: vehicleAddOnDetailDataActions.fetchList,
-            saveData: vehicleAddOnDetailDataActions.saveData,
-            listShowLoading: vehicleAddOnDetailDataActions.listShowLoading,
-            resetData: vehicleAddOnDetailDataActions.reset,
             showGlobalNotification,
         },
         dispatch
@@ -72,8 +87,14 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const AddOnDetailsMasterMain = (props) => {
-    const { fetchList, fetchScheme, schemeDescriptionData, listSchemeShowLoading, selectedInvoiceId, typeData, requestPayload, setRequestPayload, showGlobalNotification, AddonPartsData, resetData, AddonDetailsData, userId, listShowLoading, saveData, onFinishFailed } = props;
+    const { listSchemeShowLoading, selectedInvoiceId, typeData, requestPayload, setRequestPayload, showGlobalNotification, AddonPartsData, AddonDetailsData, userId, listShowLoading, saveData, onFinishFailed } = props;
     const { form, section, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick, setButtonData, buttonData, listRelationshipMangerShowLoading, fetchRelationshipManger, relationshipManagerData } = props;
+    const { isDataLoaded } = props;
+
+    const { isAmcLoaded, schemeAmcData, isRsaLoaded, schemeRsaData, isShieldLoaded, schemeShieldData } = props;
+    const { fetchAmc, listAmcLoading, resetAmc } = props;
+    const { fetchRsa, listRsaLoading, resetRsa } = props;
+    const { fetchSheild, listSheildLoaing, resetSheild } = props;
 
     const [formData, setFormData] = useState();
     const [searchData, setsearchData] = useState({});
@@ -84,13 +105,14 @@ export const AddOnDetailsMasterMain = (props) => {
     const [shieldForm] = Form.useForm();
     const [rsaForm] = Form.useForm();
     const [amcForm] = Form.useForm();
+    const [schemeDescriptionDatamain, setSchemeDescriptionData] = useState({ Shield: [], RSA: [], AMC: [] });
+    const [registerDisabled, setRegisterDisabled] = useState({ Shield: true, RSA: true, AMC: true });
 
     const onSuccessAction = (res) => {
         // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
     const onErrorAction = (message) => {
-        resetData();
         showGlobalNotification({ message });
     };
 
@@ -98,24 +120,8 @@ export const AddOnDetailsMasterMain = (props) => {
         openAccordian?.includes(values) ? setOpenAccordian('') : setOpenAccordian([values]);
     };
 
-    const extraParams = [
-        {
-            key: 'invoiceNumber',
-            title: 'invoiceNumber',
-            value: selectedInvoiceId,
-            name: 'Invoice Number',
-        },
-    ];
-
     useEffect(() => {
-        if (userId && selectedInvoiceId) {
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedInvoiceId, formActionType?.viewMode]);
-
-    useEffect(() => {
-        if (userId && openAccordian) {
+        if (selectedInvoiceId && userId) {
             const extraParams = [
                 {
                     key: 'invoiceNumber',
@@ -124,29 +130,34 @@ export const AddOnDetailsMasterMain = (props) => {
                     name: 'Invoice Number',
                 },
             ];
-            if (openAccordian === 'Shield') {
-                fetchScheme({ setIsLoading: listSchemeShowLoading, userId, extraParams });
-            } else if (openAccordian === 'RSA') {
-                fetchScheme({ setIsLoading: listSchemeShowLoading, userId, extraParams, customURL: customRsaURL });
-            } else if (openAccordian === 'AMC') {
-                fetchScheme({ setIsLoading: listSchemeShowLoading, userId, extraParams, customURL: customAmcURL });
-            }
+            fetchAmc({ setIsLoading: listAmcLoading, userId, extraParams, onErrorAction });
+            fetchRsa({ setIsLoading: listRsaLoading, userId, extraParams, onErrorAction });
+            fetchSheild({ setIsLoading: listSheildLoaing, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, openAccordian]);
+    }, [selectedInvoiceId, userId]);
+    useEffect(() => {
+        if (isAmcLoaded) setSchemeDescriptionData((prev) => ({ ...prev, AMC: schemeAmcData }));
+        if (isRsaLoaded) setSchemeDescriptionData((prev) => ({ ...prev, RSA: schemeRsaData }));
+        if (isShieldLoaded) setSchemeDescriptionData((prev) => ({ ...prev, Shield: schemeShieldData }));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isAmcLoaded, isRsaLoaded, isShieldLoaded]);
 
     useEffect(() => {
         if (AddonDetailsData) {
             form.setFieldsValue({ ...AddonDetailsData });
             setFormData({ ...AddonDetailsData });
         }
+        if (AddonDetailsData?.sheildRequest) setRegisterDisabled((prev) => ({ ...prev, Shield: true }));
+        if (AddonDetailsData?.rsaRequest) setRegisterDisabled((prev) => ({ ...prev, RSA: true }));
+        if (AddonDetailsData?.amcRequest) setRegisterDisabled((prev) => ({ ...prev, AMC: true }));
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [AddonDetailsData]);
+    }, [AddonDetailsData, section]);
 
     useEffect(() => {
-        handleFormValueChange();
+        setButtonData({ ...buttonData, formBtnActive: true });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [section]);
 
     const handleOnChange = (e) => {
         form.setFieldsValue({
@@ -201,8 +212,8 @@ export const AddOnDetailsMasterMain = (props) => {
         accessoryForm,
         formActionType,
         typeData,
-        schemeDescriptionData,
         relationshipManagerData,
+        schemeDescriptionDatamain,
     };
     const formProps = {
         form,
@@ -223,10 +234,12 @@ export const AddOnDetailsMasterMain = (props) => {
         shieldForm,
         rsaForm,
         amcForm,
-        schemeDescriptionData,
         handleEmployeeSearch,
         handleOnChange,
         relationshipManagerData,
+        schemeDescriptionDatamain,
+        setRegisterDisabled,
+        registerDisabled,
     };
 
     return (

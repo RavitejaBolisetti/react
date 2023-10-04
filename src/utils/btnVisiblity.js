@@ -47,7 +47,7 @@ export const btnVisiblity = ({ defaultBtnVisiblity, buttonAction, saveAndNewBtn 
                 return { ...btnVisibility, editBtn: false };
             case OTF_STATUS?.CANCELLED?.key:
             case OTF_STATUS?.PENDING_FOR_CANCELLATION?.key:
-                return { ...btnVisibility, pendingCancellationOTFBtn: true };
+                return { ...btnVisibility, editBtn: false, pendingCancellationOTFBtn: true };
             case OTF_STATUS?.DELIVERED?.key:
                 return { ...btnVisibility, editBtn: false };
             default:

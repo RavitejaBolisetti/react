@@ -15,8 +15,7 @@ import { otfvehicleDetailsLovDataActions } from 'store/actions/data/otf/vehicleD
 import { otfvehicleDetailsServiceLovDataActions } from 'store/actions/data/otf/serviceLov';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { showGlobalNotification } from 'store/actions/notification';
-
-import dayjs from 'dayjs';
+import { SALES_MODULE_TYPE } from 'constants/salesModuleType';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -37,7 +36,7 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         isDataLoaded,
-        vehicleDetailData,
+        vehicleDetailDataReceived: vehicleDetailData,
         isLoading,
         moduleTitle,
         productAttributeData,
@@ -84,45 +83,53 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const VehicleDetailsMasterMain = (props) => {
-    const { vehicleDetailData, isVehicleLovDataLoading, resetProductLov, productAttributeData, fetchProductLovCode, isLoading, saveData, ProductLovLoading } = props;
+    const { isProductDataLoading, vehicleDetailDataReceived, vehicleDetailDataPass, isVehicleLovDataLoading, resetProductLov, productAttributeData, fetchProductLovCode, isLoading, saveData, ProductLovLoading } = props;
+    const { form, selectedOrderId, selectedRecordId, section, buttonData, setButtonData, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
+    const { refreshData, setRefreshData, isVehicleServiceLoaded, vehicleServiceData, fetchServiceLov, serviceLoading, selectedOrder, setSelectedOrder } = props;
     const { isProductHierarchyDataLoaded, typeData, fetchList, resetData, userId, listShowLoading, showGlobalNotification } = props;
-    const { form, selectedOrderId, section, buttonData, setButtonData, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
-    const { refreshData, setRefreshData, vehicleServiceData, fetchServiceLov, serviceLoading, selectedOrder, setSelectedOrder } = props;
-    const { formKey, onFinishCustom = undefined, FormActionButton, StatusBar } = props;
-    const { isProductDataLoaded, fetchProductList, productCode, productHierarchyDataList } = props;
-    const [productModelCode, setProductModelCode] = useState();
+    const { formKey, onFinishCustom = undefined, FormActionButton, StatusBar, salesModuleType } = props;
+    const { fetchProductList, productHierarchyDataList } = props;
 
     const [activeKey, setactiveKey] = useState([1]);
     const [formData, setFormData] = useState({});
-    const [optionsServiceModified, setoptionsServiceModified] = useState([]);
-    const [optionsServicesMapping, setoptionsServicesMapping] = useState([]);
+    const [optionalServices, setOptionalServices] = useState([]);
     const [openAccordian, setOpenAccordian] = useState('1');
 
     const [toolTipContent, setToolTipContent] = useState();
     const [isReadOnly, setIsReadOnly] = useState();
     const [productHierarchyData, setProductHierarchyData] = useState([]);
+    const [filterVehicleData, setFilterVehicleData] = useState([]);
+
+    const vehicleDetailData = vehicleDetailDataPass || vehicleDetailDataReceived;
 
     const onSuccessAction = (res) => {
         //showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
     const onErrorAction = (message) => {
-        resetData();
         showGlobalNotification({ message: message });
     };
-    const extraParams = [
-        {
-            key: 'otfNumber',
-            title: 'otfNumber',
-            value: selectedOrderId,
-            name: 'Booking Number',
-        },
-    ];
 
-    const loadDependependentData = () => {
-        fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
-        fetchServiceLov({ setIsLoading: serviceLoading, userId, onErrorAction });
-    };
+    const isOTFModule = salesModuleType === SALES_MODULE_TYPE.OTF.KEY;
+
+    useEffect(() => {
+        if (userId && selectedRecordId) {
+            if (isOTFModule) {
+                const extraParams = [
+                    {
+                        key: 'otfId',
+                        value: selectedRecordId,
+                    },
+                ];
+                fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+            }
+
+            if (!isVehicleServiceLoaded) {
+                fetchServiceLov({ setIsLoading: serviceLoading, userId, onErrorAction });
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, selectedRecordId, isVehicleServiceLoaded]);
 
     useEffect(() => {
         setProductHierarchyData(productHierarchyDataList?.map((i) => DisableParent(i, 'subProdct')));
@@ -130,7 +137,7 @@ const VehicleDetailsMasterMain = (props) => {
     }, [productHierarchyDataList]);
 
     useEffect(() => {
-        if (userId && (!isProductDataLoaded || productCode !== selectedOrder?.modelCode) && selectedOrder?.modelCode) {
+        if (isOTFModule && userId && selectedOrder?.modelCode) {
             const extraParams = [
                 {
                     key: 'unit',
@@ -146,9 +153,11 @@ const VehicleDetailsMasterMain = (props) => {
                 },
             ];
             fetchProductList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+        } else {
+            setButtonData({ ...buttonData, formBtnActive: true });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isProductDataLoaded, selectedOrder]);
+    }, [userId, selectedOrder]);
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
@@ -165,13 +174,6 @@ const VehicleDetailsMasterMain = (props) => {
             setactiveKey([...activeKey, values]);
         }
     };
-
-    useEffect(() => {
-        if (userId && selectedOrderId) {
-            loadDependependentData();
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOrderId]);
 
     useEffect(() => {
         return () => {
@@ -208,126 +210,130 @@ const VehicleDetailsMasterMain = (props) => {
 
     useEffect(() => {
         if (vehicleDetailData) {
-            vehicleDetailData?.optionalServices && setoptionsServiceModified(vehicleDetailData?.optionalServices);
-            setProductModelCode(vehicleDetailData?.modelCode);
             setFormData(vehicleDetailData);
+            vehicleDetailData?.optionalServices && setOptionalServices(vehicleDetailData?.optionalServices);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vehicleDetailData]);
 
     useEffect(() => {
-        if (productModelCode) {
-            const extraParams = [
+        if (selectedRecordId && formData?.modelCode) {
+            const lovExtraParams = [
                 {
                     key: 'prodctCode',
-                    title: 'prodctCode',
-                    value: productModelCode,
-                    name: 'Product Code',
+                    value: vehicleDetailData?.modelCode,
                 },
             ];
+
             const onErrorActionProduct = () => {
                 resetProductLov();
             };
-            setFormData({ ...formData, modelCode: productModelCode });
-            fetchProductLovCode({ setIsLoading: ProductLovLoading, userId, onErrorAction: onErrorActionProduct, extraParams });
+
+            fetchProductLovCode({ setIsLoading: ProductLovLoading, userId, onErrorAction: onErrorActionProduct, extraParams: lovExtraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [productModelCode]);
+    }, [selectedRecordId, formData]);
 
-    const handleDiscountChange = () => {
-        const discountExtraParams = [
+    const handleVehicleDetailChange = (vehicleData) => {
+        setFilterVehicleData({ ...vehicleData });
+        const { productModelCode, discountAmount, saleType, priceType } = vehicleData;
+        const extraParams = [
             {
-                key: 'otfNumber',
-                title: 'otfNumber',
-                value: selectedOrderId,
-                name: 'Booking Number',
+                key: 'otfId',
+                value: selectedRecordId,
             },
             {
                 key: 'modelCode',
-                title: 'modelCode',
-                value: form.getFieldValue('modelCode'),
-                name: 'Booking Number',
+                value: productModelCode,
             },
             {
                 key: 'discountAmount',
-                title: 'discountAmount',
-                value: form.getFieldValue('discountAmount') ?? 0,
-                name: 'Booking Number',
+                value: discountAmount,
+            },
+
+            {
+                key: 'saleType',
+                value: saleType,
+            },
+
+            {
+                key: 'priceType',
+                value: priceType,
             },
         ];
-        fetchList({ setIsLoading: listShowLoading, userId, extraParams: discountExtraParams, onErrorAction });
+
+        const onSuccessAction = () => {
+            productModelCode && form.setFieldValue('modalCode', productModelCode);
+        };
+
+        fetchList({ setIsLoading: listShowLoading, userId, extraParams: extraParams, onSuccessAction, onErrorAction, resetOnError: false });
     };
 
     const onFinish = (values) => {
-        if (onFinishCustom) {
-            onFinishCustom({ key: formKey, values });
-            handleButtonClick({ buttonAction: NEXT_ACTION });
-            setButtonData({ ...buttonData, formBtnActive: false });
-        } else {
-            // if (productAttributeData?.length === 0) {
-            //     showGlobalNotification({ message: 'Model selected is not valid' });
-            //     return;
-            // }
-            let data;
-            // if (!values.hasOwnProperty('vehicleUsageType')) {
-            //     data = {
-            //         ...values,
-            //         otfNumber: selectedOrderId || '',
-            //         otfId: formData?.otfId || '',
-            //         id: formData?.id || '',
-            //         poDate: dayjs(formData?.poDate?.substr(0, 10)).format('DD/MM/YYYY'),
-            //         vehicleUsageType: vehicleDetailData?.vehicleUsageType,
-            //         model: vehicleDetailData?.model,
-            //         modelCode: vehicleDetailData?.modelCode,
-            //         discountAmount: vehicleDetailData?.discountAmount,
-            //         optionalServices: optionsServiceModified,
-            //     };
-            // } else {
-            if (productAttributeData?.length === 0) {
-                showGlobalNotification({ message: 'Model selected is not valid' });
-                return;
-            } else {
-                data = { ...values, otfNumber: selectedOrderId, otfId: formData?.otfId || '', id: formData?.id || '', optionalServices: optionsServicesMapping, model: productAttributeData['0']['prodctShrtName'] };
-            }
+        const data = {
+            ...values,
+            id: formData?.id || '',
+            otfId: formData?.otfId || '',
+            printDiscount: values?.printDiscount ? 'Y' : 'N',
+            otfNumber: selectedOrderId,
+            taxDetails: formData?.taxDetails,
+            optionalServices: optionalServices,
+        };
 
-            const onSuccess = (res) => {
-                setoptionsServicesMapping([]);
-                setoptionsServiceModified([]);
-                setFormData({});
-                setOpenAccordian('1');
-                setIsReadOnly(false);
-                form.resetFields();
-                resetData();
-                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-                setRefreshData(!refreshData);
-                setSelectedOrder({ ...selectedOrder, model: res?.data?.model });
-            };
+        switch (salesModuleType) {
+            case SALES_MODULE_TYPE.OTF.KEY:
+                if (productAttributeData?.length === 0) {
+                    showGlobalNotification({ message: 'Model selected is not valid' });
+                    return;
+                }
 
-            const onError = (message) => {
-                showGlobalNotification({ message });
-            };
+                const onSuccess = (res) => {
+                    setOptionalServices([]);
+                    setFormData({});
+                    setOpenAccordian('1');
+                    setIsReadOnly(false);
+                    form.resetFields();
+                    resetData();
+                    setRefreshData(!refreshData);
+                    handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+                    setSelectedOrder({ ...selectedOrder, model: res?.data?.model });
+                };
 
-            const requestData = {
-                data: data,
-                method: 'put',
-                setIsLoading: listShowLoading,
-                userId,
-                onError,
-                onSuccess,
-            };
+                const onError = (message) => {
+                    showGlobalNotification({ message });
+                };
 
-            saveData(requestData);
+                const requestData = {
+                    data: data,
+                    method: 'put',
+                    setIsLoading: listShowLoading,
+                    userId,
+                    onError,
+                    onSuccess,
+                };
+                saveData(requestData);
+                break;
+            case SALES_MODULE_TYPE.INVOICE.KEY:
+            case SALES_MODULE_TYPE.DELIVERY_NOTE.KEY:
+                onFinishCustom({ key: formKey, values: data });
+                handleButtonClick({ buttonAction: NEXT_ACTION });
+                setButtonData({ ...buttonData, formBtnActive: false });
+                break;
+            default:
+                break;
         }
     };
+
     const onFinishFailed = () => {
         form.validateFields().then(() => {});
     };
 
-    const handlePriceChange = (__, value) => {
-        if (value?.type === 'D') {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'This value has been deprecated. Please select another value' });
-        }
-    };
+    // const handlePriceTypeChange = (value, option) => {
+    //     setPriceType(value);
+    //     if (option?.type === 'D') {
+    //         showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'This value has been deprecated. Please select another value' });
+    //     }
+    // };
 
     const formProps = {
         ...props,
@@ -353,33 +359,36 @@ const VehicleDetailsMasterMain = (props) => {
         setOpenAccordian,
         isReadOnly,
         setIsReadOnly,
-        optionsServiceModified,
-        setoptionsServiceModified,
-        optionsServicesMapping,
-        setoptionsServicesMapping,
+        optionalServices,
+        setOptionalServices,
         handleFormValueChange,
         toolTipContent,
         isVehicleLovDataLoading,
         vehicleServiceData,
-        productModelCode,
-        setProductModelCode,
+
         productHierarchyData,
         resetProductLov,
-        handlePriceChange,
-        handleDiscountChange,
+        isProductDataLoading,
+        filterVehicleData,
+        setFilterVehicleData,
+        handleVehicleDetailChange,
+        viewOnly: !isOTFModule,
+        isOTFModule,
     };
 
     const viewProps = {
+        ...props,
+        formActionType,
         activeKey,
         setactiveKey,
         onChange,
         styles,
         formData,
-        modelData: productModelCode,
         toolTipContent,
         setToolTipContent,
         typeData,
         isLoading,
+        isOTFModule,
     };
 
     return (

@@ -328,11 +328,11 @@ const ListPinCodeMasterBase = (props) => {
     }, [isDataCountryLoaded, isStateDataLoaded]);
 
     useEffect(() => {
-        if (userId && filterString && page) {
+        if (userId && extraParams && page) {
             loadPinCodeDataList();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, userId, page]);
+    }, [extraParams, userId, page]);
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
@@ -410,7 +410,7 @@ const ListPinCodeMasterBase = (props) => {
             }
 
             if (name === 'districtCode') {
-                setFilteredCityData(cityData?.filter((i) => i?.parentKey === filterValue));
+                setFilteredCityData(cityData?.filter((i) => i?.districtCode === filterValue));
                 setFilteredTehsilData(tehsilData?.filter((i) => i?.parentKey === filterValue));
                 advanceFilterForm.setFieldsValue({ cityCode: undefined });
                 advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
@@ -531,11 +531,12 @@ const ListPinCodeMasterBase = (props) => {
         page,
         setPage,
         isLoading: showDataLoading,
-        tableColumn: tableColumn(handleButtonClick),
+        tableColumn: tableColumn(handleButtonClick, page?.current, page.pageSize),
         tableData: data,
         noDataMessage: dataMessage,
         scroll: { x: 1800 },
         showAddButton,
+        srl: false,
     };
 
     const onAdvanceSearchCloseAction = () => {

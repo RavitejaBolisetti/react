@@ -9,13 +9,10 @@ import { Row, Col, Input, Form, DatePicker, Card, Select } from 'antd';
 import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
-import styles from 'assets/sass/app.module.scss';
-
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { formData, form, buttonData, setButtonData, supplierTypeData } = props;
-    //console.log('🚀 ~ file: AddEditForm.js:18 ~ AddEditFormMain ~ supplierTypeData:', supplierTypeData);
 
     const selectProps = {
         optionFilterProp: 'children',

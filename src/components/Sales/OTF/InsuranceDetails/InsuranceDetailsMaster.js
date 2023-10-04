@@ -12,7 +12,6 @@ import { AddEditForm, ViewDetail } from 'components/Sales/Common/InsuranceDetail
 import { showGlobalNotification } from 'store/actions/notification';
 import { insuranceDetailDataActions } from 'store/actions/data/otf/insuranceDetail';
 
-
 import styles from 'assets/sass/app.module.scss';
 const mapStateToProps = (state) => {
     const {
@@ -55,7 +54,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const InsuranceDetailsMasterBase = (props) => {
     const { insuranceData, onCloseAction, fetchList, formActionType, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
-    const { form, selectedOrderId, handleFormValueChange, section, isLoading, NEXT_ACTION, handleButtonClick, onFinishFailed, saveData } = props;
+    const { form, selectedRecordId, handleFormValueChange, section, isLoading, NEXT_ACTION, handleButtonClick, onFinishFailed, saveData } = props;
     const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar, pageType } = props;
 
     const [formData, setFormData] = useState();
@@ -69,27 +68,17 @@ const InsuranceDetailsMasterBase = (props) => {
 
     const extraParams = [
         {
-            key: 'otfNumber',
-            title: 'otfNumber',
-            value: selectedOrderId,
-            name: 'Booking Number',
+            key: 'otfId',
+            value: selectedRecordId,
         },
     ];
 
     useEffect(() => {
-        if (userId && selectedOrderId) {
-            const extraParams = [
-                {
-                    key: 'otfNumber',
-                    title: 'otfNumber',
-                    value: selectedOrderId,
-                    name: 'Booking Number',
-                },
-            ];
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction});
+        if (userId && selectedRecordId) {
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOrderId]);
+    }, [userId, selectedRecordId]);
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message: message });
@@ -124,7 +113,7 @@ const InsuranceDetailsMasterBase = (props) => {
 
     const onFinish = (values) => {
         const recordId = insuranceData?.id || '';
-        const data = { ...values, id: recordId, otfNumber: selectedOrderId };
+        const data = { ...values, id: recordId, otfId: selectedRecordId };
         if (onFinishCustom) {
             onFinishCustom({ key: formKey, values: data });
             handleButtonClick({ buttonAction: NEXT_ACTION });
@@ -137,7 +126,7 @@ const InsuranceDetailsMasterBase = (props) => {
             };
 
             const onError = (message) => {
-                // showGlobalNotification({ message });
+                showGlobalNotification({ message });
             };
 
             const requestData = {

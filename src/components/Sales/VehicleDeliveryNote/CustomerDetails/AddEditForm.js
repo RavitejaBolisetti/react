@@ -3,17 +3,22 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Col, Input, Form, Row, Card, Space } from 'antd';
-
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-
 import styles from 'assets/sass/app.module.scss';
 
 const { Search } = Input;
 const AddEditFormMain = (props) => {
-    const { formData, handleCustomerIdSearch, handleOnChange, soldByDealer } = props;
+    const { form, formData, handleCustomerIdSearch, handleOnChange, soldByDealer } = props;
     const [customer, setCustomer] = useState();
+
+    useEffect(() => {
+        if (formData) {
+            form.setFieldsValue({ ...formData });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData]);
 
     const handleCustomerId = () => {
         setCustomer(true);

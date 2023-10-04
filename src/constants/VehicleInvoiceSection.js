@@ -59,4 +59,10 @@ export const VEHICLE_INVOICE_SECTION = {
         advance: false,
         displayOnList: true,
     },
+
+    THANK_YOU_PAGE: {
+        id: 12,
+        title: 'Thank You',
+        displayOnList: false,
+    },
 };

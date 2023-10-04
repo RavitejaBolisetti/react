@@ -8,15 +8,13 @@ import { connect } from 'react-redux';
 import { Row, Col, Form } from 'antd';
 import { bindActionCreators } from 'redux';
 
-import { ViewDetail } from './ViewDetail';
-import { AddEditForm } from './AddEditForm';
+import { ViewDetail, AddEditForm } from 'components/Sales/Common/FinananceDetails';
 import { otfFinanceDetailDataActions } from 'store/actions/data/otf/financeDetail';
 import { financeLovDataActions } from 'store/actions/data/otf/financeLov';
 import { showGlobalNotification } from 'store/actions/notification';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { convertDateToCalender } from 'utils/formatDateTime';
-import { PAGE_TYPE } from 'components/Sales/VehicleDeliveryNote/utils/pageType';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -36,7 +34,7 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         isLoaded,
-        financeData,
+        // financeData,
         isLoading,
         moduleTitle,
 
@@ -68,11 +66,9 @@ export const FinananceDetailsMasterBase = (props) => {
     const { saveData, resetData, fetchList, userId, listShowLoading, financeData, isFinanceLovDataLoaded, setFormActionType, isFinanceLovLoading, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, section, isLoading } = props;
     const { typeData, form, selectedOrderId, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION } = props;
     const { formKey, onFinishCustom = undefined, onFinishDeliveryNoteCustom = undefined, FormActionButton, StatusBar, pageType } = props;
+    const { buttonData, setButtonData } = props;
 
     const [isFormVisible, setIsFormVisible] = useState(false);
-
-    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
-    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -87,30 +83,26 @@ export const FinananceDetailsMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [financeData]);
-
     useEffect(() => {
-        return () => {
-            setFormData();
-            resetData();
-        };
+        setButtonData({ ...buttonData, formBtnActive: true });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [section]);
 
-    const extraParams = [
-        {
-            key: 'otfNumber',
-            title: 'otfNumber',
-            value: selectedOrderId,
-            name: 'Booking Number',
-        },
-    ];
+    // const extraParams = [
+    //     {
+    //         key: 'otfNumber',
+    //         title: 'otfNumber',
+    //         value: selectedOrderId,
+    //         name: 'Booking Number',
+    //     },
+    // ];
 
-    useEffect(() => {
-        if (userId && selectedOrderId) {
-            fetchList({ setIsLoading: listShowLoading, extraParams, onErrorAction, userId });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOrderId]);
+    // useEffect(() => {
+    //     if (userId && selectedOrderId) {
+    //         fetchList({ setIsLoading: listShowLoading, extraParams, onErrorAction, userId });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [userId, selectedOrderId]);
 
     useEffect(() => {
         if (userId && !isFinanceLovDataLoaded) {
@@ -140,7 +132,6 @@ export const FinananceDetailsMasterBase = (props) => {
             const onSuccess = (res) => {
                 form.resetFields();
                 showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-                fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction, userId });
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
             };
 
@@ -167,7 +158,6 @@ export const FinananceDetailsMasterBase = (props) => {
     const onCloseAction = () => {
         form.resetFields();
         setIsFormVisible(false);
-        setButtonData({ ...defaultBtnVisiblity });
     };
 
     const formProps = {

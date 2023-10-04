@@ -12,15 +12,18 @@ import CommonForm from './CommonForm';
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { formData, shieldForm, rsaForm, amcForm, formActionType, handleFormValueChange, openAccordian, setOpenAccordian, onSingleFormFinish, schemeDescriptionData, handleEmployeeSearch, handleOnChange } = props;
+    const { formData, setRegisterDisabled, registerDisabled, shieldForm, rsaForm, amcForm, formActionType, handleFormValueChange, openAccordian, setOpenAccordian, onSingleFormFinish, schemeDescriptionData, handleEmployeeSearch, handleOnChange, schemeDescriptionDatamain } = props;
 
     const handleCollapse = (key) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
+    const RegisterHandler = (key) => {
+        key && setRegisterDisabled({ ...registerDisabled, [key]: false });
+    };
 
-    const shieldInfoProps = { ...props, formActionType, openAccordian, formData: formData?.sheildRequest, onSingleFormFinish, schemeDescriptionData, addOnForm: shieldForm, handleEmployeeSearch, handleOnChange };
-    const rsaProps = { ...props, formActionType, openAccordian, formData: formData?.rsaRequest, onSingleFormFinish, schemeDescriptionData, addOnForm: rsaForm, handleEmployeeSearch, handleOnChange };
-    const amcProps = { ...props, formActionType, openAccordian, formData: formData?.amcRequest, onSingleFormFinish, schemeDescriptionData, addOnForm: amcForm, handleEmployeeSearch, handleOnChange };
+    const shieldInfoProps = { ...props, formActionType, openAccordian, formData: formData?.sheildRequest, onSingleFormFinish, schemeDescriptionData, addOnForm: shieldForm, handleEmployeeSearch, handleOnChange, registerDisabled };
+    const rsaProps = { ...props, formActionType, openAccordian, formData: formData?.rsaRequest, onSingleFormFinish, schemeDescriptionData, addOnForm: rsaForm, handleEmployeeSearch, handleOnChange, registerDisabled };
+    const amcProps = { ...props, formActionType, openAccordian, formData: formData?.amcRequest, onSingleFormFinish, schemeDescriptionData, addOnForm: amcForm, handleEmployeeSearch, handleOnChange, registerDisabled };
 
     return (
         <Row gutter={20}>
@@ -28,7 +31,7 @@ const AddEditFormMain = (props) => {
                 <Collapse onChange={() => handleCollapse('Shield')} expandIcon={expandIcon} activeKey={openAccordian} expandIconPosition="end">
                     <Panel header="Shield Information" key="Shield">
                         <Divider />
-                        <Form layout="vertical" autoComplete="off" form={shieldForm} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange}>
+                        <Form layout="vertical" autoComplete="off" form={shieldForm} onFieldsChange={() => RegisterHandler('Shield')}>
                             <CommonForm {...shieldInfoProps} formKey={'sheildRequest'} />
                         </Form>
                     </Panel>
@@ -37,7 +40,7 @@ const AddEditFormMain = (props) => {
                 <Collapse onChange={() => handleCollapse('RSA')} expandIcon={expandIcon} activeKey={openAccordian} expandIconPosition="end">
                     <Panel header="RSA" key="RSA">
                         <Divider />
-                        <Form layout="vertical" autoComplete="off" form={rsaForm} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange}>
+                        <Form layout="vertical" autoComplete="off" form={rsaForm} onFieldsChange={() => RegisterHandler('RSA')}>
                             <CommonForm {...rsaProps} formKey={'rsaRequest'} />
                         </Form>
                     </Panel>
@@ -46,7 +49,7 @@ const AddEditFormMain = (props) => {
                 <Collapse onChange={() => handleCollapse('AMC')} expandIcon={expandIcon} activeKey={openAccordian} expandIconPosition="end">
                     <Panel header="AMC" key="AMC">
                         <Divider />
-                        <Form layout="vertical" autoComplete="off" form={amcForm} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange}>
+                        <Form layout="vertical" autoComplete="off" form={amcForm} onFieldsChange={() => RegisterHandler('AMC')}>
                             <CommonForm {...amcProps} formKey={'amcRequest'} />
                         </Form>
                     </Panel>

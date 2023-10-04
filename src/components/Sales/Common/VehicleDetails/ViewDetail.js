@@ -20,7 +20,7 @@ import { prepareCaption } from 'utils/prepareCaption';
 
 const { Panel } = Collapse;
 const ViewDetailMain = (props) => {
-    const { typeData, isLoading, activeKey, onChange, toolTipContent, styles, formData, showPrintDiscount = false, ShowPOandSOdetails = true, showAvailaibleStock = true } = props;
+    const { typeData, isLoading, formActionType, activeKey, onChange, toolTipContent, styles, formData, showPrintDiscount = false, isOTFModule } = props;
     const viewProps = {
         bordered: false,
         colon: false,
@@ -42,9 +42,10 @@ const ViewDetailMain = (props) => {
                                     </div>
                                 </Descriptions.Item>
                                 <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(formData?.modelCode, isLoading)}</Descriptions.Item>
-                                {showAvailaibleStock && <Descriptions.Item label="Available Stock">{checkAndSetDefaultValue(formData?.availableStock, isLoading)}</Descriptions.Item>}
-                                {ShowPOandSOdetails && (
+                                {isOTFModule && (
                                     <>
+                                        <Descriptions.Item label="Available Stock">{checkAndSetDefaultValue(formData?.availableStock, isLoading)}</Descriptions.Item>
+
                                         <Descriptions.Item label="PO Number">{checkAndSetDefaultValue(formData?.poNumber, isLoading)}</Descriptions.Item>
                                         <Descriptions.Item label="PO Date">{checkAndSetDefaultValue(formData?.poDate ? formData?.poDate : undefined, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                                         <Descriptions.Item label="PO Status">{checkAndSetDefaultValue(getCodeValue(typeData?.PO_STATS, formData?.poStatus), isLoading)}</Descriptions.Item>
@@ -65,7 +66,7 @@ const ViewDetailMain = (props) => {
                             <Descriptions {...viewProps} title={prepareCaption('Benefits')}>
                                 <Descriptions.Item label="Dealer Discount with TAX">{checkAndSetDefaultValue(formData?.discountAmount, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Consumer Scheme with TAX">{checkAndSetDefaultValue(formData?.taxAmount, isLoading)}</Descriptions.Item>
-                                {showPrintDiscount && <Descriptions.Item label="Print Discount">{formData?.printDiscount ? 'Yes' : 'No'}</Descriptions.Item>}
+                                {showPrintDiscount && <Descriptions.Item label="Print Discount">{formData?.printDiscount === 'Y' ? 'Yes' : 'No'}</Descriptions.Item>}
                             </Descriptions>
                         </Panel>
                     </Collapse>
@@ -80,7 +81,7 @@ const ViewDetailMain = (props) => {
                     <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end" className={styles?.collapseContainer} collapsible="icon">
                         <Panel header="Optional Services" key="3">
                             <Divider />
-                            <DataTable tableColumn={optionalServicesColumns()} tableData={formData['optionalServices']} pagination={false} />
+                            <DataTable tableColumn={optionalServicesColumns({ formActionType })} tableData={formData['optionalServices']} pagination={false} />
                         </Panel>
                     </Collapse>
                 </Col>

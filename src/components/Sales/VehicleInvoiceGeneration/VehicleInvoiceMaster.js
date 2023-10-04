@@ -32,7 +32,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 
 import { FilterIcon } from 'Icons';
-import { validateOTFMenu } from './LeftSidebar/MenuNav';
+import { validateInvoiceMenu } from './LeftSidebar/MenuNav';
 import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
 import { ReportModal } from 'components/common/ReportModal/ReportModal';
 import { OTF_STATUS } from 'constants/OTFStatus';
@@ -161,7 +161,6 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [cancelInvoiceVisible, setCancelInvoiceVisible] = useState(false);
     const [additionalReportParams, setAdditionalReportParams] = useState();
-    //console.log('🚀 ~ file: VehicleInvoiceMaster.js:159 ~ VehicleInvoiceMasterBase ~ additionalReportParams:', additionalReportParams);
     const [isReportVisible, setReportVisible] = useState();
     const [confirmRequest, setConfirmRequest] = useState(false);
     const [previousSection, setpreviousSection] = useState(1);
@@ -201,7 +200,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
@@ -300,25 +299,13 @@ export const VehicleInvoiceMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, invoiceStatus, filterString, page]);
+
     useEffect(() => {
         if (!isSalesConsultantDataLoaded && userId) {
             fetchSalesConsultant({ setIsLoading: listConsultantShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isSalesConsultantDataLoaded, userId]);
-
-    // useEffect(() => {
-    //     if (otfData && formActionType?.viewMode) {
-    //         console.log('otfData', otfData);
-    //         setSelectedOrder({ ...otfData, ...vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest, ...vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.billingCustomer, ...vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.bookingCustomer });
-    //     } else if (vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest?.orderStatus === OTF_STATUS?.ALLOTED?.key && formActionType?.addMode) {
-    //         setSelectedOrder({ ...vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest, ...vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.billingCustomer, ...vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.bookingCustomer });
-    //     } else {
-    //         setSelectedOrder('');
-    //     }
-
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [otfData, formActionType, isInVoiceMasterDetailDataLoaded]);
 
     useEffect(() => {
         if (otfData && formActionType?.viewMode && isDataLoaded && vehicleInvoiceMasterData) {
@@ -339,7 +326,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     }, [vehicleInvoiceMasterData, isInVoiceMasterDetailDataLoaded]);
 
     useEffect(() => {
-        if (selectedOrderId && !formActionType?.addMode) {
+        if (selectedOrderId || selectedOtfNumber) {
             const extraParams = [
                 {
                     key: 'otfNumber',
@@ -353,7 +340,6 @@ export const VehicleInvoiceMasterBase = (props) => {
                     name: 'Invoice Number',
                 },
             ];
-
             fetchOTFDetail({ customURL, setIsLoading: listShowLoading, userId, extraParams: extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -368,7 +354,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     }, []);
 
     const filterActiveMenu = (items) => {
-        return items?.filter((item) => validateOTFMenu({ item, otfData }));
+        return items?.filter((item) => validateInvoiceMenu({ item, otfData }));
     };
 
     const filterActiveSection = sectionName && filterActiveMenu(Object.values(sectionName));
@@ -517,7 +503,7 @@ export const VehicleInvoiceMasterBase = (props) => {
                 handleBookingNumberSearch(record?.otfNumber, record?.invoiceNumber);
                 break;
             case NEXT_ACTION:
-                const nextSection = filterActiveSection?.find((i) => i?.displayOnList && i.id > currentSection);
+                const nextSection = filterActiveSection?.find((i) => i.id > currentSection);
                 section && setCurrentSection(nextSection?.id);
                 setLastSection(!nextSection?.id);
                 break;
@@ -559,6 +545,12 @@ export const VehicleInvoiceMasterBase = (props) => {
         const { vehicleDetails, financeDetails, insuranceDetails, invoiceDetails } = requestPayload;
         const data = { vehicleDetails, financeDetails, insuranceDetails, invoiceDetails };
         const onSuccess = (res) => {
+            // setShowDataLoading(true);
+            // showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage + 'Invoice No.:' + res?.data?.invoiceNumber });
+            // fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
+            // handleButtonClick({ buttonAction: NEXT_ACTION });
+            // setCurrentSection(defaultSection);
+
             form.resetFields();
             setShowDataLoading(true);
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage + 'Invoice No.:' + res?.data?.invoiceNumber });
@@ -566,6 +558,7 @@ export const VehicleInvoiceMasterBase = (props) => {
             resetInvoiceData();
             setCurrentSection(defaultSection);
         };
+
         const onError = (message) => {
             showGlobalNotification({ message });
         };
@@ -604,6 +597,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         setIsFormVisible(false);
         setCancelInvoiceVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
+        setCurrentSection(defaultSection);
     };
 
     const onCloseAction = () => {
@@ -858,12 +852,7 @@ export const VehicleInvoiceMasterBase = (props) => {
             <VehicleInvoiceFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable
-                        // handleButtonClick={handleButtonClick}
-                        isLoading={showDataLoading}
-                        {...tableProps}
-                        showAddButton={false}
-                    />
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} showAddButton={false} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />

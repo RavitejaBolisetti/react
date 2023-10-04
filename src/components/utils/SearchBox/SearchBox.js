@@ -49,6 +49,14 @@ const SearchBox = (props) => {
                 setValidationRules([validateLettersWithWhitespaces('customer name')]);
                 break;
             }
+            case SearchConstants?.NEWMODELGROUP?.id: {
+                setValidationRules([validateRequiredInputField('new modal group')]);
+                break;
+            }
+            case SearchConstants?.OLDMODELGROUP?.id: {
+                setValidationRules([validateRequiredInputField('old modal group')]);
+                break;
+            }
             default: {
                 setValidationRules([validateRequiredInputField('input')]);
                 break;

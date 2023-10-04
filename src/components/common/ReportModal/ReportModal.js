@@ -141,6 +141,10 @@ export const EmbeddedReportMasterBase = (props) => {
                     }}
                 />
             )}
+            {/* PDF VIEWER */}
+            {/* <object width="100%" height="90vh" data="http://www.africau.edu/images/default/sample.pdf" type="application/pdf">
+                {' '}
+            </object> */}
         </div>
     );
 };

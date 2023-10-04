@@ -6,7 +6,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { screen, fireEvent, act } from '@testing-library/react';
-import SearchBox from "@components/utils/SearchBox/SearchBox";
+import SearchBox from "components/utils/SearchBox/SearchBox";
 import { Form } from 'antd';
 
 const optionType= [{"id":"106","key":"chassisNumber","value":"chassisNumber"},
@@ -14,7 +14,9 @@ const optionType= [{"id":"106","key":"chassisNumber","value":"chassisNumber"},
                     {"id":"106","key":"registrationNumber","value":"registrationNumber"},
                     {"id":"106","key":"customerName","value":"customerName"},
                     {"id":"106","key":"Test","value":"Test"},
-                    {"id":"106","key":"","value":""}];
+                    {"id":"106","key":"","value":""},
+                    {"id":"106","key":"NMGR","value":"NMGR"},
+                    {"id":"106","key":"OMGR","value":"OMGR"}];
 
 const FormWrapper = (props) => {
     const [searchForm] = Form.useForm();
@@ -48,6 +50,12 @@ describe("SearchBox components",() => {
             fireEvent.change(parameter, { target: { value: 'customerName' } });
             const customerName=screen.getAllByText(/customerName/i);
             fireEvent.click(customerName[1]);
+            fireEvent.change(parameter, { target: { value: 'NMGR' } });
+            const NMGR=screen.getAllByText(/NMGR/i);
+            fireEvent.click(NMGR[1]);
+            fireEvent.change(parameter, { target: { value: 'OMGR' } });
+            const OMGR=screen.getAllByText(/OMGR/i);
+            fireEvent.click(OMGR[1]);
             fireEvent.change(parameter, { target: { value: 'Test' } });
             const test=screen.getAllByText(/Test/i);
             fireEvent.click(test[1]);
