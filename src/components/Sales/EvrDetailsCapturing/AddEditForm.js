@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState } from 'react';
+import React from 'react';
 import { Row, Col, Input, Form, Switch, DatePicker } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
@@ -17,8 +17,7 @@ import styles from 'assets/sass/app.module.scss';
 
 const { TextArea } = Input;
 const AddEditFormMain = (props) => {
-    const { form, formData, buttonData, setButtonData, typeData, fieldNames, editProductData, handleButtonClick, onCloseAction, formActionType, onFinish, onFinishFailed, viewProductData, modelGroupArr, setViewProductData, responseData } = props;
-    const { hoPriceDetailData } = props;
+    const { form, formData, buttonData, setButtonData, typeData, isEvrDetailLoading, handleButtonClick, onCloseAction, formActionType, onFinish, onFinishFailed } = props;
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -38,11 +37,7 @@ const AddEditFormMain = (props) => {
         styles,
         typeData,
         formActionType,
-        viewProductData,
-        modelGroupArr,
-        setViewProductData,
-        hoPriceDetailData,
-        responseData,
+        isLoading: isEvrDetailLoading,
     };
 
     return (

@@ -10,6 +10,12 @@ import styles from 'assets/sass/app.module.scss';
 export const tableColumn = ({ handleButtonClick, actionButtonVisiblity }) => {
     const tableColumn = [
         tblPrepareColumns({
+            title: 'Model Group',
+            dataIndex: 'modelGroupCode',
+            width: '18%',
+        }),
+
+        tblPrepareColumns({
             title: 'Model',
             dataIndex: 'modelCode',
             width: '18%',

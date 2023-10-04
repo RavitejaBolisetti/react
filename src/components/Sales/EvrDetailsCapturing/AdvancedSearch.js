@@ -15,12 +15,9 @@ import dayjs from 'dayjs';
 
 import styles from 'assets/sass/app.module.scss';
 import TreeSelectField from 'components/common/TreeSelectField';
-import { customSelectBox } from 'utils/customSelectBox';
-
-const { Option } = Select;
 
 export const AdvancedSearchFrom = (props) => {
-    const { setAdvanceSearchVisible, setSelectedTreeSelectKey, productHierarchyList, productHierarchyData, selectedTreeSelectKey, handleSelectTreeClick, modelCodeName } = props;
+    const { setAdvanceSearchVisible, setSelectedTreeSelectKey, modelGroupProductData, selectedTreeSelectKey, handleSelectTreeClick, modelCodeName } = props;
     const { filterString, setFilterString, advanceFilterForm, handleResetFilter } = props;
 
     useEffect(() => {
@@ -47,17 +44,12 @@ export const AdvancedSearchFrom = (props) => {
         return;
     };
 
-    const selectProps = {
-        optionFilterProp: 'children',
-        showSearch: true,
-        allowClear: true,
-    };
     const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
-
+    
     const treeSelectFieldProps = {
         treeFieldNames,
-        treeData: productHierarchyData,
+        treeData: modelGroupProductData,
         handleSelectTreeClick,
         selectedTreeSelectKey,
         defaultParent: false,
@@ -71,8 +63,6 @@ export const AdvancedSearchFrom = (props) => {
         }
         return Promise.reject(new Error('Date cant be less than Effective from date'));
     };
-
-    //formatDateToCalenderDate
 
     return (
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>

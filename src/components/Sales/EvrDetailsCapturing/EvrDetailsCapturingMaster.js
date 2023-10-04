@@ -11,8 +11,7 @@ import { Col, Form, Row } from 'antd';
 import { tableColumn } from './tableColumn';
 import EvrDetailsCapturingFilter from './EvrDetailsCapturingFilter';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, btnVisiblity, NEXT_ACTION } from 'utils/btnVisiblity';
-import { convertDateTime, dateFormatView, formatDateToCalenderDate } from 'utils/formatDateTime';
-import { MODEL_TYPE } from 'constants/modules/hoPricingMapping/index';
+import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 
 import { AddEditForm } from './AddEditForm';
 
@@ -20,9 +19,9 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
 import { EVR_STATUS } from 'constants/EvrStatus';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
-import { tncProductHierarchyDataActions } from 'store/actions/data/termsConditions/tncProductHierarchy';
 import { evrDetailsCapturingDataActions } from 'store/actions/data/evrDetailsCapturing/evrDetailsCapturing';
 import { evrDetailsCapturingDetailDataActions } from 'store/actions/data/evrDetailsCapturing/evrDetailsCapturingDetails';
+import { MODEL_TYPE } from 'constants/modules/hoPricingMapping/index';
 
 import { showGlobalNotification } from 'store/actions/notification';
 
@@ -88,14 +87,10 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const EvrDetailsCapturingMasterBase = (props) => {
     const { filterString, setFilterString, vehicleDetailData, fetchList, evrDetailData, isEvrDetailLoading, saveData, listShowLoading, userId, fetchProductLovList, data, fetchDetail, listProductMainShowLoading, fetchProductList, listDetailShowLoading } = props;
-    const { typeData, listProductShowLoading, filteredStateData, districtData, productHierarchyData, totalRecords, showGlobalNotification, hoPriceDetailData, isHoPriceDetaiLoading } = props;
+    const { typeData, listProductShowLoading, filteredStateData, productHierarchyData, totalRecords, showGlobalNotification } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
-    const [filteredCityData, setFilteredCityData] = useState([]);
-    const [editProductData, setEditProductData] = useState([]);
-    const [viewProductData, setViewProductData] = useState([]);
-    const [modelGroupArr, setModelGroupArr] = useState([]);
-    const [checkedKeys, setCheckedKeys] = useState([]);
     const [modelCodeName, setModelCodeName] = useState();
+    const [modelGroupProductData, setModelGroupProductData] = useState([]);
 
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
@@ -105,7 +100,6 @@ export const EvrDetailsCapturingMasterBase = (props) => {
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [chargingStatusType, setChargingStatusType] = useState(EVR_STATUS?.DUE_FOR_CHARGING.key);
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
-    const [modelDetails, setModelDetails] = useState([]);
     const dynamicPagination = true;
 
     const defaultBtnVisiblity = {
@@ -259,7 +253,29 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAdvanceSearchVisible, filterString]);
 
-    const handlePricingTypeChange = (buttonName) => {
+    const disableExceptModelGroup = (node) => {
+        if (node?.attributeType === MODEL_TYPE?.MODAL_GROUP?.key) {
+            node[`disabled`] = false;
+        } else {
+            node[`disabled`] = true;
+        }
+
+        if (node?.subProdct?.length > 0) {
+            node?.subProdct?.forEach((child) => {
+                disableExceptModelGroup(child);
+            });
+        }
+
+        return node;
+    };
+
+    useEffect(() => {
+        setModelGroupProductData(productHierarchyData?.map((e) => disableExceptModelGroup(e)));
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [productHierarchyData]);
+
+    const handleChargingTypeChange = (buttonName) => {
         switch (buttonName?.key) {
             case EVR_STATUS?.DUE_FOR_CHARGING?.key: {
                 setActionButtonVisiblity({ canAdd: false, canView: false, canEdit: true });
@@ -289,33 +305,6 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         advanceFilterForm.setFieldsValue(obj);
         setSelectedTreeSelectKey(value);
     };
-
-    // const handleFilterChange =
-    //     (name, type = 'value') =>
-    //     (value) => {
-    //         if (!value) {
-    //             switch (name) {
-    //                 case 'stateCode': {
-    //                     setFilteredCityData();
-    //                     advanceFilterForm.setFieldsValue({ cityCode: undefined });
-    //                     break;
-    //                 }
-    //                 case 'cityCode': {
-    //                     break;
-    //                 }
-    //                 default: {
-    //                     break;
-    //                 }
-    //             }
-    //             return;
-    //         }
-    //         const filterValue = type === 'text' ? value.target.value : value;
-
-    //         if (name === 'stateCode') {
-    //             setFilteredCityData(districtData?.filter((i) => i?.parentKey === filterValue));
-    //             advanceFilterForm.setFieldsValue({ cityCode: undefined });
-    //         }
-    //     };
 
     const handleSearch = (value) => {
         setFilterString({ ...filterString, modelDescription: value, advanceFilter: true });
@@ -474,7 +463,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         handleSearch,
         chargingStatusType,
         setChargingStatusType,
-        handlePricingTypeChange,
+        handleChargingTypeChange,
         title,
         data,
         setAdvanceSearchVisible,
@@ -488,7 +477,6 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
         filteredStateData,
-        filteredCityData,
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
         filterString,
@@ -502,6 +490,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         selectedTreeSelectKey,
         modelCodeName,
         setSelectedTreeSelectKey,
+        modelGroupProductData,
     };
 
     const formProps = {
@@ -514,20 +503,11 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         setButtonData,
         formData: evrDetailData,
         form,
-        modelDetails,
-        setModelDetails,
         onFinish,
-        viewProductData,
-        modelGroupArr,
-        editProductData,
-        setViewProductData,
-        hoPriceDetailData,
-        checkedKeys,
-        setCheckedKeys,
-        isHoPriceDetaiLoading,
         selectedTreeSelectKey,
         setSelectedTreeSelectKey,
         productHierarchyData,
+        isEvrDetailLoading,
     };
 
     return (

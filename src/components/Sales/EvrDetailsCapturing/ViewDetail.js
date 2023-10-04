@@ -19,8 +19,6 @@ const ViewDetailMain = (props) => {
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
 
-    console.log('formData', formData);
-
     return (
         <div className={styles.viewDrawerContainer}>
             <Card>
