@@ -101,6 +101,7 @@ export const ROUTING_VEHICLE_RECEIPT = ROUTING_SALES.concat('vehicle-receipt');
 export const ROUTING_RECEIPTS = ROUTING_SALES.concat('receipts');
 export const ROUTING_OTF_SO_MAPPING_CONTROL_MASTER = ROUTING_SALES.concat('booking-so-mapping-control-master');
 export const ROUTING_OTF_BLOCK_MASTER = ROUTING_SALES.concat('booking-block-master');
+export const ROUTING_VEHICLE_CHECKLIST_MASTER = ROUTING_SALES.concat('vehicle-checklist-master');
 
 export const ROUTING_FINANCIAL_ACCOUNTING_TAX_CHARGES = ROUTING_FINANCIAL_ACCOUNTING.concat('tax-charges');
 export const ROUTING_FINANCIAL_ACCOUNTING_TAX_CHARGES_CATEGORY = ROUTING_FINANCIAL_ACCOUNTING.concat('tax-charges-category');
@@ -116,7 +117,6 @@ export const ROUTING_VEHICLE_INVOICE_GENERATION = ROUTING_SALES.concat('vehicle-
 export const ROUTING_VEHICLE_DELIVERY_NOTE = ROUTING_SALES.concat('vehicle-delivery-note');
 
 export const ROUTING_VEHICLE_MODEL_TAX_CHARGES_CATEGORY = ROUTING_FINANCIAL_ACCOUNTING.concat('vehicle-model-tax-and-charges-category');
-
 
 export const ROUTING_GST_IRN_AUTHENTICATION = ROUTING_FINANCIAL_ACCOUNTING.concat('gst-irn-authentication');
 export const ROUTING_ONROAD_PRICE_MASTER = ROUTING_SALES.concat('onroad-price-master');
