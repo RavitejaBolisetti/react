@@ -18,9 +18,7 @@ import { AddEditForm } from './AddEditForm';
 import { AdvancedSearch } from './AdvancedSearch';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { btnVisiblity } from 'utils/btnVisiblity';
-
 import { searchValidatorPincode } from 'utils/validation';
-import { FilterIcon } from 'Icons';
 
 import { geoCountryDataActions } from 'store/actions/data/geo/countries';
 import { geoStateDataActions } from 'store/actions/data/geo/states';

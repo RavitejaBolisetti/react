@@ -4,10 +4,9 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 
-import { Row, Col, Space, Avatar, Typography, Card, Divider, Button } from 'antd';
+import { Row, Col, Space, Avatar, Typography, Divider, Button } from 'antd';
 
 import { VehicleDeliveryNoteFormButton } from '../VehicleDeliveryNoteFormButton';
-import { LANGUAGE_EN } from 'language/en';
 import { HiCheck } from 'react-icons/hi';
 
 import styles from 'assets/sass/app.module.scss';

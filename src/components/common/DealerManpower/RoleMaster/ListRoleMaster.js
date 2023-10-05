@@ -25,8 +25,6 @@ import { AddEditForm } from './AddEditForm';
 import { AdvancedSearch } from './AdvancedSearch';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 
-import { FilterIcon } from 'Icons';
-
 const mapStateToProps = (state) => {
     const {
         auth: { userId },

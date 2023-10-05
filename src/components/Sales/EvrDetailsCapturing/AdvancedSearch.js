@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Col, Form, Row, Button, Select, DatePicker } from 'antd';
+import { Col, Form, Row, Button, DatePicker } from 'antd';
 
 import { withModal } from 'components/withModal';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
@@ -46,7 +46,7 @@ export const AdvancedSearchFrom = (props) => {
 
     const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
-    
+
     const treeSelectFieldProps = {
         treeFieldNames,
         treeData: modelGroupProductData,

@@ -15,7 +15,6 @@ import { MileSkillDataactions } from 'store/actions/data/dealerManpower/mileSkil
 import { roleMasterDataActions } from 'store/actions/data/dealerManpower/roleMaster';
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { FilterIcon } from 'Icons';
 import { showGlobalNotification } from 'store/actions/notification';
 import { filterFunction } from 'utils/filterFunction';
 import { btnVisiblity } from 'utils/btnVisiblity';

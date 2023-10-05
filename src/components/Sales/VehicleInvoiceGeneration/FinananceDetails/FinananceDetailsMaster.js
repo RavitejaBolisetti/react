@@ -20,7 +20,6 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             OTF: {
-                FinanceDetail: { isLoaded, isLoading, data: financeData = [] },
                 FinanceLov: { isLoaded: isFinanceLovDataLoaded = false, isloading: isFinanceLovLoading, data: FinanceLovData = [] },
             },
         },
@@ -30,10 +29,7 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         userId,
-        isLoaded,
-        isLoading,
         moduleTitle,
-
         isFinanceLovDataLoaded,
         isFinanceLovLoading,
         FinanceLovData,

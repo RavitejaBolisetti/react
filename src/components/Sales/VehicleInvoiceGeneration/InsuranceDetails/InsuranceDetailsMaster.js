@@ -5,9 +5,7 @@
  */
 import React, { useState, useEffect } from 'react';
 import { Form, Row, Col } from 'antd';
-
 import { AddEditForm, ViewDetail } from 'components/Sales/Common/InsuranceDetails';
-import { formattedCalendarDate } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -21,13 +19,6 @@ export const InsuranceDetailsMaster = (props) => {
         setFormData(insuranceData);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [insuranceData]);
-
-    // useEffect(() => {
-    //     if (formData) {
-    //         form.setFieldsValue({ ...formData, insuranceDate: formattedCalendarDate(formData?.insuranceDate) });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [formData, formActionType]);
 
     const viewProps = {
         styles,

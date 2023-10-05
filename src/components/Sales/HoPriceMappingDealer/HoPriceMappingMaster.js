@@ -29,8 +29,6 @@ import { hoPriceMappingDetailDataActions } from 'store/actions/data/hoPriceMappi
 
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { FilterIcon } from 'Icons';
-
 const mapStateToProps = (state) => {
     const {
         auth: { userId },

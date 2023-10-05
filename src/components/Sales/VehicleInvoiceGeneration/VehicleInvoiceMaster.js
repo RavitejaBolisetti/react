@@ -33,8 +33,6 @@ import { VEHICLE_INVOICE_SECTION } from 'constants/VehicleInvoiceSection';
 import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
 import { OTF_STATUS } from 'constants/OTFStatus';
 
-import { FilterIcon } from 'Icons';
-
 const mapStateToProps = (state) => {
     const {
         auth: { userId },

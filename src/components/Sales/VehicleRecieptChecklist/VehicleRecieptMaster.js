@@ -26,7 +26,6 @@ import { formatDateToCalenderDate, convertDateTime, dateFormatView } from 'utils
 import { validateRequiredInputField } from 'utils/validation';
 import { LANGUAGE_EN } from 'language/en';
 
-import { FilterIcon } from 'Icons';
 import { QueryButtons, QUERY_BUTTONS_CONSTANTS, CHECKLIST_MESSAGE_CONSTANTS } from './QueryButtons';
 import { vehicleReceiptChecklistdataActions } from 'store/actions/data/VehicleReceiptCheckList/VehicleReceiptChecklistMain';
 import { vehicleReceiptChecklistProfiledataActions } from 'store/actions/data/VehicleReceiptCheckList/VehicleReceiptChecklistProfile';

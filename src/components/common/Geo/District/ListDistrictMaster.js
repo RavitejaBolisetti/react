@@ -11,6 +11,7 @@ import { Col, Form, Row } from 'antd';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { tableColumn } from './tableColumn';
+import { AddEditForm } from './AddEditForm';
 import { AdvancedSearch } from './AdvancedSearch';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 
@@ -22,9 +23,6 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { geoStateDataActions } from 'store/actions/data/geo/states';
 import { geoDistrictDataActions } from 'store/actions/data/geo/districts';
 import { geoCountryDataActions } from 'store/actions/data/geo/countries';
-
-import { AddEditForm } from './AddEditForm';
-import { FilterIcon } from 'Icons';
 
 const mapStateToProps = (state) => {
     const {

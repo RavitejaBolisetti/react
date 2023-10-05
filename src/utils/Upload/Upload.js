@@ -72,7 +72,6 @@ const UploadBase = (props) => {
         multiple = false,
         flag = false,
         showRemoveIcon = true,
-        showDownloadIcon = true,
         showProgress = { strokeWidth: 3, showInfo: true },
         showPreviewIcon = true,
         form = undefined,

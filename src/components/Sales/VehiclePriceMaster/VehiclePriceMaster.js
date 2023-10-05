@@ -20,8 +20,6 @@ import { supportingDocumentDataActions } from 'store/actions/data/supportingDocu
 import { showGlobalNotification } from 'store/actions/notification';
 
 import { BASE_URL_VEHICLE_PRICE_MASTER_SEARCH as customURL } from 'constants/routingApi';
-
-import { FilterIcon } from 'Icons';
 import { ViewDetail } from './ViewDetail';
 import { VehiclePriceMasterUpload } from './VehiclePriceMasterUpload';
 
@@ -146,7 +144,6 @@ export const VehiclePriceMasterBase = (props) => {
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [refershData, setRefershData] = useState(false);
-    const [singleDisabled, setSingleDisabled] = useState(false);
 
     const [formData, setFormData] = useState([]);
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -597,7 +594,6 @@ export const VehiclePriceMasterBase = (props) => {
         setEmptyList,
         fetchViewDocument,
         resetViewData,
-        setSingleDisabled,
         uploadButtonName: 'Upload Price Master',
         messageText: 'Click or drop your file here to upload',
         validationText: 'File type should be .xlxs and max file size to be 8Mb',

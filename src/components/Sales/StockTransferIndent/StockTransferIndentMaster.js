@@ -7,7 +7,6 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Col, Form, Row } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { FilterIcon } from 'Icons';
 
 import { tableColumn } from './tableColumn';
 import { PARAM_MASTER } from 'constants/paramMaster';

@@ -23,7 +23,6 @@ import { filterFunction } from 'utils/filterFunction';
 import { btnVisiblity } from 'utils/btnVisiblity';
 
 import { AddEditForm } from './AddEditForm';
-import { FilterIcon } from 'Icons';
 
 const mapStateToProps = (state) => {
     const {

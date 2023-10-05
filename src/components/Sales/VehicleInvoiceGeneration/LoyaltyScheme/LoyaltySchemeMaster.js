@@ -114,7 +114,7 @@ const LoyaltySchemeMasterMain = (props) => {
     const { fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading } = props;
     const { isModelDataLoaded, isModelLoading, modelData, isVariantDataLoaded, isVariantLoading, variantData } = props;
     const { schemeLovData, isSchemeLovLoading, fetchSchemeLovList, listSchemeLovShowLoading } = props;
-    const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton } = props;
+    const { buttonData, setButtonData, FormActionButton } = props;
 
     const [filteredModelData, setfilteredModelData] = useState([]);
     const [filteredVariantData, setfilteredVariantData] = useState([]);

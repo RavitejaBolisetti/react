@@ -22,7 +22,6 @@ import { formatDate } from 'utils/formatDateTime';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
-import { FilterIcon } from 'Icons';
 import { bindActionCreators } from 'redux';
 import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
