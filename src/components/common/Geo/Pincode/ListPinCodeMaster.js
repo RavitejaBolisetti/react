@@ -212,7 +212,7 @@ const ListPinCodeMasterBase = (props) => {
                 key: 'cityCode',
                 title: 'City',
                 value: filterString?.cityCode,
-                name: filteredCityData?.find((i) => i?.key === filterString?.cityCode)?.value,
+                name: filteredCityData?.find((i) => i?.code === filterString?.cityCode)?.name,
                 canRemove: false,
             },
             {
@@ -559,6 +559,7 @@ const ListPinCodeMasterBase = (props) => {
         setFilteredTehsilData(undefined);
         setFilteredStateData(stateData?.filter((i) => i?.parentKey === defaultCountry));
         advanceFilterForm.resetFields();
+        setRefershData(!refershData);
     };
 
     const advanceFilterProps = {
@@ -666,6 +667,7 @@ const ListPinCodeMasterBase = (props) => {
         tableData: data,
         showAddButton,
     };
+    console.log(extraParams);
     return (
         <>
             <AppliedAdvanceFilter {...advanceFilterResultProps} />
