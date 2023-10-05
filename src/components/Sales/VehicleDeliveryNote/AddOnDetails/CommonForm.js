@@ -12,7 +12,8 @@ import { customSelectBox } from 'utils/customSelectBox';
 import styles from 'assets/sass/app.module.scss';
 
 const { Search } = Input;
-const CommonForm = ({ formData, typeData, formKey = 'Shield', addOnForm, openAccordian, formActionType, onSingleFormFinish, schemeDescriptionData, shieldForm, rsaForm, amcForm, registerDisabled, handleOnChange, relationshipManagerData, schemeDescriptionDatamain }) => {
+const CommonForm = ({ formData, typeData, formKey = 'Shield', addOnForm, openAccordian, formActionType, onSingleFormFinish, schemeDescriptionData, shieldForm, rsaForm, amcForm, registerDisabled, handleOnChange, relationshipManagerData, schemeDescriptionDatamain, isReadOnly = false }) => {
+    const disableProps = { disabled: isReadOnly };
     const handleChange = (values) => {
         const code = openAccordian && schemeDescriptionDatamain.hasOwnProperty(openAccordian) && schemeDescriptionDatamain[openAccordian]?.find((item) => item?.schemeDescription === values);
         if (code) {
@@ -27,18 +28,18 @@ const CommonForm = ({ formData, typeData, formKey = 'Shield', addOnForm, openAcc
                 {openAccordian === 'AMC' && (
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item initialValue={formData?.schemeType} label="Scheme Type" name="schemeType" rules={[validateRequiredSelectField('Scheme Type')]}>
-                            {customSelectBox({ data: typeData['DLVR_AMC_SCH_TYP'], placeholder: preparePlaceholderText('Scheme Type'), fieldNames: { key: 'schemeType', value: 'schemeType' } })}
+                            {customSelectBox({ data: typeData['DLVR_AMC_SCH_TYP'], placeholder: preparePlaceholderText('Scheme Type'), fieldNames: { key: 'schemeType', value: 'schemeType' }, ...disableProps })}
                         </Form.Item>
                     </Col>
                 )}
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.schemeDescription} label="Scheme Description" name="schemeDescription" rules={[validateRequiredSelectField('Scheme Description')]}>
-                        {customSelectBox({ data: schemeDescriptionDatamain[openAccordian], fieldNames: { key: 'schemeDescription', value: 'schemeDescription' }, placeholder: preparePlaceholderText('Scheme Description'), onChange: handleChange })}
+                        {customSelectBox({ data: schemeDescriptionDatamain[openAccordian], fieldNames: { key: 'schemeDescription', value: 'schemeDescription' }, placeholder: preparePlaceholderText('Scheme Description'), onChange: handleChange, ...disableProps })}
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.saleType} label="Sale Type" name="saleType" rules={[validateRequiredInputField('Sale Type')]}>
-                        {customSelectBox({ data: typeData['DLVR_SALE_TYP'], placeholder: preparePlaceholderText('Sale Type') })}
+                        {customSelectBox({ data: typeData['DLVR_SALE_TYP'], placeholder: preparePlaceholderText('Sale Type'), ...disableProps })}
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -50,7 +51,7 @@ const CommonForm = ({ formData, typeData, formKey = 'Shield', addOnForm, openAcc
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.employeeCode} label="Employee Name" name="employeeCode">
                         {/* <Search  onSearch={handleEmployeeSearch}  onChange={handleOnChange} placeholder={preparePlaceholderText('scheme amount')} allowClear /> */}
-                        {customSelectBox({ data: relationshipManagerData, fieldNames: { key: 'key', value: 'value' }, placeholder: preparePlaceholderSelect('Relationship Manager') })}
+                        {customSelectBox({ data: relationshipManagerData, fieldNames: { key: 'key', value: 'value' }, placeholder: preparePlaceholderSelect('Relationship Manager'), ...disableProps })}
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>

@@ -49,7 +49,8 @@ export const InsuranceDetailsMaster = (props) => {
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
-        const data = { ...values, id: recordId, otfNumber: selectedOrderId };
+        const otfId = formData?.otfId || '';
+        const data = { ...values, id: recordId, otfId, otfNumber: selectedOrderId };
         onFinishCustom({ key: formKey, values: data });
         handleButtonClick({ buttonAction: NEXT_ACTION });
     };

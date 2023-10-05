@@ -78,6 +78,7 @@ const OtfDetailsForm = (props) => {
                                 <Input placeholder={preparePlaceholderText('Sales Consultant Name')} disabled={true} />
                             </Form.Item>
                             <Form.Item hidden name={[formName, 'saleConsultant']} />
+                            <Form.Item hidden name={[formName, 'otfId']} />
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item initialValue={formData?.mitraType} label="Influence/Mitra Type" name={[formName, 'mitraType']}>

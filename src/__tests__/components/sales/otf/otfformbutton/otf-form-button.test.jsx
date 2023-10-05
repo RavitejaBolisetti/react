@@ -4,7 +4,7 @@ import { screen, fireEvent } from '@testing-library/react';
 import { OTFFormButton } from 'components/Sales/OTF/OTFFormButton';
 afterEach(() => {
     jest.restoreAllMocks();
-}); 
+});
 const buttonData = {
     closeBtn: true,
     cancelBtn: true,
@@ -19,6 +19,8 @@ const buttonData = {
     nextBtn: true,
     saveBtn: true,
     formBtnActive: true,
+    otfSoMappingHistoryBtn: true,
+    pendingCancellationOTFBtn: true
 };
 
 describe('Booking Form Button Component', () => {
@@ -26,8 +28,13 @@ describe('Booking Form Button Component', () => {
         customRender(<OTFFormButton />);
     });
 
-    it('test 1', async () => {
-        customRender(<OTFFormButton setButtonData={jest.fn()} buttonData={buttonData} handleButtonClick={jest.fn()} />);
+    it('should render Booking form all button', async () => {
+        const workFlowDetails = {
+            allowedActions: [{
+                allowedActions: { actionName: "test" }
+            }]
+        }
+        customRender(<OTFFormButton workFlowDetails={workFlowDetails} setButtonData={jest.fn()} buttonData={buttonData} handleButtonClick={jest.fn()} />);
         const closeBtn = screen.getByRole('button', { name: 'Close' });
         fireEvent.click(closeBtn);
         const cancelBtn = screen.getByRole('button', { name: 'Cancel' });
@@ -52,5 +59,9 @@ describe('Booking Form Button Component', () => {
         fireEvent.click(nextBtn);
         const saveBtn = screen.getByRole('button', { name: 'Save' });
         fireEvent.click(saveBtn);
+        const bookingMapHistoryBtn = screen.getByRole('button', { name: 'Booking Mapping History' });
+        fireEvent.click(bookingMapHistoryBtn);
+        const allowedActions = screen.getByRole('button', { name: '' });
+        fireEvent.click(allowedActions);
     });
 });

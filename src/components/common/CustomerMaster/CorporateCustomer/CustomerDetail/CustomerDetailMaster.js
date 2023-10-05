@@ -91,12 +91,12 @@ const CompanyCustomerDetailsMasterBase = (props) => {
     };
 
     useEffect(() => {
-        if (isDataLoaded) {
+        if (customerDetailsData) {
             form.setFieldsValue({ ...customerDetailsData });
             setFormData(customerDetailsData);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, customerDetailsData]);
+    }, [customerDetailsData]);
 
     useEffect(() => {
         return () => {
@@ -118,7 +118,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
                 {
                     key: 'customerId',
                     title: 'customerId',
-                    value: selectedCustomer?.customerId,
+                    value: selectedCustomerId,
                     name: 'Customer ID',
                 },
             ];

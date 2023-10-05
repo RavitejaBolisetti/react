@@ -567,7 +567,7 @@ export const ReceiptMasterBase = (props) => {
         receiptType,
         partySegmentType,
 
-        icon: <FilterIcon size={20} />,
+        // icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
 
         onCloseAction: onAdvanceSearchCloseAction,

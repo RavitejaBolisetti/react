@@ -40,7 +40,7 @@ const VehicleInfoForm = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.modelDescription} label="Modal Description" name="modelDescription">
+                    <Form.Item initialValue={formData?.modelDescription} label="Model Description" name="modelDescription">
                         <Input placeholder={preparePlaceholderText('Modal Description')} disabled={true} />
                     </Form.Item>
                     {toolTipContent && <div className={styles.modelTooltip}>{addToolTip(toolTipContent, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle size={13} />)}</div>}

@@ -50,7 +50,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ViewDetailMain = (props) => {
-    const { styles, userId, selectedCustomerId, formData, typeData, downloadFileFromButton, showGlobalNotification, setRefreshCustomerList, saveNameChangeData, listShowLoading } = props;
+    const { styles, userId, selectedCustomerId, formData, typeData, downloadFileFromButton, customerNameList, showGlobalNotification, setRefreshCustomerList, saveNameChangeData, listShowLoading } = props;
     const { setRefreshData, showApproveNameChangeRequestBtn = false } = props;
 
     const [confirmRequest, setConfirmRequest] = useState();
@@ -117,20 +117,38 @@ const ViewDetailMain = (props) => {
     const canApproveNameChangeRequest = true;
     return (
         <>
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={4} lg={4} xl={4}>
-                    <Form.Item label="Title">{checkAndSetDefaultValue(getCodeValue(typeData?.TITLE, formData?.titleCode))}</Form.Item>
-                </Col>
-                <Col xs={24} sm={24} md={7} lg={7} xl={7}>
-                    <Form.Item label="First Name">{checkAndSetDefaultValue(formData?.firstName)}</Form.Item>
-                </Col>
-                <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-                    <Form.Item label="Middle Name">{checkAndSetDefaultValue(formData?.middleName)}</Form.Item>
-                </Col>
-                <Col xs={24} sm={24} md={7} lg={7} xl={7}>
-                    <Form.Item label="Last Name">{checkAndSetDefaultValue(formData?.lastName)}</Form.Item>
-                </Col>
-            </Row>
+            {canApproveNameChangeRequest && showApproveNameChangeRequestBtn && (
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={4} lg={4} xl={4}>
+                        <Form.Item label="Title">{checkAndSetDefaultValue(getCodeValue(typeData?.TITLE, customerNameList?.titleCode))}</Form.Item>
+                    </Col>
+                    <Col xs={24} sm={24} md={7} lg={7} xl={7}>
+                        <Form.Item label="First Name">{checkAndSetDefaultValue(customerNameList?.firstName)}</Form.Item>
+                    </Col>
+                    <Col xs={24} sm={24} md={6} lg={6} xl={6}>
+                        <Form.Item label="Middle Name">{checkAndSetDefaultValue(customerNameList?.middleName)}</Form.Item>
+                    </Col>
+                    <Col xs={24} sm={24} md={7} lg={7} xl={7}>
+                        <Form.Item label="Last Name">{checkAndSetDefaultValue(customerNameList?.lastName)}</Form.Item>
+                    </Col>
+                </Row>
+            )}
+            {canApproveNameChangeRequest && !showApproveNameChangeRequestBtn && (
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={4} lg={4} xl={4}>
+                        <Form.Item label="Title">{checkAndSetDefaultValue(getCodeValue(typeData?.TITLE, formData?.titleCode))}</Form.Item>
+                    </Col>
+                    <Col xs={24} sm={24} md={7} lg={7} xl={7}>
+                        <Form.Item label="First Name">{checkAndSetDefaultValue(formData?.firstName)}</Form.Item>
+                    </Col>
+                    <Col xs={24} sm={24} md={6} lg={6} xl={6}>
+                        <Form.Item label="Middle Name">{checkAndSetDefaultValue(formData?.middleName)}</Form.Item>
+                    </Col>
+                    <Col xs={24} sm={24} md={7} lg={7} xl={7}>
+                        <Form.Item label="Last Name">{checkAndSetDefaultValue(formData?.lastName)}</Form.Item>
+                    </Col>
+                </Row>
+            )}
             {formData?.customerNameChangeRequest?.supportingDocuments?.map((item) => (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
