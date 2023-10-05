@@ -20,8 +20,9 @@ import { AdvancedSearch } from './AdvancedSearch';
 import { EVR_STATUS } from 'constants/EvrStatus';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { evrDetailsCapturingDataActions } from 'store/actions/data/evrDetailsCapturing/evrDetailsCapturing';
-import { evrDetailsCapturingDetailDataActions } from 'store/actions/data/evrDetailsCapturing/evrDetailsCapturingDetails';
+// import { evrDetailsCapturingDetailDataActions } from 'store/actions/data/evrDetailsCapturing/evrDetailsCapturingDetails';
 import { MODEL_TYPE } from 'constants/modules/hoPricingMapping/index';
+import { BASE_URL_EVR_DETAILS_CAPTURING_DETAIL as customURL } from 'constants/routingApi';
 
 import { showGlobalNotification } from 'store/actions/notification';
 
@@ -33,12 +34,10 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             ProductHierarchy: { data: productHierarchyData = [] },
-            OTF: {
-                VehicleDetails: { isLoaded: isVehicleDataLoaded = false, isLoading: isVehicleDataLoading, data: vehicleDetailData = [] },
-            },
+
             EvrDetailsCapturing: {
-                EvrDetailsCapturingSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString },
-                EvrDetailsCapturingDetailList: { isLoading: isEvrDetailLoading, data: evrDetailData = [] },
+                EvrDetailsCapturingSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, detailData: evrDetailData = [], filter: filterString },
+                // EvrDetailsCapturingDetailList: { isLoading: isEvrDetailLoading, data, detailData: evrDetailData = [], filter: filterString },
             },
         },
     } = state;
@@ -49,15 +48,12 @@ const mapStateToProps = (state) => {
         typeData,
         data: data?.paginationData,
         totalRecords: data?.totalRecords || [],
+        evrStatusList: Object.values(EVR_STATUS),
         moduleTitle,
-        isSearchLoading,
         isSearchDataLoaded,
         filterString,
         productHierarchyData,
-        vehicleDetailData,
-        isVehicleDataLoaded,
-        isVehicleDataLoading,
-        isEvrDetailLoading,
+        isEvrDetailLoading: isSearchLoading,
         evrDetailData,
     };
     return returnValue;
@@ -71,13 +67,16 @@ const mapDispatchToProps = (dispatch) => ({
             listProductMainShowLoading: productHierarchyDataActions.listShowLoading,
 
             fetchList: evrDetailsCapturingDataActions.fetchList,
+            fetchDetail: evrDetailsCapturingDataActions.fetchDetail,
             listShowLoading: evrDetailsCapturingDataActions.listShowLoading,
             setFilterString: evrDetailsCapturingDataActions.setFilter,
-            resetData: evrDetailsCapturingDataActions.reset,
+            saveData: evrDetailsCapturingDataActions.saveData,
 
-            fetchDetail: evrDetailsCapturingDetailDataActions.fetchList,
-            listDetailShowLoading: evrDetailsCapturingDetailDataActions.listShowLoading,
-            saveData: evrDetailsCapturingDetailDataActions.saveData,
+            // fetchList: evrDetailsCapturingDetailDataActions.fetchList,
+            // fetchDetail: evrDetailsCapturingDetailDataActions.fetchDetail,
+            // listDetailShowLoading: evrDetailsCapturingDetailDataActions.listShowLoading,
+            // setFilterString: evrDetailsCapturingDetailDataActions.setFilter,
+            // saveData: evrDetailsCapturingDetailDataActions.saveData,
 
             showGlobalNotification,
         },
@@ -86,8 +85,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const EvrDetailsCapturingMasterBase = (props) => {
-    const { filterString, setFilterString, vehicleDetailData, fetchList, evrDetailData, isEvrDetailLoading, saveData, listShowLoading, userId, fetchProductLovList, data, fetchDetail, listProductMainShowLoading, fetchProductList, listDetailShowLoading } = props;
-    const { typeData, listProductShowLoading, filteredStateData, productHierarchyData, totalRecords, showGlobalNotification } = props;
+    const { filterString, setFilterString, fetchList, evrDetailData, isEvrDetailLoading, saveData, listShowLoading, userId, data, fetchDetail, listProductMainShowLoading, fetchProductList, listDetailShowLoading } = props;
+    const { typeData, evrStatusList, filteredStateData, productHierarchyData, totalRecords, showGlobalNotification } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [modelCodeName, setModelCodeName] = useState();
     const [modelGroupProductData, setModelGroupProductData] = useState([]);
@@ -225,7 +224,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
                 },
                 {
                     key: 'prodctCode',
-                    value: vehicleDetailData?.modelCode,
+                    value: productHierarchyData?.modelCode,
                 },
                 {
                     key: 'hierarchyNode',
@@ -321,8 +320,6 @@ export const EvrDetailsCapturingMasterBase = (props) => {
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
         setFormData([]);
-        record && setFormData(record);
-        setIsFormVisible(true);
 
         if (buttonAction !== NEXT_ACTION && !(buttonAction === VIEW_ACTION)) {
             setFormActionType({
@@ -347,6 +344,9 @@ export const EvrDetailsCapturingMasterBase = (props) => {
             setButtonData({ nextBtn: true, closeBtn: true });
         }
 
+        record && setFormData(record);
+        setIsFormVisible(true);
+
         if (buttonAction !== ADD_ACTION) {
             const extraParams = [
                 {
@@ -356,7 +356,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
                     name: 'id',
                 },
             ];
-            fetchDetail({ setIsLoading: listDetailShowLoading, userId, extraParams });
+            fetchDetail({ setIsLoading: listShowLoading, userId, extraParams, customURL });
         }
     };
 
@@ -382,11 +382,12 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         const requestData = {
             data: data,
             method: 'put',
-            setIsLoading: listDetailShowLoading,
+            setIsLoading: listShowLoading,
             userId,
             onError,
             errorData: true,
             onSuccess,
+            customURL,
         };
 
         saveData(requestData);
@@ -400,7 +401,6 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
         advanceFilterForm.resetFields();
-        setSelectedTreeSelectKey(null);
         setAdvanceSearchVisible(false);
     };
 
@@ -418,6 +418,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
     const onAdvanceSearchCloseAction = () => {
         form.resetFields();
         advanceFilterForm.resetFields();
+        setSelectedTreeSelectKey();
         setAdvanceSearchVisible(false);
     };
 
@@ -469,6 +470,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         setAdvanceSearchVisible,
         typeData,
         searchForm,
+        evrStatusList,
     };
 
     const advanceFilterProps = {

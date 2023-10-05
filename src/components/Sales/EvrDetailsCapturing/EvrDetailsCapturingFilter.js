@@ -7,7 +7,6 @@ import React from 'react';
 import { Button, Row, Col, Form, Input } from 'antd';
 import { FilterIcon } from 'Icons';
 import { RxCross2 } from 'react-icons/rx';
-import { EVR_STATUS } from 'constants/EvrStatus';
 import { QueryButtons } from 'components/Sales/VehicleRecieptChecklist/QueryButtons';
 
 import styles from 'assets/sass/app.module.scss';
@@ -15,7 +14,7 @@ import styles from 'assets/sass/app.module.scss';
 const { Search } = Input;
 
 export default function EvrDetailsCapturingFilter(props) {
-    const { extraParams, removeFilter, handleResetFilter, advanceFilter, setAdvanceSearchVisible, searchForm, chargingStatusType, handleChargingTypeChange, handleSearch, filterString } = props;
+    const { extraParams, removeFilter, handleResetFilter, advanceFilter, setAdvanceSearchVisible, searchForm, chargingStatusType, handleChargingTypeChange, handleSearch, filterString, evrStatusList } = props;
 
     return (
         <div className={styles.contentHeaderBackground}>
@@ -25,7 +24,7 @@ export default function EvrDetailsCapturingFilter(props) {
                         <Form.Item name="normalSearch">
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={20} lg={20} xl={20} className={styles.verticallyCentered}>
-                                    <QueryButtons currentItem={chargingStatusType} items={EVR_STATUS} onClick={handleChargingTypeChange} />
+                                    <QueryButtons currentItem={chargingStatusType} items={evrStatusList} onClick={handleChargingTypeChange} />
                                     <div className={styles.fullWidth}>
                                         <Search placeholder="Search Model Description" onSearch={handleSearch} allowClear className={styles.headerSearchField} />
                                     </div>

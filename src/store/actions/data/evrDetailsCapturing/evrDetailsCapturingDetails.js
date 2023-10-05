@@ -6,8 +6,8 @@
 import { dataActions } from 'store/actions/crud/dataAction';
 import { BASE_URL_EVR_DETAILS_CAPTURING_DETAIL as baseURL } from 'constants/routingApi';
 
-const PREFIX = 'HO_PRICE_MAPPING_DETAIL';
-const moduleName = 'Ho Price Mapping Detail';
+const PREFIX = 'EVR_DETAIL_CAPTURING_';
+const moduleName = 'Evr Detail Capturing Details';
 
 export const RECEIVE_DATA_LOADING_ACTION_CONSTANT = PREFIX + 'LOADING_DATA';
 export const RECEIVE_DATA_ACTION_CONSTANT = PREFIX + 'LIST_RECIEVE_DATA';

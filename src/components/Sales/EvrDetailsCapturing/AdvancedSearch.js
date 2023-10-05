@@ -18,7 +18,13 @@ import TreeSelectField from 'components/common/TreeSelectField';
 
 export const AdvancedSearchFrom = (props) => {
     const { setAdvanceSearchVisible, setSelectedTreeSelectKey, modelGroupProductData, selectedTreeSelectKey, handleSelectTreeClick, modelCodeName } = props;
-    const { filterString, setFilterString, advanceFilterForm, handleResetFilter } = props;
+    const {
+        filterString,
+        setFilterString,
+        advanceFilterForm,
+        handleResetFilter,
+        advanceFilterForm: { resetFields },
+    } = props;
 
     useEffect(() => {
         advanceFilterForm.resetFields();
@@ -35,8 +41,7 @@ export const AdvancedSearchFrom = (props) => {
             modelCodeName: modelCodeName,
             advanceFilter: true,
         });
-        setSelectedTreeSelectKey(null);
-        advanceFilterForm.resetFields();
+
         setAdvanceSearchVisible(false);
     };
 
@@ -46,7 +51,7 @@ export const AdvancedSearchFrom = (props) => {
 
     const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
-    
+
     const treeSelectFieldProps = {
         treeFieldNames,
         treeData: modelGroupProductData,
