@@ -114,7 +114,7 @@ const ProductMapping = (props) => {
         const generateList = (data) => {
             for (let i = 0; i < data?.length; i++) {
                 const { id, prodctCode, subProdct, ...node } = data[i];
-                let saveProductId = userProductListData?.find((el) => el?.productCode === node?.prodctCode)?.id;
+                let saveProductId = userProductListData?.find((el) => el?.productCode === id)?.id;
                 dataList.push({
                     id: saveProductId || '',
                     productCode: id,
