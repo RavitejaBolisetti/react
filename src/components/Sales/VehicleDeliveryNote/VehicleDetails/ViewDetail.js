@@ -6,11 +6,10 @@
 import React, { useState } from 'react';
 import { Col, Row, Collapse, Card, Divider, Typography, Descriptions } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-
-import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { NoDataFound } from 'utils/noDataFound';
+
+import styles from 'assets/sass/app.module.scss';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -64,20 +63,24 @@ const ViewDetailMain = (props) => {
                     <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
                         <Panel header="Battery Information" key="2">
                             <Divider />
-                            {formData?.batteryDetail?.length ? (
-                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    {formData?.batteryDetail?.map((battery) => (
-                                        <Card className={styles.cardView} battery={battery} {...props}>
-                                            <Text>{battery?.batteryMake}</Text>
-                                            <div>
-                                                <Text type="secondary">{battery?.batteryName}</Text>
-                                            </div>
-                                        </Card>
-                                    ))}
-                                </Col>
-                            ) : (
-                                <NoDataFound />
-                            )}
+                            <Row gutter={20}>
+                                {formData?.batteryDetail?.length ? (
+                                    formData?.batteryDetail?.map((battery) => (
+                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                            <Card className={styles.cardView} battery={battery} {...props}>
+                                                <Text>{battery?.batteryMake}</Text>
+                                                <div>
+                                                    <Text type="secondary">{battery?.batteryName}</Text>
+                                                </div>
+                                            </Card>
+                                        </Col>
+                                    ))
+                                ) : (
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                        <NoDataFound />
+                                    </Col>
+                                )}
+                            </Row>
                         </Panel>
                     </Collapse>
                 </Col>

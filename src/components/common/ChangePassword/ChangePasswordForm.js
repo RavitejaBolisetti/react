@@ -97,7 +97,7 @@ const ChangePasswordBase = ({ form, password, fieldData, setFieldData, setPasswo
 
     const passwordSuffix = (type) => (
         <span onMouseDown={() => setShowPassword({ [type]: true })} onMouseUp={() => setShowPassword({ [type]: false })} onMouseLeave={() => setShowPassword({ [type]: false })}>
-            {!showPassword?.[type] ? <AiOutlineEyeInvisible size={18} /> : <AiOutlineEye size={18} />}
+            {!showPassword?.[type] ? <AiOutlineEyeInvisible size={18} data-testid="eyeInvisible" /> : <AiOutlineEye size={18} />}
         </span>
     );
 

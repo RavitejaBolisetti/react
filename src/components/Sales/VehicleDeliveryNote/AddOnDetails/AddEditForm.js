@@ -20,7 +20,6 @@ const AddEditFormMain = (props) => {
     const RegisterHandler = (key) => {
         key && setRegisterDisabled({ ...registerDisabled, [key]: false });
     };
-    console.log('registerDisabled', registerDisabled);
 
     const shieldInfoProps = { ...props, formActionType, openAccordian, formData: formData?.sheildRequest, onSingleFormFinish, schemeDescriptionData, addOnForm: shieldForm, handleEmployeeSearch, handleOnChange, registerDisabled };
     const rsaProps = { ...props, formActionType, openAccordian, formData: formData?.rsaRequest, onSingleFormFinish, schemeDescriptionData, addOnForm: rsaForm, handleEmployeeSearch, handleOnChange, registerDisabled };

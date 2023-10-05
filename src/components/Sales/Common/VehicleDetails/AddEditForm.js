@@ -33,7 +33,7 @@ const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
     const { isProductDataLoading, productHierarchyData, toolTipContent, handleFormValueChange, optionalServices, setOptionalServices, formData, openAccordian, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, typeData, vehicleServiceData } = props;
-    const { formActionType, productModelCode, setProductModelCode, viewOnly, handlePriceTypeChange, handleSaleTypeChange, handleDiscountChange = () => {}, showPrintDiscount = false, ShowPOandSOdetails = true, showAvailaibleStock = true } = props;
+    const { formActionType, filterVehicleData, handleVehicleDetailChange, viewOnly, showPrintDiscount = false, isOTFModule } = props;
 
     const [optionForm] = Form.useForm();
     const [confirmRequest, setConfirmRequest] = useState();
@@ -107,9 +107,9 @@ const AddEditFormMain = (props) => {
                 });
             },
             onSubmitAction: () => {
-                setProductModelCode(value);
+                const finalData = { ...filterVehicleData, productModelCode: value };
+                handleVehicleDetailChange(finalData);
                 handleFormValueChange(true);
-                form.setFieldValue('modalCode', value);
                 setConfirmRequest({
                     ...confirmRequest,
                     isVisible: false,
@@ -132,7 +132,7 @@ const AddEditFormMain = (props) => {
         defaultValue: null,
         treeExpandedKeys: [formData?.model],
         placeholder: preparePlaceholderSelect('Model'),
-        loading: isProductDataLoading,
+        loading: !viewOnly ? isProductDataLoading : false,
         treeDisabled: viewOnly,
     };
 
@@ -144,14 +144,14 @@ const AddEditFormMain = (props) => {
                         <Panel header="Vehicle Information" key="1">
                             <Divider />
                             <Row gutter={20}>
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                <Col xs={24} sm={24} md={14} lg={14} xl={14}>
                                     <Form.Item label="Model Description" name="model" data-testid="model">
                                         <TreeSelectField {...treeSelectFieldProps} />
                                     </Form.Item>
-                                    {toolTipContent && productModelCode && <div className={styles.modelTooltip}>{addToolTip(toolTipContent, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle size={13} />)}</div>}
+                                    {toolTipContent && <div className={styles.modelTooltip}>{addToolTip(toolTipContent, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle size={13} />)}</div>}
                                 </Col>
 
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                <Col xs={24} sm={24} md={10} lg={10} xl={10}>
                                     <Form.Item label="Model Code" name="modelCode" data-testid="vehicleVariant" rules={[validateRequiredInputField('Model Code')]}>
                                         <Input {...disabledProp} placeholder={preparePlaceholderText('Model Code')} />
                                     </Form.Item>
@@ -160,15 +160,13 @@ const AddEditFormMain = (props) => {
                             <Divider />
 
                             <Row gutter={20}>
-                                {showAvailaibleStock && (
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item label="Available Stock" name="availableStock" data-testid="availableStock">
-                                            <Input {...disabledProp} placeholder={preparePlaceholderText('Available Stock')} />
-                                        </Form.Item>
-                                    </Col>
-                                )}
-                                {ShowPOandSOdetails && (
+                                {isOTFModule && (
                                     <>
+                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                            <Form.Item label="Available Stock" name="availableStock" data-testid="availableStock">
+                                                <Input {...disabledProp} placeholder={preparePlaceholderText('Available Stock')} />
+                                            </Form.Item>
+                                        </Col>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                             <Form.Item label="PO Number" name="poNumber">
                                                 <Input {...disabledProp} placeholder={preparePlaceholderText('PO Number')} />
@@ -211,12 +209,12 @@ const AddEditFormMain = (props) => {
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item initialValue={formData?.saleType} name="saleType" label="Sale Type" rules={[validateRequiredSelectField('Sale Type')]}>
-                                        {customSelectBox({ data: typeData['SALE_TYPE'], disabled: viewOnly, onChange: handleSaleTypeChange })}
+                                        {customSelectBox({ data: typeData['SALE_TYPE'], disabled: viewOnly, onChange: (value) => handleVehicleDetailChange({ ...filterVehicleData, saleType: value }) })}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item initialValue={formData?.priceType} label="Price Type" name="priceType">
-                                        {customSelectBox({ data: typeData['PRC_TYP'], disabled: viewOnly, onChange: handlePriceTypeChange })}
+                                        {customSelectBox({ data: typeData['PRC_TYP'], disabled: viewOnly, onChange: (value) => handleVehicleDetailChange({ ...filterVehicleData, priceType: value }) })}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
@@ -247,7 +245,7 @@ const AddEditFormMain = (props) => {
                                             },
                                         ]}
                                     >
-                                        <Input placeholder={preparePlaceholderText('Dealer Discount with TAX')} onBlur={handleDiscountChange} />
+                                        <Input placeholder={preparePlaceholderText('Dealer Discount with TAX')} onBlur={(e) => handleVehicleDetailChange({ ...filterVehicleData, discountAmount: e?.target?.value })} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>

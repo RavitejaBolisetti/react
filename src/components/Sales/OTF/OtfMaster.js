@@ -125,6 +125,7 @@ export const OtfMasterBase = (props) => {
 
     const [listFilterForm] = Form.useForm();
 
+    const [selectedRecordId, setSelectedRecordId] = useState();
     const [selectedOrder, setSelectedOrder] = useState();
     const [selectedOrderId, setSelectedOrderId] = useState();
     const [selectedBookingId, setSelectedBookingId] = useState();
@@ -366,12 +367,14 @@ export const OtfMasterBase = (props) => {
                 break;
             case EDIT_ACTION:
                 setSelectedOrder(record);
+                record && setSelectedRecordId(record?.otfId);
                 record && setSelectedOrderId(record?.otfNumber);
                 record && setSelectedBookingId(record?.bookingNumber);
                 openDefaultSection && setCurrentSection(defaultSection);
                 break;
             case VIEW_ACTION:
                 setSelectedOrder(record);
+                record && setSelectedRecordId(record?.otfId);
                 record && setSelectedOrderId(record?.otfNumber);
                 record && setSelectedBookingId(record?.bookingNumber);
                 defaultSection && setCurrentSection(defaultSection);
@@ -391,7 +394,7 @@ export const OtfMasterBase = (props) => {
                 setIsAllotVisible(true);
                 break;
             case UNALLOT:
-                if (userId && selectedOrderId) {
+                if (userId && selectedRecordId) {
                     const onSuccessAction = (resp) => {
                         setConfirmRequest({
                             isVisible: true,
@@ -411,10 +414,8 @@ export const OtfMasterBase = (props) => {
                     };
                     const extraParams = [
                         {
-                            key: 'otfNumber',
-                            title: 'otfNumber',
-                            value: selectedOrderId,
-                            name: 'Booking Number',
+                            key: 'otfId',
+                            value: selectedRecordId,
                         },
                     ];
                     fetchVehicleDetail({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
@@ -600,18 +601,18 @@ export const OtfMasterBase = (props) => {
         fnOTFTransfer({
             modalTitle: 'Booking Cancel',
             modalMessage: `Do you want to cancel this ${otfData?.bookingNumber || otfData?.otfNumber}`,
-            finalData: { dealerCode: '', oemCode: '', productCode: '', ...values, id: otfData?.id, otfNumber: otfData?.otfNumber, uploadCancellationLetterDocId: uploadedFile },
+            finalData: { dealerCode: '', oemCode: '', productCode: '', ...values, id: null, otfId: selectedRecordId, otfNumber: otfData?.otfNumber, uploadCancellationLetterDocId: uploadedFile },
             callBackMethod: transferOTF,
             customURL: otfCancelURL,
         });
     };
 
     const handleWorkflowOTFCancellation = (record, actionStatus) => {
-        const { otfId, otfNumber } = record;
+        const { otfNumber } = record;
         fnOTFTransfer({
             modalTitle: `${actionStatus === CANCELLN_APPROVE ? 'Approval' : 'Rejection'}`,
             modalMessage: `Are you sure, you want to ${actionStatus === CANCELLN_APPROVE ? 'approve' : 'reject'} the cancellation of ${otfData?.bookingNumber || otfData?.otfNumber}`,
-            finalData: { id: otfId, otfNumber, actionCode: actionStatus, remarks: actionStatus },
+            finalData: { id: null, otfId: selectedRecordId, otfNumber, actionCode: actionStatus, remarks: actionStatus },
             callBackMethod: cancelOTFWorkflow,
             customURL: customURLCancelWF,
         });
@@ -673,7 +674,7 @@ export const OtfMasterBase = (props) => {
         setIsFormVisible,
         buttonData,
         ChangeHistoryTitle,
-        selectedOrderId,
+        selectedRecordId,
         selectedBookingId,
     };
     const OtfSoMappingChangeHistoryProps = {
@@ -686,7 +687,7 @@ export const OtfMasterBase = (props) => {
         setIsFormVisible,
         buttonData,
         otfSoMappingChangeHistoryTitle,
-        selectedOrderId,
+        selectedRecordId,
     };
 
     const containerProps = {
@@ -713,6 +714,8 @@ export const OtfMasterBase = (props) => {
         defaultBtnVisiblity,
         selectedOrderId,
         setSelectedOrderId,
+        selectedRecordId,
+        setSelectedRecordId,
         selectedBookingId,
         setSelectedBookingId,
         selectedOrder,

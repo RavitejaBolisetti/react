@@ -234,7 +234,6 @@ export const DealerCompanyBase = (props) => {
         }
     }, [formActionType]);
 
-    const showAddButton = false;
     const formProps = {
         form,
         formData,

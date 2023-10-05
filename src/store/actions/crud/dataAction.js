@@ -3,7 +3,6 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { message } from 'antd';
 import { axiosAPICall } from 'utils/axiosAPICall';
 import { withAuthToken } from 'utils/withAuthToken';
 import { doLogout, unAuthenticateUser } from '../../actions/auth';
@@ -61,12 +60,12 @@ export const dataActions = (params) => {
 
     const innerDataActions = {
         fetchList: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-            const { customURL = '', setIsLoading, data, type = '', mytype = '', tempRespone = false, onSuccessAction = undefined, onErrorAction = undefined, extraParams = [] } = params;
+            const { customURL = '', setIsLoading, data, type = '', mytype = '', tempRespone = false, onSuccessAction = undefined, onErrorAction = undefined, extraParams = [], resetOnError = true } = params;
             setIsLoading(true);
 
             const onError = (message) => {
                 onErrorAction && onErrorAction(message);
-                dispatch(recieveData([]));
+                resetOnError && dispatch(recieveData([]));
             };
 
             const onSuccess = (res) => {
@@ -74,7 +73,7 @@ export const dataActions = (params) => {
                     onSuccessAction && onSuccessAction(res);
                     dispatch(recieveData(type ? res?.data?.hierarchyAttribute : res?.data));
                 } else {
-                    dispatch(recieveData([]));
+                    resetOnError && dispatch(recieveData([]));
                     // onErrorAction(res?.responseMessage || LANGUAGE_EN.INTERNAL_SERVER_ERROR);
                 }
             };
@@ -109,8 +108,7 @@ export const dataActions = (params) => {
             const { setIsLoading, data, extraParams = [] } = params;
             setIsLoading(true);
 
-            const onError = (errorMessage) => {
-                message.error(errorMessage);
+            const onError = () => {
                 dispatch(filteredRecieveData([]));
             };
 
