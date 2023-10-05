@@ -41,7 +41,7 @@ import { tableColumn as manufacturerTableColumn } from './Manufacturer/tableColu
 
 import styles from 'assets/sass/app.module.scss';
 import { DealerProductActions } from 'store/actions/data/userManagement/dealerProduct';
-import CreateUserConfirmationModal from './common/CreateUserConfirmationModal';
+
 const { Option } = Select;
 
 const mapStateToProps = (state) => {
@@ -516,7 +516,7 @@ const UserManagementMain = (props) => {
         previousSection,
         setPreviousSection,
     };
-    const tableData = userDataList?.userSearchResponse?.userDetails && !userDataList?.userSearchResponse?.userDetails?.[0]?.dmsUserNotExist ? userDataList?.userSearchResponse?.userDetails : [];
+    const tableData = userDataList?.userSearchResponse?.userDetails ? userDataList?.userSearchResponse?.userDetails : [];
 
     const tableProps = {
         isLoading: isDataLoading,

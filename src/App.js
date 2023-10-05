@@ -18,7 +18,9 @@ import { CheckNetworkStatus } from 'utils/CheckNetworkStatus';
 
 import styles from './App.module.scss';
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+    
+});
 
 const mapDispatchToProps = {
     readFromStorageAndValidateAuth,
