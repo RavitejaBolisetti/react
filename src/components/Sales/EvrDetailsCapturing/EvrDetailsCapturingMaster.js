@@ -11,7 +11,7 @@ import { Col, Form, Row } from 'antd';
 import { tableColumn } from './tableColumn';
 import EvrDetailsCapturingFilter from './EvrDetailsCapturingFilter';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, btnVisiblity, NEXT_ACTION } from 'utils/btnVisiblity';
-import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
+import { convertDateTime, dateFormatView, formattedCalendarDate } from 'utils/formatDateTime';
 
 import { AddEditForm } from './AddEditForm';
 
@@ -36,7 +36,7 @@ const mapStateToProps = (state) => {
             ProductHierarchy: { data: productHierarchyData = [] },
 
             EvrDetailsCapturing: {
-                EvrDetailsCapturingSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, detailData: evrDetailData = [], filter: filterString },
+                EvrDetailsCapturingSearchList: { isLoaded: isEvrDetailLoaded = false, isDetailLoaded = false, isLoading: isEvrDetailLoading, data, detailData: evrDetailData = [], filter: filterString },
                 // EvrDetailsCapturingDetailList: { isLoading: isEvrDetailLoading, data, detailData: evrDetailData = [], filter: filterString },
             },
         },
@@ -50,11 +50,12 @@ const mapStateToProps = (state) => {
         totalRecords: data?.totalRecords || [],
         evrStatusList: Object.values(EVR_STATUS),
         moduleTitle,
-        isSearchDataLoaded,
+        isEvrDetailLoaded,
         filterString,
         productHierarchyData,
-        isEvrDetailLoading: isSearchLoading,
+        isEvrDetailLoading,
         evrDetailData,
+        isDetailLoaded,
     };
     return returnValue;
 };
@@ -85,7 +86,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const EvrDetailsCapturingMasterBase = (props) => {
-    const { filterString, setFilterString, fetchList, evrDetailData, isEvrDetailLoading, saveData, listShowLoading, userId, data, fetchDetail, listProductMainShowLoading, fetchProductList, listDetailShowLoading } = props;
+    const { filterString, setFilterString, fetchList, evrDetailData, isDetailLoaded, isEvrDetailLoading, saveData, listShowLoading, userId, data, fetchDetail, listProductMainShowLoading, fetchProductList, listDetailShowLoading } = props;
     const { typeData, evrStatusList, filteredStateData, productHierarchyData, totalRecords, showGlobalNotification } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [modelCodeName, setModelCodeName] = useState();
@@ -252,6 +253,14 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAdvanceSearchVisible, filterString]);
 
+    useEffect(() => {
+        if (isDetailLoaded) {
+            setFormData(evrDetailData);
+            evrDetailData && form.setFieldsValue({ ...evrDetailData, grnDate: formattedCalendarDate(evrDetailData?.grnDate), lastChargeDate: formattedCalendarDate(evrDetailData?.lastChargeDate), chargingDueDate: formattedCalendarDate(evrDetailData?.chargingDueDate) });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isDetailLoaded, evrDetailData, isFormVisible]);
+
     const disableExceptModelGroup = (node) => {
         if (node?.attributeType === MODEL_TYPE?.MODAL_GROUP?.key) {
             node[`disabled`] = false;
@@ -319,7 +328,6 @@ export const EvrDetailsCapturingMasterBase = (props) => {
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
-        setFormData([]);
 
         if (buttonAction !== NEXT_ACTION && !(buttonAction === VIEW_ACTION)) {
             setFormActionType({
@@ -344,7 +352,6 @@ export const EvrDetailsCapturingMasterBase = (props) => {
             setButtonData({ nextBtn: true, closeBtn: true });
         }
 
-        record && setFormData(record);
         setIsFormVisible(true);
 
         if (buttonAction !== ADD_ACTION) {
@@ -476,7 +483,6 @@ export const EvrDetailsCapturingMasterBase = (props) => {
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
 
-        icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
         filteredStateData,
         onCloseAction: onAdvanceSearchCloseAction,
@@ -503,7 +509,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         onCloseAction,
         buttonData,
         setButtonData,
-        formData: evrDetailData,
+        formData,
         form,
         onFinish,
         selectedTreeSelectKey,
