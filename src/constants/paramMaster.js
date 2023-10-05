@@ -401,4 +401,8 @@ export const PARAM_MASTER = {
         id: 'SO_RC',
         title: 'OTF SO Mapping',
     },
+    CHRG_STATUS: {
+        id: 'CHRG_STATUS',
+        title: 'EVR Charging Status',
+    },
 };
