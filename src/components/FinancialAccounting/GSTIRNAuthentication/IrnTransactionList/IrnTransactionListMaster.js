@@ -22,7 +22,6 @@ import { gstIrnTransactionAction } from 'store/actions/data/financialAccounting/
 
 import styles from 'assets/sass/app.module.scss';
 
-
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -33,7 +32,6 @@ const mapStateToProps = (state) => {
             FinancialAccounting: {
                 GstIrnTransactionDetails: { data: gstIrnTreeData = [] },
             },
- 
         },
     } = state;
 
@@ -60,7 +58,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-          
             fetchApplication: applicationMasterDataActions.fetchApplicationDetails,
             applicationDetailListShowLoading: applicationMasterDataActions.detailListShowLoading,
             // fetchApplicationCriticality: applicationMasterDataActions.fetchApplicationCriticalityGroup,
@@ -172,7 +169,6 @@ const IrnTransactionListMasterBase = (props) => {
     //     buttonData,
     // };
 
-    
     const applicationCall = (key) => {
         fetchApplication({ setIsLoading: applicationDetailListShowLoading, id: key });
     };
@@ -197,6 +193,7 @@ const IrnTransactionListMasterBase = (props) => {
         treeData: gstIrnTreeData, //menuData,
         setSearchValue,
         searchValue,
+        callOnForm: true,
     };
 
     return (
@@ -221,7 +218,7 @@ const IrnTransactionListMasterBase = (props) => {
                             {selectedTreeKey?.length && applicationDetailsData?.length ? (
                                 <>
                                     <ViewDetailMain applicationDetailsData={applicationDetailsData} styles={styles} />
-                                    
+
                                     {/* <ViewApplicationDetailMain applicationDetailsData={applicationDetailsData} styles={styles} /> */}
 
                                     {/* <div className={styles.viewContainerFooter}>

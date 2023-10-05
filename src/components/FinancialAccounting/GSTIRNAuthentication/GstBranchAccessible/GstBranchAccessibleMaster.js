@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, } from 'react';
+import React, { useEffect } from 'react';
 import { Form, Row, Col } from 'antd';
 import { GstAuthFormButton } from '../GSTAuthenticationFormButton';
 import { connect } from 'react-redux';
@@ -15,15 +15,13 @@ import { dealerBranchAccessAction } from 'store/actions/data/financialAccounting
 
 import styles from 'assets/sass/app.module.scss';
 
-
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
             FinancialAccounting: {
-                DealerBranchDetails: {  data: dealerBranchData = [] },
+                DealerBranchDetails: { data: dealerBranchData = [] },
             },
-            
         },
     } = state;
 
@@ -51,26 +49,33 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const GstBranchAccessibleMasterBase = (props) => {
-    const { userId, showGlobalNotification, section, fetchList, listShowLoading, } = props;
-    const { form, handleFormValueChange, NEXT_ACTION, handleButtonClick, dealerBranchData, nextBtn, } = props;
+    const { userId, showGlobalNotification, section, fetchList, listShowLoading } = props;
+    const { form, handleFormValueChange, NEXT_ACTION, handleButtonClick, dealerBranchData, nextBtn } = props;
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
 
     useEffect(() => {
-        if (userId) {            
+        if (userId) {
             fetchList({ setIsLoading: listShowLoading, userId, onErrorAction });
         }
-    }, [userId]);     
-  
+    }, [userId]);
+    const dealerBranchArray = [];
+    dealerBranchData.forEach((item) => {
+        if (item) {
+            item.mapUnmap = 'Yes';
+            dealerBranchArray.push(item);
+        }
+    });
+
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick),
-        tableData: dealerBranchData,  
+        tableData: dealerBranchArray, // dealerBranchData,
         showAddButton: false,
     };
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} >
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>
@@ -80,7 +85,6 @@ const GstBranchAccessibleMasterBase = (props) => {
                     </Row>
                     {/* isLoading={showDataLoading} */}
                     <ListDataTable {...tableProps} showAddButton={false} />
-
                 </Col>
             </Row>
             <Row>
