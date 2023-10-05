@@ -77,29 +77,28 @@ const VehicleDetailsMasterBase = (props) => {
     const [toolTipContent, setToolTipContent] = useState();
 
     useEffect(() => {
-        if (userId) {
+     
             setToolTipContent(
                 <div>
                     <p>
-                        Color - <span>{vehicleData?.modelColor ?? 'Na'}</span>
+                        Color - <span>{formData?.modelColor ?? 'Na'}</span>
                     </p>
                     <p>
-                        Seating - <span>{vehicleData?.seatingCapacity ?? 'Na'}</span>
+                        Seating - <span>{formData?.seatingCapacity ?? 'Na'}</span>
                     </p>
                     <p>
-                        Fuel - <span>{vehicleData?.fuel ?? 'Na'}</span>
+                        Fuel - <span>{formData?.fuel ?? 'Na'}</span>
                     </p>
                     <p>
-                        Variant - <span>{vehicleData?.varient ?? 'Na'}</span>
+                        Variant - <span>{formData?.varient ?? 'Na'}</span>
                     </p>
                     <p>
-                        Name - <span>{vehicleData?.modelDescription ?? 'Na'}</span>
+                        Name - <span>{formData?.modelDescription ?? 'Na'}</span>
                     </p>
                 </div>
             );
-        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [vehicleData]);
+    }, [formData]);
 
     useEffect(() => {
         if (userId && selectedOrderId && selectedInvoiceId && soldByDealer) {

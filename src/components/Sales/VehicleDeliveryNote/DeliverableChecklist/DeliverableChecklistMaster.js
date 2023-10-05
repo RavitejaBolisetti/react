@@ -80,14 +80,14 @@ const DeliverableChecklistMain = (props) => {
     }, [selectedOrder]);
 
     useEffect(() => {
-        if (userId && selectedOrder?.modelGroup && !isChecklistDataLoaded) {
+        if (userId && selectedOrder?.modelGroup && !isChecklistDataLoaded && !formActionType?.viewMode) {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOrder, isChecklistDataLoaded]);
+    }, [userId, selectedOrder, isChecklistDataLoaded, formActionType]);
 
     useEffect(() => {
-        if (isChecklistDataLoaded && ChecklistData?.length > 0) {
+        if (isChecklistDataLoaded && ChecklistData?.length > 0 && !formActionType?.viewMode) {
             if (requestPayload?.vehicleDeliveryCheckList?.deliveryChecklistDtos?.length) {
                 const newArr = requestPayload?.vehicleDeliveryCheckList?.deliveryChecklistDtos;
                 setcheckListDataModified(

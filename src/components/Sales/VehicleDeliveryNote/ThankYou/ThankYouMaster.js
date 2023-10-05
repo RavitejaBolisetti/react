@@ -18,7 +18,8 @@ const { Title, Text } = Typography;
 export const ThankYouMaster = (props) => {
     const { handlePrintDownload, record, selectedOrder } = props;
     const invoiceType = props?.soldByDealer ? 'Note' : 'Challan';
-
+    const messageList = selectedOrder?.responseMessage?.split(' ');
+    const Number = props?.soldByDealer ? selectedOrder?.responseMessage?.split('. ')?.[1] : selectedOrder?.responseMessage?.split(' ')?.[messageList?.length - 1];
     const message = selectedOrder?.responseMessage?.split('.')?.[0];
     const deliveryNoteNo = selectedOrder?.responseMessage?.split('. ')?.[1];
 
@@ -48,21 +49,21 @@ export const ThankYouMaster = (props) => {
         <>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.fullyCentered}>
-                    <Space size='middle' className={styles.deliveryNoteSuccess} direction="vertical" >
+                    <Space size="middle" className={styles.deliveryNoteSuccess} direction="vertical">
                         <Avatar size={150} icon={<HiCheck />} />
                         <Title level={5}>{message}</Title>
                         <div className={styles.deliveryNoteSuccessInfo}>
                             <Space className={styles.marB20}>
                                 <div className={styles.deliveryNoteSuccessText}>
                                     <Text>
-                                        Delivery Note No.: <span>{deliveryNoteNo}</span>
+                                        Delivery Note No.: <span>{Number}</span>
                                     </Text>
                                 </div>
-                                <CopytoClipboard type={'primary'} buttonText={'Copy'} text={deliveryNoteNo} />
+                                <CopytoClipboard type={'primary'} buttonText={'Copy'} text={Number} />
                             </Space>
 
                             <Divider />
-                            <Space size='middle' direction="vertical">
+                            <Space size="middle" direction="vertical">
                                 <Text>Do you want to Print or download this Delivery Note</Text>
                                 <Button onClick={() => handlePrintDownload(record)} danger>
                                     {`Download/Print ${invoiceType} Note`}

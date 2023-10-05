@@ -166,7 +166,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     const [previousSection, setpreviousSection] = useState(1);
     const [actionButtonVisiblity, setActionButtonVisiblity] = useState({ canAdd: true, canView: false, canEdit: false });
 
-    const [toolTipContent, setToolTipContent] = useState();
+    const [toolTipContent, setToolTipContent] = useState('');
 
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const [selectedOtfNumber, setSelectedOtfNumber] = useState();
@@ -222,42 +222,24 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     };
 
     useEffect(() => {
-        if (soldByDealer) {
-            if (userId && isCancelInfoDataLoaded && cancelInfo) {
-                setToolTipContent(
-                    <div>
-                        <p>
-                            Cancelled Date - <span>{cancelInfo?.cancelledDate ? dayjs(cancelInfo?.cancelledDate)?.format('DD MMM YYYY') : 'Na'}</span>
-                        </p>
-                        <p>
-                            Cancelled By - <span>{cancelInfo?.cancelledBy ?? 'Na'}</span>
-                        </p>
-                        <p>
-                            Remarks for Cancellation - <span>{cancelInfo?.remarks ?? 'Na'}</span>
-                        </p>
-                    </div>
-                );
-            }
-        } else {
-            if (userId && isCancelChallanInfoDataLoaded && cancelChallanInfo) {
-                setToolTipContent(
-                    <div>
-                        <p>
-                            Cancelled Date - <span>{dayjs(cancelChallanInfo?.cancelledDate)?.format('DD MMM YYYY') ?? 'Na'}</span>
-                        </p>
-                        <p>
-                            Cancelled By - <span>{cancelChallanInfo?.cancelledBy ?? 'Na'}</span>
-                        </p>
-                        <p>
-                            Remarks for Cancellation - <span>{cancelChallanInfo?.remarks ?? 'Na'}</span>
-                        </p>
-                    </div>
-                );
-            }
+        if (deliveryNoteMasterData && isDeliveryDataLoaded) {
+            setToolTipContent(
+                <div>
+                    <p>
+                        Cancelled Date - <span>{deliveryNoteMasterData?.cancellationInformation?.cancelledDate ? dayjs(deliveryNoteMasterData?.cancellationInformation?.cancelledDate)?.format('DD MMM YYYY') : 'Na'}</span>
+                    </p>
+                    <p>
+                        Cancelled By - <span>{deliveryNoteMasterData?.cancellationInformation?.cancelledBy ?? 'Na'}</span>
+                    </p>
+                    <p>
+                        Remarks for Cancellation - <span>{deliveryNoteMasterData?.cancellationInformation?.remarks ?? 'Na'}</span>
+                    </p>
+                </div>
+            );
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [cancelInfo, isCancelInfoDataLoaded, isCancelChallanInfoDataLoaded, cancelChallanInfo, userId]);
+    }, [deliveryNoteMasterData, isDeliveryDataLoaded]);
 
     const extraParams = useMemo(() => {
         return [
@@ -381,44 +363,44 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    useEffect(() => {
-        if (userId && selectedOrder) {
-            if (soldByDealer) {
-                const cancelInfoExtraParams = [
-                    {
-                        key: 'invoiceNumber',
-                        title: 'invoiceNumber',
-                        value: selectedOrder?.invoiceId,
-                        name: 'Invoice Number',
-                    },
-                    {
-                        key: 'deliveryNoteNumber',
-                        title: 'deliveryNoteNumber',
-                        value: selectedOrder?.vehicleDeliveryNote,
-                        name: 'Delivery Note Number',
-                    },
-                ];
-                fetchCancelInfoList({ setIsLoading: listCancelInfoShowLoading, userId, extraParams: cancelInfoExtraParams });
-            } else {
-                const cancelChallanInfoExtraParams = [
-                    {
-                        key: 'invoiceNumber',
-                        title: 'invoiceNumber',
-                        value: selectedOrder?.invoiceId,
-                        name: 'Invoice Number',
-                    },
-                    {
-                        key: 'deliveryNoteId',
-                        title: 'deliveryNoteId',
-                        value: selectedOrder?.vehicleDeliveryNote,
-                        name: 'Delivery Note Number',
-                    },
-                ];
-                fetchChallanCancelInfoList({ setIsLoading: listChallanCancelInfoShowLoading, userId, extraParams: cancelChallanInfoExtraParams });
-            }
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedOrder, formActionType?.viewMode, soldByDealer]);
+    // useEffect(() => {
+    //     if (userId && selectedOrder) {
+    //         if (soldByDealer) {
+    //             const cancelInfoExtraParams = [
+    //                 {
+    //                     key: 'invoiceNumber',
+    //                     title: 'invoiceNumber',
+    //                     value: selectedOrder?.invoiceId,
+    //                     name: 'Invoice Number',
+    //                 },
+    //                 {
+    //                     key: 'deliveryNoteNumber',
+    //                     title: 'deliveryNoteNumber',
+    //                     value: selectedOrder?.vehicleDeliveryNote,
+    //                     name: 'Delivery Note Number',
+    //                 },
+    //             ];
+    //             fetchCancelInfoList({ setIsLoading: listCancelInfoShowLoading, userId, extraParams: cancelInfoExtraParams });
+    //         } else {
+    //             const cancelChallanInfoExtraParams = [
+    //                 {
+    //                     key: 'invoiceNumber',
+    //                     title: 'invoiceNumber',
+    //                     value: selectedOrder?.invoiceId,
+    //                     name: 'Invoice Number',
+    //                 },
+    //                 {
+    //                     key: 'deliveryNoteId',
+    //                     title: 'deliveryNoteId',
+    //                     value: selectedOrder?.vehicleDeliveryNote,
+    //                     name: 'Delivery Note Number',
+    //                 },
+    //             ];
+    //             fetchChallanCancelInfoList({ setIsLoading: listChallanCancelInfoShowLoading, userId, extraParams: cancelChallanInfoExtraParams });
+    //         }
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [selectedOrder, formActionType?.viewMode, soldByDealer]);
 
     useEffect(() => {
         if (currentSection && sectionName) {
@@ -611,17 +593,26 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     };
 
     const onFinish = () => {
-        const { insuranceDetails: insuranceDto, ...rest } = requestPayload;
-        let data;
-        if (soldByDealer) {
-            data = { ...rest, insuranceDto, vehicleDeliveryChecklist: { ...rest?.vehicleDeliveryCheckList }, invoiceNumber: selectedOrder?.invoicehdrId };
-        } else {
-            data = { ...rest, insuranceDto, vehicleDeliveryChecklist: { ...rest?.vehicleDeliveryCheckList }, invoiceNumber: selectedOrder?.invoicehdrId, customerId: customerIdValue };
-            delete data?.vehicleDeliveryCheckList;
-            delete data?.deliveryNoteAddOnDetails;
-            delete data?.financeDetails;
-            delete data?.vehicleInformationDeliveyNoteDto;
+        if (!Object.keys(requestPayload)?.length) {
+            return;
         }
+        let finalPayload = {};
+        const { insuranceDetails: insuranceDto, vehicleDeliveryCheckList: vehicleDeliveryChecklist, ...rest } = requestPayload;
+
+        switch (deliveryType) {
+            case DELIVERY_TYPE.NOTE.key: {
+                finalPayload = { ...rest, insuranceDto, vehicleDeliveryChecklist, invoiceNumber: selectedOrder?.invoicehdrId };
+                break;
+            }
+            case DELIVERY_TYPE.CHALLAN.key: {
+                finalPayload = { chassisNumber: requestPayload?.deliveryNoteInvoiveDetails?.chassisNumber, engineNumber: requestPayload?.deliveryNoteInvoiveDetails?.engineNumber, vin: requestPayload?.vehicleDetails?.vinNumber, modelCode: requestPayload?.vehicleDetails?.modelCode, insuranceDto, vehicleDeliveryChecklist, invoiceNumber: selectedOrder?.invoicehdrId, customerId: customerIdValue };
+                break;
+            }
+            default: {
+                finalPayload = { ...rest, insuranceDto, vehicleDeliveryChecklist, invoiceNumber: selectedOrder?.invoicehdrId };
+            }
+        }
+        console.log('finalPayload', finalPayload);
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
@@ -634,7 +625,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
             showGlobalNotification({ message });
         };
         const requestData = {
-            data: data,
+            data: finalPayload,
             method: 'post',
             setIsLoading: listShowLoading,
             userId,
@@ -724,7 +715,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
                 if (soldByDealer) {
                     data = { ...values, invoiceHdrId: selectedOrder?.invoicehdrId, deliveryNoteId: selectedOrder?.deliveryHdrId, status: selectedOrder?.deliveryNoteStatus, cancellationReason: cancelDeliveryNoteForm.getFieldValue('cancellationReason') || '' };
                 } else {
-                    data = { ...values, oemNumber: selectedOrder?.invoiceId, status: selectedOrder?.deliveryNoteStatus, cancellationReason: cancelDeliveryNoteForm.getFieldValue('cancellationReason') || '' };
+                    data = { ...values, oemId: selectedOrder?.invoicehdrId, deliveryChallanId: selectedOrder?.deliveryHdrId, status: selectedOrder?.deliveryNoteStatus, cancellationReason: cancelDeliveryNoteForm.getFieldValue('cancellationReason') || '' };
                 }
                 const onSuccess = (res) => {
                     setShowDataLoading(true);
@@ -904,6 +895,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         engineChallanNumber,
         setEngineChallanNumber,
         toolTipContent,
+        deliveryNoteMasterData,
     };
 
     const reportDetail = EMBEDDED_REPORTS?.DELIVERY_NOTE_DOCUMENT;

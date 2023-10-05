@@ -44,7 +44,7 @@ const VehicleDeliveryNoteConatinerMain = (props) => {
     const renderElement = () => {
         switch (currentSection) {
             case VEHICLE_DELIVERY_NOTE_SECTION.INVOICE_DETAILS.id: {
-                return <InvoiceDetailsMaster {...myProps} invoiceData={soldByDealer ? requestData?.deliveryNoteInvoiveDetails : requestData?.engineDetailDto} />;
+                return <InvoiceDetailsMaster {...myProps} invoiceData={requestData?.deliveryNoteInvoiveDetails} />;
             }
             case VEHICLE_DELIVERY_NOTE_SECTION.CUSTOMER_DETAILS.id: {
                 return <CustomerDetailsMaster {...myProps} customerDetailsData={requestData?.customerDetails} />;
