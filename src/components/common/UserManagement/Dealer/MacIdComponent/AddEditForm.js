@@ -3,14 +3,14 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { Button, Form, Row, Col, Space, Select, Input } from 'antd';
-import { validateRequiredInputField, validateRequiredSelectField, validateMacId } from 'utils/validation';
+import { Button, Form, Row, Col, Select, Input } from 'antd';
+import { validateRequiredInputField, validateRequiredSelectField, validateMacId, duplicateValidator } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import styles from 'assets/sass/app.module.scss';
 
 const AddEditForm = (props) => {
-    const { onSaveFormData, macIdform, setShowAddEditForm, setIsEditing, formActionType, handleFormValueChange, setIsAdding } = props;
+    const { onSaveFormData, macIdform, setShowAddEditForm, setIsEditing, formActionType, handleFormValueChange, setIsAdding, macIdData } = props;
     const handleCancelFormEdit = () => {
         macIdform.resetFields();
         setIsAdding(false);
@@ -46,7 +46,7 @@ const AddEditForm = (props) => {
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label="Device Id" name="macId" rules={[validateRequiredInputField('Device Id'), validateMacId('Device Id')]}>
+                        <Form.Item label="Device Id" name="macId" rules={[validateRequiredInputField('Device Id'), validateMacId('Device Id'), { validator: (_, value) => duplicateValidator(value, 'macId', macIdData) }]}>
                             <Input maxLength={25} placeholder={preparePlaceholderText('Device Id"')} allowClear />
                         </Form.Item>
                     </Col>

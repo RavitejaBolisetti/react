@@ -4,11 +4,11 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect, useMemo } from 'react';
-import { Button, Col, Row, Select, Form, Empty, ConfigProvider } from 'antd';
+import { Button, Col, Row, Select, Form, Empty, ConfigProvider, Space } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { showGlobalNotification } from 'store/actions/notification';
+import { showGlobalNotification, hideGlobalNotification } from 'store/actions/notification';
 import { searchUserDataActions } from 'store/actions/data/userManagement/searchUser';
 import { ManufacturerAppDataActions } from 'store/actions/data/userManagement/manufacturerApplication';
 import { DealerAppDataActions } from 'store/actions/data/userManagement/dealerApplications';
@@ -41,6 +41,7 @@ import { tableColumn as manufacturerTableColumn } from './Manufacturer/tableColu
 
 import styles from 'assets/sass/app.module.scss';
 import { DealerProductActions } from 'store/actions/data/userManagement/dealerProduct';
+import CreateUserConfirmationModal from './common/CreateUserConfirmationModal';
 const { Option } = Select;
 
 const mapStateToProps = (state) => {
@@ -169,6 +170,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchProductHierarchyList: productHierarchyDataActions.fetchList,
             productShowLoding: productHierarchyDataActions.listShowLoading,
 
+            hideGlobalNotification,
             showGlobalNotification,
         },
         dispatch
@@ -181,7 +183,7 @@ const UserManagementMain = (props) => {
     const { userId, fetchUserDataList, listShowLoading, isDataLoading, userDataList, resetUserDetails } = props;
     const { fetchRoleDataList, rolelistShowLoading, isRoleListLoaded } = props;
     const { fetchDealersList, rolelDealersListShowLoading, dealerDataList, isDealerListLoaded } = props;
-    const { moduleTitle, productHierarchyData, isProductHierarchyLoading } = props;
+    const { moduleTitle, productHierarchyData, showGlobalNotification, hideGlobalNotification } = props;
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, next: false, nextBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, formBtnActive: false };
 
@@ -207,6 +209,7 @@ const UserManagementMain = (props) => {
     const [error, setError] = useState(false);
     const [selectedDealerCode, setselectedDealerCode] = useState('');
     const [defaultSection, setDefaultSection] = useState();
+    const [canUserCreate, setCanUserCreate] = useState(false);
 
     const [AccessMacid, setAccessMacid] = useState([]);
     const [finalFormdata, setfinalFormdata] = useState({
@@ -237,7 +240,7 @@ const UserManagementMain = (props) => {
             setSection(defaultSection);
             setFilterString();
 
-            setDisabledSearch(userType === USER_TYPE_USER.DEALER.id ? true : false);
+            setDisabledSearch(userType === USER_TYPE_USER.DEALER.id && !selectedDealerCode ? true : false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userType, isFormVisible]);
@@ -303,15 +306,57 @@ const UserManagementMain = (props) => {
                 value: selectedDealerCode,
                 name: 'dealerCode',
             },
+            {
+                key: 'createUser',
+                title: 'createUser',
+                value: canUserCreate?.toString(),
+                name: 'createUser',
+            },
         ];
-    }, [filterString, selectedDealerCode, userType]);
+    }, [filterString, selectedDealerCode, userType, canUserCreate]);
+
+    const onConfirm = () => {
+        setFilterString((prev) => ({ ...prev }));
+    };
+
+    const createUserConfirmationModal = (res) => {
+        let message;
+
+        let resMessage = 'User does not exist, do you want to create user?';
+        message = (
+            <>
+                <Space direction="vertical">
+                    {resMessage}
+                    <Row gutter={20} justify="end">
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <Button danger className={styles.button} onClick={hideGlobalNotification} size="small">
+                                Cancel
+                            </Button>
+                        </Col>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <Button type="primary" onClick={onConfirm} size="small">
+                                Create User
+                            </Button>
+                        </Col>
+                    </Row>
+                </Space>
+            </>
+        );
+        showGlobalNotification({ notificationType: 'warning', title: 'User not found', message: message, duration: 5000 });
+    };
 
     const onErrorAction = (res) => {
         setError(res);
     };
+
     const onSuccessAction = (res) => {
-        // setselectedDealerCode('');
         setError('');
+        if (res?.data?.userNotExist) {
+            setCanUserCreate(true);
+            createUserConfirmationModal(res);
+        } else {
+            setCanUserCreate(false);
+        }
     };
 
     useEffect(() => {
@@ -332,7 +377,7 @@ const UserManagementMain = (props) => {
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, userType, page?.pageSize, page?.current, filterString?.searchParam, isFormVisible, selectedDealerCode]);
+    }, [userId, userType, page?.pageSize, page?.current, filterString, isFormVisible, selectedDealerCode]);
 
     const onFinish = (values, e) => {};
 
@@ -416,9 +461,9 @@ const UserManagementMain = (props) => {
     const onCloseAction = () => {
         setIsFormVisible(false);
         setSelectedRecord([]);
-        // setDisabledSearch(true);
         setFilterString('');
-        setselectedDealerCode('');
+        // setDisabledSearch(true);
+        // setselectedDealerCode('');
     };
 
     const drawerTitle = useMemo(() => {
@@ -458,8 +503,6 @@ const UserManagementMain = (props) => {
         selectedDealerCode,
         dealerDataList,
 
-        // productDataTree,
-        // adminDataTree,
         section,
         sectionName,
         setSetionName,
@@ -501,7 +544,7 @@ const UserManagementMain = (props) => {
         filterString,
         setFilterString,
         singleField: true,
-        placeholder: 'Search token number',
+        placeholder: userType === USER_TYPE_USER.DEALER.id ? 'Search Employee Code' : 'Search token number',
         disabled: disableSearch,
         optionType: typeData,
         defaultValue: 'employeeCode',
@@ -548,8 +591,8 @@ const UserManagementMain = (props) => {
                                 </Form>
                             </Col>
                         </Row>
-                        {userDataList?.userSearchResponse?.userDetails?.[0]?.dmsUserNotExist && <TokenValidateDataCard tokenData={userDataList?.userSearchResponse?.userDetails?.[0]} isLoading={listShowLoading} selectedDealerCode={selectedDealerCode} handleButtonClick={handleButtonClick} userType={userType} />}
-                        {error && <TokenErrorCard error={error} />}
+                        {/* {userDataList?.userSearchResponse?.userDetails?.[0]?.dmsUserNotExist && <TokenValidateDataCard tokenData={userDataList?.userSearchResponse?.userDetails?.[0]} isLoading={listShowLoading} selectedDealerCode={selectedDealerCode} handleButtonClick={handleButtonClick} userType={userType} />} */}
+                        {/* {error && <TokenErrorCard error={error} />} */}
                     </div>
                 </Col>
             </Row>
@@ -572,6 +615,7 @@ const UserManagementMain = (props) => {
                 </Col>
             </Row>
             <UserMainContainer {...formProps} />
+            {/* <CreateUserConfirmationModal {...confirmationProps} /> */}
         </>
     );
 };

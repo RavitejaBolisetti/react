@@ -63,7 +63,7 @@ const MainPageBase = ({ notification }) => {
 
     useEffect(() => {
         if (notification?.visible) {
-            informationModalBox({ type: notification?.notificationType, title: notification?.title, message: notification?.message, placement: notification?.placement, showTitle: notification?.showTitle });
+            informationModalBox({ type: notification?.notificationType, title: notification?.title, message: notification?.message, placement: notification?.placement, showTitle: notification?.showTitle, duration: notification?.duration });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [notification?.visible]);
