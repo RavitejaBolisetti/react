@@ -146,14 +146,6 @@ const LoyaltySchemeMasterMain = (props) => {
     };
 
     const onFinish = (values) => {
-        // const { customerName } = values;
-        // if (!customerName) {
-        //     showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Verify Customer id to continue' });
-        //     return;
-        // }
-        // const data = { ...values, id: LoyaltySchemeData?.id || '', otfNumber: selectedOrderId };
-
-        // onFinishCustom({ key: formKey, values: data });
         handleButtonClick({ buttonAction: NEXT_ACTION });
         setButtonData({ ...buttonData, formBtnActive: false });
     };
