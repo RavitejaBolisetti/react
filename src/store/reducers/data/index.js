@@ -42,7 +42,6 @@ import { UserManagement } from './userManagement';
 import { VehicleReceiptChecklist } from './VehicleReceiptCheckList';
 import { vehicleAllotmentData } from './vehicleAllotment';
 import { HoPriceMapping } from './hoPriceMapping';
-import { VehicleInvoiceGeneration } from './invoiceGeneration';
 import { UserAccess } from './userAccess';
 import { OTFSoMapping } from './otfSoMappingUnmapping';
 import { OTFBlockMaster } from './otfBlockMaster';
@@ -92,7 +91,6 @@ export const data = combineReducers({
     VehicleReceiptChecklist,
     vehicleAllotmentData,
     HoPriceMapping,
-    VehicleInvoiceGeneration,
     UserAccess,
     stockTransferIndentData,
     OTFSoMapping,

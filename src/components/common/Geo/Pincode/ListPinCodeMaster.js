@@ -18,9 +18,7 @@ import { AddEditForm } from './AddEditForm';
 import { AdvancedSearch } from './AdvancedSearch';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { btnVisiblity } from 'utils/btnVisiblity';
-
 import { searchValidatorPincode } from 'utils/validation';
-import { FilterIcon } from 'Icons';
 
 import { geoCountryDataActions } from 'store/actions/data/geo/countries';
 import { geoStateDataActions } from 'store/actions/data/geo/states';
@@ -212,7 +210,7 @@ const ListPinCodeMasterBase = (props) => {
                 key: 'cityCode',
                 title: 'City',
                 value: filterString?.cityCode,
-                name: filteredCityData?.find((i) => i?.key === filterString?.cityCode)?.value,
+                name: filteredCityData?.find((i) => i?.code === filterString?.cityCode)?.name,
                 canRemove: false,
             },
             {
@@ -559,12 +557,13 @@ const ListPinCodeMasterBase = (props) => {
         setFilteredTehsilData(undefined);
         setFilteredStateData(stateData?.filter((i) => i?.parentKey === defaultCountry));
         advanceFilterForm.resetFields();
+        setRefershData(!refershData);
     };
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
         onCloseAction: onAdvanceSearchCloseAction,
-        icon: <FilterIcon size={20} />,
+        // icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
         isDataCountryLoaded,
         isCountryLoading,
@@ -666,6 +665,7 @@ const ListPinCodeMasterBase = (props) => {
         tableData: data,
         showAddButton,
     };
+    console.log(extraParams);
     return (
         <>
             <AppliedAdvanceFilter {...advanceFilterResultProps} />

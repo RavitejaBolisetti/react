@@ -21,7 +21,7 @@ import { EVR_STATUS } from 'constants/EvrStatus';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { evrDetailsCapturingDataActions } from 'store/actions/data/evrDetailsCapturing/evrDetailsCapturing';
 import { MODEL_TYPE } from 'constants/modules/hoPricingMapping/index';
-import { BASE_URL_EVR_DETAILS_CAPTURING_DETAIL as customURL } from 'constants/routingApi';
+import { BASE_URL_EVR_DETAILS_CAPTURING_DETAIL as customURL, BASE_URL_EVR_DETAILS_CAPTURING_UPDATE as customUpdateURL } from 'constants/routingApi';
 
 import { showGlobalNotification } from 'store/actions/notification';
 
@@ -352,7 +352,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
                     name: 'id',
                 },
             ];
-            fetchDetail({ setIsLoading: listShowLoading, userId, extraParams, customURL });
+            fetchDetail({ setIsLoading: listShowLoading, userId, extraParams, customURL, onErrorAction });
         }
     };
 
@@ -383,7 +383,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
             onError,
             errorData: true,
             onSuccess,
-            customURL,
+            customURL: customUpdateURL,
         };
 
         saveData(requestData);

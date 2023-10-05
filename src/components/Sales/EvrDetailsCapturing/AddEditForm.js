@@ -17,7 +17,7 @@ import styles from 'assets/sass/app.module.scss';
 
 const { TextArea } = Input;
 const AddEditFormMain = (props) => {
-    const { form, formData, buttonData, setButtonData, typeData, isEvrDetailLoading, handleButtonClick, onCloseAction, formActionType, onFinish, onFinishFailed, customURL } = props;
+    const { form, formData, buttonData, setButtonData, typeData, isEvrDetailLoading, handleButtonClick, onCloseAction, formActionType, onFinish, onFinishFailed } = props;
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });

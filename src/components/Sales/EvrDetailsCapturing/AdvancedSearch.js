@@ -41,7 +41,6 @@ export const AdvancedSearchFrom = (props) => {
             modelCodeName: modelCodeName,
             advanceFilter: true,
         });
-
         setAdvanceSearchVisible(false);
     };
 
