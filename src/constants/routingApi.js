@@ -341,3 +341,4 @@ export const BASE_URL_EVR_DETAILS_CAPTURING_SEARCH = BASE_URL_VEHICLE + 'evr/det
 export const BASE_URL_EVR_DETAILS_CAPTURING_DETAIL = BASE_URL_VEHICLE + 'evr/details';
 export const BASE_URL_VEHICE_DELIVERY_NOTE_MASTER_DATA = BASE_URL_OTF + 'deliverynote/dealer/detail';
 export const BASE_URL_VEHICE_DELIVERY_NOTE_CHALLAN_MASTER_DATA = BASE_URL_OTF + 'delivery/challan/detail';
+export const BASE_URL_GST_LOGIN = BASE_URL + '/v1/gstirnauthentication/authenticate';

@@ -21,7 +21,7 @@ import { VehicleInvoiceMainConatiner } from './VehicleInvoiceMainConatiner';
 import { ListDataTable } from 'utils/ListDataTable';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
-import { BASE_URL_VEHICLE_INVOICE_IRN_GENERATION, BASE_URL_VEHICLE_INVOICE_LIST, BASE_URL_VEHICLE_INVOICE_PROFILE_CARD as customURL } from 'constants/routingApi';
+import { BASE_URL_INVOICE_DETAIL, BASE_URL_VEHICLE_INVOICE_IRN_GENERATION, BASE_URL_VEHICLE_INVOICE_LIST, BASE_URL_VEHICLE_INVOICE_PROFILE_CARD as customURL } from 'constants/routingApi';
 
 import { vehicleInvoiceGenerationDataActions } from 'store/actions/data/sales/vehicleInvoiceGeneration';
 import { salesConsultantActions } from 'store/actions/data/otf/salesConsultant';
@@ -401,7 +401,7 @@ export const VehicleInvoiceMasterBase = (props) => {
                 }
             };
 
-            fetchInvoiceMasterData({ setIsLoading: listDetailShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+            fetchInvoiceMasterData({ customURL: BASE_URL_INVOICE_DETAIL, setIsLoading: listDetailShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
     };
 
