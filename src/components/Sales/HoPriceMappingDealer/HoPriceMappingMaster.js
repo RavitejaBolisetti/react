@@ -250,7 +250,7 @@ export const HoPriceMappingMasterBase = (props) => {
 
     useEffect(() => {
         if (userId) {
-            fetchProductList({ setIsLoading: listProductMainShowLoading, userId, onCloseAction, extraParams: [{ key: 'manufactureOrgCode', value: `LMM` }], onErrorAction });
+            fetchProductList({ setIsLoading: listProductMainShowLoading, userId, onCloseAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
@@ -342,12 +342,12 @@ export const HoPriceMappingMasterBase = (props) => {
 
     const disableExceptModelGroup = (node) => {
         if (node?.attributeType === MODEL_TYPE.MODAL_GROUP.key && (node?.parntProdctCode !== ATTRIBUTE_TYPE.SERVICE.key || node?.parntProdctCode === null)) {
-            node[`disabled`] = false;
+            node[`selectable`] = false;
             let key = hoPriceDetailData?.modelDealerMapResponse?.find((e) => e?.modelGroupCode === node?.prodctCode);
             if (key && Object.values(key) && key?.status === true) setCheckedKeys((prev) => [...prev, node?.id]);
             setModelGroupArr((prev) => [...prev, node]);
         } else {
-            node[`disabled`] = true;
+            node[`checkable`] = false;
         }
         if (node?.subProdct?.length > 0) {
             node?.subProdct?.forEach((child) => {
