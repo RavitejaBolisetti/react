@@ -23,7 +23,7 @@ export default function DataTable({ filterString, isLoading, rowSelection = unde
         if (dynamicPagination) {
             setPagination({ ...tablePagination, current: filterString?.current || tablePagination?.current, total: totalRecords });
         } else {
-            setPagination({ ...tablePagination, current: filterString?.current || tablePagination?.current, total: tableData?.length });
+            setPagination({ ...tablePagination, current: 1, total: tableData?.length });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dynamicPagination, totalRecords, tableData, page]);
