@@ -159,7 +159,7 @@ const ReferralsMasterBase = (props) => {
     }, [filterString]);
 
     const onFinish = (values) => {
-        const data = { ...values, otfNumber: selectedRecordId, dob: formatDate(values?.dob), id: referralData?.id };
+        const data = { ...values, otfId: selectedRecordId, dob: formatDate(values?.dob), id: referralData?.id };
         if (onFinishCustom) {
             onFinishCustom({ key: formKey, values: data });
             handleButtonClick({ buttonAction: NEXT_ACTION });

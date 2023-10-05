@@ -169,7 +169,7 @@ export const dataActions = (params) => {
                 }
             };
 
-            let sExtraParamsString = '/details?';
+            let sExtraParamsString = '?';
             extraParams?.forEach((item, index) => {
                 sExtraParamsString += item?.value && item?.key ? item?.value && item?.key + '=' + item?.value + '&' : '';
             });

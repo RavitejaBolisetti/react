@@ -194,7 +194,7 @@ export const BASE_URL_RSM_APPROVAL = BASE_URL_INVOICE + 'rsm';
 export const BASE_URL_DELIVERY_NOTE_INVOICE_CANCELLATION = BASE_URL_INVOICE + 'invoicedeliverynote/cancellation';
 export const BASE_URL_DELIVERY_NOTE_INVOICE_CANCELLATION_SEARCH = BASE_URL_DELIVERY_NOTE_INVOICE_CANCELLATION + '/search';
 export const BASE_URL_RSM_APPROVAL_SEARCH = BASE_URL_RSM_APPROVAL + '/search';
-export const BASE_URL_INVOICE_DETAILS = BASE_URL_INVOICE + 'details';
+export const BASE_URL_INVOICE_DETAIL = BASE_URL_INVOICE + 'details';
 
 export const BASE_URL_VEHICLE = BASE_URL + 'vehicle/';
 export const BASE_URL_VEHICLE_SEARCH = BASE_URL_VEHICLE + 'search';
@@ -281,14 +281,8 @@ export const BASE_URL_VEHICLE_RECEIPT_CHECKLIST_PROFILE = BASE_URL_VEHICLE + 're
 export const BASE_URL_VEHICLE_RECEIPT_CHECKLIST_MASTER = BASE_URL_VEHICLE + 'receiptchecklist/detail';
 export const BASE_URL_VEHICLE_ALLOTMENT = BASE_URL + 'vehicle/allotments';
 
-export const BASE_URL_DEALER_BRANCH_ACCESS = BASE_URL_DEALER_MANPOWER + '/parent/locations';
-export const BASE_URL_DEALER_GST = BASE_URL_DEALER_MANPOWER + '/parent/gstin/lov';
-
-export const BASE_URL_VEHICLE_INVOICE_GENERATION = BASE_URL_OTF + 'vehicleinvoice/search';
-export const BASE_URL_VEHICLE_IRN_GENERATION = BASE_URL_OTF + 'vehicleinvoice/irngeneration';
-export const BASE_URL_INVOICE_DETAIL = BASE_URL_OTF + 'vehicleinvoice/details';
-export const BASE_URL_VEHICLE_INVOICE_DETAIL = BASE_URL_OTF + 'vehicleinvoice/vehicledetails';
 export const BASE_URL_VEHICLE_INVOICE = BASE_URL_OTF + 'vehicleinvoice';
+export const BASE_URL_VEHICLE_INVOICE_DETAIL = BASE_URL_OTF + 'vehicleinvoice/details';
 export const BASE_URL_VEHICLE_INVOICE_LIST = BASE_URL_VEHICLE_INVOICE + '/search';
 export const BASE_URL_VEHICLE_INVOICE_IRN_GENERATION = BASE_URL_VEHICLE_INVOICE + '/irngeneration';
 export const BASE_URL_VEHICLE_INVOICE_PROFILE_CARD = BASE_URL_VEHICLE_INVOICE + '/profile';
@@ -322,7 +316,7 @@ export const BASE_URL_VEHICLE_DELIVERY_NOTE = BASE_URL_OTF + 'deliverynote/';
 export const BASE_URL_VEHICLE_DELIVERY_NOTE_SEARCH = BASE_URL_VEHICLE_DELIVERY_NOTE + 'search';
 export const BASE_URL_VEHICLE_DELIVERY_NOTE_GENERATE = BASE_URL_VEHICLE_DELIVERY_NOTE + 'generate';
 export const BASE_URL_VEHICLE_DELIVERY_NOTE_CHALLAN_GENERATE = BASE_URL_VEHICLE_DELIVERY_NOTE + 'challan/generate';
-export const BASE_URL_VEHICLE_INVOICE_DETAILS = BASE_URL_VEHICLE_DELIVERY_NOTE + 'invoicedetail';
+export const BASE_URL_VEHICLE_DELIVERY_NOTE_INVOICE_DETAILS = BASE_URL_VEHICLE_DELIVERY_NOTE + 'invoicedetail';
 export const BASE_URL_VEHICLE_DELIVERY_NOTE_CANCELLATION = BASE_URL_VEHICLE_DELIVERY_NOTE + 'cancel';
 export const BASE_URL_VEHICLE_CUSTOMER_DETAILS = BASE_URL_CUSTOMER_MASTER + '/deliverynote/details';
 export const BASE_URL_VEHICLE_ADD_ON_DETAILS = BASE_URL_VEHICLE_DELIVERY_NOTE + 'addondetail';
@@ -351,3 +345,6 @@ export const BASE_URL_VEHICE_DELIVERY_NOTE_MASTER_DATA = BASE_URL_OTF + 'deliver
 export const BASE_URL_VEHICE_DELIVERY_NOTE_CHALLAN_MASTER_DATA = BASE_URL_OTF + 'delivery/challan/detail';
 
 export const BASE_URL_GST_LOGIN = BASE_URL + '/v1/gstirnauthentication/authenticate';
+
+export const BASE_URL_DEALER_BRANCH_ACCESS = BASE_URL_DEALER_MANPOWER + '/parent/locations';
+export const BASE_URL_DEALER_GST = BASE_URL_DEALER_MANPOWER + '/parent/gstin/lov';
