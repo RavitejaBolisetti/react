@@ -13,6 +13,7 @@ import { financialAccTaxChargeActions } from 'store/actions/data/financialAccoun
 import { documentDescriptionDataActions } from 'store/actions/data/financialAccounting/documentDescription';
 import { financialAccountHeadDataActions } from 'store/actions/data/financialAccounting/financialAccountHead';
 import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
+import { vehicleChecklistMasterDataActions } from 'store/actions/data/sales/vehicleChecklistMaster/VehicleChecklistMaster';
 
 import { showGlobalNotification } from 'store/actions/notification';
 
@@ -38,6 +39,9 @@ const mapStateToProps = (state) => {
                 DocumentDescription: { isLoaded: isDocumentDescriptionLoaded = false, data: documentDescription = [] },
                 TaxCharges: { isLoaded: isTaxChargeLoaded = false, data: taxChargeData = [] },
             },
+            // VehicleChecklistMaster: {
+            //     VehicleChecklistMasterList: { isLoaded: isVehicleChecklistMasterLoaded = false, data: VehicleChecklistMasterList = [] },
+            // },
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -61,6 +65,7 @@ const mapStateToProps = (state) => {
         isTaxChargeLoaded,
         attributeData,
         typeData,
+        //VehicleChecklistMasterList,
         unFilteredAttributeData: attributeData?.filter((i) => i?.status),
     };
     return returnValue;
@@ -82,6 +87,9 @@ const mapDispatchToProps = (dispatch) => ({
 
             fetchDocumentDescription: documentDescriptionDataActions.fetchList,
             listShowLoadingDocumentDescription: documentDescriptionDataActions.listShowLoading,
+
+            fetchVehicleChecklist: vehicleChecklistMasterDataActions.fetchList,
+            listShowLoadingVehicleChecklist: vehicleChecklistMasterDataActions.listShowLoading,
 
             showGlobalNotification,
         },
@@ -120,8 +128,12 @@ export const VehicleChecklistMain = ({
     isTaxChargeLoaded,
     listShowLoadingFinancialAccountHead,
     listShowLoadingDocumentDescription,
+    fetchVehicleChecklist,
+    listShowLoadingVehicleChecklist,
+    // VehicleChecklistMasterList,
 }) => {
     const [form] = Form.useForm();
+    const [searchForm] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
 
@@ -137,15 +149,92 @@ export const VehicleChecklistMain = ({
     const [searchValue, setSearchValue] = useState('');
     const [attributeType, setAttributeType] = useState();
     const [calculationType, setCalculationType] = useState();
+    const [buttonType, setButtonType] = useState('VDCL');
 
     const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
-    const fieldNames = { title: 'taxChargesTypeCode', key: 'taxChargesTypeCode', children: 'subChargeTypes' };
+    const fieldNames = { title: 'descriptionTitle', key: 'code', children: 'children' };
 
-    const onKeyPressHandler = (e) => {
-        e.key === 'Enter' && e.preventDefault();
-    };
+    const VehicleChecklistMasterList = [
+        {
+            id: 'aa1cd6d6-660f-4f66-8b82-45788aa09431',
+            attributeLevel: 'GRP',
+            descriptionTitle: 'Vehicle Delivery Checklist',
+            isChildPresent: true,
+            code: 'VRC',
+            parentCode: 'VDCL',
+            status: true,
+            children: [
+                {
+                    id: 'f864099e-ca23-43be-98de-e6bdd2ccd61c',
+                    code: 'SD1',
+                    attributeLevel: 'SUBGRP',
+                    descriptionTitle: 'Vehicle Delivery Sub Group',
+                    parentCode: 'VRC',
+                    status: true,
+                    isChildPresent: true,
+                    children: [
+                        {
+                            id: '80e60696-d827-427b-9cec-c99db1c590d4',
+                            code: 'ADL',
+                            attributeLevel: 'CHKL',
+                            descriptionTitle: 'All India Dealers List',
+                            parentCode: 'SD1',
+                            status: true,
+                            isChildPresent: false,
+                            children: [],
+                            model: [],
+                        },
+                        {
+                            id: '490f6fe4-2a86-4069-91b2-2354cff5b0c4',
+                            code: 'DUK',
+                            attributeLevel: 'CHKL',
+                            descriptionTitle: 'Duplicate Key',
+                            parentCode: 'SD1',
+                            status: true,
+                            isChildPresent: false,
+                            children: [],
+                            model: [
+                                {
+                                    modelGroupCode: 'S0',
+                                    status: true,
+                                },
+                                {
+                                    modelGroupCode: 'RV',
+                                    status: true,
+                                },
+                                {
+                                    modelGroupCode: '3',
+                                    status: true,
+                                },
+                            ],
+                        },
+                        {
+                            id: '3aaa7f1a-aa66-46e0-9b5a-7bfa94593df4',
+                            code: 'GAP',
+                            attributeLevel: 'CHKL',
+                            descriptionTitle: 'Gate Pass',
+                            parentCode: 'SD1',
+                            status: true,
+                            isChildPresent: false,
+                            children: [],
+                            model: [
+                                {
+                                    modelGroupCode: 'S0',
+                                    status: true,
+                                },
+                                {
+                                    modelGroupCode: 'IW',
+                                    status: true,
+                                },
+                            ],
+                        },
+                    ],
+                },
+            ],
+        },
+    ];
 
     useEffect(() => {
         if (!isDataLoaded && userId) {
@@ -175,6 +264,19 @@ export const VehicleChecklistMain = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
+    useEffect(() => {
+        const extraParams = [
+            {
+                key: 'searchType',
+                value: buttonType,
+            },
+        ];
+        if (userId) {
+            fetchVehicleChecklist({ setIsLoading: listShowLoadingVehicleChecklist, userId, extraParams });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, buttonType]);
+
     const onChange = (e) => {
         setSearchValue(e.target.value);
     };
@@ -201,7 +303,7 @@ export const VehicleChecklistMain = ({
         return dataList;
     };
 
-    const flatternData = generateList(finalTaxAndChargesData);
+    const flatternData = generateList(VehicleChecklistMasterList);
     const handleTreeViewClick = (keys) => {
         form.resetFields();
         setFormData([]);
@@ -210,14 +312,16 @@ export const VehicleChecklistMain = ({
         if (keys && keys?.length > 0) {
             setFormActionType(FROM_ACTION_TYPE.VIEW);
             const formData = flatternData.find((i) => keys?.[0] === i?.key);
+
+            console.log(`formDataformData`, formData);
             if (formData) {
-                const isChildAllowed = unFilteredAttributeData?.find((attribute) => attribute.hierarchyAttribueCode === formData?.data?.attributeTypeCode)?.isChildAllowed;
-                setFormData({ ...formData?.data, isChildAllowed });
+                //const isChildAllowed = unFilteredAttributeData?.find((attribute) => attribute.hierarchyAttribueCode === formData?.data?.attributeTypeCode)?.isChildAllowed;
+                setFormData(formData?.data);
 
                 setAttributeType(formData?.data?.attributeTypeCode);
                 setCalculationType(formData?.data?.calculationType);
 
-                setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: isChildAllowed, siblingBtn: true });
+                setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: formData?.isChildPresent, siblingBtn: true });
 
                 const hierarchyAttribueName = unFilteredAttributeData?.find((attribute) => attribute?.hierarchyAttribueCode === formData?.data?.attributeTypeCode)?.hierarchyAttribueName;
                 const attributeParentName = flatternData.find((i) => formData?.data?.parentCode === i.key)?.data?.taxChargesTypeCode;
@@ -313,7 +417,7 @@ export const VehicleChecklistMain = ({
         selectedTreeSelectKey,
         fieldNames,
         handleTreeViewClick,
-        treeData: taxChargeData,
+        treeData: VehicleChecklistMasterList,
         searchValue,
         setSearchValue,
     };
@@ -377,17 +481,28 @@ export const VehicleChecklistMain = ({
 
     const leftCol = taxChargeData?.length > 0 ? 14 : 24;
     const rightCol = taxChargeData?.length > 0 ? 10 : 24;
-    const title = 'Tax & Charges';
+
     return (
         <>
             <div className={styles.contentHeaderBackground}>
                 <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form onKeyPress={onKeyPressHandler} autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                            <Form.Item label={title} name="code" validateTrigger={['onSearch']}>
+                    <Col xs={24} sm={24} md={18} lg={18} xl={18}>
+                        <Form autoComplete="off" form={searchForm} colon={false} className={styles.masterListSearchForm}>
+                            <Form.Item name="normalSearch">
                                 <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                        <Search placeholder="Search" allowClear onChange={onChange} />
+                                    <Col xs={24} sm={24} md={20} lg={20} xl={20} className={styles.verticallyCentered}>
+                                        <div className={`${styles.userManagement} ${styles.headingToggle}`}>
+                                            {typeData?.CHKLST_TYPE?.map((item) => {
+                                                return (
+                                                    <Button type={buttonType === item?.key ? 'primary' : 'link'} onClick={() => setButtonType(item?.key)}>
+                                                        {item?.value}
+                                                    </Button>
+                                                );
+                                            })}
+                                        </div>
+                                        <div className={styles.fullWidth}>
+                                            <Search placeholder="Search" onSearch={''} allowClear className={styles.headerSearchField} />
+                                        </div>
                                     </Col>
                                 </Row>
                             </Form.Item>

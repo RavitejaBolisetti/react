@@ -347,3 +347,5 @@ export const BASE_URL_GST_LOGIN = BASE_URL + '/v1/gstirnauthentication/authentic
 
 export const BASE_URL_DEALER_BRANCH_ACCESS = BASE_URL_DEALER_MANPOWER + '/parent/locations';
 export const BASE_URL_DEALER_GST = BASE_URL_DEALER_MANPOWER + '/parent/gstin/lov';
+export const BASE_URL_VEHICLE_CHECKLIST_MASTER = BASE_URL + 'vehicle/checklist/master/search';
+
