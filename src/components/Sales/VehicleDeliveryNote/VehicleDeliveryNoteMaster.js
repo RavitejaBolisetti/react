@@ -783,10 +783,8 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         isVisible: isAdvanceSearchVisible,
         receiptType,
         partySegmentType,
-
-        icon: <FilterIcon size={20} />,
+        // icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
-
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
         filterString,

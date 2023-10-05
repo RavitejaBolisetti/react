@@ -530,8 +530,7 @@ export const HoPriceMappingMasterBase = (props) => {
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
-
-        icon: <FilterIcon size={20} />,
+        // icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
         filteredStateData,
         filteredCityData,

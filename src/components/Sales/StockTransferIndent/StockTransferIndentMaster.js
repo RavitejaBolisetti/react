@@ -543,7 +543,7 @@ export const StockTransferIndentMasterBase = (props) => {
 
     const advanceSearchFilterProps = {
         isVisible: isAdvanceSearchVisible,
-        icon: <FilterIcon size={20} />,
+        // icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
         toggleButton,
         onCloseAction,

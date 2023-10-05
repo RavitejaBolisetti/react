@@ -264,7 +264,7 @@ export const ListStateMasterBase = (props) => {
         isVisible: isAdvanceSearchVisible,
         onCloseAction: onAdvanceSearchCloseAction,
         setAdvanceSearchVisible,
-        icon: <FilterIcon size={20} />,
+        // icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
         isDataCountryLoaded,
         isCountryLoading,

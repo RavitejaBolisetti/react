@@ -281,7 +281,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
         onCloseAction: onAdvanceSearchCloseAction,
-        icon: <FilterIcon size={20} />,
+        // icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
         divisionData,
         filterString,
