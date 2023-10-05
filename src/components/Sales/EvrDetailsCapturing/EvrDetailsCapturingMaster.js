@@ -20,13 +20,10 @@ import { AdvancedSearch } from './AdvancedSearch';
 import { EVR_STATUS } from 'constants/EvrStatus';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { evrDetailsCapturingDataActions } from 'store/actions/data/evrDetailsCapturing/evrDetailsCapturing';
-// import { evrDetailsCapturingDetailDataActions } from 'store/actions/data/evrDetailsCapturing/evrDetailsCapturingDetails';
 import { MODEL_TYPE } from 'constants/modules/hoPricingMapping/index';
 import { BASE_URL_EVR_DETAILS_CAPTURING_DETAIL as customURL } from 'constants/routingApi';
 
 import { showGlobalNotification } from 'store/actions/notification';
-
-import { FilterIcon } from 'Icons';
 
 const mapStateToProps = (state) => {
     const {
@@ -37,7 +34,6 @@ const mapStateToProps = (state) => {
 
             EvrDetailsCapturing: {
                 EvrDetailsCapturingSearchList: { isLoaded: isEvrDetailLoaded = false, isDetailLoaded = false, isLoading: isEvrDetailLoading, data, detailData: evrDetailData = [], filter: filterString },
-                // EvrDetailsCapturingDetailList: { isLoading: isEvrDetailLoading, data, detailData: evrDetailData = [], filter: filterString },
             },
         },
     } = state;
@@ -73,12 +69,6 @@ const mapDispatchToProps = (dispatch) => ({
             setFilterString: evrDetailsCapturingDataActions.setFilter,
             saveData: evrDetailsCapturingDataActions.saveData,
 
-            // fetchList: evrDetailsCapturingDetailDataActions.fetchList,
-            // fetchDetail: evrDetailsCapturingDetailDataActions.fetchDetail,
-            // listDetailShowLoading: evrDetailsCapturingDetailDataActions.listShowLoading,
-            // setFilterString: evrDetailsCapturingDetailDataActions.setFilter,
-            // saveData: evrDetailsCapturingDetailDataActions.saveData,
-
             showGlobalNotification,
         },
         dispatch
@@ -86,7 +76,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const EvrDetailsCapturingMasterBase = (props) => {
-    const { filterString, setFilterString, fetchList, evrDetailData, isDetailLoaded, isEvrDetailLoading, saveData, listShowLoading, userId, data, fetchDetail, listProductMainShowLoading, fetchProductList, listDetailShowLoading } = props;
+    const { filterString, setFilterString, fetchList, evrDetailData, isDetailLoaded, isEvrDetailLoading, saveData, listShowLoading, userId, data, fetchDetail, listProductMainShowLoading, fetchProductList } = props;
     const { typeData, evrStatusList, filteredStateData, productHierarchyData, totalRecords, showGlobalNotification } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [modelCodeName, setModelCodeName] = useState();
@@ -232,7 +222,6 @@ export const EvrDetailsCapturingMasterBase = (props) => {
                     value: 'MV',
                 },
             ];
-            //  [{ key: 'manufactureOrgCode', value: `LMM` }]
             fetchProductList({ setIsLoading: listProductMainShowLoading, userId, onCloseAction, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -482,7 +471,6 @@ export const EvrDetailsCapturingMasterBase = (props) => {
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
-
         titleOverride: 'Advance Filters',
         filteredStateData,
         onCloseAction: onAdvanceSearchCloseAction,
