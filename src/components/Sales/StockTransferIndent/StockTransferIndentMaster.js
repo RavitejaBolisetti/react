@@ -69,7 +69,6 @@ const mapStateToProps = (state) => {
             },
         },
     } = state;
-    console.log('🚀 ~ file: StockTransferIndentMaster.js:73 ~ mapStateToProps ~ state:', state);
 
     let returnValue = {
         userId,
