@@ -1,9 +1,27 @@
 import React from 'react';
-import { screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { ManufacturerAdminstrativeHierarchy } from '@components/common/ManufacturerAdminstrativeHierarchy/ManufacturerAdminstrativeHierarchy';
 import customRender from '@utils/test-utils';
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
+
+
+jest.mock('@components/common/ManufacturerAdminstrativeHierarchy/AddEditForm', () => {
+    const AddEditForm = ({ onFinish }) => (
+        <div>
+            <button onClick={onFinish}>Save</button>
+        </div>
+    );
+    return {
+        __esModule: true,
+        AddEditForm,
+    };
+});
+
+jest.mock('store/actions/data/manufacturerAdminHierarchy/manufacturerAdminHierarchy', () => ({
+    ManufacturerAdminHierarchyDataActions: {},
+}));
+
 
 describe('ManufacturerAdminstrativeHierarchyMain', () => {
     it('renders without errors', () => {
@@ -16,7 +34,7 @@ describe('ManufacturerAdminstrativeHierarchyMain', () => {
         expect(organizationSelect).toBeInTheDocument();
     });
 
-    it('displays the search input when an organization is selected', () => {
+    it('displays the search input when an organization is selected', async() => {
         const manufacturerAdminHierarchyData = [{
             attributeKey: null,
             id: "19ec8958-f007-4835-be24-4bc9bd332719",
@@ -40,24 +58,26 @@ describe('ManufacturerAdminstrativeHierarchyMain', () => {
 
         const fetchList = jest.fn();
         const fetchDetailList = jest.fn();
-        const treeSelectFieldProps = {
-            treeFieldNames: "test",
-            treeData: manufacturerAdminHierarchyData,
-            selectedTreeSelectKey:123,
-            defaultParent: false,
-            handleSelectTreeClick: jest.fn(),
-            HandleClear: jest.fn(),
-            defaultValue: 'organizationId',
-            placeholder: 'Organization Hierarchy',
-        };
+        const saveData = jest.fn()
+
 
         customRender(
             <Provider store={mockStore}>
-                <ManufacturerAdminstrativeHierarchy treeSelectFieldProps={treeSelectFieldProps} fetchDetailList={fetchDetailList} fetchList={fetchList} />
+                <ManufacturerAdminstrativeHierarchy isVisible={true} saveData={saveData} handleButtonClick={jest.fn()} resetData={jest.fn()} fetchDetailList={fetchDetailList} fetchList={fetchList} />
             </Provider>
         );
+
         const organizationSelect = screen.getByRole("combobox", { name: '' });
         fireEvent.change(organizationSelect, { target: { value: 'some value' } });
-    });
 
+        const save = screen.getByRole('button', { name: 'Save' })
+        fireEvent.click(save)
+
+        await waitFor(() => {
+            expect(saveData).toHaveBeenCalled();
+        });
+        
+        saveData.mock.calls[0][0].onSuccess();
+        saveData.mock.calls[0][0].onError();
+    });
 });

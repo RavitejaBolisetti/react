@@ -10,21 +10,14 @@ import styles from 'assets/sass/app.module.scss';
 
 const { Search } = Input;
 const AddEditFormMain = (props) => {
-    const { form, formData, handleCustomerIdSearch, handleOnChange, soldByDealer } = props;
-    const [customer, setCustomer] = useState();
-
+    const { form, formData, handleCustomerIdSearch, handleOnChange, soldByDealer, customerDetailsDataSearched } = props;
     useEffect(() => {
         if (formData) {
             form.setFieldsValue({ ...formData });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
-
-    const handleCustomerId = () => {
-        setCustomer(true);
-        handleCustomerIdSearch();
-    };
-
+    const showFields = soldByDealer || (customerDetailsDataSearched && Object?.keys(customerDetailsDataSearched)?.length > 0);
     return (
         <>
             <div className={styles.drawerCustomerMaster}>
@@ -40,11 +33,11 @@ const AddEditFormMain = (props) => {
                                                     <Input placeholder={preparePlaceholderText('Customer ID')} disabled={true} />
                                                 </>
                                             ) : (
-                                                <Search onChange={handleOnChange} onSearch={handleCustomerId} placeholder={preparePlaceholderText('Customer ID')} allowClear />
+                                                <Search onChange={handleOnChange} onSearch={handleCustomerIdSearch} placeholder={preparePlaceholderText('Customer ID')} allowClear />
                                             )}
                                         </Form.Item>
                                     </Col>
-                                    {(customer || soldByDealer) && (
+                                    {showFields && (
                                         <>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                 <Form.Item label="Customer Type" name="customerType">

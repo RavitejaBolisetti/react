@@ -43,12 +43,13 @@ const ViewDetailMain = (props) => {
 
     const customerDetail = (customerData) => (
         <Descriptions {...viewProps}>
+            {console.log(customerData)}
             <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(customerData?.mobileNumber, isLoading)}</Descriptions.Item>
             <Descriptions.Item label="Customer ID">{checkAndSetDefaultValue(customerData?.customerId, isLoading)}</Descriptions.Item>
             <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(customerData?.customerName, isLoading)}</Descriptions.Item>
             <Descriptions.Item label="Email">{checkAndSetDefaultValue(customerData?.email, isLoading)}</Descriptions.Item>
-            <Descriptions.Item label="Gender">{checkAndSetDefaultValue(getCodeValue(typeData?.GENDER, formData?.gender), isLoading)}</Descriptions.Item>
-            {showAgeGroup && <Descriptions.Item label="Age Group">{checkAndSetDefaultValue(getCodeValue(typeData?.AGE_RANGE, formData?.ageGroup), isLoading)}</Descriptions.Item>}
+            <Descriptions.Item label="Gender">{checkAndSetDefaultValue(getCodeValue(typeData?.GENDER, customerData?.gender), isLoading)}</Descriptions.Item>
+            {showAgeGroup && <Descriptions.Item label="Age Group">{checkAndSetDefaultValue(getCodeValue(typeData?.AGE_RANGE, customerData?.ageGroup), isLoading)}</Descriptions.Item>}
             <Descriptions.Item label="Address">{checkAndSetDefaultValue(customerData?.address, isLoading)}</Descriptions.Item>
             <Descriptions.Item label="City/District">{checkAndSetDefaultValue(customerData?.district, isLoading)}</Descriptions.Item>
             <Descriptions.Item label="State">{checkAndSetDefaultValue(customerData?.state, isLoading)}</Descriptions.Item>

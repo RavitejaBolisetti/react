@@ -24,7 +24,6 @@ import { LANGUAGE_EN } from 'language/en';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { getCodeValue } from 'utils/getCodeValue';
 
-import { FilterIcon } from 'Icons';
 import { deliveryNoteInvoiceCancellationDataAction } from 'store/actions/data/sales/deliveryNoteInvoiceCancellation';
 import AddEditForm from './AddEditForm';
 import styles from 'assets/sass/app.module.scss';
@@ -366,8 +365,7 @@ export const InvoiceCancellationMasterBase = (props) => {
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
-
-        icon: <FilterIcon size={20} />,
+        // icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
 
         onCloseAction: onAdvanceSearchCloseAction,
