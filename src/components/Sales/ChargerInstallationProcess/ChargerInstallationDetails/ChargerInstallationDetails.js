@@ -8,7 +8,7 @@ import { Form, Row, Col } from 'antd';
 
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
-
+import { OTFStatusBar } from '../OTFStatusBar';
 import { CustomerDetailsMaster } from 'components/Sales/VehicleInvoiceGeneration/CustomerDetails';
 
 import styles from 'assets/sass/app.module.scss';
@@ -87,6 +87,9 @@ const ChargerInstallatioDetailsMasterBase = (props) => {
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <h2>{section?.title}</h2>
                         </Col>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <OTFStatusBar status={props?.selectedOrder?.orderStatus} />
+                        </Col>
                     </Row>
                     {formActionType?.viewMode ? (
                         <>
@@ -108,4 +111,4 @@ const ChargerInstallatioDetailsMasterBase = (props) => {
     );
 };
 
-export const ChargerInstallatioDetailsMaster = ChargerInstallatioDetailsMasterBase;
+export const ChargerInstallationDetailsMaster = ChargerInstallatioDetailsMasterBase;

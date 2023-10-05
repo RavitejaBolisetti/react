@@ -273,20 +273,20 @@ export const VehicleInvoiceMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
 
-    useEffect(() => {
-        if (userId && selectedOtfNumber && !formActionType?.addMode) {
-            const extraParams = [
-                {
-                    key: 'otfNumber',
-                    title: 'otfNumber',
-                    value: selectedOtfNumber,
-                    name: 'Booking Number',
-                },
-            ];
-            fetchOTFDetail({ customURL, setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOtfNumber]);
+    // useEffect(() => {
+    //     if (userId && selectedOtfNumber && !formActionType?.addMode) {
+    //         const extraParams = [
+    //             {
+    //                 key: 'otfNumber',
+    //                 title: 'otfNumber',
+    //                 value: selectedOtfNumber,
+    //                 name: 'Booking Number',
+    //             },
+    //         ];
+    //         fetchOTFDetail({ customURL, setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [userId, selectedOtfNumber]);
 
     const handleBookingNumberSearch = (otfNumber) => {
         if (!otfNumber) return false;
@@ -388,14 +388,14 @@ export const VehicleInvoiceMasterBase = (props) => {
             case EDIT_ACTION:
                 setSelectedOrder(record);
                 record && setSelectedOrderId(record?.invoiceNumber);
-                record && setSelectedOtfNumber(record?.otfNumber);
+                record && setSelectedOtfNumber(record?.bookingNumber);
                 openDefaultSection && setCurrentSection(defaultSection);
 
                 break;
             case VIEW_ACTION:
                 setSelectedOrder(record);
                 record && setSelectedOrderId(record?.invoiceNumber);
-                record && setSelectedOtfNumber(record?.otfNumber);
+                record && setSelectedOtfNumber(record?.bookingNumber);
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case NEXT_ACTION:

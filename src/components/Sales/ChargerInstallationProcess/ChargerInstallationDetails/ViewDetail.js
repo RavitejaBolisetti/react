@@ -4,12 +4,13 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Col, Row, Collapse, Descriptions, Divider } from 'antd';
+import { Col, Row, Collapse, Descriptions, Divider, Space, Card } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 import styles from 'assets/sass/app.module.scss';
-import { expandIcon } from 'utils/accordianExpandIcon';
+import { DataTable } from 'utils/dataTable';
 import { prepareCaption } from 'utils/prepareCaption';
+import { optionalServicesColumns } from './tableColumn';
 
 const { Panel } = Collapse;
 
@@ -44,22 +45,23 @@ const ViewDetailMain = (props) => {
         <div className={styles.viewDrawerContainer}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" className={styles.drawerGap}>
-                        <Panel header="Booking Details" key="1">
-                            <Divider />
-                            <Descriptions {...viewProps} title={prepareCaption('Price Information')}>
-                                <Descriptions.Item label="Booking Number">{checkAndSetDefaultValue(otfFormData?.bookingNumber || otfFormData?.otfNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Booking Date">{checkAndSetDefaultValue(otfFormData?.otfDate, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Tax Calculation">{checkAndSetDefaultValue(otfFormData?.taxCalculationType, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Tax Payable On Reverse Charges?">{checkAndSetDefaultValue(otfFormData?.taxPayableOnReverseCharges, isLoading)}</Descriptions.Item>
+                    <Space style={{ display: 'flex' }} size="middle" direction="vertical">
+                        <Card style={{ backgroundColor: '#F2F2F2' }}>
+                            <Descriptions {...viewProps}>
+                                <Descriptions.Item label="Request Id">{checkAndSetDefaultValue(otfFormData?.bookingNumber || otfFormData?.otfNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Request Date">{checkAndSetDefaultValue(otfFormData?.otfDate, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Request Status">{checkAndSetDefaultValue(otfFormData?.taxCalculationType, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Model Group">{checkAndSetDefaultValue(otfFormData?.taxPayableOnReverseCharges, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Model Variant">{checkAndSetDefaultValue(otfFormData?.saleConsultant, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Seating Capacity">{checkAndSetDefaultValue(otfFormData?.mitraType, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Color">{checkAndSetDefaultValue(otfFormData?.mitraName, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(otfFormData?.mitraName, isLoading)}</Descriptions.Item>
                             </Descriptions>
-                            <Descriptions {...viewProps} title={prepareCaption('Sales Details')}>
-                                <Descriptions.Item label="Sales Consultant Name">{checkAndSetDefaultValue(otfFormData?.saleConsultant, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Influence/Mitra Type">{checkAndSetDefaultValue(otfFormData?.mitraType, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Influence/Mitra Name">{checkAndSetDefaultValue(otfFormData?.mitraName, isLoading)}</Descriptions.Item>
-                            </Descriptions>
-                        </Panel>
-                    </Collapse>
+                        </Card>
+                        <Card style={{ backgroundColor: '#F2F2F2' }}>
+                            <DataTable tableColumn={optionalServicesColumns()} pagination={false} />
+                        </Card>
+                    </Space>
                 </Col>
             </Row>
         </div>

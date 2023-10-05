@@ -5,9 +5,12 @@
  */
 import React from 'react';
 import MenuNav from './MenuNav';
+import ProfileDetailCard from './ProfileDetailCard';
 const LeftSidebar = (props) => {
+    const { selectedOtfNumber } = props;
     return (
         <>
+            {selectedOtfNumber && <ProfileDetailCard {...props} />}
             <MenuNav {...props} />
         </>
     );

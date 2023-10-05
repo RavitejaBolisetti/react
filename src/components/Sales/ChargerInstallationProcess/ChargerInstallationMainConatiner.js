@@ -9,7 +9,7 @@ import { withDrawer } from 'components/withDrawer';
 import { CHARGER_INSTALLATION_SECTION } from 'constants/ChargerInstallationConstant';
 
 import { LeftSidebar } from './LeftSidebar';
-import { ChargerInstallatioDetailsMaster } from './ChargerInstallationDetails'; //Own Menu
+import { ChargerInstallationDetailsMaster } from './ChargerInstallationDetails'; //Own Menu
 import { InstallationAddressDetailsMaster } from './InstallationAddressDetails'; //Own Menu
 
 import { VehicleInvoiceFormButton } from './VehicleInvoiceFormButton';
@@ -35,7 +35,7 @@ const ChargerInstallationMainConatinerMain = (props) => {
     const renderElement = () => {
         switch (currentSection) {
             case CHARGER_INSTALLATION_SECTION.CHARGER_DETAILS.id: {
-                return <ChargerInstallatioDetailsMaster {...myProps} />;
+                return <ChargerInstallationDetailsMaster {...myProps} />;
             }
             default: {
                 return <InstallationAddressDetailsMaster {...myProps} formKey={'insuranceDetails'} />;
