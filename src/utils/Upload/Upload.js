@@ -72,7 +72,6 @@ const UploadBase = (props) => {
         multiple = false,
         flag = false,
         showRemoveIcon = true,
-        showDownloadIcon = true,
         showProgress = { strokeWidth: 3, showInfo: true },
         showPreviewIcon = true,
         form = undefined,
@@ -110,6 +109,7 @@ const UploadBase = (props) => {
         singleDisabled,
         setSingleDisabled,
         setUploadedFileInformation = undefined,
+        tempFileName = undefined,
     } = props;
 
     const [showStatus, setShowStatus] = useState('');
@@ -200,6 +200,7 @@ const UploadBase = (props) => {
             }
         },
         multiple,
+        name: form.getFieldValue(`${tempFileName}`),
         accept,
         listType,
         onDownload,
@@ -219,7 +220,15 @@ const UploadBase = (props) => {
             if (supportingDocs) {
                 form.validateFields()
                     .then(() => {
-                        setFileList(fileList);
+                        if (tempFileName) {
+                            setFileList(
+                                fileList.map((file, index, fileList) => {
+                                    if (fileList.length - 1 === index) {
+                                        return { ...file, name: tempFileName };
+                                    } else return file;
+                                })
+                            );
+                        } else setFileList(fileList);
                         if (!flag) handleFormValueChange();
                         const { status } = info.file;
                         setShowStatus(info.file);
@@ -229,7 +238,7 @@ const UploadBase = (props) => {
                             }, 2500);
                             setUploadedFileInformation && setUploadedFileInformation(info?.file?.response);
                             setUploadedFile(info?.file?.response?.docId);
-                            setUploadedFileName(info?.file?.response?.documentName);
+                            setUploadedFileName(tempFileName);
                         }
                         setMandatoryFields(false);
                     })

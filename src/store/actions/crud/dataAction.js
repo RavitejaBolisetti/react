@@ -9,7 +9,7 @@ import { doLogout, unAuthenticateUser } from '../../actions/auth';
 import { LANGUAGE_EN } from 'language/en';
 
 export const dataActions = (params) => {
-    const { baseURL: inBaseURL, RECEIVE_DATA_LOADING_ACTION_CONSTANT, RECEIVE_DATA_ACTION_CONSTANT, RECEIVE_DATA_ACTION_APPLY_FILTER_CONSTANT, RECEIVE_FILTERED_DATA_ACTION_CONSTANT, RECIEVE_DATA_DETAIL_ACTION_CONSTANT, RESET_DATA_ACTION_CONSTANT, SAVE_FORM_DATA_LOADING_CONSTANT, RECEIVE_CHANGE_HISTORY_DATA_ACTION_CONSTANT, RECEIVE_CHANGE_HISTORY_DATA_LOADING_ACTION_CONSTANT, RESET_DETAIL_DATA_ACTION_CONSTANT } = params;
+    const { baseURL: inBaseURL, RECEIVE_DATA_LOADING_ACTION_CONSTANT, RECEIVE_DATA_ACTION_CONSTANT, RECEIVE_DATA_ACTION_APPLY_FILTER_CONSTANT, RECEIVE_FILTERED_DATA_ACTION_CONSTANT, RECIEVE_DATA_DETAIL_ACTION_CONSTANT, RECEIVE_DETAIL_DATA_LOADING_ACTION_CONSTANT, RESET_DATA_ACTION_CONSTANT, SAVE_FORM_DATA_LOADING_CONSTANT, RECEIVE_CHANGE_HISTORY_DATA_ACTION_CONSTANT, RECEIVE_CHANGE_HISTORY_DATA_LOADING_ACTION_CONSTANT, RESET_DETAIL_DATA_ACTION_CONSTANT } = params;
 
     const saveFormShowLoading = (isLoading) => ({
         type: SAVE_FORM_DATA_LOADING_CONSTANT,
@@ -51,9 +51,15 @@ export const dataActions = (params) => {
         data,
     });
 
+    const detailShowLoading = (isLoading) => ({
+        type: RECEIVE_DETAIL_DATA_LOADING_ACTION_CONSTANT,
+        isLoading,
+    });
+
     const resetData = () => ({
         type: RESET_DATA_ACTION_CONSTANT,
     });
+
     const resetDetailData = () => ({
         type: RESET_DETAIL_DATA_ACTION_CONSTANT,
     });
@@ -159,7 +165,6 @@ export const dataActions = (params) => {
                     dispatch(recieveDataDetail(res?.data));
                 } else {
                     dispatch(recieveDataDetail([]));
-
                     onError(LANGUAGE_EN.INTERNAL_SERVER_ERROR);
                 }
             };
@@ -416,6 +421,9 @@ export const dataActions = (params) => {
         },
         listShowLoading: (isLoading) => (dispatch) => {
             dispatch(listShowLoading(isLoading));
+        },
+        listDetailShowLoading: (isLoading) => (dispatch) => {
+            dispatch(detailShowLoading(isLoading));
         },
         listShowChangeHistoryLoading: (isLoading) => (dispatch) => {
             dispatch(listShowChangeHistoryLoading(isLoading));

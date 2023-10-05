@@ -49,9 +49,16 @@
                         }
                     }
                 }
+                .ant-dropdown-menu-title-content {
+                    svg {
+                        color: $primaryRed;
+                        vertical-align: sub;
+                    }
+                }
             }
         }
     }
+    
 }
 
 .headerRight {

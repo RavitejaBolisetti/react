@@ -35,7 +35,7 @@ const expandIcon = ({ isActive }) =>
     );
 
 const VehicleInvoiceCard = (props) => {
-    const { otfData: selectedOrder, formActionType, typeData, handleIRNGeneration, isLoading } = props;
+    const { profileCardData: selectedOrder, formActionType, typeData, handleIRNGeneration, isLoading } = props;
     const { confirmRequest, setConfirmRequest } = props;
     const fullName = selectedOrder?.customerName?.split(' ');
     const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1].slice(0, 1) : '') : '';
