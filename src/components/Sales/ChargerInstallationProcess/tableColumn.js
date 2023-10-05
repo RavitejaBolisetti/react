@@ -5,23 +5,24 @@
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import styles from 'assets/sass/app.module.scss';
-
+import { ChargerStatusTag } from './ChargerStatusTag';
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'Booking No.',
-            dataIndex: 'invoiceNumber',
+            dataIndex: 'bookingNumber',
             width: '14%',
         }),
         tblPrepareColumns({
             title: 'Request ID',
-            dataIndex: 'customerName',
+            dataIndex: 'requestNumber',
             width: '14%',
         }),
         tblPrepareColumns({
             title: 'Stage Status',
-            dataIndex: 'modelDescription',
+            dataIndex: 'requestStatus',
             width: '25%',
+            render: (_, record) => ChargerStatusTag(record.requestStatus),
         }),
 
         tblActionColumn({ handleButtonClick, styles, width: '8%', canEdit: false }),
