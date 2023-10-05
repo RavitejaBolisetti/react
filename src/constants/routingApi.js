@@ -73,6 +73,7 @@ export const BASE_URL_PRODUCT_HIERARCHY_SKU_SAVE = BASE_URL + 'product/skuattrib
 export const BASE_URL_PRODUCT_NAME_DROPDOWN = BASE_URL + 'product/attributes';
 
 export const BASE_URL_ATTRIBUTE_MASTER = BASE_URL + 'hierarchyattributes';
+export const BASE_URL_HIERARCHY_ATTRIBUTE_LOV = BASE_URL_ATTRIBUTE_MASTER + '/lov';
 
 export const BASE_URL_CONFIG_PARAM_EDIT_TYPE = BASE_URL + 'configurableparametertypes';
 export const BASE_URL_QUALIFICATION_MASTER = BASE_URL + 'application/qualifications';
@@ -348,4 +349,3 @@ export const BASE_URL_GST_LOGIN = BASE_URL + '/v1/gstirnauthentication/authentic
 export const BASE_URL_DEALER_BRANCH_ACCESS = BASE_URL_DEALER_MANPOWER + '/parent/locations';
 export const BASE_URL_DEALER_GST = BASE_URL_DEALER_MANPOWER + '/parent/gstin/lov';
 export const BASE_URL_VEHICLE_CHECKLIST_MASTER = BASE_URL + 'vehicle/checklist/master/search';
-

@@ -16,6 +16,7 @@ import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarch
 import { vehicleChecklistMasterDataActions } from 'store/actions/data/sales/vehicleChecklistMaster/VehicleChecklistMaster';
 
 import { showGlobalNotification } from 'store/actions/notification';
+import { BASE_URL_HIERARCHY_ATTRIBUTE_LOV as customURL } from 'constants/routingApi';
 
 import { AddEditForm } from './AddEditForm';
 import { ViewTaxCharges } from './ViewChecklistMaster';
@@ -23,6 +24,7 @@ import LeftPanel from 'components/common/LeftPanel';
 
 import { LANGUAGE_EN } from 'language/en';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import { ATTRIBUTE_LEVEL } from 'constants/modules/VehicleCheckListMaster/attributeType';
 import { HIERARCHY_ATTRIBUTES } from 'constants/modules/hierarchyAttributes';
 
 import styles from 'assets/sass/app.module.scss';
@@ -33,23 +35,23 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
+            HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded = false, data: attributeData = [] },
             FinancialAccounting: {
                 FinancialAccountHead: { isLoaded: isFinancialAccountHeadLoaded = false, data: financialAccount = [] },
                 DocumentDescription: { isLoaded: isDocumentDescriptionLoaded = false, data: documentDescription = [] },
                 TaxCharges: { isLoaded: isTaxChargeLoaded = false, data: taxChargeData = [] },
             },
-            // VehicleChecklistMaster: {
-            //     VehicleChecklistMasterList: { isLoaded: isVehicleChecklistMasterLoaded = false, data: VehicleChecklistMasterList = [] },
-            // },
+            VehicleChecklistMaster: {
+                VehicleChecklistMasterList: { isLoaded: isVehicleChecklistMasterLoaded = false, data: VehicleChecklistMasterList = [] },
+            },
         },
         common: {
             LeftSideBar: { collapsed = false },
         },
     } = state;
 
-    const moduleTitle = 'Tax & Charges Detail';
-    const viewTitle = 'Tax & Charges Details';
+    const moduleTitle = 'Vehicle Checklist';
+    const viewTitle = 'Vehicle Checklist';
 
     let returnValue = {
         collapsed,
@@ -65,7 +67,7 @@ const mapStateToProps = (state) => {
         isTaxChargeLoaded,
         attributeData,
         typeData,
-        //VehicleChecklistMasterList,
+        VehicleChecklistMasterList,
         unFilteredAttributeData: attributeData?.filter((i) => i?.status),
     };
     return returnValue;
@@ -130,7 +132,7 @@ export const VehicleChecklistMain = ({
     listShowLoadingDocumentDescription,
     fetchVehicleChecklist,
     listShowLoadingVehicleChecklist,
-    // VehicleChecklistMasterList,
+    VehicleChecklistMasterList,
 }) => {
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
@@ -156,85 +158,85 @@ export const VehicleChecklistMain = ({
 
     const fieldNames = { title: 'descriptionTitle', key: 'code', children: 'children' };
 
-    const VehicleChecklistMasterList = [
-        {
-            id: 'aa1cd6d6-660f-4f66-8b82-45788aa09431',
-            attributeLevel: 'GRP',
-            descriptionTitle: 'Vehicle Delivery Checklist',
-            isChildPresent: true,
-            code: 'VRC',
-            parentCode: 'VDCL',
-            status: true,
-            children: [
-                {
-                    id: 'f864099e-ca23-43be-98de-e6bdd2ccd61c',
-                    code: 'SD1',
-                    attributeLevel: 'SUBGRP',
-                    descriptionTitle: 'Vehicle Delivery Sub Group',
-                    parentCode: 'VRC',
-                    status: true,
-                    isChildPresent: true,
-                    children: [
-                        {
-                            id: '80e60696-d827-427b-9cec-c99db1c590d4',
-                            code: 'ADL',
-                            attributeLevel: 'CHKL',
-                            descriptionTitle: 'All India Dealers List',
-                            parentCode: 'SD1',
-                            status: true,
-                            isChildPresent: false,
-                            children: [],
-                            model: [],
-                        },
-                        {
-                            id: '490f6fe4-2a86-4069-91b2-2354cff5b0c4',
-                            code: 'DUK',
-                            attributeLevel: 'CHKL',
-                            descriptionTitle: 'Duplicate Key',
-                            parentCode: 'SD1',
-                            status: true,
-                            isChildPresent: false,
-                            children: [],
-                            model: [
-                                {
-                                    modelGroupCode: 'S0',
-                                    status: true,
-                                },
-                                {
-                                    modelGroupCode: 'RV',
-                                    status: true,
-                                },
-                                {
-                                    modelGroupCode: '3',
-                                    status: true,
-                                },
-                            ],
-                        },
-                        {
-                            id: '3aaa7f1a-aa66-46e0-9b5a-7bfa94593df4',
-                            code: 'GAP',
-                            attributeLevel: 'CHKL',
-                            descriptionTitle: 'Gate Pass',
-                            parentCode: 'SD1',
-                            status: true,
-                            isChildPresent: false,
-                            children: [],
-                            model: [
-                                {
-                                    modelGroupCode: 'S0',
-                                    status: true,
-                                },
-                                {
-                                    modelGroupCode: 'IW',
-                                    status: true,
-                                },
-                            ],
-                        },
-                    ],
-                },
-            ],
-        },
-    ];
+    // const VehicleChecklistMasterList = [
+    //     {
+    //         id: 'aa1cd6d6-660f-4f66-8b82-45788aa09431',
+    //         attributeLevel: 'GRP',
+    //         descriptionTitle: 'Vehicle Delivery Checklist',
+    //         isChildPresent: true,
+    //         code: 'VRC',
+    //         parentCode: 'VDCL',
+    //         status: true,
+    //         children: [
+    //             {
+    //                 id: 'f864099e-ca23-43be-98de-e6bdd2ccd61c',
+    //                 code: 'SD1',
+    //                 attributeLevel: 'SUBGRP',
+    //                 descriptionTitle: 'Vehicle Delivery Sub Group',
+    //                 parentCode: 'VRC',
+    //                 status: true,
+    //                 isChildPresent: true,
+    //                 children: [
+    //                     {
+    //                         id: '80e60696-d827-427b-9cec-c99db1c590d4',
+    //                         code: 'ADL',
+    //                         attributeLevel: 'CHKL',
+    //                         descriptionTitle: 'All India Dealers List',
+    //                         parentCode: 'SD1',
+    //                         status: true,
+    //                         isChildPresent: false,
+    //                         children: [],
+    //                         model: [],
+    //                     },
+    //                     {
+    //                         id: '490f6fe4-2a86-4069-91b2-2354cff5b0c4',
+    //                         code: 'DUK',
+    //                         attributeLevel: 'CHKL',
+    //                         descriptionTitle: 'Duplicate Key',
+    //                         parentCode: 'SD1',
+    //                         status: true,
+    //                         isChildPresent: false,
+    //                         children: [],
+    //                         model: [
+    //                             {
+    //                                 modelGroupCode: 'S0',
+    //                                 status: true,
+    //                             },
+    //                             {
+    //                                 modelGroupCode: 'RV',
+    //                                 status: true,
+    //                             },
+    //                             {
+    //                                 modelGroupCode: '3',
+    //                                 status: true,
+    //                             },
+    //                         ],
+    //                     },
+    //                     {
+    //                         id: '3aaa7f1a-aa66-46e0-9b5a-7bfa94593df4',
+    //                         code: 'GAP',
+    //                         attributeLevel: 'CHKL',
+    //                         descriptionTitle: 'Gate Pass',
+    //                         parentCode: 'SD1',
+    //                         status: true,
+    //                         isChildPresent: false,
+    //                         children: [],
+    //                         model: [
+    //                             {
+    //                                 modelGroupCode: 'S0',
+    //                                 status: true,
+    //                             },
+    //                             {
+    //                                 modelGroupCode: 'IW',
+    //                                 status: true,
+    //                             },
+    //                         ],
+    //                     },
+    //                 ],
+    //             },
+    //         ],
+    //     },
+    // ];
 
     useEffect(() => {
         if (!isDataLoaded && userId) {
@@ -259,7 +261,7 @@ export const VehicleChecklistMain = ({
 
     useEffect(() => {
         if (userId) {
-            hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: HIERARCHY_ATTRIBUTES?.TAX_AND_CHARGES?.KEY });
+            hierarchyAttributeFetchList({ customURL, setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Vehicle Checklist' });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
@@ -277,13 +279,21 @@ export const VehicleChecklistMain = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, buttonType]);
 
+    useEffect(() => {
+        if (formActionType === FROM_ACTION_TYPE?.CHILD) {
+            if (attributeType === ATTRIBUTE_LEVEL?.[0]?.key) {
+                setAttributeType(ATTRIBUTE_LEVEL?.[1]?.key);
+            } else if (attributeType === ATTRIBUTE_LEVEL?.[1]?.key) {
+                setAttributeType(ATTRIBUTE_LEVEL?.[2]?.key);
+            }
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formActionType]);
+
     const onChange = (e) => {
         setSearchValue(e.target.value);
     };
-
-    const finalTaxAndChargesData = taxChargeData?.map((i) => {
-        return { ...i, taxAndChargesParentData: attributeData?.find((a) => i.attributeTypeCode === a.hierarchyAttribueId) };
-    });
 
     const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
 
@@ -313,19 +323,15 @@ export const VehicleChecklistMain = ({
             setFormActionType(FROM_ACTION_TYPE.VIEW);
             const formData = flatternData.find((i) => keys?.[0] === i?.key);
 
-            console.log(`formDataformData`, formData);
             if (formData) {
-                //const isChildAllowed = unFilteredAttributeData?.find((attribute) => attribute.hierarchyAttribueCode === formData?.data?.attributeTypeCode)?.isChildAllowed;
-                setFormData(formData?.data);
+                setAttributeType(formData?.data?.attributeLevel);
+                let isChild = formData?.data?.attributeLevel !== `CHKL` ? true : false;
 
-                setAttributeType(formData?.data?.attributeTypeCode);
-                setCalculationType(formData?.data?.calculationType);
+                setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: isChild, siblingBtn: true });
 
-                setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: formData?.isChildPresent, siblingBtn: true });
-
-                const hierarchyAttribueName = unFilteredAttributeData?.find((attribute) => attribute?.hierarchyAttribueCode === formData?.data?.attributeTypeCode)?.hierarchyAttribueName;
-                const attributeParentName = flatternData.find((i) => formData?.data?.parentCode === i.key)?.data?.taxChargesTypeCode;
-                setSelectedTreeData({ ...formData?.data, hierarchyAttribueName, parentName: attributeParentName });
+                const attributeName = attributeData?.find((e) => e?.key === formData?.data?.attributeLevel)?.value;
+                const attributeParentName = flatternData.find((i) => formData?.data?.parentCode === i.key)?.data?.descriptionTitle;
+                setFormData({ ...formData?.data, parentName: attributeParentName, attributeName });
             } else {
                 setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
             }
@@ -473,6 +479,7 @@ export const VehicleChecklistMain = ({
         setCalType,
         documentDescription,
         financialAccount,
+        formData,
     };
 
     const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
@@ -536,7 +543,7 @@ export const VehicleChecklistMain = ({
                 </Col>
 
                 <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol}>
-                    {selectedTreeData && selectedTreeData?.taxChargesTypeCode ? (
+                    {Object.keys(formData)?.length > 0 ? (
                         <>
                             <ViewTaxCharges {...viewProps} />
                             <div className={styles.viewContainerFooter}>

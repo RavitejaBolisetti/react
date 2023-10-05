@@ -11,8 +11,7 @@ import { withDrawer } from 'components/withDrawer';
 
 import styles from 'assets/sass/app.module.scss';
 
-import { TAX_CHARGES_TYPE } from 'constants/modules/taxChargesType';
-import { TAX_CHARGES_CALCULATION_TYPE } from 'constants/modules/taxChargesCalculationType';
+import { ATTRIBUTE_LEVEL } from 'constants/modules/VehicleCheckListMaster/attributeType';
 
 import { customSelectBox } from 'utils/customSelectBox';
 
@@ -48,40 +47,40 @@ const AddEditFormMain = (props) => {
     let treeCodeReadOnly = false;
     let attributeCode = '';
 
-    const taxChargeTypeList = Object.values(TAX_CHARGES_TYPE);
+    const taxChargeTypeList = Object.values('');
 
-    if (formActionType === FROM_ACTION_TYPE.EDIT || formActionType === FROM_ACTION_TYPE.VIEW) {
-        treeCodeId = formData?.parentCode;
-        attributeCode = formData?.attributeTypeCode;
-        setAttributeType(attributeCode);
-    } else if (formActionType === FROM_ACTION_TYPE.CHILD) {
-        treeCodeId = selectedTreeKey && selectedTreeKey[0];
-        treeCodeReadOnly = true;
-        attributeCode = formData?.attributeTypeCode;
-        const treeCodeData = flatternData.find((i) => i.key === treeCodeId);
-        const currentAttributeOrder = taxChargeTypeList?.find((i) => i.KEY === treeCodeData?.data?.attributeTypeCode)?.ORDER;
-        const childAttribute = taxChargeTypeList?.find((i) => i?.ORDER > currentAttributeOrder);
-        attributeCode = childAttribute?.KEY;
-        setAttributeType(attributeCode);
-    } else if (formActionType === FROM_ACTION_TYPE.SIBLING) {
-        treeCodeReadOnly = true;
-        const treeCodeData = flatternData.find((i) => i.key === selectedTreeKey[0]);
-        treeCodeId = treeCodeData && treeCodeData?.data?.parentCode;
-        const currentAttribute = taxChargeTypeList?.find((i) => i.KEY === treeCodeData?.data?.attributeTypeCode);
-        attributeCode = currentAttribute?.KEY;
-        setAttributeType(attributeCode);
-    } else {
-        const currentAttribute = taxChargeTypeList?.find((i) => i.ORDER);
-        attributeCode = currentAttribute?.KEY;
-        setAttributeType(attributeCode);
-    }
+    // if (formActionType === FROM_ACTION_TYPE.EDIT || formActionType === FROM_ACTION_TYPE.VIEW) {
+    //     treeCodeId = formData?.parentCode;
+    //     attributeCode = formData?.attributeTypeCode;
+    //     setAttributeType(attributeCode);
+    // } else if (formActionType === FROM_ACTION_TYPE.CHILD) {
+    //     treeCodeId = selectedTreeKey && selectedTreeKey[0];
+    //     treeCodeReadOnly = true;
+    //     attributeCode = formData?.attributeTypeCode;
+    //     const treeCodeData = flatternData.find((i) => i.key === treeCodeId);
+    //     const currentAttributeOrder = taxChargeTypeList?.find((i) => i.KEY === treeCodeData?.data?.attributeTypeCode)?.ORDER;
+    //     const childAttribute = taxChargeTypeList?.find((i) => i?.ORDER > currentAttributeOrder);
+    //     attributeCode = childAttribute?.KEY;
+    //     setAttributeType(attributeCode);
+    // } else if (formActionType === FROM_ACTION_TYPE.SIBLING) {
+    //     treeCodeReadOnly = true;
+    //     const treeCodeData = flatternData.find((i) => i.key === selectedTreeKey[0]);
+    //     treeCodeId = treeCodeData && treeCodeData?.data?.parentCode;
+    //     const currentAttribute = taxChargeTypeList?.find((i) => i.KEY === treeCodeData?.data?.attributeTypeCode);
+    //     attributeCode = currentAttribute?.KEY;
+    //     setAttributeType(attributeCode);
+    // } else {
+    //     const currentAttribute = taxChargeTypeList?.find((i) => i.ORDER);
+    //     attributeCode = currentAttribute?.KEY;
+    //     setAttributeType(attributeCode);
+    // }
 
-    useEffect(() => {
-        setSelectedTreeSelectKey(treeCodeId);
-        setAttributeType(formData?.attributeTypeCode);
-        setCalculationType(formData?.calculationType);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [treeCodeId]);
+    // useEffect(() => {
+    //     setSelectedTreeSelectKey(treeCodeId);
+    //     setAttributeType(formData?.attributeTypeCode);
+    //     setCalculationType(formData?.calculationType);
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [treeCodeId]);
 
     const treeSelectFieldProps = {
         treeFieldNames,
@@ -104,12 +103,7 @@ const AddEditFormMain = (props) => {
     const handleAttributeChange = (props) => {
         setAttributeType(props);
     };
-
-    const calTypeFun = (val) => {
-        setCalType(val);
-        setCalculationType(val);
-    };
-
+    console.log(`attributeType`, attributeType);
     return (
         <>
             <Form autoComplete="off" form={form} layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -118,7 +112,7 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Form.Item initialValue={attributeCode} name="attributeTypeCode" label="Attribute Type" rules={[validateRequiredSelectField('Attribute Type Code')]}>
-                                    {customSelectBox({ data: attributeData, fieldNames: { key: 'hierarchyAttribueCode', value: 'hierarchyAttribueName' }, onChange: handleAttributeChange, loading: !isDataAttributeLoaded, placeholder: preparePlaceholderSelect('Attribute Type Code'), disabled: true })}
+                                    {customSelectBox({ data: attributeData, fieldNames: { key: 'hierarchyAttribueCode', value: 'hierarchyAttribueName' }, onChange: handleAttributeChange, loading: !isDataAttributeLoaded, placeholder: preparePlaceholderSelect('Attribute Type Code') })}
                                 </Form.Item>
                             </Col>
 
@@ -128,57 +122,52 @@ const AddEditFormMain = (props) => {
                                 </Form.Item>
                             </Col>
                         </Row>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item initialValue={formData?.taxChargesTypeCode} label="Tax/Charge Type Code" name="taxChargesTypeCode" rules={[validateRequiredInputField('Tax/Charge Type Code')]}>
-                                    <Input maxLength={6} placeholder={preparePlaceholderText('Tax/Charge Type Code')} disabled={formData?.attributeTypeCode || isReadOnly} />
-                                </Form.Item>
-                            </Col>
 
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.textareaError}>
-                                <Form.Item initialValue={formData?.taxChargesTypeDescription} label="Tax/Charge Type Descrption" name="taxChargesTypeDescription" rules={[validateRequiredInputField('Tax/Charge Type Descrption')]}>
-                                    <TextArea maxLength={300} placeholder={preparePlaceholderText('Tax/Charge Type Descrption')} showCount />
-                                </Form.Item>
-                            </Col>
-                        </Row>
-
-                        {attributeType === TAX_CHARGES_TYPE?.TAX_CHARGES_TYPE_CALCULATION?.KEY ? (
+                        {attributeType === ATTRIBUTE_LEVEL?.[0]?.key ? (
                             <>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item initialValue={formData?.calculationType} label="Calculation Type" name="calculationType" rules={[validateRequiredInputField('Calculation_Type')]}>
-                                            {customSelectBox({ data: typeData?.CAL_TYPE, placeholder: preparePlaceholderSelect('Calculation Type'), onChange: calTypeFun })}
+                                        <Form.Item initialValue={formData?.code} label="Group Code" name="taxChargesTypeCode" rules={[validateRequiredInputField('Tax/Charge Type Code')]}>
+                                            <Input maxLength={6} placeholder={preparePlaceholderText('Group Code')} disabled={formData?.attributeTypeCode || isReadOnly} />
+                                        </Form.Item>
+                                    </Col>
+
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.textareaError}>
+                                        <Form.Item initialValue={formData?.descriptionTitle} label="Group Description" name="taxChargesTypeDescription" rules={[validateRequiredInputField('Tax/Charge Type Descrption')]}>
+                                            <TextArea maxLength={300} placeholder={preparePlaceholderText('Group Description')} showCount />
                                         </Form.Item>
                                     </Col>
                                 </Row>
-                                <Row gutter={20}>
-                                    {calculationType === TAX_CHARGES_CALCULATION_TYPE?.PERCENTAGE?.KEY ? (
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Form.Item initialValue={formData?.percentage} label="Percentage" name="percentage" rules={[validateRequiredInputField('Percentage'), valueOfPer('Percentage')]}>
-                                                <InputNumber placeholder={preparePlaceholderText('Percentage')} type="number" />
-                                            </Form.Item>
-                                        </Col>
-                                    ) : calculationType === TAX_CHARGES_CALCULATION_TYPE?.AMOUNT?.KEY ? (
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Form.Item initialValue={formData?.rate} label="Rate" name="rate" rules={[validateRequiredInputField('Rate'), validateNumberWithTwoDecimalPlaces('rate with two decimal places')]}>
-                                                <InputNumber placeholder={preparePlaceholderText('Rate')} type="number" step="any" />
-                                            </Form.Item>
-                                        </Col>
-                                    ) : null}
-                                </Row>
                             </>
-                        ) : attributeType === TAX_CHARGES_TYPE?.TAX_CHARGES_TYPE_ACCOUNT_AND_DOCUMENT_MAPPING?.KEY ? (
+                        ) : attributeType === ATTRIBUTE_LEVEL?.[1]?.key ? (
                             <>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item initialValue={formData?.documentTypeCode} name="documentTypeCode" label="Document Description" rules={[validateRequiredSelectField('Document Description')]}>
+                                        <Form.Item initialValue={formData?.code} name="documentTypeCode" label="Sub Group Code" rules={[validateRequiredSelectField('Document Description')]}>
                                             {customSelectBox({ data: documentDescription, fieldNames: { key: 'id', value: 'documentDescription' }, placeholder: preparePlaceholderSelect('Document Description') })}
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item initialValue={formData?.financialAccountHeadCode} name="financialAccountHeadCode" label="Financial Account Head" rules={[validateRequiredSelectField('Financial Account Head')]}>
+                                        <Form.Item initialValue={formData?.descriptionTitle} name="financialAccountHeadCode" label="Sub Group Description" rules={[validateRequiredSelectField('Financial Account Head')]}>
+                                            {customSelectBox({ data: financialAccount, placeholder: preparePlaceholderSelect('Financial Account Head') })}
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+                            </>
+                        ) : attributeType === ATTRIBUTE_LEVEL?.[2]?.key ? (
+                            <>
+                                <Row gutter={20}>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                        <Form.Item initialValue={formData?.code} name="documentTypeCode" label="Checklist Code" rules={[validateRequiredSelectField('Document Description')]}>
+                                            {customSelectBox({ data: documentDescription, fieldNames: { key: 'id', value: 'documentDescription' }, placeholder: preparePlaceholderSelect('Document Description') })}
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+                                <Row gutter={20}>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                        <Form.Item initialValue={formData?.descriptionTitle} name="financialAccountHeadCode" label="Checklist Description" rules={[validateRequiredSelectField('Financial Account Head')]}>
                                             {customSelectBox({ data: financialAccount, placeholder: preparePlaceholderSelect('Financial Account Head') })}
                                         </Form.Item>
                                     </Col>
