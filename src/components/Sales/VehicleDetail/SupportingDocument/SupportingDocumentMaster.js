@@ -152,10 +152,6 @@ const SupportingDocumentBase = (props) => {
     };
 
     const onFinish = () => {
-        if ((form.getFieldValue('documentTitle') || form.getFieldValue('documentTypeCd')) && payload?.length === 0) {
-            showGlobalNotification({ notificationType: 'warning', title: 'Warning', message: 'Please upload file to submit' });
-            return false;
-        }
         if ((!form.getFieldValue('documentTitle') || !form.getFieldValue('documentTypeCd')) && payload?.length === 0) {
             form.resetFields();
         }
@@ -195,6 +191,15 @@ const SupportingDocumentBase = (props) => {
             setUploadedFile();
             form.resetFields();
             setIsFormVisible(false);
+        }
+    };
+
+    const handleClearChange = () => {
+        if (!form.getFieldValue('documentTypeCd') && !form.getFieldValue('documentTitle')) {
+            setMandatoryFields(false);
+            form.resetFields();
+        } else {
+            setMandatoryFields(true);
         }
     };
 
@@ -246,6 +251,7 @@ const SupportingDocumentBase = (props) => {
         setDocumentTitleRule,
         mandatoryFields,
         setMandatoryFields,
+        handleClearChange,
     };
 
     const uploadProps = {
@@ -280,6 +286,7 @@ const SupportingDocumentBase = (props) => {
         supportingDocs: true,
         setMandatoryFields,
         onRemove,
+        tempFileName: form.getFieldValue('documentTitle'),
     };
 
     const myProps = {

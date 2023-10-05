@@ -223,6 +223,7 @@ export const CustomerDetailsMain = (props) => {
     };
 
     const viewProps = {
+        typeData,
         formData,
         styles,
         isLoading,

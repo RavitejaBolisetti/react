@@ -20,8 +20,6 @@ import { supportingDocumentDataActions } from 'store/actions/data/supportingDocu
 import { showGlobalNotification } from 'store/actions/notification';
 
 import { BASE_URL_VEHICLE_PRICE_MASTER_SEARCH as customURL } from 'constants/routingApi';
-
-import { FilterIcon } from 'Icons';
 import { ViewDetail } from './ViewDetail';
 import { VehiclePriceMasterUpload } from './VehiclePriceMasterUpload';
 
@@ -480,7 +478,7 @@ export const VehiclePriceMasterBase = (props) => {
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
         onCloseAction: onAdvanceSearchCloseAction,
-        icon: <FilterIcon size={20} />,
+        // icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
         isDataCountryLoaded,
         isCountryLoading,
@@ -601,6 +599,7 @@ export const VehiclePriceMasterBase = (props) => {
         validationText: 'File type should be .xlxs and max file size to be 8Mb',
         supportedFileTypes: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
         maxSize: 8,
+        single: true,
     };
 
     const buttonProps = {

@@ -20,7 +20,7 @@ const { Panel } = Collapse;
 const { Option } = Select;
 
 const AddEditForm = (props) => {
-    const { formActionType, handleFormValueChange, typeData } = props;
+    const { formActionType, handleFormValueChange, typeData,handleClearChange } = props;
     const { uploadProps, mandatoryFields } = props;
     const { ...viewProps } = props;
 
@@ -60,7 +60,7 @@ const AddEditForm = (props) => {
                             <Row gutter={16}>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                     <Form.Item label="Document Type" name="documentTypeCd" rules={mandatoryFields ? [validateRequiredSelectField('document type')] : ''} placeholder={preparePlaceholderSelect('document type')}>
-                                        <Select loading={!(typeData?.length !== 0)} placeholder="Select" {...selectProps}>
+                                        <Select loading={!(typeData?.length !== 0)} onChange={handleClearChange} placeholder="Select" {...selectProps}>
                                             {typeData?.map((item) => (
                                                 <Option key={item?.key} value={item?.key}>
                                                     {item?.value}
@@ -71,7 +71,7 @@ const AddEditForm = (props) => {
                                 </Col>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                     <Form.Item label="Document Name" name="documentTitle" rules={mandatoryFields ? [validateRequiredInputField('document name')] : ''}>
-                                        <Input placeholder={preparePlaceholderText('File Name')} allowClear />
+                                        <Input onChange={handleClearChange} placeholder={preparePlaceholderText('File Name')} allowClear />
                                     </Form.Item>
                                 </Col>
                             </Row>

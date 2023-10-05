@@ -19,6 +19,7 @@ export const initialState = {
     extraParam: [],
     filter: undefined,
     isLoadingOnSave: false,
+    isDetailDataLoading: false,
 
     isChangeHistoryLoaded: false,
     isChangeHistoryLoading: false,
@@ -69,6 +70,11 @@ const saveDataCF = (state, action) => ({
     saveDataId: action.saveDataId,
 });
 
+const showDataLoadingCF = (state, action) => ({
+    ...state,
+    isDetailDataLoading: action.isLoading,
+});
+
 const resetDataCF = (state, action) => ({
     initialState,
 });
@@ -79,7 +85,7 @@ const resetDetailDataCF = (state, action) => ({
 });
 
 export const crudDataReducer =
-    ({ RECEIVE_DATA_LOADING_ACTION_CONSTANT, RECEIVE_DATA_ACTION_CONSTANT, RECEIVE_DATA_ACTION_APPLY_FILTER_CONSTANT, RECEIVE_FILTERED_DATA_ACTION_CONSTANT, RECIEVE_DATA_DETAIL_ACTION_CONSTANT, SAVE_DATA_ACTION_CONSTANT, RESET_DATA_ACTION_CONSTANT, RESET_DETAIL_DATA_ACTION_CONSTANT, SAVE_FORM_DATA_LOADING_CONSTANT, RECEIVE_CHANGE_HISTORY_DATA_ACTION_CONSTANT, RECEIVE_CHANGE_HISTORY_DATA_LOADING_ACTION_CONSTANT, myInitialState = initialState }) =>
+    ({ RECEIVE_DATA_LOADING_ACTION_CONSTANT, RECEIVE_DATA_ACTION_CONSTANT, RECEIVE_DATA_ACTION_APPLY_FILTER_CONSTANT, RECEIVE_FILTERED_DATA_ACTION_CONSTANT, RECIEVE_DATA_DETAIL_ACTION_CONSTANT, SAVE_DATA_ACTION_CONSTANT, RESET_DATA_ACTION_CONSTANT, RESET_DETAIL_DATA_ACTION_CONSTANT, SAVE_FORM_DATA_LOADING_CONSTANT, RECEIVE_CHANGE_HISTORY_DATA_ACTION_CONSTANT, RECEIVE_CHANGE_HISTORY_DATA_LOADING_ACTION_CONSTANT, RECEIVE_DETAIL_DATA_LOADING_ACTION_CONSTANT, myInitialState = initialState }) =>
     (state = myInitialState, action) => {
         switch (action.type) {
             case RECEIVE_DATA_LOADING_ACTION_CONSTANT:
@@ -100,6 +106,8 @@ export const crudDataReducer =
                 return recieveChangeHistoryDataCF(state, action);
             case RECEIVE_CHANGE_HISTORY_DATA_LOADING_ACTION_CONSTANT:
                 return recieveChangeHistoryDataLoadingCF(state, action);
+            case RECEIVE_DETAIL_DATA_LOADING_ACTION_CONSTANT:
+                return showDataLoadingCF(state, action);
             case RESET_DATA_ACTION_CONSTANT:
                 return resetDataCF(state, action);
             case RESET_DETAIL_DATA_ACTION_CONSTANT:

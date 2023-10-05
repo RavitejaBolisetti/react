@@ -24,8 +24,6 @@ import { vehicleReceiptDataActions } from 'store/actions/data/vehicleReceipt/veh
 import { vehicleDetailDataActions } from 'store/actions/data/vehicleReceipt/vehicleDetails';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
-import { FilterIcon } from 'Icons';
-
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -461,8 +459,7 @@ export const VehicleReceiptMasterBase = (props) => {
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
-
-        icon: <FilterIcon size={20} />,
+        // icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
 
         onCloseAction: onAdvanceSearchCloseAction,

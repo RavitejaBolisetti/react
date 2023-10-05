@@ -18,13 +18,14 @@ import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
 
 import styles from 'assets/sass/app.module.scss';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
             VehicleDeliveryNote: {
-                CustomerDetailsDeliveryNote: { isLoaded, isLoading, data: customerDetailsDataSearched = [] },
+                CustomerDetailsDeliveryNote: { isLoaded, isLoading, data: customerDetailsDataSearched = {} },
             },
         },
     } = state;
@@ -57,9 +58,10 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const CustomerDetailsMasterBase = (props) => {
     const { fetchList, customerDetailsDataSearched, customerDetailsData, setFormActionType, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, isLoading } = props;
-    const { requestPayload, setRequestPayload } = props;
-    const { listShowLoading, userId, typeData, form, soldByDealer, challanRequestPayload, setChallanRequestPayload, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section, customerIdValue, setCustomerIdValue } = props;
+    const { requestPayload, setRequestPayload, showGlobalNotification } = props;
+    const { listShowLoading, userId, typeData, form, soldByDealer, isLoaded, resetData, setChallanRequestPayload, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section, customerIdValue, setCustomerIdValue } = props;
     const { buttonData, setButtonData } = props;
+    const resetKeys = ['customerType', 'customerName', 'mobile', 'address', 'customerCity', 'district', 'state', 'pinCode', 'email'];
 
     const [isFormVisible, setIsFormVisible] = useState(false);
 
@@ -71,20 +73,17 @@ export const CustomerDetailsMasterBase = (props) => {
 
     useEffect(() => {
         if (customerDetailsData) {
-            setFormData({ ...customerDetailsData });
+            setFormData({ ...customerDetailsData, customerType: typeData?.[PARAM_MASTER?.CUST_TYPE?.id]?.find((customer) => customer?.key === customerDetailsData?.customerType)?.value });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [customerDetailsData]);
 
-    // useEffect(() => {
-    //     if (customerDetailsData || customerDetailsDataSearched) {
-    //         customerDetailsData && form.setFieldsValue({ ...customerDetailsData, customerType: typeData?.[PARAM_MASTER?.CUST_TYPE?.id]?.find((customer) => customer?.key === customerDetailsData?.customerType)?.value });
-    //         customerDetailsData && setFormData({ ...customerDetailsData });
-    //         customerDetailsDataSearched && form.setFieldsValue({ ...customerDetailsDataSearched, customerType: typeData?.[PARAM_MASTER?.CUST_TYPE?.id]?.find((customer) => customer?.key === customerDetailsDataSearched?.customerType)?.value });
-    //         customerDetailsDataSearched && setFormData({ ...customerDetailsDataSearched });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [customerDetailsData, section, customerDetailsDataSearched]);
+    useEffect(() => {
+        if (customerDetailsDataSearched && isLoaded) {
+            setChallanRequestPayload({ ...requestPayload, customerDetails: customerDetailsDataSearched });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [section, customerDetailsDataSearched, isLoaded]);
 
     useEffect(() => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -92,21 +91,16 @@ export const CustomerDetailsMasterBase = (props) => {
     }, [section]);
 
     const handleOnChange = (e) => {
-        form.setFieldsValue({
-            customerType: '',
-            customerName: '',
-            mobile: '',
-            address: '',
-            city: '',
-            district: '',
-            state: '',
-            pincode: '',
-            email: '',
-        });
-        setCustomerIdValue(e.target.value);
+        form.resetFields([...resetKeys]);
+        resetData();
     };
 
-    const handleCustomerIdSearch = () => {
+    const handleCustomerIdSearch = (customerIdValue = '') => {
+        console.log('handleCustomerIdSearch', customerIdValue);
+        if (!customerIdValue) {
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Enter customer id to search' });
+            return false;
+        }
         const onSuccessAction = (res) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         };
@@ -128,10 +122,8 @@ export const CustomerDetailsMasterBase = (props) => {
         if (soldByDealer) {
             setRequestPayload({ ...requestPayload, customerDetails: customerDetailsData });
         } else {
-            setRequestPayload({ ...requestPayload, customerDetails: customerDetailsDataSearched });
+            setChallanRequestPayload({ ...requestPayload, customerDetails: customerDetailsDataSearched });
         }
-
-        setChallanRequestPayload({ ...challanRequestPayload, customerDetails: customerDetailsDataSearched });
 
         handleButtonClick({ buttonAction: NEXT_ACTION });
         setButtonData({ ...buttonData, formBtnActive: false });
@@ -167,6 +159,7 @@ export const CustomerDetailsMasterBase = (props) => {
         setButtonData,
         handleButtonClick,
         handleCustomerIdSearch,
+        customerDetailsDataSearched,
         handleOnChange,
         customerIdValue,
         soldByDealer,

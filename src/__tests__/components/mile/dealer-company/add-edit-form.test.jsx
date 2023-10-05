@@ -25,6 +25,7 @@ describe('Dealer company components', () => {
         const pattern = /^\d{6}(?:\s*,\s*\d{6})*$/;
         const formData = { companyCode: "test", parentCode: "test", status: true, pinCode: [{ key: 1, value: "test" }, { key: 2, value: "test" }] }
         const pincodeData = [{ key: 1, id: 1, value: "test", pinCode: "4545" }, { key: 2, id: 2, pinCode: "4545", value: "test" }]
+        const fetchPincodeDetail = jest.fn()
         customRender(
             <FormWrapper isVisible={true}
                 showGlobalNotification={jest.fn()}
@@ -32,7 +33,7 @@ describe('Dealer company components', () => {
                 formActionType={formActionType}
                 setButtonData={jest.fn()}
                 handleFormValueChange={jest.fn()}
-                fetchPincodeDetail={jest.fn()}
+                fetchPincodeDetail={fetchPincodeDetail}
                 pattern={pattern}
                 pincodeData={pincodeData}
                 checked={true}
@@ -89,6 +90,9 @@ describe('Dealer company components', () => {
 
         const status = screen.getByRole('switch', { name: 'Status' });
         fireEvent.click(status)
+
+        fetchPincodeDetail.mock.calls[0][0].onSuccessAction();
+        fetchPincodeDetail.mock.calls[0][0].onErrorAction();
     })
 
 

@@ -109,13 +109,10 @@ const LoyaltySchemeMasterMain = (props) => {
     const [filteredModelData, setfilteredModelData] = useState([]);
     const [filteredVariantData, setfilteredVariantData] = useState([]);
     const [formData, setformData] = useState([]);
-    const [editable, setEditable] = useState();
     const disabledProps = { disabled: true };
 
     const fnSetData = (data) => {
         if (data && Object?.keys(data)?.length > 0) {
-            if (data?.customerId) setEditable(true);
-            else setEditable(false);
             form.setFieldsValue({ ...data, customerCode: data?.customerId, oldChassisNumber: data?.chassisNumber, variantCode: data?.variant, vehicleModelGroup: data?.modelGroup, make: data?.make || VEHICLE_COMPANY_MAKE });
         } else if (data === null) {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'No data found' });
@@ -210,8 +207,6 @@ const LoyaltySchemeMasterMain = (props) => {
 
     useEffect(() => {
         if (LoyaltySchemeData) {
-            if (LoyaltySchemeData?.customerCode) setEditable(true);
-            else setEditable(false);
             setformData(LoyaltySchemeData);
             LoyaltySchemeData?.make && handleFilterChange('make', LoyaltySchemeData?.make ?? '');
             LoyaltySchemeData?.vehicleModelGroup && handleFilterChange('modelGroup', LoyaltySchemeData?.vehicleModelGroup ?? '');

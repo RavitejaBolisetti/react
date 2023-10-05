@@ -21,5 +21,6 @@ import { VehicleTrackingMaster } from './VehicleTracking';
 import { OtfListMaster as OtfSoMappingUnmappingMaster } from './OtfSoMappingUnmapping';
 import { StockTransferIndentMaster } from './StockTransferIndent';
 import { VehicleDeliveryNoteMaster } from './VehicleDeliveryNote';
+import { EvrDetailsCapturingMaster } from './EvrDetailsCapturing';
 
-export { OtfMaster, VehicleDetailMaster,OtfBlockMaster, VehicleReceiptMaster, VehiclePurchaseOrderMaster, VehicleRecieptChecklistMaster, OtfSoMappingMaster, ReceiptMaster, HoPriceMappingMaster, DigitalSignatureMaster, VehicleInvoiceMaster, VehicleAllotmentPriorityMaster, VehicleTrackingMaster, OtfSoMappingUnmappingMaster, StockTransferIndentMaster, VehicleDeliveryNoteMaster };
+export { OtfMaster, VehicleDetailMaster, OtfBlockMaster, VehicleReceiptMaster, VehiclePurchaseOrderMaster, VehicleRecieptChecklistMaster, OtfSoMappingMaster, ReceiptMaster, HoPriceMappingMaster, DigitalSignatureMaster, VehicleInvoiceMaster, VehicleAllotmentPriorityMaster, VehicleTrackingMaster, OtfSoMappingUnmappingMaster, StockTransferIndentMaster, VehicleDeliveryNoteMaster, EvrDetailsCapturingMaster };
