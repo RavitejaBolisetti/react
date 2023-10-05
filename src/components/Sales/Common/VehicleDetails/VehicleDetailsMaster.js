@@ -84,7 +84,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const VehicleDetailsMasterMain = (props) => {
     const { isProductDataLoading, vehicleDetailDataReceived, vehicleDetailDataPass, isVehicleLovDataLoading, resetProductLov, productAttributeData, fetchProductLovCode, isLoading, saveData, ProductLovLoading } = props;
-    const { form, selectedOrderId, section, buttonData, setButtonData, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
+    const { form, selectedOrderId, selectedRecordId, section, buttonData, setButtonData, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
     const { refreshData, setRefreshData, isVehicleServiceLoaded, vehicleServiceData, fetchServiceLov, serviceLoading, selectedOrder, setSelectedOrder } = props;
     const { isProductHierarchyDataLoaded, typeData, fetchList, resetData, userId, listShowLoading, showGlobalNotification } = props;
     const { formKey, onFinishCustom = undefined, FormActionButton, StatusBar, salesModuleType } = props;
@@ -113,14 +113,12 @@ const VehicleDetailsMasterMain = (props) => {
     const isOTFModule = salesModuleType === SALES_MODULE_TYPE.OTF.KEY;
 
     useEffect(() => {
-        if (userId && selectedOrderId) {
+        if (userId && selectedRecordId) {
             if (isOTFModule) {
                 const extraParams = [
                     {
-                        key: 'otfNumber',
-                        title: 'otfNumber',
-                        value: selectedOrderId,
-                        name: 'Booking Number',
+                        key: 'otfId',
+                        value: selectedRecordId,
                     },
                 ];
                 fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
@@ -131,7 +129,7 @@ const VehicleDetailsMasterMain = (props) => {
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOrderId, isVehicleServiceLoaded]);
+    }, [userId, selectedRecordId, isVehicleServiceLoaded]);
 
     useEffect(() => {
         setProductHierarchyData(productHierarchyDataList?.map((i) => DisableParent(i, 'subProdct')));
@@ -219,7 +217,7 @@ const VehicleDetailsMasterMain = (props) => {
     }, [vehicleDetailData]);
 
     useEffect(() => {
-        if (selectedOrderId && formData?.modelCode) {
+        if (selectedRecordId && formData?.modelCode) {
             const lovExtraParams = [
                 {
                     key: 'prodctCode',
@@ -234,15 +232,15 @@ const VehicleDetailsMasterMain = (props) => {
             fetchProductLovCode({ setIsLoading: ProductLovLoading, userId, onErrorAction: onErrorActionProduct, extraParams: lovExtraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedOrderId, formData]);
+    }, [selectedRecordId, formData]);
 
     const handleVehicleDetailChange = (vehicleData) => {
         setFilterVehicleData({ ...vehicleData });
         const { productModelCode, discountAmount, saleType, priceType } = vehicleData;
         const extraParams = [
             {
-                key: 'otfNumber',
-                value: selectedOrderId,
+                key: 'otfId',
+                value: selectedRecordId,
             },
             {
                 key: 'modelCode',

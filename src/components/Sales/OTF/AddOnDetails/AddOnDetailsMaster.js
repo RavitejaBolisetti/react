@@ -64,7 +64,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const AddOnDetailsMasterMain = (props) => {
     const { fetchList, resetPartData, partListLoading, showGlobalNotification, AddonPartsData, isAddonPartsDataLoaded, fetchSearchPartList, resetData, AddonDetailsData, isDataLoaded, userId, listShowLoading, saveData, onFinishFailed } = props;
-    const { form, section, selectedOrder, selectedOrderId, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
+    const { form, section, selectedOrder, selectedRecordId, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
 
     const [formData, setformData] = useState();
     const [formDataSetter, setformDataSetter] = useState({
@@ -133,20 +133,18 @@ export const AddOnDetailsMasterMain = (props) => {
 
     const extraParams = [
         {
-            key: 'otfNumber',
-            title: 'otfNumber',
-            value: selectedOrderId,
-            name: 'Booking Number',
+            key: 'otfId',
+            value: selectedRecordId,
         },
     ];
 
     useEffect(() => {
-        if (userId && selectedOrderId) {
+        if (userId && selectedRecordId) {
             accessoryForm.resetFields();
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOrderId]);
+    }, [userId, selectedRecordId]);
 
     useEffect(() => {
         if (isDataLoaded && AddonDetailsData) {
@@ -197,12 +195,12 @@ export const AddOnDetailsMasterMain = (props) => {
     const onFinish = (values) => {
         let detailsRequest = [];
         formDataSetter?.partDetailsResponses?.map((element, index) => {
-            const { id, otfNumber, partNumber, requiredQuantity, type, partDescription, sellingPrice, mrp } = element;
-            detailsRequest.push({ id, otfNumber, partNumber, requiredQuantity, type, partDescription, sellingPrice, mrp });
+            const { id, otfId, partNumber, requiredQuantity, type, partDescription, sellingPrice, mrp } = element;
+            detailsRequest.push({ id, otfId, partNumber, requiredQuantity, type, partDescription, sellingPrice, mrp });
             return undefined;
         });
 
-        const data = { id: formData?.id ?? '', otfNumber: selectedOrderId, partDetailsRequests: detailsRequest, shield: formDataSetter?.shield, rsa: formDataSetter?.rsa, amc: formDataSetter?.amc, fms: formDataSetter?.fms };
+        const data = { id: formData?.id ?? '', otfId: selectedRecordId, partDetailsRequests: detailsRequest, shield: formDataSetter?.shield, rsa: formDataSetter?.rsa, amc: formDataSetter?.amc, fms: formDataSetter?.fms };
 
         const onSuccess = (res) => {
             setformDataSetter({});
@@ -251,7 +249,7 @@ export const AddOnDetailsMasterMain = (props) => {
         handleFormValueChange,
         formDataSetter,
         setformDataSetter,
-        selectedOrderId,
+        selectedRecordId,
         addOnItemInfo,
         setAddOnItemInfo,
         shieldForm,
