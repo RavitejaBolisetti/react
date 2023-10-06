@@ -34,7 +34,7 @@ describe('ManufacturerAdminstrativeHierarchyMain', () => {
         expect(organizationSelect).toBeInTheDocument();
     });
 
-    it('displays the search input when an organization is selected', async() => {
+    it('displays the search input when an organization is selected', async () => {
         const manufacturerAdminHierarchyData = [{
             attributeKey: null,
             id: "19ec8958-f007-4835-be24-4bc9bd332719",
@@ -56,6 +56,19 @@ describe('ManufacturerAdminstrativeHierarchyMain', () => {
             },
         })
 
+        const res = {
+            data: [{
+                attributeKey: null,
+                id: "19ec8958-f007-4835-be24-4bc9bd332719",
+                manufactureAdminCode: "6e85eee5-4cfc-40cf-90e7-0dce9acbc2e4",
+                manufactureAdminLongName: "testing",
+                manufactureAdminParntId: "null",
+                manufactureAdminShortName: "test",
+                manufactureOrganizationId: "91398ed9-9128-4a8d-8165-9dac67e91f61",
+                status: true
+            }]
+        };
+
         const fetchList = jest.fn();
         const fetchDetailList = jest.fn();
         const saveData = jest.fn()
@@ -76,8 +89,8 @@ describe('ManufacturerAdminstrativeHierarchyMain', () => {
         await waitFor(() => {
             expect(saveData).toHaveBeenCalled();
         });
-        
-        saveData.mock.calls[0][0].onSuccess();
+
+        saveData.mock.calls[0][0].onSuccess(res);
         saveData.mock.calls[0][0].onError();
     });
 });
