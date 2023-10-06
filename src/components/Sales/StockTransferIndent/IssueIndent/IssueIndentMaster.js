@@ -45,7 +45,7 @@ const IssueIndentMasterMain = (props) => {
 
     useEffect(() => {
         if (issueModalOpen && vehicleVinData?.paginationData?.length) {
-            issueForm.setFieldsValue({ ...vehicleVinData?.paginationData[0], modelDescription: cancellationData?.modelDescription ?? '', invoiceDate: converDateDayjs(vehicleVinData?.paginationData[0]?.invoiceDate), grnDate: converDateDayjs(vehicleVinData?.paginationData[0]?.grnDate) });
+            issueForm.setFieldsValue({ ...vehicleVinData?.paginationData[0], modelDescription: cancellationData?.modelDescription ?? '', oemInvoiceDate: converDateDayjs(vehicleVinData?.paginationData[0]?.oemInvoiceDate), grnDate: converDateDayjs(vehicleVinData?.paginationData[0]?.grnDate) });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vehicleVinData]);
@@ -117,7 +117,7 @@ const IssueIndentMasterMain = (props) => {
         }
         const { invoiceDate, invoiceNumber, ...rest } = values;
 
-        const data = { ...rest, grnDate: vehicleVinData?.paginationData[0]?.grnDate, oemInvoiceDate: vehicleVinData?.paginationData[0]?.invoiceDate, oemInvoiceNumber: values?.invoiceNumber ?? '', indentHdrId: cancellationData?.id ?? '', id: '', modelCode: cancellationData?.modelCode ?? '', issueStatus: cancellationData?.issueStatus ?? '', issueDate: cancellationData?.issueDate ?? '', indentDetailId: cancellationData?.indentDetailId ?? '', issueNumber: '' };
+        const data = { ...rest, grnDate: vehicleVinData?.paginationData[0]?.grnDate, oemInvoiceDate: vehicleVinData?.paginationData[0]?.oemInvoiceDate, oemInvoiceNumber: values?.invoiceNumber ?? '', indentHdrId: cancellationData?.id ?? '', id: '', modelCode: cancellationData?.modelCode ?? '', issueStatus: cancellationData?.issueStatus ?? '', issueDate: cancellationData?.issueDate ?? '', indentDetailId: cancellationData?.indentDetailId ?? '', issueNumber: '' };
 
         const onSuccess = (res) => {
             issueForm.resetFields();
