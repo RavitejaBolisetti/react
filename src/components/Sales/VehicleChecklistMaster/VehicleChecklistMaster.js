@@ -350,7 +350,7 @@ export const VehicleChecklistMain = ({
             const formData = flatternData.find((i) => selectedTreeKey[0] === i.key);
             let attributeName = VehicleChecklistAttributeLov?.find((e) => e?.key === formData?.data?.attributeLevel)?.value;
             formData && setFormData({ ...formData?.data, attributeName });
-
+            console.log(`type`, type);
             form.setFieldsValue({
                 id: formData?.data?.id,
                 parentCode: formData?.data?.parentCode,
@@ -382,12 +382,9 @@ export const VehicleChecklistMain = ({
         isVisible: isFormVisible,
         onFinishFailed,
         onCloseAction: () => {
-            console.log(`hey`);
             setIsFormVisible(false);
-            //setAttributeType();
-            //setFormData([]);
         },
-        titleOverride: (formData?.taxChargesTypeCode ? 'Edit ' : 'Add ').concat(moduleTitle),
+        titleOverride: (formActionType === FROM_ACTION_TYPE?.EDIT ? 'Edit ' : 'Add ').concat(moduleTitle),
         onFinish,
         selectedTreeKey,
         selectedTreeData,
