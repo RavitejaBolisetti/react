@@ -293,13 +293,14 @@ export const VehicleChecklistMain = ({
         const codeToBeSaved = selectedTreeSelectKey || '';
         const data = { ...values, id: recordId, parentCode: codeToBeSaved };
 
+        console.log(`values`, values);
+
         const onSuccess = (res) => {
             form.resetFields();
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
 
             if (res?.data) {
                 setAttributeType(res?.data?.attributeTypeCode);
-                setCalculationType(res?.data?.calculationType);
 
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
 
