@@ -21,7 +21,7 @@ import { QUERY_BUTTONS_CONSTANTS, QUERY_BUTTONS_MNM_USER } from 'components/Sale
 // import { BASE_URL_VEHICLE_INVOICE_GENERATION_PROFILE_CARD as customURL, BASE_URL_INVOICE_DETAIL as InvoiceDetailsURL } from 'constants/routingApi';
 import { otfDataActions } from 'store/actions/data/otf/otf';
 
-// import { vehicleInvoiceDataActions } from 'store/actions/data/invoiceGeneration/vehicleInvoiceGeneration';
+import { amcRegistrationDataAction } from 'store/actions/data/amcRegistration/amcRegistration';
 // import { vehicleIrnGenerationDataActions } from 'store/actions/data/invoiceGeneration/irnGeneration';
 
 // import { vehicleInvoiceGenerationDataActions } from 'store/actions/data/invoiceGeneration/vehicleInvoice';
@@ -46,17 +46,8 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            VehicleInvoiceGeneration: {
-                VehicleInvoiceSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString, detailData: vehicleInvoiceMasterData = [], isDetailLoaded: isInVoiceMasterDetailDataLoaded },
-                VehicleIrnGeneration: { isLoaded: isIrnDataLoaded = false, isLoading: isIrnDataLoading, data: irnData = [] },
-                VehicleInvoiceDetail: { isLoaded: isVehicleInvoiceDataLoaded = false, isLoading: isVehicleInvoiceDataLoading, data: vehicleInvoiceData = [] },
-                VehicleDetails: { isLoaded: isVehicleDataLoaded = false, isLoading: isVehicleDataLoading, data: vehicleDetail = [] },
-                VehicleInvoice: { isLoaded: isInvoiceDataLoaded = false, isLoading: isInvoiceDataLoading, data: invoiceData = [] },
-            },
-
-            OTF: {
-                OtfSearchList: { isDetailLoaded: isDataLoaded, detailData: otfData = [] },
-                salesConsultantLov: { isLoaded: isSalesConsultantDataLoaded, data: salesConsultantLovData = [] },
+            AMCRegistration: {
+                AMCRegistrationSearch: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString, detailData: amcRegistrationDetailData = [], isDetailLoaded: isAMCDetailDataLoaded },
             },
         },
         common: {
@@ -74,25 +65,7 @@ const mapStateToProps = (state) => {
         moduleTitle,
         isSearchLoading,
         isSearchDataLoaded,
-        isInvoiceDataLoaded,
-        isInvoiceDataLoading,
-        invoiceData,
-        isDataLoaded,
-        otfData,
         filterString,
-        isIrnDataLoaded,
-        isIrnDataLoading,
-        isVehicleInvoiceDataLoaded,
-        isVehicleInvoiceDataLoading,
-        isVehicleDataLoaded,
-        isVehicleDataLoading,
-        irnData,
-        vehicleInvoiceData,
-        vehicleDetail,
-        vehicleInvoiceMasterData,
-        isInVoiceMasterDetailDataLoaded,
-        isSalesConsultantDataLoaded,
-        salesConsultantLovData,
         loginUserData,
     };
     return returnValue;
@@ -102,11 +75,11 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchOTFDetail: otfDataActions.fetchDetail,
-            resetOtfData: otfDataActions.reset,
+            // fetchOTFDetail: otfDataActions.fetchDetail,
+            // resetOtfData: otfDataActions.reset,
             // saveData: vehicleInvoiceGenerationDataActions.saveData,
             // cancelInvoice: vehicleInvoiceGenerationDataActions.saveData,
-            listShowLoading: otfDataActions.listShowLoading,
+            // listShowLoading: otfDataActions.listShowLoading,
             // saveData: vehicleInvoiceDetailDataActions.saveData,
             // listInvoiceShowLoading: vehicleInvoiceDetailDataActions.listShowLoading,
 
@@ -115,14 +88,17 @@ const mapDispatchToProps = (dispatch) => ({
 
             // fetchVehicleDetail: vehicleInvoiceDetailDataActions.fetchList,
             // fetchVehicleInvoiceDetail: vehicleDetailsDataActions.fetchList,
-            fetchSalesConsultant: salesConsultantActions.fetchList,
-            listConsultantShowLoading: salesConsultantActions.listShowLoading,
+            // fetchSalesConsultant: salesConsultantActions.fetchList,
+            // listConsultantShowLoading: salesConsultantActions.listShowLoading,
+
+            fetchList: amcRegistrationDataAction.fetchList,
+            listShowLoading: amcRegistrationDataAction.listShowLoading,
+            setFilterString: amcRegistrationDataAction.setFilter,
 
             // fetchList: vehicleInvoiceDataActions.fetchList,
             // fetchInvoiceMasterData: vehicleInvoiceDataActions.fetchDetail,
             // resetDetailData: vehicleInvoiceDataActions.resetDetail,
             // listInvoiceDetailShowLoading: vehicleInvoiceDataActions.listInvoiceDetailShowLoading,
-            // setFilterString: vehicleInvoiceDataActions.setFilter,
             showGlobalNotification,
         },
         dispatch
@@ -138,7 +114,7 @@ export const AMCRegistrationMasterBase = (props) => {
     const { isSalesConsultantDataLoaded, fetchSalesConsultant, salesConsultantLovData, listConsultantShowLoading, loginUserData } = props;
 
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
-    const [invoiceStatus, setInvoiceStatus] = useState(loginUserData?.userType === 'DLR' ? QUERY_BUTTONS_CONSTANTS.PENDING.key : QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.key);
+    const [amcStatus, setAmcStatus] = useState(loginUserData?.userType === 'DLR' ? QUERY_BUTTONS_CONSTANTS.PENDING.key : QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.key);
     const [requestPayload, setRequestPayload] = useState({});
 
     const [listFilterForm] = Form.useForm();
@@ -271,9 +247,9 @@ export const AMCRegistrationMasterBase = (props) => {
                 filter: false,
             },
             {
-                key: 'invoiceStatus',
-                title: 'Invoice Status',
-                value: invoiceStatus,
+                key: 'status',
+                title: 'Status',
+                value: filterString?.status,
                 canRemove: false,
                 filter: false,
             },
@@ -293,7 +269,7 @@ export const AMCRegistrationMasterBase = (props) => {
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchValue, invoiceStatus, filterString, page]);
+    }, [searchValue, amcStatus, filterString, page]);
 
     useEffect(() => {
         if (userId) {
@@ -301,14 +277,14 @@ export const AMCRegistrationMasterBase = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, invoiceStatus, filterString, page]);
+    }, [userId, amcStatus, filterString, page]);
 
-    useEffect(() => {
-        if (!isSalesConsultantDataLoaded && userId) {
-            fetchSalesConsultant({ setIsLoading: listConsultantShowLoading, userId });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isSalesConsultantDataLoaded, userId]);
+    // useEffect(() => {
+    //     if (!isSalesConsultantDataLoaded && userId) {
+    //         fetchSalesConsultant({ setIsLoading: listConsultantShowLoading, userId });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [isSalesConsultantDataLoaded, userId]);
 
     // useEffect(() => {
     //     if (otfData && formActionType?.viewMode) {
@@ -330,15 +306,15 @@ export const AMCRegistrationMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [otfData, formActionType, isDataLoaded, vehicleInvoiceMasterData]);
 
-    useEffect(() => {
-        if (!isInVoiceMasterDetailDataLoaded) {
-            setRequestPayload({ ...DefaultPayload });
-        }
-        if ((Object?.keys(vehicleInvoiceMasterData)?.length && isInVoiceMasterDetailDataLoaded && vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest?.orderStatus === OTF_STATUS?.ALLOTED?.key) || formActionType?.viewMode) {
-            setRequestPayload({ ...vehicleInvoiceMasterData });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [vehicleInvoiceMasterData, isInVoiceMasterDetailDataLoaded]);
+    // useEffect(() => {
+    //     if (!isInVoiceMasterDetailDataLoaded) {
+    //         setRequestPayload({ ...DefaultPayload });
+    //     }
+    //     if ((Object?.keys(vehicleInvoiceMasterData)?.length && isInVoiceMasterDetailDataLoaded && vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest?.orderStatus === OTF_STATUS?.ALLOTED?.key) || formActionType?.viewMode) {
+    //         setRequestPayload({ ...vehicleInvoiceMasterData });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [vehicleInvoiceMasterData, isInVoiceMasterDetailDataLoaded]);
 
     useEffect(() => {
         if (selectedOrderId && !formActionType?.addMode) {
@@ -441,7 +417,7 @@ export const AMCRegistrationMasterBase = (props) => {
         const onSuccess = (res) => {
             setShowDataLoading(true);
             setConfirmRequest(false);
-            resetOtfData();
+            // resetOtfData();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             const extraParam = [
@@ -475,7 +451,7 @@ export const AMCRegistrationMasterBase = (props) => {
     };
 
     const handleInvoiceTypeChange = (buttonName) => {
-        setInvoiceStatus(buttonName?.key);
+        setAmcStatus(buttonName?.key);
         searchForm.resetFields();
     };
 
@@ -495,7 +471,7 @@ export const AMCRegistrationMasterBase = (props) => {
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
-                resetOtfData();
+                // resetOtfData();
                 registrationForm.resetFields();
                 setpreviousSection(1);
                 setSelectedOrderId('');
@@ -537,9 +513,9 @@ export const AMCRegistrationMasterBase = (props) => {
                 // setButtonData({ ...Visibility, cancelReceiptBtn: true });
                 if (buttonAction === VIEW_ACTION) {
                     if (userType === 'DLR') {
-                        invoiceStatus === QUERY_BUTTONS_CONSTANTS.PENDING.key ? setButtonData({ ...Visibility }) : invoiceStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility }) : setButtonData({ ...Visibility });
+                        amcStatus === QUERY_BUTTONS_CONSTANTS.PENDING.key ? setButtonData({ ...Visibility }) : amcStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility }) : setButtonData({ ...Visibility });
                     } else {
-                        invoiceStatus === QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.key ? setButtonData({ ...Visibility }) : invoiceStatus === QUERY_BUTTONS_MNM_USER.PENDING_FOR_CANCELLATION.key ? setButtonData({ ...Visibility }) : setButtonData({ ...Visibility });
+                        amcStatus === QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.key ? setButtonData({ ...Visibility }) : amcStatus === QUERY_BUTTONS_MNM_USER.PENDING_FOR_CANCELLATION.key ? setButtonData({ ...Visibility }) : setButtonData({ ...Visibility });
                     }
                     // (!otfData?.irnStatus || otfData?.irnStatus && timeStampCheck(otfData?.irnDate, otfData?.invoiceDate))
                 }
@@ -591,7 +567,7 @@ export const AMCRegistrationMasterBase = (props) => {
 
     const resetInvoiceData = () => {
         resetDetailData();
-        resetOtfData();
+        // resetOtfData();
         form.resetFields();
         setSelectedOrderId('');
         setSelectedOtfNumber('');
@@ -608,7 +584,8 @@ export const AMCRegistrationMasterBase = (props) => {
     };
 
     const onCloseAction = () => {
-        resetInvoiceData();
+        // resetInvoiceData();
+        setIsFormVisible(false);
     };
 
     const tableProps = {
@@ -715,7 +692,7 @@ export const AMCRegistrationMasterBase = (props) => {
     const advanceFilterResultProps = {
         extraParams,
         removeFilter,
-        invoiceStatus,
+        amcStatus,
         invoiceStatusList,
         advanceFilter: true,
         otfFilter: true,
@@ -793,7 +770,7 @@ export const AMCRegistrationMasterBase = (props) => {
         setRequestPayload,
         receipt,
         setReceipt,
-        invoiceStatus,
+        amcStatus,
 
         setButtonData,
         handleButtonClick,

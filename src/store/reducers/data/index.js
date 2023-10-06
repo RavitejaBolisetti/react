@@ -50,6 +50,7 @@ import { DealerBlockMaster } from './dealerBlockMaster';
 import { EvrDetailsCapturing } from './evrDetailsCapturing';
 
 import { stockTransferIndentData } from './stockTransferIndent';
+import { AMCRegistration } from './amcRegistration';
 
 export const data = combineReducers({
     Menu,
@@ -98,4 +99,5 @@ export const data = combineReducers({
     VehicleDeliveryNote,
     DealerBlockMaster,
     EvrDetailsCapturing,
+    AMCRegistration,
 });

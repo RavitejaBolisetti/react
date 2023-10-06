@@ -16,7 +16,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import styles from 'assets/sass/app.module.scss';
 
 export default function RegistrationFilter(props) {
-    const { extraParams, removeFilter, typeData, invoiceStatusList, searchForm, filterString, setFilterString, handleResetFilter, advanceFilter = false, handleInvoiceTypeChange, setAdvanceSearchVisible, handleButtonClick, invoiceStatus, showAddButton } = props;
+    const { extraParams, removeFilter, typeData, invoiceStatusList, searchForm, filterString, setFilterString, handleResetFilter, advanceFilter = false, handleInvoiceTypeChange, setAdvanceSearchVisible, handleButtonClick, amcStatus, showAddButton } = props;
 
     const serachBoxProps = {
         searchForm,
@@ -34,7 +34,7 @@ export default function RegistrationFilter(props) {
                     <Form autoComplete="off" colon={false} className={styles.masterListSearchForm}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={20} lg={20} xl={20} className={styles.verticallyCentered}>
-                                <QueryButtons currentItem={invoiceStatus} items={invoiceStatusList} onClick={handleInvoiceTypeChange} />
+                                <QueryButtons currentItem={amcStatus} items={invoiceStatusList} onClick={handleInvoiceTypeChange} />
                                 <div className={styles.fullWidth}>
                                     <SearchBox {...serachBoxProps} />
                                 </div>
