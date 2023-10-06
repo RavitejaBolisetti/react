@@ -35,10 +35,10 @@ import { MANUFACTURER_USER_SECTION } from 'constants/modules/UserManagement/Manu
 
 import DataTable from 'utils/dataTable/DataTable';
 import { ADD_ACTION, EDIT_ACTION, NEXT_ACTION, VIEW_ACTION, btnVisiblity } from 'utils/btnVisiblity';
+import { LANGUAGE_EN } from 'language/en';
 
 import { tableColumn } from './Dealer/tableColumn';
 import { tableColumn as manufacturerTableColumn } from './Manufacturer/tableColumn';
-// import { ConfirmationModal } from 'utils/ConfirmationModal';
 
 import styles from 'assets/sass/app.module.scss';
 import { DealerProductActions } from 'store/actions/data/userManagement/dealerProduct';
@@ -188,6 +188,8 @@ const UserManagementMain = (props) => {
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, next: false, nextBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, formBtnActive: false };
 
+    const notFoundText = LANGUAGE_EN.GENERAL.USER_NOT_FOUND;
+
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
@@ -207,11 +209,9 @@ const UserManagementMain = (props) => {
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [formData, setFormData] = useState({});
     const [selectedRecord, setSelectedRecord] = useState(null);
-    const [error, setError] = useState(false);
     const [selectedDealerCode, setselectedDealerCode] = useState('');
     const [defaultSection, setDefaultSection] = useState();
     const [canUserCreate, setCanUserCreate] = useState(false);
-    // const [isConfirmationModalVisible, setisConfirmationModalVisible] = useState(false);
 
     const [AccessMacid, setAccessMacid] = useState([]);
     const [finalFormdata, setfinalFormdata] = useState({
@@ -320,14 +320,12 @@ const UserManagementMain = (props) => {
     const onConfirm = () => {
         setCanUserCreate(true);
         hideGlobalNotification();
-        // setFilterString((prev) => ({ ...prev }));
-        // setisConfirmationModalVisible(false);
     };
 
     const createUserConfirmationModal = (res) => {
         let message;
 
-        let resMessage = 'User does not exist, do you want to create user?';
+        let resMessage = notFoundText?.MESSAGE;
         message = (
             <>
                 <Space direction="vertical">
@@ -347,19 +345,16 @@ const UserManagementMain = (props) => {
                 </Space>
             </>
         );
-        showGlobalNotification({ notificationType: 'success', title: 'User not found', message: message, duration: 5000, backdrop: true });
+        showGlobalNotification({ notificationType: 'success', title: notFoundText?.TITLE, message: message, duration: 5000, backdrop: true });
     };
+
     const onErrorAction = (res) => {
-        setError(res);
-        // setCanUserCreate(false);
+        console.error(res);
     };
 
     const onSuccessAction = (res) => {
-        // setError('');
         if (res?.data?.userNotExist) {
             createUserConfirmationModal(res);
-            // setisConfirmationModalVisible(true);
-            // setCanUserCreate(true);
         } else {
             setCanUserCreate(false);
         }
@@ -447,7 +442,6 @@ const UserManagementMain = (props) => {
     };
 
     const onChangeSearchHandler = (event) => {
-        setError('');
         if (!event.target.value) {
             setFilterString((prev) => ({ ...prev, searchParam: '', pageSize: filterString?.pageSize, current: 1 }));
         }
@@ -461,7 +455,6 @@ const UserManagementMain = (props) => {
         }
         setFilterString({ searchParam: '', pageSize: filterString?.pageSize, current: 1 });
         setselectedDealerCode(selectedvalue);
-        setError('');
     };
 
     const onCloseAction = () => {
@@ -470,9 +463,6 @@ const UserManagementMain = (props) => {
         setFilterString('');
         hideGlobalNotification();
         setCanUserCreate(false);
-        // setisConfirmationModalVisible(false);
-        // setDisabledSearch(true);
-        // setselectedDealerCode('');
     };
 
     const drawerTitle = useMemo(() => {
@@ -541,7 +531,6 @@ const UserManagementMain = (props) => {
         setCurrentSection(userType === USER_TYPE_USER.DEALER.id ? DEALER_USER_SECTION.ASSIGN_USER_ROLES : MANUFACTURER_USER_SECTION.ASSIGN_USER_ROLES);
         setUserType(id);
         setselectedDealerCode('');
-        setError('');
         form.resetFields();
         searchForm.resetFields();
         setPage({ pageSize: 10, current: 1 });
@@ -560,17 +549,6 @@ const UserManagementMain = (props) => {
         handleChange: onChangeSearchHandler,
         valueReset: false,
     };
-
-    // const confirmationModalProps = {
-    //     isVisible: isConfirmationModalVisible,
-    //     onCloseAction,
-    //     onSubmitAction: onConfirm,
-    //     titleOverride: 'User Not Found',
-    //     submitText: 'Yes',
-    //     showField: false,
-    //     text: 'User does not exist, do you want to create user?',
-    //     width: 300,
-    // };
 
     return (
         <>
@@ -635,7 +613,6 @@ const UserManagementMain = (props) => {
                 </Col>
             </Row>
             <UserMainContainer {...formProps} />
-            {/* <ConfirmationModal {...confirmationModalProps} /> */}
         </>
     );
 };
