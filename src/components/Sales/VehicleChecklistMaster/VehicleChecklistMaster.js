@@ -350,6 +350,21 @@ export const VehicleChecklistMain = ({
             const formData = flatternData.find((i) => selectedTreeKey[0] === i.key);
             let attributeName = VehicleChecklistAttributeLov?.find((e) => e?.key === formData?.data?.attributeLevel)?.value;
             formData && setFormData({ ...formData?.data, attributeName });
+
+            form.setFieldsValue({
+                id: formData?.data?.id,
+                parentCode: formData?.data?.parentCode,
+                code: formData?.data?.code,
+                descriptionTitle: formData?.data?.descriptionTitle,
+                
+            });
+
+
+
+
+
+
+
         }
         setIsFormVisible(true);
         setFormBtnActive(false);

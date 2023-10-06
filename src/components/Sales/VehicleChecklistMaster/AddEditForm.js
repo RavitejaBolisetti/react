@@ -198,6 +198,9 @@ const AddEditFormMain = (props) => {
                                     <Switch value={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status ? true : false} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status === true || null || undefined ? true : false} {...disabledProps} />
                                 </Form.Item>
                             </Col>
+                            <Col xs={0} sm={0} md={0} lg={0} xl={0}>
+                                <Form.Item name="id" label="" />
+                            </Col>
                         </Row>
                     </Col>
                 </Row>
