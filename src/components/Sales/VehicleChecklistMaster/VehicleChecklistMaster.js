@@ -218,7 +218,6 @@ export const VehicleChecklistMain = ({
             if (attributeType === ATTRIBUTE_LEVEL?.[0]?.key) {
                 setAttributeType(ATTRIBUTE_LEVEL?.[1]?.key);
                 setSelectedTreeSelectKey(formData?.code);
-                setFormData([]);
             } else if (attributeType === ATTRIBUTE_LEVEL?.[1]?.key) {
                 setAttributeType(ATTRIBUTE_LEVEL?.[2]?.key);
             } else if (attributeType === ATTRIBUTE_LEVEL?.[2]?.key) {
@@ -226,7 +225,7 @@ export const VehicleChecklistMain = ({
             }
         } else if (formActionType === FROM_ACTION_TYPE?.SIBLING) {
             setSelectedTreeSelectKey(flatternData?.find((e) => e?.key === formData?.code)?.parentCode);
-            setFormData([]);
+            // setFormData([]);
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -347,12 +346,11 @@ export const VehicleChecklistMain = ({
     };
 
     const handleButtonClick = (type) => {
-        //setFormData([]);
-        console.log(`setSelectedTreeKey`, type);
-        form.resetFields();
         if (type === FROM_ACTION_TYPE.EDIT) {
             const formData = flatternData.find((i) => selectedTreeKey[0] === i.key);
-            formData && setFormData(formData?.data);
+            let attributeName = VehicleChecklistAttributeLov?.find((e) => e?.key === formData?.data?.attributeLevel)?.value;
+            formData && setFormData({ ...formData?.data, attributeName });
+            
         }
         setIsFormVisible(true);
         setFormBtnActive(false);
@@ -378,9 +376,10 @@ export const VehicleChecklistMain = ({
         isVisible: isFormVisible,
         onFinishFailed,
         onCloseAction: () => {
+            console.log(`hey`);
             setIsFormVisible(false);
-            setAttributeType();
-            setCalculationType();
+            //setAttributeType();
+            //setFormData([]);
         },
         titleOverride: (formData?.taxChargesTypeCode ? 'Edit ' : 'Add ').concat(moduleTitle),
         onFinish,
