@@ -122,9 +122,10 @@ const InsuranceDetailsMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        const recordId = insuranceData?.id || '';
+        const id = insuranceData?.id || '';
         const otfId = insuranceData?.otfId || '';
-        const data = { ...values, id: recordId, otfId, otfNumber: selectedOrderId };
+        const otfNumber = selectedOrderId || '';
+        const data = { ...values, id, otfNumber, otfId };
         if (onFinishCustom) {
             onFinishCustom({ key: formKey, values: data });
             handleButtonClick({ buttonAction: NEXT_ACTION });

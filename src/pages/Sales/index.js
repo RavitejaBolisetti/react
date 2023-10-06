@@ -31,6 +31,7 @@ import VehicleDeliveryNoteMasterPage from './VehicleDeliveryNote';
 import EvrDetailsCapturingMasterPage from './EvrDetailsCapturing';
 import VinBlockMasterPage from './VinBlockMaster';
 import VehicleChecklistMasterPage from './VehicleChecklistMaster';
+import RsmAsmApprovalPage from './RsmAsmApproval';
 
 export {
     OTFMasterPage,
@@ -57,4 +58,5 @@ export {
     EvrDetailsCapturingMasterPage,
     VinBlockMasterPage,
     VehicleChecklistMasterPage,
+    RsmAsmApprovalPage,
 };

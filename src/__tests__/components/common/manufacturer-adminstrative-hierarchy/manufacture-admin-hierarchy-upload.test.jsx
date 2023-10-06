@@ -2,11 +2,16 @@ import '@testing-library/jest-dom/extend-expect';
 import { ManufactureAdminHierarchyUpload } from '@components/common/ManufacturerAdminstrativeHierarchy/ManufactureAdminHierarchyUpload';
 import customRender from '@utils/test-utils';
 import { screen, fireEvent, waitFor } from '@testing-library/react';
-import { Form } from 'antd';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
 import { rootReducer } from 'store/reducers';
+import { Form } from 'antd';
+
+const FormWrapper = (props) => {
+    const [form] = Form.useForm();
+    return <ManufactureAdminHierarchyUpload form={form} {...props} />;
+};
 
 export const createMockStore = (initialState) => {
     const mockStore = configureStore({
@@ -20,6 +25,7 @@ export const createMockStore = (initialState) => {
 jest.mock('store/actions/data/manufacturerAdminHierarchy/manufacturerAdminUpload', () => ({
     manufacturerAdminUploadDataActions: {},
 }));
+
 
 describe('Manufacture Admin Hierarchy Upload view components', () => {
 
@@ -76,19 +82,25 @@ describe('Manufacture Admin Hierarchy Upload view components', () => {
 
     it('Should render  Manufacture Admin Hierarchy submit components', async () => {
         const file = new File(['(⌐□_□)'], 'kai.png', { type: 'image/png' });
-
         const mockStore = createMockStore({
             auth: { userId: 1232 },
             data: {
                 ManufacturerAdmin: {
                     ManufacturerAdminUpload: {
                         isLoaded: true, data: [{
-                            "docId": "106"
+                            attributeKey: null,
+                            id: "19ec8958-f007-4835-be24-4bc9bd332719",
+                            manufactureAdminCode: "6e85eee5-4cfc-40cf-90e7-0dce9acbc2e4",
+                            manufactureAdminLongName: "testing1234532",
+                            manufactureAdminParntId: "null",
+                            manufactureAdminShortName: "test",
+                            manufactureOrganizationId: "91398ed9-9128-4a8d-8165-9dac67e91f61",
+                            status: true
                         }]
                     }
                 },
             },
-        }) 
+        })
 
         const buttonData = {
             cancelBtn: true,
@@ -98,29 +110,38 @@ describe('Manufacture Admin Hierarchy Upload view components', () => {
             saveAndNewBtn: false,
             saveBtn: true,
             siblingBtn: true,
+            formBtnActive: true
         }
 
         const saveAuthorityData = jest.fn()
-        const fetchDocumentFileDocId = jest.fn();
         const resetData = jest.fn()
-        const authorityShowLoading = jest.fn();
-        const fetchDetailList = jest.fn()
 
-        const formActionType = {
-            viewMode: false
+        const resp = {
+            data: [{ docId: "234433" }]
         }
+
+        const resetFields = jest.fn()
 
         customRender(
             <Provider store={mockStore}>
-                <ManufactureAdminHierarchyUpload saveAuthorityData={saveAuthorityData}
-                    resetData={resetData} fetchDocumentFileDocId={fetchDocumentFileDocId} setButtonData={jest.fn()} isVisible={true} handleButtonClick={jest.fn()} fetchList={jest.fn()} buttonData={buttonData}
+                <FormWrapper
+                    saveAuthorityData={saveAuthorityData}
+                    resetData={resetData}
+                    setButtonData={jest.fn()}
+                    isVisible={true}
+                    handleButtonClick={jest.fn()}
+                    buttonData={buttonData}
                     setFileList={jest.fn()}
                     setEmptyList={jest.fn()}
                     setUploadedFileName={jest.fn()}
-                    handleUpload={jest.fn()} isReplacing={false} base64Img={false}
-                    formActionType={formActionType}
-                    authorityShowLoading={authorityShowLoading}
-                    fetchDetailList={fetchDetailList}
+                    uploadedFile={file}
+                    fetchDocumentFileDocId={jest.fn()}
+                    handleFormFieldChange={jest.fn()}
+                    handleFormValueChange={jest.fn()}
+                    onFinish={jest.fn()}
+                    setUploadedFile={jest.fn()}
+                    resetFields={resetFields}
+                    showGlobalNotification={jest.fn()}
                 />
             </Provider>
         )
@@ -129,13 +150,23 @@ describe('Manufacture Admin Hierarchy Upload view components', () => {
         fireEvent.drop(uploadFile, {
             dataTransfer: { files: [file] },
         });
+        fireEvent.change(uploadFile, { dataTransfer: { files: [file] } })
+
+        const downloadBtn = screen.getByRole('button', { name: "Download Template", exact: false });
+        fireEvent.click(downloadBtn)
 
         const saveBtn = screen.getByRole('button', { name: "Save", exact: false });
         fireEvent.click(saveBtn)
+
+        await waitFor(() => {
+            expect(saveAuthorityData).toHaveBeenCalled();
+        });
+
+        saveAuthorityData.mock.calls[0][0].onSuccess(resp);
+        saveAuthorityData.mock.calls[0][0].onError(resp);
     })
 
     it('Should render  Manufacture Admin Hierarchy cancel components', async () => {
-        const file = new File(['(⌐□_□)'], 'kai.png', { type: 'image/png' });
 
         const mockStore = createMockStore({
             auth: { userId: 1232 },
@@ -148,8 +179,8 @@ describe('Manufacture Admin Hierarchy Upload view components', () => {
                     }
                 },
             },
-        }) 
-        
+        })
+
         const buttonData = {
             cancelBtn: true,
             childBtn: true,
@@ -181,6 +212,7 @@ describe('Manufacture Admin Hierarchy Upload view components', () => {
                     formActionType={formActionType}
                     authorityShowLoading={authorityShowLoading}
                     fetchDetailList={fetchDetailList}
+
                 />
             </Provider>
         )

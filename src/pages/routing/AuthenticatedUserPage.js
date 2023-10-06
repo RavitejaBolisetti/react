@@ -67,6 +67,7 @@ import {
     EvrDetailsCapturingMasterPage,
     VinBlockMasterPage,
     VehicleChecklistMasterPage,
+    RsmAsmApprovalPage,
 } from 'pages/Sales';
 
 import { SplashPage } from 'pages/splash';
@@ -164,6 +165,7 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.STOCK_TRANSFER_INDENT} element={<StockTransferIndentMasterPage />} exact />
             <Route path={routing.ROUTING_VIN_BLOCK_MASTER} element={<VinBlockMasterPage />} exact />
             <Route path={routing.ROUTING_VEHICLE_CHECKLIST_MASTER} element={<VehicleChecklistMasterPage />} exact />
+            <Route path={routing.ROUTING_RSM_ASM_APPROVAL} element={<RsmAsmApprovalPage />} exact />
         </Routes>
     );
 };

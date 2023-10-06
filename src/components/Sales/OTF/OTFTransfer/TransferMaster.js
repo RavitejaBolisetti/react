@@ -20,6 +20,11 @@ import { BASE_URL_APPLICATION_DEALER_LOCATION as customURL } from 'constants/rou
 const mapStateToProps = (state) => {
     const {
         auth: { userId, accessToken, token },
+        common: {
+            Header: {
+                data: { dealerLocations: dealerLocation = [] },
+            },
+        },
         data: {
             ApplicationMaster: { dealerLocations = [] },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
@@ -39,6 +44,7 @@ const mapStateToProps = (state) => {
         isSalesConsultantDataLoaded,
         salesConsultantLov,
         dealerLocations,
+        dealerLocation,
     };
     return returnValue;
 };
@@ -61,12 +67,13 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const TransferMasterBase = (props) => {
-    const { otfData, selectedOrder, fetchSalesConsultant, listConsultantShowLoading, fetchDealerLocations, dealerLocations, locationDataLoding } = props;
+    const { otfData, selectedOrder, fetchSalesConsultant, listConsultantShowLoading, fetchDealerLocations, dealerLocations, dealerLocation, locationDataLoding } = props;
     const { userId, salesConsultantLov, reset } = props;
     const { moduleTitle, otfTransferForm } = props;
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, transferOTFBtn: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+    const defaultDealerLocationCode = dealerLocation?.find((i) => i?.isDefault)?.locationCode;
 
     const handleButtonClick = ({ record = null, buttonAction }) => {};
 
@@ -108,6 +115,7 @@ const TransferMasterBase = (props) => {
         salesConsultantLov,
         dealerLocations,
         handleOtfTransferLocationChange,
+        defaultDealerLocationCode,
     };
 
     return <AddEditForm {...formProps} />;

@@ -4,48 +4,49 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Button, Row, Col, Form, Input } from 'antd';
+import { Button, Row, Col, Input, Form } from 'antd';
+import { FilterIcon } from 'Icons';
 import { RxCross2 } from 'react-icons/rx';
-// import { SearchBox } from 'components/utils/SearchBox';
-import styles from 'assets/sass/app.module.scss';
+import { QueryButtons } from 'components/Sales/VehicleRecieptChecklist/QueryButtons';
 
+import { DELIVERY_NOTE_INVOICE_STATUS } from './utils/DeliveryNoteInvoiceStatus';
+
+import styles from 'assets/sass/app.module.scss';
 const { Search } = Input;
 
-export default function AdvanceVinBlockMasterFilter(props) {
-    const {
-        extraParams,
-        removeFilter,
-        handleResetFilter,
-        advanceFilter = false,
-        vinFilter = false,
-        title,
-        filterString,
-        searchForm,
-        handleSearch,
-    } = props;
-
-    
+export default function AdvanceFilter(props) {
+    const { extraParams, handleResetFilter, handleButtonQuery, handleSearchChange, invoiceStatusType, advanceFilter = false, filter = false, filterString, setAdvanceSearchVisible, searchForm, removeFilter } = props;
     return (
         <div className={styles.contentHeaderBackground}>
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={18} lg={18} xl={18}>
-                    <Form autoComplete="off" form={searchForm} colon={false} className={styles.masterListSearchForm}>
-                        <Form.Item label={`${title}`} name="vinNo">
-                            <Row gutter={20}>
-                                {vinFilter && (
-                                    <Col xs={24} sm={24} md={14} lg={14} xl={14}>
-                                        <Search placeholder="Search Vin" onSearch={handleSearch} allowClear className={styles.headerSearchField} />
-
-                                    </Col>
-                                )}
-                                
-                            </Row>
-                        </Form.Item>
-                    </Form>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.verticallyCentered}>
+                    <QueryButtons currentItem={invoiceStatusType} items={Object.values(DELIVERY_NOTE_INVOICE_STATUS)} onClick={handleButtonQuery} />
+                    {filter && (
+                        <Form form={searchForm} className={styles.masterListSearchForm}>
+                            <Form.Item name="Search">
+                                <div className={styles.verticallyCentered}>
+                                    <Search placeholder="Search by Dealer Name" allowClear onSearch={handleSearchChange} className={styles.headerSearchField} />
+                                </div>
+                            </Form.Item>
+                        </Form>
+                    )}
+                    {advanceFilter && (
+                        <div className={styles.advanceFilterBtn}>
+                            <Button
+                                icon={<FilterIcon />}
+                                type="link"
+                                className={styles.verticallyCentered}
+                                onClick={() => {
+                                    setAdvanceSearchVisible(true);
+                                }}
+                            >
+                                Advanced Filters
+                            </Button>
+                        </div>
+                    )}
                 </Col>
- 
             </Row>
-            {advanceFilter && filterString?.advanceFilter && extraParams.find((i) => i.name) && (
+            {filterString?.advanceFilter && extraParams.find((i) => i.name) && (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
                         <Row gutter={20}>

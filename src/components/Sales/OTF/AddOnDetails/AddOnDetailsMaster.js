@@ -64,7 +64,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const AddOnDetailsMasterMain = (props) => {
     const { fetchList, resetPartData, partListLoading, showGlobalNotification, AddonPartsData, isAddonPartsDataLoaded, fetchSearchPartList, resetData, AddonDetailsData, isDataLoaded, userId, listShowLoading, saveData, onFinishFailed } = props;
-    const { form, section, selectedOrder, selectedRecordId, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
+    const { form, section, selectedOrder, selectedRecordId, selectedOrderId, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
 
     const [formData, setformData] = useState();
     const [formDataSetter, setformDataSetter] = useState({
@@ -200,7 +200,7 @@ export const AddOnDetailsMasterMain = (props) => {
             return undefined;
         });
 
-        const data = { id: formData?.id ?? '', otfId: selectedRecordId, partDetailsRequests: detailsRequest, shield: formDataSetter?.shield, rsa: formDataSetter?.rsa, amc: formDataSetter?.amc, fms: formDataSetter?.fms };
+        const data = { id: formData?.id ?? '', otfId: selectedRecordId, otfNumber: selectedOrderId, partDetailsRequests: detailsRequest, shield: formDataSetter?.shield, rsa: formDataSetter?.rsa, amc: formDataSetter?.amc, fms: formDataSetter?.fms };
 
         const onSuccess = (res) => {
             setformDataSetter({});
