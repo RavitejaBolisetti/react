@@ -46,16 +46,12 @@ const mapStateToProps = (state) => {
                 VehicleChecklistMasterListAttributeLov: { isLoaded: isVehicleChecklistMasterAtrributeLovLoaded = false, data: VehicleChecklistAttributeLov = [] },
             },
         },
-        common: {
-            LeftSideBar: { collapsed = false },
-        },
     } = state;
 
     const moduleTitle = 'Vehicle Checklist';
     const viewTitle = 'Vehicle Checklist';
 
     let returnValue = {
-        collapsed,
         userId,
         moduleTitle,
         isFinancialAccountHeadLoaded,
