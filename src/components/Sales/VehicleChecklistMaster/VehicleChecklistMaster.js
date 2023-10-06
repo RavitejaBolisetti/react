@@ -382,10 +382,7 @@ export const VehicleChecklistMain = ({
         isVisible: isFormVisible,
         onFinishFailed,
         onCloseAction: () => {
-            console.log(`hey`);
             setIsFormVisible(false);
-            //setAttributeType();
-            //setFormData([]);
         },
         titleOverride: (formActionType === FROM_ACTION_TYPE?.EDIT ? 'Edit ' : 'Add ').concat(moduleTitle),
         onFinish,
