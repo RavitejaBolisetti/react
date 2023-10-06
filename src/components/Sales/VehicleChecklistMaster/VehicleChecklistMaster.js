@@ -225,7 +225,6 @@ export const VehicleChecklistMain = ({
             }
         } else if (formActionType === FROM_ACTION_TYPE?.SIBLING) {
             setSelectedTreeSelectKey(flatternData?.find((e) => e?.key === formData?.code)?.parentCode);
-            // setFormData([]);
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -385,6 +384,14 @@ export const VehicleChecklistMain = ({
         onFinishFailed,
         onCloseAction: () => {
             setIsFormVisible(false);
+            setAttributeType(formData?.attributeLevel);
+            // form.setFieldsValue({
+            //     code: null,
+            //     descriptionTitle: null,
+            //     id: null,
+            //     status: null,
+            // });
+            form.resetFields();
         },
         titleOverride: (formActionType === FROM_ACTION_TYPE?.EDIT ? 'Edit ' : 'Add ').concat(moduleTitle),
         onFinish,
