@@ -214,15 +214,18 @@ export const VehicleChecklistMain = ({
         if (formActionType === FROM_ACTION_TYPE?.CHILD) {
             setSelectedTreeSelectKey(formData?.code);
             if (attributeType === ATTRIBUTE_LEVEL?.[0]?.key) {
+                form.setFieldsValue({ attributeLevel: ATTRIBUTE_LEVEL?.[1]?.key });
                 setAttributeType(ATTRIBUTE_LEVEL?.[1]?.key);
-                form.setFieldValue({ attributeLevel: ATTRIBUTE_LEVEL?.[1]?.value });
             } else if (attributeType === ATTRIBUTE_LEVEL?.[1]?.key) {
+                form.setFieldsValue({ attributeLevel: ATTRIBUTE_LEVEL?.[2]?.key });
                 setAttributeType(ATTRIBUTE_LEVEL?.[2]?.key);
             } else if (attributeType === ATTRIBUTE_LEVEL?.[2]?.key) {
+                form.setFieldsValue({ attributeLevel: ATTRIBUTE_LEVEL?.[3]?.key });
                 setAttributeType(ATTRIBUTE_LEVEL?.[3]?.key);
             }
         } else if (formActionType === FROM_ACTION_TYPE?.SIBLING) {
-            setSelectedTreeSelectKey(flatternData?.find((e) => e?.key === formData?.code)?.parentCode);
+            form.setFieldsValue({ attributeLevel: attributeType });
+            setSelectedTreeSelectKey(flatternData?.find((e) => e?.key === formData?.code)?.data?.parentCode);
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -357,6 +360,7 @@ export const VehicleChecklistMain = ({
             setSelectedTreeSelectKey(formData?.data?.parentCode ? formData?.data?.parentCode : null);
         } else {
             form.setFieldsValue({
+                attributeLevel: null,
                 code: null,
                 descriptionTitle: null,
                 id: null,
@@ -417,6 +421,7 @@ export const VehicleChecklistMain = ({
         setCalType,
         VehicleChecklistMasterList,
         VehicleChecklistAttributeLov,
+        form,
     };
 
     const viewProps = {

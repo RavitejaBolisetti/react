@@ -21,12 +21,10 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { typeData, VehicleChecklistMasterList, onCloseAction, unFilteredAttributeData, documentDescription, setSelectedTreeSelectKey, financialAccount, flatternData, fieldNames, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, handleSelectTreeClick, attributeType, setAttributeType, VehicleChecklistAttributeLov } = props;
+    const { typeData, VehicleChecklistMasterList, onCloseAction, unFilteredAttributeData, documentDescription, setSelectedTreeSelectKey, financialAccount, flatternData, fieldNames, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, handleSelectTreeClick, attributeType, form, VehicleChecklistAttributeLov } = props;
     const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed } = props;
 
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
-    const disabledProps = { disabled: isReadOnly };
-    const [form] = Form.useForm();
 
     let attributeHierarchyFieldValidation = {
         rules: [validateRequiredSelectField('attribute level')],
@@ -43,22 +41,13 @@ const AddEditFormMain = (props) => {
         }
     }
 
-    useEffect(() => {
-        form.setFieldsValue(formData);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData]);
-
     let treeCodeId = '';
-    let treeCodeReadOnly = false;
-    let attributeCode = '';
-
-    const taxChargeTypeList = Object.values('');
+    let treeCodeReadOnly = formActionType === `child` || formActionType === `sibling` ? false : true;
 
     const treeSelectFieldProps = {
         treeFieldNames,
         treeData: VehicleChecklistMasterList,
-        treeDisabled: true,
-        //formActionType === `child` || formActionType === `sibling`,
+        treeDisabled: formActionType === `child` || formActionType === `sibling`,
         selectedTreeSelectKey,
         handleSelectTreeClick,
         defaultValue: treeCodeId,
@@ -73,9 +62,6 @@ const AddEditFormMain = (props) => {
         setFormBtnActive(true);
     };
 
-    const handleAttributeChange = (props) => {
-        setAttributeType(props);
-    };
     console.log(`attributeType`, attributeType);
     return (
         <>
@@ -85,7 +71,7 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Form.Item name="attributeLevel" label="Attribute Type" rules={[validateRequiredSelectField('Attribute Type Code')]}>
-                                    {customSelectBox({ data: VehicleChecklistAttributeLov, onChange: handleAttributeChange, placeholder: preparePlaceholderSelect('Attribute Type Code'), disabled: true })}
+                                    {customSelectBox({ data: VehicleChecklistAttributeLov, placeholder: preparePlaceholderSelect('Attribute Type Code'), disabled: true })}
                                 </Form.Item>
                             </Col>
 
@@ -101,13 +87,13 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <Form.Item label="Group Code" name="code" rules={[validateRequiredInputField('Group Code')]}>
-                                            <Input maxLength={6} placeholder={preparePlaceholderText('Group Code')} />
+                                            <Input maxLength={6} placeholder={preparePlaceholderText('Group Code')} disabled={treeCodeReadOnly} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.textareaError}>
                                         <Form.Item label="Group Description" name="descriptionTitle" rules={[validateRequiredInputField('Group Description')]}>
-                                            <TextArea maxLength={300} placeholder={preparePlaceholderText('Group Description')} showCount />
+                                            <TextArea maxLength={300} placeholder={preparePlaceholderText('Group Description')} showCount disabled={treeCodeReadOnly} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
@@ -117,14 +103,14 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <Form.Item name="code" label="Sub Group Code" rules={[validateRequiredSelectField('Document Description')]}>
-                                            <Input maxLength={6} placeholder={preparePlaceholderText('Group Code')} />
+                                            <Input maxLength={6} placeholder={preparePlaceholderText('Group Code')} disabled={treeCodeReadOnly} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <Form.Item name="descriptionTitle" label="Sub Group Description" rules={[validateRequiredSelectField('Financial Account Head')]}>
-                                            <TextArea maxLength={300} placeholder={preparePlaceholderText('Group Description')} showCount />
+                                            <TextArea maxLength={300} placeholder={preparePlaceholderText('Group Description')} showCount disabled={treeCodeReadOnly} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
@@ -134,14 +120,14 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <Form.Item name="code" label="Checklist Code" rules={[validateRequiredSelectField('Checklist Code')]}>
-                                            <Input maxLength={6} placeholder={preparePlaceholderText('Checklist Code')} />
+                                            <Input maxLength={6} placeholder={preparePlaceholderText('Checklist Code')} disabled={treeCodeReadOnly} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <Form.Item name="descriptionTitle" label="Checklist Description" rules={[validateRequiredSelectField('Checklist Description')]}>
-                                            <TextArea maxLength={300} placeholder={preparePlaceholderText('Checklist Description')} showCount />
+                                            <TextArea maxLength={300} placeholder={preparePlaceholderText('Checklist Description')} showCount disabled={treeCodeReadOnly} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
@@ -168,7 +154,7 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Form.Item initialValue={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status ? true : false} label="Status" name="status">
-                                    <Switch value={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status ? true : false} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status === true || null || undefined ? true : false} {...disabledProps} />
+                                    <Switch value={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status ? true : false} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status === true || null || undefined ? true : false} />
                                 </Form.Item>
                             </Col>
                             <Col xs={0} sm={0} md={0} lg={0} xl={0}>
