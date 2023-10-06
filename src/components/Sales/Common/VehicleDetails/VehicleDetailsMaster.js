@@ -36,7 +36,7 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         isDataLoaded,
-        vehicleDetailDataReceived: vehicleDetailData,
+        otfVehicleDetailData: vehicleDetailData,
         isLoading,
         moduleTitle,
         productAttributeData,
@@ -83,7 +83,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const VehicleDetailsMasterMain = (props) => {
-    const { isProductDataLoading, vehicleDetailDataReceived, vehicleDetailDataPass, isVehicleLovDataLoading, resetProductLov, productAttributeData, fetchProductLovCode, isLoading, saveData, ProductLovLoading } = props;
+    const { isProductDataLoading, otfVehicleDetailData, vehicleDetailDataPass, isVehicleLovDataLoading, resetProductLov, productAttributeData, fetchProductLovCode, isLoading, saveData, ProductLovLoading } = props;
     const { form, selectedOrderId, selectedRecordId, section, buttonData, setButtonData, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
     const { refreshData, setRefreshData, isVehicleServiceLoaded, vehicleServiceData, fetchServiceLov, serviceLoading, selectedOrder, setSelectedOrder } = props;
     const { isProductHierarchyDataLoaded, typeData, fetchList, resetData, userId, listShowLoading, showGlobalNotification } = props;
@@ -98,7 +98,7 @@ const VehicleDetailsMasterMain = (props) => {
     const [toolTipContent, setToolTipContent] = useState();
     const [isReadOnly, setIsReadOnly] = useState();
     const [productHierarchyData, setProductHierarchyData] = useState([]);
-    const [vehicleDetailData, setVehicleDetailData] = useState(vehicleDetailDataPass || vehicleDetailDataReceived);
+    const [vehicleDetailData, setVehicleDetailData] = useState(otfVehicleDetailData);
     const [filterVehicleData, setFilterVehicleData] = useState([]);
 
     const onSuccessAction = (res) => {
@@ -113,12 +113,12 @@ const VehicleDetailsMasterMain = (props) => {
 
     useEffect(() => {
         if (isOTFModule) {
-            setVehicleDetailData(vehicleDetailDataReceived);
+            setVehicleDetailData(otfVehicleDetailData);
         } else {
             setVehicleDetailData(vehicleDetailDataPass);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isOTFModule]);
+    }, [isOTFModule, otfVehicleDetailData]);
 
     useEffect(() => {
         if (userId && selectedRecordId) {
