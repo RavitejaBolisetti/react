@@ -167,6 +167,7 @@ const ExchangeVehiclesBase = (props) => {
             setFormData(exchangeData);
             exchangeData?.make && handleFilterChange('make', exchangeData?.make ?? '');
             exchangeData?.modelGroup && handleFilterChange('modelGroup', exchangeData?.modelGroup ?? '');
+            setButtonData({ ...buttonData, formBtnActive: false });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [exchangeData, isDataLoaded]);

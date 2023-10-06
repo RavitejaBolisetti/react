@@ -18,4 +18,11 @@ export const VEHICLE_ALLOTMENT_STATUS = {
         desc: 'Received',
         displayOnView: true,
     },
+    RETURNED: {
+        id: 3,
+        key: 'RTN',
+        title: 'Returned',
+        desc: 'Returned',
+        displayOnView: true,
+    },
 };

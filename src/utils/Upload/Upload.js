@@ -200,7 +200,6 @@ const UploadBase = (props) => {
             }
         },
         multiple,
-        name: form.getFieldValue(`${tempFileName}`),
         accept,
         listType,
         onDownload,

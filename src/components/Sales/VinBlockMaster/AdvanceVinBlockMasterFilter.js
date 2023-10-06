@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button, Row, Col, Form, Input } from 'antd';
 import { RxCross2 } from 'react-icons/rx';
 // import { SearchBox } from 'components/utils/SearchBox';
@@ -20,22 +20,11 @@ export default function AdvanceVinBlockMasterFilter(props) {
         vinFilter = false,
         title,
         filterString,
-        setFilterString,
         searchForm,
         handleSearch,
     } = props;
 
     
-    const searchBoxProps = {
-        singleField: true,
-        searchForm,
-        filterString,
-        setFilterString,
-        placeholder: 'Search By VIN',
-        singleFieldKey: 'vin',
-    };
-
-
     return (
         <div className={styles.contentHeaderBackground}>
             <Row gutter={20}>
@@ -70,7 +59,7 @@ export default function AdvanceVinBlockMasterFilter(props) {
                                                 {filter?.name}
                                                 {filter?.canRemove && (
                                                     <span>
-                                                        <RxCross2 onClick={() => removeFilter(filter?.key)} />
+                                                        <RxCross2 onClick={() => removeFilter(filter?.key)} data-testid="removeFilter" />
                                                     </span>
                                                 )}
                                             </div>

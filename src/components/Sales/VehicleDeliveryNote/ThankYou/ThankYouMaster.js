@@ -18,9 +18,8 @@ export const ThankYouMaster = (props) => {
     const { handlePrintDownload, record, selectedOrder } = props;
     const invoiceType = props?.soldByDealer ? 'Note' : 'Challan';
     const messageList = selectedOrder?.responseMessage?.split(' ');
-    const Number = props?.soldByDealer ? selectedOrder?.responseMessage?.split('. ')?.[1] : selectedOrder?.responseMessage?.split(' ')?.[messageList?.length - 1];
+    const Number = props?.soldByDealer ? selectedOrder?.responseMessage?.split('. ')?.[1] : messageList[messageList?.length - 1];
     const message = selectedOrder?.responseMessage?.split('.')?.[0];
-    const deliveryNoteNo = selectedOrder?.responseMessage?.split('. ')?.[1];
 
     const defaultBtnVisiblity = {
         editBtn: false,

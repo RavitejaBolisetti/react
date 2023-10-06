@@ -23,7 +23,7 @@ const IssueIndentFromMain = ({ issueForm, onFinish, handleVinSearch, isReadonly 
     const disabledProps = { disabled: isReadonly };
 
     const handleDependentReset = () => {
-        issueForm.resetFields(['engineNumber', 'invoiceDate', 'invoiceNumber', 'grnDate', 'grnNumber', 'netDealerPrice']);
+        issueForm.resetFields(['engineNumber', 'oemInvoiceDate', 'invoiceNumber', 'grnDate', 'grnNumber', 'netDealerPrice']);
     };
 
     return (
@@ -48,7 +48,7 @@ const IssueIndentFromMain = ({ issueForm, onFinish, handleVinSearch, isReadonly 
                 </Row>
                 <Row gutter={24}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                        <Form.Item name="invoiceDate" label="OEM Invoice Date">
+                        <Form.Item name="oemInvoiceDate" label="OEM Invoice Date">
                             <Input placeholder={preparePlaceholderText('OEN Invoice Date')} maxLength={50} {...disabledProps} />
                         </Form.Item>
                     </Col>
