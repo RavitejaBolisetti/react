@@ -100,10 +100,12 @@ export const FinananceDetailsMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        const recordId = financeData?.id || '';
+        const id = financeData?.id || '';
+        const otfNumber = selectedOrderId || '';
         const otfId = financeData?.otfId || '';
 
-        const data = { ...values, id: recordId, otfId, otfNumber: selectedOrderId, doDate: values?.doDate };
+        const data = { ...values, id, otfNumber, otfId, doDate: values?.doDate };
+
         if (onFinishCustom) {
             onFinishCustom({ key: formKey, values: data });
             handleButtonClick({ buttonAction: NEXT_ACTION });

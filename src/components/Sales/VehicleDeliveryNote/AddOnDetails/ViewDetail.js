@@ -14,7 +14,7 @@ import { getCodeValue } from 'utils/getCodeValue';
 const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading, typeData } = props;
+    const { formData, isLoading, typeData, relationshipManagerData } = props;
     const [activeKey, setactiveKey] = useState([]);
     const viewProps = {
         bordered: false,
@@ -53,7 +53,7 @@ const ViewDetailMain = (props) => {
                                 <Descriptions.Item label="Sale Type">{checkAndSetDefaultValue(getCodeValue(typeData?.DLVR_SALE_TYP, formData?.sheildRequest?.saleType, isLoading))}</Descriptions.Item>
                                 <Descriptions.Item label="Valid From Date">{checkAndSetDefaultValue(formData?.sheildRequest?.validFrom, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Valid To Date">{checkAndSetDefaultValue(formData?.sheildRequest?.validTo, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Employee Name">{checkAndSetDefaultValue(formData?.sheildRequest?.employeeName, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Employee Name">{checkAndSetDefaultValue(getCodeValue(relationshipManagerData, formData?.sheildRequest?.employeeCode, isLoading))}</Descriptions.Item>
                                 <Descriptions.Item label="Manager">{checkAndSetDefaultValue(formData?.sheildRequest?.manager, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         </Panel>
@@ -67,7 +67,7 @@ const ViewDetailMain = (props) => {
                                 <Descriptions.Item label="Sale Type">{checkAndSetDefaultValue(getCodeValue(typeData?.DLVR_SALE_TYP, formData?.rsaRequest?.saleType, isLoading))}</Descriptions.Item>
                                 <Descriptions.Item label="Valid From Date">{checkAndSetDefaultValue(formData?.rsaRequest?.validFrom, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Valid To Date">{checkAndSetDefaultValue(formData?.rsaRequest?.validTo, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Employee Name">{checkAndSetDefaultValue(formData?.rsaRequest?.employeeName, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Employee Name">{checkAndSetDefaultValue(getCodeValue(relationshipManagerData, formData?.rsaRequest?.employeeCode, isLoading))}</Descriptions.Item>
                                 <Descriptions.Item label="Manager">{checkAndSetDefaultValue(formData?.rsaRequest?.manager, isLoading)}</Descriptions.Item>
                             </Descriptions>
                             <Descriptions {...viewProps}>
@@ -85,7 +85,7 @@ const ViewDetailMain = (props) => {
                                 <Descriptions.Item label="Sale Type">{checkAndSetDefaultValue(getCodeValue(typeData?.DLVR_SALE_TYP, formData?.amcRequest?.saleType, isLoading))}</Descriptions.Item>
                                 <Descriptions.Item label="Valid From Date">{checkAndSetDefaultValue(formData?.amcRequest?.validFrom, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Valid To Date">{checkAndSetDefaultValue(formData?.amcRequest?.validTo, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Employee Name">{checkAndSetDefaultValue(formData?.amcRequest?.employeeName, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Employee Name">{checkAndSetDefaultValue(getCodeValue(relationshipManagerData, formData?.amcRequest?.employeeCode, isLoading))}</Descriptions.Item>
                                 <Descriptions.Item label="Manager">{checkAndSetDefaultValue(formData?.amcRequest?.manager, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         </Panel>

@@ -35,6 +35,8 @@ const VehicleDeliveryNoteCard = (props) => {
     const { selectedOrder, typeData, isLoading, toolTipContent, formActionType } = props;
     const fullName = selectedOrder?.customerName?.split(' ');
     const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1].slice(0, 1) : '') : '';
+    const invoiceType = props?.soldByDealer ? 'Delivery Note' : 'Challan';
+
     return (
         <Collapse bordered={true} expandIcon={expandIcon} collapsible="icon">
             <Panel
@@ -49,7 +51,7 @@ const VehicleDeliveryNoteCard = (props) => {
                         </Space>
                         <Divider />
                         <div className={styles.detailCardText}>
-                            Delivery Note No.: <span> {checkAndSetDefaultValue(selectedOrder?.vehicleDeliveryNote)}</span>
+                            {invoiceType} No.: <span> {checkAndSetDefaultValue(selectedOrder?.vehicleDeliveryNote)}</span>
                         </div>
                         <Divider />
                         <div className={styles.detailCardText}>
