@@ -344,7 +344,7 @@
         }
     }
 }
-.modelContentTooltip{
+.modelContentTooltip {
     margin: 0px;
 }
 /*--------------drawer Body Section Start--------------*/
@@ -796,7 +796,6 @@
             float: left;
         }
     }
-   
 }
 .fieldcontentData {
     width: 90%;
@@ -2084,7 +2083,29 @@
         line-height: 36px;
         color: $primaryBlack;
     }
+    .cardContanerOverflow {
+        overflow-y: scroll;
+        height: calc(100vh - 200px);
+        &::-webkit-scrollbar-track {
+            background-color: $primaryWhite;
+        }
 
+        &::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+            background-color: $primaryWhite;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: $neutralGrey2;
+            border-radius: 10px;
+            border: 2px solid $primaryWhite;
+
+            &:hover {
+                border: 2px solid $neutralGrey2;
+            }
+        }
+    }
     .viewDrawerContainer {
         & :global {
             .ant-space-horizontal {

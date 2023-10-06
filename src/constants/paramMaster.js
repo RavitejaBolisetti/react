@@ -401,4 +401,8 @@ export const PARAM_MASTER = {
         id: 'SO_RC',
         title: 'OTF SO Mapping',
     },
+    CH_SER: {
+        id: 'CH_SER',
+        title: 'Charger Installation',
+    },
 };

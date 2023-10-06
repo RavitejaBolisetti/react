@@ -46,7 +46,7 @@ const mapStateToProps = (state) => {
             },
         },
     } = state;
-    const moduleTitle = 'Invoice Generation';
+    const moduleTitle = 'Charger Installation';
     let returnValue = {
         userId,
         typeData,
@@ -121,7 +121,6 @@ export const VehicleInvoiceMasterBase = (props) => {
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [irnStatusData, setIrnStatusData] = useState();
     const [additionalReportParams, setAdditionalReportParams] = useState();
     const [isReportVisible, setReportVisible] = useState();
 
@@ -375,7 +374,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         form.setFieldsValue(undefined);
 
         if (isLastSection) {
-            generateInvoice();
+            // generateInvoice();
             return false;
         }
 
@@ -387,14 +386,14 @@ export const VehicleInvoiceMasterBase = (props) => {
                 break;
             case EDIT_ACTION:
                 setSelectedOrder(record);
-                record && setSelectedOrderId(record?.invoiceNumber);
+                // record && setSelectedOrderId(record?.invoiceNumber);
                 record && setSelectedOtfNumber(record?.bookingNumber);
                 openDefaultSection && setCurrentSection(defaultSection);
 
                 break;
             case VIEW_ACTION:
                 setSelectedOrder(record);
-                record && setSelectedOrderId(record?.invoiceNumber);
+                // record && setSelectedOrderId(record?.invoiceNumber);
                 record && setSelectedOtfNumber(record?.bookingNumber);
                 defaultSection && setCurrentSection(defaultSection);
                 break;
@@ -480,7 +479,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         advanceFilterForm.resetFields();
         advanceFilterForm.setFieldsValue();
         setAdvanceSearchVisible(false);
-
+        setLastSection();
         setSelectedOrder();
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
@@ -654,12 +653,7 @@ export const VehicleInvoiceMasterBase = (props) => {
             <ChargerInstallationFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable
-                        // handleButtonClick={handleButtonClick}
-                        isLoading={showDataLoading}
-                        {...tableProps}
-                        showAddButton={false}
-                    />
+                    <ListDataTable handleButtonClick={handleButtonClick} isLoading={showDataLoading} {...tableProps} showAddButton={false} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />

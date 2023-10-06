@@ -20,7 +20,7 @@ const { Search } = Input;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { formData, invoiceDetailForm, formActionType } = props;
+    const { formData, typeData, formActionType } = props;
     const [chargerDetails, setChargerDetails] = useState(false);
     const [activeKey, setActiveKey] = useState([]);
     const [addRequestVisible, setAddRequestVisible] = useState(false);
@@ -68,6 +68,7 @@ const AddEditFormMain = (props) => {
         addRequestForm,
         setAddRequestData,
         setAddRequestVisible,
+        typeData,
     };
 
     const handleAddRequestChange = () => {

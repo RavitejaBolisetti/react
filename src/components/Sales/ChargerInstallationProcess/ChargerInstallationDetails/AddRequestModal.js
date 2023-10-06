@@ -18,7 +18,7 @@ import styles from 'assets/sass/app.module.scss';
 import { validateRequiredInputField } from 'utils/validation';
 
 export const AddRequestModalForm = (props) => {
-    const { setAddRequestVisible, onAdvanceSearchCloseAction } = props;
+    const { setAddRequestVisible, onAdvanceSearchCloseAction, typeData } = props;
     const { filterString, setAddRequestData, addRequestForm } = props;
 
     // useEffect(() => {
@@ -43,20 +43,12 @@ export const AddRequestModalForm = (props) => {
         return Promise.reject(new Error('Date cant be less than Effective from date'));
     };
 
-    const chargerAdd = [
-        {
-            id: 'ss',
-            key: 'ss',
-            value: 'ss',
-        },
-    ];
-
     return (
         <Form autoComplete="off" layout="vertical" form={addRequestForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="Stage" name="stage" className={styles?.datePicker} rules={[validateRequiredInputField('from date')]}>
-                        {customSelectBox({ data: chargerAdd, placeholder: preparePlaceholderText('application criticality group') })}
+                        {customSelectBox({ data: typeData?.CHRGR_INST_STG_TYPE, placeholder: preparePlaceholderText('application criticality group') })}
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>

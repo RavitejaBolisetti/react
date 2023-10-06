@@ -21,7 +21,7 @@ export default function ChargerInstallationFilter(props) {
     const serachBoxProps = {
         searchForm,
         filterString,
-        optionType: typeData?.[PARAM_MASTER.INV_SER.id],
+        optionType: typeData?.[PARAM_MASTER.CH_SER.id],
         setFilterString,
         allowClear: false,
     };

@@ -244,7 +244,7 @@ const InstallationAddressDetailsMasterBase = (props) => {
                     </Row>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Card data-testid="test-case">
+                            <Card data-testid="test-case" className={styles.cardContanerOverflow}>
                                 <Typography>Customer Details</Typography>
                                 <Divider className={styles.marT20} />
                                 <Descriptions {...customerProps}>
@@ -261,7 +261,7 @@ const InstallationAddressDetailsMasterBase = (props) => {
                             </Card>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Card data-testid="test-case">
+                            <Card data-testid="test-case" className={styles.cardContanerOverflow}>
                                 <Typography>Installation Address</Typography>
                                 <Divider className={styles.marT20} />
                                 <Row gutter={20}>
