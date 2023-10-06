@@ -9,12 +9,10 @@ import { bindActionCreators } from 'redux';
 import { Button, Col, Form, Row, Input, Empty } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { HierarchyFormButton } from 'components/common/Button';
-import { financialAccTaxChargeActions } from 'store/actions/data/financialAccounting/taxCharges';
-import { documentDescriptionDataActions } from 'store/actions/data/financialAccounting/documentDescription';
-import { financialAccountHeadDataActions } from 'store/actions/data/financialAccounting/financialAccountHead';
 import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { vehicleChecklistMasterDataActions } from 'store/actions/data/sales/vehicleChecklistMaster/VehicleChecklistMaster';
 import { vehicleChecklistMasterAttributeLovDataActions } from 'store/actions/data/sales/vehicleChecklistMaster/attributeHierarchyLov';
+import { vehicleChecklistMasterPostDataActions } from 'store/actions/data/sales/vehicleChecklistMaster/VehicleChecklistMasterPost';
 
 import { showGlobalNotification } from 'store/actions/notification';
 
@@ -25,7 +23,6 @@ import LeftPanel from 'components/common/LeftPanel';
 import { LANGUAGE_EN } from 'language/en';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { ATTRIBUTE_LEVEL } from 'constants/modules/VehicleCheckListMaster/attributeType';
-import { HIERARCHY_ATTRIBUTES } from 'constants/modules/hierarchyAttributes';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -35,12 +32,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            //HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded = false, data: attributeData = [] },
-            FinancialAccounting: {
-                FinancialAccountHead: { isLoaded: isFinancialAccountHeadLoaded = false, data: financialAccount = [] },
-                DocumentDescription: { isLoaded: isDocumentDescriptionLoaded = false, data: documentDescription = [] },
-                TaxCharges: { isLoaded: isTaxChargeLoaded = false, data: taxChargeData = [] },
-            },
+
             VehicleChecklistMaster: {
                 VehicleChecklistMasterList: { isLoaded: isVehicleChecklistMasterLoaded = false, data: VehicleChecklistMasterList = [] },
                 VehicleChecklistMasterListAttributeLov: { isLoaded: isVehicleChecklistMasterAtrributeLovLoaded = false, data: VehicleChecklistAttributeLov = [] },
@@ -54,19 +46,15 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         moduleTitle,
-        isFinancialAccountHeadLoaded,
-        financialAccount,
-        isDocumentDescriptionLoaded,
-        documentDescription,
-        taxChargeData,
         // isDataAttributeLoaded,
         viewTitle,
-        isTaxChargeLoaded,
         // attributeData,
         typeData,
         VehicleChecklistMasterList,
         VehicleChecklistAttributeLov,
         // unFilteredAttributeData: attributeData?.filter((i) => i?.status),
+        isVehicleChecklistMasterLoaded,
+        isVehicleChecklistMasterAtrributeLovLoaded,
     };
     return returnValue;
 };
@@ -78,21 +66,14 @@ const mapDispatchToProps = (dispatch) => ({
             hierarchyAttributeFetchList: hierarchyAttributeMasterDataActions.fetchList,
             hierarchyAttributeListShowLoading: hierarchyAttributeMasterDataActions.listShowLoading,
 
-            fetchList: financialAccTaxChargeActions.fetchList,
-            saveData: financialAccTaxChargeActions.saveData,
-            listShowLoading: financialAccTaxChargeActions.listShowLoading,
-
-            fetchFinancialAccountHead: financialAccountHeadDataActions.fetchList,
-            listShowLoadingFinancialAccountHead: financialAccountHeadDataActions.listShowLoading,
-
-            fetchDocumentDescription: documentDescriptionDataActions.fetchList,
-            listShowLoadingDocumentDescription: documentDescriptionDataActions.listShowLoading,
-
             fetchVehicleChecklist: vehicleChecklistMasterDataActions.fetchList,
             listShowLoadingVehicleChecklist: vehicleChecklistMasterDataActions.listShowLoading,
 
             fetchVehicleChecklistAttributeLov: vehicleChecklistMasterAttributeLovDataActions.fetchList,
             listShowLoadingVehicleChecklistAttributeLov: vehicleChecklistMasterAttributeLovDataActions.listShowLoading,
+
+            saveData: vehicleChecklistMasterPostDataActions.saveData,
+            listShowLoadingPost: vehicleChecklistMasterPostDataActions.listShowLoading,
 
             showGlobalNotification,
         },
@@ -100,61 +81,21 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const VehicleChecklistMain = ({
-    typeData,
-    moduleTitle,
-    isChangeHistoryVisible,
-    fetchDocumentDescription,
-    documentDescription,
-    isDocumentDescriptionLoaded,
-    fetchFinancialAccountHead,
-    isFinancialAccountHeadLoaded,
-    financialAccount,
-    fetchChangeHistoryList,
-    viewTitle,
-    userId,
-    changeHistoryModelOpen,
-    isDataLoaded,
-    fetchList,
-    hierarchyAttributeFetchList,
-    saveData,
-    listShowLoading,
-    isDataAttributeLoaded,
-    attributeData,
-    hierarchyAttributeListShowLoading,
-    taxChargeData,
-    showGlobalNotification,
-    unFilteredAttributeData,
-    fetchListTaxCharge,
-    saveDataTaxCharge,
-    listShowLoadingTaxCharge,
-    isTaxChargeLoaded,
-    listShowLoadingFinancialAccountHead,
-    listShowLoadingDocumentDescription,
-    fetchVehicleChecklist,
-    listShowLoadingVehicleChecklist,
-    VehicleChecklistMasterList,
-    VehicleChecklistAttributeLov,
-    fetchVehicleChecklistAttributeLov,
-    listShowLoadingVehicleChecklistAttributeLov,
-}) => {
+export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId, saveData, listShowLoadingPost, isDataAttributeLoaded, showGlobalNotification, fetchVehicleChecklist, listShowLoadingVehicleChecklist, VehicleChecklistMasterList, VehicleChecklistAttributeLov, fetchVehicleChecklistAttributeLov, listShowLoadingVehicleChecklistAttributeLov }) => {
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
 
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
-    const [calType, setCalType] = useState(null);
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
     const [formActionType, setFormActionType] = useState('');
 
     const [formData, setFormData] = useState([]);
-    const [selectedTreeData, setSelectedTreeData] = useState([]);
 
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [searchValue, setSearchValue] = useState('');
     const [attributeType, setAttributeType] = useState();
-    const [calculationType, setCalculationType] = useState();
     const [buttonType, setButtonType] = useState('VDCL');
     const [handleButtonClickChange, setHandleButtonClickChange] = useState(false);
 
@@ -162,27 +103,6 @@ export const VehicleChecklistMain = ({
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
     const fieldNames = { title: 'descriptionTitle', key: 'code', children: 'children' };
-
-    useEffect(() => {
-        if (!isDataLoaded && userId) {
-            fetchList({ setIsLoading: listShowLoading, userId });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, isDataAttributeLoaded, userId]);
-
-    useEffect(() => {
-        if (!isFinancialAccountHeadLoaded && userId) {
-            fetchFinancialAccountHead({ setIsLoading: listShowLoadingFinancialAccountHead, userId });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isFinancialAccountHeadLoaded, userId]);
-
-    useEffect(() => {
-        if (!isDocumentDescriptionLoaded && userId) {
-            fetchDocumentDescription({ setIsLoading: listShowLoadingDocumentDescription, userId });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDocumentDescriptionLoaded, userId]);
 
     useEffect(() => {
         const extraParams = [
@@ -197,13 +117,14 @@ export const VehicleChecklistMain = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
+    const extraParams = [
+        {
+            key: 'searchType',
+            value: buttonType,
+        },
+    ];
+
     useEffect(() => {
-        const extraParams = [
-            {
-                key: 'searchType',
-                value: buttonType,
-            },
-        ];
         if (userId) {
             fetchVehicleChecklist({ setIsLoading: listShowLoadingVehicleChecklist, userId, extraParams });
         }
@@ -211,21 +132,36 @@ export const VehicleChecklistMain = ({
     }, [userId, buttonType]);
 
     useEffect(() => {
+        setFormData([]);
+        setSelectedTreeKey([]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [buttonType]);
+
+    useEffect(() => {
         if (formActionType === FROM_ACTION_TYPE?.CHILD) {
+            form.setFieldsValue({
+                attributeLevel: null,
+                parentCode: null,
+                code: null,
+                descriptionTitle: null,
+                status: true,
+            });
             setSelectedTreeSelectKey(formData?.code);
             if (attributeType === ATTRIBUTE_LEVEL?.[0]?.key) {
-                form.setFieldsValue({ attributeLevel: ATTRIBUTE_LEVEL?.[1]?.key });
+                form.setFieldsValue({ attributeLevel: ATTRIBUTE_LEVEL?.[1]?.key, parentCode: formData?.code });
                 setAttributeType(ATTRIBUTE_LEVEL?.[1]?.key);
             } else if (attributeType === ATTRIBUTE_LEVEL?.[1]?.key) {
-                form.setFieldsValue({ attributeLevel: ATTRIBUTE_LEVEL?.[2]?.key });
+                form.setFieldsValue({ attributeLevel: ATTRIBUTE_LEVEL?.[2]?.key, parentCode: formData?.code });
                 setAttributeType(ATTRIBUTE_LEVEL?.[2]?.key);
             } else if (attributeType === ATTRIBUTE_LEVEL?.[2]?.key) {
-                form.setFieldsValue({ attributeLevel: ATTRIBUTE_LEVEL?.[3]?.key });
+                form.setFieldsValue({ attributeLevel: ATTRIBUTE_LEVEL?.[3]?.key, parentCode: formData?.code });
                 setAttributeType(ATTRIBUTE_LEVEL?.[3]?.key);
             }
         } else if (formActionType === FROM_ACTION_TYPE?.SIBLING) {
-            form.setFieldsValue({ attributeLevel: attributeType });
-            setSelectedTreeSelectKey(flatternData?.find((e) => e?.key === formData?.code)?.data?.parentCode);
+            let treeKey = flatternData?.find((e) => e?.key === formData?.code)?.data?.parentCode;
+            treeKey = treeKey === `VRCL` || treeKey === `VDCL` ? 'DMS' : treeKey;
+            setSelectedTreeSelectKey(treeKey);
+            form.setFieldsValue({ attributeLevel: attributeType, parentCode: treeKey });
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -255,10 +191,9 @@ export const VehicleChecklistMain = ({
 
     const flatternData = generateList(VehicleChecklistMasterList);
     const handleTreeViewClick = (keys) => {
-        console.log(`c`, keys);
+        console.log(`keys`, keys);
         form.resetFields();
         setFormData([]);
-        setSelectedTreeData([]);
 
         if (keys && keys?.length > 0) {
             setFormActionType(FROM_ACTION_TYPE.VIEW);
@@ -266,7 +201,7 @@ export const VehicleChecklistMain = ({
 
             if (formData) {
                 setAttributeType(formData?.data?.attributeLevel);
-                let isChild = formData?.data?.attributeLevel !== `ANS` ? true : false;
+                let isChild = formData?.data?.attributeLevel !== ATTRIBUTE_LEVEL?.[3]?.key ? true : false;
 
                 setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: isChild, siblingBtn: true });
 
@@ -290,9 +225,11 @@ export const VehicleChecklistMain = ({
     };
 
     const onFinish = (values) => {
-        const recordId = formData?.id || '';
-        const codeToBeSaved = selectedTreeSelectKey || '';
-        const data = { ...values, id: recordId, parentCode: codeToBeSaved };
+        const recordId = values?.id || '';
+        let parentCode = values?.parentCode === `DMS` ? buttonType : values?.parentCode;
+        const data = { id: recordId, checklistType: parentCode, groupCode: values?.code, groupDescription: values?.descriptionTitle, checklistStatus: values?.status };
+
+        console.log(`values`, data);
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -303,13 +240,15 @@ export const VehicleChecklistMain = ({
 
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
 
-                fetchList({ setIsLoading: listShowLoading, userId });
+                fetchVehicleChecklist({ setIsLoading: listShowLoadingVehicleChecklist, userId, extraParams });
 
-                const hierarchyAttribueName = unFilteredAttributeData?.find((attribute) => attribute.hierarchyAttribueCode === res?.data?.attributeTypeCode)?.hierarchyAttribueName;
-                const attributeParentName = flatternData.find((i) => res?.data?.parentCode === i.key)?.data?.taxChargesTypeCode;
-                res?.data && setSelectedTreeData({ ...res?.data, hierarchyAttribueName, parentName: attributeParentName });
+                const attributeName = VehicleChecklistAttributeLov?.find((e) => e?.key === formData?.data?.attributeLevel)?.value;
+                const attributeParentName = flatternData.find((i) => formData?.data?.parentCode === i.key)?.data?.descriptionTitle;
+                res?.data && setFormData({ ...formData?.data, parentName: attributeParentName, attributeName });
 
-                setSelectedTreeKey([res?.data?.id || res?.data?.taxChargesTypeCode]);
+                console.log(`res?.data`, res?.data);
+
+                setSelectedTreeKey([res?.data?.groupCode]);
                 setFormActionType(FROM_ACTION_TYPE.VIEW);
                 setFormBtnActive(false);
                 setIsFormVisible(false);
@@ -322,8 +261,8 @@ export const VehicleChecklistMain = ({
 
         const requestData = {
             data: data,
-            method: formData?.attributeTypeCode ? 'put' : 'post',
-            setIsLoading: listShowLoading,
+            method: formActionType === `edit` ? 'put' : 'post',
+            setIsLoading: listShowLoadingPost,
             userId,
             onError,
             onSuccess,
@@ -352,20 +291,13 @@ export const VehicleChecklistMain = ({
             formData && setFormData({ ...formData?.data, attributeName, parentName });
             form.setFieldsValue({
                 id: formData?.data?.id,
-                parentCode: formData?.data?.parentCode,
+                attributeLevel: formData?.data?.attributeLevel,
+                parentCode: formData?.data?.parentCode === `VRCL` || formData?.data?.parentCode === `VDCL` ? 'DMS' : formData?.data?.parentCode,
                 code: formData?.data?.code,
                 descriptionTitle: formData?.data?.descriptionTitle,
                 status: formData?.data?.status,
             });
-            setSelectedTreeSelectKey(formData?.data?.parentCode ? formData?.data?.parentCode : null);
-        } else {
-            form.setFieldsValue({
-                attributeLevel: null,
-                code: null,
-                descriptionTitle: null,
-                id: null,
-                status: false,
-            });
+            setSelectedTreeSelectKey(formData?.data?.parentCode === `VRCL` || formData?.data?.parentCode === `VDCL` ? 'DMS' : formData?.data?.parentCode);
         }
         setIsFormVisible(true);
         setFormBtnActive(false);
@@ -395,30 +327,19 @@ export const VehicleChecklistMain = ({
             setIsFormVisible(false);
             setAttributeType(formData?.attributeLevel);
         },
-        titleOverride: (formActionType === FROM_ACTION_TYPE?.EDIT ? 'Edit ' : 'Add ').concat(moduleTitle),
+        titleOverride: (formActionType === FROM_ACTION_TYPE?.EDIT ? FROM_ACTION_TYPE?.EDIT : FROM_ACTION_TYPE?.ADD).concat(moduleTitle),
         onFinish,
-        selectedTreeKey,
-        selectedTreeData,
-        unFilteredAttributeData,
         selectedTreeSelectKey,
         handleResetBtn,
         formData,
-        taxChargeData,
         handleSelectTreeClick,
         isDataAttributeLoaded,
-        attributeData,
         fieldNames,
         setSelectedTreeSelectKey,
         isFormBtnActive,
         setFormBtnActive,
         attributeType,
         setAttributeType,
-        calculationType,
-        setCalculationType,
-        financialAccount,
-        documentDescription,
-        calType,
-        setCalType,
         VehicleChecklistMasterList,
         VehicleChecklistAttributeLov,
         form,
@@ -427,28 +348,19 @@ export const VehicleChecklistMain = ({
     const viewProps = {
         typeData,
         buttonData,
-        attributeData,
-        selectedTreeData,
         handleButtonClick,
         styles,
         viewTitle,
-        calType,
-        attributeType,
-        calculationType,
-        setCalType,
-        documentDescription,
-        financialAccount,
         formData,
+        attributeType,
     };
 
     const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
     const noDataMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
     const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_CHILD_WARNING;
 
-    const leftCol = taxChargeData?.length > 0 ? 14 : 24;
-    const rightCol = taxChargeData?.length > 0 ? 10 : 24;
-
-    console.log(`flatternData`, formData);
+    const leftCol = VehicleChecklistMasterList?.length > 0 ? 14 : 24;
+    const rightCol = VehicleChecklistMasterList?.length > 0 ? 10 : 24;
 
     return (
         <>

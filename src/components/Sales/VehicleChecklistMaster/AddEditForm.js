@@ -3,16 +3,14 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Col, Input, Form, Row, Switch, Button } from 'antd';
 import TreeSelectField from 'components/common/TreeSelectField';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
 
 import styles from 'assets/sass/app.module.scss';
-
 import { ATTRIBUTE_LEVEL } from 'constants/modules/VehicleCheckListMaster/attributeType';
-
 import { customSelectBox } from 'utils/customSelectBox';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
@@ -21,25 +19,10 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { typeData, VehicleChecklistMasterList, onCloseAction, unFilteredAttributeData, documentDescription, setSelectedTreeSelectKey, financialAccount, flatternData, fieldNames, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, handleSelectTreeClick, attributeType, form, VehicleChecklistAttributeLov } = props;
+    const { VehicleChecklistMasterList, onCloseAction, fieldNames, formActionType, formData, selectedTreeSelectKey, handleSelectTreeClick, attributeType, form, VehicleChecklistAttributeLov } = props;
     const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed } = props;
 
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
-
-    let attributeHierarchyFieldValidation = {
-        rules: [validateRequiredSelectField('attribute level')],
-    };
-    if (attributeData && formData?.attributeTypeCode) {
-        if (attributeData.find((attribute) => attribute.id === formData?.attributeTypeCode)) {
-            attributeHierarchyFieldValidation.initialValue = formData?.attributeTypeCode;
-        } else {
-            const Attribute = unFilteredAttributeData?.find((attribute) => attribute.id === formData?.attributeTypeCode);
-            if (Attribute) {
-                attributeHierarchyFieldValidation.initialValue = Attribute?.hierarchyAttribueName;
-                attributeHierarchyFieldValidation.rules.push({ type: 'number', message: Attribute?.hierarchyAttribueName + ' is not active anymore. Please select a different attribute. ' });
-            }
-        }
-    }
 
     let treeCodeId = '';
     let treeCodeReadOnly = formActionType === `child` || formActionType === `sibling` ? false : true;
@@ -137,14 +120,14 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <Form.Item name="code" label="Answer Type" rules={[validateRequiredSelectField('Document Description')]}>
-                                            {customSelectBox({ data: documentDescription, fieldNames: { key: 'id', value: 'documentDescription' }, placeholder: preparePlaceholderSelect('Document Description') })}
+                                            {customSelectBox({ data: [], fieldNames: { key: 'id', value: 'documentDescription' }, placeholder: preparePlaceholderSelect('Document Description') })}
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <Form.Item name="descriptionTitle" label="Attachment Required" rules={[validateRequiredSelectField('Financial Account Head')]}>
-                                            {customSelectBox({ data: financialAccount, placeholder: preparePlaceholderSelect('Financial Account Head') })}
+                                            {customSelectBox({ data: [], placeholder: preparePlaceholderSelect('Financial Account Head') })}
                                         </Form.Item>
                                     </Col>
                                 </Row>
@@ -153,7 +136,7 @@ const AddEditFormMain = (props) => {
 
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item initialValue={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status ? true : false} label="Status" name="status">
+                                <Form.Item label="Status" name="status">
                                     <Switch value={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status ? true : false} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status === true || null || undefined ? true : false} />
                                 </Form.Item>
                             </Col>
