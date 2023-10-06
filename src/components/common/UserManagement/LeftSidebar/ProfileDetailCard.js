@@ -9,7 +9,7 @@ import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import styles from 'assets/sass/app.module.scss';
 
 const { Panel } = Collapse;
-const { Title } = Typography;
+
 const expandIcon = ({ isActive }) =>
     isActive ? (
         <>
@@ -43,15 +43,9 @@ const ProfileDetailCard = (props) => {
             >
                 <Divider />
                 {userType === USER_TYPE_USER?.DEALER?.id ? (
-                    <>
-                        <div className={styles.detailCardText}>
-                            Employee Code: <span>{selectedRecord?.employeeCode || 'NA'}</span>
-                        </div>
-                        <Divider />
-                        <div className={styles.detailCardText}>
-                            Token No: <span>{selectedRecord?.employeeCode || 'NA'}</span>
-                        </div>
-                    </>
+                    <div className={styles.detailCardText}>
+                        Employee Code: <span>{selectedRecord?.employeeCode || 'NA'}</span>
+                    </div>
                 ) : (
                     <div className={styles.detailCardText}>
                         Token No: <span>{selectedRecord?.employeeCode || 'NA'}</span>
