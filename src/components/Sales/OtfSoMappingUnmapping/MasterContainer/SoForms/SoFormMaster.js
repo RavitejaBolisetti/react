@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Card, Row, Col, Space, Divider, Typography, Button, Form, Select } from 'antd';
 import styles from 'assets/sass/app.module.scss';
 //import SoStyles from 'components/Sales/OtfSoMappingUnmapping/Somapping.module.css';
@@ -11,14 +11,24 @@ import SoStyles from 'components/Sales/OtfSoMappingUnmapping/Somapping.module.sc
 import { AddEditForm } from './AddEditForm';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { validateRequiredSelectField } from 'utils/validation';
-import { FORM_TYPE_CONSTANSTS } from 'components/Sales/OtfSoMappingUnmapping/Constants';
+import { FORM_TYPE_CONSTANSTS, OTF_SO_MAPPING_UNMAPPING_CONSTANTS, CARD_TITLE_CONSTANT } from 'components/Sales/OtfSoMappingUnmapping/Constants';
 
 const { Text } = Typography;
 
 const SoFormMasterMain = (props) => {
-    const { selectedKey, status, SoForm, handleFormChange, onFinish, onFinishFailed, handleCancel, typeData, DealerParentData, handleDealerParent, LocationData, handleClear } = props;
-    const { isLocationLoading } = props;
-    const disabledProps = { disabled: true };
+    const { selectedKey, isReadOnly = true, status, SoForm, handleFormChange, onFinish, onFinishFailed, handleCancel, typeData, DealerParentData, handleDealerParent, LocationData, handleClear } = props;
+    const { isLocationLoading = false } = props;
+    const disabledProps = { disabled: isReadOnly };
+    const handleTitle = useMemo(() => {
+        switch (selectedKey) {
+            case OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.RESERVE_QUOTA?.key: {
+                return { title1: CARD_TITLE_CONSTANT?.SO?.key, title2: CARD_TITLE_CONSTANT?.OTF?.key };
+            }
+            default: {
+                return { title1: CARD_TITLE_CONSTANT?.OTF_1?.key, title2: CARD_TITLE_CONSTANT?.OTF_2?.key };
+            }
+        }
+    }, [selectedKey]);
 
     return (
         <>
@@ -58,7 +68,7 @@ const SoFormMasterMain = (props) => {
                                     <Row gutter={20}>
                                         <Col xs={11} sm={11} md={11} lg={11} xl={11} xxl={11}>
                                             <Space direction="vertical" size="small" className={SoStyles.flex}>
-                                                <Text className={SoStyles.headerBg}> OTF1</Text>
+                                                <Text className={SoStyles.headerBg}> {handleTitle?.title1} </Text>
                                                 <Card className={`${styles.fullWidth} ${styles.whiteBG} ${SoStyles.fullHeight}`}>
                                                     <AddEditForm {...props} disabledProps={disabledProps} formType={FORM_TYPE_CONSTANSTS?.FORM_1?.id} status={status} />
                                                 </Card>
@@ -69,7 +79,7 @@ const SoFormMasterMain = (props) => {
                                         </Col>
                                         <Col xs={11} sm={11} md={11} lg={11} xl={11} xxl={11}>
                                             <Space direction="vertical" size="small" className={SoStyles.flex}>
-                                                <Text className={SoStyles.headerBg}> OTF2</Text>
+                                                <Text className={SoStyles.headerBg}> {handleTitle?.title2} </Text>
                                                 <Card className={`${styles.fullWidth} ${styles.whiteBG} ${SoStyles.fullHeight}`}>
                                                     <AddEditForm {...props} disabledProps={disabledProps} formType={FORM_TYPE_CONSTANSTS?.FORM_2?.id} status={status} />
                                                 </Card>
