@@ -678,14 +678,24 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         }
     };
 
-    const onCancelDeliveryNote = () => {
-        setCancelDeliveryNoteVisible(true);
-        if (dayjs()?.isSame(selectedOrder?.deliveryNoteDate, 'year')) {
-            setRetailMonth(dayjs()?.isSame(selectedOrder?.deliveryNoteDate, 'month'));
+    const handleCancelCheck = (soldByDealer) => {
+        if (soldByDealer) {
+            if (dayjs()?.isSame(selectedOrder?.deliveryNoteDate, 'year')) {
+                setRetailMonth(dayjs()?.isSame(selectedOrder?.deliveryNoteDate, 'month'));
+                setYesRetailMonth(true);
+            } else {
+                setRetailMonth(false);
+                setYesRetailMonth(false);
+            }
         } else {
             setRetailMonth(false);
+            setYesRetailMonth(false);
         }
-        setYesRetailMonth(true);
+    };
+
+    const onCancelDeliveryNote = () => {
+        setCancelDeliveryNoteVisible(true);
+        handleCancelCheck(soldByDealer);
         cancelDeliveryNoteForm.resetFields();
     };
 
