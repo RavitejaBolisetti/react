@@ -31,7 +31,7 @@ export function chackedKeysMapData(treeData) {
 
         const getKeys = (treeData) => {
             treeData?.forEach((el) => {
-                if (el?.checked) {
+                if (el?.checked && el?.type === 'Action') {
                     initialCheckedKeys[node?.value].push(el?.value);
                 }
                 if (el?.children) {
@@ -136,7 +136,7 @@ const AssignUserRole = (props) => {
         };
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [selectedRoleId]);
 
     const fetchUserRoleFn = () => {
         const extraParams = [

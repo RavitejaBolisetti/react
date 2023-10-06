@@ -6,7 +6,7 @@
 export const NOTIFICATION_SHOW = 'NOTIFICATION_SHOW';
 export const NOTIFICATION_HIDE = 'NOTIFICATION_HIDE';
 
-export const showGlobalNotification = ({ notificationType = 'error', title, message, placement, showTitle, duration }) => ({
+export const showGlobalNotification = ({ notificationType = 'error', title, message, placement, showTitle, duration, backdrop }) => ({
     type: NOTIFICATION_SHOW,
     visible: true,
     notificationType,
@@ -15,9 +15,11 @@ export const showGlobalNotification = ({ notificationType = 'error', title, mess
     placement,
     showTitle,
     duration,
+    backdrop,
 });
 
 export const hideGlobalNotification = (data) => ({
     type: NOTIFICATION_HIDE,
     visible: false,
+    backdrop: false
 });

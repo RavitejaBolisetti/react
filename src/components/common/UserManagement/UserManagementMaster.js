@@ -25,8 +25,8 @@ import { RoleListtDataActions } from 'store/actions/data/userManagement/roleList
 import { SearchBox } from 'components/utils/SearchBox';
 import { UserMainContainer } from './UserMainContainer';
 
-import TokenValidateDataCard from './common/TokenValidateDataCard';
-import TokenErrorCard from './common/TokenErrorCard';
+// import TokenValidateDataCard from './common/TokenValidateDataCard';
+// import TokenErrorCard from './common/TokenErrorCard';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { USER_TYPE_USER } from 'constants/modules/UserManagement/userType';
@@ -38,6 +38,7 @@ import { ADD_ACTION, EDIT_ACTION, NEXT_ACTION, VIEW_ACTION, btnVisiblity } from 
 
 import { tableColumn } from './Dealer/tableColumn';
 import { tableColumn as manufacturerTableColumn } from './Manufacturer/tableColumn';
+// import { ConfirmationModal } from 'utils/ConfirmationModal';
 
 import styles from 'assets/sass/app.module.scss';
 import { DealerProductActions } from 'store/actions/data/userManagement/dealerProduct';
@@ -210,6 +211,7 @@ const UserManagementMain = (props) => {
     const [selectedDealerCode, setselectedDealerCode] = useState('');
     const [defaultSection, setDefaultSection] = useState();
     const [canUserCreate, setCanUserCreate] = useState(false);
+    // const [isConfirmationModalVisible, setisConfirmationModalVisible] = useState(false);
 
     const [AccessMacid, setAccessMacid] = useState([]);
     const [finalFormdata, setfinalFormdata] = useState({
@@ -316,7 +318,10 @@ const UserManagementMain = (props) => {
     }, [filterString, selectedDealerCode, userType, canUserCreate]);
 
     const onConfirm = () => {
-        setFilterString((prev) => ({ ...prev }));
+        setCanUserCreate(true);
+        hideGlobalNotification();
+        // setFilterString((prev) => ({ ...prev }));
+        // setisConfirmationModalVisible(false);
     };
 
     const createUserConfirmationModal = (res) => {
@@ -342,18 +347,19 @@ const UserManagementMain = (props) => {
                 </Space>
             </>
         );
-        showGlobalNotification({ notificationType: 'warning', title: 'User not found', message: message, duration: 5000 });
+        showGlobalNotification({ notificationType: 'success', title: 'User not found', message: message, duration: 5000, backdrop: true });
     };
-
     const onErrorAction = (res) => {
         setError(res);
+        // setCanUserCreate(false);
     };
 
     const onSuccessAction = (res) => {
-        setError('');
+        // setError('');
         if (res?.data?.userNotExist) {
-            setCanUserCreate(true);
             createUserConfirmationModal(res);
+            // setisConfirmationModalVisible(true);
+            // setCanUserCreate(true);
         } else {
             setCanUserCreate(false);
         }
@@ -377,7 +383,7 @@ const UserManagementMain = (props) => {
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, userType, page?.pageSize, page?.current, filterString, isFormVisible, selectedDealerCode]);
+    }, [userId, userType, page?.pageSize, page?.current, filterString?.searchParam, isFormVisible, selectedDealerCode, canUserCreate]);
 
     const onFinish = (values, e) => {};
 
@@ -462,6 +468,9 @@ const UserManagementMain = (props) => {
         setIsFormVisible(false);
         setSelectedRecord([]);
         setFilterString('');
+        hideGlobalNotification();
+        setCanUserCreate(false);
+        // setisConfirmationModalVisible(false);
         // setDisabledSearch(true);
         // setselectedDealerCode('');
     };
@@ -552,6 +561,17 @@ const UserManagementMain = (props) => {
         valueReset: false,
     };
 
+    // const confirmationModalProps = {
+    //     isVisible: isConfirmationModalVisible,
+    //     onCloseAction,
+    //     onSubmitAction: onConfirm,
+    //     titleOverride: 'User Not Found',
+    //     submitText: 'Yes',
+    //     showField: false,
+    //     text: 'User does not exist, do you want to create user?',
+    //     width: 300,
+    // };
+
     return (
         <>
             <Row gutter={20}>
@@ -615,7 +635,7 @@ const UserManagementMain = (props) => {
                 </Col>
             </Row>
             <UserMainContainer {...formProps} />
-            {/* <CreateUserConfirmationModal {...confirmationProps} /> */}
+            {/* <ConfirmationModal {...confirmationModalProps} /> */}
         </>
     );
 };
