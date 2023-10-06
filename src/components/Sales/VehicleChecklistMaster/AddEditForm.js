@@ -6,7 +6,7 @@
 import React, { useEffect } from 'react';
 import { Col, Input, Form, Row, Switch, Button } from 'antd';
 import TreeSelectField from 'components/common/TreeSelectField';
-import { validateRequiredInputField, validateRequiredSelectField, valueOfPer, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
 
 import styles from 'assets/sass/app.module.scss';
