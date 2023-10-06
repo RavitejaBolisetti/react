@@ -233,16 +233,14 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
 
             if (res?.data) {
-                //setAttributeType(res?.data?.attributeTypeCode);
 
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-
                 fetchVehicleChecklist({ setIsLoading: listShowLoadingVehicleChecklist, userId, extraParams });
 
                 const attributeName = VehicleChecklistAttributeLov?.find((e) => e?.key === res?.data?.attributeLevel)?.value;
                 const attributeParentName = flatternData.find((i) => res?.data?.parentCode === i.key)?.data?.descriptionTitle;
                 res?.data && setFormData({ ...res?.data, parentName: attributeParentName, attributeName });
-                console.log(`res?.data`, res?.data);
+
                 setSelectedTreeKey([res?.data?.code]);
                 setFormActionType(FROM_ACTION_TYPE.VIEW);
                 setFormBtnActive(false);
