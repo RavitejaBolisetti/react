@@ -356,15 +356,7 @@ export const VehicleChecklistMain = ({
                 parentCode: formData?.data?.parentCode,
                 code: formData?.data?.code,
                 descriptionTitle: formData?.data?.descriptionTitle,
-                
             });
-
-
-
-
-
-
-
         }
         setIsFormVisible(true);
         setFormBtnActive(false);

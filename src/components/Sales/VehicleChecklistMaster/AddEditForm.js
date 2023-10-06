@@ -21,7 +21,7 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { typeData, VehicleChecklistMasterList, onCloseAction, unFilteredAttributeData, documentDescription, setSelectedTreeSelectKey, financialAccount, flatternData, fieldNames, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, handleSelectTreeClick, taxChargeData, attributeType, setAttributeType, VehicleChecklistAttributeLov } = props;
+    const { typeData, VehicleChecklistMasterList, onCloseAction, unFilteredAttributeData, documentDescription, setSelectedTreeSelectKey, financialAccount, flatternData, fieldNames, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, handleSelectTreeClick, attributeType, setAttributeType, VehicleChecklistAttributeLov } = props;
     const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed } = props;
 
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
@@ -43,44 +43,16 @@ const AddEditFormMain = (props) => {
         }
     }
 
+    useEffect(() => {
+        form.setFieldsValue(formData);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData]);
+
     let treeCodeId = '';
     let treeCodeReadOnly = false;
     let attributeCode = '';
 
     const taxChargeTypeList = Object.values('');
-
-    // if (formActionType === FROM_ACTION_TYPE.EDIT || formActionType === FROM_ACTION_TYPE.VIEW) {
-    //     treeCodeId = formData?.parentCode;
-    //     attributeCode = formData?.attributeTypeCode;
-    //     setAttributeType(attributeCode);
-    // } else if (formActionType === FROM_ACTION_TYPE.CHILD) {
-    //     treeCodeId = selectedTreeKey && selectedTreeKey[0];
-    //     treeCodeReadOnly = true;
-    //     attributeCode = formData?.attributeTypeCode;
-    //     const treeCodeData = flatternData.find((i) => i.key === treeCodeId);
-    //     const currentAttributeOrder = taxChargeTypeList?.find((i) => i.KEY === treeCodeData?.data?.attributeTypeCode)?.ORDER;
-    //     const childAttribute = taxChargeTypeList?.find((i) => i?.ORDER > currentAttributeOrder);
-    //     attributeCode = childAttribute?.KEY;
-    //     setAttributeType(attributeCode);
-    // } else if (formActionType === FROM_ACTION_TYPE.SIBLING) {
-    //     treeCodeReadOnly = true;
-    //     const treeCodeData = flatternData.find((i) => i.key === selectedTreeKey[0]);
-    //     treeCodeId = treeCodeData && treeCodeData?.data?.parentCode;
-    //     const currentAttribute = taxChargeTypeList?.find((i) => i.KEY === treeCodeData?.data?.attributeTypeCode);
-    //     attributeCode = currentAttribute?.KEY;
-    //     setAttributeType(attributeCode);
-    // } else {
-    //     const currentAttribute = taxChargeTypeList?.find((i) => i.ORDER);
-    //     attributeCode = currentAttribute?.KEY;
-    //     setAttributeType(attributeCode);
-    // }
-
-    // useEffect(() => {
-    //     setSelectedTreeSelectKey(treeCodeId);
-    //     setAttributeType(formData?.attributeTypeCode);
-    //     setCalculationType(formData?.calculationType);
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [treeCodeId]);
 
     const treeSelectFieldProps = {
         treeFieldNames,
