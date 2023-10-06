@@ -112,7 +112,7 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Form.Item name="attributeLevel" label="Attribute Type" rules={[validateRequiredSelectField('Attribute Type Code')]}>
-                                    {customSelectBox({ data: VehicleChecklistAttributeLov, onChange: handleAttributeChange, placeholder: preparePlaceholderSelect('Attribute Type Code'), disabled: true })}
+                                    {customSelectBox({ data: VehicleChecklistAttributeLov, onChange: handleAttributeChange, placeholder: preparePlaceholderSelect('Attribute Type Code') })}
                                 </Form.Item>
                             </Col>
 
@@ -177,14 +177,14 @@ const AddEditFormMain = (props) => {
                             <>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item name="documentTypeCode" label="Answer Type" rules={[validateRequiredSelectField('Document Description')]}>
+                                        <Form.Item name="code" label="Answer Type" rules={[validateRequiredSelectField('Document Description')]}>
                                             {customSelectBox({ data: documentDescription, fieldNames: { key: 'id', value: 'documentDescription' }, placeholder: preparePlaceholderSelect('Document Description') })}
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item name="financialAccountHeadCode" label="Attachment Required" rules={[validateRequiredSelectField('Financial Account Head')]}>
+                                        <Form.Item name="descriptionTitle" label="Attachment Required" rules={[validateRequiredSelectField('Financial Account Head')]}>
                                             {customSelectBox({ data: financialAccount, placeholder: preparePlaceholderSelect('Financial Account Head') })}
                                         </Form.Item>
                                     </Col>
