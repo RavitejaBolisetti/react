@@ -221,7 +221,6 @@ export const VehicleChecklistMain = ({
             }
         } else if (formActionType === FROM_ACTION_TYPE?.SIBLING) {
             setSelectedTreeSelectKey(flatternData?.find((e) => e?.key === formData?.code)?.parentCode);
-            // setFormData([]);
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -345,14 +344,16 @@ export const VehicleChecklistMain = ({
         if (type === FROM_ACTION_TYPE.EDIT) {
             const formData = flatternData.find((i) => selectedTreeKey[0] === i.key);
             let attributeName = VehicleChecklistAttributeLov?.find((e) => e?.key === formData?.data?.attributeLevel)?.value;
-            formData && setFormData({ ...formData?.data, attributeName });
-            console.log(`type`, type);
+            let parentName = flatternData.find((i) => formData?.data?.parentCode === i.key)?.data?.descriptionTitle;
+            formData && setFormData({ ...formData?.data, attributeName, parentName });
             form.setFieldsValue({
                 id: formData?.data?.id,
                 parentCode: formData?.data?.parentCode,
                 code: formData?.data?.code,
                 descriptionTitle: formData?.data?.descriptionTitle,
+                status: formData?.data?.status,
             });
+            setSelectedTreeSelectKey(formData?.data?.parentCode ? formData?.data?.parentCode : null);
         }
         setIsFormVisible(true);
         setFormBtnActive(false);
@@ -379,6 +380,14 @@ export const VehicleChecklistMain = ({
         onFinishFailed,
         onCloseAction: () => {
             setIsFormVisible(false);
+            setAttributeType(formData?.attributeLevel);
+            // form.setFieldsValue({
+            //     code: null,
+            //     descriptionTitle: null,
+            //     id: null,
+            //     status: null,
+            // });
+            form.resetFields();
         },
         titleOverride: (formActionType === FROM_ACTION_TYPE?.EDIT ? 'Edit ' : 'Add ').concat(moduleTitle),
         onFinish,
