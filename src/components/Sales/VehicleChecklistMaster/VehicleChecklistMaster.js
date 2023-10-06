@@ -350,7 +350,6 @@ export const VehicleChecklistMain = ({
             const formData = flatternData.find((i) => selectedTreeKey[0] === i.key);
             let attributeName = VehicleChecklistAttributeLov?.find((e) => e?.key === formData?.data?.attributeLevel)?.value;
             formData && setFormData({ ...formData?.data, attributeName });
-            
         }
         setIsFormVisible(true);
         setFormBtnActive(false);
@@ -454,7 +453,7 @@ export const VehicleChecklistMain = ({
                                             })}
                                         </div>
                                         <div className={styles.fullWidth}>
-                                            <Search placeholder="Search" onSearch={''} allowClear className={styles.headerSearchField} />
+                                            <Search placeholder="Search" onChange={onChange} allowClear className={styles.headerSearchField} />
                                         </div>
                                     </Col>
                                 </Row>
