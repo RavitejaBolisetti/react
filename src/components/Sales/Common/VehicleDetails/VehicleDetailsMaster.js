@@ -98,9 +98,8 @@ const VehicleDetailsMasterMain = (props) => {
     const [toolTipContent, setToolTipContent] = useState();
     const [isReadOnly, setIsReadOnly] = useState();
     const [productHierarchyData, setProductHierarchyData] = useState([]);
+    const [vehicleDetailData, setVehicleDetailData] = useState(vehicleDetailDataPass || vehicleDetailDataReceived);
     const [filterVehicleData, setFilterVehicleData] = useState([]);
-
-    const vehicleDetailData = vehicleDetailDataPass || vehicleDetailDataReceived;
 
     const onSuccessAction = (res) => {
         //showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -111,6 +110,15 @@ const VehicleDetailsMasterMain = (props) => {
     };
 
     const isOTFModule = salesModuleType === SALES_MODULE_TYPE.OTF.KEY;
+
+    useEffect(() => {
+        if (isOTFModule) {
+            setVehicleDetailData(vehicleDetailDataReceived);
+        } else {
+            setVehicleDetailData(vehicleDetailDataPass);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isOTFModule]);
 
     useEffect(() => {
         if (userId && selectedRecordId) {
@@ -262,8 +270,9 @@ const VehicleDetailsMasterMain = (props) => {
             },
         ];
 
-        const onSuccessAction = () => {
+        const onSuccessAction = (res) => {
             productModelCode && form.setFieldValue('modalCode', productModelCode);
+            setVehicleDetailData(res?.data);
         };
 
         fetchList({ setIsLoading: listShowLoading, userId, extraParams: extraParams, onSuccessAction, onErrorAction, resetOnError: false });
