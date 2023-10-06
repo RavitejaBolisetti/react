@@ -226,24 +226,24 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
     const onFinish = (values) => {
         const recordId = values?.id || '';
         let parentCode = values?.parentCode === `DMS` ? buttonType : values?.parentCode;
-        const data = { id: recordId, checklistType: parentCode, groupCode: values?.code, groupDescription: values?.descriptionTitle, checklistStatus: values?.status };
+        const data = { ...values, id: recordId, parentCode };
 
         const onSuccess = (res) => {
             form.resetFields();
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
 
             if (res?.data) {
-                setAttributeType(res?.data?.attributeTypeCode);
+                //setAttributeType(res?.data?.attributeTypeCode);
 
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
 
                 fetchVehicleChecklist({ setIsLoading: listShowLoadingVehicleChecklist, userId, extraParams });
 
-                const attributeName = VehicleChecklistAttributeLov?.find((e) => e?.key === formData?.data?.attributeLevel)?.value;
-                const attributeParentName = flatternData.find((i) => formData?.data?.parentCode === i.key)?.data?.descriptionTitle;
-                res?.data && setFormData({ ...formData?.data, parentName: attributeParentName, attributeName });
-
-                setSelectedTreeKey([res?.data?.groupCode]);
+                const attributeName = VehicleChecklistAttributeLov?.find((e) => e?.key === res?.data?.attributeLevel)?.value;
+                const attributeParentName = flatternData.find((i) => res?.data?.parentCode === i.key)?.data?.descriptionTitle;
+                res?.data && setFormData({ ...res?.data, parentName: attributeParentName, attributeName });
+                console.log(`res?.data`, res?.data);
+                setSelectedTreeKey([res?.data?.code]);
                 setFormActionType(FROM_ACTION_TYPE.VIEW);
                 setFormBtnActive(false);
                 setIsFormVisible(false);
