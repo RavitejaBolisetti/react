@@ -156,6 +156,7 @@ export const VehicleChecklistMain = ({
     const [attributeType, setAttributeType] = useState();
     const [calculationType, setCalculationType] = useState();
     const [buttonType, setButtonType] = useState('VDCL');
+    const [handleButtonClickChange, setHandleButtonClickChange] = useState(false);
 
     const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -211,9 +212,10 @@ export const VehicleChecklistMain = ({
 
     useEffect(() => {
         if (formActionType === FROM_ACTION_TYPE?.CHILD) {
+            setSelectedTreeSelectKey(formData?.code);
             if (attributeType === ATTRIBUTE_LEVEL?.[0]?.key) {
                 setAttributeType(ATTRIBUTE_LEVEL?.[1]?.key);
-                setSelectedTreeSelectKey(formData?.code);
+                form.setFieldValue({ attributeLevel: ATTRIBUTE_LEVEL?.[1]?.value });
             } else if (attributeType === ATTRIBUTE_LEVEL?.[1]?.key) {
                 setAttributeType(ATTRIBUTE_LEVEL?.[2]?.key);
             } else if (attributeType === ATTRIBUTE_LEVEL?.[2]?.key) {
@@ -224,7 +226,7 @@ export const VehicleChecklistMain = ({
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formActionType]);
+    }, [formActionType, handleButtonClickChange]);
 
     const onChange = (e) => {
         setSearchValue(e.target.value);
@@ -288,8 +290,6 @@ export const VehicleChecklistMain = ({
         const recordId = formData?.id || '';
         const codeToBeSaved = selectedTreeSelectKey || '';
         const data = { ...values, id: recordId, parentCode: codeToBeSaved };
-
-        console.log(`values`, values);
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -355,10 +355,18 @@ export const VehicleChecklistMain = ({
                 status: formData?.data?.status,
             });
             setSelectedTreeSelectKey(formData?.data?.parentCode ? formData?.data?.parentCode : null);
+        } else {
+            form.setFieldsValue({
+                code: null,
+                descriptionTitle: null,
+                id: null,
+                status: false,
+            });
         }
         setIsFormVisible(true);
         setFormBtnActive(false);
         setFormActionType(type);
+        setHandleButtonClickChange(() => !handleButtonClickChange);
     };
 
     const myProps = {
@@ -382,13 +390,6 @@ export const VehicleChecklistMain = ({
         onCloseAction: () => {
             setIsFormVisible(false);
             setAttributeType(formData?.attributeLevel);
-            // form.setFieldsValue({
-            //     code: null,
-            //     descriptionTitle: null,
-            //     id: null,
-            //     status: null,
-            // });
-            form.resetFields();
         },
         titleOverride: (formActionType === FROM_ACTION_TYPE?.EDIT ? 'Edit ' : 'Add ').concat(moduleTitle),
         onFinish,
