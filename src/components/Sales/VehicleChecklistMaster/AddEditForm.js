@@ -57,7 +57,8 @@ const AddEditFormMain = (props) => {
     const treeSelectFieldProps = {
         treeFieldNames,
         treeData: VehicleChecklistMasterList,
-        treeDisabled: formActionType === `child` || formActionType === `sibling`,
+        treeDisabled: true,
+        //formActionType === `child` || formActionType === `sibling`,
         selectedTreeSelectKey,
         handleSelectTreeClick,
         defaultValue: treeCodeId,
@@ -84,7 +85,7 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Form.Item name="attributeLevel" label="Attribute Type" rules={[validateRequiredSelectField('Attribute Type Code')]}>
-                                    {customSelectBox({ data: VehicleChecklistAttributeLov, onChange: handleAttributeChange, placeholder: preparePlaceholderSelect('Attribute Type Code') })}
+                                    {customSelectBox({ data: VehicleChecklistAttributeLov, onChange: handleAttributeChange, placeholder: preparePlaceholderSelect('Attribute Type Code'), disabled: true })}
                                 </Form.Item>
                             </Col>
 
