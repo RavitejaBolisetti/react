@@ -52,7 +52,7 @@ const mapStateToProps = (state) => {
 
         isTypeDataLoaded,
         isTypeDataLoading,
-        typeData: typeData,
+        typeData,
 
         moduleTitle,
     };
@@ -217,6 +217,7 @@ export const CustomerDetailsMain = (props) => {
     };
 
     const viewProps = {
+        typeData,
         formData,
         styles,
         isLoading,

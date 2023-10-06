@@ -15,6 +15,9 @@ export const vehicleAllotmentStatusTag = (status) => {
         case VEHICLE_ALLOTMENT_STATUS.RECEIVED.key:
             tag = <Tag color="success">{VEHICLE_ALLOTMENT_STATUS.RECEIVED.desc}</Tag>;
             break;
+        case VEHICLE_ALLOTMENT_STATUS.RETURNED.key:
+            tag = <Tag color="success">{VEHICLE_ALLOTMENT_STATUS.RETURNED.desc}</Tag>;
+            break;
         default:
     }
     return tag;

@@ -362,8 +362,7 @@ export const RSMApprovalMasterBase = (props) => {
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
-
-        icon: <FilterIcon size={20} />,
+        // icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
 
         onCloseAction: onAdvanceSearchCloseAction,

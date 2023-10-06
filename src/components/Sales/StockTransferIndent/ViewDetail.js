@@ -38,6 +38,7 @@ const ViewDetailMain = (props) => {
     };
 
     const onFinish = (values) => {
+        setEditVehicleDetails({});
         setIsEditVehicleDetailsVisible(false);
         editVehicleDetailsForm.resetFields();
         updateVehicleDetails({ ...editVehicleDetails, cancelledQuantity: values?.cancelledQuantity });
@@ -60,7 +61,8 @@ const ViewDetailMain = (props) => {
     const handleButtonClickVehicleDetails = ({ record = null, buttonAction, openDefaultSection = true, index }) => {
         switch (buttonAction) {
             case EDIT_ACTION:
-                setEditVehicleDetails(record);
+                setEditVehicleDetails({ ...record });
+                editVehicleDetailsForm.setFieldsValue({ ...record });
                 setIsEditVehicleDetailsVisible(true);
                 break;
             case VIEW_ACTION:

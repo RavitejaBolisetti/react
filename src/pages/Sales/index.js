@@ -28,10 +28,33 @@ import VehicleTrackingPage from './VehicleTracking';
 import OtfSoMappingUnmappingMasterPage from './OtfSoMappingUnmapping';
 import StockTransferIndentMasterPage from './StockTransferIndent';
 import VehicleDeliveryNoteMasterPage from './VehicleDeliveryNote';
-
+import EvrDetailsCapturingMasterPage from './EvrDetailsCapturing';
 import VinBlockMasterPage from './VinBlockMaster';
 import AMCRegistrationMasterPage from './AMCRegistration';
 
-export { OTFMasterPage, OtfBlockMasterPage, VehicleDetailMasterPage, VehicleReceiptMasterPage, VehiclePriceMasterPage, VehicleRecieptChecklistMaster, RSMApprovalPage, VehiclePurchaseOrderMasterPage, OtfSoMappingMasterPage, VehicleAllotmentMasterPage, ReceiptMasterPage, VehicleInvoiceMasterPage, DigitalSignatureMasterPage, HoPriceMappingMasterPage, DeliveryNoteInvoiceCancellationPage, OnRoadPriceMasterPage, VehicleAllotmentPriorityMasterPage, VehicleTrackingPage, OtfSoMappingUnmappingMasterPage, StockTransferIndentMasterPage, VehicleDeliveryNoteMasterPage, VinBlockMasterPage };
-
+export {
+    OTFMasterPage,
+    OtfBlockMasterPage,
+    VehicleDetailMasterPage,
+    VehicleReceiptMasterPage,
+    VehiclePriceMasterPage,
+    VehicleRecieptChecklistMaster,
+    RSMApprovalPage,
+    VehiclePurchaseOrderMasterPage,
+    OtfSoMappingMasterPage,
+    VehicleAllotmentMasterPage,
+    ReceiptMasterPage,
+    VehicleInvoiceMasterPage,
+    DigitalSignatureMasterPage,
+    HoPriceMappingMasterPage,
+    DeliveryNoteInvoiceCancellationPage,
+    OnRoadPriceMasterPage,
+    VehicleAllotmentPriorityMasterPage,
+    VehicleTrackingPage,
+    OtfSoMappingUnmappingMasterPage,
+    StockTransferIndentMasterPage,
+    VehicleDeliveryNoteMasterPage,
+    EvrDetailsCapturingMasterPage,
+    VinBlockMasterPage,
+};
 export default AMCRegistrationMasterPage;

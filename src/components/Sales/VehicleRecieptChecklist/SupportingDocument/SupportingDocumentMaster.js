@@ -201,6 +201,7 @@ const SupportingDocumentBase = (props) => {
         mandatoryFields,
         setMandatoryFields,
         supportingDocs: true,
+        tempFileName: form.getFieldValue('fileName'),
     };
 
     const myProps = {

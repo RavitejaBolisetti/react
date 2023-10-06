@@ -10,7 +10,6 @@ import { bindActionCreators } from 'redux';
 import { Row, Col, Form } from 'antd';
 import { tableColumn } from './tableColumn';
 import AdvanceFilter from './AdvanceFilter';
-import { FilterIcon } from 'Icons';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 import { ReportModal } from 'components/common/ReportModal/ReportModal';
 import { ListDataTable } from 'utils/ListDataTable';
@@ -476,8 +475,7 @@ export const CreditDebitNoteMasterBase = (props) => {
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
-
-        icon: <FilterIcon size={20} />,
+        // icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,

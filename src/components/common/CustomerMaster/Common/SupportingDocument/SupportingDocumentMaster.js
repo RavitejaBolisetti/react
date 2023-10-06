@@ -262,6 +262,7 @@ const SupportingDocumentBase = (props) => {
         setMandatoryFields,
         supportingDocs: true,
         handleClearChange,
+        tempFileName: form.getFieldValue('documentName'),
     };
 
     const myProps = {

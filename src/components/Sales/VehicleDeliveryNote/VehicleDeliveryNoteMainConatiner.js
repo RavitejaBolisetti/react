@@ -20,14 +20,12 @@ import { AddOnDetailsMaster } from './AddOnDetails';
 import { DeliverableChecklistMaster } from './DeliverableChecklist';
 import { VehicleDeliveryNoteFormButton } from './VehicleDeliveryNoteFormButton';
 import { DELIVERY_TYPE } from 'constants/modules/vehicleDetailsNotes.js/deliveryType';
-// import { ThankYouMaster } from './ThankYou';
-
-import styles from 'assets/sass/app.module.scss';
 import { ThankYouMaster } from './ThankYou';
+import styles from 'assets/sass/app.module.scss';
 
 const VehicleDeliveryNoteConatinerMain = (props) => {
     const { currentSection, selectedOtfNumber, selectedOrderId, soldByDealer } = props;
-    const { requestPayload, setRequestPayload, challanRequestPayload, setChallanRequestPayload, deliveryType } = props;
+    const { requestPayload, setRequestPayload, challanRequestPayload, deliveryType } = props;
 
     const onFinishCustom = ({ key, values }) => {
         setRequestPayload({ ...requestPayload, [key]: values });
@@ -41,12 +39,10 @@ const VehicleDeliveryNoteConatinerMain = (props) => {
         selectedInvoiceId: selectedOrderId,
     };
 
-    console.log('requestData', requestData);
-
     const renderElement = () => {
         switch (currentSection) {
             case VEHICLE_DELIVERY_NOTE_SECTION.INVOICE_DETAILS.id: {
-                return <InvoiceDetailsMaster {...myProps} invoiceData={soldByDealer ? requestData?.deliveryNoteInvoiveDetails : requestData?.engineDetailDto} />;
+                return <InvoiceDetailsMaster {...myProps} invoiceData={requestData?.deliveryNoteInvoiveDetails} />;
             }
             case VEHICLE_DELIVERY_NOTE_SECTION.CUSTOMER_DETAILS.id: {
                 return <CustomerDetailsMaster {...myProps} customerDetailsData={requestData?.customerDetails} />;
@@ -54,11 +50,9 @@ const VehicleDeliveryNoteConatinerMain = (props) => {
             case VEHICLE_DELIVERY_NOTE_SECTION.VEHICLE_DETAILS.id: {
                 return <VehicleDetailsMaster {...myProps} vehicleData={soldByDealer ? requestData?.vehicleDetails : requestData?.vehicleInformationDto} />;
             }
-
             case VEHICLE_DELIVERY_NOTE_SECTION.FINANCE_DETAILS.id: {
                 return <FinananceDetailsMaster {...myProps} formKey={'financeDetails'} financeData={requestData?.financeDetails} />;
             }
-
             case VEHICLE_DELIVERY_NOTE_SECTION.INSURANCE_DETAILS.id: {
                 return <InsuranceDetailsMaster {...myProps} formKey={'insuranceDetails'} insuranceData={requestData?.insuranceDetails} />;
             }

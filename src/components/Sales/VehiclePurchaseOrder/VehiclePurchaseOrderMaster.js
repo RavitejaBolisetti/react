@@ -19,7 +19,6 @@ import { validateRequiredInputField } from 'utils/validation';
 import { showGlobalNotification } from 'store/actions/notification';
 import { vehiclePurchaseOrderDataActions } from 'store/actions/data/vehicle/vehiclePurchaseOrderDetails';
 
-import { FilterIcon } from 'Icons';
 import { PoCancellationMaster } from './VehiclePurchaseOrderCancellation/PoCancellationMaster';
 import { VehiclePurchaseOrderDetailMaster } from './VehiclePurchaseOrderDetail';
 import { saveVPODataActions } from 'store/actions/data/vehicle/vehiclePurchaseOrderAction';
@@ -351,7 +350,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         totalRecords,
         tableColumn: tableColumn(handleButtonClick),
         tableData: data,
-        showAddButton: false,   
+        showAddButton: false,
         page,
         setPage,
     };
@@ -447,7 +446,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
     };
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
-        icon: <FilterIcon size={20} />,
+        // icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,

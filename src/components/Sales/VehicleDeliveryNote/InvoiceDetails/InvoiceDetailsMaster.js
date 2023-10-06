@@ -28,7 +28,6 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             VehicleDeliveryNote: {
-                InvoiceDetails: { isLoaded, isLoading, data: invoiceData = [] },
                 RelationshipManager: { isLoaded: isRelationshipManagerLoaded = false, isloading: isRelationshipManagerLoading, data: relationshipManagerData = [] },
                 VinNumberSearch: { isLoaded: vinNumberDataLoaded = false, isloading: vinNumberDataLoading, data: vinData = [] },
                 EngineNumber: { isLoaded: engineNumberDataLoaded = false, isloading: engineNumberLoading, data: engineNumberData = [] },
@@ -41,9 +40,6 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         userId,
-        isLoaded,
-        // invoiceData,
-        isLoading,
         moduleTitle,
         isRelationshipManagerLoaded,
         isRelationshipManagerLoading,
@@ -90,9 +86,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const InvoiceDetailsMasterBase = (props) => {
-    const { fetchList, userId, vinData, listvinNumberShowLoading, fetchEngineNumber, listEngineNumberShowLoading, fetchvinNumber, listShowLoading, relationshipManagerData, invoiceData, isRelationshipManagerLoaded, setFormActionType, fetchRelationshipManger, listRelationshipMangerShowLoading, isLoading, record } = props;
-
-    const { typeData, form, selectedOrderId, selectedInvoiceId, requestPayload, setRequestPayload, challanRequestPayload, setChallanRequestPayload, soldByDealer, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section, resetData, engineNumberData, chassisNoValue, setChassisNoValue, challanInvoiceDetailsDataLoaded, challanInvoiceDetailsLoading, challanInvoiceDetail, fetchInvoiceChallan, listChallanInvoiceShowLoading } = props;
+    const { userId, vinData, listvinNumberShowLoading, fetchEngineNumber, listEngineNumberShowLoading, fetchvinNumber, relationshipManagerData, invoiceData, isRelationshipManagerLoaded, setFormActionType, fetchRelationshipManger, listRelationshipMangerShowLoading, isLoading } = props;
+    const { typeData, form, selectedOrderId, requestPayload, setRequestPayload, challanRequestPayload, setChallanRequestPayload, soldByDealer, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section, engineNumberData, chassisNoValue, setChassisNoValue } = props;
     const { buttonData, setButtonData } = props;
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
@@ -122,7 +117,6 @@ export const InvoiceDetailsMasterBase = (props) => {
     // }, []);
     useEffect(() => {
         if (formActionType.addMode && !soldByDealer) {
-
             form.setFieldsValue({
                 deliveryNoteFor: 'Directly Billed Vehicle',
             });
@@ -135,7 +129,6 @@ export const InvoiceDetailsMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [section]);
 
-    console.log('invoiceDatainvoiceData', invoiceData, buttonData);
     useEffect(() => {
         if (invoiceData) {
             form.setFieldsValue({ ...invoiceData, invoiceDate: formattedCalendarDate(invoiceData?.invoiceDate), customerPromiseDate: formattedCalendarDate(invoiceData?.customerPromiseDate) });
@@ -143,6 +136,7 @@ export const InvoiceDetailsMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [invoiceData, section]);
+
     useEffect(() => {
         setButtonData({ ...buttonData, formBtnActive: true });
         // eslint-disable-next-line react-hooks/exhaustive-deps

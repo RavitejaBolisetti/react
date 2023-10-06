@@ -99,7 +99,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const LoyaltySchemeMasterMain = (props) => {
     const { isLoyaltySchemeDataLoaded, isLoading, section, listShowLoading, fetchList, LoyaltySchemeData, userId, showGlobalNotification } = props;
-    const { form, selectedOrder, selectedOrderId, formActionType, handleFormValueChange, onFinishFailed, handleButtonClick, NEXT_ACTION } = props;
+    const { form, selectedOrder, selectedRecordId, formActionType, handleFormValueChange, onFinishFailed, handleButtonClick, NEXT_ACTION } = props;
     const { typeData } = props;
     const { fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading } = props;
     const { isModelDataLoaded, isModelLoading, modelData, isVariantDataLoaded, isVariantLoading, variantData, saveData } = props;
@@ -109,13 +109,10 @@ const LoyaltySchemeMasterMain = (props) => {
     const [filteredModelData, setfilteredModelData] = useState([]);
     const [filteredVariantData, setfilteredVariantData] = useState([]);
     const [formData, setformData] = useState([]);
-    const [editable, setEditable] = useState();
     const disabledProps = { disabled: true };
 
     const fnSetData = (data) => {
         if (data && Object?.keys(data)?.length > 0) {
-            if (data?.customerId) setEditable(true);
-            else setEditable(false);
             form.setFieldsValue({ ...data, customerCode: data?.customerId, oldChassisNumber: data?.chassisNumber, variantCode: data?.variant, vehicleModelGroup: data?.modelGroup, make: data?.make || VEHICLE_COMPANY_MAKE });
         } else if (data === null) {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'No data found' });
@@ -130,10 +127,8 @@ const LoyaltySchemeMasterMain = (props) => {
 
     const extraParams = [
         {
-            key: 'otfNumber',
-            title: 'otfNumber',
-            value: selectedOrderId,
-            name: 'Booking Number',
+            key: 'otfId',
+            value: selectedRecordId,
         },
     ];
     const makeExtraParams = (key, title, value, name) => {
@@ -154,7 +149,7 @@ const LoyaltySchemeMasterMain = (props) => {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Verify Customer id to continue' });
             return;
         }
-        const data = { ...values, id: LoyaltySchemeData?.id || '', otfNumber: selectedOrderId };
+        const data = { ...values, id: LoyaltySchemeData?.id || '', otfId: selectedRecordId };
 
         if (onFinishCustom) {
             onFinishCustom({ key: formKey, values: data });
@@ -181,12 +176,12 @@ const LoyaltySchemeMasterMain = (props) => {
     };
 
     useEffect(() => {
-        if (userId && selectedOrderId) {
+        if (userId && selectedRecordId) {
             const extraParams = [
                 {
-                    key: 'otfNumber',
-                    title: 'otfNumber',
-                    value: selectedOrderId,
+                    key: 'otfId',
+                    title: 'otfId',
+                    value: selectedRecordId,
                     name: 'Booking Number',
                 },
             ];
@@ -208,12 +203,10 @@ const LoyaltySchemeMasterMain = (props) => {
             fetchSchemeLovList({ setIsLoading: listSchemeLovShowLoading, extraParams: schemeExtraParams, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOrderId]);
+    }, [userId, selectedRecordId]);
 
     useEffect(() => {
         if (LoyaltySchemeData) {
-            if (LoyaltySchemeData?.customerCode) setEditable(true);
-            else setEditable(false);
             setformData(LoyaltySchemeData);
             LoyaltySchemeData?.make && handleFilterChange('make', LoyaltySchemeData?.make ?? '');
             LoyaltySchemeData?.vehicleModelGroup && handleFilterChange('modelGroup', LoyaltySchemeData?.vehicleModelGroup ?? '');

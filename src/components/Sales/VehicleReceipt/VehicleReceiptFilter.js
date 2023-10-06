@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Button, Row, Col, Input } from 'antd';
+import { Button, Row, Col, Input, Form } from 'antd';
 import { FilterIcon } from 'Icons';
 import { RxCross2 } from 'react-icons/rx';
 import { QueryButtons } from 'components/Sales/VehicleRecieptChecklist/QueryButtons';
@@ -15,31 +15,35 @@ const { Search } = Input;
 
 export default function VehicleReceiptFilter(props) {
     const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, vehicleReceiptStatusList, filterString, handleReceiptTypeChange, setAdvanceSearchVisible, handleChange, handleSearch } = props;
-    const { currentItem } = props;
+    const { currentItem, searchForm } = props;
     return (
         <div className={styles.contentHeaderBackground}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Row gutter={20}>
-                        <Col xs={24} sm={16} md={16} lg={16} xl={16} className={styles.verticallyCentered}>
-                            <QueryButtons currentItem={currentItem} items={vehicleReceiptStatusList} onClick={handleReceiptTypeChange} />
-                            <div className={styles.fullWidth}>
-                                <Search placeholder="Search GRN No." onChange={handleChange} onSearch={handleSearch} allowClear className={styles.headerSearchField} />
-                            </div>
-                        </Col>
-                        <Col xs={24} sm={8} md={8} lg={8} xl={8} className={styles.verticallyCentered}>
-                            <Button
-                                icon={<FilterIcon />}
-                                type="link"
-                                className={styles.verticallyCentered}
-                                onClick={() => {
-                                    setAdvanceSearchVisible(true);
-                                }}
-                            >
-                                Advanced Filters
-                            </Button>
-                        </Col>
-                    </Row>
+                    <Form autoComplete="off" form={searchForm} colon={false} className={styles.masterListSearchForm}>
+                        <Form.Item name="normalSearch">
+                            <Row gutter={20}>
+                                <Col xs={24} sm={16} md={16} lg={16} xl={16} className={styles.verticallyCentered}>
+                                    <QueryButtons currentItem={currentItem} items={vehicleReceiptStatusList} onClick={handleReceiptTypeChange} />
+                                    <div className={styles.fullWidth}>
+                                        <Search placeholder="Search GRN No." onChange={handleChange} onSearch={handleSearch} allowClear className={styles.headerSearchField} />
+                                    </div>
+                                </Col>
+                                <Col xs={24} sm={8} md={8} lg={8} xl={8} className={styles.verticallyCentered}>
+                                    <Button
+                                        icon={<FilterIcon />}
+                                        type="link"
+                                        className={styles.verticallyCentered}
+                                        onClick={() => {
+                                            setAdvanceSearchVisible(true);
+                                        }}
+                                    >
+                                        Advanced Filters
+                                    </Button>
+                                </Col>
+                            </Row>
+                        </Form.Item>
+                    </Form>
                 </Col>
             </Row>
             {advanceFilter && filterString?.advanceFilter && extraParams.find((i) => i.name) && (

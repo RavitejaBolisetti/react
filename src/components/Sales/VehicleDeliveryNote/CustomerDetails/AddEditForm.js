@@ -3,23 +3,21 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Col, Input, Form, Row, Card, Space } from 'antd';
-
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-
 import styles from 'assets/sass/app.module.scss';
 
 const { Search } = Input;
 const AddEditFormMain = (props) => {
-    const { formData, handleCustomerIdSearch, handleOnChange, soldByDealer } = props;
-    const [customer, setCustomer] = useState();
-
-    const handleCustomerId = () => {
-        setCustomer(true);
-        handleCustomerIdSearch();
-    };
-
+    const { form, formData, handleCustomerIdSearch, handleOnChange, soldByDealer, customerDetailsDataSearched } = props;
+    useEffect(() => {
+        if (formData) {
+            form.setFieldsValue({ ...formData });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData]);
+    const showFields = soldByDealer || (customerDetailsDataSearched && Object?.keys(customerDetailsDataSearched)?.length > 0);
     return (
         <>
             <div className={styles.drawerCustomerMaster}>
@@ -35,11 +33,11 @@ const AddEditFormMain = (props) => {
                                                     <Input placeholder={preparePlaceholderText('Customer ID')} disabled={true} />
                                                 </>
                                             ) : (
-                                                <Search onChange={handleOnChange} onSearch={handleCustomerId} placeholder={preparePlaceholderText('Customer ID')} allowClear />
+                                                <Search onChange={handleOnChange} onSearch={handleCustomerIdSearch} placeholder={preparePlaceholderText('Customer ID')} allowClear />
                                             )}
                                         </Form.Item>
                                     </Col>
-                                    {(customer || soldByDealer) && (
+                                    {showFields && (
                                         <>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                 <Form.Item label="Customer Type" name="customerType">

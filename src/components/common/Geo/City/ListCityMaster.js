@@ -24,7 +24,6 @@ import { AddEditForm } from './AddEditForm';
 import { AdvancedSearch } from './AdvancedSearch';
 
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
-import { FilterIcon } from 'Icons';
 
 const mapStateToProps = (state) => {
     const {
@@ -409,7 +408,7 @@ export const ListCityMasterBase = (props) => {
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
         onCloseAction: onAdvanceSearchCloseAction,
-        icon: <FilterIcon size={20} />,
+        //icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
         isDataCountryLoaded,
         isCountryLoading,

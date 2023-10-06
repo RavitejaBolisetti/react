@@ -41,7 +41,7 @@ import {
     LessorCustomerCreationPage,
 } from 'pages/common';
 
-import { TaxChargesPage, TaxChargesCategoryPage, AccountCategoryPage, VehicleModelTaxChargesCategoryPage, DocumentTypeOtherChargesPage, CreditDebitNoteMasterPage, ChartOfAccountPage } from 'pages/FinancialAccounting';
+import { TaxChargesPage, TaxChargesCategoryPage, AccountCategoryPage, VehicleModelTaxChargesCategoryPage, DocumentTypeOtherChargesPage, CreditDebitNoteMasterPage, GSTIRNAuthenticationPage, ChartOfAccountPage } from 'pages/FinancialAccounting';
 import {
     OTFMasterPage,
     VehicleDetailMasterPage,
@@ -64,6 +64,7 @@ import {
     OtfSoMappingUnmappingMasterPage,
     StockTransferIndentMasterPage,
     VehicleDeliveryNoteMasterPage,
+    EvrDetailsCapturingMasterPage,
     VinBlockMasterPage,
 } from 'pages/Sales';
 
@@ -169,9 +170,11 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_DIGITAL_SIGNATURE_MAPPING} element={<DigitalSignatureMasterPage />} exact />
             <Route path={routing.ROUTING_FINANCIAL_ACCOUNTING_CHART_OF_ACCOUNT} element={<ChartOfAccountPage />} exact />
 
+            <Route path={routing.ROUTING_GST_IRN_AUTHENTICATION} element={<GSTIRNAuthenticationPage />} exact />
             <Route path={routing.ROUTING_ONROAD_PRICE_MASTER} element={<OnRoadPriceMasterPage />} exact />
 
             <Route path={routing.ROUTING_HO_PRICE_MAPPING} element={<HoPriceMappingMasterPage />} exact />
+            <Route path={routing.ROUTING_EVR_DETAILS_CAPTURING} element={<EvrDetailsCapturingMasterPage />} exact />
             <Route path={routing.STOCK_TRANSFER_INDENT} element={<StockTransferIndentMasterPage />} exact />
 
             <Route path={routing.ROUTING_VIN_BLOCK_MASTER} element={<VinBlockMasterPage />} exact />

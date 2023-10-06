@@ -96,10 +96,14 @@
 .marR20 {
     margin-right: 20px;
 }
+.marB0 {
+    margin-bottom: 0px !important;
+}
 
 .marB10 {
     margin-bottom: 10px;
 }
+
 
 .marB20 {
     margin-bottom: 20px;
@@ -1055,7 +1059,71 @@
         }
     }
 }
+.viewContainerInner {
+    border: 1px solid $neutralGrey1;
+    border-radius: 4px 4px 0px 0px;
+    -moz-border-radius: 4px 4px 0px 0px;
+    -webkit-border-radius: 4px 4px 0px 0px;
 
+    & :global {
+        .ant-descriptions {
+            .ant-descriptions-header {
+                margin-bottom: 0px;
+            }
+
+            .ant-descriptions-view {
+                overflow-y: auto;
+                height: calc(100vh - 305px);
+                padding: 20px;
+                padding-right: 12px;
+
+                table {
+                    tbody {
+                        tr {
+                            th {
+                                padding: 0;
+                            }
+
+                            td {
+                                padding: 0;
+                                padding-bottom: 20px;
+
+                                .ant-descriptions-item-content {
+                                    .ant-collapse {
+                                        margin-bottom: -10px !important;
+                                    }
+                                }
+                            }
+
+                            // &:last-child {
+                            //     td {
+                            //         padding-bottom: 0;
+                            //     }
+                            // }
+                        }
+                    }
+                }
+            }
+
+            .ant-descriptions-item-label {
+                color: $primaryBlack;
+            }
+
+            .ant-descriptions-item-content {
+                color: $neutralGrey3 !important;
+                .ant-typography {
+                    color: $neutralGrey3 !important;
+                    strong {
+                        color: $primaryBlack !important;
+                    }
+                }
+                .ant-typography-success {
+                    color: $semanticSuccess !important;
+                }
+            }
+        }
+    }
+}
 .viewOneColProps {
     & :global {
         .ant-descriptions {

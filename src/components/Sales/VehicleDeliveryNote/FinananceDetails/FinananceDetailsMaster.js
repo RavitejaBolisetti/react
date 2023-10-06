@@ -63,9 +63,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const FinananceDetailsMasterBase = (props) => {
-    const { saveData, resetData, fetchList, userId, listShowLoading, financeData, isFinanceLovDataLoaded, setFormActionType, isFinanceLovLoading, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, section, isLoading } = props;
+    const { saveData, fetchList, userId, listShowLoading, financeData, isFinanceLovDataLoaded, setFormActionType, isFinanceLovLoading, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, section, isLoading } = props;
     const { typeData, form, selectedOrderId, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION } = props;
-    const { formKey, onFinishCustom = undefined, onFinishDeliveryNoteCustom = undefined, FormActionButton, StatusBar, pageType } = props;
+    const { formKey, onFinishCustom = undefined, FormActionButton, StatusBar, pageType } = props;
     const { buttonData, setButtonData } = props;
 
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -88,23 +88,6 @@ export const FinananceDetailsMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [section]);
 
-    // const extraParams = [
-    //     {
-    //         key: 'otfNumber',
-    //         title: 'otfNumber',
-    //         value: selectedOrderId,
-    //         name: 'Booking Number',
-    //     },
-    // ];
-
-    // useEffect(() => {
-    //     if (userId && selectedOrderId) {
-    //         fetchList({ setIsLoading: listShowLoading, extraParams, onErrorAction, userId });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [userId, selectedOrderId]);
-    console.log('financeData-->', financeData);
-
     useEffect(() => {
         if (userId && !isFinanceLovDataLoaded) {
             fetchFinanceLovList({ setIsLoading: listFinanceLovShowLoading, userId });
@@ -112,19 +95,15 @@ export const FinananceDetailsMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isFinanceLovDataLoaded]);
 
-    const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-    };
-
     const onErrorAction = (message) => {
         showGlobalNotification(message);
     };
 
     const onFinish = (values) => {
-        // if (pageType === PAGE_TYPE?.OTF_PAGE_TYPE?.key) {
         const recordId = financeData?.id || '';
-        const data = { ...values, id: recordId, otfNumber: selectedOrderId, doDate: values?.doDate };
+        const otfId = financeData?.otfId || '';
 
+        const data = { ...values, id: recordId, otfId, otfNumber: selectedOrderId, doDate: values?.doDate };
         if (onFinishCustom) {
             onFinishCustom({ key: formKey, values: data });
             handleButtonClick({ buttonAction: NEXT_ACTION });
@@ -147,11 +126,6 @@ export const FinananceDetailsMasterBase = (props) => {
 
             saveData(requestData);
         }
-        // } else {
-        //     const financeDetailsRequest = { ...values };
-        //     handleButtonClick({ buttonAction: NEXT_ACTION });
-        //     setRequestPayload({ ...requestPayload, financeDetails: financeDetailsRequest });
-        // }
     };
 
     const onFinishFailed = () => {};

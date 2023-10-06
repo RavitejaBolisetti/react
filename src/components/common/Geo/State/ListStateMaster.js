@@ -24,7 +24,6 @@ import { btnVisiblity } from 'utils/btnVisiblity';
 import { AdvancedSearch } from './AdvancedSearch';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { AddEditForm } from './AddEditForm';
-import { FilterIcon } from 'Icons';
 
 const mapStateToProps = (state) => {
     const {
@@ -264,7 +263,7 @@ export const ListStateMasterBase = (props) => {
         isVisible: isAdvanceSearchVisible,
         onCloseAction: onAdvanceSearchCloseAction,
         setAdvanceSearchVisible,
-        icon: <FilterIcon size={20} />,
+        // icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
         isDataCountryLoaded,
         isCountryLoading,

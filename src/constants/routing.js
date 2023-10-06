@@ -117,6 +117,8 @@ export const ROUTING_VEHICLE_DELIVERY_NOTE = ROUTING_SALES.concat('vehicle-deliv
 
 export const ROUTING_VEHICLE_MODEL_TAX_CHARGES_CATEGORY = ROUTING_FINANCIAL_ACCOUNTING.concat('vehicle-model-tax-and-charges-category');
 
+
+export const ROUTING_GST_IRN_AUTHENTICATION = ROUTING_FINANCIAL_ACCOUNTING.concat('gst-irn-authentication');
 export const ROUTING_ONROAD_PRICE_MASTER = ROUTING_SALES.concat('onroad-price-master');
 export const ROUTING_VEHICLE_VEHICLE_ALLOTMENT_PRIORITY_MASTER = ROUTING_SALES.concat('vehicle-allotment-priority-master');
 export const ROUTING_DIGITAL_SIGNATURE_MAPPING = ROUTING_SALES.concat('digital-signature');
@@ -124,5 +126,6 @@ export const ROUTING_HO_PRICE_MAPPING = ROUTING_SALES.concat('ho-price-mapping')
 export const STOCK_TRANSFER_INDENT = ROUTING_SALES.concat('stock-transfer-indent');
 export const ROUTING_SO_MAPPING_UNMAPPING = ROUTING_SALES.concat('booking-so-mapping');
 export const ROUTING_AMC_REGISTRATION = ROUTING_SALES.concat('amc-registration');
+export const ROUTING_EVR_DETAILS_CAPTURING = ROUTING_SALES.concat('evr-details-capturing');
 
 export const ROUTING_VIN_BLOCK_MASTER = ROUTING_SALES.concat('vin-block-master');

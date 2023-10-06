@@ -131,7 +131,7 @@ export const BASE_URL_FAMILY_DETAIL_SEARCH = BASE_URL + 'customers/individual';
 export const BASE_URL_INDIVIUAL_PROFILE_CUSTOMER_MASTER = BASE_URL + 'customers/individual/profile';
 export const BASE_URL_CUSTOMER_MASTER_CUSTOMER_DETAILS_INDIVIDUAL = BASE_URL + 'customers/individual';
 export const BASE_URL_CUSTOMER_MASTER_ACCOUNTS_RELATED_INDIVISUAL = BASE_URL + 'customers/individual/accounts';
-export const BASE_URL_FAMILY_DETAIL_CUSTOMER_MASTER = BASE_URL + 'customers//individual/familydetails';
+export const BASE_URL_FAMILY_DETAIL_CUSTOMER_MASTER = BASE_URL + 'customers/individual/familydetails';
 export const BASE_URL_CUSTOMER_MASTER_ADDRESS = BASE_URL + 'customers/individual/address';
 export const BASE_URL_CUSTOMER_MASTER_ADDRESS_CORPORATE = BASE_URL + 'customers/corporate/address';
 export const BASE_URL_CUSTOMER_MASTER_INDIVIDUAL_CONTACT = BASE_URL + 'customers/individual/contacts';
@@ -164,7 +164,7 @@ export const BASE_URL_ADD_ON_PART = BASE_URL_OTF + 'part/details';
 
 export const BASE_URL_OTF_INVOICE = BASE_URL + 'otf/invoice';
 export const BASE_URL_OTF_FINANCE = BASE_URL + 'otf/finance';
-export const BASE_URL_OTF_SCHEME_DETAIL = BASE_URL + 'otf/schemes/lov';
+export const BASE_URL_OTF_SCHEME_DETAIL = BASE_URL + 'otf/schemes';
 export const BASE_URL_OTF_INSURANCE_DETAIL = BASE_URL + 'otf/insurancedetails';
 export const BASE_URL_OTF_FINANCE_LOV = BASE_URL + 'otf/financiers/lov';
 export const BASE_URL_OTF_SCHEMES = BASE_URL_OTF + 'schemes';
@@ -194,7 +194,7 @@ export const BASE_URL_RSM_APPROVAL = BASE_URL_INVOICE + 'rsm';
 export const BASE_URL_DELIVERY_NOTE_INVOICE_CANCELLATION = BASE_URL_INVOICE + 'invoicedeliverynote/cancellation';
 export const BASE_URL_DELIVERY_NOTE_INVOICE_CANCELLATION_SEARCH = BASE_URL_DELIVERY_NOTE_INVOICE_CANCELLATION + '/search';
 export const BASE_URL_RSM_APPROVAL_SEARCH = BASE_URL_RSM_APPROVAL + '/search';
-export const BASE_URL_INVOICE_DETAILS = BASE_URL_INVOICE + 'details';
+export const BASE_URL_INVOICE_DETAIL = BASE_URL_INVOICE + 'details';
 
 export const BASE_URL_VEHICLE = BASE_URL + 'vehicle/';
 export const BASE_URL_VEHICLE_SEARCH = BASE_URL_VEHICLE + 'search';
@@ -280,10 +280,12 @@ export const BASE_URL_VEHICLE_RECEIPT_CHECKLIST_MAIN = BASE_URL_VEHICLE + 'recei
 export const BASE_URL_VEHICLE_RECEIPT_CHECKLIST_PROFILE = BASE_URL_VEHICLE + 'receiptchecklist/profile';
 export const BASE_URL_VEHICLE_RECEIPT_CHECKLIST_MASTER = BASE_URL_VEHICLE + 'receiptchecklist/detail';
 export const BASE_URL_VEHICLE_ALLOTMENT = BASE_URL + 'vehicle/allotments';
-export const BASE_URL_VEHICLE_INVOICE_GENERATION = BASE_URL_OTF + 'vehicleinvoice/search';
-export const BASE_URL_VEHICLE_IRN_GENERATION = BASE_URL_OTF + 'vehicleinvoice/irngeneration';
-export const BASE_URL_INVOICE_DETAIL = BASE_URL_OTF + 'vehicleinvoice/details';
-export const BASE_URL_VEHICLE_INVOICE_DETAIL = BASE_URL_OTF + 'vehicleinvoice/vehicledetails';
+
+export const BASE_URL_VEHICLE_INVOICE = BASE_URL_OTF + 'vehicleinvoice';
+export const BASE_URL_VEHICLE_INVOICE_DETAIL = BASE_URL_OTF + 'vehicleinvoice/details';
+export const BASE_URL_VEHICLE_INVOICE_LIST = BASE_URL_VEHICLE_INVOICE + '/search';
+export const BASE_URL_VEHICLE_INVOICE_IRN_GENERATION = BASE_URL_VEHICLE_INVOICE + '/irngeneration';
+export const BASE_URL_VEHICLE_INVOICE_PROFILE_CARD = BASE_URL_VEHICLE_INVOICE + '/profile';
 
 export const BASE_URL_VEHICLE_DETAILS_SERVICE = BASE_URL + 'otf/vehicledetails/optionalcharges';
 
@@ -301,7 +303,6 @@ export const BASE_URL_VEHICLE_ALLOTMENT_PRIORITY = BASE_URL + 'vehicle/allotment
 export const BASE_URL_NOTIFICATION = BASE_URL + 'applications/notifications';
 
 export const BASE_URL_NOTIFICATION_COUNTS = BASE_URL + 'applications/notifications/counts';
-export const BASE_URL_VEHICLE_INVOICE = BASE_URL_OTF + 'vehicleinvoice';
 
 export const BASE_URL_OTF_SO_MAPPING_MAIN = BASE_URL + 'otf/somapunmap';
 export const BASE_URL_OTF_SO_MAPPING_SWAP = BASE_URL + 'otf/somapunmap/swap';
@@ -315,7 +316,7 @@ export const BASE_URL_VEHICLE_DELIVERY_NOTE = BASE_URL_OTF + 'deliverynote/';
 export const BASE_URL_VEHICLE_DELIVERY_NOTE_SEARCH = BASE_URL_VEHICLE_DELIVERY_NOTE + 'search';
 export const BASE_URL_VEHICLE_DELIVERY_NOTE_GENERATE = BASE_URL_VEHICLE_DELIVERY_NOTE + 'generate';
 export const BASE_URL_VEHICLE_DELIVERY_NOTE_CHALLAN_GENERATE = BASE_URL_VEHICLE_DELIVERY_NOTE + 'challan/generate';
-export const BASE_URL_VEHICLE_INVOICE_DETAILS = BASE_URL_VEHICLE_DELIVERY_NOTE + 'invoicedetail';
+export const BASE_URL_VEHICLE_DELIVERY_NOTE_INVOICE_DETAILS = BASE_URL_VEHICLE_DELIVERY_NOTE + 'invoicedetail';
 export const BASE_URL_VEHICLE_DELIVERY_NOTE_CANCELLATION = BASE_URL_VEHICLE_DELIVERY_NOTE + 'cancel';
 export const BASE_URL_VEHICLE_CUSTOMER_DETAILS = BASE_URL_CUSTOMER_MASTER + '/deliverynote/details';
 export const BASE_URL_VEHICLE_ADD_ON_DETAILS = BASE_URL_VEHICLE_DELIVERY_NOTE + 'addondetail';
@@ -334,9 +335,15 @@ export const BASE_URL_VEHICLE_CHALLAN_CANCEL_NOTE = BASE_URL + 'otf/delivery/cha
 
 export const BASE_URL_RELATIONSHIP_MANAGER = BASE_URL_USER_MANAGEMENT_APPLICATIONS_DEALER + '/employees';
 export const BASE_URL_DELIVERY_NOTE_VEHICLE_DETAILS = BASE_URL_OTF_VEHICLE_DETAILS + '/search/registrationnumber';
-export const BASE_URL_VEHICLE_INVOICE_GENERATION_PROFILE_CARD = BASE_URL_OTF + 'vehicleinvoice/profile';
 
 export const BASE_URL_VIN_BLOCK_MASTER = BASE_URL_VEHICLE + 'vinbolckmaster/search';
 export const BASE_URL_VIN_BLOCK_VIEWMASTER = BASE_URL_VEHICLE + 'vinbolckmaster';
+export const BASE_URL_EVR_DETAILS_CAPTURING_SEARCH = BASE_URL_VEHICLE + 'evr/details/search';
+export const BASE_URL_EVR_DETAILS_CAPTURING_DETAIL = BASE_URL_VEHICLE + 'evr/details';
 export const BASE_URL_VEHICE_DELIVERY_NOTE_MASTER_DATA = BASE_URL_OTF + 'deliverynote/dealer/detail';
 export const BASE_URL_VEHICE_DELIVERY_NOTE_CHALLAN_MASTER_DATA = BASE_URL_OTF + 'delivery/challan/detail';
+
+export const BASE_URL_GST_LOGIN = BASE_URL + '/v1/gstirnauthentication/authenticate';
+
+export const BASE_URL_DEALER_BRANCH_ACCESS = BASE_URL_DEALER_MANPOWER + '/parent/locations';
+export const BASE_URL_DEALER_GST = BASE_URL_DEALER_MANPOWER + '/parent/gstin/lov';

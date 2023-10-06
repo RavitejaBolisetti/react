@@ -6,11 +6,10 @@
 import React from 'react';
 import { Card, Descriptions } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-import { PARAM_MASTER } from 'constants/paramMaster';
-import { getCodeValue } from 'utils/getCodeValue';
 
 const ViewDetailMain = (props) => {
-    const { styles, formData, isLoading, typeData } = props;
+    const { formData, isLoading } = props;
+
     const viewProps = {
         bordered: false,
         colon: false,
@@ -18,10 +17,10 @@ const ViewDetailMain = (props) => {
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
     return (
-        <Card >
+        <Card>
             <Descriptions {...viewProps}>
                 <Descriptions.Item label="Customer ID">{checkAndSetDefaultValue(formData?.customerId, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Customer Type">{checkAndSetDefaultValue(getCodeValue(typeData?.[PARAM_MASTER?.CUST_TYPE?.id], formData?.customerType), isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Customer Type">{checkAndSetDefaultValue(formData?.customerType, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(formData?.customerName, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Mobile No.">{checkAndSetDefaultValue(formData?.customerPhoneNumber, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Address">{checkAndSetDefaultValue(formData?.customerAddress, isLoading)}</Descriptions.Item>

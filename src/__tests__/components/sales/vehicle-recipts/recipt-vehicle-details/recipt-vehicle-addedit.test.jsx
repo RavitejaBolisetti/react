@@ -1,11 +1,23 @@
 import '@testing-library/jest-dom/extend-expect';
 import { AddEditForm } from '@components/Sales/VehicleReceipt/VehicleDetails/AddEditForm';
 import customRender from '@utils/test-utils';
-import { screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
+import { Form } from 'antd';
 
 afterEach(() => {
     jest.restoreAllMocks();
 });
+
+const FormWrapper = (props) => {
+    const [vehicleDetailForm] = Form.useForm();
+
+    const myFormMock = {
+        ...vehicleDetailForm,
+        getFieldValue: jest.fn(),
+        setFieldsValue: jest.fn(),
+    };
+    return <AddEditForm vehicleDetailForm={myFormMock} {...props} />;
+};
 
 const formData = [{ color: null, demoVehicle: 'Y', fuel: null, id: '4a04fbfc-711e-45e1-961d-080153a9ef43', keyNumber: null, mfgdate: null, modelCode: null, modelDescription: 'LX BS4 7SF MISTSILVER', name: null, physicalStatus: 'TL', receivedOn: null, returnNumber: null, seatingCapacity: null, shortage: 'Y', variant: null, vehicleCost: null, vehicleReceiptChecklistNumber: null, vehicleStatus: 'TRN', vin: null }];
 
@@ -35,5 +47,24 @@ describe('Term Condition Manufacturer vehicle addedit components', () => {
 
         const minusBtn = screen.getByRole('img', { name: 'minus' });
         fireEvent.click(minusBtn);
+    });
+
+    it('should ', async () => {
+        customRender(<FormWrapper isVisible={true} formData={formData} setFinalData={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} vehicleStatusType={vehicleStatusType} physicalStatusType={physicalStatusType} shortageType={shortageType} />);
+
+        const editBtn = screen.getByRole('img', { name: 'plus' });
+        fireEvent.click(editBtn);
+
+        const demo = screen.getByRole('combobox', { name: /Demo Vehicle/i });
+        fireEvent.change(demo, { target: { value: 'Yes' } });
+
+        const vehicle = screen.getByRole('combobox', { name: /Vehicle Status/i });
+        fireEvent.change(vehicle, { target: { value: 'kai' } });
+
+        const physical = screen.getByRole('combobox', { name: /Physical Status/i });
+        fireEvent.change(physical, { target: { value: 'kai' } });
+
+        const saveBtn = screen.getByRole('button', { name: /save/i });
+        fireEvent.click(saveBtn);
     });
 });

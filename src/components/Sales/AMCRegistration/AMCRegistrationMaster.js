@@ -18,15 +18,15 @@ import { AdvancedSearch } from './AdvancedSearch';
 // import { CancelInvoice } from './CancelInvoice';
 // import { VEHICLE_INVOICE_SECTION } from 'constants/VehicleInvoiceSection';
 import { QUERY_BUTTONS_CONSTANTS, QUERY_BUTTONS_MNM_USER } from 'components/Sales/CommonScheme/QueryButtons';
-import { BASE_URL_VEHICLE_INVOICE_GENERATION_PROFILE_CARD as customURL, BASE_URL_INVOICE_DETAIL as InvoiceDetailsURL } from 'constants/routingApi';
+// import { BASE_URL_VEHICLE_INVOICE_GENERATION_PROFILE_CARD as customURL, BASE_URL_INVOICE_DETAIL as InvoiceDetailsURL } from 'constants/routingApi';
 import { otfDataActions } from 'store/actions/data/otf/otf';
 
-import { vehicleInvoiceDataActions } from 'store/actions/data/invoiceGeneration/vehicleInvoiceGeneration';
-import { vehicleIrnGenerationDataActions } from 'store/actions/data/invoiceGeneration/irnGeneration';
+// import { vehicleInvoiceDataActions } from 'store/actions/data/invoiceGeneration/vehicleInvoiceGeneration';
+// import { vehicleIrnGenerationDataActions } from 'store/actions/data/invoiceGeneration/irnGeneration';
 
-import { vehicleInvoiceGenerationDataActions } from 'store/actions/data/invoiceGeneration/vehicleInvoice';
+// import { vehicleInvoiceGenerationDataActions } from 'store/actions/data/invoiceGeneration/vehicleInvoice';
 
-import { vehicleInvoiceDetailDataActions } from 'store/actions/data/invoiceGeneration/vehicleInvoiceDetail';
+// import { vehicleInvoiceDetailDataActions } from 'store/actions/data/invoiceGeneration/vehicleInvoiceDetail';
 import { showGlobalNotification } from 'store/actions/notification';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
@@ -104,25 +104,25 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchOTFDetail: otfDataActions.fetchDetail,
             resetOtfData: otfDataActions.reset,
-            saveData: vehicleInvoiceGenerationDataActions.saveData,
-            cancelInvoice: vehicleInvoiceGenerationDataActions.saveData,
+            // saveData: vehicleInvoiceGenerationDataActions.saveData,
+            // cancelInvoice: vehicleInvoiceGenerationDataActions.saveData,
             listShowLoading: otfDataActions.listShowLoading,
             // saveData: vehicleInvoiceDetailDataActions.saveData,
-            listInvoiceShowLoading: vehicleInvoiceDetailDataActions.listShowLoading,
+            // listInvoiceShowLoading: vehicleInvoiceDetailDataActions.listShowLoading,
 
-            irnGeneration: vehicleIrnGenerationDataActions.saveData,
-            listIrnShowLoading: vehicleIrnGenerationDataActions.listShowLoading,
+            // irnGeneration: vehicleIrnGenerationDataActions.saveData,
+            // listIrnShowLoading: vehicleIrnGenerationDataActions.listShowLoading,
 
             // fetchVehicleDetail: vehicleInvoiceDetailDataActions.fetchList,
             // fetchVehicleInvoiceDetail: vehicleDetailsDataActions.fetchList,
             fetchSalesConsultant: salesConsultantActions.fetchList,
             listConsultantShowLoading: salesConsultantActions.listShowLoading,
 
-            fetchList: vehicleInvoiceDataActions.fetchList,
-            fetchInvoiceMasterData: vehicleInvoiceDataActions.fetchDetail,
-            resetDetailData: vehicleInvoiceDataActions.resetDetail,
-            listInvoiceDetailShowLoading: vehicleInvoiceDataActions.listInvoiceDetailShowLoading,
-            setFilterString: vehicleInvoiceDataActions.setFilter,
+            // fetchList: vehicleInvoiceDataActions.fetchList,
+            // fetchInvoiceMasterData: vehicleInvoiceDataActions.fetchDetail,
+            // resetDetailData: vehicleInvoiceDataActions.resetDetail,
+            // listInvoiceDetailShowLoading: vehicleInvoiceDataActions.listInvoiceDetailShowLoading,
+            // setFilterString: vehicleInvoiceDataActions.setFilter,
             showGlobalNotification,
         },
         dispatch
@@ -356,7 +356,7 @@ export const AMCRegistrationMasterBase = (props) => {
                 },
             ];
 
-            fetchOTFDetail({ customURL, setIsLoading: listShowLoading, userId, extraParams: extraParams, onErrorAction });
+            // fetchOTFDetail({ customURL, setIsLoading: listShowLoading, userId, extraParams: extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedOrderId, selectedOtfNumber, formActionType]);
@@ -424,7 +424,7 @@ export const AMCRegistrationMasterBase = (props) => {
                 }
             };
 
-            fetchInvoiceMasterData({ customURL: InvoiceDetailsURL, setIsLoading: listInvoiceShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+            // fetchInvoiceMasterData({ customURL: InvoiceDetailsURL, setIsLoading: listInvoiceShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
     };
 
@@ -458,7 +458,7 @@ export const AMCRegistrationMasterBase = (props) => {
                 },
             ];
 
-            fetchOTFDetail({ customURL, setIsLoading: listShowLoading, userId, extraParams: extraParam, onErrorAction });
+            // fetchOTFDetail({ customURL, setIsLoading: listShowLoading, userId, extraParams: extraParam, onErrorAction });
         };
         const onError = (message) => {
             showGlobalNotification({ message });
@@ -491,7 +491,6 @@ export const AMCRegistrationMasterBase = (props) => {
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
         form.setFieldsValue(undefined);
-
 
         switch (buttonAction) {
             case ADD_ACTION:

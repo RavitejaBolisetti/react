@@ -17,14 +17,10 @@ const AddEditFormMain = (props) => {
     const handleCollapse = (key) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
-    const RegisterHandler = (key) => {
-        key && setRegisterDisabled({ ...registerDisabled, [key]: false });
-    };
-    console.log('registerDisabled', registerDisabled);
 
-    const shieldInfoProps = { ...props, formActionType, openAccordian, formData: formData?.sheildRequest, onSingleFormFinish, schemeDescriptionData, addOnForm: shieldForm, handleEmployeeSearch, handleOnChange, registerDisabled };
-    const rsaProps = { ...props, formActionType, openAccordian, formData: formData?.rsaRequest, onSingleFormFinish, schemeDescriptionData, addOnForm: rsaForm, handleEmployeeSearch, handleOnChange, registerDisabled };
-    const amcProps = { ...props, formActionType, openAccordian, formData: formData?.amcRequest, onSingleFormFinish, schemeDescriptionData, addOnForm: amcForm, handleEmployeeSearch, handleOnChange, registerDisabled };
+    const shieldInfoProps = { ...props, formActionType, openAccordian, formData: formData?.sheildRequest, onSingleFormFinish, schemeDescriptionData, addOnForm: shieldForm, handleEmployeeSearch, handleOnChange, registerDisabled, isReadOnly: registerDisabled[openAccordian] };
+    const rsaProps = { ...props, formActionType, openAccordian, formData: formData?.rsaRequest, onSingleFormFinish, schemeDescriptionData, addOnForm: rsaForm, handleEmployeeSearch, handleOnChange, registerDisabled, isReadOnly: registerDisabled[openAccordian] };
+    const amcProps = { ...props, formActionType, openAccordian, formData: formData?.amcRequest, onSingleFormFinish, schemeDescriptionData, addOnForm: amcForm, handleEmployeeSearch, handleOnChange, registerDisabled, isReadOnly: registerDisabled[openAccordian] };
 
     return (
         <Row gutter={20}>
@@ -32,7 +28,7 @@ const AddEditFormMain = (props) => {
                 <Collapse onChange={() => handleCollapse('Shield')} expandIcon={expandIcon} activeKey={openAccordian} expandIconPosition="end">
                     <Panel header="Shield Information" key="Shield">
                         <Divider />
-                        <Form layout="vertical" autoComplete="off" form={shieldForm} onFieldsChange={() => RegisterHandler('Shield')}>
+                        <Form layout="vertical" autoComplete="off" form={shieldForm}>
                             <CommonForm {...shieldInfoProps} formKey={'sheildRequest'} />
                         </Form>
                     </Panel>
@@ -41,7 +37,7 @@ const AddEditFormMain = (props) => {
                 <Collapse onChange={() => handleCollapse('RSA')} expandIcon={expandIcon} activeKey={openAccordian} expandIconPosition="end">
                     <Panel header="RSA" key="RSA">
                         <Divider />
-                        <Form layout="vertical" autoComplete="off" form={rsaForm} onFieldsChange={() => RegisterHandler('RSA')}>
+                        <Form layout="vertical" autoComplete="off" form={rsaForm}>
                             <CommonForm {...rsaProps} formKey={'rsaRequest'} />
                         </Form>
                     </Panel>
@@ -50,7 +46,7 @@ const AddEditFormMain = (props) => {
                 <Collapse onChange={() => handleCollapse('AMC')} expandIcon={expandIcon} activeKey={openAccordian} expandIconPosition="end">
                     <Panel header="AMC" key="AMC">
                         <Divider />
-                        <Form layout="vertical" autoComplete="off" form={amcForm} onFieldsChange={() => RegisterHandler('AMC')}>
+                        <Form layout="vertical" autoComplete="off" form={amcForm}>
                             <CommonForm {...amcProps} formKey={'amcRequest'} />
                         </Form>
                     </Panel>
