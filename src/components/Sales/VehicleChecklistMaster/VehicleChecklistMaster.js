@@ -193,7 +193,6 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
 
     const flatternData = generateList(VehicleChecklistMasterList);
     const handleTreeViewClick = (keys) => {
-        console.log(`keys`, keys);
         form.resetFields();
         setFormData([]);
 
@@ -230,8 +229,6 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
         const recordId = values?.id || '';
         let parentCode = values?.parentCode === `DMS` ? buttonType : values?.parentCode;
         const data = { id: recordId, checklistType: parentCode, groupCode: values?.code, groupDescription: values?.descriptionTitle, checklistStatus: values?.status };
-
-        console.log(`values`, data);
 
         const onSuccess = (res) => {
             form.resetFields();
