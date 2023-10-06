@@ -246,8 +246,6 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
                 const attributeParentName = flatternData.find((i) => formData?.data?.parentCode === i.key)?.data?.descriptionTitle;
                 res?.data && setFormData({ ...formData?.data, parentName: attributeParentName, attributeName });
 
-                console.log(`res?.data`, res?.data);
-
                 setSelectedTreeKey([res?.data?.groupCode]);
                 setFormActionType(FROM_ACTION_TYPE.VIEW);
                 setFormBtnActive(false);
