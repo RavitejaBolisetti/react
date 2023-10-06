@@ -19,4 +19,9 @@ export const ATTRIBUTE_LEVEL = [
         key: 'CHKL',
         value: 'Checklist',
     },
+    {
+        id: 4,
+        key: 'ANS',
+        value: 'Answer',
+    },
 ];

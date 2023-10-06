@@ -43,6 +43,12 @@ export const ViewTaxChargesMain = (props) => {
                             <Descriptions.Item label="Checklist Description">{formData?.descriptionTitle}</Descriptions.Item>
                         </>
                     )}
+                    {attributeType === ATTRIBUTE_LEVEL?.[3]?.key && (
+                        <>
+                            <Descriptions.Item label="Checklist Code">{formData?.code}</Descriptions.Item>
+                            <Descriptions.Item label="Checklist Description">{formData?.descriptionTitle}</Descriptions.Item>
+                        </>
+                    )}
                 </Descriptions>
             </div>
         </>
