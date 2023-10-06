@@ -138,14 +138,16 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
     }, [buttonType]);
 
     useEffect(() => {
+        let obj = {
+            attributeLevel: null,
+            parentCode: null,
+            code: null,
+            descriptionTitle: null,
+            status: true,
+            id: null,
+        };
         if (formActionType === FROM_ACTION_TYPE?.CHILD) {
-            form.setFieldsValue({
-                attributeLevel: null,
-                parentCode: null,
-                code: null,
-                descriptionTitle: null,
-                status: true,
-            });
+            form.setFieldsValue(obj);
             setSelectedTreeSelectKey(formData?.code);
             if (attributeType === ATTRIBUTE_LEVEL?.[0]?.key) {
                 form.setFieldsValue({ attributeLevel: ATTRIBUTE_LEVEL?.[1]?.key, parentCode: formData?.code });
@@ -161,7 +163,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
             let treeKey = flatternData?.find((e) => e?.key === formData?.code)?.data?.parentCode;
             treeKey = treeKey === `VRCL` || treeKey === `VDCL` ? 'DMS' : treeKey;
             setSelectedTreeSelectKey(treeKey);
-            form.setFieldsValue({ attributeLevel: attributeType, parentCode: treeKey });
+            form.setFieldsValue({ ...obj, attributeLevel: attributeType, parentCode: treeKey });
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
