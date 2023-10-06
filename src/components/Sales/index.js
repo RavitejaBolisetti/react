@@ -25,4 +25,5 @@ import { EvrDetailsCapturingMaster } from './EvrDetailsCapturing';
 import { VehicleChecklistMaster } from './VehicleChecklistMaster';
 import { RsmAsmApprovalMaster } from './RsmAsmApproval';
 
-export { OtfMaster, VehicleDetailMaster, OtfBlockMaster, VehicleReceiptMaster, VehiclePurchaseOrderMaster, VehicleRecieptChecklistMaster, OtfSoMappingMaster, ReceiptMaster, HoPriceMappingMaster, DigitalSignatureMaster, VehicleInvoiceMaster, VehicleAllotmentPriorityMaster, VehicleTrackingMaster, OtfSoMappingUnmappingMaster, StockTransferIndentMaster, VehicleDeliveryNoteMaster, EvrDetailsCapturingMaster, VehicleChecklistMasterRsmAsmApprovalMaster };
+export { OtfMaster, VehicleDetailMaster, OtfBlockMaster, VehicleReceiptMaster, VehiclePurchaseOrderMaster, VehicleRecieptChecklistMaster, OtfSoMappingMaster, ReceiptMaster, HoPriceMappingMaster, DigitalSignatureMaster, VehicleInvoiceMaster, VehicleAllotmentPriorityMaster, VehicleTrackingMaster, OtfSoMappingUnmappingMaster, StockTransferIndentMaster, VehicleDeliveryNoteMaster, EvrDetailsCapturingMaster, VehicleChecklistMaster, RsmAsmApprovalMaster };
+
