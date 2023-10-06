@@ -23,6 +23,7 @@ import LeftPanel from 'components/common/LeftPanel';
 import { LANGUAGE_EN } from 'language/en';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { ATTRIBUTE_LEVEL } from 'constants/modules/VehicleCheckListMaster/attributeType';
+import { CHECKLIST_TYPE } from 'constants/modules/VehicleCheckListMaster/checklistType';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -46,13 +47,10 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         moduleTitle,
-        // isDataAttributeLoaded,
         viewTitle,
-        // attributeData,
         typeData,
         VehicleChecklistMasterList,
         VehicleChecklistAttributeLov,
-        // unFilteredAttributeData: attributeData?.filter((i) => i?.status),
         isVehicleChecklistMasterLoaded,
         isVehicleChecklistMasterAtrributeLovLoaded,
     };
@@ -96,7 +94,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [searchValue, setSearchValue] = useState('');
     const [attributeType, setAttributeType] = useState();
-    const [buttonType, setButtonType] = useState('VDCL');
+    const [buttonType, setButtonType] = useState(CHECKLIST_TYPE?.VDC?.key);
     const [handleButtonClickChange, setHandleButtonClickChange] = useState(false);
 
     const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false };
@@ -161,7 +159,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
             }
         } else if (formActionType === FROM_ACTION_TYPE?.SIBLING) {
             let treeKey = flatternData?.find((e) => e?.key === formData?.code)?.data?.parentCode;
-            treeKey = treeKey === `VRCL` || treeKey === `VDCL` ? 'DMS' : treeKey;
+            treeKey = treeKey === CHECKLIST_TYPE?.VRC?.key || treeKey === CHECKLIST_TYPE?.VDC?.key ? 'DMS' : treeKey;
             setSelectedTreeSelectKey(treeKey);
             form.setFieldsValue({ ...obj, attributeLevel: attributeType, parentCode: treeKey });
         }
@@ -258,7 +256,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
 
         const requestData = {
             data: data,
-            method: formActionType === `edit` ? 'put' : 'post',
+            method: formActionType === FROM_ACTION_TYPE?.EDIT ? 'put' : 'post',
             setIsLoading: listShowLoadingPost,
             userId,
             onError,
@@ -289,12 +287,12 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
             form.setFieldsValue({
                 id: formData?.data?.id,
                 attributeLevel: formData?.data?.attributeLevel,
-                parentCode: formData?.data?.parentCode === `VRCL` || formData?.data?.parentCode === `VDCL` ? 'DMS' : formData?.data?.parentCode,
+                parentCode: formData?.data?.parentCode === CHECKLIST_TYPE?.VRC.key || formData?.data?.parentCode === CHECKLIST_TYPE?.VDC?.key ? 'DMS' : formData?.data?.parentCode,
                 code: formData?.data?.code,
                 descriptionTitle: formData?.data?.descriptionTitle,
                 status: formData?.data?.status,
             });
-            setSelectedTreeSelectKey(formData?.data?.parentCode === `VRCL` || formData?.data?.parentCode === `VDCL` ? 'DMS' : formData?.data?.parentCode);
+            setSelectedTreeSelectKey(formData?.data?.parentCode === CHECKLIST_TYPE?.VRC.key || formData?.data?.parentCode === CHECKLIST_TYPE?.VDC?.key ? 'DMS' : formData?.data?.parentCode);
         }
         setIsFormVisible(true);
         setFormBtnActive(false);
@@ -324,7 +322,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
             setIsFormVisible(false);
             setAttributeType(formData?.attributeLevel);
         },
-        titleOverride: (formActionType === FROM_ACTION_TYPE?.EDIT ? FROM_ACTION_TYPE?.EDIT : FROM_ACTION_TYPE?.ADD).concat(moduleTitle),
+        titleOverride: (formActionType === FROM_ACTION_TYPE?.EDIT ? `Edit ` : `Add `).concat(moduleTitle),
         onFinish,
         selectedTreeSelectKey,
         handleResetBtn,

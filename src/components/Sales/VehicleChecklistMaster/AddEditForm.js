@@ -19,18 +19,18 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { VehicleChecklistMasterList, onCloseAction, fieldNames, formActionType, formData, selectedTreeSelectKey, handleSelectTreeClick, attributeType, form, VehicleChecklistAttributeLov } = props;
+    const { VehicleChecklistMasterList, onCloseAction, fieldNames, formActionType, formData, selectedTreeSelectKey, handleSelectTreeClick, attributeType, form, VehicleChecklistAttributeLov, typeData } = props;
     const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed } = props;
 
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
 
     let treeCodeId = '';
-    let treeCodeReadOnly = formActionType === `child` || formActionType === `sibling` ? false : true;
+    let treeCodeReadOnly = formActionType === FROM_ACTION_TYPE?.CHILD || formActionType === FROM_ACTION_TYPE?.SIBLING ? false : true;
 
     const treeSelectFieldProps = {
         treeFieldNames,
         treeData: VehicleChecklistMasterList,
-        treeDisabled: formActionType === `child` || formActionType === `sibling`,
+        treeDisabled: formActionType === FROM_ACTION_TYPE?.CHILD || formActionType === FROM_ACTION_TYPE?.SIBLING,
         selectedTreeSelectKey,
         handleSelectTreeClick,
         defaultValue: treeCodeId,
@@ -45,7 +45,6 @@ const AddEditFormMain = (props) => {
         setFormBtnActive(true);
     };
 
-    console.log(`attributeType`, attributeType);
     return (
         <>
             <Form autoComplete="off" form={form} layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -120,7 +119,7 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <Form.Item name="code" label="Answer Type" rules={[validateRequiredSelectField('Document Description')]}>
-                                            {customSelectBox({ data: [], fieldNames: { key: 'id', value: 'documentDescription' }, placeholder: preparePlaceholderSelect('Document Description') })}
+                                            {customSelectBox({ data: typeData?.CHKL_ANS_TYPE, placeholder: preparePlaceholderSelect('Document Description') })}
                                         </Form.Item>
                                     </Col>
                                 </Row>
