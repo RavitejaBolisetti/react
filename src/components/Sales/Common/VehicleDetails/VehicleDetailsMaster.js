@@ -98,7 +98,7 @@ const VehicleDetailsMasterMain = (props) => {
     const [toolTipContent, setToolTipContent] = useState();
     const [isReadOnly, setIsReadOnly] = useState();
     const [productHierarchyData, setProductHierarchyData] = useState([]);
-    const [vehicleDetailData, setVehicleDetailData] = useState(otfVehicleDetailData);
+    const [vehicleDetailData, setVehicleDetailData] = useState();
     const [filterVehicleData, setFilterVehicleData] = useState([]);
 
     const onSuccessAction = (res) => {
@@ -112,13 +112,21 @@ const VehicleDetailsMasterMain = (props) => {
     const isOTFModule = salesModuleType === SALES_MODULE_TYPE.OTF.KEY;
 
     useEffect(() => {
-        if (isOTFModule) {
+        if (isOTFModule && otfVehicleDetailData) {
             setVehicleDetailData(otfVehicleDetailData);
-        } else {
+        } else if (vehicleDetailDataPass) {
             setVehicleDetailData(vehicleDetailDataPass);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isOTFModule, otfVehicleDetailData]);
+    }, [isOTFModule, otfVehicleDetailData, vehicleDetailDataPass]);
+
+    useEffect(() => {
+        if (vehicleDetailData) {
+            setFormData(vehicleDetailData);
+            vehicleDetailData?.optionalServices && setOptionalServices(vehicleDetailData?.optionalServices);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [vehicleDetailData]);
 
     useEffect(() => {
         if (userId && selectedRecordId) {
@@ -215,14 +223,6 @@ const VehicleDetailsMasterMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [productAttributeData, isProductHierarchyDataLoaded, userId]);
-
-    useEffect(() => {
-        if (vehicleDetailData) {
-            setFormData(vehicleDetailData);
-            vehicleDetailData?.optionalServices && setOptionalServices(vehicleDetailData?.optionalServices);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [vehicleDetailData]);
 
     useEffect(() => {
         if (selectedRecordId && formData?.modelCode) {
