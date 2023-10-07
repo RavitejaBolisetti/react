@@ -240,6 +240,19 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [deliveryNoteMasterData, isDeliveryDataLoaded]);
 
+    useEffect(() => {
+        return () => {
+            resetDeliveryNoteMasterData();
+            setFilterString();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+    
+    useEffect(() => {
+        typeData && typeData?.[PARAM_MASTER.DLVR_SER.id]?.length && searchForm.setFieldsValue({ searchType: 'invoiceId' });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [typeData]);
+
     const extraParams = useMemo(() => {
         return [
             {
