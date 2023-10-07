@@ -62,6 +62,7 @@ const InsuranceDetailsMasterBase = (props) => {
     useEffect(() => {
         if (insuranceData) {
             setFormData(insuranceData);
+            setButtonData({ ...buttonData, formBtnActive: false });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [insuranceData]);

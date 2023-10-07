@@ -28,7 +28,7 @@ const AddEditFormMain = (props) => {
         if (formData) {
             setDoReceived(formData?.doReceived || 'N');
             setFinanceArrangedBy(formData?.financeArrangedBy);
-            form.setFieldsValue({ ...formData, printHypothecationDetails: formData?.printHypothecationDetails ? 1 : 0, doDate: formattedCalendarDate(formData?.doDate), financier: formData?.financierCode });
+            form.setFieldsValue({ ...formData, printHypothecationDetails: formData?.printHypothecationDetails ? 1 : 0, doDate: formattedCalendarDate(formData?.doDate), financier: formData?.financierCode || formData?.financier });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);

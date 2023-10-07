@@ -86,8 +86,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const InvoiceDetailsMasterBase = (props) => {
-    const { userId, vinData, listvinNumberShowLoading, fetchEngineNumber, listEngineNumberShowLoading, fetchvinNumber, relationshipManagerData, invoiceData, isRelationshipManagerLoaded, setFormActionType, fetchRelationshipManger, listRelationshipMangerShowLoading, isLoading } = props;
-    const { typeData, form, selectedOrderId, requestPayload, setRequestPayload, challanRequestPayload, setChallanRequestPayload, soldByDealer, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section, engineNumberData, chassisNoValue, setChassisNoValue } = props;
+    const { fetchList, userId, vinData, listvinNumberShowLoading, fetchEngineNumber, listEngineNumberShowLoading, fetchvinNumber, selectedOrder, relationshipManagerData, invoiceData, isRelationshipManagerLoaded, setFormActionType, fetchRelationshipManger, listRelationshipMangerShowLoading, isLoading, record } = props;
+
+    const { typeData, form, selectedOrderId, selectedInvoiceId, requestPayload, setRequestPayload, challanRequestPayload, setChallanRequestPayload, soldByDealer, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section, resetData, engineNumberData, chassisNoValue, setChassisNoValue, challanInvoiceDetailsDataLoaded, challanInvoiceDetailsLoading, challanInvoiceDetail, fetchInvoiceChallan, listChallanInvoiceShowLoading } = props;
     const { buttonData, setButtonData } = props;
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
@@ -138,9 +139,18 @@ export const InvoiceDetailsMasterBase = (props) => {
     }, [invoiceData, section]);
 
     useEffect(() => {
-        setButtonData({ ...buttonData, formBtnActive: true });
+        if (userId && !soldByDealer) {
+            const searchParams = [
+                {
+                    key: 'invoiceHdrId',
+                    value: selectedOrder?.invoicehdrId,
+                    name: 'invoiceHdrId',
+                },
+            ];
+            fetchvinNumber({ setIsLoading: listvinNumberShowLoading, userId, extraParams: searchParams, onErrorAction });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [section]);
+    }, [section, userId, soldByDealer]);
 
     // const extraParams = [
     //     {
@@ -229,15 +239,15 @@ export const InvoiceDetailsMasterBase = (props) => {
     const onFinish = (values) => {
         const invoiceDetailsRequest = { ...values, relationShipManagerCode: values?.relationShipManager, relationShipManager: values?.relationShipManagerCode };
         setRequestPayload({ ...requestPayload, deliveryNoteInvoiveDetails: { ...invoiceDetailsRequest, invoiceDate: convertDate(invoiceData?.invoiceDate), customerPromiseDate: convertDate(invoiceData?.customerPromiseDate) } });
-        setChallanRequestPayload({ ...challanRequestPayload, deliveryNoteInvoiveDetails: { ...invoiceDetailsRequest } });
-        delete invoiceDetailsRequest?.deliveryNoteFor;
+        // setChallanRequestPayload({ ...challanRequestPayload, deliveryNoteInvoiveDetails: { ...invoiceDetailsRequest } });
+        // delete invoiceDetailsRequest?.deliveryNoteFor;
         handleButtonClick({ buttonAction: NEXT_ACTION });
         setButtonData({ ...buttonData, formBtnActive: false });
     };
 
     const onFinishFailed = () => {};
-    const handleRelationShipManagerChange = (__, value) => {
-        form.setFieldValue('relationShipManagerCode', value?.children);
+    const handleRelationShipManagerChange = (value) => {
+        form.setFieldValue('relationShipManagerCode', value);
     };
 
     const formProps = {
@@ -271,6 +281,7 @@ export const InvoiceDetailsMasterBase = (props) => {
         engineNumberData,
         userId,
         handleRelationShipManagerChange,
+        setButtonData,
     };
 
     const viewProps = {

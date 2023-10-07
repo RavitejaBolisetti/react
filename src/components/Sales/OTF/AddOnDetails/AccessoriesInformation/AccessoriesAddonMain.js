@@ -44,7 +44,7 @@ const AccessoriesAddonMain = ({ setIsBtnDisabled, openAccordian, partNameSearchV
                 setisEditing(false);
                 handleFormValueChange();
             })
-            .catch((err) => { });
+            .catch((err) => {});
     };
     const handleDelete = (index) => {
         setAddOnItemInfo(addOnItemInfo?.filter((element, i) => i !== index));
@@ -92,9 +92,11 @@ const AccessoriesAddonMain = ({ setIsBtnDisabled, openAccordian, partNameSearchV
         <>
             <Divider />
             {addButtonDisabled?.partDetailsResponses && <AddEditForm {...AddEditFormProps} />}
-            {addOnItemInfo?.map((element, index) => {
-                return <CardMapping AddEditFormProps={AddEditFormProps} element={element} isEditing={isEditing} setisEditing={setisEditing} handleDelete={handleDelete} index={index} />;
-            })}
+            {addOnItemInfo?.length > 0
+                ? addOnItemInfo.map((element, index) => {
+                      return <CardMapping AddEditFormProps={AddEditFormProps} element={element} isEditing={isEditing} setisEditing={setisEditing} handleDelete={handleDelete} index={index} />;
+                  })
+                : !addButtonDisabled?.partDetailsResponses && <div style={{ textAlign: 'center', padding: '10px' }}>No Accessories Information Added</div>}
         </>
     );
 };

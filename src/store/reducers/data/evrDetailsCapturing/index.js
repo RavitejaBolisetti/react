@@ -6,9 +6,7 @@
 import { combineReducers } from 'redux';
 
 import { EvrDetailsCapturingSearchList } from './evrDetailsCapturing';
-import { EvrDetailsCapturingDetailList } from './evrDetailsCapturingDetails';
 
 export const EvrDetailsCapturing = combineReducers({
     EvrDetailsCapturingSearchList,
-    EvrDetailsCapturingDetailList,
 });

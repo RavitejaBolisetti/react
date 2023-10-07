@@ -51,9 +51,9 @@ export const dataActions = (params) => {
         data,
     });
 
-    const detailShowLoading = (isLoading) => ({
+    const listDetailShowLoading = (isLoading) => ({
         type: RECEIVE_DETAIL_DATA_LOADING_ACTION_CONSTANT,
-        isLoading,
+        isDetailLoading: isLoading,
     });
 
     const resetData = () => ({
@@ -169,7 +169,7 @@ export const dataActions = (params) => {
                 }
             };
 
-            let sExtraParamsString = '/details?';
+            let sExtraParamsString = '?';
             extraParams?.forEach((item, index) => {
                 sExtraParamsString += item?.value && item?.key ? item?.value && item?.key + '=' + item?.value + '&' : '';
             });
@@ -423,7 +423,7 @@ export const dataActions = (params) => {
             dispatch(listShowLoading(isLoading));
         },
         listDetailShowLoading: (isLoading) => (dispatch) => {
-            dispatch(detailShowLoading(isLoading));
+            console.log(isLoading, 'Kuldeep') || dispatch(listDetailShowLoading(isLoading));
         },
         listShowChangeHistoryLoading: (isLoading) => (dispatch) => {
             dispatch(listShowChangeHistoryLoading(isLoading));

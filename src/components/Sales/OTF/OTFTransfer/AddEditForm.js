@@ -20,7 +20,7 @@ import styles from 'assets/sass/app.module.scss';
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { formData, isLoading, selectedOrder, salesConsultantLov, dealerLocations } = props;
+    const { formData, isLoading, selectedOrder, salesConsultantLov, dealerLocations, locationDataLoding, defaultDealerLocationCode } = props;
     const { otfTransferForm, onFinishOTFTansfer, handleOtfTransferLocationChange } = props;
     const { handleButtonClick, buttonData, setButtonData, onCloseAction, typeData } = props;
 
@@ -58,11 +58,13 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                                 <Form.Item name="otfTransferLocation" label="Transfer To Location" initialValue={formData?.otfTransferLocation} rules={[validateRequiredSelectField('Transfer To Location')]}>
-                                    <Select placeholder="Select" showSearch allowClear onChange={handleOtfTransferLocationChange}>
-                                        {dealerLocations?.map((item) => (
-                                            <Option value={item.locationId}>{item.dealerLocationName}</Option>
-                                        ))}
-                                    </Select>
+                                    {customSelectBox({
+                                        data: dealerLocations?.filter((location) => location?.locationCode !== defaultDealerLocationCode),
+                                        loading: locationDataLoding,
+                                        fieldNames: { key: 'locationId', value: 'dealerLocationName' },
+                                        placeholder: preparePlaceholderSelect(''),
+                                        onChange: handleOtfTransferLocationChange,
+                                    })}
                                 </Form.Item>
                             </Col>
 
@@ -79,7 +81,6 @@ const AddEditFormMain = (props) => {
                         <Row>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                 <Form.Item name="transferReason" label="Reason For Transfer" initialValue={formData?.transferReason} rules={[validateRequiredSelectField('Reason For Transfer')]}>
-                                    {/* <Select {...selectProps} fieldNames={{ label: 'value', value: 'key' }} options={typeData} placeholder={preparePlaceholderSelect('Reason For Cancellation')} /> */}
                                     {customSelectBox({ data: typeData, placeholder: preparePlaceholderSelect('Reason For Cancellation') })}
                                 </Form.Item>
                             </Col>

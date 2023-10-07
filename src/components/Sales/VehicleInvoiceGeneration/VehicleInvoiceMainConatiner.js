@@ -26,7 +26,7 @@ import styles from 'assets/sass/app.module.scss';
 import { SALES_MODULE_TYPE } from 'constants/salesModuleType';
 
 const VehicleInvoiceMainConatinerMain = (props) => {
-    const { currentSection, handleIRNGeneration, selectedOtfNumber, requestPayload, setRequestPayload } = props;
+    const { currentSection, handleIRNGeneration, selectedOtfNumber, requestPayload, setRequestPayload, selectedOtfId } = props;
 
     const onFinishCustom = ({ key, values }) => {
         setRequestPayload({ ...requestPayload, [key]: values });
@@ -49,7 +49,7 @@ const VehicleInvoiceMainConatinerMain = (props) => {
                 return <InvoiceDetailsMaster {...myProps} />;
             }
             case VEHICLE_INVOICE_SECTION.VEHICLE_DETAILS.id: {
-                return <VehicleDetailsMaster {...myProps} showPrintDiscount={true} vehicleDetailDataPass={requestPayload?.vehicleDetails} formKey={'vehicleDetails'} />;
+                return <VehicleDetailsMaster {...myProps} selectedRecordId={selectedOtfId} showPrintDiscount={true} vehicleDetailDataPass={requestPayload?.vehicleDetails} formKey={'vehicleDetails'} />;
             }
             case VEHICLE_INVOICE_SECTION.SCHEME_OFFER_DETAILS.id: {
                 return <SchemeDetailsMaster {...myProps} formData={requestPayload?.schemeOfferDetails} formKey={'schemeOfferDetails'} />;

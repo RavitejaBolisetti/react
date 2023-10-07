@@ -14,17 +14,19 @@ import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai'; // AiOutli
 import styles from 'assets/sass/app.module.scss';
 
 export function GSTLoginForm(props) {
-    const { onFinish, onFinishFailed } = props;
-    const { form, isReadOnly = true } = props;
+    // const { onFinish, onFinishFailed } = props;
+    // const { form, isReadOnly = true } = props;
     // const { formData, typeData,} = props;
     // const disabledProps = { disabled: isReadOnly };
     const userIddRef = useRef(null);
     const passwordInputRef = useRef(null);
     const clientIdInputRef = useRef(null);
+    const secretIdInputRef = useRef(null);
 
     const [showPassword, setShowPassword] = useState(false);
 
     const [showClientId, setShowClientId] = useState(false);
+    const [showSecretId, setShowSecretId] = useState(false);
 
     const [fieldData, setFieldData] = useState();
 
@@ -45,9 +47,20 @@ export function GSTLoginForm(props) {
     const handleHideClientId = () => {
         setShowClientId(false);
     };
+    const handleShowSecretId = () => {
+        setShowSecretId(true);
+    };
+    const handleHideSecretId = () => {
+        setShowSecretId(false);
+    };
     const clientIdSuffix = (
         <span onMouseDown={handleShowClientId} onMouseUp={handleHideClientId} onMouseLeave={handleHideClientId}>
             {!showClientId ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
+        </span>
+    );
+    const secretIdSuffix = (
+        <span onMouseDown={handleShowSecretId} onMouseUp={handleHideSecretId} onMouseLeave={handleHideSecretId}>
+            {!showSecretId ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
         </span>
     );
 
@@ -74,8 +87,8 @@ export function GSTLoginForm(props) {
                             </div>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.inputLabelPlaceholder}>
-                                    <Form.Item name="userId" data-testid="userIdInput" rules={[validateRequiredInputField('user id')]} className={styles.inputBox}>
-                                        {<Input data-testid="userNameInput" ref={userIddRef} prefix={<BiUser size={16} />} type="text" maxLength={25} onChange={handleFormChange('userId')} placeholder="UserName" />}
+                                    <Form.Item name="userName" data-testid="userIdInput" rules={[validateRequiredInputField('user id')]} className={styles.inputBox}>
+                                        {<Input data-testid="userNameInput" ref={userIddRef} prefix={<BiUser size={16} />} type="text" maxLength={25} onChange={handleFormChange('userName')} placeholder="UserName" />}
                                     </Form.Item>
                                     {/* {!fieldData?.userId && <label onClick={handleFieldFocus(userIddRef)}>User ID </label>} */}
                                 </Col>
@@ -84,9 +97,17 @@ export function GSTLoginForm(props) {
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.inputLabelPlaceholder}>
                                     <Form.Item name="clientId" data-testid="userIdInput" rules={[validateRequiredInputField('client id')]} className={styles.inputBox}>
-                                        <Input data-testid="inputPassword" ref={clientIdInputRef} type={showClientId ? 'text' : 'password'} prefix={<FiLock size={16} />} suffix={clientIdSuffix} onChange={handleFormChange('clientId')} placeholder="Client Secret Id" />
+                                        <Input data-testid="inputPassword" ref={clientIdInputRef} type={showClientId ? 'text' : 'password'} prefix={<FiLock size={16} />} suffix={clientIdSuffix} onChange={handleFormChange('clientId')} placeholder="Client Id" />
                                     </Form.Item>
                                     {/* {!fieldData?.clientId && <label onClick={handleFieldFocus(clientIdInputRef)}>Client Secret Id</label>} */}
+                                </Col>
+                            </Row>
+
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.inputLabelPlaceholder}>
+                                    <Form.Item name="secretId" data-testid="userIdInput" rules={[validateRequiredInputField('secret id')]} className={styles.inputBox}>
+                                        <Input data-testid="inputPassword" ref={secretIdInputRef} type={showSecretId ? 'text' : 'password'} prefix={<FiLock size={16} />} suffix={secretIdSuffix} onChange={handleFormChange('secretId')} placeholder="Secret Id" />
+                                    </Form.Item>
                                 </Col>
                             </Row>
 

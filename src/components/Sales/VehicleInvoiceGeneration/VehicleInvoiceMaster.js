@@ -21,7 +21,7 @@ import { VehicleInvoiceMainConatiner } from './VehicleInvoiceMainConatiner';
 import { ListDataTable } from 'utils/ListDataTable';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
-import { BASE_URL_VEHICLE_INVOICE_IRN_GENERATION, BASE_URL_VEHICLE_INVOICE_LIST, BASE_URL_VEHICLE_INVOICE_PROFILE_CARD as customURL } from 'constants/routingApi';
+import { BASE_URL_VEHICLE_INVOICE_DETAIL, BASE_URL_VEHICLE_INVOICE_IRN_GENERATION, BASE_URL_VEHICLE_INVOICE_LIST, BASE_URL_VEHICLE_INVOICE_PROFILE_CARD as customURL } from 'constants/routingApi';
 
 import { vehicleInvoiceGenerationDataActions } from 'store/actions/data/sales/vehicleInvoiceGeneration';
 import { salesConsultantActions } from 'store/actions/data/otf/salesConsultant';
@@ -99,7 +99,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VehicleInvoiceMasterBase = (props) => {
-    const { data, receiptDetailData, userId, irnGeneration, fetchList, listShowLoading, showGlobalNotification, fetchInvoiceMasterData } = props;
+    const { data, receiptDetailData, userId, fetchList, listShowLoading, showGlobalNotification, fetchInvoiceMasterData } = props;
     const { isVehicleInvoiceDataLoading, listDetailShowLoading } = props;
     const { typeData, receiptType, partySegmentType, saveData, paymentModeType, documentType, moduleTitle, totalRecords } = props;
     const { filterString, setFilterString, invoiceStatusList, otfData, vehicleInvoiceMasterData, resetDetailData, resetOtfData } = props;
@@ -401,7 +401,7 @@ export const VehicleInvoiceMasterBase = (props) => {
                 }
             };
 
-            fetchInvoiceMasterData({ setIsLoading: listDetailShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+            fetchInvoiceMasterData({ customURL: BASE_URL_VEHICLE_INVOICE_DETAIL, setIsLoading: listDetailShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
     };
 
@@ -420,18 +420,16 @@ export const VehicleInvoiceMasterBase = (props) => {
             setConfirmRequest(false);
             resetOtfData();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             const extraParam = [
                 {
-                    key: 'otfNumber',
-                    title: 'otfNumber',
-                    value: selectedOtfNumber,
-                    name: 'Booking Number',
+                    key: 'invoiceId',
+                    value: selectedOrder?.id,
+                    name: 'Invoice Id',
                 },
                 {
-                    key: 'invoiceId',
-                    value: selectedRecordId,
-                    name: 'Invoice Id',
+                    key: 'otfId',
+                    value: selectedOrder?.otfId,
+                    name: 'OTF Number',
                 },
             ];
 
@@ -458,7 +456,7 @@ export const VehicleInvoiceMasterBase = (props) => {
             onError,
             onSuccess,
         };
-        irnGeneration(requestData);
+        saveData(requestData);
     };
 
     const handleInvoiceTypeChange = (buttonName) => {
@@ -767,6 +765,7 @@ export const VehicleInvoiceMasterBase = (props) => {
 
     const containerProps = {
         ...props,
+        selectedOtfId,
         profileCardData,
         record: selectedOrder,
         form,

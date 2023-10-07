@@ -5,7 +5,7 @@
  */
 import React from 'react';
 import { Input, Form } from 'antd';
-import { validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
+import { validateAlphanumericWithSpaceHyphenPeriod, validateRequiredInputField } from 'utils/validation';
 import { OTF_SO_MAPPING_UNMAPPING_CONSTANTS } from 'components/Sales/OtfSoMappingUnmapping/Constants';
 
 import styles from 'assets/sass/app.module.scss';
@@ -19,7 +19,7 @@ const AddEditFormMain = ({ formType, disabledProps, handleSearchChange, isLoadin
     return (
         <>
             {hideFields && (
-                <Form.Item label="SO No." name={[formType, 'soNumber']} rules={[validateRequiredInputField('SO number'), validationFieldLetterAndNumber('SO number')]}>
+                <Form.Item label="SO No." name={[formType, 'soNumber']} rules={[validateRequiredInputField('SO number'), validateAlphanumericWithSpaceHyphenPeriod('SO number')]}>
                     <Search placeholder="Search by SO Number" allowClear onSearch={(value) => handleSearchChange(value, formType)} onChange={() => handleResetData(formType, ['soNumber'])} className={styles.headerSearchField} />
                 </Form.Item>
             )}
@@ -29,7 +29,7 @@ const AddEditFormMain = ({ formType, disabledProps, handleSearchChange, isLoadin
                 </Form.Item>
             )}
             {!hideFields && (
-                <Form.Item label="Booking No." name={[formType, 'otfNumber']} rules={[validateRequiredInputField('Booking number'), validationFieldLetterAndNumber('Booking number')]}>
+                <Form.Item label="Booking No." name={[formType, 'otfNumber']} rules={[validateRequiredInputField('Booking number'), validateAlphanumericWithSpaceHyphenPeriod('Booking number')]}>
                     <Search placeholder="Search by Booking Number" allowClear onSearch={(value) => handleSearchChange(value, formType)} onChange={() => handleResetData(formType)} className={styles.headerSearchField} />
                 </Form.Item>
             )}
