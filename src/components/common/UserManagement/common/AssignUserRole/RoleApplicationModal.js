@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Row, Col, Form } from 'antd';
+import { Row, Col, Form, Divider } from 'antd';
 
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
@@ -21,7 +21,7 @@ const RoleApplicationModalrMain = (props) => {
     const { dlrAppList, mnmAppList, selectedRoleId, userRoleDataList, disableMdlSaveBtn, setDisableMdlSaveBtn, record } = props;
 
     useEffect(() => {
-        selectedRoleId || record?.roleId ? form.setFieldsValue({ roleId: selectedRoleId || record?.roleId }) : form.setFieldsValue({ roleId: '' });
+        (selectedRoleId || record?.roleId) && form.setFieldsValue({ roleId: selectedRoleId || record?.roleId });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [mnmAppList, dlrAppList]);
 
@@ -58,7 +58,7 @@ const RoleApplicationModalrMain = (props) => {
             ) : (
                 <ApplicationTree {...props} setDisableMdlSaveBtn={setDisableMdlSaveBtn} />
             )}
-
+            <Divider/>
             <ModalButtons {...modalBtnProps} />
         </>
     );
