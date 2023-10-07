@@ -255,7 +255,13 @@ export const RsmAsmApprovalMasterBase = (props) => {
 
     const onFinish = (values) => {
         setConfirmRequest({ isVisible: false });
-        let data = { action: values?.requestType, id: formData?.id, deliveryOrInvoiceId: formData?.deliveryOrInvoiceId, requestType: formData?.requestType, cancelRemark: values?.rejectionRemark };
+        let data = {
+            action: values?.requestType,
+            id: formData?.id,
+            deliveryOrInvoiceId: formData?.deliveryOrInvoiceId,
+            requestType: getCodeValue(typeData?.DEL_INV_CAN_TYP, formData?.requestType),
+            cancelRemark: values?.rejectionRemark,
+        };
 
         const onSuccess = (res) => {
             form.resetFields();

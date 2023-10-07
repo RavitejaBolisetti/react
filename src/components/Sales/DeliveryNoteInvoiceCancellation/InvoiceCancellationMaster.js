@@ -246,8 +246,12 @@ export const InvoiceCancellationMasterBase = (props) => {
 
     const handleCancelRequest = () => {
         const data = {
-            invoiceId: formData?.invoiceId,
-            requestStatus: REQUEST_STATUS_CONSTANT?.OPEN?.key,
+            // invoiceId: formData?.invoiceId,
+            // requestStatus: REQUEST_STATUS_CONSTANT?.OPEN?.key,
+            id: formData?.id,
+            action: DELIVERY_NOTE_INVOICE_STATUS?.REJECTED?.key,
+            deliveryOrInvoiceId: formData?.invoiceId,
+            requestType: getCodeValue(typeData?.DEL_INV_CAN_TYP, formData?.requestType),
         };
         const onSuccess = (res) => {
             setShowDataLoading(true);
@@ -287,7 +291,8 @@ export const InvoiceCancellationMasterBase = (props) => {
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
         setFormData([]);
-        record?.requestStatus === REQUEST_STATUS_CONSTANT?.OPEN?.key && invoiceStatusType === DELIVERY_NOTE_INVOICE_STATUS?.PENDING?.key ? setButtonData({ ...defaultBtnVisiblity, cancelRequest: true }) : setButtonData({ ...defaultBtnVisiblity });
+        invoiceStatusType === DELIVERY_NOTE_INVOICE_STATUS?.PENDING?.key ? setButtonData({ ...defaultBtnVisiblity, cancelRequest: true }) : setButtonData({ ...defaultBtnVisiblity });
+        // record?.requestStatus === REQUEST_STATUS_CONSTANT?.OPEN?.key &&
         setFormActionType({ viewMode: buttonAction === VIEW_ACTION });
         record && setFormData(record);
         setIsFormVisible(true);
