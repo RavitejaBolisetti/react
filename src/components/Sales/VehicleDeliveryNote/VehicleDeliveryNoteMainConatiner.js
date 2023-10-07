@@ -30,7 +30,8 @@ const VehicleDeliveryNoteConatinerMain = (props) => {
     const onFinishCustom = ({ key, values }) => {
         setRequestPayload({ ...requestPayload, [key]: values });
     };
-    const requestData = deliveryType === DELIVERY_TYPE?.NOTE?.key ? requestPayload : challanRequestPayload;
+    const requestData = requestPayload;
+    const invoiceDataPayload = soldByDealer ? requestData?.deliveryNoteInvoiveDetails : requestData?.engineDetailDto;
     const myProps = {
         ...props,
         FormActionButton: VehicleDeliveryNoteFormButton,
@@ -42,7 +43,7 @@ const VehicleDeliveryNoteConatinerMain = (props) => {
     const renderElement = () => {
         switch (currentSection) {
             case VEHICLE_DELIVERY_NOTE_SECTION.INVOICE_DETAILS.id: {
-                return <InvoiceDetailsMaster {...myProps} invoiceData={requestData?.deliveryNoteInvoiveDetails} />;
+                return <InvoiceDetailsMaster {...myProps} invoiceData={invoiceDataPayload} />;
             }
             case VEHICLE_DELIVERY_NOTE_SECTION.CUSTOMER_DETAILS.id: {
                 return <CustomerDetailsMaster {...myProps} customerDetailsData={requestData?.customerDetails} />;

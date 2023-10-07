@@ -15,70 +15,182 @@ afterEach(() => {
 });
 
 describe('VehicleModelAndTaxChargersCategory component', () => {
-    const fetchList = jest.fn();
-    const fetchModelList = jest.fn();
-    const fetchAccountCategoryLov = jest.fn();
-    const fetchTaxCategoryLov = jest.fn();
+    
+    it("combobox", () => {
+        const fieldNames = { key: 'modelGroupCode', value: 'modelGroupDescription' }
+        const ModelOptions = [{modelGroupCode: "ECOM", modelGroupDescription: "ECOMOBILE"}]; 
 
-    const VehicleModelTaxChargesCategoryData = [{accountCategoryCode:'AC123', accountCategoryDescription:'test', id:'123', modelGroup:'grp', taxCategoryDescription:'test1', taxCategoryId:'65' }];
-    const ProductHierarchyData = [];
-    const AccountData = [{key:'001', parentKey:null, value:'service'}];
-    const TaxCategoryData = [{id:'123', key:'T001', parentKey:null, value:'SGST'}];
+        customRender(
+            <VehicleModelAndTaxChargersCategory fieldNames={fieldNames} ModelOptions={ModelOptions} isProductHierarchyDataLoading={false}/>
+        );
 
-    it("pass data", ()=>{
-        const filterString = {keyword:'123'};
+        const inputBox = screen.getByRole('combobox', { name: '', exact: false});
+        fireEvent.change(inputBox, { target: { value: 'ECOMOBILE' } });
+        fireEvent.click(inputBox);
+    })
+
+    it("plus Add butotn", ()=>{
+        const VehicleModelTaxChargesCategoryData = {pageNumber:1, pageSize:10, totalRecords:'5942', vehicleModel: [{
+            accountCategoryCode: "A002",
+            accountCategoryDescription: "Vehicle Sales Account",
+        }] }
 
         const mockStore = createMockStore({
-            auth: { userId:123 },
-            data: {
-                VehicleModelandTaxChargesCategory: {VehicleModelTaxChargesCategoryMain:{isLoaded:false}, data:VehicleModelTaxChargesCategoryData},
-                ProductModelGroup: {isLoaded:false, data:ProductHierarchyData},
-                AccountCategorylov: { isFilteredListLoaded:false, data:AccountData},
-                TaxChargeCategoryLov: { isFilteredListLoaded:false, data:TaxCategoryData}
+            auth:{userId:123},
+            data:{
+                VehicleModelandTaxChargesCategory:{
+                    VehicleModelTaxChargesCategoryMain: { isLoaded: false, data: VehicleModelTaxChargesCategoryData },
+                }
             }
-        })
+        });
 
         customRender(
             <Provider store={mockStore}>
-                <VehicleModelAndTaxChargersCategory fetchList={fetchList} fetchModelList={fetchModelList} fetchAccountCategoryLov={fetchAccountCategoryLov} fetchTaxCategoryLov={fetchTaxCategoryLov} filterString={filterString} />
+                <VehicleModelAndTaxChargersCategory buttonAction={'add'} />
             </Provider>
         );
+
+        const plusAdd = screen.getByRole('button', {name:'plus Add'});
+        fireEvent.click(plusAdd); 
+
+        const cancelBtn = screen.getByRole('button', {name:'Cancel'});
+        fireEvent.click(cancelBtn);
     })
 
-    it("filterString", ()=>{
-        customRender(<VehicleModelAndTaxChargersCategory filterString={{keyword:'test'}}/>)
-    })
+    it("refresh butotn", ()=>{
+        const VehicleModelTaxChargesCategoryData = {pageNumber:1, pageSize:10, totalRecords:'5942', vehicleModel: [{
+            accountCategoryCode: "A002",
+            accountCategoryDescription: "Vehicle Sales Account",
+        }] }
 
-    it("VehicleModelTaxChargesCategoryDataLoaded=false", ()=>{
-        customRender(<VehicleModelAndTaxChargersCategory userId={'123'} VehicleModelTaxChargesCategoryDataLoaded={false}/>)
-    })
+        const mockStore = createMockStore({
+            auth:{userId:123},
+            data:{
+                VehicleModelandTaxChargesCategory:{
+                    VehicleModelTaxChargesCategoryMain: { isLoaded: false, data: VehicleModelTaxChargesCategoryData },
+                }
+            }
+        });
 
-    it("VehicleModelTaxChargesCategoryDataLoaded=true", ()=>{
-        customRender(<VehicleModelAndTaxChargersCategory userId={'123'} VehicleModelTaxChargesCategoryDataLoaded={true}/>)
-    })
+        customRender(
+            <Provider store={mockStore}>
+                <VehicleModelAndTaxChargersCategory buttonAction={'add'} />
+            </Provider>
+        );
 
-    it("isAccountDataLoaded=true", ()=>{
-        customRender(<VehicleModelAndTaxChargersCategory userId={'123'} isAccountDataLoaded={true}/>)
-    })
+        const refreshBtn = screen.getByRole('button', {name:''});
+        fireEvent.click(refreshBtn)
+    });
 
-    it("isAccountDataLoaded=false", ()=>{
-        customRender(<VehicleModelAndTaxChargersCategory userId={'123'} isAccountDataLoaded={false}/>)
-    })
+    it("useEfect data passed", ()=>{
 
-    it("isTaxCategoryDataLoaded=true", ()=>{
-        customRender(<VehicleModelAndTaxChargersCategory userId={'123'} isTaxCategoryDataLoaded={true}/>)
-    })
+        const mockStore = createMockStore({
+            auth:{userId:123},
+            data:{
+                VehicleModelandTaxChargesCategory:{
 
-    it("isTaxCategoryDataLoaded=false", ()=>{
-        customRender(<VehicleModelAndTaxChargersCategory userId={'123'} isTaxCategoryDataLoaded={false}/>)
-    })
+                    ProductModelGroup: { isLoaded: true, data: [
+                        {modelGroupCode: 'ECOM', modelGroupDescription: 'ECOMOBILE', segmentCode: 'PROSPER', productDivisionCode: null, productDivisionName: null}
+                    ] },
 
-    it('isProductHierarchyDataLoaded=true', ()=>{
-        customRender(<VehicleModelAndTaxChargersCategory isProductHierarchyDataLoaded={true} />)
-    })
+                    TaxChargeCategoryLov: { isFilteredListLoaded: true, isLoading: false, filteredListData: [{
+                        id: "234", key: "12", parentKey: null, value: "DESCTESST"
+                    }] },
 
-    it('buttonData', ()=>{
-        customRender(<VehicleModelAndTaxChargersCategory buttonData={{closeBtn:true}} isVisible={true} onCloseAction={jest.fn()} />);
-    })
+                    AccountCategorylov: { isFilteredListLoaded: true, filteredListData: [
+                        {key: 'A001', value: 'Parts Account', parentKey: null}
+                    ] },
+                }
+            }
+        });
+
+        customRender(
+            <Provider store={mockStore}>
+                <VehicleModelAndTaxChargersCategory />
+            </Provider>
+        );
+
+    });
+
+    it("isLoaded=true", ()=>{
+        const VehicleModelTaxChargesCategoryData = {pageNumber:1, pageSize:10, totalRecords:'5942', vehicleModel: [{
+            accountCategoryCode: "A002",
+            accountCategoryDescription: "Vehicle Sales Account",
+        }] }
+
+        const mockStore = createMockStore({
+            auth:{userId:123},
+            data:{
+                VehicleModelandTaxChargesCategory:{
+                    VehicleModelTaxChargesCategoryMain: { isLoaded: true, data: VehicleModelTaxChargesCategoryData },
+                }
+            }
+        });
+
+        customRender(
+            <Provider store={mockStore}>
+                <VehicleModelAndTaxChargersCategory buttonAction={'add'} />
+            </Provider>
+        );
+
+        const refreshBtn = screen.getByRole('button', {name:''});
+        fireEvent.click(refreshBtn)
+    });
+
+    it("onFinish", ()=>{
+        
+        const VehicleModelTaxChargesCategoryData = {pageNumber:1, pageSize:10, totalRecords:'5942', vehicleModel: [{
+            accountCategoryCode: "A002",
+            accountCategoryDescription: "Vehicle Sales Account",
+        }] };
+
+        const mockStore = createMockStore({
+            auth:{userId:123},
+            data:{
+                VehicleModelandTaxChargesCategory:{
+                    VehicleModelTaxChargesCategoryMain: { isLoaded: false, data: VehicleModelTaxChargesCategoryData },
+
+                    ProductModelGroup: { isLoaded: true, data: [
+                        {modelGroupCode: 'ECOM', modelGroupDescription: 'ECOMOBILE', segmentCode: 'PROSPER', productDivisionCode: null, productDivisionName: null}
+                    ] },
+
+                    TaxChargeCategoryLov: { isFilteredListLoaded: true, isLoading: false, filteredListData: [{
+                        id: "234", key: "12", parentKey: null, value: "DESCTESST"
+                    }] },
+
+                    AccountCategorylov: { isFilteredListLoaded: true, filteredListData: [
+                        {key: 'A001', value: 'Parts Account', parentKey: null}
+                    ] },
+                }
+            }
+        });
+
+        customRender(
+            <Provider store={mockStore}>
+                <VehicleModelAndTaxChargersCategory />
+            </Provider>
+        );
+
+        const plusAdd = screen.getByRole('button', {name:'plus Add'});
+        fireEvent.click(plusAdd); 
+
+        const modelComboBox = screen.getByRole('combobox', {name:'Model Group (Product Hierarchy)'});
+        fireEvent.change(modelComboBox, {target:{value:'ECOMOBILE'}});
+        expect(modelComboBox.value).toBe('ECOMOBILE');
+        fireEvent.click(modelComboBox);
+
+        const taxComboBox = screen.getByRole('combobox', {name:'Tax/Charge Category'});
+        fireEvent.change(taxComboBox, {target:{value:'DESCTESST'}});
+        expect(taxComboBox.value).toBe('DESCTESST');
+        fireEvent.click(taxComboBox);
+
+        const accountComboBox = screen.getByRole('combobox', {name:'Account category'});
+        fireEvent.change(accountComboBox, {target:{value:'Parts Account'}});
+        expect(accountComboBox.value).toBe('Parts Account');
+        fireEvent.click(accountComboBox);
+
+        const saveBtn = screen.getByRole('button', {name:'Save'});
+        fireEvent.click(saveBtn); 
+    });
 
 });

@@ -9,6 +9,8 @@ import { Row, Col, Form, Typography, Divider } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import { RequestDetailsForm } from './RequestDetailsForm';
 import { DeliveryNoteInvoiceForm } from './DeliveryNoteInvoiceForm';
+import { InvoiceDetailsForm } from './InvoiceDetailsForm';
+import { REQUEST_TYPE_CONSTANT } from './utils/RequestTypeConstant';
 import { formattedCalendarDate } from 'utils/formatDateTime';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
@@ -58,18 +60,35 @@ const AddEditFormMain = (props) => {
                                 <RequestDetailsForm {...requestDetailFormProps} />
                             </Col>
                         </Row>
-                        <Row gutter={16}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Row>
-                                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                        <Text strong>Delivery Note/Invoice Details</Text>
-                                    </Col>
-                                </Row>
-                                <Divider />
+                        {requestDetailData?.requestType === REQUEST_TYPE_CONSTANT?.invoice?.key && (
+                            <Row gutter={16}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                    <Row>
+                                        <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                            <Text strong>Invoice Details</Text>
+                                        </Col>
+                                    </Row>
+                                    <Divider />
+                                    <InvoiceDetailsForm {...requestDetailFormProps} />
+                                </Col>
+                            </Row>
+                        )}
 
-                                <DeliveryNoteInvoiceForm {...requestDetailFormProps} />
-                            </Col>
-                        </Row>
+                        {requestDetailData?.requestType === REQUEST_TYPE_CONSTANT?.delivery?.key && (
+                            <Row gutter={16}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                    <Row>
+                                        <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                            <Text strong>Delivery Note/Invoice Details</Text>
+                                        </Col>
+                                    </Row>
+                                    <Divider />
+
+                                    <DeliveryNoteInvoiceForm {...requestDetailFormProps} />
+                                </Col>
+                            </Row>
+                        )}
+
                         <Row gutter={16}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Row>
