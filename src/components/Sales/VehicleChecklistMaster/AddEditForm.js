@@ -10,7 +10,7 @@ import { validateRequiredInputField, validateRequiredSelectField } from 'utils/v
 import { withDrawer } from 'components/withDrawer';
 
 import styles from 'assets/sass/app.module.scss';
-import { ATTRIBUTE_LEVEL } from 'constants/modules/VehicleCheckListMaster/attributeType';
+import { VEHICLE_CHECKLIST_TYPE } from 'constants/modules/VehicleCheckListMaster/vehicleChecklistType';
 import { customSelectBox } from 'utils/customSelectBox';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
@@ -64,7 +64,7 @@ const AddEditFormMain = (props) => {
                             </Col>
                         </Row>
 
-                        {attributeType === ATTRIBUTE_LEVEL?.[0]?.key ? (
+                        {attributeType === VEHICLE_CHECKLIST_TYPE?.GROUP?.key ? (
                             <>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -80,7 +80,7 @@ const AddEditFormMain = (props) => {
                                     </Col>
                                 </Row>
                             </>
-                        ) : attributeType === ATTRIBUTE_LEVEL?.[1]?.key ? (
+                        ) : attributeType === VEHICLE_CHECKLIST_TYPE?.SUB_GROUP?.key ? (
                             <>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -97,7 +97,7 @@ const AddEditFormMain = (props) => {
                                     </Col>
                                 </Row>
                             </>
-                        ) : attributeType === ATTRIBUTE_LEVEL?.[2]?.key ? (
+                        ) : attributeType === VEHICLE_CHECKLIST_TYPE?.CHECKLIST?.key ? (
                             <>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -114,7 +114,7 @@ const AddEditFormMain = (props) => {
                                     </Col>
                                 </Row>
                             </>
-                        ) : attributeType === ATTRIBUTE_LEVEL?.[3]?.key ? (
+                        ) : attributeType === VEHICLE_CHECKLIST_TYPE?.ANSWER?.key ? (
                             <>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>

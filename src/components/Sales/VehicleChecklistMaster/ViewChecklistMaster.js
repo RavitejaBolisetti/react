@@ -6,7 +6,7 @@
 import React from 'react';
 import { Descriptions } from 'antd';
 import { HIERARCHY_DEFAULT_PARENT } from 'constants/constants';
-import { ATTRIBUTE_LEVEL } from 'constants/modules/VehicleCheckListMaster/attributeType';
+import { VEHICLE_CHECKLIST_TYPE } from 'constants/modules/VehicleCheckListMaster/vehicleChecklistType';
 
 export const ViewTaxChargesMain = (props) => {
     const { attributeType, viewTitle, styles, formData } = props;
@@ -24,31 +24,32 @@ export const ViewTaxChargesMain = (props) => {
                 <Descriptions {...viewOneColProps}>
                     <Descriptions.Item label="Attribute Level">{formData?.attributeName}</Descriptions.Item>
                     <Descriptions.Item label="Parent">{formData?.parentName || HIERARCHY_DEFAULT_PARENT}</Descriptions.Item>
-                    <Descriptions.Item label="Status">{formData?.status === true ? 'Active' : 'InActive'}</Descriptions.Item>
-                    {attributeType === ATTRIBUTE_LEVEL?.[0]?.key && (
+
+                    {attributeType === VEHICLE_CHECKLIST_TYPE?.GROUP?.key && (
                         <>
                             <Descriptions.Item label="Group Code">{formData?.code}</Descriptions.Item>
                             <Descriptions.Item label="Group Description">{formData?.descriptionTitle}</Descriptions.Item>
                         </>
                     )}
-                    {attributeType === ATTRIBUTE_LEVEL?.[1]?.key && (
+                    {attributeType === VEHICLE_CHECKLIST_TYPE?.SUB_GROUP?.key && (
                         <>
                             <Descriptions.Item label="Sub Group Code">{formData?.code}</Descriptions.Item>
                             <Descriptions.Item label="Sub Group Description">{formData?.descriptionTitle}</Descriptions.Item>
                         </>
                     )}
-                    {attributeType === ATTRIBUTE_LEVEL?.[2]?.key && (
+                    {attributeType === VEHICLE_CHECKLIST_TYPE?.CHECKLIST?.key && (
                         <>
                             <Descriptions.Item label="Checklist Code">{formData?.code}</Descriptions.Item>
                             <Descriptions.Item label="Checklist Description">{formData?.descriptionTitle}</Descriptions.Item>
                         </>
                     )}
-                    {attributeType === ATTRIBUTE_LEVEL?.[3]?.key && (
+                    {attributeType === VEHICLE_CHECKLIST_TYPE?.ANSWER?.key && (
                         <>
                             <Descriptions.Item label="Checklist Code">{formData?.code}</Descriptions.Item>
                             <Descriptions.Item label="Checklist Description">{formData?.descriptionTitle}</Descriptions.Item>
                         </>
                     )}
+                    <Descriptions.Item label="Status">{formData?.status === true ? 'Active' : 'InActive'}</Descriptions.Item>
                 </Descriptions>
             </div>
         </>
