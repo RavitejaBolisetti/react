@@ -4,11 +4,12 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Descriptions } from 'antd';
+import { Descriptions, Typography } from 'antd';
 import { HIERARCHY_DEFAULT_PARENT } from 'constants/constants';
 import { ATTRIBUTE_LEVEL } from 'constants/modules/VehicleCheckListMaster/attributeType';
 
 export const ViewTaxChargesMain = (props) => {
+    const { Text } = Typography;
     const { attributeType, viewTitle, styles, formData } = props;
     const viewOneColProps = {
         bordered: false,
@@ -24,7 +25,7 @@ export const ViewTaxChargesMain = (props) => {
                 <Descriptions {...viewOneColProps}>
                     <Descriptions.Item label="Attribute Level">{formData?.attributeName}</Descriptions.Item>
                     <Descriptions.Item label="Parent">{formData?.parentName || HIERARCHY_DEFAULT_PARENT}</Descriptions.Item>
-                    <Descriptions.Item label="Status">{formData?.status === true ? 'Active' : 'InActive'}</Descriptions.Item>
+                    <Descriptions.Item label="Status">{formData?.status ? <Text type="success">Active</Text> : <Text>Inactive</Text>}</Descriptions.Item>
                     {attributeType === ATTRIBUTE_LEVEL?.[0]?.key && (
                         <>
                             <Descriptions.Item label="Group Code">{formData?.code}</Descriptions.Item>
