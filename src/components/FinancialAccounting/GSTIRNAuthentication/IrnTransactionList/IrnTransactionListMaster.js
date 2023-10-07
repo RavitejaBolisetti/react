@@ -81,10 +81,10 @@ const mapDispatchToProps = (dispatch) => ({
 
 const IrnTransactionListMasterBase = (props) => {
     // const { typeData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailData } = props;
-    const { userId, showGlobalNotification, section, fetchList, listShowLoading,  } = props;
+    const { userId, showGlobalNotification, section, fetchList, listShowLoading } = props;
     const { form, selectedId, onFinish, onFinishFailed, applicationMasterDataShowLoading } = props;
     const { applicationDetailsData, isApplicationDeatilsLoading, fetchApplication, applicationDetailListShowLoading, fetchListGstIrnTree, listShowLoadingTree } = props;
-    const { gstIrnTreeData,  } = props;
+    const { gstIrnTreeData } = props;
     // const { finalData, setFinalData, isDataLoaded, isLoading, menuData, nextBtn,  } = props;
     // const [vehicleDetailForm] = Form.useForm();
 
@@ -128,7 +128,7 @@ const IrnTransactionListMasterBase = (props) => {
             fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, sid: 'APPMST' });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId ]); //menuType
+    }, [userId]); //menuType
 
     useEffect(() => {
         if (userId) {
