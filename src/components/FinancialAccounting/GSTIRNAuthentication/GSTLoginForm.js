@@ -23,7 +23,6 @@ export function GSTLoginForm(props) {
     const clientIdInputRef = useRef(null);
     const secretIdInputRef = useRef(null);
 
-
     const [showPassword, setShowPassword] = useState(false);
 
     const [showClientId, setShowClientId] = useState(false);
