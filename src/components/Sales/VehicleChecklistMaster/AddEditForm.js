@@ -46,8 +46,6 @@ const AddEditFormMain = (props) => {
     const handleFormFieldChange = () => {
         setFormBtnActive(true);
     };
-
-    console.log(form.getFieldsValue('code').code, 'attributeTypess');
     return (
         <>
             <Form autoComplete="off" form={form} layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -126,15 +124,13 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                 </Row>
-                                {console.log(AnswerTypes.key, 'answerTypeCode')}
-
                                 {AnswerTypes.map(
                                     (answer) =>
                                         answer.key === answerTypeCode && (
                                             <Row gutter={20}>
                                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                     <Form.Item name={'answerType' + answer.key} label={answer.value} rules={[validateRequiredSelectField('Financial Account Head')]}>
-                                                        <Input placeholder={preparePlaceholderText('Group Description')} disabled={treeCodeReadOnly} />
+                                                        <Input placeholder={preparePlaceholderText('Answer Type')} />
                                                     </Form.Item>
                                                 </Col>
                                             </Row>
