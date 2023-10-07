@@ -62,6 +62,7 @@ const mapStateToProps = (state) => {
                 // UserDealerBranchLocation: { isLoaded: isUserDlrProductListLoaded, isLoading: isUserDlrProductListLoding, data: userDlrProductList },
                 DealerProduct: { isLoaded: isProductLoaded, data: userProductListData, isLoading: isProductLoading },
             },
+            ConfigurableParameterEditing: { filteredListData: typeData = []},
             ProductHierarchy: { isLoading: isProductHierarchyLoading = false, data: productHierarchyData = [] },
         },
     } = state;
@@ -70,6 +71,7 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         userId,
+        typeData,
         userDataList,
         userDetailData,
         isDataLoading,

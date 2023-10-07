@@ -6,11 +6,11 @@
 import { Button, Form, Row, Col, Select, Input } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField, validateMacId, duplicateValidator } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-
+import { PARAM_MASTER } from 'constants/paramMaster';
 import styles from 'assets/sass/app.module.scss';
 
 const AddEditForm = (props) => {
-    const { onSaveFormData, macIdform, setShowAddEditForm, setIsEditing, formActionType, handleFormValueChange, setIsAdding, macIdData } = props;
+    const { typeData, onSaveFormData, macIdform, setShowAddEditForm, setIsEditing, formActionType, handleFormValueChange, setIsAdding, macIdData } = props;
     const handleCancelFormEdit = () => {
         macIdform.resetFields();
         setIsAdding(false);
@@ -25,24 +25,13 @@ const AddEditForm = (props) => {
         className: styles.headerSelectField,
     };
 
-    const options = [
-        {
-            value: 'Web',
-            label: 'Web',
-        },
-        {
-            value: 'Mobile',
-            label: 'Mobile',
-        },
-    ];
-
     return (
         <>
             <Form form={macIdform} autoComplete="off" onFinish={onSaveFormData} onFieldsChange={handleFormValueChange} layout="vertical">
                 <Row gutter={[20, 0]}>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                         <Form.Item label="Device Type" name="deviceType" rules={[validateRequiredSelectField('Device Type')]}>
-                            <Select {...selectProps} placeholder={preparePlaceholderSelect('Device Type')} allowClear options={options}></Select>
+                            <Select {...selectProps} placeholder={preparePlaceholderSelect('Device Type')} allowClear options={typeData?.[PARAM_MASTER.DEVICE_TYPE.id]}></Select>
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>

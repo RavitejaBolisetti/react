@@ -4,9 +4,10 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Collapse, Space, Avatar, Typography, Divider } from 'antd';
+import { Collapse, Space, Avatar, Divider } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import styles from 'assets/sass/app.module.scss';
+import { USER_TYPE_USER } from 'constants/modules/UserManagement/userType';
 
 const { Panel } = Collapse;
 
@@ -24,7 +25,7 @@ const expandIcon = ({ isActive }) =>
     );
 
 const ProfileDetailCard = (props) => {
-    const { selectedRecord, userType, USER_TYPE_USER, formData } = props;
+    const { selectedRecord, userType, formData } = props;
     const fullName = formData?.manufacturerUserName?.split(' ') || formData?.userName?.split(' ');
     const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1].slice(0, 1) : '') : '';
 
@@ -53,7 +54,7 @@ const ProfileDetailCard = (props) => {
                 )}
                 <Divider />
                 <div className={styles.detailCardText}>
-                    User Name: <span>{selectedRecord?.manufacturerUserName || 'NA'}</span>
+                    User Name: <span>{selectedRecord?.manufacturerUserName ||formData?.userName ||  'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>

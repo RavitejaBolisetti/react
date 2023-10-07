@@ -405,4 +405,8 @@ export const PARAM_MASTER = {
         id: 'CHRG_STATUS',
         title: 'EVR Charging Status',
     },
+    DEVICE_TYPE: {
+        id: 'DVIC_TYP',
+        title: 'Device Type',
+    },
 };
