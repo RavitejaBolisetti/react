@@ -3,16 +3,17 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import '@testing-library/jest-dom/extend-expect';
-import { ViewDetail } from '@components/FinancialAccounting/VehicleModelAndTaxCharges/ViewDetail';
 import customRender from '@utils/test-utils';
+import { ViewSupportingDocDetail } from 'components/FinancialAccounting/GSTIRNAuthentication/ViewSupportingDocDetail';
 
 afterEach(() => {
     jest.restoreAllMocks();
 });
 
-describe('ViewDetail component', () => {
-    it('render table header', () => {
-        customRender(<ViewDetail styles={{}} />);
-    })
+
+describe("ViewSupportingDocDetail components", ()=>{
+    it("render", ()=>{
+        customRender(<ViewSupportingDocDetail />);
+    });
+
 })
