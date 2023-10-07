@@ -74,15 +74,7 @@ const ProductMapping = (props) => {
             setButtonData((prev) => ({ ...prev, nextBtn: false, saveBtn: true, editBtn: formActionType?.viewMode }));
 
             if (!productHierarchyData?.length) {
-                const extraParamsDef = [
-                    {
-                        key: 'manufactureOrgCode',
-                        title: 'manufactureOrgCode',
-                        value: 'PRSNL',
-                    },
-                ];
-
-                fetchProductHierarchyList({ setIsLoading: productShowLoding, extraParams: extraParamsDef, userId });
+                fetchProductHierarchyList({ setIsLoading: productShowLoding, userId });
             }
             fetchDealerProduct({ setIsLoading: dealerProductShowLoading, extraParams, userId });
         }
