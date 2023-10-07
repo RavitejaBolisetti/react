@@ -11,7 +11,7 @@ import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import styles from 'assets/sass/app.module.scss';
 
-import { FiCopy } from 'react-icons/fi';
+// import { FiCopy } from 'react-icons/fi';
 
 const { Panel } = Collapse;
 
@@ -29,7 +29,7 @@ const expandIcon = ({ isActive }) =>
     );
 
 const GstAuthenticationDetailCard = (props) => {
-    const { selectedRecord, typeData, isLoading } = props;
+    const {isLoading } = props;
 
     return (
         <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon} collapsible="icon">
