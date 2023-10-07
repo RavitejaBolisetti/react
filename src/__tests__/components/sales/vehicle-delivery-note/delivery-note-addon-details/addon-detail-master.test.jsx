@@ -52,7 +52,7 @@ const FormWrapper = (props) => {
 
 describe('AddOn Detail Master components', () => {
     it('should render components', () => {
-        customRender(<FormWrapper handleFormValueChange={jest.fn()} />);
+        customRender(<FormWrapper handleFormValueChange={jest.fn()} setButtonData={jest.fn()} />);
     });
     it('test1', () => {
         const mockStore = createMockStore({
@@ -68,7 +68,7 @@ describe('AddOn Detail Master components', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper handleFormValueChange={jest.fn()} selectedInvoiceId={106} fetchList={fetchList} resetData={jest.fn()} />
+                <FormWrapper handleFormValueChange={jest.fn()} selectedInvoiceId={106} setButtonData={jest.fn()} fetchList={fetchList} resetData={jest.fn()} />
             </Provider>
         );
 
@@ -94,7 +94,7 @@ describe('AddOn Detail Master components', () => {
         const formActionType={
             viewMode: true
         }
-        customRender(<FormWrapper handleFormValueChange={jest.fn()} formActionType={formActionType} />);
+        customRender(<FormWrapper handleFormValueChange={jest.fn()} formActionType={formActionType} setButtonData={jest.fn()} />);
 
         const plusCollapse=screen.getAllByRole('img', { name: 'plus' });
         fireEvent.click(plusCollapse[0]);
