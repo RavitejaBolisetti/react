@@ -33,7 +33,6 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-
             VehicleChecklistMaster: {
                 VehicleChecklistMasterList: { isLoaded: isVehicleChecklistMasterLoaded = false, data: VehicleChecklistMasterList = [] },
                 VehicleChecklistMasterListAttributeLov: { isLoaded: isVehicleChecklistMasterAtrributeLovLoaded = false, data: VehicleChecklistAttributeLov = [] },
@@ -79,7 +78,8 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId, saveData, listShowLoadingPost, isDataAttributeLoaded, showGlobalNotification, fetchVehicleChecklist, listShowLoadingVehicleChecklist, VehicleChecklistMasterList, VehicleChecklistAttributeLov, fetchVehicleChecklistAttributeLov, listShowLoadingVehicleChecklistAttributeLov }) => {
+export const VehicleChecklistMain = ({ typeData, ConfigurableParameterEditing, moduleTitle, viewTitle, userId, saveData, listShowLoadingPost, isDataAttributeLoaded, showGlobalNotification, fetchVehicleChecklist, listShowLoadingVehicleChecklist, VehicleChecklistMasterList, VehicleChecklistAttributeLov, fetchVehicleChecklistAttributeLov, listShowLoadingVehicleChecklistAttributeLov }) => {
+    console.log(typeData, 'ConfigurableParameterEditing');
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
@@ -233,7 +233,6 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
 
             if (res?.data) {
-
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
                 fetchVehicleChecklist({ setIsLoading: listShowLoadingVehicleChecklist, userId, extraParams });
 
