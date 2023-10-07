@@ -8,6 +8,7 @@ import { Divider, Form } from 'antd';
 
 import CardMapping from './CardMapping';
 import AddEditForm from './AddEditForm';
+import { NoDataFound } from 'utils/noDataFound';
 
 const AccessoriesAddonMain = ({ setIsBtnDisabled, openAccordian, partNameSearchVisible, setPartNameSearchVisible, fnSetData, setOpenAccordian, isEditing, setisEditing, selectedOrderId, handleFormValueChange, showGlobalNotification, setsearchData, searchData, setaddButtonDisabled, onSearchPart, AddonPartsData, addButtonDisabled, accessoryForm, isBtnDisabled, setFormBtnDisable, setAddOnItemInfo, addOnItemInfo, formData }) => {
     const [EditingForm] = Form.useForm();
@@ -44,7 +45,7 @@ const AccessoriesAddonMain = ({ setIsBtnDisabled, openAccordian, partNameSearchV
                 setisEditing(false);
                 handleFormValueChange();
             })
-            .catch((err) => { });
+            .catch((err) => {});
     };
     const handleDelete = (index) => {
         setAddOnItemInfo(addOnItemInfo?.filter((element, i) => i !== index));
@@ -92,6 +93,7 @@ const AccessoriesAddonMain = ({ setIsBtnDisabled, openAccordian, partNameSearchV
         <>
             <Divider />
             {addButtonDisabled?.partDetailsResponses && <AddEditForm {...AddEditFormProps} />}
+            {!addOnItemInfo?.length && !addButtonDisabled?.partDetailsResponses && <NoDataFound informtion={'Add accessories'} />}
             {addOnItemInfo?.map((element, index) => {
                 return <CardMapping AddEditFormProps={AddEditFormProps} element={element} isEditing={isEditing} setisEditing={setisEditing} handleDelete={handleDelete} index={index} />;
             })}

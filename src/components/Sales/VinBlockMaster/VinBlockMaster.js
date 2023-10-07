@@ -12,7 +12,6 @@ import { tableColumn } from './tableColumn';
 import ListDataTable from 'utils/ListDataTable/ListDataTable';
 import { showGlobalNotification } from 'store/actions/notification';
 import { ViewDetail } from './ViewDetail';
-// import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, CANCEL_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 import AdvanceVinBlockMasterFilter from './AdvanceVinBlockMasterFilter';
 
 import { vinBlockMasterAction } from 'store/actions/data/vehicle/vinBlockMasterAction';
@@ -68,7 +67,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const VinBlockMasterBase = (props) => {
     const { filterString, setFilterString, saveData, userId, showGlobalNotification, fetchOnRoadViewPriceDetail } = props;
     const { typeData, fetchVinBlockList, listVinShowLoading } = props;
-    const { moduleTitle, vinData, totalRecords, fetchVinDetailList,  } = props;
+    const { moduleTitle, vinData, totalRecords, fetchVinDetailList } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
@@ -77,7 +76,7 @@ export const VinBlockMasterBase = (props) => {
 
     const [formData, setFormData] = useState([]);
     const [isFormVisible, setIsFormVisible] = useState(false);
- 
+
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
     const [vinInfo, setvinInfo] = useState();
@@ -197,8 +196,6 @@ export const VinBlockMasterBase = (props) => {
         showLoading(true);
         setFormData(record);
         setIsFormVisible(true);
-        
-       
     };
 
     const onCloseAction = () => {
@@ -235,7 +232,6 @@ export const VinBlockMasterBase = (props) => {
     const handleOnClick = () => {
         setButtonData({ ...defaultBtnVisiblity, saveAndNewBtn: false, cancelBtn: false, saveBtn: true });
         // setIsUploadFormVisible(true);
-
     };
 
     const handleSearch = (value) => {
@@ -252,7 +248,7 @@ export const VinBlockMasterBase = (props) => {
             setFilterString({ ...rest });
         }
     };
-    
+
     const title = 'Vin Block Master';
 
     const advanceFilterResultProps = {

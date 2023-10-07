@@ -66,12 +66,12 @@ const mapDispatchToProps = (dispatch) => ({
             resetViewData: documentViewDataActions.reset,
 
             downloadFile: supportingDocumentDataActions.downloadFile,
-            listShowLoading: supportingDocumentDataActions.listShowLoading,     
-            
+            listShowLoading: supportingDocumentDataActions.listShowLoading,
+
             saveData: gstIrnLoginAction.saveData,
             fetchListGstLogin: gstIrnLoginAction.fetchList,
             listShowLoadingGstLogin: gstIrnLoginAction.listShowLoading,
-            
+
             showGlobalNotification,
         },
         dispatch
@@ -82,7 +82,7 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
     const { userId, data, showGlobalNotification } = props;
     const { typeData, moduleTitle } = props;
     const { filterString, setFilterString, listShowLoadingGst, fetchList, dealerGstData } = props;
-    const { viewDocument, listShowLoadingGstLogin, fetchListGstLogin, listShowLoading, saveData, } = props;
+    const { viewDocument, listShowLoadingGstLogin, fetchListGstLogin, listShowLoading, saveData } = props;
 
     // const { accessToken, token, resetData, isSupportingDataLoaded, isSupportingDataLoading, supportingData, downloadFile, listShowLoading, isViewDataLoaded, viewListShowLoading, resetViewData, fetchViewDocument } = props;
     // const { ...viewProps } = props;
@@ -209,9 +209,8 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         setFilterString();
         advanceFilterForm.resetFields();
     };
-   
-    const onFinish = (values) => {
 
+    const onFinish = (values) => {
         setCurrentGst(values?.gstinNumber);
         const data = { ...values, docId: uploadedFile };
 
@@ -220,7 +219,7 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
             setShowDataLoading(true);
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchListGstLogin({ setIsLoading: listShowLoadingGstLogin, userId, onSuccessAction, onErrorAction });
-            
+
             setButtonData({ ...buttonData, formBtnActive: false });
             setIsFormVisible(false);
             setCurrentSection(1);
@@ -342,7 +341,6 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         userId,
         currentGst,
         setCurrentGst,
-
     };
 
     const loginProps = {
@@ -386,8 +384,6 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         singleDisabled,
         setSingleDisabled,
         isReplaceEnabled: false,
-
-         
     };
     return (
         <>

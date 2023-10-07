@@ -88,7 +88,7 @@ const AddEditFormMain = (props) => {
                 if (formData === undefined) {
                     return false;
                 } else {
-                    if (formData[dataKey] === undefined || !formData[dataKey]) {
+                    if (formData?.[dataKey] === undefined || !formData?.[dataKey]) {
                         return false;
                     }
                 }
@@ -113,7 +113,6 @@ const AddEditFormMain = (props) => {
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                 <Collapse onChange={() => handleCollapse('Accessories Information')} expandIcon={expandIcon} activeKey={openAccordian} expandIconPosition="end" collapsible="icon">
                     <Panel header={headerPropsFn(OTF_ADDON_SECTION?.ACCESSORIES_INFORMATION?.headerText, OTF_ADDON_SECTION?.ACCESSORIES_INFORMATION?.dataKey, OTF_ADDON_SECTION?.ACCESSORIES_INFORMATION?.openKey, OTF_ADDON_SECTION?.ACCESSORIES_INFORMATION?.types)} key="Accessories Information">
-                        {/* {!addButtonDisabled['partDetailsResponses'] && <Divider />} */}
                         <AccessoriesAddonMain {...AccerssoriesInformationProps} />
                     </Panel>
                 </Collapse>
