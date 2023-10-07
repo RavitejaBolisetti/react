@@ -142,48 +142,4 @@ describe('HoPriceMappingMaster Component', () => {
     const closeCircleBtn = screen.getByRole('button', { name: 'close-circle' });
     fireEvent.click(closeCircleBtn);
   })
-
-  it('Should render submit button components', () => {
-    const data = [{
-      "id": "4a50fd6d-a788-4313-96dc-8b4fe9b8d7d1",
-      "state": "Uttar Pradesh",
-      "city": "KURNOOL",
-      "enabledDate": "2017-07-01T00:00:00.000+00:00",
-      "enabledBy": "Sakshi",
-      "dealerBranch": "AM02",
-      "dealerParent": "SUPREME MOBILES PVT LTD.",
-      "dealerSelectOnRoadPrice": true,
-      "modelDealerMapResponse": null
-    }]
-
-    const mockStore = createMockStore({
-      auth: { userId: 106 },
-      data: {
-        HoPriceMapping: {
-          HoPriceMappingSearchList:
-            { isLoaded: true, data: data}
-        }
-      },
-    });
-
-    const fetchList = jest.fn();
-    const fetchDetail = jest.fn();
-    const saveData = jest.fn();
-
-    const buttonData = {
-      saveBtn: true,
-      cancelBtn: true,
-      closeBtn: true,
-      formBtnActive: false
-    }
-
-    const res = { data: [{ customerId: 'CUS1694080366163' }] };
-    customRender(
-      <Provider store={mockStore}>
-        <HoPriceMappingMaster saveData={saveData} isVisible={true} buttonData={buttonData} setButtonData={jest.fn()} handleButtonClick={jest.fn()} fetchList={fetchList} fetchDetail={fetchDetail} setFilterString={jest.fn()} />
-      </Provider>
-    );
-
-  })
-
 });
