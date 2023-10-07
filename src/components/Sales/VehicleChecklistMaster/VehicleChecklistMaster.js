@@ -79,7 +79,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VehicleChecklistMain = ({ typeData, ConfigurableParameterEditing, moduleTitle, viewTitle, userId, saveData, listShowLoadingPost, isDataAttributeLoaded, showGlobalNotification, fetchVehicleChecklist, listShowLoadingVehicleChecklist, VehicleChecklistMasterList, VehicleChecklistAttributeLov, fetchVehicleChecklistAttributeLov, listShowLoadingVehicleChecklistAttributeLov }) => {
-    console.log(typeData, 'ConfigurableParameterEditing');
+    // console.log(typeData, 'ConfigurableParameterEditing');
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);

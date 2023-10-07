@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState } from 'react';
+import React from 'react';
 import { Col, Input, Form, Row, Switch, Button } from 'antd';
 import TreeSelectField from 'components/common/TreeSelectField';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
@@ -15,11 +15,11 @@ import { customSelectBox } from 'utils/customSelectBox';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { ANSWER_TYPES } from 'constants/modules/VehicleCheckListMaster/AnswerTypes';
+// import { ANSWER_TYPES } from 'constants/modules/VehicleCheckListMaster/AnswerTypes';
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const [answerTypeCode, setAnswerTypeCode] = useState(null);
+    // const [answerTypeCode, setAnswerTypeCode] = useState(null);
     const { VehicleChecklistMasterList, onCloseAction, fieldNames, formActionType, formData, selectedTreeSelectKey, handleSelectTreeClick, attributeType, form, VehicleChecklistAttributeLov, typeData } = props;
     const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed } = props;
 
@@ -40,7 +40,7 @@ const AddEditFormMain = (props) => {
 
     const handleFormValueChange = () => {
         setFormBtnActive(true);
-        setAnswerTypeCode(form.getFieldsValue('code').code);
+        // setAnswerTypeCode(form.getFieldsValue('code').code);
     };
 
     const handleFormFieldChange = () => {
@@ -124,22 +124,22 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                 </Row>
-                                {ANSWER_TYPES.map(
+                                {/* {ANSWER_TYPES.map(
                                     (answer) =>
                                         answer.key === answerTypeCode && (
                                             <Row gutter={20}>
                                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                    <Form.Item name={'answerType' + answer.key} label={answer.value} rules={[validateRequiredSelectField('Financial Account Head')]}>
+                                                    <Form.Item name={'answerType' + answer.key} label={answer.value} rules={[validateRequiredSelectField('Select Answer Type')]}>
                                                         {answer.type}
                                                     </Form.Item>
                                                 </Col>
                                             </Row>
                                         )
-                                )}
+                                )} */}
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item name="descriptionTitle" label="Attachment Required" rules={[validateRequiredSelectField('Financial Account Head')]}>
-                                            {customSelectBox({ data: [], placeholder: preparePlaceholderSelect('Financial Account Head') })}
+                                        <Form.Item name="attachmentRequired" label="Attachment Required" rules={[validateRequiredSelectField('Select Attachment Required')]}>
+                                            {customSelectBox({ data: [], placeholder: preparePlaceholderSelect('Attachment Required') })}
                                         </Form.Item>
                                     </Col>
                                 </Row>
