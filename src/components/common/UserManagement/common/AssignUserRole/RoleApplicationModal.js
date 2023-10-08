@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Row, Col, Form, Divider } from 'antd';
+import { Row, Col, Form } from 'antd';
 
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
@@ -13,7 +13,7 @@ import { withModal } from 'components/withModal';
 import { ModalButtons } from 'components/common/Button';
 import { customSelectBox } from 'utils/customSelectBox';
 
-import { ListSkeleton } from 'components/common/Skeleton';
+import { InputSkeleton } from 'components/common/Skeleton';
 import styles from 'assets/sass/app.module.scss';
 import style from 'components/common/TreeView.module.scss';
 
@@ -53,7 +53,7 @@ const RoleApplicationModalrMain = (props) => {
                     </Form>
                     {isLoading ? (
                         <div className={styles.marB20}>
-                            <ListSkeleton count={4} height={30} />
+                            <InputSkeleton width={300} height={25} count={6} />
                         </div>
                     ) : (
                         <ApplicationTree {...props} setDisableMdlSaveBtn={setDisableMdlSaveBtn} />
