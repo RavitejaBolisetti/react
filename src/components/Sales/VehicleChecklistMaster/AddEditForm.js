@@ -12,16 +12,15 @@ import { withDrawer } from 'components/withDrawer';
 import styles from 'assets/sass/app.module.scss';
 import { VEHICLE_CHECKLIST_TYPE } from 'constants/modules/VehicleCheckListMaster/vehicleChecklistType';
 import { customSelectBox } from 'utils/customSelectBox';
-
+import { ANSWER_TYPES } from 'constants/modules/VehicleCheckListMaster/AnswerTypes';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-// import { ANSWER_TYPES } from 'constants/modules/VehicleCheckListMaster/AnswerTypes';
+
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    // const [answerTypeCode, setAnswerTypeCode] = useState(null);
     const { VehicleChecklistMasterList, onCloseAction, fieldNames, formActionType, formData, selectedTreeSelectKey, handleSelectTreeClick, attributeType, form, VehicleChecklistAttributeLov, typeData } = props;
-    const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed } = props;
+    const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed, answerType } = props;
 
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
 
@@ -40,7 +39,6 @@ const AddEditFormMain = (props) => {
 
     const handleFormValueChange = () => {
         setFormBtnActive(true);
-        // setAnswerTypeCode(form.getFieldsValue('code').code);
     };
 
     const handleFormFieldChange = () => {
@@ -85,14 +83,14 @@ const AddEditFormMain = (props) => {
                             <>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item name="code" label="Sub Group Code" rules={[validateRequiredSelectField('Document Description')]}>
+                                        <Form.Item name="code" label="Sub Group Code" rules={[validateRequiredInputField('Document Description')]}>
                                             <Input maxLength={6} placeholder={preparePlaceholderText('Group Code')} disabled={treeCodeReadOnly} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item name="descriptionTitle" label="Sub Group Description" rules={[validateRequiredSelectField('Financial Account Head')]}>
+                                        <Form.Item name="descriptionTitle" label="Sub Group Description" rules={[validateRequiredInputField('Financial Account Head')]}>
                                             <TextArea maxLength={300} placeholder={preparePlaceholderText('Group Description')} showCount disabled={treeCodeReadOnly} />
                                         </Form.Item>
                                     </Col>
@@ -102,32 +100,41 @@ const AddEditFormMain = (props) => {
                             <>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item name="code" label="Checklist Code" rules={[validateRequiredSelectField('Checklist Code')]}>
+                                        <Form.Item name="code" label="Checklist Code" rules={[validateRequiredInputField('Checklist Code')]}>
                                             <Input maxLength={6} placeholder={preparePlaceholderText('Checklist Code')} disabled={treeCodeReadOnly} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item name="descriptionTitle" label="Checklist Description" rules={[validateRequiredSelectField('Checklist Description')]}>
+                                        <Form.Item name="descriptionTitle" label="Checklist Description" rules={[validateRequiredInputField('Checklist Description')]}>
                                             <TextArea maxLength={300} placeholder={preparePlaceholderText('Checklist Description')} showCount disabled={treeCodeReadOnly} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item name="code" label="Answer Type" rules={[validateRequiredSelectField('Document Description')]}>
-                                            {customSelectBox({ data: typeData?.CHKL_ANS_TYPE, placeholder: preparePlaceholderSelect('Document Description') })}
+                                        <Form.Item name="answerType" label="Answer Type" rules={[validateRequiredSelectField('Answer Type')]}>
+                                            {customSelectBox({ data: typeData?.CHKL_ANS_TYPE, placeholder: preparePlaceholderSelect('Answer Type'), onChange: () => setAnswerType() })}
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item name="attachmentRequired" label="Attachment Required" rules={[validateRequiredSelectField('Select Attachment Required')]}>
-                                            {customSelectBox({ data: [], placeholder: preparePlaceholderSelect('Attachment Required') })}
+                                        <Form.Item name="attachmentRequired" label="Attachment Required" rules={[validateRequiredSelectField('Attachment Required')]}>
+                                            {customSelectBox({ data: typeData?.ATT_TYPE, placeholder: preparePlaceholderSelect('Attachment Required') })}
                                         </Form.Item>
                                     </Col>
                                 </Row>
+                                {answerType && (
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                            <Form.Item name="attachmentRequired" label="Attachment Required" rules={[validateRequiredSelectField('Attachment Required')]}>
+                                                {customSelectBox({ data: [], placeholder: preparePlaceholderSelect('Attachment Required') })}
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                )}
                             </>
                         ) : null}
 

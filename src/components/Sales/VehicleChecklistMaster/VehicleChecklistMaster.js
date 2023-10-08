@@ -95,6 +95,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
     const [attributeType, setAttributeType] = useState();
     const [buttonType, setButtonType] = useState(CHECKLIST_TYPE?.VDC?.key);
     const [handleButtonClickChange, setHandleButtonClickChange] = useState(false);
+    const [answerType, setAnswerType] = useState(false);
 
     const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -335,6 +336,8 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
         VehicleChecklistMasterList,
         VehicleChecklistAttributeLov,
         form,
+        answerType,
+        setAnswerType,
     };
 
     const viewProps = {
