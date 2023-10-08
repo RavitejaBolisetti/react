@@ -73,7 +73,7 @@ export const MakeCheckResult = (props) => {
         case FORMTYPE_CONSTANTS?.FIXED?.id: {
             if (data?.answerText) {
                 checkResult = data?.checklistAnswerResponses?.find((i) => i?.answerCode === data?.answerText)?.answerDescription;
-                return checkResult;
+                return checkResult?.trim() ? checkResult : data?.answerText;
             } else {
                 return 'NA';
             }

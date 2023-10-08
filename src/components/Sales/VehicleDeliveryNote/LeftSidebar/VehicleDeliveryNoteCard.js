@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Collapse, Space, Avatar, Typography, Divider } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
@@ -35,15 +35,26 @@ const VehicleDeliveryNoteCard = (props) => {
     const { selectedOrder, typeData, isLoading, toolTipContent, formActionType } = props;
     const fullName = selectedOrder?.customerName?.split(' ');
     const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1].slice(0, 1) : '') : '';
-    const invoiceType = props?.soldByDealer ? 'Delivery Note' : 'Challan';
-
+    const deliveryTitles = useMemo(() => {
+        switch (props?.soldByDealer) {
+            case true: {
+                return { invoiceType: 'Delivery Note', deliveryDate: 'Delivery Note Date', fullName, userAvatar };
+            }
+            case false: {
+                return { invoiceType: 'Challan', deliveryDate: 'Challan Date', fullName, userAvatar };
+            }
+            default: {
+                return { invoiceType: 'Delivery Note', deliveryDate: 'Delivery Note Date', fullName, userAvatar };
+            }
+        }
+    }, [selectedOrder]);
     return (
         <Collapse bordered={true} expandIcon={expandIcon} collapsible="icon">
             <Panel
                 header={
                     <>
                         <Space>
-                            <Avatar size={50}>{userAvatar?.toUpperCase()}</Avatar>
+                            <Avatar size={50}>{deliveryTitles?.userAvatar?.toUpperCase()}</Avatar>
                             <div>
                                 <Title level={5}>{selectedOrder?.customerName?.toLowerCase()}</Title>
                                 <Text>{selectedOrder?.customerId || 'NA'}</Text>
@@ -51,7 +62,7 @@ const VehicleDeliveryNoteCard = (props) => {
                         </Space>
                         <Divider />
                         <div className={styles.detailCardText}>
-                            {invoiceType} No.: <span> {checkAndSetDefaultValue(selectedOrder?.vehicleDeliveryNote)}</span>
+                            {deliveryTitles?.invoiceType} No.: <span> {checkAndSetDefaultValue(selectedOrder?.vehicleDeliveryNote)}</span>
                         </div>
                         <Divider />
                         {selectedOrder?.mobileNumber && (
@@ -65,7 +76,7 @@ const VehicleDeliveryNoteCard = (props) => {
             >
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Delivery Note Date: <span> {checkAndSetDefaultValue(selectedOrder?.deliveryNoteDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
+                    {deliveryTitles?.deliveryDate} <span> {checkAndSetDefaultValue(selectedOrder?.deliveryNoteDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
