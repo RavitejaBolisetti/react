@@ -51,7 +51,7 @@ import { RsmAsmApproval } from './rsmAsmApproval';
 import { EvrDetailsCapturing } from './evrDetailsCapturing';
 
 import { stockTransferIndentData } from './stockTransferIndent';
-
+import { CRMSchemeEnrollmentList } from './crmSchemeEnrollment';
 export const data = combineReducers({
     Menu,
     ProductHierarchy,
@@ -85,7 +85,6 @@ export const data = combineReducers({
     ManufacturerOrg,
     VehicleReceipt,
     VehiclePriceMaster,
-    Receipt,
     VehicleModelandTaxChargesCategory,
     Report,
     VehicleReceiptChecklist,
@@ -97,6 +96,7 @@ export const data = combineReducers({
     OTFBlockMaster,
     VehicleDeliveryNote,
     DealerBlockMaster,
+    CRMSchemeEnrollmentList,
     RsmAsmApproval,
     EvrDetailsCapturing,
 });

@@ -118,6 +118,7 @@ const AddEditFormMain = (props) => {
         onFinishAddVehicleDetails,
         productHierarchyData,
         formData: selectedVehicle,
+        tableDataItem,
     };
 
     return (

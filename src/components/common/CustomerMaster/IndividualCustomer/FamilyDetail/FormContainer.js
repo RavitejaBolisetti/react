@@ -8,7 +8,7 @@ import { Input, Select, DatePicker, Row, Col, Button, Form } from 'antd';
 
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
-import { YES_NO_FLAG } from 'constants/yesNoFlag'
+import { YES_NO_FLAG } from 'constants/yesNoFlag';
 import { GetAge } from 'utils/getAge';
 import { disableFutureDate } from 'utils/disableDate';
 import { dateFormat, formatDate } from 'utils/formatDateTime';
@@ -37,7 +37,7 @@ const FormBase = (props) => {
     };
 
     const getRelationCode = (props) => {
-        let relationCode = relationData?.find((e) => e.value === props);
+        let relationCode = relationData?.REL_TYPE?.find((e) => e.value === props);
         form.setFieldsValue({
             relationCode: relationCode?.key,
         });
@@ -74,7 +74,7 @@ const FormBase = (props) => {
                     <Form.Item initialValue={customerType} label="M&M Customer" name="mnmCustomer" rules={[validateRequiredSelectField('M&M Customer')]}>
                         <Select placeholder={preparePlaceholderText('M&M Customer')} onChange={onChange}>
                             {relationData?.YES_NO_FLG?.map((item) => (
-                                <Option key={'yn' + item?.key} value={item.value}>
+                                <Option key={'yn' + item?.key} value={item.key}>
                                     {item?.value}
                                 </Option>
                             ))}
@@ -120,7 +120,7 @@ const FormBase = (props) => {
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item initialValue={null} label="Relationship" name="relationship" rules={[validateRequiredSelectField('Relationship')]}>
                             <Select placeholder={preparePlaceholderText('Relationship')} allowClear onChange={getRelationCode}>
-                                {relationData?.map((item) => (
+                                {relationData?.REL_TYPE?.map((item) => (
                                     <Option key={'rel' + item?.key} value={item.value}>
                                         {item?.value}
                                     </Option>

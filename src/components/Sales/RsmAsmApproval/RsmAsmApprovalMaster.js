@@ -20,7 +20,7 @@ import { dateFormatView, converDateDayjs } from 'utils/formatDateTime';
 import { BASE_URL_APPROVAL_CANCEL_REQUEST_URL as approvalCancelURL } from 'constants/routingApi';
 
 import { LANGUAGE_EN } from 'language/en';
-import { PARAM_MASTER } from 'constants/paramMaster';
+import { getCodeValue } from 'utils/getCodeValue';
 
 import { FilterIcon } from 'Icons';
 import { rsmAsmApprovalSearchDataAction } from 'store/actions/data/rsmAsmApproval/rsmAsmApprovalSearch';
@@ -28,7 +28,6 @@ import { deliveryNoteInvoiceCancellationDataAction } from 'store/actions/data/sa
 import { ViewDetail } from './ViewDetail';
 import styles from 'assets/sass/app.module.scss';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
-import { getCodeValue } from 'utils/getCodeValue';
 
 const mapStateToProps = (state) => {
     const {

@@ -64,8 +64,9 @@ import {
     OtfSoMappingUnmappingMasterPage,
     StockTransferIndentMasterPage,
     VehicleDeliveryNoteMasterPage,
-    EvrDetailsCapturingMasterPage,
+    CrmScreenEnrolmentMasterPage,
     VinBlockMasterPage,
+    EvrDetailsCapturingMasterPage,
     RsmAsmApprovalPage,
 } from 'pages/Sales';
 
@@ -156,6 +157,7 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_REPORT_OTF_REPORTS} element={<OtfReportsPage />} />
             <Route path={routing.ROUTING_OTF_SO_MAPPING_CONTROL_MASTER} element={<OtfSoMappingMasterPage />} />
             <Route path={routing.ROUTING_OTF_BLOCK_MASTER} element={<OtfBlockMasterPage />} />
+            <Route path={routing.ROUTING_CRM_SCHEME_ENROLMENT} element={<CrmScreenEnrolmentMasterPage />} />
             <Route path={routing.ROUTING_SO_MAPPING_UNMAPPING} element={<OtfSoMappingUnmappingMasterPage />} />
 
             <Route path={routing.ROUTING_FINANCIAL_ACCOUNTING_TAX_CHARGES} element={<TaxChargesPage />} exact />

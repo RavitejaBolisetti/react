@@ -211,6 +211,9 @@ export const BASE_URL_VEHICLE_TRACKING = BASE_URL_VEHICLE + 'tracking';
 export const BASE_URL_VEHICLE_CHECKLIST = BASE_URL_VEHICLE + 'checklist';
 
 export const BASE_URL_ACCOUNT_HEAD = BASE_URL + 'finance/financialaccountheads';
+
+export const BASE_URL_CRM_SCHEME_ENROLLMENT = BASE_URL + 'vehicle/crmschemes/search';
+export const BASE_URL_CRM_SCHEME_ENROLLMENT_DETAILS = BASE_URL + 'vehicle/crmschemes';
 export const BASE_URL_DOCUMENT_DESCRIPTION_SEARCH = BASE_URL + 'applications/documenttypes/search';
 export const BASE_URL_DOCUMENT_DESCRIPTION = BASE_URL + 'applications/documenttypes';
 
@@ -240,6 +243,7 @@ export const BASE_URL_VEHICLE_PRICE_MASTER = BASE_URL_VEHICLE + 'pricemaster';
 export const BASE_URL_VEHICLE_PRICE_MASTER_SEARCH = BASE_URL_VEHICLE + 'pricemaster/search';
 export const BASE_URL_VEHICLE_CUSTOMER_DETAIL = BASE_URL_VEHICLE + 'customerdetails';
 export const BASE_URL_VEHICLE_CUSTOMER_COMMON_DETAIL = BASE_URL + 'customers/commondetails';
+export const BASE_URL_CUSTOMER_VERIFY = BASE_URL + 'customers/verify';
 
 export const BASE_URL_VEHICLE_PURCHASE_ORDER_DETAILS = BASE_URL + 'otf/vehicle/purchaseorder/search';
 export const BASE_URL_VIEW_VEHICLE_PURCHASE_ORDER_DETAILS = BASE_URL + 'otf/vehicle/purchaseorder/';

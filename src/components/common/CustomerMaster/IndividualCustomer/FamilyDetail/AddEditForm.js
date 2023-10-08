@@ -15,6 +15,7 @@ import dayjs from 'dayjs';
 import { LANGUAGE_EN } from 'language/en';
 import { NoDataFound } from 'utils/noDataFound';
 import { expandIcon } from 'utils/accordianExpandIcon';
+import { YES_NO_FLAG } from 'constants/yesNoFlag';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -48,7 +49,7 @@ const AddEditFormMain = (props) => {
     const addFunction = () => {
         form.resetFields();
         setShowForm(true);
-        setCustomerType('No');
+        setCustomerType(YES_NO_FLAG?.NO?.key);
     };
 
     const onEdit = (values, index) => {
@@ -65,17 +66,17 @@ const AddEditFormMain = (props) => {
             editedId: values?.editedId,
             relationship: values?.relationship,
             relationCode: values?.relationCode,
-            relationCustomerId: values?.mnmCustomer === 'Yes' ? values?.relationCustomerId : '',
+            relationCustomerId: values?.mnmCustomer === YES_NO_FLAG?.YES?.key ? values?.relationCustomerId : '',
             dateOfBirth: typeof values?.dateOfBirth === 'object' ? values?.dateOfBirth : dayjs(values?.dateOfBirth),
             relationAge: values?.relationAge,
             remarks: values?.remarks,
         };
 
         setEditedValues(Val);
-        if (values?.mnmCustomer === 'Yes') {
-            setCustomerType('Yes');
-        } else if (values?.mnmCustomer === 'No') {
-            setCustomerType('No');
+        if (values?.mnmCustomer === YES_NO_FLAG?.YES?.key) {
+            setCustomerType(YES_NO_FLAG?.YES?.key);
+        } else if (values?.mnmCustomer === YES_NO_FLAG?.NO?.key) {
+            setCustomerType(YES_NO_FLAG?.NO?.key);
         }
         form.setFieldsValue(Val);
     };
@@ -173,7 +174,7 @@ const AddEditFormMain = (props) => {
                                                     </Button>
                                                 )}
                                             </Row>
-                                            {<Text type="secondary">{item?.mnmCustomer === 'Yes' ? 'M&M user' : item?.mnmCustomer === 'No' ? 'Non-M&M user' : ''}</Text>}
+                                            {<Text type="secondary">{item?.mnmCustomer === YES_NO_FLAG?.YES?.key ? 'M&M user' : item?.mnmCustomer === YES_NO_FLAG?.NO?.key ? 'Non-M&M user' : ''}</Text>}
                                         </Row>
                                     }
                                     key={index}
