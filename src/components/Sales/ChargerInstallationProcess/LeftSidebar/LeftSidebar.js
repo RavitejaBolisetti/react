@@ -7,10 +7,10 @@ import React from 'react';
 import MenuNav from './MenuNav';
 import ProfileDetailCard from './ProfileDetailCard';
 const LeftSidebar = (props) => {
-    const { selectedOtfNumber } = props;
+    const { formActionType } = props;
     return (
         <>
-            {selectedOtfNumber && <ProfileDetailCard {...props} />}
+            {!formActionType?.addMode && <ProfileDetailCard {...props} />}
             <MenuNav {...props} />
         </>
     );

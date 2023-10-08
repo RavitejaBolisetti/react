@@ -10,7 +10,7 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 
 import { DataTable } from 'utils/dataTable';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
-import { validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredInputField } from 'utils/validation';
 import { PlusOutlined } from '@ant-design/icons';
 import { AddRequestModal } from './AddRequestModal';
 import { FilterIcon } from 'Icons';
@@ -20,8 +20,7 @@ const { Search } = Input;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { formData, typeData, formActionType } = props;
-    const [chargerDetails, setChargerDetails] = useState(false);
+    const { formData, typeData, formActionType, chargerDetails, crmCustomerVehicleData, handleBookingNumberSearch, handleBookingChange } = props;
     const [activeKey, setActiveKey] = useState([]);
     const [addRequestVisible, setAddRequestVisible] = useState(false);
     const [addRequestData, setAddRequestData] = useState([]);
@@ -32,10 +31,6 @@ const AddEditFormMain = (props) => {
         colon: false,
         layout: 'vertical',
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
-    };
-
-    const handleBookingNumberSearch = () => {
-        setChargerDetails(true);
     };
 
     const onChange = (values) => {
@@ -83,13 +78,13 @@ const AddEditFormMain = (props) => {
                             <Card style={{ backgroundColor: '#F2F2F2' }}>
                                 <Row gutter={18}>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={formData?.bookingNumber || formData?.otfNumber} label="Booking Number" name="otfNumber" rules={[validateRequiredSelectField('Booking Number')]}>
-                                            <Search maxLength={50} placeholder={preparePlaceholderText('Booking Number')} onSearch={(value) => handleBookingNumberSearch(value)} allowClear />
+                                        <Form.Item initialValue={formData?.bookingNumber || formData?.otfNumber} label="Booking Number" name="otfNumber" rules={[validateRequiredInputField('Booking Number')]}>
+                                            <Search maxLength={50} placeholder={preparePlaceholderText('Booking Number')} onSearch={(value) => handleBookingNumberSearch(value)} allowClear onChange={handleBookingChange} />
                                         </Form.Item>
                                     </Col>
                                     {chargerDetails && (
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item initialValue={formData?.bookimgStatus} label="Booking Status" name="bookingStatus">
+                                            <Form.Item initialValue={crmCustomerVehicleData?.otfDetails?.orderStatus} label="Booking Status" name="bookingStatus">
                                                 <Input placeholder={preparePlaceholderText('Booking Status')} disabled={true} />
                                             </Form.Item>
                                         </Col>
@@ -100,11 +95,11 @@ const AddEditFormMain = (props) => {
                                     <>
                                         <Divider />
                                         <Descriptions {...viewProps}>
-                                            <Descriptions.Item label="Model Group">XUV 400</Descriptions.Item>
-                                            <Descriptions.Item label="Model Variant">W 10</Descriptions.Item>
-                                            <Descriptions.Item label="Seating Capacity">5</Descriptions.Item>
-                                            <Descriptions.Item label="Color">Pear White</Descriptions.Item>
-                                            <Descriptions.Item label="Model Code">EV</Descriptions.Item>
+                                            <Descriptions.Item label="Model Group">{crmCustomerVehicleData?.vehicleDetails?.modelGroup}</Descriptions.Item>
+                                            <Descriptions.Item label="Model Variant">{crmCustomerVehicleData?.vehicleDetails?.modelVariant}</Descriptions.Item>
+                                            <Descriptions.Item label="Seating Capacity">{crmCustomerVehicleData?.vehicleDetails?.seatingCapacity}</Descriptions.Item>
+                                            <Descriptions.Item label="Color">{crmCustomerVehicleData?.vehicleDetails?.color}</Descriptions.Item>
+                                            <Descriptions.Item label="Model Code">{crmCustomerVehicleData?.vehicleDetails?.modelCode}</Descriptions.Item>
                                         </Descriptions>
                                     </>
                                 )}

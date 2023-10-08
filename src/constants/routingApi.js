@@ -287,6 +287,7 @@ export const BASE_URL_INVOICE_DETAIL = BASE_URL_OTF + 'vehicleinvoice/details';
 export const BASE_URL_VEHICLE_INVOICE_DETAIL = BASE_URL_OTF + 'vehicleinvoice/vehicledetails';
 
 export const BASE_URL_VEHICLE_DETAILS_SERVICE = BASE_URL + 'otf/vehicledetails/optionalcharges';
+export const BASE_URL_VEHICLE_CUSTOMER_CRM_DETAILS = BASE_URL + 'otf/vehiclecustomer/details';
 
 export const BASE_URL_ON_ROAD_PRICE_MASTER_SEARCH = BASE_URL + 'vehicle/onroad/pricemaster/search';
 

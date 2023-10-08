@@ -77,10 +77,12 @@ export const AddRequestModalForm = (props) => {
                     </Button>
                 </Col> */}
 
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.alignRight}>
+                <Col xs={24} m={12} md={12} lg={12} xl={12} xxl={12} className={styles.alignRight}>
                     <Button onClick={onAdvanceSearchCloseAction} danger>
                         Cancel
                     </Button>
+                </Col>
+                <Col xs={24} m={12} md={12} lg={12} xl={12} xxl={12}>
                     <Button htmlType="submit" type="primary">
                         Add
                     </Button>

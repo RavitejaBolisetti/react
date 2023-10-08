@@ -48,7 +48,7 @@ import { OTFSoMapping } from './otfSoMappingUnmapping';
 import { OTFBlockMaster } from './otfBlockMaster';
 import { VehicleDeliveryNote } from './vehicleDeliveryNote';
 import { DealerBlockMaster } from './dealerBlockMaster';
-
+import { CRMCustomerVehicle } from './crmCustomerVehicle';
 import { stockTransferIndentData } from './stockTransferIndent';
 import { ChargerInstallation } from './chargerInstallation';
 export const data = combineReducers({
@@ -85,7 +85,6 @@ export const data = combineReducers({
     ManufacturerOrg,
     VehicleReceipt,
     VehiclePriceMaster,
-    Receipt,
     VehicleModelandTaxChargesCategory,
     Report,
     VehicleReceiptChecklist,
@@ -99,4 +98,5 @@ export const data = combineReducers({
     VehicleDeliveryNote,
     DealerBlockMaster,
     ChargerInstallation,
+    CRMCustomerVehicle,
 });
