@@ -65,7 +65,6 @@ export const data = combineReducers({
     ApplicationMaster,
     QualificationMaster,
     UserManagement,
-    // UserManagementManufacturer,
     Geo,
     Sales,
     DealerManpower,

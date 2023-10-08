@@ -11,7 +11,6 @@ import { AddEditForm } from './AddEditForm';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { vehicleAddOnDetailDataActions } from 'store/actions/data/vehicleDeliveryNote/addOnDetails';
 import { relationshipManagerDataActions } from 'store/actions/data/vehicleDeliveryNote/relationshipManager';
 import { schemeDescriptionAmcDataActions, schemeDescriptionRsaDataActions, schemeDescriptionShieldDataActions } from 'store/actions/data/vehicleDeliveryNote';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -25,13 +24,9 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             VehicleDeliveryNote: {
-                AddOnDetails: { isLoaded: isDataLoaded = false, isLoading, data: AddonDetailsData = [] },
-                // SchemeDescription: { isLoaded: isSchemeDataLoaded = false, isSchemeLoading, data: schemeDescriptionData = [] },
-
                 SchemeDescriptionAmc: { isLoaded: isAmcLoaded = false, isLoading: isAmcLoading, data: schemeAmcData = [] },
                 SchemeDescriptionRsa: { isLoaded: isRsaLoaded = false, isLoading: isRsaLoading, data: schemeRsaData = [] },
                 SchemeDescriptionShield: { isLoaded: isShieldLoaded = false, isLoading: isShieldLoading, data: schemeShieldData = [] },
-
                 RelationshipManager: { isLoaded: isRelationshipManagerLoaded = false, isloading: isRelationshipManagerLoading, data: relationshipManagerData = [] },
             },
         },
@@ -41,12 +36,8 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         userId,
-        isDataLoaded,
-        isLoading,
         moduleTitle,
-        // AddonDetailsData,
         typeData,
-
         isAmcLoaded,
         schemeAmcData,
         isRsaLoaded,
