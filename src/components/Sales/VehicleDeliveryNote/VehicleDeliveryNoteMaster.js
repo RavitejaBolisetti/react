@@ -26,13 +26,10 @@ import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { VEHICLE_DELIVERY_NOTE_SECTION } from 'constants/vehicleDeliveryNoteSection';
 import { BASE_URL_VEHICLE_DELIVERY_NOTE_GENERATE as customURL, BASE_URL_VEHICLE_DELIVERY_NOTE_CHALLAN_GENERATE as customChallanURL, BASE_URL_VEHICE_DELIVERY_NOTE_MASTER_DATA, BASE_URL_VEHICE_DELIVERY_NOTE_CHALLAN_MASTER_DATA } from 'constants/routingApi';
 
-import { FilterIcon } from 'Icons';
 import VehicleDeliveryNoteFilter from './VehicleDeliveryNoteFilter';
 import { validateDeliveryNote } from 'components/Sales/VehicleDeliveryNote/utils/validateDeliveryNote';
 import { CancelDeliveryNote } from './CancelDeliveryNote';
 import { challanCancelVehicleDeliveryNoteDataActions } from 'store/actions/data/vehicleDeliveryNote/challanCancel';
-import { infoCancelVehicleDeliveryNoteDataActions } from 'store/actions/data/vehicleDeliveryNote/infoCancelDeliveryNote';
-import { infoChallanVehicleDeliveryNoteDataActions } from 'store/actions/data/vehicleDeliveryNote/infoChallanCancel';
 import { DeliverableChecklistMaindataActions } from 'store/actions/data/vehicleDeliveryNote';
 import { DELIVERY_TYPE } from 'constants/modules/vehicleDetailsNotes.js/deliveryType';
 
@@ -43,8 +40,6 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             VehicleDeliveryNote: {
                 VehicleDeliveryNoteSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString, isDetailLoaded: isDeliveryDataLoaded = false, detailData: deliveryNoteMasterData = [] },
-                CancelInfoDeliveryNote: { isLoaded: isCancelInfoDataLoaded = false, isLoading: isCancelInfoLoading, data: cancelInfo = {} },
-                CancelInfoChallanDeliveryNote: { isLoaded: isCancelChallanInfoDataLoaded = false, isLoading: isCancelChallanInfoLoading, data: cancelChallanInfo = {} },
             },
         },
     } = state;
@@ -59,14 +54,6 @@ const mapStateToProps = (state) => {
         isSearchLoading,
         isSearchDataLoaded,
         filterString,
-
-        isCancelInfoDataLoaded,
-        isCancelInfoLoading,
-        cancelInfo,
-
-        isCancelChallanInfoDataLoaded,
-        isCancelChallanInfoLoading,
-        cancelChallanInfo,
 
         deliveryNoteMasterData,
         isDeliveryDataLoaded,
@@ -89,14 +76,6 @@ const mapDispatchToProps = (dispatch) => ({
             cancelShowLoading: cancelVehicleDeliveryNoteDataActions.listShowLoading,
             cancelChallan: challanCancelVehicleDeliveryNoteDataActions.saveData,
 
-            fetchCancelInfoList: infoCancelVehicleDeliveryNoteDataActions.fetchList,
-            resetInfoData: infoCancelVehicleDeliveryNoteDataActions.reset,
-            listCancelInfoShowLoading: infoCancelVehicleDeliveryNoteDataActions.listShowLoading,
-
-            fetchChallanCancelInfoList: infoChallanVehicleDeliveryNoteDataActions.fetchList,
-            listChallanCancelInfoShowLoading: infoChallanVehicleDeliveryNoteDataActions.listShowLoading,
-            resetChallanInfoData: infoChallanVehicleDeliveryNoteDataActions.reset,
-
             resetCheckListData: DeliverableChecklistMaindataActions.reset,
 
             showGlobalNotification,
@@ -108,7 +87,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const VehicleDeliveryNoteMasterBase = (props) => {
     const { data, receiptDetailData, userId, resetData, fetchList, listShowLoading, saveData } = props;
     const { typeData, receiptType, partySegmentType, paymentModeType, documentType, moduleTitle, totalRecords, showGlobalNotification } = props;
-    const { filterString, setFilterString, deliveryStatusList, cancelDeliveryNote, cancelShowLoading, cancelChallan, isCancelInfoDataLoaded, isCancelInfoLoading, cancelInfo, fetchCancelInfoList, listCancelInfoShowLoading, isCancelChallanInfoDataLoaded, isCancelChallanInfoLoading, cancelChallanInfo, fetchChallanCancelInfoList, listChallanCancelInfoShowLoading, resetChallanInfoData, resetInfoData, resetCheckListData } = props;
+    const { filterString, setFilterString, deliveryStatusList, cancelDeliveryNote, cancelShowLoading, cancelChallan, resetCheckListData } = props;
     const { fetchDeliveryNoteMasterData, resetDeliveryNoteMasterData, deliveryNoteMasterData, isDeliveryDataLoaded } = props;
 
     const defaultRequestPayload = {
@@ -120,54 +99,35 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         customerDetails: {},
         vehicleDetails: {},
     };
-    const defaultchallanRequestPayload = {
-        deliveryNoteInvoiveDetails: {},
-        insuranceDto: {},
-        deliveryNoteAddOnDetails: {},
-        vehicleDeliveryCheckList: {},
-        customerDetails: {},
-        vehicleDetails: {},
-    };
-
-    const [requestPayload, setRequestPayload] = useState({ ...defaultRequestPayload });
-    const [challanRequestPayload, setChallanRequestPayload] = useState({ ...defaultchallanRequestPayload });
-    const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
-    const [deliveryStatus, setDeliveryStatus] = useState(QUERY_BUTTONS_CONSTANTS.PENDING.key);
-
-    const [listFilterForm] = Form.useForm();
-    const [cancelDeliveryNoteForm] = Form.useForm();
-
-    const [searchValue, setSearchValue] = useState('');
-    const [selectedOrder, setSelectedOrder] = useState();
-    const [selectedOrderId, setSelectedOrderId] = useState();
-    const [soldByDealer, setSoldByDealer] = useState();
-    const [selectedCustomerId, setSelectedCustomerId] = useState();
-
-    const [section, setSection] = useState();
-    const [defaultSection, setDefaultSection] = useState();
-    const [currentSection, setCurrentSection] = useState();
-    const [sectionName, setSetionName] = useState();
-    const [isLastSection, setLastSection] = useState(false);
-    const [retailMonth, setRetailMonth] = useState(false);
-    const [yesRetailMonth, setYesRetailMonth] = useState(false);
-
-    const [apportionList, setApportionList] = useState([]);
 
     const [form] = Form.useForm();
-
     const [searchForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
     const [invoiceDetailForm] = Form.useForm();
+    const [listFilterForm] = Form.useForm();
+    const [cancelDeliveryNoteForm] = Form.useForm();
 
+    const [requestPayload, setRequestPayload] = useState({ ...defaultRequestPayload });
+
+    const [selectedOrder, setSelectedOrder] = useState();
+    const [selectedOrderId, setSelectedOrderId] = useState();
+
+    const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
+
+    const [deliveryStatus, setDeliveryStatus] = useState(QUERY_BUTTONS_CONSTANTS.PENDING.key);
+
+    const [soldByDealer, setSoldByDealer] = useState();
+    const [selectedCustomerId, setSelectedCustomerId] = useState();
+
+    const [retailMonth, setRetailMonth] = useState(false);
+    const [yesRetailMonth, setYesRetailMonth] = useState(false);
+    const [apportionList, setApportionList] = useState([]);
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [cancelDeliveryNoteVisible, setCancelDeliveryNoteVisible] = useState(false);
     const [previousSection, setpreviousSection] = useState(1);
     const [actionButtonVisiblity, setActionButtonVisiblity] = useState({ canAdd: true, canView: false, canEdit: false });
-
     const [toolTipContent, setToolTipContent] = useState('');
-
-    const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const [selectedOtfNumber, setSelectedOtfNumber] = useState();
     const [customerIdValue, setCustomerIdValue] = useState();
     const [additionalReportParams, setAdditionalReportParams] = useState();
@@ -175,8 +135,13 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     const [chassisNoValue, setChassisNoValue] = useState();
     const [engineChallanNumber, setEngineChallanNumber] = useState('');
     const [deliveryType, setDeliveryType] = useState(DELIVERY_TYPE.NOTE.key);
+    const [page, setPage] = useState({ pageSize: 10, current: 1 });
 
-    const dynamicPagination = true;
+    const [section, setSection] = useState();
+    const [defaultSection, setDefaultSection] = useState();
+    const [currentSection, setCurrentSection] = useState();
+    const [sectionName, setSetionName] = useState();
+    const [isLastSection, setLastSection] = useState(false);
 
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -205,13 +170,9 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         setFilterString({});
         setFilterString((prev) => ({ ...prev, searchParam: '', current: 1 }));
         advanceFilterForm.resetFields();
-        searchForm.resetFields();
     };
 
     const onSuccessAction = () => {
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-        searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
-        searchForm.resetFields();
         setShowDataLoading(false);
     };
 
@@ -239,6 +200,19 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [deliveryNoteMasterData, isDeliveryDataLoaded]);
+
+    useEffect(() => {
+        return () => {
+            resetDeliveryNoteMasterData();
+            setFilterString();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        typeData && typeData?.[PARAM_MASTER.DLVR_SER.id]?.length && searchForm.setFieldsValue({ searchType: 'invoiceId' });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [typeData, typeData?.[PARAM_MASTER.DLVR_SER.id], deliveryStatus]);
 
     const extraParams = useMemo(() => {
         return [
@@ -361,45 +335,6 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // useEffect(() => {
-    //     if (userId && selectedOrder) {
-    //         if (soldByDealer) {
-    //             const cancelInfoExtraParams = [
-    //                 {
-    //                     key: 'invoiceNumber',
-    //                     title: 'invoiceNumber',
-    //                     value: selectedOrder?.invoiceId,
-    //                     name: 'Invoice Number',
-    //                 },
-    //                 {
-    //                     key: 'deliveryNoteNumber',
-    //                     title: 'deliveryNoteNumber',
-    //                     value: selectedOrder?.vehicleDeliveryNote,
-    //                     name: 'Delivery Note Number',
-    //                 },
-    //             ];
-    //             fetchCancelInfoList({ setIsLoading: listCancelInfoShowLoading, userId, extraParams: cancelInfoExtraParams });
-    //         } else {
-    //             const cancelChallanInfoExtraParams = [
-    //                 {
-    //                     key: 'invoiceNumber',
-    //                     title: 'invoiceNumber',
-    //                     value: selectedOrder?.invoiceId,
-    //                     name: 'Invoice Number',
-    //                 },
-    //                 {
-    //                     key: 'deliveryNoteId',
-    //                     title: 'deliveryNoteId',
-    //                     value: selectedOrder?.vehicleDeliveryNote,
-    //                     name: 'Delivery Note Number',
-    //                 },
-    //             ];
-    //             fetchChallanCancelInfoList({ setIsLoading: listChallanCancelInfoShowLoading, userId, extraParams: cancelChallanInfoExtraParams });
-    //         }
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [selectedOrder, formActionType?.viewMode, soldByDealer]);
-
     useEffect(() => {
         if (currentSection && sectionName) {
             const section = Object.values(sectionName)?.find((i) => i.id === currentSection);
@@ -415,7 +350,6 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
 
     const handleDeliveryNoteTypeChange = (buttonName) => {
         setDeliveryStatus(buttonName?.key);
-        searchForm.resetFields();
         switch (buttonName?.key) {
             case QUERY_BUTTONS_CONSTANTS?.PENDING?.key: {
                 setActionButtonVisiblity({ canAdd: true, canView: false, canEdit: false });
@@ -444,10 +378,6 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
                 value: selectedOrder?.vehicleDeliveryNote,
             },
         ]);
-    };
-
-    const handleChange = (e) => {
-        setSearchValue(e.target.value);
     };
 
     const handleSearch = (value) => {
@@ -524,7 +454,6 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
                 break;
             case NEXT_ACTION:
                 const nextSection = Object.values(sectionName)?.find((i) => validateDeliveryNote({ item: i, soldByDealer }) && i.id > currentSection);
-                // const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
                 if (nextSection?.id === VEHICLE_DELIVERY_NOTE_SECTION?.THANK_YOU_PAGE?.id && !formActionType?.addMode) {
                     return false;
                 }
@@ -625,8 +554,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
 
     const onCloseAction = () => {
         resetDeliveryNoteMasterData();
-        resetChallanInfoData();
-        resetInfoData();
+        resetCheckListData();
         form.resetFields();
         form.setFieldsValue();
         setSelectedOrderId();
@@ -644,11 +572,10 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         setIsFormVisible(false);
         setCancelDeliveryNoteVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
-        resetCheckListData();
     };
 
     const tableProps = {
-        dynamicPagination,
+        dynamicPagination: true,
         totalRecords,
         setPage,
         page,
@@ -656,6 +583,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         tableData: data,
         showAddButton: false,
         typeData,
+        filterString,
     };
 
     const onAdvanceSearchCloseAction = () => {
@@ -757,7 +685,6 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         handleResetFilter,
         advanceFilterForm,
         handleButtonClick,
-        handleChange,
         handleSearch,
         handleDeliveryNoteTypeChange,
 
@@ -775,7 +702,6 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         isVisible: isAdvanceSearchVisible,
         receiptType,
         partySegmentType,
-        // icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
@@ -819,8 +745,6 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     const payloadRequestProps = {
         requestPayload,
         setRequestPayload,
-        challanRequestPayload,
-        setChallanRequestPayload,
         deliveryType,
     };
 

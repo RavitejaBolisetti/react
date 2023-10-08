@@ -54,9 +54,11 @@ const VehicleDeliveryNoteCard = (props) => {
                             {invoiceType} No.: <span> {checkAndSetDefaultValue(selectedOrder?.vehicleDeliveryNote)}</span>
                         </div>
                         <Divider />
-                        <div className={styles.detailCardText}>
-                            Mobile No.: <span> {checkAndSetDefaultValue(selectedOrder?.mobileNumber)}</span>
-                        </div>
+                        {selectedOrder?.mobileNumber && (
+                            <div className={styles.detailCardText}>
+                                Mobile No.: <span> {checkAndSetDefaultValue(selectedOrder?.mobileNumber)}</span>
+                            </div>
+                        )}
                     </>
                 }
                 key={1}

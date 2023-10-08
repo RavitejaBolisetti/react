@@ -90,7 +90,7 @@ const AddEditFormMain = (props) => {
                 if (formData === undefined) {
                     return false;
                 } else {
-                    if (formData[dataKey] === undefined || !formData[dataKey]) {
+                    if (formData?.[dataKey] === undefined || !formData?.[dataKey]) {
                         return false;
                     }
                 }

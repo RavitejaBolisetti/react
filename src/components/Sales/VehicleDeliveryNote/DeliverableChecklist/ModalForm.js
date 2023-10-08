@@ -20,7 +20,7 @@ export const ChecklistModalForms = (props) => {
     const { AdvanceformData, setAdvanceformData, isReadonly = true } = props;
     const { onCloseAction, handleFormValueChange, checkListDataModified, setcheckListDataModified, aggregateForm, setRequestPayload, selectedOrder } = props;
     const { setAdvanceSearchVisible } = props;
-    const { isVisible, setisEditing } = props;
+    const { isVisible, setisEditing, setPage, defaultPage } = props;
     const [saveDisabled, setsaveDisabled] = useState(true);
 
     const disabledProps = { disabled: true };
@@ -51,6 +51,7 @@ export const ChecklistModalForms = (props) => {
                 handleFormValueChange();
                 setisEditing(false);
                 setAdvanceformData();
+                setPage((prev) => ({ ...defaultPage, current: prev?.current }));
             })
             .catch((err) => {});
     };

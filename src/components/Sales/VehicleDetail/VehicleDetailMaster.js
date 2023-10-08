@@ -181,13 +181,13 @@ export const VehicleDetailMasterBase = (props) => {
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: page?.pageSize,
+                value: filterString?.pageSize || page?.pageSize,
                 canRemove: true,
             },
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: page?.current,
+                value: filterString?.current || page?.current,
                 canRemove: true,
             },
             {
@@ -348,6 +348,7 @@ export const VehicleDetailMasterBase = (props) => {
         showAddButton: false,
         handleButtonClick,
         noMessge: LANGUAGE_EN.GENERAL.LIST_NO_DATA_FOUND.TITLE,
+        filterString,
     };
 
     const removeFilter = (key) => {
