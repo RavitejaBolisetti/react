@@ -577,7 +577,7 @@ const UserManagementMain = (props) => {
                                                     <Select className={styles.marR20} style={{ width: '60%' }} onChange={handleDealerChange} optionFilterProp="children" placeholder="Select dealer" showSearch allowClear>
                                                         {dealerDataList?.map((item) => (
                                                             <Option key={item?.dealerCode} value={item?.dealerCode}>
-                                                                {item?.dealerName}
+                                                                {item?.dealerCode +' - '+ item?.dealerName}
                                                             </Option>
                                                         ))}
                                                     </Select>
