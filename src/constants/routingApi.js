@@ -343,7 +343,9 @@ export const BASE_URL_EVR_DETAILS_CAPTURING_DETAIL = BASE_URL_VEHICLE + 'evr/det
 export const BASE_URL_VEHICE_DELIVERY_NOTE_MASTER_DATA = BASE_URL_OTF + 'deliverynote/dealer/detail';
 export const BASE_URL_VEHICE_DELIVERY_NOTE_CHALLAN_MASTER_DATA = BASE_URL_OTF + 'delivery/challan/detail';
 
-export const BASE_URL_GST_LOGIN = BASE_URL + '/v1/gstirnauthentication/authenticate';
+export const BASE_URL_GST_LOGIN = BASE_URL + 'finance/gstirnauthentication/login';
+export const BASE_URL_RSM_ASM_APPROVAL_SEARCH = BASE_URL_INVOICE + 'invoicedeliverynote/cancellation/approval/search';
+export const BASE_URL_APPROVAL_CANCEL_REQUEST_URL = BASE_URL_DELIVERY_NOTE_INVOICE_CANCELLATION + '/approval';
 
 export const BASE_URL_DEALER_BRANCH_ACCESS = BASE_URL_DEALER_MANPOWER + '/parent/locations';
 export const BASE_URL_DEALER_GST = BASE_URL_DEALER_MANPOWER + '/parent/gstin/lov';

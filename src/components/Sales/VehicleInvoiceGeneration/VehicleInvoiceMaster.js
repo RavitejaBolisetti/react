@@ -99,7 +99,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VehicleInvoiceMasterBase = (props) => {
-    const { data, receiptDetailData, userId, irnGeneration, fetchList, listShowLoading, showGlobalNotification, fetchInvoiceMasterData } = props;
+    const { data, receiptDetailData, userId, fetchList, listShowLoading, showGlobalNotification, fetchInvoiceMasterData } = props;
     const { isVehicleInvoiceDataLoading, listDetailShowLoading } = props;
     const { typeData, receiptType, partySegmentType, saveData, paymentModeType, documentType, moduleTitle, totalRecords } = props;
     const { filterString, setFilterString, invoiceStatusList, otfData, vehicleInvoiceMasterData, resetDetailData, resetOtfData } = props;
@@ -420,18 +420,16 @@ export const VehicleInvoiceMasterBase = (props) => {
             setConfirmRequest(false);
             resetOtfData();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             const extraParam = [
                 {
-                    key: 'otfNumber',
-                    title: 'otfNumber',
-                    value: selectedOtfNumber,
-                    name: 'Booking Number',
+                    key: 'invoiceId',
+                    value: selectedOrder?.id,
+                    name: 'Invoice Id',
                 },
                 {
-                    key: 'invoiceId',
-                    value: selectedRecordId,
-                    name: 'Invoice Id',
+                    key: 'otfId',
+                    value: selectedOrder?.otfId,
+                    name: 'OTF Number',
                 },
             ];
 
@@ -458,7 +456,7 @@ export const VehicleInvoiceMasterBase = (props) => {
             onError,
             onSuccess,
         };
-        irnGeneration(requestData);
+        saveData(requestData);
     };
 
     const handleInvoiceTypeChange = (buttonName) => {

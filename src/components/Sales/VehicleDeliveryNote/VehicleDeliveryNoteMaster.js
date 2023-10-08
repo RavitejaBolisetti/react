@@ -117,7 +117,6 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         financeDetails: {},
         insuranceDetails: {},
         vehicleDeliveryCheckList: {},
-        vehicleInformationDeliveyNoteDto: {},
         customerDetails: {},
         vehicleDetails: {},
     };
@@ -339,10 +338,9 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
 
     useEffect(() => {
         if (deliveryNoteMasterData && typeof deliveryNoteMasterData === 'object' && Object?.keys(deliveryNoteMasterData)?.length && isDeliveryDataLoaded) {
-            deliveryType === DELIVERY_TYPE.NOTE.key ? setRequestPayload((prev) => ({ ...prev, ...deliveryNoteMasterData })) : setChallanRequestPayload((prev) => ({ ...prev, ...deliveryNoteMasterData }));
+            setRequestPayload((prev) => ({ ...prev, ...deliveryNoteMasterData }));
         } else {
             setRequestPayload({ ...defaultRequestPayload });
-            setChallanRequestPayload({ ...defaultchallanRequestPayload });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [deliveryNoteMasterData, isDeliveryDataLoaded]);
@@ -492,6 +490,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     };
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
+        console.log('record', record);
         form.resetFields();
         form.setFieldsValue(undefined);
         switch (buttonAction) {
@@ -526,6 +525,9 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
             case NEXT_ACTION:
                 const nextSection = Object.values(sectionName)?.find((i) => validateDeliveryNote({ item: i, soldByDealer }) && i.id > currentSection);
                 // const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
+                if (nextSection?.id === VEHICLE_DELIVERY_NOTE_SECTION?.THANK_YOU_PAGE?.id && !formActionType?.addMode) {
+                    return false;
+                }
                 section && setCurrentSection(nextSection?.id);
                 setLastSection(!nextSection?.id);
                 break;
@@ -567,31 +569,6 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         advanceFilterForm.resetFields();
     };
 
-    const onFinishChallan = () => {
-        const data = { ...requestPayload, ...requestPayload?.deliveryNoteInvoiveDetails, invoiceNumber: selectedOrderId, customerId: customerIdValue };
-        const onSuccess = (res) => {
-            form.resetFields();
-            setShowDataLoading(true);
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
-            setButtonData({ ...buttonData, formBtnActive: false });
-            section && setCurrentSection(VEHICLE_DELIVERY_NOTE_SECTION.THANK_YOU_PAGE.id);
-            setSelectedOrder((prev) => ({ ...prev, responseMessage: res?.responseMessage }));
-        };
-        const onError = (message) => {
-            showGlobalNotification({ message });
-        };
-        const requestData = {
-            data: data,
-            method: 'post',
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-            customURL: customChallanURL,
-        };
-        saveData(requestData);
-    };
-
     const onFinish = () => {
         if (!Object.keys(requestPayload)?.length) {
             return;
@@ -605,20 +582,22 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
                 break;
             }
             case DELIVERY_TYPE.CHALLAN.key: {
-                finalPayload = { chassisNumber: requestPayload?.deliveryNoteInvoiveDetails?.chassisNumber, engineNumber: requestPayload?.deliveryNoteInvoiveDetails?.engineNumber, vin: requestPayload?.vehicleDetails?.vinNumber, modelCode: requestPayload?.vehicleDetails?.modelCode, insuranceDto, vehicleDeliveryChecklist, invoiceNumber: selectedOrder?.invoicehdrId, customerId: customerIdValue };
+                finalPayload = { chassisNumber: requestPayload?.deliveryNoteInvoiveDetails?.chassisNumber, engineNumber: requestPayload?.deliveryNoteInvoiveDetails?.engineNumber, vin: requestPayload?.vehicleDetails?.vinNumber, modelCode: requestPayload?.vehicleDetails?.modelCode, insuranceDto, vehicleDeliveryChecklist, invoiceNumber: selectedOrder?.invoicehdrId, customerId: requestPayload?.customerDetails?.customerId };
                 break;
             }
             default: {
                 finalPayload = { ...rest, insuranceDto, vehicleDeliveryChecklist, invoiceNumber: selectedOrder?.invoicehdrId };
             }
         }
-        console.log('finalPayload', finalPayload);
+        // console.log('finalPayload', finalPayload);
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             setButtonData({ ...buttonData, formBtnActive: false });
-            setSelectedOrder((prev) => ({ ...prev, responseMessage: res?.responseMessage }));
+            const messageList = res?.responseMessage?.split(' ');
+            const Number = soldByDealer ? res?.responseMessage?.split('. ')?.[1] : messageList[messageList?.length - 1];
+            setSelectedOrder((prev) => ({ ...prev, responseMessage: res?.responseMessage, vehicleDeliveryNote: Number, deliveryNoteDate: dayjs()?.format(dateFormatView) }));
             section && setCurrentSection(VEHICLE_DELIVERY_NOTE_SECTION.THANK_YOU_PAGE.id);
         };
         const onError = (message) => {
@@ -699,11 +678,24 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         }
     };
 
+    const handleCancelCheck = (soldByDealer) => {
+        if (soldByDealer) {
+            if (dayjs()?.isSame(selectedOrder?.deliveryNoteDate, 'year')) {
+                setRetailMonth(dayjs()?.isSame(selectedOrder?.deliveryNoteDate, 'month'));
+                setYesRetailMonth(true);
+            } else {
+                setRetailMonth(false);
+                setYesRetailMonth(false);
+            }
+        } else {
+            setRetailMonth(false);
+            setYesRetailMonth(false);
+        }
+    };
+
     const onCancelDeliveryNote = () => {
         setCancelDeliveryNoteVisible(true);
-        const isSameMonth = dayjs(selectedOrder?.invoiceDate)?.isSame(selectedOrder?.deliveryNoteDate, 'month');
-        setRetailMonth(isSameMonth);
-        setYesRetailMonth(true);
+        handleCancelCheck(soldByDealer);
         cancelDeliveryNoteForm.resetFields();
     };
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ReceiptMaster } from 'components/Sales/Receipts/ReceiptMaster';
 import customRender from '@utils/test-utils';
-import { screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import createMockStore from '__mocks__/store';
 
@@ -9,9 +9,17 @@ afterEach(() => {
     jest.restoreAllMocks();
 });
 
+jest.mock('store/actions/data/receipt/receipt', () => ({
+    receiptDataActions: {},
+}));
+
+jest.mock('store/actions/data/receipt/cancelReceipt', () => ({
+    cancelReceiptDataActions: {},
+}));
+
 describe('Receipts Component', () => {
     it('should render Receipts master component UI', () => {
-        customRender(<ReceiptMaster sectionName={'party'} />);
+        customRender(<ReceiptMaster sectionName={'party'} setFilterString={jest.fn()} />);
 
         const openedBtn = screen.getByRole('button', { name: 'Opened' });
         fireEvent.click(openedBtn);
@@ -33,7 +41,7 @@ describe('Receipts Component', () => {
     });
 
     it('should render Receipts master component UI', () => {
-        customRender(<ReceiptMaster sectionName={'party'} />);
+        customRender(<ReceiptMaster sectionName={'party'} setFilterString={jest.fn()} />);
 
         const addBtn = screen.getByRole('button', { name: 'plus Add' });
         fireEvent.click(addBtn);
@@ -43,7 +51,7 @@ describe('Receipts Component', () => {
     });
 
     it('should click on available coulmnheader', () => {
-        customRender(<ReceiptMaster />);
+        customRender(<ReceiptMaster setFilterString={jest.fn()} />);
 
         const reciptNo = screen.getByRole('columnheader', { name: 'Receipt No.' });
         fireEvent.click(reciptNo);
@@ -58,7 +66,7 @@ describe('Receipts Component', () => {
         fireEvent.click(customerName);
     });
     it('reset button should work', () => {
-        customRender(<ReceiptMaster />);
+        customRender(<ReceiptMaster setFilterString={jest.fn()} />);
 
         const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
         fireEvent.click(advanceFilter);
@@ -67,7 +75,7 @@ describe('Receipts Component', () => {
     });
 
     it('test for closing the advance filter', () => {
-        customRender(<ReceiptMaster />);
+        customRender(<ReceiptMaster setFilterString={jest.fn()} />);
 
         const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
         fireEvent.click(advanceFilter);
@@ -86,7 +94,7 @@ describe('Receipts Component', () => {
         });
         customRender(
             <Provider store={mockStore}>
-                <ReceiptMaster />
+                <ReceiptMaster fetchList={jest.fn()} setFilterString={jest.fn()} />
             </Provider>
         );
 
@@ -108,7 +116,7 @@ describe('Receipts Component', () => {
         });
         customRender(
             <Provider store={mockStore}>
-                <ReceiptMaster />
+                <ReceiptMaster fetchList={jest.fn()} setFilterString={jest.fn()} />
             </Provider>
         );
 
@@ -116,5 +124,43 @@ describe('Receipts Component', () => {
         fireEvent.change(advanceFilter, { target: { value: 'Test' } });
         const removeFilter = screen.getByTestId('removeFilter');
         fireEvent.click(removeFilter);
+    });
+
+    it('test for apply button', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                Receipt: {
+                    ReceiptSearchList: { filter: { advanceFilter: 'Test', fromDate: '06/06/2022', key: 'searchParam' } },
+                },
+            },
+        });
+
+        const fetchList = jest.fn();
+
+        customRender(
+            <Provider store={mockStore}>
+                <ReceiptMaster fetchList={fetchList} setFilterString={jest.fn()} />
+            </Provider>
+        );
+
+        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        fireEvent.click(advanceFilter);
+
+        const fromDate = screen.getByRole('textbox', { name: 'Receipt From Date' });
+        fireEvent.click(fromDate);
+        const todayForFromDate = await screen.findByText('Today');
+        fireEvent.click(todayForFromDate);
+
+        const toDate = screen.getByRole('textbox', { name: 'Receipt To Date' });
+        fireEvent.click(toDate);
+        const todayToFromDate = await screen.findAllByText('Today');
+        fireEvent.click(todayToFromDate[1]);
+
+        const resetBtn = screen.getByRole('button', { name: /apply/i });
+        fireEvent.click(resetBtn);
+
+        fetchList.mock.calls[0][0].onSuccessAction();
+        fetchList.mock.calls[0][0].onErrorAction();
     });
 });

@@ -70,14 +70,15 @@ const saveDataCF = (state, action) => ({
     saveDataId: action.saveDataId,
 });
 
-const showDataLoadingCF = (state, action) => ({
+const showDetailDataLoadingCF = (state, action) => ({
     ...state,
-    isDetailDataLoading: action.isLoading,
+    isDetailLoading: action.isDetailLoading,
 });
 
 const resetDataCF = (state, action) => ({
     initialState,
 });
+
 const resetDetailDataCF = (state, action) => ({
     ...state,
     detailData: [],
@@ -107,12 +108,11 @@ export const crudDataReducer =
             case RECEIVE_CHANGE_HISTORY_DATA_LOADING_ACTION_CONSTANT:
                 return recieveChangeHistoryDataLoadingCF(state, action);
             case RECEIVE_DETAIL_DATA_LOADING_ACTION_CONSTANT:
-                return showDataLoadingCF(state, action);
+                return showDetailDataLoadingCF(state, action);
             case RESET_DATA_ACTION_CONSTANT:
                 return resetDataCF(state, action);
             case RESET_DETAIL_DATA_ACTION_CONSTANT:
                 return resetDetailDataCF(state, action);
-
             default:
                 return state;
         }

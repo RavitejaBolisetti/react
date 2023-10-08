@@ -25,6 +25,15 @@ jest.mock('store/actions/data/userAccess', () => ({
     userAccessMasterDataAction: {},
 }));
 
+jest.mock('store/actions/auth', () => ({
+    doLogoutAPI: {},
+    clearLocalStorageData: jest.fn(),
+}));
+
+jest.mock('store/actions/data/userAccess', () => ({
+    userAccessMasterDataAction: {},
+}));
+
 const props = {
     isLoading: true,
 
@@ -90,7 +99,6 @@ describe('Header Components', () => {
         });
 
         const yesLogout = screen.getByRole('button', { name: 'Yes, Logout' });
-
         fireEvent.click(yesLogout);
 
         await waitFor(() => {

@@ -77,78 +77,54 @@ const VehicleDetailsMasterBase = (props) => {
     const [toolTipContent, setToolTipContent] = useState();
 
     useEffect(() => {
-     
-            setToolTipContent(
-                <div>
-                    <p>
-                        Color - <span>{formData?.modelColor ?? 'Na'}</span>
-                    </p>
-                    <p>
-                        Seating - <span>{formData?.seatingCapacity ?? 'Na'}</span>
-                    </p>
-                    <p>
-                        Fuel - <span>{formData?.fuel ?? 'Na'}</span>
-                    </p>
-                    <p>
-                        Variant - <span>{formData?.varient ?? 'Na'}</span>
-                    </p>
-                    <p>
-                        Name - <span>{formData?.modelDescription ?? 'Na'}</span>
-                    </p>
-                </div>
-            );
+        setToolTipContent(
+            <div>
+                <p>
+                    Color - <span>{formData?.modelColor ?? 'Na'}</span>
+                </p>
+                <p>
+                    Seating - <span>{formData?.seatingCapacity ?? 'Na'}</span>
+                </p>
+                <p>
+                    Fuel - <span>{formData?.fuel ?? 'Na'}</span>
+                </p>
+                <p>
+                    Variant - <span>{formData?.varient ?? 'Na'}</span>
+                </p>
+                <p>
+                    Name - <span>{formData?.modelDescription ?? 'Na'}</span>
+                </p>
+            </div>
+        );
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
     useEffect(() => {
-        if (userId && selectedOrderId && selectedInvoiceId && soldByDealer) {
-            // const extraParams = [
-            //     {
-            //         key: 'invoicenumber',
-            //         title: 'invoicenumber',
-            //         value: selectedInvoiceId,
-            //         name: 'Invoice Number',
-            //     },
-            //     {
-            //         key: 'otfNumber',
-            //         title: 'otfNumber',
-            //         value: selectedOrderId,
-            //         name: 'Invoice Number',
-            //     },
-            // ];
-            // fetchList({ setIsLoading: listShowLoading, extraParams, userId, onErrorAction });
-        } else if (!soldByDealer && !formActionType?.viewMode) {
-            const extraParams = [
-                {
-                    key: 'chassisNumber',
-                    title: 'chassisNumber',
-                    value: requestPayload?.deliveryNoteInvoiveDetails?.chassisNumber,
-                    name: 'Chassis Number',
-                },
-                {
-                    key: 'engineNumber',
-                    title: 'engineNumber',
-                    value: requestPayload?.deliveryNoteInvoiveDetails?.engineNumber,
-                    name: 'Engine Number',
-                },
-            ];
+        if (!soldByDealer && !formActionType?.viewMode && userId) {
+            const chassi = requestPayload?.deliveryNoteInvoiveDetails?.chassisNumber;
+            const engineNo = requestPayload?.deliveryNoteInvoiveDetails?.engineNumber;
+            if (engineNo && chassi) {
+                const extraParams = [
+                    {
+                        key: 'chassisNumber',
+                        title: 'chassisNumber',
+                        value: chassi,
+                        name: 'Chassis Number',
+                    },
+                    {
+                        key: 'engineNumber',
+                        title: 'engineNumber',
+                        value: engineNo,
+                        name: 'Engine Number',
+                    },
+                ];
 
-            fetchChallanList({ setIsLoading: listChallanShowLoading, extraParams, userId, onErrorAction });
+                fetchChallanList({ setIsLoading: listChallanShowLoading, extraParams, userId, onErrorAction });
+            }
         }
-        // } else if (!soldByDealer && formActionType?.viewMode) {
-        //     const extraParams = [
-        //         {
-        //             key: 'chassisNumber',
-        //             title: 'chassisNumber',
-        //             value: chassisNoValue,
-        //             name: 'Chassis Number',
-        //         },
-        //     ];
 
-        //     fetchChallanList({ setIsLoading: listChallanShowLoading, extraParams, userId, onErrorAction });
-        // }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOrderId, selectedInvoiceId, soldByDealer, requestPayload?.deliveryNoteInvoiveDetails]);
+    }, [requestPayload, formActionType, soldByDealer, userId]);
 
     useEffect(() => {
         if (vehicleData) {

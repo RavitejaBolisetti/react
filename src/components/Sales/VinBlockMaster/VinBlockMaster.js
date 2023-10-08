@@ -12,7 +12,6 @@ import { tableColumn } from './tableColumn';
 import ListDataTable from 'utils/ListDataTable/ListDataTable';
 import { showGlobalNotification } from 'store/actions/notification';
 import { ViewDetail } from './ViewDetail';
-import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, CANCEL_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 import AdvanceVinBlockMasterFilter from './AdvanceVinBlockMasterFilter';
 
 import { vinBlockMasterAction } from 'store/actions/data/vehicle/vinBlockMasterAction';
@@ -68,26 +67,18 @@ const mapDispatchToProps = (dispatch) => ({
 export const VinBlockMasterBase = (props) => {
     const { filterString, setFilterString, saveData, userId, showGlobalNotification, fetchOnRoadViewPriceDetail } = props;
     const { typeData, fetchVinBlockList, listVinShowLoading } = props;
-    const { moduleTitle, vinData, totalRecords, fetchVinDetailList, listVinDetailsShowLoading,  } = props;
+    const { moduleTitle, vinData, totalRecords, fetchVinDetailList } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
     const [searchForm] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
-    const [refershData, setRefershData] = useState(false);
 
     const [formData, setFormData] = useState([]);
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [currentPage, setCurrentPage] = useState();
 
-    const [defaultSection, setDefaultSection] = useState();
-    const [selectedOrder, setSelectedOrder] = useState();
-    const [selectedOrderId, setSelectedOrderId] = useState();
-
-    const [currentSection, setCurrentSection] = useState();
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
-    const [isCancelVisible, setIsCancelVisible] = useState(false);
     const [vinInfo, setvinInfo] = useState();
     const [isLoading, showLoading] = useState(true);
 
@@ -100,7 +91,7 @@ export const VinBlockMasterBase = (props) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
-        setRefershData(false);
+        // setRefershData(false);
         setShowDataLoading(false);
     };
 
@@ -200,43 +191,11 @@ export const VinBlockMasterBase = (props) => {
     }, [formData]);
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
+        console.log('hadleclick');
         form.resetFields();
         showLoading(true);
         setFormData(record);
         setIsFormVisible(true);
-        if (buttonAction === 'edit') {
-            setCurrentPage('edit');
-        } else {
-            setCurrentPage('view');
-        }
-        switch (buttonAction) {
-            case ADD_ACTION:
-                defaultSection && setCurrentSection(defaultSection);
-                break;
-            case EDIT_ACTION:
-                setSelectedOrder(record);
-                record && setSelectedOrderId(record?.id);
-                openDefaultSection && setCurrentSection(defaultSection);
-                break;
-            case VIEW_ACTION:
-                setSelectedOrder(record);
-                record && setSelectedOrderId(record?.id);
-                defaultSection && setCurrentSection(defaultSection);
-                break;
-            case CANCEL_ACTION:
-                setIsCancelVisible(true);
-                break;
-            default:
-                break;
-        }
-        if (buttonAction !== NEXT_ACTION) {
-            setFormActionType({
-                addMode: buttonAction === ADD_ACTION,
-                editMode: buttonAction === EDIT_ACTION,
-                viewMode: buttonAction === VIEW_ACTION,
-            });
-            setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction, orderStatus: record?.status }));
-        }
     };
 
     const onCloseAction = () => {
@@ -273,7 +232,6 @@ export const VinBlockMasterBase = (props) => {
     const handleOnClick = () => {
         setButtonData({ ...defaultBtnVisiblity, saveAndNewBtn: false, cancelBtn: false, saveBtn: true });
         // setIsUploadFormVisible(true);
-
     };
 
     const handleSearch = (value) => {
@@ -290,7 +248,7 @@ export const VinBlockMasterBase = (props) => {
             setFilterString({ ...rest });
         }
     };
-    
+
     const title = 'Vin Block Master';
 
     const advanceFilterResultProps = {
@@ -334,7 +292,7 @@ export const VinBlockMasterBase = (props) => {
         handleButtonClick,
         userId,
         form,
-        NEXT_ACTION,
+        // NEXT_ACTION,
         isFormVisible,
         setIsFormVisible,
         showGlobalNotification,

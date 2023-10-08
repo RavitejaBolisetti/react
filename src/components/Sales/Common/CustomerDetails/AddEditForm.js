@@ -22,9 +22,20 @@ const AddEditFormBase = (props) => {
     useEffect(() => {
         if (formData) {
             form?.setFieldsValue({
-                bookingCustomer: { ...formData?.bookingCustomer, birthDate: formattedCalendarDate(formData?.bookingCustomer?.birthDate) },
-                billingCustomer: { ...formData?.billingCustomer, birthDate: formattedCalendarDate(formData?.billingCustomer?.birthDate), sameAsBookingCustomer: formData?.bookingCustomer?.sameAsBookingCustomer },
+                bookingCustomer: {
+                    ...formData?.bookingCustomer,
+                    birthDate: formattedCalendarDate(formData?.bookingCustomer?.birthDate),
+                },
+                billingCustomer: {
+                    ...formData?.billingCustomer,
+                    birthDate: formattedCalendarDate(formData?.billingCustomer?.birthDate),
+                    sameAsBookingCustomer: formData?.billingCustomer?.sameAsBookingCustomer,
+                },
             });
+
+            if (formData?.billingCustomer?.sameAsBookingCustomer) {
+                setSameAsBookingCustomer(true);
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData, selectedOrderId]);

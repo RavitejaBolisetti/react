@@ -17,7 +17,7 @@ const AddEditFormMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
-    const showFields = soldByDealer || (customerDetailsDataSearched && Object?.keys(customerDetailsDataSearched)?.length > 0);
+    const showFields = soldByDealer || (formData && Object?.keys(formData)?.length > 0 && formData?.customerType);
     return (
         <>
             <div className={styles.drawerCustomerMaster}>
