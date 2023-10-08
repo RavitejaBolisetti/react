@@ -188,7 +188,7 @@ const UserManagementMain = (props) => {
     const { fetchDealersList, rolelDealersListShowLoading, dealerDataList, isDealerListLoaded } = props;
     const { moduleTitle, productHierarchyData, showGlobalNotification, hideGlobalNotification } = props;
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
-    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, next: false, nextBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, formBtnActive: false };
+    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, next: false, nextBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
 
     const notFoundText = LANGUAGE_EN.GENERAL.USER_NOT_FOUND;
 
@@ -389,6 +389,7 @@ const UserManagementMain = (props) => {
     };
 
     const handleButtonClick = ({ buttonAction, record = null, openDefaultSection = true }) => {
+        console.log("🚀 ~ file: UserManagementMaster.js:392 ~ handleButtonClick ~ buttonAction:", buttonAction)
         switch (buttonAction) {
             case FROM_ACTION_TYPE?.ADD:
                 setFormActionType((prev) => ({ ...prev, viewMode: false, editMode: false, addMode: true }));

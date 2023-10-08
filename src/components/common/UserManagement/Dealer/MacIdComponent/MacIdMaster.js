@@ -90,7 +90,7 @@ const MacIdMasterMain = (props) => {
 
     useEffect(() => {
         if (userId) {
-            setButtonData((prev) => ({ ...prev, nextBtn: false, nextBtnWthPopMag: false, saveBtn: true, editBtn: formActionType?.viewMode }));
+            // setButtonData((prev) => ({ ...prev, nextBtn: false, nextBtnWthPopMag: false, saveBtn: true, editBtn: formActionType?.viewMode }));
             fetchMacIdList({ setIsLoading: listMacIdShowLoading, userId, extraParams, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

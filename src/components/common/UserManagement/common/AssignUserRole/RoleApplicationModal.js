@@ -15,6 +15,7 @@ import { customSelectBox } from 'utils/customSelectBox';
 
 import { ListSkeleton } from 'components/common/Skeleton';
 import styles from 'assets/sass/app.module.scss';
+import style from 'components/common/TreeView.module.scss';
 
 const RoleApplicationModalrMain = (props) => {
     const { form, formActionType, handleFormFieldChange, onFinishFailed, isLoading, roleListdata, handleSaveUserRoleAppliactions, handleCancelModal, handleSelectRole } = props;
@@ -29,6 +30,7 @@ const RoleApplicationModalrMain = (props) => {
         reset: true,
         submit: true,
         hideSaveBtn: formActionType?.viewMode,
+        // saveDisabled: false,
         saveDisabled: disableMdlSaveBtn,
         htmltype: false,
         resetName: 'Cancel',
@@ -49,17 +51,17 @@ const RoleApplicationModalrMain = (props) => {
                             </Col>
                         </Row>
                     </Form>
+                    {isLoading ? (
+                        <div className={styles.marB20}>
+                            <ListSkeleton count={4} height={30} />
+                        </div>
+                    ) : (
+                        <ApplicationTree {...props} setDisableMdlSaveBtn={setDisableMdlSaveBtn} />
+                    )}
+                    <div className={style.footerBorder} ></div>
+                    <ModalButtons {...modalBtnProps} />
                 </Col>
             </Row>
-            {isLoading ? (
-                <div className={styles.marB20}>
-                    <ListSkeleton count={4} height={30} />
-                </div>
-            ) : (
-                <ApplicationTree {...props} setDisableMdlSaveBtn={setDisableMdlSaveBtn} />
-            )}
-            <Divider/>
-            <ModalButtons {...modalBtnProps} />
         </>
     );
 };

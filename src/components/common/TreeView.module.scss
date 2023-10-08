@@ -289,3 +289,8 @@
     @include space(margin, bottom, $sp8);
     width: '100%';
 }
+
+.footerBorder {
+    margin-bottom: 10px;
+    border-block-start: 1px solid #e6e6e6;
+}

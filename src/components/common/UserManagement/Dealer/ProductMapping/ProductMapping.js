@@ -34,7 +34,7 @@ const ProductMapping = (props) => {
     const { productHierarchyData, userId, selectedRecord, formActionType, isProductHierarchyLoading, viewMode, section, setButtonData, fetchProductHierarchyList, productShowLoding } = props;
     const { userProductListData, fetchDealerProduct, dealerProductShowLoading, saveDealerProduct, showGlobalNotification } = props;
     const { isUserDlrProductListLoding, handleButtonClick } = props;
-    
+
     const [form] = Form.useForm();
     const [searchValue, setSearchValue] = useState();
     const [checkedKeys, setCheckedKeys] = useState([]);
@@ -71,7 +71,7 @@ const ProductMapping = (props) => {
 
     useEffect(() => {
         if (userId) {
-            setButtonData((prev) => ({ ...prev, nextBtn: false, saveBtn: true, editBtn: formActionType?.viewMode }));
+        // setButtonData((prev) => ({ ...prev, nextBtn: false, saveBtn: true, editBtn: formActionType?.viewMode }));
 
             if (!productHierarchyData?.length) {
                 fetchProductHierarchyList({ setIsLoading: productShowLoding, userId });
@@ -86,6 +86,7 @@ const ProductMapping = (props) => {
     };
 
     const onCheck = (checkedKeysValue) => {
+        if (formActionType?.viewMode) return;
         setButtonData((prev) => ({ ...prev, formBtnActive: true }));
         setCheckedKeys([...checkedKeysValue]);
         const mapSelectedKeyData = (data) => fnMapData({ data: data, fieldNames, checkedKeysValue });
