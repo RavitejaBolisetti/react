@@ -109,4 +109,36 @@ describe('Vehicle Delivery Note Master components', () => {
         const removeFilter = screen.getAllByTestId('removeFilter');
         fireEvent.click(removeFilter[0]);
     });
+
+    it('test1', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                VehicleDeliveryNote: {
+                    VehicleDeliveryNoteSearchList: { filter: { advanceFilter: 'Test', invoiceFromDate: '06/06/2022', invoiceToDate: '06/06/2022', deliveryNoteFromDate: '06/06/2022', deliveryNoteToDate: '06/06/2022', key: 'searchParam' } },
+                },
+            },
+        });
+        customRender(
+            <Provider store={mockStore}>
+                <VehicleDeliveryNoteMaster fetchList={jest.fn()} setFilterString={jest.fn()} />
+            </Provider>
+        );
+
+        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        fireEvent.click(advanceFilter);
+
+        const fromDate = screen.getByRole('textbox', { name: 'Invoice From Date' });
+        fireEvent.click(fromDate);
+        const todayForFromDate = await screen.findByText('Today');
+        fireEvent.click(todayForFromDate);
+
+        const toDate = screen.getByRole('textbox', { name: 'Invoice To Date' });
+        fireEvent.click(toDate);
+        const todayToFromDate = await screen.findAllByText('Today');
+        fireEvent.click(todayToFromDate[1]);
+
+        const resetBtn = screen.getByRole('button', { name: /apply/i });
+        fireEvent.click(resetBtn);
+    });
 });
