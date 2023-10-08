@@ -32,7 +32,7 @@ import { CancelDeliveryNote } from './CancelDeliveryNote';
 import { challanCancelVehicleDeliveryNoteDataActions } from 'store/actions/data/vehicleDeliveryNote/challanCancel';
 import { DeliverableChecklistMaindataActions } from 'store/actions/data/vehicleDeliveryNote';
 import { DELIVERY_TYPE } from 'constants/modules/vehicleDetailsNotes.js/deliveryType';
-
+import { FORMTYPE_CONSTANTS } from './DeliverableChecklist';
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -497,14 +497,24 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         setFilterString({});
         advanceFilterForm.resetFields();
     };
-
+    const findKeyValue = (key, data) => {
+        return data?.find((i) => i?.answerCode === key)?.answerDescription;
+    };
     const onFinish = () => {
         if (!Object.keys(requestPayload)?.length) {
             return;
         }
         let finalPayload = {};
-        const { insuranceDetails: insuranceDto, vehicleDeliveryCheckList: vehicleDeliveryChecklist, ...rest } = requestPayload;
-
+        const { insuranceDetails: insuranceDto, vehicleDeliveryCheckList, ...rest } = requestPayload;
+        const vehicleDeliveryChecklist = {
+            vin: vehicleDeliveryCheckList?.vin,
+            deliveryChecklistDtos: vehicleDeliveryCheckList?.deliveryChecklistDtos?.map((item) => {
+                if (item?.answerType === FORMTYPE_CONSTANTS?.FIXED?.id) {
+                    return { ...item, answerText: findKeyValue(item?.answerText, item?.checklistAnswerResponses) };
+                }
+                return { ...item };
+            }),
+        };
         switch (deliveryType) {
             case DELIVERY_TYPE.NOTE.key: {
                 finalPayload = { ...rest, insuranceDto, vehicleDeliveryChecklist, invoiceNumber: selectedOrder?.invoicehdrId };
