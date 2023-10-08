@@ -48,7 +48,7 @@ const AddEditFormMain = (props) => {
         if (formData) {
             form.setFieldsValue({
                 ...formData,
-                poDate: dayjs(formData?.poDate?.substr(0, 10)).format('DD/MM/YYYY'),
+                poDate: formData?.poDate ? dayjs(formData?.poDate?.substr(0, 10)).format('DD/MM/YYYY') : undefined,
                 vehicleUsageType: findUsageType(formData?.vehicleUsageType),
                 vehicleAllocatedStatus: getCodeValue(VEHICLE_TYPE, formData?.vehicleAllocatedStatus, 'title'),
             });
@@ -65,7 +65,7 @@ const AddEditFormMain = (props) => {
 
     const addContactHandeler = (e) => {
         optionForm.resetFields();
-        setOpenAccordian('3');
+        !activeKey.includes(3) && onChange(3);
         setIsReadOnly(true);
     };
 
@@ -135,7 +135,6 @@ const AddEditFormMain = (props) => {
         treeDisabled: viewOnly,
     };
 
-    // expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)}
     return (
         <>
             <Row gutter={20}>

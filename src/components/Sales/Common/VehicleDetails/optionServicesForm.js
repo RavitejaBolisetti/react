@@ -17,7 +17,7 @@ const OptionServicesFormMain = (props) => {
     useEffect(() => {
         if (optionalServices && optionalServices?.length) {
             const serviceNameList = optionalServices.map((i) => i.serviceName);
-            setUniqueServiceOptions(uniqueServiceOptions?.map((element) => ({ ...element, disabled: serviceNameList.includes(element.value) })));
+            setUniqueServiceOptions(uniqueServiceOptions?.map((element) => ({ ...element, disabled: serviceNameList.includes(element.chargeDescription) })));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [optionalServices]);
@@ -40,7 +40,7 @@ const OptionServicesFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8} xxl={8}>
                                 <Form.Item name="taxId" label="Service Name" rules={[validateRequiredSelectField('Service Name')]}>
-                                    <Select onChange={(value, selectedObj) => optionForm.setFieldsValue({ serviceName: selectedObj?.value })} options={uniqueServiceOptions} fieldNames={{ label: 'value', value: 'id' }} placeholder={preparePlaceholderSelect('Service Name')} allowClear />
+                                    <Select onChange={(value, selectedObj) => optionForm.setFieldsValue({ serviceName: selectedObj?.chargeDescription })} options={uniqueServiceOptions} fieldNames={{ label: 'chargeDescription', value: 'id' }} placeholder={preparePlaceholderSelect('Service Name')} allowClear />
                                 </Form.Item>
                                 <Form.Item hidden name="otfNumber" initialValue={selectedOrderId} />
                                 <Form.Item hidden name="otfId" initialValue={formData?.otfId ?? ''} />
