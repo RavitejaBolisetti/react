@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Descriptions, Typography } from 'antd';
+import { Descriptions, } from 'antd';
 import { ACCESSIBLE_LOCATION_INDICATOR } from 'constants/modules/applicationMaster';
 
 // import CardDocument from './CardDocument';
@@ -13,7 +13,7 @@ import { ACCESSIBLE_LOCATION_INDICATOR } from 'constants/modules/applicationMast
 
 // import { accordianExpandIcon } from 'utils/accordianExpandIcon';
 
-const { Text } = Typography;
+// const { Text } = Typography;
 // const { Panel } = Collapse;
 
 const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = 'Application Details', styles }) => {
@@ -42,15 +42,7 @@ const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = 'Applicatio
                     <Descriptions.Item label="Accessible Location">{ACCESSIBLE_LOCATION_INDICATOR[rest?.accessableIndicator] || 'NA'}</Descriptions.Item>
                     <Descriptions.Item label="IRN Integration">{rest?.irnIntegrationRequired ? 'Yes' : 'No'}</Descriptions.Item>
 
-                    {/* 
-                    <Descriptions.Item label="Application Title">{rest?.applicationTitle || 'NA'}</Descriptions.Item> 
-                    <Descriptions.Item label="Parent Application ID">{rest?.parentApplicationId || 'NA'}</Descriptions.Item>
-                    <Descriptions.Item label="Status">{rest?.status ? <Text type="success">Active</Text> : <Text>Inactive</Text>}</Descriptions.Item>
-                    <Descriptions.Item label="Application Criticality Group">{rest?.criticalityGroupName || 'NA'}</Descriptions.Item>
-                    <Descriptions.Item label="Document number to be generated">{rest?.documentNumRequired ? <Text type="success"> Yes </Text> : <Text>No</Text>}</Descriptions.Item>
-                    <Descriptions.Item label="T&C Required">{rest?.termAndConRequired ? <Text type="success"> Yes </Text> : <Text>No</Text>}</Descriptions.Item>
-                    <Descriptions.Item label="Digital Signature Required">{rest?.digitalSignatureRequired ? <Text type="success"> Yes </Text> : <Text>No</Text>}</Descriptions.Item>
-                    <Descriptions.Item label="Is Finance Related">{rest?.isFinanceRelated ? <Text type="success"> Yes </Text> : <Text>No</Text>}</Descriptions.Item> */}
+                                        
                 </Descriptions>
             </div>
         </>

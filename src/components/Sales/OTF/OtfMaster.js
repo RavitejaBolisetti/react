@@ -512,11 +512,15 @@ export const OtfMasterBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
+    const setPage = (page) => {
+        setFilterString({ ...filterString, ...page });
+    };
+
     const tableProps = {
         dynamicPagination,
         filterString,
         totalRecords,
-        setPage: setFilterString,
+        setPage: setPage,
         isLoading: showDataLoading,
         tableColumn: tableColumn(handleButtonClick),
         tableData: data,

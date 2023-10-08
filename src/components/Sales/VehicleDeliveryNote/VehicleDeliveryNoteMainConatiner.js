@@ -19,13 +19,12 @@ import { FinananceDetailsMaster } from './FinananceDetails';
 import { AddOnDetailsMaster } from './AddOnDetails';
 import { DeliverableChecklistMaster } from './DeliverableChecklist';
 import { VehicleDeliveryNoteFormButton } from './VehicleDeliveryNoteFormButton';
-import { DELIVERY_TYPE } from 'constants/modules/vehicleDetailsNotes.js/deliveryType';
 import { ThankYouMaster } from './ThankYou';
 import styles from 'assets/sass/app.module.scss';
 
 const VehicleDeliveryNoteConatinerMain = (props) => {
     const { currentSection, selectedOtfNumber, selectedOrderId, soldByDealer } = props;
-    const { requestPayload, setRequestPayload, challanRequestPayload, deliveryType } = props;
+    const { requestPayload, setRequestPayload } = props;
 
     const onFinishCustom = ({ key, values }) => {
         setRequestPayload({ ...requestPayload, [key]: values });

@@ -165,10 +165,10 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.buttonsGroup}>
                     {addButtonDisabled?.partDetailsResponses ? (
                         <>
-                            <Button disabled={isBtnDisabled} onClick={handleAccesoriesForm} type="primary">
+                            <Button  disabled={isBtnDisabled} onClick={handleAccesoriesForm} type="primary">
                                 Add
                             </Button>
-                            <Button danger onClick={onCancel}>
+                            <Button  danger onClick={onCancel}>
                                 Cancel
                             </Button>
                         </>

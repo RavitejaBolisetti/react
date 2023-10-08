@@ -64,6 +64,9 @@ const DeliverableChecklistMain = (props) => {
     const [AdvanceformData, setAdvanceformData] = useState([]);
     const [isEditing, setisEditing] = useState();
     const [checkListDataModified, setcheckListDataModified] = useState([]);
+    const defaultPage = { pageSize: 10, current: 1 };
+    const [page, setPage] = useState({});
+
     const onSuccessAction = (res) => {
         // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
@@ -85,6 +88,12 @@ const DeliverableChecklistMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrder, isChecklistDataLoaded, formActionType]);
+    useEffect(() => {
+        const newArr = requestPayload?.vehicleDeliveryCheckList?.deliveryChecklistDtos;
+        newArr?.filter((i) => i?.ismodified)?.length > 0 && handleFormValueChange();
+        setPage({ ...defaultPage });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         if (isChecklistDataLoaded && ChecklistData?.length > 0 && !formActionType?.viewMode) {
@@ -129,6 +138,10 @@ const DeliverableChecklistMain = (props) => {
         tableColumn: tableColumn({ handleButtonClick: handleCheckListClick, formActionType }),
         tableData: checkListDataModified,
         showAddButton: false,
+        setPage,
+        page,
+        dynamicPagination: true,
+        totalRecords: checkListDataModified?.length,
     };
 
     const formProps = {
@@ -150,6 +163,8 @@ const DeliverableChecklistMain = (props) => {
         setisEditing,
         requestPayload,
         setRequestPayload,
+        setPage,
+        defaultPage,
     };
 
     const viewProps = {

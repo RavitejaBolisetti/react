@@ -28,6 +28,7 @@ import VehicleTrackingPage from './VehicleTracking';
 import OtfSoMappingUnmappingMasterPage from './OtfSoMappingUnmapping';
 import StockTransferIndentMasterPage from './StockTransferIndent';
 import VehicleDeliveryNoteMasterPage from './VehicleDeliveryNote';
+import CrmScreenEnrolmentMasterPage from './crmScreenEnrolment';
 import EvrDetailsCapturingMasterPage from './EvrDetailsCapturing';
 import VinBlockMasterPage from './VinBlockMaster';
 import VehicleChecklistMasterPage from './VehicleChecklistMaster';
@@ -55,6 +56,7 @@ export {
     OtfSoMappingUnmappingMasterPage,
     StockTransferIndentMasterPage,
     VehicleDeliveryNoteMasterPage,
+    CrmScreenEnrolmentMasterPage,
     EvrDetailsCapturingMasterPage,
     VinBlockMasterPage,
     VehicleChecklistMasterPage,

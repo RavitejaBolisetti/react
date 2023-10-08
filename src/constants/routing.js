@@ -102,6 +102,7 @@ export const ROUTING_RECEIPTS = ROUTING_SALES.concat('receipts');
 export const ROUTING_OTF_SO_MAPPING_CONTROL_MASTER = ROUTING_SALES.concat('booking-so-mapping-control-master');
 export const ROUTING_OTF_BLOCK_MASTER = ROUTING_SALES.concat('booking-block-master');
 export const ROUTING_VEHICLE_CHECKLIST_MASTER = ROUTING_SALES.concat('vehicle-checklist-master');
+export const ROUTING_CRM_SCHEME_ENROLMENT = ROUTING_SALES.concat('crm-scheme-enrolment');
 
 export const ROUTING_FINANCIAL_ACCOUNTING_TAX_CHARGES = ROUTING_FINANCIAL_ACCOUNTING.concat('tax-charges');
 export const ROUTING_FINANCIAL_ACCOUNTING_TAX_CHARGES_CATEGORY = ROUTING_FINANCIAL_ACCOUNTING.concat('tax-charges-category');

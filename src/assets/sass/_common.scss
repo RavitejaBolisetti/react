@@ -258,7 +258,10 @@
         }
     }
 }
-
+.cardDark{
+    background: $neutralGrey1 !important;
+    border: 1px solid $neutralGrey2 !important;
+}
 /*--------------Text Ellipsis--------------*/
 .txtEllipsis {
     white-space: nowrap;

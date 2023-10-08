@@ -86,12 +86,14 @@ export const CustomerDetailsMasterBase = (props) => {
 
     useEffect(() => {
         if (customerDetailsData?.customerType) setButtonData({ ...buttonData, formBtnActive: true });
+        else {
+            setButtonData({ ...buttonData, formBtnActive: false });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [section]);
 
     const handleOnChange = (e) => {
         form.resetFields([...resetKeys]);
-        // setChallanRequestPayload({ ...requestPayload, customerDetails: {} });
         setRequestPayload({ ...requestPayload, customerDetails: {} });
         setSelectedOrder((prev) => ({ ...prev, customerName: '', customerId: '' }));
         setButtonData({ ...buttonData, formBtnActive: false });
@@ -104,7 +106,6 @@ export const CustomerDetailsMasterBase = (props) => {
             return false;
         }
         const onSuccessAction = (res) => {
-            // setChallanRequestPayload({ ...requestPayload, customerDetails: res?.data });
             setRequestPayload({ ...requestPayload, customerDetails: res?.data });
             setSelectedOrder((prev) => ({ ...prev, customerName: res?.data?.customerName, customerId: res?.data?.customerId }));
             setButtonData({ ...buttonData, formBtnActive: true });

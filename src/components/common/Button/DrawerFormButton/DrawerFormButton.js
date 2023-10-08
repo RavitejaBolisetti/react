@@ -27,6 +27,11 @@ const DrawerButtons = ({ formData, onCloseAction, buttonData, setButtonData, sav
             </Col>
 
             <Col xs={24} sm={18} md={18} lg={18} xl={18} className={styles.buttonsGroupRight}>
+                {buttonData?.printDownloadBtn && (
+                    <Button danger onClick={onCloseAction}>
+                        Print/Download
+                    </Button>
+                )}
                 {buttonData?.saveBtn && (
                     <Button loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
                         {saveButtonName}

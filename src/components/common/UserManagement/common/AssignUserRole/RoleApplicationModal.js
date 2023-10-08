@@ -13,15 +13,16 @@ import { withModal } from 'components/withModal';
 import { ModalButtons } from 'components/common/Button';
 import { customSelectBox } from 'utils/customSelectBox';
 
-import { ListSkeleton } from 'components/common/Skeleton';
+import { InputSkeleton } from 'components/common/Skeleton';
 import styles from 'assets/sass/app.module.scss';
+import style from 'components/common/TreeView.module.scss';
 
 const RoleApplicationModalrMain = (props) => {
     const { form, formActionType, handleFormFieldChange, onFinishFailed, isLoading, roleListdata, handleSaveUserRoleAppliactions, handleCancelModal, handleSelectRole } = props;
     const { dlrAppList, mnmAppList, selectedRoleId, userRoleDataList, disableMdlSaveBtn, setDisableMdlSaveBtn, record } = props;
 
     useEffect(() => {
-        selectedRoleId || record?.roleId ? form.setFieldsValue({ roleId: selectedRoleId || record?.roleId }) : form.setFieldsValue({ roleId: '' });
+        (selectedRoleId || record?.roleId) && form.setFieldsValue({ roleId: selectedRoleId || record?.roleId });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [mnmAppList, dlrAppList]);
 
@@ -29,6 +30,7 @@ const RoleApplicationModalrMain = (props) => {
         reset: true,
         submit: true,
         hideSaveBtn: formActionType?.viewMode,
+        // saveDisabled: false,
         saveDisabled: disableMdlSaveBtn,
         htmltype: false,
         resetName: 'Cancel',
@@ -49,17 +51,17 @@ const RoleApplicationModalrMain = (props) => {
                             </Col>
                         </Row>
                     </Form>
+                    {isLoading ? (
+                        <div className={styles.marB20}>
+                            <InputSkeleton width={300} height={25} count={6} />
+                        </div>
+                    ) : (
+                        <ApplicationTree {...props} setDisableMdlSaveBtn={setDisableMdlSaveBtn} />
+                    )}
+                    <div className={style.footerBorder} ></div>
+                    <ModalButtons {...modalBtnProps} />
                 </Col>
             </Row>
-            {isLoading ? (
-                <div className={styles.marB20}>
-                    <ListSkeleton count={4} height={30} />
-                </div>
-            ) : (
-                <ApplicationTree {...props} setDisableMdlSaveBtn={setDisableMdlSaveBtn} />
-            )}
-
-            <ModalButtons {...modalBtnProps} />
         </>
     );
 };

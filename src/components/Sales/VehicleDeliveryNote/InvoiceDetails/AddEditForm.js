@@ -6,8 +6,6 @@
 import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 
-
-
 import { Col, Input, Form, Row, Card, DatePicker, Space, AutoComplete, Select } from 'antd';
 
 import { disableFutureDate, disableFieldsOnFutureDate } from 'utils/disableDate';
@@ -21,17 +19,8 @@ import { debounce } from 'utils/debounce';
 
 const { TextArea } = Input;
 const AddEditFormMain = (props) => {
-    const { formData, relationshipManagerData, typeData, form, soldByDealer, handleChassisNoSearch, handleOnChange, chassisNoValue, fetchEngineNumber, listEngineNumberShowLoading, engineNumberData, userId, handleRelationShipManagerChange, setButtonData } = props;
+    const { formData, relationshipManagerData, typeData, form, soldByDealer, handleRelationShipManagerChange, setButtonData } = props;
     const { vinData } = props;
-
-    useEffect(() => {
-        if (engineNumberData) {
-            form.setFieldsValue({
-                engineNumber: engineNumberData?.engineNumber,
-            });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [engineNumberData]);
 
     const handleSelectVinNo = (value, ValueObj) => {
         if (value && ValueObj?.engineNumber) {
@@ -72,9 +61,6 @@ const AddEditFormMain = (props) => {
                                     {!soldByDealer && (
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                             <Form.Item initialValue={formData?.chassisNumber} label="Chassis No." name="chassisNumber">
-                                                {/* <AutoComplete fieldNames={fieldNames} label="Chasiss No" options={vinData} backfill={false} onSelect={handleSelectVinNo} onSearch={debounce(handleChassisNoSearch, 400)} allowSearch>
-                                                    <Input.Search size="large" allowClear placeholder={preparePlaceholderAutoComplete('')} />
-                                                </AutoComplete> */}
                                                 <Select showSearch options={(vinData?.length && vinData) || []} fieldNames={{ label: 'chassisNumber', value: 'chassisNumber' }} placeholder={preparePlaceholderSelect('chassisNumber')} onSelect={(value, valueObj) => handleSelectVinNo(value, valueObj)} optionFilterProp="chassisNumber" />
                                             </Form.Item>
                                         </Col>

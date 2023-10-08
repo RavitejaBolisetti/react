@@ -67,7 +67,7 @@ const ViewDetailMain = (props) => {
                                 {formData?.batteryDetail?.length ? (
                                     formData?.batteryDetail?.map((battery) => (
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Card className={styles.cardView} battery={battery} {...props}>
+                                            <Card className={`${styles.cardView} ${styles.cardDark}`} battery={battery} {...props}>
                                                 <Text>{battery?.batteryMake}</Text>
                                                 <div>
                                                     <Text type="secondary">{battery?.batteryName}</Text>

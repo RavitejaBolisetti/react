@@ -13,7 +13,7 @@ import { doLogoutAPI } from '../store/actions/auth';
 import { bindActionCreators } from 'redux';
 
 import styles from './withSpinner.module.scss';
-
+import style from './../App.module.scss';
 import { AuthenticatedUserPage } from 'pages/routing/AuthenticatedUserPage';
 import { UnAuthenticatedUserPage } from 'pages/routing/UnAuthenticatedUserPage';
 import { ROUTING_DASHBOARD, ROUTING_FORGOT_PASSWORD, ROUTING_HOME, ROUTING_LOGIN, ROUTING_SSO_LOGIN, ROUTING_UPDATE_PASSWORD } from 'constants/routing';
@@ -63,7 +63,7 @@ const MainPageBase = ({ notification }) => {
 
     useEffect(() => {
         if (notification?.visible) {
-            informationModalBox({ type: notification?.notificationType, title: notification?.title, message: notification?.message, placement: notification?.placement, showTitle: notification?.showTitle });
+            informationModalBox({ type: notification?.notificationType, title: notification?.title, message: notification?.message, placement: notification?.placement, showTitle: notification?.showTitle, duration: notification?.duration });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [notification?.visible]);
@@ -73,6 +73,7 @@ const MainPageBase = ({ notification }) => {
             {isLoggedIn ? (
                 <>
                     <div className={styles.lightThemeScroll}>
+                        {notification?.backdrop && <div className={style.antNotificationOverlay}/>}
                         <SessionTimeout />
                         <AuthenticatedUserPage />
                     </div>

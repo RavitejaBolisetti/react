@@ -13,7 +13,7 @@ const BatteryInfoForm = (props) => {
     const { battery } = props;
     return (
         <>
-            <Card className={styles.cardView} style={{ display: 'flex', width: '100%' }}>
+            <Card className={`${styles.cardView} ${styles.cardDark}`} style={{ display: 'flex', width: '100%' }}>
                 <Text>{battery?.batteryMake}</Text>
                 <div>
                     <Text type="secondary">{battery?.batteryName}</Text>
