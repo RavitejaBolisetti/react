@@ -21,7 +21,7 @@ import { BASE_URL_CRM_SCHEME_ENROLLMENT_DETAILS as customURL } from 'constants/r
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 
 import { crmSchemeEnrollmentDataActions } from 'store/actions/data/crmSchemeEnrollment';
-import { vehicleBatteryDetailsDataActions } from 'store/actions/data/vehicleDeliveryNote/vehicleBatteryDetails';
+// import { vehicleBatteryDetailsDataActions } from 'store/actions/data/vehicleDeliveryNote/vehicleBatteryDetails';
 import { customerVerificationtDataActions } from 'store/actions/data/customerMaster/customerVerification';
 import { addressIndividualDataActions } from 'store/actions/data/customerMaster/individual/address/individualAddress';
 import { addressCorporateDataActions } from 'store/actions/data/customerMaster/corporate/address/individualAddress';
@@ -99,8 +99,8 @@ const mapDispatchToProps = (dispatch) => ({
             fetchSalesConsultant: salesConsultantActions.fetchList,
             listConsultantShowLoading: salesConsultantActions.listShowLoading,
 
-            fetchVehicleList: vehicleBatteryDetailsDataActions.fetchList,
-            listVehicleShowLoading: vehicleBatteryDetailsDataActions.listShowLoading,
+            // fetchVehicleList: vehicleBatteryDetailsDataActions.fetchList,
+            // listVehicleShowLoading: vehicleBatteryDetailsDataActions.listShowLoading,
 
             fetchCustomerVerifyList: customerVerificationtDataActions.fetchList,
             listCustomerVerifyShowLoading: customerVerificationtDataActions.listShowLoading,
