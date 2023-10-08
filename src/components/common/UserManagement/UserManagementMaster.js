@@ -180,7 +180,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const typeData = [{ key: 'employeeCode', value: 'Token No.' }];
+const selecttypeData = [{ key: 'employeeCode', value: 'Token No.' }];
 
 const UserManagementMain = (props) => {
     const { userId, fetchUserDataList, listShowLoading, isDataLoading, userDataList, resetUserDetails } = props;
@@ -389,7 +389,6 @@ const UserManagementMain = (props) => {
     };
 
     const handleButtonClick = ({ buttonAction, record = null, openDefaultSection = true }) => {
-        console.log("🚀 ~ file: UserManagementMaster.js:392 ~ handleButtonClick ~ buttonAction:", buttonAction)
         switch (buttonAction) {
             case FROM_ACTION_TYPE?.ADD:
                 setFormActionType((prev) => ({ ...prev, viewMode: false, editMode: false, addMode: true }));
@@ -547,7 +546,7 @@ const UserManagementMain = (props) => {
         singleField: true,
         placeholder: userType === USER_TYPE_USER.DEALER.id ? 'Search Employee Code' : 'Search token number',
         disabled: disableSearch,
-        optionType: typeData,
+        optionType: selecttypeData,
         defaultValue: 'employeeCode',
         handleChange: onChangeSearchHandler,
         valueReset: false,
