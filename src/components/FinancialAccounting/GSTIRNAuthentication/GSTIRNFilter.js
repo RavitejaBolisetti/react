@@ -15,7 +15,7 @@ import styles from 'assets/sass/app.module.scss';
 
 export default function GSTIRNFilter(props) {
     const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, filterString, dealerGstData } = props;
-    const { userId, isReadOnly = true } = props;
+    const { userId, isReadOnly = true, handleGstinNumber, } = props;
     // const { selectedGst, setSelectedGst } = props;
     const disabledProps = { disabled: isReadOnly };
 
@@ -34,7 +34,7 @@ export default function GSTIRNFilter(props) {
                         </Col>
                         <Col xs={24} sm={10} md={10} lg={10} xl={10} className={styles.verticallyCentered}>
                             <Form.Item name="gstinNumber" className={styles.marB0} rules={[validateRequiredInputField('gstinNumber')]}>
-                                {customSelectBox({ data: dealerGstData, fieldNames: { key: 'value', value: 'value' }, placeholder: preparePlaceholderSelect('GSTIN NUMBER') })}
+                                {customSelectBox({ data: dealerGstData, fieldNames: { key: 'value', value: 'value' }, onChange:handleGstinNumber, placeholder: preparePlaceholderSelect('GSTIN NUMBER') })}
                             </Form.Item>
                         </Col>
 
