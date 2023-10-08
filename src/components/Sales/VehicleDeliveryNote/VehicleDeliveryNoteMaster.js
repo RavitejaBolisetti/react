@@ -525,6 +525,9 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
             case NEXT_ACTION:
                 const nextSection = Object.values(sectionName)?.find((i) => validateDeliveryNote({ item: i, soldByDealer }) && i.id > currentSection);
                 // const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
+                if (nextSection?.id === VEHICLE_DELIVERY_NOTE_SECTION?.THANK_YOU_PAGE?.id && !formActionType?.addMode) {
+                    return false;
+                }
                 section && setCurrentSection(nextSection?.id);
                 setLastSection(!nextSection?.id);
                 break;
@@ -594,7 +597,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
             setButtonData({ ...buttonData, formBtnActive: false });
             const messageList = res?.responseMessage?.split(' ');
             const Number = soldByDealer ? res?.responseMessage?.split('. ')?.[1] : messageList[messageList?.length - 1];
-            setSelectedOrder((prev) => ({ ...prev, responseMessage: res?.responseMessage, vehicleDeliveryNote: Number }));
+            setSelectedOrder((prev) => ({ ...prev, responseMessage: res?.responseMessage, vehicleDeliveryNote: Number, deliveryNoteDate: dayjs()?.format(dateFormatView) }));
             section && setCurrentSection(VEHICLE_DELIVERY_NOTE_SECTION.THANK_YOU_PAGE.id);
         };
         const onError = (message) => {
@@ -675,11 +678,24 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         }
     };
 
+    const handleCancelCheck = (soldByDealer) => {
+        if (soldByDealer) {
+            if (dayjs()?.isSame(selectedOrder?.deliveryNoteDate, 'year')) {
+                setRetailMonth(dayjs()?.isSame(selectedOrder?.deliveryNoteDate, 'month'));
+                setYesRetailMonth(true);
+            } else {
+                setRetailMonth(false);
+                setYesRetailMonth(false);
+            }
+        } else {
+            setRetailMonth(false);
+            setYesRetailMonth(false);
+        }
+    };
+
     const onCancelDeliveryNote = () => {
         setCancelDeliveryNoteVisible(true);
-        const isSameMonth = dayjs(selectedOrder?.invoiceDate)?.isSame(selectedOrder?.deliveryNoteDate, 'month');
-        setRetailMonth(isSameMonth);
-        setYesRetailMonth(true);
+        handleCancelCheck(soldByDealer);
         cancelDeliveryNoteForm.resetFields();
     };
 

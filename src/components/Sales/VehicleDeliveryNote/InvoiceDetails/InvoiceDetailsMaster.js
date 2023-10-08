@@ -246,8 +246,8 @@ export const InvoiceDetailsMasterBase = (props) => {
     };
 
     const onFinishFailed = () => {};
-    const handleRelationShipManagerChange = (__, value) => {
-        form.setFieldValue('relationShipManagerCode', value?.children);
+    const handleRelationShipManagerChange = (value) => {
+        form.setFieldValue('relationShipManagerCode', value);
     };
 
     const formProps = {

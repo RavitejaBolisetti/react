@@ -15,21 +15,22 @@ import { LeftSidebar } from './LeftSidebar';
 
 import styles from 'assets/sass/app.module.scss';
 
-
 const GSTIRNMainConatinerMain = (props) => {
-    const { currentSection, currentGst, setCurrentGst, } = props;
+    const { currentSection } = props;
+    const { currentGst, setCurrentGst } = props;
 
     const myProps = {
         ...props,
-        nextBtn:true,
+        nextBtn: true,
+        currentGst,
+        setCurrentGst,
     };
     const myPropsIrnTrans = {
         ...props,
-        nextBtn:false
+        nextBtn: false,
     };
     const renderElement = () => {
         switch (currentSection) {
-            
             case GST_IRN_SECTION.BRANCH_ACCESSIBLE.id: {
                 return <GstBranchAccessibleMaster {...myProps} />;
             }

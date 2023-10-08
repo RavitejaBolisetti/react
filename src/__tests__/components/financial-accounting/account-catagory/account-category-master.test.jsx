@@ -12,7 +12,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
 import { rootReducer } from 'store/reducers';
 
-const accountCategoryData = {totalRecords:'89',paginationData:[{accountCategoryCode: 'A001', accountCategoryDescription: 'Parts Account', status: true}]};
+const accountCategoryData = {totalRecords:'89', pageNumber:'1', pageSize:'10', paginationData:[{accountCategoryCode: 'A001', accountCategoryDescription: 'Parts Account', status: true}]};
 
 export const createMockStore = (initialState) => {
     const mockStore = configureStore({
@@ -72,6 +72,25 @@ describe('AccountCategory components', () => {
         fireEvent.click(cancelBtn);
     });
 
+    it("refresh button", ()=>{
+        const mockStore = createMockStore({
+            auth: { userId: 123 },
+            data: {
+                FinancialAccounting: {
+                    AccountCategory: { isLoading:false, data:accountCategoryData },
+                },
+            },
+        });
+        customRender(
+            <Provider store={mockStore}>
+                <AccountCategory />
+            </Provider>
+        )
+    
+        const refreshBtn = screen.getByRole('button', {name:''});
+        fireEvent.click(refreshBtn)
+    });
+
     it("view and edit icon", async()=>{
         const tableColumn  = jest.fn()
         const mockStore = createMockStore({
@@ -88,6 +107,39 @@ describe('AccountCategory components', () => {
             </Provider>
         );
     })
+
+    it("save button", ()=>{
+        const mockStore = createMockStore({
+            auth: { userId: 123 },
+            data: {
+                FinancialAccounting: {
+                    AccountCategory: { isLoading:false, data:accountCategoryData },
+                },
+            },
+        });
+        customRender(
+            <Provider store={mockStore}>
+                <AccountCategory />
+            </Provider>
+        )
+    
+        const plusAdd = screen.getByRole('button', {name:'plus Add'});
+        fireEvent.click(plusAdd)
+
+        const codeTextbox = screen.getAllByRole('textbox', {name:'Account Category Code'});
+        fireEvent.change(codeTextbox[1], {target:{value:'A001'}});
+        expect(codeTextbox[1].value).toBe('A001');
+
+        const descTextbox = screen.getByRole('textbox', {name:'Description'});
+        fireEvent.change(descTextbox, {target:{value:'Parts Account'}});
+        expect(descTextbox.value).toBe('Parts Account');
+
+        const switchStatus = screen.getByRole('switch', {name:'Status'});
+        fireEvent.click(switchStatus);
+
+        const saveBtn = screen.getByRole('button', {name:'Save'});
+        fireEvent.click(saveBtn);
+    });
     
 });
 

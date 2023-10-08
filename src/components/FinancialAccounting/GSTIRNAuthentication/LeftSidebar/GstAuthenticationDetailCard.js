@@ -6,15 +6,11 @@
 import React from 'react';
 import { Collapse, Divider } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
-// import { getCodeValue } from 'utils/getCodeValue';
-// import { DATA_TYPE } from 'constants/dataType';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+
 import styles from 'assets/sass/app.module.scss';
 
-import { FiCopy } from 'react-icons/fi';
-
 const { Panel } = Collapse;
-
 const expandIcon = ({ isActive }) =>
     isActive ? (
         <>
@@ -29,7 +25,7 @@ const expandIcon = ({ isActive }) =>
     );
 
 const GstAuthenticationDetailCard = (props) => {
-    const { selectedRecord, typeData, isLoading } = props;
+    const { isLoading } = props;
 
     return (
         <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon} collapsible="icon">
@@ -37,7 +33,7 @@ const GstAuthenticationDetailCard = (props) => {
                 header={
                     <>
                         <div className={`${styles.detailCardText} ${styles.marB5}`} style={{ fontSize: '14px' }}>
-                            Dealer Name:<span> {checkAndSetDefaultValue(props?.userId, isLoading)} </span> 
+                            Dealer Name:<span> {checkAndSetDefaultValue(props?.userId, isLoading)} </span>
                             {/* <span>
                                 {checkAndSetDefaultValue(selectedRecord?.grnNumber, isLoading)}
                                 <a className={`${styles.floatRight} ${styles.marL5}`}>
@@ -53,8 +49,6 @@ const GstAuthenticationDetailCard = (props) => {
                 <div className={styles.detailCardText}>
                     GSTIN: <span>{checkAndSetDefaultValue(props?.currentGst, isLoading)}</span>
                     {/* GSTIN: <span>{selectedRecord && checkAndSetDefaultValue(selectedRecord?.grnType, isLoading)}</span> */}
-
-                    
                 </div>
                 {/* <Divider />
                 <div className={styles.detailCardText}>

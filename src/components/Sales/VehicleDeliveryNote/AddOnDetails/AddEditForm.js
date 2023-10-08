@@ -25,7 +25,7 @@ const AddEditFormMain = (props) => {
     return (
         <Row gutter={20}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                <Collapse onChange={() => handleCollapse('Shield')} expandIcon={expandIcon} activeKey={openAccordian} expandIconPosition="end">
+                <Collapse onChange={() => handleCollapse('Shield')} expandIcon={expandIcon} activeKey={openAccordian} expandIconPosition="end" collapsible='icon'>
                     <Panel header="Shield Information" key="Shield">
                         <Divider />
                         <Form layout="vertical" autoComplete="off" form={shieldForm}>
@@ -34,7 +34,7 @@ const AddEditFormMain = (props) => {
                     </Panel>
                 </Collapse>
 
-                <Collapse onChange={() => handleCollapse('RSA')} expandIcon={expandIcon} activeKey={openAccordian} expandIconPosition="end">
+                <Collapse onChange={() => handleCollapse('RSA')} expandIcon={expandIcon} activeKey={openAccordian} expandIconPosition="end" collapsible='icon'>
                     <Panel header="RSA" key="RSA">
                         <Divider />
                         <Form layout="vertical" autoComplete="off" form={rsaForm}>
@@ -43,7 +43,7 @@ const AddEditFormMain = (props) => {
                     </Panel>
                 </Collapse>
 
-                <Collapse onChange={() => handleCollapse('AMC')} expandIcon={expandIcon} activeKey={openAccordian} expandIconPosition="end">
+                <Collapse onChange={() => handleCollapse('AMC')} expandIcon={expandIcon} activeKey={openAccordian} expandIconPosition="end" collapsible='icon'>
                     <Panel header="AMC" key="AMC">
                         <Divider />
                         <Form layout="vertical" autoComplete="off" form={amcForm}>

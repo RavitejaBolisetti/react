@@ -17,6 +17,9 @@ export const tableColumn = ({ handleButtonClick, typeData }) => {
             title: 'Request Type',
             dataIndex: 'requestType',
             width: '16%',
+            render: (__, value) => {
+                return checkAndSetDefaultValue(getCodeValue(typeData?.DEL_INV_CAN_TYP, value?.requestType));
+            },
         }),
         tblPrepareColumns({
             title: 'Request Status',

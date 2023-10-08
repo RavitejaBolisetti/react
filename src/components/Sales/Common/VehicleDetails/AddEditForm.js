@@ -15,7 +15,7 @@ import dayjs from 'dayjs';
 
 import { DataTable } from 'utils/dataTable';
 import { taxDetailsColumn, optionalServicesColumns } from './tableColumn';
-import { expandIcon, expandIconWithText } from 'utils/accordianExpandIcon';
+import { expandIcon } from 'utils/accordianExpandIcon';
 import { addToolTip } from 'utils/customMenuLink';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { getCodeValue } from 'utils/getCodeValue';
@@ -33,7 +33,7 @@ const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
     const { isProductDataLoading, productHierarchyData, toolTipContent, handleFormValueChange, optionalServices, setOptionalServices, formData, openAccordian, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, typeData, vehicleServiceData } = props;
-    const { formActionType, filterVehicleData, handleVehicleDetailChange, viewOnly, showPrintDiscount = false, isOTFModule } = props;
+    const { activeKey, onChange, formActionType, filterVehicleData, handleVehicleDetailChange, viewOnly, showPrintDiscount = false, isOTFModule } = props;
 
     const [optionForm] = Form.useForm();
     const [confirmRequest, setConfirmRequest] = useState();
@@ -56,12 +56,12 @@ const AddEditFormMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
-    const handleCollapse = (key) => {
-        if (key !== 3 && isReadOnly) {
-            setIsReadOnly(false);
-        }
-        setOpenAccordian((prev) => (prev === key ? '' : key));
-    };
+    // const handleCollapse = (key) => {
+    //     if (key !== 3 && isReadOnly) {
+    //         setIsReadOnly(false);
+    //     }
+    //     setOpenAccordian((prev) => (prev === key ? '' : key));
+    // };
 
     const addContactHandeler = (e) => {
         optionForm.resetFields();
@@ -129,18 +129,18 @@ const AddEditFormMain = (props) => {
         defaultParent: false,
         selectedTreeSelectKey: formData?.model,
         handleSelectTreeClick,
-        defaultValue: null,
         treeExpandedKeys: [formData?.model],
         placeholder: preparePlaceholderSelect('Model'),
         loading: !viewOnly ? isProductDataLoading : false,
         treeDisabled: viewOnly,
     };
 
+    // expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)}
     return (
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} activeKey={openAccordian} collapsible="icon">
+                    <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" collapsible="icon">
                         <Panel header="Vehicle Information" key="1">
                             <Divider />
                             <Row gutter={20}>
@@ -255,21 +255,21 @@ const AddEditFormMain = (props) => {
                                 </Col>
                                 {showPrintDiscount && (
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={formActionType?.editMode ? (formData?.printDiscount === 'Y' ? true : false) : false} labelAlign="left" wrapperCol={{ span: 24 }} name="printDiscount" label="Print Discount?" valuePropName="checked">
-                                            <Switch checkedChildren="Yes" unCheckedChildren="No" valuePropName="checked" onChange={(checked) => (checked ? 'Y' : 'N')} />
+                                        <Form.Item initialValue={formActionType?.editMode ? (formData?.printDiscount === 'Y' ? true : false) : false} labelAlign="left" wrapperCol={{ span: 24 }} name="printDiscount" label="Print Discount?">
+                                            <Switch checkedChildren="Yes" unCheckedChildren="No" onChange={(checked) => (checked ? 'Y' : 'N')} />
                                         </Form.Item>
                                     </Col>
                                 )}
                             </Row>
                         </Panel>
                     </Collapse>
-                    <Collapse onChange={() => handleCollapse(2)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} collapsible="icon">
+                    <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end" collapsible="icon">
                         <Panel header="Tax Details" key="2">
                             <Divider />
                             <DataTable tableColumn={taxDetailsColumn()} tableData={formData['taxDetails']} pagination={false} />
                         </Panel>
                     </Collapse>
-                    <Collapse onChange={() => handleCollapse(3)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} collapsible="icon">
+                    <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end" collapsible="icon">
                         <Panel
                             header={
                                 <Row>

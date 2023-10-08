@@ -36,7 +36,7 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         isDataLoaded,
-        vehicleDetailDataReceived: vehicleDetailData,
+        otfVehicleDetailData: vehicleDetailData,
         isLoading,
         moduleTitle,
         productAttributeData,
@@ -83,7 +83,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const VehicleDetailsMasterMain = (props) => {
-    const { isProductDataLoading, vehicleDetailDataReceived, vehicleDetailDataPass, isVehicleLovDataLoading, resetProductLov, productAttributeData, fetchProductLovCode, isLoading, saveData, ProductLovLoading } = props;
+    const { isProductDataLoading, otfVehicleDetailData, vehicleDetailDataPass, isVehicleLovDataLoading, resetProductLov, productAttributeData, fetchProductLovCode, isLoading, saveData, ProductLovLoading } = props;
     const { form, selectedOrderId, selectedRecordId, section, buttonData, setButtonData, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
     const { refreshData, setRefreshData, isVehicleServiceLoaded, vehicleServiceData, fetchServiceLov, serviceLoading, selectedOrder, setSelectedOrder } = props;
     const { isProductHierarchyDataLoaded, typeData, fetchList, resetData, userId, listShowLoading, showGlobalNotification } = props;
@@ -98,7 +98,7 @@ const VehicleDetailsMasterMain = (props) => {
     const [toolTipContent, setToolTipContent] = useState();
     const [isReadOnly, setIsReadOnly] = useState();
     const [productHierarchyData, setProductHierarchyData] = useState([]);
-    const [vehicleDetailData, setVehicleDetailData] = useState(vehicleDetailDataPass || vehicleDetailDataReceived);
+    const [vehicleDetailData, setVehicleDetailData] = useState();
     const [filterVehicleData, setFilterVehicleData] = useState([]);
 
     const onSuccessAction = (res) => {
@@ -112,13 +112,21 @@ const VehicleDetailsMasterMain = (props) => {
     const isOTFModule = salesModuleType === SALES_MODULE_TYPE.OTF.KEY;
 
     useEffect(() => {
-        if (isOTFModule) {
-            setVehicleDetailData(vehicleDetailDataReceived);
-        } else {
+        if (isOTFModule && otfVehicleDetailData) {
+            setVehicleDetailData(otfVehicleDetailData);
+        } else if (vehicleDetailDataPass) {
             setVehicleDetailData(vehicleDetailDataPass);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isOTFModule]);
+    }, [isOTFModule, otfVehicleDetailData, vehicleDetailDataPass]);
+
+    useEffect(() => {
+        if (vehicleDetailData) {
+            setFormData(vehicleDetailData);
+            vehicleDetailData?.optionalServices && setOptionalServices(vehicleDetailData?.optionalServices);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [vehicleDetailData]);
 
     useEffect(() => {
         if (userId && selectedRecordId) {
@@ -215,14 +223,6 @@ const VehicleDetailsMasterMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [productAttributeData, isProductHierarchyDataLoaded, userId]);
-
-    useEffect(() => {
-        if (vehicleDetailData) {
-            setFormData(vehicleDetailData);
-            vehicleDetailData?.optionalServices && setOptionalServices(vehicleDetailData?.optionalServices);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [vehicleDetailData]);
 
     useEffect(() => {
         if (selectedRecordId && formData?.modelCode) {
