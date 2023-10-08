@@ -78,8 +78,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const VehicleChecklistMain = ({ typeData, ConfigurableParameterEditing, moduleTitle, viewTitle, userId, saveData, listShowLoadingPost, isDataAttributeLoaded, showGlobalNotification, fetchVehicleChecklist, listShowLoadingVehicleChecklist, VehicleChecklistMasterList, VehicleChecklistAttributeLov, fetchVehicleChecklistAttributeLov, listShowLoadingVehicleChecklistAttributeLov }) => {
-    // console.log(typeData, 'ConfigurableParameterEditing');
+export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId, saveData, listShowLoadingPost, isDataAttributeLoaded, showGlobalNotification, fetchVehicleChecklist, listShowLoadingVehicleChecklist, VehicleChecklistMasterList, VehicleChecklistAttributeLov, fetchVehicleChecklistAttributeLov, listShowLoadingVehicleChecklistAttributeLov }) => {
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
@@ -200,9 +199,10 @@ export const VehicleChecklistMain = ({ typeData, ConfigurableParameterEditing, m
 
             if (formData) {
                 setAttributeType(formData?.data?.attributeLevel);
-                let isChild = formData?.data?.attributeLevel !== VEHICLE_CHECKLIST_TYPE?.ANSWER?.key ? true : false;
+                let isChild = formData?.data?.attributeLevel === VEHICLE_CHECKLIST_TYPE?.GROUP?.key || formData?.data?.attributeLevel === VEHICLE_CHECKLIST_TYPE?.SUB_GROUP?.key ? true : false;
+                let isSibling = formData?.data?.attributeLevel !== VEHICLE_CHECKLIST_TYPE?.ANSWER?.key;
 
-                setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: isChild, siblingBtn: true });
+                setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: isChild, siblingBtn: isSibling });
 
                 const attributeName = VehicleChecklistAttributeLov?.find((e) => e?.key === formData?.data?.attributeLevel)?.value;
                 const attributeParentName = flatternData.find((i) => formData?.data?.parentCode === i.key)?.data?.descriptionTitle;

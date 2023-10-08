@@ -114,9 +114,6 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                 </Row>
-                            </>
-                        ) : attributeType === VEHICLE_CHECKLIST_TYPE?.ANSWER?.key ? (
-                            <>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <Form.Item name="code" label="Answer Type" rules={[validateRequiredSelectField('Document Description')]}>
@@ -124,18 +121,6 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                 </Row>
-                                {/* {ANSWER_TYPES.map(
-                                    (answer) =>
-                                        answer.key === answerTypeCode && (
-                                            <Row gutter={20}>
-                                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                    <Form.Item name={'answerType' + answer.key} label={answer.value} rules={[validateRequiredSelectField('Select Answer Type')]}>
-                                                        {answer.type}
-                                                    </Form.Item>
-                                                </Col>
-                                            </Row>
-                                        )
-                                )} */}
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <Form.Item name="attachmentRequired" label="Attachment Required" rules={[validateRequiredSelectField('Select Attachment Required')]}>
