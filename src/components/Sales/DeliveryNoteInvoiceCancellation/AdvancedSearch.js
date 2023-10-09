@@ -66,18 +66,6 @@ export const AdvancedSearchFrom = (props) => {
     return (
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
-                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item name="requestType" label="Request Type" initialValue={filterString?.requestType}>
-                        {customSelectBox({ data: typeData[PARAM_MASTER?.DEL_INV_CAN_TYP?.id], placeholder: preparePlaceholderSelect('Request Type') })}
-                    </Form.Item>
-                </Col>
-                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item name="requestStatus" label="Request Status" initialValue={filterString?.requestStatus}>
-                        {customSelectBox({ data: typeData[PARAM_MASTER?.INV_DEL_NOT_REQ_TYP?.id], placeholder: preparePlaceholderSelect('Request Status') })}
-                    </Form.Item>
-                </Col>
-            </Row>
-            <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="From Date" name="fromDate" rules={[validateRequiredSelectField('From Date')]} className={styles?.datePicker}>
                         <DatePicker format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} onChange={() => advanceFilterForm.setFieldsValue({ toDate: undefined })} />
@@ -99,6 +87,18 @@ export const AdvancedSearchFrom = (props) => {
                         <DatePicker format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
                     </Form.Item>
                 </Col>
+            </Row>
+            <Row gutter={16}>
+                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                    <Form.Item name="requestType" label="Request Type" initialValue={filterString?.requestType}>
+                        {customSelectBox({ data: typeData[PARAM_MASTER?.DEL_INV_CAN_TYP?.id], placeholder: preparePlaceholderSelect('Request Type') })}
+                    </Form.Item>
+                </Col>
+                {/* <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                    <Form.Item name="requestStatus" label="Request Status" initialValue={filterString?.requestStatus}>
+                        {customSelectBox({ data: typeData[PARAM_MASTER?.INV_DEL_NOT_REQ_TYP?.id], placeholder: preparePlaceholderSelect('Request Status') })}
+                    </Form.Item>
+                </Col> */}
             </Row>
 
             <ModalButtons {...modalProps} />
