@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Col, Form, Row, Button, Select, DatePicker } from 'antd';
+import { Col, Form, Row, Button, DatePicker } from 'antd';
 
 import { withModal } from 'components/withModal';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
@@ -17,7 +17,7 @@ import styles from 'assets/sass/app.module.scss';
 import TreeSelectField from 'components/common/TreeSelectField';
 
 export const AdvancedSearchFrom = (props) => {
-    const { setAdvanceSearchVisible, setSelectedTreeSelectKey, modelGroupProductData, selectedTreeSelectKey, handleSelectTreeClick, modelCodeName } = props;
+    const { setAdvanceSearchVisible, modelGroupProductData, selectedTreeSelectKey, handleSelectTreeClick, modelCodeName } = props;
     const {
         filterString,
         setFilterString,
@@ -92,7 +92,7 @@ export const AdvancedSearchFrom = (props) => {
                             validateRequiredSelectField('Due To Date'),
                             {
                                 validator: (_, value) => {
-                                    return advanceFilterForm.getFieldValue('dueFromDate') ? CheckDateEffectiveTo(value, advanceFilterForm?.getFieldValue('dueFromDate')) : null;
+                                    return advanceFilterForm.getFieldValue('dueFromDate') ? CheckDateEffectiveTo(value, advanceFilterForm?.getFieldValue('dueFromDate')) : Promise.resolve();
                                 },
                             },
                         ]}
