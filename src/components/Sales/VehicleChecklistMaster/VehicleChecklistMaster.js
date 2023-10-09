@@ -13,6 +13,7 @@ import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarch
 import { vehicleChecklistMasterDataActions } from 'store/actions/data/sales/vehicleChecklistMaster/VehicleChecklistMaster';
 import { vehicleChecklistMasterAttributeLovDataActions } from 'store/actions/data/sales/vehicleChecklistMaster/attributeHierarchyLov';
 import { vehicleChecklistMasterPostDataActions } from 'store/actions/data/sales/vehicleChecklistMaster/VehicleChecklistMasterPost';
+import { otfLoyaltyModelGroupDataActions } from 'store/actions/data/otf/loyaltyModelGroup';
 
 import { showGlobalNotification } from 'store/actions/notification';
 
@@ -37,6 +38,9 @@ const mapStateToProps = (state) => {
                 VehicleChecklistMasterList: { isLoaded: isVehicleChecklistMasterLoaded = false, data: VehicleChecklistMasterList = [] },
                 VehicleChecklistMasterListAttributeLov: { isLoaded: isVehicleChecklistMasterAtrributeLovLoaded = false, data: VehicleChecklistAttributeLov = [] },
             },
+            OTF: {
+                LoyaltyModelGroup: { isLoading: isModelLoading, data: modelData = [] },
+            },
         },
     } = state;
 
@@ -52,6 +56,8 @@ const mapStateToProps = (state) => {
         VehicleChecklistAttributeLov,
         isVehicleChecklistMasterLoaded,
         isVehicleChecklistMasterAtrributeLovLoaded,
+        isModelLoading,
+        modelData,
     };
     return returnValue;
 };
@@ -72,15 +78,19 @@ const mapDispatchToProps = (dispatch) => ({
             saveData: vehicleChecklistMasterPostDataActions.saveData,
             listShowLoadingPost: vehicleChecklistMasterPostDataActions.listShowLoading,
 
+            fetchModelLovList: otfLoyaltyModelGroupDataActions.fetchList,
+            listModelShowLoading: otfLoyaltyModelGroupDataActions.listShowLoading,
+
             showGlobalNotification,
         },
         dispatch
     ),
 });
 
-export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId, saveData, listShowLoadingPost, isDataAttributeLoaded, showGlobalNotification, fetchVehicleChecklist, listShowLoadingVehicleChecklist, VehicleChecklistMasterList, VehicleChecklistAttributeLov, fetchVehicleChecklistAttributeLov, listShowLoadingVehicleChecklistAttributeLov }) => {
+export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId, saveData, listShowLoadingPost, isDataAttributeLoaded, showGlobalNotification, fetchVehicleChecklist, listShowLoadingVehicleChecklist, VehicleChecklistMasterList, VehicleChecklistAttributeLov, fetchVehicleChecklistAttributeLov, listShowLoadingVehicleChecklistAttributeLov, fetchModelLovList, listModelShowLoading, modelData }) => {
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
+    const [answerForm] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
 
@@ -96,6 +106,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
     const [buttonType, setButtonType] = useState(CHECKLIST_TYPE?.VDC?.key);
     const [handleButtonClickChange, setHandleButtonClickChange] = useState(false);
     const [answerType, setAnswerType] = useState(false);
+    const [answerData, setAnswerData] = useState([]);
 
     const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -111,6 +122,13 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
         ];
         if (userId) {
             fetchVehicleChecklistAttributeLov({ setIsLoading: listShowLoadingVehicleChecklistAttributeLov, userId, extraParams });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId]);
+
+    useEffect(() => {
+        if (userId) {
+            fetchModelLovList({ setIsLoading: listModelShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
@@ -169,6 +187,11 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
 
     const onChange = (e) => {
         setSearchValue(e.target.value);
+    };
+
+    const onChangeAnswerType = (val) => {
+        console.log(val);
+        setAnswerType(val);
     };
 
     const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
@@ -338,6 +361,11 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
         form,
         answerType,
         setAnswerType,
+        onChangeAnswerType,
+        modelData,
+        answerData,
+        setAnswerData,
+        answerForm,
     };
 
     const viewProps = {

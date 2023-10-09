@@ -4,10 +4,11 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Col, Input, Form, Row, Switch, Button } from 'antd';
+import { Col, Input, Form, Row, Switch, Button, Card } from 'antd';
 import TreeSelectField from 'components/common/TreeSelectField';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
+import { AnswerFormCardMaster } from './AnswerModelForm/AnswerFormCard';
 
 import styles from 'assets/sass/app.module.scss';
 import { VEHICLE_CHECKLIST_TYPE } from 'constants/modules/VehicleCheckListMaster/vehicleChecklistType';
@@ -20,7 +21,7 @@ const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
     const { VehicleChecklistMasterList, onCloseAction, fieldNames, formActionType, formData, selectedTreeSelectKey, handleSelectTreeClick, attributeType, form, VehicleChecklistAttributeLov, typeData } = props;
-    const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed, answerType } = props;
+    const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed, answerType, onChangeAnswerType, modelData } = props;
 
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
 
@@ -44,6 +45,7 @@ const AddEditFormMain = (props) => {
     const handleFormFieldChange = () => {
         setFormBtnActive(true);
     };
+
     return (
         <>
             <Form autoComplete="off" form={form} layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -108,14 +110,14 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <Form.Item name="descriptionTitle" label="Checklist Description" rules={[validateRequiredInputField('Checklist Description')]}>
-                                            <TextArea maxLength={300} placeholder={preparePlaceholderText('Checklist Description')} showCount disabled={treeCodeReadOnly} />
+                                            <TextArea maxLength={300} placeholder={preparePlaceholderText('Checklist Description')} disabled={treeCodeReadOnly} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <Form.Item name="answerType" label="Answer Type" rules={[validateRequiredSelectField('Answer Type')]}>
-                                            {customSelectBox({ data: typeData?.CHKL_ANS_TYPE, placeholder: preparePlaceholderSelect('Answer Type'), onChange: () => setAnswerType() })}
+                                            {customSelectBox({ data: typeData?.CHKL_ANS_TYPE, placeholder: preparePlaceholderSelect('Answer Type'), onChange: onChangeAnswerType })}
                                         </Form.Item>
                                     </Col>
                                 </Row>
@@ -126,28 +128,45 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                 </Row>
-                                {answerType && (
-                                    <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Form.Item name="attachmentRequired" label="Attachment Required" rules={[validateRequiredSelectField('Attachment Required')]}>
-                                                {customSelectBox({ data: [], placeholder: preparePlaceholderSelect('Attachment Required') })}
-                                            </Form.Item>
-                                        </Col>
-                                    </Row>
-                                )}
+                                <Row gutter={20}>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                        <Form.Item label="Status" name="status">
+                                            <Switch value={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status ? true : false} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status === true || null || undefined ? true : false} />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col xs={0} sm={0} md={0} lg={0} xl={0}>
+                                        <Form.Item name="id" label="" />
+                                    </Col>
+                                </Row>
+                                {
+                                    answerType === ANSWER_TYPES?.Fixed?.key && <AnswerFormCardMaster {...props}/>
+                                    // <Row gutter={20}>
+                                    //     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                    //         <Card
+                                    //             style={{
+                                    //                 width: '100%',
+                                    //             }}
+                                    //         >
+                                    //             <Form.Item name="answerCode" label="Answer Code" rules={[validateRequiredInputField('Answer Code')]}>
+                                    //                 <Input maxLength={6} placeholder={preparePlaceholderText('Answer Code')} disabled={treeCodeReadOnly} />
+                                    //             </Form.Item>
+                                    //             <Form.Item name="answerDescription" label="Answer Description" rules={[validateRequiredInputField('Answer Description')]}>
+                                    //                 <TextArea maxLength={300} placeholder={preparePlaceholderText('Answer Description')} disabled={treeCodeReadOnly} />
+                                    //             </Form.Item>
+                                    //             <Form.Item name="answerStatus">
+                                    //                 <Row justify="space-between" align="middle">
+                                    //                     <Switch value={true} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={true} />
+                                    //                     <Button type="primary" icon={<PlusOutlined />}>
+                                    //                         Add
+                                    //                     </Button>
+                                    //                 </Row>
+                                    //             </Form.Item>
+                                    //         </Card>
+                                    //     </Col>
+                                    // </Row>
+                                }
                             </>
                         ) : null}
-
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item label="Status" name="status">
-                                    <Switch value={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status ? true : false} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status === true || null || undefined ? true : false} />
-                                </Form.Item>
-                            </Col>
-                            <Col xs={0} sm={0} md={0} lg={0} xl={0}>
-                                <Form.Item name="id" label="" />
-                            </Col>
-                        </Row>
                     </Col>
                 </Row>
 
