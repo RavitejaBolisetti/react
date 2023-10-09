@@ -548,13 +548,41 @@ export const VehicleInvoiceMasterBase = (props) => {
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage + 'Invoice No.:' + res?.data?.invoiceNumber });
             fetchList({ customURL: BASE_URL_VEHICLE_INVOICE_LIST, setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
-            resetInvoiceData();
-            setCurrentSection(defaultSection);
+            const invoiceId = res?.data?.invoiceDetails?.id;
+            const otfId = res?.data?.invoiceDetails?.otfDetailsRequest?.otfId;
 
-            // handleButtonClick({ buttonAction: NEXT_ACTION });
-            // setCurrentSection(defaultSection);
+            if (invoiceId && otfId) {
+                extraParams.push(
+                    {
+                        key: 'invoiceId',
+                        value: invoiceId,
+                        name: 'Invoice Id',
+                    },
+                    {
+                        key: 'otfId',
+                        value: otfId,
+                        name: 'OTF Number',
+                    }
+                );
+
+                fetchData({
+                    customURL,
+                    setIsLoading: listOTFShowLoading,
+                    userId,
+                    extraParams: extraParams,
+                    onSuccessAction: (res) => {
+                        setProfileCardData(res?.data);
+                    },
+                    onErrorAction,
+                });
+
+                handleBookingNumberSearch(res?.data?.invoiceDetails?.otfDetailsRequest?.otfId, res?.data?.invoiceDetails?.id);
+            }
+
+            const nextSection = filterActiveSection?.find((i) => i.id > currentSection);
+            section && setCurrentSection(nextSection?.id);
+            setLastSection(!nextSection?.id);
         };
 
         const onError = (message) => {
