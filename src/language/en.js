@@ -31,5 +31,6 @@ export const LANGUAGE_EN = {
         USER_TOKEN_VALIDATION: { TITLE: 'Error', MESSAGE: 'User token number {DealerSearchvalue} does not exist. Try again with valid token number' },
         APPLICATON_REQUIRE_VALIDATION: { TITLE: 'Error', MESSAGE: 'Please provide {NAME} to proceed' },
         DELIVERY_NOTE_MESSAGE: { TITLE: 'Delivery {NAME} created successfully', MESSAGE: 'Delivery Note No.: {ORDER_ID}' },
+        USER_NOT_FOUND: { TITLE: 'User not found', MESSAGE: 'User does not exist, do you want to create user?' },
     },
 };

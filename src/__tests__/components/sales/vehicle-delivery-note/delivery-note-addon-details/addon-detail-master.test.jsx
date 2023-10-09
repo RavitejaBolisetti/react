@@ -37,7 +37,7 @@ jest.mock('components/Sales/VehicleDeliveryNote/AddOnDetails/CommonForm', () => 
 });
 
 jest.mock('store/actions/data/vehicleDeliveryNote/addOnDetails', () => ({
-    vehicleAddOnDetailDataActions: {}
+    vehicleAddOnDetailDataActions: {},
 }));
 
 const FormWrapper = (props) => {
@@ -52,7 +52,7 @@ const FormWrapper = (props) => {
 
 describe('AddOn Detail Master components', () => {
     it('should render components', () => {
-        customRender(<FormWrapper handleFormValueChange={jest.fn()} />);
+        customRender(<FormWrapper handleFormValueChange={jest.fn()} setButtonData={jest.fn()} />);
     });
     it('test1', () => {
         const mockStore = createMockStore({
@@ -64,48 +64,46 @@ describe('AddOn Detail Master components', () => {
             },
         });
 
-        const fetchList=jest.fn();
+        const fetchList = jest.fn();
 
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper handleFormValueChange={jest.fn()} selectedInvoiceId={106} fetchList={fetchList} resetData={jest.fn()} />
+                <FormWrapper handleFormValueChange={jest.fn()} selectedInvoiceId={106} setButtonData={jest.fn()} fetchList={fetchList} resetData={jest.fn()} />
             </Provider>
         );
 
         fetchList.mock.calls[0][0].onErrorAction();
         fetchList.mock.calls[0][0].onSuccessAction();
 
-        const plusCollapse=screen.getAllByRole('img', { name: 'plus' });
+        const plusCollapse = screen.getAllByRole('img', { name: 'plus' });
         fireEvent.click(plusCollapse[0]);
         fireEvent.click(plusCollapse[1]);
         fireEvent.click(plusCollapse[2]);
 
-        const shieldRegister=screen.getByRole('button', { name: 'Shield Register' });
+        const shieldRegister = screen.getByRole('button', { name: 'Shield Register' });
         fireEvent.click(shieldRegister);
 
-        const amcRegister=screen.getByRole('button', { name: 'AMC Register' });
+        const amcRegister = screen.getByRole('button', { name: 'AMC Register' });
         fireEvent.click(amcRegister);
 
-        const rmsRegister=screen.getByRole('button', { name: 'RSA Register' });
+        const rmsRegister = screen.getByRole('button', { name: 'RSA Register' });
         fireEvent.click(rmsRegister);
     });
 
     it('test2', () => {
-        const formActionType={
-            viewMode: true
-        }
-        customRender(<FormWrapper handleFormValueChange={jest.fn()} formActionType={formActionType} />);
+        const formActionType = {
+            viewMode: true,
+        };
+        customRender(<FormWrapper handleFormValueChange={jest.fn()} formActionType={formActionType} setButtonData={jest.fn()} />);
 
-        const plusCollapse=screen.getAllByRole('img', { name: 'plus' });
+        const plusCollapse = screen.getAllByRole('img', { name: 'plus' });
         fireEvent.click(plusCollapse[0]);
         fireEvent.click(plusCollapse[1]);
         fireEvent.click(plusCollapse[2]);
 
-        const minusCollapse=screen.getAllByRole('img', { name: 'minus' });
+        const minusCollapse = screen.getAllByRole('img', { name: 'minus' });
         fireEvent.click(minusCollapse[0]);
         fireEvent.click(minusCollapse[1]);
         fireEvent.click(minusCollapse[2]);
-
     });
-
 });

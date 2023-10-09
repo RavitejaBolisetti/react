@@ -4,11 +4,11 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect, useMemo } from 'react';
-import { Button, Col, Row, Select, Form, Empty, ConfigProvider } from 'antd';
+import { Button, Col, Row, Select, Form, Empty, ConfigProvider, Space } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { showGlobalNotification } from 'store/actions/notification';
+import { showGlobalNotification, hideGlobalNotification } from 'store/actions/notification';
 import { searchUserDataActions } from 'store/actions/data/userManagement/searchUser';
 import { ManufacturerAppDataActions } from 'store/actions/data/userManagement/manufacturerApplication';
 import { DealerAppDataActions } from 'store/actions/data/userManagement/dealerApplications';
@@ -25,8 +25,8 @@ import { RoleListtDataActions } from 'store/actions/data/userManagement/roleList
 import { SearchBox } from 'components/utils/SearchBox';
 import { UserMainContainer } from './UserMainContainer';
 
-import TokenValidateDataCard from './common/TokenValidateDataCard';
-import TokenErrorCard from './common/TokenErrorCard';
+// import TokenValidateDataCard from './common/TokenValidateDataCard';
+// import TokenErrorCard from './common/TokenErrorCard';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { USER_TYPE_USER } from 'constants/modules/UserManagement/userType';
@@ -35,12 +35,14 @@ import { MANUFACTURER_USER_SECTION } from 'constants/modules/UserManagement/Manu
 
 import DataTable from 'utils/dataTable/DataTable';
 import { ADD_ACTION, EDIT_ACTION, NEXT_ACTION, VIEW_ACTION, btnVisiblity } from 'utils/btnVisiblity';
+import { LANGUAGE_EN } from 'language/en';
 
 import { tableColumn } from './Dealer/tableColumn';
 import { tableColumn as manufacturerTableColumn } from './Manufacturer/tableColumn';
 
 import styles from 'assets/sass/app.module.scss';
 import { DealerProductActions } from 'store/actions/data/userManagement/dealerProduct';
+
 const { Option } = Select;
 
 const mapStateToProps = (state) => {
@@ -60,6 +62,7 @@ const mapStateToProps = (state) => {
                 // UserDealerBranchLocation: { isLoaded: isUserDlrProductListLoaded, isLoading: isUserDlrProductListLoding, data: userDlrProductList },
                 DealerProduct: { isLoaded: isProductLoaded, data: userProductListData, isLoading: isProductLoading },
             },
+            ConfigurableParameterEditing: { filteredListData: typeData = []},
             ProductHierarchy: { isLoading: isProductHierarchyLoading = false, data: productHierarchyData = [] },
         },
     } = state;
@@ -68,6 +71,7 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         userId,
+        typeData,
         userDataList,
         userDetailData,
         isDataLoading,
@@ -169,21 +173,24 @@ const mapDispatchToProps = (dispatch) => ({
             fetchProductHierarchyList: productHierarchyDataActions.fetchList,
             productShowLoding: productHierarchyDataActions.listShowLoading,
 
+            hideGlobalNotification,
             showGlobalNotification,
         },
         dispatch
     ),
 });
 
-const typeData = [{ key: 'employeeCode', value: 'Token No.' }];
+const selecttypeData = [{ key: 'employeeCode', value: 'Token No.' }];
 
 const UserManagementMain = (props) => {
     const { userId, fetchUserDataList, listShowLoading, isDataLoading, userDataList, resetUserDetails } = props;
     const { fetchRoleDataList, rolelistShowLoading, isRoleListLoaded } = props;
     const { fetchDealersList, rolelDealersListShowLoading, dealerDataList, isDealerListLoaded } = props;
-    const { moduleTitle, productHierarchyData, isProductHierarchyLoading } = props;
+    const { moduleTitle, productHierarchyData, showGlobalNotification, hideGlobalNotification } = props;
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
-    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, next: false, nextBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, formBtnActive: false };
+    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, next: false, nextBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
+
+    const notFoundText = LANGUAGE_EN.GENERAL.USER_NOT_FOUND;
 
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
@@ -204,9 +211,9 @@ const UserManagementMain = (props) => {
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [formData, setFormData] = useState({});
     const [selectedRecord, setSelectedRecord] = useState(null);
-    const [error, setError] = useState(false);
     const [selectedDealerCode, setselectedDealerCode] = useState('');
     const [defaultSection, setDefaultSection] = useState();
+    const [canUserCreate, setCanUserCreate] = useState(false);
 
     const [AccessMacid, setAccessMacid] = useState([]);
     const [finalFormdata, setfinalFormdata] = useState({
@@ -237,7 +244,7 @@ const UserManagementMain = (props) => {
             setSection(defaultSection);
             setFilterString();
 
-            setDisabledSearch(userType === USER_TYPE_USER.DEALER.id ? true : false);
+            setDisabledSearch(userType === USER_TYPE_USER.DEALER.id && !selectedDealerCode ? true : false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userType, isFormVisible]);
@@ -303,15 +310,56 @@ const UserManagementMain = (props) => {
                 value: selectedDealerCode,
                 name: 'dealerCode',
             },
+            {
+                key: 'createUser',
+                title: 'createUser',
+                value: canUserCreate?.toString(),
+                name: 'createUser',
+            },
         ];
-    }, [filterString, selectedDealerCode, userType]);
+    }, [filterString, selectedDealerCode, userType, canUserCreate]);
+
+    const onConfirm = () => {
+        setCanUserCreate(true);
+        hideGlobalNotification();
+    };
+
+    const createUserConfirmationModal = (res) => {
+        let message;
+
+        let resMessage = notFoundText?.MESSAGE;
+        message = (
+            <>
+                <Space direction="vertical">
+                    {resMessage}
+                    <Row gutter={20} justify="end">
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <Button danger className={styles.button} onClick={hideGlobalNotification} size="small">
+                                Cancel
+                            </Button>
+                        </Col>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <Button type="primary" onClick={onConfirm} size="small">
+                                Create User
+                            </Button>
+                        </Col>
+                    </Row>
+                </Space>
+            </>
+        );
+        showGlobalNotification({ notificationType: 'success', title: notFoundText?.TITLE, message: message, duration: 5000, backdrop: true });
+    };
 
     const onErrorAction = (res) => {
-        setError(res);
+        console.error(res);
     };
+
     const onSuccessAction = (res) => {
-        // setselectedDealerCode('');
-        setError('');
+        if (res?.data?.userNotExist) {
+            createUserConfirmationModal(res);
+        } else {
+            setCanUserCreate(false);
+        }
     };
 
     useEffect(() => {
@@ -332,7 +380,7 @@ const UserManagementMain = (props) => {
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, userType, page?.pageSize, page?.current, filterString?.searchParam, isFormVisible, selectedDealerCode]);
+    }, [userId, userType, page?.pageSize, page?.current, filterString?.searchParam, isFormVisible, selectedDealerCode, canUserCreate]);
 
     const onFinish = (values, e) => {};
 
@@ -396,7 +444,6 @@ const UserManagementMain = (props) => {
     };
 
     const onChangeSearchHandler = (event) => {
-        setError('');
         if (!event.target.value) {
             setFilterString((prev) => ({ ...prev, searchParam: '', pageSize: filterString?.pageSize, current: 1 }));
         }
@@ -410,15 +457,14 @@ const UserManagementMain = (props) => {
         }
         setFilterString({ searchParam: '', pageSize: filterString?.pageSize, current: 1 });
         setselectedDealerCode(selectedvalue);
-        setError('');
     };
 
     const onCloseAction = () => {
         setIsFormVisible(false);
         setSelectedRecord([]);
-        // setDisabledSearch(true);
         setFilterString('');
-        setselectedDealerCode('');
+        hideGlobalNotification();
+        setCanUserCreate(false);
     };
 
     const drawerTitle = useMemo(() => {
@@ -458,8 +504,6 @@ const UserManagementMain = (props) => {
         selectedDealerCode,
         dealerDataList,
 
-        // productDataTree,
-        // adminDataTree,
         section,
         sectionName,
         setSetionName,
@@ -473,7 +517,7 @@ const UserManagementMain = (props) => {
         previousSection,
         setPreviousSection,
     };
-    const tableData = userDataList?.userSearchResponse?.userDetails && !userDataList?.userSearchResponse?.userDetails?.[0]?.dmsUserNotExist ? userDataList?.userSearchResponse?.userDetails : [];
+    const tableData = userDataList?.userSearchResponse?.userDetails ? userDataList?.userSearchResponse?.userDetails : [];
 
     const tableProps = {
         isLoading: isDataLoading,
@@ -489,7 +533,6 @@ const UserManagementMain = (props) => {
         setCurrentSection(userType === USER_TYPE_USER.DEALER.id ? DEALER_USER_SECTION.ASSIGN_USER_ROLES : MANUFACTURER_USER_SECTION.ASSIGN_USER_ROLES);
         setUserType(id);
         setselectedDealerCode('');
-        setError('');
         form.resetFields();
         searchForm.resetFields();
         setPage({ pageSize: 10, current: 1 });
@@ -501,9 +544,9 @@ const UserManagementMain = (props) => {
         filterString,
         setFilterString,
         singleField: true,
-        placeholder: 'Search token number',
+        placeholder: userType === USER_TYPE_USER.DEALER.id ? 'Search Employee Code' : 'Search token number',
         disabled: disableSearch,
-        optionType: typeData,
+        optionType: selecttypeData,
         defaultValue: 'employeeCode',
         handleChange: onChangeSearchHandler,
         valueReset: false,
@@ -533,7 +576,7 @@ const UserManagementMain = (props) => {
                                                     <Select className={styles.marR20} style={{ width: '60%' }} onChange={handleDealerChange} optionFilterProp="children" placeholder="Select dealer" showSearch allowClear>
                                                         {dealerDataList?.map((item) => (
                                                             <Option key={item?.dealerCode} value={item?.dealerCode}>
-                                                                {item?.dealerName}
+                                                                {item?.dealerCode +' - '+ item?.dealerName}
                                                             </Option>
                                                         ))}
                                                     </Select>
@@ -548,8 +591,8 @@ const UserManagementMain = (props) => {
                                 </Form>
                             </Col>
                         </Row>
-                        {userDataList?.userSearchResponse?.userDetails?.[0]?.dmsUserNotExist && <TokenValidateDataCard tokenData={userDataList?.userSearchResponse?.userDetails?.[0]} isLoading={listShowLoading} selectedDealerCode={selectedDealerCode} handleButtonClick={handleButtonClick} userType={userType} />}
-                        {error && <TokenErrorCard error={error} />}
+                        {/* {userDataList?.userSearchResponse?.userDetails?.[0]?.dmsUserNotExist && <TokenValidateDataCard tokenData={userDataList?.userSearchResponse?.userDetails?.[0]} isLoading={listShowLoading} selectedDealerCode={selectedDealerCode} handleButtonClick={handleButtonClick} userType={userType} />} */}
+                        {/* {error && <TokenErrorCard error={error} />} */}
                     </div>
                 </Col>
             </Row>

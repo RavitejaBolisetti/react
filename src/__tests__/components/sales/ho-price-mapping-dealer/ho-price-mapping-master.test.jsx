@@ -7,7 +7,7 @@ import { HoPriceMappingMaster } from 'components/Sales/HoPriceMappingDealer/HoPr
 import customRender from '@utils/test-utils';
 
 afterEach(() => {
-    jest.restoreAllMocks();
+  jest.restoreAllMocks();
 });
 
 jest.mock('store/actions/data/hoPriceMapping/hoPriceMapping', () => ({
@@ -36,9 +36,9 @@ jest.mock('@components/Sales/HoPriceMappingDealer/AddEditForm', () => {
 });
 
 describe('HoPriceMappingMaster Component', () => {
-    it('should render HoPriceMappingMaster component UI', () => {
-        customRender(<HoPriceMappingMaster />);
-    });
+  it('should render HoPriceMappingMaster component UI', () => {
+    customRender(<HoPriceMappingMaster />);
+  });
 
     it('should render component with data', () => {
         const data = {

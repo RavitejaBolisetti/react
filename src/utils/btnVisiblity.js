@@ -18,6 +18,7 @@ export const UNALLOT = FROM_ACTION_TYPE?.UNALLOT;
 export const DELETE_ACTION = FROM_ACTION_TYPE?.DELETE;
 export const CANCELLN_APPROVE = FROM_ACTION_TYPE?.CANCELLN_APPROVE;
 export const CANCELLN_REJECT = FROM_ACTION_TYPE?.CANCELLN_REJECT;
+export const UPLOAD_ACTION = FROM_ACTION_TYPE?.UPLOAD;
 
 export const btnVisiblity = ({ defaultBtnVisiblity, buttonAction, saveAndNewBtn = true, orderStatus = false }) => {
     let btnVisibility = defaultBtnVisiblity;

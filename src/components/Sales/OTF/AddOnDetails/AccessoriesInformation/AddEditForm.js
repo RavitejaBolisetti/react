@@ -32,7 +32,7 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
         accessoryForm
             .validateFields()
             .then((values) => {
-                if (isPresent(values?.partName)) {
+                if (isPresent(values?.partNumber)) {
                     return;
                 }
 
@@ -42,11 +42,6 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
                 }
 
                 const data = { ...values, otfNumber: selectedOrderId, isDeleting: true, id: '' };
-
-                if (!values?.partNumber) {
-                    showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Verify Part Number to continue' });
-                    return;
-                }
 
                 setAddOnItemInfo((prev) => (prev ? [data, ...prev] : [data]));
                 accessoryForm.resetFields();

@@ -62,7 +62,7 @@ const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
 
 const MacIdMasterMain = (props) => {
     const { form, section, userId, searchType, fetchMacIdList, listMacIdShowLoading, showGlobalNotification, typeData, macIdDataList, isMacIdLoaded } = props;
-    const { isContactDataLoading, saveData, formData, isMacIdLoading } = props;
+    const { saveData, formData, isMacIdLoading } = props;
     const { buttonData, setButtonData, formActionType, setIsFormVisible } = props;
 
     const [macIdform] = Form.useForm();
@@ -90,7 +90,7 @@ const MacIdMasterMain = (props) => {
 
     useEffect(() => {
         if (userId) {
-            setButtonData((prev) => ({ ...prev, nextBtn: false, nextBtnWthPopMag: false, saveBtn: true, editBtn: formActionType?.viewMode }));
+            // setButtonData((prev) => ({ ...prev, nextBtn: false, nextBtnWthPopMag: false, saveBtn: true, editBtn: formActionType?.viewMode }));
             fetchMacIdList({ setIsLoading: listMacIdShowLoading, userId, extraParams, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -220,7 +220,7 @@ const MacIdMasterMain = (props) => {
                             ) : (
                                 <>
                                     <Row type="flex" align="middle">
-                                        <Text strong> Mac ID</Text>
+                                        <Text strong> Device ID</Text>
                                         {!formActionType?.viewMode && (
                                             <Button onClick={addBtnMacIdHandler} icon={<PlusOutlined />} type="primary" disabled={isEditing || isAdding}>
                                                 Add

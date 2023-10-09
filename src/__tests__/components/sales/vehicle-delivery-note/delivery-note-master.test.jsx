@@ -15,7 +15,7 @@ jest.mock('store/actions/data/vehicleDeliveryNote/vehicleDeliveryNote', () => ({
 
 describe('Vehicle Delivery Note Master components', () => {
     it('should render components', () => {
-        customRender(<VehicleDeliveryNoteMaster />);
+        customRender(<VehicleDeliveryNoteMaster resetDeliveryNoteMasterData={jest.fn()} setFilterString={jest.fn()} />);
 
         const pendingBtn = screen.getAllByRole('button', { name: /Pending/i });
         fireEvent.click(pendingBtn[0]);
@@ -40,7 +40,7 @@ describe('Vehicle Delivery Note Master components', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <VehicleDeliveryNoteMaster fetchList={fetchList} setFilterString={jest.fn()} />
+                <VehicleDeliveryNoteMaster fetchList={fetchList} setFilterString={jest.fn()} resetDeliveryNoteMasterData={jest.fn()} />
             </Provider>
         );
 
@@ -49,7 +49,7 @@ describe('Vehicle Delivery Note Master components', () => {
     });
 
     it('reset button should work', () => {
-        customRender(<VehicleDeliveryNoteMaster setFilterString={jest.fn()} />);
+        customRender(<VehicleDeliveryNoteMaster setFilterString={jest.fn()} resetDeliveryNoteMasterData={jest.fn()} />);
 
         const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
         fireEvent.click(advanceFilter);
@@ -58,7 +58,7 @@ describe('Vehicle Delivery Note Master components', () => {
     });
 
     it('test for closing the advance filter', () => {
-        customRender(<VehicleDeliveryNoteMaster />);
+        customRender(<VehicleDeliveryNoteMaster resetDeliveryNoteMasterData={jest.fn()} setFilterString={jest.fn()} />);
 
         const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
         fireEvent.click(advanceFilter);
@@ -77,7 +77,7 @@ describe('Vehicle Delivery Note Master components', () => {
         });
         customRender(
             <Provider store={mockStore}>
-                <VehicleDeliveryNoteMaster fetchList={jest.fn()} setFilterString={jest.fn()} />
+                <VehicleDeliveryNoteMaster fetchList={jest.fn()} setFilterString={jest.fn()} resetDeliveryNoteMasterData={jest.fn()} />
             </Provider>
         );
 
@@ -100,7 +100,7 @@ describe('Vehicle Delivery Note Master components', () => {
         });
         customRender(
             <Provider store={mockStore}>
-                <VehicleDeliveryNoteMaster fetchList={jest.fn()} setFilterString={jest.fn()} />
+                <VehicleDeliveryNoteMaster fetchList={jest.fn()} setFilterString={jest.fn()} resetDeliveryNoteMasterData={jest.fn()} />
             </Provider>
         );
 
@@ -108,5 +108,37 @@ describe('Vehicle Delivery Note Master components', () => {
         fireEvent.change(advanceFilter, { target: { value: 'Test' } });
         const removeFilter = screen.getAllByTestId('removeFilter');
         fireEvent.click(removeFilter[0]);
+    });
+
+    it('test1', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                VehicleDeliveryNote: {
+                    VehicleDeliveryNoteSearchList: { filter: { advanceFilter: 'Test', invoiceFromDate: '06/06/2022', invoiceToDate: '06/06/2022', deliveryNoteFromDate: '06/06/2022', deliveryNoteToDate: '06/06/2022', key: 'searchParam' } },
+                },
+            },
+        });
+        customRender(
+            <Provider store={mockStore}>
+                <VehicleDeliveryNoteMaster fetchList={jest.fn()} setFilterString={jest.fn()} resetDeliveryNoteMasterData={jest.fn()} />
+            </Provider>
+        );
+
+        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        fireEvent.click(advanceFilter);
+
+        const fromDate = screen.getByRole('textbox', { name: 'Invoice From Date' });
+        fireEvent.click(fromDate);
+        const todayForFromDate = await screen.findByText('Today');
+        fireEvent.click(todayForFromDate);
+
+        const toDate = screen.getByRole('textbox', { name: 'Invoice To Date' });
+        fireEvent.click(toDate);
+        const todayToFromDate = await screen.findAllByText('Today');
+        fireEvent.click(todayToFromDate[1]);
+
+        const resetBtn = screen.getByRole('button', { name: /apply/i });
+        fireEvent.click(resetBtn);
     });
 });

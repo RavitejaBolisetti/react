@@ -31,7 +31,7 @@ export function chackedKeysMapData(treeData) {
 
         const getKeys = (treeData) => {
             treeData?.forEach((el) => {
-                if (el?.checked) {
+                if (el?.checked && el?.type === 'Action') {
                     initialCheckedKeys[node?.value].push(el?.value);
                 }
                 if (el?.children) {
@@ -69,9 +69,9 @@ const AssignUserRole = (props) => {
         if (!userType) return;
         setButtonData((prev) => {
             if (userType === USER_TYPE_USER?.MANUFACTURER?.id) {
-                return { ...prev, nextBtn: false, nextBtnWthPopMag: false, closeBtn: false, formBtnActive: false };
+                return { ...prev, nextBtn: false, nextBtnWthPopMag: false, formBtnActive: false };
             } else {
-                return { ...prev, closeBtn: false, nextBtnWthPopMag: false, formBtnActive: false };
+                return { ...prev, nextBtnWthPopMag: false, formBtnActive: false };
             }
         });
 
@@ -118,6 +118,7 @@ const AssignUserRole = (props) => {
 
     useEffect(() => {
         if (userId && formData?.employeeCode && (record?.roleId || selectedRoleId)) {
+            setDeviceType(APPLICATION_WEB);
             if (userType === USER_TYPE_USER?.DEALER?.id) {
                 fetchDLRUserRoleDataList({ setIsLoading: usrRolelAppListShowLoading, userId, extraParams: extraParamsDlr, onErrorAction });
             } else {
@@ -136,7 +137,7 @@ const AssignUserRole = (props) => {
         };
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [selectedRoleId]);
 
     const fetchUserRoleFn = () => {
         const extraParams = [
@@ -169,7 +170,7 @@ const AssignUserRole = (props) => {
             form.resetFields();
             resetUsrDlrRoleAppDataList();
             setisModalVisible(false);
-            setButtonData((prev) => ({ ...defaultBtnVisiblity, saveBtn: true, formBtnActive: true }));
+            // setButtonData((prev) => ({ ...defaultBtnVisiblity, saveBtn: true, formBtnActive: true }));
             fetchUserRoleFn();
             setDisableMdlSaveBtn(true);
         };

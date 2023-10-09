@@ -10,7 +10,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { vehicleChallanDetailsDataActions } from 'store/actions/data/vehicleDeliveryNote/vehicleChallanDetails';
-import { vehicleBatteryDetailsDataActions } from 'store/actions/data/vehicleDeliveryNote/vehicleBatteryDetails';
 import { showGlobalNotification } from 'store/actions/notification';
 
 import styles from 'assets/sass/app.module.scss';
@@ -25,7 +24,6 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             VehicleDeliveryNote: {
-                VehicleBatteryDetails: { isLoaded: isDataLoaded = false, isLoading, data: vehicleData = {} },
                 VehicleDetailsChallan: { isLoaded: isChallanDataLoaded = false, isChallanLoading, data: vehicleChallanData = {} },
             },
         },
@@ -35,10 +33,7 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         userId,
-        isDataLoaded,
-        isLoading,
         moduleTitle,
-        // vehicleData,
         isChallanDataLoaded,
         isChallanLoading,
         vehicleChallanData,
@@ -50,8 +45,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: vehicleBatteryDetailsDataActions.fetchList,
-            listShowLoading: vehicleBatteryDetailsDataActions.listShowLoading,
             fetchChallanList: vehicleChallanDetailsDataActions.fetchList,
             listChallanShowLoading: vehicleChallanDetailsDataActions.listShowLoading,
             showGlobalNotification,
@@ -62,12 +55,12 @@ const mapDispatchToProps = (dispatch) => ({
 
 const VehicleDetailsMasterBase = (props) => {
     const { typeData, partySegmentType, vehicleChallanData } = props;
-    const { userId, selectedOrderId, selectedInvoiceId, soldByDealer, setFormActionType, showGlobalNotification, listShowLoading, isDataLoaded, isLoading, requestPayload } = props;
-    const { form, formActionType, fetchChallanList, listChallanShowLoading, handleButtonClick, handleFormValueChange, section, openAccordian, setOpenAccordian, fetchList, vehicleData, NEXT_ACTION, chassisNoValue, record, engineChallanNumber, setEngineChallanNumber, setSelectedOrder, setRequestPayload } = props;
+    const { userId, soldByDealer, setFormActionType, showGlobalNotification, isLoading, requestPayload } = props;
+    const { form, formActionType, fetchChallanList, listChallanShowLoading, handleButtonClick, handleFormValueChange, section, openAccordian, setOpenAccordian, fetchList, vehicleData, NEXT_ACTION, setRequestPayload } = props;
     const { buttonData, setButtonData } = props;
 
     const [regNumber, setRegNumber] = useState();
-    const [activeKey, setActiveKey] = useState([]);
+    const [activeKey, setActiveKey] = useState([1, 2]);
     const [otfNumber, setOtfNumber] = useState();
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -103,6 +96,11 @@ const VehicleDetailsMasterBase = (props) => {
         if (!soldByDealer && !formActionType?.viewMode && userId) {
             const chassi = requestPayload?.deliveryNoteInvoiveDetails?.chassisNumber;
             const engineNo = requestPayload?.deliveryNoteInvoiveDetails?.engineNumber;
+            const onSuccessAction = () => {
+                form.setFieldsValue({ ...vehicleChallanData });
+                setFormData({ ...vehicleChallanData });
+                setRequestPayload({ ...requestPayload, vehicleInformationDto: vehicleChallanData });
+            };
             if (engineNo && chassi) {
                 const extraParams = [
                     {
@@ -119,37 +117,33 @@ const VehicleDetailsMasterBase = (props) => {
                     },
                 ];
 
-                fetchChallanList({ setIsLoading: listChallanShowLoading, extraParams, userId, onErrorAction });
+                fetchChallanList({ setIsLoading: listChallanShowLoading, extraParams, userId, onErrorAction, onSuccessAction });
             }
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [requestPayload, formActionType, soldByDealer, userId]);
+    }, [section, formActionType, soldByDealer, userId]);
 
     useEffect(() => {
         if (vehicleData) {
             form.setFieldsValue({ ...vehicleData });
             setFormData({ ...vehicleData });
         }
-        if (!soldByDealer && vehicleChallanData) {
-            form.setFieldsValue({ ...vehicleChallanData });
-            setFormData({ ...vehicleChallanData });
-        }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [vehicleData, vehicleChallanData, soldByDealer]);
+    }, [vehicleData, soldByDealer, section, requestPayload, vehicleChallanData]);
+
     useEffect(() => {
         setButtonData({ ...buttonData, formBtnActive: true });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [section]);
-
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
 
     const onFinish = (values) => {
         if (!soldByDealer) {
-            setRequestPayload({ ...requestPayload, vehicleDetails: { ...values } });
+            setRequestPayload({ ...requestPayload, vehicleInformationDto: values?.vinNumber ? { ...values } : { ...vehicleChallanData }, vehicleDetails: values?.vinNumber ? { ...values } : { ...vehicleData } });
         }
         handleButtonClick({ buttonAction: NEXT_ACTION });
         setButtonData({ ...buttonData, formBtnActive: false });
@@ -177,7 +171,6 @@ const VehicleDetailsMasterBase = (props) => {
         EDIT_ACTION,
         VIEW_ACTION,
         isVisible: isFormVisible,
-        isDataLoaded,
         formData,
         isLoading,
         setActiveKey,

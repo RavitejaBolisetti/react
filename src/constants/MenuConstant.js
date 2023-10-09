@@ -636,4 +636,12 @@ export const MenuConstant = {
         icon: undefined,
         parentMenuId: 'SACT-04',
     },
+
+    [getMenyKey('FINA-05.01')]: {
+        key: 'FINA-05.01',
+        link: routing.ROUTING_GST_IRN_AUTHENTICATION,
+        icon: undefined,
+        parentMenuId: 'FINA-05',
+    },
+    
 };
