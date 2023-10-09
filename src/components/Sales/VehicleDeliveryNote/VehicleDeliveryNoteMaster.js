@@ -420,7 +420,6 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     };
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
-        console.log('record', record);
         form.resetFields();
         form.setFieldsValue(undefined);
         switch (buttonAction) {
@@ -528,7 +527,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
                 finalPayload = { ...rest, insuranceDto, vehicleDeliveryChecklist, invoiceNumber: selectedOrder?.invoicehdrId };
             }
         }
-        // console.log('finalPayload', finalPayload);
+
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);

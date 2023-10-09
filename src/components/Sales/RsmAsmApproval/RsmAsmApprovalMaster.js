@@ -244,10 +244,8 @@ export const RsmAsmApprovalMasterBase = (props) => {
     };
 
     const handleSearchChange = (value) => {
-        console.log('value', value);
         const searchValue = value.trim();
         if (!searchValue) {
-            console.log(searchValue);
             return;
         }
         setFilterString({ ...filterString, advanceFilter: true, searchParam: searchValue });

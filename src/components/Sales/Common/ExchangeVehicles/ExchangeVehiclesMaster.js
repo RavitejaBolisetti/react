@@ -138,7 +138,7 @@ const ExchangeVehiclesBase = (props) => {
     const { schemeLovData, isSchemeLovLoading, fetchSchemeLovList, listSchemeLovShowLoading } = props;
     const { form, selectedRecordId, selectedOrderId, formActionType, handleFormValueChange, resetData } = props;
     const { fetchCustomerList, listCustomerShowLoading, handleButtonClick, NEXT_ACTION } = props;
-    const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar, isProductHierarchyDataLoaded, salesModuleType } = props;
+    const { viewOnly = false, modelCode = undefined, buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar, isProductHierarchyDataLoaded, salesModuleType } = props;
 
     const [formData, setFormData] = useState('');
     const [filteredModelData, setfilteredModelData] = useState([]);
@@ -168,13 +168,9 @@ const ExchangeVehiclesBase = (props) => {
     useEffect(() => {
         if (isOTFModule && exchangeData) {
             setFormData(exchangeData);
-            exchangeData?.make && handleFilterChange('make', exchangeData?.make ?? '');
-            exchangeData?.modelGroup && handleFilterChange('modelGroup', exchangeData?.modelGroup ?? '');
             setButtonData({ ...buttonData, formBtnActive: false });
         } else if (exchangeDataPass) {
             setFormData(exchangeDataPass);
-            exchangeData?.make && handleFilterChange('make', exchangeData?.make ?? '');
-            exchangeData?.modelGroup && handleFilterChange('modelGroup', exchangeData?.modelGroup ?? '');
             setButtonData({ ...buttonData, formBtnActive: true });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -222,12 +218,12 @@ const ExchangeVehiclesBase = (props) => {
     }, [variantData]);
 
     useEffect(() => {
-        if (userId && selectedRecordId) {
+        if (userId && selectedOrder) {
             const schemeExtraParams = [
                 {
                     key: 'modelCode',
                     title: 'modelCode',
-                    value: selectedOrder?.modelCode,
+                    value: selectedOrder?.modelCode || modelCode,
                     name: 'Booking Number',
                 },
                 {
@@ -242,7 +238,7 @@ const ExchangeVehiclesBase = (props) => {
             fetchSchemeLovList({ setIsLoading: listSchemeLovShowLoading, extraParams: schemeExtraParams, onErrorAction, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedRecordId]);
+    }, [userId, selectedOrder, modelCode]);
 
     useEffect(() => {
         return () => {
@@ -360,10 +356,10 @@ const ExchangeVehiclesBase = (props) => {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Verify Customer id to continue' });
             return;
         }
-        const data = { ...values, exchange: values?.exchange ? 1 : 0, id: exchangeData?.id || '', otfId: selectedRecordId, otfNumber: selectedOrderId };
+        const data = { ...values, exchange: values?.exchange ? 1 : 0, id: formData?.id || '', otfId: selectedRecordId, otfNumber: selectedOrderId };
 
         if (onFinishCustom) {
-            onFinishCustom({ key: formKey, values: data });
+            !viewOnly && onFinishCustom({ key: formKey, values: data });
             handleButtonClick({ buttonAction: NEXT_ACTION });
             setButtonData({ ...buttonData, formBtnActive: false });
         } else {
@@ -375,7 +371,7 @@ const ExchangeVehiclesBase = (props) => {
 
             const requestData = {
                 data: data,
-                method: exchangeData?.id ? 'put' : 'post',
+                method: formData?.id ? 'put' : 'post',
                 setIsLoading: listShowLoading,
                 userId,
                 onError: onErrorAction,

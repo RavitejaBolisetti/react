@@ -21,7 +21,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const AddEditFormMain = (props) => {
-    const { formData, accessoryForm, shieldForm, rsaForm, amcForm, fmsForm, fnSetData, addOnItemInfo, setAddOnItemInfo, formActionType, selectedOrderId, formDataSetter, setformDataSetter, handleFormValueChange, showGlobalNotification, onSearchPart, AddonPartsData, setsearchData, searchData } = props;
+    const { formData, accessoryForm, shieldForm, rsaForm, amcForm, fmsForm, fnSetData, addOnItemInfo, setAddOnItemInfo, formActionType, selectedOrderId, formDataSetter, setFormDataSetter, handleFormValueChange, showGlobalNotification, onSearchPart, AddonPartsData, setsearchData, searchData } = props;
 
     const [openAccordian, setOpenAccordian] = useState(formData?.partDetailsResponses?.length ? ['ci'] : []);
 
@@ -35,7 +35,7 @@ const AddEditFormMain = (props) => {
     const [isEditing, setisEditing] = useState(false);
 
     useEffect(() => {
-        setformDataSetter({ ...formDataSetter, partDetailsResponses: addOnItemInfo });
+        setFormDataSetter({ ...formDataSetter, partDetailsResponses: addOnItemInfo });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [addOnItemInfo]);
 
@@ -72,7 +72,7 @@ const AddEditFormMain = (props) => {
         fmsForm,
         addButtonDisabled,
         setaddButtonDisabled,
-        setformDataSetter,
+        setFormDataSetter,
         formDataSetter,
         handleFormValueChange,
         formActionType,
