@@ -472,6 +472,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
         form.setFieldsValue(undefined);
+        cancelInvoiceForm.resetFields();
 
         if (isLastSection) {
             generateInvoice();
@@ -480,6 +481,7 @@ export const VehicleInvoiceMasterBase = (props) => {
 
         switch (buttonAction) {
             case ADD_ACTION:
+                setProfileCardData();
                 defaultSection && setCurrentSection(defaultSection);
                 resetOtfData();
                 invoiceDetailForm.resetFields();
