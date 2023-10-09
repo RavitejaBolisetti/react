@@ -15,7 +15,8 @@ import styles from 'assets/sass/app.module.scss';
 
 export default function GSTIRNFilter(props) {
     const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, filterString, dealerGstData } = props;
-    const { userId, isReadOnly = true, selectedGst, setSelectedGst } = props;
+    const { userId, isReadOnly = true, handleGstinNumber, } = props;
+    // const { selectedGst, setSelectedGst } = props;
     const disabledProps = { disabled: isReadOnly };
 
     return (
@@ -27,13 +28,13 @@ export default function GSTIRNFilter(props) {
                             GST IRN Authentication
                         </Col>
                         <Col xs={24} sm={4} md={4} lg={4} xl={4} className={styles.verticallyCentered}>
-                            <Form.Item name="dealerName" className={styles.marB0}>
+                            <Form.Item className={styles.marB0}>
                                 <Input maxLength={6} placeholder="Dealer Name" value={userId} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={10} md={10} lg={10} xl={10} className={styles.verticallyCentered}>
                             <Form.Item name="gstinNumber" className={styles.marB0} rules={[validateRequiredInputField('gstinNumber')]}>
-                                {customSelectBox({ data: dealerGstData, fieldNames: { key: 'key', value: 'value' }, placeholder: preparePlaceholderSelect('GSTIN NUMBER') })}
+                                {customSelectBox({ data: dealerGstData, fieldNames: { key: 'value', value: 'value' }, onChange:handleGstinNumber, placeholder: preparePlaceholderSelect('GSTIN NUMBER') })}
                             </Form.Item>
                         </Col>
 

@@ -8,7 +8,7 @@ import { Row, Col, Input, Form } from 'antd';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 
-const RSAForm = ({ formData, rsaForm, setformDataSetter, formDataSetter, formActionType, handleFormValueChange }) => {
+const RSAForm = ({ formData, rsaForm, setFormDataSetter, formDataSetter, formActionType, handleFormValueChange }) => {
     const [isReadOnly, setisReadOnly] = useState(false);
 
     useEffect(() => {
@@ -27,7 +27,7 @@ const RSAForm = ({ formData, rsaForm, setformDataSetter, formDataSetter, formAct
     const onFinishFailed = () => {};
     const onValuesChange = (values) => {
         const Myvalues = rsaForm.getFieldsValue();
-        setformDataSetter({ ...formDataSetter, rsa: { ...Myvalues } });
+        setFormDataSetter({ ...formDataSetter, rsa: { ...Myvalues } });
     };
 
     return (

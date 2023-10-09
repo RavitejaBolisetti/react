@@ -4,12 +4,14 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Collapse, Space, Avatar, Typography, Divider } from 'antd';
+import { Collapse, Space, Avatar, Divider, Typography } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import styles from 'assets/sass/app.module.scss';
+import { USER_TYPE_USER } from 'constants/modules/UserManagement/userType';
 
 const { Panel } = Collapse;
-const { Title } = Typography;
+const { Text, Title } = Typography;
+
 const expandIcon = ({ isActive }) =>
     isActive ? (
         <>
@@ -24,7 +26,7 @@ const expandIcon = ({ isActive }) =>
     );
 
 const ProfileDetailCard = (props) => {
-    const { selectedRecord, userType, USER_TYPE_USER, formData } = props;
+    const { selectedRecord, userType, formData } = props;
     const fullName = formData?.manufacturerUserName?.split(' ') || formData?.userName?.split(' ');
     const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1].slice(0, 1) : '') : '';
 
@@ -35,31 +37,28 @@ const ProfileDetailCard = (props) => {
                     <>
                         <Space>
                             <Avatar size={50}>{userAvatar?.toUpperCase()}</Avatar>
-                            {/* <Title level={5}>{formData?.manufacturerUserName || formData?.userName}</Title> */}
+                            <div>
+                                <Title level={5}>{formData?.manufacturerUserName || formData?.userName}</Title>
+                                {selectedRecord?.employeeCode && <Text>{`Token No:  ${selectedRecord?.employeeCode}`} </Text>}
+                            </div>
                         </Space>
                     </>
                 }
                 key={1}
             >
                 <Divider />
-                {userType === USER_TYPE_USER?.DEALER?.id ? (
-                    <>
-                        <div className={styles.detailCardText}>
-                            Employee Code: <span>{selectedRecord?.employeeCode || 'NA'}</span>
-                        </div>
-                        <Divider />
-                        <div className={styles.detailCardText}>
-                            Token No: <span>{selectedRecord?.employeeCode || 'NA'}</span>
-                        </div>
-                    </>
+                {/* {userType === USER_TYPE_USER?.DEALER?.id ? (
+                    <div className={styles.detailCardText}>
+                        Employee Code: <span>{selectedRecord?.employeeCode || 'NA'}</span>
+                    </div>
                 ) : (
                     <div className={styles.detailCardText}>
                         Token No: <span>{selectedRecord?.employeeCode || 'NA'}</span>
                     </div>
                 )}
-                <Divider />
+                <Divider /> */}
                 <div className={styles.detailCardText}>
-                    User Name: <span>{selectedRecord?.manufacturerUserName || 'NA'}</span>
+                    User Name: <span>{selectedRecord?.manufacturerUserName || formData?.userName || 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>

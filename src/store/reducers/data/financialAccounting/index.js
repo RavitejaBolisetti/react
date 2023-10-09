@@ -21,7 +21,7 @@ import { GstIrnTransactionDetails } from './gstIrnTransactionDetails';
 // import { ChartOfAccountHierarchy } from './chartOfAccount/chartOfAccountHierarchy';
 // import { ChartOfAccount } from './chartOfAccount/chartOfAccount';
 import { ChartOfAccountMaster } from './chartOfAccount';
-
+import { GstToDocDetails } from './selectGstToDocDetails';
 export const FinancialAccounting = combineReducers({
     TaxCharges,
     TaxChargesCategory,
@@ -40,4 +40,5 @@ export const FinancialAccounting = combineReducers({
     // ChartOfAccountHierarchy,
     // ChartOfAccount,
     ChartOfAccountMaster,
+    GstToDocDetails,
 });

@@ -401,6 +401,14 @@ export const PARAM_MASTER = {
         id: 'SO_RC',
         title: 'OTF SO Mapping',
     },
+    CRM_SCHEME_TYPE: {
+        id: 'CRM_SCHEME_TYPE',
+        title: 'Scheme Type',
+    },
+    CRM_SCHEME_TYPE_SEARCH: {
+        id: 'CRM_SCHEME_TYPE_SEARCH',
+        title: 'Scheme Type Search',
+    },
     CHRG_STATUS: {
         id: 'CHRG_STATUS',
         title: 'EVR Charging Status',
@@ -408,5 +416,9 @@ export const PARAM_MASTER = {
     AMC_SCHEME_TYPE: {
         id: 'AMC_SCHEME_TYPE',
         title: 'AMC Scheme AMC Type',
+    },
+    DEVICE_TYPE: {
+        id: 'DVIC_TYP',
+        title: 'Device Type',
     },
 };

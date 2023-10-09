@@ -32,7 +32,19 @@ describe('Advanced Search Component', () => {
             productHierarchy: 'Kai',
         };
 
-        customRender(<FormWrapper isVisible={true} handleFilterChange={jest.fn()} filterString={filterString} setAdvanceSearchVisible={jest.fn()} setFilterString={jest.fn()} />);
+        const res = [{
+            "id": "4a50fd6d-a788-4313-96dc-8b4fe9b8d7d1",
+            "state": "Uttar Pradesh",
+            "city": "KURNOOL",
+            "enabledDate": "2017-07-01T00:00:00.000+00:00",
+            "enabledBy": "Sakshi",
+            "dealerBranch": "AM02",
+            "dealerParent": "SUPREME MOBILES PVT LTD.",
+            "dealerSelectOnRoadPrice": true,
+            "modelDealerMapResponse": null
+          }]
+
+        customRender(<FormWrapper isVisible={true} filteredStateData={res} handleFilterChange={jest.fn()} filterString={filterString} setAdvanceSearchVisible={jest.fn()} setFilterString={jest.fn()} />);
 
         const applyBtn = screen.getByRole('button', { name: 'Apply' });
         fireEvent.click(applyBtn);

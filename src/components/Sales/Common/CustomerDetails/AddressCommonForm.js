@@ -26,6 +26,7 @@ export const AddressCommonForm = (props) => {
             return Promise.resolve();
         }
     };
+
     return (
         <>
             {formType === 'billingCustomer' && canUpdate && (
@@ -38,10 +39,8 @@ export const AddressCommonForm = (props) => {
             {!viewOnly && formType === 'billingCustomer' && (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item name={[formType, 'sameAsBookingCustomer']} label="" initialValue={formData?.sameAsBookingCustomer}>
-                            <Checkbox valuePropName="checked" onClick={handleOnChange} name="sameAsBookingCustomer">
-                                Same as Booking Customer
-                            </Checkbox>
+                        <Form.Item name={[formType, 'sameAsBookingCustomer']} valuePropName="checked" label="" initialValue={formData?.sameAsBookingCustomer}>
+                            <Checkbox onClick={handleOnChange}>Same as Booking Customer</Checkbox>
                         </Form.Item>
                     </Col>
                 </Row>

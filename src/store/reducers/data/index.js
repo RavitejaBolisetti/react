@@ -47,11 +47,13 @@ import { OTFSoMapping } from './otfSoMappingUnmapping';
 import { OTFBlockMaster } from './otfBlockMaster';
 import { VehicleDeliveryNote } from './vehicleDeliveryNote';
 import { DealerBlockMaster } from './dealerBlockMaster';
+import { RsmAsmApproval } from './rsmAsmApproval';
 import { EvrDetailsCapturing } from './evrDetailsCapturing';
 
 import { stockTransferIndentData } from './stockTransferIndent';
 import { AMCRegistration } from './amcRegistration';
 
+import { CRMSchemeEnrollmentList } from './crmSchemeEnrollment';
 export const data = combineReducers({
     Menu,
     ProductHierarchy,
@@ -65,7 +67,6 @@ export const data = combineReducers({
     ApplicationMaster,
     QualificationMaster,
     UserManagement,
-    // UserManagementManufacturer,
     Geo,
     Sales,
     DealerManpower,
@@ -86,7 +87,6 @@ export const data = combineReducers({
     ManufacturerOrg,
     VehicleReceipt,
     VehiclePriceMaster,
-    Receipt,
     VehicleModelandTaxChargesCategory,
     Report,
     VehicleReceiptChecklist,
@@ -98,6 +98,8 @@ export const data = combineReducers({
     OTFBlockMaster,
     VehicleDeliveryNote,
     DealerBlockMaster,
+    CRMSchemeEnrollmentList,
+    RsmAsmApproval,
     EvrDetailsCapturing,
     AMCRegistration,
 });

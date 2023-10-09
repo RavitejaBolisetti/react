@@ -18,7 +18,7 @@ const BranchMapping = (props) => {
     // const [parentDealerCode, setParentDealerCode] = useState('');
 
     useEffect(() => {
-        setButtonData((prev) => ({ ...prev, nextBtn: false, nextBtnWthPopMag: false, saveBtn: true, editBtn: formActionType?.viewMode }));
+        // setButtonData((prev) => ({ ...prev, nextBtn: false, nextBtnWthPopMag: false, saveBtn: true, editBtn: formActionType?.viewMode }));
 
         return () => {
             resetUsrDlrBranchLocationsList();

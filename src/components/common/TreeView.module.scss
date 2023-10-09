@@ -135,7 +135,7 @@
     & :global {
         .ant-collapse {
             &:first-child {
-                margin-bottom: 0 !important;
+                //margin-bottom: 0 !important;
             }
             &:last-child {
                 &:not(:first-child) {
@@ -288,4 +288,9 @@
     @include space(margin, top, $sp12);
     @include space(margin, bottom, $sp8);
     width: '100%';
+}
+
+.footerBorder {
+    margin-bottom: 10px;
+    border-block-start: 1px solid #e6e6e6;
 }

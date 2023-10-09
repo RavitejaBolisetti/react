@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen, fireEvent, logRoles } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { VehicleDetailsMaster } from '@components/Sales/OTF/VehicleDetails/VehicleDetailsMaster';
+import { VehicleDetailsMaster } from '@components/Sales/Common/VehicleDetails/VehicleDetailsMaster';
 import customRender from '@utils/test-utils';
 import { Button, Form } from 'antd';
 import createMockStore from '__mocks__/store';
@@ -60,7 +60,7 @@ describe('OtfMaster component render', () => {
         });
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper typeData={'VEHCL_TYPE'} selectedOrderId={'hello'} onChange={jest.fn()} StatusBar={StatusBar} FormActionButton={FormActionButton} />
+                <FormWrapper typeData={'VEHCL_TYPE'} selectedOrderId={'hello'} onChange={jest.fn()} StatusBar={StatusBar} FormActionButton={FormActionButton} setButtonData={jest.fn()} handleFormValueChange={jest.fn()} />
             </Provider>
         );
 

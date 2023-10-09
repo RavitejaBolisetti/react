@@ -150,10 +150,8 @@ export const HoPriceMappingMasterBase = (props) => {
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
-
     const [formData, setFormData] = useState([]);
 
     const onSuccessAction = (res) => {
@@ -494,14 +492,13 @@ export const HoPriceMappingMasterBase = (props) => {
     };
 
     const title = 'HO Price Upload Mapping for Dealer';
+    const drawerTitleHeading = ' HO Price Upload Mapping';
 
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
-            return 'View ';
+            return 'View' + drawerTitleHeading;
         } else if (formActionType?.editMode) {
-            return 'Edit ';
-        } else {
-            return 'Add New ';
+            return 'Edit' + drawerTitleHeading;
         }
     }, [formActionType]);
 

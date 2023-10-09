@@ -19,7 +19,7 @@ import { CorporateAddress } from './corporate/corporateAddress';
 import { NameChangeRequest } from './individual/nameChangeRequest';
 import { CustomerParentCompany } from './customerParentCompany';
 import { ViewDocument } from './documentView';
-
+import { CustomerVerification } from './customerVerification';
 export const CustomerMaster = combineReducers({
     IndiviualProfile,
     CustomerDetails,
@@ -35,4 +35,5 @@ export const CustomerMaster = combineReducers({
     CustomerParentCompany,
     CorporateAddress,
     ViewDocument,
+    CustomerVerification,
 });

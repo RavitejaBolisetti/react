@@ -22,7 +22,7 @@ const FormWrapper = (props) => {
 
 describe(' Advance Search components', () => {
     it('should abe to select InvoiceDate without error', async () => {
-        customRender(<FormWrapper isVisible={true} />);
+        customRender(<FormWrapper isVisible={true} deliveryStatus={true} />);
 
         const fromDate = screen.getByRole('textbox', { name: 'Invoice From Date' });
 

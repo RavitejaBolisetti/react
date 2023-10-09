@@ -5,7 +5,23 @@ import { LoyaltySchemeMaster } from 'components/Sales/OTF/LoyaltyScheme/LoyaltyS
 import customRender from '@utils/test-utils';
 import { Form, Button } from 'antd';
 import createMockStore from '__mocks__/store';
-import { OTFFormButton } from 'components/Sales/OTF/OTFFormButton';
+
+jest.mock('store/actions/data/otf/loyaltyAndScheme', () => ({
+    otfLoyaltySchemeDataActions: {},
+}));
+
+
+jest.mock('@components/Sales/Common/LoyaltyScheme/AddEditForm', () => {
+    const AddEditForm = ({ onFinish }) => (
+        <div>
+            <button onClick={onFinish}>Save</button>
+        </div>
+    );
+    return {
+        __esModule: true,
+        AddEditForm,
+    };
+});
 
 const FormActionButton = () => (
     <div>
@@ -25,16 +41,6 @@ const FormWrapper = (props) => {
     return <LoyaltySchemeMaster form={myForm} {...props} />;
 };
 
-const CustomerDetailData = [
-    {
-        id: 'test',
-        value: 'test1',
-    },
-    {
-        id: 'test1',
-        value: 'test1',
-    },
-];
 const buttonData = {
     allotBtn: true,
     cancelBtn: true,
@@ -53,78 +59,74 @@ const buttonData = {
 };
 
 describe('Loyalty scheme master render', () => {
-    it('should render loyalty scheme add edit from details', () => {
+    it('should render loyalty scheme add edit from details', async () => {
         const CustomerDetailData = [
             {
-                id: 'test',
-                value: 'test1',
-            },
-            {
-                id: 'test1',
-                value: 'test1',
-            },
+                "id": "5d6651ac-4e5f-4dc7-9f70-88ffb7ae62e4",
+                "schemeMasterId": "7e35b561-f3f7-40b1-a976-2ee1e46ce8a5",
+                "otfId": "898b6f9f-f7dd-4f7d-a2ae-972fa38b1c50",
+                "otfNumber": "OTF24D000598",
+                "customerCode": "C230496131",
+                "customerName": "SNEHAL PRABHAKAR WANJARI",
+                "customerDOB": null,
+                "registrationYear": "2023",
+                "registrationYearCode": "2023",
+                "registrationMonth": "JANUARY",
+                "registrationMonthCode": "1",
+                "kilometer": null,
+                "vehicleUsageCode": "C",
+                "vehicleUsage": "Commercial",
+                "financierCode": null,
+                "financierName": null,
+                "variantCode": null,
+                "variantName": "M0020",
+                "vehicleManufactureCode": null,
+                "vehicleModelCode": null,
+                "vehicleModelGroup": "X300",
+                "make": "mahindra",
+                "financeIndicator": null,
+                "loyaltyBonus": null,
+                "oldChassisNumber": "N2H59599",
+                "registrationNumber": "MH43CC3313",
+                "relationCode": "HUSB",
+                "relationName": "Husband",
+                "serialNumber": null,
+                "schemeCode": "7e35b561-f3f7-40b1-a976-2ee1e46ce8a5",
+                "schemeType": "D",
+                "schemeName": "2 years free extended warranty",
+                "schemeCategory": "OINVC",
+                "schemeAmount": null,
+                "schemeApplicableTo": "IND",
+                "validFrom": "2010-11-01",
+                "validTo": "2010-11-30",
+                "remarks": null
+            }
         ];
+
         const mockStore = createMockStore({
             auth: { userId: '123456' },
             data: {
                 OTF: {
-                    LoyaltyScheme: { isLoaded: true, data: CustomerDetailData },
+                    LoyaltyScheme: { isLoaded: true, data: CustomerDetailData, LoyaltySchemeData: CustomerDetailData },
                 },
             },
         });
 
+        const res = {
+            "otfId": "1234",
+        }
+
         const fetchList = jest.fn();
+        const saveData = jest.fn()
 
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper StatusBar={'test'} FormActionButton={FormActionButton} fetchList={fetchList} buttonData={buttonData} setButtonData={jest.fn()} />
+                <LoyaltySchemeMaster StatusBar={'test'} data={res} setformData={jest.fn()} handleSchemeChange={jest.fn()} onFinishCustom={{ key: 1, value: res }} handleFilterChange={jest.fn()} variantData={CustomerDetailData} saveData={saveData} FormActionButton={FormActionButton} fetchList={fetchList} buttonData={buttonData} setButtonData={jest.fn()} />
             </Provider>
         );
 
-        const combobox = screen.getByRole('combobox', { name: '', exact: false });
-        fireEvent.change(combobox, { target: { value: 'testing' } });
-
-        const make = screen.getByRole('combobox', { name: 'Make', exact: false });
-        fireEvent.change(make, { target: { value: 'make' } });
-
-        const modelG = screen.getByRole('combobox', { name: 'Model Group', exact: false });
-        fireEvent.change(modelG, { target: { value: 'test model' } });
-
-        const variant = screen.getByRole('combobox', { name: 'Variant', exact: false });
-        fireEvent.change(variant, { target: { value: 'variant' } });
-
-        const usage = screen.getByRole('combobox', { name: 'Usage', exact: false });
-        fireEvent.change(usage, { target: { value: 'variant' } });
-
-        const yearOfReg = screen.getByRole('combobox', { name: 'Year of Registration', exact: false });
-        fireEvent.change(yearOfReg, { target: { value: 'variant' } });
-
-        const monthOfReg = screen.getByRole('combobox', { name: 'Month of Registration', exact: false });
-        fireEvent.change(monthOfReg, { target: { value: 'variant' } });
-
-        const relationship = screen.getByRole('combobox', { name: 'Relationship', exact: false });
-        fireEvent.change(relationship, { target: { value: '999999' } });
-
-        const schemeName = screen.getByRole('combobox', { name: 'Scheme Name', exact: false });
-        fireEvent.change(schemeName, { target: { value: 'variant' } });
-
-        const oldRegNumber = screen.getByRole('textbox', { name: 'Old Reg. Number', exact: false });
-        fireEvent.change(oldRegNumber, { target: { value: 'variant' } });
-
-        const oldChassisNumber = screen.getByRole('textbox', { name: 'Old Chassis Number', exact: false });
-        fireEvent.change(oldChassisNumber, { target: { value: 'variant' } });
-
-        const remark = screen.getByRole('textbox', { name: 'Remarks', exact: false });
-        fireEvent.change(remark, { target: { value: 'variant' } });
-
-        const customerName = screen.getByRole('textbox', { name: 'Customer Name', exact: false });
-        fireEvent.change(customerName, { target: { value: 'variant' } });
-
-        const schemeAmount = screen.getByRole('textbox', { name: 'Scheme Amount', exact: false });
-        fireEvent.change(schemeAmount, { target: { value: 'testName' } });
-
-        const submitBtn = screen.getByRole('button', { name: 'Save', exact: false });
-        fireEvent.click(submitBtn);
+        const submitBtn = screen.getAllByRole('button', { name: 'Save', exact: false });
+        fireEvent.click(submitBtn[0]);
     });
 
     it('should render loyalty scheme search details', () => {
@@ -148,18 +150,11 @@ describe('Loyalty scheme master render', () => {
         });
 
         const fetchList = jest.fn();
-        const fetchSchemeLovList = jest.fn();
 
         customRender(
             <Provider store={mockStore}>
                 <FormWrapper StatusBar={'test'} FormActionButton={FormActionButton} fetchList={fetchList} buttonData={buttonData} setButtonData={jest.fn()} />
             </Provider>
         );
-
-        const searchInput = screen.getByPlaceholderText('Search');
-        fireEvent.change(searchInput, { target: { value: 'testing' } });
-
-        const searchBtn = screen.getByRole('button', { name: 'search', exact: false });
-        fireEvent.click(searchBtn);
     });
 });

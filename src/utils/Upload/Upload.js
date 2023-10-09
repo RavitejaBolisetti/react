@@ -110,6 +110,8 @@ const UploadBase = (props) => {
         setSingleDisabled,
         setUploadedFileInformation = undefined,
         tempFileName = undefined,
+        undefinedType = false,
+        draggerDisable
     } = props;
 
     const [showStatus, setShowStatus] = useState('');
@@ -184,7 +186,7 @@ const UploadBase = (props) => {
             }
             const fileSize = file.size / 1024 / 1024;
 
-            const isValid = supportedFileTypes.find((element) => element === file.type);
+            const isValid = supportedFileTypes.find((element) => element === file.type) || (file.type === '' && undefinedType);
             if (supportedFileTypes?.length === 0) {
                 return true;
             } else if (fileSize > maxSize) {
@@ -334,7 +336,7 @@ const UploadBase = (props) => {
                     </>
                 ) : (
                     <>
-                        <Dragger key={key} className={fileList?.length === 0 ? '' : uploadTime ? styles.uploadDraggerStrip : styles.uploadDraggerBox} fileList={fileList} customRequest={handleUpload} {...uploadProps}>
+                        <Dragger key={key} className={(fileList?.length === 0 ? '' : uploadTime ? styles.uploadDraggerStrip : styles.uploadDraggerBox) || (draggerDisable ? styles.uploadDraggerStrip : styles.uploadDraggerBox)} fileList={fileList} customRequest={handleUpload} {...uploadProps}>
                             <Space direction="vertical">
                                 <UploadBoxIcon />
                                 <div>

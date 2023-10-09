@@ -28,9 +28,11 @@ import VehicleTrackingPage from './VehicleTracking';
 import OtfSoMappingUnmappingMasterPage from './OtfSoMappingUnmapping';
 import StockTransferIndentMasterPage from './StockTransferIndent';
 import VehicleDeliveryNoteMasterPage from './VehicleDeliveryNote';
+import CrmScreenEnrolmentMasterPage from './crmScreenEnrolment';
 import EvrDetailsCapturingMasterPage from './EvrDetailsCapturing';
 import VinBlockMasterPage from './VinBlockMaster';
 import AMCRegistrationMasterPage from './AMCRegistration';
+import RsmAsmApprovalPage from './RsmAsmApproval';
 
 export {
     OTFMasterPage,
@@ -54,7 +56,9 @@ export {
     OtfSoMappingUnmappingMasterPage,
     StockTransferIndentMasterPage,
     VehicleDeliveryNoteMasterPage,
+    CrmScreenEnrolmentMasterPage,
     EvrDetailsCapturingMasterPage,
     VinBlockMasterPage,
+    RsmAsmApprovalPage,
 };
 export default AMCRegistrationMasterPage;

@@ -14,12 +14,14 @@ import { GSTIRNMainConatiner } from './GSTIRNMainConatiner';
 import { GST_IRN_SECTION } from 'constants/GSTIRNSection';
 import { showGlobalNotification } from 'store/actions/notification';
 import { UploadUtil } from 'utils/Upload';
-import { ViewSupportingDocDetail } from './ViewSupportingDocDetail';
+// import { ViewSupportingDocDetail } from './ViewSupportingDocDetail';
 import { GSTLoginForm } from './GSTLoginForm';
 import { dealerGstAction } from 'store/actions/data/financialAccounting/dealerGstAction';
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 import { gstIrnLoginAction } from 'store/actions/data/financialAccounting/gstIrnLoginAction';
+import { selectGstToDocAction } from 'store/actions/data/financialAccounting/selectGstToDocAction';
+import { BASE_URL_GST_DOCID_NAME as customURL } from 'constants/routingApi';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -27,14 +29,12 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId, accessToken, token },
         data: {
-            // ConfigurableParameterEditing: { filteredListData: typeData = [] },
             FinancialAccounting: {
                 DealerGstDetails: { data: dealerGstData = [] },
             },
             CustomerMaster: {
                 ViewDocument: { isLoaded: isViewDataLoaded = false, data: viewDocument },
             },
-            SupportingDocument: { isLoaded: isSupportingDataLoaded = false, isSupportingDataLoading, data: supportingData },
         },
     } = state;
 
@@ -47,9 +47,7 @@ const mapStateToProps = (state) => {
         dealerGstData,
         viewDocument,
         isViewDataLoaded,
-        isSupportingDataLoaded,
-        isSupportingDataLoading,
-        supportingData,
+        
     };
     return returnValue;
 };
@@ -66,11 +64,15 @@ const mapDispatchToProps = (dispatch) => ({
             resetViewData: documentViewDataActions.reset,
 
             downloadFile: supportingDocumentDataActions.downloadFile,
-            listShowLoading: supportingDocumentDataActions.listShowLoading,     
-            
-            // fetchListGstLogin: gstIrnLoginAction.fetchList,
-            // listShowLoadingGstLogin: gstIrnLoginAction.listShowLoading,
-            
+            listShowLoading: supportingDocumentDataActions.listShowLoading,
+
+            saveData: gstIrnLoginAction.saveData,
+            fetchListGstLogin: gstIrnLoginAction.fetchList,
+            listShowLoadingGstLogin: gstIrnLoginAction.listShowLoading,
+
+            fetchGstDoc: selectGstToDocAction.fetchList,
+            listShowLoadingGstDoc: selectGstToDocAction.listShowLoading,
+
             showGlobalNotification,
         },
         dispatch
@@ -81,11 +83,9 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
     const { userId, data, showGlobalNotification } = props;
     const { typeData, moduleTitle } = props;
     const { filterString, setFilterString, listShowLoadingGst, fetchList, dealerGstData } = props;
-    const { accessToken, token, viewDocument, isViewDataLoaded, viewListShowLoading, resetViewData, fetchViewDocument } = props;
-
-    const { resetData, isSupportingDataLoaded, isSupportingDataLoading, supportingData, downloadFile, listShowLoading } = props;
-
-    const { ...viewProps } = props;
+    const { viewDocument, listShowLoadingGstLogin, fetchListGstLogin, listShowLoading, saveData } = props;
+    const { fetchGstDoc, listShowLoadingGstDoc, } = props;
+    
 
     const [listFilterForm] = Form.useForm();
     const [selectedRecord, setSelectedRecord] = useState();
@@ -96,6 +96,7 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
     const [currentSection, setCurrentSection] = useState();
     const [sectionName, setSetionName] = useState();
     const [isLastSection, setLastSection] = useState(false);
+
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
@@ -106,8 +107,11 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
     const [emptyList, setEmptyList] = useState(true);
     const [uploadedFileName, setUploadedFileName] = useState('');
     const [fileList, setFileList] = useState([]);
-    const [singleDisabled, setSingleDisabled] = useState(false);
+    const [singleDisabled, setSingleDisabled] = useState(true);
     const [currentGst, setCurrentGst] = useState();
+    const [draggerDisable, setDraggerDisable] = useState(true);
+
+    
 
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -136,6 +140,33 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         // setShowDataLoading(false);
     };
 
+    const handleGstinNumber = (value) => {
+        setCurrentGst(value);        
+        // To call a service for file name and docId       
+            fetchGstDoc({
+            setIsLoading: () => {},
+                userId,
+                extraParams: [
+                    {
+                        key: 'gstin',
+                        value: value,
+                    },
+                ],
+                customURL,
+                onSuccessAction: (res) => {
+                    if(res.data.documentId){
+                        setSingleDisabled(true);
+                        setDraggerDisable(true);
+                    } 
+                },
+                onErrorAction: (res) => {                     
+                        setSingleDisabled(false);
+                        setDraggerDisable(false);
+                }
+            });
+        
+    };
+
     useEffect(() => {
         if (userId) {
             fetchList({ setIsLoading: listShowLoadingGst, userId, onSuccessAction, onErrorAction });
@@ -147,7 +178,6 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         setDefaultSection(defaultSection);
         setSetionName(GST_IRN_SECTION);
         setSection(defaultSection);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
@@ -160,7 +190,6 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         }
         form.resetFields();
         form.setFieldsValue(undefined);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
@@ -211,45 +240,32 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        setCurrentGst(values?.gstinNumber);
-        // const data = {
-        //     gstinNumber: values?.gstinNumber,
-        //     userName: values?.userId,
-        //     secretId: values?.clientId,
-        //     password: values?.password,
-        //     docId: 'ee1438de-9571-4c9f-9a3e-e16c2741e04d',
-        //     clientId: values?.clientId,
-        // };
-        console.log('req values', values);
-        console.log('uploadedFile',uploadedFile);
+        const data = { ...values, docId: uploadedFile };
 
-        setCurrentSection(1);
-        handleButtonClick({ record: values, VIEW_ACTION, openDefaultSection: false, currentSection: 1 });
+        const onSuccess = (res) => {
+            form.resetFields();
+            // setShowDataLoading(true);
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            fetchListGstLogin({ setIsLoading: listShowLoadingGstLogin, userId, onSuccessAction, onErrorAction });
+
+            setButtonData({ ...buttonData, formBtnActive: false });
+            setIsFormVisible(false);
+            setCurrentSection(1);
+            handleButtonClick({ record: values, VIEW_ACTION, openDefaultSection: false, currentSection: 1 });
+        };
+        const onError = (message) => {
+            showGlobalNotification({ message });
+        };
+        const requestData = {
+            data: data,
+            method: 'post',
+            setIsLoading: listShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+        saveData(requestData);
     };
-
-    // const onFinish = (values) => {
-    //     const data = { supplierInvoiceNumber: selectedId };
-    //     const onSuccess = (res) => {
-    //         form.resetFields();
-    //         setShowDataLoading(true);
-    //         showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-    //         fetchVehicleReceiptList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-    //         setButtonData({ ...buttonData, formBtnActive: false });
-    //         setIsFormVisible(false);
-    //     };
-    //     const onError = (message) => {
-    //         showGlobalNotification({ message });
-    //     };
-    //     const requestData = {
-    //         data: data,
-    //         method: 'put',
-    //         setIsLoading: listShowLoading,
-    //         userId,
-    //         onError,
-    //         onSuccess,
-    //     };
-    //     saveData(requestData);
-    // };
 
     const onFinishFailed = (errorInfo) => {
         // form.validateFields().then((values) => {});
@@ -299,6 +315,7 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         onFinishSearch,
         userId,
         dealerGstData,
+        handleGstinNumber,
     };
 
     const drawerTitle = useMemo(() => {
@@ -353,7 +370,6 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         userId,
         currentGst,
         setCurrentGst,
-
     };
 
     const loginProps = {
@@ -375,11 +391,12 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         validationText: 'File type should be .pem and max file size to be 5Mb',
         fileList,
         setFileList,
+        emptyList,
         setEmptyList,
         multiple: false,
-        supportedFileTypes: ['image/png', 'image/jpeg', 'application/pdf'],
+        supportedFileTypes: [''],
         maxSize: 5,
-        accept: 'image/png, image/jpeg, application/pdf',
+        accept: '',
         showUploadList: {
             showRemoveIcon: true,
             showDownloadIcon: true,
@@ -397,7 +414,9 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         singleDisabled,
         setSingleDisabled,
         isReplaceEnabled: false,
-         
+        undefinedType: true,
+        draggerDisable,
+        setDraggerDisable
     };
     return (
         <>
@@ -408,9 +427,11 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
                         <Card>
                             <div className={styles.marB20}>
                                 <UploadUtil {...uploadProps} handleFormValueChange={handleFormValueChange} />
-                                {/* <ViewSupportingDocDetail {...viewProps} /> */}
                             </div>
+                             
                         </Card>
+
+                        
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Card>

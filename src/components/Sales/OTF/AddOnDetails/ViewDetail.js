@@ -12,6 +12,7 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 import ShieldForm from './Shield/ShieldForm';
 import AMCForm from './AMC/AMCForm';
 import RSAForm from './RSA/RSAForm';
+import { NoDataFound } from 'utils/noDataFound';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -31,32 +32,34 @@ const ViewDetailMain = (props) => {
                         <Panel header="Accessories Information" key={'ci'}>
                             <Divider />
                             <div className={styles.innerCollapse}>
-                                {formData?.partDetailsResponses?.map((element, i) => {
-                                    return (
-                                        <Collapse expandIcon={expandIcon} activeKey={myActiveKey} onChange={() => handleCollapses(i)} expandIconPosition="end" collapsible="icon">
-                                            <Panel
-                                                header={
-                                                    <Row justify="space-between">
-                                                        <Col xs={14} sm={14} md={14} lg={14} xl={14}>
-                                                            <Space>
-                                                                <Text className={styles.headText}> {`${element?.partDescription ? element?.partDescription : 'NA'} `}</Text>
-                                                                <Text className={styles.headText}> {`|`}</Text>
-                                                                <Text className={styles.headText}> {`${element?.partNumber ? element?.partNumber : 'NA'} `}</Text>
-                                                            </Space>
-                                                            <Row>
-                                                                <Text className={styles.subSection}> {`Required Quantity: ${element?.requiredQuantity ? element?.requiredQuantity : 'NA'} `}</Text>
-                                                            </Row>
-                                                        </Col>
-                                                    </Row>
-                                                }
-                                                key={i}
-                                            >
-                                                <Divider />
-                                                <AccessoriesInformationCard formData={element} />
-                                            </Panel>
-                                        </Collapse>
-                                    );
-                                })}
+                                {formData?.partDetailsResponses?.length &&
+                                    formData?.partDetailsResponses?.map((element, i) => {
+                                        return (
+                                            <Collapse expandIcon={expandIcon} activeKey={myActiveKey} onChange={() => handleCollapses(i)} expandIconPosition="end" collapsible="icon">
+                                                <Panel
+                                                    header={
+                                                        <Row justify="space-between">
+                                                            <Col xs={14} sm={14} md={14} lg={14} xl={14}>
+                                                                <Space>
+                                                                    <Text className={styles.headText}> {`${element?.partDescription ? element?.partDescription : 'NA'} `}</Text>
+                                                                    <Text className={styles.headText}> {`|`}</Text>
+                                                                    <Text className={styles.headText}> {`${element?.partNumber ? element?.partNumber : 'NA'} `}</Text>
+                                                                </Space>
+                                                                <Row>
+                                                                    <Text className={styles.subSection}> {`Required Quantity: ${element?.requiredQuantity ? element?.requiredQuantity : 'NA'} `}</Text>
+                                                                </Row>
+                                                            </Col>
+                                                        </Row>
+                                                    }
+                                                    key={i}
+                                                >
+                                                    <Divider />
+                                                    <AccessoriesInformationCard formData={element} />
+                                                </Panel>
+                                            </Collapse>
+                                        );
+                                    })}
+                                {!formData?.partDetailsResponses?.length && <NoDataFound informtion={'No accessories data found'} />}
                             </div>
                         </Panel>
                     </Collapse>

@@ -27,7 +27,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            ApplicationMaster: { applicationCriticalityGroupData: criticalityGroupData, applicationDetailsData, applicationData, isApplicationDeatilsLoading, isLoading },
+            ApplicationMaster: { applicationDetailsData, applicationData, isApplicationDeatilsLoading, isLoading },
             // ApplicationMaster: { applicationCriticalityGroupData: criticalityGroupData, applicationDetailsData, dealerLocations, applicationData, configurableParamData, actions, isApplicationDeatilsLoading, isApplicatinoOnSaveLoading, isLoading, isActionsLoaded },
             FinancialAccounting: {
                 GstIrnTransactionDetails: { data: gstIrnTreeData = [] },
@@ -41,8 +41,8 @@ const mapStateToProps = (state) => {
         userId,
         // isDataLoaded,
         vehicleStatusType: typeData[PARAM_MASTER.VEHCL_STATS.id],
-        physicalStatusType: typeData[PARAM_MASTER.PHYSICAL_STATUS.id],
-        shortageType: typeData[PARAM_MASTER.YES_NO_FLG.id],
+        // physicalStatusType: typeData[PARAM_MASTER.PHYSICAL_STATUS.id],
+        // shortageType: typeData[PARAM_MASTER.YES_NO_FLG.id],
         // vehicleDetailData: vehicleDetailData?.vehicleDetails,
         isLoading,
         moduleTitle,
@@ -80,12 +80,13 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const IrnTransactionListMasterBase = (props) => {
-    const { typeData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailData } = props;
-    const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, isLoading } = props;
-    const { form, selectedId, finalData, setFinalData, onFinish, onFinishFailed, menuData, applicationMasterDataShowLoading } = props;
+    // const { typeData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailData } = props;
+    const { userId, showGlobalNotification, section, fetchList, listShowLoading } = props;
+    const { form, selectedId, onFinish, onFinishFailed, applicationMasterDataShowLoading } = props;
     const { applicationDetailsData, isApplicationDeatilsLoading, fetchApplication, applicationDetailListShowLoading, fetchListGstIrnTree, listShowLoadingTree } = props;
-    const { gstIrnTreeData, nextBtn } = props;
-    const [vehicleDetailForm] = Form.useForm();
+    const { gstIrnTreeData } = props;
+    // const { finalData, setFinalData, isDataLoaded, isLoading, menuData, nextBtn,  } = props;
+    // const [vehicleDetailForm] = Form.useForm();
 
     const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -96,7 +97,7 @@ const IrnTransactionListMasterBase = (props) => {
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
     const fieldNames = { title: 'menuTitle', key: 'menuId', children: 'subMenu' };
     const [searchValue, setSearchValue] = useState('');
-    const [menuType, setMenuType] = useState('W');
+    // const [menuType, setMenuType] = useState('W');
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -124,10 +125,10 @@ const IrnTransactionListMasterBase = (props) => {
             // fetchApplicationAction({ setIsLoading: applicationMasterDataShowLoading, userId, id: 'Finac' });
             // fetchCriticalitiData({ setIsLoading: applicationMasterDataShowLoading });
 
-            fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, deviceType: menuType, sid: 'APPMST' });
+            fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, sid: 'APPMST' });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, menuType]);
+    }, [userId]); //menuType
 
     useEffect(() => {
         if (userId) {

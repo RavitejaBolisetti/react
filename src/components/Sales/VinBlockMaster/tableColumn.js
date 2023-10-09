@@ -5,7 +5,7 @@
  */
 import { tblPrepareColumns } from 'utils/tableColumn';
 import styles from 'assets/sass/app.module.scss';
-import { FiEdit, FiEye } from 'react-icons/fi';
+import { FiEye } from 'react-icons/fi';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { Button,Space } from 'antd';
 
