@@ -18,7 +18,9 @@ import { CheckNetworkStatus } from 'utils/CheckNetworkStatus';
 
 import styles from './App.module.scss';
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+    notificationState: state.notification,
+});
 
 const mapDispatchToProps = {
     readFromStorageAndValidateAuth,
@@ -27,13 +29,20 @@ const mapDispatchToProps = {
 
 const NotificationContext = createContext();
 
-const AppBase = ({ readFromStorageAndValidateAuth, hideGlobalNotification }) => {
+const AppBase = ({ readFromStorageAndValidateAuth, hideGlobalNotification, notificationState }) => {
     const [informationNotification, contextInformationNotification] = notification.useNotification();
 
     useEffect(() => {
         readFromStorageAndValidateAuth();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    useEffect(() => {
+        if (!notificationState?.visible) {
+            informationNotification.destroy();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [notificationState?.visible]);
 
     const informationModalBox = useCallback(
         ({ type = 'error', title = 'ERROR', message, duration = 3, placement = 'topRight', showTitle = true }) => {

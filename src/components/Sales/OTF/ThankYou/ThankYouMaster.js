@@ -16,7 +16,7 @@ const { Title, Text } = Typography;
 
 export const ThankYouMaster = (props) => {
     const title = LANGUAGE_EN.GENERAL.THANK_YOU_PAGE_OTF.TITLE;
-    const message = LANGUAGE_EN.GENERAL.THANK_YOU_PAGE_OTF.MESSAGE.replace('{ORDER_ID}', props?.selectedOrderId);
+    const message = LANGUAGE_EN.GENERAL.THANK_YOU_PAGE_OTF.MESSAGE.replace('{ORDER_ID}', props?.selectedBookingId || props?.selectedOrderId);
 
     const myProps = {
         ...props,

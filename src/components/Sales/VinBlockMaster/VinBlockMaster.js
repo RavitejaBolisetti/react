@@ -188,10 +188,10 @@ export const VinBlockMasterBase = (props) => {
                 },
             });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
-        console.log('hadleclick');
         form.resetFields();
         showLoading(true);
         setFormData(record);

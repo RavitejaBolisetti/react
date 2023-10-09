@@ -8,14 +8,15 @@ import { Divider, Form } from 'antd';
 
 import CardMapping from './CardMapping';
 import AddEditForm from './AddEditForm';
+import { NoDataFound } from 'utils/noDataFound';
 
 const AccessoriesAddonMain = ({ setIsBtnDisabled, openAccordian, partNameSearchVisible, setPartNameSearchVisible, fnSetData, setOpenAccordian, isEditing, setisEditing, selectedOrderId, handleFormValueChange, showGlobalNotification, setsearchData, searchData, setaddButtonDisabled, onSearchPart, AddonPartsData, addButtonDisabled, accessoryForm, isBtnDisabled, setFormBtnDisable, setAddOnItemInfo, addOnItemInfo, formData }) => {
     const [EditingForm] = Form.useForm();
 
-    const isPresent = (partName, i = -1) => {
-        const isPartAlreadyExist = addOnItemInfo?.find((element, index) => element?.partName === partName && index !== i);
+    const isPresent = (partNumber, i = -1) => {
+        const isPartAlreadyExist = addOnItemInfo?.find((element, index) => element?.partNumber === partNumber && index !== i);
         if (isPartAlreadyExist) {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Part Name is already exist' });
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Part is already added' });
             return true;
         }
         return false;
@@ -25,13 +26,15 @@ const AccessoriesAddonMain = ({ setIsBtnDisabled, openAccordian, partNameSearchV
         accessoryForm
             .validateFields()
             .then((values) => {
-                if (isPresent(values?.partName, index)) {
+                if (isPresent(values?.partNumber, index)) {
                     return;
                 }
-                if (!values['type']) {
-                    showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Verify Part Name to continue' });
+
+                if (!values?.partNumber) {
+                    showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please provide part number' });
                     return;
                 }
+
                 addOnItemInfo?.map((element, i) => {
                     if (i === index) {
                         const isDeletable = element?.isDeleting;
@@ -92,11 +95,10 @@ const AccessoriesAddonMain = ({ setIsBtnDisabled, openAccordian, partNameSearchV
         <>
             <Divider />
             {addButtonDisabled?.partDetailsResponses && <AddEditForm {...AddEditFormProps} />}
-            {addOnItemInfo?.length > 0
-                ? addOnItemInfo.map((element, index) => {
-                      return <CardMapping AddEditFormProps={AddEditFormProps} element={element} isEditing={isEditing} setisEditing={setisEditing} handleDelete={handleDelete} index={index} />;
-                  })
-                : !addButtonDisabled?.partDetailsResponses && <div style={{ textAlign: 'center', padding: '10px' }}>No Accessories Information Added</div>}
+            {!addOnItemInfo?.length && !addButtonDisabled?.partDetailsResponses && <NoDataFound informtion={'Add accessories'} />}
+            {addOnItemInfo?.map((element, index) => {
+                return <CardMapping AddEditFormProps={AddEditFormProps} element={element} isEditing={isEditing} setisEditing={setisEditing} handleDelete={handleDelete} index={index} />;
+            })}
         </>
     );
 };

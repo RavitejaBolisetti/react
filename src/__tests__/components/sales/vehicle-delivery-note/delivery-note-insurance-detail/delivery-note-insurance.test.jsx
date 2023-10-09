@@ -55,7 +55,7 @@ describe('Insurance Detail components', () => {
     });
     it('should render components when viewmode is true', () => {
         const formActionType = { viewMode: true };
-        customRender(<FormWrapper formActionType={formActionType} StatusBar={StatusBar} FormActionButton={FormActionButton} />);
+        customRender(<FormWrapper formActionType={formActionType} setButtonData={jest.fn()} StatusBar={StatusBar} FormActionButton={FormActionButton} />);
     });
 
     it('test for onSuccess', async () => {
@@ -75,7 +75,7 @@ describe('Insurance Detail components', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <InsuranceDetailsMaster saveData={saveData} fetchList={fetchList} handleButtonClick={jest.fn()} StatusBar={StatusBar} FormActionButton={FormActionButton} />
+                <InsuranceDetailsMaster saveData={saveData} fetchList={fetchList} handleButtonClick={jest.fn()} StatusBar={StatusBar} FormActionButton={FormActionButton} setButtonData={jest.fn()} />
             </Provider>
         );
 

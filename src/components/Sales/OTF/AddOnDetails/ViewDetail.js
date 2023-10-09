@@ -12,6 +12,7 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 import ShieldForm from './Shield/ShieldForm';
 import AMCForm from './AMC/AMCForm';
 import RSAForm from './RSA/RSAForm';
+import { NoDataFound } from 'utils/noDataFound';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -31,7 +32,7 @@ const ViewDetailMain = (props) => {
                         <Panel header="Accessories Information" key={'ci'}>
                             <Divider />
                             <div className={styles.innerCollapse}>
-                                {formData?.partDetailsResponses?.length > 0 ? (
+                                {formData?.partDetailsResponses?.length &&
                                     formData?.partDetailsResponses?.map((element, i) => {
                                         return (
                                             <Collapse expandIcon={expandIcon} activeKey={myActiveKey} onChange={() => handleCollapses(i)} expandIconPosition="end" collapsible="icon">
@@ -57,10 +58,8 @@ const ViewDetailMain = (props) => {
                                                 </Panel>
                                             </Collapse>
                                         );
-                                    })
-                                ) : (
-                                    <div style={{ textAlign: 'center', padding: '0px 10px 15px 10px' }}>No Accessories Information Added</div>
-                                )}
+                                    })}
+                                {!formData?.partDetailsResponses?.length && <NoDataFound informtion={'No accessories data found'} />}
                             </div>
                         </Panel>
                     </Collapse>

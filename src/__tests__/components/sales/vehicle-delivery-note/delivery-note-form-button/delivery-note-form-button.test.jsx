@@ -18,7 +18,7 @@ describe('Vehicle Delivery Note form-button components', () => {
             saveBtn: true,
             printDeliveryNoteBtn: true,
         };
-        customRender(<VehicleDeliveryNoteFormButton setButtonData={jest.fn()} buttonData={buttonData} handleButtonClick={jest.fn()} />);
+        customRender(<VehicleDeliveryNoteFormButton setButtonData={jest.fn()} buttonData={buttonData} handleButtonClick={jest.fn()} handlePrintDownload={jest.fn()} />);
 
         const closeBtn = screen.getByRole('button', { name: 'Close' });
         fireEvent.click(closeBtn);
@@ -33,7 +33,7 @@ describe('Vehicle Delivery Note form-button components', () => {
         fireEvent.click(saveBtn);
         // const cancelNote = screen.getByRole('button', { name: 'Cancel Deliery Note' });
         // fireEvent.click(cancelNote);
-        // const printNote = screen.getByRole('button', { name: 'Print Delivery Note' });
-        // fireEvent.click(printNote);
+        const printNote = screen.getByRole('button', { name: 'Print Delivery Note' });
+        fireEvent.click(printNote);
     });
 });

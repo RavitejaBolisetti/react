@@ -12,6 +12,8 @@ import ShieldForm from './Shield/ShieldForm';
 import AMCForm from './AMC/AMCForm';
 import RSAForm from './RSA/RSAForm';
 
+import styles from 'assets/sass/app.module.scss';
+
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { OTF_ADDON_SECTION } from 'constants/OTFAddonSection';
 
@@ -19,7 +21,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const AddEditFormMain = (props) => {
-    const { formData, accessoryForm, shieldForm, rsaForm, amcForm, fmsForm, fnSetData, addOnItemInfo, setAddOnItemInfo, formActionType, selectedOrderId, formDataSetter, setformDataSetter, handleFormValueChange, showGlobalNotification, onSearchPart, AddonPartsData, setsearchData, searchData } = props;
+    const { formData, accessoryForm, shieldForm, rsaForm, amcForm, fmsForm, fnSetData, addOnItemInfo, setAddOnItemInfo, formActionType, selectedOrderId, formDataSetter, setFormDataSetter, handleFormValueChange, showGlobalNotification, onSearchPart, AddonPartsData, setsearchData, searchData } = props;
 
     const [openAccordian, setOpenAccordian] = useState(formData?.partDetailsResponses?.length ? ['ci'] : []);
 
@@ -33,7 +35,7 @@ const AddEditFormMain = (props) => {
     const [isEditing, setisEditing] = useState(false);
 
     useEffect(() => {
-        setformDataSetter({ ...formDataSetter, partDetailsResponses: addOnItemInfo });
+        setFormDataSetter({ ...formDataSetter, partDetailsResponses: addOnItemInfo });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [addOnItemInfo]);
 
@@ -70,7 +72,7 @@ const AddEditFormMain = (props) => {
         fmsForm,
         addButtonDisabled,
         setaddButtonDisabled,
-        setformDataSetter,
+        setFormDataSetter,
         formDataSetter,
         handleFormValueChange,
         formActionType,
@@ -88,7 +90,7 @@ const AddEditFormMain = (props) => {
                 if (formData === undefined) {
                     return false;
                 } else {
-                    if (formData[dataKey] === undefined || !formData[dataKey]) {
+                    if (formData?.[dataKey] === undefined || !formData?.[dataKey]) {
                         return false;
                     }
                 }
@@ -101,7 +103,7 @@ const AddEditFormMain = (props) => {
             <>
                 <Text strong> {headerText}</Text>
                 {!formActionType?.viewMode && toShowAddButton() && (
-                    <Button style={{ marginLeft: '10px' }} disabled={addButtonDisabled[dataKey] || isEditing} onClick={(event) => handleCollapseAdd(openKey, dataKey, event)} icon={<PlusOutlined />} type="primary">
+                    <Button className={styles.marL10} disabled={addButtonDisabled[dataKey] || isEditing} onClick={(event) => handleCollapseAdd(openKey, dataKey, event)} icon={<PlusOutlined />} type="primary">
                         Add
                     </Button>
                 )}

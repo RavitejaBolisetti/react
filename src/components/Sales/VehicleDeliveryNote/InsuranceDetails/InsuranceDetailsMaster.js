@@ -10,37 +10,19 @@ import { bindActionCreators } from 'redux';
 
 import { AddEditForm, ViewDetail } from 'components/Sales/Common/InsuranceDetails';
 import { showGlobalNotification } from 'store/actions/notification';
-import { insuranceDetailDataActions } from 'store/actions/data/otf/insuranceDetail';
 
 import styles from 'assets/sass/app.module.scss';
-import { insuranceChallanDetailsDataActions } from 'store/actions/data/vehicleDeliveryNote/challanInsurance';
+
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
-        data: {
-            OTF: {
-                InsuranceDetail: { isLoaded: isDataLoaded = false, isLoading, data: insuranceData = [] },
-            },
-            PartyMaster: { isFilteredListLoaded: isInsuranceCompanyDataLoaded = false, detailData: insuranceCompanies },
-            VehicleDeliveryNote: {
-                InsuranceDetailChallan: { isLoaded: isInsuranceLoaded, isLoading: isInsuranceDataLoading, data: insuranceChallanData = [] },
-            },
-        },
+        data: {},
     } = state;
     const moduleTitle = 'Insurance Details';
 
     let returnValue = {
         userId,
-        isDataLoaded,
-        // insuranceData,
-        isLoading,
         moduleTitle,
-        isInsuranceCompanyDataLoaded,
-        insuranceCompanies,
-
-        isInsuranceLoaded,
-        isInsuranceDataLoading,
-        insuranceChallanData,
     };
     return returnValue;
 };
@@ -49,14 +31,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: insuranceDetailDataActions.fetchList,
-            listShowLoading: insuranceDetailDataActions.listShowLoading,
-            resetData: insuranceDetailDataActions.reset,
-            saveData: insuranceDetailDataActions.saveData,
-
-            fetchChallanInsuranceList: insuranceChallanDetailsDataActions.fetchList,
-            listChallanInsuranceShowLoading: insuranceChallanDetailsDataActions.listShowLoading,
-
             showGlobalNotification,
         },
         dispatch
@@ -64,10 +38,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const InsuranceDetailsMasterBase = (props) => {
-    const { insuranceData, onCloseAction, fetchList, formActionType, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
-    const { form, selectedOrderId, handleFormValueChange, section, isLoading, NEXT_ACTION, handleButtonClick, onFinishFailed, saveData } = props;
-    const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar, pageType, isInsuranceLoaded, isInsuranceDataLoading, fetchChallanInsuranceList, insuranceChallanData, listChallanInsuranceShowLoading, soldByDealer, record } = props;
-    const [formData, setFormData] = useState();
+    const { insuranceData, onCloseAction, formActionType, userId, isDataLoaded } = props;
+    const { form, selectedOrderId, handleFormValueChange, section, isLoading = false, NEXT_ACTION, handleButtonClick, onFinishFailed } = props;
+    const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar, pageType } = props;
+    const [formData, setFormData] = useState({});
 
     useEffect(() => {
         if (insuranceData) {
@@ -81,24 +55,8 @@ const InsuranceDetailsMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [section]);
 
-    const extraParams = [
-        {
-            key: 'otfNumber',
-            title: 'otfNumber',
-            value: selectedOrderId,
-            name: 'Booking Number',
-        },
-    ];
-
-    const onErrorAction = (message) => {
-        showGlobalNotification({ message: message });
-    };
-
-    const onSuccessAction = (res) => {
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-    };
-
     const viewProps = {
+        ...props,
         styles,
         onCloseAction,
         formData,
@@ -109,7 +67,6 @@ const InsuranceDetailsMasterBase = (props) => {
     const formProps = {
         ...props,
         form,
-        fetchList,
         userId,
         isDataLoaded,
         isLoading,
@@ -130,27 +87,6 @@ const InsuranceDetailsMasterBase = (props) => {
             onFinishCustom({ key: formKey, values: data });
             handleButtonClick({ buttonAction: NEXT_ACTION });
             setButtonData({ ...buttonData, formBtnActive: false });
-        } else {
-            const onSuccess = (res) => {
-                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-                fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
-            };
-
-            const onError = (message) => {
-                showGlobalNotification({ message });
-            };
-
-            const requestData = {
-                data: data,
-                method: insuranceData?.id ? 'put' : 'post',
-                setIsLoading: listShowLoading,
-                userId,
-                onError,
-                onSuccess,
-            };
-
-            saveData(requestData);
         }
     };
 
