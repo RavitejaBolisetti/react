@@ -56,6 +56,7 @@ const InsuranceDetailsMasterBase = (props) => {
     }, [section]);
 
     const viewProps = {
+        ...props,
         styles,
         onCloseAction,
         formData,

@@ -96,6 +96,11 @@ const VehicleDetailsMasterBase = (props) => {
         if (!soldByDealer && !formActionType?.viewMode && userId) {
             const chassi = requestPayload?.deliveryNoteInvoiveDetails?.chassisNumber;
             const engineNo = requestPayload?.deliveryNoteInvoiveDetails?.engineNumber;
+            const onSuccessAction = () => {
+                form.setFieldsValue({ ...vehicleChallanData });
+                setFormData({ ...vehicleChallanData });
+                setRequestPayload({ ...requestPayload, vehicleInformationDto: vehicleChallanData });
+            };
             if (engineNo && chassi) {
                 const extraParams = [
                     {
@@ -112,37 +117,33 @@ const VehicleDetailsMasterBase = (props) => {
                     },
                 ];
 
-                fetchChallanList({ setIsLoading: listChallanShowLoading, extraParams, userId, onErrorAction });
+                fetchChallanList({ setIsLoading: listChallanShowLoading, extraParams, userId, onErrorAction, onSuccessAction });
             }
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [requestPayload, formActionType, soldByDealer, userId]);
+    }, [section, formActionType, soldByDealer, userId]);
 
     useEffect(() => {
         if (vehicleData) {
             form.setFieldsValue({ ...vehicleData });
             setFormData({ ...vehicleData });
         }
-        if (!soldByDealer && vehicleChallanData) {
-            form.setFieldsValue({ ...vehicleChallanData });
-            setFormData({ ...vehicleChallanData });
-        }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [vehicleData, vehicleChallanData, soldByDealer]);
+    }, [vehicleData, soldByDealer, section,requestPayload]);
+
     useEffect(() => {
         setButtonData({ ...buttonData, formBtnActive: true });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [section]);
-
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
 
     const onFinish = (values) => {
         if (!soldByDealer) {
-            setRequestPayload({ ...requestPayload, vehicleDetails: values?.vinNumber ? { ...values } : { ...vehicleChallanData } });
+            setRequestPayload({ ...requestPayload, vehicleInformationDto: values?.vinNumber ? { ...values } : { ...vehicleChallanData }, vehicleDetails: values?.vinNumber ? { ...values } : { ...vehicleData } });
         }
         handleButtonClick({ buttonAction: NEXT_ACTION });
         setButtonData({ ...buttonData, formBtnActive: false });

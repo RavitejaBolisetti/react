@@ -654,6 +654,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
                     setIsFormVisible(false);
                     setCancelDeliveryNoteVisible(false);
                     cancelDeliveryNoteForm.resetFields();
+                    onCloseAction();
                 };
                 const onError = (message) => {
                     showGlobalNotification({ message });
@@ -810,7 +811,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         documentType,
         onCancelDeliveryNote,
         saveButtonName: isLastSection ? 'Submit' : 'Continue',
-        CancelDeliveryButtonName: soldByDealer ? 'Cancel Delivery Note' : 'Cancel Note',
+        CancelDeliveryButtonName: soldByDealer ? 'Cancel Delivery Note' : 'Cancel Challan',
         setLastSection,
         customerIdValue,
         setCustomerIdValue,
