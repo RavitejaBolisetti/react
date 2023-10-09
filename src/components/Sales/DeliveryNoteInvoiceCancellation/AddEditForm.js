@@ -28,8 +28,8 @@ const AddEditFormMain = (props) => {
             form.setFieldsValue({
                 ...requestDetailData,
                 requestType: typeData[PARAM_MASTER?.DEL_INV_CAN_TYP?.id]?.find((request) => requestDetailData?.requestType === request?.key)?.value,
-                invoiceStatus: typeData[PARAM_MASTER?.CDLR_INV_APP_STATUS?.id]?.find((status) => requestDetailData?.invoiceStatus === status?.key)?.value,
-                requestStatus: typeData[PARAM_MASTER?.INV_DEL_NOT_REQ_TYP?.id]?.find((reqStatus) => requestDetailData?.requestStatus === reqStatus?.key)?.value,
+                invoiceStatus: typeData[PARAM_MASTER?.INV_DEL_NOT_REQ_TYP?.id]?.find((status) => requestDetailData?.invoiceStatus === status?.key)?.value,
+                requestStatus: typeData[PARAM_MASTER?.CDLR_INV_APP_STATUS?.id]?.find((reqStatus) => requestDetailData?.requestStatus === reqStatus?.key)?.value,
                 requestDate: formattedCalendarDate(requestDetailData?.requestDate),
                 invoiceDate: formattedCalendarDate(requestDetailData?.invoiceDate),
                 deliveryNoteDate: formattedCalendarDate(requestDetailData?.deliveryNoteDate),

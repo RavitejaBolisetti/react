@@ -68,7 +68,7 @@ describe('AddOn Detail Master components', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper handleFormValueChange={jest.fn()} setButtonData={jest.fn()} selectedInvoiceId={106} fetchList={fetchList} resetData={jest.fn()} />
+                <FormWrapper handleFormValueChange={jest.fn()} selectedInvoiceId={106} setButtonData={jest.fn()} fetchList={fetchList} resetData={jest.fn()} />
             </Provider>
         );
 

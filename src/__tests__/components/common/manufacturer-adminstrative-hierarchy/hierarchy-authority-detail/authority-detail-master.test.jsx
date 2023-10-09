@@ -4,32 +4,14 @@ import customRender from '@utils/test-utils';
 import { screen, fireEvent } from '@testing-library/react';
 import { Form } from 'antd';
 import { Provider } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
-import thunk from 'redux-thunk';
-import { rootReducer } from 'store/reducers';
+import createMockStore from '__mocks__/store';
 
-export const createMockStore = (initialState) => {
-    const mockStore = configureStore({
-        reducer: rootReducer,
-
-        preloadedState: initialState,
-
-        middleware: [thunk],
-    });
-    return mockStore;
-};
-
-const mockStore = createMockStore({
-    data: {
-        ManufacturerAdmin: {
-            ManufactureAdminValidateToken: {
-                data: [
-                    { key: 1, value: 'test' },
-                    { key: 2, value: 'test' },
-                ],
-            },
-        },
-    },
+jest.mock('components/common/ManufacturerAdminstrativeHierarchy/HierarchyAuthorityDetail/AddEditForm', () => {
+    const AddEditForm = ({ onFinish }) => <div><button onClick={onFinish}>Save</button></div>;
+    return {
+        __esModule: true,
+        AddEditForm,
+    };
 });
 
 const FormWrapper = (props) => {
@@ -38,40 +20,74 @@ const FormWrapper = (props) => {
 };
 
 describe('Authority detail master components', () => {
+
     it('Should render authority detail master components', () => {
-        customRender(
-            <Provider store={mockStore}>
-                <FormWrapper isVisible={true} viewMode={false} />
-            </Provider>
-        );
-
-        const authorityType = screen.getByRole('combobox', { name: 'Authority Type' });
-        fireEvent.change(authorityType, { target: { value: 'kai' } });
-
-        const token = screen.getByRole('textbox', { name: 'Token' });
-        fireEvent.change(token, { target: { value: 'kai' } });
-
-        const searchImg = screen.getByRole('img', { name: 'search' });
-        fireEvent.click(searchImg);
-
-        const plusImg = screen.getByRole('img', { name: 'plus' });
-        fireEvent.click(plusImg);
+        customRender(<FormWrapper isVisible={true} />)
     });
 
-    it('Should render authority detail card item components', () => {
-        const data = [
-            { key: 1, value: 'test', id: 1 },
-            { key: 2, value: 'test', id: 2 },
-        ];
-        const formActionType = { viewMode: false, isEditing: false };
+    it('edit button should work', () => {
+        const mockStore=createMockStore({
+            data: {
+                ManufacturerAdmin: {
+                    ManufactureAdminValidateToken: { data: { name: 'Kai' } },
+                },
+            },
+        });
+
+        const documentTypesList=[{ name: 'Kai' }];
 
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper isVisible={true} formActionType={formActionType} documentTypesList={data} viewMode={false} isEditing={true} isBtnDisabled={false} record={[{ key: 1, value: 'test' }]} setDocumentTypesList={jest.fn()} setIsBtnDisabled={jest.fn()} handleFormValueChange={jest.fn()} selectedValueOnUpdate={jest.fn()} />
+                <FormWrapper isVisible={true} documentTypesList={documentTypesList} />
             </Provider>
         );
-
-        const button = screen.getAllByRole('button');
-        fireEvent.change(button[0]);
+        const editBtn=screen.getAllByRole('button', { name: '' });
+        fireEvent.click(editBtn[0]);
     });
+
+    it('delete button should work', () => {
+        const mockStore=createMockStore({
+            data: {
+                ManufacturerAdmin: {
+                    ManufactureAdminValidateToken: { data: { name: 'Kai' } },
+                },
+            },
+        });
+
+        const documentTypesList=[{ name: 'Kai' }];
+        const setDocumentTypesList=jest.fn();
+
+        customRender(
+            <Provider store={mockStore}>
+                <FormWrapper isVisible={true} documentTypesList={documentTypesList} setDocumentTypesList={setDocumentTypesList} />
+            </Provider>
+        );
+        const deleteBtn=screen.getAllByRole('button', { name: '' });
+        fireEvent.click(deleteBtn[1]);
+
+        setDocumentTypesList.mock.calls[0][0]('Kai');
+    });
+
+    it('save button should work', () => {
+        const mockStore=createMockStore({
+            data: {
+                ManufacturerAdmin: {
+                    ManufactureAdminValidateToken: { data: { name: 'Kai' } },
+                },
+            },
+        });
+
+        const documentTypesList=[{ name: 'Kai' }];
+        const setDocumentTypesList=jest.fn();
+
+        customRender(
+            <Provider store={mockStore}>
+                <FormWrapper isVisible={true} documentTypesList={documentTypesList} setDocumentTypesList={setDocumentTypesList} />
+            </Provider>
+        );
+        
+        const saveBtn=screen.getByRole('button', { name: 'Save' });
+        fireEvent.click(saveBtn);
+    });
+
 });

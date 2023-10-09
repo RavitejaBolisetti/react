@@ -4,21 +4,11 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Descriptions, } from 'antd';
+import { Descriptions } from 'antd';
 import { ACCESSIBLE_LOCATION_INDICATOR } from 'constants/modules/applicationMaster';
-
-// import CardDocument from './CardDocument';
-// import CardLocation from './CardLocation';
-// import CardAction from './CardAction';
-
-// import { accordianExpandIcon } from 'utils/accordianExpandIcon';
-
-// const { Text } = Typography;
-// const { Panel } = Collapse;
 
 const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = 'Application Details', styles }) => {
     const { applicationAction, documentType, accessibleLocation, ...rest } = applicationDetailsData[0];
-    // const [openAccordian, setOpenAccordian] = useState('');
 
     const viewOneColProps = {
         bordered: false,
@@ -27,10 +17,6 @@ const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = 'Applicatio
         title: <div className={styles.viewContainerHeader}>{viewTitle}</div>,
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
-
-    // const handleCollapse = (key) => {
-    //     setOpenAccordian((prev) => (prev === key ? '' : key));
-    // };
 
     return (
         <>
@@ -41,8 +27,6 @@ const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = 'Applicatio
                     <Descriptions.Item label="Application Type">{rest.applicationType || 'NA'}</Descriptions.Item>
                     <Descriptions.Item label="Accessible Location">{ACCESSIBLE_LOCATION_INDICATOR[rest?.accessableIndicator] || 'NA'}</Descriptions.Item>
                     <Descriptions.Item label="IRN Integration">{rest?.irnIntegrationRequired ? 'Yes' : 'No'}</Descriptions.Item>
-
-                                        
                 </Descriptions>
             </div>
         </>
