@@ -73,7 +73,7 @@ const MainPageBase = ({ notification }) => {
             {isLoggedIn ? (
                 <>
                     <div className={styles.lightThemeScroll}>
-                        {notification?.backdrop && <div className={style.antNotificationOverlay}/>}
+                        {notification?.backdrop && <div className={style.antNotificationOverlay} />}
                         <SessionTimeout />
                         <AuthenticatedUserPage />
                     </div>

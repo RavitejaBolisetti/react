@@ -548,13 +548,12 @@ export const VehicleInvoiceMasterBase = (props) => {
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage + 'Invoice No.:' + res?.data?.invoiceNumber });
+            // showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage + 'Invoice No.:' + res?.data?.invoiceNumber });
             fetchList({ customURL: BASE_URL_VEHICLE_INVOICE_LIST, setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
-            resetInvoiceData();
-            setCurrentSection(defaultSection);
-
-            // handleButtonClick({ buttonAction: NEXT_ACTION });
             // setCurrentSection(defaultSection);
+            // resetInvoiceData();
+            handleButtonClick({ buttonAction: NEXT_ACTION });
+            setCurrentSection(defaultSection);
         };
 
         const onError = (message) => {
