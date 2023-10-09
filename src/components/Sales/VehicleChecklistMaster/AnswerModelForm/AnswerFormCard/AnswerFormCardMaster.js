@@ -6,58 +6,50 @@
 import React, { useReducer, useState, useEffect } from 'react';
 import AnswerCard from './AnswerCard';
 import AnswerForm from './AnswerForm';
+import { Card } from 'antd';
 
 export const AnswerFormCardMaster = (props) => {
-    const { isVisible, selectedTreeData, showGlobalNotification, taxChargeCategoryTypeData, taxCategory, taxChargeCategoryCodeData, handleCodeFunction, form, editForm, answerForm, formEdit, setFormEdit, answerData, setAnswerData, buttonData, setButtonData, viewMode, dropdownItems, setDropdownItems } = props;
+    const { isVisible, taxCategory, editForm, answerForm, formEdit, setFormEdit, answerData, setAnswerData, buttonData, setButtonData } = props;
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [disableSaveButton, setDisableSaveButton] = useState(false);
     const [changeValue, setChangeValue] = useState(null);
     const [uniqueCardEdit, setuniqueCardEdit] = useState(null);
     const [mainFomEdit, setMainFormEdit] = useState(false);
+    const [answerSwitch, setAnswerSwitch] = useState(true);
 
     const onFinishAnswerForm = (val) => {
         answerForm.validateFields().then(() => {
             let data = answerForm.getFieldsValue();
-
             let updateData = { ...data, internalId: Math.floor(Math.random() * 100000000 + 1), id: '' };
             setAnswerData((item) => [updateData, ...item]);
             answerForm.resetFields();
             forceUpdate();
-            setButtonData({ ...buttonData, formBtnActive: true });
-            handleCodeFunction();
         });
     };
 
-    const handleDescriptionChange = (taxCode) => {
-        setChangeValue(taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxDescription);
-        formEdit ? editForm.setFieldValue('chargeDescription', taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxDescription) : answerForm.setFieldValue('chargeDescription', taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxDescription);
+    // const handleDescriptionChange = (taxCode) => {
+    //     setChangeValue(taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxDescription);
+    //     formEdit ? editForm.setFieldValue('chargeDescription', taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxDescription) : answerForm.setFieldValue('chargeDescription', taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxDescription);
 
-        let codeFind = {
-            taxMasterId: taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.id,
-        };
-        if (formEdit) {
-            editForm.setFieldsValue(codeFind);
-        } else {
-            answerForm.setFieldsValue(codeFind);
-        }
-    };
+    //     let codeFind = {
+    //         taxMasterId: taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.id,
+    //     };
+    //     if (formEdit) {
+    //         editForm.setFieldsValue(codeFind);
+    //     } else {
+    //         answerForm.setFieldsValue(codeFind);
+    //     }
+    // };
 
     const cardAttributeProps = {
         answerForm,
         onFinishAnswerForm,
         forceUpdate,
         isVisible,
-        selectedTreeData,
-        taxCharges: taxChargeCategoryTypeData,
-        objTaxCharge: taxCategory,
         disableSaveButton,
         setDisableSaveButton,
-        showGlobalNotification,
         answerData,
         setAnswerData,
-        taxChargeCategoryCodeData,
-        handleCodeFunction,
-        form,
         changeValue,
         setChangeValue,
         editForm,
@@ -65,12 +57,10 @@ export const AnswerFormCardMaster = (props) => {
         setFormEdit,
         uniqueCardEdit,
         setuniqueCardEdit,
-        handleDescriptionChange,
         buttonData,
         setButtonData,
-        viewMode,
-        dropdownItems,
-        setDropdownItems,
+        answerSwitch,
+        setAnswerSwitch,
     };
 
     const formProductAttributeProps = {
@@ -99,13 +89,13 @@ export const AnswerFormCardMaster = (props) => {
     }, [formEdit]);
 
     return (
-        <>
+        <Card>
             <AnswerForm {...formProductAttributeProps} mainFomEdit={mainFomEdit} />
 
             {answerData?.length > 0 &&
                 answerData?.map((action) => {
-                    return <AnswerCard {...cardAttributeProps} chargeType={action?.chargeType} chargeCode={action?.chargeCode} chargeDescription={action?.chargeDescription} internalId={action?.internalId} id={action?.id} taxMasterId={action?.taxMasterId} />;
+                    return <AnswerCard {...cardAttributeProps} answerCode={action?.answerCode} answerDescription={action?.answerDescription} answerStatus={action?.answerStatus} internalId={action?.internalId} id={action?.id} />;
                 })}
-        </>
+        </Card>
     );
 };

@@ -138,33 +138,7 @@ const AddEditFormMain = (props) => {
                                         <Form.Item name="id" label="" />
                                     </Col>
                                 </Row>
-                                {
-                                    answerType === ANSWER_TYPES?.Fixed?.key && <AnswerFormCardMaster {...props}/>
-                                    // <Row gutter={20}>
-                                    //     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    //         <Card
-                                    //             style={{
-                                    //                 width: '100%',
-                                    //             }}
-                                    //         >
-                                    //             <Form.Item name="answerCode" label="Answer Code" rules={[validateRequiredInputField('Answer Code')]}>
-                                    //                 <Input maxLength={6} placeholder={preparePlaceholderText('Answer Code')} disabled={treeCodeReadOnly} />
-                                    //             </Form.Item>
-                                    //             <Form.Item name="answerDescription" label="Answer Description" rules={[validateRequiredInputField('Answer Description')]}>
-                                    //                 <TextArea maxLength={300} placeholder={preparePlaceholderText('Answer Description')} disabled={treeCodeReadOnly} />
-                                    //             </Form.Item>
-                                    //             <Form.Item name="answerStatus">
-                                    //                 <Row justify="space-between" align="middle">
-                                    //                     <Switch value={true} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={true} />
-                                    //                     <Button type="primary" icon={<PlusOutlined />}>
-                                    //                         Add
-                                    //                     </Button>
-                                    //                 </Row>
-                                    //             </Form.Item>
-                                    //         </Card>
-                                    //     </Col>
-                                    // </Row>
-                                }
+                                {answerType === ANSWER_TYPES?.Fixed?.key && <AnswerFormCardMaster {...props} />}
                             </>
                         ) : null}
                     </Col>

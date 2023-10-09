@@ -93,6 +93,8 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
     const [answerForm] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [editForm] = Form.useForm();
+    const [formEdit, setFormEdit] = useState(false);
 
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
@@ -366,6 +368,10 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
         answerData,
         setAnswerData,
         answerForm,
+        setButtonData,
+        formEdit,
+        setFormEdit,
+        editForm,
     };
 
     const viewProps = {

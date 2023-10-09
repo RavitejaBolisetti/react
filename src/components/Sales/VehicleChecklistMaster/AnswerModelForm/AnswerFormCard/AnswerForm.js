@@ -4,60 +4,55 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Input, Form, Col, Row, Button, Select } from 'antd';
-import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
-import { customSelectBox } from 'utils/customSelectBox';
-import styles from 'assets/sass/app.module.scss';
+import { Input, Form, Col, Row, Button, Switch } from 'antd';
+import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import { validateRequiredInputField } from 'utils/validation';
 import { PlusOutlined } from '@ant-design/icons';
 
-const AnswerForm = (props) => {
-    const { answerForm, taxCharges, onFinishAnswerForm, formEdit, editForm, handleCodeFunction, handleDescriptionChange, mainFomEdit, dropdownItems } = props;
+const { TextArea } = Input;
 
-    const fieldNames = { key: 'taxCode', value: 'taxCode' };
+const AnswerForm = (props) => {
+    const { answerForm, onFinishAnswerForm, formEdit, editForm, answerSwitch, setAnswerSwitch, mainFomEdit } = props;
 
     return (
         <>
             <Form form={formEdit ? editForm : answerForm} id="myForm" autoComplete="off" layout="vertical">
                 <Row gutter={20}>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Tax/Charge Type" name="chargeType" rules={[validateRequiredSelectField('Tax Charge')]}>
-                            {customSelectBox({ disabled: mainFomEdit, data: taxCharges, fieldNames: { key: 'taxType', value: 'taxDescription' }, placeholder: preparePlaceholderSelect('Tax Charge'), onChange: handleCodeFunction })}
-                        </Form.Item>
-                    </Col>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Tax/Charge Code" name="chargeCode" initialValue={props?.code} rules={[validateRequiredSelectField('Tax Code')]}>
-                            <Select options={dropdownItems} disabled={mainFomEdit} fieldNames={fieldNames} placeholder={preparePlaceholderSelect('Tax Code')} onChange={handleDescriptionChange} />
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <Form.Item name="answerCode" label="Answer Code" rules={[validateRequiredInputField('Answer Code')]}>
+                            <Input maxLength={6} placeholder={preparePlaceholderText('Answer Code')} disabled={mainFomEdit} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Form.Item labelAlign="left" name="chargeDescription" label="Description" rules={[validateRequiredInputField('Description')]} initialValue={props?.chargeDescription}>
-                            <Input placeholder={preparePlaceholderText('Description')} disabled />
+                        <Form.Item name="answerDescription" label="Answer Description" rules={[validateRequiredInputField('Answer Description')]}>
+                            <TextArea maxLength={300} placeholder={preparePlaceholderText('Answer Description')} disabled={mainFomEdit} />
                         </Form.Item>
+                    </Col>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} style={{ marginBottom: '12px' }}>
+                        <Row justify="space-between" align="middle">
+                            <Form.Item name="answerStatus" initialValue={answerSwitch}>
+                                <Switch value={answerSwitch} onChange={() => setAnswerSwitch(!answerSwitch)} defaultChecked={answerSwitch} style={{ marginBottom: '-16px' }} disabled={mainFomEdit} />
+                            </Form.Item>
+                            {!props?.internalId && (
+                                <Button
+                                    disabled={formEdit}
+                                    type="primary"
+                                    icon={<PlusOutlined />}
+                                    onClick={() => {
+                                        onFinishAnswerForm();
+                                    }}
+                                >
+                                    Add
+                                </Button>
+                            )}
+                        </Row>
                     </Col>
                     <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
                         <Form.Item name="internalId" label="Internal Id" />
                     </Col>
                     <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
-                        <Form.Item name="taxMasterId" label="taxMasterId" />
-                    </Col>
-                    <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
                         <Form.Item name="id" label="Id" />
                     </Col>
-                    {!props?.internalId && (
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.marB20}>
-                            <Button
-                                disabled={formEdit}
-                                type="primary"
-                                icon={<PlusOutlined />}
-                                onClick={() => {
-                                    onFinishAnswerForm();
-                                }}
-                            >
-                                Add
-                            </Button>
-                        </Col>
-                    )}
                 </Row>
             </Form>
         </>
@@ -65,3 +60,28 @@ const AnswerForm = (props) => {
 };
 
 export default AnswerForm;
+
+// <Row gutter={20}>
+//     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+//         <Card
+//             style={{
+//                 width: '100%',
+//             }}
+//         >
+//             <Form.Item name="answerCode" label="Answer Code" rules={[validateRequiredInputField('Answer Code')]}>
+//                 <Input maxLength={6} placeholder={preparePlaceholderText('Answer Code')} disabled={treeCodeReadOnly} />
+//             </Form.Item>
+//             <Form.Item name="answerDescription" label="Answer Description" rules={[validateRequiredInputField('Answer Description')]}>
+//                 <TextArea maxLength={300} placeholder={preparePlaceholderText('Answer Description')} disabled={treeCodeReadOnly} />
+//             </Form.Item>
+//             <Form.Item name="answerStatus">
+//                 <Row justify="space-between" align="middle">
+//                     <Switch value={true} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={true} />
+//                     <Button type="primary" icon={<PlusOutlined />}>
+//                         Add
+//                     </Button>
+//                 </Row>
+//             </Form.Item>
+//         </Card>
+//     </Col>
+// </Row>

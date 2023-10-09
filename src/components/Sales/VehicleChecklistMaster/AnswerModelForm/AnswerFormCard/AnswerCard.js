@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Card, Row, Col, Button, Divider, Typography } from 'antd';
+import { Card, Row, Col, Button, Divider, Typography, Space } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 import styles from 'assets/sass/app.module.scss';
 
@@ -13,23 +13,22 @@ import AnswerForm from './AnswerForm';
 const { Text } = Typography;
 
 const AnswerCard = (props) => {
-    const { finalFormdata, taxChargeCalForm, forceUpdate, taxCharges, productHierarchyAttributeData, taxChargeCategoryCodeData, answerData, setTaxChargeCalList, objTaxCharge, setOpenAccordian, changeValue, setChangeValue, handleCodeFunction, editForm, formEdit, setFormEdit, uniqueCardEdit, setuniqueCardEdit, handleDescriptionChange, buttonData, setButtonData, dropdownItems, setDropdownItems, viewMode, internalId } = props;
-    const taxChargeDesc = taxCharges?.find((e) => e?.taxType === props?.chargeType)?.taxDescription;
+    const { finalFormdata, answerForm, forceUpdate, answerData, setAnswerData, setOpenAccordian, changeValue, setChangeValue, editForm, formEdit, setFormEdit, uniqueCardEdit, setuniqueCardEdit, buttonData, setButtonData, internalId, formActionType, answerSwitch, setAnswerSwitch } = props;
 
     const answerEdit = (props) => {
+        console.log(`props`, props);
         setuniqueCardEdit(props?.internalId);
         setFormEdit(true);
         setButtonData({ ...buttonData, formBtnActive: true });
+        setAnswerSwitch(props?.answerStatus);
 
         editForm.setFieldsValue({
-            chargeCode: props?.chargeCode,
-            chargeType: props?.chargeType,
-            chargeDescription: props?.chargeDescription,
+            answerCode: props?.answerCode,
+            answerDescription: props?.answerDescription,
+            answerStatus: props?.answerStatus,
             internalId: props?.internalId,
-            taxMasterId: props?.taxMasterId,
+            id: props?.id,
         });
-
-        handleCodeFunction(props?.chargeType);
     };
 
     const answerSave = () => {
@@ -37,23 +36,22 @@ const AnswerCard = (props) => {
 
         const upd_obj = answerData?.map((obj) => {
             if (obj?.internalId === newFormData?.internalId) {
-                obj.chargeCode = newFormData?.chargeCode;
-                obj.chargeType = newFormData?.chargeType;
-                obj.chargeDescription = newFormData?.chargeDescription;
+                obj.answerCode = newFormData?.answerCode;
+                obj.answerDescription = newFormData?.answerDescription;
+                obj.answerStatus = newFormData?.answerStatus;
                 obj.internalId = newFormData?.internalId;
-                obj.taxMasterId = newFormData?.taxMasterId;
+                obj.id = newFormData?.id;
             }
             return obj;
         });
 
-        setTaxChargeCalList([...upd_obj]);
-        setDropdownItems(() => []);
+        setAnswerData([...upd_obj]);
         setFormEdit(false);
         forceUpdate();
     };
 
     const answerDelete = (val) => {
-        setTaxChargeCalList((prev) => {
+        setAnswerData((prev) => {
             const indx = prev.findIndex((el) => el.internalId === val?.internalId);
             let updatedValue = prev;
             updatedValue?.splice(indx, 1);
@@ -61,51 +59,47 @@ const AnswerCard = (props) => {
         });
 
         setFormEdit(false);
-        taxChargeCalForm.resetFields();
+        answerForm.resetFields();
         forceUpdate();
     };
 
     const answerCancel = () => {
         setFormEdit(false);
-        setDropdownItems(() => []);
     };
 
     const FormProductAttributeProp = {
-        productHierarchyAttributeData,
         editForm,
         finalFormdata,
         formEdit,
-        taxChargeCalList,
-        taxCharges,
-        taxCharge: objTaxCharge,
-        taxChargeCategoryCodeData,
+        answerForm,
         setOpenAccordian,
         changeValue,
         setChangeValue,
-        handleCodeFunction,
-        taxChargeCalForm,
-        handleDescriptionChange,
-        dropdownItems,
         internalId,
+        answerSwitch,
+        setAnswerSwitch,
     };
 
-    useEffect(() => {
-        if (formEdit) {
-            setButtonData({ ...buttonData, formBtnActive: true });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formEdit]);
+    // useEffect(() => {
+    //     if (formEdit) {
+    //         setButtonData({ ...buttonData, formBtnActive: true });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [formEdit]);
 
     return (
         <Card>
             <Row align="middle" justify="space-between" className={styles.marB20}>
                 <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18}>
-                    <Text>{taxChargeDesc}</Text>
-                    <Divider type="vertical" />
-                    <Text>{props?.chargeCode}</Text>
+                    <Space direction="vertical">
+                        <Text>{props?.answerCode}</Text>
+                        <Text>{props?.answerDescription}</Text>
+
+                        <Text>{props?.answerStatus === true ? 'Active' : 'InActive'}</Text>
+                    </Space>
                 </Col>
                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6} className={styles.buttonsGroupRight}>
-                    {viewMode === false ? (
+                    {formActionType !== 'view' ? (
                         <>
                             {!formEdit && (
                                 <>
