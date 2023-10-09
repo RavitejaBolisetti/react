@@ -11,15 +11,28 @@ import { HiCheck } from 'react-icons/hi';
 
 import styles from 'assets/sass/app.module.scss';
 import { CopytoClipboard } from 'utils/CopytoClipboard';
+import { useMemo } from 'react';
 
 const { Title, Text } = Typography;
 
 export const ThankYouMaster = (props) => {
     const { handlePrintDownload, record, selectedOrder } = props;
-    const invoiceType = props?.soldByDealer ? 'Note' : 'Challan';
     const messageList = selectedOrder?.responseMessage?.split(' ');
-    const Number = props?.soldByDealer ? selectedOrder?.responseMessage?.split('. ')?.[1] : messageList[messageList?.length - 1];
     const message = selectedOrder?.responseMessage?.split('.')?.[0];
+
+    const ThankYoutitles = useMemo(() => {
+        switch (props?.soldByDealer) {
+            case true: {
+                return { invoiceType: 'Delivery Note', Number: selectedOrder?.responseMessage?.split('. ')?.[1] };
+            }
+            case false: {
+                return { invoiceType: 'Challan', Number: messageList[messageList?.length - 1] };
+            }
+            default: {
+                return { invoiceType: 'Delivery Note', Number: selectedOrder?.responseMessage?.split('. ')?.[1] };
+            }
+        }
+    }, [selectedOrder]);
 
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -54,17 +67,17 @@ export const ThankYouMaster = (props) => {
                             <Space className={styles.marB20}>
                                 <div className={styles.deliveryNoteSuccessText}>
                                     <Text>
-                                        Delivery Note No.: <span>{Number}</span>
+                                        {ThankYoutitles?.invoiceType} No.: <span>{ThankYoutitles?.Number}</span>
                                     </Text>
                                 </div>
-                                <CopytoClipboard type={'primary'} buttonText={'Copy'} text={Number} />
+                                <CopytoClipboard type={'primary'} buttonText={'Copy'} text={ThankYoutitles?.Number} />
                             </Space>
 
                             <Divider />
                             <Space size="middle" direction="vertical">
                                 <Text>Do you want to Print or download this Delivery Note</Text>
                                 <Button onClick={() => handlePrintDownload(record)} danger>
-                                    {`Download/Print ${invoiceType} Note`}
+                                    {`Download/Print ${ThankYoutitles?.invoiceType}`}
                                 </Button>
                             </Space>
                         </div>
