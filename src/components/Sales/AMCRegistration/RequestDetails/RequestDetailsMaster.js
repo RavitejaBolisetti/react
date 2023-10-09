@@ -10,94 +10,64 @@ import ViewDetail from './ViewDetail';
 
 import styles from 'assets/sass/app.module.scss';
 import { formattedCalendarDate } from 'utils/formatDateTime';
+import { RejectRequest } from '../RequestModal';
 
 const RequestDetailsMasterBase = (props) => {
     const { typeData, vehicleInvoiceMasterData, selectedOrderId } = props;
     const { userId, buttonData, setButtonData, section, isDataLoaded, isLoading, invoiceDetailForm } = props;
-    const { formActionType, selectedOtfNumber, setSelectedOtfNumber } = props;
+    const { selectedAMC, formActionType, selectedOtfNumber, setSelectedOtfNumber } = props;
 
-    const { FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch, CustomerForm, showGlobalNotification, salesConsultantLovData } = props;
+    const { form, FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch, CustomerForm, showGlobalNotification, salesConsultantLovData } = props;
 
     const [activeKey, setActiveKey] = useState([3]);
-    useEffect(() => {
-        if (!selectedOrderId) {
-            CustomerForm.resetFields();
-        } else if (vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto) {
-            CustomerForm.setFieldsValue({
-                bookingCustomer: { ...vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.bookingCustomer, birthDate: formattedCalendarDate(vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.bookingCustomer?.birthDate) },
-                billingCustomer: { ...vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.billingCustomer, birthDate: formattedCalendarDate(vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.billingCustomer?.birthDate) },
-            });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto, selectedOrderId]);
-
-    useEffect(() => {
-        if (selectedOtfNumber) {
-            setButtonData({ ...buttonData, formBtnActive: true });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedOtfNumber]);
+    const [isRejectModalVisible, setRejectModalVisible] = useState(false);
 
     const handleChange = (e) => {
         setButtonData({ ...buttonData, formBtnActive: false });
     };
 
+    const handleCancelRequest = () => {
+        setRejectModalVisible(true);
+    };
     const onFinish = (values) => {
-        const { otfDetailsRequest, ...bookingAndBillingCustomerDto } = values;
-        if (!Object?.keys(bookingAndBillingCustomerDto)?.length) {
-            if (!requestPayload?.invoiceDetails?.bookingAndBillingCustomerDto?.billingCustomer) {
-                showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please provide billing customer details' });
-                setActiveKey([3, 2]);
-                return false;
-            } else if (!requestPayload?.invoiceDetails?.bookingAndBillingCustomerDto?.bookingCustomer) {
-                showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please provide booking customer details' });
-                setActiveKey([3, 1]);
-                return false;
-            } else setRequestPayload({ ...requestPayload, invoiceDetails: { otfDetailsRequest, bookingAndBillingCustomerDto: { ...requestPayload?.invoiceDetails?.bookingAndBillingCustomerDto } } });
-        } else {
-            setRequestPayload({ ...requestPayload, invoiceDetails: { otfDetailsRequest, bookingAndBillingCustomerDto: CustomerForm.getFieldsValue() } });
-        }
+        // const { otfDetailsRequest, ...bookingAndBillingCustomerDto } = values;
+        // if (!Object?.keys(bookingAndBillingCustomerDto)?.length) {
+        //     if (!requestPayload?.invoiceDetails?.bookingAndBillingCustomerDto?.billingCustomer) {
+        //         showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please provide billing customer details' });
+        //         setActiveKey([3, 2]);
+        //         return false;
+        //     } else if (!requestPayload?.invoiceDetails?.bookingAndBillingCustomerDto?.bookingCustomer) {
+        //         showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please provide booking customer details' });
+        //         setActiveKey([3, 1]);
+        //         return false;
+        //     } else setRequestPayload({ ...requestPayload, invoiceDetails: { otfDetailsRequest, bookingAndBillingCustomerDto: { ...requestPayload?.invoiceDetails?.bookingAndBillingCustomerDto } } });
+        // } else {
+        //     setRequestPayload({ ...requestPayload, invoiceDetails: { otfDetailsRequest, bookingAndBillingCustomerDto: CustomerForm.getFieldsValue() } });
+        // }
         handleButtonClick({ buttonAction: NEXT_ACTION });
         setButtonData({ ...buttonData, formBtnActive: false });
     };
 
     const onFinishFailed = () => {};
-
-    const formProps = {
-        ...props,
-        formName: 'otfDetailsRequest',
-        form: CustomerForm,
-        typeData,
-        handleChange,
-        formActionType,
-        userId,
-        isDataLoaded,
-        isLoading,
-        setActiveKey,
-        activeKey,
-        selectedOtfNumber,
-        setSelectedOtfNumber,
-        wrapForm: false,
-        handleBookingNumberSearch,
-        selectedOrderId,
-        styles,
+    const cancelModalProps = {
+        isVisible: isRejectModalVisible,
+        onCloseAction: () => setRejectModalVisible(false),
+        titleOverride: 'Cancel Request',
     };
 
     const viewProps = {
+        cancelModalProps,
+        selectedAMC,
         typeData,
         formActionType,
         styles,
         isLoading,
         wrapForm: false,
-        selectedOrderId,
-        salesConsultantLovData,
+        handleCancelRequest,
     };
-    const CustomerDetailsMasterProps = {
-        ...formProps,
-        formData: vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto,
-    };
+
     return (
-        <Form layout="vertical" autoComplete="off" form={invoiceDetailForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>
@@ -105,16 +75,9 @@ const RequestDetailsMasterBase = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                     </Row>
-             
-                    {formActionType?.viewMode && (
-                        <ViewDetail
-                            {...viewProps}
-                            formData={[
-                                { name: 'Raject', amcRegNum: 'AT8967P' },
-                                { name: 'OM Shiv', amcRegNum: 'AT8967P' },
-                            ]}
-                        />
-                    )}
+
+                    {formActionType?.viewMode && <ViewDetail {...viewProps} formData={[requestPayload?.amcRequestDetails]} />}
+                    <RejectRequest {...cancelModalProps} />
                 </Col>
             </Row>
             <Row>

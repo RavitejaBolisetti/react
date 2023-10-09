@@ -9,13 +9,12 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 import styles from 'assets/sass/app.module.scss';
 import { expandIcon } from 'utils/accordianExpandIcon';
-import { prepareCaption } from 'utils/prepareCaption';
 import { getCodeValue } from 'utils/getCodeValue';
 
 const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading, typeData, salesConsultantLovData } = props;
+    const { formData, isLoading, typeData } = props;
     const [activeKey, setactiveKey] = useState([]);
     const viewProps = {
         bordered: false,
@@ -23,6 +22,8 @@ const ViewDetailMain = (props) => {
         layout: 'vertical',
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
+
+    console.log('formData', formData);
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
@@ -49,19 +50,19 @@ const ViewDetailMain = (props) => {
                         <Panel header="Registration Information" key="1">
                             <Divider />
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Sale Type">{checkAndSetDefaultValue(formData?.bookingNumber || formData?.otfNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Employee Name">{checkAndSetDefaultValue(formData?.otfDate ? formData?.otfDate : formData?.orderDate, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Manager Name">{checkAndSetDefaultValue(getCodeValue(typeData?.TAX_CALCLTN_TYPE, formData?.taxCalculationType), isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Remarks">{checkAndSetDefaultValue(getCodeValue(typeData?.RFRL, formData?.taxPayableOnReverseCharges), isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Sale Type">{checkAndSetDefaultValue(formData?.amcRegistration?.saleType, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Employee Name">{checkAndSetDefaultValue(formData?.amcRegistration?.employeeName, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Manager Name">{checkAndSetDefaultValue(formData?.amcRegistration?.managerName, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Remarks">{checkAndSetDefaultValue(formData?.amcRegistration?.remarks, isLoading)}</Descriptions.Item>
                             </Descriptions>
                             <Divider />
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Credit Note Number">{checkAndSetDefaultValue(getCodeValue(salesConsultantLovData, formData?.saleConsultant), isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Credit Note Date">{checkAndSetDefaultValue(formData?.mitraType, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Credit Note Amount">{checkAndSetDefaultValue(formData?.mitraType, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Debit Note Number">{checkAndSetDefaultValue(getCodeValue(salesConsultantLovData, formData?.saleConsultant), isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Debit Note Date">{checkAndSetDefaultValue(getCodeValue(salesConsultantLovData, formData?.saleConsultant), isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Debit Note Amount">{checkAndSetDefaultValue(getCodeValue(salesConsultantLovData, formData?.saleConsultant), isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Credit Note Number">{checkAndSetDefaultValue(formData?.amcRegistration?.creditNoteNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Credit Note Date">{checkAndSetDefaultValue(formData?.amcRegistration?.creditNoteDate, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Credit Note Amount">{checkAndSetDefaultValue(formData?.amcRegistration?.creditNoteAmount, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Debit Note Number">{checkAndSetDefaultValue(formData?.amcRegistration?.debitNoteNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Debit Note Date">{checkAndSetDefaultValue(formData?.amcRegistration?.debitNoteDate, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Debit Note Amount">{checkAndSetDefaultValue(formData?.amcRegistration?.debitNoteAmount, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         </Panel>
                     </Collapse>
@@ -73,13 +74,13 @@ const ViewDetailMain = (props) => {
                         <Panel header="Scheme Details" key="2">
                             <Divider />
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="AMC Type">{checkAndSetDefaultValue(formData?.bookingNumber || formData?.otfNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Scheme Description">{checkAndSetDefaultValue(formData?.otfDate ? formData?.otfDate : formData?.orderDate, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Scheme Code">{checkAndSetDefaultValue(getCodeValue(typeData?.TAX_CALCLTN_TYPE, formData?.taxCalculationType), isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Scheme Basic Amount">{checkAndSetDefaultValue(getCodeValue(typeData?.RFRL, formData?.taxPayableOnReverseCharges), isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Scheme Discount">{checkAndSetDefaultValue(getCodeValue(typeData?.RFRL, formData?.taxPayableOnReverseCharges), isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Scheme Tax Amount">{checkAndSetDefaultValue(getCodeValue(typeData?.RFRL, formData?.taxPayableOnReverseCharges), isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Scheme End Date">{checkAndSetDefaultValue(getCodeValue(typeData?.RFRL, formData?.taxPayableOnReverseCharges), isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="AMC Type">{checkAndSetDefaultValue(getCodeValue(typeData?.AMC_SCHEME_TYPE, formData?.amcRegistration?.bookingNumber), isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Scheme Description">{checkAndSetDefaultValue(formData?.amcRegistration?.schemeDescription, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Scheme Code">{checkAndSetDefaultValue(formData?.amcRegistration?.schemeCode, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Scheme Basic Amount">{checkAndSetDefaultValue(formData?.amcRegistration?.schemeBasicAmount, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Scheme Discount">{checkAndSetDefaultValue(formData?.amcRegistration?.schemeDiscount, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Scheme Tax Amount">{checkAndSetDefaultValue(formData?.amcRegistration?.schemeTaxAmount, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Scheme End Date">{checkAndSetDefaultValue(formData?.amcRegistration?.schemeEndDate, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         </Panel>
                     </Collapse>

@@ -9,7 +9,7 @@ import { Button, Row, Col, Popover } from 'antd';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'assets/sass/app.module.scss';
 
-export const AMCRegistrationFormButton = ({ formActionType, record, onCloseAction, onCancelInvoice, onApproveCancel, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection, onPrintInvoice, onPrintForm21 }) => {
+export const AMCRegistrationFormButton = ({ formActionType, record, onCloseAction, onCancelAMC, onApproveCancel, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection, onPrintInvoice, onPrintForm21 }) => {
     return (
         <div className={styles.formFooter}>
             <Row gutter={20}>
@@ -28,20 +28,9 @@ export const AMCRegistrationFormButton = ({ formActionType, record, onCloseActio
                 </Col>
 
                 <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.buttonsGroupRight}>
-                    {buttonData?.printForm21Btn && (
-                        <Button onClick={() => onPrintForm21(record)} danger>
-                            Print Form 21
-                        </Button>
-                    )}
-                    {buttonData?.printInvoiceBtn && (
-                        <Button onClick={() => onPrintInvoice(record)} danger>
-                            Print Invoice
-                        </Button>
-                    )}
-
                     {buttonData?.cancelInvoiceBtn && (
-                        <Button onClick={onCancelInvoice} danger>
-                            Cancel Invoice
+                        <Button onClick={onCancelAMC} danger>
+                            Cancel AMC
                         </Button>
                     )}
 

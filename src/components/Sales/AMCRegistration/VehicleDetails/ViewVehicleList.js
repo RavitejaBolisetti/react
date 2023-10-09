@@ -9,16 +9,17 @@ import { FiEdit } from 'react-icons/fi';
 
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { getNameFromKey } from 'utils/checkAndSetDefaultValue';
+import { ViewDetail } from './ViewDetail';
 
 import AddEditForm from './AddEditForm';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
 
-const ViewContactList = (props) => {
+const ViewVehicleList = (props) => {
     const { styles, contactData, deleteContactHandeler, onCheckdefaultAddClick, setEditingData, typeData } = props;
-    const { isAdding, setShowAddEditForm, showAddEditForm, setContactData, onFinish, form, contactform, isEditing, setIsEditing, formActionType } = props;
-
+    const { requestPayload, isAdding, setShowAddEditForm, showAddEditForm, setContactData, onFinish, form, contactform, isEditing, setIsEditing, formActionType } = props;
+    console.log('cfgvhbjnkm', requestPayload);
     const [openAccordian, setOpenAccordian] = useState('');
     const disableProp = { disabled: formActionType?.viewMode };
 
@@ -77,7 +78,7 @@ const ViewContactList = (props) => {
                                 }
                             >
                                 <Divider />
-                                <AddEditForm styles={styles} formData={data} index={i} {...detailProps} />
+                                <ViewDetail styles={styles} formData={data} index={i} {...detailProps} />
                             </Panel>
                         </Collapse>
                     );
@@ -86,4 +87,4 @@ const ViewContactList = (props) => {
     );
 };
 
-export default ViewContactList;
+export default ViewVehicleList;

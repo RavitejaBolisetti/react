@@ -20,20 +20,20 @@ const ViewDetailMain = (props) => {
     return (
         <Card>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Customer ID">{checkAndSetDefaultValue(formData?.customerId, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Customer ID">{checkAndSetDefaultValue(formData?.amcCustomerDetails?.customerCode, isLoading)}</Descriptions.Item>
             </Descriptions>
             <Divider />
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(formData?.customerName, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Address">{checkAndSetDefaultValue(formData?.customerAddress, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="State">{checkAndSetDefaultValue(formData?.state, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="City">{checkAndSetDefaultValue(formData?.customerCity, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="District">{checkAndSetDefaultValue(formData?.district, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Tehsil">{checkAndSetDefaultValue(formData?.district, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Locality">{checkAndSetDefaultValue(formData?.district, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Pincode">{checkAndSetDefaultValue(formData?.pinCode, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Mobile No.">{checkAndSetDefaultValue(formData?.customerPhoneNumber, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="GSTIN">{checkAndSetDefaultValue(formData?.email, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(formData?.amcCustomerDetails?.customerName, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Address">{checkAndSetDefaultValue(formData?.amcCustomerDetails?.address, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="State">{checkAndSetDefaultValue(formData?.amcCustomerDetails?.state, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="City">{checkAndSetDefaultValue(formData?.amcCustomerDetails?.city, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="District">{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Tehsil">{checkAndSetDefaultValue(formData?.amcCustomerDetails?.tehsil, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Locality">{checkAndSetDefaultValue(formData?.amcCustomerDetails?.locality, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Pincode">{checkAndSetDefaultValue(formData?.amcCustomerDetails?.pinCode, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Mobile No.">{checkAndSetDefaultValue(formData?.amcCustomerDetails?.customerPhoneNumber, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="GSTIN">{checkAndSetDefaultValue(formData?.amcCustomerDetails?.email, isLoading)}</Descriptions.Item>
             </Descriptions>
         </Card>
     );

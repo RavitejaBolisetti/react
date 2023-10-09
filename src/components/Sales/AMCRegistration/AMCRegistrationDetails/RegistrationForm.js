@@ -17,21 +17,8 @@ const { Search } = Input;
 const { TextArea } = Input;
 
 const RegistrationForm = (props) => {
-    const { formName, registrationForm, formData, typeData, selectedOtfNumber, handleBookingNumberSearch, handleEmployeeNameSearch, isVehicleInvoiceDataLoading, handleBookingChange, salesConsultantLovData } = props;
+    const { formName, registrationForm, formData, typeData, handleFormValueChange, handleBookingNumberSearch, handleEmployeeNameSearch, isVehicleInvoiceDataLoading, handleBookingChange, salesConsultantLovData } = props;
 
-    useEffect(() => {
-        if (formData) {
-            registrationForm?.setFieldsValue({
-                [formName]: {
-                    ...formData,
-                    otfNumber: formData?.bookingNumber || formData?.otfNumber,
-                    orderDate: formattedCalendarDate(formData?.orderDate),
-                    saleConsultantName: getCodeValue(salesConsultantLovData, formData?.saleConsultant),
-                },
-            });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData]);
 
     const handleSaleTypeChange = () => {
         registrationForm.setFieldsValue({ bookingNumber: '67KLGYH90', vin: 'MK7867878KL' });
@@ -39,38 +26,40 @@ const RegistrationForm = (props) => {
 
     return (
         <>
-            <Row gutter={16}>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.saleType} label="Sale Type" name="saleType" rules={[validateRequiredSelectField('Sale Type')]}>
-                        {customSelectBox({ data: typeData?.[PARAM_MASTER.TAX_CALCLTN_TYPE.id], placeholder: preparePlaceholderSelect('Sale Type'), onChange: handleSaleTypeChange })}
-                    </Form.Item>
-                </Col>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item label="Booking Number" name="bookingNumber" rules={[validateRequiredInputField('Booking Number')]}>
-                        <Search maxLength={50} placeholder={preparePlaceholderText('Booking Number')} loading={isVehicleInvoiceDataLoading} onSearch={(value) => handleBookingNumberSearch(value)} allowClear onChange={handleBookingChange} />
-                    </Form.Item>
-                </Col>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item label="VIN" name="vin" rules={[validateRequiredInputField('vin')]}>
-                        <Input disabled maxLength={50} placeholder={preparePlaceholderText('vin')} />
-                    </Form.Item>
-                </Col>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item label="Employee Name" name="employeeName" rules={[validateRequiredInputField('Employee Name')]}>
-                        <Search maxLength={50} placeholder={preparePlaceholderText('Employee Name')} loading={isVehicleInvoiceDataLoading} onSearch={(value) => handleEmployeeNameSearch(value)} allowClear />
-                    </Form.Item>
-                </Col>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item label="Manager Name" name="managerName" rules={[validateRequiredInputField('Manager Name')]}>
-                        <Input disabled maxLength={50} placeholder={preparePlaceholderText('Manager Name')} />
-                    </Form.Item>
-                </Col>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Form.Item initialValue={formData?.remarks} label="Remarks" name="remarks" rules={[validateRequiredSelectField('Remarks')]}>
-                        <TextArea maxLength={300} placeholder={preparePlaceholderText('Remarks')} showCount />
-                    </Form.Item>
-                </Col>
-            </Row>
+            <Form layout="vertical" autoComplete="off" form={registrationForm} onFieldsChange={handleFormValueChange}>
+                <Row gutter={16}>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item initialValue={formData?.saleType} label="Sale Type" name="saleType" rules={[validateRequiredSelectField('Sale Type')]}>
+                            {customSelectBox({ data: typeData?.[PARAM_MASTER.DLVR_SALE_TYP.id], placeholder: preparePlaceholderSelect('Sale Type'), onChange: handleSaleTypeChange })}
+                        </Form.Item>
+                    </Col>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item label="Booking Number" name="bookingNumber" rules={[validateRequiredInputField('Booking Number')]}>
+                            <Search maxLength={50} placeholder={preparePlaceholderText('Booking Number')} loading={isVehicleInvoiceDataLoading} onSearch={(value) => handleBookingNumberSearch(value)} allowClear onChange={handleBookingChange} />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item label="VIN" name="vin" rules={[validateRequiredInputField('vin')]}>
+                            <Input disabled maxLength={50} placeholder={preparePlaceholderText('vin')} />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item label="Employee Name" name="employeeName" rules={[validateRequiredInputField('Employee Name')]}>
+                            <Search maxLength={50} placeholder={preparePlaceholderText('Employee Name')} loading={isVehicleInvoiceDataLoading} onSearch={(value) => handleEmployeeNameSearch(value)} allowClear />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item label="Manager Name" name="managerName" rules={[validateRequiredInputField('Manager Name')]}>
+                            <Input disabled maxLength={50} placeholder={preparePlaceholderText('Manager Name')} />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <Form.Item initialValue={formData?.remarks} label="Remarks" name="remarks" rules={[validateRequiredSelectField('Remarks')]}>
+                            <TextArea maxLength={300} placeholder={preparePlaceholderText('Remarks')} showCount />
+                        </Form.Item>
+                    </Col>
+                </Row>
+            </Form>
         </>
     );
 };

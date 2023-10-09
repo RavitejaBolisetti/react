@@ -405,4 +405,8 @@ export const PARAM_MASTER = {
         id: 'CHRG_STATUS',
         title: 'EVR Charging Status',
     },
+    AMC_SCHEME_TYPE: {
+        id: 'AMC_SCHEME_TYPE',
+        title: 'AMC Scheme AMC Type',
+    },
 };

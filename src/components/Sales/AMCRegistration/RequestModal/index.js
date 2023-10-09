@@ -3,11 +3,6 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { combineReducers } from 'redux';
-import { AMCRegistrationSearch } from './amcRegistration';
-import { AMCRegistrationData } from './amcRegistrationData';
+import { RejectRequest } from './RequestModal';
 
-export const AMCRegistration = combineReducers({
-    AMCRegistrationSearch,
-    AMCRegistrationData
-});
+export { RejectRequest };

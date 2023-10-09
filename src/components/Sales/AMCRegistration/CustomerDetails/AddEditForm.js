@@ -18,21 +18,7 @@ const { Search } = Input;
 const { TextArea } = Input;
 
 const CustomerDetailsForm = (props) => {
-    const { formName, invoiceDetailForm, formData, typeData, selectedOtfNumber, handleBookingNumberSearch, handleEmployeeNameSearch, isVehicleInvoiceDataLoading, handleBookingChange, salesConsultantLovData } = props;
-
-    useEffect(() => {
-        if (formData) {
-            invoiceDetailForm?.setFieldsValue({
-                [formName]: {
-                    ...formData,
-                    otfNumber: formData?.bookingNumber || formData?.otfNumber,
-                    orderDate: formattedCalendarDate(formData?.orderDate),
-                    saleConsultantName: getCodeValue(salesConsultantLovData, formData?.saleConsultant),
-                },
-            });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData]);
+    const { handleCustomerSearch, formName, invoiceDetailForm, formData, typeData, selectedOtfNumber, handleBookingNumberSearch, handleEmployeeNameSearch, isVehicleInvoiceDataLoading, handleBookingChange, salesConsultantLovData } = props;
 
     return (
         <>
@@ -44,7 +30,7 @@ const CustomerDetailsForm = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={24} sm={8} md={8} lg={8} xl={8}>
                                         <Form.Item initialValue={formData?.customerId} label="Customer ID" name="customerId">
-                                            <Search placeholder={preparePlaceholderText('Customer ID')} allowClear />
+                                            <Search placeholder={preparePlaceholderText('Customer ID')} onSearch={handleCustomerSearch} allowClear />
                                         </Form.Item>
                                     </Col>
                                 </Row>

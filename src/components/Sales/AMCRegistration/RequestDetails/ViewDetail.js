@@ -6,10 +6,11 @@
 import React from 'react';
 import { Button, Card, Row, Col, Divider, Typography } from 'antd';
 import styles from 'assets/sass/app.module.scss';
+import { convertDateMonthYear } from 'utils/formatDateTime';
 const { Text } = Typography;
 
 const ViewDetail = (props) => {
-    const { formData, userType } = props;
+    const { formData, userType, selectedAMC, handleCancelRequest } = props;
     const viewProps = {
         bordered: false,
         colon: false,
@@ -27,9 +28,14 @@ const ViewDetail = (props) => {
                                 <Col xs={24} sm={24} md={24} lg={24}>
                                     <Text strong>Registration Request</Text>
                                     <Divider type="vertical" />
-                                    <Text strong>{data?.name}</Text>
+                                    <Text strong>{data?.customerName}</Text>
                                     <Divider type="vertical" />
-                                    <Text strong>{data?.amcRegNum}</Text>
+                                    <Text strong>{selectedAMC?.amcRegistrationNumber}</Text>
+                                </Col>
+                            </Row>
+                            <Row type="flex" align="middle">
+                                <Col xs={24} sm={24} md={24} lg={24}>
+                                    <div className={styles.tableTextColor85}>Requested On: {convertDateMonthYear(data?.amcRegistrationDate)}</div>
                                 </Col>
                             </Row>
 
@@ -46,7 +52,9 @@ const ViewDetail = (props) => {
                             ) : (
                                 <Row gutter={20} className={styles.marB20}>
                                     <Col xs={4} sm={4} md={4} lg={4}>
-                                        <Button type="primary">Cancel</Button>
+                                        <Button type="primary" onClick={handleCancelRequest}>
+                                            Cancel
+                                        </Button>
                                     </Col>
                                 </Row>
                             )}

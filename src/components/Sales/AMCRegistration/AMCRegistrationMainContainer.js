@@ -21,11 +21,13 @@ const VehicleDetailsMaster = React.lazy(() => import('./VehicleDetails'));
 const RequestDetailsMaster = React.lazy(() => import('./RequestDetails'));
 
 const AMCRegistrationMainContainerMain = (props) => {
-    const { currentSection, handleIRNGeneration, selectedOtfNumber, requestPayload, setRequestPayload } = props;
+    const { customerForm,currentSection, handleIRNGeneration, selectedOtfNumber, requestPayload, setRequestPayload, registrationForm } = props;
 
     const onFinishCustom = ({ key, values }) => {
         setRequestPayload({ ...requestPayload, [key]: values });
     };
+
+    console.log('requestPayload', requestPayload);
 
     const myProps = {
         ...props,
@@ -40,13 +42,13 @@ const AMCRegistrationMainContainerMain = (props) => {
     const renderElement = () => {
         switch (currentSection) {
             case AMC_REGISTRATION_SECTION.AMC_REGISTRATION_DETAILS.id: {
-                return <AMCRegistrationDetailsMaster {...myProps} />;
+                return <AMCRegistrationDetailsMaster form={registrationForm} {...myProps} />;
             }
             case AMC_REGISTRATION_SECTION.CUSTOMER_DETAILS.id: {
-                return <CustomerDetailsMaster {...myProps} formData={requestPayload?.customerDetails} formKey={'customerDetails'} />;
+                return <CustomerDetailsMaster {...myProps} form={customerForm} formData={requestPayload?.customerDetails} formKey={'customerDetails'} />;
             }
             case AMC_REGISTRATION_SECTION.VEHICLE_DETAILS.id: {
-                return <VehicleDetailsMaster {...myProps} formData={requestPayload?.vehicleDetails} formKey={'vehicleDetails'} />;
+                return <VehicleDetailsMaster {...myProps} formData={requestPayload?.amcVehicleDetails} formKey={'vehicleDetails'} />;
             }
             case AMC_REGISTRATION_SECTION.REQUEST_DETAILS.id: {
                 return <RequestDetailsMaster {...myProps} formData={requestPayload?.requestDetails} formKey={'requestDetails'} />;

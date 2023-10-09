@@ -14,23 +14,23 @@ import { formattedCalendarDate } from 'utils/formatDateTime';
 
 const AMCRegistrationDetailsMasterBase = (props) => {
     const { typeData, vehicleInvoiceMasterData, selectedOrderId } = props;
-    const { userId, buttonData, setButtonData, section, isDataLoaded, isLoading, registrationForm } = props;
+    const { userId, buttonData, setButtonData, section, isDataLoaded, isLoading, form } = props;
     const { formActionType, selectedOtfNumber, setSelectedOtfNumber, handleFormValueChange } = props;
 
     const { FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch, CustomerForm, showGlobalNotification, salesConsultantLovData } = props;
 
+    const [registrationForm] = Form.useForm();
+    const [schemeForm] = Form.useForm();
     const [activeKey, setActiveKey] = useState([3]);
+
     useEffect(() => {
-        if (!selectedOrderId) {
-            CustomerForm.resetFields();
-        } else if (vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto) {
-            CustomerForm.setFieldsValue({
-                bookingCustomer: { ...vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.bookingCustomer, birthDate: formattedCalendarDate(vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.bookingCustomer?.birthDate) },
-                billingCustomer: { ...vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.billingCustomer, birthDate: formattedCalendarDate(vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.billingCustomer?.birthDate) },
-            });
+        console.log(requestPayload);
+        if (requestPayload) {
+            registrationForm.setFieldsValue({ ...requestPayload?.amcRegistration });
+            schemeForm.setFieldsValue({ ...requestPayload?.amcSchemeDetails });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto, selectedOrderId]);
+    }, [requestPayload]);
 
     useEffect(() => {
         if (selectedOtfNumber) {
@@ -47,24 +47,12 @@ const AMCRegistrationDetailsMasterBase = (props) => {
         registrationForm.setFieldsValue({ managerName: 'Rajendra Prasad' });
     };
     const handleSchemeDescriptionChange = () => {
-        registrationForm.setFieldsValue({ schemeCode: '5678', schemeBasicAmount: '1000', schemeTaxAmount: '5000' });
+        schemeForm.setFieldsValue({ schemeCode: '5678', schemeBasicAmount: '1000', schemeTaxAmount: '5000' });
     };
 
-    const onFinish = (values) => {
-        const { otfDetailsRequest, ...bookingAndBillingCustomerDto } = values;
-        if (!Object?.keys(bookingAndBillingCustomerDto)?.length) {
-            if (!requestPayload?.invoiceDetails?.bookingAndBillingCustomerDto?.billingCustomer) {
-                showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please provide billing customer details' });
-                setActiveKey([3, 2]);
-                return false;
-            } else if (!requestPayload?.invoiceDetails?.bookingAndBillingCustomerDto?.bookingCustomer) {
-                showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please provide booking customer details' });
-                setActiveKey([3, 1]);
-                return false;
-            } else setRequestPayload({ ...requestPayload, invoiceDetails: { otfDetailsRequest, bookingAndBillingCustomerDto: { ...requestPayload?.invoiceDetails?.bookingAndBillingCustomerDto } } });
-        } else {
-            setRequestPayload({ ...requestPayload, invoiceDetails: { otfDetailsRequest, bookingAndBillingCustomerDto: CustomerForm.getFieldsValue() } });
-        }
+    const onFinish = () => {
+        setRequestPayload({ ...requestPayload, amcRegistration: registrationForm.getFieldsValue(), amcSchemeDetails: schemeForm.getFieldsValue() });
+
         handleButtonClick({ buttonAction: NEXT_ACTION });
         setButtonData({ ...buttonData, formBtnActive: false });
     };
@@ -73,8 +61,8 @@ const AMCRegistrationDetailsMasterBase = (props) => {
 
     const formProps = {
         ...props,
-        formName: 'otfDetailsRequest',
-        form: CustomerForm,
+        schemeForm,
+        registrationForm,
         typeData,
         handleChange,
         formActionType,
@@ -94,6 +82,7 @@ const AMCRegistrationDetailsMasterBase = (props) => {
     };
 
     const viewProps = {
+        formData: requestPayload,
         typeData,
         formActionType,
         styles,
@@ -102,12 +91,9 @@ const AMCRegistrationDetailsMasterBase = (props) => {
         selectedOrderId,
         salesConsultantLovData,
     };
-    const CustomerDetailsMasterProps = {
-        ...formProps,
-        formData: vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto,
-    };
+   
     return (
-        <Form layout="vertical" autoComplete="off" form={registrationForm} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>
@@ -115,7 +101,7 @@ const AMCRegistrationDetailsMasterBase = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                     </Row>
-                    {formActionType?.viewMode ? <ViewDetail {...viewProps} formData={vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest} /> : <AddEditForm {...formProps} formData={vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest} />}
+                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
                 </Col>
             </Row>
             <Row>

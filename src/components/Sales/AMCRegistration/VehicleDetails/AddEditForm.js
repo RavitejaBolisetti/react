@@ -13,7 +13,7 @@ import styles from 'assets/sass/app.module.scss';
 const { Search } = Input;
 
 const AddEditForm = (props) => {
-    const { isReadOnly = false, onSaveFormData, contactform, setShowAddEditForm, setIsEditing, typeData, customerType, formActionType, handleFormValueChange, setIsAdding, contactData, editingData } = props;
+    const { isReadOnly = false, onSaveFormData, handleVinSearch, contactform, setShowAddEditForm, setIsEditing, typeData, customerType, formActionType, handleFormValueChange, setIsAdding, contactData, editingData } = props;
 
     const disabledProps = { disabled: true || formActionType?.viewMode };
 
@@ -62,12 +62,10 @@ const AddEditForm = (props) => {
     return (
         <>
             <Form form={contactform} autoComplete="off" onFinish={onSaveFormData} onFieldsChange={handleFormValueChange} layout="vertical">
-                {/* <UploadUtils {...props} isViewModeVisible={isViewModeVisible} setUploadImgDocId={setUploadImgDocId} formActionType={formActionType} /> */}
-                {/* <Divider /> */}
                 <Row gutter={20}>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                         <Form.Item label="VIN" name="vin">
-                            <Search placeholder={preparePlaceholderText('VIN')} allowClear />
+                            <Search placeholder={preparePlaceholderText('VIN')} onSearch={handleVinSearch} allowClear />
                         </Form.Item>
                     </Col>
                 </Row>
@@ -80,7 +78,7 @@ const AddEditForm = (props) => {
                     </Col>
 
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label="Org. Warranty Start Date" name="orgWarrantyStartDate">
+                        <Form.Item label="Org. Warranty Start Date" name="orignallyWarrantyStartDate">
                             <DatePicker disabled placeholder={preparePlaceholderText('Org. Warranty Start Date')} />
                         </Form.Item>
                     </Col>

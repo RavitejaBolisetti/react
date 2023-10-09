@@ -12,6 +12,8 @@ import { connect } from 'react-redux';
 
 import { customerDetailDataActions } from 'store/actions/customer/customerContacts';
 import { customerDetailIndividualDataActions } from 'store/actions/customer/customerContactsIndividual';
+import { vehicleDetailDataActions } from 'store/actions/data/vehicle/vehicleDetail';
+
 import { showGlobalNotification } from 'store/actions/notification';
 
 import AddEditForm from './AddEditForm';
@@ -35,6 +37,9 @@ const mapStateToProps = (state) => {
         },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
+            Vehicle: {
+                VehicleDetail: { vehicleData },
+            },
         },
     } = state;
 
@@ -48,6 +53,7 @@ const mapStateToProps = (state) => {
         isCustomerIndDataLoaded,
         isCustomerIndDataLoading,
         customerIndData,
+        vehicleData,
     };
     return returnValue;
 };
@@ -66,6 +72,9 @@ const mapDispatchToProps = (dispatch) => ({
             saveIndividualData: customerDetailIndividualDataActions.saveData,
             resetIndividualData: customerDetailIndividualDataActions.reset,
 
+            fetchVehicleData: vehicleDetailDataActions.fetchList,
+            listVehicleShowLoading: vehicleDetailDataActions.listShowLoading,
+
             showGlobalNotification,
         },
         dispatch
@@ -75,7 +84,7 @@ const mapDispatchToProps = (dispatch) => ({
 const VehicleDetailsMasterBase = (props) => {
     const { form, section, userId, customerType, resetData, fetchContactDetailsList, customerData, customerIndData, listContactDetailsShowLoading, saveData, showGlobalNotification, typeData } = props;
     const { isCustomerIndDataLoading, isCustomerDataLoading, selectedCustomer, fetchContactIndividualDetailsList, saveIndividualData, resetIndividualData } = props;
-    const { buttonData, setButtonData, formActionType, handleButtonClick, NEXT_ACTION, FormActionButton } = props;
+    const { fetchVehicleData, listVehicleShowLoading, vehicleData, requestPayload, buttonData, setButtonData, formActionType, handleButtonClick, NEXT_ACTION, FormActionButton } = props;
 
     const [contactform] = Form.useForm();
     const [contactData, setContactData] = useState([]);
@@ -85,6 +94,13 @@ const VehicleDetailsMasterBase = (props) => {
     const [continueWithOldMobNo, setContinueWithOldMobNo] = useState(false);
     const [isAdding, setIsAdding] = useState(false);
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
+    console.log('requestPayloadrequestPayloadrequestPayload', requestPayload);
+    useEffect(() => {
+        if (formActionType?.viewMode) {
+            setContactData(requestPayload?.amcVehicleDetails);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [requestPayload]);
 
     const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
     const addDataTitle = (
@@ -202,7 +218,36 @@ const VehicleDetailsMasterBase = (props) => {
         setShowAddEditForm(true);
     };
 
+    const handleVinSearch = (value) => {
+        console.log('value', value);
+        const vehicleExtraParams = [
+            {
+                key: 'searchType',
+                value: 'vehicleIdentificationNumber',
+            },
+            {
+                key: 'searchParam',
+                value: value,
+            },
+            {
+                key: 'pageSize',
+                value: '10',
+            },
+            {
+                key: 'pageNumber',
+                value: '1',
+            },
+            {
+                key: 'status',
+                value: 'C',
+            },
+        ];
+
+        fetchVehicleData({ setIsLoading: listVehicleShowLoading, userId, extraParams: vehicleExtraParams, onSuccessAction, onErrorAction });
+    };
+
     const formProps = {
+        requestPayload,
         setShowAddEditForm,
         showAddEditForm,
         setContactData,
@@ -226,10 +271,11 @@ const VehicleDetailsMasterBase = (props) => {
         isAdding,
         setIsAdding,
         buttonData,
+        handleVinSearch,
     };
 
     const onFinish = () => {
-        let data = { customerId: selectedCustomer?.customerId, customerContact: contactData };
+        let data = { ...requestPayload, amcVehicleDetails: contactData };
 
         const onSuccess = (res) => {
             contactform.resetFields();

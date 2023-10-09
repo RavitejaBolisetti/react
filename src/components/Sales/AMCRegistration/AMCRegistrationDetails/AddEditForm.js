@@ -17,17 +17,6 @@ const AddEditFormMain = (props) => {
     const { formData, registrationForm } = props;
     const { activeKey, setActiveKey } = props;
 
-    useEffect(() => {
-        if (formData) {
-            registrationForm?.setFieldsValue({
-                formData: formData,
-                bookingCustomer: { ...formData?.bookingCustomer, birthDate: convertDateToCalender(formData?.bookingCustomer?.birthDate) },
-                billingCustomer: { ...formData?.billingCustomer, birthDate: convertDateToCalender(formData?.billingCustomer?.birthDate) },
-            });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData]);
-
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
 
@@ -52,7 +41,7 @@ const AddEditFormMain = (props) => {
                     <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
                         <Panel header="Registration Information" key="1">
                             <Divider />
-                            <RegistrationForm {...props} />
+                            <RegistrationForm  {...props} />
                         </Panel>
                     </Collapse>
                     <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
