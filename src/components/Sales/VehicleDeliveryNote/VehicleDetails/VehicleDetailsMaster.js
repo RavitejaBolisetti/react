@@ -60,7 +60,7 @@ const VehicleDetailsMasterBase = (props) => {
     const { buttonData, setButtonData } = props;
 
     const [regNumber, setRegNumber] = useState();
-    const [activeKey, setActiveKey] = useState([]);
+    const [activeKey, setActiveKey] = useState([1, 2]);
     const [otfNumber, setOtfNumber] = useState();
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -131,7 +131,7 @@ const VehicleDetailsMasterBase = (props) => {
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [vehicleData, soldByDealer, section,requestPayload]);
+    }, [vehicleData, soldByDealer, section, requestPayload, vehicleChallanData]);
 
     useEffect(() => {
         setButtonData({ ...buttonData, formBtnActive: true });
