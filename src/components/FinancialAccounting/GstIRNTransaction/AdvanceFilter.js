@@ -12,14 +12,13 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'assets/sass/app.module.scss';
 
-export default function AdvanceOTFFilter(props) {
-    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, otfFilter = false, title, filterString, setFilterString, typeData, setAdvanceSearchVisible, searchForm, AdvanceOtfFilter } = props;
-
+export default function AdvanceFilter(props) {
+    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, filter = false, title, filterString, setFilterString, typeData, setAdvanceSearchVisible, searchForm } = props;
+    
     const serachBoxProps = {
         searchForm,
         filterString,
-        optionType: typeData?.[PARAM_MASTER.OTF_SER.id],
-        defaultOption: 'customerName',
+        optionType: typeData?.[PARAM_MASTER.IRN_PEND.id],
         setFilterString,
         allowClear: false,
     };
@@ -31,11 +30,10 @@ export default function AdvanceOTFFilter(props) {
                     <Form autoComplete="off" colon={false} className={styles.masterListSearchForm}>
                         <Form.Item label={`${title}`}>
                             <Row gutter={20}>
-                                {otfFilter && (
-                                    <Col xs={24} sm={24} md={14} lg={14} xl={14}>
-                                        <SearchBox {...serachBoxProps} />
-                                    </Col>
-                                )}
+                                <Col xs={24} sm={24} md={14} lg={14} xl={14}>
+                                    <SearchBox {...serachBoxProps} />
+                                </Col>
+
                                 {advanceFilter && (
                                     <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.verticallyCentered}>
                                         <Button

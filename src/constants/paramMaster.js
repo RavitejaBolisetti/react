@@ -401,6 +401,14 @@ export const PARAM_MASTER = {
         id: 'SO_RC',
         title: 'OTF SO Mapping',
     },
+    IRN_PEND_TRN_STATUS: {
+        id: 'IRN_PEND_TRN_STATUS',
+        title: 'IRN Pending Transaction',
+    },
+    IRN_PEND: {
+        id: 'IRN_PEND',
+        title: 'IRN Pending Transaction',
+    },
     CRM_SCHEME_TYPE: {
         id: 'CRM_SCHEME_TYPE',
         title: 'Scheme Type',
