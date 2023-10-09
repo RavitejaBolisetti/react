@@ -7,10 +7,12 @@ import React from 'react';
 import MenuNav from './MenuNav';
 import ProfileDetailCard from './ProfileDetailCard';
 const LeftSidebar = (props) => {
-    const { selectedCustomerId } = props;
+    const { previousSection, setpreviousSection, currentSection } = props;
+    if (currentSection > previousSection) setpreviousSection(currentSection);
+
     return (
         <>
-            {selectedCustomerId && <ProfileDetailCard {...props} />}
+            <ProfileDetailCard {...props} />
             <MenuNav {...props} />
         </>
     );
