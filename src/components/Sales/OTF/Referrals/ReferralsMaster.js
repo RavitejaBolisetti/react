@@ -67,7 +67,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const ReferralsMasterBase = (props) => {
     const { formActionType, fetchList, showGlobalNotification, saveData, listShowLoading, userId, referralData, isLoading } = props;
-    const { form, selectedRecordId, section, handleFormValueChange, onFinishFailed, fetchCustomerList, typeData, handleButtonClick, NEXT_ACTION } = props;
+    const { form, selectedRecordId, selectedOrderId, section, handleFormValueChange, onFinishFailed, fetchCustomerList, typeData, handleButtonClick, NEXT_ACTION } = props;
     const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar } = props;
 
     const [searchForm] = Form.useForm();
@@ -81,6 +81,7 @@ const ReferralsMasterBase = (props) => {
         setFilterString();
         if (referralData) {
             setFormData({ ...referralData });
+            setButtonData({ ...buttonData, formBtnActive: false });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [referralData]);
@@ -91,6 +92,7 @@ const ReferralsMasterBase = (props) => {
             value: selectedRecordId,
         },
     ];
+
     useEffect(() => {
         if (userId && selectedRecordId) {
             fetchList({
@@ -159,7 +161,7 @@ const ReferralsMasterBase = (props) => {
     }, [filterString]);
 
     const onFinish = (values) => {
-        const data = { ...values, otfNumber: selectedRecordId, dob: formatDate(values?.dob), id: referralData?.id };
+        const data = { ...values, otfId: selectedRecordId, otfNumber: selectedOrderId, dob: formatDate(values?.dob), id: referralData?.id };
         if (onFinishCustom) {
             onFinishCustom({ key: formKey, values: data });
             handleButtonClick({ buttonAction: NEXT_ACTION });
@@ -190,7 +192,7 @@ const ReferralsMasterBase = (props) => {
     };
 
     const onErrorAction = (message) => {
-        showGlobalNotification({ message });
+        // showGlobalNotification({ message });
     };
 
     const onSuccessAction = (res) => {

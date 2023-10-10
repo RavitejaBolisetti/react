@@ -9,13 +9,35 @@ afterEach(() => {
     jest.restoreAllMocks();
 });
 
+jest.mock('store/actions/data/vehicleReceipt/vehicleReceipt', () => ({
+    vehicleReceiptDataActions: {},
+}));
+
+jest.mock('store/actions/data/vehicleReceipt/vehicleDetails', () => ({
+    vehicleDetailDataActions: {},
+}));
+
+jest.mock('@components/Sales/VehicleReceipt/VehicleDetails/AddEditForm', () => {
+    const AddEditForm = ({ onFinish }) => (
+        <div>
+            <button onClick={onFinish}>Save</button>
+        </div>
+    );
+
+    return {
+        __esModule: true,
+
+        AddEditForm,
+    };
+});
+
 describe('Term Condition Manufacturer Master components', () => {
     it('should render components', () => {
-        customRender(<VehicleReceiptMaster />);
+        customRender(<VehicleReceiptMaster setFilterString={jest.fn()} resetData={jest.fn()} />);
     });
 
     it('should click buttons', () => {
-        customRender(<VehicleReceiptMaster sectionName={'vehicle'} ADD_ACTION={true} handleButtonClick={jest.fn()} setSearchValue={jest.fn()} />);
+        customRender(<VehicleReceiptMaster setFilterString={jest.fn()} resetData={jest.fn()} sectionName={'vehicle'} ADD_ACTION={true} handleButtonClick={jest.fn()} setSearchValue={jest.fn()} />);
 
         const inTransit = screen.getByRole('button', { name: 'In-Transit' });
         fireEvent.click(inTransit);
@@ -43,7 +65,21 @@ describe('Term Condition Manufacturer Master components', () => {
     });
 
     it('reset button should work', () => {
-        customRender(<VehicleReceiptMaster />);
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+
+            data: {
+                VehicleReceipt: {
+                    VehicleReceiptSearch: { filter: { advanceFilter: 'Test', grnFromDate: '06/06/2022', pageSize: 106 } },
+                },
+            },
+        });
+
+        customRender(
+            <Provider store={mockStore}>
+                <VehicleReceiptMaster setFilterString={jest.fn()} resetData={jest.fn()} />
+            </Provider>
+        );
 
         const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
         fireEvent.click(advanceFilter);
@@ -52,7 +88,7 @@ describe('Term Condition Manufacturer Master components', () => {
     });
 
     it('test for closing the advance filter', () => {
-        customRender(<VehicleReceiptMaster />);
+        customRender(<VehicleReceiptMaster setFilterString={jest.fn()} onCloseAction={jest.fn()} resetData={jest.fn()} />);
 
         const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
         fireEvent.click(advanceFilter);
@@ -71,7 +107,7 @@ describe('Term Condition Manufacturer Master components', () => {
         });
         customRender(
             <Provider store={mockStore}>
-                <VehicleReceiptMaster />
+                <VehicleReceiptMaster setFilterString={jest.fn()} resetData={jest.fn()} />
             </Provider>
         );
 
@@ -93,7 +129,7 @@ describe('Term Condition Manufacturer Master components', () => {
         });
         customRender(
             <Provider store={mockStore}>
-                <VehicleReceiptMaster />
+                <VehicleReceiptMaster setFilterString={jest.fn()} resetData={jest.fn()} />
             </Provider>
         );
 
@@ -103,18 +139,21 @@ describe('Term Condition Manufacturer Master components', () => {
         fireEvent.click(removeFilter);
     });
 
-    it('test for apply button', async () => {
+    it('test for apply button and on success', async () => {
         const mockStore = createMockStore({
             auth: { userId: 106 },
             data: {
                 VehicleReceipt: {
-                    VehicleReceiptSearch: { filter: { advanceFilter: 'Test', grnFromDate: '06/06/2022', grnToDate: '06/06/2022', grnType: 'kai', key: 'searchParam' } },
+                    VehicleReceiptSearch: { filter: { current: 106, advanceFilter: 'Test', grnFromDate: '06/06/2022', grnToDate: '06/06/2022', grnType: 'kai', key: 'searchParam' } },
                 },
             },
         });
+
+        const fetchVehicleReceiptList = jest.fn();
+
         customRender(
             <Provider store={mockStore}>
-                <VehicleReceiptMaster />
+                <VehicleReceiptMaster fetchVehicleReceiptList={fetchVehicleReceiptList} setFilterString={jest.fn()} resetData={jest.fn()} />
             </Provider>
         );
 
@@ -133,5 +172,8 @@ describe('Term Condition Manufacturer Master components', () => {
 
         const resetBtn = screen.getByRole('button', { name: /apply/i });
         fireEvent.click(resetBtn);
+
+        fetchVehicleReceiptList.mock.calls[0][0].onSuccessAction();
+        fetchVehicleReceiptList.mock.calls[0][0].onErrorAction();
     });
 });

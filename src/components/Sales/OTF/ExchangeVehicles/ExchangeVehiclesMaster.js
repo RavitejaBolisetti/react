@@ -24,6 +24,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { BASE_URL_CUSTOMER_MASTER_VEHICLE_LIST as customURL } from 'constants/routingApi';
 
 import styles from 'assets/sass/app.module.scss';
+import { SALES_MODULE_TYPE } from 'constants/salesModuleType';
 
 const mapStateToProps = (state) => {
     const {
@@ -129,15 +130,15 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ExchangeVehiclesBase = (props) => {
-    const { exchangeData, isLoading, fetchList, userId, listShowLoading, showGlobalNotification, section, fetchProductLovCode, ProductLovCodeLoading, VehicleLovCodeData } = props;
+    const { exchangeData, exchangeDataPass, isLoading, fetchList, userId, listShowLoading, showGlobalNotification, section, fetchProductLovCode, ProductLovCodeLoading, VehicleLovCodeData } = props;
     const { typeData, selectedOrder, fetchListVehicleExchangeAlert, listShowLoadingVehicleExchangeAlert, exchangeVehicleAlertData, resetVehicleExchangeAlert } = props;
     const { fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading } = props;
     const { isMakeLoading, makeData, isModelDataLoaded, isModelLoading, modelData, isVariantDataLoaded, isVariantLoading, variantData, saveData } = props;
     const { financeLovData, isFinanceLovLoading, fetchFinanceLovList, listFinanceLovShowLoading } = props;
     const { schemeLovData, isSchemeLovLoading, fetchSchemeLovList, listSchemeLovShowLoading } = props;
-    const { form, selectedRecordId, formActionType, handleFormValueChange, isDataLoaded, resetData } = props;
+    const { form, selectedRecordId, selectedOrderId, formActionType, handleFormValueChange, resetData } = props;
     const { fetchCustomerList, listCustomerShowLoading, handleButtonClick, NEXT_ACTION } = props;
-    const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar, isProductHierarchyDataLoaded } = props;
+    const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar, isProductHierarchyDataLoaded, salesModuleType } = props;
 
     const [formData, setFormData] = useState('');
     const [filteredModelData, setfilteredModelData] = useState([]);
@@ -146,6 +147,8 @@ const ExchangeVehiclesBase = (props) => {
     const [customerList, setCustomerList] = useState();
     const [modalOpen, setModalOpen] = useState(false);
     const [modelGroup, setModelGroup] = useState(null);
+
+    const isOTFModule = salesModuleType === SALES_MODULE_TYPE.OTF.KEY;
 
     const fnSetData = (data) => {
         if (data?.make) {
@@ -163,13 +166,19 @@ const ExchangeVehiclesBase = (props) => {
     };
 
     useEffect(() => {
-        if (exchangeData && isDataLoaded) {
+        if (isOTFModule && exchangeData) {
             setFormData(exchangeData);
             exchangeData?.make && handleFilterChange('make', exchangeData?.make ?? '');
             exchangeData?.modelGroup && handleFilterChange('modelGroup', exchangeData?.modelGroup ?? '');
+            setButtonData({ ...buttonData, formBtnActive: false });
+        } else if (exchangeDataPass) {
+            setFormData(exchangeDataPass);
+            exchangeData?.make && handleFilterChange('make', exchangeData?.make ?? '');
+            exchangeData?.modelGroup && handleFilterChange('modelGroup', exchangeData?.modelGroup ?? '');
+            setButtonData({ ...buttonData, formBtnActive: true });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [exchangeData, isDataLoaded]);
+    }, [isOTFModule, exchangeData, exchangeDataPass]);
 
     const makeExtraParams = (key, title, value, name) => {
         const extraParams = [
@@ -182,6 +191,7 @@ const ExchangeVehiclesBase = (props) => {
         ];
         return extraParams;
     };
+
     const extraParams = [
         {
             key: 'otfId',
@@ -190,7 +200,7 @@ const ExchangeVehiclesBase = (props) => {
     ];
 
     const onErrorAction = (message) => {
-        showGlobalNotification({ message });
+        // showGlobalNotification({ message });
         setEditableOnSearch(false);
     };
     const onSuccessAction = (res) => {
@@ -227,7 +237,7 @@ const ExchangeVehiclesBase = (props) => {
                     name: 'Module',
                 },
             ];
-            fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction, userId });
+            isOTFModule && fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, userId });
             fetchFinanceLovList({ setIsLoading: listFinanceLovShowLoading, userId, onErrorAction });
             fetchSchemeLovList({ setIsLoading: listSchemeLovShowLoading, extraParams: schemeExtraParams, onErrorAction, userId });
         }
@@ -350,7 +360,7 @@ const ExchangeVehiclesBase = (props) => {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Verify Customer id to continue' });
             return;
         }
-        const data = { ...values, exchange: values?.exchange ? 1 : 0, id: exchangeData?.id || '', otfId: selectedRecordId };
+        const data = { ...values, exchange: values?.exchange ? 1 : 0, id: exchangeData?.id || '', otfId: selectedRecordId, otfNumber: selectedOrderId };
 
         if (onFinishCustom) {
             onFinishCustom({ key: formKey, values: data });

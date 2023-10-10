@@ -18,7 +18,7 @@ const { Text } = Typography;
 const { Search } = Input;
 const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
 
-const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
+const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
 
 const checkKey = (data, key) => data?.includes(key);
 
@@ -34,6 +34,7 @@ const ProductMapping = (props) => {
     const { productHierarchyData, userId, selectedRecord, formActionType, isProductHierarchyLoading, viewMode, section, setButtonData, fetchProductHierarchyList, productShowLoding } = props;
     const { userProductListData, fetchDealerProduct, dealerProductShowLoading, saveDealerProduct, showGlobalNotification } = props;
     const { isUserDlrProductListLoding, handleButtonClick } = props;
+
     const [form] = Form.useForm();
     const [searchValue, setSearchValue] = useState();
     const [checkedKeys, setCheckedKeys] = useState([]);
@@ -70,18 +71,10 @@ const ProductMapping = (props) => {
 
     useEffect(() => {
         if (userId) {
-            setButtonData((prev) => ({ ...prev, nextBtn: false, saveBtn: true, editBtn: formActionType?.viewMode }));
+        // setButtonData((prev) => ({ ...prev, nextBtn: false, saveBtn: true, editBtn: formActionType?.viewMode }));
 
             if (!productHierarchyData?.length) {
-                const extraParamsDef = [
-                    {
-                        key: 'manufactureOrgCode',
-                        title: 'manufactureOrgCode',
-                        value: 'PRSNL',
-                    },
-                ];
-
-                fetchProductHierarchyList({ setIsLoading: productShowLoding, extraParams: extraParamsDef, userId });
+                fetchProductHierarchyList({ setIsLoading: productShowLoding, userId });
             }
             fetchDealerProduct({ setIsLoading: dealerProductShowLoading, extraParams, userId });
         }
@@ -92,7 +85,8 @@ const ProductMapping = (props) => {
         setSearchValue(event.target.value);
     };
 
-    const onCheck = (checkedKeysValue, { halfCheckedKeys }) => {
+    const onCheck = (checkedKeysValue) => {
+        if (formActionType?.viewMode) return;
         setButtonData((prev) => ({ ...prev, formBtnActive: true }));
         setCheckedKeys([...checkedKeysValue]);
         const mapSelectedKeyData = (data) => fnMapData({ data: data, fieldNames, checkedKeysValue });
@@ -112,14 +106,15 @@ const ProductMapping = (props) => {
         const dataList = [];
         const generateList = (data) => {
             for (let i = 0; i < data?.length; i++) {
-                const { subProdct, ...node } = data[i];
-                let mappedprod = userProductListData?.find((el) => el?.productCode === node?.prodctCode);
+                const { id, prodctCode, subProdct, ...node } = data[i];
+                let saveProductId = userProductListData?.find((el) => el?.productCode === id)?.id;
                 dataList.push({
-                    id: mappedprod?.id || '',
-                    productCode: node?.prodctCode,
+                    id: saveProductId || '',
+                    productCode: id,
                     userId,
                     status: false,
                 });
+
                 if (subProdct?.length) {
                     generateList(subProdct, fieldNames, userId);
                 }
@@ -168,11 +163,11 @@ const ProductMapping = (props) => {
             handleButtonClick({ buttonAction: NEXT_ACTION });
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         };
-        const filterData = mapProductList?.filter((el) => el?.id || el?.status);
-        const finalFilter = filterData?.filter((prod, index) => filterData?.findIndex((data) => data?.productCode === prod?.productCode) === index)?.map(({ checkable, selectable, disabled, ...i }) => ({ ...i }));
 
+        const filterData = mapProductList?.filter((el) => el?.id || el?.status);
+        // const finalFilter = filterData?.filter((prod, index) => filterData?.findIndex((data) => data?.id === prod?.id) === index)?.map(({ checkable, selectable, disabled, ...i }) => ({ ...i }));
         const requestData = {
-            data: finalFilter,
+            data: filterData,
             setIsLoading: dealerProductShowLoading,
             userId,
             onErrorAction,

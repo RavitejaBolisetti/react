@@ -69,7 +69,6 @@ const mapStateToProps = (state) => {
             },
         },
     } = state;
-    console.log('🚀 ~ file: StockTransferIndentMaster.js:73 ~ mapStateToProps ~ state:', state);
 
     let returnValue = {
         userId,
@@ -136,7 +135,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const StockTransferIndentMasterBase = (props) => {
-    const { data, filterString, setFilterString, isFetchDataLoading, fetchReportDetail, dealerLocations } = props;
+    const { data, filterString, setFilterString, resetData, isFetchDataLoading, fetchReportDetail, dealerLocations } = props;
     const { userId, typeData, parentGroupCode, showGlobalNotification } = props;
     const { indentLocationList, requestedByDealerList, productHierarchyData, isLoadingDealerLoc } = props;
     const { fetchIndentList, fetchIndentLocation, fetchIndentDetails, fetchRequestedByList, listShowLoading, saveData, ProductLovLoading, fetchProductLov, fetchVinDetails, vehicleVinData, saveIssueDetail, resetVinDetails, fetchIssueList, resetIssueList, listIssueLoading } = props;
@@ -200,6 +199,13 @@ export const StockTransferIndentMasterBase = (props) => {
         setPage({ ...page, current: 1 });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, toggleButton]);
+
+    useEffect(() => {
+        return () => {
+            resetData();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         if (userId && parentGroupCode) {

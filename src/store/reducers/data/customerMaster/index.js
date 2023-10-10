@@ -21,6 +21,7 @@ import { CustomerParentCompany } from './customerParentCompany';
 import { ViewDocument } from './documentView';
 import {customerMobileDetail} from './searchMobileNumber';
 
+import { CustomerVerification } from './customerVerification';
 export const CustomerMaster = combineReducers({
     IndiviualProfile,
     CustomerDetails,
@@ -37,4 +38,5 @@ export const CustomerMaster = combineReducers({
     CorporateAddress,
     ViewDocument,
     customerMobileDetail,
+    CustomerVerification,
 });

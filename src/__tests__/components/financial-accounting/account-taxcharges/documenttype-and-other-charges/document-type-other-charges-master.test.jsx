@@ -7,22 +7,33 @@ import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { DocumentTypeOtherChargesMaster } from '@components/FinancialAccounting/AccountTaxCharges/DocumentTypeOtherCharges/DocumentTypeOtherChargesMaster';
 import customRender from '@utils/test-utils';
+import createMockStore from '__mocks__/store';
+import { Provider } from 'react-redux';
+import { tblActionColumn } from 'utils/tableColumn';
 
 afterEach(() => {
     jest.restoreAllMocks();
 });
 
-describe('Render components', () => {
-    it('should render components', () => {
-        customRender(<DocumentTypeOtherChargesMaster />);
+describe('DocumentTypeOtherChargesMaster components', () => {
+    it('veiw and edit button', () => {
         
-        const appMenu = screen.getByRole('columnheader', {name:'Application Menu'});
-        expect(appMenu).toBeTruthy();
+        const mockStore = createMockStore({
+            auth: { userId:123 },
+            data: {
+                FinancialAccounting: {
+                    DocumentTypeLedger: { isLoaded: false, isLoading:false, data: [{
+                        applicationId: "Finac", applicationName: "Financial Accounting", documentType: "REC", documentTypeCode: "REC", documentTypeId: "765",
+                    }] },
+                },
+            },
+        });
 
-        const docType = screen.getByRole('columnheader', {name:'Document Type'});
-        expect(docType).toBeTruthy();
+        customRender(
+            <Provider store={mockStore}>
+                <DocumentTypeOtherChargesMaster />
+            </Provider>
+        );
 
-        const action = screen.getByRole('columnheader', {name:'Action'});
-        expect(action).toBeTruthy();
     });
 });

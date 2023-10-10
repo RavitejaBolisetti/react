@@ -62,6 +62,7 @@ const InsuranceDetailsMasterBase = (props) => {
     useEffect(() => {
         if (insuranceData) {
             setFormData(insuranceData);
+            setButtonData({ ...buttonData, formBtnActive: false });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [insuranceData]);
@@ -81,7 +82,7 @@ const InsuranceDetailsMasterBase = (props) => {
     }, [userId, selectedRecordId]);
 
     const onErrorAction = (message) => {
-        showGlobalNotification({ message: message });
+        // showGlobalNotification({ message: message });
     };
 
     const onSuccessAction = (res) => {

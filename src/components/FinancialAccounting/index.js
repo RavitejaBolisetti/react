@@ -7,8 +7,8 @@ import { AccountCategory } from './AccountCategory';
 import { TaxChargesMaster, TaxChargesCategory, DocumentTypeOtherChargesMaster } from './AccountTaxCharges';
 import { VehicleModelAndTaxChargersCategory } from './VehicleModelAndTaxCharges';
 import { CreditDebitNoteMaster } from './CreditDebitNote';
+import { GstIRNTransaction } from './GstIRNTransaction';
 import { GSTIRNAuthenticationMaster } from './GSTIRNAuthentication';
-
 import { ChartOfAccountMaster } from './ChartOfAccount';
 
-export { TaxChargesMaster, TaxChargesCategory, VehicleModelAndTaxChargersCategory, CreditDebitNoteMaster, AccountCategory, DocumentTypeOtherChargesMaster, GSTIRNAuthenticationMaster, ChartOfAccountMaster };
+export { TaxChargesMaster, TaxChargesCategory, VehicleModelAndTaxChargersCategory, CreditDebitNoteMaster, AccountCategory, DocumentTypeOtherChargesMaster, GSTIRNAuthenticationMaster, ChartOfAccountMaster, GstIRNTransaction };

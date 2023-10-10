@@ -10,10 +10,10 @@ import { Form, Row, Col } from 'antd';
 import { familyDetailsDataActions } from 'store/actions/data/customerMaster/individual/familyDetails/familyDetails';
 import { familyDetailSearchDataActions } from 'store/actions/data/customerMaster/individual/familyDetails/familyDetailSearch';
 import { showGlobalNotification } from 'store/actions/notification';
-import { PARAM_MASTER } from 'constants/paramMaster';
 import { GetAge } from 'utils/getAge';
 import { AddEditForm } from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
+import { YES_NO_FLAG } from 'constants/yesNoFlag';
 
 import { formatDate } from 'utils/formatDateTime';
 
@@ -70,7 +70,7 @@ const FamilyDetailMasterBase = (props) => {
     const [form] = Form.useForm();
     const [familyDetailList, setFamilyDetailsList] = useState([]);
     const [showForm, setShowForm] = useState(false);
-    const [customerType, setCustomerType] = useState('No');
+    const [customerType, setCustomerType] = useState(YES_NO_FLAG?.NO?.key);
     const [editedMode, setEditedMode] = useState(false);
     const [editedId, setEditedId] = useState(0);
 
@@ -132,6 +132,16 @@ const FamilyDetailMasterBase = (props) => {
             ];
 
             fetchFamilySearchList({ setIsLoading: listFamilySearchLoading, userId, extraParams: searchParams, onErrorAction });
+        } else {
+            form.setFieldsValue({
+                customerName: null,
+                relationship: null,
+                relationCode: null,
+                dateOfBirth: null,
+                relationAge: null,
+                remarks: null,
+                relationCustomerId: null,
+            });
         }
     };
 
@@ -165,10 +175,10 @@ const FamilyDetailMasterBase = (props) => {
 
                 form.resetFields();
 
-                if (values?.mnmCustomer === 'Yes') {
-                    setCustomerType('Yes');
-                } else if (values?.mnmCustomer === 'No') {
-                    setCustomerType('No');
+                if (values?.mnmCustomer === YES_NO_FLAG?.YES?.key) {
+                    setCustomerType(YES_NO_FLAG?.YES?.key);
+                } else if (values?.mnmCustomer === YES_NO_FLAG?.NO?.key) {
+                    setCustomerType(YES_NO_FLAG?.NO?.key);
                 }
             })
             .catch((err) => console.error(err));

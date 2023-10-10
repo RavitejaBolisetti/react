@@ -16,9 +16,8 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
 import { showGlobalNotification } from 'store/actions/notification';
 import { DELIVERY_NOTE_INVOICE_STATUS } from './utils/DeliveryNoteInvoiceStatus';
-import { REQUEST_STATUS_CONSTANT } from './utils/RequestStatusConstant';
 import { dateFormatView, converDateDayjs } from 'utils/formatDateTime';
-import { BASE_URL_DELIVERY_NOTE_INVOICE_CANCELLATION_SEARCH as customURL } from 'constants/routingApi';
+import { BASE_URL_DELIVERY_NOTE_INVOICE_CANCELLATION_SEARCH as customURL, BASE_URL_APPROVAL_CANCEL_REQUEST_URL } from 'constants/routingApi';
 
 import { LANGUAGE_EN } from 'language/en';
 import { PARAM_MASTER } from 'constants/paramMaster';
@@ -156,7 +155,7 @@ export const InvoiceCancellationMasterBase = (props) => {
                 filter: true,
             },
             {
-                key: 'invoiceActionStatus',
+                key: 'requestStatus',
                 title: 'Status',
                 value: filterString?.invoiceActionStatus || invoiceStatusType,
                 name: undefined,
@@ -223,7 +222,7 @@ export const InvoiceCancellationMasterBase = (props) => {
             },
         ];
         if (userId && isFormVisible) {
-            setShowDataLoading(true);
+            // setShowDataLoading(true);
             fetchDetail({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
 
@@ -246,8 +245,12 @@ export const InvoiceCancellationMasterBase = (props) => {
 
     const handleCancelRequest = () => {
         const data = {
-            invoiceId: formData?.invoiceId,
-            requestStatus: REQUEST_STATUS_CONSTANT?.OPEN?.key,
+            // invoiceId: formData?.invoiceId,
+            // requestStatus: REQUEST_STATUS_CONSTANT?.OPEN?.key,
+            id: formData?.id,
+            action: DELIVERY_NOTE_INVOICE_STATUS?.REJECTED?.key,
+            deliveryOrInvoiceId: formData?.invoiceId,
+            requestType: formData?.requestType,
         };
         const onSuccess = (res) => {
             setShowDataLoading(true);
@@ -263,6 +266,7 @@ export const InvoiceCancellationMasterBase = (props) => {
         };
 
         const requestData = {
+            customURL: BASE_URL_APPROVAL_CANCEL_REQUEST_URL,
             data: data,
             method: 'put',
             setIsLoading: listShowLoading,
@@ -275,6 +279,9 @@ export const InvoiceCancellationMasterBase = (props) => {
     };
 
     const handleResetFilter = (e) => {
+        form.resetFields();
+        advanceFilterForm.resetFields();
+        advanceFilterForm.setFieldsValue();
         if (filterString) {
             const { invoiceActionStatus, ...rest } = filterString;
             if (rest?.invoiceActionStatus) {
@@ -287,7 +294,8 @@ export const InvoiceCancellationMasterBase = (props) => {
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
         setFormData([]);
-        record?.requestStatus === REQUEST_STATUS_CONSTANT?.OPEN?.key && invoiceStatusType === DELIVERY_NOTE_INVOICE_STATUS?.PENDING?.key ? setButtonData({ ...defaultBtnVisiblity, cancelRequest: true }) : setButtonData({ ...defaultBtnVisiblity });
+        invoiceStatusType === DELIVERY_NOTE_INVOICE_STATUS?.PENDING?.key ? setButtonData({ ...defaultBtnVisiblity, cancelRequest: true }) : setButtonData({ ...defaultBtnVisiblity });
+        // record?.requestStatus === REQUEST_STATUS_CONSTANT?.OPEN?.key &&
         setFormActionType({ viewMode: buttonAction === VIEW_ACTION });
         record && setFormData(record);
         setIsFormVisible(true);

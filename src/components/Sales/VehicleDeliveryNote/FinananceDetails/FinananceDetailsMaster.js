@@ -23,7 +23,6 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             OTF: {
-                FinanceDetail: { isLoaded, isLoading, data: financeData = [] },
                 FinanceLov: { isLoaded: isFinanceLovDataLoaded = false, isloading: isFinanceLovLoading, data: FinanceLovData = [] },
             },
         },
@@ -33,11 +32,7 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         userId,
-        isLoaded,
-        // financeData,
-        isLoading,
         moduleTitle,
-
         isFinanceLovDataLoaded,
         isFinanceLovLoading,
         FinanceLovData,
@@ -51,11 +46,6 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchFinanceLovList: financeLovDataActions.fetchList,
             listFinanceLovShowLoading: financeLovDataActions.listShowLoading,
-
-            fetchList: otfFinanceDetailDataActions.fetchList,
-            saveData: otfFinanceDetailDataActions.saveData,
-            resetData: otfFinanceDetailDataActions.reset,
-            listShowLoading: otfFinanceDetailDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -63,9 +53,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const FinananceDetailsMasterBase = (props) => {
-    const { saveData, resetData, fetchList, userId, listShowLoading, financeData, isFinanceLovDataLoaded, setFormActionType, isFinanceLovLoading, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, section, isLoading } = props;
+    const { userId, financeData, isFinanceLovDataLoaded, setFormActionType, isFinanceLovLoading, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, section, isLoading } = props;
     const { typeData, form, selectedOrderId, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION } = props;
-    const { formKey, onFinishCustom = undefined, onFinishDeliveryNoteCustom = undefined, FormActionButton, StatusBar, pageType } = props;
+    const { formKey, onFinishCustom = undefined, FormActionButton, StatusBar, pageType } = props;
     const { buttonData, setButtonData } = props;
 
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -88,22 +78,6 @@ export const FinananceDetailsMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [section]);
 
-    // const extraParams = [
-    //     {
-    //         key: 'otfNumber',
-    //         title: 'otfNumber',
-    //         value: selectedOrderId,
-    //         name: 'Booking Number',
-    //     },
-    // ];
-
-    // useEffect(() => {
-    //     if (userId && selectedOrderId) {
-    //         fetchList({ setIsLoading: listShowLoading, extraParams, onErrorAction, userId });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [userId, selectedOrderId]);
-
     useEffect(() => {
         if (userId && !isFinanceLovDataLoaded) {
             fetchFinanceLovList({ setIsLoading: listFinanceLovShowLoading, userId });
@@ -111,46 +85,18 @@ export const FinananceDetailsMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isFinanceLovDataLoaded]);
 
-    const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-    };
-
-    const onErrorAction = (message) => {
-        showGlobalNotification(message);
-    };
-
     const onFinish = (values) => {
-        // if (pageType === PAGE_TYPE?.OTF_PAGE_TYPE?.key) {
-        const recordId = financeData?.id || '';
-        const data = { ...values, id: recordId, otfNumber: selectedOrderId, doDate: values?.doDate };
+        const id = financeData?.id || '';
+        const otfNumber = selectedOrderId || '';
+        const otfId = financeData?.otfId || '';
+
+        const data = { ...values, id, otfNumber, otfId, doDate: values?.doDate };
 
         if (onFinishCustom) {
             onFinishCustom({ key: formKey, values: data });
             handleButtonClick({ buttonAction: NEXT_ACTION });
             setButtonData({ ...buttonData, formBtnActive: false });
-        } else {
-            const onSuccess = (res) => {
-                form.resetFields();
-                showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-            };
-
-            const requestData = {
-                data: data,
-                method: financeData?.id ? 'put' : 'post',
-                setIsLoading: listShowLoading,
-                userId,
-                onError: onErrorAction,
-                onSuccess,
-            };
-
-            saveData(requestData);
         }
-        // } else {
-        //     const financeDetailsRequest = { ...values };
-        //     handleButtonClick({ buttonAction: NEXT_ACTION });
-        //     setRequestPayload({ ...requestPayload, financeDetails: financeDetailsRequest });
-        // }
     };
 
     const onFinishFailed = () => {};
@@ -168,7 +114,6 @@ export const FinananceDetailsMasterBase = (props) => {
         setFormData,
         formActionType,
         setFormActionType,
-        fetchList,
         onFinish,
         onFinishFailed,
         isVisible: isFormVisible,
@@ -189,6 +134,7 @@ export const FinananceDetailsMasterBase = (props) => {
     };
 
     const viewProps = {
+        ...props,
         formData,
         styles,
         isLoading,

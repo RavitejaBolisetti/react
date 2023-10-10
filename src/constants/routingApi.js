@@ -194,7 +194,7 @@ export const BASE_URL_RSM_APPROVAL = BASE_URL_INVOICE + 'rsm';
 export const BASE_URL_DELIVERY_NOTE_INVOICE_CANCELLATION = BASE_URL_INVOICE + 'invoicedeliverynote/cancellation';
 export const BASE_URL_DELIVERY_NOTE_INVOICE_CANCELLATION_SEARCH = BASE_URL_DELIVERY_NOTE_INVOICE_CANCELLATION + '/search';
 export const BASE_URL_RSM_APPROVAL_SEARCH = BASE_URL_RSM_APPROVAL + '/search';
-export const BASE_URL_INVOICE_DETAILS = BASE_URL_INVOICE + 'details';
+export const BASE_URL_INVOICE_DETAIL = BASE_URL_INVOICE + 'details';
 
 export const BASE_URL_VEHICLE = BASE_URL + 'vehicle/';
 export const BASE_URL_VEHICLE_SEARCH = BASE_URL_VEHICLE + 'search';
@@ -211,6 +211,9 @@ export const BASE_URL_VEHICLE_TRACKING = BASE_URL_VEHICLE + 'tracking';
 export const BASE_URL_VEHICLE_CHECKLIST = BASE_URL_VEHICLE + 'checklist';
 
 export const BASE_URL_ACCOUNT_HEAD = BASE_URL + 'finance/financialaccountheads';
+
+export const BASE_URL_CRM_SCHEME_ENROLLMENT = BASE_URL + 'vehicle/crmschemes/search';
+export const BASE_URL_CRM_SCHEME_ENROLLMENT_DETAILS = BASE_URL + 'vehicle/crmschemes';
 export const BASE_URL_DOCUMENT_DESCRIPTION_SEARCH = BASE_URL + 'applications/documenttypes/search';
 export const BASE_URL_DOCUMENT_DESCRIPTION = BASE_URL + 'applications/documenttypes';
 
@@ -240,6 +243,7 @@ export const BASE_URL_VEHICLE_PRICE_MASTER = BASE_URL_VEHICLE + 'pricemaster';
 export const BASE_URL_VEHICLE_PRICE_MASTER_SEARCH = BASE_URL_VEHICLE + 'pricemaster/search';
 export const BASE_URL_VEHICLE_CUSTOMER_DETAIL = BASE_URL_VEHICLE + 'customerdetails';
 export const BASE_URL_VEHICLE_CUSTOMER_COMMON_DETAIL = BASE_URL + 'customers/commondetails';
+export const BASE_URL_CUSTOMER_VERIFY = BASE_URL + 'customers/verify';
 
 export const BASE_URL_VEHICLE_PURCHASE_ORDER_DETAILS = BASE_URL + 'otf/vehicle/purchaseorder/search';
 export const BASE_URL_VIEW_VEHICLE_PURCHASE_ORDER_DETAILS = BASE_URL + 'otf/vehicle/purchaseorder/';
@@ -281,14 +285,8 @@ export const BASE_URL_VEHICLE_RECEIPT_CHECKLIST_PROFILE = BASE_URL_VEHICLE + 're
 export const BASE_URL_VEHICLE_RECEIPT_CHECKLIST_MASTER = BASE_URL_VEHICLE + 'receiptchecklist/detail';
 export const BASE_URL_VEHICLE_ALLOTMENT = BASE_URL + 'vehicle/allotments';
 
-export const BASE_URL_DEALER_BRANCH_ACCESS = BASE_URL_DEALER_MANPOWER + '/parent/locations';
-export const BASE_URL_DEALER_GST = BASE_URL_DEALER_MANPOWER + '/parent/gstin/lov';
-
-export const BASE_URL_VEHICLE_INVOICE_GENERATION = BASE_URL_OTF + 'vehicleinvoice/search';
-export const BASE_URL_VEHICLE_IRN_GENERATION = BASE_URL_OTF + 'vehicleinvoice/irngeneration';
-export const BASE_URL_INVOICE_DETAIL = BASE_URL_OTF + 'vehicleinvoice/details';
-export const BASE_URL_VEHICLE_INVOICE_DETAIL = BASE_URL_OTF + 'vehicleinvoice/vehicledetails';
 export const BASE_URL_VEHICLE_INVOICE = BASE_URL_OTF + 'vehicleinvoice';
+export const BASE_URL_VEHICLE_INVOICE_DETAIL = BASE_URL_OTF + 'vehicleinvoice/details';
 export const BASE_URL_VEHICLE_INVOICE_LIST = BASE_URL_VEHICLE_INVOICE + '/search';
 export const BASE_URL_VEHICLE_INVOICE_IRN_GENERATION = BASE_URL_VEHICLE_INVOICE + '/irngeneration';
 export const BASE_URL_VEHICLE_INVOICE_PROFILE_CARD = BASE_URL_VEHICLE_INVOICE + '/profile';
@@ -322,7 +320,7 @@ export const BASE_URL_VEHICLE_DELIVERY_NOTE = BASE_URL_OTF + 'deliverynote/';
 export const BASE_URL_VEHICLE_DELIVERY_NOTE_SEARCH = BASE_URL_VEHICLE_DELIVERY_NOTE + 'search';
 export const BASE_URL_VEHICLE_DELIVERY_NOTE_GENERATE = BASE_URL_VEHICLE_DELIVERY_NOTE + 'generate';
 export const BASE_URL_VEHICLE_DELIVERY_NOTE_CHALLAN_GENERATE = BASE_URL_VEHICLE_DELIVERY_NOTE + 'challan/generate';
-export const BASE_URL_VEHICLE_INVOICE_DETAILS = BASE_URL_VEHICLE_DELIVERY_NOTE + 'invoicedetail';
+export const BASE_URL_VEHICLE_DELIVERY_NOTE_INVOICE_DETAILS = BASE_URL_VEHICLE_DELIVERY_NOTE + 'invoicedetail';
 export const BASE_URL_VEHICLE_DELIVERY_NOTE_CANCELLATION = BASE_URL_VEHICLE_DELIVERY_NOTE + 'cancel';
 export const BASE_URL_VEHICLE_CUSTOMER_DETAILS = BASE_URL_CUSTOMER_MASTER + '/deliverynote/details';
 export const BASE_URL_VEHICLE_ADD_ON_DETAILS = BASE_URL_VEHICLE_DELIVERY_NOTE + 'addondetail';
@@ -344,11 +342,21 @@ export const BASE_URL_DELIVERY_NOTE_VEHICLE_DETAILS = BASE_URL_OTF_VEHICLE_DETAI
 
 export const BASE_URL_VIN_BLOCK_MASTER = BASE_URL_VEHICLE + 'vinbolckmaster/search';
 export const BASE_URL_VIN_BLOCK_VIEWMASTER = BASE_URL_VEHICLE + 'vinbolckmaster';
+
+export const BASE_URL_GSTIRN_TRANSACTION_SEARCH = BASE_URL_OTF + 'irn/transactions/search';
+export const BASE_URL_GSTIRN_TRANSACTION_GSTIN = BASE_URL + 'dealer/parent/gstin/lov';
+export const BASE_URL_GSTIRN_TRANSACTION_VIEW_DOC = BASE_URL + 'common/document/view';
+export const BASE_URL_GSTIRN_TRANSACTION_UPLOAD_DOC = BASE_URL + 'dealer/parent/gstin/lov';
 export const BASE_URL_EVR_DETAILS_CAPTURING_SEARCH = BASE_URL_VEHICLE + 'evr/details/search';
 export const BASE_URL_EVR_DETAILS_CAPTURING_DETAIL = BASE_URL_VEHICLE + 'evr/details';
 export const BASE_URL_VEHICE_DELIVERY_NOTE_MASTER_DATA = BASE_URL_OTF + 'deliverynote/dealer/detail';
 export const BASE_URL_VEHICE_DELIVERY_NOTE_CHALLAN_MASTER_DATA = BASE_URL_OTF + 'delivery/challan/detail';
 
+export const BASE_URL_GST_LOGIN = BASE_URL + 'finance/gstirnauthentication/login';
+export const BASE_URL_RSM_ASM_APPROVAL_SEARCH = BASE_URL_INVOICE + 'invoicedeliverynote/cancellation/approval/search';
+export const BASE_URL_APPROVAL_CANCEL_REQUEST_URL = BASE_URL_DELIVERY_NOTE_INVOICE_CANCELLATION + '/approval';
 
-export const BASE_URL_GST_LOGIN = BASE_URL + '/v1/gstirnauthentication/authenticate';
+export const BASE_URL_DEALER_BRANCH_ACCESS = BASE_URL_DEALER_MANPOWER + '/parent/locations';
+export const BASE_URL_DEALER_GST = BASE_URL_DEALER_MANPOWER + '/parent/gstin/lov';
 
+export const BASE_URL_GST_DOCID_NAME = BASE_URL + 'finance/gstirnauthentication';

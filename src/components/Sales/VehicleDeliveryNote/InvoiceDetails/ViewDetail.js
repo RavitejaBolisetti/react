@@ -4,10 +4,12 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
+import dayjs from 'dayjs';
 import { Card, Descriptions } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { DATA_TYPE } from 'constants/dataType';
 import { getCodeValue } from 'utils/getCodeValue';
+import { disableFieldsOnFutureDate } from 'utils/disableDate';
 
 const ViewDetailMain = (props) => {
     const { styles, formData, isLoading, soldByDealer, typeData } = props;
@@ -35,9 +37,13 @@ const ViewDetailMain = (props) => {
                         <Descriptions.Item label="Chassis No.">{checkAndSetDefaultValue(formData?.chassisNumber, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Relationship Manager">{checkAndSetDefaultValue(formData?.relationShipManager, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Customer Provided Date">{checkAndSetDefaultValue(formData?.customerPromiseDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                        <Descriptions.Item label="Reasons For Delay">{checkAndSetDefaultValue(getCodeValue(typeData['DLVR_DLY_RSN'], formData?.reasonForDelay), isLoading)}</Descriptions.Item>
-                        <br />
-                        <Descriptions.Item label="Remark For Delay">{checkAndSetDefaultValue(formData?.reasonForDelayRemarks, isLoading)}</Descriptions.Item>
+                        {formData?.customerPromiseDate && disableFieldsOnFutureDate(dayjs(formData?.customerPromiseDate)) && (
+                            <>
+                                <Descriptions.Item label="Reasons For Delay">{checkAndSetDefaultValue(getCodeValue(typeData['DLVR_DLY_RSN'], formData?.reasonForDelay), isLoading)}</Descriptions.Item>
+                                <br />
+                                <Descriptions.Item label="Remark For Delay">{checkAndSetDefaultValue(formData?.reasonForDelayRemarks, isLoading)}</Descriptions.Item>
+                            </>
+                        )}
                     </>
                 )}
             </Descriptions>

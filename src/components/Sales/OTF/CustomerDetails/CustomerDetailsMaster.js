@@ -132,7 +132,7 @@ export const CustomerDetailsMain = (props) => {
             showGlobalNotification({ message: 'Please provide booking customer' });
             setActiveKey([...activeKey, !values?.bookingCustomer?.customerId ? 1 : '']);
             return false;
-        } else if (!values?.billingCustomer?.customerId && !formData?.billingCustomer?.customerId) {
+        } else if (!values?.billingCustomer?.customerId && activeKey.includes(2)) {
             showGlobalNotification({ message: 'Please provide billing customer' });
             setActiveKey([...activeKey, !values?.billingCustomer?.customerId ? 2 : '']);
             return false;

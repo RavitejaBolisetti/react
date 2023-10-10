@@ -21,6 +21,9 @@ export const StockIndentStatusTag = (status) => {
         case STOCK_INDENT_STATUS.PARTIALLY_RECVD.key:
             tag = <Tag color="warning">{STOCK_INDENT_STATUS.PARTIALLY_RECVD.desc}</Tag>;
             break;
+        case STOCK_INDENT_STATUS.PARTIALLY_ISSUED.key:
+            tag = <Tag color="warning">{STOCK_INDENT_STATUS.PARTIALLY_ISSUED.desc}</Tag>;
+            break;
 
         default:
     }

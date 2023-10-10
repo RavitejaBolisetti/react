@@ -23,9 +23,15 @@ export const STOCK_INDENT_STATUS = {
         desc: 'Partially Received',
     },
     ISSUED: {
-        id: 3,
+        id: 4,
         key: 'Issued',
         title: 'Issued',
         desc: 'Issued',
+    },
+    PARTIALLY_ISSUED: {
+        id: 5,
+        key: 'Partially Issued',
+        title: 'Partially Issued',
+        desc: 'Partially Issued',
     },
 };

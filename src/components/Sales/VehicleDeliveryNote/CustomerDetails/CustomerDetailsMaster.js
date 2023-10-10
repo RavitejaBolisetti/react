@@ -59,7 +59,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const CustomerDetailsMasterBase = (props) => {
     const { fetchList, customerDetailsDataSearched, customerDetailsData, setFormActionType, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, isLoading } = props;
     const { requestPayload, setRequestPayload, showGlobalNotification } = props;
-    const { listShowLoading, userId, typeData, form, soldByDealer, isLoaded, resetData, setChallanRequestPayload, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section, customerIdValue, setCustomerIdValue } = props;
+    const { listShowLoading, userId, typeData, form, soldByDealer, isLoaded, resetData, setChallanRequestPayload, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section, customerIdValue, setSelectedOrder } = props;
     const { buttonData, setButtonData } = props;
     const resetKeys = ['customerType', 'customerName', 'mobile', 'address', 'customerCity', 'district', 'state', 'pinCode', 'email'];
 
@@ -76,32 +76,39 @@ export const CustomerDetailsMasterBase = (props) => {
             setFormData({ ...customerDetailsData, customerType: typeData?.[PARAM_MASTER?.CUST_TYPE?.id]?.find((customer) => customer?.key === customerDetailsData?.customerType)?.value });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [customerDetailsData]);
-
+    }, [customerDetailsData, section]);
     useEffect(() => {
-        if (customerDetailsDataSearched && isLoaded) {
-            setChallanRequestPayload({ ...requestPayload, customerDetails: customerDetailsDataSearched });
-        }
+        return () => {
+            resetData();
+        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [section, customerDetailsDataSearched, isLoaded]);
+    }, []);
 
     useEffect(() => {
-        setButtonData({ ...buttonData, formBtnActive: true });
+        if (customerDetailsData?.customerType) setButtonData({ ...buttonData, formBtnActive: true });
+        else {
+            setButtonData({ ...buttonData, formBtnActive: false });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [section]);
 
     const handleOnChange = (e) => {
         form.resetFields([...resetKeys]);
+        setRequestPayload({ ...requestPayload, customerDetails: {} });
+        setSelectedOrder((prev) => ({ ...prev, customerName: '', customerId: '' }));
+        setButtonData({ ...buttonData, formBtnActive: false });
         resetData();
     };
 
     const handleCustomerIdSearch = (customerIdValue = '') => {
-        console.log('handleCustomerIdSearch', customerIdValue);
         if (!customerIdValue) {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Enter customer id to search' });
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Enter customer id to continue' });
             return false;
         }
         const onSuccessAction = (res) => {
+            setRequestPayload({ ...requestPayload, customerDetails: res?.data });
+            setSelectedOrder((prev) => ({ ...prev, customerName: res?.data?.customerName, customerId: res?.data?.customerId }));
+            setButtonData({ ...buttonData, formBtnActive: true });
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         };
         const onErrorAction = (message) => {
@@ -122,7 +129,7 @@ export const CustomerDetailsMasterBase = (props) => {
         if (soldByDealer) {
             setRequestPayload({ ...requestPayload, customerDetails: customerDetailsData });
         } else {
-            setChallanRequestPayload({ ...requestPayload, customerDetails: customerDetailsDataSearched });
+            setRequestPayload({ ...requestPayload, customerDetails: customerDetailsDataSearched });
         }
 
         handleButtonClick({ buttonAction: NEXT_ACTION });

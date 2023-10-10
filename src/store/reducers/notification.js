@@ -12,12 +12,14 @@ const initialState = {
     title: 'ERROR',
     message: null,
     placement: null,
+    duration: 3,
+    backdrop: false,
 };
 
 export const notification = (state = initialState, action) => {
     switch (action.type) {
         case NOTIFICATION_SHOW:
-            return { ...state, visible: true, notificationType: action.notificationType, title: action.title, message: action.message, placement: action.placement, showTitle: action.showTitle };
+            return { ...state, visible: true, notificationType: action.notificationType, title: action.title, message: action.message, placement: action.placement, showTitle: action.showTitle, duration: action?.duration, backdrop: action?.backdrop };
         case NOTIFICATION_HIDE:
             return { ...initialState };
         default:

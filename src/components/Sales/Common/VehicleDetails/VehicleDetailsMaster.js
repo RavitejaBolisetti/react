@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { Form, Row, Col } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -11,7 +11,6 @@ import { bindActionCreators } from 'redux';
 import { AddEditForm, ViewDetail } from 'components/Sales/Common/VehicleDetails';
 import { DisableParent } from 'components/common/ProductHierarchy/ProductHierarchyUtils';
 import { otfvehicleDetailsDataActions } from 'store/actions/data/otf/vehicleDetails';
-import { otfvehicleDetailsLovDataActions } from 'store/actions/data/otf/vehicleDetailsLov';
 import { otfvehicleDetailsServiceLovDataActions } from 'store/actions/data/otf/serviceLov';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -36,7 +35,7 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         isDataLoaded,
-        vehicleDetailDataReceived: vehicleDetailData,
+        otfVehicleDetailData: vehicleDetailData,
         isLoading,
         moduleTitle,
         productAttributeData,
@@ -60,22 +59,19 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             fetchList: otfvehicleDetailsDataActions.fetchList,
+            listShowLoading: otfvehicleDetailsDataActions.listShowLoading,
+            fetchData: otfvehicleDetailsDataActions.fetchData,
             saveData: otfvehicleDetailsDataActions.saveData,
+            resetData: otfvehicleDetailsDataActions.reset,
 
             fetchProductList: productHierarchyDataActions.fetchList,
+            ProductLovCodeLoading: productHierarchyDataActions.listShowLoading,
             fetchProductDetail: productHierarchyDataActions.fetchDetail,
             fetchProductLovCode: productHierarchyDataActions.fetchFilteredList,
-            fetchProductLov: otfvehicleDetailsLovDataActions.fetchFilteredList,
 
             fetchServiceLov: otfvehicleDetailsServiceLovDataActions.fetchFilteredList,
             serviceLoading: otfvehicleDetailsServiceLovDataActions.listShowLoading,
 
-            ProductLovCodeLoading: productHierarchyDataActions.listShowLoading,
-            ProductLovLoading: otfvehicleDetailsLovDataActions.listShowLoading,
-            listShowLoading: otfvehicleDetailsDataActions.listShowLoading,
-
-            resetData: otfvehicleDetailsDataActions.reset,
-            resetProductLov: otfvehicleDetailsLovDataActions.reset,
             showGlobalNotification,
         },
         dispatch
@@ -83,10 +79,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const VehicleDetailsMasterMain = (props) => {
-    const { isProductDataLoading, vehicleDetailDataReceived, vehicleDetailDataPass, isVehicleLovDataLoading, resetProductLov, productAttributeData, fetchProductLovCode, isLoading, saveData, ProductLovLoading } = props;
+    const { isProductDataLoading, otfVehicleDetailData, vehicleDetailDataPass, isVehicleLovDataLoading, productAttributeData, fetchProductLovCode, isLoading, saveData } = props;
     const { form, selectedOrderId, selectedRecordId, section, buttonData, setButtonData, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
     const { refreshData, setRefreshData, isVehicleServiceLoaded, vehicleServiceData, fetchServiceLov, serviceLoading, selectedOrder, setSelectedOrder } = props;
-    const { isProductHierarchyDataLoaded, typeData, fetchList, resetData, userId, listShowLoading, showGlobalNotification } = props;
+    const { isProductHierarchyDataLoaded, typeData, fetchList, fetchData, resetData, userId, listShowLoading, showGlobalNotification } = props;
     const { formKey, onFinishCustom = undefined, FormActionButton, StatusBar, salesModuleType } = props;
     const { fetchProductList, productHierarchyDataList } = props;
 
@@ -98,9 +94,8 @@ const VehicleDetailsMasterMain = (props) => {
     const [toolTipContent, setToolTipContent] = useState();
     const [isReadOnly, setIsReadOnly] = useState();
     const [productHierarchyData, setProductHierarchyData] = useState([]);
+    const [vehicleDetailData, setVehicleDetailData] = useState();
     const [filterVehicleData, setFilterVehicleData] = useState([]);
-
-    const vehicleDetailData = vehicleDetailDataPass || vehicleDetailDataReceived;
 
     const onSuccessAction = (res) => {
         //showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -111,6 +106,29 @@ const VehicleDetailsMasterMain = (props) => {
     };
 
     const isOTFModule = salesModuleType === SALES_MODULE_TYPE.OTF.KEY;
+
+    const vehicleDetailFinalData = useMemo(() => {
+        if (isOTFModule && otfVehicleDetailData) {
+            return otfVehicleDetailData;
+        } else if (vehicleDetailDataPass) {
+            return vehicleDetailDataPass;
+        }
+    }, [isOTFModule, otfVehicleDetailData, vehicleDetailDataPass]);
+
+    useEffect(() => {
+        if (vehicleDetailFinalData) {
+            setVehicleDetailData(vehicleDetailFinalData);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [vehicleDetailFinalData]);
+
+    useEffect(() => {
+        if (vehicleDetailData) {
+            setFormData(vehicleDetailData);
+            vehicleDetailData?.optionalServices && setOptionalServices(vehicleDetailData?.optionalServices);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [vehicleDetailData]);
 
     useEffect(() => {
         if (userId && selectedRecordId) {
@@ -178,10 +196,9 @@ const VehicleDetailsMasterMain = (props) => {
     useEffect(() => {
         return () => {
             resetData();
-            resetProductLov();
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [resetData, resetProductLov]);
+    }, [resetData]);
 
     useEffect(() => {
         if (userId && isProductHierarchyDataLoaded && productAttributeData?.length > 0) {
@@ -209,15 +226,7 @@ const VehicleDetailsMasterMain = (props) => {
     }, [productAttributeData, isProductHierarchyDataLoaded, userId]);
 
     useEffect(() => {
-        if (vehicleDetailData) {
-            setFormData(vehicleDetailData);
-            vehicleDetailData?.optionalServices && setOptionalServices(vehicleDetailData?.optionalServices);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [vehicleDetailData]);
-
-    useEffect(() => {
-        if (selectedRecordId && formData?.modelCode) {
+        if (vehicleDetailData?.modelCode) {
             const lovExtraParams = [
                 {
                     key: 'prodctCode',
@@ -226,13 +235,13 @@ const VehicleDetailsMasterMain = (props) => {
             ];
 
             const onErrorActionProduct = () => {
-                resetProductLov();
+                // resetProductLov();
             };
 
-            fetchProductLovCode({ setIsLoading: ProductLovLoading, userId, onErrorAction: onErrorActionProduct, extraParams: lovExtraParams });
+            fetchProductLovCode({ setIsLoading: () => {}, userId, onErrorAction: onErrorActionProduct, extraParams: lovExtraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedRecordId, formData]);
+    }, [vehicleDetailData]);
 
     const handleVehicleDetailChange = (vehicleData) => {
         setFilterVehicleData({ ...vehicleData });
@@ -262,11 +271,12 @@ const VehicleDetailsMasterMain = (props) => {
             },
         ];
 
-        const onSuccessAction = () => {
+        const onSuccessAction = (res) => {
+            setVehicleDetailData(res?.data);
             productModelCode && form.setFieldValue('modalCode', productModelCode);
         };
 
-        fetchList({ setIsLoading: listShowLoading, userId, extraParams: extraParams, onSuccessAction, onErrorAction, resetOnError: false });
+        fetchData({ setIsLoading: listShowLoading, userId, extraParams: extraParams, onSuccessAction, onErrorAction, resetOnError: false });
     };
 
     const onFinish = (values) => {
@@ -367,7 +377,7 @@ const VehicleDetailsMasterMain = (props) => {
         vehicleServiceData,
 
         productHierarchyData,
-        resetProductLov,
+        // resetProductLov,
         isProductDataLoading,
         filterVehicleData,
         setFilterVehicleData,

@@ -17,7 +17,7 @@ const ViewDetailMain = (props) => {
             <Space style={{ display: 'flex' }} direction="vertical" size="middle">
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <DataTable {...tableProps} tableData={requestPayload?.vehicleDeliveryCheckList?.deliveryChecklistDtos || []} />
+                        <DataTable {...tableProps} tableData={requestPayload?.vehicleDeliveryCheckList?.deliveryChecklistDtos || []} totalRecords={requestPayload?.vehicleDeliveryCheckList?.deliveryChecklistDtos?.length} />
                     </Col>
                 </Row>
             </Space>

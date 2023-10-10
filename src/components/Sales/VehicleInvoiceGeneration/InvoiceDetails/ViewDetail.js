@@ -11,6 +11,7 @@ import styles from 'assets/sass/app.module.scss';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { prepareCaption } from 'utils/prepareCaption';
 import { getCodeValue } from 'utils/getCodeValue';
+import { DATA_TYPE } from 'constants/dataType';
 
 const { Panel } = Collapse;
 
@@ -50,7 +51,7 @@ const ViewDetailMain = (props) => {
                             <Divider />
                             <Descriptions {...viewProps} title={prepareCaption('Price Information')}>
                                 <Descriptions.Item label="Booking Number">{checkAndSetDefaultValue(formData?.bookingNumber || formData?.otfNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Booking Date">{checkAndSetDefaultValue(formData?.otfDate ? formData?.otfDate : formData?.orderDate, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Booking Date">{checkAndSetDefaultValue(formData?.otfDate ? formData?.otfDate : formData?.orderDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                                 <Descriptions.Item label="Tax Calculation">{checkAndSetDefaultValue(getCodeValue(typeData?.TAX_CALCLTN_TYPE, formData?.taxCalculationType), isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Tax Payable On Reverse Charges?">{checkAndSetDefaultValue(getCodeValue(typeData?.RFRL, formData?.taxPayableOnReverseCharges), isLoading)}</Descriptions.Item>
                             </Descriptions>

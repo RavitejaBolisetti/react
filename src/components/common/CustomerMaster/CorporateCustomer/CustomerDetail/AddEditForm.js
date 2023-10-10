@@ -253,12 +253,12 @@ const AddEditFormMain = (props) => {
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         {corporateType === 'NON-LIS' ? (
                             <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
-                                <Input placeholder={preparePlaceholderText('corporate name')} />
+                                <Input placeholder={preparePlaceholderText('corporate name')} disabled={editMode} />
                             </Form.Item>
                         ) : (
                             <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
                                 {/* <Select placeholder={preparePlaceholderSelect('customer name')} onChange={onHandleSelect} fieldNames={{ label: 'value', value: 'key' }} options={corporateLovData} allowClear></Select> */}
-                                {customSelectBox({ data: corporateLovData, placeholder: preparePlaceholderSelect('corporate name'), onChange: onHandleSelect })}
+                                {customSelectBox({ data: corporateLovData, placeholder: preparePlaceholderSelect('corporate name'), onChange: onHandleSelect, disabled: editMode })}
                             </Form.Item>
                         )}
                     </Col>

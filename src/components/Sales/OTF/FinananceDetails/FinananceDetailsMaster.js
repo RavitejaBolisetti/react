@@ -83,6 +83,7 @@ export const FinananceDetailsMasterBase = (props) => {
         if (financeData) {
             form.setFieldsValue({ ...financeData, doDate: convertDateToCalender(financeData?.doDate) });
             setFormData({ ...financeData, doDate: convertDateToCalender(financeData?.doDate) });
+            setButtonData({ ...buttonData, formBtnActive: false });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [financeData]);
@@ -121,7 +122,7 @@ export const FinananceDetailsMasterBase = (props) => {
     };
 
     const onErrorAction = (message) => {
-        showGlobalNotification(message);
+        // showGlobalNotification(message);
     };
 
     const onFinish = (values) => {

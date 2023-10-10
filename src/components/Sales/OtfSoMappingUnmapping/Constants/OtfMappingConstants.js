@@ -64,3 +64,21 @@ export const FORM_TYPE_CONSTANSTS = {
         key: 'BOOKING SO FORM CONSTANTS',
     },
 };
+export const CARD_TITLE_CONSTANT = {
+    OTF: {
+        id: 'OTF',
+        key: 'OTF',
+    },
+    OTF_1: {
+        id: 'OTF_1',
+        key: 'OTF 1',
+    },
+    OTF_2: {
+        id: 'OTF_2',
+        key: 'OTF 2',
+    },
+    SO: {
+        id: 'SO',
+        key: 'SO',
+    },
+};

@@ -13,32 +13,45 @@ afterEach(() => {
 });
 
 describe('AddEditForm component', () => {
-    it('close button', () => {
-        customRender(<AddEditForm isVisible={true} formActionType={{}} onCloseAction={jest.fn()} buttonData={{closeBtn:true}}/>);
 
-        const closeBtn = screen.getAllByRole('button', {name:'Close'});
-        fireEvent.click(closeBtn[0]);
+    it('should render when taxCategoryId = TaxChargesOptions id',()=>{
+        const TaxChargesOptions = [{id:'895'}];
+        const formData = {taxCategoryId: "895"};
+        
+        customRender(<AddEditForm isVisible={true} formActionType={{}} TaxChargesOptions={TaxChargesOptions} formData={formData}/>);
     });
 
-    it('viewMode=true',()=>{
-        customRender(<AddEditForm isVisible={true} formActionType={{}} viewMode={true} />);
+    it('should render when taxCategoryId != TaxChargesOptions id',()=>{
+        const TaxChargesOptions = [{id:'126'}];
+        const formData = {taxCategoryId: "895"};
+        
+        customRender(<AddEditForm isVisible={true} formActionType={{}} TaxChargesOptions={TaxChargesOptions} formData={formData}/>);
+    });
+
+    it('should render when accountCategoryCode = AccountDataOptions key',()=>{
+        const AccountDataOptions = [{key:'A001'}];
+        const formData = {accountCategoryCode: "A001"};
+        
+        customRender(<AddEditForm isVisible={true} formActionType={{}} AccountDataOptions={AccountDataOptions} formData={formData}/>);
+    });
+
+    it('should render when accountCategoryCode != AccountDataOptions key',()=>{
+        const AccountDataOptions = [{key:'A001'}];
+        const formData = {accountCategoryCode: "CPA28"};
+        
+        customRender(<AddEditForm isVisible={true} formActionType={{}} AccountDataOptions={AccountDataOptions} formData={formData}/>);
+    });
+
+    it("handleFormValueChange", ()=>{
+        const fieldNames = { key: 'id', value: 'value' };
+        const TaxChargesOptions = [{id: "234", key: "12", parentKey: null, value: "DESCTESST"}];
+
+        customRender(<AddEditForm isVisible={true} formActionType={{}} fieldNames={fieldNames} TaxChargesOptions={TaxChargesOptions}/>);
+
+        const taxComboBox = screen.getByRole('combobox', {name:'Tax/Charge Category'});
+        fireEvent.change(taxComboBox, {target:{value:'DESCTESST'}});
+        expect(taxComboBox.value).toBe('DESCTESST');
+        fireEvent.click(taxComboBox);
     })
-
-    it('viewMode=false',()=>{
-        customRender(<AddEditForm isVisible={true} formActionType={{}} viewMode={false} />);
-    })
-
-    it("TaxChargesOptions", ()=>{
-        const TaxChargesOptions = [{id:'123', key:'T001', parentKey:null, value:'SGST'}];
-        const formData = {taxCategoryId:'123', taxCategoryDescription:'test'}
-
-        customRender(<AddEditForm isVisible={true} formActionType={{}} viewMode={false} TaxChargesOptions={TaxChargesOptions} formData={formData}/>)
-    })
-
-    it("TaxChargesOptions", ()=>{
-        const AccountDataOptions = [{key:'T001', parentKey:null, value:'SGST'}];
-        const formData = {accountCategoryCode: "A002", accountCategoryDescription:'test'};
-
-        customRender(<AddEditForm isVisible={true} formActionType={{}} viewMode={false} AccountDataOptions={AccountDataOptions} formData={formData}/>)
-    })
+    
 })

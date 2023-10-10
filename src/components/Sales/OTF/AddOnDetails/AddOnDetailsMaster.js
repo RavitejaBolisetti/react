@@ -64,10 +64,11 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const AddOnDetailsMasterMain = (props) => {
     const { fetchList, resetPartData, partListLoading, showGlobalNotification, AddonPartsData, isAddonPartsDataLoaded, fetchSearchPartList, resetData, AddonDetailsData, isDataLoaded, userId, listShowLoading, saveData, onFinishFailed } = props;
-    const { form, section, selectedOrder, selectedRecordId, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
+    const { form, section, selectedOrder, selectedRecordId, selectedOrderId, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
 
-    const [formData, setformData] = useState();
-    const [formDataSetter, setformDataSetter] = useState({
+    const [formData, setFormData] = useState();
+
+    const [formDataSetter, setFormDataSetter] = useState({
         shield: {},
         rsa: {},
         amc: {},
@@ -147,11 +148,11 @@ export const AddOnDetailsMasterMain = (props) => {
     }, [userId, selectedRecordId]);
 
     useEffect(() => {
-        if (isDataLoaded && AddonDetailsData) {
+        if (AddonDetailsData) {
             accessoryForm.resetFields();
-            setformData(AddonDetailsData);
+            setFormData(AddonDetailsData);
             AddonDetailsData?.partDetailsResponses?.length ? setopenAccordian(['ci']) : setopenAccordian([]);
-            setformDataSetter(AddonDetailsData);
+            setFormDataSetter(AddonDetailsData);
             setAddOnItemInfo(
                 AddonDetailsData['partDetailsResponses']?.map((element, index) => {
                     return { ...element, isDeleting: false };
@@ -160,9 +161,9 @@ export const AddOnDetailsMasterMain = (props) => {
         } else {
             setopenAccordian([]);
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded]);
+    }, [AddonDetailsData]);
+
     useEffect(() => {
         return () => {
             setsearchData();
@@ -180,7 +181,6 @@ export const AddOnDetailsMasterMain = (props) => {
     }, [isAddonPartsDataLoaded, AddonPartsData]);
 
     const fnSetData = (data) => {
-        setformData(data);
         accessoryForm.setFieldsValue({
             mrp: data?.mrp,
             partNumber: data?.partNumber,
@@ -189,22 +189,25 @@ export const AddOnDetailsMasterMain = (props) => {
             sellingPrice: data?.sellingPrice,
             type: data?.type,
         });
+        setFormData({ ...data });
+        // setFormData({ ...formData, partDetailsResponses: formData?.partDetailsResponses.push({ ...data }) });
         handleFormValueChange();
     };
 
     const onFinish = (values) => {
         let detailsRequest = [];
+
         formDataSetter?.partDetailsResponses?.map((element, index) => {
             const { id, otfId, partNumber, requiredQuantity, type, partDescription, sellingPrice, mrp } = element;
             detailsRequest.push({ id, otfId, partNumber, requiredQuantity, type, partDescription, sellingPrice, mrp });
             return undefined;
         });
 
-        const data = { id: formData?.id ?? '', otfId: selectedRecordId, partDetailsRequests: detailsRequest, shield: formDataSetter?.shield, rsa: formDataSetter?.rsa, amc: formDataSetter?.amc, fms: formDataSetter?.fms };
+        const data = { id: AddonDetailsData?.id ?? '', otfId: selectedRecordId, otfNumber: selectedOrderId, partDetailsRequests: detailsRequest, shield: formDataSetter?.shield, rsa: formDataSetter?.rsa, amc: formDataSetter?.amc, fms: formDataSetter?.fms };
 
         const onSuccess = (res) => {
-            setformDataSetter({});
-            setformData({});
+            setFormDataSetter({});
+            setFormData();
             accessoryForm.resetFields();
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
@@ -216,7 +219,7 @@ export const AddOnDetailsMasterMain = (props) => {
 
         const requestData = {
             data: data,
-            method: formData?.id ? 'put' : 'post',
+            method: AddonDetailsData?.id ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -248,7 +251,7 @@ export const AddOnDetailsMasterMain = (props) => {
         showGlobalNotification,
         handleFormValueChange,
         formDataSetter,
-        setformDataSetter,
+        setFormDataSetter,
         selectedRecordId,
         addOnItemInfo,
         setAddOnItemInfo,
