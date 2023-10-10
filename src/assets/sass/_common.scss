@@ -89,6 +89,7 @@
 .marB5 {
     margin-bottom: 5px;
 }
+
 .marR10 {
     margin-right: 10px;
 }
@@ -96,6 +97,7 @@
 .marR20 {
     margin-right: 20px;
 }
+
 .marB0 {
     margin-bottom: 0px !important;
 }
@@ -258,10 +260,12 @@
         }
     }
 }
-.cardDark{
+
+.cardDark {
     background: $neutralGrey1 !important;
     border: 1px solid $neutralGrey2 !important;
 }
+
 /*--------------Text Ellipsis--------------*/
 .txtEllipsis {
     white-space: nowrap;
@@ -274,7 +278,7 @@
     display: flex;
     align-items: center;
 
-    > svg {
+    >svg {
         margin-left: 5px;
         color: $semanticInfo;
     }
@@ -304,12 +308,14 @@
         }
     }
 }
+
 .leftPannelButton {
     line-height: 14px !important;
     font-weight: 500;
     height: auto;
     padding: 5px 16px !important;
 }
+
 /*--------------Model Section Strat--------------*/
 .modelTooltip {
     svg {
@@ -320,6 +326,7 @@
         top: 39px;
     }
 }
+
 .modelTooltipView {
     svg {
         color: $semanticInfo;
@@ -351,9 +358,11 @@
         }
     }
 }
+
 .modelContentTooltip {
     margin: 0px;
 }
+
 /*--------------drawer Body Section Start--------------*/
 
 .drawerBody :global .ant-timeline.ant-timeline-label .ant-timeline-item-label {
@@ -711,8 +720,8 @@
         }
 
         .ant-input-search {
-            > .ant-input-group {
-                > .ant-input-group-addon {
+            >.ant-input-group {
+                >.ant-input-group-addon {
                     &:last-child {
                         .ant-input-search-button {
                             &:not(.ant-btn-primary) {
@@ -803,25 +812,31 @@
             float: left;
         }
     }
-   
+
 }
+
 .fieldcontentData {
     width: 90%;
 }
+
 .fieldcontentData {
     width: 90%;
 }
+
 .navTab {
     & :global {
         .ant-tabs.ant-tabs-top {
             .ant-tabs-nav {
                 margin: 0 0 8px 0;
+
                 .ant-tabs-tab {
                     padding: 0 0 8px 0;
-                    + .ant-tabs-tab {
+
+                    +.ant-tabs-tab {
                         margin: 0 0 0 20px;
                     }
                 }
+
                 &::before {
                     border-bottom: 1px solid $neutralGrey1;
                 }
@@ -1049,12 +1064,15 @@
 
             .ant-descriptions-item-content {
                 color: $neutralGrey3 !important;
+
                 .ant-typography {
                     color: $neutralGrey3 !important;
+
                     strong {
                         color: $primaryBlack !important;
                     }
                 }
+
                 .ant-typography-success {
                     color: $semanticSuccess !important;
                 }
@@ -1062,6 +1080,7 @@
         }
     }
 }
+
 .viewContainerInner {
     border: 1px solid $neutralGrey1;
     border-radius: 4px 4px 0px 0px;
@@ -1114,12 +1133,15 @@
 
             .ant-descriptions-item-content {
                 color: $neutralGrey3 !important;
+
                 .ant-typography {
                     color: $neutralGrey3 !important;
+
                     strong {
                         color: $primaryBlack !important;
                     }
                 }
+
                 .ant-typography-success {
                     color: $semanticSuccess !important;
                 }
@@ -1127,15 +1149,18 @@
         }
     }
 }
+
 .viewOneColProps {
     & :global {
         .ant-descriptions {
             .ant-descriptions-view {
                 padding-bottom: 0 !important;
+
                 .ant-descriptions-row {
                     .ant-descriptions-item {
                         &:first-child {
                             padding-right: 0 !important;
+
                             .ant-descriptions-item-content {
                                 .ant-collapse {
                                     &:last-child {
@@ -1479,11 +1504,11 @@
     & :global {
         .ant-descriptions {
             .ant-descriptions-row {
-                > th {
+                >th {
                     padding-bottom: 0px;
                 }
 
-                > td {
+                >td {
                     padding-bottom: 0px;
                 }
             }
@@ -1499,19 +1524,19 @@
             margin-bottom: 0px;
 
             .ant-form-item-label {
-                > label {
+                >label {
                     margin-right: 20px;
                     height: 36px;
                     color: $primaryBlack;
                 }
 
-                > label.ant-form-item-no-colon {
+                >label.ant-form-item-no-colon {
                     &::after {
                         display: none;
                     }
                 }
 
-                > label.ant-form-item-required {
+                >label.ant-form-item-required {
                     &:not(.ant-form-item-required-mark-optional) {
                         &::before {
                             margin-top: -3px;
@@ -1584,8 +1609,8 @@
         .ant-collapse {
             border: 0.5px solid $neutralGrey2;
 
-            > .ant-collapse-item {
-                > .ant-collapse-header {
+            >.ant-collapse-item {
+                >.ant-collapse-header {
                     padding: 12px 16px 16px;
 
                     .ant-collapse-header-text {
@@ -1641,7 +1666,7 @@
                         }
                     }
 
-                    > .ant-collapse-header-text {
+                    >.ant-collapse-header-text {
                         .ant-space-vertical {
                             display: inline-block;
                             width: 100%;
@@ -1687,7 +1712,7 @@
             }
 
             .ant-collapse-content {
-                > .ant-collapse-content-box {
+                >.ant-collapse-content-box {
                     padding: 0 16px 12px;
                     margin-bottom: 0;
 
@@ -1758,7 +1783,7 @@
             }
 
             .ant-timeline-item-last {
-                > .ant-timeline-item-content {
+                >.ant-timeline-item-content {
                     min-height: 32px;
                 }
             }
@@ -1914,15 +1939,15 @@
 
         .ant-steps {
             .ant-steps-item-process {
-                > .ant-steps-item-container {
-                    > .ant-steps-item-tail {
+                >.ant-steps-item-container {
+                    >.ant-steps-item-tail {
                         &::after {
                             background-color: $neutralGrey2;
                         }
                     }
 
-                    > .ant-steps-item-content {
-                        > .ant-steps-item-title {
+                    >.ant-steps-item-content {
+                        >.ant-steps-item-title {
                             color: $primaryBlack;
                             font-size: 10px;
                             font-weight: 500;
@@ -1934,15 +1959,15 @@
             }
 
             .ant-steps-item-wait {
-                > .ant-steps-item-container {
-                    > .ant-steps-item-tail {
+                >.ant-steps-item-container {
+                    >.ant-steps-item-tail {
                         &::after {
                             background-color: $neutralGrey2;
                         }
                     }
 
-                    > .ant-steps-item-content {
-                        > .ant-steps-item-title {
+                    >.ant-steps-item-content {
+                        >.ant-steps-item-title {
                             color: $primaryBlack;
                             font-size: 10px;
                             font-weight: 500;
@@ -2018,6 +2043,7 @@
         }
 
         .ant-table-wrapper {
+
             // table {
             //     border: 1px solid $neutralGrey2;
             //     background: $primaryWhite;
@@ -2062,7 +2088,7 @@
                     }
                 }
 
-                > .ant-collapse-content-box {
+                >.ant-collapse-content-box {
                     padding: 0 30px;
                     margin-bottom: 0;
 
@@ -2074,8 +2100,8 @@
                 }
             }
 
-            > .ant-collapse-item {
-                > .ant-collapse-header {
+            >.ant-collapse-item {
+                >.ant-collapse-header {
                     padding: 20px 30px;
 
                     .ant-collapse-header-text {
@@ -2100,8 +2126,8 @@
                 }
             }
 
-            > .ant-collapse-item-active {
-                > .ant-collapse-header {
+            >.ant-collapse-item-active {
+                >.ant-collapse-header {
                     padding: 20px 30px;
                 }
             }
@@ -2160,7 +2186,7 @@
 
         .ant-result-success {
             .ant-result-icon {
-                > .anticon-check-circle {
+                >.anticon-check-circle {
                     border: 47px solid $transparentSuccessL;
                     border-radius: 100px;
                 }
@@ -2218,8 +2244,8 @@
             }
 
             .ant-collapse {
-                > .ant-collapse-item {
-                    > .ant-collapse-header {
+                >.ant-collapse-item {
+                    >.ant-collapse-header {
                         padding: 20px 30px;
                     }
                 }
@@ -2231,6 +2257,7 @@
                 }
             }
         }
+
         .drawerGap {
             margin-bottom: 10px !important;
         }
@@ -2375,6 +2402,7 @@
                 }
             }
         }
+
         .deliveryNoteSuccess {
             & :global {
                 .ant-avatar.ant-avatar-icon {
@@ -2398,19 +2426,23 @@
             }
         }
     }
+
     .deliveryNoteSuccessInfo {
         border: 1px solid #e6e6e6;
         border-radius: 4px;
         padding: 20px;
         box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.15);
+
         .deliveryNoteSuccessText {
             padding: 6px 10px;
             background-color: #f2f2f2;
             border-radius: 4px;
+
             & :global {
                 .ant-typography {
                     font-size: 16px;
                     color: #858585;
+
                     span {
                         font-size: 16px;
                         font-weight: 600;
@@ -2773,6 +2805,7 @@
                 margin-inline-start: 0;
                 width: 0 !important;
             }
+
             .ant-select-selection-placeholder {
                 padding-right: 18px;
             }
@@ -2858,7 +2891,7 @@
             }
 
             .ant-collapse-content {
-                > .ant-collapse-content-box {
+                >.ant-collapse-content-box {
                     padding-top: 0px;
                 }
             }
@@ -2892,7 +2925,7 @@
             // }
 
             .ant-collapse-content {
-                > .ant-collapse-content-box {
+                >.ant-collapse-content-box {
                     padding-top: 0px;
                 }
             }
@@ -3051,7 +3084,7 @@
             }
 
             .ant-modal-confirm-body {
-                > .anticon {
+                >.anticon {
                     + {
                         .ant-modal-confirm-title {
                             + {
@@ -3078,7 +3111,7 @@
                 }
             }
 
-            .ant-tree-checkbox + span {
+            .ant-tree-checkbox+span {
                 &:hover {
                     color: $neutralGrey3;
                     cursor: not-allowed;
@@ -3086,7 +3119,7 @@
             }
 
             .ant-tree-checkbox {
-                &:hover + span {
+                &:hover+span {
                     color: $neutralGrey3;
                     cursor: not-allowed;
                 }
@@ -3115,7 +3148,7 @@
                 }
             }
 
-            .ant-tree-checkbox-checked + span {
+            .ant-tree-checkbox-checked+span {
                 &:hover {
                     color: $primaryRed;
 
@@ -3124,7 +3157,7 @@
             }
 
             .ant-tree-checkbox-checked {
-                &:hover + span {
+                &:hover+span {
                     color: $primaryRed;
 
                     cursor: not-allowed;
@@ -3143,7 +3176,7 @@
                 }
             }
 
-            .ant-tree-checkbox-indeterminate + span {
+            .ant-tree-checkbox-indeterminate+span {
                 &:hover {
                     color: $primaryBlack;
                     cursor: not-allowed;
@@ -3151,7 +3184,7 @@
             }
 
             .ant-tree-checkbox-indeterminate {
-                &:hover + span {
+                &:hover+span {
                     color: $primaryBlack;
                     cursor: not-allowed;
                 }
