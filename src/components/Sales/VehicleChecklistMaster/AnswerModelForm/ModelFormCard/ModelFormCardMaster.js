@@ -20,26 +20,13 @@ export const ModelFormCardMaster = (props) => {
     const onFinishModelForm = (val) => {
         modelForm.validateFields().then(() => {
             let data = modelForm.getFieldsValue();
+            console.log(`data`, data);
             let updateData = { ...data, internalId: Math.floor(Math.random() * 100000000 + 1), id: '' };
-            setModelData((item) => [updateData, ...item]);
+            modelData?.length > 0 ? setModelData((item) => [updateData, ...item]) : setModelData([updateData]);
             modelForm.resetFields();
             forceUpdate();
         });
     };
-
-    // const handleDescriptionChange = (taxCode) => {
-    //     setChangeValue(taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxDescription);
-    //     modelEdit ? modelEditForm.setFieldValue('chargeDescription', taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxDescription) : modelForm.setFieldValue('chargeDescription', taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxDescription);
-
-    //     let codeFind = {
-    //         taxMasterId: taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.id,
-    //     };
-    //     if (modelEdit) {
-    //         modelEditForm.setFieldsValue(codeFind);
-    //     } else {
-    //         modelForm.setFieldsValue(codeFind);
-    //     }
-    // };
 
     const cardAttributeProps = {
         modelForm,
@@ -65,18 +52,6 @@ export const ModelFormCardMaster = (props) => {
     const formProductAttributeProps = {
         ...cardAttributeProps,
     };
-
-    // useEffect(() => {
-    //     if (taxCategory?.taxCategoryDetail?.length > 0) {
-    //         setModelData(() => []);
-    //         let len = taxCategory?.taxCategoryDetail?.length;
-    //         for (let i = 0; i < len; i++) {
-    //             let internalId = Math.floor(Math.random() * 100000000 + 1);
-    //             setModelData((item) => [...item, { ...taxCategory?.taxCategoryDetail[i], internalId: internalId }]);
-    //         }
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [taxCategory]);
 
     useEffect(() => {
         if (modelEdit) {

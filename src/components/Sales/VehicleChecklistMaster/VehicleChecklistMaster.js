@@ -171,6 +171,9 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
         if (formActionType === FROM_ACTION_TYPE?.CHILD) {
             form.setFieldsValue(obj);
             setSelectedTreeSelectKey(formData?.code);
+            setModelData([]);
+            setAnswerData([]);
+
             if (attributeType === VEHICLE_CHECKLIST_TYPE?.GROUP?.key) {
                 form.setFieldsValue({ attributeLevel: VEHICLE_CHECKLIST_TYPE?.SUB_GROUP?.key, parentCode: formData?.code });
                 setAttributeType(VEHICLE_CHECKLIST_TYPE?.SUB_GROUP?.key);
@@ -182,23 +185,19 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
                 setAttributeType(VEHICLE_CHECKLIST_TYPE?.ANSWER?.key);
             }
         } else if (formActionType === FROM_ACTION_TYPE?.SIBLING) {
+            setModelData([]);
+            setAnswerData([]);
             let treeKey = flatternData?.find((e) => e?.key === formData?.code)?.data?.parentCode;
             treeKey = treeKey === CHECKLIST_TYPE?.VRC?.key || treeKey === CHECKLIST_TYPE?.VDC?.key ? 'DMS' : treeKey;
             setSelectedTreeSelectKey(treeKey);
             form.setFieldsValue({ ...obj, attributeLevel: attributeType, parentCode: treeKey });
+        } else if (formActionType === FROM_ACTION_TYPE?.VIEW) {
+            setModelData(formData?.model?.length > 0 ? [...formData?.model] : []);
+            setAnswerData(formData?.answer?.length > 0 ? [...formData?.answer] : []);
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formActionType, handleButtonClickChange]);
-
-    useEffect(() => {
-        if (isAddBtnClicked) {
-            console.log(`listShowLoadingVehicleChecklist`, isVehicleChecklistMasterLoaded);
-            form.setFieldsValue({ attributeLevel: VEHICLE_CHECKLIST_TYPE?.GROUP?.key, parentCode: buttonType });
-            setAttributeType(VEHICLE_CHECKLIST_TYPE?.GROUP?.key);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [buttonType, isAddBtnClicked]);
 
     const onChange = (e) => {
         setSearchValue(e.target.value);
@@ -230,6 +229,8 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
     const handleTreeViewClick = (keys) => {
         form.resetFields();
         setFormData([]);
+        setAnswerData([]);
+        setModelData([]);
 
         if (keys && keys?.length > 0) {
             setFormActionType(FROM_ACTION_TYPE.VIEW);
@@ -244,7 +245,10 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
 
                 const attributeName = VehicleChecklistAttributeLov?.find((e) => e?.key === formData?.data?.attributeLevel)?.value;
                 const attributeParentName = flatternData.find((i) => formData?.data?.parentCode === i.key)?.data?.descriptionTitle;
-                setFormData({ ...formData?.data, parentName: attributeParentName, attributeName });
+                const answerTypeName = formData?.data?.attributeLevel === 'CHKL' ? typeData?.CHKL_ANS_TYPE?.find((e) => e?.key === formData?.data?.answerType)?.value : null;
+                setFormData({ ...formData?.data, parentName: attributeParentName, attributeName, answerTypeName });
+                setModelData(formData?.data?.model?.length > 0 ? [...formData?.data?.model] : []);
+                setAnswerData(formData?.data?.answer?.length > 0 ? [...formData?.data?.answer] : []);
             } else {
                 setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
             }
@@ -277,27 +281,31 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
             };
         } else if (values?.attributeLevel === 'SUBGRP') {
             data = {
-                parentId: parentId,
+                attributeLevel: values?.attributeLevel,
                 subGroupDto: {
-                    children: {
-                        ...updatedData,
-                    },
+                    parentId: parentId,
+                    children: [
+                        {
+                            ...updatedData,
+                        },
+                    ],
                 },
             };
         } else if (values?.attributeLevel === 'CHKL') {
             data = {
-                parentId: parentId,
+                attributeLevel: values?.attributeLevel,
                 checklistDto: {
-                    children: {
-                        ...updatedData,
-                        model: modelData,
-                        answer: answerData,
-                    },
+                    parentId: parentId,
+                    children: [
+                        {
+                            ...updatedData,
+                            model: modelData,
+                            answer: answerData,
+                        },
+                    ],
                 },
             };
         }
-
-        console.log(`data`, data);
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -308,10 +316,20 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
                 fetchVehicleChecklist({ setIsLoading: listShowLoadingVehicleChecklist, userId, extraParams });
 
                 const attributeName = VehicleChecklistAttributeLov?.find((e) => e?.key === res?.data?.attributeLevel)?.value;
-                const attributeParentName = flatternData.find((i) => res?.data?.parentCode === i.key)?.data?.descriptionTitle;
-                res?.data && setFormData({ ...res?.data, parentName: attributeParentName, attributeName });
 
-                setSelectedTreeKey([res?.data?.code]);
+                if (res?.data?.attributeLevel === 'GRP') {
+                    const attributeParentName = flatternData.find((i) => res?.data?.groupDto?.parentCode === i.key)?.data?.descriptionTitle;
+                    setFormData({ ...res?.data?.groupDto, parentName: attributeParentName, attributeName });
+                    setSelectedTreeKey([res?.data?.groupDto?.code]);
+                } else if (res?.data?.attributeLevel === 'SUBGRP') {
+                    const attributeParentName = flatternData.find((i) => res?.data?.subGroupDto?.children?.[0]?.parentCode === i.key)?.data?.descriptionTitle;
+                    setFormData({ ...res?.data?.subGroupDto?.children?.[0], parentName: attributeParentName, attributeName });
+                    setSelectedTreeKey([res?.data?.subGroupDto?.children?.[0]?.code]);
+                } else if (res?.data?.attributeLevel === 'CHKL') {
+                    const attributeParentName = flatternData.find((i) => res?.data?.checklistDto?.children?.[0]?.parentCode === i.key)?.data?.descriptionTitle;
+                    setFormData({ ...res?.data?.checklistDto?.children?.[0], parentName: attributeParentName, attributeName });
+                    setSelectedTreeKey([res?.data?.checklistDto?.children?.[0]?.code]);
+                }
                 setFormActionType(FROM_ACTION_TYPE.VIEW);
                 setFormBtnActive(false);
                 setIsFormVisible(false);
@@ -325,7 +343,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
         const requestData = {
             data: data,
             method: formActionType === FROM_ACTION_TYPE?.EDIT ? 'put' : 'post',
-            setIsLoading: vehicleChecklistMasterDataActions,
+            setIsLoading: listShowLoadingVehicleChecklist,
             userId,
             onError,
             onSuccess,
@@ -360,8 +378,11 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
                 code: formData?.data?.code,
                 descriptionTitle: formData?.data?.descriptionTitle,
                 status: formData?.data?.status,
+                attachmentRequired: formData?.data?.attachmentRequired,
+                answerType: formData?.data?.answerType,
             });
             setSelectedTreeSelectKey(formData?.data?.parentCode === CHECKLIST_TYPE?.VRC.key || formData?.data?.parentCode === CHECKLIST_TYPE?.VDC?.key ? 'DMS' : formData?.data?.parentCode);
+            formData?.answer?.length > 0 && setAnswerType(true);
         }
         setIsFormVisible(true);
         setFormBtnActive(false);
@@ -390,6 +411,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
         onCloseAction: () => {
             setIsFormVisible(false);
             setAttributeType(formData?.attributeLevel);
+            setFormActionType('view');
         },
         titleOverride: (formActionType === FROM_ACTION_TYPE?.EDIT ? `Edit ` : `Add `).concat(moduleTitle),
         onFinish,
@@ -435,6 +457,10 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
         viewTitle,
         formData,
         attributeType,
+        modelData,
+        answerData,
+        modelGroupData,
+        formActionType,
     };
 
     const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;

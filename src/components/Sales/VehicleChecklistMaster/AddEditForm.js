@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Col, Input, Form, Row, Switch, Button, Card } from 'antd';
+import { Col, Input, Form, Row, Switch, Button } from 'antd';
 import TreeSelectField from 'components/common/TreeSelectField';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
@@ -22,7 +22,7 @@ const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
     const { VehicleChecklistMasterList, onCloseAction, fieldNames, formActionType, formData, selectedTreeSelectKey, handleSelectTreeClick, attributeType, form, VehicleChecklistAttributeLov, typeData } = props;
-    const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed, answerType, onChangeAnswerType, listShowLoadingVehicleChecklist, onAttributeChange } = props;
+    const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed, answerType, onChangeAnswerType } = props;
 
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
 

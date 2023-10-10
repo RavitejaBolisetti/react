@@ -23,7 +23,7 @@ const AnswerCard = (props) => {
 
         editForm.setFieldsValue({
             answerCode: props?.answerCode,
-            answerDescription: props?.answerDescription,
+            answerTitle: props?.answerTitle,
             answerStatus: props?.answerStatus,
             internalId: props?.internalId,
             id: props?.id,
@@ -36,7 +36,7 @@ const AnswerCard = (props) => {
         const upd_obj = answerData?.map((obj) => {
             if (obj?.internalId === newFormData?.internalId) {
                 obj.answerCode = newFormData?.answerCode;
-                obj.answerDescription = newFormData?.answerDescription;
+                obj.answerTitle = newFormData?.answerTitle;
                 obj.answerStatus = newFormData?.answerStatus;
                 obj.internalId = newFormData?.internalId;
                 obj.id = newFormData?.id;
@@ -79,20 +79,13 @@ const AnswerCard = (props) => {
         setAnswerSwitch,
     };
 
-    // useEffect(() => {
-    //     if (formEdit) {
-    //         setButtonData({ ...buttonData, formBtnActive: true });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [formEdit]);
-
     return (
         <Card>
             <Row align="middle" justify="space-between" className={styles.marB20}>
                 <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18}>
                     <Space direction="vertical">
                         <Text>{props?.answerCode}</Text>
-                        <Text>{props?.answerDescription}</Text>
+                        <Text>{props?.answerTitle}</Text>
 
                         <Text>{props?.answerStatus === true ? 'Active' : 'InActive'}</Text>
                     </Space>

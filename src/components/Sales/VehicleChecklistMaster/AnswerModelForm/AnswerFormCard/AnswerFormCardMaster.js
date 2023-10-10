@@ -21,25 +21,11 @@ export const AnswerFormCardMaster = (props) => {
         answerForm.validateFields().then(() => {
             let data = answerForm.getFieldsValue();
             let updateData = { ...data, internalId: Math.floor(Math.random() * 100000000 + 1), id: '' };
-            setAnswerData((item) => [updateData, ...item]);
+            answerData?.length > 0 ? setAnswerData((item) => [updateData, ...item]) : setAnswerData([updateData]);
             answerForm.resetFields();
             forceUpdate();
         });
     };
-
-    // const handleDescriptionChange = (taxCode) => {
-    //     setChangeValue(taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxDescription);
-    //     formEdit ? editForm.setFieldValue('chargeDescription', taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxDescription) : answerForm.setFieldValue('chargeDescription', taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxDescription);
-
-    //     let codeFind = {
-    //         taxMasterId: taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.id,
-    //     };
-    //     if (formEdit) {
-    //         editForm.setFieldsValue(codeFind);
-    //     } else {
-    //         answerForm.setFieldsValue(codeFind);
-    //     }
-    // };
 
     const cardAttributeProps = {
         answerForm,
@@ -67,18 +53,6 @@ export const AnswerFormCardMaster = (props) => {
         ...cardAttributeProps,
     };
 
-    // useEffect(() => {
-    //     if (taxCategory?.taxCategoryDetail?.length > 0) {
-    //         setAnswerData(() => []);
-    //         let len = taxCategory?.taxCategoryDetail?.length;
-    //         for (let i = 0; i < len; i++) {
-    //             let internalId = Math.floor(Math.random() * 100000000 + 1);
-    //             setAnswerData((item) => [...item, { ...taxCategory?.taxCategoryDetail[i], internalId: internalId }]);
-    //         }
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [taxCategory]);
-
     useEffect(() => {
         if (formEdit) {
             setMainFormEdit(true);
@@ -94,7 +68,7 @@ export const AnswerFormCardMaster = (props) => {
 
             {answerData?.length > 0 &&
                 answerData?.map((action) => {
-                    return <AnswerCard {...cardAttributeProps} answerCode={action?.answerCode} answerDescription={action?.answerDescription} answerStatus={action?.answerStatus} internalId={action?.internalId} id={action?.id} />;
+                    return <AnswerCard {...cardAttributeProps} answerCode={action?.answerCode} answerTitle={action?.answerTitle} answerStatus={action?.answerStatus} internalId={action?.internalId} id={action?.id} />;
                 })}
         </Card>
     );

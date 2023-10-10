@@ -24,7 +24,7 @@ const AnswerForm = (props) => {
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Form.Item name="answerDescription" label="Answer Description" rules={[validateRequiredInputField('Answer Description')]}>
+                        <Form.Item name="answerTitle" label="Answer Description" rules={[validateRequiredInputField('Answer Description')]}>
                             <TextArea maxLength={300} placeholder={preparePlaceholderText('Answer Description')} disabled={mainFomEdit} />
                         </Form.Item>
                     </Col>
