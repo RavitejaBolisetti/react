@@ -110,7 +110,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
     const [attributeType, setAttributeType] = useState();
     const [buttonType, setButtonType] = useState(CHECKLIST_TYPE?.VDC?.key);
     const [handleButtonClickChange, setHandleButtonClickChange] = useState(false);
-    const [answerType, setAnswerType] = useState(false);
+    const [answerType, setAnswerType] = useState(null);
     const [answerData, setAnswerData] = useState([]);
     const [modelData, setModelData] = useState([]);
     const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
@@ -168,6 +168,8 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
             descriptionTitle: null,
             status: true,
             id: null,
+            attachmentRequired: null,
+            answerType: null,
         };
         if (formActionType === FROM_ACTION_TYPE?.CHILD) {
             form.setFieldsValue(obj);
@@ -176,6 +178,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
             setAnswerData([]);
             answerForm.resetFields();
             modelForm.resetFields();
+            setAnswerType(null);
 
             if (attributeType === VEHICLE_CHECKLIST_TYPE?.GROUP?.key) {
                 form.setFieldsValue({ attributeLevel: VEHICLE_CHECKLIST_TYPE?.SUB_GROUP?.key, parentCode: formData?.code });
@@ -190,6 +193,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
         } else if (formActionType === FROM_ACTION_TYPE?.SIBLING) {
             setModelData([]);
             setAnswerData([]);
+            setAnswerType(null);
             let treeKey = flatternData?.find((e) => e?.key === formData?.code)?.data?.parentCode;
             treeKey = treeKey === CHECKLIST_TYPE?.VRC?.key || treeKey === CHECKLIST_TYPE?.VDC?.key ? 'DMS' : treeKey;
             setSelectedTreeSelectKey(treeKey);
@@ -208,6 +212,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
 
     const onChangeAnswerType = (val) => {
         setAnswerType(val);
+        answerForm.resetFields();
     };
 
     const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
@@ -417,7 +422,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
         onCloseAction: () => {
             setIsFormVisible(false);
             setAttributeType(formData?.attributeLevel);
-            setFormActionType('view');
+            setFormActionType(FROM_ACTION_TYPE?.VIEW);
         },
         titleOverride: (formActionType === FROM_ACTION_TYPE?.EDIT ? `Edit ` : `Add `).concat(moduleTitle),
         onFinish,
