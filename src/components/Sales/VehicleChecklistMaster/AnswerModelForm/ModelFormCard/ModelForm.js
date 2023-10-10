@@ -4,35 +4,36 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Input, Form, Col, Row, Button, Switch } from 'antd';
-import { preparePlaceholderText } from 'utils/preparePlaceholder';
-import { validateRequiredInputField } from 'utils/validation';
+import { Form, Col, Row, Button, Switch } from 'antd';
+import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { validateRequiredSelectField } from 'utils/validation';
 import { PlusOutlined } from '@ant-design/icons';
+import { customSelectBox } from 'utils/customSelectBox';
 
 const ModelForm = (props) => {
-    const { answerForm, onFinishAnswerForm, formEdit, editForm, modelSwitch, setModelSwitch, mainFomEdit } = props;
+    const { modelForm, onFinishModelForm, modelEdit, modelEditForm, modelSwitch, setModelSwitch, mainFomEdit, modelGroupData } = props;
 
     return (
         <>
-            <Form form={formEdit ? editForm : answerForm} id="myForm" autoComplete="off" layout="vertical">
+            <Form form={modelEdit ? modelEditForm : modelForm} id="myForm" autoComplete="off" layout="vertical">
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Form.Item name="modelGroupCode" label="Model Group Code" rules={[validateRequiredInputField('Model Group Code')]}>
-                            <Input maxLength={6} placeholder={preparePlaceholderText('Model Group Code')} disabled={mainFomEdit} />
+                        <Form.Item label="Model Group Code" name="modelGroupCode" rules={[validateRequiredSelectField('Model Group Code')]}>
+                            {customSelectBox({ disabled: mainFomEdit, data: modelGroupData, fieldNames: { key: 'modelGroupCode', value: 'modelGroupDescription' }, placeholder: preparePlaceholderSelect('model group code') })}
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} style={{ marginBottom: '12px' }}>
                         <Row justify="space-between" align="middle">
-                            <Form.Item name="checklistModelStatus" initialValue={modelSwitch}>
-                                <Switch value={modelSwitch} onChange={() => setModelSwitch(!modelSwitch)} defaultChecked={modelSwitch} style={{ marginBottom: '-16px' }} disabled={mainFomEdit} />
+                            <Form.Item label="Model Group Status" name="checklistModelStatus" initialValue={modelSwitch}>
+                                <Switch value={modelSwitch} onChange={() => setModelSwitch(!modelSwitch)} defaultChecked={modelSwitch} disabled={mainFomEdit} checkedChildren="Active" unCheckedChildren="Inactive" />
                             </Form.Item>
                             {!props?.internalId && (
                                 <Button
-                                    disabled={formEdit}
+                                    disabled={modelEdit}
                                     type="primary"
                                     icon={<PlusOutlined />}
                                     onClick={() => {
-                                        onFinishAnswerForm();
+                                        onFinishModelForm();
                                     }}
                                 >
                                     Add

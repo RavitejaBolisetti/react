@@ -9,7 +9,7 @@ import ModelForm from './ModelForm';
 import { Card } from 'antd';
 
 export const ModelFormCardMaster = (props) => {
-    const { isVisible, modelEditForm, modelForm, modelEdit, setModelEdit, modelData, setModelData, buttonData, setButtonData } = props;
+    const { isVisible, modelEditForm, modelForm, modelEdit, setModelEdit, modelData, setModelData, modelGroupData } = props;
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [disableSaveButton, setDisableSaveButton] = useState(false);
     const [changeValue, setChangeValue] = useState(null);
@@ -17,7 +17,7 @@ export const ModelFormCardMaster = (props) => {
     const [mainFomEdit, setMainFormEdit] = useState(false);
     const [modelSwitch, setModelSwitch] = useState(true);
 
-    const onFinishAnswerForm = (val) => {
+    const onFinishModelForm = (val) => {
         modelForm.validateFields().then(() => {
             let data = modelForm.getFieldsValue();
             let updateData = { ...data, internalId: Math.floor(Math.random() * 100000000 + 1), id: '' };
@@ -43,7 +43,7 @@ export const ModelFormCardMaster = (props) => {
 
     const cardAttributeProps = {
         modelForm,
-        onFinishAnswerForm,
+        onFinishModelForm,
         forceUpdate,
         isVisible,
         disableSaveButton,
@@ -59,6 +59,7 @@ export const ModelFormCardMaster = (props) => {
         setuniqueCardEdit,
         modelSwitch,
         setModelSwitch,
+        modelGroupData,
     };
 
     const formProductAttributeProps = {
@@ -92,7 +93,7 @@ export const ModelFormCardMaster = (props) => {
 
             {modelData?.length > 0 &&
                 modelData?.map((action) => {
-                    return <ModelCard {...cardAttributeProps} answerCode={action?.answerCode} answerDescription={action?.answerDescription} answerStatus={action?.answerStatus} internalId={action?.internalId} id={action?.id} />;
+                    return <ModelCard {...cardAttributeProps} modelGroupCode={action?.modelGroupCode} checklistModelStatus={action?.checklistModelStatus} internalId={action?.internalId} id={action?.id} />;
                 })}
         </Card>
     );

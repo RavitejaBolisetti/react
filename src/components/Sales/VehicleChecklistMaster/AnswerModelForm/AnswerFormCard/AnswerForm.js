@@ -30,8 +30,8 @@ const AnswerForm = (props) => {
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} style={{ marginBottom: '12px' }}>
                         <Row justify="space-between" align="middle">
-                            <Form.Item name="answerStatus" initialValue={answerSwitch}>
-                                <Switch value={answerSwitch} onChange={() => setAnswerSwitch(!answerSwitch)} defaultChecked={answerSwitch} style={{ marginBottom: '-16px' }} disabled={mainFomEdit} />
+                            <Form.Item label="Answer Status" name="answerStatus" initialValue={answerSwitch}>
+                                <Switch value={answerSwitch} onChange={() => setAnswerSwitch(!answerSwitch)} defaultChecked={answerSwitch} disabled={mainFomEdit} checkedChildren="Active" unCheckedChildren="Inactive" />
                             </Form.Item>
                             {!props?.internalId && (
                                 <Button

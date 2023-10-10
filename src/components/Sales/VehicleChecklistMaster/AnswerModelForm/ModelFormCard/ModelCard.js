@@ -13,31 +13,31 @@ import ModelForm from './ModelForm';
 const { Text } = Typography;
 
 const ModelCard = (props) => {
-    const { finalFormdata, forceUpdate, modelData, setModelData, setOpenAccordian, changeValue, setChangeValue, modelForm, modelEdit, setModelEdit, uniqueCardEdit, setuniqueCardEdit, buttonData, setButtonData, internalId, formActionType, modelSwitch, setModelSwitch } = props;
+    const { finalFormdata, forceUpdate, modelData, setModelData, setOpenAccordian, changeValue, setChangeValue, modelForm, modelEdit, setModelEdit, uniqueCardEdit, setuniqueCardEdit, internalId, formActionType, modelSwitch, setModelSwitch, modelGroupData, modelEditForm } = props;
+    const modelName = modelGroupData?.find((e) => e?.modelGroupCode === props?.modelGroupCode)?.modelGroupDescription;
 
-    const answerEdit = (props) => {
+    const onModelEdit = (props) => {
         setuniqueCardEdit(props?.internalId);
         setModelEdit(true);
-        setButtonData({ ...buttonData, formBtnActive: true });
-        setModelSwitch(props?.answerStatus);
+        //setButtonData({ ...buttonData, formBtnActive: true });
+        setModelSwitch(props?.checklistModelStatus);
 
-        modelForm.setFieldsValue({
-            answerCode: props?.answerCode,
-            answerDescription: props?.answerDescription,
-            answerStatus: props?.answerStatus,
+        console.log(`props?.modelGroupCode`, props?.modelGroupCode);
+
+        modelEditForm.setFieldsValue({
+            modelGroupCode: props?.modelGroupCode,
+            checklistModelStatus: props?.checklistModelStatus,
             internalId: props?.internalId,
             id: props?.id,
         });
     };
 
-    const answerSave = () => {
-        let newFormData = modelForm?.getFieldsValue();
-
+    const modelSave = () => {
+        let newFormData = modelEditForm?.getFieldsValue();
         const upd_obj = modelData?.map((obj) => {
             if (obj?.internalId === newFormData?.internalId) {
-                obj.answerCode = newFormData?.answerCode;
-                obj.answerDescription = newFormData?.answerDescription;
-                obj.answerStatus = newFormData?.answerStatus;
+                obj.modelGroupCode = newFormData?.modelGroupCode;
+                obj.checklistModelStatus = newFormData?.checklistModelStatus;
                 obj.internalId = newFormData?.internalId;
                 obj.id = newFormData?.id;
             }
@@ -49,7 +49,7 @@ const ModelCard = (props) => {
         forceUpdate();
     };
 
-    const answerDelete = (val) => {
+    const modelDelete = (val) => {
         setModelData((prev) => {
             const indx = prev.findIndex((el) => el.internalId === val?.internalId);
             let updatedValue = prev;
@@ -62,7 +62,7 @@ const ModelCard = (props) => {
         forceUpdate();
     };
 
-    const answerCancel = () => {
+    const modelCancel = () => {
         setModelEdit(false);
     };
 
@@ -76,6 +76,9 @@ const ModelCard = (props) => {
         internalId,
         modelSwitch,
         setModelSwitch,
+        modelGroupData,
+        modelData,
+        modelEditForm,
     };
 
     // useEffect(() => {
@@ -90,10 +93,8 @@ const ModelCard = (props) => {
             <Row align="middle" justify="space-between" className={styles.marB20}>
                 <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18}>
                     <Space direction="vertical">
-                        <Text>{props?.answerCode}</Text>
-                        <Text>{props?.answerDescription}</Text>
-
-                        <Text>{props?.answerStatus === true ? 'Active' : 'InActive'}</Text>
+                        <Text>{modelName}</Text>
+                        <Text>{props?.checklistModelStatus === true ? 'Active' : 'InActive'}</Text>
                     </Space>
                 </Col>
                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6} className={styles.buttonsGroupRight}>
@@ -105,18 +106,18 @@ const ModelCard = (props) => {
                                         type="link"
                                         icon={<FiEdit />}
                                         onClick={() => {
-                                            answerEdit(props);
+                                            onModelEdit(props);
                                         }}
                                     />
-                                    <Button onClick={() => answerDelete(props)} type="link" icon={<FiTrash />} disabled={props?.id ? true : false} />
+                                    <Button onClick={() => modelDelete(props)} type="link" icon={<FiTrash />} disabled={props?.id ? true : false} />
                                 </>
                             )}
                             {modelEdit && props?.internalId === uniqueCardEdit && (
                                 <>
-                                    <Button type="link" onClick={answerSave}>
+                                    <Button type="link" onClick={modelSave}>
                                         Save
                                     </Button>
-                                    <Button type="link" onClick={answerCancel}>
+                                    <Button type="link" onClick={modelCancel}>
                                         Cancel
                                     </Button>
                                 </>
