@@ -24,6 +24,7 @@ import { LANGUAGE_EN } from 'language/en';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { VEHICLE_CHECKLIST_TYPE } from 'constants/modules/VehicleCheckListMaster/vehicleChecklistType';
 import { CHECKLIST_TYPE } from 'constants/modules/VehicleCheckListMaster/checklistType';
+import { ANSWER_TYPES } from 'constants/modules/VehicleCheckListMaster/AnswerTypes';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -173,6 +174,8 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
             setSelectedTreeSelectKey(formData?.code);
             setModelData([]);
             setAnswerData([]);
+            answerForm.resetFields();
+            modelForm.resetFields();
 
             if (attributeType === VEHICLE_CHECKLIST_TYPE?.GROUP?.key) {
                 form.setFieldsValue({ attributeLevel: VEHICLE_CHECKLIST_TYPE?.SUB_GROUP?.key, parentCode: formData?.code });
@@ -327,7 +330,10 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
                     setSelectedTreeKey([res?.data?.subGroupDto?.children?.[0]?.code]);
                 } else if (res?.data?.attributeLevel === VEHICLE_CHECKLIST_TYPE?.CHECKLIST?.key) {
                     const attributeParentName = flatternData.find((i) => res?.data?.checklistDto?.children?.[0]?.parentCode === i.key)?.data?.descriptionTitle;
-                    setFormData({ ...res?.data?.checklistDto?.children?.[0], parentName: attributeParentName, attributeName });
+                    const answerTypeName = typeData?.CHKL_ANS_TYPE?.find((e) => e?.key === res?.data?.checklistDto?.children?.[0]?.answerType)?.value;
+                    setFormData({ ...res?.data?.checklistDto?.children?.[0], parentName: attributeParentName, attributeName, answerTypeName });
+                    setModelData(res?.data?.checklistDto?.children?.[0]?.model?.length > 0 ? [...res?.data?.checklistDto?.children?.[0]?.model] : []);
+                    setAnswerData(res?.data?.checklistDto?.children?.[0]?.answer?.length > 0 ? [...res?.data?.checklistDto?.children?.[0]?.model] : []);
                     setSelectedTreeKey([res?.data?.checklistDto?.children?.[0]?.code]);
                 }
                 setFormActionType(FROM_ACTION_TYPE.VIEW);
@@ -382,7 +388,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
                 answerType: formData?.data?.answerType,
             });
             setSelectedTreeSelectKey(formData?.data?.parentCode === CHECKLIST_TYPE?.VRC.key || formData?.data?.parentCode === CHECKLIST_TYPE?.VDC?.key ? 'DMS' : formData?.data?.parentCode);
-            formData?.answer?.length > 0 && setAnswerType(true);
+            formData?.data?.answer?.length > 0 ? setAnswerType(ANSWER_TYPES?.Fixed?.key) : setAnswerType(null);
         }
         setIsFormVisible(true);
         setFormBtnActive(false);
@@ -461,6 +467,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
         answerData,
         modelGroupData,
         formActionType,
+        setFormBtnActive,
     };
 
     const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;

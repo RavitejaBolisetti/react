@@ -13,12 +13,12 @@ import AnswerForm from './AnswerForm';
 const { Text } = Typography;
 
 const AnswerCard = (props) => {
-    const { finalFormdata, answerForm, forceUpdate, answerData, setAnswerData, setOpenAccordian, changeValue, setChangeValue, editForm, formEdit, setFormEdit, uniqueCardEdit, setuniqueCardEdit, buttonData, setButtonData, internalId, formActionType, answerSwitch, setAnswerSwitch } = props;
+    const { finalFormdata, answerForm, forceUpdate, answerData, setAnswerData, setOpenAccordian, changeValue, setChangeValue, editForm, formEdit, setFormEdit, uniqueCardEdit, setuniqueCardEdit, internalId, formActionType, answerSwitch, setAnswerSwitch, setFormBtnActive } = props;
 
     const answerEdit = (props) => {
         setuniqueCardEdit(props?.internalId);
         setFormEdit(true);
-        setButtonData({ ...buttonData, formBtnActive: true });
+        setFormBtnActive(true);
         setAnswerSwitch(props?.answerStatus);
 
         editForm.setFieldsValue({
@@ -77,6 +77,7 @@ const AnswerCard = (props) => {
         internalId,
         answerSwitch,
         setAnswerSwitch,
+        setFormBtnActive,
     };
 
     return (

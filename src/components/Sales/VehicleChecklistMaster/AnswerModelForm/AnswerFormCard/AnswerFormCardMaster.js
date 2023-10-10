@@ -9,7 +9,7 @@ import AnswerForm from './AnswerForm';
 import { Card } from 'antd';
 
 export const AnswerFormCardMaster = (props) => {
-    const { isVisible, editForm, answerForm, formEdit, setFormEdit, answerData, setAnswerData, buttonData, setButtonData } = props;
+    const { isVisible, editForm, answerForm, formEdit, setFormEdit, answerData, setAnswerData, setFormBtnActive } = props;
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [disableSaveButton, setDisableSaveButton] = useState(false);
     const [changeValue, setChangeValue] = useState(null);
@@ -43,8 +43,7 @@ export const AnswerFormCardMaster = (props) => {
         setFormEdit,
         uniqueCardEdit,
         setuniqueCardEdit,
-        buttonData,
-        setButtonData,
+        setFormBtnActive,
         answerSwitch,
         setAnswerSwitch,
     };

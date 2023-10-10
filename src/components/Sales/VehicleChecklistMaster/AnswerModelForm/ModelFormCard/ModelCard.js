@@ -13,13 +13,13 @@ import ModelForm from './ModelForm';
 const { Text } = Typography;
 
 const ModelCard = (props) => {
-    const { finalFormdata, forceUpdate, modelData, setModelData, setOpenAccordian, changeValue, setChangeValue, modelForm, modelEdit, setModelEdit, uniqueCardEdit, setuniqueCardEdit, internalId, formActionType, modelSwitch, setModelSwitch, modelGroupData, modelEditForm } = props;
+    const { finalFormdata, forceUpdate, modelData, setModelData, setOpenAccordian, changeValue, setChangeValue, modelForm, modelEdit, setModelEdit, uniqueCardEdit, setuniqueCardEdit, internalId, formActionType, modelSwitch, setModelSwitch, modelGroupData, modelEditForm, setButtonData, buttonData, setFormBtnActive } = props;
     const modelName = modelGroupData?.find((e) => e?.modelGroupCode === props?.modelGroupCode)?.modelGroupDescription;
 
     const onModelEdit = (props) => {
         setuniqueCardEdit(props?.internalId);
         setModelEdit(true);
-        //setButtonData({ ...buttonData, formBtnActive: true });
+        setFormBtnActive(true);
         setModelSwitch(props?.checklistModelStatus);
 
         modelEditForm.setFieldsValue({
@@ -78,13 +78,6 @@ const ModelCard = (props) => {
         modelData,
         modelEditForm,
     };
-
-    // useEffect(() => {
-    //     if (modelEdit) {
-    //         setButtonData({ ...buttonData, formBtnActive: true });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [modelEdit]);
 
     return (
         <Card>

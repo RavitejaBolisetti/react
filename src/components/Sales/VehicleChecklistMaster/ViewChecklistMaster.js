@@ -15,8 +15,8 @@ const { Panel } = Collapse;
 const expandIcon = ({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />);
 
 export const ViewTaxChargesMain = (props) => {
-    const { attributeType, viewTitle, styles, answerData, modelData, formData, modelGroupData, formActionType } = props;
-    //const answerTypeName = typeData?.CHKL_ANS_TYPE?.find((e) => e?.key === formData?.answerType)?.value;
+    const { attributeType, viewTitle, styles, answerData, modelData, formData, modelGroupData, formActionType, setFormBtnActive } = props;
+
     const viewOneColProps = {
         bordered: false,
         colon: false,
@@ -28,6 +28,7 @@ export const ViewTaxChargesMain = (props) => {
     const cardProps = {
         modelGroupData,
         formActionType,
+        setFormBtnActive,
     };
 
     return (
@@ -60,7 +61,7 @@ export const ViewTaxChargesMain = (props) => {
                                         <Panel header="Model Group" key="1">
                                             <Divider />
                                             {modelData?.map((item) => (
-                                                <ModelCard key={'groupCode' + item?.modelGroupCode} modelGroupCode={item?.modelGroupCode} checklistModelStatus={item?.status} {...cardProps} />
+                                                <ModelCard key={'groupCode' + item?.modelGroupCode} modelGroupCode={item?.modelGroupCode} checklistModelStatus={item?.checklistModelStatus} {...cardProps} />
                                             ))}
                                         </Panel>
                                     </Collapse>
