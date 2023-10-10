@@ -77,7 +77,7 @@ const DeliverableChecklistMain = (props) => {
     const extraParams = useMemo(() => {
         return [
             { key: 'checklistType', title: 'checklistType', value: 'VDCL', name: 'Checklist Type' },
-            { key: 'modelGroupCode', title: 'modelGroupCode', value: '4' || selectedOrder?.modelGroup, name: 'Model Group Code' },
+            { key: 'modelGroupCode', title: 'modelGroupCode', value: selectedOrder?.modelGroup, name: 'Model Group Code' },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedOrder]);
