@@ -66,7 +66,10 @@ describe('AddOn Detail Common Form components', () => {
                 schemeDescription: 'Kai',
             },
         ];
-        customRender(<FormWrapper typeData={typeData} openAccordian={'RSA'} schemeDescriptionData={schemeDescriptionData} />);
+        const schemeDescriptionDatamain={
+            RSA: ['Kai']
+        }
+        customRender(<FormWrapper typeData={typeData} openAccordian={'RSA'} registerDisabled={schemeDescriptionDatamain} schemeDescriptionDatamain={schemeDescriptionDatamain} schemeDescriptionData={schemeDescriptionData} />);
         const schemeType = screen.getByRole('combobox', { name: 'Scheme Description' });
         fireEvent.change(schemeType, { target: { value: 'Kai' } });
         fireEvent.click(screen.getAllByText('Kai')[1]);
@@ -78,7 +81,10 @@ describe('AddOn Detail Common Form components', () => {
                 schemeDescription: 'Kai',
             },
         ];
-        customRender(<FormWrapper typeData={typeData} openAccordian={'RSA'} schemeDescriptionData={schemeDescriptionData} onSingleFormFinish={jest.fn()} />);
+        const schemeDescriptionDatamain={
+            RSA: ['Kai']
+        }
+        customRender(<FormWrapper typeData={typeData} openAccordian={'RSA'} registerDisabled={schemeDescriptionDatamain} schemeDescriptionDatamain={schemeDescriptionDatamain} schemeDescriptionData={schemeDescriptionData} onSingleFormFinish={jest.fn()} />);
         const registeBtn = screen.getByRole('button', { name: 'Register' });
         fireEvent.click(registeBtn);
     });

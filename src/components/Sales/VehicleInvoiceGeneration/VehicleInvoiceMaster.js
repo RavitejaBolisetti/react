@@ -313,11 +313,18 @@ export const VehicleInvoiceMasterBase = (props) => {
                     }
                 );
             } else if (selectedOtfId) {
-                extraParams.push({
-                    key: 'otfId',
-                    value: selectedOtfId,
-                    name: 'OTF Number',
-                });
+                extraParams.push(
+                    {
+                        key: 'invoiceId',
+                        value: selectedOrder?.id,
+                        name: 'Invoice Id',
+                    },
+                    {
+                        key: 'otfId',
+                        value: selectedOtfId,
+                        name: 'OTF Number',
+                    }
+                );
             }
 
             fetchData({
@@ -332,7 +339,7 @@ export const VehicleInvoiceMasterBase = (props) => {
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedOrder?.id, selectedOtfId, formActionType, vehicleInvoiceMasterData]);
+    }, [selectedOrder?.id, selectedOtfId, formActionType]);
 
     useEffect(() => {
         const defaultSection = VEHICLE_INVOICE_SECTION.INVOICE_DETAILS.id;
@@ -472,6 +479,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
         form.setFieldsValue(undefined);
+        cancelInvoiceForm.resetFields();
 
         if (isLastSection) {
             generateInvoice();
@@ -480,6 +488,7 @@ export const VehicleInvoiceMasterBase = (props) => {
 
         switch (buttonAction) {
             case ADD_ACTION:
+                setProfileCardData();
                 defaultSection && setCurrentSection(defaultSection);
                 resetOtfData();
                 invoiceDetailForm.resetFields();
@@ -546,15 +555,44 @@ export const VehicleInvoiceMasterBase = (props) => {
         const { vehicleDetails, financeDetails, insuranceDetails, invoiceDetails } = requestPayload;
         const data = { vehicleDetails, financeDetails, insuranceDetails, invoiceDetails };
         const onSuccess = (res) => {
+            console.log('🚀 ~ file: VehicleInvoiceMaster.js:558 ~ onSuccess ~ res:', res);
             form.resetFields();
             setShowDataLoading(true);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage + 'Invoice No.:' + res?.data?.invoiceNumber });
             fetchList({ customURL: BASE_URL_VEHICLE_INVOICE_LIST, setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
-            resetInvoiceData();
-            setCurrentSection(defaultSection);
+            const invoiceId = res?.data?.invoiceDetails?.id;
+            const otfId = res?.data?.invoiceDetails?.otfDetailsRequest?.otfId;
+            setSelectedOrderId(res?.data?.invoiceDetails?.invoiceNumber);
+            if (invoiceId && otfId) {
+                const extraParams = [
+                    {
+                        key: 'invoiceId',
+                        value: invoiceId,
+                        name: 'Invoice Id',
+                    },
+                    {
+                        key: 'otfId',
+                        value: otfId,
+                        name: 'OTF Number',
+                    },
+                ];
 
-            // handleButtonClick({ buttonAction: NEXT_ACTION });
-            // setCurrentSection(defaultSection);
+                fetchData({
+                    customURL,
+                    setIsLoading: listOTFShowLoading,
+                    userId,
+                    extraParams: extraParams,
+                    onSuccessAction: (res) => {
+                        setProfileCardData(res?.data);
+                    },
+                    onErrorAction,
+                });
+
+                handleBookingNumberSearch(res?.data?.invoiceDetails?.otfDetailsRequest?.bookingNumber || res?.data?.invoiceDetails?.otfDetailsRequest?.otfNumber, res?.data?.invoiceDetails?.id);
+            }
+
+            const nextSection = filterActiveSection?.find((i) => i.id > currentSection);
+            section && setCurrentSection(nextSection?.id);
+            setLastSection(!nextSection?.id);
         };
 
         const onError = (message) => {

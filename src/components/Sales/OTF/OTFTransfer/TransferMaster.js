@@ -29,7 +29,7 @@ const mapStateToProps = (state) => {
             ApplicationMaster: { dealerLocations = [] },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             OTF: {
-                salesConsultantLov: { isLoaded: isSalesConsultantDataLoaded, detailData: salesConsultantLov = [] },
+                salesConsultantLov: { isLoaded: isSalesConsultantDataLoaded, isLoading: isSalesConsultantLoading, detailData: salesConsultantLov = [] },
             },
         },
     } = state;
@@ -43,6 +43,7 @@ const mapStateToProps = (state) => {
         moduleTitle,
         isSalesConsultantDataLoaded,
         salesConsultantLov,
+        isSalesConsultantLoading,
         dealerLocations,
         dealerLocation,
     };

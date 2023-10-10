@@ -91,14 +91,6 @@ const CancellationMasterBase = (props) => {
                     key: 'unit',
                     value: 'Sales',
                 },
-                {
-                    key: 'prodctCode',
-                    value: selectedOrder?.modelCode,
-                },
-                {
-                    key: 'hierarchyNode',
-                    value: 'MV',
-                },
             ];
             fetchProductHierarchyList({ setIsLoading: listShowLoading, userId, extraParams });
         }

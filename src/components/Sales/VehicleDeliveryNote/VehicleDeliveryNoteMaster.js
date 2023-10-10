@@ -9,7 +9,7 @@ import { bindActionCreators } from 'redux';
 
 import { Col, Form, Row } from 'antd';
 import dayjs from 'dayjs';
-import { tableColumn } from './tableColumn';
+import { tableColumnDeliveryNote, tableColumnDeliveryChallan } from './tableColumn';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
 import { ReportModal } from 'components/common/ReportModal/ReportModal';
@@ -594,7 +594,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         totalRecords,
         setPage,
         page,
-        tableColumn: tableColumn({ handleButtonClick, actionButtonVisiblity }),
+        tableColumn: deliveryType === DELIVERY_TYPE.NOTE.key ? tableColumnDeliveryNote({ handleButtonClick, actionButtonVisiblity }) : tableColumnDeliveryChallan({ handleButtonClick, actionButtonVisiblity }),
         tableData: data,
         showAddButton: false,
         typeData,
