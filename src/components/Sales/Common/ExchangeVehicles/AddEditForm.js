@@ -17,7 +17,7 @@ import { convertToUpperCase } from 'utils/convertToUpperCase';
 
 const AddEditFormMain = (props) => {
     const { formData, form, formActionType, editableOnSearch, showAlert } = props;
-    const { financeLovData, schemeLovData, typeData, makeData } = props;
+    const { financeLovData, schemeLovData, typeData } = props;
     const { isConfigLoading, isSchemeLovLoading, isFinanceLovLoading, isMakeLoading, isModelLoading, isVariantLoading } = props;
     const { filteredModelData, filteredVariantData, handleFilterChange, fnSetData, handleSchemeChange, viewOnly = false } = props;
 

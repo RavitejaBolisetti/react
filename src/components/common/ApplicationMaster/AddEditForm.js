@@ -17,46 +17,7 @@ import { accordianExpandIcon } from 'utils/accordianExpandIcon';
 
 const { Panel } = Collapse;
 
-const AddEditFormMain = ({
-    setSelectedTreeKey,
-    selectedTreeKey,
-    showGlobalNotification,
-    setparentAppCode,
-    parentAppCode,
-    applicationForm,
-    forceUpdate,
-    setFinalFormdata,
-    finalFormdata,
-    setFormBtnDisable,
-    onFinish,
-    onFinishFailed,
-    form,
-    handleAdd,
-    setForceFormReset,
-    isVisible,
-    setisVisible,
-    isChecked,
-    setIsChecked,
-    formActionType,
-    isReadOnly,
-    formData,
-    setFormData,
-    isDataAttributeLoaded,
-    attributeData,
-    setFieldValue,
-    handleSelectTreeClick,
-    isLoadingOnSave,
-    criticalityGroupData,
-    configurableParamData,
-    actions,
-    menuData,
-    isApplicatinoOnSaveLoading,
-    isFieldDisable,
-    onCloseAction,
-    applicationDetailsData,
-    isBtnDisabled,
-    setIsBtnDisabled,
-}) => {
+const AddEditFormMain = ({ setSelectedTreeKey, selectedTreeKey, showGlobalNotification, setparentAppCode, parentAppCode, applicationForm, setFinalFormdata, finalFormdata, onFinish, isReadOnly, criticalityGroupData, configurableParamData, actions, menuData, isApplicatinoOnSaveLoading, isFieldDisable, onCloseAction, isBtnDisabled, setIsBtnDisabled }) => {
     const [openAccordian, setOpenAccordian] = useState('');
     const [isRestrictedLocation, setIsRestrictedLocation] = useState(false);
     const [isDocumentToGenerate, setIsDocumentToGenerate] = useState(true);

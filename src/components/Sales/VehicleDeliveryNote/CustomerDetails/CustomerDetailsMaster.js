@@ -59,7 +59,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const CustomerDetailsMasterBase = (props) => {
     const { fetchList, customerDetailsDataSearched, customerDetailsData, setFormActionType, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, isLoading } = props;
     const { requestPayload, setRequestPayload, showGlobalNotification } = props;
-    const { listShowLoading, userId, typeData, form, soldByDealer, isLoaded, resetData, setChallanRequestPayload, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section, customerIdValue, setSelectedOrder } = props;
+    const { listShowLoading, userId, typeData, form, soldByDealer, resetData, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section, customerIdValue, setSelectedOrder } = props;
     const { buttonData, setButtonData } = props;
     const resetKeys = ['customerType', 'customerName', 'mobile', 'address', 'customerCity', 'district', 'state', 'pinCode', 'email'];
 
@@ -136,8 +136,6 @@ export const CustomerDetailsMasterBase = (props) => {
         setButtonData({ ...buttonData, formBtnActive: false });
     };
 
-    const onFinishFailed = () => {};
-
     const onCloseAction = () => {
         form.resetFields();
         setIsFormVisible(false);
@@ -152,7 +150,6 @@ export const CustomerDetailsMasterBase = (props) => {
         setFormActionType,
         fetchList,
         onFinish,
-        onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
 
@@ -183,7 +180,7 @@ export const CustomerDetailsMasterBase = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

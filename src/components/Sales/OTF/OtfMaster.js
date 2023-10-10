@@ -33,7 +33,6 @@ import { LANGUAGE_EN } from 'language/en';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { validateOTFMenu } from './utils/validateOTFMenu';
 
-import { FilterIcon } from 'Icons';
 import { ChangeHistory } from './ChangeHistory';
 
 import styles from 'assets/sass/app.module.scss';

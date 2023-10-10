@@ -32,7 +32,6 @@ import { CustomerNameChangeHistory } from 'components/common/CustomerMaster/Indi
 import DataTable from 'utils/dataTable/DataTable';
 import { CustomerMainConatiner } from './CustomerMainConatiner';
 import styles from 'assets/sass/app.module.scss';
-import { UnsavedDataPopup } from './Common/UnsavedDataPopup';
 
 const mapStateToProps = (state) => {
     const {
@@ -127,7 +126,6 @@ const CustomerMasterMain = (props) => {
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
 
-
     const defaultExtraParam = useMemo(() => {
         return [
             {
@@ -167,8 +165,6 @@ const CustomerMasterMain = (props) => {
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [customerType, filterString, page]);
-
-
 
     const extraParams = useMemo(() => {
         if (filterString) {
@@ -318,7 +314,7 @@ const CustomerMasterMain = (props) => {
         setIsFormVisible(true);
     };
 
-    const onFinish = (values, e) => { };
+    // const onFinish = (values, e) => {};
 
     const onFinishFailed = (errorInfo) => {
         console.error(errorInfo);
@@ -378,7 +374,7 @@ const CustomerMasterMain = (props) => {
     }, [formActionType]);
 
     const handleCustomerTypeChange = (id) => {
-        setFilterString({ current: 1 })
+        setFilterString({ current: 1 });
         setCustomerType(id);
         searchForm.resetFields();
     };
@@ -402,7 +398,8 @@ const CustomerMasterMain = (props) => {
         if (filterString) {
             setShowDataLoading(true);
         }
-        setFilterString({ pageSize, current: 1 }); setShowDataLoading(true);
+        setFilterString({ pageSize, current: 1 });
+        setShowDataLoading(true);
         searchForm.resetFields();
     };
 
@@ -469,7 +466,6 @@ const CustomerMasterMain = (props) => {
         form,
         formActionType,
         setFormActionType,
-        onFinish,
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
