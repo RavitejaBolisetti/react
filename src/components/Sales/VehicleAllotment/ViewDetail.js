@@ -127,7 +127,7 @@ const ViewDetailMain = (props) => {
     };
 
     useEffect(() => {
-        if (userId && toggleButton === VEHICLE_TYPE.UNALLOTED.key && !isOTFSearchLoading && formData && !isVehicleDataLoading) {
+        if (userId && (formData?.modelCd || formData?.modelCode) && toggleButton === VEHICLE_TYPE.UNALLOTED.key && !isOTFSearchLoading && !isVehicleDataLoading) {
             setShowDataLoading(true);
             fetchOTFSearchedList({ setIsLoading: listShowLoading, userId, extraParams: searchOTFExtraParams, onSuccessAction, onErrorAction });
         }
