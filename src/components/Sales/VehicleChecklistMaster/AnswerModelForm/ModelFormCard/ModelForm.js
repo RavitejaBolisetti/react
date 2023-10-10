@@ -9,29 +9,22 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField } from 'utils/validation';
 import { PlusOutlined } from '@ant-design/icons';
 
-const { TextArea } = Input;
-
-const AnswerForm = (props) => {
-    const { answerForm, onFinishAnswerForm, formEdit, editForm, answerSwitch, setAnswerSwitch, mainFomEdit } = props;
+const ModelForm = (props) => {
+    const { answerForm, onFinishAnswerForm, formEdit, editForm, modelSwitch, setModelSwitch, mainFomEdit } = props;
 
     return (
         <>
             <Form form={formEdit ? editForm : answerForm} id="myForm" autoComplete="off" layout="vertical">
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Form.Item name="answerCode" label="Answer Code" rules={[validateRequiredInputField('Answer Code')]}>
-                            <Input maxLength={6} placeholder={preparePlaceholderText('Answer Code')} disabled={mainFomEdit} />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Form.Item name="answerDescription" label="Answer Description" rules={[validateRequiredInputField('Answer Description')]}>
-                            <TextArea maxLength={300} placeholder={preparePlaceholderText('Answer Description')} disabled={mainFomEdit} />
+                        <Form.Item name="modelGroupCode" label="Model Group Code" rules={[validateRequiredInputField('Model Group Code')]}>
+                            <Input maxLength={6} placeholder={preparePlaceholderText('Model Group Code')} disabled={mainFomEdit} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} style={{ marginBottom: '12px' }}>
                         <Row justify="space-between" align="middle">
-                            <Form.Item name="answerStatus" initialValue={answerSwitch}>
-                                <Switch value={answerSwitch} onChange={() => setAnswerSwitch(!answerSwitch)} defaultChecked={answerSwitch} style={{ marginBottom: '-16px' }} disabled={mainFomEdit} />
+                            <Form.Item name="checklistModelStatus" initialValue={modelSwitch}>
+                                <Switch value={modelSwitch} onChange={() => setModelSwitch(!modelSwitch)} defaultChecked={modelSwitch} style={{ marginBottom: '-16px' }} disabled={mainFomEdit} />
                             </Form.Item>
                             {!props?.internalId && (
                                 <Button
@@ -59,4 +52,4 @@ const AnswerForm = (props) => {
     );
 };
 
-export default AnswerForm;
+export default ModelForm;

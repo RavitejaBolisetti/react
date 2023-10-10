@@ -9,6 +9,7 @@ import TreeSelectField from 'components/common/TreeSelectField';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
 import { AnswerFormCardMaster } from './AnswerModelForm/AnswerFormCard';
+import { ModelFormCardMaster } from './AnswerModelForm/ModelFormCard';
 
 import styles from 'assets/sass/app.module.scss';
 import { VEHICLE_CHECKLIST_TYPE } from 'constants/modules/VehicleCheckListMaster/vehicleChecklistType';
@@ -21,7 +22,7 @@ const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
     const { VehicleChecklistMasterList, onCloseAction, fieldNames, formActionType, formData, selectedTreeSelectKey, handleSelectTreeClick, attributeType, form, VehicleChecklistAttributeLov, typeData } = props;
-    const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed, answerType, onChangeAnswerType, modelData } = props;
+    const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed, answerType, onChangeAnswerType, modelGroupData } = props;
 
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
 
@@ -138,6 +139,7 @@ const AddEditFormMain = (props) => {
                                         <Form.Item name="id" label="" />
                                     </Col>
                                 </Row>
+                                <ModelFormCardMaster {...props} />
                                 {answerType === ANSWER_TYPES?.Fixed?.key && <AnswerFormCardMaster {...props} />}
                             </>
                         ) : null}

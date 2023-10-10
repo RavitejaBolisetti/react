@@ -8,20 +8,20 @@ import { Card, Row, Col, Button, Divider, Typography, Space } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 import styles from 'assets/sass/app.module.scss';
 
-import AnswerForm from './AnswerForm';
+import ModelForm from './ModelForm';
 
 const { Text } = Typography;
 
-const AnswerCard = (props) => {
-    const { finalFormdata, answerForm, forceUpdate, answerData, setAnswerData, setOpenAccordian, changeValue, setChangeValue, editForm, formEdit, setFormEdit, uniqueCardEdit, setuniqueCardEdit, buttonData, setButtonData, internalId, formActionType, answerSwitch, setAnswerSwitch } = props;
+const ModelCard = (props) => {
+    const { finalFormdata, forceUpdate, modelData, setModelData, setOpenAccordian, changeValue, setChangeValue, modelForm, modelEdit, setModelEdit, uniqueCardEdit, setuniqueCardEdit, buttonData, setButtonData, internalId, formActionType, modelSwitch, setModelSwitch } = props;
 
     const answerEdit = (props) => {
         setuniqueCardEdit(props?.internalId);
-        setFormEdit(true);
+        setModelEdit(true);
         setButtonData({ ...buttonData, formBtnActive: true });
-        setAnswerSwitch(props?.answerStatus);
+        setModelSwitch(props?.answerStatus);
 
-        editForm.setFieldsValue({
+        modelForm.setFieldsValue({
             answerCode: props?.answerCode,
             answerDescription: props?.answerDescription,
             answerStatus: props?.answerStatus,
@@ -31,9 +31,9 @@ const AnswerCard = (props) => {
     };
 
     const answerSave = () => {
-        let newFormData = editForm?.getFieldsValue();
+        let newFormData = modelForm?.getFieldsValue();
 
-        const upd_obj = answerData?.map((obj) => {
+        const upd_obj = modelData?.map((obj) => {
             if (obj?.internalId === newFormData?.internalId) {
                 obj.answerCode = newFormData?.answerCode;
                 obj.answerDescription = newFormData?.answerDescription;
@@ -44,47 +44,46 @@ const AnswerCard = (props) => {
             return obj;
         });
 
-        setAnswerData([...upd_obj]);
-        setFormEdit(false);
+        setModelData([...upd_obj]);
+        setModelEdit(false);
         forceUpdate();
     };
 
     const answerDelete = (val) => {
-        setAnswerData((prev) => {
+        setModelData((prev) => {
             const indx = prev.findIndex((el) => el.internalId === val?.internalId);
             let updatedValue = prev;
             updatedValue?.splice(indx, 1);
             return updatedValue;
         });
 
-        setFormEdit(false);
-        answerForm.resetFields();
+        setModelEdit(false);
+        modelForm.resetFields();
         forceUpdate();
     };
 
     const answerCancel = () => {
-        setFormEdit(false);
+        setModelEdit(false);
     };
 
     const FormProductAttributeProp = {
-        editForm,
+        modelForm,
         finalFormdata,
-        formEdit,
-        answerForm,
+        modelEdit,
         setOpenAccordian,
         changeValue,
         setChangeValue,
         internalId,
-        answerSwitch,
-        setAnswerSwitch,
+        modelSwitch,
+        setModelSwitch,
     };
 
     // useEffect(() => {
-    //     if (formEdit) {
+    //     if (modelEdit) {
     //         setButtonData({ ...buttonData, formBtnActive: true });
     //     }
     //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [formEdit]);
+    // }, [modelEdit]);
 
     return (
         <Card>
@@ -100,7 +99,7 @@ const AnswerCard = (props) => {
                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6} className={styles.buttonsGroupRight}>
                     {formActionType !== 'view' ? (
                         <>
-                            {!formEdit && (
+                            {!modelEdit && (
                                 <>
                                     <Button
                                         type="link"
@@ -112,7 +111,7 @@ const AnswerCard = (props) => {
                                     <Button onClick={() => answerDelete(props)} type="link" icon={<FiTrash />} disabled={props?.id ? true : false} />
                                 </>
                             )}
-                            {formEdit && props?.internalId === uniqueCardEdit && (
+                            {modelEdit && props?.internalId === uniqueCardEdit && (
                                 <>
                                     <Button type="link" onClick={answerSave}>
                                         Save
@@ -127,14 +126,14 @@ const AnswerCard = (props) => {
                 </Col>
             </Row>
 
-            {formEdit && props?.internalId === uniqueCardEdit && (
+            {modelEdit && props?.internalId === uniqueCardEdit && (
                 <>
                     <Divider />
-                    <AnswerForm {...FormProductAttributeProp} />
+                    <ModelForm {...FormProductAttributeProp} />
                 </>
             )}
         </Card>
     );
 };
 
-export default AnswerCard;
+export default ModelCard;

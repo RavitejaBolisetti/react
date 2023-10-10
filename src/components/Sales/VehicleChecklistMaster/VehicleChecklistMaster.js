@@ -39,7 +39,7 @@ const mapStateToProps = (state) => {
                 VehicleChecklistMasterListAttributeLov: { isLoaded: isVehicleChecklistMasterAtrributeLovLoaded = false, data: VehicleChecklistAttributeLov = [] },
             },
             OTF: {
-                LoyaltyModelGroup: { isLoading: isModelLoading, data: modelData = [] },
+                LoyaltyModelGroup: { isLoading: isModelLoading, data: modelGroupData = [] },
             },
         },
     } = state;
@@ -57,7 +57,7 @@ const mapStateToProps = (state) => {
         isVehicleChecklistMasterLoaded,
         isVehicleChecklistMasterAtrributeLovLoaded,
         isModelLoading,
-        modelData,
+        modelGroupData,
     };
     return returnValue;
 };
@@ -87,14 +87,19 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId, saveData, listShowLoadingPost, isDataAttributeLoaded, showGlobalNotification, fetchVehicleChecklist, listShowLoadingVehicleChecklist, VehicleChecklistMasterList, VehicleChecklistAttributeLov, fetchVehicleChecklistAttributeLov, listShowLoadingVehicleChecklistAttributeLov, fetchModelLovList, listModelShowLoading, modelData }) => {
+export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId, saveData, listShowLoadingPost, isDataAttributeLoaded, showGlobalNotification, fetchVehicleChecklist, listShowLoadingVehicleChecklist, VehicleChecklistMasterList, VehicleChecklistAttributeLov, fetchVehicleChecklistAttributeLov, listShowLoadingVehicleChecklistAttributeLov, fetchModelLovList, listModelShowLoading, modelGroupData }) => {
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
     const [answerForm] = Form.useForm();
+    const [editForm] = Form.useForm();
+    const [modelForm] = Form.useForm();
+    const [modelEditForm] = Form.useForm();
+
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [editForm] = Form.useForm();
+
     const [formEdit, setFormEdit] = useState(false);
+    const [modelEdit, setModelEdit] = useState(false);
 
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
@@ -109,6 +114,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
     const [handleButtonClickChange, setHandleButtonClickChange] = useState(false);
     const [answerType, setAnswerType] = useState(false);
     const [answerData, setAnswerData] = useState([]);
+    const [modelData, setModelData] = useState([]);
 
     const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -364,7 +370,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
         answerType,
         setAnswerType,
         onChangeAnswerType,
-        modelData,
+        modelGroupData,
         answerData,
         setAnswerData,
         answerForm,
@@ -372,6 +378,12 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
         formEdit,
         setFormEdit,
         editForm,
+        modelEditForm,
+        modelForm,
+        modelData,
+        setModelData,
+        modelEdit,
+        setModelEdit,
     };
 
     const viewProps = {
