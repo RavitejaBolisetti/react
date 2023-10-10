@@ -98,6 +98,11 @@ const AddEditForm = (props) => {
                             <Input disabled placeholder={preparePlaceholderText('Model Description')} />
                         </Form.Item>
                     </Col>
+                    {/* <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+                        <Form.Item label="amcRegistrationNumber" name="amcRegistrationNumber">
+                            <Input hidden  />
+                        </Form.Item>
+                    </Col> */}
                 </Row>
 
                 {!formActionType?.viewMode && (

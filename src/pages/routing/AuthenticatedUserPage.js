@@ -68,6 +68,7 @@ import {
     CrmScreenEnrolmentMasterPage,
     VinBlockMasterPage,
     RsmAsmApprovalPage,
+    AMCRegistrationMasterPage
 } from 'pages/Sales';
 
 import { SplashPage } from 'pages/splash';
@@ -80,7 +81,6 @@ import { URLFilterReportPage } from 'pages/report/URLFilterReport/URLFilterRepor
 
 import { CMSPage } from 'pages/cms';
 import { DealerCompanyPage } from 'pages/common/Dealer';
-const AMCRegistrationMasterPage = React.lazy(() => import('pages/Sales/AMCRegistration'));
 
 export const AuthenticatedUserPage = () => {
     return (

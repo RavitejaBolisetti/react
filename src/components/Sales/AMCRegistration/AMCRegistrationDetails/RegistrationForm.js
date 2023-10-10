@@ -19,8 +19,10 @@ const { TextArea } = Input;
 const RegistrationForm = (props) => {
     const { formName, registrationForm, formData, typeData, handleFormValueChange, handleBookingNumberSearch, handleEmployeeNameSearch, isVehicleInvoiceDataLoading, handleBookingChange, salesConsultantLovData } = props;
 
-
-    const handleSaleTypeChange = () => {
+    const handleSaleTypeChange = (value, recordValue) => {
+        console.log('recordValue', value, recordValue);
+        if (value === 'DMFOC') {
+        }
         registrationForm.setFieldsValue({ bookingNumber: '67KLGYH90', vin: 'MK7867878KL' });
     };
 
@@ -33,16 +35,20 @@ const RegistrationForm = (props) => {
                             {customSelectBox({ data: typeData?.[PARAM_MASTER.DLVR_SALE_TYP.id], placeholder: preparePlaceholderSelect('Sale Type'), onChange: handleSaleTypeChange })}
                         </Form.Item>
                     </Col>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Booking Number" name="bookingNumber" rules={[validateRequiredInputField('Booking Number')]}>
-                            <Search maxLength={50} placeholder={preparePlaceholderText('Booking Number')} loading={isVehicleInvoiceDataLoading} onSearch={(value) => handleBookingNumberSearch(value)} allowClear onChange={handleBookingChange} />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="VIN" name="vin" rules={[validateRequiredInputField('vin')]}>
-                            <Input disabled maxLength={50} placeholder={preparePlaceholderText('vin')} />
-                        </Form.Item>
-                    </Col>
+                    {registrationForm.getFieldValue('saleType') === 'DMFOC' && (
+                        <>
+                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                <Form.Item label="Booking Number" name="bookingNumber" rules={[validateRequiredInputField('Booking Number')]}>
+                                    <Search maxLength={50} placeholder={preparePlaceholderText('Booking Number')} loading={isVehicleInvoiceDataLoading} onSearch={(value) => handleBookingNumberSearch(value)} allowClear onChange={handleBookingChange} />
+                                </Form.Item>
+                            </Col>
+                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                <Form.Item label="VIN" name="vin" rules={[validateRequiredInputField('vin')]}>
+                                    <Input disabled maxLength={50} placeholder={preparePlaceholderText('vin')} />
+                                </Form.Item>
+                            </Col>
+                        </>
+                    )}
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Employee Name" name="employeeName" rules={[validateRequiredInputField('Employee Name')]}>
                             <Search maxLength={50} placeholder={preparePlaceholderText('Employee Name')} loading={isVehicleInvoiceDataLoading} onSearch={(value) => handleEmployeeNameSearch(value)} allowClear />

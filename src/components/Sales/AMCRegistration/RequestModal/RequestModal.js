@@ -7,23 +7,25 @@ import React from 'react';
 import { Row, Col, Form, Input, Button, Checkbox } from 'antd';
 
 import { withModal } from 'components/withModal';
-import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField } from 'utils/validation';
 
 import styles from 'assets/sass/app.module.scss';
+import { customSelectBox } from 'utils/customSelectBox';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 const { TextArea } = Input;
 
 export const RejectRequestForm = (props) => {
     const { rejectModalCloseAction, rejectRequest } = props;
-    const { formData, rejectForm, onFinish, onFinishFailed, rejectFormButtonActive, setRejectFormButtonActive } = props;
+    const { handleCancelRequests, amcWholeCancellation, amcCancellationText, typeData, formData, cancelAMCForm, onFinish, onFinishFailed, rejectFormButtonActive, setRejectFormButtonActive } = props;
 
     const handleFormValueChange = () => {
-        setRejectFormButtonActive(false);
+        // setRejectFormButtonActive(false);
     };
 
-    const handleFormFieldChange = () => {
-        setRejectFormButtonActive(false);
+    const handleCancelReasonChange = () => {
+        // setRejectFormButtonActive(false);
     };
 
     const handleCheckboxChange = (e) => {
@@ -36,42 +38,48 @@ export const RejectRequestForm = (props) => {
 
     return (
         <>
-            {rejectRequest ? (
-                <Row gutter={16}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
-                        <Form.Item label="Rejection Remarks" name="remarks" rules={[validateRequiredInputField('remarks')]} initialValue={formData?.remarks}>
-                            <TextArea showCount maxLength={300} placeholder={preparePlaceholderText('remark')} />
-                        </Form.Item>
+            <Form autoComplete="off" layout="vertical" form={cancelAMCForm} onFinish={onFinish} onFinishFailed={onFinishFailed} onValuesChange={handleFormValueChange}>
+                {amcWholeCancellation && rejectRequest ? (
+                    <>
+                        <Row gutter={16}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
+                                <Form.Item label="Reason for Cancellation" name="amcCancelRemarks" rules={[validateRequiredInputField('remarks')]} initialValue={formData?.remarks}>
+                                    {customSelectBox({ data: typeData?.[PARAM_MASTER.AMC_CANCEL_REASON.id], placeholder: preparePlaceholderSelect('Sale Type'), onChange: handleCancelReasonChange })}
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Row gutter={16}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
+                                <Form.Item label="Rejection Remarks" name="remarks" rules={[validateRequiredInputField('remarks')]} initialValue={formData?.remarks}>
+                                    <TextArea showCount maxLength={300} placeholder={preparePlaceholderText('remark')} />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                    </>
+                ) : (
+                    <>
+                        <Row gutter={16}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.modalCheckBox}>
+                                {amcCancellationText}
+                            </Col>
+                        </Row>
+                    </>
+                )}
+
+                <Row gutter={20}>
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                        <Button onClick={rejectModalCloseAction} danger className={styles.fullWidth}>
+                            No
+                        </Button>
+                    </Col>
+
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                        <Button className={styles.fullWidth} onClick={handleCancelRequests} type="primary">
+                            Yes, Cancel
+                        </Button>
                     </Col>
                 </Row>
-            ) : (
-                <>
-                    <Row gutter={16}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.modalCheckBox}>
-                            <Form.Item initialValue={false} valuePropName="checked" name="status">
-                                <Checkbox className={styles.registered} onChange={handleCheckboxChange}>
-                                    I accept that for the Transferred Vehicle , Claim can be generated from the billed Dealer. <br />
-                                    If more than one transfer happens for the same vehicle then claim is not allowed for any of the dealership.
-                                </Checkbox>
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                </>
-            )}
-
-            <Row gutter={20}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                    <Button onClick={rejectModalCloseAction} danger className={styles.fullWidth}>
-                        No
-                    </Button>
-                </Col>
-
-                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                    <Button className={styles.fullWidth} type="primary">
-                        Yes, Cancel
-                    </Button>
-                </Col>
-            </Row>
+            </Form>
         </>
     );
 };

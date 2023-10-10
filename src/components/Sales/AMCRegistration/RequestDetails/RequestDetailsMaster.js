@@ -10,25 +10,19 @@ import ViewDetail from './ViewDetail';
 
 import styles from 'assets/sass/app.module.scss';
 import { formattedCalendarDate } from 'utils/formatDateTime';
-import { RejectRequest } from '../RequestModal';
 
 const RequestDetailsMasterBase = (props) => {
     const { typeData, vehicleInvoiceMasterData, selectedOrderId } = props;
     const { userId, buttonData, setButtonData, section, isDataLoaded, isLoading, invoiceDetailForm } = props;
-    const { selectedAMC, formActionType, selectedOtfNumber, setSelectedOtfNumber } = props;
+    const { selectedAMC, formActionType, handleCancelRequest, selectedOtfNumber, setSelectedOtfNumber } = props;
 
     const { form, FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch, CustomerForm, showGlobalNotification, salesConsultantLovData } = props;
 
     const [activeKey, setActiveKey] = useState([3]);
-    const [isRejectModalVisible, setRejectModalVisible] = useState(false);
-
     const handleChange = (e) => {
         setButtonData({ ...buttonData, formBtnActive: false });
     };
 
-    const handleCancelRequest = () => {
-        setRejectModalVisible(true);
-    };
     const onFinish = (values) => {
         // const { otfDetailsRequest, ...bookingAndBillingCustomerDto } = values;
         // if (!Object?.keys(bookingAndBillingCustomerDto)?.length) {
@@ -49,14 +43,8 @@ const RequestDetailsMasterBase = (props) => {
     };
 
     const onFinishFailed = () => {};
-    const cancelModalProps = {
-        isVisible: isRejectModalVisible,
-        onCloseAction: () => setRejectModalVisible(false),
-        titleOverride: 'Cancel Request',
-    };
 
     const viewProps = {
-        cancelModalProps,
         selectedAMC,
         typeData,
         formActionType,
@@ -77,7 +65,6 @@ const RequestDetailsMasterBase = (props) => {
                     </Row>
 
                     {formActionType?.viewMode && <ViewDetail {...viewProps} formData={[requestPayload?.amcRequestDetails]} />}
-                    <RejectRequest {...cancelModalProps} />
                 </Col>
             </Row>
             <Row>

@@ -33,14 +33,12 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 
 import { FilterIcon } from 'Icons';
-// import { validateOTFMenu } from './LeftSidebar/MenuNav';
-import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
-import { ReportModal } from 'components/common/ReportModal/ReportModal';
-import { OTF_STATUS } from 'constants/OTFStatus';
-import { salesConsultantActions } from 'store/actions/data/otf/salesConsultant';
+
 import RegistrationFilter from './RegistrationFilter';
 import { AMCRegistrationMainContainer } from './AMCRegistrationMainContainer';
 import { AMC_REGISTRATION_SECTION } from 'constants/AMCRegistrationSection';
+import { RejectRequest } from './RequestModal';
+
 import { customerDetailsIndividualDataActions } from 'store/actions/data/customerMaster/customerDetailsIndividual';
 
 const mapStateToProps = (state) => {
@@ -67,7 +65,7 @@ const mapStateToProps = (state) => {
         typeData,
         data: data?.paginationData,
         totalRecords: data?.totalRecords || [],
-        invoiceStatusList: loginUserData?.userType === 'DLR' ? Object.values(QUERY_BUTTONS_CONSTANTS) : Object.values(QUERY_BUTTONS_MNM_USER),
+        invoiceStatusList: loginUserData?.userType !== 'DLR' ? Object.values(QUERY_BUTTONS_CONSTANTS) : Object.values(QUERY_BUTTONS_MNM_USER),////////for testing purpose sholud be ===
         moduleTitle,
         isSearchLoading,
         isSearchDataLoaded,
@@ -91,8 +89,7 @@ const mapDispatchToProps = (dispatch) => ({
             listCustomerShowLoading: customerDetailsIndividualDataActions.listShowLoading,
 
             fetchDetail: amcRegistrationDataAction.fetchDetail,
-
-      
+            saveData: amcRegistrationDataAction.saveData,
 
             showGlobalNotification,
         },
@@ -118,7 +115,7 @@ export const AMCRegistrationMasterBase = (props) => {
     });
 
     const [listFilterForm] = Form.useForm();
-    const [cancelInvoiceForm] = Form.useForm();
+    const [cancelAMCForm] = Form.useForm();
     const [customerForm] = Form.useForm();
 
     const [searchValue, setSearchValue] = useState();
@@ -133,8 +130,6 @@ export const AMCRegistrationMasterBase = (props) => {
     const [sectionName, setSetionName] = useState();
     const [isLastSection, setLastSection] = useState(false);
     const [receipt, setReceipt] = useState('');
-    const [reportType, setReportType] = useState();
-    const [reportDetail, setReportDetail] = useState();
 
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
@@ -143,20 +138,21 @@ export const AMCRegistrationMasterBase = (props) => {
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [cancelInvoiceVisible, setCancelInvoiceVisible] = useState(false);
-    const [additionalReportParams, setAdditionalReportParams] = useState();
-    const [isReportVisible, setReportVisible] = useState();
+
     const [confirmRequest, setConfirmRequest] = useState(false);
-    // const [userType, setUserType] = useState('DLR'); to be changed after developement
-    const [userType, setUserType] = useState('DLR');
+    const [userType, setUserType] = useState('MNM');//////for testing pupose should be 'DLR'
+    const [amcWholeCancellation, setAmcWholeCancellation] = useState(false);
+    const [rejectRequest, setRejectRequest] = useState(false);
     const [previousSection, setpreviousSection] = useState(1);
 
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
 
+    const [isRejectModalVisible, setRejectModalVisible] = useState(false);
+
     useEffect(() => {
         if (loginUserData?.userType) {
-            if (loginUserData?.userType === 'DLR') {
+            if (loginUserData?.userType !== 'DLR') { //////for testing pupose should be ===
                 setAmcStatus(QUERY_BUTTONS_CONSTANTS.PENDING.key);
             } else {
                 setAmcStatus(QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.key);
@@ -167,7 +163,7 @@ export const AMCRegistrationMasterBase = (props) => {
     }, [loginUserData?.userType]);
 
     useEffect(() => {
-        if (userType !== 'DLR') {
+        if (userType === 'DLR') { ///for testing pupose should be !==
             setUserType('MNM');
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -189,6 +185,7 @@ export const AMCRegistrationMasterBase = (props) => {
         cancelBtn: false,
         formBtnActive: false,
         nextBtn: false,
+        cancelAMCBtn: false,
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -214,7 +211,7 @@ export const AMCRegistrationMasterBase = (props) => {
                 key: 'searchType',
                 title: 'Type',
                 value: filterString?.searchType,
-                name: typeData?.[PARAM_MASTER.INV_SER.id]?.find((i) => i?.key === filterString?.searchType)?.value,
+                name: typeData?.[PARAM_MASTER.AMC_SEARCH_TYPE.id]?.find((i) => i?.key === filterString?.searchType)?.value,
                 canRemove: false,
                 filter: true,
             },
@@ -288,8 +285,6 @@ export const AMCRegistrationMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, amcStatus, filterString, page]);
-
-   
 
     // useEffect(() => {
     //     if (!isSalesConsultantDataLoaded && userId) {
@@ -471,26 +466,20 @@ export const AMCRegistrationMasterBase = (props) => {
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
-                // resetOtfData();
                 registrationForm.resetFields();
                 setpreviousSection(1);
-                setSelectedOrderId('');
                 setSelectedAMC('');
                 break;
             case EDIT_ACTION:
                 fetchDetail({ setIsLoading: listShowLoading, userId, extraParams: detailExtraParams, customURL, onSuccessAction, onErrorAction });
 
-                record && setSelectedOrderId(record?.invoiceNumber);
                 record && setSelectedAMC(record);
                 openDefaultSection && setCurrentSection(defaultSection);
                 // handleBookingNumberSearch(record?.otfNumber, record?.invoiceNumber);
                 break;
             case VIEW_ACTION:
                 fetchDetail({ setIsLoading: listShowLoading, userId, extraParams: detailExtraParams, customURL, onSuccessAction, onErrorAction });
-
-                record && setSelectedOrderId(record?.invoiceNumber);
                 record && setSelectedAMC(record);
-
                 defaultSection && setCurrentSection(defaultSection);
                 // handleBookingNumberSearch(record?.otfNumber, record?.invoiceNumber);
                 break;
@@ -518,11 +507,10 @@ export const AMCRegistrationMasterBase = (props) => {
                 // setButtonData({ ...Visibility, cancelReceiptBtn: true });
                 if (buttonAction === VIEW_ACTION) {
                     if (userType === 'DLR') {
-                        amcStatus === QUERY_BUTTONS_CONSTANTS.PENDING.key ? setButtonData({ ...Visibility }) : amcStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility }) : setButtonData({ ...Visibility });
+                        amcStatus === QUERY_BUTTONS_CONSTANTS.PENDING.key ? setButtonData({ ...Visibility, cancelAMCBtn: true }) : amcStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility }) : setButtonData({ ...Visibility });
                     } else {
                         amcStatus === QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.key ? setButtonData({ ...Visibility }) : amcStatus === QUERY_BUTTONS_MNM_USER.PENDING_FOR_CANCELLATION.key ? setButtonData({ ...Visibility }) : setButtonData({ ...Visibility });
                     }
-                    // (!otfData?.irnStatus || otfData?.irnStatus && timeStampCheck(otfData?.irnDate, otfData?.invoiceDate))
                 }
             }
         }
@@ -530,6 +518,43 @@ export const AMCRegistrationMasterBase = (props) => {
     };
 
     const onFinishSearch = (values) => {};
+
+    const onFinish = ({ type = null }) => {
+        let finalPayload;
+        if (!type) {
+            finalPayload = { ...requestPayload, amcId: selectedAMC?.amcId, amcRegistrationNumber: selectedAMC?.amcRegistrationNumber };
+        } else if (type === 'cancel') {
+            finalPayload = { ...requestPayload, amcId: selectedAMC?.amcId, amcRegistrationNumber: selectedAMC?.amcRegistrationNumber, amcRequestDetails: { ...requestPayload?.amcRequestDetails, amcStatus: 'CNCL' } };
+        } else if (type === 'wholeCancel') {
+            finalPayload = { ...requestPayload, amcId: selectedAMC?.amcId, amcRegistrationNumber: selectedAMC?.amcRegistrationNumber, amcRequestDetails: { ...requestPayload?.amcRequestDetails, amcStatus: 'CNCL', amcCancelRemarks: cancelAMCForm?.getFieldValue('amcCancelRemarks') } };
+        }
+
+        const onError = (res) => {
+            showGlobalNotification({ message: res?.responseMessage });
+        };
+        const onSuccess = (res) => {
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            if (type === 'cancel') {
+                setRejectModalVisible(false);
+            } else if (type === 'wholeCancel') {
+                setRejectModalVisible(false);
+                setIsFormVisible(false);
+            } else {
+                setIsFormVisible(false);
+            }
+        };
+
+        const requestData = {
+            data: finalPayload,
+            method: selectedAMC?.amcId ? 'put' : 'post',
+            setIsLoading: listShowLoading,
+            userId,
+            onError,
+            onSuccess,
+            customURL,
+        };
+        saveData(requestData);
+    };
 
     const handleResetFilter = (e) => {
         setShowDataLoading(false);
@@ -545,24 +570,6 @@ export const AMCRegistrationMasterBase = (props) => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
 
-    const resetInvoiceData = () => {
-        resetDetailData();
-        // resetOtfData();
-        form.resetFields();
-        setSelectedOrderId('');
-        setSelectedAMC('');
-        setSelectedOrder('');
-        registrationForm.resetFields();
-
-        advanceFilterForm.resetFields();
-        advanceFilterForm.setFieldsValue();
-        setAdvanceSearchVisible(false);
-        setLastSection(false);
-        setIsFormVisible(false);
-        setCancelInvoiceVisible(false);
-        setButtonData({ ...defaultBtnVisiblity });
-    };
-
     const onCloseAction = () => {
         // resetInvoiceData();
         setIsFormVisible(false);
@@ -573,7 +580,7 @@ export const AMCRegistrationMasterBase = (props) => {
         totalRecords,
         setPage,
         tableColumn: tableColumn(handleButtonClick),
-        tableData: data || [{ amcRegistrationNumber: '456789', dealerLocation: 'ertyui', vin: 'fcgvhbjn' }],
+        tableData: data,
         showAddButton: false,
         typeData,
     };
@@ -583,11 +590,6 @@ export const AMCRegistrationMasterBase = (props) => {
         advanceFilterForm.resetFields();
         advanceFilterForm.setFieldsValue();
         setAdvanceSearchVisible(false);
-    };
-
-    const onCancelCloseAction = () => {
-        setCancelInvoiceVisible(false);
-        cancelInvoiceForm.resetFields();
     };
 
     const removeFilter = (key) => {
@@ -601,70 +603,6 @@ export const AMCRegistrationMasterBase = (props) => {
             const { [key]: names, ...rest } = filterString;
             setFilterString({ ...rest });
         }
-    };
-
-    const onCancelInvoice = () => {
-        setCancelInvoiceVisible(true);
-    };
-
-    const onPrintInvoice = (record) => {
-        setReportType(`Invoice`);
-        setReportVisible(true);
-
-        setAdditionalReportParams([
-            {
-                key: 'invoice_id',
-                value: record?.invoiceNumber,
-            },
-        ]);
-    };
-
-    const onPrintForm21 = (record) => {
-        setReportType(`Form_21`);
-        setReportVisible(true);
-
-        setAdditionalReportParams([
-            {
-                key: 'invoice_id',
-                value: record?.invoiceNumber,
-            },
-        ]);
-    };
-
-    useEffect(() => {
-        setReportDetail(reportType === `Invoice` ? EMBEDDED_REPORTS?.INVOICE_DOCUMENT : reportType === `Form_21` ? EMBEDDED_REPORTS?.FORM_21_DOCUMENT : null);
-    }, [reportType]);
-
-    const handleCloseReceipt = () => {
-        setCancelInvoiceVisible(false);
-        cancelInvoiceForm.resetFields();
-    };
-
-    const handleCancelReceipt = () => {
-        const recordId = selectedOrderId;
-        const cancelReason = cancelInvoiceForm.getFieldValue().cancelReason;
-        const data = { id: recordId ?? '', invoiceNumber: selectedOrderId, cancelReason: cancelReason };
-        const onSuccess = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
-            cancelInvoiceForm.resetFields();
-            setCancelInvoiceVisible(false);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
-            resetInvoiceData();
-        };
-        const onError = (message) => {
-            showGlobalNotification({ message });
-        };
-        const requestData = {
-            data: data,
-            method: 'put',
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-        cancelInvoice(requestData);
     };
 
     const title = 'AMC Registration';
@@ -703,7 +641,6 @@ export const AMCRegistrationMasterBase = (props) => {
         receiptType,
         partySegmentType,
 
-        icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
 
         onCloseAction: onAdvanceSearchCloseAction,
@@ -728,6 +665,31 @@ export const AMCRegistrationMasterBase = (props) => {
         }
     }, [formActionType]);
 
+    const handleCancelRequest = () => {
+        setRejectModalVisible(true);
+        setAmcWholeCancellation(false);
+    };
+    const handleCancelRequests = () => {
+        if (rejectRequest && amcWholeCancellation) {
+            onFinish({ type: 'wholeCancel' });
+        } else if (amcWholeCancellation) {
+            setRejectRequest(true);
+        } else {
+            console.log('hello');
+            setRequestPayload({ ...requestPayload, amcRequestDetails: { ...requestPayload?.amcRequestDetails, amcStatus: 'CNCL' } });
+            onFinish({ type: 'cancel' });
+        }
+    };
+    const handleWholeAMCCancellation = () => {
+        setRejectModalVisible(true);
+        setAmcWholeCancellation(true);
+    };
+    const rejectModalCloseAction = () => {
+        setRejectModalVisible(false);
+        setAmcWholeCancellation(false);
+        setRejectRequest(false);
+    };
+
     const containerProps = {
         record: selectedOrder,
         form,
@@ -735,7 +697,7 @@ export const AMCRegistrationMasterBase = (props) => {
         customerForm,
         formActionType,
         setFormActionType,
-        // onFinish,
+        AMConFinish: onFinish,
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
@@ -776,15 +738,13 @@ export const AMCRegistrationMasterBase = (props) => {
         partySegmentType,
         paymentModeType,
         documentType,
-        onCancelInvoice,
-        saveButtonName: isLastSection ? 'Submit' : 'Continue',
+
+        saveButtonName: isLastSection ? 'Submit' : 'Save and Next',
         setLastSection,
         handleIRNGeneration,
         handleBookingNumberSearch,
         isVehicleInvoiceDataLoading,
         handleBookingChange,
-        onPrintInvoice,
-        onPrintForm21,
         confirmRequest,
         setConfirmRequest,
         previousSection,
@@ -796,25 +756,21 @@ export const AMCRegistrationMasterBase = (props) => {
         userType,
         fetchCustomerList,
         listCustomerShowLoading,
+        handleCancelRequest,
+        handleWholeAMCCancellation,
     };
 
-    const cancelInvoiceProps = {
-        isVisible: cancelInvoiceVisible,
-        titleOverride: 'Cancel Request',
-        handleCloseReceipt,
-        handleCancelReceipt,
-        cancelInvoiceForm,
-        onCloseAction: onCancelCloseAction,
+    const cancelModalProps = {
+        isVisible: isRejectModalVisible,
+        cancelAMCForm,
+        onCloseAction: () => setRejectModalVisible(false),
+        titleOverride: amcWholeCancellation ? 'Cancel AMC Registration' : 'Cancel Request',
+        amcCancellationText: amcWholeCancellation ? 'Are you sure you want to cancel the AMC Registration?' : 'Are you sure you want to cancel the request?',
+        amcWholeCancellation,
+        rejectRequest,
+        handleCancelRequests,
+        rejectModalCloseAction,
         typeData,
-    };
-
-    const reportProps = {
-        isVisible: isReportVisible,
-        titleOverride: reportDetail?.title,
-        additionalParams: additionalReportParams,
-        onCloseAction: () => {
-            setReportVisible(false);
-        },
     };
 
     return (
@@ -832,6 +788,8 @@ export const AMCRegistrationMasterBase = (props) => {
             </Row>
             <AdvancedSearch {...advanceFilterProps} />
             <AMCRegistrationMainContainer {...containerProps} />
+            <RejectRequest {...cancelModalProps} />
+
             {/* <CancelInvoice {...cancelInvoiceProps} /> */}
             {/* <ReportModal {...reportProps} reportDetail={reportDetail} /> */}
         </>

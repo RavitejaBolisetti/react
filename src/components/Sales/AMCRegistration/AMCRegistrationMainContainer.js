@@ -14,14 +14,13 @@ import { LeftSidebar } from './LeftSidebar';
 import { AMCRegistrationFormButton } from './AMCRegistrationFormButton';
 
 import styles from 'assets/sass/app.module.scss';
-
-const AMCRegistrationDetailsMaster = React.lazy(() => import('./AMCRegistrationDetails'));
-const CustomerDetailsMaster = React.lazy(() => import('./CustomerDetails'));
-const VehicleDetailsMaster = React.lazy(() => import('./VehicleDetails'));
-const RequestDetailsMaster = React.lazy(() => import('./RequestDetails'));
+import AMCRegistrationDetailsMaster from './AMCRegistrationDetails';
+import CustomerDetailsMaster from './CustomerDetails';
+import VehicleDetailsMaster from './VehicleDetails';
+import RequestDetailsMaster from './RequestDetails';
 
 const AMCRegistrationMainContainerMain = (props) => {
-    const { customerForm,currentSection, handleIRNGeneration, selectedOtfNumber, requestPayload, setRequestPayload, registrationForm } = props;
+    const { customerForm, currentSection, handleIRNGeneration, selectedOtfNumber, requestPayload, setRequestPayload, registrationForm } = props;
 
     const onFinishCustom = ({ key, values }) => {
         setRequestPayload({ ...requestPayload, [key]: values });

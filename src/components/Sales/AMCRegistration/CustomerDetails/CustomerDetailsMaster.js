@@ -18,7 +18,7 @@ import { BASE_URL_VEHICLE_CUSTOMER_COMMON_DETAIL as customURL } from 'constants/
 const CustomerDetailsMasterBase = (props) => {
     const { typeData, vehicleInvoiceMasterData, selectedOrderId } = props;
     const { userId, buttonData, setButtonData, section, isDataLoaded, isLoading, invoiceDetailForm } = props;
-    const { form, fetchCustomerList, formActionType, selectedOtfNumber, setSelectedOtfNumber, handleFormValueChange } = props;
+    const { selectedAMC, form, fetchCustomerList, formActionType, selectedOtfNumber, setSelectedOtfNumber, handleFormValueChange } = props;
 
     const { FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch, CustomerForm, showGlobalNotification, salesConsultantLovData } = props;
 
@@ -50,7 +50,7 @@ const CustomerDetailsMasterBase = (props) => {
     };
 
     const onFinish = () => {
-        setRequestPayload({ ...requestPayload, customerDetails: form.getFieldsValue() });
+        setRequestPayload({ ...requestPayload, amcCustomerDetails: form.getFieldsValue() });
         handleButtonClick({ buttonAction: NEXT_ACTION });
         setButtonData({ ...buttonData, formBtnActive: false });
     };

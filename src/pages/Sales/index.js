@@ -60,5 +60,5 @@ export {
     EvrDetailsCapturingMasterPage,
     VinBlockMasterPage,
     RsmAsmApprovalPage,
+    AMCRegistrationMasterPage
 };
-export default AMCRegistrationMasterPage;

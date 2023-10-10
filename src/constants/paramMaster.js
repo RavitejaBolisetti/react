@@ -421,4 +421,12 @@ export const PARAM_MASTER = {
         id: 'DVIC_TYP',
         title: 'Device Type',
     },
+    AMC_SEARCH_TYPE: {
+        id: 'AMC_SEARCH_TYPE',
+        title: 'AMC Search',
+    },
+    AMC_CANCEL_REASON: {
+        id: 'AMC_CANCEL_REASON',
+        title: 'AMC cancellation reason',
+    },
 };

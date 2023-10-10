@@ -9,7 +9,7 @@ import { Button, Row, Col, Popover } from 'antd';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'assets/sass/app.module.scss';
 
-export const AMCRegistrationFormButton = ({ formActionType, record, onCloseAction, onCancelAMC, onApproveCancel, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection, onPrintInvoice, onPrintForm21 }) => {
+export const AMCRegistrationFormButton = ({ formActionType, record, onCloseAction, handleWholeAMCCancellation, onApproveCancel, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection, onPrintInvoice, onPrintForm21 }) => {
     return (
         <div className={styles.formFooter}>
             <Row gutter={20}>
@@ -28,18 +28,16 @@ export const AMCRegistrationFormButton = ({ formActionType, record, onCloseActio
                 </Col>
 
                 <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.buttonsGroupRight}>
-                    {buttonData?.cancelInvoiceBtn && (
-                        <Button onClick={onCancelAMC} danger>
+                    {buttonData?.cancelAMCBtn && (
+                        <Button onClick={handleWholeAMCCancellation} danger>
                             Cancel AMC
                         </Button>
                     )}
 
                     {buttonData?.rejectCancelBtn && (
-                        <Popover content={'Coming Soon'} trigger="hover">
                             <Button onClick={onApproveCancel} type="primary">
                                 Reject
                             </Button>
-                        </Popover>
                     )}
 
                     {buttonData?.approveCancelBtn && (

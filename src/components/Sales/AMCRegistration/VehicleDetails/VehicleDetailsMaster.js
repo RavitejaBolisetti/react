@@ -84,7 +84,7 @@ const mapDispatchToProps = (dispatch) => ({
 const VehicleDetailsMasterBase = (props) => {
     const { form, section, userId, customerType, resetData, fetchContactDetailsList, customerData, customerIndData, listContactDetailsShowLoading, saveData, showGlobalNotification, typeData } = props;
     const { isCustomerIndDataLoading, isCustomerDataLoading, selectedCustomer, fetchContactIndividualDetailsList, saveIndividualData, resetIndividualData } = props;
-    const { fetchVehicleData, listVehicleShowLoading, vehicleData, requestPayload, buttonData, setButtonData, formActionType, handleButtonClick, NEXT_ACTION, FormActionButton } = props;
+    const { selectedAMC, setLastSection, AMConFinish, setRequestPayload, fetchVehicleData, listVehicleShowLoading, vehicleData, requestPayload, buttonData, setButtonData, formActionType, handleButtonClick, NEXT_ACTION, FormActionButton } = props;
 
     const [contactform] = Form.useForm();
     const [contactData, setContactData] = useState([]);
@@ -101,6 +101,14 @@ const VehicleDetailsMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [requestPayload]);
+
+    useEffect(() => {
+        if (formActionType?.addMode) {
+            console.log('formActionType?.addMode', formActionType?.addMode);
+            setLastSection(true);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [section, formActionType]);
 
     const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
     const addDataTitle = (
@@ -127,24 +135,11 @@ const VehicleDetailsMasterBase = (props) => {
     }, []);
 
     useEffect(() => {
-        if (userId && selectedCustomer?.customerId) {
-            if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
-                fetchContactIndividualDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams });
-            } else if (customerType === CUSTOMER_TYPE?.CORPORATE?.id) {
-                fetchContactDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams });
-            }
+        if (!formActionType?.viewMode) {
+            setRequestPayload({ ...requestPayload, amcVehicleDetails: contactData });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedCustomer?.customerId]);
-
-    useEffect(() => {
-        if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id && selectedCustomer?.customerId && customerIndData?.customerContact) {
-            setContactData(customerIndData?.customerContact || []);
-        } else if (customerData?.customerContact && selectedCustomer?.customerId) {
-            setContactData(customerData?.customerContact || []);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [customerData, customerIndData]);
+    }, [contactData]);
 
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -220,6 +215,11 @@ const VehicleDetailsMasterBase = (props) => {
 
     const handleVinSearch = (value) => {
         console.log('value', value);
+
+        const onVehicleSearchSuccessAction = (data) => {
+            console.log('data', data?.data?.vehicleSearch[0]);
+            contactform.setFieldsValue({ ...data?.data?.vehicleSearch[0], modelDescription: data?.data?.vehicleSearch[0].chassisNumber });
+        };
         const vehicleExtraParams = [
             {
                 key: 'searchType',
@@ -243,7 +243,7 @@ const VehicleDetailsMasterBase = (props) => {
             },
         ];
 
-        fetchVehicleData({ setIsLoading: listVehicleShowLoading, userId, extraParams: vehicleExtraParams, onSuccessAction, onErrorAction });
+        fetchVehicleData({ setIsLoading: listVehicleShowLoading, userId, extraParams: vehicleExtraParams, onSuccessAction: onVehicleSearchSuccessAction, onErrorAction });
     };
 
     const formProps = {
@@ -275,44 +275,7 @@ const VehicleDetailsMasterBase = (props) => {
     };
 
     const onFinish = () => {
-        let data = { ...requestPayload, amcVehicleDetails: contactData };
-
-        const onSuccess = (res) => {
-            contactform.resetFields();
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            setButtonData({ ...buttonData, formBtnActive: false });
-            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-            if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
-                fetchContactIndividualDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
-            } else {
-                fetchContactDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
-            }
-        };
-
-        const onError = (message) => {
-            showGlobalNotification({ message });
-        };
-
-        const requestData = {
-            data: data,
-            method: customerData?.customerContact ? 'put' : 'post',
-            setIsLoading: listContactDetailsShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-
-        if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
-            saveIndividualData(requestData);
-        } else {
-            saveData(requestData);
-        }
-
-        setShowAddEditForm(false);
-        setIsEditing(false);
-        setIsAdding(false);
-        setEditingData({});
-        contactform.resetFields();
+        AMConFinish(requestPayload);
     };
 
     const onFinishFailed = (err) => {
@@ -347,7 +310,7 @@ const VehicleDetailsMasterBase = (props) => {
                                     </Row>
                                     <Divider className={styles.marT20} />
                                     {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
-                                    {!contactData?.length && !isAdding ? <NoDataFound informtion={formActionType?.viewMode ? noDataTitle : addDataTitle} /> : <ViewVehicleList {...formProps} />}
+                                    {!contactData?.length ? <NoDataFound informtion={formActionType?.viewMode ? noDataTitle : addDataTitle} /> : <ViewVehicleList {...formProps} />}
                                 </>
                             )}
                         </Card>

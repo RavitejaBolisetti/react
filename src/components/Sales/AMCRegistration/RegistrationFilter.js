@@ -21,10 +21,10 @@ export default function RegistrationFilter(props) {
     const serachBoxProps = {
         searchForm,
         filterString,
-        optionType: typeData?.[PARAM_MASTER.INV_SER.id],
+        optionType: typeData?.[PARAM_MASTER.AMC_SEARCH_TYPE.id],
         setFilterString,
         allowClear: false,
-        defaultOption: 'customerName',
+        // defaultOption: 'customerName',
     };
 
     return (
