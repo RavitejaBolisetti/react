@@ -7,10 +7,8 @@ import { combineReducers } from 'redux';
 
 import { VehicleChecklistMasterList } from './vehicleChecklistMaster';
 import { VehicleChecklistMasterListAttributeLov } from './hierarchyAttributeLov';
-import { VehicleChecklistMasterPostList } from './vehicleChecklistMasterPost';
 
 export const VehicleChecklistMaster = combineReducers({
     VehicleChecklistMasterList,
     VehicleChecklistMasterListAttributeLov,
-    VehicleChecklistMasterPostList,
 });

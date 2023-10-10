@@ -354,8 +354,7 @@ export const BASE_URL_APPROVAL_CANCEL_REQUEST_URL = BASE_URL_DELIVERY_NOTE_INVOI
 
 export const BASE_URL_DEALER_BRANCH_ACCESS = BASE_URL_DEALER_MANPOWER + '/parent/locations';
 export const BASE_URL_DEALER_GST = BASE_URL_DEALER_MANPOWER + '/parent/gstin/lov';
-export const BASE_URL_VEHICLE_CHECKLIST_MASTER = BASE_URL + 'vehicle/checklist/master/search';
-export const BASE_URL_VEHICLE_CHECKLIST_MASTER_GROUP = BASE_URL + 'vehicle/checklist/master/group';
+export const BASE_URL_VEHICLE_CHECKLIST_MASTER = BASE_URL + 'vehicle/checklist/checklistmaster';
 
 export const BASE_URL_GST_DOCID_NAME = BASE_URL + 'finance/gstirnauthentication';
 

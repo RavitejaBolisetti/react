@@ -22,7 +22,7 @@ const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
     const { VehicleChecklistMasterList, onCloseAction, fieldNames, formActionType, formData, selectedTreeSelectKey, handleSelectTreeClick, attributeType, form, VehicleChecklistAttributeLov, typeData } = props;
-    const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed, answerType, onChangeAnswerType, modelGroupData } = props;
+    const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed, answerType, onChangeAnswerType, listShowLoadingVehicleChecklist, onAttributeChange } = props;
 
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
 
@@ -55,7 +55,7 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Form.Item name="attributeLevel" label="Attribute Type" rules={[validateRequiredSelectField('Attribute Type Code')]}>
-                                    {customSelectBox({ data: VehicleChecklistAttributeLov, placeholder: preparePlaceholderSelect('Attribute Type Code'), disabled: true })}
+                                    {customSelectBox({ data: VehicleChecklistAttributeLov, placeholder: preparePlaceholderSelect('Attribute Type Code'), disabled: listShowLoadingVehicleChecklist && VehicleChecklistMasterList?.length <= 0 ? false : true, onChange: onAttributeChange})}
                                 </Form.Item>
                             </Col>
 

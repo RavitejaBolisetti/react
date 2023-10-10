@@ -22,8 +22,6 @@ const ModelCard = (props) => {
         //setButtonData({ ...buttonData, formBtnActive: true });
         setModelSwitch(props?.checklistModelStatus);
 
-        console.log(`props?.modelGroupCode`, props?.modelGroupCode);
-
         modelEditForm.setFieldsValue({
             modelGroupCode: props?.modelGroupCode,
             checklistModelStatus: props?.checklistModelStatus,

@@ -12,7 +12,6 @@ import { HierarchyFormButton } from 'components/common/Button';
 import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { vehicleChecklistMasterDataActions } from 'store/actions/data/sales/vehicleChecklistMaster/VehicleChecklistMaster';
 import { vehicleChecklistMasterAttributeLovDataActions } from 'store/actions/data/sales/vehicleChecklistMaster/attributeHierarchyLov';
-import { vehicleChecklistMasterPostDataActions } from 'store/actions/data/sales/vehicleChecklistMaster/VehicleChecklistMasterPost';
 import { otfLoyaltyModelGroupDataActions } from 'store/actions/data/otf/loyaltyModelGroup';
 
 import { showGlobalNotification } from 'store/actions/notification';
@@ -71,12 +70,10 @@ const mapDispatchToProps = (dispatch) => ({
 
             fetchVehicleChecklist: vehicleChecklistMasterDataActions.fetchList,
             listShowLoadingVehicleChecklist: vehicleChecklistMasterDataActions.listShowLoading,
+            saveData: vehicleChecklistMasterDataActions.saveData,
 
             fetchVehicleChecklistAttributeLov: vehicleChecklistMasterAttributeLovDataActions.fetchList,
             listShowLoadingVehicleChecklistAttributeLov: vehicleChecklistMasterAttributeLovDataActions.listShowLoading,
-
-            saveData: vehicleChecklistMasterPostDataActions.saveData,
-            listShowLoadingPost: vehicleChecklistMasterPostDataActions.listShowLoading,
 
             fetchModelLovList: otfLoyaltyModelGroupDataActions.fetchList,
             listModelShowLoading: otfLoyaltyModelGroupDataActions.listShowLoading,
@@ -87,7 +84,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId, saveData, listShowLoadingPost, isDataAttributeLoaded, showGlobalNotification, fetchVehicleChecklist, listShowLoadingVehicleChecklist, VehicleChecklistMasterList, VehicleChecklistAttributeLov, fetchVehicleChecklistAttributeLov, listShowLoadingVehicleChecklistAttributeLov, fetchModelLovList, listModelShowLoading, modelGroupData }) => {
+export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId, isDataAttributeLoaded, showGlobalNotification, fetchVehicleChecklist, listShowLoadingVehicleChecklist, VehicleChecklistMasterList, VehicleChecklistAttributeLov, fetchVehicleChecklistAttributeLov, listShowLoadingVehicleChecklistAttributeLov, fetchModelLovList, listModelShowLoading, modelGroupData, saveData }) => {
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
     const [answerForm] = Form.useForm();
@@ -198,8 +195,11 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
     };
 
     const onChangeAnswerType = (val) => {
-        console.log(val);
         setAnswerType(val);
+    };
+
+    const onAttributeChange = (attriVal) => {
+        setAttributeType(attriVal);
     };
 
     const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
@@ -258,7 +258,39 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
     const onFinish = (values) => {
         const recordId = values?.id || '';
         let parentCode = values?.parentCode === `DMS` ? buttonType : values?.parentCode;
-        const data = { ...values, id: recordId, parentCode };
+        let data = {};
+        let updatedData = { ...values, id: recordId, parentCode };
+
+        if (values?.attributeLevel === 'GRP') {
+            data = {
+                attributeLevel: values?.attributeLevel,
+                groupDto: {
+                    ...updatedData,
+                },
+            };
+        } else if (values?.attributeLevel === 'SUBGRP') {
+            data = {
+                parentId: parentCode,
+                subGroupDto: {
+                    children: {
+                        ...updatedData,
+                    },
+                },
+            };
+        } else if (values?.attributeLevel === 'CHKL') {
+            data = {
+                parentId: parentCode,
+                checklistDto: {
+                    children: {
+                        ...updatedData,
+                        model: modelData,
+                        answer: answerData,
+                    },
+                },
+            };
+        }
+
+        console.log(`data`, data);
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -286,7 +318,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
         const requestData = {
             data: data,
             method: formActionType === FROM_ACTION_TYPE?.EDIT ? 'put' : 'post',
-            setIsLoading: listShowLoadingPost,
+            setIsLoading: vehicleChecklistMasterDataActions,
             userId,
             onError,
             onSuccess,
@@ -384,6 +416,8 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
         setModelData,
         modelEdit,
         setModelEdit,
+        listShowLoadingVehicleChecklist,
+        onAttributeChange,
     };
 
     const viewProps = {
