@@ -22,14 +22,14 @@ const mapStateToProps = (state) => {
         auth: { userId, accessToken, token },
         common: {
             Header: {
-                data: { dealerLocations: dealerLocation = [] },
+                data: { parentGroupCode, dealerLocations: dealerLocation = [] },
             },
         },
         data: {
             ApplicationMaster: { dealerLocations = [] },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             OTF: {
-                salesConsultantLov: { isLoaded: isSalesConsultantDataLoaded, detailData: salesConsultantLov = [] },
+                salesConsultantLov: { isLoaded: isSalesConsultantDataLoaded, isLoading: isSalesConsultantLoading, detailData: salesConsultantLov = [] },
             },
         },
     } = state;
@@ -43,8 +43,10 @@ const mapStateToProps = (state) => {
         moduleTitle,
         isSalesConsultantDataLoaded,
         salesConsultantLov,
+        isSalesConsultantLoading,
         dealerLocations,
         dealerLocation,
+        parentGroupCode,
     };
     return returnValue;
 };
@@ -67,7 +69,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const TransferMasterBase = (props) => {
-    const { otfData, selectedOrder, fetchSalesConsultant, listConsultantShowLoading, fetchDealerLocations, dealerLocations, dealerLocation, locationDataLoding } = props;
+    const { otfData, selectedOrder, fetchSalesConsultant, listConsultantShowLoading, fetchDealerLocations, dealerLocations, dealerLocation, locationDataLoding, parentGroupCode } = props;
     const { userId, salesConsultantLov, reset } = props;
     const { moduleTitle, otfTransferForm } = props;
 
@@ -82,12 +84,12 @@ const TransferMasterBase = (props) => {
     };
 
     useEffect(() => {
-        if (userId) {
+        if (userId && selectedOrder?.modelCode) {
             reset();
-            fetchDealerLocations({ customURL: customURL + '?locationType=S', setIsLoading: locationDataLoding, userId });
+            fetchDealerLocations({ customURL: customURL + '?locationType=S&modelCode=' + selectedOrder?.modelCode + '&parentGroupCode=' + parentGroupCode, setIsLoading: locationDataLoding, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
+    }, [userId, selectedOrder]);
 
     const handleOtfTransferLocationChange = (value) => {
         if (!value) {

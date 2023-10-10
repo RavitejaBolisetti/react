@@ -118,6 +118,7 @@ const AssignUserRole = (props) => {
 
     useEffect(() => {
         if (userId && formData?.employeeCode && (record?.roleId || selectedRoleId)) {
+            setDeviceType(APPLICATION_WEB);
             if (userType === USER_TYPE_USER?.DEALER?.id) {
                 fetchDLRUserRoleDataList({ setIsLoading: usrRolelAppListShowLoading, userId, extraParams: extraParamsDlr, onErrorAction });
             } else {

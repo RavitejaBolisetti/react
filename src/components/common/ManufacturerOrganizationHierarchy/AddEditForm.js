@@ -13,6 +13,7 @@ import styles from 'assets/sass/app.module.scss';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+import { HIERARCHY_DEFAULT_PARENT } from 'constants/constants';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -24,7 +25,6 @@ const AddEditFormMain = (props) => {
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
     const disabledProps = { disabled: isReadOnly };
     const [form] = Form.useForm();
-
     let attributeHierarchyFieldValidation = {
         rules: [validateRequiredSelectField('attribute level')],
     };
@@ -55,7 +55,7 @@ const AddEditFormMain = (props) => {
     }
 
     useEffect(() => {
-        setSelectedTreeSelectKey(treeCodeId);
+        setSelectedTreeSelectKey(treeCodeId === 'null' || treeCodeId === '' ? HIERARCHY_DEFAULT_PARENT : treeCodeId);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [treeCodeId]);
 
@@ -94,7 +94,7 @@ const AddEditFormMain = (props) => {
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item initialValue={treeCodeId} label="Parent" name="manufactureOrgParntId">
+                                <Form.Item initialValue={treeCodeId === 'null' || treeCodeId === '' ? HIERARCHY_DEFAULT_PARENT : treeCodeId} label="Parent" name="manufactureOrgParntId">
                                     <TreeSelectField {...treeSelectFieldProps} />
                                 </Form.Item>
                             </Col>

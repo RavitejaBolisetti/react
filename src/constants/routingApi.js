@@ -342,6 +342,11 @@ export const BASE_URL_DELIVERY_NOTE_VEHICLE_DETAILS = BASE_URL_OTF_VEHICLE_DETAI
 
 export const BASE_URL_VIN_BLOCK_MASTER = BASE_URL_VEHICLE + 'vinbolckmaster/search';
 export const BASE_URL_VIN_BLOCK_VIEWMASTER = BASE_URL_VEHICLE + 'vinbolckmaster';
+
+export const BASE_URL_GSTIRN_TRANSACTION_SEARCH = BASE_URL_OTF + 'irn/transactions/search';
+export const BASE_URL_GSTIRN_TRANSACTION_GSTIN = BASE_URL + 'dealer/parent/gstin/lov';
+export const BASE_URL_GSTIRN_TRANSACTION_VIEW_DOC = BASE_URL + 'common/document/view';
+export const BASE_URL_GSTIRN_TRANSACTION_UPLOAD_DOC = BASE_URL + 'dealer/parent/gstin/lov';
 export const BASE_URL_EVR_DETAILS_CAPTURING_SEARCH = BASE_URL_VEHICLE + 'evr/details/search';
 export const BASE_URL_EVR_DETAILS_CAPTURING_DETAIL = BASE_URL_VEHICLE + 'evr/details';
 export const BASE_URL_VEHICE_DELIVERY_NOTE_MASTER_DATA = BASE_URL_OTF + 'deliverynote/dealer/detail';

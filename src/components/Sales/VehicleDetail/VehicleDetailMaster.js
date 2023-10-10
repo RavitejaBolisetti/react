@@ -208,6 +208,7 @@ export const VehicleDetailMasterBase = (props) => {
 
     useEffect(() => {
         if (userId) {
+            setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

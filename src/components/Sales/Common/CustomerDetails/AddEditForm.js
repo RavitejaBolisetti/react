@@ -9,14 +9,14 @@ import { Col, Row, Collapse, AutoComplete, Divider } from 'antd';
 import { AddressCommonForm } from './AddressCommonForm';
 import { formattedCalendarDate } from 'utils/formatDateTime';
 
-import { expandActionIcon } from 'utils/accordianExpandIcon';
+import { expandIcon } from 'utils/accordianExpandIcon';
 import { VehicleCustomerSearch } from '../../VehicleDetail/CustomerDetails/VehicleCustomerSearch';
 
 const { Panel } = Collapse;
 
 const AddEditFormBase = (props) => {
     const { form, formData, sameAsBookingCustomer, setSameAsBookingCustomer, viewOnly = false } = props;
-    const { typeData, activeKey, setActiveKey, formActionType, fnSetData, selectedOrderId = '' } = props;
+    const { typeData, activeKey, setActiveKey, fnSetData, selectedOrderId = '' } = props;
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
@@ -107,13 +107,13 @@ const AddEditFormBase = (props) => {
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Collapse collapsible="icon" expandIcon={({ isActive }) => expandActionIcon(isActive, formActionType)} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
+                    <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
                         <Panel header="Booking Customer" key="1">
                             <Divider />
                             <AddressCommonForm key="3" {...bookingCustomerProps} isBillingCustmrForm={false} />
                         </Panel>
                     </Collapse>
-                    <Collapse collapsible="icon" expandIcon={({ isActive }) => expandActionIcon(isActive, formActionType)} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
+                    <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
                         <Panel header="Billing Customer" key="2">
                             <Divider />
                             <AddressCommonForm key="4" {...bilingCustomerProps} isBillingCustmrForm={true} />

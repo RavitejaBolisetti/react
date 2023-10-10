@@ -20,7 +20,7 @@ import styles from 'assets/sass/app.module.scss';
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { formData, isLoading, selectedOrder, salesConsultantLov, dealerLocations, locationDataLoding, defaultDealerLocationCode } = props;
+    const { formData, isLoading, selectedOrder, salesConsultantLov, dealerLocations, isSalesConsultantLoading, defaultDealerLocationCode } = props;
     const { otfTransferForm, onFinishOTFTansfer, handleOtfTransferLocationChange } = props;
     const { handleButtonClick, buttonData, setButtonData, onCloseAction, typeData } = props;
 
@@ -40,6 +40,13 @@ const AddEditFormMain = (props) => {
         column: { xs: 1, sm: 2, lg: 2, xl: 2, xxl: 2 },
     };
 
+    const viewTwoProps = {
+        bordered: false,
+        colon: false,
+        layout: 'vertical',
+        column: { xs: 1, sm: 1, lg: 1, xl: 1, xxl: 1 },
+    };
+
     return (
         <>
             <Form form={otfTransferForm} data-testid="test" onFinish={onFinishOTFTansfer} layout="vertical" autocomplete="off" colon="false">
@@ -51,6 +58,8 @@ const AddEditFormMain = (props) => {
                                 <Descriptions.Item label="Booking Date">{checkAndSetDefaultValue(convertDateTime(selectedOrder?.otfDate, dateFormatView), isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(selectedOrder?.customerName, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Mobile No.">{checkAndSetDefaultValue(selectedOrder?.mobileNumber, isLoading)}</Descriptions.Item>
+                            </Descriptions>
+                            <Descriptions {...viewTwoProps}>
                                 <Descriptions.Item label="Model">{checkAndSetDefaultValue(selectedOrder?.model, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Order Status">{getStatus(selectedOrder?.orderStatus)}</Descriptions.Item>
                             </Descriptions>
@@ -60,7 +69,6 @@ const AddEditFormMain = (props) => {
                                 <Form.Item name="otfTransferLocation" label="Transfer To Location" initialValue={formData?.otfTransferLocation} rules={[validateRequiredSelectField('Transfer To Location')]}>
                                     {customSelectBox({
                                         data: dealerLocations?.filter((location) => location?.locationCode !== defaultDealerLocationCode),
-                                        loading: locationDataLoding,
                                         fieldNames: { key: 'locationId', value: 'dealerLocationName' },
                                         placeholder: preparePlaceholderSelect(''),
                                         onChange: handleOtfTransferLocationChange,
@@ -70,7 +78,7 @@ const AddEditFormMain = (props) => {
 
                             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                                 <Form.Item name="salesConsultant" label="Sales Consultant" initialValue={formData?.salesConsultant} rules={[validateRequiredSelectField('Sales Consultant')]}>
-                                    <Select placeholder="Select" showSearch allowClear>
+                                    <Select placeholder="Select" loading={isSalesConsultantLoading} showSearch allowClear>
                                         {salesConsultantLov?.map((item) => (
                                             <Option value={item.key}>{item.value}</Option>
                                         ))}

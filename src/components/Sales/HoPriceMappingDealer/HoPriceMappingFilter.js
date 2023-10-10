@@ -14,7 +14,7 @@ import styles from 'assets/sass/app.module.scss';
 const { Search } = Input;
 
 export default function HoPriceMappingFilter(props) {
-    const { extraParams, removeFilter, handleResetFilter, advanceFilter, setAdvanceSearchVisible, searchForm, pricingType, handlePricingTypeChange, handleSearch, filterString } = props;
+    const { extraParams, removeFilter, setFilterString, advanceFilter, setAdvanceSearchVisible, searchForm, pricingType, handlePricingTypeChange, handleSearch, filterString } = props;
 
     return (
         <div className={styles.contentHeaderBackground}>
@@ -79,7 +79,7 @@ export default function HoPriceMappingFilter(props) {
                                 })}
                             </Col>
                             <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
-                                <Button className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
+                                <Button className={styles.clearBtn} onClick={() => setFilterString()} danger>
                                     Clear
                                 </Button>
                             </Col>

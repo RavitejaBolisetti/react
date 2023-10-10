@@ -25,6 +25,7 @@ import { ViewManufacturerOrgDetail } from './ViewManufacturerOrgDetails';
 import LeftPanel from '../LeftPanel';
 
 import styles from 'assets/sass/app.module.scss';
+import { HIERARCHY_DEFAULT_PARENT } from 'constants/constants';
 
 const { Search } = Input;
 const mapStateToProps = (state) => {
@@ -38,7 +39,7 @@ const mapStateToProps = (state) => {
             LeftSideBar: { collapsed = false },
         },
     } = state;
-    
+
     const moduleTitle = 'Manufacturer Organisation Detail';
     const viewTitle = 'Hierarchy Details';
 
@@ -175,7 +176,7 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
-        const codeToBeSaved = selectedTreeSelectKey || '';
+        const codeToBeSaved = selectedTreeSelectKey === HIERARCHY_DEFAULT_PARENT ? '' : selectedTreeSelectKey || '';
         const data = { ...values, id: recordId, manufactureOrgParntId: codeToBeSaved };
 
         const onSuccess = (res) => {

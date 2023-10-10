@@ -27,6 +27,7 @@ const FormWrapper = (props) => {
     const myFormMock={
         ...form,
         setFieldsValue: jest.fn(),
+        getFieldValue: jest.fn()
     }
     return <CustomerMainConatiner form={myFormMock} {...props} />
 }

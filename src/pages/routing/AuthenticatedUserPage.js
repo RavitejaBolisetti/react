@@ -41,7 +41,7 @@ import {
     LessorCustomerCreationPage,
 } from 'pages/common';
 
-import { TaxChargesPage, TaxChargesCategoryPage, AccountCategoryPage, VehicleModelTaxChargesCategoryPage, DocumentTypeOtherChargesPage, CreditDebitNoteMasterPage, GSTIRNAuthenticationPage, ChartOfAccountPage } from 'pages/FinancialAccounting';
+import { TaxChargesPage, TaxChargesCategoryPage, AccountCategoryPage, VehicleModelTaxChargesCategoryPage, DocumentTypeOtherChargesPage, CreditDebitNoteMasterPage, GSTIRNAuthenticationPage, ChartOfAccountPage, GstIRNTransactionPage } from 'pages/FinancialAccounting';
 import {
     OTFMasterPage,
     VehicleDetailMasterPage,
@@ -192,7 +192,7 @@ export const AuthenticatedUserPage = () => {
             />
             {/*  */}
             <Route path={routing.ROUTING_RSM_ASM_APPROVAL} element={<RsmAsmApprovalPage />} exact />
-
+            <Route path={routing.ROUTING_GST_IRN_TRANSACTION} element={<GstIRNTransactionPage />} exact />
             <Route path={routing.ROUTING_VIN_BLOCK_MASTER} element={<VinBlockMasterPage />} exact />
         </Routes>
     );
