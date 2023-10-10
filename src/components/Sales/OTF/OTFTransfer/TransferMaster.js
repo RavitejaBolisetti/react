@@ -75,9 +75,6 @@ const TransferMasterBase = (props) => {
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, transferOTFBtn: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const defaultDealerLocationCode = dealerLocation?.find((i) => i?.isDefault)?.locationCode;
-
-    const handleButtonClick = ({ record = null, buttonAction }) => {};
-
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
@@ -112,7 +109,6 @@ const TransferMasterBase = (props) => {
         selectedOrder,
         buttonData,
         setButtonData,
-        handleButtonClick,
         salesConsultantLov,
         dealerLocations,
         handleOtfTransferLocationChange,

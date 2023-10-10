@@ -79,7 +79,7 @@ const CancellationMasterBase = (props) => {
     const [productHierarchyData, setProductHierarchyData] = useState([]);
 
     const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
-    const handleButtonClick = ({ record = null, buttonAction }) => {};
+
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
@@ -130,7 +130,7 @@ const CancellationMasterBase = (props) => {
         selectedOrder,
         buttonData,
         setButtonData,
-        handleButtonClick,
+
         uploadDocumentFile,
         setUploadedFile,
         fieldNames,
