@@ -162,7 +162,7 @@ export const InvoiceDetailsMasterBase = (props) => {
             fetchRelationshipManger({ setIsLoading: listRelationshipMangerShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, soldByDealer]);
+    }, [userId, soldByDealer, section]);
 
     const handleChassisNoSearch = (val) => {
         if (!val) return;

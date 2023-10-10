@@ -55,9 +55,9 @@ const mapDispatchToProps = (dispatch) => ({
 
 const DeliverableChecklistMain = (props) => {
     const { userId, isChecklistDataLoaded, isChecklistDataLoading, ChecklistData, deliveryNoteOnFinish } = props;
-    const { selectedOrder, handleButtonClick } = props;
+    const { selectedOrder, setButtonData, buttonData } = props;
     const { fetchList, listShowLoading, showGlobalNotification } = props;
-    const { form, selectedCheckListId, section, formActionType, handleFormValueChange, NEXT_ACTION, requestPayload, setRequestPayload } = props;
+    const { form, selectedCheckListId, section, formActionType, handleFormValueChange, requestPayload, setRequestPayload } = props;
 
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [aggregateForm] = Form.useForm();
@@ -90,7 +90,7 @@ const DeliverableChecklistMain = (props) => {
     }, [userId, selectedOrder, isChecklistDataLoaded, formActionType]);
     useEffect(() => {
         const newArr = requestPayload?.vehicleDeliveryCheckList?.deliveryChecklistDtos;
-        newArr?.filter((i) => i?.ismodified)?.length > 0 && handleFormValueChange();
+        newArr?.filter((i) => i?.ismodified)?.length > 0 ? handleFormValueChange() : setButtonData({ ...buttonData, formBtnActive: false });
         setPage({ ...defaultPage });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

@@ -78,7 +78,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const AddOnDetailsMasterMain = (props) => {
-    const { listSchemeShowLoading, selectedInvoiceId, typeData, requestPayload, setRequestPayload, showGlobalNotification, AddonPartsData, AddonDetailsData, userId, listShowLoading, saveData, onFinishFailed } = props;
+    const { typeData, requestPayload, setRequestPayload, showGlobalNotification, AddonPartsData, AddonDetailsData, userId, onFinishFailed } = props;
     const { form, section, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick, setButtonData, buttonData, listRelationshipMangerShowLoading, fetchRelationshipManger, relationshipManagerData, deliveryNoteMasterData } = props;
     const { selectedOrder } = props;
 
@@ -151,6 +151,7 @@ export const AddOnDetailsMasterMain = (props) => {
 
     useEffect(() => {
         setButtonData({ ...buttonData, formBtnActive: true });
+        handleEmployeeSearch();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [section]);
 
@@ -161,36 +162,25 @@ export const AddOnDetailsMasterMain = (props) => {
     };
 
     const handleEmployeeSearch = () => {
-        const onSuccessAction = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-        };
         const onErrorAction = (message) => {
             showGlobalNotification({ message });
         };
 
-        fetchRelationshipManger({ setIsLoading: listRelationshipMangerShowLoading, userId, onSuccessAction, onErrorAction });
+        fetchRelationshipManger({ setIsLoading: listRelationshipMangerShowLoading, userId, onErrorAction });
     };
-
+    const getCodeValue = (data, key) => {
+        return data?.find((i) => i?.schemeDescription === key)?.schemeCode;
+    };
     const onSingleFormFinish = (key, formName) => {
         formName.validateFields().then(() => {
-            switch (key) {
-                case 'sheildRequest':
-                    setMultipleFormData({ ...muiltipleFormData, sheildRequest: shieldForm.getFieldsValue() });
-                    setRegisterDisabled((prev) => ({ ...prev, Shield: true }));
-                    break;
-                case 'rsaRequest':
-                    setMultipleFormData({ ...muiltipleFormData, rsaRequest: rsaForm.getFieldsValue() });
-                    setRegisterDisabled((prev) => ({ ...prev, RSA: true }));
-                    break;
-                case 'amcRequest':
-                    setMultipleFormData({ ...muiltipleFormData, amcRequest: amcForm.getFieldsValue() });
-                    setRegisterDisabled((prev) => ({ ...prev, AMC: true }));
-                    break;
-
-                default:
-                    return;
-                    break;
+            const formDataset = formName?.getFieldsValue();
+            if (formDataset?.schemeCode) {
+                setMultipleFormData({ ...muiltipleFormData, [key]: formDataset });
+            } else {
+                setMultipleFormData({ ...muiltipleFormData, [key]: { ...formDataset, schemeCode: getCodeValue(schemeDescriptionDatamain[openAccordian], formDataset?.schemeDescription) } });
             }
+
+            setRegisterDisabled((prev) => ({ ...prev, [openAccordian]: true }));
             const message = !muiltipleFormData?.[key] ? 'registered' : 'saved';
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: `Scheme has been ${message} successfully` });
         });
