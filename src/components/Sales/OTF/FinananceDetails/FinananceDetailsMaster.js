@@ -122,7 +122,7 @@ export const FinananceDetailsMasterBase = (props) => {
     };
 
     const onErrorAction = (message) => {
-        showGlobalNotification(message);
+        // showGlobalNotification(message);
     };
 
     const onFinish = (values) => {

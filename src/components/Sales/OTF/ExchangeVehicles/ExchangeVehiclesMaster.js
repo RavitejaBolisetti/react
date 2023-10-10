@@ -200,7 +200,7 @@ const ExchangeVehiclesBase = (props) => {
     ];
 
     const onErrorAction = (message) => {
-        showGlobalNotification({ message });
+        // showGlobalNotification({ message });
         setEditableOnSearch(false);
     };
     const onSuccessAction = (res) => {
@@ -237,7 +237,7 @@ const ExchangeVehiclesBase = (props) => {
                     name: 'Module',
                 },
             ];
-            isOTFModule && fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction, userId });
+            isOTFModule && fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, userId });
             fetchFinanceLovList({ setIsLoading: listFinanceLovShowLoading, userId, onErrorAction });
             fetchSchemeLovList({ setIsLoading: listSchemeLovShowLoading, extraParams: schemeExtraParams, onErrorAction, userId });
         }

@@ -14,7 +14,7 @@ import { GSTIRNMainConatiner } from './GSTIRNMainConatiner';
 import { GST_IRN_SECTION } from 'constants/GSTIRNSection';
 import { showGlobalNotification } from 'store/actions/notification';
 import { UploadUtil } from 'utils/Upload';
-// import { ViewSupportingDocDetail } from './ViewSupportingDocDetail';
+import { ViewSupportingDocDetail } from './ViewSupportingDocDetail';
 import { GSTLoginForm } from './GSTLoginForm';
 import { dealerGstAction } from 'store/actions/data/financialAccounting/dealerGstAction';
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
@@ -83,8 +83,8 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
     const { userId, data, showGlobalNotification } = props;
     const { typeData, moduleTitle } = props;
     const { filterString, setFilterString, listShowLoadingGst, fetchList, dealerGstData } = props;
-    const { viewDocument, listShowLoadingGstLogin, fetchListGstLogin, listShowLoading, saveData } = props;
-    const { fetchGstDoc, listShowLoadingGstDoc, } = props;
+    const { listShowLoadingGstLogin, fetchListGstLogin, listShowLoading, saveData } = props;
+    const { fetchGstDoc,downloadFile   } = props;
     
 
     const [listFilterForm] = Form.useForm();
@@ -110,6 +110,7 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
     const [singleDisabled, setSingleDisabled] = useState(true);
     const [currentGst, setCurrentGst] = useState();
     const [draggerDisable, setDraggerDisable] = useState(true);
+    const [docData, setDocData] = useState();
 
     
 
@@ -155,12 +156,14 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
                 customURL,
                 onSuccessAction: (res) => {
                     if(res.data.documentId){
+                        setDocData(res.data);
                         setSingleDisabled(true);
                         setDraggerDisable(true);
                     } 
                 },
-                onErrorAction: (res) => {                     
-                        setSingleDisabled(false);
+                onErrorAction: (res) => {     
+                    setDocData();
+                    setSingleDisabled(false);
                         setDraggerDisable(false);
                 }
             });
@@ -240,7 +243,8 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        const data = { ...values, docId: uploadedFile };
+
+        const data = { ...values, docId: uploadedFile ? uploadedFile : docData.documentId };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -377,15 +381,31 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         onFinishFailed,
     };
 
-    const onDrop = (e) => {};
+    const onDrop = (e) => {};     
+
     const onDownload = (file) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
-        // handlePreview(file?.response);
-        let a = document.createElement('a');
-        a.href = `data:image/png;base64,${viewDocument?.base64}`;
-        a.download = viewDocument?.fileName;
-        a.click();
+        const onSuccessAction = (res) => {
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage || 'Your download will start soon' });
+        };
+        const extraParams = [
+            {
+                key: 'docId',
+                title: 'docId',
+                value: docData?.documentId,
+                name: 'docId',
+            },
+        ];
+        downloadFile({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction });
     };
+
+
+    const onRemove = (value) => {        
+        setDocData();
+        setSingleDisabled(false);
+        setDraggerDisable(false);
+  
+
+};
     const uploadProps = {
         messageText: 'Click or drop your file here to upload',
         validationText: 'File type should be .pem and max file size to be 5Mb',
@@ -416,8 +436,19 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         isReplaceEnabled: false,
         undefinedType: true,
         draggerDisable,
-        setDraggerDisable
+        setDraggerDisable,
+        downloadFile
+
     };
+   
+
+    const fileProps ={
+        docData,
+        setDocData,
+        onDrop,
+        onDownload,
+        onRemove,
+    }
     return (
         <>
             <Form form={form} name="login_from" layout="vertical" autocomplete="off" onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -427,6 +458,8 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
                         <Card>
                             <div className={styles.marB20}>
                                 <UploadUtil {...uploadProps} handleFormValueChange={handleFormValueChange} />
+
+                                <ViewSupportingDocDetail {...fileProps}/>
                             </div>
                              
                         </Card>

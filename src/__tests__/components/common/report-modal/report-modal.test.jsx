@@ -21,7 +21,7 @@ describe('Report Modal Components', () => {
             auth: { userId: 106 },
             data: {
                 Report: {
-                    Reports: { isLoaded: true, data: {embedToken: 'Kai'} },
+                    Reports: { isLoaded: true, data: {embedToken: 'Kai', embedReports: [{embedUrl: 'Kai', reportId: 'KaiKaiKaiKaiKaiKaiKaiKaiKaiKaiKaiKaiKaiKaiKaiKaiKaiKai'}]} },
                 },
             },
         });

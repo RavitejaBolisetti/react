@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, screen } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { InvoiceDetailsMaster } from '@components/Sales/VehicleDeliveryNote/InvoiceDetails/InvoiceDetailsMaster';
 import customRender from '@utils/test-utils';
 import createMockStore from '__mocks__/store';
@@ -9,10 +9,6 @@ import { Form } from 'antd';
 beforeEach(() => {
     jest.clearAllMocks();
 });
-
-jest.mock('store/actions/data/vehicleDeliveryNote/challanInvoice', () => ({
-    invoiceDetailsDataActions: {},
-}));
 
 const FormWrapper = (props) => {
     const [form] = Form.useForm();
@@ -24,6 +20,20 @@ const FormWrapper = (props) => {
     };
     return <InvoiceDetailsMaster form={myMoock} {...props} />;
 };
+
+jest.mock('@components/Sales/VehicleDeliveryNote/InvoiceDetails/AddEditForm', () => {
+    const AddEditForm = ({ onFinish }) => (
+        <div>
+            <button onClick={onFinish}>Save</button>
+        </div>
+    );
+
+    return {
+        __esModule: true,
+
+        AddEditForm,
+    };
+});
 
 describe('delivery note Invoice Details render', () => {
     it('should render component ', async () => {
@@ -44,7 +54,7 @@ describe('delivery note Invoice Details render', () => {
             data: {
                 VehicleDeliveryNote: {
                     RelationshipManager: { isLoaded: true, data: [{ id: '12' }] },
-                    EngineNumber: { isLoaded: true, data: [{ chassisNumber: '1212' }] },
+                    EngineNumber: { isLoaded: true, data: [{ chassisNumber: '1212', engineNumber: '121' }] },
                 },
             },
         });
@@ -58,12 +68,37 @@ describe('delivery note Invoice Details render', () => {
         );
     });
 
-    it('should render component for viewmode ', async () => {
-        const formActionType = { viewMode: false };
+    it('test for onSuccess', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                VehicleDeliveryNote: {
+                    RelationshipManager: { isLoaded: true, data: [{ id: '12' }] },
+                    VinNumberSearch: { isLoaded: true, data: [{ chassisNumber: '1212', engineNumber: '121' }] },
+                },
+            },
+        });
 
-        customRender(<FormWrapper formActionType={formActionType} setButtonData={jest.fn()} soldByDealer={false} />);
+        const saveData = jest.fn();
+        const fetchList = jest.fn();
+        const formActionType = { addMode: true };
 
-        const chassis = screen.getByRole('combobox', { name: /Chassis No./i });
-        fireEvent.change(chassis, { target: { value: 'TestCity' } });
+        customRender(
+            <Provider store={mockStore}>
+                <FormWrapper setFilterString={jest.fn()} setButtonData={jest.fn()} fetchList={fetchList} formActionType={formActionType} soldByDealer={true} disableFieldsOnFutureDate={true} setRequestPayload={jest.fn()} handleButtonClick={jest.fn()} />
+            </Provider>
+        );
+
+      
+
+        const saveBtn = screen.getByRole('button', { name: 'Save' });
+
+        fireEvent.click(saveBtn);
+
+        await waitFor(() => {
+            expect(saveData).toHaveBeenCalled();
+        });
+
+        saveData.mock.calls[0][0].onSuccess();
     });
 });

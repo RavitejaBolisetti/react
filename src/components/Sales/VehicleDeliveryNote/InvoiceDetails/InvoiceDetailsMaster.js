@@ -10,6 +10,7 @@ import { bindActionCreators } from 'redux';
 
 import { relationshipManagerDataActions } from 'store/actions/data/vehicleDeliveryNote/relationshipManager';
 import { vinNumberNoteDataActions } from 'store/actions/data/vehicleDeliveryNote/challanVinNumber';
+import { vehicleChallanDetailsDataActions } from 'store/actions/data/vehicleDeliveryNote/vehicleChallanDetails';
 import { showGlobalNotification } from 'store/actions/notification';
 import { formattedCalendarDate, convertDate } from 'utils/formatDateTime';
 
@@ -27,6 +28,7 @@ const mapStateToProps = (state) => {
             VehicleDeliveryNote: {
                 RelationshipManager: { isLoaded: isRelationshipManagerLoaded = false, isloading: isRelationshipManagerLoading, data: relationshipManagerData = [] },
                 VinNumberSearch: { isLoaded: vinNumberDataLoaded = false, isloading: vinNumberDataLoading, data: vinData = [] },
+                VehicleDetailsChallan: { isLoaded: isChallanDataLoaded = false, isloading: isChallanLoading, data: vehicleChallanData = {} },
             },
         },
     } = state;
@@ -43,6 +45,10 @@ const mapStateToProps = (state) => {
         vinNumberDataLoaded,
         vinNumberDataLoading,
         vinData,
+
+        isChallanDataLoaded,
+        isChallanLoading,
+        vehicleChallanData,
     };
     return returnValue;
 };
@@ -57,6 +63,9 @@ const mapDispatchToProps = (dispatch) => ({
             fetchRelationshipManger: relationshipManagerDataActions.fetchList,
             listRelationshipMangerShowLoading: relationshipManagerDataActions.listShowLoading,
 
+            fetchChallanList: vehicleChallanDetailsDataActions.fetchList,
+            listChallanShowLoading: vehicleChallanDetailsDataActions.listShowLoading,
+
             showGlobalNotification,
         },
         dispatch
@@ -67,6 +76,9 @@ export const InvoiceDetailsMasterBase = (props) => {
     const { userId, vinData, listvinNumberShowLoading, listEngineNumberShowLoading, fetchvinNumber, selectedOrder, relationshipManagerData, invoiceData, isRelationshipManagerLoaded, setFormActionType, fetchRelationshipManger, listRelationshipMangerShowLoading, isLoading, record } = props;
 
     const { typeData, form, selectedOrderId, requestPayload, setRequestPayload, soldByDealer, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section, resetData, engineNumberData, chassisNoValue } = props;
+
+    const { isChallanDataLoaded, isChallanLoading, vehicleChallanData, fetchChallanList, listChallanShowLoading } = props;
+
     const { buttonData, setButtonData } = props;
 
     const [formData, setFormData] = useState({});
@@ -78,7 +90,26 @@ export const InvoiceDetailsMasterBase = (props) => {
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
+    const getChallanDetails = (chassi, engineNo) => {
+        if (engineNo && chassi) {
+            const extraParams = [
+                {
+                    key: 'chassisNumber',
+                    title: 'chassisNumber',
+                    value: chassi,
+                    name: 'Chassis Number',
+                },
+                {
+                    key: 'engineNumber',
+                    title: 'engineNumber',
+                    value: engineNo,
+                    name: 'Engine Number',
+                },
+            ];
 
+            fetchChallanList({ setIsLoading: listChallanShowLoading, extraParams, userId, onErrorAction });
+        }
+    };
     useEffect(() => {
         if (formActionType.addMode && !soldByDealer) {
             form.setFieldsValue({
@@ -191,6 +222,7 @@ export const InvoiceDetailsMasterBase = (props) => {
         userId,
         handleRelationShipManagerChange,
         setButtonData,
+        getChallanDetails,
     };
 
     const viewProps = {

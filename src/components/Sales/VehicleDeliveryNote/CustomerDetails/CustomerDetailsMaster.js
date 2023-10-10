@@ -76,7 +76,7 @@ export const CustomerDetailsMasterBase = (props) => {
             setFormData({ ...customerDetailsData, customerType: typeData?.[PARAM_MASTER?.CUST_TYPE?.id]?.find((customer) => customer?.key === customerDetailsData?.customerType)?.value });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [customerDetailsData]);
+    }, [customerDetailsData, section]);
     useEffect(() => {
         return () => {
             resetData();

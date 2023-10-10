@@ -85,19 +85,11 @@ const CancellationMasterBase = (props) => {
     };
 
     useEffect(() => {
-        if (userId && (!isProductDataLoaded || productCode !== selectedOrder?.modelCode) && selectedOrder?.modelCode) {
+        if (userId) {
             const extraParams = [
                 {
                     key: 'unit',
                     value: 'Sales',
-                },
-                {
-                    key: 'prodctCode',
-                    value: selectedOrder?.modelCode,
-                },
-                {
-                    key: 'hierarchyNode',
-                    value: 'MV',
                 },
             ];
             fetchProductHierarchyList({ setIsLoading: listShowLoading, userId, extraParams });

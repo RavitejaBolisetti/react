@@ -16,7 +16,7 @@ const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
     const { formData, isLoading } = props;
-    const [activeKey, setactiveKey] = useState([]);
+    const [activeKey, setactiveKey] = useState([1, 2]);
     const viewProps = {
         bordered: false,
         colon: false,

@@ -6,7 +6,7 @@
 import React, { useState } from 'react';
 import { Col, Input, Form, Row, Select, DatePicker, Collapse, Card, Divider } from 'antd';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { formattedCalendarDate } from 'utils/formatDateTime';
+import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
 
 import { expandIcon } from 'utils/accordianExpandIcon';
 
@@ -62,12 +62,12 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                         <Form.Item initialValue={formattedCalendarDate(schemeForm?.validFrom)} label="Valid From" name="validFrom">
-                                            <DatePicker placeholder={preparePlaceholderText('Valid From')} onChange={onChange} {...disabledProps} />
+                                            <DatePicker format={dateFormat} placeholder={preparePlaceholderText('Valid From')} onChange={onChange} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                         <Form.Item initialValue={formattedCalendarDate(schemeForm?.validTo)} label="Valid To" name="validTo">
-                                            <DatePicker placeholder={preparePlaceholderText('Valid To')} onChange={onChange} {...disabledProps} />
+                                            <DatePicker format={dateFormat} placeholder={preparePlaceholderText('Valid To')} onChange={onChange} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
                                 </Row>

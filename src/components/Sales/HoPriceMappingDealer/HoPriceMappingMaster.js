@@ -172,6 +172,12 @@ export const HoPriceMappingMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
+    useEffect(() => {
+        if (filterString && isAdvanceSearchVisible) {
+            advanceFilterForm.setFieldsValue({ ...filterString });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isAdvanceSearchVisible, filterString]);
 
     const extraParams = useMemo(() => {
         return [
@@ -306,8 +312,7 @@ export const HoPriceMappingMasterBase = (props) => {
 
     const handleResetFilter = () => {
         setShowDataLoading(false);
-        setFilterString();
-        advanceFilterForm.resetFields();
+        advanceFilterForm.setFieldsValue({ stateCode: undefined, cityCode: undefined, modelCode: undefined });
         setFilteredCityData([]);
     };
 

@@ -91,10 +91,14 @@ export const EmbeddedReportMasterBase = (props) => {
 
     useEffect(() => {
         let sExtraParamsString = '&rp:';
+
         additionalParams?.forEach((item, index) => {
             sExtraParamsString += item?.value && item?.key ? item?.value && item?.key + '=' + item?.value + '&' : '';
         });
+
         sExtraParamsString = sExtraParamsString.substring(0, sExtraParamsString.length - 1);
+        sExtraParamsString += '&rdl:reportView=pageView';
+
         const embedUrl = data?.embedReports?.[0]?.embedUrl ? data?.embedReports?.[0]?.embedUrl.concat(sExtraParamsString) : '';
 
         setReportConfig({
