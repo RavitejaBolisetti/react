@@ -15,7 +15,7 @@ import { PartNameListModal } from './PartNameListModal';
 const { TextArea } = Input;
 const { Search } = Input;
 
-function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, editCardForm, formData, selectedOrderId, partNameSearchVisible, setPartNameSearchVisible, handleFormValueChange, showGlobalNotification, onSearchPart, setsearchData, searchData, addButtonDisabled, setaddButtonDisabled, setAddOnItemInfo, addOnItemInfo, AddonPartsData, onCancel, accessoryForm, onFieldsChange, onFinish, isEditing, isBtnDisabled, setIsBtnDisabled, finalFormdata, documentTypeDescription, documentTypeCode }) {
+function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, editCardForm, selectedOrderId, partNameSearchVisible, setPartNameSearchVisible, handleFormValueChange, showGlobalNotification, onSearchPart, setsearchData, searchData, addButtonDisabled, setaddButtonDisabled, setAddOnItemInfo, AddonPartsData, onCancel, accessoryForm, onFieldsChange, isBtnDisabled }) {
     const disableProp = { disabled: true };
     const [selectedRowData, setSelectedRowData] = useState();
 
@@ -86,9 +86,6 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
         handleSelectedData,
     };
 
-    const resetSearchFields = () => {
-        accessoryForm.resetFields(['partName']);
-    };
     return (
         <>
             <Form autoComplete="off" form={accessoryForm} onFieldsChange={onFieldsChange} layout="vertical" onFinishFailed={onFinishFailed}>
@@ -165,10 +162,10 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.buttonsGroup}>
                     {addButtonDisabled?.partDetailsResponses ? (
                         <>
-                            <Button  disabled={isBtnDisabled} onClick={handleAccesoriesForm} type="primary">
+                            <Button disabled={isBtnDisabled} onClick={handleAccesoriesForm} type="primary">
                                 Add
                             </Button>
-                            <Button  danger onClick={onCancel}>
+                            <Button danger onClick={onCancel}>
                                 Cancel
                             </Button>
                         </>
