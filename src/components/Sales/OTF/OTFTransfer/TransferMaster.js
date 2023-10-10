@@ -83,12 +83,12 @@ const TransferMasterBase = (props) => {
     };
 
     useEffect(() => {
-        if (userId) {
+        if (userId && selectedOrder?.modelCode) {
             reset();
-            fetchDealerLocations({ customURL: customURL + '?locationType=S', setIsLoading: locationDataLoding, userId });
+            fetchDealerLocations({ customURL: customURL + '?locationType=S&modelCode=' + selectedOrder?.modelCode, setIsLoading: locationDataLoding, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
+    }, [userId, selectedOrder]);
 
     const handleOtfTransferLocationChange = (value) => {
         if (!value) {
