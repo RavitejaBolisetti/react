@@ -145,4 +145,26 @@ export const EMBEDDED_REPORTS = {
         type: 'Document',
         slug: '',
     },
+    CO_DEALER_INVOICE_REPORT: {
+        id: 20,
+        key: 'Co_Dealer_Invoice_Report',
+        title: 'Co Dealer Invoice Report ',
+        type: 'Report',
+        slug: 'co-dealer-invoice-report',
+    },
+    ON_ROAD_PRICE_DETAIL_SUMMARY_REPORT: {
+        id: 21,
+        key: 'On_Road_Price_Detail_Summary_Report',
+        title: 'On Road Price Detail Summary Report ',
+        type: 'Report',
+        slug: 'on-road-price-detail-summary-Report',
+    },
+    RSA_REPORT: {
+        id: 22,
+        key: 'RSA_Report',
+        title: 'RSA Report ',
+        type: 'Report',
+        slug: 'rsa-report',
+    },
+
 };

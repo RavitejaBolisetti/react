@@ -80,7 +80,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const AddOnDetailsMasterMain = (props) => {
     const { listSchemeShowLoading, selectedInvoiceId, typeData, requestPayload, setRequestPayload, showGlobalNotification, AddonPartsData, AddonDetailsData, userId, listShowLoading, saveData, onFinishFailed } = props;
     const { form, section, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick, setButtonData, buttonData, listRelationshipMangerShowLoading, fetchRelationshipManger, relationshipManagerData, deliveryNoteMasterData } = props;
-    const { isDataLoaded } = props;
+    const { selectedOrder } = props;
 
     const { isAmcLoaded, schemeAmcData, isRsaLoaded, schemeRsaData, isShieldLoaded, schemeShieldData } = props;
     const { fetchAmc, listAmcLoading } = props;
@@ -99,10 +99,6 @@ export const AddOnDetailsMasterMain = (props) => {
     const [schemeDescriptionDatamain, setSchemeDescriptionData] = useState({ Shield: [], RSA: [], AMC: [] });
     const [registerDisabled, setRegisterDisabled] = useState({ Shield: false, RSA: false, AMC: false });
 
-    const onSuccessAction = (res) => {
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-    };
-
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
@@ -112,12 +108,12 @@ export const AddOnDetailsMasterMain = (props) => {
     };
 
     useEffect(() => {
-        if (selectedInvoiceId && userId) {
+        if (selectedOrder?.invoicehdrId && userId) {
             const extraParams = [
                 {
                     key: 'invoiceNumber',
                     title: 'invoiceNumber',
-                    value: selectedInvoiceId,
+                    value: selectedOrder?.invoicehdrId,
                     name: 'Invoice Number',
                 },
             ];
@@ -126,25 +122,10 @@ export const AddOnDetailsMasterMain = (props) => {
             fetchSheild({ setIsLoading: listSheildLoaing, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedInvoiceId, userId]);
+    }, [selectedOrder?.invoicehdrId, userId]);
     useEffect(() => {
         if (isAmcLoaded && isRsaLoaded && isShieldLoaded) {
             setSchemeDescriptionData((prev) => ({ ...prev, AMC: schemeAmcData, RSA: schemeRsaData, Shield: schemeShieldData }));
-        }
-        if (deliveryNoteMasterData?.deliveryNoteAddOnDetails) {
-            const DisableFormData = deliveryNoteMasterData?.deliveryNoteAddOnDetails;
-            if (DisableFormData?.sheildRequest && Object?.keys(DisableFormData?.sheildRequest)?.length) {
-                setRegisterDisabled((prev) => ({ ...prev, Shield: true }));
-                setMultipleFormData((prev) => ({ ...prev, sheildRequest: { ...DisableFormData?.sheildRequest, mappedInDelivery: false } }));
-            }
-            if (DisableFormData?.rsaRequest && Object?.keys(DisableFormData?.rsaRequest)?.length) {
-                setRegisterDisabled((prev) => ({ ...prev, RSA: true }));
-                setMultipleFormData((prev) => ({ ...prev, rsaRequest: { ...DisableFormData?.rsaRequest, mappedInDelivery: false } }));
-            }
-            if (DisableFormData?.amcRequest && Object?.keys(DisableFormData?.amcRequest)?.length) {
-                setRegisterDisabled((prev) => ({ ...prev, AMC: true }));
-                setMultipleFormData((prev) => ({ ...prev, amcRequest: { ...DisableFormData?.amcRequest, mappedInDelivery: false } }));
-            }
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -154,6 +135,16 @@ export const AddOnDetailsMasterMain = (props) => {
         if (AddonDetailsData) {
             form.setFieldsValue({ ...AddonDetailsData });
             setFormData({ ...AddonDetailsData });
+            if (AddonDetailsData?.sheildRequest) {
+                setRegisterDisabled((prev) => ({ ...prev, Shield: true }));
+            }
+            if (AddonDetailsData?.rsaRequest) {
+                setRegisterDisabled((prev) => ({ ...prev, RSA: true }));
+            }
+
+            if (AddonDetailsData?.amcRequest) {
+                setRegisterDisabled((prev) => ({ ...prev, AMC: true }));
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [AddonDetailsData, section]);
@@ -185,19 +176,23 @@ export const AddOnDetailsMasterMain = (props) => {
             switch (key) {
                 case 'sheildRequest':
                     setMultipleFormData({ ...muiltipleFormData, sheildRequest: shieldForm.getFieldsValue() });
+                    setRegisterDisabled((prev) => ({ ...prev, Shield: true }));
                     break;
                 case 'rsaRequest':
                     setMultipleFormData({ ...muiltipleFormData, rsaRequest: rsaForm.getFieldsValue() });
+                    setRegisterDisabled((prev) => ({ ...prev, RSA: true }));
                     break;
                 case 'amcRequest':
                     setMultipleFormData({ ...muiltipleFormData, amcRequest: amcForm.getFieldsValue() });
+                    setRegisterDisabled((prev) => ({ ...prev, AMC: true }));
                     break;
 
                 default:
                     return;
                     break;
             }
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Scheme has been successfully registered' });
+            const message = !muiltipleFormData?.[key] ? 'registered' : 'saved';
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: `Scheme has been ${message} successfully` });
         });
     };
 
@@ -244,6 +239,7 @@ export const AddOnDetailsMasterMain = (props) => {
         schemeDescriptionDatamain,
         setRegisterDisabled,
         registerDisabled,
+        muiltipleFormData,
     };
 
     return (

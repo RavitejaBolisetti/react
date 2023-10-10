@@ -85,7 +85,7 @@ const CancellationMasterBase = (props) => {
     };
 
     useEffect(() => {
-        if (userId && (!isProductDataLoaded || productCode !== selectedOrder?.modelCode) && selectedOrder?.modelCode) {
+        if (userId) {
             const extraParams = [
                 {
                     key: 'unit',

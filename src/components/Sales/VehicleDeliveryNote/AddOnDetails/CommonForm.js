@@ -12,7 +12,7 @@ import { customSelectBox } from 'utils/customSelectBox';
 import styles from 'assets/sass/app.module.scss';
 
 const { Search } = Input;
-const CommonForm = ({ formData, typeData, formKey = 'Shield', addOnForm, openAccordian, formActionType, onSingleFormFinish, schemeDescriptionData, shieldForm, rsaForm, amcForm, registerDisabled, handleOnChange, relationshipManagerData, schemeDescriptionDatamain, isReadOnly = false }) => {
+const CommonForm = ({ formData, typeData, formKey = 'Shield', addOnForm, openAccordian, formActionType, onSingleFormFinish, registerDisabled, relationshipManagerData, schemeDescriptionDatamain, isReadOnly = false, handleEditRegister, handleCancelRegister, disableKey, muiltipleFormData }) => {
     const disableProps = { disabled: isReadOnly };
     const handleChange = (values) => {
         const code = openAccordian && schemeDescriptionDatamain.hasOwnProperty(openAccordian) && schemeDescriptionDatamain[openAccordian]?.find((item) => item?.schemeDescription === values);
@@ -66,15 +66,29 @@ const CommonForm = ({ formData, typeData, formKey = 'Shield', addOnForm, openAcc
                     <Input />
                 </Form.Item>
             </Row>
-            {!formActionType?.viewMode && (
-                <Row gutter={20}>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Button className={styles.marB20} type="primary" disabled={registerDisabled[openAccordian]} onClick={() => onSingleFormFinish(formKey, addOnForm)}>
-                            Register
-                        </Button>
-                    </Col>
-                </Row>
-            )}
+            {!formActionType?.viewMode &&
+                (!registerDisabled?.[openAccordian] ? (
+                    <Row gutter={20}>
+                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                            <Button className={styles.marB20} type="primary" onClick={() => onSingleFormFinish(formKey, addOnForm)}>
+                                {!muiltipleFormData?.[formKey]  ? 'Register' : 'Save'}
+                            </Button>
+                            {muiltipleFormData?.[formKey] && Object?.values(muiltipleFormData?.[formKey])?.length && (
+                                <Button onClick={() => handleCancelRegister(disableKey)} className={styles.marL20} danger>
+                                    Cancel
+                                </Button>
+                            )}
+                        </Col>
+                    </Row>
+                ) : (
+                    <Row gutter={20} justify="start">
+                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                            <Button onClick={() => handleEditRegister(disableKey)} className={styles.marB20} type="primary">
+                                Edit
+                            </Button>
+                        </Col>
+                    </Row>
+                ))}
         </>
     );
 };

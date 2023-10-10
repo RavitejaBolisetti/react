@@ -290,11 +290,11 @@ const HeaderMain = (props) => {
                 },
                 data: { userId, token: refreshToken },
                 onError: () => {
-                    showGlobalNotification({ notificationType: 'successBeforeLogin', title: 'Seesion Expired', message: 'Your session has expired. Please log in again to continue accessing the application.' });
+                    showGlobalNotification({ notificationType: 'successBeforeLogin', title: 'Session Expired', message: 'Your session has expired. Please log in again to continue accessing the application.' });
                     navigate(routing.ROUTING_LOGIN);
                 },
             });
-        }, 10 * 1000);
+        }, 90 * 1000);
 
         return () => {
             clearInterval(interval);
