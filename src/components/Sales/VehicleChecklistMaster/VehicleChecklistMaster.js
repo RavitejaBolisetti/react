@@ -84,7 +84,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId, isDataAttributeLoaded, showGlobalNotification, fetchVehicleChecklist, listShowLoadingVehicleChecklist, VehicleChecklistMasterList, VehicleChecklistAttributeLov, fetchVehicleChecklistAttributeLov, listShowLoadingVehicleChecklistAttributeLov, fetchModelLovList, listModelShowLoading, modelGroupData, saveData }) => {
+export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId, isDataAttributeLoaded, showGlobalNotification, fetchVehicleChecklist, listShowLoadingVehicleChecklist, VehicleChecklistMasterList, VehicleChecklistAttributeLov, fetchVehicleChecklistAttributeLov, listShowLoadingVehicleChecklistAttributeLov, fetchModelLovList, listModelShowLoading, modelGroupData, saveData, isVehicleChecklistMasterLoaded }) => {
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
     const [answerForm] = Form.useForm();
@@ -112,6 +112,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
     const [answerType, setAnswerType] = useState(false);
     const [answerData, setAnswerData] = useState([]);
     const [modelData, setModelData] = useState([]);
+    const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
 
     const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -190,16 +191,21 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formActionType, handleButtonClickChange]);
 
+    useEffect(() => {
+        if (isAddBtnClicked) {
+            console.log(`listShowLoadingVehicleChecklist`, isVehicleChecklistMasterLoaded);
+            form.setFieldsValue({ attributeLevel: VEHICLE_CHECKLIST_TYPE?.GROUP?.key, parentCode: buttonType });
+            setAttributeType(VEHICLE_CHECKLIST_TYPE?.GROUP?.key);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [buttonType, isAddBtnClicked]);
+
     const onChange = (e) => {
         setSearchValue(e.target.value);
     };
 
     const onChangeAnswerType = (val) => {
         setAnswerType(val);
-    };
-
-    const onAttributeChange = (attriVal) => {
-        setAttributeType(attriVal);
     };
 
     const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
@@ -256,21 +262,22 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
     };
 
     const onFinish = (values) => {
-        const recordId = values?.id || '';
         let parentCode = values?.parentCode === `DMS` ? buttonType : values?.parentCode;
+        let parentId = flatternData?.find((e) => e?.key === values?.parentCode)?.data?.id;
         let data = {};
-        let updatedData = { ...values, id: recordId, parentCode };
+        let updatedData = { ...values, id: values?.id || '', parentCode, parentId };
 
         if (values?.attributeLevel === 'GRP') {
             data = {
                 attributeLevel: values?.attributeLevel,
                 groupDto: {
                     ...updatedData,
+                    parentId: '',
                 },
             };
         } else if (values?.attributeLevel === 'SUBGRP') {
             data = {
-                parentId: parentCode,
+                parentId: parentId,
                 subGroupDto: {
                     children: {
                         ...updatedData,
@@ -279,7 +286,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
             };
         } else if (values?.attributeLevel === 'CHKL') {
             data = {
-                parentId: parentCode,
+                parentId: parentId,
                 checklistDto: {
                     children: {
                         ...updatedData,
@@ -337,6 +344,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
     const handleAdd = () => {
         setFormBtnActive(false);
         setIsFormVisible(true);
+        setIsAddBtnClicked(() => !isAddBtnClicked);
     };
 
     const handleButtonClick = (type) => {
@@ -417,7 +425,6 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
         modelEdit,
         setModelEdit,
         listShowLoadingVehicleChecklist,
-        onAttributeChange,
     };
 
     const viewProps = {

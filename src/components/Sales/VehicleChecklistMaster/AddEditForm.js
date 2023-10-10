@@ -55,7 +55,7 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Form.Item name="attributeLevel" label="Attribute Type" rules={[validateRequiredSelectField('Attribute Type Code')]}>
-                                    {customSelectBox({ data: VehicleChecklistAttributeLov, placeholder: preparePlaceholderSelect('Attribute Type Code'), disabled: listShowLoadingVehicleChecklist && VehicleChecklistMasterList?.length <= 0 ? false : true, onChange: onAttributeChange})}
+                                    {customSelectBox({ data: VehicleChecklistAttributeLov, placeholder: preparePlaceholderSelect('Attribute Type Code'), disabled: true })}
                                 </Form.Item>
                             </Col>
 
@@ -129,20 +129,20 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                 </Row>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item label="Status" name="status">
-                                            <Switch value={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status ? true : false} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status === true || null || undefined ? true : false} />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={0} sm={0} md={0} lg={0} xl={0}>
-                                        <Form.Item name="id" label="" />
-                                    </Col>
-                                </Row>
                                 <ModelFormCardMaster {...props} />
                                 {answerType === ANSWER_TYPES?.Fixed?.key && <AnswerFormCardMaster {...props} />}
                             </>
                         ) : null}
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <Form.Item label="Status" name="status">
+                                    <Switch value={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status ? true : false} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status === true || null || undefined ? true : false} />
+                                </Form.Item>
+                            </Col>
+                            <Col xs={0} sm={0} md={0} lg={0} xl={0}>
+                                <Form.Item name="id" label="" />
+                            </Col>
+                        </Row>
                     </Col>
                 </Row>
 

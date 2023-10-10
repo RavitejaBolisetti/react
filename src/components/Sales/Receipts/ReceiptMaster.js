@@ -384,6 +384,7 @@ export const ReceiptMasterBase = (props) => {
     };
 
     const handlePrintDownload = (record) => {
+        console.log(`record`, record);
         setReportVisible(true);
         setAdditionalReportParams([
             {
