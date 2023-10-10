@@ -6,14 +6,11 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Form, Row, Input, Empty } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
-
+import { Col, Form, Row, Input, Empty } from 'antd';
 import { HierarchyFormButton } from 'components/common/Button';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { ViewDetails } from './ViewDetails';
 import TreeSelectField from '../../common/TreeSelectField';
-import { cancellationDataActions } from 'store/actions/data/otf/otfCancellation';
 
 import { ManufacturerAdminHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy/manufacturerAdminHierarchy';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
@@ -28,9 +25,8 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { DisableParent } from 'components/common/ProductHierarchy/ProductHierarchyUtils';
 
 import LeftPanel from 'components/common/LeftPanel';
-//import styles from 'components/common/Common.module.css';
-import styles from 'assets/sass/app.module.scss';
 
+import styles from 'assets/sass/app.module.scss';
 
 import { LANGUAGE_EN } from 'language/en';
 
@@ -49,7 +45,6 @@ const mapStateToProps = (state) => {
             },
 
             ProductHierarchy: { isLoaded: isProductDataLoaded = false, data: productHierarchyData = [], organizationId = '' },
-
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -113,8 +108,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const OtfBlockMasterMain = (props) => {
-    const { viewTitle, manufacturerAdminHierarchyData, fetchList, resetData, otfBlockMasterData, productHierarchyData, listOTFBlockShowLoading, fetchOTFBlockList, setSelectedOrganizationId, organizationId, saveOTFBlockData, isDataAttributeLoaded, attributeData, fetchProductDataList, listProductLoading, hierarchyAttributeListShowLoading } = props;
-    const { isDataOrgLoaded, isDataLoaded, manufacturerOrgHierarchyData, fetchOrgList } = props;
+    const { viewTitle, manufacturerAdminHierarchyData, fetchList, resetData, otfBlockMasterData, productHierarchyData, listOTFBlockShowLoading, fetchOTFBlockList, setSelectedOrganizationId, organizationId, saveOTFBlockData, isDataAttributeLoaded, attributeData, fetchProductDataList, listProductLoading } = props;
+    const { isDataOrgLoaded, manufacturerOrgHierarchyData, fetchOrgList } = props;
     const { detailData, userId, listShowLoading, showGlobalNotification, moduleTitle } = props;
     const { AdminDetailData, ManufacturerAdminHierarchyDetailLoading } = props;
 
@@ -287,14 +282,8 @@ export const OtfBlockMasterMain = (props) => {
         setFormBtnActive(true);
     };
 
-    const handleAdd = () => {
-        setIsFormVisible(true);
-        setFormBtnActive(false);
-    };
-
     const handleButtonClick = (type) => {
         switch (type) {
-
             case FROM_ACTION_TYPE.EDIT: {
                 setFormData(otfBlockMasterData);
                 break;
@@ -351,9 +340,6 @@ export const OtfBlockMasterMain = (props) => {
 
         saveOTFBlockData(requestData);
     };
-
-    const onFinishFailed = (errorInfo) => {};
-
     const myProps = {
         isTreeViewVisible,
         handleTreeViewVisiblity,
@@ -391,7 +377,6 @@ export const OtfBlockMasterMain = (props) => {
         handleResetBtn,
         buttonData,
         titleOverride: (formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
-        onFinishFailed,
         isFormBtnActive,
         setFormBtnActive,
         manufacturerAdminHierarchyData,
@@ -467,7 +452,7 @@ export const OtfBlockMasterMain = (props) => {
             <div className={styles.contentHeaderBackground}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={18} lg={18} xl={18}>
-                        <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onfinishHeader} onFinishFailed={onFinishFailed}>
+                        <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onfinishHeader}>
                             <Form.Item label={`${title}`} name="code">
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>
