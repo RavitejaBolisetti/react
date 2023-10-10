@@ -245,7 +245,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
 
                 const attributeName = VehicleChecklistAttributeLov?.find((e) => e?.key === formData?.data?.attributeLevel)?.value;
                 const attributeParentName = flatternData.find((i) => formData?.data?.parentCode === i.key)?.data?.descriptionTitle;
-                const answerTypeName = formData?.data?.attributeLevel === 'CHKL' ? typeData?.CHKL_ANS_TYPE?.find((e) => e?.key === formData?.data?.answerType)?.value : null;
+                const answerTypeName = formData?.data?.attributeLevel === VEHICLE_CHECKLIST_TYPE?.CHECKLIST?.key ? typeData?.CHKL_ANS_TYPE?.find((e) => e?.key === formData?.data?.answerType)?.value : null;
                 setFormData({ ...formData?.data, parentName: attributeParentName, attributeName, answerTypeName });
                 setModelData(formData?.data?.model?.length > 0 ? [...formData?.data?.model] : []);
                 setAnswerData(formData?.data?.answer?.length > 0 ? [...formData?.data?.answer] : []);
@@ -271,7 +271,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
         let data = {};
         let updatedData = { ...values, id: values?.id || '', parentCode, parentId };
 
-        if (values?.attributeLevel === 'GRP') {
+        if (values?.attributeLevel === VEHICLE_CHECKLIST_TYPE?.GROUP?.key) {
             data = {
                 attributeLevel: values?.attributeLevel,
                 groupDto: {
@@ -279,7 +279,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
                     parentId: '',
                 },
             };
-        } else if (values?.attributeLevel === 'SUBGRP') {
+        } else if (values?.attributeLevel === VEHICLE_CHECKLIST_TYPE?.SUB_GROUP?.key) {
             data = {
                 attributeLevel: values?.attributeLevel,
                 subGroupDto: {
@@ -291,7 +291,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
                     ],
                 },
             };
-        } else if (values?.attributeLevel === 'CHKL') {
+        } else if (values?.attributeLevel === VEHICLE_CHECKLIST_TYPE?.CHECKLIST?.key) {
             data = {
                 attributeLevel: values?.attributeLevel,
                 checklistDto: {
@@ -317,15 +317,15 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
 
                 const attributeName = VehicleChecklistAttributeLov?.find((e) => e?.key === res?.data?.attributeLevel)?.value;
 
-                if (res?.data?.attributeLevel === 'GRP') {
+                if (res?.data?.attributeLevel === VEHICLE_CHECKLIST_TYPE?.GROUP?.key) {
                     const attributeParentName = flatternData.find((i) => res?.data?.groupDto?.parentCode === i.key)?.data?.descriptionTitle;
                     setFormData({ ...res?.data?.groupDto, parentName: attributeParentName, attributeName });
                     setSelectedTreeKey([res?.data?.groupDto?.code]);
-                } else if (res?.data?.attributeLevel === 'SUBGRP') {
+                } else if (res?.data?.attributeLevel === VEHICLE_CHECKLIST_TYPE?.SUB_GROUP?.key) {
                     const attributeParentName = flatternData.find((i) => res?.data?.subGroupDto?.children?.[0]?.parentCode === i.key)?.data?.descriptionTitle;
                     setFormData({ ...res?.data?.subGroupDto?.children?.[0], parentName: attributeParentName, attributeName });
                     setSelectedTreeKey([res?.data?.subGroupDto?.children?.[0]?.code]);
-                } else if (res?.data?.attributeLevel === 'CHKL') {
+                } else if (res?.data?.attributeLevel === VEHICLE_CHECKLIST_TYPE?.CHECKLIST?.key) {
                     const attributeParentName = flatternData.find((i) => res?.data?.checklistDto?.children?.[0]?.parentCode === i.key)?.data?.descriptionTitle;
                     setFormData({ ...res?.data?.checklistDto?.children?.[0], parentName: attributeParentName, attributeName });
                     setSelectedTreeKey([res?.data?.checklistDto?.children?.[0]?.code]);
