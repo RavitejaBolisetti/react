@@ -16,8 +16,8 @@ import styles from 'assets/sass/app.module.scss';
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
-        data: {},
     } = state;
+
     const moduleTitle = 'Insurance Details';
 
     let returnValue = {
@@ -56,6 +56,7 @@ const InsuranceDetailsMasterBase = (props) => {
     }, [section]);
 
     const viewProps = {
+        ...props,
         styles,
         onCloseAction,
         formData,

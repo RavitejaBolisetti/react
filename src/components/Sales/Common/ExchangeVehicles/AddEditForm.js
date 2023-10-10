@@ -48,7 +48,7 @@ const AddEditFormMain = (props) => {
             </Row>
             {(form.getFieldValue('exchange') || formData?.exchange === 1) && (
                 <>
-                    <CustomerListMaster fnSetData={fnSetData} defaultOption={'registrationNumber'} />
+                    {!viewOnly && <CustomerListMaster fnSetData={fnSetData} defaultOption={'registrationNumber'} />}
 
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>

@@ -26,7 +26,7 @@ export const tableColumn = ({ handleButtonClick, typeData }) => {
             dataIndex: 'requestStatus',
             width: '20%',
             render: (__, value) => {
-                return checkAndSetDefaultValue(getCodeValue(typeData?.INV_DEL_NOT_REQ_TYP, value?.requestStatus));
+                return checkAndSetDefaultValue(getCodeValue(typeData?.CDLR_INV_APP_STATUS, value?.requestStatus));
             },
         }),
 

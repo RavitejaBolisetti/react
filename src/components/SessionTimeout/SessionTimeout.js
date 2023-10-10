@@ -18,7 +18,8 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 const mapStateToProps = (state) => {
     const {
-        auth: { userId, refreshToken },
+        auth: { userId, isLoggedIn, refreshToken },
+
         data: {
             ConfigurableParameterEditing: { isLoaded, data: configData = [] },
         },
@@ -27,6 +28,7 @@ const mapStateToProps = (state) => {
     return {
         userId,
         refreshToken,
+        isLoggedIn,
         isLoaded,
         timeOutConfig: configData?.find((i) => i.controlId === 'STOUT'),
     };
@@ -44,7 +46,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const SessionTimeoutMain = ({ doLogout, doRefreshToken, showGlobalNotification, refreshToken, userId, isLoaded, configData, timeOutConfig }) => {
+const SessionTimeoutMain = ({ isLoggedIn, doLogout, doRefreshToken, showGlobalNotification, refreshToken, userId, timeOutConfig }) => {
     const navigate = useNavigate();
     const [timeOutSetting, setTimeOutSetting] = useState({ timeout: 180_000, promptBeforeIdle: 30_000 });
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -81,6 +83,7 @@ const SessionTimeoutMain = ({ doLogout, doRefreshToken, showGlobalNotification, 
     const onPrompt = () => {
         setIsModalOpen(true);
     };
+
     const { getRemainingTime, activate } = useIdleTimer({
         onIdle,
         onActive,

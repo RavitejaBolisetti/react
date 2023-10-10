@@ -17,8 +17,10 @@ describe('Vehicle invoice form-button components', () => {
             approveCancelBtn: true,
             nextBtn: true,
             saveBtn: true,
+            printForm21Btn: true,
+            printInvoiceBtn: true,
         };
-        customRender(<VehicleInvoiceFormButton setButtonData={jest.fn()} buttonData={buttonData} handleButtonClick={jest.fn()} />);
+        customRender(<VehicleInvoiceFormButton setButtonData={jest.fn()} onPrintInvoice={jest.fn()} onPrintForm21={jest.fn()} buttonData={buttonData} handleButtonClick={jest.fn()} />);
 
         const closeBtn = screen.getByRole('button', { name: 'Close' });
         fireEvent.click(closeBtn);
@@ -35,5 +37,11 @@ describe('Vehicle invoice form-button components', () => {
         fireEvent.click(canceReciptBtn);
         const nextBtnn = screen.getByRole('button', { name: 'Next' });
         fireEvent.click(nextBtnn);
+
+        const printForm = screen.getByRole('button', { name: 'Print Form 21' });
+        fireEvent.click(printForm);
+
+        const printInvoice = screen.getByRole('button', { name: 'Print Invoice' });
+        fireEvent.click(printInvoice);
     });
 });

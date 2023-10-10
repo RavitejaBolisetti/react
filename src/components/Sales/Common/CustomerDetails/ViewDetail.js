@@ -43,7 +43,6 @@ const ViewDetailMain = (props) => {
 
     const customerDetail = (customerData) => (
         <Descriptions {...viewProps}>
-            {console.log(customerData)}
             <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(customerData?.mobileNumber, isLoading)}</Descriptions.Item>
             <Descriptions.Item label="Customer ID">{checkAndSetDefaultValue(customerData?.customerId, isLoading)}</Descriptions.Item>
             <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(customerData?.customerName, isLoading)}</Descriptions.Item>

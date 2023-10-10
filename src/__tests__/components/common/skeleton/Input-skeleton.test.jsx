@@ -40,4 +40,10 @@ describe('InputSkeleton', () => {
         const skeleton = container.querySelector('.react-loading-skeleton');
         expect(skeleton).toBeInTheDocument();
     });
+
+    it('renders the skeleton with any theme correctly', () => {
+        const { container } = customRender(<InputSkeleton theme="any" count={2} />);
+        const skeleton = container.querySelector('.react-loading-skeleton');
+        expect(skeleton).toBeInTheDocument();
+    });
 });

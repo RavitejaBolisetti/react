@@ -134,6 +134,7 @@ export const FinananceDetailsMasterBase = (props) => {
     };
 
     const viewProps = {
+        ...props,
         formData,
         styles,
         isLoading,

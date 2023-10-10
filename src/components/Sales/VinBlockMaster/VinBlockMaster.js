@@ -84,7 +84,11 @@ export const VinBlockMasterBase = (props) => {
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-    const [page, setPage] = useState({ pageSize: 10, current: 1 });
+    useEffect(() => {
+        setFilterString({ ...filterString, pageSize: 10, current: 1 });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);    
+    
     const dynamicPagination = true;
 
     const onSuccessAction = (res) => {
@@ -99,12 +103,8 @@ export const VinBlockMasterBase = (props) => {
         showGlobalNotification({ message: res });
     };
 
-    useEffect(() => {
-        if (filterString) {
-            setPage({ ...page, current: 1 });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString]);
+   
+    
     const extraParams = useMemo(() => {
         return [
             {
@@ -135,39 +135,41 @@ export const VinBlockMasterBase = (props) => {
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: page?.pageSize,
+                value: filterString?.pageSize ?? 10,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: page?.current,
+                value: filterString?.current,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'sortBy',
                 title: 'Sort By',
-                value: page?.sortBy,
+                value: filterString?.sortBy,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'sortIn',
                 title: 'Sort Type',
-                value: page?.sortType,
+                value: filterString?.sortType,
                 canRemove: true,
                 filter: false,
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, page]);
+    }, [filterString]);
 
+    
     useEffect(() => {
-        if (userId) {
+        if (userId && extraParams?.find((i) => i.key === 'pageNumber')?.value > 0) {
+            setShowDataLoading(true);
             fetchVinBlockList({ setIsLoading: listVinShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
-        }
+}
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, extraParams]);
 
@@ -188,10 +190,10 @@ export const VinBlockMasterBase = (props) => {
                 },
             });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
-        console.log('hadleclick');
         form.resetFields();
         showLoading(true);
         setFormData(record);
@@ -203,21 +205,26 @@ export const VinBlockMasterBase = (props) => {
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
     };
-
+    const setPage = (page) => {
+        setFilterString({ ...filterString, ...page });
+    };
     const tableProps = {
         dynamicPagination,
+        filterString,
         totalRecords,
-        page,
-        setPage,
+        setPage: setPage,
         isLoading: showDataLoading,
         tableColumn: tableColumn(handleButtonClick),
         tableData: vinData,
     };
 
-    const handleResetFilter = () => {
-        setFilterString();
+    const handleResetFilter = (e) => {
+        const { pageSize } = filterString;
+        if (filterString) {
+            setShowDataLoading(true);
+        }
+        setFilterString({ pageSize, current: 1 });
         searchForm.resetFields();
-        setShowDataLoading(false);
     };
 
     const drawerTitle = useMemo(() => {

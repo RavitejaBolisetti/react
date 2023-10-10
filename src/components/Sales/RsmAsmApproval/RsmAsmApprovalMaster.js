@@ -75,7 +75,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const RsmAsmApprovalMasterBase = (props) => {
     const { fetchList, saveData, listShowLoading, userId, data, totalRecords, showGlobalNotification } = props;
     const { typeData } = props;
-    const { filterString, setFilterString, isDetailLoaded, fetchDetail } = props;
+    const { filterString, setFilterString, isDetailLoaded } = props;
 
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
@@ -225,12 +225,15 @@ export const RsmAsmApprovalMasterBase = (props) => {
     };
 
     const handleResetFilter = (e) => {
+        form.resetFields();
+        advanceFilterForm.resetFields();
+        advanceFilterForm.setFieldsValue();
         if (filterString) {
-            const { invoiceActionStatus, ...rest } = filterString;
-            if (rest?.invoiceActionStatus) {
+            const { invoiceStatusType, ...rest } = filterString;
+            if (rest?.invoiceStatusType) {
                 setShowDataLoading(true);
             }
-            setFilterString({ invoiceActionStatus: invoiceActionStatus });
+            setFilterString({ invoiceStatusType: invoiceStatusType });
         }
     };
 
@@ -244,10 +247,8 @@ export const RsmAsmApprovalMasterBase = (props) => {
     };
 
     const handleSearchChange = (value) => {
-        console.log('value', value);
         const searchValue = value.trim();
         if (!searchValue) {
-            console.log(searchValue);
             return;
         }
         setFilterString({ ...filterString, advanceFilter: true, searchParam: searchValue });
@@ -259,7 +260,7 @@ export const RsmAsmApprovalMasterBase = (props) => {
             action: values?.requestType,
             id: formData?.id,
             deliveryOrInvoiceId: formData?.deliveryOrInvoiceId,
-            requestType: getCodeValue(typeData?.DEL_INV_CAN_TYP, formData?.requestType),
+            requestType: formData?.requestType,
             cancelRemark: values?.rejectionRemark,
         };
 

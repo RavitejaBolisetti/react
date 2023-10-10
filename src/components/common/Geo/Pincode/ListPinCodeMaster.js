@@ -665,7 +665,6 @@ const ListPinCodeMasterBase = (props) => {
         tableData: data,
         showAddButton,
     };
-    console.log(extraParams);
     return (
         <>
             <AppliedAdvanceFilter {...advanceFilterResultProps} />

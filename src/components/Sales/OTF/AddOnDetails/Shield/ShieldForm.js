@@ -9,7 +9,7 @@ import { Row, Col, Input, Form } from 'antd';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 
-const ShieldForm = ({ formData, shieldForm, setformDataSetter, formDataSetter, formActionType, handleFormValueChange }) => {
+const ShieldForm = ({ formData, shieldForm, setFormDataSetter, formDataSetter, formActionType, handleFormValueChange }) => {
     const [isReadOnly, setisReadOnly] = useState(false);
     useEffect(() => {
         if ((formData === undefined || formData?.id === null || formData?.id === '') && !formActionType?.viewMode) {
@@ -27,7 +27,7 @@ const ShieldForm = ({ formData, shieldForm, setformDataSetter, formDataSetter, f
     const onFinishFailed = () => {};
     const onValuesChange = (values) => {
         const Myvalues = shieldForm.getFieldsValue();
-        setformDataSetter({ ...formDataSetter, shield: { ...Myvalues } });
+        setFormDataSetter({ ...formDataSetter, shield: { ...Myvalues } });
     };
 
     return (

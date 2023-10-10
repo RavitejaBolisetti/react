@@ -8,7 +8,7 @@ import { Row, Col, Input, Form } from 'antd';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 
-const AMCForm = ({ formData, amcForm, setformDataSetter, formDataSetter, formActionType, handleFormValueChange }) => {
+const AMCForm = ({ formData, amcForm, setFormDataSetter, formDataSetter, formActionType, handleFormValueChange }) => {
     const [isReadOnly, setisReadOnly] = useState(false);
 
     useEffect(() => {
@@ -27,7 +27,7 @@ const AMCForm = ({ formData, amcForm, setformDataSetter, formDataSetter, formAct
     const onFinishFailed = () => {};
     const onValuesChange = (values) => {
         const Myvalues = amcForm.getFieldsValue();
-        setformDataSetter({ ...formDataSetter, shield: { ...Myvalues } });
+        setFormDataSetter({ ...formDataSetter, shield: { ...Myvalues } });
     };
 
     return (

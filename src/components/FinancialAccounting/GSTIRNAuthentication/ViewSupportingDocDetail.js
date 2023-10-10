@@ -6,36 +6,34 @@
 import React from 'react';
 import { Card } from 'antd';
 
-import { FiDownload } from 'react-icons/fi';
+import { FiTrash, FiEye } from 'react-icons/fi';
 import styles from 'assets/sass/app.module.scss';
 
-
 export const ViewSupportingDocDetail = (props) => {
-    const { downloadFileFromButton, documentData } = props;
-
+    const { onDownload, onRemove, docData,  } = props;
     return (
         <div className={styles.viewDrawerContainer}>
-            {documentData?.supportingDocuments?.length > 0 ? (
+            {docData !== undefined ? (
                 <div className={styles.marT20}>
-                    {documentData?.supportingDocuments?.map((uploadData) => {
-                        return (
-                            <Card
-                                className={styles.viewDocumentStrip}
-                                key={uploadData.documentId}
-                                title={uploadData?.documentTitle}
-                                extra={
-                                    <>
-                                        <FiDownload onClick={() => downloadFileFromButton(uploadData)} />
-                                        {/* {!viewMode && <FiTrash onClick={() => deleteFile(uploadData)} />} */}
-                                    </>
-                                }
-                            ></Card>
-                        );
-                    })}
-                </div>
+                    <Card
+                        className={styles.viewDocumentStrip}
+                        key={docData?.documentId}
+                        title={docData?.pemFile}
+                        extra={
+                            <>
+                                <FiEye onClick={() => onDownload(docData.documentId)} />
+                                <FiTrash onClick={() => onRemove(docData.documentId)} />
+                            </>
+                        }
+                    ></Card>
+                 </div>
             ) : (
-                
-                <Card><div className={styles.marB20}>No Supporting Document Available</div></Card>
+            <>           
+                {/* <Card>
+                    <div className={styles.marB20}>No File Available</div>
+                </Card> */}
+                </>
+ 
             )}
         </div>
     );

@@ -9,7 +9,7 @@ import { bindActionCreators } from 'redux';
 
 import { Col, Form, Row } from 'antd';
 import dayjs from 'dayjs';
-import { tableColumn } from './tableColumn';
+import { tableColumnDeliveryNote, tableColumnDeliveryChallan } from './tableColumn';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
 import { ReportModal } from 'components/common/ReportModal/ReportModal';
@@ -31,6 +31,7 @@ import { validateDeliveryNote } from 'components/Sales/VehicleDeliveryNote/utils
 import { CancelDeliveryNote } from './CancelDeliveryNote';
 import { challanCancelVehicleDeliveryNoteDataActions } from 'store/actions/data/vehicleDeliveryNote/challanCancel';
 import { DeliverableChecklistMaindataActions } from 'store/actions/data/vehicleDeliveryNote';
+import { vehicleChallanDetailsDataActions } from 'store/actions/data/vehicleDeliveryNote/vehicleChallanDetails';
 import { DELIVERY_TYPE } from 'constants/modules/vehicleDetailsNotes.js/deliveryType';
 import { FORMTYPE_CONSTANTS } from './DeliverableChecklist';
 const mapStateToProps = (state) => {
@@ -40,6 +41,7 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             VehicleDeliveryNote: {
                 VehicleDeliveryNoteSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString, isDetailLoaded: isDeliveryDataLoaded = false, detailData: deliveryNoteMasterData = [] },
+                VehicleDetailsChallan: { isLoaded: isChallanDataLoaded = false, isChallanLoading, data: vehicleChallanData = {} },
             },
         },
     } = state;
@@ -57,6 +59,8 @@ const mapStateToProps = (state) => {
 
         deliveryNoteMasterData,
         isDeliveryDataLoaded,
+
+        vehicleChallanData,
     };
     return returnValue;
 };
@@ -77,6 +81,7 @@ const mapDispatchToProps = (dispatch) => ({
             cancelChallan: challanCancelVehicleDeliveryNoteDataActions.saveData,
 
             resetCheckListData: DeliverableChecklistMaindataActions.reset,
+            resetChallanData: vehicleChallanDetailsDataActions.reset,
 
             showGlobalNotification,
         },
@@ -88,7 +93,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     const { data, receiptDetailData, userId, resetData, fetchList, listShowLoading, saveData } = props;
     const { typeData, receiptType, partySegmentType, paymentModeType, documentType, moduleTitle, totalRecords, showGlobalNotification } = props;
     const { filterString, setFilterString, deliveryStatusList, cancelDeliveryNote, cancelShowLoading, cancelChallan, resetCheckListData } = props;
-    const { fetchDeliveryNoteMasterData, resetDeliveryNoteMasterData, deliveryNoteMasterData, isDeliveryDataLoaded } = props;
+    const { fetchDeliveryNoteMasterData, resetDeliveryNoteMasterData, deliveryNoteMasterData, isDeliveryDataLoaded, vehicleChallanData, resetChallanData } = props;
 
     const defaultRequestPayload = {
         deliveryNoteInvoiveDetails: {},
@@ -420,7 +425,6 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     };
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
-        console.log('record', record);
         form.resetFields();
         form.setFieldsValue(undefined);
         switch (buttonAction) {
@@ -528,7 +532,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
                 finalPayload = { ...rest, insuranceDto, vehicleDeliveryChecklist, invoiceNumber: selectedOrder?.invoicehdrId };
             }
         }
-        // console.log('finalPayload', finalPayload);
+
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
@@ -564,6 +568,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
 
     const onCloseAction = () => {
         resetDeliveryNoteMasterData();
+        resetChallanData();
         resetCheckListData();
         form.resetFields();
         form.setFieldsValue();
@@ -589,7 +594,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         totalRecords,
         setPage,
         page,
-        tableColumn: tableColumn({ handleButtonClick, actionButtonVisiblity }),
+        tableColumn: deliveryType === DELIVERY_TYPE.NOTE.key ? tableColumnDeliveryNote({ handleButtonClick, actionButtonVisiblity }) : tableColumnDeliveryChallan({ handleButtonClick, actionButtonVisiblity }),
         tableData: data,
         showAddButton: false,
         typeData,
@@ -655,6 +660,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
                     setIsFormVisible(false);
                     setCancelDeliveryNoteVisible(false);
                     cancelDeliveryNoteForm.resetFields();
+                    onCloseAction();
                 };
                 const onError = (message) => {
                     showGlobalNotification({ message });
@@ -811,7 +817,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         documentType,
         onCancelDeliveryNote,
         saveButtonName: isLastSection ? 'Submit' : 'Continue',
-        CancelDeliveryButtonName: soldByDealer ? 'Cancel Delivery Note' : 'Cancel Note',
+        CancelDeliveryButtonName: soldByDealer ? 'Cancel Delivery Note' : 'Cancel Challan',
         setLastSection,
         customerIdValue,
         setCustomerIdValue,
@@ -821,6 +827,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         setEngineChallanNumber,
         toolTipContent,
         deliveryNoteMasterData,
+        vehicleChallanData,
     };
 
     const reportDetail = EMBEDDED_REPORTS?.DELIVERY_NOTE_DOCUMENT;

@@ -32,16 +32,18 @@ const CardMapping = ({ index, AddEditFormProps, handleDelete, element, isEditing
     return (
         <>
             <Card className={styles.innerCollapse}>
-                <Row align="middle" className={styles.marB20}>
-                    <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
+                <Row justify="space-between">
+                    <Col xs={16} sm={16} md={16} lg={16} xl={16}>
                         <Space size="small">
                             <Text className={styles.headText}>{element?.partDescription}</Text>
                             <Text className={styles.headText}> {'|'}</Text>
                             <Text className={styles.headText}> {element?.partNumber}</Text>
                         </Space>
-                        <Text type="secondary" className={styles.subSection}>
-                            {`Required Quantity: ` + element?.requiredQuantity}
-                        </Text>
+                        <Row style={{ marginBottom: '8px' }}>
+                            <Text type="secondary" className={styles.subSection}>
+                                {`Required Quantity: ` + element?.requiredQuantity}
+                            </Text>
+                        </Row>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.buttonsGroupRight}>
                         <Space size="middle" className={isEditing || addButtonDisabled?.partDetailsResponses ? styles.disabledClass : ''}>

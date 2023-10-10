@@ -56,11 +56,11 @@ const mapDispatchToProps = (dispatch) => ({
 const VehicleDetailsMasterBase = (props) => {
     const { typeData, partySegmentType, vehicleChallanData } = props;
     const { userId, soldByDealer, setFormActionType, showGlobalNotification, isLoading, requestPayload } = props;
-    const { form, formActionType, fetchChallanList, listChallanShowLoading, handleButtonClick, handleFormValueChange, section, openAccordian, setOpenAccordian, fetchList, vehicleData, NEXT_ACTION, setRequestPayload } = props;
+    const { form, formActionType, handleButtonClick, handleFormValueChange, section, openAccordian, setOpenAccordian, fetchList, vehicleData, NEXT_ACTION, setRequestPayload } = props;
     const { buttonData, setButtonData } = props;
 
     const [regNumber, setRegNumber] = useState();
-    const [activeKey, setActiveKey] = useState([]);
+    const [activeKey, setActiveKey] = useState([1, 2]);
     const [otfNumber, setOtfNumber] = useState();
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -92,57 +92,58 @@ const VehicleDetailsMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
-    useEffect(() => {
-        if (!soldByDealer && !formActionType?.viewMode && userId) {
-            const chassi = requestPayload?.deliveryNoteInvoiveDetails?.chassisNumber;
-            const engineNo = requestPayload?.deliveryNoteInvoiveDetails?.engineNumber;
-            if (engineNo && chassi) {
-                const extraParams = [
-                    {
-                        key: 'chassisNumber',
-                        title: 'chassisNumber',
-                        value: chassi,
-                        name: 'Chassis Number',
-                    },
-                    {
-                        key: 'engineNumber',
-                        title: 'engineNumber',
-                        value: engineNo,
-                        name: 'Engine Number',
-                    },
-                ];
+    // useEffect(() => {
+    //     if (!soldByDealer && !formActionType?.viewMode && userId) {
+    //         const chassi = requestPayload?.deliveryNoteInvoiveDetails?.chassisNumber;
+    //         const engineNo = requestPayload?.deliveryNoteInvoiveDetails?.engineNumber;
+    //         const onSuccessAction = () => {
+    //             form.setFieldsValue({ ...vehicleChallanData });
+    //             setFormData({ ...vehicleChallanData });
+    //             setRequestPayload({ ...requestPayload, vehicleInformationDto: vehicleChallanData });
+    //         };
+    //         if (engineNo && chassi) {
+    //             const extraParams = [
+    //                 {
+    //                     key: 'chassisNumber',
+    //                     title: 'chassisNumber',
+    //                     value: chassi,
+    //                     name: 'Chassis Number',
+    //                 },
+    //                 {
+    //                     key: 'engineNumber',
+    //                     title: 'engineNumber',
+    //                     value: engineNo,
+    //                     name: 'Engine Number',
+    //                 },
+    //             ];
 
-                fetchChallanList({ setIsLoading: listChallanShowLoading, extraParams, userId, onErrorAction });
-            }
-        }
+    //             fetchChallanList({ setIsLoading: listChallanShowLoading, extraParams, userId, onErrorAction, onSuccessAction });
+    //         }
+    //     }
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [requestPayload, formActionType, soldByDealer, userId]);
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [section, formActionType, soldByDealer, userId]);
 
     useEffect(() => {
         if (vehicleData) {
             form.setFieldsValue({ ...vehicleData });
             setFormData({ ...vehicleData });
         }
-        if (!soldByDealer && vehicleChallanData) {
-            form.setFieldsValue({ ...vehicleChallanData });
-            setFormData({ ...vehicleChallanData });
-        }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [vehicleData, vehicleChallanData, soldByDealer]);
+    }, [vehicleData, soldByDealer, section, requestPayload]);
+
     useEffect(() => {
         setButtonData({ ...buttonData, formBtnActive: true });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [section]);
-
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
 
     const onFinish = (values) => {
         if (!soldByDealer) {
-            setRequestPayload({ ...requestPayload, vehicleDetails: values?.vinNumber ? { ...values } : { ...vehicleChallanData } });
+            setRequestPayload({ ...requestPayload, vehicleInformationDto: values?.vinNumber ? { ...values } : { ...vehicleChallanData }, vehicleDetails: values?.vinNumber ? { ...values } : { ...vehicleData } });
         }
         handleButtonClick({ buttonAction: NEXT_ACTION });
         setButtonData({ ...buttonData, formBtnActive: false });
