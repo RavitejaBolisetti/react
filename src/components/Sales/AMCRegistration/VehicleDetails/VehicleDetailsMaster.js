@@ -23,6 +23,7 @@ import { NoDataFound } from 'utils/noDataFound';
 
 import { AMC_CONSTANTS } from '../utils/AMCConstants';
 import styles from 'assets/sass/app.module.scss';
+import { formattedCalendarDate } from 'utils/formatDateTime';
 
 const { Text } = Typography;
 
@@ -147,7 +148,7 @@ const VehicleDetailsMasterBase = (props) => {
 
     const handleVinSearch = (value) => {
         const onVehicleSearchSuccessAction = (data) => {
-            contactform.setFieldsValue({ ...data?.data?.vehicleSearch[0], modelDescription: data?.data?.vehicleSearch[0].chassisNumber, vehicleRegistrationNumber: data?.data?.vehicleSearch[0].registrationNumber });
+            contactform.setFieldsValue({ ...data?.data?.vehicleSearch[0], modelDescription: data?.data?.vehicleSearch[0].chassisNumber, vehicleRegistrationNumber: data?.data?.vehicleSearch[0].registrationNumber, orignallyWarrantyStartDate: formattedCalendarDate(data?.data?.vehicleSearch[0].chassisNumber) });
         };
         const vehicleExtraParams = [
             {
