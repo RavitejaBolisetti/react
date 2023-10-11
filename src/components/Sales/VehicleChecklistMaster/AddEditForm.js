@@ -33,7 +33,6 @@ const AddEditFormMain = (props) => {
         treeFieldNames,
         treeData: VehicleChecklistMasterList,
         treeDisabled: true,
-        // formActionType === FROM_ACTION_TYPE?.CHILD || formActionType === FROM_ACTION_TYPE?.SIBLING
         selectedTreeSelectKey,
         handleSelectTreeClick,
         defaultValue: treeCodeId,
