@@ -10,7 +10,7 @@ import styles from 'assets/sass/app.module.scss';
 
 const { Search } = Input;
 const AddEditFormMain = (props) => {
-    const { form, formData, handleCustomerIdSearch, handleOnChange, soldByDealer, customerDetailsDataSearched } = props;
+    const { form, formData, handleCustomerIdSearch, handleOnChange, soldByDealer } = props;
     useEffect(() => {
         if (formData) {
             form.setFieldsValue({ ...formData });

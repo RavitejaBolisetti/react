@@ -115,9 +115,8 @@ export const InvoiceDetailsMasterBase = (props) => {
             form.setFieldsValue({
                 deliveryNoteFor: 'Directly Billed Vehicle',
             });
-            if (invoiceData?.chassisNumber && invoiceData?.engineNumber) {
-                setButtonData({ ...buttonData, formBtnActive: true });
-            }
+            const disableFormButton = invoiceData?.chassisNumber && invoiceData?.engineNumber;
+            setButtonData({ ...buttonData, formBtnActive: disableFormButton });
             setFormData((prev) => ({ ...prev, deliveryNoteFor: 'Directly Billed Vehicle' }));
         } else {
             form.setFieldsValue({

@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Form, Row, Col } from 'antd';
 
 import { ViewDetail } from './ViewDetail';
@@ -106,30 +106,35 @@ export const AddOnDetailsMasterMain = (props) => {
     const handleCollapse = (values) => {
         openAccordian?.includes(values) ? setOpenAccordian('') : setOpenAccordian([values]);
     };
+    const extraParams = useMemo(() => {
+        return [
+            {
+                key: 'invoiceNumber',
+                title: 'invoiceNumber',
+                value: selectedOrder?.invoicehdrId,
+                name: 'Invoice Number',
+            },
+        ];
+    }, [selectedOrder]);
 
     useEffect(() => {
         if (selectedOrder?.invoicehdrId && userId) {
-            const extraParams = [
-                {
-                    key: 'invoiceNumber',
-                    title: 'invoiceNumber',
-                    value: selectedOrder?.invoicehdrId,
-                    name: 'Invoice Number',
-                },
-            ];
-            fetchAmc({ setIsLoading: listAmcLoading, userId, extraParams, onErrorAction });
-            fetchRsa({ setIsLoading: listRsaLoading, userId, extraParams, onErrorAction });
             fetchSheild({ setIsLoading: listSheildLoaing, userId, extraParams, onErrorAction });
+            fetchRsa({ setIsLoading: listRsaLoading, userId, extraParams, onErrorAction });
+            // fetchAmc({ setIsLoading: listAmcLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedOrder?.invoicehdrId, userId]);
     useEffect(() => {
-        if (isAmcLoaded && isRsaLoaded && isShieldLoaded) {
-            setSchemeDescriptionData((prev) => ({ ...prev, AMC: schemeAmcData, RSA: schemeRsaData, Shield: schemeShieldData }));
+        if (isRsaLoaded && isShieldLoaded) {
+            setSchemeDescriptionData((prev) => ({ ...prev, RSA: schemeRsaData, Shield: schemeShieldData }));
+        }
+        if (isAmcLoaded && schemeAmcData) {
+            setSchemeDescriptionData((prev) => ({ ...prev, AMC: schemeAmcData }));
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isAmcLoaded, isRsaLoaded, isShieldLoaded, deliveryNoteMasterData]);
+    }, [isAmcLoaded, isRsaLoaded, isShieldLoaded, deliveryNoteMasterData, schemeAmcData]);
 
     useEffect(() => {
         if (AddonDetailsData) {
@@ -169,25 +174,33 @@ export const AddOnDetailsMasterMain = (props) => {
         fetchRelationshipManger({ setIsLoading: listRelationshipMangerShowLoading, userId, onErrorAction });
     };
     const getCodeValue = (data, key) => {
-        return data?.find((i) => i?.schemeDescription === key)?.schemeCode;
+        return data?.find((i) => i?.schemeDescription === key)?.id;
     };
     const onSingleFormFinish = (key, formName) => {
         formName.validateFields().then(() => {
             const formDataset = formName?.getFieldsValue();
             if (formDataset?.schemeCode) {
-                setMultipleFormData({ ...muiltipleFormData, [key]: formDataset });
+                setRequestPayload({ ...requestPayload, deliveryNoteAddOnDetails: { ...requestPayload?.deliveryNoteAddOnDetails, [key]: formDataset } });
             } else {
-                setMultipleFormData({ ...muiltipleFormData, [key]: { ...formDataset, schemeCode: getCodeValue(schemeDescriptionDatamain[openAccordian], formDataset?.schemeDescription) } });
+                setRequestPayload({ ...requestPayload, deliveryNoteAddOnDetails: { ...requestPayload?.deliveryNoteAddOnDetails, [key]: { ...formDataset, schemeCode: getCodeValue(schemeDescriptionDatamain[openAccordian], formDataset?.schemeDescription) } } });
             }
-
             setRegisterDisabled((prev) => ({ ...prev, [openAccordian]: true }));
-            const message = !muiltipleFormData?.[key] ? 'registered' : 'saved';
+            const message = !formData?.[key] ? 'registered' : 'saved';
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: `Scheme has been ${message} successfully` });
         });
     };
-
+    const handleAmcDescriptionData = (amcSchemeCode) => {
+        const params = [
+            ...extraParams,
+            {
+                key: 'type',
+                title: 'Amc Scheme code',
+                value: amcSchemeCode,
+            },
+        ];
+        fetchAmc({ setIsLoading: listAmcLoading, userId, extraParams: params, onErrorAction });
+    };
     const onFinish = () => {
-        setRequestPayload({ ...requestPayload, deliveryNoteAddOnDetails: muiltipleFormData });
         handleButtonClick({ buttonAction: NEXT_ACTION });
         setButtonData({ ...buttonData, formBtnActive: false });
     };
@@ -230,6 +243,7 @@ export const AddOnDetailsMasterMain = (props) => {
         setRegisterDisabled,
         registerDisabled,
         muiltipleFormData,
+        handleAmcDescriptionData,
     };
 
     return (
