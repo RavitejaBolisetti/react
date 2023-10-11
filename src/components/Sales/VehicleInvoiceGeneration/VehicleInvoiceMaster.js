@@ -419,7 +419,6 @@ export const VehicleInvoiceMasterBase = (props) => {
     const handleIRNGeneration = () => {
         const data = { otfNumber: selectedOtfNumber, invoiceNumber: selectedOrder?.invoiceNumber };
         const onSuccess = (res) => {
-            setShowDataLoading(true);
             setConfirmRequest(false);
             resetOtfData();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
