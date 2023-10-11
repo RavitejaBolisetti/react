@@ -299,7 +299,7 @@ const AssignUserRole = (props) => {
         handleFormFieldChange,
         onFinishFailed,
         userRoleDataList,
-        roleListdata,
+        roleListdata: roleListdata?.filter((i) => i?.roleType === userType),
         handleSelectRole,
         setSelectedRoleId,
         selectedRoleId,
