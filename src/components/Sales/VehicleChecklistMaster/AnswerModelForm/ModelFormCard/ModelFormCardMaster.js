@@ -29,9 +29,9 @@ export const ModelFormCardMaster = (props) => {
         });
     };
 
-    const handleChange = (value) => {
-        console.log(`selected ${value}`);
-    };
+    // const handleChange = (value) => {
+    //     //console.log(`selected ${value}`);
+    // };
 
     const cardAttributeProps = {
         modelForm,

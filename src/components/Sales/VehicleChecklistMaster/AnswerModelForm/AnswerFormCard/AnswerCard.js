@@ -32,7 +32,6 @@ const AnswerCard = (props) => {
 
     const answerSave = () => {
         let newFormData = editForm?.getFieldsValue();
-        console.log(`newFormData`, newFormData);
         const upd_obj = answerData?.map((obj) => {
             if (obj?.internalId === newFormData?.internalId) {
                 obj.answerCode = newFormData?.answerCode;
