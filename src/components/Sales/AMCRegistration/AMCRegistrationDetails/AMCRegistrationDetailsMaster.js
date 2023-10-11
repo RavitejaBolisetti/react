@@ -9,28 +9,64 @@ import { Form, Row, Col } from 'antd';
 import ViewDetail from './ViewDetail';
 import AddEditForm from './AddEditForm';
 
+import { AMC_CONSTANTS } from '../utils/AMCConstants';
 import styles from 'assets/sass/app.module.scss';
-import { formattedCalendarDate } from 'utils/formatDateTime';
 
 const AMCRegistrationDetailsMasterBase = (props) => {
-    const { typeData, vehicleInvoiceMasterData, selectedOrderId } = props;
+    const { typeData, selectedOrderId } = props;
     const { userId, buttonData, setButtonData, section, isDataLoaded, isLoading, form } = props;
-    const { formActionType, selectedOtfNumber, setSelectedOtfNumber, handleFormValueChange } = props;
+    const { registrationForm, formActionType, selectedOtfNumber, setSelectedOtfNumber, handleFormValueChange } = props;
 
-    const { FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch, CustomerForm, showGlobalNotification, salesConsultantLovData } = props;
+    const { schemeForm, FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch, employeeData, fetchEmployeeList, listEmployeeShowLoading, fetchSchemeList, listSchemeShowLoading, schemeData } = props;
 
-    const [registrationForm] = Form.useForm();
-    const [schemeForm] = Form.useForm();
     const [activeKey, setActiveKey] = useState([3]);
+    const [options, setOptions] = useState(false);
+    const [selectedEmployees, setSelectedEmployee] = useState(false);
 
     useEffect(() => {
-        console.log(requestPayload);
         if (requestPayload) {
             registrationForm.setFieldsValue({ ...requestPayload?.amcRegistration });
             schemeForm.setFieldsValue({ ...requestPayload?.amcSchemeDetails });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [requestPayload]);
+
+    useEffect(() => {
+        const extraParams = [
+            {
+                key: 'vin',
+                value: registrationForm.getFieldValue('vin'),
+            },
+            {
+                key: 'schemeType',
+                value: AMC_CONSTANTS?.SCHM?.key,
+            },
+        ];
+        fetchSchemeList({ setIsLoading: listSchemeShowLoading, userId, extraParams });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [registrationForm.getFieldValue('vin'), registrationForm.getFieldValue('saleType')]);
+
+    useEffect(() => {
+        const employeeOption = employeeData?.map((item) => ({
+            label: item?.employeeName,
+            value: item?.employeeName,
+            key: item?.employeeCode,
+        }));
+        setOptions(employeeOption);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [employeeData]);
+
+    useEffect(() => {
+        return () => {
+            setOptions();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        setOptions();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         if (selectedOtfNumber) {
@@ -43,16 +79,42 @@ const AMCRegistrationDetailsMasterBase = (props) => {
         setButtonData({ ...buttonData, formBtnActive: false });
     };
 
-    const handleEmployeeNameSearch = () => {
-        registrationForm.setFieldsValue({ managerName: 'Rajendra Prasad' });
+    const handleEmployeeNameSearch = (searchValue) => {
+        const extraParams = [
+            {
+                key: 'searchParam',
+                value: searchValue,
+            },
+        ];
+
+        fetchEmployeeList({ setIsLoading: listEmployeeShowLoading, userId, extraParams });
     };
-    const handleSchemeDescriptionChange = () => {
-        schemeForm.setFieldsValue({ schemeCode: '5678', schemeBasicAmount: '1000', schemeTaxAmount: '5000' });
+
+    const handleOnSelect = (key) => {
+        const selectedEmployee = employeeData?.find((i) => i.employeeName === key);
+        setSelectedEmployee(selectedEmployee);
+        if (selectedEmployee) {
+            form.setFieldsValue({
+                employeeName: selectedEmployee?.employeeName,
+                managerName: selectedEmployee?.managerName,
+            });
+        }
+    };
+    const handleOnClear = (e) => {
+        if (e.target.value === '') {
+            setOptions();
+            form.resetFields('managerName');
+        }
+    };
+    const handleSchemeDescriptionChange = (schemeValue) => {
+        const selectedScheme = schemeData.find((value) => {
+            return value?.schemeCode === schemeValue;
+        });
+        schemeForm.setFieldsValue({ schemeCode: selectedScheme?.schemeCode, schemeBasicAmount: selectedScheme?.schemeAmount, id: selectedScheme?.id });
     };
 
     const onFinish = () => {
-        setRequestPayload({ ...requestPayload, amcRegistration: registrationForm.getFieldsValue(), amcSchemeDetails: schemeForm.getFieldsValue() });
-
+        setRequestPayload({ ...requestPayload, amcRegistration: { ...registrationForm.getFieldsValue(), employeeName: selectedEmployees?.employeeCode }, amcSchemeDetails: schemeForm.getFieldsValue() });
         handleButtonClick({ buttonAction: NEXT_ACTION });
         setButtonData({ ...buttonData, formBtnActive: false });
     };
@@ -79,6 +141,9 @@ const AMCRegistrationDetailsMasterBase = (props) => {
         styles,
         handleEmployeeNameSearch,
         handleSchemeDescriptionChange,
+        options,
+        handleOnSelect,
+        handleOnClear,
     };
 
     const viewProps = {
@@ -89,9 +154,8 @@ const AMCRegistrationDetailsMasterBase = (props) => {
         isLoading,
         wrapForm: false,
         selectedOrderId,
-        salesConsultantLovData,
     };
-   
+
     return (
         <Form layout="vertical" autoComplete="off" form={form} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>

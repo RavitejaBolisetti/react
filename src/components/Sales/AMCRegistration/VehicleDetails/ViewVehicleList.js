@@ -4,29 +4,22 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Collapse, Typography, Row, Col, Checkbox, Divider, Button } from 'antd';
+import { Collapse, Typography, Row, Col, Divider, Button } from 'antd';
 import { FiEdit } from 'react-icons/fi';
 
 import { expandIcon } from 'utils/accordianExpandIcon';
-import { getNameFromKey } from 'utils/checkAndSetDefaultValue';
 import { ViewDetail } from './ViewDetail';
-
-import AddEditForm from './AddEditForm';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewVehicleList = (props) => {
-    const { styles, contactData, deleteContactHandeler, onCheckdefaultAddClick, setEditingData, typeData } = props;
-    const { requestPayload, isAdding, setShowAddEditForm, showAddEditForm, setContactData, onFinish, form, contactform, isEditing, setIsEditing, formActionType } = props;
-    console.log('cfgvhbjnkm', requestPayload);
+    const { styles, contactData, deleteContactHandeler, setEditingData, typeData } = props;
+    const { isAdding, setShowAddEditForm, showAddEditForm, setContactData, onFinish, form, contactform, isEditing, setIsEditing, formActionType } = props;
     const [openAccordian, setOpenAccordian] = useState('');
-    const disableProp = { disabled: formActionType?.viewMode };
 
     const deleteVehicle = (e, data, i) => {
         e.stopPropagation();
-        // setOpenAccordian(i);
-        // setIsEditing(true);
         setEditingData(data);
         contactform.setFieldsValue(data);
         setContactData((prev) => {
@@ -58,9 +51,8 @@ const ViewVehicleList = (props) => {
     return (
         <div>
             {contactData?.length > 0 &&
-                contactData?.map((data, i, { length }) => {
+                contactData?.map((data, i) => {
                     return (
-                        // className={i + 1 === length ? styles.marB20 : ''} (Do not remove this line as this might be used in future)
                         <Collapse key={data?.purposeOfContact + data?.contactNameFirstName} onChange={() => handleCollapse(i)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} collapsible="icon">
                             <Panel
                                 key={i}

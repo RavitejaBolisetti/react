@@ -3,22 +3,17 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
-import { Row, Col, Form, DatePicker, Input, Divider, Card, Space } from 'antd';
-import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
-import { validateRequiredSelectField, validateRequiredInputField } from 'utils/validation';
-import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
-import { customSelectBox } from 'utils/customSelectBox';
-import { PARAM_MASTER } from 'constants/paramMaster';
-import { prepareCaption } from 'utils/prepareCaption';
-import { getCodeValue } from 'utils/getCodeValue';
+import React from 'react';
+import { Row, Col, Form, Input, Divider, Card, Space } from 'antd';
+
+import { preparePlaceholderText } from 'utils/preparePlaceholder';
+
 import styles from 'assets/sass/app.module.scss';
 
 const { Search } = Input;
-const { TextArea } = Input;
 
 const CustomerDetailsForm = (props) => {
-    const { handleCustomerSearch, formName, invoiceDetailForm, formData, typeData, selectedOtfNumber, handleBookingNumberSearch, handleEmployeeNameSearch, isVehicleInvoiceDataLoading, handleBookingChange, salesConsultantLovData } = props;
+    const { handleCustomerSearch, disabledProps, formData } = props;
 
     return (
         <>
@@ -29,8 +24,8 @@ const CustomerDetailsForm = (props) => {
                             <Card style={{ backgroundColor: '#F2F2F2' }}>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={formData?.customerId} label="Customer ID" name="customerId">
-                                            <Search placeholder={preparePlaceholderText('Customer ID')} onSearch={handleCustomerSearch} allowClear />
+                                        <Form.Item initialValue={formData?.customerId} label="Customer ID" name="customerCode">
+                                            <Search {...disabledProps} placeholder={preparePlaceholderText('Customer ID')} onSearch={handleCustomerSearch} allowClear />
                                         </Form.Item>
                                     </Col>
                                 </Row>

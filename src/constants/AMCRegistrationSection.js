@@ -29,4 +29,10 @@ export const AMC_REGISTRATION_SECTION = {
         advance: true,
         displayOnList: true,
     },
+    THANK_YOU_PAGE: {
+        id: 5,
+        title: 'Thank You',
+        advance: false,
+        displayOnList: false,
+    },
 };

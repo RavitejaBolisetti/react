@@ -28,7 +28,7 @@ const expandIcon = ({ isActive }) =>
     );
 
 const AMCRegistrationCard = (props) => {
-    const { selectedAMC, requestPayload, formActionType, isLoading, typeData, handleIRNGeneration, isDataLoaded, isInVoiceMasterDetailDataLoaded } = props;
+    const { selectedAMC, requestPayload, isLoading } = props;
     return (
         <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon} collapsible="icon">
             <Panel

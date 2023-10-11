@@ -4,12 +4,12 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Button, Row, Col, Popover } from 'antd';
+import { Button, Row, Col } from 'antd';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'assets/sass/app.module.scss';
 
-export const AMCRegistrationFormButton = ({ formActionType, record, onCloseAction, handleWholeAMCCancellation, onApproveCancel, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection, onPrintInvoice, onPrintForm21 }) => {
+export const AMCRegistrationFormButton = ({ record, onCloseAction, handleWholeAMCCancellation, onApproveCancel, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
     return (
         <div className={styles.formFooter}>
             <Row gutter={20}>
@@ -35,17 +35,15 @@ export const AMCRegistrationFormButton = ({ formActionType, record, onCloseActio
                     )}
 
                     {buttonData?.rejectCancelBtn && (
-                            <Button onClick={onApproveCancel} type="primary">
-                                Reject
-                            </Button>
+                        <Button onClick={onApproveCancel} type="primary">
+                            Reject
+                        </Button>
                     )}
 
                     {buttonData?.approveCancelBtn && (
-                        <Popover content={'Coming Soon'} trigger="hover">
-                            <Button onClick={onApproveCancel} type="primary">
-                                Approve
-                            </Button>
-                        </Popover>
+                        <Button onClick={onApproveCancel} type="primary">
+                            Approve
+                        </Button>
                     )}
 
                     {buttonData?.nextBtn && !isLastSection && (

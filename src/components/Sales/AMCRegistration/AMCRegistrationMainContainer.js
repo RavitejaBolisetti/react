@@ -9,33 +9,23 @@ import { withDrawer } from 'components/withDrawer';
 import { AMC_REGISTRATION_SECTION } from 'constants/AMCRegistrationSection';
 
 import { LeftSidebar } from './LeftSidebar';
-// import { InvoiceDetailsMaster } from './InvoiceDetails';
 
 import { AMCRegistrationFormButton } from './AMCRegistrationFormButton';
-
-import styles from 'assets/sass/app.module.scss';
 import AMCRegistrationDetailsMaster from './AMCRegistrationDetails';
 import CustomerDetailsMaster from './CustomerDetails';
 import VehicleDetailsMaster from './VehicleDetails';
 import RequestDetailsMaster from './RequestDetails';
+import { ThankYouMaster } from './ThankYou';
+
+import styles from 'assets/sass/app.module.scss';
 
 const AMCRegistrationMainContainerMain = (props) => {
-    const { customerForm, currentSection, handleIRNGeneration, selectedOtfNumber, requestPayload, setRequestPayload, registrationForm } = props;
-
-    const onFinishCustom = ({ key, values }) => {
-        setRequestPayload({ ...requestPayload, [key]: values });
-    };
-
-    console.log('requestPayload', requestPayload);
+    const { customerForm, currentSection, requestPayload, registrationForm } = props;
 
     const myProps = {
         ...props,
         wrapForm: false,
-        handleIRNGeneration,
-        onFinishCustom,
-        selectedOrderId: selectedOtfNumber,
         FormActionButton: AMCRegistrationFormButton,
-        vehicleInvoiceMasterData: requestPayload,
     };
 
     const renderElement = () => {
@@ -51,6 +41,9 @@ const AMCRegistrationMainContainerMain = (props) => {
             }
             case AMC_REGISTRATION_SECTION.REQUEST_DETAILS.id: {
                 return <RequestDetailsMaster {...myProps} formData={requestPayload?.requestDetails} formKey={'requestDetails'} />;
+            }
+            case AMC_REGISTRATION_SECTION.THANK_YOU_PAGE.id: {
+                return <ThankYouMaster {...myProps} />;
             }
             default: {
                 return <AMCRegistrationDetailsMaster {...myProps} />;

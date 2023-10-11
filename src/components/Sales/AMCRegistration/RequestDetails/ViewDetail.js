@@ -7,16 +7,11 @@ import React from 'react';
 import { Button, Card, Row, Col, Divider, Typography } from 'antd';
 import styles from 'assets/sass/app.module.scss';
 import { convertDateMonthYear } from 'utils/formatDateTime';
+import { AMC_CONSTANTS } from '../utils/AMCConstants';
 const { Text } = Typography;
 
 const ViewDetail = (props) => {
-    const { formData, userType, selectedAMC, handleCancelRequest } = props;
-    const viewProps = {
-        bordered: false,
-        colon: false,
-        layout: 'vertical',
-        column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
-    };
+    const { formData, userType, selectedAMC, handleCancelRequest, handleMNMApproval, handleMNMRejection } = props;
 
     return (
         <>
@@ -40,13 +35,17 @@ const ViewDetail = (props) => {
                             </Row>
 
                             <Divider className={styles.marT20} />
-                            {userType === 'MNM' ? (
+                            {userType === AMC_CONSTANTS?.MNM?.key ? (
                                 <Row gutter={20} className={styles.marB20}>
                                     <Col xs={4} sm={4} md={4} lg={4}>
-                                        <Button type="primary">Approve</Button>
+                                        <Button type="primary" onClick={handleMNMApproval}>
+                                            Approve
+                                        </Button>
                                     </Col>
                                     <Col xs={4} sm={4} md={4} lg={4}>
-                                        <Button type="danger">Reject</Button>
+                                        <Button type="danger" onClick={handleMNMRejection}>
+                                            Reject
+                                        </Button>
                                     </Col>
                                 </Row>
                             ) : (

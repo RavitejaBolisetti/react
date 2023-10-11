@@ -3,16 +3,15 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState } from 'react';
+import React from 'react';
 import { Descriptions, Divider } from 'antd';
 
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-import { getCodeValue } from 'utils/getCodeValue';
+import { DATA_TYPE } from 'constants/dataType';
 
 const ViewDetailBase = (props) => {
     const { formData, styles } = props;
-    const { isLoading, typeData } = props;
-    console.log('xdcfvgbhnj', formData);
+    const { isLoading } = props;
     const viewProps = {
         bordered: false,
         colon: false,
@@ -28,11 +27,11 @@ const ViewDetailBase = (props) => {
                 </Descriptions>
                 <Divider />
                 <Descriptions {...viewProps}>
-                    <Descriptions.Item label="Vehicle Registration No.">{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Original Warranty Start Date">{checkAndSetDefaultValue(formData?.alternateMobileNumber, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Vehicle Registration No.">{checkAndSetDefaultValue(formData?.vehicleRegistrationNumber, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Original Warranty Start Date">{checkAndSetDefaultValue(formData?.orignallyWarrantyStartDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
 
-                    <Descriptions.Item label="Model Group">{checkAndSetDefaultValue(getCodeValue(typeData?.GENDER_CD, formData?.gender), isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Model Family">{checkAndSetDefaultValue(getCodeValue(typeData?.TITLE, formData?.title), isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Model Group">{checkAndSetDefaultValue(formData?.modelGroup, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Model Family">{checkAndSetDefaultValue(formData?.modelFamily, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Model Description">{checkAndSetDefaultValue(formData?.modelDescription, isLoading)}</Descriptions.Item>
                 </Descriptions>
             </>

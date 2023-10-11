@@ -9,12 +9,11 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 import styles from 'assets/sass/app.module.scss';
 import { expandIcon } from 'utils/accordianExpandIcon';
-import { getCodeValue } from 'utils/getCodeValue';
 
 const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading, typeData } = props;
+    const { formData, isLoading } = props;
     const [activeKey, setactiveKey] = useState([]);
     const viewProps = {
         bordered: false,
@@ -23,7 +22,6 @@ const ViewDetailMain = (props) => {
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
 
-    console.log('formData', formData);
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
@@ -74,13 +72,13 @@ const ViewDetailMain = (props) => {
                         <Panel header="Scheme Details" key="2">
                             <Divider />
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="AMC Type">{checkAndSetDefaultValue(getCodeValue(typeData?.AMC_SCHEME_TYPE, formData?.amcRegistration?.bookingNumber), isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Scheme Description">{checkAndSetDefaultValue(formData?.amcRegistration?.schemeDescription, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Scheme Code">{checkAndSetDefaultValue(formData?.amcRegistration?.schemeCode, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Scheme Basic Amount">{checkAndSetDefaultValue(formData?.amcRegistration?.schemeBasicAmount, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Scheme Discount">{checkAndSetDefaultValue(formData?.amcRegistration?.schemeDiscount, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Scheme Tax Amount">{checkAndSetDefaultValue(formData?.amcRegistration?.schemeTaxAmount, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Scheme End Date">{checkAndSetDefaultValue(formData?.amcRegistration?.schemeEndDate, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="AMC Type">{checkAndSetDefaultValue(formData?.amcSchemeDetails?.amcType, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Scheme Description">{checkAndSetDefaultValue(formData?.amcSchemeDetails?.schemeDescription, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Scheme Code">{checkAndSetDefaultValue(formData?.amcSchemeDetails?.schemeCode, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Scheme Basic Amount">{checkAndSetDefaultValue(formData?.amcSchemeDetails?.schemeBasicAmount, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Scheme Discount">{checkAndSetDefaultValue(formData?.amcSchemeDetails?.schemeDiscount, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Scheme Tax Amount">{checkAndSetDefaultValue(formData?.amcSchemeDetails?.schemeTaxAmount, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Scheme End Date">{checkAndSetDefaultValue(formData?.amcSchemeDetails?.schemeEndDate, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         </Panel>
                     </Collapse>

@@ -5,9 +5,11 @@
  */
 import { combineReducers } from 'redux';
 import { AMCRegistrationSearch } from './amcRegistration';
-import { AMCRegistrationData } from './amcRegistrationData';
+import { EmployeeData } from './employeeSearch';
+import { AMCScheme } from './amcScheme';
 
 export const AMCRegistration = combineReducers({
     AMCRegistrationSearch,
-    AMCRegistrationData
+    EmployeeData,
+    AMCScheme,
 });

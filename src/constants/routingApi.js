@@ -362,4 +362,6 @@ export const BASE_URL_DEALER_GST = BASE_URL_DEALER_MANPOWER + '/parent/gstin/lov
 export const BASE_URL_AMC_REGISTRATION = BASE_URL + 'vehicle/amc';
 export const BASE_URL_AMC_REGISTRATION_SEARCH = BASE_URL_AMC_REGISTRATION + '/search';
 export const BASE_URL_AMC_REGISTRATION_DATA = BASE_URL_AMC_REGISTRATION + '/registration/details';
+export const BASE_URL_AMC_EMPLOYEE_SEARCH = BASE_URL + 'users/search/employees';
+export const BASE_URL_AMC_SCHEMES = BASE_URL_AMC_REGISTRATION + '/scheme';
 export const BASE_URL_GST_DOCID_NAME = BASE_URL + 'finance/gstirnauthentication';

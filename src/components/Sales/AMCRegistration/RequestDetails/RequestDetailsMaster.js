@@ -3,41 +3,20 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Form, Row, Col } from 'antd';
 
 import ViewDetail from './ViewDetail';
 
 import styles from 'assets/sass/app.module.scss';
-import { formattedCalendarDate } from 'utils/formatDateTime';
 
 const RequestDetailsMasterBase = (props) => {
-    const { typeData, vehicleInvoiceMasterData, selectedOrderId } = props;
-    const { userId, buttonData, setButtonData, section, isDataLoaded, isLoading, invoiceDetailForm } = props;
-    const { selectedAMC, formActionType, handleCancelRequest, selectedOtfNumber, setSelectedOtfNumber } = props;
+    const { typeData } = props;
+    const { buttonData, setButtonData, section, isLoading } = props;
+    const { selectedAMC, formActionType, handleCancelRequest, handleMNMApproval, handleMNMRejection } = props;
+    const { form, FormActionButton, requestPayload, handleButtonClick, NEXT_ACTION } = props;
 
-    const { form, FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch, CustomerForm, showGlobalNotification, salesConsultantLovData } = props;
-
-    const [activeKey, setActiveKey] = useState([3]);
-    const handleChange = (e) => {
-        setButtonData({ ...buttonData, formBtnActive: false });
-    };
-
-    const onFinish = (values) => {
-        // const { otfDetailsRequest, ...bookingAndBillingCustomerDto } = values;
-        // if (!Object?.keys(bookingAndBillingCustomerDto)?.length) {
-        //     if (!requestPayload?.invoiceDetails?.bookingAndBillingCustomerDto?.billingCustomer) {
-        //         showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please provide billing customer details' });
-        //         setActiveKey([3, 2]);
-        //         return false;
-        //     } else if (!requestPayload?.invoiceDetails?.bookingAndBillingCustomerDto?.bookingCustomer) {
-        //         showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please provide booking customer details' });
-        //         setActiveKey([3, 1]);
-        //         return false;
-        //     } else setRequestPayload({ ...requestPayload, invoiceDetails: { otfDetailsRequest, bookingAndBillingCustomerDto: { ...requestPayload?.invoiceDetails?.bookingAndBillingCustomerDto } } });
-        // } else {
-        //     setRequestPayload({ ...requestPayload, invoiceDetails: { otfDetailsRequest, bookingAndBillingCustomerDto: CustomerForm.getFieldsValue() } });
-        // }
+    const onFinish = () => {
         handleButtonClick({ buttonAction: NEXT_ACTION });
         setButtonData({ ...buttonData, formBtnActive: false });
     };
@@ -52,6 +31,8 @@ const RequestDetailsMasterBase = (props) => {
         isLoading,
         wrapForm: false,
         handleCancelRequest,
+        handleMNMApproval,
+        handleMNMRejection,
     };
 
     return (

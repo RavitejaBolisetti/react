@@ -3,35 +3,20 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
-import { Row, Col, Form, DatePicker, Input, Divider } from 'antd';
-import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
+import React from 'react';
+import { Row, Col, Form, DatePicker, Input } from 'antd';
 import { validateRequiredSelectField, validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { customSelectBox } from 'utils/customSelectBox';
 import { PARAM_MASTER } from 'constants/paramMaster';
-import { prepareCaption } from 'utils/prepareCaption';
-import { getCodeValue } from 'utils/getCodeValue';
 
-const { Search } = Input;
+
 
 const SchemeDetailsForm = (props) => {
-    const { formName, schemeForm, formData, typeData, handleFormValueChange, handleBookingNumberSearch, isVehicleInvoiceDataLoading, handleBookingChange, handleSchemeDescriptionChange, salesConsultantLovData } = props;
-
-    useEffect(() => {
-        // if (formData) {
-        //     // schemeForm?.setFieldsValue({
-        //     //         otfNumber: formData?.bookingNumber || formData?.otfNumber,
-        //     //         orderDate: formattedCalendarDate(formData?.orderDate),
-        //     //         saleConsultantName: getCodeValue(salesConsultantLovData, formData?.saleConsultant),
-        //     //     },
-        //     // });
-        // }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData]);
+    const {  schemeForm, formData, typeData, handleFormValueChange, handleSchemeDescriptionChange, schemeData } = props;
 
     return (
-        <Form layout="vertical" autoComplete="off" form={schemeForm} onFieldsChange={handleFormValueChange} >
+        <Form layout="vertical" autoComplete="off" form={schemeForm} onFieldsChange={handleFormValueChange}>
             <Row gutter={16}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.saleType} label="AMC Type" name="amcType" rules={[validateRequiredSelectField('AMC Type')]}>
@@ -40,7 +25,7 @@ const SchemeDetailsForm = (props) => {
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Scheme Description" name="schemeDescription" rules={[validateRequiredSelectField('Scheme Description')]}>
-                        {customSelectBox({ data: typeData?.[PARAM_MASTER.TAX_CALCLTN_TYPE.id], placeholder: preparePlaceholderSelect('Scheme Description'), onChange: handleSchemeDescriptionChange })}
+                        {customSelectBox({ data: schemeData, placeholder: preparePlaceholderSelect('Scheme Description'), fieldNames: { key: 'schemeCode', value: 'schemeDescription' }, onChange: handleSchemeDescriptionChange })}
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -48,6 +33,10 @@ const SchemeDetailsForm = (props) => {
                         <Input disabled maxLength={50} placeholder={preparePlaceholderText('Scheme Code')} />
                     </Form.Item>
                 </Col>
+
+                <Form.Item hidden label="" name="id">
+                    <Input maxLength={50} />
+                </Form.Item>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Scheme Basic Amount" name="schemeBasicAmount" rules={[validateRequiredInputField('Scheme Basic Amount')]}>
                         <Input disabled maxLength={50} placeholder={preparePlaceholderText('Scheme Basic Amount')} />
@@ -59,7 +48,11 @@ const SchemeDetailsForm = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item label="Scheme Tax Amount" name="schemeTaxAmount" rules={[validateRequiredInputField('Scheme Tax Amount')]}>
+                    <Form.Item
+                        label="Scheme Tax Amount"
+                        name="schemeTaxAmount"
+                        //  rules={[validateRequiredInputField('Scheme Tax Amount')]}
+                    >
                         <Input disabled maxLength={50} placeholder={preparePlaceholderText('Scheme Tax Amount')} />
                     </Form.Item>
                 </Col>

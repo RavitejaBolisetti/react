@@ -8,28 +8,36 @@ import { Form, Row, Col } from 'antd';
 
 import ViewDetail from './ViewDetail';
 
-import styles from 'assets/sass/app.module.scss';
-import { formattedCalendarDate } from 'utils/formatDateTime';
 import AddEditForm from './AddEditForm';
+import { AMC_CONSTANTS } from '../utils/AMCConstants';
 import { BASE_URL_VEHICLE_CUSTOMER_COMMON_DETAIL as customURL } from 'constants/routingApi';
-
-// import AddeditForm from './AddeditForm';
+import styles from 'assets/sass/app.module.scss';
 
 const CustomerDetailsMasterBase = (props) => {
-    const { typeData, vehicleInvoiceMasterData, selectedOrderId } = props;
-    const { userId, buttonData, setButtonData, section, isDataLoaded, isLoading, invoiceDetailForm } = props;
-    const { selectedAMC, form, fetchCustomerList, formActionType, selectedOtfNumber, setSelectedOtfNumber, handleFormValueChange } = props;
-
-    const { FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch, CustomerForm, showGlobalNotification, salesConsultantLovData } = props;
-
+    const { typeData, selectedOrderId } = props;
+    const { userId, buttonData, setButtonData, section, isDataLoaded, isLoading } = props;
+    const { otfData, form, fetchCustomerList, formActionType, selectedOtfNumber, setSelectedOtfNumber, handleFormValueChange } = props;
+    const { FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch } = props;
+    
+    const [isReadOnly, setIsReadOnly] = useState(false);
     const [activeKey, setActiveKey] = useState([3]);
+    const disabledProps = { disabled: isReadOnly };
+    console.log('requestPayload in customer',requestPayload);
+    useEffect(() => {
+        if (formActionType?.addMode && requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.DMFOC?.key) {
+            form.setFieldsValue({ customerCode: otfData?.otfDetails[0]?.customerId });
+            handleCustomerSearch();
+            setIsReadOnly(true);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formActionType]);
 
     const handleCustomerSearch = () => {
         const extraParams = [
             {
                 key: 'customerId',
                 title: 'customerId',
-                value: form.getFieldValue('customerId'),
+                value: form.getFieldValue('customerCode'),
                 name: 'Customer ID',
             },
         ];
@@ -39,7 +47,7 @@ const CustomerDetailsMasterBase = (props) => {
             extraParams,
             userId,
             onSuccessAction: (response) => {
-                form.setFieldsValue({ ...response?.data });
+                form.setFieldsValue({ ...response?.data, customerAddress: response?.data?.address, customerCity: response?.data?.city, customerPhoneNumber: response?.data?.mobileNumber });
             },
             onErrorAction: () => {},
         });
@@ -75,6 +83,7 @@ const CustomerDetailsMasterBase = (props) => {
         selectedOrderId,
         styles,
         handleCustomerSearch,
+        disabledProps,
     };
 
     const viewProps = {
@@ -85,7 +94,6 @@ const CustomerDetailsMasterBase = (props) => {
         isLoading,
         wrapForm: false,
         selectedOrderId,
-        salesConsultantLovData,
     };
 
     return (

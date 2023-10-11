@@ -28,12 +28,7 @@ export const QUERY_BUTTONS = {
         key: 'CNCL',
         active: false,
     },
-    // CANCELLATION_REQUEST: {
-    //     id: 'cancellation request',
-    //     title: 'Cancellation Request',
-    //     key: 'CR',
-    //     active: false,
-    // },
+  
 };
 
 export const QUERY_BUTTONS_MNM_USER = {

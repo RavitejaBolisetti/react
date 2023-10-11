@@ -22,14 +22,12 @@ export const validateAMCRegistrationMenu = ({ item, status, formActionType }) =>
 const MenuNav = (props) => {
     const { currentSection, setCurrentSection, formActionType, selectedOrder: { orderStatus = false } = {}, previousSection = 1 } = props;
 
-    // const otfData = vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest;
 
     const onHandle = (key) => {
         setCurrentSection(key);
     };
     const className = (id) => {
         return formActionType?.addMode && id > previousSection ? styles.cursorNotAllowed : styles.cursorPointer; //to be uncommented after deve;lopement
-        // return formActionType?.addMode && id > previousSection ? styles.cursorPointer : styles.cursorPointer;
     };
 
     const items = Object.values(AMC_REGISTRATION_SECTION)
@@ -42,7 +40,6 @@ const MenuNav = (props) => {
                         <div
                             className={className(item?.id)}
                             onClick={() => (!formActionType?.addMode || (formActionType?.addMode && item?.id <= previousSection) ? onHandle(item?.id) : '')}
-                             // onClick={onHandle(item.id)}
                         >
                             {item.title}
                         </div>

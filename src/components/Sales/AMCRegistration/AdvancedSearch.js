@@ -14,6 +14,7 @@ import { validateRequiredInputField } from 'utils/validation';
 import { dateFormat, formatDate, formatDateToCalenderDate } from 'utils/formatDateTime';
 import { disableFutureDate } from 'utils/disableDate';
 
+import { AMC_CONSTANTS } from './utils/AMCConstants';
 import styles from 'assets/sass/app.module.scss';
 
 export const AdvancedSearchFrom = (props) => {
@@ -57,7 +58,7 @@ export const AdvancedSearchFrom = (props) => {
 
     return (
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-            {userType === 'MNM' && (
+            {userType === AMC_CONSTANTS?.MNM?.key && (
                 <Row gutter={16}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item initialValue={filterString?.dealerParent} label="Dealer Parent" name="dealerParent">

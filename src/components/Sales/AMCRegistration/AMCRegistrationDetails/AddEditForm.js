@@ -3,18 +3,16 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Row, Col, Collapse, Divider, Space } from 'antd';
 import { expandIcon } from 'utils/accordianExpandIcon';
 
-import { convertDateToCalender } from 'utils/formatDateTime';
 import RegistrationForm from './RegistrationForm';
 import SchemeDetailsForm from './SchemeDetailsForm';
 
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { formData, registrationForm } = props;
     const { activeKey, setActiveKey } = props;
 
     const onChange = (values) => {
