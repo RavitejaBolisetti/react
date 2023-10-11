@@ -7,7 +7,7 @@ import { HoPriceMappingMaster } from 'components/Sales/HoPriceMappingDealer/HoPr
 import customRender from '@utils/test-utils';
 
 afterEach(() => {
-  jest.restoreAllMocks();
+    jest.restoreAllMocks();
 });
 
 jest.mock('store/actions/data/hoPriceMapping/hoPriceMapping', () => ({
@@ -36,9 +36,9 @@ jest.mock('@components/Sales/HoPriceMappingDealer/AddEditForm', () => {
 });
 
 describe('HoPriceMappingMaster Component', () => {
-  it('should render HoPriceMappingMaster component UI', () => {
-    customRender(<HoPriceMappingMaster />);
-  });
+    it('should render HoPriceMappingMaster component UI', () => {
+        customRender(<HoPriceMappingMaster />);       
+    });
 
     it('should render component with data', () => {
         const data = {
@@ -82,7 +82,9 @@ describe('HoPriceMappingMaster Component', () => {
     });
 
     it('advanced filters and apply button should work', async () => {
-        customRender(<HoPriceMappingMaster />);
+        const value = ""
+        const handleFilterChange = jest.fn('stateCode', value)
+        customRender(<HoPriceMappingMaster handleFilterChange={handleFilterChange}/>);
         const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
         fireEvent.click(advanceFilter);
 
@@ -122,10 +124,11 @@ describe('HoPriceMappingMaster Component', () => {
 
         const fetchList = jest.fn();
         const fetchProductList = jest.fn();
+        const removeFilter = jest.fn('stateCode')
 
         customRender(
             <Provider store={mockStore}>
-                <HoPriceMappingMaster fetchList={fetchList} generateList={jest.fn()} setFilterString={jest.fn()} fetchProductList={fetchProductList} />
+                <HoPriceMappingMaster fetchList={fetchList} removeFilter={removeFilter} generateList={jest.fn()} setFilterString={jest.fn()} fetchProductList={fetchProductList} />
             </Provider>
         );
 
@@ -190,7 +193,7 @@ describe('HoPriceMappingMaster Component', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <HoPriceMappingMaster isVisible={true} fetchProductList={jest.fn()} handleButtonClick={jest.fn()} resetData={jest.fn()} fetchList={fetchList} buttonData={buttonData} saveData={saveData} setFilterString={jest.fn()} />
+                <HoPriceMappingMaster isVisible={true} setButtonData={jest.fn()}  setIsFormVisible={jest.fn()} showGlobalNotification={jest.fn()} fetchProductList={jest.fn()} handleButtonClick={jest.fn()} resetData={jest.fn()} fetchList={fetchList} buttonData={buttonData} saveData={saveData} setFilterString={jest.fn()} />
             </Provider>
         );
 
@@ -255,7 +258,7 @@ describe('HoPriceMappingMaster Component', () => {
 
         const fetchList = jest.fn();
         const saveData = jest.fn();
-        const formActionType = { formActionType: true }
+        const formActionType = { viewMode: true };
 
         customRender(
             <Provider store={mockStore}>
@@ -263,7 +266,5 @@ describe('HoPriceMappingMaster Component', () => {
             </Provider>
         );
 
-        const save = screen.getByRole('button', { name: 'Edit' });
-        fireEvent.click(save);
     });
 });

@@ -27,27 +27,27 @@ import { showGlobalNotification } from 'store/actions/notification';
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
-        data: {
-            ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            Receipt: {
-                ReceiptSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString },
-                ReceiptDetails: { isLoaded: isDetailedDataLoaded = false, isLoading, data: receiptDetailData = [] },
-            },
-        },
+        // data: {
+        //     ConfigurableParameterEditing: { filteredListData: typeData = [] },
+        //     Receipt: {
+        //         ReceiptSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString },
+        //         ReceiptDetails: { isLoaded: isDetailedDataLoaded = false, isLoading, data: receiptDetailData = [] },
+        //     },
+        // },
     } = state;
     const moduleTitle = 'Map New Digital Signature';
     let returnValue = {
         userId,
-        typeData,
-        data: data?.paginationData,
-        totalRecords: data?.totalRecords || [],
-        receiptDetailData,
-        isLoading,
-        moduleTitle,
-        isSearchLoading,
-        isSearchDataLoaded,
-        isDetailedDataLoaded,
-        filterString,
+        // typeData,
+        // data: data?.paginationData,
+        // totalRecords: data?.totalRecords || [],
+        // receiptDetailData,
+        // isLoading,
+         moduleTitle,
+        // isSearchLoading,
+        // isSearchDataLoaded,
+        // isDetailedDataLoaded,
+        // filterString,
     };
     return returnValue;
 };
@@ -74,9 +74,9 @@ export const DigitalSignatureMasterBase = (props) => {
     const { typeData, moduleTitle, totalRecords, showGlobalNotification } = props;
     const { filterString, setFilterString } = props;
 
-    const [searchValue, setSearchValue] = useState();
+    //const [searchValue, setSearchValue] = useState();
 
-    const [selectedOrder, setSelectedOrder] = useState();
+    //const [selectedOrder, setSelectedOrder] = useState();
     const [selectedOrderId, setSelectedOrderId] = useState();
 
     const [form] = Form.useForm();
@@ -154,8 +154,8 @@ export const DigitalSignatureMasterBase = (props) => {
             {
                 key: 'searchParam',
                 title: 'searchParam',
-                value: searchValue,
-                name: searchValue,
+               // value: searchValue,
+                //name: searchValue,
                 canRemove: false,
                 filter: false,
             },
@@ -191,7 +191,7 @@ export const DigitalSignatureMasterBase = (props) => {
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchValue, filterString, page]);
+    }, [ filterString, page]);
 
     useEffect(() => {
         if (userId) {
@@ -266,7 +266,7 @@ export const DigitalSignatureMasterBase = (props) => {
         advanceFilterForm.resetFields();
         advanceFilterForm.setFieldsValue();
 
-        setSelectedOrder();
+        //setSelectedOrder();
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
     };
@@ -282,7 +282,7 @@ export const DigitalSignatureMasterBase = (props) => {
         typeData,
     };
 
-    const title = 'Dealer Sig-Dealer Code Mapping';
+    //const title = 'Dealer Sig-Dealer Code Mapping';
 
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
@@ -297,7 +297,7 @@ export const DigitalSignatureMasterBase = (props) => {
     const searchBoxProps = {
         searchForm,
         filterString,
-        optionType: typeData[PARAM_MASTER?.CUST_VEH_SEARCH?.id],
+        // optionType: typeData[PARAM_MASTER?.CUST_VEH_SEARCH?.id],
         setFilterString,
         selectWide: true,
     };

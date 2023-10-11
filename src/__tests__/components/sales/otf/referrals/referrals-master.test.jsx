@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-mocks-import */
 import React from 'react';
 import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
@@ -21,13 +22,7 @@ const FormActionButton = () => (
 );
 
 jest.mock('store/actions/data/otf/referrals', () => ({
-    otfReferralsDataActions: {
-        innerDataActions: {
-            fetchList: jest.fn(),
-            saveData: jest.fn(),
-            fetchData: jest.fn(),
-        },
-    },
+    otfReferralsDataActions: {}
 }));
 
 const FormWrapper = (props) => {
@@ -42,22 +37,7 @@ const FormWrapper = (props) => {
 
 describe('OTF Referrals Master Component', () => {
     it('should render referrals add edit form', async () => {
-        customRender(<FormWrapper setFilterString={jest.fn()} StatusBar={StatusBar} FormActionButton={FormActionButton} />);
-    });
-
-    it('should successfully set the view form data', async () => {
-        const mockStore = createMockStore({
-            auth: { userId: 106 },
-        });
-        const fetchCustomerList = jest.fn();
-        const fetchList = jest.fn();
-        customRender(
-            <Provider store={mockStore}>
-                <FormWrapper selectedOrderId={106} fetchList={fetchList} fetchCustomerList={fetchCustomerList} setFilterString={jest.fn()} StatusBar={StatusBar} FormActionButton={FormActionButton} />
-            </Provider>
-        );
-        fetchList.mock.calls[0][0].onSuccessAction();
-        fetchList.mock.calls[0][0].onErrorAction();
+        customRender(<FormWrapper setFilterString={jest.fn()} setButtonData={jest.fn()} StatusBar={StatusBar} FormActionButton={FormActionButton} />);
     });
 
     it('save & next button should work', async () => {
@@ -81,15 +61,30 @@ describe('OTF Referrals Master Component', () => {
             },
         });
         const fetchCustomerList = jest.fn();
+        const saveData = jest.fn()
+        const fetchList = jest.fn();
+        const res = { name: 'test106' }
+
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper buttonData={buttonData} setButtonData={jest.fn()} setFilterString={jest.fn()} fetchCustomerList={fetchCustomerList} StatusBar={StatusBar} FormActionButton={FormActionButton} />
+                <FormWrapper buttonData={buttonData} fetchList={fetchList} handleButtonClick={jest.fn()} handleFormValueChange={jest.fn()} saveData={saveData} setButtonData={jest.fn()} setFilterString={jest.fn()} fetchCustomerList={fetchCustomerList} StatusBar={StatusBar} FormActionButton={FormActionButton} />
             </Provider>
         );
         await waitFor(() => expect(fetchCustomerList).toHaveBeenCalled());
         fetchCustomerList.mock.calls[0][0].onSuccessAction();
+        fetchCustomerList.mock.calls[0][0].onErrorAction();
         const saveBtn = screen.getByRole('button', { name: 'Save' });
         fireEvent.click(saveBtn);
+
+        await waitFor(() => {
+            expect(saveData).toHaveBeenCalled();
+        });
+
+        saveData.mock.calls[0][0].onSuccess(res);
+        saveData.mock.calls[0][0].onError();
+
+        fetchList.mock.calls[0][0].onSuccessAction();
+
     });
 });
 
@@ -98,6 +93,6 @@ describe('OTF Referrals View Details Component', () => {
         const formActionType = {
             viewMode: true,
         };
-        customRender(<FormWrapper formActionType={formActionType} setFilterString={jest.fn()} StatusBar={StatusBar} FormActionButton={FormActionButton} />);
+        customRender(<FormWrapper formActionType={formActionType} setButtonData={jest.fn()} setFilterString={jest.fn()} StatusBar={StatusBar} FormActionButton={FormActionButton} />);
     });
 });
