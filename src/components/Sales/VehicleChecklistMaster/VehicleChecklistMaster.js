@@ -254,7 +254,8 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
                 const attributeName = VehicleChecklistAttributeLov?.find((e) => e?.key === formData?.data?.attributeLevel)?.value;
                 const attributeParentName = flatternData.find((i) => formData?.data?.parentCode === i.key)?.data?.descriptionTitle;
                 const answerTypeName = formData?.data?.attributeLevel === VEHICLE_CHECKLIST_TYPE?.CHECKLIST?.key ? typeData?.CHKL_ANS_TYPE?.find((e) => e?.key === formData?.data?.answerType)?.value : null;
-                setFormData({ ...formData?.data, parentName: attributeParentName, attributeName, answerTypeName });
+                const attachmentRequiredName = formData?.data?.attributeLevel === VEHICLE_CHECKLIST_TYPE?.CHECKLIST?.key ? typeData?.ATT_TYPE?.find((e) => e?.key === formData?.data?.attachmentRequired)?.value : null;
+                setFormData({ ...formData?.data, parentName: attributeParentName, attributeName, answerTypeName, attachmentRequiredName });
                 setModelData(formData?.data?.model?.length > 0 ? [...formData?.data?.model] : []);
                 setAnswerData(formData?.data?.answer?.length > 0 ? [...formData?.data?.answer] : []);
             } else {
@@ -336,7 +337,8 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
                 } else if (res?.data?.attributeLevel === VEHICLE_CHECKLIST_TYPE?.CHECKLIST?.key) {
                     const attributeParentName = flatternData.find((i) => res?.data?.checklistDto?.children?.[0]?.parentCode === i.key)?.data?.descriptionTitle;
                     const answerTypeName = typeData?.CHKL_ANS_TYPE?.find((e) => e?.key === res?.data?.checklistDto?.children?.[0]?.answerType)?.value;
-                    setFormData({ ...res?.data?.checklistDto?.children?.[0], parentName: attributeParentName, attributeName, answerTypeName });
+                    const attachmentRequiredName = typeData?.ATT_TYPE?.find((e) => e?.key === res?.data?.checklistDto?.children?.[0]?.attachmentRequired)?.value;
+                    setFormData({ ...res?.data?.checklistDto?.children?.[0], parentName: attributeParentName, attributeName, answerTypeName, attachmentRequiredName });
                     setModelData(res?.data?.checklistDto?.children?.[0]?.model?.length > 0 ? [...res?.data?.checklistDto?.children?.[0]?.model] : []);
                     setAnswerData(res?.data?.checklistDto?.children?.[0]?.answer?.length > 0 ? [...res?.data?.checklistDto?.children?.[0]?.model] : []);
                     setSelectedTreeKey([res?.data?.checklistDto?.children?.[0]?.code]);

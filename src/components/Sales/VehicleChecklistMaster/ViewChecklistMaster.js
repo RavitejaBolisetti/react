@@ -54,7 +54,7 @@ export const ViewTaxChargesMain = (props) => {
                             <Descriptions.Item label="Checklist Code">{formData?.code}</Descriptions.Item>
                             <Descriptions.Item label="Checklist Description">{formData?.descriptionTitle}</Descriptions.Item>
                             <Descriptions.Item label="Answer Type">{formData?.answerTypeName}</Descriptions.Item>
-                            <Descriptions.Item label="Attachment Required">{formData?.answerTitle}</Descriptions.Item>
+                            <Descriptions.Item label="Attachment Required">{formData?.attachmentRequiredName}</Descriptions.Item>
                             {modelData && modelData?.length > 0 && (
                                 <div>
                                     <Collapse expandIcon={expandIcon} collapsible="icon" className={styles.fullWidth}>
