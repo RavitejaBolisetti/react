@@ -15,7 +15,7 @@ const { Text } = Typography;
 const ModelCard = (props) => {
     const { finalFormdata, forceUpdate, modelData, setModelData, setOpenAccordian, changeValue, setChangeValue, modelForm, modelEdit, setModelEdit, uniqueCardEdit, setuniqueCardEdit, internalId, formActionType, modelSwitch, setModelSwitch, modelGroupData, modelEditForm, setButtonData, buttonData, setFormBtnActive } = props;
     const modelName = modelGroupData?.find((e) => e?.modelGroupCode === props?.modelGroupCode)?.modelGroupDescription;
-    console.log(`props`, props);
+
     const onModelEdit = (props) => {
         setuniqueCardEdit(props?.internalId);
         setModelEdit(true);
