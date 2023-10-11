@@ -79,13 +79,13 @@ const CancellationMasterBase = (props) => {
     const [productHierarchyData, setProductHierarchyData] = useState([]);
 
     const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
-    const handleButtonClick = ({ record = null, buttonAction }) => {};
+
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
 
     useEffect(() => {
-        if (userId && (!isProductDataLoaded || productCode !== selectedOrder?.modelCode) && selectedOrder?.modelCode) {
+        if (userId) {
             const extraParams = [
                 {
                     key: 'unit',
@@ -130,7 +130,7 @@ const CancellationMasterBase = (props) => {
         selectedOrder,
         buttonData,
         setButtonData,
-        handleButtonClick,
+
         uploadDocumentFile,
         setUploadedFile,
         fieldNames,

@@ -75,7 +75,7 @@ const initialFormData = {
     accessibleLocation: [],
 };
 
-export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLoading, applicationMasterDataShowLoading, fetchApplication, fetchApplicationCriticality, criticalityGroupData, fetchDealerLocations, fetchApplicationAction, saveApplicationDetails, menuData, fetchList, applicationDetailsData, configurableParamData, fetchCriticalitiData, actions, showGlobalNotification, isApplicationDeatilsLoading, isApplicatinoOnSaveLoading, onSaveShowLoading, applicationDetailListShowLoading, detailListShowLoading }) => {
+export const ApplicationMasterMain = ({ userId, isLoading, applicationMasterDataShowLoading, fetchApplication, fetchApplicationCriticality, criticalityGroupData, fetchApplicationAction, saveApplicationDetails, menuData, fetchList, applicationDetailsData, configurableParamData, fetchCriticalitiData, actions, showGlobalNotification, isApplicationDeatilsLoading, isApplicatinoOnSaveLoading, onSaveShowLoading, applicationDetailListShowLoading }) => {
     const [form] = Form.useForm();
     const [applicationForm] = Form.useForm();
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
@@ -107,7 +107,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, menuType]);
 
-    const handleAdd = (type) => {
+    const handleAdd = () => {
         setisVisible(true);
         // setFormActionType(type);
         setIsReadOnly(false);

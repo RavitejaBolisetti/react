@@ -33,7 +33,6 @@ import { LANGUAGE_EN } from 'language/en';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { validateOTFMenu } from './utils/validateOTFMenu';
 
-import { FilterIcon } from 'Icons';
 import { ChangeHistory } from './ChangeHistory';
 
 import styles from 'assets/sass/app.module.scss';
@@ -165,7 +164,7 @@ export const OtfMasterBase = (props) => {
         unAllotBtn: false,
         invoiceBtn: false,
         deliveryNote: false,
-        changeHistory: true,
+        changeHistory: false,
         otfSoMappingHistoryBtn: false,
     };
 
@@ -438,7 +437,7 @@ export const OtfMasterBase = (props) => {
                     editMode: buttonAction === EDIT_ACTION,
                     viewMode: buttonAction === VIEW_ACTION,
                 });
-                setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction, orderStatus: record?.orderStatus }));
+                setButtonData(btnVisiblity({ defaultBtnVisiblity: { ...defaultBtnVisiblity, changeHistory: buttonAction === VIEW_ACTION ? true : false }, buttonAction, orderStatus: record?.orderStatus }));
             }
         }
     };

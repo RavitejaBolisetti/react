@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React from 'react';
 import { connect } from 'react-redux';
 // import styles from 'components/crud/crudListingPage/crudMasterPage.module.css';
@@ -28,7 +33,7 @@ export const crudMasterPage = ({ ListingPage, AddPage, EditPage, ViewPage, advan
                 {canViewMaster ? (
                     <>
                         <div className={'crudMasterPage'}>
-                            <ListingPage onAddAction={onAddAction} onEditAction={onEditAction} kuldeep="singh" canViewMaster={canViewMaster} canAddMaster={canAddMaster} canEditMaster={canEditMaster} {...props} />
+                            <ListingPage onAddAction={onAddAction} onEditAction={onEditAction} canViewMaster={canViewMaster} canAddMaster={canAddMaster} canEditMaster={canEditMaster} {...props} />
                         </div>
                         {canAddMaster || canEditMaster ? <AddPage onCloseAction={onAddCloseAction} isVisible={isAddFormVisible} {...props} /> : <DisableItemComponent />}
                         {canEditMaster ? <EditPage onCloseAction={onEditCloseAction} isVisible={isEditFormVisible} {...props} /> : <DisableItemComponent />}

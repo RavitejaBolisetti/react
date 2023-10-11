@@ -22,7 +22,7 @@ const mapStateToProps = (state) => {
         auth: { userId, accessToken, token },
         common: {
             Header: {
-                data: { dealerLocations: dealerLocation = [] },
+                data: { parentGroupCode, dealerLocations: dealerLocation = [] },
             },
         },
         data: {
@@ -46,6 +46,7 @@ const mapStateToProps = (state) => {
         isSalesConsultantLoading,
         dealerLocations,
         dealerLocation,
+        parentGroupCode,
     };
     return returnValue;
 };
@@ -68,27 +69,24 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const TransferMasterBase = (props) => {
-    const { otfData, selectedOrder, fetchSalesConsultant, listConsultantShowLoading, fetchDealerLocations, dealerLocations, dealerLocation, locationDataLoding } = props;
+    const { otfData, selectedOrder, fetchSalesConsultant, listConsultantShowLoading, fetchDealerLocations, dealerLocations, dealerLocation, locationDataLoding, parentGroupCode } = props;
     const { userId, salesConsultantLov, reset } = props;
     const { moduleTitle, otfTransferForm } = props;
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, transferOTFBtn: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const defaultDealerLocationCode = dealerLocation?.find((i) => i?.isDefault)?.locationCode;
-
-    const handleButtonClick = ({ record = null, buttonAction }) => {};
-
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
 
     useEffect(() => {
-        if (userId) {
+        if (userId && selectedOrder?.modelCode) {
             reset();
-            fetchDealerLocations({ customURL: customURL + '?locationType=S', setIsLoading: locationDataLoding, userId });
+            fetchDealerLocations({ customURL: customURL + '?locationType=S&modelCode=' + selectedOrder?.modelCode + '&parentGroupCode=' + parentGroupCode, setIsLoading: locationDataLoding, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
+    }, [userId, selectedOrder]);
 
     const handleOtfTransferLocationChange = (value) => {
         if (!value) {
@@ -112,7 +110,6 @@ const TransferMasterBase = (props) => {
         selectedOrder,
         buttonData,
         setButtonData,
-        handleButtonClick,
         salesConsultantLov,
         dealerLocations,
         handleOtfTransferLocationChange,

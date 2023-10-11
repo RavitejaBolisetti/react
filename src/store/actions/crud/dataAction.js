@@ -423,7 +423,7 @@ export const dataActions = (params) => {
             dispatch(listShowLoading(isLoading));
         },
         listDetailShowLoading: (isLoading) => (dispatch) => {
-            console.log(isLoading, 'Kuldeep') || dispatch(listDetailShowLoading(isLoading));
+            dispatch(listDetailShowLoading(isLoading));
         },
         listShowChangeHistoryLoading: (isLoading) => (dispatch) => {
             dispatch(listShowChangeHistoryLoading(isLoading));

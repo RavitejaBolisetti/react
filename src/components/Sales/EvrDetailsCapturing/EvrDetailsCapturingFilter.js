@@ -14,7 +14,7 @@ import styles from 'assets/sass/app.module.scss';
 const { Search } = Input;
 
 export default function EvrDetailsCapturingFilter(props) {
-    const { extraParams, removeFilter, handleResetFilter, advanceFilter, setAdvanceSearchVisible, searchForm, chargingStatusType, handleChargingTypeChange, handleSearch, filterString, evrStatusList } = props;
+    const { extraParams, removeFilter, handleClear, advanceFilter, setAdvanceSearchVisible, searchForm, chargingStatusType, handleChargingTypeChange, handleSearch, filterString, evrStatusList } = props;
 
     return (
         <div className={styles.contentHeaderBackground}>
@@ -62,7 +62,7 @@ export default function EvrDetailsCapturingFilter(props) {
                                                 {filter?.name}
                                                 {filter?.canRemove && (
                                                     <span>
-                                                        <RxCross2 onClick={() => removeFilter(filter?.key)} />
+                                                        <RxCross2 onClick={() => removeFilter(filter?.key)} data-testid="removeFilter" />
                                                     </span>
                                                 )}
                                             </div>
@@ -71,7 +71,7 @@ export default function EvrDetailsCapturingFilter(props) {
                                 })}
                             </Col>
                             <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
-                                <Button className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
+                                <Button className={styles.clearBtn} onClick={() => handleClear()} danger>
                                     Clear
                                 </Button>
                             </Col>

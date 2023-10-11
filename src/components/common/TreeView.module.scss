@@ -53,14 +53,14 @@
             font-weight: 500;
         }
 
-        .ant-tree-checkbox + span.ant-tree-node-selected {
+        .ant-tree-checkbox+span.ant-tree-node-selected {
             background-color: $transparentColor;
             color: $primaryRed;
             border-radius: 4px;
             font-weight: 500;
         }
 
-        .ant-tree-checkbox + span {
+        .ant-tree-checkbox+span {
             position: relative;
             z-index: auto;
             min-height: 24px;
@@ -137,6 +137,7 @@
             &:first-child {
                 //margin-bottom: 0 !important;
             }
+
             &:last-child {
                 &:not(:first-child) {
                     margin-bottom: 20px !important;
@@ -189,12 +190,13 @@
 }
 
 .scrollTreeDataInner {
-    width: 100%;
+    width: 90%;
     overflow: auto;
-    height: calc(100vh - 286px);
+    // height: calc(100vh - 286px);
     @include space(padding, all, $sp20);
     border: 1px solid $neutralGrey1;
     border-radius: 4px;
+    margin-bottom: 20px;
 
     &::-webkit-scrollbar-track {
         background-color: $primaryWhite;

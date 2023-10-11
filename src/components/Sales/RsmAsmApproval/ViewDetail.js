@@ -38,7 +38,7 @@ const ViewDetailMain = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                         <Descriptions {...viewOneColProps}>
-                            <Descriptions.Item label="Request Type">{checkAndSetDefaultValue(formData?.requestType, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Request Type">{checkAndSetDefaultValue(getCodeValue(typeData?.DEL_INV_CAN_TYP, formData?.requestType), isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Request Status">{checkAndSetDefaultValue(getCodeValue(typeData?.CDLR_INV_APP_STATUS, formData?.requestStatus), isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Request Number">{checkAndSetDefaultValue(formData?.requestNumber, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Request Date">{checkAndSetDefaultValue(formData?.requestDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>

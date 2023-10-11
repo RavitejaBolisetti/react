@@ -156,8 +156,6 @@ export const VehicleInvoiceMasterBase = (props) => {
         deliveryNote: false,
         nextBtn: false,
         cancelInvoiceBtn: false,
-        approveCancelBtn: false,
-        rejectCancelBtn: false,
         printInvoiceBtn: false,
         printForm21Btn: false,
     };
@@ -313,11 +311,18 @@ export const VehicleInvoiceMasterBase = (props) => {
                     }
                 );
             } else if (selectedOtfId) {
-                extraParams.push({
-                    key: 'otfId',
-                    value: selectedOtfId,
-                    name: 'OTF Number',
-                });
+                extraParams.push(
+                    {
+                        key: 'invoiceId',
+                        value: selectedOrder?.id,
+                        name: 'Invoice Id',
+                    },
+                    {
+                        key: 'otfId',
+                        value: selectedOtfId,
+                        name: 'OTF Number',
+                    }
+                );
             }
 
             fetchData({
@@ -332,7 +337,7 @@ export const VehicleInvoiceMasterBase = (props) => {
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedOrder?.id, selectedOtfId, formActionType, vehicleInvoiceMasterData]);
+    }, [selectedOrder?.id, selectedOtfId, formActionType]);
 
     useEffect(() => {
         const defaultSection = VEHICLE_INVOICE_SECTION.INVOICE_DETAILS.id;
@@ -412,7 +417,6 @@ export const VehicleInvoiceMasterBase = (props) => {
     const handleIRNGeneration = () => {
         const data = { otfNumber: selectedOtfNumber, invoiceNumber: selectedOrder?.invoiceNumber };
         const onSuccess = (res) => {
-            setShowDataLoading(true);
             setConfirmRequest(false);
             resetOtfData();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
@@ -472,6 +476,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
         form.setFieldsValue(undefined);
+        cancelInvoiceForm.resetFields();
 
         if (isLastSection) {
             generateInvoice();
@@ -480,6 +485,7 @@ export const VehicleInvoiceMasterBase = (props) => {
 
         switch (buttonAction) {
             case ADD_ACTION:
+                setProfileCardData();
                 defaultSection && setCurrentSection(defaultSection);
                 resetOtfData();
                 invoiceDetailForm.resetFields();
@@ -527,7 +533,7 @@ export const VehicleInvoiceMasterBase = (props) => {
                 setButtonData(Visibility);
                 // setButtonData({ ...Visibility, cancelReceiptBtn: true });
                 if (buttonAction === VIEW_ACTION) {
-                    invoiceStatus === QUERY_BUTTONS_CONSTANTS.INVOICED.key ? setButtonData({ ...Visibility, printForm21Btn: true, printInvoiceBtn: true, cancelInvoiceBtn: true, approveCancelBtn: false, rejectCancelBtn: false }) : invoiceStatus === QUERY_BUTTONS_CONSTANTS.CANCELLATION_REQUEST.key ? setButtonData({ ...Visibility, cancelInvoiceBtn: false, approveCancelBtn: true, rejectCancelBtn: true }) : setButtonData({ ...Visibility, cancelInvoiceBtn: false, approveCancelBtn: false, rejectCancelBtn: false });
+                    invoiceStatus === QUERY_BUTTONS_CONSTANTS.INVOICED.key ? setButtonData({ ...Visibility, printForm21Btn: true, printInvoiceBtn: true, cancelInvoiceBtn: true }) : setButtonData({ ...Visibility, cancelInvoiceBtn: false });
                 }
             }
         }
@@ -546,14 +552,15 @@ export const VehicleInvoiceMasterBase = (props) => {
         const { vehicleDetails, financeDetails, insuranceDetails, invoiceDetails } = requestPayload;
         const data = { vehicleDetails, financeDetails, insuranceDetails, invoiceDetails };
         const onSuccess = (res) => {
+            console.log('🚀 ~ file: VehicleInvoiceMaster.js:558 ~ onSuccess ~ res:', res);
             form.resetFields();
             setShowDataLoading(true);
             fetchList({ customURL: BASE_URL_VEHICLE_INVOICE_LIST, setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             const invoiceId = res?.data?.invoiceDetails?.id;
             const otfId = res?.data?.invoiceDetails?.otfDetailsRequest?.otfId;
-
+            setSelectedOrderId(res?.data?.invoiceDetails?.invoiceNumber);
             if (invoiceId && otfId) {
-                extraParams.push(
+                const extraParams = [
                     {
                         key: 'invoiceId',
                         value: invoiceId,
@@ -563,8 +570,8 @@ export const VehicleInvoiceMasterBase = (props) => {
                         key: 'otfId',
                         value: otfId,
                         name: 'OTF Number',
-                    }
-                );
+                    },
+                ];
 
                 fetchData({
                     customURL,
@@ -577,7 +584,7 @@ export const VehicleInvoiceMasterBase = (props) => {
                     onErrorAction,
                 });
 
-                handleBookingNumberSearch(res?.data?.invoiceDetails?.otfDetailsRequest?.otfId, res?.data?.invoiceDetails?.id);
+                handleBookingNumberSearch(res?.data?.invoiceDetails?.otfDetailsRequest?.bookingNumber || res?.data?.invoiceDetails?.otfDetailsRequest?.otfNumber, res?.data?.invoiceDetails?.id);
             }
 
             const nextSection = filterActiveSection?.find((i) => i.id > currentSection);

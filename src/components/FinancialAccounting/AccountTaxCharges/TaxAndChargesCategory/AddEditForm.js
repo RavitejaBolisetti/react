@@ -5,15 +5,14 @@
  */
 import React, { useState, useEffect, createContext } from 'react';
 import { Col, Input, Form, Row, Collapse, Switch, Divider } from 'antd';
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
-import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { validateRequiredInputField } from 'utils/validation';
+import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { ViewDetail } from './ViewDetail';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import { accordianExpandIcon } from 'utils/accordianExpandIcon';
 import { TaxAndChargesCalculationMaster } from './TaxAndChargesCalculation';
 import { taxChargeCategoryDataActions } from 'store/actions/data/financialAccounting/taxChargesCategory';
-import { customSelectBox } from 'utils/customSelectBox';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -43,7 +42,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchTaxChargeCategoryDetail: taxChargeCategoryDataActions.fetchDetail,
+            fetchTaxChargeCategoryDetail: taxChargeCategoryDataActions.fetchData,
             listShowLoadingTaxChargeCategory: taxChargeCategoryDataActions.listShowLoading,
             showGlobalNotification,
         },
@@ -55,7 +54,7 @@ export const ViewEditContext = createContext(null);
 
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType, formActionType: { editMode, viewMode } = undefined, isVisible, fetchTaxChargeCategoryDetail, userId, handleCodeFunction, taxChargeCategoryCodeData, onFinish, onFinishFailed, stateData, saleData, taxChargeCategoryTypeData, editForm, taxChargeCalForm, dropdownItems, setDropdownItems } = props;
-    const { buttonData, setButtonData, handleButtonClick, formEdit, setFormEdit, taxChargeCalList, setTaxChargeCalList } = props;
+    const { buttonData, setButtonData, handleButtonClick, formEdit, setFormEdit, taxChargeCalList, setTaxChargeCalList, isTaxCategoryCodeLoading, isConfigurableLoading } = props;
 
     const [openAccordian, setOpenAccordian] = useState(1);
     const [taxCategory, setTaxCategory] = useState();
@@ -139,6 +138,10 @@ const AddEditFormMain = (props) => {
         formActionType,
         dropdownItems,
         setDropdownItems,
+        stateData,
+        saleData,
+        isTaxCategoryCodeLoading,
+        isConfigurableLoading,
     };
 
     return (
@@ -160,16 +163,7 @@ const AddEditFormMain = (props) => {
                                         <Input placeholder={preparePlaceholderText('Description')} maxLength={50} />
                                     </Form.Item>
                                 </Col>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                    <Form.Item label="State" initialValue={taxCategory?.stateCode} name="stateCode" rules={[validateRequiredSelectField('State')]}>
-                                        {customSelectBox({ data: stateData, fieldNames: { key: 'code', value: 'name' }, placeholder: preparePlaceholderSelect('State') })}
-                                    </Form.Item>
-                                </Col>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                    <Form.Item label="Sale Type" initialValue={taxCategory?.saleType} name="saleType" rules={[validateRequiredSelectField('Sale Type')]}>
-                                        {customSelectBox({ data: saleData, placeholder: preparePlaceholderSelect('Sale Type') })}
-                                    </Form.Item>
-                                </Col>
+
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                     <Form.Item initialValue={editMode ? taxCategory?.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
                                         <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />

@@ -23,7 +23,7 @@ import { ThankYouMaster } from './ThankYou';
 import styles from 'assets/sass/app.module.scss';
 
 const VehicleDeliveryNoteConatinerMain = (props) => {
-    const { currentSection, selectedOtfNumber, selectedOrderId, soldByDealer } = props;
+    const { currentSection, selectedOtfNumber, selectedOrderId, soldByDealer, vehicleChallanData } = props;
     const { requestPayload, setRequestPayload } = props;
 
     const onFinishCustom = ({ key, values }) => {
@@ -48,7 +48,7 @@ const VehicleDeliveryNoteConatinerMain = (props) => {
                 return <CustomerDetailsMaster {...myProps} customerDetailsData={requestData?.customerDetails} />;
             }
             case VEHICLE_DELIVERY_NOTE_SECTION.VEHICLE_DETAILS.id: {
-                return <VehicleDetailsMaster {...myProps} vehicleData={soldByDealer ? requestData?.vehicleDetails : requestData?.vehicleInformationDto} />;
+                return <VehicleDetailsMaster {...myProps} vehicleData={soldByDealer ? requestData?.vehicleDetails : props?.formActionType?.addMode ? vehicleChallanData : requestData?.vehicleInformationDto} />;
             }
             case VEHICLE_DELIVERY_NOTE_SECTION.FINANCE_DETAILS.id: {
                 return <FinananceDetailsMaster {...myProps} formKey={'financeDetails'} financeData={requestData?.financeDetails} />;

@@ -9,7 +9,7 @@ import { Form } from 'antd';
 import CardDocumentType from './CardDocumentType';
 import DocumentTypesForm from './DocumentTypesForm';
 
-const DocumentTypes = ({ setCanFormSave, setIsBtnDisabled, isBtnDisabled, onFinish = () => {}, onFinishFailed = () => {}, isReadOnly = false, setFormBtnDisable, setFinalFormdata, finalFormdata }) => {
+const DocumentTypes = ({ setCanFormSave, setIsBtnDisabled, isBtnDisabled, setFinalFormdata, finalFormdata }) => {
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [docForm] = Form.useForm();
 
