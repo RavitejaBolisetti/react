@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import { InvoiceDetailsMaster } from '@components/Sales/OTF/InvoiceDetails/InvoiceDetailsMaster';
 import customRender from '@utils/test-utils';
 import createMockStore from '__mocks__/store';
@@ -34,7 +34,12 @@ describe('Booking Invoice Details render', () => {
                 OTF: {
                     InvoiceDetail: {
                         isLoaded: true,
-                        data: [{ name: '1' }, { name: '2' }],
+                        data: {
+                            otfNumber: 'OTF23D010023',
+                            deliveryDetails: [{ deliveryNoteDate: '2023-10-09', deliveryNoteNumber: 'VDN23D010046', deliveryNoteStatus: null, id: 'd97bf836-8367-4b13-b81d-473d3001d6b8' }],
+
+                            invoiceDetails: [{ bookingAndBillingCustomerDto: null, id: 'd97bf836-8367-4b13-b81d-473d3001d6b8', invoiceDate: '2023-10-09', invoiceNumber: 'INV23D010061', invoiceStatus: 'C' }],
+                        },
                     },
                 },
             },
@@ -43,7 +48,7 @@ describe('Booking Invoice Details render', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <InvoiceDetailsMaster NEXT_ACTION={jest.fn()} selectedOrder={selectedOrder} selectedOrderId={'123'} userId={'123'} onChange={jest.fn()} onFinish={jest.fn()} {...props} />
+                <InvoiceDetailsMaster NEXT_ACTION={jest.fn()} invoiceInformation={true} selectedOrder={selectedOrder} selectedOrderId={'123'} userId={'123'} onChange={jest.fn()} onFinish={jest.fn()} {...props} />
             </Provider>
         );
 
@@ -63,6 +68,6 @@ describe('Booking Invoice Details render', () => {
         expect(deliveredText).toBeTruthy();
 
         const nextBtn = screen.getAllByRole('button', { name: 'Next' });
-        expect(nextBtn).toBeTruthy();
+        fireEvent.click(nextBtn[0]);
     });
 });

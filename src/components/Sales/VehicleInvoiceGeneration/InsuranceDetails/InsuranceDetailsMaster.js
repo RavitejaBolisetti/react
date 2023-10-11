@@ -11,7 +11,7 @@ import styles from 'assets/sass/app.module.scss';
 
 export const InsuranceDetailsMaster = (props) => {
     const { formData: insuranceData, onCloseAction, formActionType, userId, isDataLoaded } = props;
-    const { form, selectedOrderId, handleFormValueChange, section, isLoading, NEXT_ACTION, handleButtonClick, onFinishFailed } = props;
+    const { form, selectedRecordId, selectedOrderId, handleFormValueChange, section, isLoading, NEXT_ACTION, handleButtonClick, onFinishFailed } = props;
     const { buttonData, formKey, onFinishCustom = undefined, FormActionButton, pageType } = props;
     const [formData, setFormData] = useState();
 
@@ -40,7 +40,7 @@ export const InsuranceDetailsMaster = (props) => {
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
-        const otfId = formData?.otfId || '';
+        const otfId = selectedRecordId || formData?.otfId || '';
         const data = { ...values, id: recordId, otfId, otfNumber: selectedOrderId };
         onFinishCustom({ key: formKey, values: data });
         handleButtonClick({ buttonAction: NEXT_ACTION });

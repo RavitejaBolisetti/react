@@ -50,7 +50,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const ChangePasswordBase = ({ form, password, fieldData, setFieldData, setPassword, showGlobalNotification, isOpen = false, onOk = () => {}, title = '', discreption = '', doLogout, saveData, isDataLoaded, listShowLoading, userId }) => {
+const ChangePasswordBase = ({ form, password, fieldData, setFieldData, setPassword, showGlobalNotification, doLogout, saveData, listShowLoading, userId }) => {
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState({ oldPassword: false, newPassword: false, confirmNewPassword: false });
     const [tooltipVisible, setTooltipVisible] = useState(false);

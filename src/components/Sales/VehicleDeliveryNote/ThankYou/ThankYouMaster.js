@@ -32,6 +32,7 @@ export const ThankYouMaster = (props) => {
                 return { invoiceType: 'Delivery Note', Number: selectedOrder?.responseMessage?.split('. ')?.[1] };
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedOrder]);
 
     const defaultBtnVisiblity = {

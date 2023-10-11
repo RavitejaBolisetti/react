@@ -308,11 +308,16 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         searchForm.resetFields();
     };
 
+    const handleClear = () => {
+        setFilterString();
+        advanceFilterForm.setFieldsValue({ dueFromDate: undefined, dueToDate: undefined });
+    };
+
     const handleResetFilter = () => {
         setShowDataLoading(false);
-        setFilterString();
-        setSelectedTreeSelectKey(null);
+        setSelectedTreeSelectKey();
         advanceFilterForm.resetFields();
+        advanceFilterForm.setFieldsValue({ dueFromDate: undefined, dueToDate: undefined });
     };
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
@@ -467,6 +472,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         typeData,
         searchForm,
         evrStatusList,
+        handleClear,
     };
 
     const advanceFilterProps = {

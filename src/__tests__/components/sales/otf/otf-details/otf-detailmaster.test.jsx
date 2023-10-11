@@ -4,10 +4,22 @@ import { OtfDetailsMaster } from '@components/Sales/OTF/OtfDetails/OtfDetailsMas
 import customRender from '@utils/test-utils';
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
+import { Form } from 'antd';
 
 jest.mock('store/actions/data/otf/otf', () => ({
-    otfDataActions: {}
+    otfDataActions: {},
 }));
+
+const FormWrapper = (props) => {
+    const [form] = Form.useForm();
+    const myMoock = {
+        ...form,
+        validateFields: jest.fn(),
+        getFieldsValue: jest.fn().mockResolvedValue([{ name: 'Kai' }]),
+        resetFields: jest.fn(),
+    };
+    return <OtfDetailsMaster form={myMoock} {...props} />;
+};
 
 beforeEach(() => {
     jest.clearAllMocks();
@@ -138,7 +150,7 @@ describe('AddEdit Component render', () => {
             auth: { userId: 123 },
             data: {
                 OTF: {
-                    OtfSearchList: { isDetailLoaded: true, detailData: { loyaltyScheme: true,  } },
+                    OtfSearchList: { isDetailLoaded: true, detailData: { loyaltyScheme: true } },
                 },
             },
         });
@@ -157,12 +169,12 @@ describe('AddEdit Component render', () => {
             auth: { userId: 123 },
             data: {
                 OTF: {
-                    OtfSearchList: { isDetailLoaded: true, detailData: { exchange: true,  } },
+                    OtfSearchList: { isDetailLoaded: true, detailData: { exchange: true } },
                 },
             },
         });
 
-        const saveData=jest.fn();
+        const saveData = jest.fn();
 
         customRender(
             <Provider store={mockStore}>
@@ -175,17 +187,26 @@ describe('AddEdit Component render', () => {
         const saveBtn = screen.getByRole('button', { name: 'Save', exact: false });
         fireEvent.click(saveBtn);
 
-        await waitFor(() => { expect(saveData).toHaveBeenCalled() });
-        
+        await waitFor(() => {
+            expect(saveData).toHaveBeenCalled();
+        });
+
         saveData.mock.calls[0][0].onSuccess();
         saveData.mock.calls[0][0].onError();
-
     });
 });
 
 describe('AddEdit Component render when viewmode is false', () => {
-    const formActionType = { addMode: false, editMode: false, viewMode: false };
+    const formActionType = { addMode: false, editMode: true, viewMode: false };
     it('should render addedit page', async () => {
-        customRender(<OtfDetailsMaster {...formActionType} typeData={('SALE_TYP', 'PRC_TYP')} setWorkFlowDetails={jest.fn()} />);
+        customRender(<FormWrapper {...formActionType} typeData={('SALE_TYP', 'PRC_TYP')} setWorkFlowDetails={jest.fn()} />);
+
+        const Switch = screen.getByRole('switch', { name: /Loyalty Scheme/i });
+        fireEvent.click(Switch);
+        expect(Switch).toBeChecked();
+
+        const Switch2 = screen.getByRole('switch', { name: /Referral/i });
+        fireEvent.click(Switch2);
+        expect(Switch2).toBeChecked();
     });
 });
