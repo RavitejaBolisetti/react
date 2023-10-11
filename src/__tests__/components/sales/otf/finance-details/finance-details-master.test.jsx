@@ -25,6 +25,20 @@ const FormActionButton = () => (
     </div>
 );
 
+jest.mock('@components/Sales/Common/FinananceDetails/AddEditForm', () => {
+    const AddEditForm = ({ onFinish }) => (
+        <div>
+            <button onClick={onFinish}>Save</button>
+        </div>
+    );
+
+    return {
+        __esModule: true,
+
+        AddEditForm,
+    };
+});
+
 const FNC_ARNGD = [
     { key: '1', value: 'Finance Option 1' },
     { key: '2', value: 'Finance Option 2' },
@@ -74,9 +88,6 @@ describe('Booking finance view Details render', () => {
     it('finance form input should work', () => {
         const prop2 = { formActionType: { viewMode: false } };
         customRender(<FormWrapper setFormData={jest.fn} resetData={jest.fn()} {...prop2} typeData={FNC_ARNGD} FormActionButton={FormActionButton} StatusBar={StatusBar} />);
-
-        const financier = screen.getByRole('combobox', { name: /Finance Arranged By/i });
-        fireEvent.change(financier, { target: { value: 'Self' } });
     });
     it('should render when view mode is true', async () => {
         const prop2 = { formActionType: { viewMode: true } };
@@ -104,7 +115,39 @@ describe('Booking finance view Details render', () => {
             </Provider>
         );
 
-        const saveBtn = screen.getByRole('button', { name: /save/i });
-        fireEvent.click(saveBtn);
+        const saveBtn = screen.getAllByRole('button', { name: /save/i });
+        fireEvent.click(saveBtn[0]);
+    });
+
+    it('test for onSuccess', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 123 },
+            data: {
+                OTF: {
+                    FinanceDetail: { isLoaded: true, data: [{ branch: 'MUMBAI', doDate: 11 / 11 / 2023, doNumber: '1212', doReceived: 'N', emi: '111', fileNumber: '1', financeArrangedBy: 'CSH', financeDone: null, financier: 'AB BANK LTD', financierCode: '166', fincrCd: null, id: '106', loanAmount: 1222, otfId: '107', otfNumber: 'OTF23D000246' }] },
+                },
+            },
+        });
+
+        const res = { data: [{ branch: 'MUMBAI', doDate: 11 / 11 / 2023, doNumber: '1212', doReceived: 'N', emi: '111', fileNumber: '1', financeArrangedBy: 'CSH', financeDone: null, financier: 'AB BANK LTD', financierCode: '166', fincrCd: null, id: '106', loanAmount: 1222, otfId: '107', otfNumber: 'OTF23D000246' }] };
+
+        const saveData = jest.fn();
+        const fetchList = jest.fn();
+
+        customRender(
+            <Provider store={mockStore}>
+                <FormWrapper saveData={saveData} onFinishCustom={true} fetchList={fetchList} handleButtonClick={jest.fn()} setButtonData={jest.fn()} onCloseAction={jest.fn()} StatusBar={StatusBar} FormActionButton={FormActionButton} resetData={jest.fn()} typeData={FNC_ARNGD} />
+            </Provider>
+        );
+
+        const saveBtn = screen.getAllByRole('button', { name: 'Save' });
+
+        fireEvent.click(saveBtn[1]);
+
+        await waitFor(() => {
+            expect(saveData).toHaveBeenCalled();
+        });
+
+        saveData.mock.calls[0][0].onSuccess(res);
     });
 });

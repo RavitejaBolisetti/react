@@ -102,7 +102,7 @@ const AddEditFormMain = (props) => {
     const [searchItem] = Form.useForm();
     const fieldNames = { title: 'label', key: 'value', children: 'children' };
 
-    const { buttonData, setButtonData, handleButtonClick } = props;
+    const { buttonData, setButtonData, handleButtonClick, roleType } = props;
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -164,6 +164,7 @@ const AddEditFormMain = (props) => {
         const data = {
             ...values,
             id: recordId,
+            roleType,
             webRoleManagementRequest: filteredWebMenuData,
             mobileRoleManagementRequest: filteredMobileMenuData,
         };

@@ -37,7 +37,7 @@ const CardDocumentType = (prop) => {
         setIsBtnDisabled(true);
     };
 
-    const onUpdate = (value) => {
+    const onUpdate = () => {
         form.validateFields()
             .then((newFormData) => {
                 setfinalFormdata((prev) => {
@@ -51,7 +51,7 @@ const CardDocumentType = (prop) => {
                 form.resetFields();
             })
             .catch((err) => {
-                return;
+                return err;
             });
     };
 

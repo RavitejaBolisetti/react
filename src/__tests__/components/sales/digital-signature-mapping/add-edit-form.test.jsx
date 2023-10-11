@@ -17,6 +17,7 @@ describe('Add Edit Form Component', () => {
             'YES_NO_FLG': 'Test'
         };
         customRender(<AddEditForm isVisible={true} formActionType={formActionType} typeData={typeData} />)
+
     });
 
     it('input and save button should work', () => {

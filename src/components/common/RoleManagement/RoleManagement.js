@@ -13,13 +13,14 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import { tableColumn } from './tableColumn';
 import { AddEditForm } from './AddEditForm';
+import AppliedAdvanceFilter from './AppliedAdvanceFilter';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { APPLICATION_DEVICE_TYPE } from 'utils/applicationDeviceType';
-import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { ListDataTable } from 'utils/ListDataTable';
 import { filterFunction } from 'utils/filterFunction';
 import { btnVisiblity } from 'utils/btnVisiblity';
+import { USER_TYPE_USER } from 'constants/modules/UserManagement/userType';
 
 const mapStateToProps = (state) => {
     const {
@@ -41,7 +42,8 @@ const mapStateToProps = (state) => {
         isMenuLoading,
         isDataLoaded,
         isMenuLoaded,
-        roleManagementData,
+        roleManagementData: roleManagementData,
+        // roleManagementData: roleManagementData?.map((role) => ({ ...role, roleType: Object.values(USER_TYPE)?.find((i) => i.key === role?.roleType)?.title })),
         rolemenuData,
     };
     return returnValue;
@@ -60,8 +62,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const RoleManagementMain = (props) => {
-    const { fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, roleManagementData, fetchMenuList } = props;
-
+    const { fetchList, userId, isDataLoaded, listShowLoading,isDataLoading, showGlobalNotification, roleManagementData, fetchMenuList } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
 
@@ -82,6 +83,7 @@ export const RoleManagementMain = (props) => {
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
     const [unFilteredMenuData, setUnFilteredMenuData] = useState([]);
+    const [roleType, setRoleType] = useState(USER_TYPE_USER?.MANUFACTURER?.id);
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -112,16 +114,17 @@ export const RoleManagementMain = (props) => {
 
     useEffect(() => {
         if (isDataLoaded && roleManagementData && userId) {
+            const roleList = roleManagementData?.filter((i) => i?.roleType === roleType);
             if (filterString) {
                 const keyword = filterString?.keyword;
-                const filterDataItem = roleManagementData?.filter((item) => filterFunction(keyword)(item?.roleName));
+                const filterDataItem = roleList?.filter((item) => filterFunction(keyword)(item?.roleName));
                 setSearchdata(filterDataItem);
             } else {
-                setSearchdata(roleManagementData);
+                setSearchdata(roleList);
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, isDataLoaded, roleManagementData]);
+    }, [filterString, isDataLoaded, roleManagementData, roleType]);
 
     const handleReferesh = () => {
         setShowDataLoading(true);
@@ -208,14 +211,18 @@ export const RoleManagementMain = (props) => {
         handleButtonClick,
 
         setIsFormVisible,
+        roleType,
     };
 
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick),
         tableData: searchData,
+        isLoading: isDataLoading,
     };
 
-    const title = 'Role Name';
+    const handleToggleButton = (key) => {
+        setRoleType(key);
+    };
 
     const advanceFilterResultProps = {
         advanceFilter: false,
@@ -227,8 +234,11 @@ export const RoleManagementMain = (props) => {
         handleClearInSearch,
         handleReferesh,
         handleButtonClick,
-        title,
+        title: '',
         tableData: searchData,
+        currentItem: roleType,
+        handleToggleButton,
+        isToggleBtnVisible: true,
     };
 
     return (

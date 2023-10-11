@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import '@testing-library/jest-dom/extend-expect';
-import { ListEmployeeDepartmentMaster } from '@components/common/DealerManpower/DealerEmployeeDepartmentMaster/ListEmployeeDepartmentMaster';
+import { ListEmployeeDepartmentMaster } from 'components/common/DealerManpower/DealerEmployeeDepartmentMaster/ListEmployeeDepartmentMaster';
 import customRender from '@utils/test-utils';
 import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { Form } from 'antd';
@@ -81,6 +81,16 @@ describe('List Employee Department Master components', () => {
 
         const searchImg = screen.getByRole('img', { name: 'search' });
         fireEvent.click(searchImg);
+
+        const clearBtn=screen.getByRole('button', { name: 'Clear' });
+        fireEvent.click(clearBtn);
+
+        const advanceFilter=screen.getByText('Advanced Filters');
+        fireEvent.click(advanceFilter);
+
+        const closeBtn=screen.getByRole('img', { name: /close/i });
+        fireEvent.click(closeBtn);
+
     })
 
     it('refresh button should work', async () => {
@@ -102,14 +112,18 @@ describe('List Employee Department Master components', () => {
             },
         });
 
+        const fetchList=jest.fn();
+
         customRender(
             <Provider store={mockStore}>
-                <ListEmployeeDepartmentMaster fetchList={jest.fn()} fetchDivisionLovList={jest.fn()} />
+                <ListEmployeeDepartmentMaster fetchList={fetchList} fetchDivisionLovList={jest.fn()} />
             </Provider>
         );
 
         const refreshbutton = screen.getByRole('button', { name: '', exact: false });
         fireEvent.click(refreshbutton);
+
+        fetchList.mock.calls[0][0].onSuccessAction();
     })
 
     it('Should render Employee Department Master add edit form components', () => {
@@ -244,16 +258,6 @@ describe('List Employee Department Master components', () => {
 
         const saveData = jest.fn();
 
-        const res = {
-            data: [{
-                departmentCode: "DC98",
-                departmentName: "Employee",
-                divisionCode: "C",
-                divisionName: "COMMON",
-                status: true
-            }]
-        };
-
         customRender(
             <Provider store={mockStore}>
                 <ListEmployeeDepartmentMaster saveData={saveData} setIsFormVisible={jest.fn()} handleButtonClick={jest.fn()} fetchList={jest.fn()} resetData={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} />
@@ -269,7 +273,7 @@ describe('List Employee Department Master components', () => {
         fireEvent.click(saveBtn);
 
         await waitFor(() => expect(saveData).toHaveBeenCalled());
-        saveData.mock.calls[0][0].onSuccess(res);
+        saveData.mock.calls[0][0].onSuccess();
         saveData.mock.calls[0][0].onError();
     });
 

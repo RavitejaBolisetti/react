@@ -69,13 +69,6 @@ afterEach(() => {
     jest.restoreAllMocks();
 });
 
-const props = {
-    formActionType: { addMode: false, editMode: false, viewMode: true },
-    section: { displayOnList: true, id: 1, title: 'Exchange Vehicle' },
-    isDataLoaded: true,
-    isLoading: false,
-    selectedOrderId: '1234',
-};
 
 const exchangeData = [{
     customerExpectedPrice: "850000",
@@ -149,6 +142,7 @@ describe('ExchangeVehiclesMaster component render', () => {
             },
         })
 
+
         customRender(
             <Provider store={mockStore}>
                 <FormWrapper saveData={saveData} handleButtonClick={jest.fn()} resetData={jest.fn()} fetchCustomerList={jest.fn()} fetchList={fetchList} typeData="REL_TYPE" StatusBar={StatusBar} formActionType={formActionType} FormActionButton={FormActionButton} {...props} setfilteredModelData={jest.fn()} setfilteredVariantData={jest.fn()} />
@@ -164,5 +158,7 @@ describe('ExchangeVehiclesMaster component render', () => {
         
         saveData.mock.calls[0][0].onSuccess();
         saveData.mock.calls[0][0].onError();
+        fetchList.mock.calls[0][0].onSuccessAction();
+        fetchList.mock.calls[0][0].onErrorAction();
     });
 });

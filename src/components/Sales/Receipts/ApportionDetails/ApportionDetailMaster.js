@@ -94,8 +94,6 @@ const ApportionDetailMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDocumentTypesLoaded]);
 
-    const handleFieldsChange = () => {};
-
     const handleDocumentNumberChange = () => {
         setShowApportionForm();
         resetInvoiceData();
@@ -172,7 +170,7 @@ const ApportionDetailMasterBase = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFieldsChange} onFinish={receiptOnFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFinish={receiptOnFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>
