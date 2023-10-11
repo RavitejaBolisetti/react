@@ -138,6 +138,17 @@ describe('List Dealer location type master components', () => {
                 },
             },
         });
+
+        const res = {
+            data: [{
+                departmentCode: "DC98",
+                departmentName: "Employee",
+                divisionCode: "C",
+                divisionName: "COMMON",
+                status: true
+            }]
+        };
+
         const saveData= jest.fn()
         customRender(
             <Provider store={mockStore}>
@@ -165,6 +176,10 @@ describe('List Dealer location type master components', () => {
 
         const saveBtn = screen.getByRole('button', { name: 'Save', exact: false });
         fireEvent.click(saveBtn);
+
+        await waitFor(() => expect(saveData).toHaveBeenCalled());
+        saveData.mock.calls[0][0].onSuccess(res);
+        saveData.mock.calls[0][0].onError();
     })
 
     it('Should render Dealer location type master close components', () => {
@@ -263,10 +278,6 @@ describe('List Dealer location type master components', () => {
 
         const saveBtn = screen.getByRole('button', { name: /Save/i });
         fireEvent.click(saveBtn);
-
-        await waitFor(() => expect(saveData).toHaveBeenCalled());
-        saveData.mock.calls[0][0].onSuccess(res);
-        saveData.mock.calls[0][0].onError();
     });
 
 });
