@@ -8,7 +8,7 @@ import CardProductAttribute from './CardTaxAndChargeCal';
 import FormProductAttribute from './FormTaxAndChargeCal';
 
 export const TaxAndChargesCalculationMaster = (props) => {
-    const { isVisible, selectedTreeData, showGlobalNotification, taxChargeCategoryTypeData, taxCategory, taxChargeCategoryCodeData, handleCodeFunction, form, editForm, taxChargeCalForm, formEdit, setFormEdit, taxChargeCalList, setTaxChargeCalList, buttonData, setButtonData, viewMode, dropdownItems, setDropdownItems } = props;
+    const { isVisible, selectedTreeData, showGlobalNotification, taxChargeCategoryTypeData, taxCategory, taxChargeCategoryCodeData, handleCodeFunction, form, editForm, taxChargeCalForm, formEdit, setFormEdit, taxChargeCalList, setTaxChargeCalList, buttonData, setButtonData, viewMode, dropdownItems, setDropdownItems, stateData, saleData, isTaxCategoryCodeLoading } = props;
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [disableSaveButton, setDisableSaveButton] = useState(false);
     const [changeValue, setChangeValue] = useState(null);
@@ -71,6 +71,10 @@ export const TaxAndChargesCalculationMaster = (props) => {
         viewMode,
         dropdownItems,
         setDropdownItems,
+        stateData,
+        saleData,
+        taxCategory,
+        isTaxCategoryCodeLoading,
     };
 
     const formProductAttributeProps = {
@@ -104,7 +108,7 @@ export const TaxAndChargesCalculationMaster = (props) => {
 
             {taxChargeCalList?.length > 0 &&
                 taxChargeCalList?.map((action) => {
-                    return <CardProductAttribute {...cardAttributeProps} chargeType={action?.chargeType} chargeCode={action?.chargeCode} chargeDescription={action?.chargeDescription} internalId={action?.internalId} id={action?.id} taxMasterId={action?.taxMasterId} />;
+                    return <CardProductAttribute {...cardAttributeProps} chargeType={action?.chargeType} chargeCode={action?.chargeCode} chargeDescription={action?.chargeDescription} internalId={action?.internalId} id={action?.id} taxMasterId={action?.taxMasterId} stateCode={action?.stateCode} saleType={action?.saleType} />;
                 })}
         </>
     );
