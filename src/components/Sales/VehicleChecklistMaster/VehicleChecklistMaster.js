@@ -33,7 +33,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ConfigurableParameterEditing: { filteredListData: typeData = [] },
+            ConfigurableParameterEditing: { isLoading: isConfigLoaded, filteredListData: typeData = [] },
             VehicleChecklistMaster: {
                 VehicleChecklistMasterList: { isLoaded: isVehicleChecklistMasterLoaded = false, data: VehicleChecklistMasterList = [] },
                 VehicleChecklistMasterListAttributeLov: { isLoaded: isVehicleChecklistMasterAtrributeLovLoaded = false, data: VehicleChecklistAttributeLov = [] },
@@ -58,6 +58,7 @@ const mapStateToProps = (state) => {
         isVehicleChecklistMasterAtrributeLovLoaded,
         isModelLoading,
         modelGroupData,
+        isConfigLoaded,
     };
     return returnValue;
 };
@@ -85,7 +86,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId, isDataAttributeLoaded, showGlobalNotification, fetchVehicleChecklist, listShowLoadingVehicleChecklist, VehicleChecklistMasterList, VehicleChecklistAttributeLov, fetchVehicleChecklistAttributeLov, listShowLoadingVehicleChecklistAttributeLov, fetchModelLovList, listModelShowLoading, modelGroupData, saveData, isVehicleChecklistMasterLoaded }) => {
+export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId, isDataAttributeLoaded, showGlobalNotification, fetchVehicleChecklist, listShowLoadingVehicleChecklist, VehicleChecklistMasterList, VehicleChecklistAttributeLov, fetchVehicleChecklistAttributeLov, listShowLoadingVehicleChecklistAttributeLov, fetchModelLovList, listModelShowLoading, modelGroupData, saveData, isConfigLoaded }) => {
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
     const [answerForm] = Form.useForm();
@@ -301,6 +302,12 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
                 },
             };
         } else if (values?.attributeLevel === VEHICLE_CHECKLIST_TYPE?.CHECKLIST?.key) {
+            if (modelData?.length <= 0) {
+                showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please add atleast one model' });
+            }
+            if (answerType === ANSWER_TYPES?.Fixed?.key && answerData?.length <= 0) {
+                showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please add atleast one answer' });
+            }
             data = {
                 attributeLevel: values?.attributeLevel,
                 checklistDto: {
