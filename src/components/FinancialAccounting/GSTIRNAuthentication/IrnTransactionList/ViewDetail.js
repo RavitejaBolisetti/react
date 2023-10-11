@@ -4,10 +4,11 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Descriptions } from 'antd';
+import { Descriptions, Typography } from 'antd';
 import { ACCESSIBLE_LOCATION_INDICATOR } from 'constants/modules/applicationMaster';
+const { Text } = Typography;
 
-const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = 'Application Details', styles }) => {
+const ViewDetailMain = ({ applicationDetailsData, viewTitle = 'Application Details', styles }) => {
     const { applicationAction, documentType, accessibleLocation, ...rest } = applicationDetailsData[0];
 
     const viewOneColProps = {
@@ -26,11 +27,12 @@ const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = 'Applicatio
                     <Descriptions.Item label="Application Name/Reports">{rest?.applicationName || 'NA'}</Descriptions.Item>
                     <Descriptions.Item label="Application Type">{rest.applicationType || 'NA'}</Descriptions.Item>
                     <Descriptions.Item label="Accessible Location">{ACCESSIBLE_LOCATION_INDICATOR[rest?.accessableIndicator] || 'NA'}</Descriptions.Item>
-                    <Descriptions.Item label="IRN Integration">{rest?.irnIntegrationRequired ? 'Yes' : 'No'}</Descriptions.Item>
+                    <Descriptions.Item label="IRN Integration">{rest?.irnIntegrationRequired ? <Text type="success"> Yes </Text> : <Text>No</Text>}</Descriptions.Item>
+
                 </Descriptions>
             </div>
         </>
     );
 };
 
-export default ViewDealerDetailsMain;
+export default ViewDetailMain;
