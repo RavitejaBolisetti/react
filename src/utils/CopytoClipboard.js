@@ -23,10 +23,11 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CopytoClipboardMaster = (props) => {
-    const { text, type = 'link', buttonText, showGlobalNotification } = props;
+    const { text = '', type = 'link', buttonText, showGlobalNotification } = props;
+
     const handleClick = () => {
         text && navigator.clipboard.writeText(text);
-        showGlobalNotification({ notificationType: 'success', title: 'Copied', message: '' });
+        showGlobalNotification({ notificationType: 'success', title: 'Copied', message: text });
     };
     if (!text) return '';
     return (

@@ -26,8 +26,7 @@ import { formatDateToCalenderDate, convertDateTime, dateFormatView } from 'utils
 import { validateRequiredInputField } from 'utils/validation';
 import { LANGUAGE_EN } from 'language/en';
 
-import { FilterIcon } from 'Icons';
-import { QueryButtons, QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
+import { QueryButtons, QUERY_BUTTONS_CONSTANTS, CHECKLIST_MESSAGE_CONSTANTS } from './QueryButtons';
 import { vehicleReceiptChecklistdataActions } from 'store/actions/data/VehicleReceiptCheckList/VehicleReceiptChecklistMain';
 import { vehicleReceiptChecklistProfiledataActions } from 'store/actions/data/VehicleReceiptCheckList/VehicleReceiptChecklistProfile';
 import { VehicleCheclistDetailsdataActions } from 'store/actions/data/VehicleReceiptCheckList/VehicleReceiptChecklistMaster';
@@ -408,8 +407,8 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         if (!record?.chassisNumber && buttonAction !== NEXT_ACTION) {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Vehicle details not present' });
-            return;
+            showGlobalNotification({ ...CHECKLIST_MESSAGE_CONSTANTS?.CHASSIS_NOT_PRESENT });
+            return false;
         }
         form.resetFields();
         form.setFieldsValue(undefined);
@@ -683,8 +682,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     };
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
-
-        icon: <FilterIcon size={20} />,
+        // icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
 
         onCloseAction: onAdvanceSearchCloseAction,

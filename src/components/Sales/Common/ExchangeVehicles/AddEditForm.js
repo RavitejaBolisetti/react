@@ -17,7 +17,7 @@ import { convertToUpperCase } from 'utils/convertToUpperCase';
 
 const AddEditFormMain = (props) => {
     const { formData, form, formActionType, editableOnSearch, showAlert } = props;
-    const { financeLovData, schemeLovData, typeData, makeData } = props;
+    const { financeLovData, schemeLovData, typeData } = props;
     const { isConfigLoading, isSchemeLovLoading, isFinanceLovLoading, isMakeLoading, isModelLoading, isVariantLoading } = props;
     const { filteredModelData, filteredVariantData, handleFilterChange, fnSetData, handleSchemeChange, viewOnly = false } = props;
 
@@ -48,7 +48,7 @@ const AddEditFormMain = (props) => {
             </Row>
             {(form.getFieldValue('exchange') || formData?.exchange === 1) && (
                 <>
-                    <CustomerListMaster fnSetData={fnSetData} defaultOption={'registrationNumber'} />
+                    {!viewOnly && <CustomerListMaster fnSetData={fnSetData} defaultOption={'registrationNumber'} />}
 
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>

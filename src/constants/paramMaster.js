@@ -405,4 +405,28 @@ export const PARAM_MASTER = {
         id: 'CH_SER',
         title: 'Charger Installation',
     },
+    IRN_PEND_TRN_STATUS: {
+        id: 'IRN_PEND_TRN_STATUS',
+        title: 'IRN Pending Transaction',
+    },
+    IRN_PEND: {
+        id: 'IRN_PEND',
+        title: 'IRN Pending Transaction',
+    },
+    CRM_SCHEME_TYPE: {
+        id: 'CRM_SCHEME_TYPE',
+        title: 'Scheme Type',
+    },
+    CRM_SCHEME_TYPE_SEARCH: {
+        id: 'CRM_SCHEME_TYPE_SEARCH',
+        title: 'Scheme Type Search',
+    },
+    CHRG_STATUS: {
+        id: 'CHRG_STATUS',
+        title: 'EVR Charging Status',
+    },
+    DEVICE_TYPE: {
+        id: 'DVIC_TYP',
+        title: 'Device Type',
+    },
 };

@@ -7,7 +7,7 @@
 import React from 'react';
 import { Row, Col } from 'antd';
 
-import { DataTable } from 'utils/dataTable';
+// import { DataTable } from 'utils/dataTable';
 import { ModalForm } from './ModalForm';
 import { ListDataTable } from 'utils/ListDataTable';
 
@@ -31,7 +31,6 @@ const AddEditFormMain = (props) => {
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    {/* <DataTable {...tableProps} /> */}
                     <ListDataTable {...tableProps} />
                 </Col>
             </Row>

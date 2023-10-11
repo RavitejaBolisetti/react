@@ -5,15 +5,13 @@
  */
 import React, { useState, useEffect } from 'react';
 import { Form, Row, Col } from 'antd';
-
 import { AddEditForm, ViewDetail } from 'components/Sales/Common/InsuranceDetails';
-import { formattedCalendarDate } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
 
 export const InsuranceDetailsMaster = (props) => {
     const { formData: insuranceData, onCloseAction, formActionType, userId, isDataLoaded } = props;
-    const { form, selectedOrderId, handleFormValueChange, section, isLoading, NEXT_ACTION, handleButtonClick, onFinishFailed } = props;
+    const { form, selectedRecordId, selectedOrderId, handleFormValueChange, section, isLoading, NEXT_ACTION, handleButtonClick, onFinishFailed } = props;
     const { buttonData, formKey, onFinishCustom = undefined, FormActionButton, pageType } = props;
     const [formData, setFormData] = useState();
 
@@ -21,13 +19,6 @@ export const InsuranceDetailsMaster = (props) => {
         setFormData(insuranceData);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [insuranceData]);
-
-    // useEffect(() => {
-    //     if (formData) {
-    //         form.setFieldsValue({ ...formData, insuranceDate: formattedCalendarDate(formData?.insuranceDate) });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [formData, formActionType]);
 
     const viewProps = {
         styles,
@@ -49,7 +40,8 @@ export const InsuranceDetailsMaster = (props) => {
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
-        const data = { ...values, id: recordId, otfNumber: selectedOrderId };
+        const otfId = selectedRecordId || formData?.otfId || '';
+        const data = { ...values, id: recordId, otfId, otfNumber: selectedOrderId };
         onFinishCustom({ key: formKey, values: data });
         handleButtonClick({ buttonAction: NEXT_ACTION });
     };

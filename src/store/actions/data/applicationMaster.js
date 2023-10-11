@@ -221,7 +221,7 @@ applicationMasterDataActions.fetchApplicationCriticalityGroup = withAuthToken((p
 });
 
 applicationMasterDataActions.fetchMenuList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, errorAction, data, userId, sid, deviceType } = params;
+    const { setIsLoading, errorAction, data, userId, screenId, deviceType } = params;
     setIsLoading(true);
     const onError = (errorMessage) => message.error(errorMessage);
 
@@ -236,7 +236,7 @@ applicationMasterDataActions.fetchMenuList = withAuthToken((params) => ({ token,
     const apiCallParams = {
         data,
         method: 'get',
-        url: BASE_URL_MENU + (sid ? '?sid=' + sid : ''),
+        url: BASE_URL_MENU + (screenId ? '?screenId=' + screenId : ''),
         deviceType,
         token,
         accessToken,

@@ -34,15 +34,14 @@ import { VehiclePriceMaster } from './vehiclePriceMaster';
 import { RoleManagementData } from './roleManagementData';
 import { ManufacturerAdmin } from './ManufacturerAdmin';
 import { ManufacturerOrg } from './ManufacturerOrg';
-import { VehicleReceipt } from './vehicleReceipt';
 import { Receipt } from './receipt';
+import { VehicleReceipt } from './vehicleReceipt';
 import { VehicleModelandTaxChargesCategory } from './VehicleModelTaxChargesCategory';
 import { Report } from './report';
 import { UserManagement } from './userManagement';
 import { VehicleReceiptChecklist } from './VehicleReceiptCheckList';
 import { vehicleAllotmentData } from './vehicleAllotment';
 import { HoPriceMapping } from './hoPriceMapping';
-import { VehicleInvoiceGeneration } from './invoiceGeneration';
 import { UserAccess } from './userAccess';
 import { OTFSoMapping } from './otfSoMappingUnmapping';
 import { OTFBlockMaster } from './otfBlockMaster';
@@ -51,6 +50,10 @@ import { DealerBlockMaster } from './dealerBlockMaster';
 import { CRMCustomerVehicle } from './crmCustomerVehicle';
 import { stockTransferIndentData } from './stockTransferIndent';
 import { ChargerInstallation } from './chargerInstallation';
+import { RsmAsmApproval } from './rsmAsmApproval';
+import { EvrDetailsCapturing } from './evrDetailsCapturing';
+
+import { CRMSchemeEnrollmentList } from './crmSchemeEnrollment';
 export const data = combineReducers({
     Menu,
     ProductHierarchy,
@@ -64,7 +67,6 @@ export const data = combineReducers({
     ApplicationMaster,
     QualificationMaster,
     UserManagement,
-    // UserManagementManufacturer,
     Geo,
     Sales,
     DealerManpower,
@@ -84,13 +86,13 @@ export const data = combineReducers({
     ManufacturerAdmin,
     ManufacturerOrg,
     VehicleReceipt,
+    Receipt,
     VehiclePriceMaster,
     VehicleModelandTaxChargesCategory,
     Report,
     VehicleReceiptChecklist,
     vehicleAllotmentData,
     HoPriceMapping,
-    VehicleInvoiceGeneration,
     UserAccess,
     stockTransferIndentData,
     OTFSoMapping,
@@ -99,4 +101,7 @@ export const data = combineReducers({
     DealerBlockMaster,
     ChargerInstallation,
     CRMCustomerVehicle,
+    CRMSchemeEnrollmentList,
+    RsmAsmApproval,
+    EvrDetailsCapturing,
 });

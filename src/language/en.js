@@ -25,10 +25,12 @@ export const LANGUAGE_EN = {
         HIERARCHY_SAME_PARENT_AND_CHILD_WARNING: { TITLE: 'WARNING', MESSAGE: 'Select different parent' },
         THANK_YOU_PAGE_OTF: { TITLE: 'Booking form updated successfully', MESSAGE: 'Booking number: {ORDER_ID}' },
         CUSTOMER_UPDATE: { TITLE: 'Success', MESSAGE: 'Customer detail edited successfully' },
+        THANK_YOU_PAGE_INVOICE: { TITLE: 'Invoice number created successfully', MESSAGE: 'Booking number: {ORDER_ID}' },
 
         DOWNLOAD_START: { TITLE: 'Download', MESSAGE: 'Your download will start soon' },
         USER_TOKEN_VALIDATION: { TITLE: 'Error', MESSAGE: 'User token number {DealerSearchvalue} does not exist. Try again with valid token number' },
         APPLICATON_REQUIRE_VALIDATION: { TITLE: 'Error', MESSAGE: 'Please provide {NAME} to proceed' },
         DELIVERY_NOTE_MESSAGE: { TITLE: 'Delivery {NAME} created successfully', MESSAGE: 'Delivery Note No.: {ORDER_ID}' },
+        USER_NOT_FOUND: { TITLE: 'User not found', MESSAGE: 'User does not exist, do you want to create user?' },
     },
 };

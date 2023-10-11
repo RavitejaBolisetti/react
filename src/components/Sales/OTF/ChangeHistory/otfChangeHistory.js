@@ -50,21 +50,19 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const ChangeHistoryMain = ({ fetchOTFChangeHistory, onCloseAction, listShowChangeHistoryLoading, isChangeHistoryLoading, userId, isChangeHistoryLoaded, changeHistoryData, selectedOrderId, selectedBookingId = undefined }) => {
+const ChangeHistoryMain = ({ fetchOTFChangeHistory, onCloseAction, listShowChangeHistoryLoading, isChangeHistoryLoading, userId, isChangeHistoryLoaded, changeHistoryData, selectedRecordId, selectedBookingId = undefined }) => {
     useEffect(() => {
-        if (selectedOrderId) {
+        if (selectedRecordId) {
             const extraParams = [
                 {
-                    key: 'otfNumber',
-                    title: 'otfNumber',
-                    value: selectedOrderId,
-                    name: 'Booking Number',
+                    key: 'otfId',
+                    value: selectedRecordId,
                 },
             ];
             fetchOTFChangeHistory({ customURL, setIsLoading: listShowChangeHistoryLoading, userId, extraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedOrderId]);
+    }, [selectedRecordId]);
 
     const tableColumn = [
         tblPrepareColumns({

@@ -69,8 +69,8 @@ const mapDispatchToProps = (dispatch) => ({
 const OtfDetailsMasterBase = (props) => {
     const { typeData, listConsultantShowLoading } = props;
     const { userId, showGlobalNotification, section, fetchOTFDetail, listShowLoading, isDataLoaded, otfData, saveData, isLoading } = props;
-    const { form, selectedOrderId, formActionType, handleFormValueChange, fetchSalesConsultant, salesConsultantLov, isSalesConsultantDataLoaded, NEXT_ACTION, handleButtonClick } = props;
-    const { workFlowDetails, setWorkFlowDetails } = props;
+    const { form, selectedRecordId, formActionType, handleFormValueChange, fetchSalesConsultant, salesConsultantLov, isSalesConsultantDataLoaded, NEXT_ACTION, handleButtonClick } = props;
+    const { setWorkFlowDetails } = props;
     const [exchangeValue, setexchangeValue] = useState(false);
     const [loyaltyValue, setloyaltyValue] = useState(false);
     const disabledProps = {
@@ -102,27 +102,23 @@ const OtfDetailsMasterBase = (props) => {
 
     const extraParams = [
         {
-            key: 'otfNumber',
-            title: 'otfNumber',
-            value: selectedOrderId,
-            name: 'Booking Number',
+            key: 'otfId',
+            value: selectedRecordId,
         },
     ];
 
     useEffect(() => {
-        if (userId && selectedOrderId) {
+        if (userId && selectedRecordId) {
             const extraParams = [
                 {
-                    key: 'otfNumber',
-                    title: 'otfNumber',
-                    value: selectedOrderId,
-                    name: 'Booking Number',
+                    key: 'otfId',
+                    value: selectedRecordId,
                 },
             ];
             fetchOTFDetail({ customURL, setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOrderId]);
+    }, [userId, selectedRecordId]);
 
     useEffect(() => {
         if (!isSalesConsultantDataLoaded && userId) {

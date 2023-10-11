@@ -79,7 +79,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const CustomerDetailsMain = (props) => {
     const { resetData, saveData, isLoading, userId, isDataLoaded, fetchList, listShowLoading, customerFormData, showGlobalNotification, onFinishFailed } = props;
     const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, formActionType, NEXT_ACTION, handleButtonClick, section, fetchCustomerDetailData } = props;
-    const { typeData, selectedOrderId } = props;
+    const { typeData, selectedRecordId } = props;
     const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar } = props;
 
     const [form] = Form.useForm();
@@ -91,6 +91,7 @@ export const CustomerDetailsMain = (props) => {
     useEffect(() => {
         if (userId && customerFormData) {
             setFormData(customerFormData);
+            setButtonData({ ...buttonData, formBtnActive: false });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, customerFormData]);
@@ -113,19 +114,17 @@ export const CustomerDetailsMain = (props) => {
 
     const extraParams = [
         {
-            key: 'otfNumber',
-            title: 'otfNumber',
-            value: selectedOrderId,
-            name: 'Booking Number',
+            key: 'otfId',
+            value: selectedRecordId,
         },
     ];
 
     useEffect(() => {
-        if (userId && selectedOrderId) {
+        if (userId && selectedRecordId) {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOrderId]);
+    }, [userId, selectedRecordId]);
 
     const onFinish = (values) => {
         let data;
@@ -133,18 +132,18 @@ export const CustomerDetailsMain = (props) => {
             showGlobalNotification({ message: 'Please provide booking customer' });
             setActiveKey([...activeKey, !values?.bookingCustomer?.customerId ? 1 : '']);
             return false;
-        } else if (!values?.billingCustomer?.customerId && !formData?.billingCustomer?.customerId) {
+        } else if (!values?.billingCustomer?.customerId && activeKey.includes(2)) {
             showGlobalNotification({ message: 'Please provide billing customer' });
             setActiveKey([...activeKey, !values?.billingCustomer?.customerId ? 2 : '']);
             return false;
         } else {
             form.getFieldsValue();
             if (!values?.bookingCustomer?.customerId && formData?.bookingCustomer?.customerId) {
-                data = { bookingCustomer: { ...formData?.bookingCustomer, otfNumber: selectedOrderId }, billingCustomer: { ...values?.billingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer } };
+                data = { otfId: selectedRecordId, bookingCustomer: { ...formData?.bookingCustomer, otfId: selectedRecordId }, billingCustomer: { ...values?.billingCustomer, otfId: selectedRecordId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer } };
             } else if (!values?.billingCustomer?.customerId && formData?.billingCustomer?.customerId) {
-                data = { bookingCustomer: { ...values?.bookingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BOOKING', id: customerFormData?.bookingCustomer?.id }, billingCustomer: { ...formData?.billingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: formData?.billingCustomer?.sameAsBookingCustomer } };
+                data = { otfId: selectedRecordId, bookingCustomer: { ...values?.bookingCustomer, otfId: selectedRecordId, bookingAndBillingType: 'BOOKING', id: customerFormData?.bookingCustomer?.id }, billingCustomer: { ...formData?.billingCustomer, otfId: selectedRecordId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: formData?.billingCustomer?.sameAsBookingCustomer } };
             } else {
-                data = { bookingCustomer: { ...values?.bookingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BOOKING', id: customerFormData?.bookingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer }, billingCustomer: { ...values?.billingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer } };
+                data = { otfId: selectedRecordId, bookingCustomer: { ...values?.bookingCustomer, otfId: selectedRecordId, bookingAndBillingType: 'BOOKING', id: customerFormData?.bookingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer }, billingCustomer: { ...values?.billingCustomer, otfId: selectedRecordId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer } };
             }
 
             if (onFinishCustom) {
@@ -159,7 +158,7 @@ export const CustomerDetailsMain = (props) => {
                 };
 
                 const onError = (message) => {
-                    // showGlobalNotification({ message });
+                    showGlobalNotification({ message });
                 };
 
                 const requestData = {
@@ -224,6 +223,7 @@ export const CustomerDetailsMain = (props) => {
     };
 
     const viewProps = {
+        typeData,
         formData,
         styles,
         isLoading,

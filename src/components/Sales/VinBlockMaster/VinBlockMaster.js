@@ -12,7 +12,6 @@ import { tableColumn } from './tableColumn';
 import ListDataTable from 'utils/ListDataTable/ListDataTable';
 import { showGlobalNotification } from 'store/actions/notification';
 import { ViewDetail } from './ViewDetail';
-import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, CANCEL_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 import AdvanceVinBlockMasterFilter from './AdvanceVinBlockMasterFilter';
 
 import { vinBlockMasterAction } from 'store/actions/data/vehicle/vinBlockMasterAction';
@@ -41,7 +40,7 @@ const mapStateToProps = (state) => {
         filterString,
         isvinInfoLoading,
         isVinDataLoaded,
-        vinData: vinData.vinBlockMasterResponseList, //vinData?.paginationData,
+        vinData: vinData?.paginationData,
         totalRecords: vinData?.totalRecords,
         detailData,
     };
@@ -68,39 +67,35 @@ const mapDispatchToProps = (dispatch) => ({
 export const VinBlockMasterBase = (props) => {
     const { filterString, setFilterString, saveData, userId, showGlobalNotification, fetchOnRoadViewPriceDetail } = props;
     const { typeData, fetchVinBlockList, listVinShowLoading } = props;
-    const { moduleTitle, vinData, totalRecords, fetchVinDetailList, listVinDetailsShowLoading } = props;
+    const { moduleTitle, vinData, totalRecords, fetchVinDetailList } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
     const [searchForm] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
-    const [refershData, setRefershData] = useState(false);
 
     const [formData, setFormData] = useState([]);
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [currentPage, setCurrentPage] = useState();
 
-    const [defaultSection, setDefaultSection] = useState();
-    const [selectedOrder, setSelectedOrder] = useState();
-    const [selectedOrderId, setSelectedOrderId] = useState();
-
-    const [currentSection, setCurrentSection] = useState();
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
-    const [isCancelVisible, setIsCancelVisible] = useState(false);
     const [vinInfo, setvinInfo] = useState();
     const [isLoading, showLoading] = useState(true);
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-    const [page, setPage] = useState({ pageSize: 10, current: 1 });
+    useEffect(() => {
+        setFilterString({ ...filterString, pageSize: 10, current: 1 });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);    
+    
     const dynamicPagination = true;
 
     const onSuccessAction = (res) => {
-        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
-        setRefershData(false);
+        // setRefershData(false);
         setShowDataLoading(false);
     };
 
@@ -108,12 +103,8 @@ export const VinBlockMasterBase = (props) => {
         showGlobalNotification({ message: res });
     };
 
-    useEffect(() => {
-        if (filterString) {
-            setPage({ ...page, current: 1 });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString]);
+   
+    
     const extraParams = useMemo(() => {
         return [
             {
@@ -144,39 +135,41 @@ export const VinBlockMasterBase = (props) => {
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: page?.pageSize,
+                value: filterString?.pageSize ?? 10,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: page?.current,
+                value: filterString?.current,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'sortBy',
                 title: 'Sort By',
-                value: page?.sortBy,
+                value: filterString?.sortBy,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'sortIn',
                 title: 'Sort Type',
-                value: page?.sortType,
+                value: filterString?.sortType,
                 canRemove: true,
                 filter: false,
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, page]);
+    }, [filterString]);
 
+    
     useEffect(() => {
-        if (userId) {
+        if (userId && extraParams?.find((i) => i.key === 'pageNumber')?.value > 0) {
+            setShowDataLoading(true);
             fetchVinBlockList({ setIsLoading: listVinShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
-        }
+}
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, extraParams]);
 
@@ -197,6 +190,7 @@ export const VinBlockMasterBase = (props) => {
                 },
             });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
@@ -204,39 +198,6 @@ export const VinBlockMasterBase = (props) => {
         showLoading(true);
         setFormData(record);
         setIsFormVisible(true);
-        if (buttonAction === 'edit') {
-            setCurrentPage('edit');
-        } else {
-            setCurrentPage('view');
-        }
-        switch (buttonAction) {
-            case ADD_ACTION:
-                defaultSection && setCurrentSection(defaultSection);
-                break;
-            case EDIT_ACTION:
-                setSelectedOrder(record);
-                record && setSelectedOrderId(record?.id);
-                openDefaultSection && setCurrentSection(defaultSection);
-                break;
-            case VIEW_ACTION:
-                setSelectedOrder(record);
-                record && setSelectedOrderId(record?.id);
-                defaultSection && setCurrentSection(defaultSection);
-                break;
-            case CANCEL_ACTION:
-                setIsCancelVisible(true);
-                break;
-            default:
-                break;
-        }
-        if (buttonAction !== NEXT_ACTION) {
-            setFormActionType({
-                addMode: buttonAction === ADD_ACTION,
-                editMode: buttonAction === EDIT_ACTION,
-                viewMode: buttonAction === VIEW_ACTION,
-            });
-            setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction, orderStatus: record?.status }));
-        }
     };
 
     const onCloseAction = () => {
@@ -244,21 +205,26 @@ export const VinBlockMasterBase = (props) => {
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
     };
-
+    const setPage = (page) => {
+        setFilterString({ ...filterString, ...page });
+    };
     const tableProps = {
         dynamicPagination,
+        filterString,
         totalRecords,
-        page,
-        setPage,
+        setPage: setPage,
         isLoading: showDataLoading,
         tableColumn: tableColumn(handleButtonClick),
         tableData: vinData,
     };
 
-    const handleResetFilter = () => {
-        setFilterString();
-        advanceFilterForm.resetFields();
-        setShowDataLoading(false);
+    const handleResetFilter = (e) => {
+        const { pageSize } = filterString;
+        if (filterString) {
+            setShowDataLoading(true);
+        }
+        setFilterString({ pageSize, current: 1 });
+        searchForm.resetFields();
     };
 
     const drawerTitle = useMemo(() => {
@@ -275,6 +241,11 @@ export const VinBlockMasterBase = (props) => {
         // setIsUploadFormVisible(true);
     };
 
+    const handleSearch = (value) => {
+        setFilterString({ ...filterString, vin: value, advanceFilter: true, current: 1 });
+        searchForm.resetFields();
+    };
+
     const removeFilter = (key) => {
         if (key === 'searchParam') {
             const { searchType, searchParam, ...rest } = filterString;
@@ -284,13 +255,14 @@ export const VinBlockMasterBase = (props) => {
             setFilterString({ ...rest });
         }
     };
+
     const title = 'Vin Block Master';
-    console.log('searchForm', searchForm);
+
     const advanceFilterResultProps = {
         extraParams,
         removeFilter,
         advanceFilter: true,
-        onRoadFilter: true,
+        vinFilter: true,
         filterString,
         setFilterString,
         from: listFilterForm,
@@ -300,6 +272,7 @@ export const VinBlockMasterBase = (props) => {
         typeData,
         searchForm,
         handleOnClick,
+        handleSearch,
     };
 
     const buttonProps = {
@@ -326,7 +299,7 @@ export const VinBlockMasterBase = (props) => {
         handleButtonClick,
         userId,
         form,
-        NEXT_ACTION,
+        // NEXT_ACTION,
         isFormVisible,
         setIsFormVisible,
         showGlobalNotification,

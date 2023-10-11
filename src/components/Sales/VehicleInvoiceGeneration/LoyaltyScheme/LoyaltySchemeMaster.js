@@ -114,7 +114,7 @@ const LoyaltySchemeMasterMain = (props) => {
     const { fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading } = props;
     const { isModelDataLoaded, isModelLoading, modelData, isVariantDataLoaded, isVariantLoading, variantData } = props;
     const { schemeLovData, isSchemeLovLoading, fetchSchemeLovList, listSchemeLovShowLoading } = props;
-    const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton } = props;
+    const { buttonData, setButtonData, FormActionButton } = props;
 
     const [filteredModelData, setfilteredModelData] = useState([]);
     const [filteredVariantData, setfilteredVariantData] = useState([]);
@@ -146,14 +146,6 @@ const LoyaltySchemeMasterMain = (props) => {
     };
 
     const onFinish = (values) => {
-        // const { customerName } = values;
-        // if (!customerName) {
-        //     showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Verify Customer id to continue' });
-        //     return;
-        // }
-        // const data = { ...values, id: LoyaltySchemeData?.id || '', otfNumber: selectedOrderId };
-
-        // onFinishCustom({ key: formKey, values: data });
         handleButtonClick({ buttonAction: NEXT_ACTION });
         setButtonData({ ...buttonData, formBtnActive: false });
     };

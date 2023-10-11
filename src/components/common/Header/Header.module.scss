@@ -22,6 +22,11 @@
                     }
                 }
             }
+            .ant-dropdown-menu-submenu-title{
+                .ant-dropdown-menu-submenu-expand-icon{
+                    top:6px;
+                }
+            }
         }
 
         &.ant-dropdown-placement-bottomRight {
@@ -49,9 +54,16 @@
                         }
                     }
                 }
+                .ant-dropdown-menu-title-content {
+                    svg {
+                        color: $primaryRed;
+                        vertical-align: sub;
+                    }
+                }
             }
         }
     }
+    
 }
 
 .headerRight {

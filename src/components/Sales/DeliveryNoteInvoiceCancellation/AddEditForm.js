@@ -9,6 +9,8 @@ import { Row, Col, Form, Typography, Divider } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import { RequestDetailsForm } from './RequestDetailsForm';
 import { DeliveryNoteInvoiceForm } from './DeliveryNoteInvoiceForm';
+import { InvoiceDetailsForm } from './InvoiceDetailsForm';
+import { REQUEST_TYPE_CONSTANT } from './utils/RequestTypeConstant';
 import { formattedCalendarDate } from 'utils/formatDateTime';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
@@ -26,8 +28,8 @@ const AddEditFormMain = (props) => {
             form.setFieldsValue({
                 ...requestDetailData,
                 requestType: typeData[PARAM_MASTER?.DEL_INV_CAN_TYP?.id]?.find((request) => requestDetailData?.requestType === request?.key)?.value,
-                invoiceStatus: typeData[PARAM_MASTER?.CDLR_INV_APP_STATUS?.id]?.find((status) => requestDetailData?.invoiceStatus === status?.key)?.value,
-                requestStatus: typeData[PARAM_MASTER?.INV_DEL_NOT_REQ_TYP?.id]?.find((reqStatus) => requestDetailData?.requestStatus === reqStatus?.key)?.value,
+                invoiceStatus: typeData[PARAM_MASTER?.INV_DEL_NOT_REQ_TYP?.id]?.find((status) => requestDetailData?.invoiceStatus === status?.key)?.value,
+                requestStatus: typeData[PARAM_MASTER?.CDLR_INV_APP_STATUS?.id]?.find((reqStatus) => requestDetailData?.requestStatus === reqStatus?.key)?.value,
                 requestDate: formattedCalendarDate(requestDetailData?.requestDate),
                 invoiceDate: formattedCalendarDate(requestDetailData?.invoiceDate),
                 deliveryNoteDate: formattedCalendarDate(requestDetailData?.deliveryNoteDate),
@@ -58,18 +60,35 @@ const AddEditFormMain = (props) => {
                                 <RequestDetailsForm {...requestDetailFormProps} />
                             </Col>
                         </Row>
-                        <Row gutter={16}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Row>
-                                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                        <Text strong>Delivery Note/Invoice Details</Text>
-                                    </Col>
-                                </Row>
-                                <Divider />
+                        {requestDetailData?.requestType === REQUEST_TYPE_CONSTANT?.invoice?.key && (
+                            <Row gutter={16}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                    <Row>
+                                        <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                            <Text strong>Invoice Details</Text>
+                                        </Col>
+                                    </Row>
+                                    <Divider />
+                                    <InvoiceDetailsForm {...requestDetailFormProps} />
+                                </Col>
+                            </Row>
+                        )}
 
-                                <DeliveryNoteInvoiceForm {...requestDetailFormProps} />
-                            </Col>
-                        </Row>
+                        {requestDetailData?.requestType === REQUEST_TYPE_CONSTANT?.delivery?.key && (
+                            <Row gutter={16}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                    <Row>
+                                        <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                            <Text strong>Delivery Note Details</Text>
+                                        </Col>
+                                    </Row>
+                                    <Divider />
+
+                                    <DeliveryNoteInvoiceForm {...requestDetailFormProps} />
+                                </Col>
+                            </Row>
+                        )}
+
                         <Row gutter={16}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Row>

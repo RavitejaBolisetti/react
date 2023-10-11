@@ -20,7 +20,6 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             OTF: {
-                FinanceDetail: { isLoaded, isLoading, data: financeData = [] },
                 FinanceLov: { isLoaded: isFinanceLovDataLoaded = false, isloading: isFinanceLovLoading, data: FinanceLovData = [] },
             },
         },
@@ -30,10 +29,7 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         userId,
-        isLoaded,
-        isLoading,
         moduleTitle,
-
         isFinanceLovDataLoaded,
         isFinanceLovLoading,
         FinanceLovData,
@@ -75,7 +71,8 @@ export const FinananceDetailsMasterBase = (props) => {
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
-        const data = { ...values, id: recordId, otfNumber: selectedOrderId, doDate: values?.doDate };
+        const otfId = formData?.otfId || '';
+        const data = { ...values, id: recordId, otfId, otfNumber: selectedOrderId, doDate: values?.doDate };
 
         onFinishCustom({ key: formKey, values: data });
         handleButtonClick({ buttonAction: NEXT_ACTION });

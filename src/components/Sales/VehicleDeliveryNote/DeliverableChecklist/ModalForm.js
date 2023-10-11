@@ -20,7 +20,7 @@ export const ChecklistModalForms = (props) => {
     const { AdvanceformData, setAdvanceformData, isReadonly = true } = props;
     const { onCloseAction, handleFormValueChange, checkListDataModified, setcheckListDataModified, aggregateForm, setRequestPayload, selectedOrder } = props;
     const { setAdvanceSearchVisible } = props;
-    const { isVisible, setisEditing } = props;
+    const { isVisible, setisEditing, setPage, defaultPage } = props;
     const [saveDisabled, setsaveDisabled] = useState(true);
 
     const disabledProps = { disabled: true };
@@ -46,11 +46,12 @@ export const ChecklistModalForms = (props) => {
                     return element;
                 });
                 setcheckListDataModified(newArr);
-                setRequestPayload((prev) => ({ ...prev, vehicleDeliveryChecklist: { vin: selectedOrder?.vin, deliveryChecklistDtos: newArr?.filter((i) => i?.ismodified) } }));
+                setRequestPayload((prev) => ({ ...prev, vehicleDeliveryCheckList: { vin: prev?.vehicleDetails?.vinNumber, deliveryChecklistDtos: newArr?.filter((i) => i?.ismodified) } }));
                 setAdvanceSearchVisible(false);
                 handleFormValueChange();
                 setisEditing(false);
                 setAdvanceformData();
+                setPage((prev) => ({ ...defaultPage, current: prev?.current }));
             })
             .catch((err) => {});
     };

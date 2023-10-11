@@ -4,23 +4,36 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 
-import { Row, Col, Space, Avatar, Typography, Card, Divider, Button } from 'antd';
+import { Row, Col, Space, Avatar, Typography, Divider, Button } from 'antd';
 
 import { VehicleDeliveryNoteFormButton } from '../VehicleDeliveryNoteFormButton';
-import { LANGUAGE_EN } from 'language/en';
 import { HiCheck } from 'react-icons/hi';
 
 import styles from 'assets/sass/app.module.scss';
 import { CopytoClipboard } from 'utils/CopytoClipboard';
+import { useMemo } from 'react';
 
 const { Title, Text } = Typography;
 
 export const ThankYouMaster = (props) => {
     const { handlePrintDownload, record, selectedOrder } = props;
-    const invoiceType = props?.soldByDealer ? 'Note' : 'Challan';
-
+    const messageList = selectedOrder?.responseMessage?.split(' ');
     const message = selectedOrder?.responseMessage?.split('.')?.[0];
-    const deliveryNoteNo = selectedOrder?.responseMessage?.split('. ')?.[1];
+
+    const ThankYoutitles = useMemo(() => {
+        switch (props?.soldByDealer) {
+            case true: {
+                return { invoiceType: 'Delivery Note', Number: selectedOrder?.responseMessage?.split('. ')?.[1] };
+            }
+            case false: {
+                return { invoiceType: 'Challan', Number: messageList[messageList?.length - 1] };
+            }
+            default: {
+                return { invoiceType: 'Delivery Note', Number: selectedOrder?.responseMessage?.split('. ')?.[1] };
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedOrder]);
 
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -48,27 +61,27 @@ export const ThankYouMaster = (props) => {
         <>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.fullyCentered}>
-                    <Space direction="vertical">
-                        <Avatar size={180} icon={<HiCheck />} />
+                    <Space size="middle" className={styles.deliveryNoteSuccess} direction="vertical">
+                        <Avatar size={150} icon={<HiCheck />} />
                         <Title level={5}>{message}</Title>
-                        <Card>
-                            <Row>
-                                <Col xs={16} sm={16} md={16} lg={16} xl={16} style={{ padding: '2px', border: '1px solid grey', borderRadius: '4px', width: '64%' }}>
-                                    <Text>Delivery Note No.:</Text>
-                                    <Text strong> {deliveryNoteNo}</Text>
-                                </Col>
-                                <Col>
-                                    <CopytoClipboard type={'primary'} buttonText={'Copy'} text={deliveryNoteNo} />
-                                </Col>
-                            </Row>
+                        <div className={styles.deliveryNoteSuccessInfo}>
+                            <Space className={styles.marB20}>
+                                <div className={styles.deliveryNoteSuccessText}>
+                                    <Text>
+                                        {ThankYoutitles?.invoiceType} No.: <span>{ThankYoutitles?.Number}</span>
+                                    </Text>
+                                </div>
+                                <CopytoClipboard type={'primary'} buttonText={'Copy'} text={ThankYoutitles?.Number} />
+                            </Space>
+
                             <Divider />
-                            <Space direction="vertical">
+                            <Space size="middle" direction="vertical">
                                 <Text>Do you want to Print or download this Delivery Note</Text>
-                                <Button onClick={() => handlePrintDownload(record)} className={styles.marB20} danger>
-                                    {`Download/Print ${invoiceType} Note`}
+                                <Button onClick={() => handlePrintDownload(record)} danger>
+                                    {`Download/Print ${ThankYoutitles?.invoiceType}`}
                                 </Button>
                             </Space>
-                        </Card>
+                        </div>
                     </Space>
                 </Col>
             </Row>

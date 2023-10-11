@@ -100,7 +100,6 @@ describe("IssueIndentMaster component", ()=>{
         fireEvent.click(submitBtn);
     });
 
-
     it("issueData", ()=>{
         const props = {
             issueData :[{issueNumber: '8'}]
@@ -146,5 +145,7 @@ describe("IssueIndentMaster component", ()=>{
 
         customRender(<IssueIndentMaster {...cancelIssueProps} typeData={['PARAM_MASTER']}  ModalButtonName={'Yes Recieve'} />);
     });
+
+    
 })
 

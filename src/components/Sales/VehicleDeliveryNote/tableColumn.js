@@ -8,7 +8,7 @@ import { convertDateMonthYear } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
 
-export const tableColumn = ({ handleButtonClick, page, pageSize, actionButtonVisiblity }) => {
+export const tableColumnDeliveryNote = ({ handleButtonClick, actionButtonVisiblity }) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'Customer Name',
@@ -24,6 +24,52 @@ export const tableColumn = ({ handleButtonClick, page, pageSize, actionButtonVis
         tblPrepareColumns({
             title: 'Booking No.',
             dataIndex: 'otfNumber',
+            width: '14%',
+            render: (_, record) => record?.bookingNumber || record?.otfNumber,
+        }),
+        tblPrepareColumns({
+            title: 'Delivery Note No. & Date',
+            dataIndex: 'vehicleDeliveryNote',
+            width: '20%',
+            render: (_, value) => {
+                return (
+                    <>
+                        <div>{value?.vehicleDeliveryNote}</div>
+                        {value?.deliveryNoteDate ? <div className={styles.tableTextColor85}> {convertDateMonthYear(value?.deliveryNoteDate)}</div> : ''}
+                    </>
+                );
+            },
+        }),
+        tblPrepareColumns({
+            title: 'Invoice No. & Date',
+            dataIndex: 'invoiceId',
+            width: '24%',
+            render: (__, value) => {
+                return (
+                    <>
+                        <div>{value?.invoiceId}</div>
+                        {value?.invoiceDate ? <div className={styles.tableTextColor85}> {convertDateMonthYear(value?.invoiceDate)}</div> : ''}
+                    </>
+                );
+            },
+        }),
+
+        tblActionColumn({ handleButtonClick, styles, width: '8%', ...actionButtonVisiblity }),
+    ];
+
+    return tableColumn;
+};
+
+export const tableColumnDeliveryChallan = ({ handleButtonClick, actionButtonVisiblity }) => {
+    const tableColumn = [
+        tblPrepareColumns({
+            title: 'Customer Name',
+            dataIndex: 'customerName',
+            width: '14%',
+        }),
+        tblPrepareColumns({
+            title: 'Model group',
+            dataIndex: 'modelGroup',
             width: '14%',
         }),
         tblPrepareColumns({

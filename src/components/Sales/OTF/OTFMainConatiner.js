@@ -10,7 +10,7 @@ import { OTF_SECTION } from 'constants/OTFSection';
 
 import { OtfDetailsMaster } from 'components/Sales/OTF/OtfDetails';
 import { CustomerDetailsMaster } from 'components/Sales/OTF/CustomerDetails';
-import { VehicleDetailsMaster } from 'components/Sales/OTF/VehicleDetails';
+import { VehicleDetailsMaster } from 'components/Sales/Common/VehicleDetails';
 import { SchemeDetailsMaster } from 'components/Sales/OTF/SchemeDetails';
 import { FinananceDetailsMaster } from 'components/Sales/OTF/FinananceDetails';
 import { InsuranceDetailsMaster } from 'components/Sales/OTF/InsuranceDetails';
@@ -29,6 +29,7 @@ import { OTFStatusBar } from './utils/OTFStatusBar';
 import { PAGE_TYPE } from 'components/Sales/VehicleDeliveryNote/utils/pageType';
 
 import styles from 'assets/sass/app.module.scss';
+import { SALES_MODULE_TYPE } from 'constants/salesModuleType';
 
 const OTFMainConatinerMain = (props) => {
     const { currentSection } = props;
@@ -36,6 +37,7 @@ const OTFMainConatinerMain = (props) => {
 
     const myProps = {
         ...props,
+        salesModuleType: SALES_MODULE_TYPE.OTF.KEY,
         FormActionButton: OTFFormButton,
         StatusBar: OTFStatusBar,
         pageType: PAGE_TYPE?.OTF_PAGE_TYPE?.key,

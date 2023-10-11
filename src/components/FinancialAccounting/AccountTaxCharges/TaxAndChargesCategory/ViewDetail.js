@@ -24,8 +24,7 @@ const ViewDetailBase = ({ formData, styles, parameterType, taxCharges, taxCatego
                 <Descriptions {...viewOneColProps}>
                     <Descriptions.Item label="Code">{taxCategory?.taxCategoryCode}</Descriptions.Item>
                     <Descriptions.Item label="Description">{taxCategory?.taxCategoryDescription}</Descriptions.Item>
-                    <Descriptions.Item label="State">{taxCategory?.stateName}</Descriptions.Item>
-                    <Descriptions.Item label="Sale Type">{taxCategory?.saleType}</Descriptions.Item>
+                    <Descriptions.Item label="Status">{taxCategory?.status === true ? 'Active' : taxCategory?.status === false ? 'Inactive' : null}</Descriptions.Item>
                     <div>
                         {taxCategory?.taxCategoryDetail?.length > 0 && (
                             <Collapse expandIcon={expandIcon} collapsible="icon" className={styles.fullWidth}>

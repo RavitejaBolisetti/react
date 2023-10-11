@@ -22,7 +22,7 @@ export const DEALER_USER_SECTION = {
     },
     MAC_ID: {
         id: 4,
-        title: 'MAC Id',
+        title: 'Device ID',
         displayOnList: true,
     },
 };

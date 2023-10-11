@@ -17,7 +17,6 @@ import OtfSoMappingMasterPage from './OtfSoMapping';
 import RSMApprovalPage from './RSMApproval';
 import OtfBlockMasterPage from './OtfBlockMaster';
 
-
 import OnRoadPriceMasterPage from './OnRoadPriceMaster';
 
 import DigitalSignatureMasterPage from './DigitalSignatureMapping';
@@ -29,6 +28,37 @@ import VehicleTrackingPage from './VehicleTracking';
 import OtfSoMappingUnmappingMasterPage from './OtfSoMappingUnmapping';
 import StockTransferIndentMasterPage from './StockTransferIndent';
 import VehicleDeliveryNoteMasterPage from './VehicleDeliveryNote';
-import VinBlockMasterPage from './VinBlockMaster';
 import ChargerInstallationPage from './ChargerInstallationProcess';
-export { OTFMasterPage, OtfBlockMasterPage, VehicleDetailMasterPage, VehicleReceiptMasterPage, VehiclePriceMasterPage, VehicleRecieptChecklistMaster, RSMApprovalPage, VehiclePurchaseOrderMasterPage, OtfSoMappingMasterPage, VehicleAllotmentMasterPage, ReceiptMasterPage, VehicleInvoiceMasterPage, DigitalSignatureMasterPage, HoPriceMappingMasterPage, DeliveryNoteInvoiceCancellationPage, OnRoadPriceMasterPage, VehicleAllotmentPriorityMasterPage, VehicleTrackingPage, OtfSoMappingUnmappingMasterPage, StockTransferIndentMasterPage, VehicleDeliveryNoteMasterPage, ChargerInstallationPage, VinBlockMasterPage };
+import CrmScreenEnrolmentMasterPage from './crmScreenEnrolment';
+import EvrDetailsCapturingMasterPage from './EvrDetailsCapturing';
+import VinBlockMasterPage from './VinBlockMaster';
+import RsmAsmApprovalPage from './RsmAsmApproval';
+
+export {
+    OTFMasterPage,
+    OtfBlockMasterPage,
+    VehicleDetailMasterPage,
+    VehicleReceiptMasterPage,
+    VehiclePriceMasterPage,
+    VehicleRecieptChecklistMaster,
+    RSMApprovalPage,
+    VehiclePurchaseOrderMasterPage,
+    OtfSoMappingMasterPage,
+    VehicleAllotmentMasterPage,
+    ReceiptMasterPage,
+    VehicleInvoiceMasterPage,
+    DigitalSignatureMasterPage,
+    HoPriceMappingMasterPage,
+    DeliveryNoteInvoiceCancellationPage,
+    OnRoadPriceMasterPage,
+    VehicleAllotmentPriorityMasterPage,
+    VehicleTrackingPage,
+    OtfSoMappingUnmappingMasterPage,
+    StockTransferIndentMasterPage,
+    VehicleDeliveryNoteMasterPage,
+    CrmScreenEnrolmentMasterPage,
+    EvrDetailsCapturingMasterPage,
+    VinBlockMasterPage,
+    RsmAsmApprovalPage,
+    ChargerInstallationPage,
+};

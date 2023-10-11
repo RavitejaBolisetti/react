@@ -70,7 +70,7 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch
     ),
 });
-export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadingOnSave, moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
+export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadingOnSave, moduleTitle, fetchDataList, isLoading, saveData, userId, typeData, configData, isDataLoaded, listShowLoading, showGlobalNotification }) => {
     const [form] = Form.useForm();
     const defaultParametarType = CONFIGURABLE_PARAMETARS_INPUT_TYPE.TEXT.KEY;
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);

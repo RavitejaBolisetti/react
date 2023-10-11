@@ -5,7 +5,8 @@
  */
 import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
-import { Col, Input, Form, Row, Card, DatePicker, Space, AutoComplete } from 'antd';
+
+import { Col, Input, Form, Row, Card, DatePicker, Space, AutoComplete, Select } from 'antd';
 
 import { disableFutureDate, disableFieldsOnFutureDate } from 'utils/disableDate';
 import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
@@ -14,50 +15,22 @@ import { preparePlaceholderSelect, preparePlaceholderText, preparePlaceholderAut
 
 import styles from 'assets/sass/app.module.scss';
 import { customSelectBox } from 'utils/customSelectBox';
-import { debounce } from 'utils/debounce';
 
 const { TextArea } = Input;
 const AddEditFormMain = (props) => {
-    const { formData, relationshipManagerData, typeData, form, soldByDealer, handleChassisNoSearch, handleOnChange, chassisNoValue, fetchEngineNumber, listEngineNumberShowLoading, engineNumberData, userId } = props;
-    const { vinData } = props;
+    const { formData, relationshipManagerData, typeData, form, soldByDealer, handleRelationShipManagerChange, setButtonData } = props;
+    const { vinData, getChallanDetails } = props;
 
+    const handleSelectVinNo = (value, ValueObj) => {
+        if (value && ValueObj?.engineNumber) {
+            form.setFieldsValue({
+                engineNumber: ValueObj?.engineNumber,
+            });
+            setButtonData((prev) => ({ ...prev, formBtnActive: true }));
 
-    useEffect(() => {
-        if (soldByDealer) {
-            form.setFieldsValue({
-                deliveryNoteFor: 'Vehicle Sold By Dealer',
-            });
-        } else {
-            form.setFieldsValue({
-                deliveryNoteFor: 'Directly Billed Vehicle',
-            });
+            getChallanDetails(value, ValueObj?.engineNumber);
         }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [soldByDealer]);
-
-    useEffect(() => {
-        if (engineNumberData) {
-            form.setFieldsValue({
-                engineNumber: engineNumberData?.engineNumber,
-            });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [engineNumberData]);
-
-    const handleSelectVinNo = (value) => {
-        const searchParams = [
-            {
-                key: 'chassisNumber',
-                title: 'chassisNumber',
-                value: value || chassisNoValue,
-                name: 'Chassis Number',
-            },
-        ];
-        fetchEngineNumber({ setIsLoading: listEngineNumberShowLoading, userId, extraParams: searchParams });
     };
-
-    const fieldNames = { label: 'chassisNumber', value: 'chassisNumber' };
 
     return (
         <>
@@ -89,9 +62,7 @@ const AddEditFormMain = (props) => {
                                     {!soldByDealer && (
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                             <Form.Item initialValue={formData?.chassisNumber} label="Chassis No." name="chassisNumber">
-                                                <AutoComplete  fieldNames={fieldNames} label="Chasiss No" options={vinData} backfill={false} onSelect={handleSelectVinNo} onSearch={debounce(handleChassisNoSearch, 400)} allowSearch>
-                                                    <Input.Search size="large" allowClear placeholder={preparePlaceholderAutoComplete('')} />
-                                                </AutoComplete>
+                                                <Select showSearch options={(vinData?.length && vinData) || []} fieldNames={{ label: 'chassisNumber', value: 'chassisNumber' }} placeholder={preparePlaceholderSelect('chassisNumber')} onSelect={(value, valueObj) => handleSelectVinNo(value, valueObj)} optionFilterProp="chassisNumber" />
                                             </Form.Item>
                                         </Col>
                                     )}
@@ -111,7 +82,10 @@ const AddEditFormMain = (props) => {
 
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                 <Form.Item initialValue={formData?.relationShipManager} label="Relationship Manager" name="relationShipManager">
-                                                    {customSelectBox({ data: relationshipManagerData, fieldNames: { key: 'value', value: 'value' }, placeholder: preparePlaceholderSelect('Relationship Manager') })}
+                                                    {customSelectBox({ data: relationshipManagerData, fieldNames: { key: 'key', value: 'value' }, placeholder: preparePlaceholderSelect('Relationship Manager'), onChange: handleRelationShipManagerChange })}
+                                                </Form.Item>
+                                                <Form.Item hidden initialValue={formData?.relationShipManagerCode} label="Relationship Manager Code" name="relationShipManagerCode">
+                                                    <Input />
                                                 </Form.Item>
                                             </Col>
                                         </>
@@ -126,7 +100,7 @@ const AddEditFormMain = (props) => {
                                                     <DatePicker format={dateFormat} placeholder={preparePlaceholderSelect('Customer Promise Date')} disabled={true} />
                                                 </Form.Item>
                                             </Col>
-                                            {disableFieldsOnFutureDate(dayjs(formData?.customerPromiseDate)) && (
+                                            {formData?.customerPromiseDate && disableFieldsOnFutureDate(dayjs(formData?.customerPromiseDate)) && (
                                                 <>
                                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                         <Form.Item initialValue={formData?.reasonForDelay} label="Reasons For Delay" name="reasonForDelay" rules={[validateRequiredSelectField('reasons for delay')]}>

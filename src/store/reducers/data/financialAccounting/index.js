@@ -15,10 +15,15 @@ import { AccountCategory } from './accountCategory/accountCategory';
 import { ApplicationMenu } from './accountCategory/appilcationMenu';
 import { AccountCategoryDocumentDescription } from './accountCategory/accountCategoryDocumentDescription';
 import { DocumentTypeLedger } from './documentTypeLedger';
+import { DealerBranchDetails } from './dealerBranchAccess';
+import { DealerGstDetails } from './dealerGstDetails';
+import { GstIrnTransactionDetails } from './gstIrnTransactionDetails';
 // import { ChartOfAccountHierarchy } from './chartOfAccount/chartOfAccountHierarchy';
 // import { ChartOfAccount } from './chartOfAccount/chartOfAccount';
 import { ChartOfAccountMaster } from './chartOfAccount';
+import { GstIRNTransaction } from './gstIRNTransactionPending/gstIRNTransaction';
 
+import { GstToDocDetails } from './selectGstToDocDetails';
 export const FinancialAccounting = combineReducers({
     TaxCharges,
     TaxChargesCategory,
@@ -31,7 +36,12 @@ export const FinancialAccounting = combineReducers({
     ApplicationMenu,
     AccountCategoryDocumentDescription,
     DocumentTypeLedger,
+    DealerBranchDetails,
+    DealerGstDetails,
+    GstIrnTransactionDetails,
     // ChartOfAccountHierarchy,
     // ChartOfAccount,
     ChartOfAccountMaster,
+    GstIRNTransaction,
+    GstToDocDetails,
 });

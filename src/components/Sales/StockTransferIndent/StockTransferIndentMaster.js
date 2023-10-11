@@ -7,7 +7,6 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Col, Form, Row } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { FilterIcon } from 'Icons';
 
 import { tableColumn } from './tableColumn';
 import { PARAM_MASTER } from 'constants/paramMaster';
@@ -19,8 +18,10 @@ import { StockIndentIssueDataAction } from 'store/actions/data/sales/stockTransf
 import { DealerBranchLocationDataActions } from 'store/actions/data/userManagement/dealerBranchLocation';
 import { otfvehicleDetailsLovDataActions } from 'store/actions/data/otf/vehicleDetailsLov';
 import { vehicleDetailDataActions } from 'store/actions/data/vehicle/vehicleDetail';
+import { vehicleAllotment } from 'store/actions/data/vehicleAllotment/VehicleAllotment';
+
 import { reportDataActions } from 'store/actions/data/report/reports';
-import { BASE_URL_STOCK_TRANSFER as customURL, BASE_URL_USER_MANAGEMENT_DEALER as dealerURL } from 'constants/routingApi';
+import { BASE_URL_STOCK_TRANSFER as customURL, BASE_URL_USER_MANAGEMENT_DEALER as dealerURL, BASE_URL_VEHICLE_ALLOTMENT as customURLVINSearch } from 'constants/routingApi';
 import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
 
 import { ListDataTable } from 'utils/ListDataTable';
@@ -57,11 +58,14 @@ const mapStateToProps = (state) => {
             OTF: {
                 VehicleDetailsLov: { filteredListData: productHierarchyData },
             },
-            Vehicle: {
-                VehicleDetail: { data: vehicleVinData, isLoading: vehicleVinDataLoading = false },
-            },
+            // Vehicle: {
+            //     VehicleDetail: { data: vehicleVinData, isLoading: vehicleVinDataLoading = false },
+            // },
             Report: {
                 Reports: { data: reportData },
+            },
+            vehicleAllotmentData: {
+                vehicleAllotment: { isLoading: vehicleVinDataLoading = false, data: vehicleVinData },
             },
         },
     } = state;
@@ -110,8 +114,11 @@ const mapDispatchToProps = (dispatch) => ({
             resetData: stockTransferIndent.reset,
             saveData: stockTransferIndent.saveData,
 
-            fetchVinDetails: vehicleDetailDataActions.fetchList,
-            resetVinDetails: vehicleDetailDataActions.reset,
+            // fetchVinDetails: vehicleDetailDataActions.fetchList,
+            // resetVinDetails: vehicleDetailDataActions.reset,
+            fetchVinDetails: vehicleAllotment.fetchList,
+            resetVinDetails: vehicleAllotment.reset,
+
             fetchIssueList: StockIndentIssueDataAction.fetchList,
             listIssueLoading: StockIndentIssueDataAction.listShowLoading,
 
@@ -128,7 +135,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const StockTransferIndentMasterBase = (props) => {
-    const { data, filterString, setFilterString, isFetchDataLoading, fetchReportDetail, dealerLocations } = props;
+    const { data, filterString, setFilterString, resetData, isFetchDataLoading, fetchReportDetail, dealerLocations } = props;
     const { userId, typeData, parentGroupCode, showGlobalNotification } = props;
     const { indentLocationList, requestedByDealerList, productHierarchyData, isLoadingDealerLoc } = props;
     const { fetchIndentList, fetchIndentLocation, fetchIndentDetails, fetchRequestedByList, listShowLoading, saveData, ProductLovLoading, fetchProductLov, fetchVinDetails, vehicleVinData, saveIssueDetail, resetVinDetails, fetchIssueList, resetIssueList, listIssueLoading } = props;
@@ -192,6 +199,13 @@ export const StockTransferIndentMasterBase = (props) => {
         setPage({ ...page, current: 1 });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, toggleButton]);
+
+    useEffect(() => {
+        return () => {
+            resetData();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         if (userId && parentGroupCode) {
@@ -455,27 +469,27 @@ export const StockTransferIndentMasterBase = (props) => {
             {
                 key: 'searchType',
                 title: 'Type',
-                value: 'vehicleIdentificationNumber',
+                value: VEHICLE_TYPE.UNALLOTED.key,
             },
             {
                 key: 'searchParam',
                 title: 'Value',
                 value: vinNumber,
             },
+            // {
+            //     key: 'status',
+            //     title: 'Value',
+            //     value: VEHICLE_TYPE.UNALLOTED.key,
+            // },
             {
-                key: 'status',
-                title: 'Value',
-                value: VEHICLE_TYPE.UNALLOTED.key,
-            },
-            {
-                key: 'modelCode',
+                key: 'modelValue',
                 title: 'Value',
                 value: cancellationData?.modelCode,
             },
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: 1000,
+                value: 100,
             },
             {
                 key: 'pageNumber',
@@ -484,11 +498,10 @@ export const StockTransferIndentMasterBase = (props) => {
             },
         ];
         setshowVinLoading(true);
-        fetchVinDetails({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+        fetchVinDetails({ customURL: customURLVINSearch + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
     };
 
     const handlePrintDownload = (record) => {
-        //console.log(`record`, record);
         setRecordType(record?.issueStatus);
         setReportVisible(true);
         setAdditionalReportParams([
@@ -535,7 +548,7 @@ export const StockTransferIndentMasterBase = (props) => {
 
     const advanceSearchFilterProps = {
         isVisible: isAdvanceSearchVisible,
-        icon: <FilterIcon size={20} />,
+        // icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
         toggleButton,
         onCloseAction,

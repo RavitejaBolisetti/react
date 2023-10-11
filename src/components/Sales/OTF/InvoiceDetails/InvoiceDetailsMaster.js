@@ -60,7 +60,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const InvoiceDetailsMasterBase = (props) => {
     const { form, invoiceData, fetchList, userId, typeData, listShowLoading, handleButtonClick, NEXT_ACTION } = props;
-    const { section, selectedOrderId, selectedOrder: { orderStatus = false } = {} } = props;
+    const { section, selectedRecordId, selectedOrder: { orderStatus = false } = {} } = props;
 
     const [activeKey, setactiveKey] = useState([1]);
 
@@ -82,20 +82,18 @@ export const InvoiceDetailsMasterBase = (props) => {
     };
 
     useEffect(() => {
-        if (selectedOrderId && userId) {
+        if (selectedRecordId && userId) {
             const extraParams = [
                 {
-                    key: 'otfNumber',
-                    title: 'otfNumber',
-                    value: selectedOrderId,
-                    name: 'Booking Number',
+                    key: 'otfId',
+                    value: selectedRecordId,
                 },
             ];
 
             fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedOrderId, userId]);
+    }, [selectedRecordId, userId]);
 
     const myProps = {
         ...props,

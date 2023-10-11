@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState } from 'react';
+import React from 'react';
 import { Collapse, Space, Button, Avatar, Typography, Divider } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import { DATA_TYPE } from 'constants/dataType';
@@ -17,7 +17,6 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import styles from 'assets/sass/app.module.scss';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
 import { IRN_STATUS } from 'constants/IRNStatus';
-import { InputSkeleton } from 'components/common/Skeleton';
 
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
@@ -36,11 +35,11 @@ const expandIcon = ({ isActive }) =>
     );
 
 const VehicleInvoiceCard = (props) => {
-    const { selectedOrder, formActionType, isLoading, typeData, handleIRNGeneration, isDataLoaded, isInVoiceMasterDetailDataLoaded } = props;
+    const { profileCardData: selectedOrder, formActionType, typeData, handleIRNGeneration, isLoading } = props;
     const { confirmRequest, setConfirmRequest } = props;
     const fullName = selectedOrder?.customerName?.split(' ');
     const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1].slice(0, 1) : '') : '';
-    if ((!isDataLoaded && !formActionType?.addMode) || (!isInVoiceMasterDetailDataLoaded && selectedOrder)) return <InputSkeleton height={80} count={3} />;
+
     const showConfirmation = () => {
         setConfirmRequest(true);
     };
@@ -59,20 +58,20 @@ const VehicleInvoiceCard = (props) => {
     };
 
     return (
-        <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon} collapsible="icon">
+        <Collapse bordered={true} expandIcon={expandIcon} collapsible="icon">
             <Panel
                 header={
                     <>
                         <Space>
                             <Avatar size={50}>{userAvatar?.toUpperCase()}</Avatar>
                             <div>
-                                <Title level={5}>{selectedOrder?.customerName?.toLowerCase()}</Title>
-                                <Text>{checkAndSetDefaultValue(selectedOrder?.customerId)}</Text>
+                                <Title level={5}>{checkAndSetDefaultValue(selectedOrder?.customerName?.toLowerCase(), isLoading)}</Title>
+                                <Text>{checkAndSetDefaultValue(selectedOrder?.customerId, isLoading)}</Text>
                             </div>
                         </Space>
                         <Divider />
                         <div className={styles.detailCardText}>
-                            Invoice No.: <span>{checkAndSetDefaultValue(selectedOrder?.invoiceNumber)}</span>
+                            Invoice No.: <span>{checkAndSetDefaultValue(selectedOrder?.invoiceNumber, isLoading)}</span>
                         </div>
                     </>
                 }
@@ -97,7 +96,7 @@ const VehicleInvoiceCard = (props) => {
                                                     Cancelled Date: <span>{checkAndSetDefaultValue(selectedOrder?.cancelDate, isLoading, DATA_TYPE?.DATE?.key ?? 'Na')}</span>
                                                 </p>
                                                 <p>
-                                                    Cancel By: <span>{selectedOrder?.cancelBy ?? 'Na'}</span>
+                                                    Cancel By: <span>{checkAndSetDefaultValue(selectedOrder?.cancelBy ?? 'Na', isLoading)}</span>
                                                 </p>
                                                 <p>
                                                     Cancellation Reason: <span>{checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.INVOICE_CANCEL_REASON.id], selectedOrder?.cancelReason))}</span>
@@ -127,7 +126,7 @@ const VehicleInvoiceCard = (props) => {
                                     </>
                                 ) : (
                                     <>
-                                        {checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.IRN_GEN_STATUS.id], selectedOrder?.irnStatus))}
+                                        {checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.IRN_GEN_STATUS.id], selectedOrder?.irnStatus), isLoading)}
                                         <div className={styles.tooltipAlign}>
                                             {selectedOrder?.irnStatus &&
                                                 selectedOrder?.irnStatus !== IRN_STATUS?.PENDING?.key &&
@@ -137,10 +136,10 @@ const VehicleInvoiceCard = (props) => {
                                                             IRN Date: <span>{checkAndSetDefaultValue(selectedOrder?.irnDate, isLoading, DATA_TYPE?.DATE?.key ?? 'Na')}</span>
                                                         </p>
                                                         <p>
-                                                            IRN No.: <span>{selectedOrder?.irnNumber ?? 'Na'}</span>
+                                                            IRN No.: <span>{checkAndSetDefaultValue(selectedOrder?.irnNumber ?? 'Na', isLoading)}</span>
                                                         </p>
                                                         <p>
-                                                            Description: <span>{selectedOrder?.irnDesc ?? 'Na'}</span>
+                                                            Description: <span>{checkAndSetDefaultValue(selectedOrder?.irnDesc ?? 'Na', isLoading)}</span>
                                                         </p>
                                                     </div>,
                                                     'bottom',
@@ -156,7 +155,7 @@ const VehicleInvoiceCard = (props) => {
                     </>
                 )}
                 <div className={styles.detailCardText}>
-                    Booking No.: <span>{checkAndSetDefaultValue(selectedOrder?.bookingNumber || selectedOrder?.otfNumber)}</span>
+                    Booking No.: <span>{checkAndSetDefaultValue(selectedOrder?.bookingNumber || selectedOrder?.otfNumber, isLoading)}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>

@@ -15,7 +15,54 @@ afterEach(() => {
     jest.restoreAllMocks();
 });
 
-describe('Render components', () => {
+describe('Render components',() => {
+    const fetchList = jest.fn()
+    const fetchDetail = jest.fn()
+    const tableData = [{
+        customerName: null,
+        id: "123",
+        paidAmount: 0,
+        partyCode: "CK01",
+        partySegment: "PRINCIPAL",
+        partyType: "PRI",
+        status: true,
+        voucherDate: "2023",
+        voucherNumber: "VCR24E000037",
+        voucherType: "CRN"
+    }];
+
+    it("removeFilter, searchParam", async()=>{
+        const extraParams = [{canRemove: true, filter: true, key: "searchParam", name: "VCR24E000037", title: "Value", value: "VCR24E000037"}];
+        const filterString = {advanceFilter:true };
+
+        const mockStore = createMockStore({
+            auth: { userId: 123 },
+            data: {
+                FinancialAccounting: {
+                    CreditDebitNoteSearch: { isLoaded: false, data: tableData, filter: filterString },
+                },
+            },
+        });
+
+        customRender(
+            <Provider store={mockStore}>
+                <CreditDebitNoteMaster isVisible={true} extraParams={extraParams} filterString={filterString} otfFilter={true} advanceFilter={true}/>
+            </Provider>
+        );
+
+        const textbox = screen.getByRole('textbox', {name:'Search Credit/Debit'});
+        fireEvent.change(textbox,{target:{value:'VCR24E000037'}});
+
+        const searchImg = screen.getByRole('img', {name:'search'});
+        fireEvent.click(searchImg);
+
+        const textAdvanced = await screen.findAllByText(/Applied Advance Filters :/i);
+        expect(textAdvanced).toBeTruthy();
+
+        const removeFilterIcon = screen.getAllByTestId('remove-filter');
+        fireEvent.click(removeFilterIcon[0]);
+    })
+
     it('should render components', () => {
         customRender(<CreditDebitNoteMaster />);
 
@@ -37,10 +84,35 @@ describe('Render components', () => {
     });
 
     it('Debit button', () => {
-        customRender(<CreditDebitNoteMaster />);
+        customRender(<CreditDebitNoteMaster buttonData={{printBtn:true}}/>);
 
         const debitBtn = screen.getByRole('button', {name:'Add Debit Note'});
-        fireEvent.click(debitBtn)
+        fireEvent.click(debitBtn);
+
+        const plusImg = screen.getAllByRole('img', {name:'plus'});
+        fireEvent.click(plusImg[1]);
+
+        const partySeg = screen.getByRole('combobox', {name:'Party Segment'});
+        fireEvent.change(partySeg, {target:{value:'test1'}});
+
+        const partyId = screen.getByRole('textbox', {name:'Party ID'});
+        fireEvent.change(partyId, {target:{name:'test'}});
+
+        const searchBtn = screen.getAllByRole('img', {name:'search'});
+        fireEvent.click(searchBtn[1]);
+
+        const saveBtn = screen.getByRole('button', {name:'Save & Next'});
+        fireEvent.click(saveBtn);
+    });
+
+    it('Advanced Filters, closeImg', () => {
+        customRender(<CreditDebitNoteMaster />);
+
+        const advancedBtn = screen.getByRole('button', {name:'Advanced Filters'});
+        fireEvent.click(advancedBtn);
+
+        const closeImg = screen.getByRole('img', {name:'close'});
+        fireEvent.click(closeImg);
     });
 
     it('Advanced Filters, Search', () => {
@@ -52,38 +124,6 @@ describe('Render components', () => {
         const searchBtn = screen.getByRole('button', {name:'Search'});
         fireEvent.click(searchBtn);
     });
-
-    const fetchList = jest.fn()
-    const fetchDetail = jest.fn()
-    const tableData = {
-        customerName: null,
-        id: "123",
-        paidAmount: 0,
-        partyCode: "CK01",
-        partySegment: "PRINCIPAL",
-        partyType: "PRI",
-        status: true,
-        voucherDate: "2023-08-30T04:01:57.000+00:00",
-        voucherNumber: "VCR24E000037",
-        voucherType: "CRN"
-    }
-
-    it("view and edit button",()=>{
-        const mockStore = createMockStore({
-            auth: { userId: 123 },
-            data: {
-                FinancialAccounting: {
-                    CreditDebitNoteSearch: { isLoaded: false, data: tableData },
-                },
-            },
-        });
-        
-        customRender(
-            <Provider store={mockStore}>
-                <CreditDebitNoteMaster fetchList={fetchList} isVisible={true} fetchDetail={fetchDetail}/>
-            </Provider>
-        );
-    })
 
     it("clearBtn", ()=>{
         const filterString = {advanceFilter:true }
@@ -118,7 +158,7 @@ describe('Render components', () => {
         });
         customRender(
             <Provider store={mockStore}>
-                <CreditDebitNoteMaster fetchList={fetchList} isVisible={true} fetchDetail={fetchDetail} formActionType={formActionType} setVoucherTableData={jest.fn([])} setApportionTableData={jest.fn([])} />
+                <CreditDebitNoteMaster isVisible={true} formActionType={formActionType}/>
             </Provider>
         );
     })

@@ -629,4 +629,26 @@ export const MenuConstant = {
         icon: undefined,
         parentMenuId: 'SACT-04',
     },
+
+    [getMenyKey('SACT-04.13')]: {
+        key: 'SACT-04.13',
+        link: routing.ROUTING_EVR_DETAILS_CAPTURING,
+        icon: undefined,
+        parentMenuId: 'SACT-04',
+    },
+
+    [getMenyKey('FINA-05.01')]: {
+        key: 'FINA-05.01',
+        link: routing.ROUTING_GST_IRN_AUTHENTICATION,
+        icon: undefined,
+        parentMenuId: 'FINA-05',
+    },
+
+    [getMenyKey('SACT-05')]: {
+        key: 'SACT-05',
+        link: routing.ROUTING_VIN_BLOCK_MASTER,
+        icon: undefined,
+        parentMenuId: 'Sales',
+    },
+    
 };

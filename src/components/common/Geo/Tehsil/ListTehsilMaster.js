@@ -22,7 +22,6 @@ import { formatDate } from 'utils/formatDateTime';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
-import { FilterIcon } from 'Icons';
 import { bindActionCreators } from 'redux';
 import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
@@ -390,7 +389,7 @@ export const ListTehsilBase = (props) => {
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
         onCloseAction: onAdvanceSearchCloseAction,
-        icon: <FilterIcon size={20} />,
+        // icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
         isDataCountryLoaded,
         isCountryLoading,

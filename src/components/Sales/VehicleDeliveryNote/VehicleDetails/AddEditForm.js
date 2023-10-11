@@ -16,7 +16,7 @@ const { Panel } = Collapse;
 const AddEditFormMain = (props) => {
     const { activeKey, setActiveKey, formData, form } = props;
 
-    const vehicleDetailsProps = { ...props, form, formType: 'vehicle', formData: formData?.vehicleDetails };
+    const vehicleDetailsProps = { ...props, form, formType: 'vehicle', formData };
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
@@ -47,7 +47,17 @@ const AddEditFormMain = (props) => {
                 <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
                     <Panel header="Battery Details" key="2">
                         <Divider />
-                        {formData?.batteryDetail?.length ? formData?.batteryDetail?.map((battery) => <BatteryInfoForm battery={battery} {...props} />) : <NoDataFound />}
+                        <Row gutter={20}>
+                            {formData?.batteryDetail?.length ? (
+                                formData?.batteryDetail?.map((battery) => (
+                                    <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                        <BatteryInfoForm battery={battery} {...props} />
+                                    </Col>
+                                ))
+                            ) : (
+                                <NoDataFound />
+                            )}
+                        </Row>
                     </Panel>
                 </Collapse>
             </Col>
@@ -56,3 +66,4 @@ const AddEditFormMain = (props) => {
 };
 
 export const AddEditForm = AddEditFormMain;
+

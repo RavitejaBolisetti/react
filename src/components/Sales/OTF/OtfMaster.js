@@ -33,7 +33,6 @@ import { LANGUAGE_EN } from 'language/en';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { validateOTFMenu } from './utils/validateOTFMenu';
 
-import { FilterIcon } from 'Icons';
 import { ChangeHistory } from './ChangeHistory';
 
 import styles from 'assets/sass/app.module.scss';
@@ -125,6 +124,7 @@ export const OtfMasterBase = (props) => {
 
     const [listFilterForm] = Form.useForm();
 
+    const [selectedRecordId, setSelectedRecordId] = useState();
     const [selectedOrder, setSelectedOrder] = useState();
     const [selectedOrderId, setSelectedOrderId] = useState();
     const [selectedBookingId, setSelectedBookingId] = useState();
@@ -164,7 +164,7 @@ export const OtfMasterBase = (props) => {
         unAllotBtn: false,
         invoiceBtn: false,
         deliveryNote: false,
-        changeHistory: true,
+        changeHistory: false,
         otfSoMappingHistoryBtn: false,
     };
 
@@ -321,14 +321,13 @@ export const OtfMasterBase = (props) => {
             return false;
         }
 
-        const { otfId, otfNumber } = record;
-        //const { vinnumber } = VehicleDetailsData;
+        const { otfId, otfNumber, bookingNumber = undefined } = record;
+        let data = { otfId, otfNumber, bookingNumber, allotmentStatus: updatedStatus, vehicleIdentificationNumber: vinNumber };
 
-        let data = { otfId, otfNumber, allotmentStatus: updatedStatus, vehicleIdentificationNumber: vinNumber };
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
-            setRefreshData(true);
+            setRefreshData(!refreshData);
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             setButtonData({ ...buttonData, formBtnActive: false });
             setIsFormVisible(false);
@@ -340,7 +339,7 @@ export const OtfMasterBase = (props) => {
         };
 
         const onError = (message) => {
-            // showGlobalNotification({ message });
+            showGlobalNotification({ message });
         };
 
         const requestData = {
@@ -367,12 +366,14 @@ export const OtfMasterBase = (props) => {
                 break;
             case EDIT_ACTION:
                 setSelectedOrder(record);
+                record && setSelectedRecordId(record?.otfId);
                 record && setSelectedOrderId(record?.otfNumber);
                 record && setSelectedBookingId(record?.bookingNumber);
                 openDefaultSection && setCurrentSection(defaultSection);
                 break;
             case VIEW_ACTION:
                 setSelectedOrder(record);
+                record && setSelectedRecordId(record?.otfId);
                 record && setSelectedOrderId(record?.otfNumber);
                 record && setSelectedBookingId(record?.bookingNumber);
                 defaultSection && setCurrentSection(defaultSection);
@@ -392,7 +393,7 @@ export const OtfMasterBase = (props) => {
                 setIsAllotVisible(true);
                 break;
             case UNALLOT:
-                if (userId && selectedOrderId) {
+                if (userId && selectedRecordId) {
                     const onSuccessAction = (resp) => {
                         setConfirmRequest({
                             isVisible: true,
@@ -412,10 +413,8 @@ export const OtfMasterBase = (props) => {
                     };
                     const extraParams = [
                         {
-                            key: 'otfNumber',
-                            title: 'otfNumber',
-                            value: selectedOrderId,
-                            name: 'Booking Number',
+                            key: 'otfId',
+                            value: selectedRecordId,
                         },
                     ];
                     fetchVehicleDetail({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
@@ -438,7 +437,7 @@ export const OtfMasterBase = (props) => {
                     editMode: buttonAction === EDIT_ACTION,
                     viewMode: buttonAction === VIEW_ACTION,
                 });
-                setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction, orderStatus: record?.orderStatus }));
+                setButtonData(btnVisiblity({ defaultBtnVisiblity: { ...defaultBtnVisiblity, changeHistory: buttonAction === VIEW_ACTION ? true : false }, buttonAction, orderStatus: record?.orderStatus }));
             }
         }
     };
@@ -469,7 +468,7 @@ export const OtfMasterBase = (props) => {
         };
 
         const onError = (message) => {
-            // showGlobalNotification({ message });
+            showGlobalNotification({ message });
         };
 
         const requestData = {
@@ -512,11 +511,15 @@ export const OtfMasterBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
+    const setPage = (page) => {
+        setFilterString({ ...filterString, ...page });
+    };
+
     const tableProps = {
         dynamicPagination,
         filterString,
         totalRecords,
-        setPage: setFilterString,
+        setPage: setPage,
         isLoading: showDataLoading,
         tableColumn: tableColumn(handleButtonClick),
         tableData: data,
@@ -601,18 +604,18 @@ export const OtfMasterBase = (props) => {
         fnOTFTransfer({
             modalTitle: 'Booking Cancel',
             modalMessage: `Do you want to cancel this ${otfData?.bookingNumber || otfData?.otfNumber}`,
-            finalData: { dealerCode: '', oemCode: '', productCode: '', ...values, id: otfData?.id, otfNumber: otfData?.otfNumber, uploadCancellationLetterDocId: uploadedFile },
+            finalData: { dealerCode: '', oemCode: '', productCode: '', ...values, id: null, otfId: selectedRecordId, otfNumber: otfData?.otfNumber, uploadCancellationLetterDocId: uploadedFile },
             callBackMethod: transferOTF,
             customURL: otfCancelURL,
         });
     };
 
     const handleWorkflowOTFCancellation = (record, actionStatus) => {
-        const { otfId, otfNumber } = record;
+        const { otfNumber } = record;
         fnOTFTransfer({
             modalTitle: `${actionStatus === CANCELLN_APPROVE ? 'Approval' : 'Rejection'}`,
             modalMessage: `Are you sure, you want to ${actionStatus === CANCELLN_APPROVE ? 'approve' : 'reject'} the cancellation of ${otfData?.bookingNumber || otfData?.otfNumber}`,
-            finalData: { id: otfId, otfNumber, actionCode: actionStatus, remarks: actionStatus },
+            finalData: { id: null, otfId: selectedRecordId, otfNumber, actionCode: actionStatus, remarks: actionStatus },
             callBackMethod: cancelOTFWorkflow,
             customURL: customURLCancelWF,
         });
@@ -642,7 +645,7 @@ export const OtfMasterBase = (props) => {
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
-        icon: <FilterIcon size={20} />,
+        // icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
@@ -674,7 +677,7 @@ export const OtfMasterBase = (props) => {
         setIsFormVisible,
         buttonData,
         ChangeHistoryTitle,
-        selectedOrderId,
+        selectedRecordId,
         selectedBookingId,
     };
     const OtfSoMappingChangeHistoryProps = {
@@ -687,7 +690,7 @@ export const OtfMasterBase = (props) => {
         setIsFormVisible,
         buttonData,
         otfSoMappingChangeHistoryTitle,
-        selectedOrderId,
+        selectedRecordId,
     };
 
     const containerProps = {
@@ -714,6 +717,8 @@ export const OtfMasterBase = (props) => {
         defaultBtnVisiblity,
         selectedOrderId,
         setSelectedOrderId,
+        selectedRecordId,
+        setSelectedRecordId,
         selectedBookingId,
         setSelectedBookingId,
         selectedOrder,
@@ -772,8 +777,10 @@ export const OtfMasterBase = (props) => {
         isVisible: isAllotVisible,
         setIsAllotVisible,
         onCloseAction: onCancelCloseAction,
+        refreshData,
         setRefreshData,
         setIsFormVisible,
+        setShowDataLoading,
     };
 
     return (

@@ -55,18 +55,21 @@ const mapDispatchToProps = (dispatch) => ({
 
 const DeliverableChecklistMain = (props) => {
     const { userId, isChecklistDataLoaded, isChecklistDataLoading, ChecklistData, deliveryNoteOnFinish } = props;
-    const { selectedOrder, handleButtonClick } = props;
+    const { selectedOrder } = props;
     const { fetchList, listShowLoading, showGlobalNotification } = props;
-    const { form, selectedCheckListId, section, formActionType, handleFormValueChange, NEXT_ACTION, requestPayload, setRequestPayload } = props;
+    const { form, selectedCheckListId, section, formActionType, handleFormValueChange, requestPayload, setRequestPayload } = props;
 
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [aggregateForm] = Form.useForm();
     const [AdvanceformData, setAdvanceformData] = useState([]);
     const [isEditing, setisEditing] = useState();
     const [checkListDataModified, setcheckListDataModified] = useState([]);
-    const onSuccessAction = (res) => {
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-    };
+    const defaultPage = { pageSize: 10, current: 1 };
+    const [page, setPage] = useState({});
+
+    // const onSuccessAction = (res) => {
+    //     // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+    // };
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message: message });
@@ -80,19 +83,36 @@ const DeliverableChecklistMain = (props) => {
     }, [selectedOrder]);
 
     useEffect(() => {
-        if (userId && selectedOrder?.modelGroup && !isChecklistDataLoaded) {
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
+        if (userId && selectedOrder?.modelGroup && !isChecklistDataLoaded && !formActionType?.viewMode) {
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOrder, isChecklistDataLoaded]);
+    }, [userId, selectedOrder, isChecklistDataLoaded, formActionType]);
+    useEffect(() => {
+        const newArr = requestPayload?.vehicleDeliveryCheckList?.deliveryChecklistDtos;
+        newArr?.filter((i) => i?.ismodified)?.length > 0 && handleFormValueChange();
+        setPage({ ...defaultPage });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
-        if (isChecklistDataLoaded && ChecklistData?.length > 0) {
-            setcheckListDataModified(
-                ChecklistData?.map((element) => {
-                    return { ...element, ismodified: false };
-                })
-            );
+        if (isChecklistDataLoaded && ChecklistData?.length > 0 && !formActionType?.viewMode) {
+            if (requestPayload?.vehicleDeliveryCheckList?.deliveryChecklistDtos?.length) {
+                const newArr = requestPayload?.vehicleDeliveryCheckList?.deliveryChecklistDtos;
+                setcheckListDataModified(
+                    ChecklistData?.map((element) => {
+                        const found = newArr?.find((i) => i?.id === element?.id);
+                        if (found?.id) return { ...found };
+                        return { ...element };
+                    })
+                );
+            } else {
+                setcheckListDataModified(
+                    ChecklistData?.map((element) => {
+                        return { ...element, ismodified: false };
+                    })
+                );
+            }
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -118,6 +138,10 @@ const DeliverableChecklistMain = (props) => {
         tableColumn: tableColumn({ handleButtonClick: handleCheckListClick, formActionType }),
         tableData: checkListDataModified,
         showAddButton: false,
+        setPage,
+        page,
+        dynamicPagination: true,
+        totalRecords: checkListDataModified?.length,
     };
 
     const formProps = {
@@ -139,6 +163,8 @@ const DeliverableChecklistMain = (props) => {
         setisEditing,
         requestPayload,
         setRequestPayload,
+        setPage,
+        defaultPage,
     };
 
     const viewProps = {
@@ -148,6 +174,7 @@ const DeliverableChecklistMain = (props) => {
         setcheckListDataModified,
         formActionType,
         tableProps,
+        requestPayload,
     };
 
     return (

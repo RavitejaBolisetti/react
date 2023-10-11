@@ -9,19 +9,19 @@ afterEach(() => {
     jest.restoreAllMocks();
 });
 
-jest.mock('store/actions/data/invoiceGeneration/vehicleInvoiceGeneration', () => ({
-    vehicleInvoiceDataActions: {
-        innerDataActions: {
-            fetchList: jest.fn(),
-        },
-    },
-}));
+// jest.mock('store/actions/data/invoiceGeneration/vehicleInvoiceGeneration', () => ({
+//     vehicleInvoiceDataActions: {
+//         innerDataActions: {
+//             fetchList: jest.fn(),
+//         },
+//     },
+// }));
 
 jest.mock('store/actions/data/invoiceGeneration/irnGeneration', () => ({
     vehicleIrnGenerationDataActions: {},
 }));
 
-jest.mock('store/actions/data/invoiceGeneration/vehicleInvoice', () => ({
+jest.mock('store/actions/data/sales/vehicleInvoiceGeneration', () => ({
     vehicleInvoiceGenerationDataActions: {},
 }));
 

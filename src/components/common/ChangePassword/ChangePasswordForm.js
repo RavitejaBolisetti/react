@@ -50,7 +50,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const ChangePasswordBase = ({ form, password, fieldData, setFieldData, setPassword, showGlobalNotification, isOpen = false, onOk = () => {}, title = '', discreption = '', doLogout, saveData, isDataLoaded, listShowLoading, userId }) => {
+const ChangePasswordBase = ({ form, password, fieldData, setFieldData, setPassword, showGlobalNotification, doLogout, saveData, listShowLoading, userId }) => {
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState({ oldPassword: false, newPassword: false, confirmNewPassword: false });
     const [tooltipVisible, setTooltipVisible] = useState(false);
@@ -97,7 +97,7 @@ const ChangePasswordBase = ({ form, password, fieldData, setFieldData, setPasswo
 
     const passwordSuffix = (type) => (
         <span onMouseDown={() => setShowPassword({ [type]: true })} onMouseUp={() => setShowPassword({ [type]: false })} onMouseLeave={() => setShowPassword({ [type]: false })}>
-            {!showPassword?.[type] ? <AiOutlineEyeInvisible size={18} /> : <AiOutlineEye size={18} />}
+            {!showPassword?.[type] ? <AiOutlineEyeInvisible size={18} data-testid="eyeInvisible" /> : <AiOutlineEye size={18} />}
         </span>
     );
 

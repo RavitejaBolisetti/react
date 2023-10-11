@@ -8,10 +8,9 @@ import { connect } from 'react-redux';
 import { Row, Col, Form } from 'antd';
 import { bindActionCreators } from 'redux';
 
-import { invoiceDetailDataActions } from 'store/actions/data/vehicleDeliveryNote/invoiceDetails';
 import { relationshipManagerDataActions } from 'store/actions/data/vehicleDeliveryNote/relationshipManager';
 import { vinNumberNoteDataActions } from 'store/actions/data/vehicleDeliveryNote/challanVinNumber';
-import { enginNumberDataActions } from 'store/actions/data/vehicleDeliveryNote/challanEngineNumber';
+import { vehicleChallanDetailsDataActions } from 'store/actions/data/vehicleDeliveryNote/vehicleChallanDetails';
 import { showGlobalNotification } from 'store/actions/notification';
 import { formattedCalendarDate, convertDate } from 'utils/formatDateTime';
 
@@ -20,7 +19,6 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
 import styles from 'assets/sass/app.module.scss';
-import { invoiceDetailsDataActions } from 'store/actions/data/vehicleDeliveryNote/challanInvoice';
 
 const mapStateToProps = (state) => {
     const {
@@ -28,11 +26,9 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             VehicleDeliveryNote: {
-                InvoiceDetails: { isLoaded, isLoading, data: invoiceData = [] },
                 RelationshipManager: { isLoaded: isRelationshipManagerLoaded = false, isloading: isRelationshipManagerLoading, data: relationshipManagerData = [] },
                 VinNumberSearch: { isLoaded: vinNumberDataLoaded = false, isloading: vinNumberDataLoading, data: vinData = [] },
-                EngineNumber: { isLoaded: engineNumberDataLoaded = false, isloading: engineNumberLoading, data: engineNumberData = [] },
-                InvoiceDetailChallan: { isLoaded: challanInvoiceDetailsDataLoaded = false, isloading: challanInvoiceDetailsLoading, data: challanInvoiceDetail = [] },
+                VehicleDetailsChallan: { isLoaded: isChallanDataLoaded = false, isloading: isChallanLoading, data: vehicleChallanData = {} },
             },
         },
     } = state;
@@ -41,9 +37,6 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         userId,
-        isLoaded,
-        invoiceData,
-        isLoading,
         moduleTitle,
         isRelationshipManagerLoaded,
         isRelationshipManagerLoading,
@@ -52,13 +45,10 @@ const mapStateToProps = (state) => {
         vinNumberDataLoaded,
         vinNumberDataLoading,
         vinData,
-        engineNumberDataLoaded,
-        engineNumberLoading,
-        engineNumberData,
 
-        challanInvoiceDetailsDataLoaded,
-        challanInvoiceDetailsLoading,
-        challanInvoiceDetail,
+        isChallanDataLoaded,
+        isChallanLoading,
+        vehicleChallanData,
     };
     return returnValue;
 };
@@ -70,19 +60,12 @@ const mapDispatchToProps = (dispatch) => ({
             fetchvinNumber: vinNumberNoteDataActions.fetchList,
             listvinNumberShowLoading: vinNumberNoteDataActions.listShowLoading,
 
-            fetchInvoiceChallan: invoiceDetailsDataActions.fetchList,
-            listChallanInvoiceShowLoading: invoiceDetailsDataActions.listShowLoading,
-
-            fetchEngineNumber: enginNumberDataActions.fetchList,
-            listEngineNumberShowLoading: enginNumberDataActions.listShowLoading,
-
             fetchRelationshipManger: relationshipManagerDataActions.fetchList,
             listRelationshipMangerShowLoading: relationshipManagerDataActions.listShowLoading,
 
-            fetchList: invoiceDetailDataActions.fetchList,
-            saveData: invoiceDetailDataActions.saveData,
-            resetData: invoiceDetailDataActions.reset,
-            listShowLoading: invoiceDetailDataActions.listShowLoading,
+            fetchChallanList: vehicleChallanDetailsDataActions.fetchList,
+            listChallanShowLoading: vehicleChallanDetailsDataActions.listShowLoading,
+
             showGlobalNotification,
         },
         dispatch
@@ -90,84 +73,81 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const InvoiceDetailsMasterBase = (props) => {
-    const { fetchList, userId, vinData, listvinNumberShowLoading, fetchEngineNumber, listEngineNumberShowLoading, fetchvinNumber, listShowLoading, relationshipManagerData, invoiceData, isRelationshipManagerLoaded, setFormActionType, fetchRelationshipManger, listRelationshipMangerShowLoading, isLoading, record } = props;
+    const { userId, vinData, listvinNumberShowLoading, listEngineNumberShowLoading, fetchvinNumber, selectedOrder, relationshipManagerData, invoiceData, isRelationshipManagerLoaded, setFormActionType, fetchRelationshipManger, listRelationshipMangerShowLoading, isLoading, record } = props;
 
-    const { typeData, form, selectedOrderId, selectedInvoiceId, requestPayload, setRequestPayload, soldByDealer, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section, resetData, engineNumberData, chassisNoValue, setChassisNoValue, challanInvoiceDetailsDataLoaded, challanInvoiceDetailsLoading, challanInvoiceDetail, fetchInvoiceChallan, listChallanInvoiceShowLoading } = props;
+    const { typeData, form, selectedOrderId, requestPayload, setRequestPayload, soldByDealer, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section, resetData, engineNumberData, chassisNoValue } = props;
 
-    const [isFormVisible, setIsFormVisible] = useState(false);
-    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
-    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+    const { isChallanDataLoaded, isChallanLoading, vehicleChallanData, fetchChallanList, listChallanShowLoading } = props;
+
+    const { buttonData, setButtonData } = props;
+
+    const [formData, setFormData] = useState({});
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
-    const [formData, setFormData] = useState();
-
-    useEffect(() => {
-        if (invoiceData && selectedInvoiceId && soldByDealer) {
-            form.setFieldsValue({ ...invoiceData, invoiceDate: formattedCalendarDate(invoiceData?.invoiceDate), customerPromiseDate: formattedCalendarDate(invoiceData?.customerPromiseDate) });
-            setFormData({ ...invoiceData });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [invoiceData]);
-
-    useEffect(() => {
-        return () => {
-            setFormData();
-            resetData();
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-    useEffect(() => {
-        setButtonData({ ...buttonData, formBtnActive: false });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [buttonData]);
-
-    const extraParams = [
-        {
-            key: 'invoiceNumber',
-            title: 'invoiceNumber',
-            value: selectedInvoiceId,
-            name: 'Invoice Number',
-        },
-    ];
-
-    useEffect(() => {
-        if (userId && selectedInvoiceId && soldByDealer) {
-            fetchList({ setIsLoading: listShowLoading, extraParams, userId });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedInvoiceId, soldByDealer]);
-
-    useEffect(() => {
-        if (userId && selectedInvoiceId && !soldByDealer) {
-            const challanExtraParams = [
+    const onErrorAction = (message) => {
+        showGlobalNotification({ message });
+    };
+    const getChallanDetails = (chassi, engineNo) => {
+        if (engineNo && chassi) {
+            const extraParams = [
                 {
-                    key: 'invoiceNumber',
-                    title: 'invoiceNumber',
-                    value: selectedInvoiceId,
-                    name: 'Invoice Number',
+                    key: 'chassisNumber',
+                    title: 'chassisNumber',
+                    value: chassi,
+                    name: 'Chassis Number',
                 },
                 {
-                    key: 'deliveryNoteId',
-                    title: 'deliveryNoteId',
-                    value: record?.vehicleDeliveryNote,
-                    name: 'Delivery Note',
+                    key: 'engineNumber',
+                    title: 'engineNumber',
+                    value: engineNo,
+                    name: 'Engine Number',
                 },
             ];
-            fetchInvoiceChallan({ setIsLoading: listChallanInvoiceShowLoading, extraParams: challanExtraParams, userId });
+
+            fetchChallanList({ setIsLoading: listChallanShowLoading, extraParams, userId, onErrorAction });
+        }
+    };
+    useEffect(() => {
+        if (formActionType.addMode && !soldByDealer) {
+            form.setFieldsValue({
+                deliveryNoteFor: 'Directly Billed Vehicle',
+            });
+            if (invoiceData?.chassisNumber && invoiceData?.engineNumber) {
+                setButtonData({ ...buttonData, formBtnActive: true });
+            }
+            setFormData((prev) => ({ ...prev, deliveryNoteFor: 'Directly Billed Vehicle' }));
+        } else {
+            form.setFieldsValue({
+                deliveryNoteFor: 'Vehicle Sold By Dealer',
+            });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedInvoiceId, soldByDealer]);
+    }, [section]);
 
     useEffect(() => {
-        if (challanInvoiceDetailsDataLoaded && challanInvoiceDetail && !soldByDealer) {
-            setFormData({ ...challanInvoiceDetail });
-            setChassisNoValue(challanInvoiceDetail?.chassisNumber);
+        if (invoiceData) {
+            form.setFieldsValue({ ...invoiceData, invoiceDate: formattedCalendarDate(invoiceData?.invoiceDate), customerPromiseDate: formattedCalendarDate(invoiceData?.customerPromiseDate) });
+            setFormData((prev) => ({ ...prev, ...invoiceData }));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [challanInvoiceDetail, soldByDealer]);
+    }, [invoiceData, section]);
+
+    useEffect(() => {
+        if (userId && !soldByDealer) {
+            const searchParams = [
+                {
+                    key: 'invoiceHdrId',
+                    value: selectedOrder?.invoicehdrId,
+                    name: 'invoiceHdrId',
+                },
+            ];
+            fetchvinNumber({ setIsLoading: listvinNumberShowLoading, userId, extraParams: searchParams, onErrorAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [section, userId, soldByDealer]);
 
     useEffect(() => {
         const extraParams = [
@@ -179,26 +159,16 @@ export const InvoiceDetailsMasterBase = (props) => {
             },
         ];
         if (userId && soldByDealer) {
-            fetchRelationshipManger({ setIsLoading: listRelationshipMangerShowLoading, userId, extraParams });
+            fetchRelationshipManger({ setIsLoading: listRelationshipMangerShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, soldByDealer]);
-
-    const handleOnChange = (e) => {
-        form.setFieldsValue({
-            engineNumber: '',
-        });
-        setChassisNoValue(e.target.value);
-    };
 
     const handleChassisNoSearch = (val) => {
         if (!val) return;
 
         const onSuccessAction = (res) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-        };
-        const onErrorAction = (message) => {
-            showGlobalNotification({ message });
         };
         const searchParams = [
             {
@@ -211,24 +181,16 @@ export const InvoiceDetailsMasterBase = (props) => {
         fetchvinNumber({ setIsLoading: listvinNumberShowLoading, userId, extraParams: searchParams, onSuccessAction, onErrorAction });
     };
 
-    const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-    };
-
     const onFinish = (values) => {
-        const invoiceDetailsRequest = { ...values };
-        setRequestPayload({ ...requestPayload, deliveryNoteInvoiveDetails: { ...invoiceDetailsRequest, invoiceDate: convertDate(invoiceData?.invoiceDate), customerPromiseDate: convertDate(invoiceData?.customerPromiseDate) } });
-        delete invoiceDetailsRequest?.deliveryNoteFor;
+        const invoiceDetailsRequest = { ...values, relationShipManagerCode: values?.relationShipManager, relationShipManager: values?.relationShipManagerCode };
+        setRequestPayload({ ...requestPayload, engineDetailDto: { ...invoiceDetailsRequest }, deliveryNoteInvoiveDetails: { ...invoiceDetailsRequest, invoiceDate: convertDate(invoiceData?.invoiceDate), customerPromiseDate: convertDate(invoiceData?.customerPromiseDate) } });
         handleButtonClick({ buttonAction: NEXT_ACTION });
         setButtonData({ ...buttonData, formBtnActive: false });
     };
 
-    const onFinishFailed = () => { };
-
-    const onCloseAction = () => {
-        form.resetFields();
-        setIsFormVisible(false);
-        setButtonData({ ...defaultBtnVisiblity });
+    const onFinishFailed = () => {};
+    const handleRelationShipManagerChange = (value) => {
+        form.setFieldValue('relationShipManagerCode', value);
     };
 
     const formProps = {
@@ -236,17 +198,13 @@ export const InvoiceDetailsMasterBase = (props) => {
         typeData,
         form,
         formData,
-        // invoiceData,
         formActionType,
         setFormActionType,
         onFinish,
         onFinishFailed,
-        isVisible: isFormVisible,
-        onCloseAction,
         isRelationshipManagerLoaded,
         fetchRelationshipManger,
         listRelationshipMangerShowLoading,
-
         ADD_ACTION,
         EDIT_ACTION,
         VIEW_ACTION,
@@ -256,14 +214,15 @@ export const InvoiceDetailsMasterBase = (props) => {
         soldByDealer,
         selectedOrderId,
         handleChassisNoSearch,
-        handleOnChange,
         chassisNoValue,
         vinData,
         relationshipManagerData,
-        fetchEngineNumber,
         listEngineNumberShowLoading,
         engineNumberData,
         userId,
+        handleRelationShipManagerChange,
+        setButtonData,
+        getChallanDetails,
     };
 
     const viewProps = {
@@ -290,7 +249,7 @@ export const InvoiceDetailsMasterBase = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <VehicleDeliveryNoteFormButton {...props} />
+                    <VehicleDeliveryNoteFormButton {...formProps} />
                 </Col>
             </Row>
         </Form>

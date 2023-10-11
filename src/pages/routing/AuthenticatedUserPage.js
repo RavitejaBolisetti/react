@@ -5,7 +5,7 @@
  */
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { DashboardPage } from 'pages/dashboard';
+import { DashboardNewPage, DashboardPage } from 'pages/dashboard';
 import * as routing from 'constants/routing';
 
 import {
@@ -41,8 +41,35 @@ import {
     LessorCustomerCreationPage,
 } from 'pages/common';
 
-import { TaxChargesPage, TaxChargesCategoryPage, AccountCategoryPage, VehicleModelTaxChargesCategoryPage, DocumentTypeOtherChargesPage, CreditDebitNoteMasterPage, ChartOfAccountPage } from 'pages/FinancialAccounting';
-import { OTFMasterPage, VehicleDetailMasterPage, OtfBlockMasterPage, VehiclePriceMasterPage, VehicleReceiptMasterPage, RSMApprovalPage, VehiclePurchaseOrderMasterPage, VehicleRecieptChecklistMaster, OtfSoMappingMasterPage, ReceiptMasterPage, VehicleAllotmentMasterPage, VehicleAllotmentPriorityMasterPage, DeliveryNoteInvoiceCancellationPage, DigitalSignatureMasterPage, HoPriceMappingMasterPage, VehicleInvoiceMasterPage, OnRoadPriceMasterPage, VehicleTrackingPage, OtfSoMappingUnmappingMasterPage, StockTransferIndentMasterPage, VehicleDeliveryNoteMasterPage, VinBlockMasterPage, ChargerInstallationPage } from 'pages/Sales';
+import { TaxChargesPage, TaxChargesCategoryPage, AccountCategoryPage, VehicleModelTaxChargesCategoryPage, DocumentTypeOtherChargesPage, CreditDebitNoteMasterPage, GSTIRNAuthenticationPage, ChartOfAccountPage, GstIRNTransactionPage } from 'pages/FinancialAccounting';
+import {
+    OTFMasterPage,
+    VehicleDetailMasterPage,
+    OtfBlockMasterPage,
+    VehiclePriceMasterPage,
+    VehicleReceiptMasterPage,
+    RSMApprovalPage,
+    VehiclePurchaseOrderMasterPage,
+    VehicleRecieptChecklistMaster,
+    OtfSoMappingMasterPage,
+    ReceiptMasterPage,
+    VehicleAllotmentMasterPage,
+    VehicleAllotmentPriorityMasterPage,
+    DeliveryNoteInvoiceCancellationPage,
+    DigitalSignatureMasterPage,
+    HoPriceMappingMasterPage,
+    OnRoadPriceMasterPage,
+    VehicleInvoiceMasterPage,
+    VehicleTrackingPage,
+    OtfSoMappingUnmappingMasterPage,
+    StockTransferIndentMasterPage,
+    VehicleDeliveryNoteMasterPage,
+    CrmScreenEnrolmentMasterPage,
+    VinBlockMasterPage,
+    EvrDetailsCapturingMasterPage,
+    RsmAsmApprovalPage,
+    ChargerInstallationPage,
+} from 'pages/Sales';
 
 import { SplashPage } from 'pages/splash';
 import { ProfilePage, SettingPage, FaqPage, TrainingPage } from 'pages/user';
@@ -60,6 +87,7 @@ export const AuthenticatedUserPage = () => {
         <Routes>
             <Route path={routing.ROUTING_HOME} element={<SplashPage />} exact />
             <Route path={routing.ROUTING_DASHBOARD} element={<DashboardPage />} />
+            <Route path={routing.ROUTING_DASHBOARD_NEW} element={<DashboardNewPage />} />
 
             <Route path={routing.ROUTING_COMMON_MANUFACTURER_ORGANIZATION_HIERARCHY} element={<ManufacturerOrgHierarchyPage />} />
             <Route path={routing.ROUTING_COMMON_PRODUCT_HIERARCHY} element={<ProductHierarchyPage />} />
@@ -132,6 +160,7 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_REPORT_OTF_REPORTS} element={<OtfReportsPage />} />
             <Route path={routing.ROUTING_OTF_SO_MAPPING_CONTROL_MASTER} element={<OtfSoMappingMasterPage />} />
             <Route path={routing.ROUTING_OTF_BLOCK_MASTER} element={<OtfBlockMasterPage />} />
+            <Route path={routing.ROUTING_CRM_SCHEME_ENROLMENT} element={<CrmScreenEnrolmentMasterPage />} />
             <Route path={routing.ROUTING_SO_MAPPING_UNMAPPING} element={<OtfSoMappingUnmappingMasterPage />} />
 
             <Route path={routing.ROUTING_FINANCIAL_ACCOUNTING_TAX_CHARGES} element={<TaxChargesPage />} exact />
@@ -146,15 +175,15 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_DIGITAL_SIGNATURE_MAPPING} element={<DigitalSignatureMasterPage />} exact />
             <Route path={routing.ROUTING_FINANCIAL_ACCOUNTING_CHART_OF_ACCOUNT} element={<ChartOfAccountPage />} exact />
 
+            <Route path={routing.ROUTING_GST_IRN_AUTHENTICATION} element={<GSTIRNAuthenticationPage />} exact />
             <Route path={routing.ROUTING_ONROAD_PRICE_MASTER} element={<OnRoadPriceMasterPage />} exact />
 
-
             <Route path={routing.ROUTING_HO_PRICE_MAPPING} element={<HoPriceMappingMasterPage />} exact />
+            <Route path={routing.ROUTING_EVR_DETAILS_CAPTURING} element={<EvrDetailsCapturingMasterPage />} exact />
             <Route path={routing.STOCK_TRANSFER_INDENT} element={<StockTransferIndentMasterPage />} exact />
-
-
+            <Route path={routing.ROUTING_RSM_ASM_APPROVAL} element={<RsmAsmApprovalPage />} exact />
+            <Route path={routing.ROUTING_GST_IRN_TRANSACTION} element={<GstIRNTransactionPage />} exact />
             <Route path={routing.ROUTING_VIN_BLOCK_MASTER} element={<VinBlockMasterPage />} exact />
-
         </Routes>
     );
 };

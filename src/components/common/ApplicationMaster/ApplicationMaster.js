@@ -75,7 +75,7 @@ const initialFormData = {
     accessibleLocation: [],
 };
 
-export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLoading, applicationMasterDataShowLoading, fetchApplication, fetchApplicationCriticality, criticalityGroupData, fetchDealerLocations, fetchApplicationAction, saveApplicationDetails, menuData, fetchList, applicationDetailsData, configurableParamData, fetchCriticalitiData, actions, showGlobalNotification, isApplicationDeatilsLoading, isApplicatinoOnSaveLoading, onSaveShowLoading, applicationDetailListShowLoading, detailListShowLoading }) => {
+export const ApplicationMasterMain = ({ userId, isLoading, applicationMasterDataShowLoading, fetchApplication, fetchApplicationCriticality, criticalityGroupData, fetchApplicationAction, saveApplicationDetails, menuData, fetchList, applicationDetailsData, configurableParamData, fetchCriticalitiData, actions, showGlobalNotification, isApplicationDeatilsLoading, isApplicatinoOnSaveLoading, onSaveShowLoading, applicationDetailListShowLoading }) => {
     const [form] = Form.useForm();
     const [applicationForm] = Form.useForm();
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
@@ -102,12 +102,12 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
             fetchApplicationCriticality({ setIsLoading: applicationMasterDataShowLoading });
             fetchApplicationAction({ setIsLoading: applicationMasterDataShowLoading, userId, id: APPLICATION_ACTION_ID });
             fetchCriticalitiData({ setIsLoading: applicationMasterDataShowLoading });
-            fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, deviceType: menuType, sid: SPECIAL_MENU_ID });
+            fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, deviceType: menuType, screenId: SPECIAL_MENU_ID });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, menuType]);
 
-    const handleAdd = (type) => {
+    const handleAdd = () => {
         setisVisible(true);
         // setFormActionType(type);
         setIsReadOnly(false);
@@ -132,7 +132,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
             const { accessibleLocation, applicationAction, documentType, ...rest } = res?.data[0];
 
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, deviceType: menuType, sid: SPECIAL_MENU_ID });
+            fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, deviceType: menuType, screenId: SPECIAL_MENU_ID });
 
             applicationCall(rest?.applicationId);
             setSelectedTreeKey([rest?.applicationId]);
@@ -163,7 +163,10 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
                 nodeType: '',
                 id: values?.id || '',
                 ...values,
-                irnIntegrationRequired: values?.irnIntegrationRequired || false, isFinanceRelated: values?.isFinanceRelated || false, digitalSignatureRequired: values?.digitalSignatureRequired || false, termAndConRequired: values?.termAndConRequired || false ,
+                irnIntegrationRequired: values?.irnIntegrationRequired || false,
+                isFinanceRelated: values?.isFinanceRelated || false,
+                digitalSignatureRequired: values?.digitalSignatureRequired || false,
+                termAndConRequired: values?.termAndConRequired || false,
                 status: values?.applicationStatus,
                 parentApplicationId: parentAppCode,
                 documentType: documentType?.map((el) => ({ ...el, id: el.id || '' })),

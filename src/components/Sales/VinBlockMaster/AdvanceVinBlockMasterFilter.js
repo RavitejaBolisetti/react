@@ -3,11 +3,13 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
-import { Button, Row, Col, Form } from 'antd';
+import React from 'react';
+import { Button, Row, Col, Form, Input } from 'antd';
 import { RxCross2 } from 'react-icons/rx';
-import { SearchBox } from 'components/utils/SearchBox';
+// import { SearchBox } from 'components/utils/SearchBox';
 import styles from 'assets/sass/app.module.scss';
+
+const { Search } = Input;
 
 export default function AdvanceVinBlockMasterFilter(props) {
     const {
@@ -15,39 +17,25 @@ export default function AdvanceVinBlockMasterFilter(props) {
         removeFilter,
         handleResetFilter,
         advanceFilter = false,
-        onRoadFilter = false,
+        vinFilter = false,
         title,
         filterString,
-        setFilterString,
         searchForm,
-        searchForm: { setFieldsValue },
+        handleSearch,
     } = props;
 
     
-    const searchBoxProps = {
-        singleField: true,
-        searchForm,
-        filterString,
-        setFilterString,
-        placeholder: 'Search By VIN',
-        singleFieldKey: 'vin',
-    };
-
-    useEffect(() => {
-        setFieldsValue({ searchParam: filterString?.searchParam, searchType: filterString?.searchType });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString]);
-
     return (
         <div className={styles.contentHeaderBackground}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={18} lg={18} xl={18}>
-                    <Form autoComplete="off" colon={false} className={styles.masterListSearchForm}>
-                        <Form.Item label={`${title}`}>
+                    <Form autoComplete="off" form={searchForm} colon={false} className={styles.masterListSearchForm}>
+                        <Form.Item label={`${title}`} name="vinNo">
                             <Row gutter={20}>
-                                {onRoadFilter && (
+                                {vinFilter && (
                                     <Col xs={24} sm={24} md={14} lg={14} xl={14}>
-                                        <SearchBox {...searchBoxProps} />
+                                        <Search placeholder="Search Vin" onSearch={handleSearch} allowClear className={styles.headerSearchField} />
+
                                     </Col>
                                 )}
                                 
@@ -71,7 +59,7 @@ export default function AdvanceVinBlockMasterFilter(props) {
                                                 {filter?.name}
                                                 {filter?.canRemove && (
                                                     <span>
-                                                        <RxCross2 onClick={() => removeFilter(filter?.key)} />
+                                                        <RxCross2 onClick={() => removeFilter(filter?.key)} data-testid="removeFilter" />
                                                     </span>
                                                 )}
                                             </div>

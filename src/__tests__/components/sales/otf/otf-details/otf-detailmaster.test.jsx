@@ -1,9 +1,25 @@
 import React from 'react';
-import { fireEvent, screen } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { OtfDetailsMaster } from '@components/Sales/OTF/OtfDetails/OtfDetailsMaster';
 import customRender from '@utils/test-utils';
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
+import { Form } from 'antd';
+
+jest.mock('store/actions/data/otf/otf', () => ({
+    otfDataActions: {},
+}));
+
+const FormWrapper = (props) => {
+    const [form] = Form.useForm();
+    const myMoock = {
+        ...form,
+        validateFields: jest.fn(),
+        getFieldsValue: jest.fn().mockResolvedValue([{ name: 'Kai' }]),
+        resetFields: jest.fn(),
+    };
+    return <OtfDetailsMaster form={myMoock} {...props} />;
+};
 
 beforeEach(() => {
     jest.clearAllMocks();
@@ -128,9 +144,15 @@ describe('AddEdit Component render', () => {
         const unAllot = screen.getByRole('button', { name: 'Un-Allot' });
         fireEvent.click(unAllot);
     });
+
     it('cancel button should work', async () => {
         const mockStore = createMockStore({
             auth: { userId: 123 },
+            data: {
+                OTF: {
+                    OtfSearchList: { isDetailLoaded: true, detailData: { loyaltyScheme: true } },
+                },
+            },
         });
         customRender(
             <Provider store={mockStore}>
@@ -142,13 +164,21 @@ describe('AddEdit Component render', () => {
         fireEvent.click(cancelBtn);
     });
 
-    it('should validate fields on finish failed', async () => {
+    it('should validate fields on finish', async () => {
         const mockStore = createMockStore({
             auth: { userId: 123 },
+            data: {
+                OTF: {
+                    OtfSearchList: { isDetailLoaded: true, detailData: { exchange: true } },
+                },
+            },
         });
+
+        const saveData = jest.fn();
+
         customRender(
             <Provider store={mockStore}>
-                <OtfDetailsMaster {...props} typeData="SALE_TYP" buttonData={defaultBtnVisiblity} setButtonData={jest.fn()} onCloseAction={jest.fn()} onSuccess={jest.fn()} handleFormValueChange={jest.fn()} handleFieldsChange={jest.fn()} onFinish={jest.fn()} onFinishFailed={jest.fn()} setWorkFlowDetails={jest.fn()} />
+                <OtfDetailsMaster {...props} typeData="SALE_TYP" buttonData={defaultBtnVisiblity} setButtonData={jest.fn()} saveData={saveData} setWorkFlowDetails={jest.fn()} />
             </Provider>
         );
         const addBtn = screen.getByRole('button', { name: 'Edit', exact: false });
@@ -156,30 +186,27 @@ describe('AddEdit Component render', () => {
 
         const saveBtn = screen.getByRole('button', { name: 'Save', exact: false });
         fireEvent.click(saveBtn);
-    });
 
-    it('save button should work with on finish', async () => {
-        const mockStore = createMockStore({
-            auth: { userId: 123 },
+        await waitFor(() => {
+            expect(saveData).toHaveBeenCalled();
         });
-        customRender(
-            <Provider store={mockStore}>
-                <OtfDetailsMaster {...props} typeData="SALE_TYP" buttonData={defaultBtnVisiblity} setButtonData={jest.fn()} onCloseAction={jest.fn()} onSuccess={jest.fn()} handleFormValueChange={jest.fn()} handleFieldsChange={jest.fn()} onFinish={jest.fn()} onFinishFailed={jest.fn()} setWorkFlowDetails={jest.fn()} />
-            </Provider>
-        );
-        const addBtn = screen.getByRole('button', { name: 'Edit', exact: false });
-        fireEvent.click(addBtn);
 
-        const disableChecked = screen.getByRole('columnheader', { name: 'Loyalty Scheme', exact: false });
-        expect(disableChecked).not.toBeDisabled();
-        const saveBtn = screen.getByRole('button', { name: 'Save', exact: false });
-        fireEvent.click(saveBtn);
+        saveData.mock.calls[0][0].onSuccess();
+        saveData.mock.calls[0][0].onError();
     });
 });
 
 describe('AddEdit Component render when viewmode is false', () => {
-    const formActionType = { addMode: false, editMode: false, viewMode: false };
+    const formActionType = { addMode: false, editMode: true, viewMode: false };
     it('should render addedit page', async () => {
-        customRender(<OtfDetailsMaster {...formActionType} typeData={('SALE_TYP', 'PRC_TYP')} setWorkFlowDetails={jest.fn()} />);
+        customRender(<FormWrapper {...formActionType} typeData={('SALE_TYP', 'PRC_TYP')} setWorkFlowDetails={jest.fn()} />);
+
+        const Switch = screen.getByRole('switch', { name: /Loyalty Scheme/i });
+        fireEvent.click(Switch);
+        expect(Switch).toBeChecked();
+
+        const Switch2 = screen.getByRole('switch', { name: /Referral/i });
+        fireEvent.click(Switch2);
+        expect(Switch2).toBeChecked();
     });
 });

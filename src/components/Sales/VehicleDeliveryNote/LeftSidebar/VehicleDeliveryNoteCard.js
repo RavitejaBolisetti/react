@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Collapse, Space, Avatar, Typography, Divider } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
@@ -35,13 +35,26 @@ const VehicleDeliveryNoteCard = (props) => {
     const { selectedOrder, typeData, isLoading, toolTipContent, formActionType } = props;
     const fullName = selectedOrder?.customerName?.split(' ');
     const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1].slice(0, 1) : '') : '';
+    const deliveryTitles = useMemo(() => {
+        switch (props?.soldByDealer) {
+            case true: {
+                return { invoiceType: 'Delivery Note', deliveryDate: 'Delivery Note Date', fullName, userAvatar };
+            }
+            case false: {
+                return { invoiceType: 'Challan', deliveryDate: 'Challan Date', fullName, userAvatar };
+            }
+            default: {
+                return { invoiceType: 'Delivery Note', deliveryDate: 'Delivery Note Date', fullName, userAvatar };
+            }
+        }
+    }, [selectedOrder]);
     return (
-        <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon} collapsible="icon">
+        <Collapse bordered={true} expandIcon={expandIcon} collapsible="icon">
             <Panel
                 header={
                     <>
                         <Space>
-                            <Avatar size={50}>{userAvatar?.toUpperCase()}</Avatar>
+                            <Avatar size={50}>{deliveryTitles?.userAvatar?.toUpperCase()}</Avatar>
                             <div>
                                 <Title level={5}>{selectedOrder?.customerName?.toLowerCase()}</Title>
                                 <Text>{selectedOrder?.customerId || 'NA'}</Text>
@@ -49,24 +62,29 @@ const VehicleDeliveryNoteCard = (props) => {
                         </Space>
                         <Divider />
                         <div className={styles.detailCardText}>
-                            Delivery Note No.: <span> {checkAndSetDefaultValue(selectedOrder?.vehicleDeliveryNote)}</span>
+                            {deliveryTitles?.invoiceType} No.: <span> {checkAndSetDefaultValue(selectedOrder?.vehicleDeliveryNote)}</span>
                         </div>
                         <Divider />
-                        <div className={styles.detailCardText}>
-                            Mobile No.: <span> {checkAndSetDefaultValue(selectedOrder?.mobileNumber)}</span>
-                        </div>
+                        {selectedOrder?.mobileNumber && (
+                            <div className={styles.detailCardText}>
+                                Mobile No.: <span> {checkAndSetDefaultValue(selectedOrder?.mobileNumber)}</span>
+                            </div>
+                        )}
                     </>
                 }
                 key={1}
             >
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Delivery Note Date: <span> {checkAndSetDefaultValue(selectedOrder?.deliveryNoteDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
+                    {deliveryTitles?.deliveryDate} <span> {checkAndSetDefaultValue(selectedOrder?.deliveryNoteDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Status: <span className={styles.tooltipAlign}>{checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.DLVR_NT_STS.id], selectedOrder?.deliveryNoteStatus, isLoading))}</span>
-                    {formActionType?.viewMode && selectedOrder?.deliveryNoteStatus === 'cancelled' && <span className={styles.marL5}>{toolTipContent && selectedOrder?.deliveryNoteStatus && <div className={styles.toolTip}>{addToolTip(toolTipContent, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}</div>}</span>}
+                    Status:
+                    <div className={styles.tooltipAlign}>
+                        {checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.DLVR_NT_STS.id], selectedOrder?.deliveryNoteStatus, isLoading))}
+                        {formActionType?.viewMode && selectedOrder?.deliveryNoteStatus === 'cancelled' && <span className={styles.marL5}>{toolTipContent && selectedOrder?.deliveryNoteStatus && <div className={styles.toolTip}>{addToolTip(toolTipContent, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}</div>}</span>}
+                    </div>
                 </div>
 
                 <Divider />
@@ -79,7 +97,7 @@ const VehicleDeliveryNoteCard = (props) => {
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Booking Number: <span> {checkAndSetDefaultValue(selectedOrder?.otfNumber)}</span>
+                    Booking Number: <span> {checkAndSetDefaultValue(selectedOrder?.bookingNumber || selectedOrder?.otfNumber)}</span>
                 </div>
             </Panel>
         </Collapse>

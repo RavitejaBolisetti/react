@@ -15,7 +15,7 @@ import { PartNameListModal } from './PartNameListModal';
 const { TextArea } = Input;
 const { Search } = Input;
 
-function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, editCardForm, formData, selectedOrderId, partNameSearchVisible, setPartNameSearchVisible, handleFormValueChange, showGlobalNotification, onSearchPart, setsearchData, searchData, addButtonDisabled, setaddButtonDisabled, setAddOnItemInfo, addOnItemInfo, AddonPartsData, onCancel, accessoryForm, onFieldsChange, onFinish, isEditing, isBtnDisabled, setIsBtnDisabled, finalFormdata, documentTypeDescription, documentTypeCode }) {
+function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, editCardForm, selectedOrderId, partNameSearchVisible, setPartNameSearchVisible, handleFormValueChange, showGlobalNotification, onSearchPart, setsearchData, searchData, addButtonDisabled, setaddButtonDisabled, setAddOnItemInfo, AddonPartsData, onCancel, accessoryForm, onFieldsChange, isBtnDisabled }) {
     const disableProp = { disabled: true };
     const [selectedRowData, setSelectedRowData] = useState();
 
@@ -32,7 +32,7 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
         accessoryForm
             .validateFields()
             .then((values) => {
-                if (isPresent(values?.partName)) {
+                if (isPresent(values?.partNumber)) {
                     return;
                 }
 
@@ -42,11 +42,6 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
                 }
 
                 const data = { ...values, otfNumber: selectedOrderId, isDeleting: true, id: '' };
-
-                if (!values?.partNumber) {
-                    showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Verify Part Number to continue' });
-                    return;
-                }
 
                 setAddOnItemInfo((prev) => (prev ? [data, ...prev] : [data]));
                 accessoryForm.resetFields();
@@ -84,10 +79,6 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
         selectedRowData,
         setSelectedRowData,
         handleSelectedData,
-    };
-
-    const resetSearchFields = () => {
-        accessoryForm.resetFields(['partName']);
     };
     return (
         <>

@@ -18,7 +18,6 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'assets/sass/app.module.scss';
 
 const { Text } = Typography;
-const defaultBtnVisiblity = { editBtn: false, saveBtn: true, next: false, nextBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, formBtnActive: false };
 
 const APPLICATION_WEB = DEVICE_TYPE?.WEB?.key;
 const APPLICATION_MOBILE = DEVICE_TYPE?.MOBILE?.key;
@@ -31,7 +30,7 @@ export function chackedKeysMapData(treeData) {
 
         const getKeys = (treeData) => {
             treeData?.forEach((el) => {
-                if (el?.checked) {
+                if (el?.checked && el?.type === 'Action') {
                     initialCheckedKeys[node?.value].push(el?.value);
                 }
                 if (el?.children) {
@@ -62,7 +61,6 @@ const AssignUserRole = (props) => {
 
     const [isModalVisible, setisModalVisible] = useState(false);
     const [record, setRecord] = useState({});
-    //console.log("🚀 ~ file: AssignUserRoleMain.js:65 ~ AssignUserRole ~ record:", record)
     const [selectedRoleId, setSelectedRoleId] = useState('');
     const [disableMdlSaveBtn, setDisableMdlSaveBtn] = useState(true);
 
@@ -70,9 +68,9 @@ const AssignUserRole = (props) => {
         if (!userType) return;
         setButtonData((prev) => {
             if (userType === USER_TYPE_USER?.MANUFACTURER?.id) {
-                return { ...prev, nextBtn: false, nextBtnWthPopMag: false, closeBtn: false, formBtnActive: false };
+                return { ...prev, nextBtn: false, nextBtnWthPopMag: false, formBtnActive: false };
             } else {
-                return { ...prev, closeBtn: false, nextBtnWthPopMag: false, formBtnActive: false };
+                return { ...prev, nextBtnWthPopMag: false, formBtnActive: false };
             }
         });
 
@@ -119,6 +117,7 @@ const AssignUserRole = (props) => {
 
     useEffect(() => {
         if (userId && formData?.employeeCode && (record?.roleId || selectedRoleId)) {
+            setDeviceType(APPLICATION_WEB);
             if (userType === USER_TYPE_USER?.DEALER?.id) {
                 fetchDLRUserRoleDataList({ setIsLoading: usrRolelAppListShowLoading, userId, extraParams: extraParamsDlr, onErrorAction });
             } else {
@@ -137,7 +136,7 @@ const AssignUserRole = (props) => {
         };
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [selectedRoleId]);
 
     const fetchUserRoleFn = () => {
         const extraParams = [
@@ -170,7 +169,7 @@ const AssignUserRole = (props) => {
             form.resetFields();
             resetUsrDlrRoleAppDataList();
             setisModalVisible(false);
-            setButtonData((prev) => ({ ...defaultBtnVisiblity, saveBtn: true, formBtnActive: true }));
+            // setButtonData((prev) => ({ ...defaultBtnVisiblity, saveBtn: true, formBtnActive: true }));
             fetchUserRoleFn();
             setDisableMdlSaveBtn(true);
         };
@@ -218,7 +217,7 @@ const AssignUserRole = (props) => {
     };
 
     const handleButtonClickModal = ({ buttonAction, record }) => {
-        setSelectedRoleId('')
+        setSelectedRoleId('');
         mainform.resetFields();
         setisModalVisible(true);
         setRecord(record);
@@ -299,7 +298,7 @@ const AssignUserRole = (props) => {
         handleFormFieldChange,
         onFinishFailed,
         userRoleDataList,
-        roleListdata,
+        roleListdata: roleListdata?.filter((i) => i?.roleType === userType),
         handleSelectRole,
         setSelectedRoleId,
         selectedRoleId,
