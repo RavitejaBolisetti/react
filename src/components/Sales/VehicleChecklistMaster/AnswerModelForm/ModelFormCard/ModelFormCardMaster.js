@@ -6,7 +6,9 @@
 import React, { useReducer, useState, useEffect } from 'react';
 import ModelCard from './ModelCard';
 import ModelForm from './ModelForm';
-import { Card } from 'antd';
+import { Card, Select, Space } from 'antd';
+
+const { Option } = Select;
 
 export const ModelFormCardMaster = (props) => {
     const { isVisible, modelEditForm, modelForm, modelEdit, setModelEdit, modelData, setModelData, modelGroupData, setFormBtnActive } = props;
@@ -25,6 +27,10 @@ export const ModelFormCardMaster = (props) => {
             modelForm.resetFields();
             forceUpdate();
         });
+    };
+
+    const handleChange = (value) => {
+        console.log(`selected ${value}`);
     };
 
     const cardAttributeProps = {
@@ -63,13 +69,30 @@ export const ModelFormCardMaster = (props) => {
     }, [modelEdit]);
 
     return (
-        <Card>
+        <Card style={{ paddingBottom: '16px' }}>
             <ModelForm {...formProductAttributeProps} mainFomEdit={mainFomEdit} />
 
             {modelData?.length > 0 &&
                 modelData?.map((action) => {
                     return <ModelCard {...cardAttributeProps} modelGroupCode={action?.modelGroupCode} checklistModelStatus={action?.checklistModelStatus} internalId={action?.internalId} id={action?.id} />;
                 })}
+
+            {/* <Select
+                mode="multiple"
+                style={{
+                    width: '100%',
+                }}
+                placeholder="select Group Code"
+                // defaultValue={['china']}
+                onChange={handleChange}
+                optionLabelProp="label"
+            >
+                {modelGroupData?.map((item) => (
+                    <Option value={item?.modelGroupCode} label={item?.modelGroupDescription}>
+                        <Space>{item?.modelGroupDescription}</Space>
+                    </Option>
+                ))}
+            </Select> */}
         </Card>
     );
 };

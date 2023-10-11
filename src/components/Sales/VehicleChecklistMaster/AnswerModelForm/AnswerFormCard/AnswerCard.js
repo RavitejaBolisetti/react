@@ -20,7 +20,7 @@ const AnswerCard = (props) => {
         setFormEdit(true);
         setFormBtnActive(true);
         setAnswerSwitch(props?.answerStatus);
-
+        console.log(`props`, props);
         editForm.setFieldsValue({
             answerCode: props?.answerCode,
             answerTitle: props?.answerTitle,
@@ -32,7 +32,7 @@ const AnswerCard = (props) => {
 
     const answerSave = () => {
         let newFormData = editForm?.getFieldsValue();
-
+        console.log(`newFormData`, newFormData);
         const upd_obj = answerData?.map((obj) => {
             if (obj?.internalId === newFormData?.internalId) {
                 obj.answerCode = newFormData?.answerCode;

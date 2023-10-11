@@ -7,7 +7,7 @@
 export const ANSWER_TYPES = {
     Fixed: {
         id: 1,
-        key: 'FX',
+        key: 'FIX',
         value: 'Fixed',
     },
 };

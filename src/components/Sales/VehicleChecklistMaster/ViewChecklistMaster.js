@@ -55,6 +55,7 @@ export const ViewTaxChargesMain = (props) => {
                             <Descriptions.Item label="Checklist Description">{formData?.descriptionTitle}</Descriptions.Item>
                             <Descriptions.Item label="Answer Type">{formData?.answerTypeName}</Descriptions.Item>
                             <Descriptions.Item label="Attachment Required">{formData?.attachmentRequiredName}</Descriptions.Item>
+                            <Descriptions.Item label="Status">{formData?.status === true ? 'Active' : 'InActive'}</Descriptions.Item>
                             {modelData && modelData?.length > 0 && (
                                 <div>
                                     <Collapse expandIcon={expandIcon} collapsible="icon" className={styles.fullWidth}>
@@ -81,7 +82,7 @@ export const ViewTaxChargesMain = (props) => {
                             )}
                         </>
                     )}
-                    <Descriptions.Item label="Status">{formData?.status === true ? 'Active' : 'InActive'}</Descriptions.Item>
+                    {attributeType !== VEHICLE_CHECKLIST_TYPE?.CHECKLIST?.key && <Descriptions.Item label="Status">{formData?.status === true ? 'Active' : 'InActive'}</Descriptions.Item>}
                 </Descriptions>
             </div>
         </>

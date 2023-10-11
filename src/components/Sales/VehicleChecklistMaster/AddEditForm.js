@@ -32,7 +32,8 @@ const AddEditFormMain = (props) => {
     const treeSelectFieldProps = {
         treeFieldNames,
         treeData: VehicleChecklistMasterList,
-        treeDisabled: formActionType === FROM_ACTION_TYPE?.CHILD || formActionType === FROM_ACTION_TYPE?.SIBLING,
+        treeDisabled: true,
+        // formActionType === FROM_ACTION_TYPE?.CHILD || formActionType === FROM_ACTION_TYPE?.SIBLING
         selectedTreeSelectKey,
         handleSelectTreeClick,
         defaultValue: treeCodeId,
@@ -129,16 +130,23 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                 </Row>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                    <Form.Item label="Status" name="status">
+                                        <Switch value={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status ? true : false} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status === true || null || undefined ? true : false} />
+                                    </Form.Item>
+                                </Col>
                                 <ModelFormCardMaster {...props} />
                                 {answerType === ANSWER_TYPES?.Fixed?.key && <AnswerFormCardMaster {...props} />}
                             </>
                         ) : null}
                         <Row gutter={20}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item label="Status" name="status">
-                                    <Switch value={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status ? true : false} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status === true || null || undefined ? true : false} />
-                                </Form.Item>
-                            </Col>
+                            {attributeType !== VEHICLE_CHECKLIST_TYPE?.CHECKLIST?.key && (
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                    <Form.Item label="Status" name="status">
+                                        <Switch value={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status ? true : false} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status === true || null || undefined ? true : false} />
+                                    </Form.Item>
+                                </Col>
+                            )}
                             <Col xs={0} sm={0} md={0} lg={0} xl={0}>
                                 <Form.Item name="id" label="" />
                             </Col>

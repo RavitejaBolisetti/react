@@ -118,7 +118,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
     const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
-    const fieldNames = { title: 'descriptionTitle', key: 'code', children: 'children' };
+    const fieldNames = { title: 'descriptionTitle', key: 'id', children: 'children' };
 
     useEffect(() => {
         const extraParams = [
@@ -194,7 +194,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
             setModelData([]);
             setAnswerData([]);
             setAnswerType(null);
-            let treeKey = flatternData?.find((e) => e?.key === formData?.code)?.data?.parentCode;
+            let treeKey = flatternData?.find((e) => e?.key === formData?.id)?.data?.parentCode;
             treeKey = treeKey === CHECKLIST_TYPE?.VRC?.key || treeKey === CHECKLIST_TYPE?.VDC?.key ? 'DMS' : treeKey;
             setSelectedTreeSelectKey(treeKey);
             form.setFieldsValue({ ...obj, attributeLevel: attributeType, parentCode: treeKey });
@@ -276,7 +276,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
 
     const onFinish = (values) => {
         let parentCode = values?.parentCode === `DMS` ? buttonType : values?.parentCode;
-        let parentId = flatternData?.find((e) => e?.key === values?.parentCode)?.data?.id;
+        let parentId = flatternData?.find((e) => e?.data?.code === values?.parentCode)?.data?.id;
         let data = {};
         let updatedData = { ...values, id: values?.id || '', parentCode, parentId };
 
@@ -329,11 +329,11 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
                 if (res?.data?.attributeLevel === VEHICLE_CHECKLIST_TYPE?.GROUP?.key) {
                     const attributeParentName = flatternData.find((i) => res?.data?.groupDto?.parentCode === i.key)?.data?.descriptionTitle;
                     setFormData({ ...res?.data?.groupDto, parentName: attributeParentName, attributeName });
-                    setSelectedTreeKey([res?.data?.groupDto?.code]);
+                    setSelectedTreeKey([res?.data?.groupDto?.id]);
                 } else if (res?.data?.attributeLevel === VEHICLE_CHECKLIST_TYPE?.SUB_GROUP?.key) {
                     const attributeParentName = flatternData.find((i) => res?.data?.subGroupDto?.children?.[0]?.parentCode === i.key)?.data?.descriptionTitle;
                     setFormData({ ...res?.data?.subGroupDto?.children?.[0], parentName: attributeParentName, attributeName });
-                    setSelectedTreeKey([res?.data?.subGroupDto?.children?.[0]?.code]);
+                    setSelectedTreeKey([res?.data?.subGroupDto?.children?.[0]?.id]);
                 } else if (res?.data?.attributeLevel === VEHICLE_CHECKLIST_TYPE?.CHECKLIST?.key) {
                     const attributeParentName = flatternData.find((i) => res?.data?.checklistDto?.children?.[0]?.parentCode === i.key)?.data?.descriptionTitle;
                     const answerTypeName = typeData?.CHKL_ANS_TYPE?.find((e) => e?.key === res?.data?.checklistDto?.children?.[0]?.answerType)?.value;
@@ -341,7 +341,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
                     setFormData({ ...res?.data?.checklistDto?.children?.[0], parentName: attributeParentName, attributeName, answerTypeName, attachmentRequiredName });
                     setModelData(res?.data?.checklistDto?.children?.[0]?.model?.length > 0 ? [...res?.data?.checklistDto?.children?.[0]?.model] : []);
                     setAnswerData(res?.data?.checklistDto?.children?.[0]?.answer?.length > 0 ? [...res?.data?.checklistDto?.children?.[0]?.model] : []);
-                    setSelectedTreeKey([res?.data?.checklistDto?.children?.[0]?.code]);
+                    setSelectedTreeKey([res?.data?.checklistDto?.children?.[0]?.id]);
                 }
                 setFormActionType(FROM_ACTION_TYPE.VIEW);
                 setFormBtnActive(false);
