@@ -26,7 +26,7 @@ const FormWrapper = (props) =>{
 
 describe('AddEditForm component', () => {
     it('saveBtn', () => {
-        customRender(<FormWrapper isVisible={true} onFinish={jest.fn()} onFinishFailed={jest.fn()} handleAccountChange ={jest.fn()} setIsAccountHeadValidated={jest.fn()}/>);
+        customRender(<FormWrapper isVisible={true} onFinish={jest.fn()} onFinishFailed={jest.fn()} handleAccountChange ={jest.fn()} setIsAccountHeadValidated={jest.fn()} />);
 
         const accountHead = screen.getByRole('textbox', {name:'Account Head'});
         fireEvent.change(accountHead, {target:{value:'test'}})

@@ -17,7 +17,7 @@ describe('address common form Components', () => {
         customRender(<AddressCommonForm formType="billingCustomer" typeData={['GENDER']} isvisible={true} />);
 
         const mobileNo = screen.getByLabelText('Mobile Number');
-        expect(mobileNo).toBeInTheDocument();
+        fireEvent.change(mobileNo, { target: { value: '9311828211' } });
 
         const customerid = screen.getByLabelText('Customer ID');
         fireEvent.change(customerid, { target: { value: 'Dmscustomerid' } });
@@ -38,7 +38,7 @@ describe('address common form Components', () => {
         fireEvent.change(pincode, { target: { value: 'Dmspincode' } });
 
         const alternatenumber = screen.getByLabelText('Alternate Number');
-        fireEvent.change(alternatenumber, { target: { value: 'Dmsalternateno' } });
+        fireEvent.change(alternatenumber, { target: { value: '9311828211' } });
 
         const email = screen.getByLabelText('Email');
         fireEvent.change(email, { target: { value: 'Dmsemail' } });

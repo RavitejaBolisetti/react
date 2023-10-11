@@ -159,12 +159,16 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
                         setDocData(res.data);
                         setSingleDisabled(true);
                         setDraggerDisable(true);
+                     showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+
                     } 
                 },
-                onErrorAction: (res) => {     
+                onErrorAction: (res) => { 
                     setDocData();
                     setSingleDisabled(false);
-                        setDraggerDisable(false);
+                    setDraggerDisable(false);
+                    showGlobalNotification({ notificationType: 'error', title: 'Error', message: res });
+
                 }
             });
         
@@ -281,9 +285,9 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
     };
 
     const onCloseAction = () => {
+        setDocData();  
         form.resetFields();
         form.setFieldsValue();
-
         advanceFilterForm.resetFields();
         advanceFilterForm.setFieldsValue();
         // setAdvanceSearchVisible(false);
