@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
-import { OtfDetailsMaster } from '@components/Sales/OTF/OtfDetails/OtfDetailsMaster';
+import { OtfDetailsMaster } from '@components/Sales/Common/OtfDetails/OtfDetailsMaster';
 import customRender from '@utils/test-utils';
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
@@ -9,6 +9,10 @@ import { Form } from 'antd';
 jest.mock('store/actions/data/otf/otf', () => ({
     otfDataActions: {},
 }));
+
+beforeEach(() => {
+    jest.clearAllMocks();
+});
 
 const FormWrapper = (props) => {
     const [form] = Form.useForm();
@@ -20,10 +24,6 @@ const FormWrapper = (props) => {
     };
     return <OtfDetailsMaster form={myMoock} {...props} />;
 };
-
-beforeEach(() => {
-    jest.clearAllMocks();
-});
 
 const props = {
     formActionType: { addMode: false, editMode: false, viewMode: true },
@@ -184,7 +184,7 @@ describe('AddEdit Component render', () => {
         const addBtn = screen.getByRole('button', { name: 'Edit', exact: false });
         fireEvent.click(addBtn);
 
-        const saveBtn = screen.getByRole('button', { name: 'Save', exact: false });
+        const saveBtn = screen.getByRole('button', { name: 'Save & Next', exact: false });
         fireEvent.click(saveBtn);
 
         await waitFor(() => {
