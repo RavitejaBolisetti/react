@@ -45,22 +45,6 @@ export const VehicleInvoiceFormButton = ({ formActionType, record, onCloseAction
                         </Button>
                     )}
 
-                    {buttonData?.rejectCancelBtn && (
-                        <Popover content={'Coming Soon'} trigger="hover">
-                            <Button onClick={onApproveCancel} type="primary">
-                                Reject
-                            </Button>
-                        </Popover>
-                    )}
-
-                    {buttonData?.approveCancelBtn && (
-                        <Popover content={'Coming Soon'} trigger="hover">
-                            <Button onClick={onApproveCancel} type="primary">
-                                Approve
-                            </Button>
-                        </Popover>
-                    )}
-
                     {buttonData?.nextBtn && !isLastSection && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
                             Next

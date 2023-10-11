@@ -79,7 +79,7 @@ const AddEditFormMain = (props) => {
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                     <Row>
                                         <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                            <Text strong>Delivery Note/Invoice Details</Text>
+                                            <Text strong>Delivery Note Details</Text>
                                         </Col>
                                     </Row>
                                     <Divider />

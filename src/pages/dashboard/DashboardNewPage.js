@@ -6,12 +6,12 @@
 import React from 'react';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 
-import { Dashboard } from 'components/Dashboard/Dashboard';
+import { DashboardNew } from 'components/DashboardNew/DashboardNew';
 import { DashboardSkelton } from 'components/Dashboard/DashboardSkelton';
 
-const DashboardPageBase = ({ props }) => {
+const DashboardNewPageBase = ({ props }) => {
     const { isLoading } = props;
-    return isLoading ? <DashboardSkelton /> : <Dashboard {...props} />;
+    return isLoading ? <DashboardSkelton /> : <DashboardNew {...props} />;
 };
 
-export const DashboardPage = withLayoutMaster(DashboardPageBase);
+export const DashboardNewPage = withLayoutMaster(DashboardNewPageBase);

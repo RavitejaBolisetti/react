@@ -3,18 +3,57 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { fireEvent, screen, act } from '@testing-library/react';
+import { fireEvent, screen, act, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { GstIRNTransaction } from 'components/FinancialAccounting/GstIRNTransaction/GstIRNTransactionMaster';
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 
+jest.mock('store/actions/data/financialAccounting/gstIRNTransactionPending/gstIRNTransaction', ()=>({
+    gstIRNTransactionActions:{}
+}));
+
+const fetchList = jest.fn();
+const fetchGSTINList = jest.fn();
+
 afterEach(() => {
     jest.restoreAllMocks();
 });
 
 describe("GstIRNTransaction component",()=>{
+
+    it("success and error alert", async()=>{
+        const mockStore = createMockStore({
+            auth: { userId:123 },
+            data: {
+                FinancialAccounting: {
+                    GstIRNTransaction: { isLoading: false, data:{pageNumber:'1', pageSize:'10', totalRecords:'1', 
+                    paginationData:[{invoiceDocumentNumber: "test"}]}, },
+                },
+            },
+        });
+
+        customRender(
+            <Provider store={mockStore}>
+                <GstIRNTransaction fetchList={fetchList} fetchGSTINList={fetchGSTINList} viewDocument={jest.fn()} 
+                uploadDocument={jest.fn()}/>
+            </Provider>
+        )
+
+        fetchGSTINList.mock.calls[0][0].onSuccessAction();
+        fetchList.mock.calls[0][0].onSuccessAction();
+
+        await waitFor(() => { expect(screen.getByText(/test/i)).toBeInTheDocument() });
+        const viewBtn=screen.getByTestId('view');
+        fireEvent.click(viewBtn);
+
+        await waitFor(() => { expect(screen.getByText(/test/i)).toBeInTheDocument() });
+        const uploadBtn=screen.getByTestId('upload');
+        fireEvent.click(uploadBtn);
+
+        fetchList.mock.calls[0][0].onErrorAction();
+    })
 
     it("onAdvanceSearchCloseAction", ()=>{
         customRender(<GstIRNTransaction />);
@@ -27,13 +66,23 @@ describe("GstIRNTransaction component",()=>{
     })
 
     it("resetBtn", ()=>{
-        customRender(<GstIRNTransaction />);
+        customRender(<GstIRNTransaction setFilterString={jest.fn()}/>);
 
         const advancedBtn = screen.getByRole('button', {name:'Advanced Filters'});
         fireEvent.click(advancedBtn);
 
         const resetBtn = screen.getByRole('button', {name:'Reset'});
         fireEvent.click(resetBtn)
+    })
+
+    it("applyBtn", ()=>{
+        customRender(<GstIRNTransaction setFilterString={jest.fn()}/>);
+
+        const advancedBtn = screen.getByRole('button', {name:'Advanced Filters'});
+        fireEvent.click(advancedBtn);
+
+        const applyBtn = screen.getByRole('button', {name:'Apply'});
+        fireEvent.click(applyBtn)
     })
 
     it("clearBtn",()=>{
@@ -53,7 +102,7 @@ describe("GstIRNTransaction component",()=>{
         })
         customRender(
             <Provider store={mockStore}>
-                <GstIRNTransaction advanceFilter={true} extraParams={extraParams} />
+                <GstIRNTransaction advanceFilter={true} extraParams={extraParams} fetchList={fetchList} fetchGSTINList={fetchGSTINList} setFilterString={jest.fn()} />
             </Provider>
         );
 
@@ -74,5 +123,6 @@ describe("GstIRNTransaction component",()=>{
         const clearBtn = screen.getByRole('button', {name:'Clear'});
         fireEvent.click(clearBtn);
     })
+
 })
 
