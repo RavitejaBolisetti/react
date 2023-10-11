@@ -7,7 +7,7 @@ import React, { useMemo } from 'react';
 import { Card, Row, Col, Space, Divider, Typography, Button, Form, Select } from 'antd';
 import styles from 'assets/sass/app.module.scss';
 //import SoStyles from 'components/Sales/OtfSoMappingUnmapping/Somapping.module.css';
-import SoStyles from 'components/Sales/OtfSoMappingUnmapping/Somapping.module.scss';
+import SoStyles from 'assets/sass/Somapping.module.scss';
 import { AddEditForm } from './AddEditForm';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { validateRequiredSelectField } from 'utils/validation';
@@ -66,33 +66,30 @@ const SoFormMasterMain = (props) => {
                                         </Col>
                                     </Row>
                                     <Row gutter={20}>
-                                        <Col xs={11} sm={11} md={11} lg={11} xl={11} xxl={11}>
-                                            <Space direction="vertical" size="small" className={SoStyles.flex}>
+                                        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} >
+                                            <Space direction="vertical" size="small" className={SoStyles.otfMappingContaner}>
                                                 <Text className={SoStyles.headerBg}> {handleTitle?.title1} </Text>
-                                                <Card className={`${styles.fullWidth} ${styles.whiteBG} ${SoStyles.fullHeight}`}>
+                                                <Card className={SoStyles.fullHeight}>
                                                     <AddEditForm {...props} disabledProps={disabledProps} formType={FORM_TYPE_CONSTANSTS?.FORM_1?.id} status={status} />
                                                 </Card>
                                             </Space>
                                         </Col>
-                                        <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2} className={styles.textCenter}>
-                                            <Divider type="vertical" />
-                                        </Col>
-                                        <Col xs={11} sm={11} md={11} lg={11} xl={11} xxl={11}>
-                                            <Space direction="vertical" size="small" className={SoStyles.flex}>
+                                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} >
+                                            <Space direction="vertical" size="small" className={SoStyles.otfMappingContaner}>
                                                 <Text className={SoStyles.headerBg}> {handleTitle?.title2} </Text>
-                                                <Card className={`${styles.fullWidth} ${styles.whiteBG} ${SoStyles.fullHeight}`}>
+                                                <Card className={SoStyles.fullHeight}>
                                                     <AddEditForm {...props} disabledProps={disabledProps} formType={FORM_TYPE_CONSTANSTS?.FORM_2?.id} status={status} />
                                                 </Card>
                                             </Space>
                                         </Col>
                                     </Row>
-                                    <Row gutter={20}>
-                                        <Col span={10} offset={8}>
+                                    <Row gutter={20} className={SoStyles.descriptionSection}>
+                                        <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} >
                                             <Form.Item label="Reason Category" name="resonCategoryCode" rules={[validateRequiredSelectField('reason category')]}>
                                                 <Select options={typeData[PARAM_MASTER?.SO_RC?.id]} fieldNames={{ label: 'value', value: 'key' }} placeholder="Select" allowClear showSearch optionFilterProp="value" />
                                             </Form.Item>
                                         </Col>
-                                        <Col span={10} offset={8}>
+                                        <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                             <Form.Item label="Reason Description" name="reasonDescriptionCode" rules={[validateRequiredSelectField('reason description')]}>
                                                 <Select options={typeData[PARAM_MASTER?.SO_RD?.id]} fieldNames={{ label: 'value', value: 'key' }} placeholder="Select" allowClear showSearch optionFilterProp="value" />
                                             </Form.Item>
