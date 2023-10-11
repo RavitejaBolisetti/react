@@ -9,9 +9,9 @@ import { Row, Button, Col, Input, Form } from 'antd';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { customSelectBox } from 'utils/customSelectBox';
+
 import styles from 'assets/sass/app.module.scss';
 
-// const { Search } = Input;
 const CommonForm = ({ formData, typeData, formKey = 'Shield', addOnForm, openAccordian, formActionType, onSingleFormFinish, registerDisabled, relationshipManagerData, schemeDescriptionDatamain, isReadOnly = false, handleEditRegister, handleCancelRegister, disableKey, muiltipleFormData }) => {
     const disableProps = { disabled: isReadOnly };
     const handleChange = (values) => {
@@ -50,7 +50,6 @@ const CommonForm = ({ formData, typeData, formKey = 'Shield', addOnForm, openAcc
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.employeeCode} label="Employee Name" name="employeeCode">
-                        {/* <Search  onSearch={handleEmployeeSearch}  onChange={handleOnChange} placeholder={preparePlaceholderText('scheme amount')} allowClear /> */}
                         {customSelectBox({ data: relationshipManagerData, fieldNames: { key: 'key', value: 'value' }, placeholder: preparePlaceholderSelect('Relationship Manager'), ...disableProps })}
                     </Form.Item>
                 </Col>
