@@ -8,7 +8,6 @@ import { Col, Modal, Row, Form } from 'antd';
 import { ChangePasswordForm } from './ChangePasswordForm';
 
 import styles from 'components/Auth/Auth.module.scss';
-//import styles from 'components/Auth/Auth.module.css';
 
 export const ChangePassword = ({ setModalOpen, isOpen = false, title = '', discreption = '' }) => {
     const [form] = Form.useForm();
