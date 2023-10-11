@@ -24,7 +24,7 @@ const ModelForm = (props) => {
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} style={{ marginBottom: '12px' }}>
                         <Row justify="space-between" align="middle">
-                            <Form.Item label="Model Group Status" name="checklistModelStatus" initialValue={modelSwitch}>
+                            <Form.Item label="Model Group Status" name="status" initialValue={modelSwitch}>
                                 <Switch value={modelSwitch} onChange={() => setModelSwitch(!modelSwitch)} defaultChecked={modelSwitch} disabled={mainFomEdit} checkedChildren="Active" unCheckedChildren="Inactive" />
                             </Form.Item>
                             {!props?.internalId && (
