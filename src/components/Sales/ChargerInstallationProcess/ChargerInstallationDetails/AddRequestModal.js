@@ -11,28 +11,26 @@ import { customSelectBox } from 'utils/customSelectBox';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 import dayjs from 'dayjs';
-import { dateFormat, formatDate, formatDateToCalenderDate } from 'utils/formatDateTime';
+import { dateFormat, convertDateTimedayjs, formatDateToCalenderDate } from 'utils/formatDateTime';
 import { disableFutureDate } from 'utils/disableDate';
 
 import styles from 'assets/sass/app.module.scss';
 import { validateRequiredInputField } from 'utils/validation';
+import { showGlobalNotification } from 'store/actions/notification';
 
 export const AddRequestModalForm = (props) => {
     const { setAddRequestVisible, onAdvanceSearchCloseAction, typeData } = props;
-    const { filterString, setAddRequestData, addRequestForm } = props;
+    const { filterString, setAddRequestData, addRequestForm, setActiveKey, onModalFinish, requestPayload, handleFormValueChange, setRequestPayload, handleButtonClick, setButtonData } = props;
 
     // useEffect(() => {
     //     // eslint-disable-next-line react-hooks/exhaustive-deps
     // }, [filterString]);
 
-    const onFinish = (values) => {
-        setAddRequestData(values);
-        setAddRequestVisible(false);
-    };
-
     const onFinishFailed = () => {
         return;
     };
+
+    console.log(requestPayload);
 
     const CheckDateEffectiveTo = (value, effectiveFrom) => {
         if (!value) return Promise.resolve();
@@ -44,27 +42,27 @@ export const AddRequestModalForm = (props) => {
     };
 
     return (
-        <Form autoComplete="off" layout="vertical" form={addRequestForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" layout="vertical" form={addRequestForm} onFinish={onModalFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="Stage" name="stage" className={styles?.datePicker} rules={[validateRequiredInputField('from date')]}>
+                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="Stage" name="requestStage" className={styles?.datePicker} rules={[validateRequiredInputField('from date')]}>
                         {customSelectBox({ data: typeData?.CHRGR_INST_STG_TYPE, placeholder: preparePlaceholderText('application criticality group') })}
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.toDate)} label="Preferred Date & Time 1" name="fromDate" className={styles?.datePicker} rules={[validateRequiredInputField('fromDate')]}>
+                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.toDate)} label="Preferred Date & Time 1" name="visitTimeSlotOne" className={styles?.datePicker} rules={[validateRequiredInputField('fromDate')]}>
                         <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.toDate)} label="Preferred Date & Time 2" name="toDate" className={styles?.datePicker}>
+                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.toDate)} label="Preferred Date & Time 2" name="visitTimeSlotTwo" className={styles?.datePicker}>
                         <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.toDate)} label="Preferred Date & Time 3" name="toDate2" className={styles?.datePicker}>
+                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.toDate)} label="Preferred Date & Time 3" name="visitTimeSlotThree" className={styles?.datePicker}>
                         <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
                     </Form.Item>
                 </Col>
@@ -77,12 +75,12 @@ export const AddRequestModalForm = (props) => {
                     </Button>
                 </Col> */}
 
-                <Col xs={24} m={12} md={12} lg={12} xl={12} xxl={12} className={styles.alignRight}>
+                <Col xs={24} m={24} md={12} lg={12} xl={12} className={styles.alignRight}>
                     <Button onClick={onAdvanceSearchCloseAction} danger>
                         Cancel
                     </Button>
                 </Col>
-                <Col xs={24} m={12} md={12} lg={12} xl={12} xxl={12}>
+                <Col xs={24} m={24} md={12} lg={12} xl={12}>
                     <Button htmlType="submit" type="primary">
                         Add
                     </Button>

@@ -24,8 +24,8 @@ const expandIcon = ({ isActive }) =>
     );
 
 const ProfileDetailCard = (props) => {
-    const { selectedCustomer } = props;
-    const fullName = selectedCustomer?.customerName?.split(' ');
+    const { chargerInstallationMasterData } = props;
+    const fullName = chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.customerName?.split(' ');
     const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1].slice(0, 1) : '') : '';
     return (
         <Collapse bordered={true} defaultActiveKey={[1]} accordion={true} expandIcon={expandIcon} collapsible="icon">
@@ -35,13 +35,13 @@ const ProfileDetailCard = (props) => {
                         <Space>
                             <Avatar size={50}>{userAvatar?.toUpperCase()}</Avatar>
                             <div>
-                                <Title level={5}>{selectedCustomer?.customerName}</Title>
-                                <Text>{selectedCustomer?.customerId}</Text>
+                                <Title level={5}>{chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.customerName}</Title>
+                                <Text>{chargerInstallationMasterData?.customerId}</Text>
                             </div>
                         </Space>
                         <Divider />
                         <div className={styles.detailCardText}>
-                            Booking No: <span>{selectedCustomer?.customerTypeName}</span>
+                            Booking No: <span>{chargerInstallationMasterData?.bookingNumber}</span>
                         </div>
                     </>
                 }
@@ -49,7 +49,7 @@ const ProfileDetailCard = (props) => {
             >
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Overall Status: <span>{selectedCustomer?.mobileNumber || 'NA'}</span>
+                    Overall Status: <span>{chargerInstallationMasterData?.chargerInstDetails?.requestStatus}</span>
                 </div>
             </Panel>
         </Collapse>

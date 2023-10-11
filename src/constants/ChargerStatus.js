@@ -6,15 +6,15 @@
 export const VEHICLE_COMPANY_MAKE = 'MAL';
 
 export const CHARGER_STATUS = {
-    SUCCESS: {
+    IN_PROGRESS: {
         id: 1,
-        key: 'O',
-        title: 'Booked',
-        desc: 'Booked',
+        key: 'In-Progress',
+        title: 'In-Progress',
+        desc: 'In-Progress',
         displayOnView: true,
         filter: true,
     },
-    IN_PROGRESS: {
+    SUCCESS: {
         id: 2,
         key: 'A',
         title: 'Allotted',

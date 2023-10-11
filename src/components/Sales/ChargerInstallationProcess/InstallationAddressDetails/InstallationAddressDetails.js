@@ -11,6 +11,8 @@ import { AddEditForm } from './AddEditForm';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { showGlobalNotification } from 'store/actions/notification';
+import { OTFStatusBar } from '../OTFStatusBar';
+import { getCodeValue } from 'utils/getCodeValue';
 
 import styles from 'assets/sass/app.module.scss';
 import { geoPinCodeDataActions } from 'store/actions/data/geo/pincodes';
@@ -56,20 +58,22 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const InstallationAddressDetailsMasterBase = (props) => {
-    const { insuranceData, onCloseAction, fetchList, formActionType, crmCustomerVehicleData, fetchPincodeDetail, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
+    const { StatusBar, onCloseAction, fetchList, formActionType, chargerInstallationMasterData, crmCustomerVehicleData, fetchPincodeDetail, userId, isDataLoaded, requestPayload, onChargerInstallationFinish, setRequestPayload, showGlobalNotification } = props;
     const { form, selectedOrderId, handleFormValueChange, section, isLoading, NEXT_ACTION, handleButtonClick, onFinishFailed, saveData } = props;
     const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, pageType } = props;
     const { insuranceCompanies, pincodeData } = props;
     const [formData, setFormData] = useState();
 
-    const extraParams = [
-        {
-            key: 'otfNumber',
-            title: 'otfNumber',
-            value: selectedOrderId,
-            name: 'Booking Number',
-        },
-    ];
+    const onFinish = () => {
+        form.validateFields()
+            .then(() => {
+                const values = form.getFieldsValue();
+                setRequestPayload((prev) => ({ ...prev, chargerInstAddressDetails: { sameAsCustomerAddress: values?.sameAsCustomerAddress ? 'Y' : 'N', instAddressDetails: { address: values?.address, city: values?.city, state: values?.state, pinCode: values?.pinCode, customerMobileNumber: values?.customerMobileNumber } } }));
+                handleFormValueChange();
+                onChargerInstallationFinish();
+            })
+            .catch((err) => {});
+    };
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message: message });
@@ -86,6 +90,7 @@ const InstallationAddressDetailsMasterBase = (props) => {
         isLoading,
         pageType,
         insuranceCompanies,
+        chargerInstallationMasterData,
     };
 
     const formProps = {
@@ -109,37 +114,6 @@ const InstallationAddressDetailsMasterBase = (props) => {
         ...props,
     };
 
-    const onFinish = (values) => {
-        const recordId = insuranceData?.id || '';
-        const data = { ...values, id: recordId, otfNumber: selectedOrderId };
-        if (onFinishCustom) {
-            onFinishCustom({ key: formKey, values: data });
-            handleButtonClick({ buttonAction: NEXT_ACTION });
-            setButtonData({ ...buttonData, formBtnActive: false });
-        } else {
-            const onSuccess = (res) => {
-                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-                fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
-            };
-
-            const onError = (message) => {
-                // showGlobalNotification({ message });
-            };
-
-            const requestData = {
-                data: data,
-                method: insuranceData?.id ? 'put' : 'post',
-                setIsLoading: listShowLoading,
-                userId,
-                onError,
-                onSuccess,
-            };
-
-            saveData(requestData);
-        }
-    };
-
     return (
         <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed} onValuesChange={handleFormValueChange}>
             <Row gutter={20} className={styles.drawerBodyRight}>
@@ -147,6 +121,9 @@ const InstallationAddressDetailsMasterBase = (props) => {
                     <Row>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <h2>{section?.title}</h2>
+                        </Col>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            {!formActionType?.addMode && <StatusBar status={chargerInstallationMasterData?.chargerInstDetails?.requestDetails[0].requestStage} />}
                         </Col>
                     </Row>
                     {formActionType?.viewMode ? (

@@ -27,13 +27,12 @@ export const OTFStatusBar = (props) => {
     } else {
         displayItem = otfStatusList.filter((i) => i.displayOnView && i?.id !== QUERY_BUTTONS_CONSTANTS.COMMISSION.id);
     }
-
     return (
         <Steps
             current={0}
             size="small"
             labelPlacement="vertical"
-            items={displayItem.map((i) => ({
+            items={otfStatusList.map((i) => ({
                 ...i,
                 icon: i.id <= currentStatusId ? <FaCheckCircle color={'#70C922'} /> : <BsRecordCircleFill color={'#b5b5b6'} />,
             }))}

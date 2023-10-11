@@ -7,7 +7,7 @@ import React from 'react';
 import { Col, Row } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import { CHARGER_INSTALLATION_SECTION } from 'constants/ChargerInstallationConstant';
-
+import { OTFStatusBar } from './OTFStatusBar';
 import { LeftSidebar } from './LeftSidebar';
 import { ChargerInstallationDetailsMaster } from './ChargerInstallationDetails'; //Own Menu
 import { InstallationAddressDetailsMaster } from './InstallationAddressDetails'; //Own Menu
@@ -17,7 +17,7 @@ import { VehicleInvoiceFormButton } from './VehicleInvoiceFormButton';
 import styles from 'assets/sass/app.module.scss';
 
 const ChargerInstallationMainConatinerMain = (props) => {
-    const { currentSection, handleIRNGeneration, selectedOtfNumber, requestPayload, setRequestPayload } = props;
+    const { currentSection, handleIRNGeneration, selectedOtfNumber, chargerInstallationMasterData, requestPayload, setRequestPayload } = props;
 
     const onFinishCustom = ({ key, values }) => {
         setRequestPayload({ ...requestPayload, [key]: values });
@@ -26,10 +26,12 @@ const ChargerInstallationMainConatinerMain = (props) => {
     const myProps = {
         ...props,
         wrapForm: false,
+        StatusBar: OTFStatusBar,
         handleIRNGeneration,
         onFinishCustom,
         selectedOrderId: selectedOtfNumber,
         FormActionButton: VehicleInvoiceFormButton,
+        chargerInstallationMasterData,
     };
 
     const renderElement = () => {

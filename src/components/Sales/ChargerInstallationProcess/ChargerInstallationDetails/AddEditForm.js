@@ -20,11 +20,7 @@ const { Search } = Input;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { formData, typeData, formActionType, chargerDetails, crmCustomerVehicleData, handleBookingNumberSearch, handleBookingChange } = props;
-    const [activeKey, setActiveKey] = useState([]);
-    const [addRequestVisible, setAddRequestVisible] = useState(false);
-    const [addRequestData, setAddRequestData] = useState([]);
-    const [addRequestForm] = Form.useForm();
+    const { formData, typeData, formActionType, chargerDetails, activeKey, setActiveKey, crmCustomerVehicleData, setAddRequestVisible, addRequestVisible, handleBookingNumberSearch, handleBookingChange, addRequestForm, addRequestData, setAddRequestData } = props;
 
     const viewProps = {
         bordered: false,
@@ -55,6 +51,7 @@ const AddEditFormMain = (props) => {
     };
 
     const addRequestProps = {
+        ...props,
         isVisible: addRequestVisible,
         icon: <FilterIcon size={20} />,
         titleOverride: 'Add Request',
@@ -64,6 +61,7 @@ const AddEditFormMain = (props) => {
         setAddRequestData,
         setAddRequestVisible,
         typeData,
+        setActiveKey,
     };
 
     const handleAddRequestChange = () => {

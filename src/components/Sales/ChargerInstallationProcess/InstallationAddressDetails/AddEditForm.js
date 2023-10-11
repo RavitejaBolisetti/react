@@ -74,8 +74,8 @@ const AddEditFormMain = (props) => {
         if (selectedPinCode) {
             form.setFieldsValue({
                 pinCode: selectedPinCode?.pinCode,
-                stateName: selectedPinCode?.stateName,
-                cityName: selectedPinCode?.cityName,
+                state: selectedPinCode?.stateName,
+                city: selectedPinCode?.cityName,
             });
             forceUpdate();
         }
@@ -84,9 +84,9 @@ const AddEditFormMain = (props) => {
     const handleOnClear = () => {
         setOptions();
         form.setFieldsValue({
-            pinCode: null,
-            stateName: null,
-            cityName: null,
+            pinCode: undefined,
+            state: undefined,
+            city: undefined,
         });
     };
 
@@ -119,7 +119,7 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Form.Item name="sameAsCustomer" label="">
-                                    <Checkbox valuePropName="checked" onClick={handleOnChange} name="sameAsCustomer">
+                                    <Checkbox valuePropName="checked" onClick={handleOnChange} name="sameAsCustomerAddress">
                                         Same as Customer Address
                                     </Checkbox>
                                 </Form.Item>
@@ -135,7 +135,7 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                 <Form.Item label="Pin Code" name="pinCode" rules={[validateRequiredInputField('Pin Code'), validatePincodeField('Pin Code')]}>
-                                    <AutoComplete {...disabledProps} maxLength={6} options={options} onSelect={handleOnSelect} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
+                                    <AutoComplete maxLength={6} options={options} onSelect={handleOnSelect} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
                                         <Search onSearch={handleOnSearch} onChange={handleOnClear} placeholder="Search" loading={isPinCodeLoading} type="text" allowClear />
                                     </AutoComplete>
                                 </Form.Item>
@@ -144,14 +144,14 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                 <Form.Item label="City" name="city">
-                                    <Input {...disabledProps} placeholder={preparePlaceholderText('city')} maxLength={50} />
+                                    <Input disabled={true} placeholder={preparePlaceholderText('city')} maxLength={50} />
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                 <Form.Item label="State" name="state">
-                                    <Input {...disabledProps} placeholder={preparePlaceholderText('state')} maxLength={50} />
+                                    <Input disabled={true} placeholder={preparePlaceholderText('state')} maxLength={50} />
                                 </Form.Item>
                             </Col>
                         </Row>

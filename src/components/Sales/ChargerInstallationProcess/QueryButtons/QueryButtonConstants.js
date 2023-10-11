@@ -8,25 +8,28 @@ export const QUERY_BUTTONS = {
         id: 'site_survey',
         title: 'Site Survey',
         key: 'SRV',
+        displayOnView: true,
         active: true,
     },
     SITE_VALIDATION: {
         id: 'site_validation',
         title: 'Site Validation',
         key: 'VLD',
+        displayOnView: true,
         active: false,
     },
     INSTALLATION: {
         id: 'installation',
         title: 'Installation',
         key: 'INS',
+        displayOnView: true,
         active: false,
     },
     COMMISSION: {
         id: 'commission',
         title: 'Commission',
         key: 'COM',
+        displayOnView: true,
         active: false,
     },
-
 };
