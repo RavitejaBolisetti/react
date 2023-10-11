@@ -62,7 +62,7 @@ export const ViewTaxChargesMain = (props) => {
                                         <Panel header="Model Group" key="1">
                                             <Divider />
                                             {modelData?.map((item) => (
-                                                <ModelCard key={'groupCode' + item?.modelGroupCode} modelGroupCode={item?.modelGroupCode} checklistModelStatus={item?.checklistModelStatus} {...cardProps} />
+                                                <ModelCard key={'groupCode' + item?.modelGroupCode} modelGroupCode={item?.modelGroupCode} checklistModelStatus={item?.checklistModelStatus} status={item?.status} {...cardProps} />
                                             ))}
                                         </Panel>
                                     </Collapse>

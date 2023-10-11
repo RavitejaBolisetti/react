@@ -68,7 +68,7 @@ export const ModelFormCardMaster = (props) => {
 
             {modelData?.length > 0 &&
                 modelData?.map((action) => {
-                    return <ModelCard {...cardAttributeProps} modelGroupCode={action?.modelGroupCode} checklistModelStatus={action?.checklistModelStatus} internalId={action?.internalId} id={action?.id} />;
+                    return <ModelCard {...cardAttributeProps} modelGroupCode={action?.modelGroupCode} checklistModelStatus={action?.checklistModelStatus} status={action?.status} internalId={action?.internalId} id={action?.id} />;
                 })}
         </Card>
     );

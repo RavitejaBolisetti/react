@@ -253,7 +253,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
                 setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: isChild, siblingBtn: isSibling });
 
                 const attributeName = VehicleChecklistAttributeLov?.find((e) => e?.key === formData?.data?.attributeLevel)?.value;
-                const attributeParentName = flatternData.find((i) => formData?.data?.parentCode === i.key)?.data?.descriptionTitle;
+                const attributeParentName = flatternData.find((i) => formData?.data?.parentCode === i?.data?.code)?.data?.descriptionTitle;
                 const answerTypeName = formData?.data?.attributeLevel === VEHICLE_CHECKLIST_TYPE?.CHECKLIST?.key ? typeData?.CHKL_ANS_TYPE?.find((e) => e?.key === formData?.data?.answerType)?.value : null;
                 const attachmentRequiredName = formData?.data?.attributeLevel === VEHICLE_CHECKLIST_TYPE?.CHECKLIST?.key ? typeData?.ATT_TYPE?.find((e) => e?.key === formData?.data?.attachmentRequired)?.value : null;
                 setFormData({ ...formData?.data, parentName: attributeParentName, attributeName, answerTypeName, attachmentRequiredName });
@@ -334,15 +334,15 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
                 const attributeName = VehicleChecklistAttributeLov?.find((e) => e?.key === res?.data?.attributeLevel)?.value;
 
                 if (res?.data?.attributeLevel === VEHICLE_CHECKLIST_TYPE?.GROUP?.key) {
-                    const attributeParentName = flatternData.find((i) => res?.data?.groupDto?.parentCode === i.key)?.data?.descriptionTitle;
+                    const attributeParentName = flatternData.find((i) => res?.data?.groupDto?.parentCode === i?.data?.code)?.data?.descriptionTitle;
                     setFormData({ ...res?.data?.groupDto, parentName: attributeParentName, attributeName });
                     setSelectedTreeKey([res?.data?.groupDto?.id]);
                 } else if (res?.data?.attributeLevel === VEHICLE_CHECKLIST_TYPE?.SUB_GROUP?.key) {
-                    const attributeParentName = flatternData.find((i) => res?.data?.subGroupDto?.children?.[0]?.parentCode === i.key)?.data?.descriptionTitle;
+                    const attributeParentName = flatternData.find((i) => res?.data?.subGroupDto?.children?.[0]?.parentCode === i?.data?.code)?.data?.descriptionTitle;
                     setFormData({ ...res?.data?.subGroupDto?.children?.[0], parentName: attributeParentName, attributeName });
                     setSelectedTreeKey([res?.data?.subGroupDto?.children?.[0]?.id]);
                 } else if (res?.data?.attributeLevel === VEHICLE_CHECKLIST_TYPE?.CHECKLIST?.key) {
-                    const attributeParentName = flatternData.find((i) => res?.data?.checklistDto?.children?.[0]?.parentCode === i.key)?.data?.descriptionTitle;
+                    const attributeParentName = flatternData.find((i) => res?.data?.checklistDto?.children?.[0]?.parentCode === i?.data?.code)?.data?.descriptionTitle;
                     const answerTypeName = typeData?.CHKL_ANS_TYPE?.find((e) => e?.key === res?.data?.checklistDto?.children?.[0]?.answerType)?.value;
                     const attachmentRequiredName = typeData?.ATT_TYPE?.find((e) => e?.key === res?.data?.checklistDto?.children?.[0]?.attachmentRequired)?.value;
                     setFormData({ ...res?.data?.checklistDto?.children?.[0], parentName: attributeParentName, attributeName, answerTypeName, attachmentRequiredName });
@@ -389,7 +389,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
         if (type === FROM_ACTION_TYPE.EDIT) {
             const formData = flatternData.find((i) => selectedTreeKey[0] === i.key);
             let attributeName = VehicleChecklistAttributeLov?.find((e) => e?.key === formData?.data?.attributeLevel)?.value;
-            let parentName = flatternData.find((i) => formData?.data?.parentCode === i.key)?.data?.descriptionTitle;
+            let parentName = flatternData.find((i) => formData?.data?.parentCode === i?.data?.code)?.data?.descriptionTitle;
             formData && setFormData({ ...formData?.data, attributeName, parentName });
             form.setFieldsValue({
                 id: formData?.data?.id,

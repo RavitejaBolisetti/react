@@ -15,7 +15,7 @@ const { Text } = Typography;
 const ModelCard = (props) => {
     const { finalFormdata, forceUpdate, modelData, setModelData, setOpenAccordian, changeValue, setChangeValue, modelForm, modelEdit, setModelEdit, uniqueCardEdit, setuniqueCardEdit, internalId, formActionType, modelSwitch, setModelSwitch, modelGroupData, modelEditForm, setButtonData, buttonData, setFormBtnActive } = props;
     const modelName = modelGroupData?.find((e) => e?.modelGroupCode === props?.modelGroupCode)?.modelGroupDescription;
-
+    console.log(`props`, props);
     const onModelEdit = (props) => {
         setuniqueCardEdit(props?.internalId);
         setModelEdit(true);
@@ -85,7 +85,7 @@ const ModelCard = (props) => {
                 <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18}>
                     <Space direction="vertical">
                         <Text>{modelName}</Text>
-                        <Text>{props?.checklistModelStatus === true ? 'Active' : 'InActive'}</Text>
+                        <Text>{props?.checklistModelStatus === true || props?.status === true ? 'Active' : 'InActive'}</Text>
                     </Space>
                 </Col>
                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6} className={styles.buttonsGroupRight}>
