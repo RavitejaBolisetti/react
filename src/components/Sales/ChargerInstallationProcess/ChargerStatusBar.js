@@ -11,7 +11,7 @@ import { FaCheckCircle } from 'react-icons/fa';
 
 import { QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
 
-export const OTFStatusBar = (props) => {
+export const ChargerStatusBar = (props) => {
     const { status } = props;
 
     const otfStatusList = Object.values(QUERY_BUTTONS_CONSTANTS);

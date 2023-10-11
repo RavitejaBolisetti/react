@@ -3,40 +3,33 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Form, Row, Col } from 'antd';
 
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
-import { getCodeValue } from 'utils/getCodeValue';
 import { convertDateTimedayjs } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
 
 const ChargerInstallatioDetailsMasterBase = (props) => {
-    const { typeData, selectedOrder, chargerInstallationMasterData, vehicleInvoiceMasterData, StatusBar } = props;
+    const { typeData, addRequestData, setAddRequestData, chargerInstallationMasterData, vehicleInvoiceMasterData, StatusBar } = props;
     const { userId, buttonData, setButtonData, showGlobalNotification, section, isDataLoaded, isLoading, chargerInstallationForm } = props;
     const { form, formActionType, handleFormValueChange, selectedOtfNumber, setSelectedOtfNumber, addRequestForm } = props;
-    const { FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch } = props;
+    const { FormActionButton, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch } = props;
 
     const [activeKey, setActiveKey] = useState([]);
-    const [addRequestData, setAddRequestData] = useState([]);
     const [addRequestVisible, setAddRequestVisible] = useState(false);
 
-    const onErrorAction = (message) => {
-        showGlobalNotification({ message });
-    };
-
     const onModalFinish = (values) => {
-        setAddRequestData((prev) => [values, ...prev]);
         setAddRequestVisible(false);
         setActiveKey([1]);
         addRequestForm
             .validateFields()
             .then(() => {
+                setAddRequestData((prev) => [values, ...prev]);
                 const values = addRequestForm.getFieldsValue();
-                console.log(values);
-                setRequestPayload((prev) => ({ ...prev, chargerInstDetails: { requestDetails: [{ id: '', stageRequestDate: convertDateTimedayjs(new Date()), requestStage: values?.requestStage, visitTimeSlotOne: convertDateTimedayjs(values?.visitTimeSlotOne), visitTimeSlotTwo: values?.visitTimeSlotTwo, visitTimeSlotThree: values?.visitTimeSlotThree }] } }));
+                setRequestPayload((prev) => ({ ...prev, chargerInstDetails: { requestDetails: [{ id: '', stageRequestDate: convertDateTimedayjs(new Date()), requestStage: values?.requestStage, visitTimeSlotOne: convertDateTimedayjs(values?.visitTimeSlotOne) || '', visitTimeSlotTwo: convertDateTimedayjs(values?.visitTimeSlotTwo) || '', visitTimeSlotThree: convertDateTimedayjs(values?.visitTimeSlotThree) || '' }] } }));
                 handleFormValueChange();
             })
             .catch((err) => {
@@ -55,16 +48,6 @@ const ChargerInstallatioDetailsMasterBase = (props) => {
             handleButtonClick({ buttonAction: NEXT_ACTION });
             setButtonData({ ...buttonData, formBtnActive: false });
         }
-
-        // addRequestForm
-        //     .validateFields()
-        //     .then(() => {
-        //         handleButtonClick({ buttonAction: NEXT_ACTION });
-        //         setButtonData({ ...buttonData, formBtnActive: false });
-        //     })
-        //     .catch((err) => {
-        //         showGlobalNotification({ message: 'Please Add Request' });
-        //     });
     };
 
     const onFinishFailed = () => {};
@@ -93,6 +76,7 @@ const ChargerInstallatioDetailsMasterBase = (props) => {
         onModalFinish,
         addRequestVisible,
         setAddRequestVisible,
+        chargerInstallationMasterData,
     };
 
     const viewProps = {

@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Form, Row, Col } from 'antd';
 
 import { ViewDetail } from './ViewDetail';
@@ -11,8 +11,6 @@ import { AddEditForm } from './AddEditForm';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { showGlobalNotification } from 'store/actions/notification';
-import { OTFStatusBar } from '../OTFStatusBar';
-import { getCodeValue } from 'utils/getCodeValue';
 
 import styles from 'assets/sass/app.module.scss';
 import { geoPinCodeDataActions } from 'store/actions/data/geo/pincodes';
@@ -58,17 +56,22 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const InstallationAddressDetailsMasterBase = (props) => {
-    const { StatusBar, onCloseAction, fetchList, formActionType, chargerInstallationMasterData, crmCustomerVehicleData, fetchPincodeDetail, userId, isDataLoaded, requestPayload, onChargerInstallationFinish, setRequestPayload, showGlobalNotification } = props;
-    const { form, selectedOrderId, handleFormValueChange, section, isLoading, NEXT_ACTION, handleButtonClick, onFinishFailed, saveData } = props;
-    const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, pageType } = props;
+    const { StatusBar, onCloseAction, fetchList, formActionType, chargerInstallationMasterData, crmCustomerVehicleData, fetchPincodeDetail, userId, isDataLoaded, onChargerInstallationFinish, setRequestPayload, showGlobalNotification } = props;
+    const { form, handleFormValueChange, section, isLoading, onFinishFailed } = props;
+    const { FormActionButton, pageType } = props;
     const { insuranceCompanies, pincodeData } = props;
-    const [formData, setFormData] = useState();
+    const [checked, setChecked] = useState(false);
 
     const onFinish = () => {
         form.validateFields()
             .then(() => {
                 const values = form.getFieldsValue();
-                setRequestPayload((prev) => ({ ...prev, chargerInstAddressDetails: { sameAsCustomerAddress: values?.sameAsCustomerAddress ? 'Y' : 'N', instAddressDetails: { address: values?.address, city: values?.city, state: values?.state, pinCode: values?.pinCode, customerMobileNumber: values?.customerMobileNumber } } }));
+                if (checked) {
+                    setRequestPayload((prev) => ({ ...prev, chargerInstAddressDetails: { sameAsCustomerAddress: values?.sameAsCustomerAddress ? 'Y' : 'N', instAddressDetails: { address: crmCustomerVehicleData?.customerDetails?.customerAddress, pinCode: crmCustomerVehicleData?.customerDetails?.pinCode, city: crmCustomerVehicleData?.customerDetails?.customerCity, state: crmCustomerVehicleData?.customerDetails?.state, customerMobileNumber: crmCustomerVehicleData?.otfDetails?.mobileNumber } } }));
+                } else {
+                    setRequestPayload((prev) => ({ ...prev, chargerInstAddressDetails: { sameAsCustomerAddress: values?.sameAsCustomerAddress ? 'Y' : 'N', instAddressDetails: { address: values?.address, city: values?.city, state: values?.state, pinCode: values?.pinCode, customerMobileNumber: values?.customerMobileNumber } } }));
+                }
+
                 handleFormValueChange();
                 onChargerInstallationFinish();
             })
@@ -86,7 +89,6 @@ const InstallationAddressDetailsMasterBase = (props) => {
     const viewProps = {
         styles,
         onCloseAction,
-        formData,
         isLoading,
         pageType,
         insuranceCompanies,
@@ -101,13 +103,13 @@ const InstallationAddressDetailsMasterBase = (props) => {
         userId,
         isDataLoaded,
         isLoading,
-        formData,
         pageType,
         insuranceCompanies,
         onSuccessAction,
         onErrorAction,
         fetchPincodeDetail,
         crmCustomerVehicleData,
+        setChecked,
     };
 
     const myProps = {

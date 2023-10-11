@@ -9,8 +9,7 @@ import { Button, Row, Col } from 'antd';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'assets/sass/app.module.scss';
 
-export const VehicleInvoiceFormButton = ({ formActionType, record, onCloseAction, onCancelInvoice, onApproveCancel, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection, onPrintInvoice }) => {
-    //console.log('formActionType', formActionType);
+export const ChargerInstallationFormButton = ({ formActionType, record, onCloseAction, onCancelInvoice, onApproveCancel, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection, onPrintInvoice }) => {
     return (
         <div className={styles.formFooter}>
             <Row gutter={20}>
@@ -39,6 +38,11 @@ export const VehicleInvoiceFormButton = ({ formActionType, record, onCloseAction
                         Edit
                     </Button>
                 )} */}
+                    {buttonData?.addRequestBtn && !isLastSection && (
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record })} type="primary">
+                            Add request
+                        </Button>
+                    )}
                     {buttonData?.nextBtn && !isLastSection && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
                             Next

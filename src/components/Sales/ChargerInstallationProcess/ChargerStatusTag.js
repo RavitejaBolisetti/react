@@ -15,6 +15,9 @@ export const ChargerStatusTag = (status) => {
         case CHARGER_STATUS.IN_PROGRESS.key:
             tag = <Tag color="warning">{CHARGER_STATUS.IN_PROGRESS.desc}</Tag>;
             break;
+        case CHARGER_STATUS.FAILED.key:
+            tag = <Tag color="warning">{CHARGER_STATUS.FAILED.desc}</Tag>;
+            break;
         default:
     }
     return tag;

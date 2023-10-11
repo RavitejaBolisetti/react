@@ -7,12 +7,12 @@ import React from 'react';
 import { Col, Row } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import { CHARGER_INSTALLATION_SECTION } from 'constants/ChargerInstallationConstant';
-import { OTFStatusBar } from './OTFStatusBar';
+import { ChargerStatusBar } from './ChargerStatusBar';
 import { LeftSidebar } from './LeftSidebar';
 import { ChargerInstallationDetailsMaster } from './ChargerInstallationDetails'; //Own Menu
 import { InstallationAddressDetailsMaster } from './InstallationAddressDetails'; //Own Menu
 
-import { VehicleInvoiceFormButton } from './VehicleInvoiceFormButton';
+import { ChargerInstallationFormButton } from './ChargerInstallationFormButton';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -26,11 +26,11 @@ const ChargerInstallationMainConatinerMain = (props) => {
     const myProps = {
         ...props,
         wrapForm: false,
-        StatusBar: OTFStatusBar,
+        StatusBar: ChargerStatusBar,
         handleIRNGeneration,
         onFinishCustom,
         selectedOrderId: selectedOtfNumber,
-        FormActionButton: VehicleInvoiceFormButton,
+        FormActionButton: ChargerInstallationFormButton,
         chargerInstallationMasterData,
     };
 

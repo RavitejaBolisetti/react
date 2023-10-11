@@ -8,12 +8,12 @@ import { Row, Col, Form, Input, Typography, Divider, Checkbox, Descriptions, Car
 import styles from 'assets/sass/app.module.scss';
 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-import { validateRequiredInputField, validatePincodeField } from 'utils/validation';
+import { validateRequiredInputField, validatePincodeField, validateMobileNoField } from 'utils/validation';
 
 const { Search } = Input;
 
 const AddEditFormMain = (props) => {
-    const { crmCustomerVehicleData, pincodeData, fetchPincodeDetail, listPinCodeShowLoading, form, userId, onSuccessAction, onErrorAction, isPinCodeLoading } = props;
+    const { crmCustomerVehicleData, pincodeData, fetchPincodeDetail, setChecked, listPinCodeShowLoading, form, userId, onSuccessAction, onErrorAction, isPinCodeLoading } = props;
     const [options, setOptions] = useState();
     const [disabled, setDisabled] = useState(false);
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
@@ -44,9 +44,11 @@ const AddEditFormMain = (props) => {
     const handleOnChange = (e) => {
         if (e.target.checked) {
             setDisabled(true);
+            setChecked(true);
             form?.setFieldsValue({ address: crmCustomerVehicleData?.customerDetails?.customerAddress, pinCode: crmCustomerVehicleData?.customerDetails?.pinCode, city: crmCustomerVehicleData?.customerDetails?.customerCity, state: crmCustomerVehicleData?.customerDetails?.state, customerMobileNumber: crmCustomerVehicleData?.otfDetails?.mobileNumber });
         } else {
             setDisabled(false);
+            setChecked(false);
             form?.setFieldsValue({ address: undefined, pinCode: undefined, city: undefined, state: undefined, customerMobileNumber: undefined });
         }
     };
@@ -127,7 +129,7 @@ const AddEditFormMain = (props) => {
                         </Row>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Form.Item label="Installation Address" name="address" className={styles?.datePicker}>
+                                <Form.Item label="Installation Address" name="address" className={styles?.datePicker} rules={[validateRequiredInputField('Installation Adress')]}>
                                     <Input {...disabledProps} maxLength={50} placeholder={preparePlaceholderText('Installation Address')} />
                                 </Form.Item>
                             </Col>
@@ -135,7 +137,7 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                 <Form.Item label="Pin Code" name="pinCode" rules={[validateRequiredInputField('Pin Code'), validatePincodeField('Pin Code')]}>
-                                    <AutoComplete maxLength={6} options={options} onSelect={handleOnSelect} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
+                                    <AutoComplete {...disabledProps} maxLength={6} options={options} onSelect={handleOnSelect} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
                                         <Search onSearch={handleOnSearch} onChange={handleOnClear} placeholder="Search" loading={isPinCodeLoading} type="text" allowClear />
                                     </AutoComplete>
                                 </Form.Item>
@@ -143,21 +145,21 @@ const AddEditFormMain = (props) => {
                         </Row>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Form.Item label="City" name="city">
+                                <Form.Item label="City" name="city" rules={[validateRequiredInputField('City')]}>
                                     <Input disabled={true} placeholder={preparePlaceholderText('city')} maxLength={50} />
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Form.Item label="State" name="state">
+                                <Form.Item label="State" name="state" rules={[validateRequiredInputField('State')]}>
                                     <Input disabled={true} placeholder={preparePlaceholderText('state')} maxLength={50} />
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Form.Item label="Contact Number" name="customerMobileNumber">
+                                <Form.Item label="Contact Number" name="customerMobileNumber" rules={[validateRequiredInputField('Customer Mobile Number'), validateMobileNoField('mobile number')]}>
                                     <Input {...disabledProps} placeholder={preparePlaceholderText('Contact Number')} maxLength={50} />
                                 </Form.Item>
                             </Col>

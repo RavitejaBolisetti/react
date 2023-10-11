@@ -12,7 +12,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { QueryButtons } from 'components/Sales/VehicleRecieptChecklist/QueryButtons';
 import { SearchBox } from 'components/utils/SearchBox';
 import { PARAM_MASTER } from 'constants/paramMaster';
-
+import { QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
 import styles from 'assets/sass/app.module.scss';
 
 export default function ChargerInstallationFilter(props) {
@@ -53,11 +53,13 @@ export default function ChargerInstallationFilter(props) {
                         </Row>
                     </Form>
                 </Col>
-                <Col xs={24} sm={4} md={4} lg={4} xl={4} className={styles.buttonsGroupRight}>
-                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                        Add
-                    </Button>
-                </Col>
+                {QUERY_BUTTONS_CONSTANTS.SITE_SURVEY.key === chargerStatus && (
+                    <Col xs={24} sm={4} md={4} lg={4} xl={4} className={styles.buttonsGroupRight}>
+                        <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                            Add
+                        </Button>
+                    </Col>
+                )}
             </Row>
             {advanceFilter && filterString?.advanceFilter && extraParams.find((i) => i.name) && (
                 <Row gutter={20}>

@@ -12,7 +12,7 @@ import { DataTable } from 'utils/dataTable';
 import { optionalServicesColumnsView } from './tableColumn';
 
 const ViewDetailMain = (props) => {
-    const { otfFormData, isLoading, chargerInstallationMasterData } = props;
+    const { typeData, isLoading, chargerInstallationMasterData } = props;
     const [viewData, setViewData] = useState([]);
 
     useEffect(() => {
@@ -32,18 +32,18 @@ const ViewDetailMain = (props) => {
                     <Space style={{ display: 'flex' }} size="middle" direction="vertical">
                         <Card style={{ backgroundColor: '#F2F2F2' }}>
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Request Id">{checkAndSetDefaultValue(viewData[0]?.chargerInstDetails?.requestId)}</Descriptions.Item>
+                                <Descriptions.Item label="Request Id">{checkAndSetDefaultValue(viewData[0]?.chargerInstDetails?.requestId, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Request Date">{checkAndSetDefaultValue(viewData[0]?.chargerInstDetails?.requestDate, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Request Status">{checkAndSetDefaultValue(viewData[0]?.chargerInstDetails?.requestStatus, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Model Group">{checkAndSetDefaultValue(otfFormData?.taxPayableOnReverseCharges, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Model Variant">{checkAndSetDefaultValue(otfFormData?.saleConsultant, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Seating Capacity">{checkAndSetDefaultValue(otfFormData?.mitraType, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Color">{checkAndSetDefaultValue(otfFormData?.mitraName, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(otfFormData?.mitraName, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Model Group">{checkAndSetDefaultValue(viewData[0]?.chargerInstDetails?.modelGroup, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Model Variant">{checkAndSetDefaultValue(viewData[0]?.chargerInstDetails?.modelVarient, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Seating Capacity">{checkAndSetDefaultValue(viewData[0]?.chargerInstDetails?.seatingCapacity, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Color">{checkAndSetDefaultValue(viewData[0]?.chargerInstDetails?.color, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(viewData[0]?.chargerInstDetails?.modelCode, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         </Card>
                         <Card style={{ backgroundColor: '#F2F2F2' }}>
-                            <DataTable tableColumn={optionalServicesColumnsView()} tableData={viewData} pagination={false} scroll={{ x: 10000 }} />
+                            <DataTable tableColumn={optionalServicesColumnsView(typeData)} tableData={viewData} pagination={false} scroll={{ x: '1000' }} />
                         </Card>
                     </Space>
                 </Col>

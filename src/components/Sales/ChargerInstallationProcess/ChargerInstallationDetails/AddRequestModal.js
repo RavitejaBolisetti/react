@@ -45,36 +45,30 @@ export const AddRequestModalForm = (props) => {
         <Form autoComplete="off" layout="vertical" form={addRequestForm} onFinish={onModalFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="Stage" name="requestStage" className={styles?.datePicker} rules={[validateRequiredInputField('from date')]}>
+                    <Form.Item label="Stage" name="requestStage" className={styles?.datePicker} rules={[validateRequiredInputField('from date')]}>
                         {customSelectBox({ data: typeData?.CHRGR_INST_STG_TYPE, placeholder: preparePlaceholderText('application criticality group') })}
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.toDate)} label="Preferred Date & Time 1" name="visitTimeSlotOne" className={styles?.datePicker} rules={[validateRequiredInputField('fromDate')]}>
+                    <Form.Item label="Preferred Date & Time 1" name="visitTimeSlotOne" className={styles?.datePicker} rules={[validateRequiredInputField('fromDate')]}>
                         <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.toDate)} label="Preferred Date & Time 2" name="visitTimeSlotTwo" className={styles?.datePicker}>
+                    <Form.Item label="Preferred Date & Time 2" name="visitTimeSlotTwo" className={styles?.datePicker}>
                         <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.toDate)} label="Preferred Date & Time 3" name="visitTimeSlotThree" className={styles?.datePicker}>
+                    <Form.Item label="Preferred Date & Time 3" name="visitTimeSlotThree" className={styles?.datePicker}>
                         <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
                     </Form.Item>
                 </Col>
             </Row>
 
             <Row gutter={20}>
-                {/* <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.alignRight}>
-                    <Button onClick={handleResetFilter} danger>
-                        Reset
-                    </Button>
-                </Col> */}
-
                 <Col xs={24} m={24} md={12} lg={12} xl={12} className={styles.alignRight}>
                     <Button onClick={onAdvanceSearchCloseAction} danger>
                         Cancel
