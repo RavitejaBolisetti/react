@@ -13,8 +13,10 @@ import FormProductAttribute from './FormTaxAndChargeCal';
 const { Text } = Typography;
 
 const CardProductAttribute = (props) => {
-    const { finalFormdata, taxChargeCalForm, forceUpdate, taxCharges, productHierarchyAttributeData, taxChargeCategoryCodeData, taxChargeCalList, setTaxChargeCalList, objTaxCharge, setOpenAccordian, changeValue, setChangeValue, handleCodeFunction, editForm, formEdit, setFormEdit, uniqueCardEdit, setuniqueCardEdit, handleDescriptionChange, buttonData, setButtonData, dropdownItems, setDropdownItems, viewMode, internalId } = props;
+    const { finalFormdata, taxChargeCalForm, forceUpdate, taxCharges, productHierarchyAttributeData, taxChargeCategoryCodeData, taxChargeCalList, setTaxChargeCalList, objTaxCharge, setOpenAccordian, changeValue, setChangeValue, handleCodeFunction, editForm, formEdit, setFormEdit, uniqueCardEdit, setuniqueCardEdit, handleDescriptionChange, buttonData, setButtonData, dropdownItems, setDropdownItems, viewMode, internalId, stateData, saleData, taxCategory } = props;
     const taxChargeDesc = taxCharges?.find((e) => e?.taxType === props?.chargeType)?.taxDescription;
+    const stateName = stateData?.find((e) => e?.gstStateCode === props?.stateCode)?.name;
+    const saleTypeName = saleData?.find((e) => e?.key === props?.saleType)?.value;
 
     const taxChargeCalEdit = (props) => {
         setuniqueCardEdit(props?.internalId);
@@ -27,6 +29,8 @@ const CardProductAttribute = (props) => {
             chargeDescription: props?.chargeDescription,
             internalId: props?.internalId,
             taxMasterId: props?.taxMasterId,
+            stateCode: props?.stateCode,
+            saleType: props?.saleType,
         });
 
         handleCodeFunction(props?.chargeType);
@@ -42,6 +46,8 @@ const CardProductAttribute = (props) => {
                 obj.chargeDescription = newFormData?.chargeDescription;
                 obj.internalId = newFormData?.internalId;
                 obj.taxMasterId = newFormData?.taxMasterId;
+                obj.stateCode = newFormData?.stateCode;
+                obj.saleType = newFormData?.saleType;
             }
             return obj;
         });
@@ -87,6 +93,9 @@ const CardProductAttribute = (props) => {
         handleDescriptionChange,
         dropdownItems,
         internalId,
+        stateData,
+        saleData,
+        taxCategory,
     };
 
     useEffect(() => {
@@ -104,6 +113,12 @@ const CardProductAttribute = (props) => {
                     <Divider type="vertical" />
                     <Text>{props?.chargeCode}</Text>
                 </Col>
+                <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18}>
+                    <Text style={{ fontSize: '12px', color: 'grey' }}>{stateName}</Text>
+                    <Divider type="vertical" />
+                    <Text style={{ fontSize: '12px', color: 'grey' }}>{saleTypeName}</Text>
+                </Col>
+
                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6} className={styles.buttonsGroupRight}>
                     {viewMode === false ? (
                         <>

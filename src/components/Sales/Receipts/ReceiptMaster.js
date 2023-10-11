@@ -19,7 +19,7 @@ import { CancelReceipt } from './CancelReceipt';
 import { QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
 import { RECEIPT_SECTION } from 'constants/ReceiptSection';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
-import { reportDataActions } from 'store/actions/data/report/reports';
+// import { reportDataActions } from 'store/actions/data/report/reports';
 import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
 
 import { showGlobalNotification } from 'store/actions/notification';
@@ -30,7 +30,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { partyDetailDataActions } from 'store/actions/data/receipt/partyDetails';
 import { ReportModal } from 'components/common/ReportModal/ReportModal';
 
-import { FilterIcon } from 'Icons';
+// import { FilterIcon } from 'Icons';
 
 const mapStateToProps = (state) => {
     const {

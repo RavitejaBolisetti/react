@@ -22,4 +22,6 @@ import LOGO from './images/logo.png';
 import MAH_WHITE_LOGO from './img/mahindra_Wh_login.png';
 import RL_LOGO from './images/RobinDark_theme.svg';
 
-export { R_IMG, O_IMG, B_IMG, I_IMG, N_IMG, ADC, BG_IMG, FILE, LOGO_IMG, ROBIN_LIGHT_THEME, B_LIGHT_THEME, LINE, LOGO, MAH_WHITE_LOGO, RL_LOGO };
+import BANNER_IMG from './images/ad-img.png';
+
+export { R_IMG, O_IMG, B_IMG, I_IMG, N_IMG, ADC, BG_IMG, FILE, LOGO_IMG, ROBIN_LIGHT_THEME, B_LIGHT_THEME, LINE, LOGO, MAH_WHITE_LOGO, RL_LOGO, BANNER_IMG };

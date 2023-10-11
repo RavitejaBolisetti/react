@@ -55,9 +55,9 @@ const mapDispatchToProps = (dispatch) => ({
 
 const DeliverableChecklistMain = (props) => {
     const { userId, isChecklistDataLoaded, isChecklistDataLoading, ChecklistData, deliveryNoteOnFinish } = props;
-    const { selectedOrder, handleButtonClick } = props;
+    const { selectedOrder } = props;
     const { fetchList, listShowLoading, showGlobalNotification } = props;
-    const { form, selectedCheckListId, section, formActionType, handleFormValueChange, NEXT_ACTION, requestPayload, setRequestPayload } = props;
+    const { form, selectedCheckListId, section, formActionType, handleFormValueChange, requestPayload, setRequestPayload } = props;
 
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [aggregateForm] = Form.useForm();
@@ -67,9 +67,9 @@ const DeliverableChecklistMain = (props) => {
     const defaultPage = { pageSize: 10, current: 1 };
     const [page, setPage] = useState({});
 
-    const onSuccessAction = (res) => {
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-    };
+    // const onSuccessAction = (res) => {
+    //     // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+    // };
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message: message });
@@ -84,7 +84,7 @@ const DeliverableChecklistMain = (props) => {
 
     useEffect(() => {
         if (userId && selectedOrder?.modelGroup && !isChecklistDataLoaded && !formActionType?.viewMode) {
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrder, isChecklistDataLoaded, formActionType]);

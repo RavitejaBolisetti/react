@@ -28,7 +28,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ConfigurableParameterEditing: { filteredListData: saleData = [] },
+            ConfigurableParameterEditing: { isLoading: isConfigurableLoading = false, filteredListData: saleData = [] },
             Geo: {
                 State: { isLoaded: isStateDataLoaded = false, isLoading: isStateLoading = false, data: stateData = [] },
             },
@@ -60,6 +60,7 @@ const mapStateToProps = (state) => {
         taxChargeCategoryData: taxChargeCategoryData?.taxCategoryHeaderListDto,
         totalRecords: taxChargeCategoryData?.totalRecords,
         taxChargeCategoryCodeData,
+        isConfigurableLoading,
     };
     return returnValue;
 };
@@ -88,7 +89,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const TaxChargesCategoryMain = (props) => {
-    const { saveData, userId, showGlobalNotification, taxChargeCategoryCodeData, isStateDataLoaded, fetchStateList, listStateShowLoading, stateData, saleData, fetchTaxCodeList, fetchTaxChargeCategoryType, taxChargeCategoryTypeData, listShowLoadingTaxChargeCategoryType, fetchTaxChargeCategory, listShowLoadingTaxChargeCategory, totalRecords, taxChargeCategoryData, listTaxCodeLoading } = props;
+    const { saveData, userId, showGlobalNotification, taxChargeCategoryCodeData, isStateDataLoaded, fetchStateList, listStateShowLoading, stateData, saleData, fetchTaxCodeList, fetchTaxChargeCategoryType, taxChargeCategoryTypeData, listShowLoadingTaxChargeCategoryType, fetchTaxChargeCategory, listShowLoadingTaxChargeCategory, totalRecords, taxChargeCategoryData, listTaxCodeLoading, isTaxCategoryCodeLoading, isConfigurableLoading } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
@@ -373,6 +374,8 @@ export const TaxChargesCategoryMain = (props) => {
         setTaxChargeCalList,
         dropdownItems,
         setDropdownItems,
+        isTaxCategoryCodeLoading,
+        isConfigurableLoading,
     };
 
     const tableProps = {
