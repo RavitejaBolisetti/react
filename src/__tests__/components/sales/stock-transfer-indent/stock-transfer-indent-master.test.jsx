@@ -10,6 +10,8 @@ import { Provider } from 'react-redux';
 import createMockStore from '__mocks__/store';
 import { StockTransferIndentMaster } from 'components/Sales/StockTransferIndent/StockTransferIndentMaster';
 import customRender from '@utils/test-utils';
+import createMockStore from '__mocks__/store';
+import { Provider } from 'react-redux';
 
 jest.mock('components/Sales/StockTransferIndent/ViewDetail', () => {
     const ViewDetail = ({ onCloseAction, updateVehicleDetails }) => {
