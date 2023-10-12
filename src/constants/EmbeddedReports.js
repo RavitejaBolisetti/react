@@ -166,5 +166,4 @@ export const EMBEDDED_REPORTS = {
         type: 'Report',
         slug: 'rsa-report',
     },
-
 };
