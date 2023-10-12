@@ -18,7 +18,6 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'assets/sass/app.module.scss';
 
 const { Text } = Typography;
-const defaultBtnVisiblity = { editBtn: false, saveBtn: true, next: false, nextBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, formBtnActive: false };
 
 const APPLICATION_WEB = DEVICE_TYPE?.WEB?.key;
 const APPLICATION_MOBILE = DEVICE_TYPE?.MOBILE?.key;
@@ -115,14 +114,20 @@ const AssignUserRole = (props) => {
     const onErrorAction = (data) => {
         console.error(data);
     };
+    
+    const onSuccessAction = (res) => {
+        if (res?.data?.role?.applications?.mobileApplications?.length || res?.data?.role?.applications?.webApplications?.length) {
+            selectedRoleId && setDisableMdlSaveBtn(false);
+        }
+    };
 
     useEffect(() => {
         if (userId && formData?.employeeCode && (record?.roleId || selectedRoleId)) {
             setDeviceType(APPLICATION_WEB);
             if (userType === USER_TYPE_USER?.DEALER?.id) {
-                fetchDLRUserRoleDataList({ setIsLoading: usrRolelAppListShowLoading, userId, extraParams: extraParamsDlr, onErrorAction });
+                fetchDLRUserRoleDataList({ setIsLoading: usrRolelAppListShowLoading, userId, extraParams: extraParamsDlr, onErrorAction, onSuccessAction });
             } else {
-                fetchMNMUserRoleAppDataList({ setIsLoading: usrRolelAppListShowLoading, userId, extraParams: extraParamsMNM, onErrorAction });
+                fetchMNMUserRoleAppDataList({ setIsLoading: usrRolelAppListShowLoading, userId, extraParams: extraParamsMNM, onErrorAction, onSuccessAction });
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -215,6 +220,7 @@ const AssignUserRole = (props) => {
         setCheckedKeys({});
         resetMnmUserRoleAppDataList();
         resetUsrDlrRoleAppDataList();
+        setDisableMdlSaveBtn(true);
     };
 
     const handleButtonClickModal = ({ buttonAction, record }) => {
@@ -299,7 +305,7 @@ const AssignUserRole = (props) => {
         handleFormFieldChange,
         onFinishFailed,
         userRoleDataList,
-        roleListdata,
+        roleListdata: roleListdata?.filter((i) => i?.roleType === userType),
         handleSelectRole,
         setSelectedRoleId,
         selectedRoleId,

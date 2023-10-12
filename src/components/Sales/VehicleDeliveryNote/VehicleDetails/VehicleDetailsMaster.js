@@ -56,7 +56,7 @@ const mapDispatchToProps = (dispatch) => ({
 const VehicleDetailsMasterBase = (props) => {
     const { typeData, partySegmentType, vehicleChallanData } = props;
     const { userId, soldByDealer, setFormActionType, showGlobalNotification, isLoading, requestPayload } = props;
-    const { form, formActionType, fetchChallanList, listChallanShowLoading, handleButtonClick, handleFormValueChange, section, openAccordian, setOpenAccordian, fetchList, vehicleData, NEXT_ACTION, setRequestPayload } = props;
+    const { form, formActionType, handleButtonClick, handleFormValueChange, section, openAccordian, setOpenAccordian, fetchList, vehicleData, NEXT_ACTION, setRequestPayload } = props;
     const { buttonData, setButtonData } = props;
 
     const [regNumber, setRegNumber] = useState();
@@ -93,45 +93,13 @@ const VehicleDetailsMasterBase = (props) => {
     }, [formData]);
 
     useEffect(() => {
-        if (!soldByDealer && !formActionType?.viewMode && userId) {
-            const chassi = requestPayload?.deliveryNoteInvoiveDetails?.chassisNumber;
-            const engineNo = requestPayload?.deliveryNoteInvoiveDetails?.engineNumber;
-            const onSuccessAction = () => {
-                form.setFieldsValue({ ...vehicleChallanData });
-                setFormData({ ...vehicleChallanData });
-                setRequestPayload({ ...requestPayload, vehicleInformationDto: vehicleChallanData });
-            };
-            if (engineNo && chassi) {
-                const extraParams = [
-                    {
-                        key: 'chassisNumber',
-                        title: 'chassisNumber',
-                        value: chassi,
-                        name: 'Chassis Number',
-                    },
-                    {
-                        key: 'engineNumber',
-                        title: 'engineNumber',
-                        value: engineNo,
-                        name: 'Engine Number',
-                    },
-                ];
-
-                fetchChallanList({ setIsLoading: listChallanShowLoading, extraParams, userId, onErrorAction, onSuccessAction });
-            }
-        }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [section, formActionType, soldByDealer, userId]);
-
-    useEffect(() => {
         if (vehicleData) {
             form.setFieldsValue({ ...vehicleData });
             setFormData({ ...vehicleData });
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [vehicleData, soldByDealer, section, requestPayload, vehicleChallanData]);
+    }, [vehicleData, soldByDealer, section, requestPayload]);
 
     useEffect(() => {
         setButtonData({ ...buttonData, formBtnActive: true });

@@ -384,6 +384,7 @@ const VehicleDetailsMasterMain = (props) => {
         handleVehicleDetailChange,
         viewOnly: !isOTFModule,
         isOTFModule,
+        orderStatus: selectedOrder?.orderStatus,
     };
 
     const viewProps = {
@@ -410,7 +411,7 @@ const VehicleDetailsMasterMain = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            {StatusBar && <StatusBar status={props?.selectedOrder?.orderStatus} />}
+                            {StatusBar && <StatusBar status={selectedOrder?.orderStatus} />}
                         </Col>
                     </Row>
                     {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}

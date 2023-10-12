@@ -15,12 +15,11 @@ import { preparePlaceholderSelect, preparePlaceholderText, preparePlaceholderAut
 
 import styles from 'assets/sass/app.module.scss';
 import { customSelectBox } from 'utils/customSelectBox';
-import { debounce } from 'utils/debounce';
 
 const { TextArea } = Input;
 const AddEditFormMain = (props) => {
     const { formData, relationshipManagerData, typeData, form, soldByDealer, handleRelationShipManagerChange, setButtonData } = props;
-    const { vinData } = props;
+    const { vinData, getChallanDetails } = props;
 
     const handleSelectVinNo = (value, ValueObj) => {
         if (value && ValueObj?.engineNumber) {
@@ -28,6 +27,9 @@ const AddEditFormMain = (props) => {
                 engineNumber: ValueObj?.engineNumber,
             });
             setButtonData((prev) => ({ ...prev, formBtnActive: true }));
+            getChallanDetails(value, ValueObj?.engineNumber);
+        } else {
+            setButtonData((prev) => ({ ...prev, formBtnActive: false }));
         }
     };
 

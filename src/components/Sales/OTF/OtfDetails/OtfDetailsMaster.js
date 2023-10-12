@@ -70,7 +70,7 @@ const OtfDetailsMasterBase = (props) => {
     const { typeData, listConsultantShowLoading } = props;
     const { userId, showGlobalNotification, section, fetchOTFDetail, listShowLoading, isDataLoaded, otfData, saveData, isLoading } = props;
     const { form, selectedRecordId, formActionType, handleFormValueChange, fetchSalesConsultant, salesConsultantLov, isSalesConsultantDataLoaded, NEXT_ACTION, handleButtonClick } = props;
-    const { workFlowDetails, setWorkFlowDetails } = props;
+    const { setWorkFlowDetails } = props;
     const [exchangeValue, setexchangeValue] = useState(false);
     const [loyaltyValue, setloyaltyValue] = useState(false);
     const disabledProps = {
@@ -138,7 +138,6 @@ const OtfDetailsMasterBase = (props) => {
 
         const onSuccess = (res) => {
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-            // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             fetchOTFDetail({ customURL, fetchOTFDetail, setIsLoading: listShowLoading, userId, extraParams });
         };
 

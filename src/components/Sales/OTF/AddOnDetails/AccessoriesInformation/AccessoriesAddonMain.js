@@ -10,7 +10,7 @@ import CardMapping from './CardMapping';
 import AddEditForm from './AddEditForm';
 import { NoDataFound } from 'utils/noDataFound';
 
-const AccessoriesAddonMain = ({ setIsBtnDisabled, openAccordian, partNameSearchVisible, setPartNameSearchVisible, fnSetData, setOpenAccordian, isEditing, setisEditing, selectedOrderId, handleFormValueChange, showGlobalNotification, setsearchData, searchData, setaddButtonDisabled, onSearchPart, AddonPartsData, addButtonDisabled, accessoryForm, isBtnDisabled, setFormBtnDisable, setAddOnItemInfo, addOnItemInfo, formData }) => {
+const AccessoriesAddonMain = ({ setIsBtnDisabled, partNameSearchVisible, setPartNameSearchVisible, fnSetData, isEditing, setisEditing, selectedOrderId, handleFormValueChange, showGlobalNotification, setsearchData, searchData, setaddButtonDisabled, onSearchPart, AddonPartsData, addButtonDisabled, accessoryForm, isBtnDisabled, setAddOnItemInfo, addOnItemInfo, formData }) => {
     const [EditingForm] = Form.useForm();
 
     const isPresent = (partNumber, i = -1) => {
@@ -61,9 +61,6 @@ const AccessoriesAddonMain = ({ setIsBtnDisabled, openAccordian, partNameSearchV
         // } Need to check
     };
 
-    const onFieldsChange = () => {
-        // setCanFormSave(true);
-    };
     const AddEditFormProps = {
         setsearchData,
         searchData,
@@ -78,7 +75,6 @@ const AccessoriesAddonMain = ({ setIsBtnDisabled, openAccordian, partNameSearchV
         isBtnDisabled,
         addOnItemInfo,
         setAddOnItemInfo,
-        onFieldsChange,
         setaddButtonDisabled,
         addButtonDisabled,
         showGlobalNotification,

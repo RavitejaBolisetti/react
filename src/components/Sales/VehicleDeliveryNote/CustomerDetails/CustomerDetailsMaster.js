@@ -31,14 +31,14 @@ const mapStateToProps = (state) => {
     } = state;
 
     const moduleTitle = 'Customer Details';
+    const resetKeys = ['customerType', 'customerName', 'mobile', 'address', 'customerCity', 'district', 'state', 'pinCode', 'email'];
 
     let returnValue = {
         userId,
         isLoaded,
-        // customerDetailsData,
-        customerDetailsDataSearched,
         isLoading,
         moduleTitle,
+        resetKeys,
     };
     return returnValue;
 };
@@ -57,11 +57,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const CustomerDetailsMasterBase = (props) => {
-    const { fetchList, customerDetailsDataSearched, customerDetailsData, setFormActionType, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, isLoading } = props;
-    const { requestPayload, setRequestPayload, showGlobalNotification } = props;
-    const { listShowLoading, userId, typeData, form, soldByDealer, isLoaded, resetData, setChallanRequestPayload, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section, customerIdValue, setSelectedOrder } = props;
-    const { buttonData, setButtonData } = props;
-    const resetKeys = ['customerType', 'customerName', 'mobile', 'address', 'customerCity', 'district', 'state', 'pinCode', 'email'];
+    const { fetchList, customerDetailsData, setFormActionType, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, isLoading } = props;
+    const { requestPayload, setRequestPayload } = props;
+    const { typeData, form, soldByDealer, resetData, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section, customerIdValue, setSelectedOrder, handleCustomerIdSearch } = props;
+    const { buttonData, setButtonData, resetKeys } = props;
 
     const [isFormVisible, setIsFormVisible] = useState(false);
 
@@ -77,12 +76,6 @@ export const CustomerDetailsMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [customerDetailsData, section]);
-    useEffect(() => {
-        return () => {
-            resetData();
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     useEffect(() => {
         if (customerDetailsData?.customerType) setButtonData({ ...buttonData, formBtnActive: true });
@@ -90,7 +83,7 @@ export const CustomerDetailsMasterBase = (props) => {
             setButtonData({ ...buttonData, formBtnActive: false });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [section]);
+    }, [customerDetailsData?.customerType, section]);
 
     const handleOnChange = (e) => {
         form.resetFields([...resetKeys]);
@@ -100,43 +93,11 @@ export const CustomerDetailsMasterBase = (props) => {
         resetData();
     };
 
-    const handleCustomerIdSearch = (customerIdValue = '') => {
-        if (!customerIdValue) {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Enter customer id to continue' });
-            return false;
-        }
-        const onSuccessAction = (res) => {
-            setRequestPayload({ ...requestPayload, customerDetails: res?.data });
-            setSelectedOrder((prev) => ({ ...prev, customerName: res?.data?.customerName, customerId: res?.data?.customerId }));
-            setButtonData({ ...buttonData, formBtnActive: true });
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-        };
-        const onErrorAction = (message) => {
-            showGlobalNotification({ message });
-        };
-        const searchParams = [
-            {
-                key: 'customerId',
-                title: 'customerId',
-                value: customerIdValue,
-                name: 'Customer ID',
-            },
-        ];
-        fetchList({ setIsLoading: listShowLoading, userId, extraParams: searchParams, onSuccessAction, onErrorAction });
-    };
-
     const onFinish = (values) => {
-        if (soldByDealer) {
-            setRequestPayload({ ...requestPayload, customerDetails: customerDetailsData });
-        } else {
-            setRequestPayload({ ...requestPayload, customerDetails: customerDetailsDataSearched });
-        }
-
+        setRequestPayload({ ...requestPayload, customerDetails: customerDetailsData });
         handleButtonClick({ buttonAction: NEXT_ACTION });
         setButtonData({ ...buttonData, formBtnActive: false });
     };
-
-    const onFinishFailed = () => {};
 
     const onCloseAction = () => {
         form.resetFields();
@@ -152,7 +113,6 @@ export const CustomerDetailsMasterBase = (props) => {
         setFormActionType,
         fetchList,
         onFinish,
-        onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
 
@@ -166,7 +126,6 @@ export const CustomerDetailsMasterBase = (props) => {
         setButtonData,
         handleButtonClick,
         handleCustomerIdSearch,
-        customerDetailsDataSearched,
         handleOnChange,
         customerIdValue,
         soldByDealer,
@@ -183,7 +142,7 @@ export const CustomerDetailsMasterBase = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

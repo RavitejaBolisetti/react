@@ -9,10 +9,11 @@ import { Row, Button, Col, Input, Form } from 'antd';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { customSelectBox } from 'utils/customSelectBox';
+
 import styles from 'assets/sass/app.module.scss';
 
 const { Search } = Input;
-const CommonForm = ({ formData, typeData, formKey = 'Shield', addOnForm, openAccordian, formActionType, onSingleFormFinish, schemeDescriptionData, shieldForm, rsaForm, amcForm, registerDisabled, handleOnChange, relationshipManagerData, schemeDescriptionDatamain, isReadOnly = false }) => {
+const CommonForm = ({ formData, typeData, formKey = 'Shield', addOnForm, openAccordian, formActionType, onSingleFormFinish, registerDisabled, relationshipManagerData, schemeDescriptionDatamain, isReadOnly = false, handleEditRegister, handleCancelRegister, disableKey, muiltipleFormData, handleAmcDescriptionData }) => {
     const disableProps = { disabled: isReadOnly };
     const handleChange = (values) => {
         const code = openAccordian && schemeDescriptionDatamain.hasOwnProperty(openAccordian) && schemeDescriptionDatamain[openAccordian]?.find((item) => item?.schemeDescription === values);
@@ -28,7 +29,7 @@ const CommonForm = ({ formData, typeData, formKey = 'Shield', addOnForm, openAcc
                 {openAccordian === 'AMC' && (
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item initialValue={formData?.schemeType} label="Scheme Type" name="schemeType" rules={[validateRequiredSelectField('Scheme Type')]}>
-                            {customSelectBox({ data: typeData['DLVR_AMC_SCH_TYP'], placeholder: preparePlaceholderText('Scheme Type'), fieldNames: { key: 'key', value: 'value' }, ...disableProps })}
+                            {customSelectBox({ data: typeData['DLVR_AMC_SCH_TYP'], placeholder: preparePlaceholderText('Scheme Type'), fieldNames: { key: 'key', value: 'value' }, ...disableProps, onChange: handleAmcDescriptionData })}
                         </Form.Item>
                     </Col>
                 )}
@@ -50,7 +51,6 @@ const CommonForm = ({ formData, typeData, formKey = 'Shield', addOnForm, openAcc
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.employeeCode} label="Employee Name" name="employeeCode">
-                        {/* <Search  onSearch={handleEmployeeSearch}  onChange={handleOnChange} placeholder={preparePlaceholderText('scheme amount')} allowClear /> */}
                         {customSelectBox({ data: relationshipManagerData, fieldNames: { key: 'key', value: 'value' }, placeholder: preparePlaceholderSelect('Relationship Manager'), ...disableProps })}
                     </Form.Item>
                 </Col>
@@ -66,15 +66,29 @@ const CommonForm = ({ formData, typeData, formKey = 'Shield', addOnForm, openAcc
                     <Input />
                 </Form.Item>
             </Row>
-            {!formActionType?.viewMode && (
-                <Row gutter={20}>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Button className={styles.marB20} type="primary" disabled={registerDisabled[openAccordian]} onClick={() => onSingleFormFinish(formKey, addOnForm)}>
-                            Register
-                        </Button>
-                    </Col>
-                </Row>
-            )}
+            {!formActionType?.viewMode &&
+                (!registerDisabled?.[openAccordian] ? (
+                    <Row gutter={20}>
+                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                            <Button className={styles.marB20} type="primary" onClick={() => onSingleFormFinish(formKey, addOnForm)}>
+                                {!formData ? 'Register' : 'Save'}
+                            </Button>
+                            {formData && Object?.values(formData)?.length && (
+                                <Button onClick={() => handleCancelRegister(disableKey)} className={styles.marL20} danger>
+                                    Cancel
+                                </Button>
+                            )}
+                        </Col>
+                    </Row>
+                ) : (
+                    <Row gutter={20} justify="start">
+                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                            <Button onClick={() => handleEditRegister(disableKey)} className={styles.marB20} type="primary">
+                                Edit
+                            </Button>
+                        </Col>
+                    </Row>
+                ))}
         </>
     );
 };

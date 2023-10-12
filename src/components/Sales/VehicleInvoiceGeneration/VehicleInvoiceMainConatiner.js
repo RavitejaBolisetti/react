@@ -59,7 +59,7 @@ const VehicleInvoiceMainConatinerMain = (props) => {
                 return <FinananceDetailsMaster {...myProps} formData={requestPayload?.financeDetails} formKey={'financeDetails'} />;
             }
             case VEHICLE_INVOICE_SECTION.INSURANCE_DETAILS.id: {
-                return <InsuranceDetailsMaster {...myProps} formData={requestPayload?.insuranceDetails} formKey={'insuranceDetails'} />;
+                return <InsuranceDetailsMaster {...myProps} selectedRecordId={selectedOtfId} formData={requestPayload?.insuranceDetails} formKey={'insuranceDetails'} />;
             }
             case VEHICLE_INVOICE_SECTION.EXCHANGE_DETAILS.id: {
                 const formData = { exchangeDataPass: requestPayload?.exchangeDetails, selectedRecordId: selectedOtfId, modelCode: requestPayload?.vehicleDetails?.modelCode, viewOnly: true };

@@ -4,397 +4,167 @@ import { DesignationMaster } from '@components/common/DealerManpower/Designation
 import customRender from '@utils/test-utils';
 import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
-import thunk from 'redux-thunk';
-import { rootReducer } from 'store/reducers';
+import createMockStore from '__mocks__/store';
 
 jest.mock('store/actions/data/dealerManpower/dealerDivisionMaster', () => ({
     dealerManpowerDivisionMasterDataActions: {},
 }));
 
-export const createMockStore = (initialState) => {
-    const mockStore = configureStore({
-        reducer: rootReducer,
-        preloadedState: initialState,
-        middleware: [thunk],
-    });
-    return mockStore;
-};
+jest.mock('store/actions/data/dealerManpower/designationMaster', () => ({
+    dealerManpowerDesignationMasterDataActions: {},
+}));
 
-afterEach(() => {
-    jest.restoreAllMocks();
+jest.mock('store/actions/data/dealerManpower/dealerEmployeeDepartmentMaster', () => ({
+    dealerManpowerEmployeeDepartmentDataActions: {},
+}));
+
+jest.mock('store/actions/data/dealerManpower/roleMaster', () => ({
+    roleMasterDataActions: {},
+}));
+
+jest.mock('store/actions/data/dealerManpower/mileSkill', () => ({
+    MileSkillDataactions: {},
+}));
+
+jest.mock('components/common/DealerManpower/DesignationMaster/AdvancedSearch', () => {
+    const AdvancedSearch = ({  onCloseAction, handleFilterChange, handleResetFilter, setFilterString }) => { 
+        const onFinish = () => {
+            const values={ code: 106, departmentCode: 106, roleCode: 106, keyword: 'Kai' }
+            setFilterString({ ...values, advanceFilter: true });
+        }
+        return (
+            <>
+                <div><button onClick={onCloseAction}>Close</button></div>
+                <div><button onClick={handleResetFilter}>Reset</button></div>
+                <div><button onClick={onFinish}>Search</button></div>
+                <div><button onClick={handleFilterChange('code')}>Change</button></div>
+                <div><button onClick={handleFilterChange('departmentCode')}>Change 1</button></div>
+            </>
+        );
+    }
+    return {
+        __esModule: true,
+        AdvancedSearch,
+    };
 });
 
-let assignMock = jest.fn();
-
-delete window.location;
-window.location = { assign: assignMock };
-
-afterEach(() => {
-    assignMock.mockClear();
-});
-
-
-
-const buttonData = {
-    closeBtn: false,
-    cancelBtn: true,
-    saveBtn: true,
-    saveAndNewBtn: true,
-    editBtn: false,
-    formBtnActive: false,
-};
-
-const data = [{
-    departmentCode: null,
-    departmentName: null,
-    designationCode: "DS0029",
-    designationDescription: "My Designation 2",
-    designationType: "SM",
-    divisionCode: "C",
-    divisionName: "COMMON",
-    isAccountsDataIndicatorRequired: true,
-    isCapabilityIndicatorRequired: true,
-    isCreateUserIdRequired: true,
-    isManpowerIndicatorRequired: true,
-    mileSkillId: null,
-    roleCode: null,
-    roleDescription: null,
-    status: true
-}]
+const props={
+    fetchDivisionLovList: jest.fn(),
+    fetchList: jest.fn(),
+    fetchDepartmentLovList: jest.fn(),
+    fetchRoleLovList: jest.fn(),
+    fetchMileSkill: jest.fn()
+}
 
 describe('Designation Master components', () => {
-    it('Should render Designation Master search and clear components', () => {
+
+    it('test1', async () => {
         const mockStore = createMockStore({
             auth: { userId: 123 },
             data: {
                 DealerManpower: {
-                    DesignationMaster: {
-                        isLoaded: true, data: data
-                    }
+                    DesignationMaster: { isLoaded: true, data: [{ divisionCode: 106, designationCode: 106, status: 'Active', designationType: 'Hello', departmentName: 'Kai', divisionName: 'Div', designationDescription: 'Des', roleDescription: 'Role'  }] }
                 },
             },
         });
 
-        const fetchList = jest.fn();
-        const fetchDivisionLovList = jest.fn()
+        const fetchDivisionLovList=jest.fn();
+        const saveData=jest.fn();
 
         customRender(
             <Provider store={mockStore}>
-                <DesignationMaster
-                    isVisible={true}
-                    fetchList={fetchList}
-                    setIsLoading={jest.fn()}
-                    fetchDivisionLovList={fetchDivisionLovList}
-                />
-            </Provider>
-        )
-
-        const textBox = screen.getByRole('textbox', { name: 'Designation Name' });
-        fireEvent.change(textBox, { target: { value: 'kai' } });
-
-        const searchBtn = screen.getByRole('button', { name: 'search' });
-        fireEvent.click(searchBtn);
-    })
-
-    it('refresh button should work', async () => {
-
-        const mockStore = createMockStore({
-            auth: { userId: 123 },
-            data: {
-                DealerManpower: {
-                    DesignationMaster: {
-                        isLoaded: true, data: [{
-                            departmentCode: null,
-                            departmentName: null,
-                            designationCode: "DS0029",
-                            designationDescription: "My Designation 2",
-                            designationType: "SM",
-                            divisionCode: "C",
-                            divisionName: "kai",
-                            isAccountsDataIndicatorRequired: true,
-                            isCapabilityIndicatorRequired: true,
-                            isCreateUserIdRequired: true,
-                            isManpowerIndicatorRequired: true,
-                            mileSkillId: null,
-                            roleCode: null,
-                            roleDescription: null,
-                            status: true
-                        }]
-                    },
-                },
-            },
-        });
-
-        const fetchList = jest.fn()
-        const fetchDivisionLovList = jest.fn()
-        customRender(
-            <Provider store={mockStore}>
-                <DesignationMaster
-                    isVisible={true}
-                    fetchList={jest.fn()}
-                    setIsLoading={jest.fn()}
-                    fetchDivisionLovList={fetchDivisionLovList} />
+                <DesignationMaster isVisible={true} fetchDivisionLovList={fetchDivisionLovList} fetchList={jest.fn()} fetchDepartmentLovList={jest.fn()} fetchRoleLovList={jest.fn()} fetchMileSkill={jest.fn()} saveData={saveData} />
             </Provider>
         );
 
-        await waitFor(() => { expect(screen.getByText('kai')).toBeInTheDocument() });
-        const refreshbutton = screen.getByRole('button', { name: '', exact: false });
-        fireEvent.click(refreshbutton);
-    })
+        fetchDivisionLovList.mock.calls[0][0].onSuccessAction();
 
-    it('Should render Designation Master Applied Advance Filter search button components', () => {
-        const mockStore = createMockStore({
-            auth: { userId: 123 },
-            data: {
-                DealerManpower: {
-                    DesignationMaster: {
-                        isLoaded: true, data: data
-                    }
-                },
-            },
-        });
-        const fetchList = jest.fn()
-        const fetchDivisionLovList = jest.fn()
+        await waitFor(() => { expect(screen.getByText('Kai')).toBeInTheDocument() });
 
-        customRender(
-            <Provider store={mockStore}>
-                <DesignationMaster isVisible={true}
-                    fetchList={fetchList}
-                    setIsLoading={jest.fn()}
-                    fetchDivisionLovList={fetchDivisionLovList} />
-            </Provider>
-        )
-
-        const advancedFilter = screen.getByRole('button', { name: 'Advanced Filters' });
-        fireEvent.click(advancedFilter);
-
-        const departmentName = screen.getByRole('combobox', { name: 'Department Name' });
-        fireEvent.change(departmentName, { target: { value: 'kai' } });
-
-        const roleName = screen.getByRole('combobox', { name: 'Role Name' });
-        fireEvent.change(roleName, { target: { value: 'kai' } });
-
-        const searchBtn = screen.getByRole('button', { name: 'Search' });
-        fireEvent.click(searchBtn);
-
-    })
-
-    it('Should render Designation Master Applied Advance Filter reset button components', () => {
-        const mockStore = createMockStore({
-            auth: { userId: 123 },
-            data: {
-                DealerManpower: {
-                    DesignationMaster: {
-                        isLoaded: true, data: data
-                    },
-                },
-            },
-        });
-        const fetchList = jest.fn()
-        const fetchDivisionLovList = jest.fn()
-
-        customRender(
-            <Provider store={mockStore}>
-                <DesignationMaster isVisible={true} fetchList={fetchList} setIsLoading={jest.fn()} fetchDivisionLovList={fetchDivisionLovList} />
-            </Provider>
-        )
-
-        const advancedFilter = screen.getByRole('button', { name: 'Advanced Filters' });
-        fireEvent.click(advancedFilter);
-
-        const resetBtn = screen.getByRole('button', { name: 'Reset' });
-        fireEvent.click(resetBtn);
-    })
-
-    it('Should render Designation Master Applied Advance Filter close button components', () => {
-        const mockStore = createMockStore({
-            auth: { userId: 123 },
-            data: {
-                DealerManpower: {
-                    DesignationMaster: {
-                        isLoaded: true, data: data
-                    },
-                },
-            },
-        });
-
-        const fetchList = jest.fn()
-        const fetchDivisionLovList = jest.fn()
-
-        customRender(
-            <Provider store={mockStore}>
-                <DesignationMaster isVisible={true} fetchList={fetchList} setIsLoading={jest.fn()} fetchDivisionLovList={fetchDivisionLovList} />
-            </Provider>
-        )
-
-        const advancedFilter = screen.getByRole('button', { name: 'Advanced Filters' });
-        fireEvent.click(advancedFilter);
-
-        const closeBtn = screen.getByRole('button', { name: 'Close' });
-        fireEvent.click(closeBtn);
-    })
-
-    it('test for onSuccess', async () => {
-        const mockStore = createMockStore({
-            auth: { userId: 123 },
-            data: {
-                DealerManpower: {
-                    DesignationMaster: {
-                        isLoaded: true, data: data
-                    },
-                },
-            },
-        });
-
-        const saveData = jest.fn();
-
-        const res = {
-            data: [{
-                departmentCode: null,
-                departmentName: null,
-                designationCode: "DS0029",
-                designationDescription: "My Designation 2",
-                designationType: "SM",
-                divisionCode: "C",
-                divisionName: "COMMON",
-                isAccountsDataIndicatorRequired: true,
-                isCapabilityIndicatorRequired: true,
-                isCreateUserIdRequired: true,
-                isManpowerIndicatorRequired: true,
-                mileSkillId: null,
-                roleCode: null,
-                roleDescription: null,
-                status: true
-            }]
-        };
-
-        const fetchList = jest.fn()
-        const fetchDivisionLovList = jest.fn()
-        customRender(
-            <Provider store={mockStore}>
-                <DesignationMaster saveData={saveData} setIsLoading={jest.fn()} fetchDivisionLovList={fetchDivisionLovList} setIsFormVisible={jest.fn()} handleButtonClick={jest.fn()} fetchList={fetchList} resetData={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} />
-            </Provider>
-        );
-        const editBtn = screen.getByRole('button', { name: /fa-edit/i });
+        const editBtn=screen.getByTestId('edit');
         fireEvent.click(editBtn);
 
-        const status = screen.getByRole('switch', { name: 'Status' });
+        const status=screen.getByRole('switch', { name: 'Status' });
         fireEvent.click(status);
 
-        const saveBtn = screen.getByRole('button', { name: /Save/i });
+        const saveBtn=screen.getByRole('button', { name: 'Save' });
         fireEvent.click(saveBtn);
 
-        await waitFor(() => expect(saveData).toHaveBeenCalled());
-        saveData.mock.calls[0][0].onSuccess(res);
+        await waitFor(() => { expect(saveData).toHaveBeenCalled() });
+
+        saveData.mock.calls[0][0].onSuccess();
         saveData.mock.calls[0][0].onError();
     });
 
-    it('Should render Designation Master add edit form components', () => {
+    it('test4', async () => {
         const mockStore = createMockStore({
             auth: { userId: 123 },
             data: {
                 DealerManpower: {
-                    DesignationMaster: {
-                        isLoaded: true, data: data
-                    },
+                    DesignationMaster: { isLoaded: true, data: [{ divisionCode: 106, designationCode: 106, status: 'Active', designationType: 'Hello', departmentName: 'Kai', divisionName: 'Div', designationDescription: 'Des', roleDescription: 'Role'  }] }
                 },
             },
         });
 
-        const fetchList = jest.fn()
-        const fetchDivisionLovList = jest.fn()
+        const fetchDivisionLovList=jest.fn();
+
         customRender(
             <Provider store={mockStore}>
-                <DesignationMaster isVisible={true} setIsLoading={jest.fn()} fetchDivisionLovList={fetchDivisionLovList} setIsFormVisible={jest.fn()} handleButtonClick={jest.fn()} fetchList={fetchList} resetData={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} />
+                <DesignationMaster isVisible={true} fetchDivisionLovList={fetchDivisionLovList} fetchList={jest.fn()} fetchDepartmentLovList={jest.fn()} fetchRoleLovList={jest.fn()} fetchMileSkill={jest.fn()} />
             </Provider>
-        )
+        );
 
-        const plusImg = screen.getByRole('img', { name: 'plus' });
-        fireEvent.click(plusImg);
+        fetchDivisionLovList.mock.calls[0][0].onSuccessAction();
 
-        const divisionName = screen.getByRole('combobox', { name: 'Division Name' });
-        fireEvent.click(divisionName);
+        await waitFor(() => { expect(screen.getByText('Kai')).toBeInTheDocument() });
+        
+        const viewBtn=screen.getByTestId('view');
+        fireEvent.click(viewBtn);
 
-        const departmentName = screen.getByRole('combobox', { name: 'Department Name' });
-        fireEvent.click(departmentName);
+        const cancelBtn=screen.getAllByRole('button', { name: 'Close' });
+        fireEvent.click(cancelBtn[1]);
+    });
 
-        const roleDesc = screen.getByRole('combobox', { name: 'Role Description' });
-        fireEvent.click(roleDesc);
+    it('test2', async () => {
 
-        const designationType = screen.getByRole('combobox', { name: 'Designation Type' });
-        fireEvent.click(designationType);
+        customRender( <DesignationMaster isVisible={true} {...props} /> );
 
-        const mileSkill = screen.getByRole('combobox', { name: 'Mile Skill' });
-        fireEvent.click(mileSkill);
+        const advanceFilter=screen.getByText('Advanced Filters');
+        fireEvent.click(advanceFilter);
 
-        const status = screen.getByRole('switch', { name: 'Status' });
-        fireEvent.click(status);
+        const resetBtn=screen.getByRole('button', { name: 'Reset' });
+        fireEvent.click(resetBtn);
 
-        const manpower = screen.getByRole('checkbox', { name: 'Manpower Required' });
-        fireEvent.click(manpower);
+        const searchBtn=screen.getByRole('button', { name: 'Search' });
+        fireEvent.click(searchBtn);
 
-        const accountData = screen.getByRole('checkbox', { name: 'Accounts Data' });
-        fireEvent.click(accountData);
+        const removeFilter=screen.getAllByTestId('removeFilter');
+        fireEvent.click(removeFilter[0]);
 
-        const capability = screen.getByRole('checkbox', { name: 'Capability (L1/L2/L3)' });
-        fireEvent.click(capability);
+        const changeBtn=screen.getByRole('button', { name: 'Change' });
+        fireEvent.click(changeBtn);
 
-        const userId = screen.getByRole('checkbox', { name: 'Create User Id' });
-        fireEvent.click(userId);
-    })
+        const change1Btn=screen.getByRole('button', { name: 'Change 1' });
+        fireEvent.click(change1Btn);
 
-    it('Should render Designation Master add edit form close components', () => {
-        const mockStore = createMockStore({
-            auth: { userId: 123 },
-            data: {
-                DealerManpower: {
-                    DesignationMaster: {
-                        isLoaded: true, data: data
-                    },
-                },
-            },
-        });
-
-        const fetchList = jest.fn()
-        const fetchDivisionLovList = jest.fn()
-        customRender(
-            <Provider store={mockStore}>
-                <DesignationMaster isVisible={true} setIsLoading={jest.fn()} fetchDivisionLovList={fetchDivisionLovList} setIsFormVisible={jest.fn()} handleButtonClick={jest.fn()} fetchList={fetchList} resetData={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} />
-            </Provider>
-        )
-
-        const plusImg = screen.getByRole('img', { name: 'plus' });
-        fireEvent.click(plusImg);
-
-        const closeBtn = screen.getByRole('button', { name: 'Close', exact: false });
+        const closeBtn=screen.getByRole('button', { name: 'Close' });
         fireEvent.click(closeBtn);
-    })
 
-    it('Should render Designation Master add edit form cancel components', () => {
-        const mockStore = createMockStore({
-            auth: { userId: 123 },
-            data: {
-                DealerManpower: {
-                    DesignationMaster: {
-                        isLoaded: true, data: data
-                    },
-                },
-            },
-        });
+    });
 
-        const fetchList = jest.fn()
-        const fetchDivisionLovList = jest.fn()
-        customRender(
-            <Provider store={mockStore}>
-                <DesignationMaster isVisible={true} setIsLoading={jest.fn()} fetchDivisionLovList={fetchDivisionLovList} setIsFormVisible={jest.fn()} handleButtonClick={jest.fn()} fetchList={fetchList} resetData={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} />
-            </Provider>
-        )
+    it('test3', async () => {
 
-        const plusImg = screen.getByRole('img', { name: 'plus' });
-        fireEvent.click(plusImg);
+        customRender( <DesignationMaster isVisible={true} {...props} /> );
 
-        const cancelBtn = screen.getByRole('button', { name: 'Cancel', exact: false });
-        fireEvent.click(cancelBtn);
-    })
+        const searchBox=screen.getByRole('textbox', { name: 'Designation Name' });
+        fireEvent.change(searchBox, { name: 'Kai Kumar' });
+
+        const searchBtn=screen.getByRole('button', { name: 'search' });
+        fireEvent.click(searchBtn);
+
+        fireEvent.change(searchBox, { name: '' });
+        fireEvent.click(searchBtn);
+
+    });
+
 });

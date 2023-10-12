@@ -18,7 +18,7 @@ const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
     const { form, formData } = props;
-    const { schemeLovData, typeData, loyaltySchemeData } = props;
+    const { schemeLovData, typeData } = props;
     const { isConfigLoading, isSchemeLovLoading, isModelLoading, isVariantLoading } = props;
     const { filteredModelData, filteredVariantData, handleFilterChange, fnSetData, handleSchemeChange, viewOnly = false } = props;
 
