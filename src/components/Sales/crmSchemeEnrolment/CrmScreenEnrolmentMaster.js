@@ -91,7 +91,6 @@ export const CrmScreenEnrolmentBase = (props) => {
 
     const [customerData, setCustomerData] = useState([]);
     const [vehicleDataDetails, setVehicleDataDetails] = useState([]);
-    const [accordianDisable, setAccordianDisable] = useState(false);
 
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
@@ -489,7 +488,6 @@ export const CrmScreenEnrolmentBase = (props) => {
         isSalesConsultantDataLoading,
         salesConsultantLovData,
         isSearchLoading,
-        accordianDisable,
     };
 
     return (
