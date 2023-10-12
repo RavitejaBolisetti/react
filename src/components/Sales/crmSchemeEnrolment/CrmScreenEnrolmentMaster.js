@@ -15,17 +15,11 @@ import { AddViewFormMaster } from './addViewForm/AddViewFormMaster';
 
 import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './search/AdvancedSearch';
-import { CUSTOMER_TYPE } from 'constants/CustomerType';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { BASE_URL_CRM_SCHEME_ENROLLMENT_DETAILS as customURL } from 'constants/routingApi';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 
 import { crmSchemeEnrollmentDataActions } from 'store/actions/data/crmSchemeEnrollment';
-// import { vehicleBatteryDetailsDataActions } from 'store/actions/data/vehicleDeliveryNote/vehicleBatteryDetails';
-import { customerVerificationtDataActions } from 'store/actions/data/customerMaster/customerVerification';
-import { addressIndividualDataActions } from 'store/actions/data/customerMaster/individual/address/individualAddress';
-import { addressCorporateDataActions } from 'store/actions/data/customerMaster/corporate/address/individualAddress';
-import { salesConsultantActions } from 'store/actions/data/otf/salesConsultant';
 
 import { showGlobalNotification } from 'store/actions/notification';
 
@@ -36,20 +30,10 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            CustomerMaster: {
-                AddressIndividual: { isLoaded: isAddressLoaded = false, isLoading: isAddressLoading, data: addressIndData = [] },
-                CorporateAddress: { isLoaded: isCompanyAddressLoaded = false, isLoading: isCorporateAddressLoading, data: addressCompanyData = [] },
-            },
-            OTF: {
-                salesConsultantLov: { isLoaded: isSalesConsultantDataLoaded, data: salesConsultantLov = [] },
-            },
-            VehicleDeliveryNote: {
-                VehicleBatteryDetails: { isLoaded: isVehicleDataLoaded = false, isLoading, data: vehicleData = {} },
-            },
-            CustomerMaster: {
-                CustomerVerification: { isLoaded: isCustomerDataLoaded = false, isLoading: isCustomerDataLoading, data: customerVerificationData = {} },
-            },
             CRMSchemeEnrollmentList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString, isDetailLoaded, detailData = [] },
+        },
+        OTF: {
+            salesConsultantLov: { isLoaded: isSalesConsultantDataLoaded, data: salesConsultantLov = [] },
         },
     } = state;
 
@@ -63,22 +47,10 @@ const mapStateToProps = (state) => {
         isSearchLoading,
         isSearchDataLoaded,
         filterString,
-        isSalesConsultantDataLoaded,
-        salesConsultantLov,
-        isVehicleDataLoaded,
-        isLoading,
-        vehicleData,
-        isCustomerDataLoaded,
-        isCustomerDataLoading,
-        customerVerificationData,
-        isAddressLoaded,
-        isAddressLoading,
-        addressCompanyData: addressCompanyData?.customerAddress,
-        addressIndData: addressIndData?.customerAddress,
-        isCompanyAddressLoaded,
-        isCorporateAddressLoading,
         isDetailLoaded,
         detailData,
+        isSalesConsultantDataLoaded,
+        salesConsultantLov,
     };
     return returnValue;
 };
@@ -96,21 +68,6 @@ const mapDispatchToProps = (dispatch) => ({
             listDetailShowLoading: crmSchemeEnrollmentDataActions.listShowLoading,
             saveData: crmSchemeEnrollmentDataActions.saveData,
 
-            fetchSalesConsultant: salesConsultantActions.fetchList,
-            listConsultantShowLoading: salesConsultantActions.listShowLoading,
-
-            // fetchVehicleList: vehicleBatteryDetailsDataActions.fetchList,
-            // listVehicleShowLoading: vehicleBatteryDetailsDataActions.listShowLoading,
-
-            fetchCustomerVerifyList: customerVerificationtDataActions.fetchList,
-            listCustomerVerifyShowLoading: customerVerificationtDataActions.listShowLoading,
-
-            fetchListIndividual: addressIndividualDataActions.fetchList,
-            listShowLoadingIndividual: addressIndividualDataActions.listShowLoading,
-
-            fetchListCorporate: addressCorporateDataActions.fetchList,
-            listShowLoadingCorporate: addressCorporateDataActions.listShowLoading,
-
             showGlobalNotification,
         },
         dispatch
@@ -118,7 +75,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const CrmScreenEnrolmentBase = (props) => {
-    const { filterString, setFilterString, addressIndData, addressCompanyData, listShowLoadingIndividual, listShowLoadingCorporate, fetchListIndividual, fetchListCorporate, fetchCustomerVerifyList, listCustomerVerifyShowLoading, customerVerificationData, fetchVehicleList, listVehicleShowLoading, vehicleData, fetchSalesConsultant, isSalesConsultantDataLoaded, listConsultantShowLoading, salesConsultantLov, fetchList, saveData, data, listShowLoading, userId } = props;
+    const { filterString, setFilterString, fetchList, saveData, data, listShowLoading, userId, isSalesConsultantDataLoaded, salesConsultantLov } = props;
     const { typeData, totalRecords, showGlobalNotification, fetchDetail, listDetailShowLoading, detailData } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [openAccordian, setOpenAccordian] = useState('');
@@ -129,8 +86,6 @@ export const CrmScreenEnrolmentBase = (props) => {
 
     const [customerData, setCustomerData] = useState([]);
     const [vehicleDataDetails, setVehicleDataDetails] = useState([]);
-
-    const [addressData, setAddressData] = useState([]);
 
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
@@ -165,13 +120,6 @@ export const CrmScreenEnrolmentBase = (props) => {
         showGlobalNotification({ message });
         setShowDataLoading(false);
     };
-
-    useEffect(() => {
-        if (!isSalesConsultantDataLoaded && userId) {
-            fetchSalesConsultant({ setIsLoading: listConsultantShowLoading, userId });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isSalesConsultantDataLoaded, userId]);
 
     useEffect(() => {
         if (filterString) {
@@ -254,46 +202,12 @@ export const CrmScreenEnrolmentBase = (props) => {
     }, [userId, page, filterString]);
 
     useEffect(() => {
-        if (vehicleData?.ownerCustomer) {
-            const extraParams = [
-                {
-                    key: 'customerCode',
-                    title: 'customerCode',
-                    value: vehicleData?.ownerCustomer,
-                    name: 'Customer Code',
-                },
-            ];
-            fetchCustomerVerifyList({ setIsLoading: listCustomerVerifyShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+        if (detailData) {
+            setCustomerData(detailData?.enrolmentCustomerDetailsDto);
+            setVehicleDataDetails(detailData?.enrolmentVehicleDetailsDto);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [vehicleData?.ownerCustomer]);
-
-    useEffect(() => {
-        if (customerVerificationData?.customerId) {
-            const extraParams = [
-                {
-                    key: 'customerId',
-                    title: 'customerId',
-                    value: customerVerificationData?.customerId,
-                    name: 'Customer ID',
-                },
-            ];
-            if (customerVerificationData?.customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
-                fetchListIndividual({ setIsLoading: listShowLoadingIndividual, userId, extraParams });
-            } else if (customerVerificationData?.customerType === CUSTOMER_TYPE?.CORPORATE?.id) {
-                fetchListCorporate({ setIsLoading: listShowLoadingCorporate, userId, extraParams });
-            }
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [customerVerificationData?.customerId]);
-
-    useEffect(() => {
-        if (addressIndData?.length > 0) {
-            addressIndData?.map((item) => (item?.addressType === 'R' ? setAddressData(item) : null));
-        } else if (addressCompanyData?.length > 0) {
-            addressCompanyData?.map((item) => (item?.addressType === 'R' ? setAddressData(item) : null));
-        }
-    }, [addressCompanyData, addressIndData]);
+    }, [detailData]);
 
     useEffect(() => {
         if (formActionType?.addMode) {
@@ -335,27 +249,14 @@ export const CrmScreenEnrolmentBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [keyValue, changePress]);
 
-    useEffect(() => {
-        if (formActionType?.viewMode) {
-            setVehicleDataDetails(detailData?.enrolmentVehicleDetailsDto);
-            setCustomerData(detailData?.enrolmentCustomerDetailsDto);
-        } else if (formActionType?.addMode) {
-            setVehicleDataDetails(vehicleData);
-            setCustomerData({ ...customerVerificationData, ...addressData });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [detailData, vehicleData, customerVerificationData, addressData]);
-
     const onHandleRegistrationNumber = (value) => {
-        if (value) {
-            const extraParams = [
-                {
-                    key: 'vin',
-                    value: value,
-                },
-            ];
-            fetchVehicleList({ setIsLoading: listVehicleShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-        }
+        const extraParams = [
+            {
+                key: 'vin',
+                value: value,
+            },
+        ];
+        fetchDetail({ setIsLoading: listDetailShowLoading, userId, extraParams, customURL });
     };
 
     const addFormOpen = () => {
@@ -387,13 +288,11 @@ export const CrmScreenEnrolmentBase = (props) => {
 
         setIsEnrolmentGenerated(false);
 
-        if (buttonAction !== ADD_ACTION) {
+        if (buttonAction === VIEW_ACTION) {
             const extraParams = [
                 {
                     key: 'id',
-                    title: 'id',
                     value: record?.id,
-                    name: 'id',
                 },
             ];
             fetchDetail({ setIsLoading: listDetailShowLoading, userId, extraParams, customURL });
@@ -567,11 +466,12 @@ export const CrmScreenEnrolmentBase = (props) => {
         activeKey,
         onChange,
         typeData,
-        salesConsultantLov,
         onHandleRegistrationNumber,
         detailData,
         customerData,
         vehicleDataDetails,
+        isSalesConsultantDataLoaded,
+        salesConsultantLov,
     };
 
     return (
