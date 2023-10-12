@@ -333,8 +333,7 @@ export const AMCRegistrationMasterBase = (props) => {
     }, [currentSection, sectionName]);
 
     const handlePrintDownload = (record) => {
-        console.log(`record`, record);
-        let typeRecordKey = record?.typeRecord === `invoice_amc` ? 'fn_vc_receipts_hdr_id' : record?.typeRecord === `registration_certificate_amc` ? '' : record?.typeRecord === `registration_incentive_claim_amc` ? '' : null;
+        let typeRecordKey = record?.typeRecord === `invoice_amc` ? 'amc_registration_hdr_id' : record?.typeRecord === `registration_certificate_amc` ? 'amc_registration_hdr_id' : record?.typeRecord === `registration_incentive_claim_amc` ? 'amc_registration_hdr_id' : null;
         setReportButtonType(record?.typeRecord);
         setReportVisible(true);
         setAdditionalReportParams([
@@ -751,11 +750,11 @@ export const AMCRegistrationMasterBase = (props) => {
 
     useEffect(() => {
         if (reportButtonType === `invoice_amc`) {
-            setAmcDocumentType(EMBEDDED_REPORTS?.RECIEPT_DOCUMENT);
+            setAmcDocumentType(EMBEDDED_REPORTS?.AMC_REGISTRATION_INVOICE_DOCUMENT);
         } else if (reportButtonType === `registration_certificate_amc`) {
-            setAmcDocumentType(EMBEDDED_REPORTS?.RECIEPT_DOCUMENT);
+            setAmcDocumentType(EMBEDDED_REPORTS?.AMC_REGISTRATION_INVOICE_DOCUMENT);
         } else if (reportButtonType === `registration_incentive_claim_amc`) {
-            setAmcDocumentType(EMBEDDED_REPORTS?.RECIEPT_DOCUMENT);
+            setAmcDocumentType(EMBEDDED_REPORTS?.AMC_REGISTRATION_INVOICE_DOCUMENT);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [reportButtonType]);
