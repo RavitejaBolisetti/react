@@ -385,7 +385,7 @@ const UserManagementMain = (props) => {
     const onFinish = (values, e) => {};
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => {}).catch(err => console.error(err));
     };
 
     const handleButtonClick = ({ buttonAction, record = null, openDefaultSection = true }) => {

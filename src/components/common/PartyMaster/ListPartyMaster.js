@@ -193,7 +193,7 @@ export const ListPartyMasterBase = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => {}).catch(err => console.error(err));
     };
 
     const onCloseAction = () => {

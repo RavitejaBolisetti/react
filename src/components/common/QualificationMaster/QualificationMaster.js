@@ -164,7 +164,7 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => {}).catch(err => console.error(err));
     };
 
     const handleReferesh = () => {

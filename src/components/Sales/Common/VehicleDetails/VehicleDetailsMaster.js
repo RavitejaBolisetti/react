@@ -335,7 +335,7 @@ const VehicleDetailsMasterMain = (props) => {
     };
 
     const onFinishFailed = () => {
-        form.validateFields().then(() => {});
+        form.validateFields().then(() => {}).catch(err => console.error(err));
     };
 
     // const handlePriceTypeChange = (value, option) => {
