@@ -14,8 +14,8 @@ import styles from 'assets/sass/app.module.scss';
 const { Panel } = Collapse;
 
 const CustomerAndVehicleViewMain = (props) => {
-    const { isLoading, activeKey, onChange, formActionType, customerData, vehicleDataDetails } = props;
-    let mode = formActionType?.viewMode ? 'view' : formActionType?.addMode ? 'add' : null;
+    const { isLoading, activeKey, onChange, customerData, vehicleDataDetails } = props;
+
     const viewProps = {
         bordered: false,
         colon: false,

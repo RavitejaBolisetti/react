@@ -17,6 +17,7 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './search/AdvancedSearch';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { BASE_URL_CRM_SCHEME_ENROLLMENT_DETAILS as customURL } from 'constants/routingApi';
+import { salesConsultantActions } from 'store/actions/data/otf/salesConsultant';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 
 import { crmSchemeEnrollmentDataActions } from 'store/actions/data/crmSchemeEnrollment';
@@ -31,9 +32,9 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             CRMSchemeEnrollmentList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString, isDetailLoaded, detailData = [] },
-        },
-        OTF: {
-            salesConsultantLov: { isLoaded: isSalesConsultantDataLoaded, data: salesConsultantLov = [] },
+            OTF: {
+                salesConsultantLov: { isLoaded: isSalesConsultantDataLoaded, isLoading: isSalesConsultantDataLoading, data: salesConsultantLovData = [] },
+            },
         },
     } = state;
 
@@ -50,7 +51,8 @@ const mapStateToProps = (state) => {
         isDetailLoaded,
         detailData,
         isSalesConsultantDataLoaded,
-        salesConsultantLov,
+        salesConsultantLovData,
+        isSalesConsultantDataLoading,
     };
     return returnValue;
 };
@@ -68,6 +70,9 @@ const mapDispatchToProps = (dispatch) => ({
             listDetailShowLoading: crmSchemeEnrollmentDataActions.listShowLoading,
             saveData: crmSchemeEnrollmentDataActions.saveData,
 
+            fetchSalesConsultant: salesConsultantActions.fetchList,
+            listConsultantShowLoading: salesConsultantActions.listShowLoading,
+
             showGlobalNotification,
         },
         dispatch
@@ -75,8 +80,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const CrmScreenEnrolmentBase = (props) => {
-    const { filterString, setFilterString, fetchList, saveData, data, listShowLoading, userId, isSalesConsultantDataLoaded, salesConsultantLov } = props;
-    const { typeData, totalRecords, showGlobalNotification, fetchDetail, listDetailShowLoading, detailData } = props;
+    const { filterString, setFilterString, fetchList, saveData, data, listShowLoading, userId, salesConsultantLovData, isSearchLoading } = props;
+    const { typeData, totalRecords, showGlobalNotification, fetchDetail, listDetailShowLoading, detailData, fetchSalesConsultant, listConsultantShowLoading, isSalesConsultantDataLoading } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [openAccordian, setOpenAccordian] = useState('');
     const [isEnrolmentGenerated, setIsEnrolmentGenerated] = useState(false);
@@ -86,6 +91,7 @@ export const CrmScreenEnrolmentBase = (props) => {
 
     const [customerData, setCustomerData] = useState([]);
     const [vehicleDataDetails, setVehicleDataDetails] = useState([]);
+    const [accordianDisable, setAccordianDisable] = useState(false);
 
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
@@ -127,6 +133,13 @@ export const CrmScreenEnrolmentBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
+
+    useEffect(() => {
+        if (isEnrolmentGenerated) {
+            setButtonData({ ...defaultBtnVisiblity, cancelBtn: true });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isEnrolmentGenerated]);
 
     const extraParams = useMemo(() => {
         return [
@@ -202,12 +215,11 @@ export const CrmScreenEnrolmentBase = (props) => {
     }, [userId, page, filterString]);
 
     useEffect(() => {
-        if (detailData) {
-            setCustomerData(detailData?.enrolmentCustomerDetailsDto);
-            setVehicleDataDetails(detailData?.enrolmentVehicleDetailsDto);
+        if (userId) {
+            fetchSalesConsultant({ setIsLoading: listConsultantShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [detailData]);
+    }, [userId]);
 
     useEffect(() => {
         if (formActionType?.addMode) {
@@ -241,7 +253,11 @@ export const CrmScreenEnrolmentBase = (props) => {
             setButtonData({ ...buttonData, saveBtn: true, formBtnActive: true });
         } else if (keyValue === 4) {
             setActiveKey([2, keyValue]);
-            setButtonData({ ...defaultBtnVisiblity, cancelBtn: true, printDownloadBtn: true });
+            if (formActionType?.viewMode) {
+                setButtonData({ ...defaultBtnVisiblity, cancelBtn: true, printDownloadBtn: true });
+            } else {
+                setButtonData({ ...defaultBtnVisiblity, cancelBtn: true, saveBtn: true, formBtnActive: true });
+            }
         } else {
             setActiveKey([keyValue]);
             setButtonData({ ...buttonData, cancelBtn: true, saveBtn: true, formBtnActive: true });
@@ -307,10 +323,10 @@ export const CrmScreenEnrolmentBase = (props) => {
             const onSuccess = (res) => {
                 form.resetFields();
                 setShowDataLoading(true);
-                showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage + 'Receipt No.:' + res?.data?.receiptsDetails?.receiptNumber });
+                showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
                 fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
                 setButtonData({ ...buttonData, formBtnActive: false });
-                setIsFormVisible(false);
+                //setIsFormVisible(false);
                 setIsEnrolmentGenerated(true);
             };
 
@@ -470,8 +486,10 @@ export const CrmScreenEnrolmentBase = (props) => {
         detailData,
         customerData,
         vehicleDataDetails,
-        isSalesConsultantDataLoaded,
-        salesConsultantLov,
+        isSalesConsultantDataLoading,
+        salesConsultantLovData,
+        isSearchLoading,
+        accordianDisable,
     };
 
     return (

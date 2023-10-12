@@ -18,7 +18,7 @@ import styles from 'assets/sass/app.module.scss';
 const { Panel } = Collapse;
 
 const AddViewFormMain = (props) => {
-    const { form, formData, buttonData, setButtonData, handleButtonClick, onCloseAction, formActionType, onFinish, onFinishFailed, isEnrolmentGenerated, activeKey, onChange } = props;
+    const { form, formData, buttonData, setButtonData, handleButtonClick, onCloseAction, formActionType, onFinish, onFinishFailed, isEnrolmentGenerated, activeKey, onChange, accordianDisable } = props;
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -53,7 +53,7 @@ const AddViewFormMain = (props) => {
                                     {formActionType?.viewMode ? <EnrolmentView {...props} /> : <EnrolmentAdd {...props} />}
                                 </Panel>
                             </Collapse>
-                            <Collapse activeKey={activeKey} onChange={() => onChange(2)} expandIcon={expandIcon} expandIconPosition="end" collapsible="icon">
+                            <Collapse activeKey={activeKey} onChange={() => onChange(2)} expandIcon={expandIcon} expandIconPosition="end" collapsible={accordianDisable ? 'disabled' : 'icon'}>
                                 <Panel header="Customer And Vehicle Details" key="2">
                                     <Divider />
                                     <CustomerAndVehicleView {...props} />
