@@ -53,7 +53,7 @@ const RoleApplicationModalrMain = (props) => {
                     </Form>
                     {isLoading ? (
                         <div className={styles.marB20}>
-                            <InputSkeleton width={300} height={25} count={6} />
+                            <InputSkeleton height={50} count={4} />
                         </div>
                     ) : (
                         <ApplicationTree {...props} setDisableMdlSaveBtn={setDisableMdlSaveBtn} />

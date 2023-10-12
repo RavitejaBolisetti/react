@@ -101,7 +101,7 @@ export const RoleManagementMain = (props) => {
 
     useEffect(() => {
         if (userId && (!showDataLoading || refershData)) {
-            setShowDataLoading(false);
+            setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -217,7 +217,7 @@ export const RoleManagementMain = (props) => {
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick),
         tableData: searchData,
-        isLoading: isDataLoading,
+        isLoading: isDataLoading || showDataLoading,
     };
 
     const handleToggleButton = (key) => {

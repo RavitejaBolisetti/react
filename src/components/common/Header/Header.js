@@ -124,7 +124,7 @@ const HeaderMain = (props) => {
 
     useEffect(() => {
         if (!userId) return;
-        fetchNotificaionCountData({ setIsLoading: () => { }, userId });
+        fetchNotificaionCountData({ setIsLoading: () => {}, userId });
         setRefreshCount(false);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
