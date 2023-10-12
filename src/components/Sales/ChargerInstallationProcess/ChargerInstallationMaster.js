@@ -237,7 +237,12 @@ export const VehicleInvoiceMasterBase = (props) => {
     };
 
     const filterActiveSection = sectionName && filterActiveMenu(Object.values(sectionName));
-
+    useEffect(() => {
+        if (chargerInstallationMasterData?.chargerInstDetails?.requestDetails[0].requestStage === QUERY_BUTTONS_CONSTANTS?.COMMISSION?.key) {
+            setButtonData((prev) => ({ ...prev, addRequestBtn: false }));
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [chargerInstallationMasterData]);
     useEffect(() => {
         if (currentSection && sectionName) {
             const section = Object.values(sectionName)?.find((i) => i.id === currentSection);

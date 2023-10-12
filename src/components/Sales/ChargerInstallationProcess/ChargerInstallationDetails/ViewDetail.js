@@ -45,7 +45,6 @@ const ViewDetailMain = (props) => {
 
     const onHandleModal = () => {
         setModal(true);
-        console.log('ffff');
     };
     return (
         <>

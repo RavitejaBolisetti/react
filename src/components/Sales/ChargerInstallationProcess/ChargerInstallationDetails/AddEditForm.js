@@ -37,7 +37,6 @@ const AddEditFormMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formActionType, crmCustomerVehicleData]);
-    console.log(addRequestData);
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
 
