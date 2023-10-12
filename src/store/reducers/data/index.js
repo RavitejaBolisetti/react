@@ -48,7 +48,6 @@ import { OTFBlockMaster } from './otfBlockMaster';
 import { VehicleDeliveryNote } from './vehicleDeliveryNote';
 import { DealerBlockMaster } from './dealerBlockMaster';
 import { CRMCustomerVehicle } from './crmCustomerVehicle';
-import { stockTransferIndentData } from './stockTransferIndent';
 import { ChargerInstallation } from './chargerInstallation';
 import { RsmAsmApproval } from './rsmAsmApproval';
 import { EvrDetailsCapturing } from './evrDetailsCapturing';
@@ -108,5 +107,5 @@ export const data = combineReducers({
     RsmAsmApproval,
     EvrDetailsCapturing,
     VehicleChecklistMaster,
-    AMCRegistration
+    AMCRegistration,
 });

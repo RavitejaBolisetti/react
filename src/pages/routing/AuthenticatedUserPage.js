@@ -68,10 +68,9 @@ import {
     CrmScreenEnrolmentMasterPage,
     VinBlockMasterPage,
     VehicleChecklistMasterPage,
-    EvrDetailsCapturingMasterPage,
     RsmAsmApprovalPage,
     ChargerInstallationPage,
-    AMCRegistrationMasterPage
+    AMCRegistrationMasterPage,
 } from 'pages/Sales';
 
 import { SplashPage } from 'pages/splash';
