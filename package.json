@@ -48,13 +48,13 @@
         "web-vitals": "^2.1.4"
     },
     "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
-        "test": "cross-env BABEL_ENV=test --max-old-space-size=4096 jest",
+        "start": "react-scripts --max-old-space-size=8192 start",
+        "build": "react-scripts --max-old-space-size=8192 build",
+        "test": "cross-env BABEL_ENV=test --max-old-space-size=8192 jest",
         "watch-tests": "cross-env BABEL_ENV=test jest --watch",
         "eject": "react-scripts eject",
         "clear_jest": "jest --clearCache",
-        "test:coverage": "cross-env BABEL_ENV=test --max-old-space-size=4096 jest --coverage",
+        "test:coverage": "cross-env BABEL_ENV=test --max-old-space-size=8192 jest --coverage",
         "prepare": "husky install",
         "lint-staged": "lint-staged",
         "pre-commit": "npm run lint-staged && git add .",
