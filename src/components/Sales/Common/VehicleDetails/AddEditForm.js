@@ -8,7 +8,6 @@ import { Col, Input, Form, Row, Button, Collapse, Typography, Divider, Switch } 
 import { validateRequiredSelectField, validateNumberWithTwoDecimalPlaces, validateRequiredInputField, compareAmountValidator } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { PlusOutlined } from '@ant-design/icons';
-import { FiEdit } from 'react-icons/fi';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { OptionServicesForm } from './optionServicesForm';
 import dayjs from 'dayjs';
@@ -67,6 +66,15 @@ const AddEditFormMain = (props) => {
         optionForm.resetFields();
         !activeKey.includes(3) && onChange(3);
         setIsReadOnly(true);
+    };
+
+    const handleButtonClick = ({ record }) => {
+        setOptionalServices((prev) => {
+            let updatedVal = [...prev];
+            const index = updatedVal?.findIndex((i) => i?.serviceName === record?.serviceName);
+            updatedVal?.splice(index, 1);
+            return updatedVal;
+        });
     };
 
     const handleCancel = () => {
@@ -288,7 +296,7 @@ const AddEditFormMain = (props) => {
                                     <OptionServicesForm {...OptionServicesFormProps} />
                                 </>
                             )}
-                            <DataTable tableColumn={optionalServicesColumns({ formActionType })} tableData={optionalServices} pagination={false} />
+                            <DataTable tableColumn={optionalServicesColumns({ handleButtonClick, formActionType })} tableData={optionalServices} pagination={false} />
                         </Panel>
                     </Collapse>
                 </Col>

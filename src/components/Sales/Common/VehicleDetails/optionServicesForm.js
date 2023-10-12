@@ -15,21 +15,20 @@ const OptionServicesFormMain = (props) => {
     const [uniqueServiceOptions, setUniqueServiceOptions] = useState(vehicleServiceData);
 
     useEffect(() => {
-        if (optionalServices && optionalServices?.length) {
-            const serviceNameList = optionalServices.map((i) => i.serviceName);
-            setUniqueServiceOptions(uniqueServiceOptions?.map((element) => ({ ...element, disabled: serviceNameList.includes(element.chargeDescription) })));
+        if (optionalServices) {
+            const serviceNameList = optionalServices?.map((i) => i?.serviceName);
+            setUniqueServiceOptions(uniqueServiceOptions?.map((element) => ({ ...element, disabled: serviceNameList?.includes(element?.chargeDescription) })));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [optionalServices]);
 
     const onFinish = () => {
-        optionForm.validateFields().then(() => {
-            const values = optionForm.getFieldsValue();
+        optionForm.validateFields().then((values) => {
             const data = { serviceName: values?.serviceName, amount: values?.amount, taxId: values?.taxId, id: '' };
             setOptionalServices([...optionalServices, data]);
             optionForm.resetFields();
             handleFormValueChange();
-        });
+        }).catch(err => console.error(err));
     };
 
     return (
