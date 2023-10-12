@@ -221,6 +221,14 @@ export const CrmScreenEnrolmentBase = (props) => {
     }, [userId]);
 
     useEffect(() => {
+        if (Object.values(detailData)?.length > 0) {
+            setCustomerData(detailData?.enrolmentCustomerDetailsDto);
+            setVehicleDataDetails(detailData?.enrolmentVehicleDetailsDto);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [detailData]);
+
+    useEffect(() => {
         if (formActionType?.addMode) {
             form.resetFields();
             setVehicleDataDetails([]);
@@ -291,7 +299,7 @@ export const CrmScreenEnrolmentBase = (props) => {
         advanceFilterForm.resetFields();
     };
 
-    const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
+    const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
         setFormData([]);
         setKeyValue(1);
