@@ -20,16 +20,15 @@ const ChargerInstallatioDetailsMasterBase = (props) => {
 
     const [activeKey, setActiveKey] = useState([]);
     const [addRequestVisible, setAddRequestVisible] = useState(false);
-
-    const onModalFinish = (values) => {
+    const onModalFinish = (value) => {
         setAddRequestVisible(false);
         setActiveKey([1]);
         addRequestForm
             .validateFields()
             .then(() => {
-                setAddRequestData((prev) => [values, ...prev]);
+                addRequestData?.length > 0 ? setAddRequestData((prev) => [value, ...prev]) : setAddRequestData([value]);
                 const values = addRequestForm.getFieldsValue();
-                setRequestPayload((prev) => ({ ...prev, chargerInstDetails: { requestDetails: [{ id: '', stageRequestDate: convertDateTimedayjs(new Date()), requestStage: values?.requestStage, visitTimeSlotOne: convertDateTimedayjs(values?.visitTimeSlotOne) || '', visitTimeSlotTwo: convertDateTimedayjs(values?.visitTimeSlotTwo) || '', visitTimeSlotThree: convertDateTimedayjs(values?.visitTimeSlotThree) || '' }] } }));
+                setRequestPayload((prev) => ({ ...prev, chargerInstDetails: { requestDetails: [{ id: chargerInstallationMasterData?.chargerInstDetails?.requestDetails[0].id || '', stageRequestDate: convertDateTimedayjs(new Date()), requestStage: values?.requestStage, visitTimeSlotOne: convertDateTimedayjs(values?.visitTimeSlotOne), visitTimeSlotTwo: convertDateTimedayjs(values?.visitTimeSlotTwo, 'YYYY-MM-DD HH:mm:ss', true), visitTimeSlotThree: convertDateTimedayjs(values?.visitTimeSlotThree, 'YYYY-MM-DD HH:mm:ss', true) }] } }));
                 handleFormValueChange();
             })
             .catch((err) => {

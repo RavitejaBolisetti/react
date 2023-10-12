@@ -19,8 +19,8 @@ import { validateRequiredInputField } from 'utils/validation';
 import { showGlobalNotification } from 'store/actions/notification';
 
 export const AddRequestModalForm = (props) => {
-    const { setAddRequestVisible, onAdvanceSearchCloseAction, typeData } = props;
-    const { filterString, setAddRequestData, addRequestForm, setActiveKey, onModalFinish, requestPayload, handleFormValueChange, setRequestPayload, handleButtonClick, setButtonData } = props;
+    const { onAdvanceSearchCloseAction, typeData } = props;
+    const { addRequestForm, onModalFinish } = props;
 
     // useEffect(() => {
     //     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -29,8 +29,6 @@ export const AddRequestModalForm = (props) => {
     const onFinishFailed = () => {
         return;
     };
-
-    console.log(requestPayload);
 
     const CheckDateEffectiveTo = (value, effectiveFrom) => {
         if (!value) return Promise.resolve();
@@ -69,12 +67,13 @@ export const AddRequestModalForm = (props) => {
             </Row>
 
             <Row gutter={20}>
-                <Col xs={24} m={24} md={12} lg={12} xl={12} className={styles.alignRight}>
+                <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.buttonsGroupLeft}>
                     <Button onClick={onAdvanceSearchCloseAction} danger>
                         Cancel
                     </Button>
                 </Col>
-                <Col xs={24} m={24} md={12} lg={12} xl={12}>
+
+                <Col xs={24} m={24} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
                     <Button htmlType="submit" type="primary">
                         Add
                     </Button>
