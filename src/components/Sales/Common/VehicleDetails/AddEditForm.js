@@ -26,6 +26,7 @@ import { customSelectBox } from 'utils/customSelectBox';
 import { prepareCaption } from 'utils/prepareCaption';
 import styles from 'assets/sass/app.module.scss';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
+import { ADD_ACTION, EDIT_ACTION, DELETE_ACTION } from 'utils/btnVisiblity';
 
 const { Text } = Typography;
 const { Panel } = Collapse;
@@ -36,6 +37,7 @@ const AddEditFormMain = (props) => {
 
     const [optionForm] = Form.useForm();
     const [confirmRequest, setConfirmRequest] = useState();
+    const [editingOptionalData, setEditingOptionalData] = useState({});
 
     const findUsageType = (usage) => {
         const foundVal = typeData[PARAM_MASTER.VEHCL_TYPE.id]?.find((element, index) => element?.value === usage);
@@ -68,13 +70,26 @@ const AddEditFormMain = (props) => {
         setIsReadOnly(true);
     };
 
-    const handleButtonClick = ({ record }) => {
-        setOptionalServices((prev) => {
-            let updatedVal = [...prev];
-            const index = updatedVal?.findIndex((i) => i?.serviceName === record?.serviceName);
-            updatedVal?.splice(index, 1);
-            return updatedVal;
-        });
+    const handleButtonClick = ({ record, buttonAction }) => {
+        switch (buttonAction) {
+            case ADD_ACTION:
+                break;
+            case EDIT_ACTION:
+                optionForm.setFieldsValue({ ...record });
+                setEditingOptionalData(record)
+                break;
+            case DELETE_ACTION:
+                setOptionalServices((prev) => {
+                    let updatedVal = [...prev];
+                    const index = updatedVal?.findIndex((i) => i?.serviceName === record?.serviceName);
+                    updatedVal?.splice(index, 1);
+                    return updatedVal;
+                });
+                setEditingOptionalData({});
+                break;
+            default:
+                break;
+        }
     };
 
     const handleCancel = () => {
@@ -100,6 +115,8 @@ const AddEditFormMain = (props) => {
         setOptionalServices,
         handleFormValueChange,
         vehicleServiceData,
+        editingOptionalData,
+        setEditingOptionalData
     };
 
     const handleSelectTreeClick = (value) => {

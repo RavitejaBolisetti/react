@@ -11,7 +11,7 @@ import { validateRequiredInputField, validateNumberWithTwoDecimalPlaces, validat
 import styles from 'assets/sass/app.module.scss';
 
 const OptionServicesFormMain = (props) => {
-    const { vehicleServiceData, handleCancel, handleFormValueChange, optionalServices, setOptionalServices, selectedOrderId, formData, optionForm } = props;
+    const { vehicleServiceData, handleCancel, handleFormValueChange, optionalServices, setOptionalServices, selectedOrderId, formData, optionForm, editingOptionalData, setEditingOptionalData } = props;
     const [uniqueServiceOptions, setUniqueServiceOptions] = useState(vehicleServiceData);
 
     useEffect(() => {
@@ -23,12 +23,25 @@ const OptionServicesFormMain = (props) => {
     }, [optionalServices]);
 
     const onFinish = () => {
-        optionForm.validateFields().then((values) => {
-            const data = { serviceName: values?.serviceName, amount: values?.amount, taxId: values?.taxId, id: '' };
-            setOptionalServices([...optionalServices, data]);
-            optionForm.resetFields();
-            handleFormValueChange();
-        }).catch(err => console.error(err));
+        optionForm
+            .validateFields()
+            .then((values) => {
+                const data = { serviceName: values?.serviceName, amount: values?.amount, taxId: values?.taxId, id: '' };
+                setOptionalServices((prev) => {
+                    if (Object.keys(editingOptionalData || {})?.length) {
+                        let updatedVal = [...prev];
+                        const index = updatedVal?.findIndex((i) => i?.serviceName === editingOptionalData?.serviceName);
+                        updatedVal?.splice(index, 1, { ...values });
+                        return updatedVal;
+                    } else {
+                        return [...optionalServices, data];
+                    }
+                });
+                optionForm.resetFields();
+                handleFormValueChange();
+                setEditingOptionalData({});
+            })
+            .catch((err) => console.error(err));
     };
 
     return (

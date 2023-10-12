@@ -47,11 +47,7 @@ export const optionalServicesColumns = ({ formActionType, handleButtonClick, sty
             width: '25%',
         }),
     ];
-    (!formActionType?.viewMode || !record?.id) && tableColumn.push(tblActionColumn({ handleButtonClick, styles, width: '15%', canEdit: false, canView: false, canDelete: true }));
-
-    // if (!formActionType?.viewMode) {
-    //     tableColumn.push(tblActionColumn({ handleButtonClick, styles, width: '15%', canEdit: true, canView: false, canDelete: true }));
-    // }
+    !formActionType?.viewMode && tableColumn.push(tblActionColumn({ handleButtonClick, styles, width: '15%', canEdit: false, canView: false, canDelete: true, canServerDataEdit: true }));
 
     return tableColumn;
 };

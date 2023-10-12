@@ -125,7 +125,7 @@ const VehicleDetailsMasterMain = (props) => {
     useEffect(() => {
         if (vehicleDetailData) {
             setFormData(vehicleDetailData);
-            vehicleDetailData?.optionalServices && setOptionalServices(vehicleDetailData?.optionalServices);
+            vehicleDetailData?.optionalServices && setOptionalServices(vehicleDetailData?.optionalServices || []);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vehicleDetailData]);
