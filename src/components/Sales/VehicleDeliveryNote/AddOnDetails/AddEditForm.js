@@ -12,7 +12,7 @@ import CommonForm from './CommonForm';
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { formData, setRegisterDisabled, registerDisabled, shieldForm, rsaForm, amcForm, formActionType, openAccordian, setOpenAccordian, onSingleFormFinish, schemeDescriptionData, handleEmployeeSearch, handleOnChange, muiltipleFormData } = props;
+    const { formData, setRegisterDisabled, registerDisabled, shieldForm, rsaForm, amcForm, formActionType, handleFormValueChange, openAccordian, setOpenAccordian, onSingleFormFinish, schemeDescriptionData, handleEmployeeSearch, handleOnChange, muiltipleFormData, handleAmcDescriptionData } = props;
 
     const handleCollapse = (key) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
@@ -23,9 +23,23 @@ const AddEditFormMain = (props) => {
     const handleCancelRegister = (key) => {
         setRegisterDisabled((prev) => ({ ...prev, [key]: true }));
     };
-    const shieldInfoProps = { ...props, formActionType, openAccordian, formData: formData?.sheildRequest, onSingleFormFinish, schemeDescriptionData, addOnForm: shieldForm, handleEmployeeSearch, handleOnChange, registerDisabled, isReadOnly: registerDisabled[openAccordian], handleEditRegister, handleCancelRegister, muiltipleFormData };
-    const rsaProps = { ...props, formActionType, openAccordian, formData: formData?.rsaRequest, onSingleFormFinish, schemeDescriptionData, addOnForm: rsaForm, handleEmployeeSearch, handleOnChange, registerDisabled, isReadOnly: registerDisabled[openAccordian], handleEditRegister, handleCancelRegister, muiltipleFormData };
-    const amcProps = { ...props, formActionType, openAccordian, formData: formData?.amcRequest, onSingleFormFinish, schemeDescriptionData, addOnForm: amcForm, handleEmployeeSearch, handleOnChange, registerDisabled, isReadOnly: registerDisabled[openAccordian], handleEditRegister, handleCancelRegister, muiltipleFormData };
+    const commonFormProps = {
+        ...props,
+        formActionType,
+        openAccordian,
+        onSingleFormFinish,
+        schemeDescriptionData,
+        handleEmployeeSearch,
+        handleOnChange,
+        registerDisabled,
+        handleEditRegister,
+        handleCancelRegister,
+        muiltipleFormData,
+        handleAmcDescriptionData,
+    };
+    const shieldInfoProps = { formData: formData?.sheildRequest, addOnForm: shieldForm, isReadOnly: registerDisabled[openAccordian] };
+    const rsaProps = { formData: formData?.rsaRequest, addOnForm: rsaForm, isReadOnly: registerDisabled[openAccordian] };
+    const amcProps = { formData: formData?.amcRequest, addOnForm: amcForm, isReadOnly: registerDisabled[openAccordian] };
 
     return (
         <Row gutter={20}>
@@ -34,7 +48,7 @@ const AddEditFormMain = (props) => {
                     <Panel header="Shield Information" key="Shield">
                         <Divider />
                         <Form layout="vertical" autoComplete="off" form={shieldForm}>
-                            <CommonForm {...shieldInfoProps} formKey={'sheildRequest'} disableKey={'Shield'} />
+                            <CommonForm {...commonFormProps} {...shieldInfoProps} formKey={'sheildRequest'} disableKey={'Shield'} />
                         </Form>
                     </Panel>
                 </Collapse>
@@ -43,7 +57,7 @@ const AddEditFormMain = (props) => {
                     <Panel header="RSA" key="RSA">
                         <Divider />
                         <Form layout="vertical" autoComplete="off" form={rsaForm}>
-                            <CommonForm {...rsaProps} formKey={'rsaRequest'} disableKey={'RSA'} />
+                            <CommonForm {...commonFormProps} {...rsaProps} formKey={'rsaRequest'} disableKey={'RSA'} />
                         </Form>
                     </Panel>
                 </Collapse>
@@ -52,7 +66,7 @@ const AddEditFormMain = (props) => {
                     <Panel header="AMC" key="AMC">
                         <Divider />
                         <Form layout="vertical" autoComplete="off" form={amcForm}>
-                            <CommonForm {...amcProps} formKey={'amcRequest'} disableKey={'AMC'} />
+                            <CommonForm {...commonFormProps} {...amcProps} formKey={'amcRequest'} disableKey={'AMC'} />
                         </Form>
                     </Panel>
                 </Collapse>
