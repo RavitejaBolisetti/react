@@ -335,12 +335,12 @@ export const AMCRegistrationMasterBase = (props) => {
     const handlePrintDownload = (record) => {
         console.log(`record`, record);
         let typeRecordKey = record?.typeRecord === `invoice_amc` ? 'fn_vc_receipts_hdr_id' : record?.typeRecord === `registration_certificate_amc` ? '' : record?.typeRecord === `registration_incentive_claim_amc` ? '' : null;
-        setReportButtonType(record?.typeRecordF);
+        setReportButtonType(record?.typeRecord);
         setReportVisible(true);
         setAdditionalReportParams([
             {
                 key: typeRecordKey,
-                value: record?.id,
+                value: record?.message,
             },
         ]);
     };

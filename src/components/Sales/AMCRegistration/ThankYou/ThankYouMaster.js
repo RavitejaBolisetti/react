@@ -60,15 +60,17 @@ export const ThankYouMaster = (props) => {
                             <Divider />
                             <Space size="middle" direction="vertical">
                                 <Text>Do you want to Print or download invoice and registration certificate</Text>
-                                <Button onClick={() => handlePrintDownload({ ...record, typeRecord: 'invoice_amc' })} danger>
-                                    {`Invoice`}
-                                </Button>
-                                <Button onClick={() => handlePrintDownload({ ...record, typeRecord: 'registration_certificate_amc' })} danger>
-                                    {`Registration Certificate`}
-                                </Button>
-                                <Button onClick={() => handlePrintDownload({ ...record, typeRecord: 'registration_incentive_claim_amc' })} danger>
-                                    {`Registration Incentive Claim`}
-                                </Button>
+                                <Row justify="space-between">
+                                    <Button onClick={() => handlePrintDownload({ ...record, typeRecord: 'invoice_amc' })} danger>
+                                        {`Invoice`}
+                                    </Button>
+                                    <Button onClick={() => handlePrintDownload({ ...record, typeRecord: 'registration_certificate_amc' })} danger style={{ margin: '0 12px' }}>
+                                        {`Registration Certificate`}
+                                    </Button>
+                                    <Button onClick={() => handlePrintDownload({ ...record, typeRecord: 'registration_incentive_claim_amc' })} danger>
+                                        {`Registration Incentive Claim`}
+                                    </Button>
+                                </Row>
                             </Space>
                         </div>
                     </Space>
