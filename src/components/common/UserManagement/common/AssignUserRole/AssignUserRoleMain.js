@@ -18,7 +18,6 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'assets/sass/app.module.scss';
 
 const { Text } = Typography;
-const defaultBtnVisiblity = { editBtn: false, saveBtn: true, next: false, nextBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, formBtnActive: false };
 
 const APPLICATION_WEB = DEVICE_TYPE?.WEB?.key;
 const APPLICATION_MOBILE = DEVICE_TYPE?.MOBILE?.key;
@@ -299,7 +298,7 @@ const AssignUserRole = (props) => {
         handleFormFieldChange,
         onFinishFailed,
         userRoleDataList,
-        roleListdata,
+        roleListdata: roleListdata?.filter((i) => i?.roleType === userType),
         handleSelectRole,
         setSelectedRoleId,
         selectedRoleId,

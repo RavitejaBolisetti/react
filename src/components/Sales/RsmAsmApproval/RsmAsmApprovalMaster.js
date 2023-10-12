@@ -20,7 +20,6 @@ import { dateFormatView, converDateDayjs } from 'utils/formatDateTime';
 import { BASE_URL_APPROVAL_CANCEL_REQUEST_URL as approvalCancelURL } from 'constants/routingApi';
 
 import { LANGUAGE_EN } from 'language/en';
-import { getCodeValue } from 'utils/getCodeValue';
 
 import { FilterIcon } from 'Icons';
 import { rsmAsmApprovalSearchDataAction } from 'store/actions/data/rsmAsmApproval/rsmAsmApprovalSearch';
@@ -116,6 +115,12 @@ export const RsmAsmApprovalMasterBase = (props) => {
             value: 'A',
         },
     };
+    useEffect(() => {
+        return () => {
+            setFilterString();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const onSuccessAction = () => {
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
@@ -130,16 +135,9 @@ export const RsmAsmApprovalMasterBase = (props) => {
 
     const handleButtonQuery = (item) => {
         setInvoiceStatusType(item?.key);
-        setFilterString({ ...filterString, invoiceStatusType: item?.key });
+        setFilterString({ current: 1 });
         setShowDataLoading(true);
     };
-
-    useEffect(() => {
-        if (filterString) {
-            setPage({ ...page, current: 1 });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString]);
 
     const extraParams = useMemo(() => {
         return [
@@ -183,7 +181,7 @@ export const RsmAsmApprovalMasterBase = (props) => {
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: page?.current,
+                value: filterString?.current || page?.current,
                 canRemove: true,
             },
             {
@@ -211,11 +209,11 @@ export const RsmAsmApprovalMasterBase = (props) => {
     }, [userId, invoiceStatusType, extraParams]);
 
     useEffect(() => {
-        return () => {
-            setFilterString();
-        };
+        if (page?.current > 1) {
+            setFilterString({ ...filterString, pageSize: 10, current: page?.current });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [page]);
 
     const onAdvanceSearchCloseAction = () => {
         form.resetFields();
@@ -321,12 +319,14 @@ export const RsmAsmApprovalMasterBase = (props) => {
         dynamicPagination,
         totalRecords,
         setPage,
+        page,
         tableColumn: tableColumn({ handleButtonClick, typeData }),
         tableData: data,
         showAddButton: false,
         handleAdd: handleButtonClick,
         noMessge: LANGUAGE_EN.GENERAL.LIST_NO_DATA_FOUND.TITLE,
         invoiceStatusType,
+        filterString,
     };
 
     const removeFilter = (key) => {

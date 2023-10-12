@@ -358,7 +358,6 @@
         }
     }
 }
-
 .modelContentTooltip {
     margin: 0px;
 }
@@ -812,11 +811,38 @@
             float: left;
         }
     }
-
 }
 
-.fieldcontentData {
-    width: 90%;
+.selectError {
+    & :global {
+        .ant-form-item {
+            .ant-form-item-explain-error {
+                position: absolute;
+                left: 14px;
+                background: $transparentErrorL;
+                color: $semanticError;
+                font-size: 13px;
+                text-align: center;
+                padding: 5px 10px;
+                border-radius: 5px;
+                z-index: 90;
+
+                &:after {
+                    content: '';
+                    position: absolute;
+                    display: block;
+                    width: 0;
+                    z-index: 1;
+                    border-style: solid;
+                    border-color: $transparentErrorL $transparentColor;
+                    border-width: 0 10px 10px;
+                    top: -10px;
+                    left: 50%;
+                    margin-left: -10px;
+                }
+            }
+        }
+    }
 }
 
 .fieldcontentData {
@@ -2202,7 +2228,29 @@
         line-height: 36px;
         color: $primaryBlack;
     }
+    .cardContanerOverflow {
+        overflow-y: scroll;
+        height: calc(100vh - 200px);
+        &::-webkit-scrollbar-track {
+            background-color: $primaryWhite;
+        }
 
+        &::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+            background-color: $primaryWhite;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: $neutralGrey2;
+            border-radius: 10px;
+            border: 2px solid $primaryWhite;
+
+            &:hover {
+                border: 2px solid $neutralGrey2;
+            }
+        }
+    }
     .viewDrawerContainer {
         & :global {
             .ant-space-horizontal {

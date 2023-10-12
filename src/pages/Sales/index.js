@@ -28,9 +28,12 @@ import VehicleTrackingPage from './VehicleTracking';
 import OtfSoMappingUnmappingMasterPage from './OtfSoMappingUnmapping';
 import StockTransferIndentMasterPage from './StockTransferIndent';
 import VehicleDeliveryNoteMasterPage from './VehicleDeliveryNote';
+import ChargerInstallationPage from './ChargerInstallationProcess';
 import CrmScreenEnrolmentMasterPage from './crmScreenEnrolment';
 import EvrDetailsCapturingMasterPage from './EvrDetailsCapturing';
 import VinBlockMasterPage from './VinBlockMaster';
+import VehicleChecklistMasterPage from './VehicleChecklistMaster';
+import AMCRegistrationMasterPage from './AMCRegistration';
 import RsmAsmApprovalPage from './RsmAsmApproval';
 
 export {
@@ -58,5 +61,8 @@ export {
     CrmScreenEnrolmentMasterPage,
     EvrDetailsCapturingMasterPage,
     VinBlockMasterPage,
+    VehicleChecklistMasterPage,
     RsmAsmApprovalPage,
+    ChargerInstallationPage,
+    AMCRegistrationMasterPage
 };

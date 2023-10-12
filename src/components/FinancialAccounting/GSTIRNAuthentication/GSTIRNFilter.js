@@ -4,19 +4,16 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Button, Row, Col, Input, Form } from 'antd';
-// import { FilterIcon } from 'Icons';
+import { Button, Row, Col, Input, Form, Select } from 'antd';
 import { RxCross2 } from 'react-icons/rx';
-import { customSelectBox } from 'utils/customSelectBox';
-import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredInputField } from 'utils/validation';
 
 import styles from 'assets/sass/app.module.scss';
-
+const { Option } = Select;
+ 
 export default function GSTIRNFilter(props) {
     const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, filterString, dealerGstData } = props;
     const { userId, isReadOnly = true, handleGstinNumber, } = props;
-    // const { selectedGst, setSelectedGst } = props;
     const disabledProps = { disabled: isReadOnly };
 
     return (
@@ -32,9 +29,13 @@ export default function GSTIRNFilter(props) {
                                 <Input maxLength={6} placeholder="Dealer Name" value={userId} {...disabledProps} />
                             </Form.Item>
                         </Col>
-                        <Col xs={24} sm={10} md={10} lg={10} xl={10} className={styles.verticallyCentered}>
+                        <Col xs={24} sm={5} md={5} lg={5} xl={5} className={styles.selectError} >
                             <Form.Item name="gstinNumber" className={styles.marB0} rules={[validateRequiredInputField('gstinNumber')]}>
-                                {customSelectBox({ data: dealerGstData, fieldNames: { key: 'value', value: 'value' }, onChange:handleGstinNumber, placeholder: preparePlaceholderSelect('GSTIN NUMBER') })}
+                                <Select onChange={handleGstinNumber}  placeholder="SELECT GSTIN" allowClear>
+                                            {dealerGstData?.map((item) => (
+                                                <Option value={item.value}>{item.value}</Option>
+                                            ))}
+                                        </Select>
                             </Form.Item>
                         </Col>
 

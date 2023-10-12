@@ -69,7 +69,7 @@ const AddEditFormMain = (props) => {
                                 <Form.Item name="otfTransferLocation" label="Transfer To Location" initialValue={formData?.otfTransferLocation} rules={[validateRequiredSelectField('Transfer To Location')]}>
                                     {customSelectBox({
                                         data: dealerLocations?.filter((location) => location?.locationCode !== defaultDealerLocationCode),
-                                        fieldNames: { key: 'locationId', value: 'dealerLocationName' },
+                                        fieldNames: { key: 'locationCode', value: 'dealerLocationName' },
                                         placeholder: preparePlaceholderSelect(''),
                                         onChange: handleOtfTransferLocationChange,
                                     })}
