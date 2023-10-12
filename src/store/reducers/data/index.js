@@ -52,7 +52,8 @@ import { stockTransferIndentData } from './stockTransferIndent';
 import { ChargerInstallation } from './chargerInstallation';
 import { RsmAsmApproval } from './rsmAsmApproval';
 import { EvrDetailsCapturing } from './evrDetailsCapturing';
-
+import { VehicleChecklistMaster } from './vehicleChecklistMaster';
+import { stockTransferIndentData } from './stockTransferIndent';
 import { CRMSchemeEnrollmentList } from './crmSchemeEnrollment';
 export const data = combineReducers({
     Menu,
@@ -104,4 +105,5 @@ export const data = combineReducers({
     CRMSchemeEnrollmentList,
     RsmAsmApproval,
     EvrDetailsCapturing,
+    VehicleChecklistMaster,
 });

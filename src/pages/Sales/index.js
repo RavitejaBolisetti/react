@@ -32,6 +32,7 @@ import ChargerInstallationPage from './ChargerInstallationProcess';
 import CrmScreenEnrolmentMasterPage from './crmScreenEnrolment';
 import EvrDetailsCapturingMasterPage from './EvrDetailsCapturing';
 import VinBlockMasterPage from './VinBlockMaster';
+import VehicleChecklistMasterPage from './VehicleChecklistMaster';
 import RsmAsmApprovalPage from './RsmAsmApproval';
 
 export {
@@ -59,6 +60,7 @@ export {
     CrmScreenEnrolmentMasterPage,
     EvrDetailsCapturingMasterPage,
     VinBlockMasterPage,
+    VehicleChecklistMasterPage,
     RsmAsmApprovalPage,
     ChargerInstallationPage,
 };

@@ -66,6 +66,7 @@ import {
     VehicleDeliveryNoteMasterPage,
     CrmScreenEnrolmentMasterPage,
     VinBlockMasterPage,
+    VehicleChecklistMasterPage,
     EvrDetailsCapturingMasterPage,
     RsmAsmApprovalPage,
     ChargerInstallationPage,
@@ -184,6 +185,8 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_RSM_ASM_APPROVAL} element={<RsmAsmApprovalPage />} exact />
             <Route path={routing.ROUTING_GST_IRN_TRANSACTION} element={<GstIRNTransactionPage />} exact />
             <Route path={routing.ROUTING_VIN_BLOCK_MASTER} element={<VinBlockMasterPage />} exact />
+            <Route path={routing.ROUTING_VEHICLE_CHECKLIST_MASTER} element={<VehicleChecklistMasterPage />} exact />
+            <Route path={routing.ROUTING_RSM_ASM_APPROVAL} element={<RsmAsmApprovalPage />} exact />
         </Routes>
     );
 };
