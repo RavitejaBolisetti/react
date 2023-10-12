@@ -73,6 +73,7 @@ export const BASE_URL_PRODUCT_HIERARCHY_SKU_SAVE = BASE_URL + 'product/skuattrib
 export const BASE_URL_PRODUCT_NAME_DROPDOWN = BASE_URL + 'product/attributes';
 
 export const BASE_URL_ATTRIBUTE_MASTER = BASE_URL + 'hierarchyattributes';
+export const BASE_URL_HIERARCHY_ATTRIBUTE_LOV = BASE_URL_ATTRIBUTE_MASTER + '/lov';
 
 export const BASE_URL_CONFIG_PARAM_EDIT_TYPE = BASE_URL + 'configurableparametertypes';
 export const BASE_URL_QUALIFICATION_MASTER = BASE_URL + 'application/qualifications';
@@ -197,6 +198,8 @@ export const BASE_URL_RSM_APPROVAL_SEARCH = BASE_URL_RSM_APPROVAL + '/search';
 export const BASE_URL_INVOICE_DETAIL = BASE_URL_INVOICE + 'details';
 
 export const BASE_URL_VEHICLE = BASE_URL + 'vehicle/';
+export const BASE_URL_CHARGER_INSTALLATION_SEARCH = BASE_URL_VEHICLE + 'charger/installation/search';
+export const BASE_URL_CHARGER_INSTALLATION = BASE_URL_VEHICLE + 'charger/installation';
 export const BASE_URL_VEHICLE_SEARCH = BASE_URL_VEHICLE + 'search';
 export const BASE_URL_VIEW_VEHICLE_DETAILS = BASE_URL_VEHICLE + 'details';
 export const BASE_URL_VEHICLE_CONTACTS = BASE_URL_VEHICLE + 'contacts';
@@ -292,6 +295,7 @@ export const BASE_URL_VEHICLE_INVOICE_IRN_GENERATION = BASE_URL_VEHICLE_INVOICE 
 export const BASE_URL_VEHICLE_INVOICE_PROFILE_CARD = BASE_URL_VEHICLE_INVOICE + '/profile';
 
 export const BASE_URL_VEHICLE_DETAILS_SERVICE = BASE_URL + 'otf/vehicledetails/optionalcharges';
+export const BASE_URL_VEHICLE_CUSTOMER_CRM_DETAILS = BASE_URL + 'otf/vehiclecustomer/details';
 
 export const BASE_URL_ON_ROAD_PRICE_MASTER_SEARCH = BASE_URL + 'vehicle/onroad/pricemaster/search';
 
@@ -339,6 +343,7 @@ export const BASE_URL_VEHICLE_CHALLAN_CANCEL_NOTE = BASE_URL + 'otf/delivery/cha
 
 export const BASE_URL_RELATIONSHIP_MANAGER = BASE_URL_USER_MANAGEMENT_APPLICATIONS_DEALER + '/employees';
 export const BASE_URL_DELIVERY_NOTE_VEHICLE_DETAILS = BASE_URL_OTF_VEHICLE_DETAILS + '/search/registrationnumber';
+export const BASE_URL_VEHICLE_INVOICE_GENERATION_PROFILE_CARD = BASE_URL_OTF + 'vehicleinvoice/profile';
 
 export const BASE_URL_VIN_BLOCK_MASTER = BASE_URL_VEHICLE + 'vinbolckmaster/search';
 export const BASE_URL_VIN_BLOCK_VIEWMASTER = BASE_URL_VEHICLE + 'vinbolckmaster';
@@ -358,5 +363,11 @@ export const BASE_URL_APPROVAL_CANCEL_REQUEST_URL = BASE_URL_DELIVERY_NOTE_INVOI
 
 export const BASE_URL_DEALER_BRANCH_ACCESS = BASE_URL_DEALER_MANPOWER + '/parent/locations';
 export const BASE_URL_DEALER_GST = BASE_URL_DEALER_MANPOWER + '/parent/gstin/lov';
+export const BASE_URL_VEHICLE_CHECKLIST_MASTER = BASE_URL + 'vehicle/checklist/checklistmaster';
 
+export const BASE_URL_AMC_REGISTRATION = BASE_URL + 'vehicle/amc';
+export const BASE_URL_AMC_REGISTRATION_SEARCH = BASE_URL_AMC_REGISTRATION + '/search';
+export const BASE_URL_AMC_REGISTRATION_DATA = BASE_URL_AMC_REGISTRATION + '/registration/details';
+export const BASE_URL_AMC_EMPLOYEE_SEARCH = BASE_URL + 'users/search/employees';
+export const BASE_URL_AMC_SCHEMES = BASE_URL_AMC_REGISTRATION + '/scheme';
 export const BASE_URL_GST_DOCID_NAME = BASE_URL + 'finance/gstirnauthentication';

@@ -115,9 +115,8 @@ export const InvoiceDetailsMasterBase = (props) => {
             form.setFieldsValue({
                 deliveryNoteFor: 'Directly Billed Vehicle',
             });
-            if (invoiceData?.chassisNumber && invoiceData?.engineNumber) {
-                setButtonData({ ...buttonData, formBtnActive: true });
-            }
+            const disableFormButton = invoiceData?.chassisNumber && invoiceData?.engineNumber;
+            setButtonData({ ...buttonData, formBtnActive: disableFormButton });
             setFormData((prev) => ({ ...prev, deliveryNoteFor: 'Directly Billed Vehicle' }));
         } else {
             form.setFieldsValue({
@@ -162,7 +161,7 @@ export const InvoiceDetailsMasterBase = (props) => {
             fetchRelationshipManger({ setIsLoading: listRelationshipMangerShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, soldByDealer]);
+    }, [userId, soldByDealer, section]);
 
     const handleChassisNoSearch = (val) => {
         if (!val) return;

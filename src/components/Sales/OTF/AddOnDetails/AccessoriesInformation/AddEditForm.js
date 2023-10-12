@@ -80,6 +80,7 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
         setSelectedRowData,
         handleSelectedData,
     };
+
     return (
         <>
             <Form autoComplete="off" form={accessoryForm} onFieldsChange={onFieldsChange} layout="vertical" onFinishFailed={onFinishFailed}>
