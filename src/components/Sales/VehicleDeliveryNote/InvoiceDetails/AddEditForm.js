@@ -27,8 +27,9 @@ const AddEditFormMain = (props) => {
                 engineNumber: ValueObj?.engineNumber,
             });
             setButtonData((prev) => ({ ...prev, formBtnActive: true }));
-
             getChallanDetails(value, ValueObj?.engineNumber);
+        } else {
+            setButtonData((prev) => ({ ...prev, formBtnActive: false }));
         }
     };
 

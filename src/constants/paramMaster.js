@@ -425,8 +425,20 @@ export const PARAM_MASTER = {
         id: 'CHRG_STATUS',
         title: 'EVR Charging Status',
     },
+    AMC_SCHEME_TYPE: {
+        id: 'AMC_SCHEME_TYPE',
+        title: 'AMC Scheme AMC Type',
+    },
     DEVICE_TYPE: {
         id: 'DVIC_TYP',
         title: 'Device Type',
+    },
+    AMC_SEARCH_TYPE: {
+        id: 'AMC_SEARCH_TYPE',
+        title: 'AMC Search',
+    },
+    AMC_CANCEL_REASON: {
+        id: 'AMC_CANCEL_REASON',
+        title: 'AMC cancellation reason',
     },
 };
