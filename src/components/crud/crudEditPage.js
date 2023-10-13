@@ -98,7 +98,7 @@ export const crudEditPage = ({ mapStateToProps, dataActions, showGlobalNotificat
         };
 
         const onFinishFailed = (errorInfo) => {
-            validateFields().then((values) => {});
+            validateFields().then((values) => {}).catch(err => console.error(err));
         };
         const buttonProps = {
             formData: [],

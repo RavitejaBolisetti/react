@@ -9,13 +9,6 @@ afterEach(() => {
     jest.restoreAllMocks();
 });
 
-// jest.mock('store/actions/data/invoiceGeneration/vehicleInvoiceGeneration', () => ({
-//     vehicleInvoiceDataActions: {
-//         innerDataActions: {
-//             fetchList: jest.fn(),
-//         },
-//     },
-// }));
 
 jest.mock('store/actions/data/invoiceGeneration/irnGeneration', () => ({
     vehicleIrnGenerationDataActions: {},
@@ -135,8 +128,8 @@ describe('Vehicle Invoice Generation Master components', () => {
 
         const advanceFilter = screen.getByPlaceholderText(/Search/i);
         fireEvent.change(advanceFilter, { target: { value: 'Test' } });
-        const removeFilter = screen.getAllByTestId('removeFilter');
-        fireEvent.click(removeFilter[0]);
+        const removeFilter = screen.getByRole('img',{name:/close-circle/i});
+        fireEvent.click(removeFilter);
     });
 
     it('query buttons should work', async () => {

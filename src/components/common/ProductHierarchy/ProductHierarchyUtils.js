@@ -20,6 +20,29 @@ export const FindprodctCode = (node, prodctCode, key) => {
     return foundduplicate;
 };
 
+export const FindProductName = (node, prodctCode, key) => {
+    let prodctNm = undefined;
+    function datas(node, prodctCode, key) {
+        if (prodctNm) return;
+        for (let i = 0; i < node?.length; i++) {
+            if (prodctNm) {
+                break;
+            }
+            if (node[i]?.prodctCode === prodctCode) {
+                prodctNm = node[i]?.prodctShrtName;
+                break;
+            }
+            if (node[i]?.subProdct && node[i]?.subProdct.length) {
+                node[i]?.subProdct?.forEach((child) => {
+                    datas(node[i]?.subProdct, prodctCode, key);
+                });
+            }
+        }
+    }
+    datas(node, prodctCode, key);
+    return prodctNm;
+};
+
 export const DisableParent = (node, key = 'subManufactureOrg') => {
     function datas(node) {
         if (node?.[key] && node?.[key].length) {

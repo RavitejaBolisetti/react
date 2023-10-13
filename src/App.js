@@ -4,6 +4,8 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, createContext, useCallback } from 'react';
+import { Offline } from 'react-detect-offline';
+
 import { ConfigProvider, notification } from 'antd';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -14,7 +16,6 @@ import { MainPage } from './components/MainPage';
 
 import { readFromStorageAndValidateAuth } from 'store/actions/auth';
 import { hideGlobalNotification } from 'store/actions/notification';
-import { CheckNetworkStatus } from 'utils/CheckNetworkStatus';
 
 import styles from './App.module.scss';
 
@@ -99,7 +100,9 @@ const AppBase = ({ readFromStorageAndValidateAuth, hideGlobalNotification, notif
             >
                 <NotificationContext.Provider value={informationModalBox}>
                     {contextInformationNotification}
-                    <CheckNetworkStatus />
+                    <Offline>
+                        <div className={styles.noInternetConnectivity}>You're Offline. Please check your internet connection and try again</div>
+                    </Offline>
                     <MainPage />
                 </NotificationContext.Provider>
             </ConfigProvider>

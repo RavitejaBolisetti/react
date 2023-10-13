@@ -141,7 +141,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [cancelDeliveryNoteVisible, setCancelDeliveryNoteVisible] = useState(false);
-    const [previousSection, setpreviousSection] = useState(1);
+    const [previousSection, setPreviousSection] = useState(1);
     const [actionButtonVisiblity, setActionButtonVisiblity] = useState({ canAdd: true, canView: false, canEdit: false });
     const [toolTipContent, setToolTipContent] = useState('');
     const [selectedOtfNumber, setSelectedOtfNumber] = useState();
@@ -491,7 +491,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
                 invoiceDetailForm.resetFields();
-                setpreviousSection(1);
+                setPreviousSection(1);
                 record?.vehicleSoldByDealer && handleDeliveryNoteDataCall(record?.invoicehdrId, '', ADD_ACTION, record?.vehicleSoldByDealer);
                 record && setSelectedOrderId(record?.invoiceId);
                 record && setSelectedOtfNumber(record?.otfNumber);
@@ -836,7 +836,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         setButtonData,
         receiptDetailData,
         previousSection,
-        setpreviousSection,
+        setPreviousSection,
         apportionList,
         setApportionList,
         deliveryStatus,

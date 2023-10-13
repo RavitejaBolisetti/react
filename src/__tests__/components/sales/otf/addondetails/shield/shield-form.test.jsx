@@ -5,12 +5,12 @@ import ShieldForm from 'components/Sales/OTF/AddOnDetails/Shield/ShieldForm';
 import { Form } from 'antd';
 afterEach(() => {
     jest.restoreAllMocks();
-  }); 
+});
 
 const FormWrapper = (props) => {
-    const [shieldForm]=Form.useForm();
-    return <ShieldForm shieldForm={shieldForm} {...props} />
-}
+    const [shieldForm] = Form.useForm();
+    return <ShieldForm shieldForm={shieldForm} {...props} />;
+};
 
 describe('Shield Form Component', () => {
     it('should render shield form component', () => {
@@ -18,8 +18,8 @@ describe('Shield Form Component', () => {
     });
 
     it('shield form input should work', () => {
-        customRender(<FormWrapper setformDataSetter={jest.fn}/>);
-        const shieldInput=screen.getByRole('textbox', { name: 'Shield'});
-        fireEvent.change(shieldInput, { target: { value: 'Test' }})
+        customRender(<FormWrapper setformDataSetter={jest.fn} setFormDataSetter={jest.fn()} />);
+        const shieldInput = screen.getByRole('textbox', { name: 'Shield' });
+        fireEvent.change(shieldInput, { target: { value: 'Test' } });
     });
 });

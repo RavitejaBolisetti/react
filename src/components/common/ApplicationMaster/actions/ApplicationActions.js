@@ -3,13 +3,13 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { Fragment, useState, useReducer } from 'react';
+import React, { useState, useReducer } from 'react';
 import { Form } from 'antd';
 
 import CardApplicationAction from './CardApplicationAction';
 import ApplicationActionsForm from './ApplicationActionsForms';
 
-const ApplicationActions = ({ footerEdit = false, onFinishFailed = () => {}, isReadOnly = false, setFormBtnDisable, setFinalFormdata, finalFormdata, actions, setCanFormSave }) => {
+const ApplicationActions = ({ setFinalFormdata, finalFormdata, actions, setCanFormSave }) => {
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [isBtnDisabled, setIsBtnDisabled] = useState(false);
     const [actionForm] = Form.useForm();

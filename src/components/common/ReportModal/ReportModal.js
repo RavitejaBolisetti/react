@@ -60,8 +60,8 @@ export const EmbeddedReportMasterBase = (props) => {
         settings: undefined,
     });
 
-    const onSuccessAction = (res) => {
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'File deleted Successfully' });
+    const onSuccessAction = () => {
+        return undefined;
     };
 
     const onErrorAction = (message) => {

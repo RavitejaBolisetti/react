@@ -34,4 +34,10 @@ export const STOCK_INDENT_STATUS = {
         title: 'Partially Issued',
         desc: 'Partially Issued',
     },
+    CANCELLED: {
+        id: 5,
+        key: 'Cancelled',
+        title: 'Cancelled',
+        desc: 'Cancelled',
+    },
 };

@@ -197,7 +197,7 @@ const ReceiptDetailMasterBase = (props) => {
                 handleButtonClick({ buttonAction: NEXT_ACTION });
             }
             setButtonData({ ...buttonData, formBtnActive: false });
-        });
+        }).catch(err => console.error(err));
     };
 
     const handleFormValueChange = () => {

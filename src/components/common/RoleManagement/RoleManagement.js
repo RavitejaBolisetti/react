@@ -62,7 +62,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const RoleManagementMain = (props) => {
-    const { fetchList, userId, isDataLoaded, listShowLoading,isDataLoading, showGlobalNotification, roleManagementData, fetchMenuList } = props;
+    const { fetchList, userId, isDataLoaded, listShowLoading, isDataLoading, showGlobalNotification, roleManagementData, fetchMenuList } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
 
@@ -148,7 +148,7 @@ export const RoleManagementMain = (props) => {
         }
     };
 
-    const handleResetFilter = (e) => {
+    const handleResetFilter = () => {
         setFilterString();
         listFilterForm.resetFields();
         setShowDataLoading(false);
@@ -162,10 +162,6 @@ export const RoleManagementMain = (props) => {
             listFilterForm.resetFields();
             setShowDataLoading(false);
         }
-    };
-
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
     };
 
     const onCloseAction = () => {
@@ -204,7 +200,6 @@ export const RoleManagementMain = (props) => {
 
         formActionType,
         setFormActionType,
-        onFinishFailed,
         buttonData,
 
         setButtonData,
@@ -228,7 +223,6 @@ export const RoleManagementMain = (props) => {
         advanceFilter: false,
         filterString,
         from: listFilterForm,
-        onFinishFailed,
         onSearchHandle,
         handleResetFilter,
         handleClearInSearch,

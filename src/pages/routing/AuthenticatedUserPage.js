@@ -5,7 +5,7 @@
  */
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { DashboardNewPage, DashboardPage } from 'pages/dashboard';
+import { DashboardOldPage, DashboardPage } from 'pages/dashboard';
 import * as routing from 'constants/routing';
 
 import {
@@ -88,8 +88,8 @@ export const AuthenticatedUserPage = () => {
     return (
         <Routes>
             <Route path={routing.ROUTING_HOME} element={<SplashPage />} exact />
+            {/* <Route path={routing.ROUTING_DASHBOARD_OLD} element={<DashboardOldPage />} /> */}
             <Route path={routing.ROUTING_DASHBOARD} element={<DashboardPage />} />
-            <Route path={routing.ROUTING_DASHBOARD_NEW} element={<DashboardNewPage />} />
 
             <Route path={routing.ROUTING_COMMON_MANUFACTURER_ORGANIZATION_HIERARCHY} element={<ManufacturerOrgHierarchyPage />} />
             <Route path={routing.ROUTING_COMMON_PRODUCT_HIERARCHY} element={<ProductHierarchyPage />} />

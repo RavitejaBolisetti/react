@@ -27,7 +27,7 @@ export function GSTLoginForm(props) {
         setShowPassword(false);
     };
     const passowrdSuffix = (
-        <span onMouseDown={handleShowPassword} onMouseUp={handleHidePassword} onMouseLeave={handleHidePassword}>
+        <span onMouseDown={handleShowPassword} onMouseUp={handleHidePassword} onMouseLeave={handleHidePassword} data-testid="password-id-icon">
             {!showPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
         </span>
     );
@@ -44,12 +44,12 @@ export function GSTLoginForm(props) {
         setShowSecretId(false);
     };
     const clientIdSuffix = (
-        <span onMouseDown={handleShowClientId} onMouseUp={handleHideClientId} onMouseLeave={handleHideClientId}>
+        <span onMouseDown={handleShowClientId} onMouseUp={handleHideClientId} onMouseLeave={handleHideClientId} data-testid="clint-id-icon">
             {!showClientId ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
         </span>
     );
     const secretIdSuffix = (
-        <span onMouseDown={handleShowSecretId} onMouseUp={handleHideSecretId} onMouseLeave={handleHideSecretId}>
+        <span onMouseDown={handleShowSecretId} onMouseUp={handleHideSecretId} onMouseLeave={handleHideSecretId} data-testid="secret-id-icon">
             {!showSecretId ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
         </span>
     );
@@ -71,7 +71,7 @@ export function GSTLoginForm(props) {
                             </div>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.inputLabelPlaceholder}>
-                                    <Form.Item name="userName" data-testid="userIdInput" rules={[validateRequiredInputField('user name')]} className={styles.inputBox}>
+                                    <Form.Item name="userName" data-testid="userName" rules={[validateRequiredInputField('user name')]} className={styles.inputBox}>
                                         {<Input data-testid="userNameInput" prefix={<BiUser size={16} />} type="text" maxLength={25} onChange={handleFormChange('userName')} placeholder="UserName" />}
                                     </Form.Item>
                                 </Col>
@@ -79,16 +79,16 @@ export function GSTLoginForm(props) {
 
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.inputLabelPlaceholder}>
-                                    <Form.Item name="clientId" data-testid="userIdInput" rules={[validateRequiredInputField('client id')]} className={styles.inputBox}>
-                                        <Input data-testid="inputPassword" type={showClientId ? 'text' : 'password'} prefix={<BiUser size={16} />} suffix={clientIdSuffix} onChange={handleFormChange('clientId')} placeholder="Client Id" />
+                                    <Form.Item name="clientId" data-testid="clientId" rules={[validateRequiredInputField('client id')]} className={styles.inputBox}>
+                                        <Input data-testid="clientIdInput" type={showClientId ? 'text' : 'password'} prefix={<BiUser size={16} />} suffix={clientIdSuffix} onChange={handleFormChange('clientId')} placeholder="Client Id" />
                                     </Form.Item>
                                 </Col>
                             </Row>
 
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.inputLabelPlaceholder}>
-                                    <Form.Item name="secretId" data-testid="userIdInput" rules={[validateRequiredInputField('secret id')]} className={styles.inputBox}>
-                                        <Input data-testid="inputPassword" type={showSecretId ? 'text' : 'password'} prefix={<BiUser size={16} />} suffix={secretIdSuffix} onChange={handleFormChange('secretId')} placeholder="Secret Id" />
+                                    <Form.Item name="secretId" data-testid="secretId" rules={[validateRequiredInputField('secret id')]} className={styles.inputBox}>
+                                        <Input data-testid="secretIdInput" type={showSecretId ? 'text' : 'password'} prefix={<BiUser size={16} />} suffix={secretIdSuffix} onChange={handleFormChange('secretId')} placeholder="Secret Id" />
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -96,7 +96,7 @@ export function GSTLoginForm(props) {
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.inputLabelPlaceholder}>
                                     <Form.Item name="password" data-testid="password" rules={[validateRequiredInputField('password')]} className={styles.inputBox}>
-                                        <Input data-testid="inputPassword" type={showPassword ? 'text' : 'password'} prefix={<FiLock size={16} />} suffix={passowrdSuffix} onChange={handleFormChange('password')} placeholder="Password" />
+                                        <Input data-testid="passwordInput" type={showPassword ? 'text' : 'password'} prefix={<FiLock size={16} />} suffix={passowrdSuffix} onChange={handleFormChange('password')} placeholder="Password" />
                                     </Form.Item>
                                 </Col>
                             </Row>
