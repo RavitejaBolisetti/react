@@ -161,11 +161,11 @@ export const DealerCompanyBase = (props) => {
         }
     };
 
-    const handleResetFilter = (e) => {
-        setFilterString();
-        listFilterForm.resetFields();
-        setShowDataLoading(false);
-    };
+    // const handleResetFilter = (e) => {
+    //     setFilterString();
+    //     listFilterForm.resetFields();
+    //     setShowDataLoading(false);
+    // };
 
     const handleClearInSearch = (e) => {
         if (e?.target?.value === '') {
@@ -248,7 +248,7 @@ export const DealerCompanyBase = (props) => {
         buttonData,
         setButtonData,
         handleButtonClick,
-        handleResetFilter,
+        // handleResetFilter, //this method is unused so Please this method
         listShowLoading,
         pincodeData,
         fetchPincodeDetail,
@@ -273,7 +273,7 @@ export const DealerCompanyBase = (props) => {
         onFinish,
         onFinishFailed,
         onSearchHandle,
-        handleResetFilter,
+        // handleResetFilter, //this method is unused so Please check method,
         handleClearInSearch,
         handleReferesh,
         handleButtonClick,
