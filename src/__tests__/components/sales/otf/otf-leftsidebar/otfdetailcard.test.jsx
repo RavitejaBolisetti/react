@@ -11,9 +11,9 @@ import OTFDetailCard from '@components/Sales/OTF/LeftSidebar/OTFDetailCard';
 describe('Booking detail card Components', () => {
     it('it should render Booking detailcard components', () => {
         customRender(<OTFDetailCard />);
-        const customertype = screen.getByText('Customer Type:');
+        const customertype = screen.getByText('Booking No.:');
         expect(customertype).toBeInTheDocument();
-        const model = screen.getByText('Model:');
+        const model = screen.getByText('See more:');
         expect(model).toBeInTheDocument();
     });
 });

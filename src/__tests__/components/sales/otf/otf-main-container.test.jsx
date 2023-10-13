@@ -39,7 +39,7 @@ describe('OtfMaster component render', () => {
             VEHCL_TYPE: [{ name: 'Car' }],
         };
         const currentSection = 3;
-        customRender(<FormWrapper typeData={typeData} isVisible={true} currentSection={currentSection} handleFormValueChange={jest.fn()} />);
+        customRender(<FormWrapper setButtonData={jest.fn()} typeData={typeData} isVisible={true} currentSection={currentSection} handleFormValueChange={jest.fn()} />);
     });
 
     it('should render scheme and offer details component', () => {
@@ -49,20 +49,20 @@ describe('OtfMaster component render', () => {
 
     it('should render insurance details component', () => {
         const currentSection = 5;
-        customRender(<FormWrapper handleFormValueChange={jest.fn()} isVisible={true} currentSection={currentSection} />);
+        customRender(<FormWrapper setButtonData={jest.fn()} handleFormValueChange={jest.fn()} isVisible={true} currentSection={currentSection} />);
     });
 
     it('should render finance details component', () => {
         const currentSection = 6;
-        const typeData={
-            FNC_ARNGD: [{name: 'Kai'}]
-        }
+        const typeData = {
+            FNC_ARNGD: [{ name: 'Kai' }],
+        };
         customRender(<FormWrapper isVisible={true} typeData={typeData} currentSection={currentSection} handleFormValueChange={jest.fn()} />);
     });
 
     it('should render exchange vehicle component', () => {
         const currentSection = 7;
-        customRender(<FormWrapper isVisible={true} currentSection={currentSection} handleFormValueChange={jest.fn()} />);
+        customRender(<FormWrapper setButtonData={jest.fn()} isVisible={true} currentSection={currentSection} handleFormValueChange={jest.fn()} />);
     });
 
     it('should render referrals component', () => {
@@ -72,7 +72,7 @@ describe('OtfMaster component render', () => {
 
     it('should render loyalty scheme component', () => {
         const currentSection = 9;
-        customRender(<FormWrapper isVisible={true} currentSection={currentSection} handleFormValueChange={jest.fn()} />);
+        customRender(<FormWrapper setButtonData={jest.fn()} isVisible={true} currentSection={currentSection} handleFormValueChange={jest.fn()} />);
     });
 
     it('should render invoice information component', () => {
