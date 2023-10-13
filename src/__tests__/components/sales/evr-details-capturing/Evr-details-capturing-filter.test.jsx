@@ -38,7 +38,7 @@ describe('Evr details capturing filter render', () => {
             advanceFilter: true,
         };
         const extraParams = [{ name: 'John' }];
-        customRender(<EvrDetailsCapturingFilter handleResetFilter={jest.fn()} filterString={filterString} advanceFilter={true} extraParams={extraParams} />);
+        customRender(<EvrDetailsCapturingFilter handleClear={jest.fn()} handleResetFilter={jest.fn()} filterString={filterString} advanceFilter={true} extraParams={extraParams} />);
         const clearBtn = screen.getByRole('button', { name: 'Clear' });
         fireEvent.click(clearBtn);
     });

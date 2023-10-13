@@ -27,7 +27,7 @@ describe('Vehicle Detail master components', () => {
         const formActionType = { viewMode: true };
         customRender(<FormWrapper formActionType={formActionType} setSelectedOrder={jest.fn()} setButtonData={jest.fn()} />);
 
-        const plusImg = screen.getAllByRole('img', { name: /plus/i });
+        const plusImg = screen.getAllByRole('img', { name: /minus/i });
         fireEvent.click(plusImg[0]);
         fireEvent.click(plusImg[1]);
     });

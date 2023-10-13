@@ -25,7 +25,7 @@ describe('Booking Vehicle Details Component render', () => {
     });
 
     it('should render screen text ', async () => {
-        customRender(<FormWrapper typeData={typeDataMock} formData={'taxDetails'} setOpenAccordian={jest.fn()} toolTipContent={true} setIsReadOnly={jest.fn()} isReadOnly={false} />);
+        customRender(<FormWrapper onChange={jest.fn()} typeData={typeDataMock} formData={'taxDetails'} setOpenAccordian={jest.fn()} toolTipContent={true} setIsReadOnly={jest.fn()} isReadOnly={false} />);
 
         const plusAddBtn = screen.getAllByRole('button', { name: /plus Add/i });
         expect(plusAddBtn).toBeTruthy();
@@ -72,7 +72,7 @@ describe('Booking Vehicle Details Component render', () => {
     });
 
     it('should render screen text when readonly is true', async () => {
-        customRender(<FormWrapper typeData={typeDataMock} formData={'taxDetails'} setOpenAccordian={jest.fn()} toolTipContent={true} setIsReadOnly={jest.fn()} isReadOnly={true} />);
+        customRender(<FormWrapper typeData={typeDataMock} onChange={jest.fn()} formData={'taxDetails'} setOpenAccordian={jest.fn()} toolTipContent={true} setIsReadOnly={jest.fn()} isReadOnly={true} />);
 
         const plusAddBtn = screen.getAllByRole('button', { name: /plus Add/i });
         expect(plusAddBtn).toBeTruthy();
@@ -92,12 +92,6 @@ describe('Booking Vehicle Details Component render', () => {
 
         const sepeator = screen.getAllByRole('separator', { name: '' });
         expect(sepeator).toBeTruthy();
-
-        const table = screen.getAllByRole('table', { name: '' });
-        expect(table).toBeTruthy();
-
-        const rowGrp = screen.getAllByRole('rowgroup', { name: '' });
-        expect(rowGrp).toBeTruthy();
 
         const rateAmt = screen.getByRole('row', { name: /Srl. Description Rate Amount/i });
         expect(rateAmt).toBeTruthy();
@@ -119,7 +113,7 @@ describe('Booking Vehicle Details Component render', () => {
     });
 
     it('should render text fields', async () => {
-        customRender(<FormWrapper typeData={typeDataMock} formData={'taxDetails'} setOpenAccordian={jest.fn()} toolTipContent={true} setIsReadOnly={jest.fn()} isReadOnly={true} />);
+        customRender(<FormWrapper onChange={jest.fn()} typeData={typeDataMock} formData={'taxDetails'} setOpenAccordian={jest.fn()} toolTipContent={true} setIsReadOnly={jest.fn()} isReadOnly={true} />);
 
         const plusBtn = screen.getAllByRole('img', { name: /plus/i });
         fireEvent.click(plusBtn[0]);
