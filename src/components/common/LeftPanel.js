@@ -12,7 +12,7 @@ import { InputSkeleton } from './Skeleton';
 const LeftPanel = (props) => {
     const { selectedTreeKey, callOnForm = false, treeData, fieldNames, handleTreeViewClick, isOpenInModal, checkedKeys, expendedKeys: defaultExpandedKeys = [] } = props;
     const { isTreeViewVisible, checkable, onCheck = () => {}, selectable = true } = props;
-    const { isLoading = false, searchValue, setSearchValue, disabled = false, showLine=true } = props;
+    const { isLoading = false, searchValue, setSearchValue, disabled = false, showLine = true } = props;
 
     const [expandedKeys, setExpandedKeys] = useState([]);
     const [autoExpandParent, setAutoExpandParent] = useState(true);
@@ -94,7 +94,7 @@ const LeftPanel = (props) => {
                 if (item[fieldNames?.children]) {
                     return {
                         title,
-                        // this is used to perform specific nodes checkable disable 
+                        // this is used to perform specific nodes checkable disable
                         disabled: disabled || item?.disabled,
                         checkable: item?.checkable,
                         selectable: item?.selectable,
@@ -109,6 +109,7 @@ const LeftPanel = (props) => {
                 };
             });
         return loop(treeData);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchValue, fieldNames, treeData]);
 
     const mainClass = callOnForm ? styles.scrollTreeDataInner : styles.scrollTreeData;

@@ -12,6 +12,7 @@ import { customSelectBox } from 'utils/customSelectBox';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { prepareCaption } from 'utils/prepareCaption';
 import { getCodeValue } from 'utils/getCodeValue';
+import { YES_NO_FLAG } from '../../../../constants/yesNoFlag';
 
 const { Search } = Input;
 
@@ -24,6 +25,8 @@ const OtfDetailsForm = (props) => {
                 [formName]: {
                     ...formData,
                     otfNumber: formData?.bookingNumber || formData?.otfNumber,
+                    taxCalculationType: formData?.taxCalculationType || 'AD',
+                    taxPayableOnReverseCharges: formData?.taxPayableOnReverseCharges || YES_NO_FLAG?.NO?.key,
                     orderDate: formattedCalendarDate(formData?.orderDate),
                     saleConsultantName: getCodeValue(salesConsultantLovData, formData?.saleConsultant),
                 },
