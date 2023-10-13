@@ -47,7 +47,7 @@ export const ThankYouMaster = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.fullyCentered}>
                     <Space size="middle" className={styles.deliveryNoteSuccess} direction="vertical">
                         <Avatar size={150} icon={<HiCheck />} />
-                        <Title level={5}>{AMC_CONSTANTS?.GEN_SUCC?.value}</Title>
+                        <Title level={5}>{AMC_CONSTANTS?.GENERATED_SUCCESSFULLY?.title}</Title>
                         <div className={styles.deliveryNoteSuccessInfo}>
                             <Space className={styles.marB20}>
                                 <div className={styles.deliveryNoteSuccessText}>

@@ -9,13 +9,13 @@ import { validateRequiredSelectField, validateRequiredInputField } from 'utils/v
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { customSelectBox } from 'utils/customSelectBox';
 import { PARAM_MASTER } from 'constants/paramMaster';
-
+import { AMC_CONSTANTS } from '../utils/AMCConstants';
 
 const { Search } = Input;
 const { TextArea } = Input;
 
 const RegistrationForm = (props) => {
-    const { options, handleOnSelect, handleOnClear, registrationForm, formData, typeData, handleFormValueChange, handleBookingNumberSearch, isEmployeeDataLoading, handleEmployeeNameSearch, isVehicleInvoiceDataLoading, } = props;
+    const { options, handleOnSelect, handleOnClear, registrationForm, formData, typeData, handleFormValueChange, handleBookingNumberSearch, isEmployeeDataLoading, handleEmployeeNameSearch, isVehicleInvoiceDataLoading } = props;
 
     return (
         <>
@@ -26,7 +26,7 @@ const RegistrationForm = (props) => {
                             {customSelectBox({ data: typeData?.[PARAM_MASTER.DLVR_SALE_TYP.id], placeholder: preparePlaceholderSelect('Sale Type') })}
                         </Form.Item>
                     </Col>
-                    {registrationForm.getFieldValue('saleType') === 'DMFOC' && (
+                    {registrationForm.getFieldValue('saleType') === AMC_CONSTANTS?.MNM_FOC?.key && (
                         <>
                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                 <Form.Item label="Booking Number" name="bookingNumber" rules={[validateRequiredInputField('Booking Number')]}>

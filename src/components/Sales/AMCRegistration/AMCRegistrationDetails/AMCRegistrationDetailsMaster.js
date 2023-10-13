@@ -39,7 +39,7 @@ const AMCRegistrationDetailsMasterBase = (props) => {
             },
             {
                 key: 'schemeType',
-                value: AMC_CONSTANTS?.SCHM?.key,
+                value: AMC_CONSTANTS?.SCHEME?.key,
             },
         ];
         fetchSchemeList({ setIsLoading: listSchemeShowLoading, userId, extraParams });
