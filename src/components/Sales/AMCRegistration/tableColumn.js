@@ -6,8 +6,9 @@
 import { Tag } from 'antd';
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import styles from 'assets/sass/app.module.scss';
+import { AMC_CONSTANTS } from './utils/AMCConstants';
 
-export const tableColumn = (handleButtonClick, page, pageSize) => {
+export const tableColumn = ({ handleButtonClick, page, pageSize, userType }) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'AMC Registration No. & Date',
@@ -24,14 +25,20 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             dataIndex: 'vin',
             width: '14%',
         }),
-        tblPrepareColumns({
-            title: 'Status',
-            dataIndex: 'status',
-            width: '14%',
-            render: (status) => {
-                return <Tag color="warning">{status}</Tag>;
-            },
-        }),
+        userType === AMC_CONSTANTS?.DEALER?.key
+            ? tblPrepareColumns({
+                  title: 'Status',
+                  dataIndex: 'status',
+                  width: '14%',
+                  render: (status) => {
+                      return <Tag color="warning">{status}</Tag>;
+                  },
+              })
+            : tblPrepareColumns({
+                  title: 'Mobile No.',
+                  dataIndex: 'mobileNumber',
+                  width: '14%',
+              }),
 
         tblActionColumn({ handleButtonClick, styles, width: '8%', canEdit: false }),
     ];

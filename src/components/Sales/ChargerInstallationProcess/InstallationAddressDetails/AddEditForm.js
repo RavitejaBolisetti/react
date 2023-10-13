@@ -6,6 +6,7 @@
 import React, { useEffect, useState, useReducer } from 'react';
 import { Row, Col, Form, Input, Typography, Divider, Checkbox, Descriptions, Card, AutoComplete } from 'antd';
 import styles from 'assets/sass/app.module.scss';
+import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validatePincodeField, validateMobileNoField } from 'utils/validation';
@@ -13,11 +14,9 @@ import { validateRequiredInputField, validatePincodeField, validateMobileNoField
 const { Search } = Input;
 
 const AddEditFormMain = (props) => {
-    const { crmCustomerVehicleData, pincodeData, fetchPincodeDetail, setChecked, listPinCodeShowLoading, form, userId, onSuccessAction, onErrorAction, isPinCodeLoading } = props;
-    const [options, setOptions] = useState();
+    const { crmCustomerVehicleData, pincodeData, formActionType, options, setOptions, chargerInstallationMasterData, isLoading, fetchPincodeDetail, setChecked, listPinCodeShowLoading, form, userId, onSuccessAction, onErrorAction, isPinCodeLoading } = props;
     const [disabled, setDisabled] = useState(false);
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
-
     useEffect(() => {
         const pinOption = pincodeData?.map((item) => ({
             label: item?.pinCode + ' - ' + (item?.localityName ? item?.localityName + '-' : '') + item?.cityName + ' -' + item?.districtName + ' -' + item?.stateName,
@@ -45,11 +44,19 @@ const AddEditFormMain = (props) => {
         if (e.target.checked) {
             setDisabled(true);
             setChecked(true);
-            form?.setFieldsValue({ address: crmCustomerVehicleData?.customerDetails?.customerAddress, pinCode: crmCustomerVehicleData?.customerDetails?.pinCode, city: crmCustomerVehicleData?.customerDetails?.customerCity, state: crmCustomerVehicleData?.customerDetails?.state, customerMobileNumber: crmCustomerVehicleData?.otfDetails?.mobileNumber });
+            if (formActionType?.editMode) {
+                form?.setFieldsValue({ address: chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.address, pinCode: chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.pinCode, city: chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.city, state: chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.state, customerMobileNumber: chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.customerMobileNumber });
+            } else {
+                form?.setFieldsValue({ address: crmCustomerVehicleData?.customerDetails?.customerAddress, pinCode: crmCustomerVehicleData?.customerDetails?.pinCode, city: crmCustomerVehicleData?.customerDetails?.customerCity, state: crmCustomerVehicleData?.customerDetails?.state, customerMobileNumber: crmCustomerVehicleData?.otfDetails?.mobileNumber });
+            }
         } else {
             setDisabled(false);
             setChecked(false);
-            form?.setFieldsValue({ address: undefined, pinCode: undefined, city: undefined, state: undefined, customerMobileNumber: undefined });
+            if (formActionType?.editMode) {
+                form?.setFieldsValue({ address: chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.address, pinCode: chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.pinCode, city: chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.city, state: chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.state, customerMobileNumber: chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.customerMobileNumber });
+            } else {
+                form?.setFieldsValue({ address: undefined, pinCode: undefined, city: undefined, state: undefined, customerMobileNumber: undefined });
+            }
         }
     };
 
@@ -102,15 +109,15 @@ const AddEditFormMain = (props) => {
                         <Typography>Customer Details</Typography>
                         <Divider className={styles.marT20} />
                         <Descriptions {...customerProps}>
-                            <Descriptions.Item label="Customer Name">{crmCustomerVehicleData?.customerDetails?.customerName}</Descriptions.Item>
-                            <Descriptions.Item label="Address">{crmCustomerVehicleData?.customerDetails?.customerAddress}</Descriptions.Item>
-                            <Descriptions.Item label="Pincode">{crmCustomerVehicleData?.customerDetails?.pinCode}</Descriptions.Item>
+                            <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(crmCustomerVehicleData?.customerDetails?.customerName || chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.customerName, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Address">{checkAndSetDefaultValue(crmCustomerVehicleData?.customerDetails?.customerAddress || chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.address, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Pincode">{checkAndSetDefaultValue(crmCustomerVehicleData?.customerDetails?.pinCode || chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.pinCode, isLoading)}</Descriptions.Item>
                         </Descriptions>
                         <Descriptions {...addressProps}>
-                            <Descriptions.Item label="City">{crmCustomerVehicleData?.customerDetails?.customerCity}</Descriptions.Item>
-                            <Descriptions.Item label="State">{crmCustomerVehicleData?.customerDetails?.state}</Descriptions.Item>
-                            <Descriptions.Item label="Customer Mobile No.">{crmCustomerVehicleData?.otfDetails?.mobileNumber}</Descriptions.Item>
-                            <Descriptions.Item label="Customer Email Id.">{crmCustomerVehicleData?.customerDetails?.email}</Descriptions.Item>
+                            <Descriptions.Item label="City">{checkAndSetDefaultValue(crmCustomerVehicleData?.customerDetails?.customerCity || chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.city, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="State">{checkAndSetDefaultValue(crmCustomerVehicleData?.customerDetails?.state || chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.state, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Customer Mobile No.">{checkAndSetDefaultValue(crmCustomerVehicleData?.otfDetails?.mobileNumber || chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.customerMobileNumber, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Customer Email Id.">{checkAndSetDefaultValue(crmCustomerVehicleData?.customerDetails?.email || chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.customerEmail, isLoading)}</Descriptions.Item>
                         </Descriptions>
                     </Card>
                 </Col>

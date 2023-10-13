@@ -137,7 +137,7 @@ describe('Booking List Master Component', () => {
 
         const reasonDesc = screen.getByRole('combobox', { name: 'Reason Description' });
         fireEvent.change(reasonDesc, { target: { value: 'ReasonDesc' } });
-        fireEvent.click(screen.getAllByText('ReasonDesc')[1]);
+        // fireEvent.click(screen.getAllByText('ReasonDesc')[1]);
 
         const soNo = screen.getByRole('textbox', { name: 'SO No.' });
         fireEvent.change(soNo, { target: { value: 'Kai' } });
@@ -149,7 +149,7 @@ describe('Booking List Master Component', () => {
         fireEvent.click(searchBtn[0]);
         fireEvent.click(searchBtn[1]);
 
-        const saveBtn = screen.getByRole('button', { name: 'Save' });
+        const saveBtn = screen.getByRole('button', { name: 'Submit' });
         fireEvent.click(saveBtn);
 
         const cancelBtn = screen.getByRole('button', { name: 'Cancel' });

@@ -21,12 +21,13 @@ export const ChargerStatusBar = (props) => {
     if (status === QUERY_BUTTONS_CONSTANTS.SITE_SURVEY.key) {
         displayItem = otfStatusList.filter((i) => i.displayOnView && i?.id === QUERY_BUTTONS_CONSTANTS.SITE_SURVEY.id);
     } else if (status === QUERY_BUTTONS_CONSTANTS.SITE_VALIDATION.key) {
-        displayItem = otfStatusList.filter((i) => i.displayOnView && i?.id === QUERY_BUTTONS_CONSTANTS.SITE_VALIDATION.id);
-    } else if (status === QUERY_BUTTONS_CONSTANTS.INSTALLATION.key) {
-        displayItem = otfStatusList.filter((i) => i?.id === QUERY_BUTTONS_CONSTANTS.INSTALLATION.id);
-    } else {
-        displayItem = otfStatusList.filter((i) => i.displayOnView && i?.id !== QUERY_BUTTONS_CONSTANTS.COMMISSION.id);
+        displayItem = otfStatusList.filter((i) => (i.displayOnView && i?.id === QUERY_BUTTONS_CONSTANTS.SITE_SURVEY.id) || QUERY_BUTTONS_CONSTANTS.SITE_VALIDATION.id);
     }
+    // } else if (status === QUERY_BUTTONS_CONSTANTS.INSTALLATION.key) {
+    //     displayItem = otfStatusList.filter((i) => i?.id === QUERY_BUTTONS_CONSTANTS.INSTALLATION.id);
+    // } else {
+    //     displayItem = otfStatusList.filter((i) => i.displayOnView && i?.id !== QUERY_BUTTONS_CONSTANTS.COMMISSION.id);
+    // }
     return (
         <Steps
             current={0}

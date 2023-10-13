@@ -43,7 +43,7 @@ describe('Receipts party details Master components', () => {
             auth: { userId: 106 },
             data: {
                 Receipt: {
-                    PartyDetails: { data: [{ id: '1', value: 'kai' }], isLoaded: true },
+                    PartyDetails: { data: [{ address: 'test', city: 'MUMBAI', id: '106', mitraType: null, mobileNumber: '7844466667', partyId: 'C23D000010', partyName: 'HSTest New', partySegment: 'CUS', partySegmentDesc: 'CUSTOMER', state: 'Maharashtra' }], isLoaded: true },
                 },
             },
         });

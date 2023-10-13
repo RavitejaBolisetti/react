@@ -385,7 +385,7 @@ const UserManagementMain = (props) => {
     const onFinish = (values, e) => {};
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => {}).catch(err => console.error(err));
     };
 
     const handleButtonClick = ({ buttonAction, record = null, openDefaultSection = true }) => {
@@ -566,7 +566,7 @@ const UserManagementMain = (props) => {
                                                 <div className={`${styles.userManagement} ${styles.headingToggle}`}>
                                                     {Object.values(USER_TYPE_USER)?.map((item) => {
                                                         return (
-                                                            <Button type={userType === item?.id ? 'primary' : 'link'} danger onClick={() => handleUserTypeChange(item?.id)}>
+                                                            <Button key={item?.id} type={userType === item?.id ? 'primary' : 'link'} danger onClick={() => handleUserTypeChange(item?.id)}>
                                                                 {item?.title}
                                                             </Button>
                                                         );

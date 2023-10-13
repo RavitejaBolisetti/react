@@ -8,6 +8,7 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { AMC_CONSTANTS } from '../utils/AMCConstants';
 import styles from 'assets/sass/app.module.scss';
+import { dateFormat } from 'utils/formatDateTime';
 
 const { Search } = Input;
 
@@ -24,7 +25,7 @@ const AddEditForm = (props) => {
     return (
         <>
             <Form form={contactform} autoComplete="off" onFinish={onSaveFormData} onFieldsChange={handleFormValueChange} layout="vertical">
-                {!(formActionType?.addMode && requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.DMFOC?.key) && (
+                {!(formActionType?.addMode && requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.MNM_FOC?.key) && (
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item label="VIN" name="vin">
@@ -43,7 +44,7 @@ const AddEditForm = (props) => {
 
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                         <Form.Item label="Org. Warranty Start Date" name="orignallyWarrantyStartDate">
-                            <DatePicker disabled placeholder={preparePlaceholderText('Org. Warranty Start Date')} />
+                            <DatePicker format={dateFormat} disabled placeholder={preparePlaceholderText('Org. Warranty Start Date')} />
                         </Form.Item>
                     </Col>
 
@@ -64,7 +65,7 @@ const AddEditForm = (props) => {
                     </Col>
                 </Row>
 
-                {!formActionType?.viewMode && !(formActionType?.addMode && requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.DMFOC?.key) && (
+                {!formActionType?.viewMode && !(formActionType?.addMode && requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.MNM_FOC?.key) && (
                     <Row gutter={20} className={styles.marB20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.buttonsGroupLeft}>
                             <Button onClick={onSaveFormData} type="primary">

@@ -104,12 +104,12 @@ const CompanyProfileBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomer]);
 
-    useEffect(()=> {
-        return ()=> {
+    useEffect(() => {
+        return () => {
             resetData();
-        }
+        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[])
+    }, []);
 
     useEffect(() => {
         if (userId && customerProfileData?.customerFormDocId) {
@@ -182,7 +182,7 @@ const CompanyProfileBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
+    const onFinishFailed = () => {
         return;
     };
 

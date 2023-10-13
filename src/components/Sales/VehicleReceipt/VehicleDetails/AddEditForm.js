@@ -78,7 +78,7 @@ const AddEditFormMain = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        vehicleDetailForm.validateFields().then((values) => {});
+        vehicleDetailForm.validateFields().then((values) => {}).catch(err => console.error(err));
     };
 
     const handleSave = (indexId) => {
@@ -89,7 +89,7 @@ const AddEditFormMain = (props) => {
             setFinalData(finalData);
             setButtonData({ ...buttonData, formBtnActive: true });
             setactiveKey([]);
-        });
+        }).catch(err => console.error(err));;
     };
 
     const handleCancelFormEdit = () => {

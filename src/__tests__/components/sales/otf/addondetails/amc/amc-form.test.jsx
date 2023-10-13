@@ -6,12 +6,12 @@ import { Form } from 'antd';
 
 afterEach(() => {
     jest.restoreAllMocks();
-  }); 
+});
 
 const FormWrapper = (props) => {
     const [amcForm] = Form.useForm();
-    return <AMCForm amcForm={amcForm} {...props} />
-}
+    return <AMCForm amcForm={amcForm} {...props} />;
+};
 
 describe('AMC Form Component', () => {
     it('should render amc form component', () => {
@@ -19,8 +19,8 @@ describe('AMC Form Component', () => {
     });
 
     it('amc form input should work', () => {
-        customRender(<FormWrapper setformDataSetter={jest.fn}/>);
-        const amcInput=screen.getByRole('textbox', { name: 'AMC'});
-        fireEvent.change(amcInput, { target: { value: 'Test' }})
+        customRender(<FormWrapper setformDataSetter={jest.fn} setFormDataSetter={jest.fn()} />);
+        const amcInput = screen.getByRole('textbox', { name: 'AMC' });
+        fireEvent.change(amcInput, { target: { value: 'Test' } });
     });
 });

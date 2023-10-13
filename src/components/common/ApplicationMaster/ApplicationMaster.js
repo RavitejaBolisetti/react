@@ -91,7 +91,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationMasterData
     const [finalFormdata, setFinalFormdata] = useState(initialFormData);
     const [isReadOnly, setIsReadOnly] = useState(true);
     const [isFieldDisable, setIsFieldDisable] = useState(false);
-    const [parentAppCode, setparentAppCode] = useState(ROOT_PARENT_APPLICATION);
+    const [parentAppCode, setParentAppCode] = useState(ROOT_PARENT_APPLICATION);
     const [isBtnDisabled, setIsBtnDisabled] = useState(false);
 
     const moduleTitle = 'Application Master';
@@ -109,7 +109,6 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationMasterData
 
     const handleAdd = () => {
         setisVisible(true);
-        // setFormActionType(type);
         setIsReadOnly(false);
     };
 
@@ -244,7 +243,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationMasterData
     const formProp = {
         isReadOnly,
         parentAppCode,
-        setparentAppCode,
+        setParentAppCode,
         isVisible,
         isFieldDisable,
         applicationForm,

@@ -14,13 +14,13 @@ describe('ThankYouMaster Component', () => {
         expect(screen.getByText('Delivery Note No.:')).toBeInTheDocument();
         expect(screen.getByText('Do you want to Print or download this Delivery Note')).toBeInTheDocument();
         expect(screen.getByRole('button', { name: 'Close' })).toBeInTheDocument();
-        expect(screen.getByRole('button', { name: 'Download/Print Note Note' })).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: 'Download/Print Delivery Note' })).toBeInTheDocument();
     });
 
     it('should call handlePrintDownload function when Download/Print Note button is clicked', () => {
         customRender(<ThankYouMaster handlePrintDownload={mockHandlePrintDownload} record={record} selectedOrder={selectedOrder} soldByDealer={true} />);
 
-        const downloadPrintButton = screen.getByRole('button', { name: 'Download/Print Note Note' });
+        const downloadPrintButton = screen.getByRole('button', { name: 'Download/Print Delivery Note' });
         fireEvent.click(downloadPrintButton);
 
         expect(mockHandlePrintDownload).toHaveBeenCalledWith(record);

@@ -3,11 +3,6 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-/*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
- *   All rights reserved.
- *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
- */
 import { Button, Row, Col, Form, Input } from 'antd';
 import { searchValidator } from 'utils/validation';
 import { RxCross2 } from 'react-icons/rx';
@@ -22,7 +17,7 @@ import { USER_TYPE_USER } from 'constants/modules/UserManagement/userType';
 
 const { Search } = Input;
 export default function AppliedAdvanceFilter(props) {
-    const { tableData = [], showAddButton = true, advanceFilter = false, title, filterString, from, onFinish, onFinishFailed, extraParams, removeFilter, handleResetFilter, handleClearInSearch, onSearchHandle, setAdvanceSearchVisible, handleReferesh, handleButtonClick, validator = searchValidator, downloadReport = false, handleDownloadReport = false, showChangeHistoryButton = false, showChangeHistoryList, handleCustomShowAdd = () => false } = props;
+    const { tableData = [], showAddButton = true, advanceFilter = false, title, filterString, from, onFinish, extraParams, removeFilter, handleResetFilter, handleClearInSearch, onSearchHandle, setAdvanceSearchVisible, handleReferesh, handleButtonClick, validator = searchValidator, downloadReport = false, handleDownloadReport = false, showChangeHistoryButton = false, showChangeHistoryList, handleCustomShowAdd = () => false } = props;
     const { currentItem, handleToggleButton, isToggleBtnVisible = false } = props;
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();
@@ -35,7 +30,7 @@ export default function AppliedAdvanceFilter(props) {
                     <Col xs={24} sm={24} md={16} lg={16} xl={16}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form onKeyPress={onKeyPressHandler} autoComplete="off" colon={false} form={from} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                                <Form onKeyPress={onKeyPressHandler} autoComplete="off" colon={false} form={from} className={styles.masterListSearchForm} onFinish={onFinish}>
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={18} lg={18} xl={18} className={styles.verticallyCentered}>
                                             {isToggleBtnVisible && (
@@ -50,7 +45,6 @@ export default function AppliedAdvanceFilter(props) {
                                                 </div>
                                             )}
                                             <div className={styles.fullWidth}>
-                                                {/* <SearchBox {...searchBoxProps} /> */}
                                                 <Form.Item
                                                     label={`${title || ''}`}
                                                     name="code"

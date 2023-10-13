@@ -26,6 +26,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { VEHICLE_TYPE } from 'constants/VehicleType';
 import { BASE_URL_VEHICLE_ALLOTMENT as customURL } from 'constants/routingApi';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import { DisableParent, FindProductName } from 'components/common/ProductHierarchy/ProductHierarchyUtils';
 
 import { FilterIcon } from 'Icons';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
@@ -35,7 +36,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            ProductHierarchy: { filteredListData: productHierarchyData = [] },
+            ProductHierarchy: { data: productHierarchyData = [] },
             OTF: {
                 OtfSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, data, isDetailLoaded },
             },
@@ -61,7 +62,7 @@ const mapStateToProps = (state) => {
         allotmentSummaryDetails,
         allotmentSearchedList,
         isVehicleDataLoading,
-        productHierarchyData,
+        productHierarchyDataList: productHierarchyData,
     };
     return returnValue;
 };
@@ -78,7 +79,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchVehicleAllotmentDetails: vehicleAllotment.fetchDetail,
             saveData: vehicleAllotment.saveData,
             listShowLoading: vehicleAllotment.listShowLoading,
-            fetchModelList: productHierarchyDataActions.fetchFilteredList,
+            fetchModelList: productHierarchyDataActions.fetchList,
             showGlobalNotification,
         },
         dispatch
@@ -87,7 +88,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const VehicleAllotmentMasterBase = (props) => {
     const { fetchList, saveData, listShowLoading, userId, fetchVehicleAllotmentDetails, allotmentSummaryDetails, data, totalOTFRecords, resetData } = props;
-    const { fetchVehicleAllotmentSearchedList, allotmentSearchedList, isVehicleDataLoading, resetOTFSearchedList, fetchModelList, productHierarchyData } = props;
+    const { fetchVehicleAllotmentSearchedList, allotmentSearchedList, isVehicleDataLoading, resetOTFSearchedList, fetchModelList, productHierarchyDataList } = props;
     const { typeData, showGlobalNotification } = props;
     const { filterString, setFilterString, otfStatusList, isOTFSearchLoading } = props;
 
@@ -110,6 +111,7 @@ export const VehicleAllotmentMasterBase = (props) => {
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [productHierarchyData, setProductHierarchyData] = useState([]);
 
     const dynamicPagination = true;
 
@@ -132,6 +134,11 @@ export const VehicleAllotmentMasterBase = (props) => {
     const [formData, setFormData] = useState([]);
 
     useEffect(() => {
+        setProductHierarchyData(productHierarchyDataList?.map((i) => DisableParent(i, 'subProdct')));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [productHierarchyDataList]);
+
+    useEffect(() => {
         setFilterString({ ...filterString, pageSize: 10, current: 1 });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -148,7 +155,13 @@ export const VehicleAllotmentMasterBase = (props) => {
 
     useEffect(() => {
         if (userId) {
-            fetchModelList({ setIsLoading: listShowLoading, userId, onSuccessAction, onErrorAction });
+            const extraParams = [
+                {
+                    key: 'unit',
+                    value: 'Sales',
+                },
+            ];
+            fetchModelList({ setIsLoading: listShowLoading, userId, extraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
@@ -203,7 +216,8 @@ export const VehicleAllotmentMasterBase = (props) => {
                 key: 'modelValue',
                 title: 'Model',
                 value: filterString?.model,
-                name: productHierarchyData?.find((i) => i?.prodctCode === filterString?.model)?.prodctShrtName,
+                //name: productHierarchyData?.find((i) => i?.prodctCode === filterString?.model)?.prodctShrtName,
+                name: FindProductName(productHierarchyData, filterString?.model),
                 canRemove: true,
                 filter: true,
             },
