@@ -10,7 +10,7 @@ import { Col, Input, Form, Row, DatePicker, InputNumber, Select, Switch } from '
 
 import { convertDateTimedayjs, dateFormatView } from 'utils/formatDateTime';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
-import { validateRequiredInputField, validateRequiredSelectField, validateNegativeNumber } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validateNegativeNumber, validateNumberWithTwoDecimalPlaces, validateOnlyPositiveNumber } from 'utils/validation';
 import { FORMTYPE_CONSTANTS } from 'constants/FormtypeConstants';
 import styles from 'assets/sass/app.module.scss';
 
@@ -83,7 +83,7 @@ export const BindFormAndResult = ({ data, aggregateForm, deliveryChecklist = fal
             formItem = (
                 <Row gutter={20}>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                        <Form.Item label="Min Range" name="answerFromNumber" rules={[validateRequiredInputField('min range'), validateNegativeNumber('min range')]}>
+                        <Form.Item label="Min Range" name="answerFromNumber" rules={[validateRequiredInputField('min range'), validateOnlyPositiveNumber('min range')]}>
                             <InputNumber className={styles.fullWidth} placeholder={preparePlaceholderText('Min Range')} />
                         </Form.Item>
                     </Col>
@@ -93,7 +93,7 @@ export const BindFormAndResult = ({ data, aggregateForm, deliveryChecklist = fal
                             name="answerToNumber"
                             rules={[
                                 validateRequiredInputField('max range'),
-                                validateNegativeNumber('max range'),
+                                validateOnlyPositiveNumber('max range'),
                                 {
                                     validator: (_, value) => {
                                         if (!value) return;
@@ -106,6 +106,46 @@ export const BindFormAndResult = ({ data, aggregateForm, deliveryChecklist = fal
                             ]}
                         >
                             <InputNumber className={styles.fullWidth} placeholder={preparePlaceholderText('Max Range')} />
+                        </Form.Item>
+                    </Col>
+                </Row>
+            );
+            break;
+        }
+        case FORMTYPE_CONSTANTS?.NUMBER_RANGE_WITH_DECIMAL?.id?.toLowerCase(): {
+            if (data?.answerFromNumber && data?.answerToNumber) {
+                checkResult = checkResult.concat(data?.answerFromNumber ?? 'NA');
+                checkResult = checkResult.concat('-');
+                checkResult = checkResult.concat(data?.answerToNumber ?? 'NA');
+            } else {
+                checkResult = noDataAvalaible;
+            }
+            formItem = (
+                <Row gutter={20}>
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                        <Form.Item label="Min Range" name="answerFromNumber" rules={[validateRequiredInputField('min range'), validateNumberWithTwoDecimalPlaces('min range')]}>
+                            <InputNumber className={styles.fullWidth} precision={2} placeholder={preparePlaceholderText('Min Range')} />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                        <Form.Item
+                            label="Max Range"
+                            name="answerToNumber"
+                            rules={[
+                                validateRequiredInputField('max range'),
+                                validateNumberWithTwoDecimalPlaces('max range'),
+                                {
+                                    validator: (_, value) => {
+                                        if (!value) return;
+                                        if (value < aggregateForm.getFieldValue('answerFromNumber')) {
+                                            return Promise.reject(`Max range can't be less than Min Range`);
+                                        }
+                                        return Promise.resolve();
+                                    },
+                                },
+                            ]}
+                        >
+                            <InputNumber precision={2} className={styles.fullWidth} placeholder={preparePlaceholderText('Max Range')} />
                         </Form.Item>
                     </Col>
                 </Row>
@@ -151,11 +191,16 @@ export const BindFormAndResult = ({ data, aggregateForm, deliveryChecklist = fal
             break;
         }
         case FORMTYPE_CONSTANTS?.NUMBER_WITHOUT_DECIMAL?.id?.toLowerCase(): {
-            checkResult = data?.answerText ?? noDataAvalaible;
+            if (data?.answerFromNumber) {
+                checkResult = checkResult.concat(data?.answerFromNumber ?? 'NA');
+            } else {
+                checkResult = data?.answerFromNumber ?? noDataAvalaible;
+            }
+
             formItem = (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item label="Number" name="answerText" rules={[validateRequiredInputField('Number'), validateNegativeNumber('Number')]}>
+                        <Form.Item label="Number" name="answerFromNumber" rules={[validateRequiredInputField('Number'), validateOnlyPositiveNumber('Number')]}>
                             <InputNumber className={styles.fullWidth} placeholder={preparePlaceholderText('Number')} />
                         </Form.Item>
                     </Col>
@@ -164,12 +209,16 @@ export const BindFormAndResult = ({ data, aggregateForm, deliveryChecklist = fal
             break;
         }
         case FORMTYPE_CONSTANTS?.NUMBER_WITH_DECIMAL?.id?.toLowerCase(): {
-            checkResult = data?.answerText ?? noDataAvalaible;
+            if (data?.answerFromNumber) {
+                checkResult = checkResult.concat(data?.answerFromNumber ?? 'NA');
+            } else {
+                checkResult = data?.answerFromNumber ?? noDataAvalaible;
+            }
             formItem = (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item label="Number" name="answerText" rules={[validateRequiredInputField('Number'), validateNegativeNumber('Number')]}>
-                            <InputNumber className={styles.fullWidth} precision={2} placeholder={preparePlaceholderText('Number')} />
+                        <Form.Item label="Number" name="answerFromNumber" rules={[validateRequiredInputField('Number'), validateNumberWithTwoDecimalPlaces('Number')]}>
+                            <InputNumber precision={2} className={styles.fullWidth} placeholder={preparePlaceholderText('Number')} />
                         </Form.Item>
                     </Col>
                 </Row>
@@ -177,11 +226,15 @@ export const BindFormAndResult = ({ data, aggregateForm, deliveryChecklist = fal
             break;
         }
         case FORMTYPE_CONSTANTS?.DATE?.id?.toLowerCase(): {
-            checkResult = data?.answerText ?? noDataAvalaible;
+            if (data?.answerFromDate) {
+                checkResult = checkResult.concat(data?.answerFromDate ? convertDateTimedayjs(data?.answerFromDate, dateFormatView) : 'NA');
+            } else {
+                checkResult = noDataAvalaible;
+            }
             formItem = (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item label="Date" name="answerText" rules={[validateRequiredSelectField('Date')]} className={styles?.datePicker}>
+                        <Form.Item label="Date" name="answerFromDate" rules={[validateRequiredSelectField('Date')]} className={styles?.datePicker}>
                             <DatePicker placeholder={preparePlaceholderSelect('from date')} disabledDate={(current) => current.isBefore(moment().subtract(1, 'day'))} />
                         </Form.Item>
                     </Col>

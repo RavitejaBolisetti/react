@@ -83,7 +83,7 @@ const VehicleDeliveryNoteCard = (props) => {
                     Status:
                     <div className={styles.tooltipAlign}>
                         {checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.DLVR_NT_STS.id], selectedOrder?.deliveryNoteStatus, isLoading))}
-                        {formActionType?.viewMode && selectedOrder?.deliveryNoteStatus === 'cancelled' && <span className={styles.marL5}>{toolTipContent && selectedOrder?.deliveryNoteStatus && <div className={styles.toolTip}>{addToolTip(toolTipContent, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}</div>}</span>}
+                        {formActionType?.viewMode && selectedOrder?.deliveryNoteStatus === 'C' && <span className={styles.marL5}>{toolTipContent && selectedOrder?.deliveryNoteStatus && <div className={styles.toolTip}>{addToolTip(toolTipContent, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}</div>}</span>}
                     </div>
                 </div>
 
@@ -96,9 +96,11 @@ const VehicleDeliveryNoteCard = (props) => {
                     Invoice Date: <span> {checkAndSetDefaultValue(selectedOrder?.invoiceDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
                 </div>
                 <Divider />
-                <div className={styles.detailCardText}>
-                    Booking Number: <span> {checkAndSetDefaultValue(selectedOrder?.bookingNumber || selectedOrder?.otfNumber)}</span>
-                </div>
+                {(selectedOrder?.bookingNumber || selectedOrder?.otfNumber) && (
+                    <div className={styles.detailCardText}>
+                        Booking Number: <span> {checkAndSetDefaultValue(selectedOrder?.bookingNumber || selectedOrder?.otfNumber)}</span>
+                    </div>
+                )}
             </Panel>
         </Collapse>
     );

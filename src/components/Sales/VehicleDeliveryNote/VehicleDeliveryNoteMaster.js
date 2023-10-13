@@ -9,7 +9,7 @@ import { bindActionCreators } from 'redux';
 
 import { Col, Form, Row } from 'antd';
 import dayjs from 'dayjs';
-import { tableColumnDeliveryNote, tableColumnDeliveryChallan } from './tableColumn';
+import { tableColumnDeliveryNoteMaster } from './tableColumn';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
 import { ReportModal } from 'components/common/ReportModal/ReportModal';
@@ -36,6 +36,8 @@ import { DELIVERY_TYPE } from 'constants/modules/vehicleDetailsNotes.js/delivery
 import { FORMTYPE_CONSTANTS } from 'constants/FormtypeConstants';
 
 import { vehicleDeliveryNoteCustomerDetailDataActions } from 'store/actions/data/vehicleDeliveryNote/customerDetails';
+import { STATUS_CONSTANTS } from './Constants';
+
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -455,6 +457,33 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         fetchDeliveryNoteMasterData({ customURL: deliveryURL, setIsLoading: listShowLoading, userId, onSuccessAction, extraParams: deliveryParams, onErrorAction });
     };
 
+    const handleDrawerButtonVisibility = (btnVisiblityProps) => {
+        const { buttonAction, record } = btnVisiblityProps;
+        let formAction = { addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION };
+        let btnVisibilityStatus = { ...defaultBtnVisiblity };
+        switch (true) {
+            case buttonAction !== NEXT_ACTION && !(buttonAction === VIEW_ACTION): {
+                btnVisibilityStatus = btnVisiblity({ defaultBtnVisiblity, buttonAction });
+                break;
+            }
+            case deliveryStatus === QUERY_BUTTONS_CONSTANTS?.GENERATED?.key && buttonAction === VIEW_ACTION: {
+                const deliveryButtonVisbility = typeData && record?.deliveryNoteStatus !== STATUS_CONSTANTS?.PENDING_CANCELLATION?.key;
+                btnVisibilityStatus = { printDeliveryNoteBtn: true, cancelDeliveryNoteBtn: deliveryButtonVisbility, nextBtn: true, closeBtn: true };
+                break;
+            }
+
+            case deliveryStatus === QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key && buttonAction === VIEW_ACTION: {
+                btnVisibilityStatus = { cancelDeliveryNoteBtn: false, nextBtn: true, closeBtn: true };
+                break;
+            }
+            default:
+                btnVisibilityStatus = buttonData;
+                formAction = formActionType;
+                break;
+        }
+        return { formAction, btnVisibilityStatus };
+    };
+
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
         form.setFieldsValue(undefined);
@@ -513,7 +542,8 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
                 editMode: buttonAction === EDIT_ACTION,
                 viewMode: buttonAction === VIEW_ACTION,
             });
-            setButtonData({ printDeliveryNoteBtn: true, cancelDeliveryNoteBtn: true, nextBtn: true, closeBtn: true });
+            const deliveryButtonVisbility = typeData && record?.deliveryNoteStatus !== STATUS_CONSTANTS?.PENDING_CANCELLATION?.key;
+            setButtonData({ printDeliveryNoteBtn: true, cancelDeliveryNoteBtn: deliveryButtonVisbility, nextBtn: true, closeBtn: true });
         } else if (deliveryStatus === QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key && buttonAction === VIEW_ACTION) {
             setFormActionType({
                 addMode: buttonAction === ADD_ACTION,
@@ -522,6 +552,8 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
             });
             setButtonData({ cancelDeliveryNoteBtn: false, nextBtn: true, closeBtn: true });
         }
+        setButtonData(handleDrawerButtonVisibility({ buttonAction, record })?.btnVisibilityStatus);
+        setFormActionType(handleDrawerButtonVisibility({ buttonAction, record })?.formAction);
         setIsFormVisible(true);
     };
 
@@ -624,7 +656,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         totalRecords,
         setPage,
         page,
-        tableColumn: deliveryType === DELIVERY_TYPE.NOTE.key ? tableColumnDeliveryNote({ handleButtonClick, actionButtonVisiblity }) : tableColumnDeliveryChallan({ handleButtonClick, actionButtonVisiblity }),
+        tableColumn: tableColumnDeliveryNoteMaster({ handleButtonClick, actionButtonVisiblity, deliveryType }),
         tableData: data,
         showAddButton: false,
         typeData,
@@ -652,18 +684,8 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     };
 
     const handleCancelCheck = (soldByDealer) => {
-        if (soldByDealer) {
-            if (dayjs()?.isSame(selectedOrder?.deliveryNoteDate, 'year')) {
-                setRetailMonth(dayjs()?.isSame(selectedOrder?.deliveryNoteDate, 'month'));
-                setYesRetailMonth(true);
-            } else {
-                setRetailMonth(false);
-                setYesRetailMonth(false);
-            }
-        } else {
-            setRetailMonth(false);
-            setYesRetailMonth(false);
-        }
+        setRetailMonth(false);
+        setYesRetailMonth(false);
     };
 
     const onCancelDeliveryNote = () => {
@@ -793,7 +815,6 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         setRequestPayload,
         deliveryType,
     };
-
     const containerProps = {
         ...payloadRequestProps,
         record: selectedOrder,
