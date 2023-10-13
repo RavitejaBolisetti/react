@@ -9,7 +9,6 @@ import { Row, Col, Button } from 'antd';
 import styles from 'assets/sass/app.module.scss';
 
 export const RsmAsmApprovalButtons = ({ record, onCloseAction, buttonData, workFlowDetails, handleRequest }) => {
-    console.log('🚀 ~ file: RsmAsmApprovalButtons.js:12 ~ RsmAsmApprovalButtons ~ workFlowDetails:', workFlowDetails);
     return (
         <div className={styles.formFooter}>
             <Row gutter={20}>
