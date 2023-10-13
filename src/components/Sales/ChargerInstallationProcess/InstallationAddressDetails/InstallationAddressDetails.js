@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Row, Col } from 'antd';
 
 import { ViewDetail } from './ViewDetail';
@@ -56,8 +56,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const InstallationAddressDetailsMasterBase = (props) => {
-    const { StatusBar, onCloseAction, fetchList, formActionType, chargerInstallationMasterData, crmCustomerVehicleData, fetchPincodeDetail, userId, isDataLoaded, onChargerInstallationFinish, setRequestPayload, showGlobalNotification } = props;
-    const { form, handleFormValueChange, section, isLoading, onFinishFailed } = props;
+    const { StatusBar, onCloseAction, fetchList, formActionType, requestPayload, handleButtonClick, chargerInstallationMasterData, crmCustomerVehicleData, fetchPincodeDetail, userId, isDataLoaded, onChargerInstallationFinish, setRequestPayload, showGlobalNotification } = props;
+    const { form, handleFormValueChange, section, isLoading, onFinishFailed, NEXT_ACTION } = props;
     const { FormActionButton, pageType } = props;
     const { insuranceCompanies, pincodeData } = props;
     const [checked, setChecked] = useState(false);
@@ -66,6 +66,10 @@ const InstallationAddressDetailsMasterBase = (props) => {
         form.validateFields()
             .then(() => {
                 const values = form.getFieldsValue();
+                const dataSet = checked
+                    ? { sameAsCustomerAddress: values?.sameAsCustomerAddress ? 'Y' : 'N', instAddressDetails: { address: crmCustomerVehicleData?.customerDetails?.customerAddress, pinCode: crmCustomerVehicleData?.customerDetails?.pinCode, city: crmCustomerVehicleData?.customerDetails?.customerCity, state: crmCustomerVehicleData?.customerDetails?.state, customerMobileNumber: crmCustomerVehicleData?.otfDetails?.mobileNumber } }
+                    : { sameAsCustomerAddress: values?.sameAsCustomerAddress ? 'Y' : 'N', instAddressDetails: { address: values?.address, city: values?.city, state: values?.state, pinCode: values?.pinCode, customerMobileNumber: values?.customerMobileNumber } };
+
                 if (checked) {
                     setRequestPayload((prev) => ({ ...prev, chargerInstAddressDetails: { sameAsCustomerAddress: values?.sameAsCustomerAddress ? 'Y' : 'N', instAddressDetails: { address: crmCustomerVehicleData?.customerDetails?.customerAddress, pinCode: crmCustomerVehicleData?.customerDetails?.pinCode, city: crmCustomerVehicleData?.customerDetails?.customerCity, state: crmCustomerVehicleData?.customerDetails?.state, customerMobileNumber: crmCustomerVehicleData?.otfDetails?.mobileNumber } } }));
                 } else {
@@ -73,11 +77,10 @@ const InstallationAddressDetailsMasterBase = (props) => {
                 }
 
                 handleFormValueChange();
-                onChargerInstallationFinish();
+                onChargerInstallationFinish({ ...requestPayload, chargerInstAddressDetails: dataSet });
             })
             .catch((err) => {});
     };
-
     const onErrorAction = (message) => {
         showGlobalNotification({ message: message });
     };
@@ -110,6 +113,8 @@ const InstallationAddressDetailsMasterBase = (props) => {
         fetchPincodeDetail,
         crmCustomerVehicleData,
         setChecked,
+        chargerInstallationMasterData,
+        formActionType,
     };
 
     const myProps = {
