@@ -17,10 +17,10 @@ import { customSelectBox } from 'utils/customSelectBox';
 const { Option } = Select;
 const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_CHILD_WARNING;
 
-const ApplicationDetails = ({ setCanFormSave, form, onFinishFailed = () => {}, parentAppCode, isReadOnly, isFieldDisable, onFinish, setIsRestrictedLocation, setparentAppCode, setIsDocumentToGenerate, finalFormdata, criticalityGroupData, configurableParamData, menuData, setSelectedTreeKey, selectedTreeKey, showGlobalNotification, isApplicatinoOnSaveLoading, canFormSave, onCloseAction }) => {
+const ApplicationDetails = ({ setCanFormSave, form, onFinishFailed = () => {}, parentAppCode, isReadOnly, isFieldDisable, onFinish, setIsRestrictedLocation, setParentAppCode, setIsDocumentToGenerate, finalFormdata, criticalityGroupData, configurableParamData, menuData, setSelectedTreeKey, selectedTreeKey, showGlobalNotification, isApplicatinoOnSaveLoading, canFormSave, onCloseAction }) => {
     useEffect(() => {
         form?.setFieldsValue({ ...finalFormdata?.applicationDetails, applicationStatus: finalFormdata?.applicationDetails?.status, parentApplicationId: finalFormdata?.applicationDetails?.parentApplicationId || ROOT_PARENT_APPLICATION });
-        setparentAppCode(finalFormdata?.applicationDetails?.parentApplicationId || ROOT_PARENT_APPLICATION);
+        setParentAppCode(finalFormdata?.applicationDetails?.parentApplicationId || ROOT_PARENT_APPLICATION);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [form, finalFormdata?.applicationDetails, finalFormdata?.applicationDetails?.parentApplicationId, setSelectedTreeKey]);
 
@@ -38,7 +38,7 @@ const ApplicationDetails = ({ setCanFormSave, form, onFinishFailed = () => {}, p
         }
 
         setCanFormSave(true);
-        setparentAppCode(value);
+        setParentAppCode(value);
     };
 
     const onFieldsChange = () => {

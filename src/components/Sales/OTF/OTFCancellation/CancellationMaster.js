@@ -75,7 +75,7 @@ const CancellationMasterBase = (props) => {
     const [searchDealerValue, setSearchDealerValue] = useState('');
 
     const [uploadedFileName, setUploadedFileName] = useState('');
-    const [parentAppCode, setparentAppCode] = useState();
+    const [parentAppCode, setParentAppCode] = useState();
     const [productHierarchyData, setProductHierarchyData] = useState([]);
 
     const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
@@ -145,7 +145,7 @@ const CancellationMasterBase = (props) => {
         setUploadedFileName,
         uploadedFile,
         parentAppCode,
-        setparentAppCode,
+        setParentAppCode,
         resetDealerList,
     };
 
