@@ -28,11 +28,13 @@ import RegistrationFilter from './RegistrationFilter';
 import { AMCRegistrationMainContainer } from './AMCRegistrationMainContainer';
 import { AMC_REGISTRATION_SECTION } from 'constants/AMCRegistrationSection';
 import { RejectRequest } from './RequestModal';
+import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
 
 import { customerDetailsIndividualDataActions } from 'store/actions/data/customerMaster/customerDetailsIndividual';
 import { employeeSearchDataAction } from 'store/actions/data/amcRegistration/employeeSearch';
 import { amcSchemeDataAction } from 'store/actions/data/amcRegistration/amcScheme';
 import { AMC_CONSTANTS } from './utils/AMCConstants';
+import { ReportModal } from 'components/common/ReportModal/ReportModal';
 
 const mapStateToProps = (state) => {
     const {
@@ -157,6 +159,11 @@ export const AMCRegistrationMasterBase = (props) => {
     const [amcWholeCancellation, setAmcWholeCancellation] = useState(false);
     const [rejectRequest, setRejectRequest] = useState(false);
     const [previousSection, setpreviousSection] = useState(1);
+
+    const [additionalReportParams, setAdditionalReportParams] = useState();
+    const [isReportVisible, setReportVisible] = useState();
+    const [reportButtonType, setReportButtonType] = useState();
+    const [amcDocumentType, setAmcDocumentType] = useState();
 
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
@@ -324,6 +331,18 @@ export const AMCRegistrationMasterBase = (props) => {
         form.setFieldsValue(undefined);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
+
+    const handlePrintDownload = (record) => {
+        let typeRecordKey = record?.typeRecord === `invoice_amc` ? 'amc_registration_hdr_id' : record?.typeRecord === `registration_certificate_amc` ? 'amc_registration_hdr_id' : record?.typeRecord === `registration_incentive_claim_amc` ? 'amc_registration_hdr_id' : null;
+        setReportButtonType(record?.typeRecord);
+        setReportVisible(true);
+        setAdditionalReportParams([
+            {
+                key: typeRecordKey,
+                value: record?.message,
+            },
+        ]);
+    };
 
     const handleBookingNumberSearch = (otfNumber = '') => {
         const onSuccessAction = (res) => {
@@ -711,6 +730,7 @@ export const AMCRegistrationMasterBase = (props) => {
 
         handleMNMApproval,
         handleMNMRejection,
+        handlePrintDownload,
     };
 
     const cancelModalProps = {
@@ -728,6 +748,27 @@ export const AMCRegistrationMasterBase = (props) => {
         setIsMNMApproval,
     };
 
+    useEffect(() => {
+        if (reportButtonType === `invoice_amc`) {
+            setAmcDocumentType(EMBEDDED_REPORTS?.AMC_REGISTRATION_INVOICE_DOCUMENT);
+        } else if (reportButtonType === `registration_certificate_amc`) {
+            setAmcDocumentType(EMBEDDED_REPORTS?.AMC_REGISTRATION_INVOICE_DOCUMENT);
+        } else if (reportButtonType === `registration_incentive_claim_amc`) {
+            setAmcDocumentType(EMBEDDED_REPORTS?.AMC_REGISTRATION_INVOICE_DOCUMENT);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [reportButtonType]);
+
+    const reportDetail = amcDocumentType;
+    const reportProps = {
+        isVisible: isReportVisible,
+        titleOverride: reportDetail?.title,
+        additionalParams: additionalReportParams,
+        onCloseAction: () => {
+            setReportVisible(false);
+        },
+    };
+
     return (
         <>
             <RegistrationFilter {...advanceFilterResultProps} />
@@ -739,6 +780,7 @@ export const AMCRegistrationMasterBase = (props) => {
             <AdvancedSearch {...advanceFilterProps} />
             <AMCRegistrationMainContainer {...containerProps} />
             <RejectRequest {...cancelModalProps} />
+            <ReportModal {...reportProps} reportDetail={reportDetail} />
         </>
     );
 };
