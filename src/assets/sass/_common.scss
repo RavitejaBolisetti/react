@@ -9,6 +9,15 @@
     margin-bottom: 10px;
 }
 
+.noInternetConnectivity {
+    text-align: 'center';
+    background-color: '#505050';
+    padding: '10px';
+    color: '#ffffff';
+    font-size: '14px';
+    font-family: 'Lato'
+}
+
 .fullyCentered {
     display: flex;
     align-items: center;
@@ -358,6 +367,7 @@
         }
     }
 }
+
 .modelContentTooltip {
     margin: 0px;
 }
@@ -2228,9 +2238,11 @@
         line-height: 36px;
         color: $primaryBlack;
     }
+
     .cardContanerOverflow {
         overflow-y: scroll;
         height: calc(100vh - 200px);
+
         &::-webkit-scrollbar-track {
             background-color: $primaryWhite;
         }
@@ -2251,6 +2263,7 @@
             }
         }
     }
+
     .viewDrawerContainer {
         & :global {
             .ant-space-horizontal {

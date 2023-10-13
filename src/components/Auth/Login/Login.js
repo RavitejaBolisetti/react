@@ -142,7 +142,9 @@ const Login = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {}).catch(err => console.error(err));
+        form.validateFields()
+            .then((values) => {})
+            .catch((err) => console.error(err));
         setLoginButtonDisabled(false);
     };
 
