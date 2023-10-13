@@ -186,11 +186,15 @@ const SupportingDocumentBase = (props) => {
             saveData(requestData);
             setPayload([]);
         } else {
-            setFileList([]);
-            setEmptyList(false);
-            setUploadedFile();
-            form.resetFields();
-            setIsFormVisible(false);
+            if (mandatoryFields) {
+                showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please upload at least one file to continue' });
+            } else {
+                setFileList([]);
+                setEmptyList(false);
+                setUploadedFile();
+                form.resetFields();
+                setIsFormVisible(false);
+            }
         }
     };
 

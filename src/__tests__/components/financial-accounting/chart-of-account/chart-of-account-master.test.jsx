@@ -181,9 +181,6 @@ describe("ChartOfAccountMaster component render", ()=>{
         const editBtn = screen.getByRole('button', {name:'Edit'});
         fireEvent.click(editBtn);
 
-        // const saveBtn = screen.getByRole('button', {name:'Save'});
-        // fireEvent.click(saveBtn)
-
         const cancelBtn = screen.getByRole('button', {name:'Cancel'});
         fireEvent.click(cancelBtn)
     });

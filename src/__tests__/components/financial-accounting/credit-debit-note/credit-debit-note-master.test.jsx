@@ -103,7 +103,6 @@ describe('Render components',() => {
 
         const saveBtn = screen.getByRole('button', {name:'Save & Next'});
         fireEvent.click(saveBtn);
-
     });
 
     it('Advanced Filters, closeImg', () => {
@@ -159,7 +158,7 @@ describe('Render components',() => {
         });
         customRender(
             <Provider store={mockStore}>
-                <CreditDebitNoteMaster fetchList={fetchList} isVisible={true} fetchDetail={fetchDetail} formActionType={formActionType} setVoucherTableData={jest.fn([])} setApportionTableData={jest.fn([])} />
+                <CreditDebitNoteMaster isVisible={true} formActionType={formActionType}/>
             </Provider>
         );
     })

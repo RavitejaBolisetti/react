@@ -47,15 +47,9 @@ const ApplicationTreeMain = (props) => {
     const [searchValue, setSearchValue] = useState();
     const [activeKey, setActiveKey] = useState([]);
 
-    const handleFormValueChange = () => {
-        // setButtonData({ ...buttonData, formBtnActive: true });
+    const onFinishFailed = (err) => {
+        console.error(err)
     };
-
-    const handleFormFieldChange = () => {
-        // setButtonData({ ...buttonData, formBtnActive: true });
-    };
-
-    const onFinishFailed = () => {};
 
     const onTabChange = (newActiveKey) => {
         setDeviceType(newActiveKey);
@@ -126,7 +120,7 @@ const ApplicationTreeMain = (props) => {
                             };
 
                             return (
-                                <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={onChange} expandIconPosition="end" collapsible="icon">
+                                <Collapse key={el?.value} expandIcon={expandIcon} activeKey={activeKey} onChange={onChange} expandIconPosition="end" collapsible="icon">
                                     <Panel
                                         header={
                                             <>
@@ -165,7 +159,7 @@ const ApplicationTreeMain = (props) => {
 
     return (
         <>
-            <Form form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
+            <Form form={form} onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
                 <Tabs
                     defaultActiveKey={APPLICATION_WEB}
                     onChange={onTabChange}

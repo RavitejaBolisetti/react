@@ -15,7 +15,7 @@ import { PartNameListModal } from './PartNameListModal';
 const { TextArea } = Input;
 const { Search } = Input;
 
-function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, editCardForm, formData, selectedOrderId, partNameSearchVisible, setPartNameSearchVisible, handleFormValueChange, showGlobalNotification, onSearchPart, setsearchData, searchData, addButtonDisabled, setaddButtonDisabled, setAddOnItemInfo, addOnItemInfo, AddonPartsData, onCancel, accessoryForm, onFieldsChange, onFinish, isEditing, isBtnDisabled, setIsBtnDisabled, finalFormdata, documentTypeDescription, documentTypeCode }) {
+function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, editCardForm, selectedOrderId, partNameSearchVisible, setPartNameSearchVisible, handleFormValueChange, showGlobalNotification, onSearchPart, setsearchData, searchData, addButtonDisabled, setaddButtonDisabled, setAddOnItemInfo, AddonPartsData, onCancel, accessoryForm, onFieldsChange, isBtnDisabled }) {
     const disableProp = { disabled: true };
     const [selectedRowData, setSelectedRowData] = useState();
 
@@ -81,9 +81,6 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
         handleSelectedData,
     };
 
-    const resetSearchFields = () => {
-        accessoryForm.resetFields(['partName']);
-    };
     return (
         <>
             <Form autoComplete="off" form={accessoryForm} onFieldsChange={onFieldsChange} layout="vertical" onFinishFailed={onFinishFailed}>

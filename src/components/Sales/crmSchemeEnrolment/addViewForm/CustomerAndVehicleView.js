@@ -14,8 +14,8 @@ import styles from 'assets/sass/app.module.scss';
 const { Panel } = Collapse;
 
 const CustomerAndVehicleViewMain = (props) => {
-    const { isLoading, activeKey, onChange, formActionType, customerData, vehicleDataDetails } = props;
-    let mode = formActionType?.viewMode ? 'view' : formActionType?.addMode ? 'add' : null;
+    const { isLoading, activeKey, onChange, customerData, vehicleDataDetails } = props;
+
     const viewProps = {
         bordered: false,
         colon: false,
@@ -25,9 +25,9 @@ const CustomerAndVehicleViewMain = (props) => {
 
     const modelInfo = (
         <span>
-            Color - {mode === 'add' ? vehicleDataDetails?.modelColor : vehicleDataDetails?.colour}
+            Color - {vehicleDataDetails?.colour}
             <div>Seating Capacity - {vehicleDataDetails?.seatingCapacity}</div>
-            Variant - {mode === 'add' ? vehicleDataDetails?.varient : vehicleDataDetails?.variants}
+            Variant - {vehicleDataDetails?.variants}
         </span>
     );
 
@@ -39,28 +39,14 @@ const CustomerAndVehicleViewMain = (props) => {
                     <Card>
                         <Descriptions {...viewProps}>
                             <Descriptions.Item label="Customer ID">{checkAndSetDefaultValue(customerData?.customerId, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(mode === 'view' ? customerData?.customerName : mode === 'add' ? (customerData?.firstName || '') + ' ' + (customerData?.middleName || '') + ' ' + (customerData?.lastName || '') : null, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Address">{checkAndSetDefaultValue(mode === 'view' ? customerData?.customerAddress : mode === 'add' ? (customerData?.addressLine1 || '') + ' ' + (customerData?.addressLine2 || '') + ' ' + (customerData?.addressLine3 || '') : null, isLoading)}</Descriptions.Item>
-                            {mode === 'add' ? (
-                                <>
-                                    <Descriptions.Item label="Locality">{checkAndSetDefaultValue(customerData?.locality, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Tehsil">{checkAndSetDefaultValue(customerData?.tehsilName, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="District">{checkAndSetDefaultValue(customerData?.districtName, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="City">{checkAndSetDefaultValue(customerData?.cityName, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="State">{checkAndSetDefaultValue(customerData?.stateName, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Pin Code">{checkAndSetDefaultValue(customerData?.pinCode, isLoading)}</Descriptions.Item>
-                                </>
-                            ) : mode === 'view' ? (
-                                <>
-                                    <Descriptions.Item label="Locality">{checkAndSetDefaultValue(customerData?.locality, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Tehsil">{checkAndSetDefaultValue(customerData?.tehsil, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="District">{checkAndSetDefaultValue(customerData?.district, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="City">{checkAndSetDefaultValue(customerData?.city, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="State">{checkAndSetDefaultValue(customerData?.state, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Pin Code">{checkAndSetDefaultValue(customerData?.pinCode, isLoading)}</Descriptions.Item>
-                                </>
-                            ) : null}
-
+                            <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(customerData?.customerName)}</Descriptions.Item>
+                            <Descriptions.Item label="Address">{checkAndSetDefaultValue(customerData?.customerAddress, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Locality">{checkAndSetDefaultValue(customerData?.locality, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Tehsil">{checkAndSetDefaultValue(customerData?.tehsil, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="District">{checkAndSetDefaultValue(customerData?.district, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="City">{checkAndSetDefaultValue(customerData?.city, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="State">{checkAndSetDefaultValue(customerData?.state, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Pin Code">{checkAndSetDefaultValue(customerData?.pinCode, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Mobile No.">{checkAndSetDefaultValue(customerData?.mobileNumber, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Email ID">{checkAndSetDefaultValue(customerData?.emailId, isLoading)}</Descriptions.Item>
                         </Descriptions>

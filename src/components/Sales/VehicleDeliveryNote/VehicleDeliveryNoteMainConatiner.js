@@ -23,14 +23,18 @@ import { ThankYouMaster } from './ThankYou';
 import styles from 'assets/sass/app.module.scss';
 
 const VehicleDeliveryNoteConatinerMain = (props) => {
-    const { currentSection, selectedOtfNumber, selectedOrderId, soldByDealer } = props;
+    const { currentSection, selectedOtfNumber, selectedOrderId, soldByDealer, vehicleChallanData, customerDetailsDataSearched } = props;
     const { requestPayload, setRequestPayload } = props;
 
     const onFinishCustom = ({ key, values }) => {
         setRequestPayload({ ...requestPayload, [key]: values });
     };
     const requestData = requestPayload;
+    
     const invoiceDataPayload = soldByDealer ? requestData?.deliveryNoteInvoiveDetails : requestData?.engineDetailDto;
+    const customerdataPayload = soldByDealer ? requestData?.customerDetails : props?.formActionType?.addMode ? customerDetailsDataSearched : requestData?.customerDetails;
+    const vehicleDataPayload = soldByDealer ? requestData?.vehicleDetails : props?.formActionType?.addMode ? vehicleChallanData : requestData?.vehicleInformationDto;
+    
     const myProps = {
         ...props,
         FormActionButton: VehicleDeliveryNoteFormButton,
@@ -45,10 +49,10 @@ const VehicleDeliveryNoteConatinerMain = (props) => {
                 return <InvoiceDetailsMaster {...myProps} invoiceData={invoiceDataPayload} />;
             }
             case VEHICLE_DELIVERY_NOTE_SECTION.CUSTOMER_DETAILS.id: {
-                return <CustomerDetailsMaster {...myProps} customerDetailsData={requestData?.customerDetails} />;
+                return <CustomerDetailsMaster {...myProps} customerDetailsData={customerdataPayload} />;
             }
             case VEHICLE_DELIVERY_NOTE_SECTION.VEHICLE_DETAILS.id: {
-                return <VehicleDetailsMaster {...myProps} vehicleData={soldByDealer ? requestData?.vehicleDetails : requestData?.vehicleInformationDto} />;
+                return <VehicleDetailsMaster {...myProps} vehicleData={vehicleDataPayload} />;
             }
             case VEHICLE_DELIVERY_NOTE_SECTION.FINANCE_DETAILS.id: {
                 return <FinananceDetailsMaster {...myProps} formKey={'financeDetails'} financeData={requestData?.financeDetails} />;

@@ -1735,7 +1735,7 @@
                     .ant-descriptions-item-container {
                         .ant-descriptions-item-content {
                             display: inline-block;
-                            white-space: nowrap;
+                            // white-space: nowrap;
                             overflow: hidden;
                             text-overflow: ellipsis;
                             color: $primaryBlack;

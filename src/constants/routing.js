@@ -12,6 +12,7 @@ export const ROUTING_FORGOT_PASSWORD = '/forgot-password';
 export const ROUTING_UPDATE_PASSWORD = '/update-password';
 
 export const ROUTING_DASHBOARD = '/dashboard';
+export const ROUTING_DASHBOARD_NEW = '/dashboard-new';
 
 export const ROUTING_COMMON = '/common/';
 export const ROUTING_MILE = '/mile/';
@@ -101,6 +102,7 @@ export const ROUTING_VEHICLE_RECEIPT = ROUTING_SALES.concat('vehicle-receipt');
 export const ROUTING_RECEIPTS = ROUTING_SALES.concat('receipts');
 export const ROUTING_OTF_SO_MAPPING_CONTROL_MASTER = ROUTING_SALES.concat('booking-so-mapping-control-master');
 export const ROUTING_OTF_BLOCK_MASTER = ROUTING_SALES.concat('booking-block-master');
+export const ROUTING_VEHICLE_CHECKLIST_MASTER = ROUTING_SALES.concat('vehicle-checklist-master');
 export const ROUTING_CRM_SCHEME_ENROLMENT = ROUTING_SALES.concat('crm-scheme-enrolment');
 
 export const ROUTING_FINANCIAL_ACCOUNTING_TAX_CHARGES = ROUTING_FINANCIAL_ACCOUNTING.concat('tax-charges');
@@ -115,6 +117,7 @@ export const ROUTING_VEHICLE_ALLOTMENT = ROUTING_SALES.concat('order-delivery/ve
 export const ROUTING_VEHICLE_RECIEPT_CHECKLIST = ROUTING_SALES.concat('receipt-checklist');
 export const ROUTING_VEHICLE_INVOICE_GENERATION = ROUTING_SALES.concat('vehicle-invoice-generation');
 export const ROUTING_VEHICLE_DELIVERY_NOTE = ROUTING_SALES.concat('vehicle-delivery-note');
+export const ROUTING_CHARGER_INSTALLATION_PROCESS = ROUTING_SALES.concat('charger-installation');
 
 export const ROUTING_VEHICLE_MODEL_TAX_CHARGES_CATEGORY = ROUTING_FINANCIAL_ACCOUNTING.concat('vehicle-model-tax-and-charges-category');
 
@@ -125,6 +128,7 @@ export const ROUTING_DIGITAL_SIGNATURE_MAPPING = ROUTING_SALES.concat('digital-s
 export const ROUTING_HO_PRICE_MAPPING = ROUTING_SALES.concat('ho-price-mapping');
 export const STOCK_TRANSFER_INDENT = ROUTING_SALES.concat('stock-transfer-indent');
 export const ROUTING_SO_MAPPING_UNMAPPING = ROUTING_SALES.concat('booking-so-mapping');
+export const ROUTING_AMC_REGISTRATION = ROUTING_SALES.concat('amc-registration');
 export const ROUTING_RSM_ASM_APPROVAL = ROUTING_SALES.concat('rsm-asm-approval');
 export const ROUTING_EVR_DETAILS_CAPTURING = ROUTING_SALES.concat('evr-details-capturing');
 

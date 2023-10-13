@@ -34,8 +34,8 @@ import { VehiclePriceMaster } from './vehiclePriceMaster';
 import { RoleManagementData } from './roleManagementData';
 import { ManufacturerAdmin } from './ManufacturerAdmin';
 import { ManufacturerOrg } from './ManufacturerOrg';
-import { VehicleReceipt } from './vehicleReceipt';
 import { Receipt } from './receipt';
+import { VehicleReceipt } from './vehicleReceipt';
 import { VehicleModelandTaxChargesCategory } from './VehicleModelTaxChargesCategory';
 import { Report } from './report';
 import { UserManagement } from './userManagement';
@@ -47,11 +47,16 @@ import { OTFSoMapping } from './otfSoMappingUnmapping';
 import { OTFBlockMaster } from './otfBlockMaster';
 import { VehicleDeliveryNote } from './vehicleDeliveryNote';
 import { DealerBlockMaster } from './dealerBlockMaster';
+import { CRMCustomerVehicle } from './crmCustomerVehicle';
+import { ChargerInstallation } from './chargerInstallation';
 import { RsmAsmApproval } from './rsmAsmApproval';
 import { EvrDetailsCapturing } from './evrDetailsCapturing';
-
+import { VehicleChecklistMaster } from './vehicleChecklistMaster';
 import { stockTransferIndentData } from './stockTransferIndent';
+import { AMCRegistration } from './amcRegistration';
+import { WorkFlowMaster } from './workflow';
 import { CRMSchemeEnrollmentList } from './crmSchemeEnrollment';
+
 export const data = combineReducers({
     Menu,
     ProductHierarchy,
@@ -84,6 +89,7 @@ export const data = combineReducers({
     ManufacturerAdmin,
     ManufacturerOrg,
     VehicleReceipt,
+    Receipt,
     VehiclePriceMaster,
     VehicleModelandTaxChargesCategory,
     Report,
@@ -96,7 +102,12 @@ export const data = combineReducers({
     OTFBlockMaster,
     VehicleDeliveryNote,
     DealerBlockMaster,
+    ChargerInstallation,
+    CRMCustomerVehicle,
     CRMSchemeEnrollmentList,
     RsmAsmApproval,
     EvrDetailsCapturing,
+    VehicleChecklistMaster,
+    AMCRegistration,
+    WorkFlowMaster,
 });

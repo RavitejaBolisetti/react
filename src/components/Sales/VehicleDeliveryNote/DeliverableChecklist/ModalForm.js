@@ -85,6 +85,7 @@ export const ChecklistModalForms = (props) => {
                         <TextArea placeholder={preparePlaceholderText('Details')} autoSize={{ minRows: 3, maxRows: 5 }} maxLength={300} showCount {...disabledProps} />
                     </Form.Item>
                     <Form.Item name="id" hidden></Form.Item>
+                    <Form.Item initialValue={true} name="status" hidden></Form.Item>
                 </Col>
             </Row>
             <ModalButtons {...modalProps} />

@@ -12,7 +12,7 @@ import { InputSkeleton } from './Skeleton';
 const LeftPanel = (props) => {
     const { selectedTreeKey, callOnForm = false, treeData, fieldNames, handleTreeViewClick, isOpenInModal, checkedKeys, expendedKeys: defaultExpandedKeys = [] } = props;
     const { isTreeViewVisible, checkable, onCheck = () => {}, selectable = true } = props;
-    const { isLoading = false, searchValue, setSearchValue, disabled = false } = props;
+    const { isLoading = false, searchValue, setSearchValue, disabled = false, showLine=true } = props;
 
     const [expandedKeys, setExpandedKeys] = useState([]);
     const [autoExpandParent, setAutoExpandParent] = useState(true);
@@ -117,7 +117,7 @@ const LeftPanel = (props) => {
         <div className={`${styles.leftpanel} ${panelParentClass}`}>
             {isTreeViewVisible ? (
                 <div className={isOpenInModal ? styles.modalView : ''}>
-                    <div className={mainClass}>{isLoading ? <InputSkeleton width={300} height={25} count={10} /> : <Tree onCheck={onCheck} checkable={checkable} checkedKeys={checkedKeys} expandedKeys={expandedKeys} selectedKeys={selectedTreeKey} onSelect={handleTreeViewClick} showLine={true} showIcon={true} onExpand={onExpand} autoExpandParent={autoExpandParent} treeData={finalTreeData} selectable={selectable} />}</div>
+                    <div className={mainClass}>{isLoading ? <InputSkeleton width={300} height={25} count={10} /> : <Tree onCheck={onCheck} checkable={checkable} checkedKeys={checkedKeys} expandedKeys={expandedKeys} selectedKeys={selectedTreeKey} onSelect={handleTreeViewClick} showLine={showLine} showIcon={true} onExpand={onExpand} autoExpandParent={autoExpandParent} treeData={finalTreeData} selectable={selectable} />}</div>
                 </div>
             ) : undefined}
         </div>

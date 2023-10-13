@@ -3,30 +3,29 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Form, Row, Col } from 'antd';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
+import { VehicleDeliveryNoteFormButton } from '../VehicleDeliveryNoteFormButton';
 
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { relationshipManagerDataActions } from 'store/actions/data/vehicleDeliveryNote/relationshipManager';
 import { schemeDescriptionAmcDataActions, schemeDescriptionRsaDataActions, schemeDescriptionShieldDataActions } from 'store/actions/data/vehicleDeliveryNote';
 import { showGlobalNotification } from 'store/actions/notification';
-import { BASE_URL_VEHICLE_ADD_ON_SCHEME_RSA_DESCRIPTION as customRsaURL, BASE_URL_VEHICLE_ADD_ON_SCHEME_AMC_DESCRIPTION as customAmcURL } from 'constants/routingApi';
 
 import styles from 'assets/sass/app.module.scss';
-import { VehicleDeliveryNoteFormButton } from '../VehicleDeliveryNoteFormButton';
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             VehicleDeliveryNote: {
-                SchemeDescriptionAmc: { isLoaded: isAmcLoaded = false, isLoading: isAmcLoading, data: schemeAmcData = [] },
-                SchemeDescriptionRsa: { isLoaded: isRsaLoaded = false, isLoading: isRsaLoading, data: schemeRsaData = [] },
-                SchemeDescriptionShield: { isLoaded: isShieldLoaded = false, isLoading: isShieldLoading, data: schemeShieldData = [] },
+                SchemeDescriptionAmc: { isLoaded: isAmcLoaded = false, data: schemeAmcData = [] },
+                SchemeDescriptionRsa: { isLoaded: isRsaLoaded = false, data: schemeRsaData = [] },
+                SchemeDescriptionShield: { isLoaded: isShieldLoaded = false, data: schemeShieldData = [] },
                 RelationshipManager: { isLoaded: isRelationshipManagerLoaded = false, isloading: isRelationshipManagerLoading, data: relationshipManagerData = [] },
             },
         },
@@ -78,9 +77,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const AddOnDetailsMasterMain = (props) => {
-    const { listSchemeShowLoading, selectedInvoiceId, typeData, requestPayload, setRequestPayload, showGlobalNotification, AddonPartsData, AddonDetailsData, userId, listShowLoading, saveData, onFinishFailed } = props;
+    const { typeData, requestPayload, setRequestPayload, showGlobalNotification, AddonPartsData, AddonDetailsData, userId, onFinishFailed } = props;
     const { form, section, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick, setButtonData, buttonData, listRelationshipMangerShowLoading, fetchRelationshipManger, relationshipManagerData, deliveryNoteMasterData } = props;
-    const { isDataLoaded } = props;
+    const { selectedOrder } = props;
 
     const { isAmcLoaded, schemeAmcData, isRsaLoaded, schemeRsaData, isShieldLoaded, schemeShieldData } = props;
     const { fetchAmc, listAmcLoading } = props;
@@ -99,10 +98,6 @@ export const AddOnDetailsMasterMain = (props) => {
     const [schemeDescriptionDatamain, setSchemeDescriptionData] = useState({ Shield: [], RSA: [], AMC: [] });
     const [registerDisabled, setRegisterDisabled] = useState({ Shield: false, RSA: false, AMC: false });
 
-    const onSuccessAction = (res) => {
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-    };
-
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
@@ -110,58 +105,60 @@ export const AddOnDetailsMasterMain = (props) => {
     const handleCollapse = (values) => {
         openAccordian?.includes(values) ? setOpenAccordian('') : setOpenAccordian([values]);
     };
+    const extraParams = useMemo(() => {
+        return [
+            {
+                key: 'invoiceNumber',
+                title: 'invoiceNumber',
+                value: selectedOrder?.invoicehdrId,
+                name: 'Invoice Number',
+            },
+        ];
+    }, [selectedOrder]);
 
     useEffect(() => {
-        if (selectedInvoiceId && userId) {
-            const extraParams = [
-                {
-                    key: 'invoiceNumber',
-                    title: 'invoiceNumber',
-                    value: selectedInvoiceId,
-                    name: 'Invoice Number',
-                },
-            ];
-            fetchAmc({ setIsLoading: listAmcLoading, userId, extraParams, onErrorAction });
-            fetchRsa({ setIsLoading: listRsaLoading, userId, extraParams, onErrorAction });
+        if (selectedOrder?.invoicehdrId && userId) {
             fetchSheild({ setIsLoading: listSheildLoaing, userId, extraParams, onErrorAction });
+            fetchRsa({ setIsLoading: listRsaLoading, userId, extraParams, onErrorAction });
+            // fetchAmc({ setIsLoading: listAmcLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedInvoiceId, userId]);
+    }, [selectedOrder?.invoicehdrId, userId]);
     useEffect(() => {
-        if (isAmcLoaded && isRsaLoaded && isShieldLoaded) {
-            setSchemeDescriptionData((prev) => ({ ...prev, AMC: schemeAmcData, RSA: schemeRsaData, Shield: schemeShieldData }));
+        if (isRsaLoaded && isShieldLoaded) {
+            setSchemeDescriptionData((prev) => ({ ...prev, RSA: schemeRsaData, Shield: schemeShieldData }));
         }
-        if (deliveryNoteMasterData?.deliveryNoteAddOnDetails) {
-            const DisableFormData = deliveryNoteMasterData?.deliveryNoteAddOnDetails;
-            if (DisableFormData?.sheildRequest && Object?.keys(DisableFormData?.sheildRequest)?.length) {
-                setRegisterDisabled((prev) => ({ ...prev, Shield: true }));
-                setMultipleFormData((prev) => ({ ...prev, sheildRequest: { ...DisableFormData?.sheildRequest, mappedInDelivery: false } }));
-            }
-            if (DisableFormData?.rsaRequest && Object?.keys(DisableFormData?.rsaRequest)?.length) {
-                setRegisterDisabled((prev) => ({ ...prev, RSA: true }));
-                setMultipleFormData((prev) => ({ ...prev, rsaRequest: { ...DisableFormData?.rsaRequest, mappedInDelivery: false } }));
-            }
-            if (DisableFormData?.amcRequest && Object?.keys(DisableFormData?.amcRequest)?.length) {
-                setRegisterDisabled((prev) => ({ ...prev, AMC: true }));
-                setMultipleFormData((prev) => ({ ...prev, amcRequest: { ...DisableFormData?.amcRequest, mappedInDelivery: false } }));
-            }
+        if (isAmcLoaded && schemeAmcData) {
+            setSchemeDescriptionData((prev) => ({ ...prev, AMC: schemeAmcData }));
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isAmcLoaded, isRsaLoaded, isShieldLoaded, deliveryNoteMasterData]);
+    }, [isAmcLoaded, isRsaLoaded, isShieldLoaded, deliveryNoteMasterData, schemeAmcData]);
 
     useEffect(() => {
         if (AddonDetailsData) {
             form.setFieldsValue({ ...AddonDetailsData });
             setFormData({ ...AddonDetailsData });
+            if (AddonDetailsData?.sheildRequest) {
+                setRegisterDisabled((prev) => ({ ...prev, Shield: true }));
+            }
+            if (AddonDetailsData?.rsaRequest) {
+                setRegisterDisabled((prev) => ({ ...prev, RSA: true }));
+            }
+
+            if (AddonDetailsData?.amcRequest) {
+                setRegisterDisabled((prev) => ({ ...prev, AMC: true }));
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [AddonDetailsData, section]);
 
     useEffect(() => {
+        if (userId) handleEmployeeSearch();
         setButtonData({ ...buttonData, formBtnActive: true });
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [section]);
+    }, [section, userId]);
 
     const handleOnChange = (e) => {
         form.setFieldsValue({
@@ -170,39 +167,40 @@ export const AddOnDetailsMasterMain = (props) => {
     };
 
     const handleEmployeeSearch = () => {
-        const onSuccessAction = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-        };
         const onErrorAction = (message) => {
             showGlobalNotification({ message });
         };
 
-        fetchRelationshipManger({ setIsLoading: listRelationshipMangerShowLoading, userId, onSuccessAction, onErrorAction });
+        fetchRelationshipManger({ setIsLoading: listRelationshipMangerShowLoading, userId, onErrorAction });
     };
-
+    const getCodeValue = (data, key) => {
+        return data?.find((i) => i?.schemeDescription === key)?.id;
+    };
     const onSingleFormFinish = (key, formName) => {
         formName.validateFields().then(() => {
-            switch (key) {
-                case 'sheildRequest':
-                    setMultipleFormData({ ...muiltipleFormData, sheildRequest: shieldForm.getFieldsValue() });
-                    break;
-                case 'rsaRequest':
-                    setMultipleFormData({ ...muiltipleFormData, rsaRequest: rsaForm.getFieldsValue() });
-                    break;
-                case 'amcRequest':
-                    setMultipleFormData({ ...muiltipleFormData, amcRequest: amcForm.getFieldsValue() });
-                    break;
-
-                default:
-                    return;
-                    break;
+            const formDataset = formName?.getFieldsValue();
+            if (formDataset?.schemeCode) {
+                setRequestPayload({ ...requestPayload, deliveryNoteAddOnDetails: { ...requestPayload?.deliveryNoteAddOnDetails, [key]: formDataset } });
+            } else {
+                setRequestPayload({ ...requestPayload, deliveryNoteAddOnDetails: { ...requestPayload?.deliveryNoteAddOnDetails, [key]: { ...formDataset, schemeCode: getCodeValue(schemeDescriptionDatamain[openAccordian], formDataset?.schemeDescription) } } });
             }
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Scheme has been successfully registered' });
+            setRegisterDisabled((prev) => ({ ...prev, [openAccordian]: true }));
+            const message = !formData?.[key] ? 'registered' : 'saved';
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: `Scheme has been ${message} successfully` });
         });
     };
-
+    const handleAmcDescriptionData = (amcSchemeCode) => {
+        const params = [
+            ...extraParams,
+            {
+                key: 'type',
+                title: 'Amc Scheme code',
+                value: amcSchemeCode,
+            },
+        ];
+        fetchAmc({ setIsLoading: listAmcLoading, userId, extraParams: params, onErrorAction });
+    };
     const onFinish = () => {
-        setRequestPayload({ ...requestPayload, deliveryNoteAddOnDetails: muiltipleFormData });
         handleButtonClick({ buttonAction: NEXT_ACTION });
         setButtonData({ ...buttonData, formBtnActive: false });
     };
@@ -244,6 +242,8 @@ export const AddOnDetailsMasterMain = (props) => {
         schemeDescriptionDatamain,
         setRegisterDisabled,
         registerDisabled,
+        muiltipleFormData,
+        handleAmcDescriptionData,
     };
 
     return (

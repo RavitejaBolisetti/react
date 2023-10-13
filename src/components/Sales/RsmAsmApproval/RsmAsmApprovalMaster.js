@@ -20,11 +20,11 @@ import { dateFormatView, converDateDayjs } from 'utils/formatDateTime';
 import { BASE_URL_APPROVAL_CANCEL_REQUEST_URL as approvalCancelURL } from 'constants/routingApi';
 
 import { LANGUAGE_EN } from 'language/en';
-import { getCodeValue } from 'utils/getCodeValue';
 
 import { FilterIcon } from 'Icons';
 import { rsmAsmApprovalSearchDataAction } from 'store/actions/data/rsmAsmApproval/rsmAsmApprovalSearch';
 import { deliveryNoteInvoiceCancellationDataAction } from 'store/actions/data/sales/deliveryNoteInvoiceCancellation';
+import { workFlowDataAction } from 'store/actions/data/workflow';
 import { ViewDetail } from './ViewDetail';
 import styles from 'assets/sass/app.module.scss';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
@@ -34,7 +34,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-
+            WorkFlowMaster: { data: workFlowDetails },
             RsmAsmApproval: {
                 RsmAsmApprovalSearch: { isDetailLoaded = false, data, filter: filterString },
             },
@@ -47,6 +47,7 @@ const mapStateToProps = (state) => {
         userId,
         isDataLoaded: true,
         data: data?.paginationData,
+        workFlowDetails,
         totalRecords: data?.totalRecords || [],
         moduleTitle,
         filterString,
@@ -62,6 +63,7 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchList: rsmAsmApprovalSearchDataAction.fetchList,
             fetchDetail: deliveryNoteInvoiceCancellationDataAction.fetchDetail,
+            fetchWorkFlow: workFlowDataAction.fetchList,
             listShowLoading: rsmAsmApprovalSearchDataAction.listShowLoading,
             setFilterString: rsmAsmApprovalSearchDataAction.setFilter,
             resetData: rsmAsmApprovalSearchDataAction.reset,
@@ -73,7 +75,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const RsmAsmApprovalMasterBase = (props) => {
-    const { fetchList, saveData, listShowLoading, userId, data, totalRecords, showGlobalNotification } = props;
+    const { fetchList, fetchWorkFlow, saveData, listShowLoading, userId, data, workFlowDetails, totalRecords, showGlobalNotification } = props;
     const { typeData } = props;
     const { filterString, setFilterString, isDetailLoaded } = props;
 
@@ -90,8 +92,7 @@ export const RsmAsmApprovalMasterBase = (props) => {
         closeBtn: true,
         cancelBtn: false,
         formBtnActive: true,
-        rejectBtn: true,
-        approveBtn: true,
+        rejectApproveBtn: false,
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -109,13 +110,34 @@ export const RsmAsmApprovalMasterBase = (props) => {
     const REQUEST_CONSTANT = {
         Reject: {
             key: 'Reject',
-            value: 'R',
+            value: 'WFACTREJ',
         },
         Approve: {
             key: 'Approve',
-            value: 'A',
+            value: 'WFACTAPR',
         },
     };
+    useEffect(() => {
+        return () => {
+            setFilterString();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        if (userId) {
+            const extraParams = [
+                {
+                    key: 'documentNumber',
+                    title: 'documentNumber',
+                    value: 'INVCANCEL',
+                    name: 'documentNumber',
+                },
+            ];
+            fetchWorkFlow({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId]);
 
     const onSuccessAction = () => {
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
@@ -130,16 +152,9 @@ export const RsmAsmApprovalMasterBase = (props) => {
 
     const handleButtonQuery = (item) => {
         setInvoiceStatusType(item?.key);
-        setFilterString({ ...filterString, invoiceStatusType: item?.key });
+        setFilterString({ current: 1 });
         setShowDataLoading(true);
     };
-
-    useEffect(() => {
-        if (filterString) {
-            setPage({ ...page, current: 1 });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString]);
 
     const extraParams = useMemo(() => {
         return [
@@ -183,7 +198,7 @@ export const RsmAsmApprovalMasterBase = (props) => {
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: page?.current,
+                value: filterString?.current || page?.current,
                 canRemove: true,
             },
             {
@@ -211,11 +226,11 @@ export const RsmAsmApprovalMasterBase = (props) => {
     }, [userId, invoiceStatusType, extraParams]);
 
     useEffect(() => {
-        return () => {
-            setFilterString();
-        };
+        if (page?.current > 1) {
+            setFilterString({ ...filterString, pageSize: 10, current: page?.current });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [page]);
 
     const onAdvanceSearchCloseAction = () => {
         form.resetFields();
@@ -240,7 +255,7 @@ export const RsmAsmApprovalMasterBase = (props) => {
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
         setFormData([]);
-        record?.requestStatus === DELIVERY_NOTE_INVOICE_STATUS?.PENDING?.key ? setButtonData({ ...defaultBtnVisiblity, rejectBtn: true, approveBtn: true }) : setButtonData({ ...defaultBtnVisiblity, rejectBtn: false, approveBtn: false });
+        record?.requestStatus === DELIVERY_NOTE_INVOICE_STATUS?.PENDING?.key ? setButtonData({ ...defaultBtnVisiblity, rejectApproveBtn: true }) : setButtonData({ ...defaultBtnVisiblity, rejectApproveBtn: false });
         setFormActionType({ viewMode: buttonAction === VIEW_ACTION });
         record && setFormData(record);
         setIsFormVisible(true);
@@ -306,14 +321,14 @@ export const RsmAsmApprovalMasterBase = (props) => {
         actionItem &&
             setConfirmRequest({
                 isVisible: true,
-                titleOverride: actionItem?.requestType ? REQUEST_CONSTANT?.Reject?.key?.concat(requestModuleTitle) : REQUEST_CONSTANT?.Approve?.key?.concat(requestModuleTitle),
-                text: !actionItem?.requestType ? 'Are you sure you want to approve request?' : '',
+                titleOverride: actionItem?.buttonAction === REQUEST_CONSTANT?.Reject?.value ? REQUEST_CONSTANT?.Reject?.key?.concat(requestModuleTitle) : REQUEST_CONSTANT?.Approve?.key?.concat(requestModuleTitle),
+                text: !actionItem?.buttonAction ? 'Are you sure you want to approve request?' : '',
                 closable: true,
                 icon: false,
                 onCloseAction: rejectModalCloseAction,
-                onSubmitAction: (values) => onFinish({ ...values, requestType: actionItem?.requestType ? REQUEST_CONSTANT?.Reject?.value : REQUEST_CONSTANT?.Approve?.value }),
+                onSubmitAction: (values) => onFinish({ ...values, requestType: actionItem?.buttonAction }),
                 submitText: actionItem?.modalButtonName,
-                showField: actionItem?.requestType ? true : false,
+                showField: actionItem?.buttonAction === REQUEST_CONSTANT?.Reject?.value ? true : false,
             });
     };
 
@@ -321,12 +336,14 @@ export const RsmAsmApprovalMasterBase = (props) => {
         dynamicPagination,
         totalRecords,
         setPage,
+        page,
         tableColumn: tableColumn({ handleButtonClick, typeData }),
         tableData: data,
         showAddButton: false,
         handleAdd: handleButtonClick,
         noMessge: LANGUAGE_EN.GENERAL.LIST_NO_DATA_FOUND.TITLE,
         invoiceStatusType,
+        filterString,
     };
 
     const removeFilter = (key) => {
@@ -394,6 +411,7 @@ export const RsmAsmApprovalMasterBase = (props) => {
         invoiceStatusType,
         typeData,
         handleRequest,
+        workFlowDetails,
     };
 
     const requestModuleTitle = ' Delivery/Invoice Cancellation Request';

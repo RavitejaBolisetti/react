@@ -189,6 +189,10 @@ describe('Bay type master components', () => {
 
         const saveNewBtn = screen.getByRole('button', { name: 'Save & Add New' });
         fireEvent.click(saveNewBtn);
+
+        await waitFor(() => expect(saveData).toHaveBeenCalled());
+        saveData.mock.calls[0][0].onSuccess(res);
+        saveData.mock.calls[0][0].onError();
     });
 
     it('add and cancel button should work', () => {
