@@ -7,9 +7,8 @@
 import React, { useMemo } from 'react';
 import { Row, Col } from 'antd';
 
-import { DataTable } from 'utils/dataTable';
 import { ModalForm } from './ModalForm';
-import { MODEL_TITLE } from '../Constants';
+import { MODEL_TITLE } from './Constants';
 import { ListDataTable } from 'utils/ListDataTable';
 
 const AddEditFormMain = (props) => {

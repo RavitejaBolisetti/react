@@ -11,10 +11,8 @@ import { bindActionCreators } from 'redux';
 import { showGlobalNotification } from 'store/actions/notification';
 import { VehicleCheclistDetailsdataActions } from 'store/actions/data/VehicleReceiptCheckList/VehicleReceiptChecklistMaster';
 
-import { AddEditForm } from './AddEditForm';
-import { ViewDetail } from './ViewDetails';
+import { AddEditForm, tableColumn } from 'components/Sales/Common/ChecklistDetails';
 import { VehicleCheckListbutton } from '../VehicleRecieptFormButton';
-import { tableColumn } from './tableCoulmn';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -160,15 +158,9 @@ const VehicleRecieptCheckListMain = (props) => {
         page,
         setPage,
         pageIntialState,
-    };
-
-    const viewProps = {
-        styles,
+        matchKey: 'ansMstId',
         isChecklistDataLoading,
-        checkListDataModified,
-        setcheckListDataModified,
-        formActionType,
-        tableProps,
+        styles,
     };
 
     return (
@@ -180,7 +172,7 @@ const VehicleRecieptCheckListMain = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                     </Row>
-                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
+                    <AddEditForm {...formProps} />
                 </Col>
             </Row>
             <Row>

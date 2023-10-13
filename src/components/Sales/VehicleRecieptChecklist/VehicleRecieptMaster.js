@@ -622,8 +622,6 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         }
     }, [formActionType]);
 
-    console.log('CHKL_ANS_TYPE', typedataMaster['CHKL_ANS_TYPE']);
-
     const containerProps = {
         isProfileDataLoaded,
         ProfileData,
