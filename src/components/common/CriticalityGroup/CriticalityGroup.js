@@ -170,11 +170,6 @@ export const CriticalityGroupMain = (props) => {
 
         saveData(requestData);
     };
-
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {}).catch(err => console.error(err));
-    };
-
     const handleReferesh = () => {
         setRefershData(!refershData);
     };
@@ -230,7 +225,6 @@ export const CriticalityGroupMain = (props) => {
         isVisible: isFormVisible,
         showGlobalNotification,
         onFinish,
-        onFinishFailed,
         onCloseAction,
         titleOverride: drawerTitle.concat(moduleTitle),
         formData,

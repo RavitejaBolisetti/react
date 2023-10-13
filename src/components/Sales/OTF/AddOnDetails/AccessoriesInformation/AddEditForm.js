@@ -147,8 +147,13 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
                             <Input type="number" max={50} placeholder={preparePlaceholderText('required quantity')} />
                         </Form.Item>
                     </Col>
-
                     <Form.Item hidden name="id">
+                        <Input />
+                    </Form.Item>
+                    <Form.Item hidden name="hsnCode">
+                        <Input />
+                    </Form.Item>
+                    <Form.Item hidden name="partLocationId">
                         <Input />
                     </Form.Item>
                 </Row>

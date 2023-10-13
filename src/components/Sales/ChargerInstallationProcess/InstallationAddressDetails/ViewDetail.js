@@ -3,19 +3,14 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState } from 'react';
-import { Col, Row, Collapse, Descriptions, Divider, Typography, Space, Card } from 'antd';
+import React from 'react';
+import { Col, Row, Descriptions, Divider, Typography, Space, Card } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 import styles from 'assets/sass/app.module.scss';
-import { DataTable } from 'utils/dataTable';
-import { prepareCaption } from 'utils/prepareCaption';
-
-const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
     const { chargerInstallationMasterData, isLoading } = props;
-    const [activeKey, setactiveKey] = useState([]);
     const addressProps = {
         bordered: false,
         colon: false,
@@ -29,22 +24,6 @@ const ViewDetailMain = (props) => {
         column: { xs: 1, sm: 1, lg: 1, xl: 1, xxl: 1 },
     };
 
-    const onChange = (values) => {
-        const isPresent = activeKey.includes(values);
-
-        if (isPresent) {
-            const newActivekeys = [];
-
-            activeKey.forEach((item) => {
-                if (item !== values) {
-                    newActivekeys.push(item);
-                }
-            });
-            setactiveKey(newActivekeys);
-        } else {
-            setactiveKey([...activeKey, values]);
-        }
-    };
     return (
         <div className={styles.viewDrawerContainer}>
             <Row gutter={20}>
@@ -54,15 +33,15 @@ const ViewDetailMain = (props) => {
                             <Typography>Customer Details</Typography>
                             <Divider className={styles.marT20} />
                             <Descriptions {...customerProps}>
-                                <Descriptions.Item label="Customer Name">{chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.customerName}</Descriptions.Item>
-                                <Descriptions.Item label="Address">{chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.address}</Descriptions.Item>
-                                <Descriptions.Item label="Pincode">{chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.pinCode}</Descriptions.Item>
+                                <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.customerName, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Address">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.address, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Pincode">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.pinCode, isLoading)}</Descriptions.Item>
                             </Descriptions>
                             <Descriptions {...addressProps}>
-                                <Descriptions.Item label="City">{chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.city}</Descriptions.Item>
-                                <Descriptions.Item label="State">{chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.state}</Descriptions.Item>
-                                <Descriptions.Item label="Customer Mobile No.">{chargerInstallationMasterData?.chargerInstAddressDetails?.otfDetails?.customerMobileNumber}</Descriptions.Item>
-                                <Descriptions.Item label="Customer Email Id.">{chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.email}</Descriptions.Item>
+                                <Descriptions.Item label="City">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.city, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="State">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.state, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Customer Mobile No.">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.otfDetails?.customerMobileNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Customer Email Id.">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.customerEmail, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         </Card>
                     </Space>
@@ -72,11 +51,11 @@ const ViewDetailMain = (props) => {
                         <Typography>Installation Address</Typography>
                         <Divider className={styles.marT20} />
                         <Descriptions {...customerProps}>
-                            <Descriptions.Item label="Installation Address">{chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.address}</Descriptions.Item>
-                            <Descriptions.Item label="Pincode">{chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.pinCode}</Descriptions.Item>
-                            <Descriptions.Item label="City">{chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.city}</Descriptions.Item>
-                            <Descriptions.Item label="State">{chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.state}</Descriptions.Item>
-                            <Descriptions.Item label="Contact No.">{chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.customerMobileNumber}</Descriptions.Item>
+                            <Descriptions.Item label="Installation Address">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.address, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Pincode">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.pinCode, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="City">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.city, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="State">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.state, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Contact No.">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.customerMobileNumber, isLoading)}</Descriptions.Item>
                         </Descriptions>
                     </Card>
                 </Col>

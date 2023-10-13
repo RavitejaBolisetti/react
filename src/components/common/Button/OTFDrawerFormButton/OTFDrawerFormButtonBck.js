@@ -8,7 +8,7 @@ import React from 'react';
 import { OTF_FORM_ACTION_TYPE } from 'constants/otfActionType';
 import styles from 'assets/sass/app.module.scss';
 
-const OTFFormButton = ({ buttonData, id = { edit: 'edit', transfer: 'transfer', cancel: 'cancelOTF', allot: 'allot', unallot: 'unallot', invoice: 'invoice', deliverynote: 'deliveryNote', Next: 'myform' }, loader, onCloseAction, handleButtonClick, formData }) => {
+const OTFFormButton = ({ buttonData, id = { edit: 'edit', transfer: 'transfer', cancel: 'cancelOTF', allot: 'allot', unallot: 'unallot', invoice: 'invoice', deliverynote: 'deliveryNote', Next: 'myform' }, onCloseAction, handleButtonClick, formData }) => {
     return (
         <div className={styles.formFooter}>
             <Row gutter={20}>

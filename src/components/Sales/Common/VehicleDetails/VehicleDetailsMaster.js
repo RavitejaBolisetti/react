@@ -276,6 +276,16 @@ const VehicleDetailsMasterMain = (props) => {
             productModelCode && form.setFieldValue('modalCode', productModelCode);
         };
 
+        const onErrorAction = (message) => {
+            showGlobalNotification({ message: message });
+
+            const { productModelCode, discountAmount, saleType, priceType } = vehicleDetailData;
+            setFilterVehicleData({ ...vehicleData, productModelCode, discountAmount, saleType, priceType });
+
+            setVehicleDetailData(vehicleDetailData);
+            setFormData({ ...vehicleDetailData });
+        };
+
         fetchData({ setIsLoading: listShowLoading, userId, extraParams: extraParams, onSuccessAction, onErrorAction, resetOnError: false });
     };
 
@@ -384,6 +394,7 @@ const VehicleDetailsMasterMain = (props) => {
         handleVehicleDetailChange,
         viewOnly: !isOTFModule,
         isOTFModule,
+        orderStatus: selectedOrder?.orderStatus,
     };
 
     const viewProps = {
@@ -410,7 +421,7 @@ const VehicleDetailsMasterMain = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            {StatusBar && <StatusBar status={props?.selectedOrder?.orderStatus} />}
+                            {StatusBar && <StatusBar status={selectedOrder?.orderStatus} />}
                         </Col>
                     </Row>
                     {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}

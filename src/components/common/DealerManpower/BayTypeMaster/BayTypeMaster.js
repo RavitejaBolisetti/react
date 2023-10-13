@@ -190,10 +190,6 @@ export const BayTypeMasterBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {}).catch(err => console.error(err));
-    };
-
     const onCloseAction = () => {
         form.resetFields();
         setIsFormVisible(false);
@@ -216,7 +212,6 @@ export const BayTypeMasterBase = (props) => {
         formActionType,
         setFormActionType,
         onFinish,
-        onFinishFailed,
 
         isVisible: isFormVisible,
         onCloseAction,
@@ -244,7 +239,6 @@ export const BayTypeMasterBase = (props) => {
         filterString,
         from: listFilterForm,
         onFinish,
-        onFinishFailed,
         onSearchHandle,
         handleResetFilter,
         handleClearInSearch,

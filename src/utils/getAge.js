@@ -4,13 +4,13 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 export function GetAge(dateString) {
-    var today = new Date();
-    var birthDate = new Date(dateString);
+    let today = new Date();
+    let birthDate = new Date(dateString);
     if (typeof dateString === 'undefined') {
         return undefined;
     }
-    var age = today?.getFullYear() - birthDate?.getFullYear();
-    var m = today?.getMonth() - birthDate?.getMonth();
+    let age = today?.getFullYear() - birthDate?.getFullYear();
+    let m = today?.getMonth() - birthDate?.getMonth();
     if (m < 0 || (m === 0 && today?.getDate() < birthDate?.getDate())) {
         age--;
     }

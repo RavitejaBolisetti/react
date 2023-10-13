@@ -91,6 +91,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [addRequestForm] = Form.useForm();
     const [addRequestData, setAddRequestData] = useState([]);
     const [searchValue, setSearchValue] = useState();
+    const [options, setOptions] = useState();
 
     const [selectedOrder, setSelectedOrder] = useState();
     const [selectedOrderId, setSelectedOrderId] = useState();
@@ -236,7 +237,12 @@ export const VehicleInvoiceMasterBase = (props) => {
     };
 
     const filterActiveSection = sectionName && filterActiveMenu(Object.values(sectionName));
-
+    useEffect(() => {
+        if (chargerInstallationMasterData?.chargerInstDetails?.requestDetails[0].requestStage === QUERY_BUTTONS_CONSTANTS?.COMMISSION?.key) {
+            setButtonData((prev) => ({ ...prev, addRequestBtn: false }));
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [chargerInstallationMasterData]);
     useEffect(() => {
         if (currentSection && sectionName) {
             const section = Object.values(sectionName)?.find((i) => i.id === currentSection);
@@ -315,11 +321,6 @@ export const VehicleInvoiceMasterBase = (props) => {
         form.resetFields();
         form.setFieldsValue(undefined);
 
-        if (isLastSection) {
-            onChargerInstallationFinish();
-            return false;
-        }
-
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
@@ -357,7 +358,9 @@ export const VehicleInvoiceMasterBase = (props) => {
                 viewMode: buttonAction === VIEW_ACTION,
             });
             if (buttonAction === EDIT_ACTION) {
-                setButtonData({ ...buttonData, nextBtn: true, editBtn: false, saveBtn: true });
+                setButtonData((prev) => ({ ...prev, nextBtn: false, addRequestBtn: false, saveBtn: true }));
+                setChargerDetails(true);
+                addRequestData?.length > 0 ? setAddRequestData((prev) => [chargerInstallationMasterData?.chargerInstDetails?.requestDetails[0], ...prev]) : setAddRequestData([chargerInstallationMasterData?.chargerInstDetails?.requestDetails[0]]);
             } else {
                 const Visibility = btnVisiblity({ defaultBtnVisiblity, buttonAction });
                 setButtonData(Visibility);
@@ -379,8 +382,8 @@ export const VehicleInvoiceMasterBase = (props) => {
         advanceFilterForm.resetFields();
     };
 
-    const onChargerInstallationFinish = () => {
-        const data = { ...requestPayload, id: '', bookingNumber: selectedOtfNumber };
+    const onChargerInstallationFinish = (values) => {
+        const data = { ...values, id: '' || selectedOrderId, bookingNumber: selectedOtfNumber };
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
@@ -415,6 +418,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const onCloseAction = () => {
         form.resetFields();
         form.setFieldsValue();
+        addRequestForm.resetFields();
         setSelectedOrderId();
         setSelectedOtfNumber();
         setChargerDetails(false);
@@ -427,6 +431,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         setSelectedOrder();
         setIsFormVisible(false);
         setAddRequestData();
+        setOptions();
         setButtonData({ ...defaultBtnVisiblity });
     };
 
@@ -567,6 +572,8 @@ export const VehicleInvoiceMasterBase = (props) => {
         chargerInstallationMasterData,
         addRequestData,
         setAddRequestData,
+        options,
+        setOptions,
     };
 
     return (

@@ -24,7 +24,7 @@ const EnrolmentMain = (props) => {
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="Enrolment Number">{checkAndSetDefaultValue(detailData?.enrolmentDetailsDto?.enrollmentNumber, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Enrolment Date">{checkAndSetDefaultValue(detailData?.enrolmentDetailsDto?.enrollmentDate, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Enrolment Status">{checkAndSetDefaultValue(detailData?.enrolmentDetailsDto?.enrollmentStatus, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Enrolment Status">{checkAndSetDefaultValue(detailData?.enrolmentDetailsDto?.enrollmentStatus === true ? 'Active' : 'Inactive', isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Scheme Type">{checkAndSetDefaultValue(detailData?.enrolmentDetailsDto?.schemeType, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="VIN">{checkAndSetDefaultValue(detailData?.enrolmentDetailsDto?.vin, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Booklet Number">{checkAndSetDefaultValue(detailData?.enrolmentDetailsDto?.bookletNumber, isLoading)}</Descriptions.Item>

@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -54,7 +54,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataLoaded, fetchList, listShowLoading, data, showGlobalNotification, isLoading }) => {
+export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchList, listShowLoading, data, showGlobalNotification }) => {
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
     const [formData, setFormData] = useState({});
@@ -163,10 +163,6 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {}).catch(err => console.error(err));
-    };
-
     const handleReferesh = () => {
         setShowDataLoading(true);
         setRefershData(!refershData);
@@ -216,7 +212,6 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
         formActionType,
         setFormActionType,
         onFinish,
-        onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
         titleOverride: drawerTitle.concat('Qualification'),

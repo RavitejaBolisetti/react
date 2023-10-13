@@ -27,12 +27,13 @@ import { prepareCaption } from 'utils/prepareCaption';
 import styles from 'assets/sass/app.module.scss';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
 import { ADD_ACTION, EDIT_ACTION, DELETE_ACTION } from 'utils/btnVisiblity';
+import { OTF_STATUS } from 'constants/OTFStatus';
 
 const { Text } = Typography;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { isProductDataLoading, productHierarchyData, toolTipContent, handleFormValueChange, optionalServices, setOptionalServices, formData, openAccordian, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, typeData, vehicleServiceData } = props;
+    const { isProductDataLoading, productHierarchyData, toolTipContent, handleFormValueChange, optionalServices, setOptionalServices, formData, orderStatus, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, typeData, vehicleServiceData } = props;
     const { activeKey, onChange, formActionType, filterVehicleData, handleVehicleDetailChange, viewOnly, showPrintDiscount = false, isOTFModule } = props;
 
     const [optionForm] = Form.useForm();
@@ -76,7 +77,7 @@ const AddEditFormMain = (props) => {
                 break;
             case EDIT_ACTION:
                 optionForm.setFieldsValue({ ...record });
-                setEditingOptionalData(record)
+                setEditingOptionalData(record);
                 break;
             case DELETE_ACTION:
                 setOptionalServices((prev) => {
@@ -116,7 +117,7 @@ const AddEditFormMain = (props) => {
         handleFormValueChange,
         vehicleServiceData,
         editingOptionalData,
-        setEditingOptionalData
+        setEditingOptionalData,
     };
 
     const handleSelectTreeClick = (value) => {
@@ -157,7 +158,7 @@ const AddEditFormMain = (props) => {
         treeExpandedKeys: [formData?.model],
         placeholder: preparePlaceholderSelect('Model'),
         loading: !viewOnly ? isProductDataLoading : false,
-        treeDisabled: viewOnly,
+        treeDisabled: orderStatus === OTF_STATUS.BOOKED.key ? false : true,
     };
 
     return (
@@ -233,12 +234,12 @@ const AddEditFormMain = (props) => {
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item initialValue={formData?.saleType} name="saleType" label="Sale Type" rules={[validateRequiredSelectField('Sale Type')]}>
-                                        {customSelectBox({ data: typeData['SALE_TYPE'], disabled: viewOnly, onChange: (value) => handleVehicleDetailChange({ ...filterVehicleData, saleType: value }) })}
+                                        {customSelectBox({ data: typeData['SALE_TYPE'], onChange: (value) => handleVehicleDetailChange({ ...filterVehicleData, saleType: value }) })}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item initialValue={formData?.priceType} label="Price Type" name="priceType">
-                                        {customSelectBox({ data: typeData['PRC_TYP'], disabled: viewOnly, onChange: (value) => handleVehicleDetailChange({ ...filterVehicleData, priceType: value }) })}
+                                        {customSelectBox({ data: typeData['PRC_TYP'], onChange: (value) => handleVehicleDetailChange({ ...filterVehicleData, priceType: value }) })}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>

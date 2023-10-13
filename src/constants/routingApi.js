@@ -371,3 +371,4 @@ export const BASE_URL_AMC_REGISTRATION_DATA = BASE_URL_AMC_REGISTRATION + '/regi
 export const BASE_URL_AMC_EMPLOYEE_SEARCH = BASE_URL + 'users/search/employees';
 export const BASE_URL_AMC_SCHEMES = BASE_URL_AMC_REGISTRATION + '/scheme';
 export const BASE_URL_GST_DOCID_NAME = BASE_URL + 'finance/gstirnauthentication';
+export const BASE_URL_WORK_FLOW_MASTER = BASE_URL_APPLICATIONS + '/workflow';

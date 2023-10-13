@@ -114,14 +114,20 @@ const AssignUserRole = (props) => {
     const onErrorAction = (data) => {
         console.error(data);
     };
+    
+    const onSuccessAction = (res) => {
+        if (res?.data?.role?.applications?.mobileApplications?.length || res?.data?.role?.applications?.webApplications?.length) {
+            selectedRoleId && setDisableMdlSaveBtn(false);
+        }
+    };
 
     useEffect(() => {
         if (userId && formData?.employeeCode && (record?.roleId || selectedRoleId)) {
             setDeviceType(APPLICATION_WEB);
             if (userType === USER_TYPE_USER?.DEALER?.id) {
-                fetchDLRUserRoleDataList({ setIsLoading: usrRolelAppListShowLoading, userId, extraParams: extraParamsDlr, onErrorAction });
+                fetchDLRUserRoleDataList({ setIsLoading: usrRolelAppListShowLoading, userId, extraParams: extraParamsDlr, onErrorAction, onSuccessAction });
             } else {
-                fetchMNMUserRoleAppDataList({ setIsLoading: usrRolelAppListShowLoading, userId, extraParams: extraParamsMNM, onErrorAction });
+                fetchMNMUserRoleAppDataList({ setIsLoading: usrRolelAppListShowLoading, userId, extraParams: extraParamsMNM, onErrorAction, onSuccessAction });
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -214,6 +220,7 @@ const AssignUserRole = (props) => {
         setCheckedKeys({});
         resetMnmUserRoleAppDataList();
         resetUsrDlrRoleAppDataList();
+        setDisableMdlSaveBtn(true);
     };
 
     const handleButtonClickModal = ({ buttonAction, record }) => {
