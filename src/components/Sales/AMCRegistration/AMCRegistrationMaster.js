@@ -160,7 +160,7 @@ export const AMCRegistrationMasterBase = (props) => {
     const [userType, setUserType] = useState(AMC_CONSTANTS?.DEALER?.key);
     const [amcWholeCancellation, setAmcWholeCancellation] = useState(false);
     const [rejectRequest, setRejectRequest] = useState(false);
-    const [previousSection, setpreviousSection] = useState(1);
+    const [previousSection, setPreviousSection] = useState(1);
 
     const [additionalReportParams, setAdditionalReportParams] = useState();
     const [isReportVisible, setReportVisible] = useState();
@@ -399,7 +399,7 @@ export const AMCRegistrationMasterBase = (props) => {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
                 registrationForm.resetFields();
-                setpreviousSection(1);
+                setPreviousSection(1);
                 setSelectedAMC('');
                 break;
             case EDIT_ACTION:
@@ -737,7 +737,7 @@ export const AMCRegistrationMasterBase = (props) => {
         confirmRequest,
         setConfirmRequest,
         previousSection,
-        setpreviousSection,
+        setPreviousSection,
         showGlobalNotification,
         isDataLoaded,
         userType,

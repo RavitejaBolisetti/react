@@ -121,7 +121,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     const [section, setSection] = useState();
     const [defaultSection, setDefaultSection] = useState();
     const [currentSection, setCurrentSection] = useState();
-    const [previousSection, setpreviousSection] = useState(1);
+    const [previousSection, setPreviousSection] = useState(1);
     const [sectionName, setSetionName] = useState();
     const [isLastSection, setLastSection] = useState(false);
 
@@ -445,7 +445,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
-                setpreviousSection(1);
+                setPreviousSection(1);
                 setSelectedRecord(record);
                 setcheckListDataModified([]);
                 setPayload([]);
@@ -655,7 +655,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         sectionName,
         setCurrentSection,
         previousSection,
-        setpreviousSection,
+        setPreviousSection,
         formData,
         setFormData,
         handleFormValueChange,
