@@ -176,7 +176,6 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
     const onSuccessAction = (res) => {
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
@@ -337,7 +336,7 @@ export const VehicleInvoiceMasterBase = (props) => {
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedOrder?.id, selectedOtfId, formActionType]);
+    }, [selectedOrder?.id, selectedOtfId, formActionType, selectedOtfNumber]);
 
     useEffect(() => {
         const defaultSection = VEHICLE_INVOICE_SECTION.INVOICE_DETAILS.id;
@@ -408,6 +407,7 @@ export const VehicleInvoiceMasterBase = (props) => {
 
     const handleBookingChange = () => {
         setSelectedOtfNumber('');
+        setProfileCardData();
         invoiceDetailForm.setFieldValue();
         setSelectedOrder('');
         resetDetailData();
@@ -861,6 +861,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         isDataLoaded,
         isInVoiceMasterDetailDataLoaded,
         salesConsultantLovData,
+        resetDetailData,
     };
 
     const cancelInvoiceProps = {

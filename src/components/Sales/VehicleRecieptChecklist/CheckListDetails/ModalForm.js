@@ -8,11 +8,10 @@ import { Col, Input, Form, Row } from 'antd';
 
 import { withModal } from 'components/withModal';
 import { ModalButtons } from 'components/common/Button';
-
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField } from 'utils/validation';
-import { convertDateTimedayjs } from 'utils/formatDateTime';
-import { MakeCheckResult, setCheckresultValue, BindFormItems } from './CheckListUtils';
+import { BindFormAndResult } from './CheckListUtils';
+import { convertDateTimedayjs, formatDateToCalenderDate } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -21,23 +20,22 @@ export const ChecklistModalForms = (props) => {
     const { onCloseAction, handleFormValueChange, checkListDataModified, setcheckListDataModified, aggregateForm } = props;
     const { setAdvanceSearchVisible } = props;
     const { isVisible, setisEditing } = props;
+    const { setPage, pageIntialState } = props;
     const [saveDisabled, setsaveDisabled] = useState(true);
-
     const { TextArea } = Input;
 
     useEffect(() => {
         if (AdvanceformData && isVisible) {
-            setCheckresultValue({ form: aggregateForm, type: AdvanceformData?.answerType, data: AdvanceformData });
+            aggregateForm.setFieldsValue({ ...AdvanceformData, answerFromDate: formatDateToCalenderDate(AdvanceformData?.answerFromDate), answerToDate: formatDateToCalenderDate(AdvanceformData?.answerToDate) });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [AdvanceformData]);
+    }, [AdvanceformData, isVisible]);
 
     const onFinish = () => {
         aggregateForm
             .validateFields()
-            .then(() => {
-                const values = aggregateForm.getFieldsValue();
-                const data = { ...AdvanceformData, ...values, ismodified: true, checkResult: MakeCheckResult({ type: AdvanceformData?.answerType, data: { ...values, checklistAnswerResponses: AdvanceformData?.checklistAnswerResponses, answerToDate: convertDateTimedayjs(values?.answerToDate), answerFromDate: convertDateTimedayjs(values?.answerFromDate) } }) };
+            .then((values) => {
+                const data = { ...AdvanceformData, ...values, ismodified: true, checkResult: BindFormAndResult({ data: { ...values, answerType: AdvanceformData?.answerType, checklistAnswerResponses: AdvanceformData?.checklistAnswerResponses, answerToDate: convertDateTimedayjs(values?.answerToDate), answerFromDate: convertDateTimedayjs(values?.answerFromDate) } }, aggregateForm)?.checkResult };
                 setcheckListDataModified(
                     [...checkListDataModified]?.map((element) => {
                         if (element?.ansMstId === AdvanceformData?.ansMstId) {
@@ -46,6 +44,7 @@ export const ChecklistModalForms = (props) => {
                         return element;
                     })
                 );
+                setPage((prev) => ({ pageIntialState, current: prev?.current }));
                 setAdvanceSearchVisible(false);
                 handleFormValueChange();
                 setisEditing(false);
@@ -74,7 +73,7 @@ export const ChecklistModalForms = (props) => {
         <Form autoComplete="off" layout="vertical" form={aggregateForm} onValuesChange={handleValuesChange} onFinishFailed={onFinishFailed}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    {BindFormItems({ AdvanceformData, aggregateForm })}
+                    {BindFormAndResult({ data: AdvanceformData, aggregateForm })?.formItem}
                 </Col>
             </Row>
             <Row gutter={20}>
