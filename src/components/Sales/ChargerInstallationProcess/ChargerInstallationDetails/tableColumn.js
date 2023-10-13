@@ -145,23 +145,3 @@ export const serviceActivityColumns = () => {
 
     return tableColumn;
 };
-
-export const serviceActivityColumns = () => {
-    const tableColumn = [
-        tblPrepareColumns({
-            title: 'Service Activities',
-            dataIndex: 'activity',
-            key: 'activity',
-            width: '50%',
-        }),
-
-        tblPrepareColumns({
-            title: 'Response',
-            dataIndex: 'response',
-            key: 'response',
-            width: '50%',
-        }),
-    ];
-
-    return tableColumn;
-};
