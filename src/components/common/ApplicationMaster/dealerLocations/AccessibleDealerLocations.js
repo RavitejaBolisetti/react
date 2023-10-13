@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useReducer, useState, useEffect, useMemo, Fragment } from 'react';
+import React, { useReducer, useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
 import { Col, Row, Input, AutoComplete } from 'antd';
@@ -72,7 +72,6 @@ const AccessibleDealerLocationMain = ({ setCanFormSave, userId, dealerLocations,
                         <span>
                             {beforeStr}
                             <span className="site-tree-search-value" style={{ color: 'red' }}>
-                                {/* {searchString} */}
                                 {item?.dealerLocationName?.substring(index, index + searchValue?.length)}
                             </span>
                             {afterStr}
@@ -142,7 +141,7 @@ const AccessibleDealerLocationMain = ({ setCanFormSave, userId, dealerLocations,
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.marB20}>
-                    <AutoComplete options={dealerLocationsList} backfill={false} onSelect={handleSelect} onSearch={onSearchLocation} allowSearch notFoundContent={searchValue ? "No location found" : ''} >
+                    <AutoComplete options={dealerLocationsList} backfill={false} onSelect={handleSelect} onSearch={onSearchLocation} allowSearch notFoundContent={searchValue ? 'No location found' : ''}>
                         <Input.Search onChange={handleClearInput} size="large" allowClear placeholder={preparePlaceholderAutoComplete('')} />
                     </AutoComplete>
                 </Col>

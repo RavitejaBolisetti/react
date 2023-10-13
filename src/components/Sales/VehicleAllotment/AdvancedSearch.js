@@ -3,13 +3,14 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Row, Col, Button } from 'antd';
 
 import { withModal } from 'components/withModal';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { customSelectBox } from 'utils/customSelectBox';
+import { ProductModelHierarchy } from 'components/utils/ProductModelHierarchy';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -22,8 +23,11 @@ export const AdvancedSearchFrom = (props) => {
         advanceFilterForm: { resetFields },
     } = props;
 
+    const [parentAppCode, setParentAppCode] = useState();
+
     useEffect(() => {
         resetFields();
+        if (!filterString?.model) setParentAppCode();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, resetAdvanceFilter]);
 
@@ -47,13 +51,34 @@ export const AdvancedSearchFrom = (props) => {
         return;
     };
 
+    const handleSelectTreeClick = (value) => {
+        setParentAppCode(value);
+        advanceFilterForm.setFieldValue('model', value);
+    };
+
+    const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
+    const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
+    const treeSelectFieldProps = {
+        treeFieldNames,
+        treeData: productHierarchyData,
+        defaultParent: false,
+        selectedTreeSelectKey: parentAppCode,
+        handleSelectTreeClick,
+        defaultValue: null,
+        placeholder: preparePlaceholderSelect('Model'),
+        filterString,
+        name: 'model',
+        labelName: 'Model',
+    };
+
     return (
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Form.Item initialValue={filterString?.model} label="Model Description" name="model">
+                    {/* <Form.Item initialValue={filterString?.model} label="Model Description" name="model">
                         {customSelectBox({ data: productHierarchyData, placeholder: preparePlaceholderSelect('Model'), fieldNames: { key: 'prodctCode', value: 'prodctShrtName' } })}
-                    </Form.Item>
+                    </Form.Item> */}
+                    <ProductModelHierarchy {...treeSelectFieldProps} />
                 </Col>
             </Row>
 

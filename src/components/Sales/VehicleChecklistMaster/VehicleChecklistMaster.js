@@ -372,10 +372,6 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
-    };
-
     const handleResetBtn = () => {
         form.resetFields();
     };
@@ -427,7 +423,6 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
         flatternData,
         formActionType,
         isVisible: isFormVisible,
-        onFinishFailed,
         onCloseAction: () => {
             setIsFormVisible(false);
             setAttributeType(formData?.attributeLevel);

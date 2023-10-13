@@ -14,7 +14,7 @@ import { validateRequiredInputField } from 'utils/validation';
 import { PlusOutlined } from '@ant-design/icons';
 import { AddRequestModal } from './AddRequestModal';
 import { FilterIcon } from 'Icons';
-import { optionalServicesColumns } from './tableColumn';
+import { addRequestColumns } from './tableColumn';
 import { getCodeValue } from 'utils/getCodeValue';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
@@ -22,23 +22,21 @@ const { Search } = Input;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { formData, typeData, chargerInstallationMasterData, isLoading, formActionType, setChargerDetails, chargerDetails, activeKey, setActiveKey, chargerInstallationForm, crmCustomerVehicleData, setAddRequestVisible, addRequestVisible, handleBookingNumberSearch, handleBookingChange, addRequestForm, addRequestData, setAddRequestData } = props;
-    const [disabled, setDisabled] = useState(false);
+    const { formData, typeData, disabled, setDisabled, chargerInstallationMasterData, isLoading, formActionType, chargerDetails, activeKey, setActiveKey, chargerInstallationForm, crmCustomerVehicleData, setAddRequestVisible, addRequestVisible, handleBookingNumberSearch, handleBookingChange, addRequestForm, addRequestData, setAddRequestData } = props;
+
     const viewProps = {
         bordered: false,
         colon: false,
         layout: 'vertical',
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
-
     useEffect(() => {
         chargerInstallationForm.setFieldsValue({ bookingStatus: getCodeValue(typeData?.ORDR_STATS, crmCustomerVehicleData?.otfDetails?.orderStatus) });
         if (formActionType?.editMode) {
-            setChargerDetails(true);
+            setActiveKey([1]);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formActionType]);
-
+    }, [formActionType, crmCustomerVehicleData]);
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
 
@@ -58,6 +56,7 @@ const AddEditFormMain = (props) => {
 
     const onAdvanceSearchCloseAction = () => {
         setAddRequestVisible(false);
+        setDisabled(false);
     };
 
     const addRequestProps = {
@@ -78,7 +77,6 @@ const AddEditFormMain = (props) => {
         setAddRequestVisible(true);
         setDisabled(true);
     };
-
     return (
         <>
             <div className={styles.drawerCustomerMaster}>
@@ -106,11 +104,11 @@ const AddEditFormMain = (props) => {
                                         <>
                                             <Divider />
                                             <Descriptions {...viewProps}>
-                                                <Descriptions.Item label="Model Group">{crmCustomerVehicleData?.vehicleDetails?.modelGroup}</Descriptions.Item>
-                                                <Descriptions.Item label="Model Variant">{crmCustomerVehicleData?.vehicleDetails?.modelVariant}</Descriptions.Item>
-                                                <Descriptions.Item label="Seating Capacity">{crmCustomerVehicleData?.vehicleDetails?.seatingCapacity}</Descriptions.Item>
-                                                <Descriptions.Item label="Color">{crmCustomerVehicleData?.vehicleDetails?.color}</Descriptions.Item>
-                                                <Descriptions.Item label="Model Code">{crmCustomerVehicleData?.vehicleDetails?.modelCode}</Descriptions.Item>
+                                                <Descriptions.Item label="Model Group">{checkAndSetDefaultValue(crmCustomerVehicleData?.vehicleDetails?.modelGroup, isLoading)}</Descriptions.Item>
+                                                <Descriptions.Item label="Model Variant">{checkAndSetDefaultValue(crmCustomerVehicleData?.vehicleDetails?.modelVariant, isLoading)}</Descriptions.Item>
+                                                <Descriptions.Item label="Seating Capacity">{checkAndSetDefaultValue(crmCustomerVehicleData?.vehicleDetails?.seatingCapacity, isLoading)}</Descriptions.Item>
+                                                <Descriptions.Item label="Color">{checkAndSetDefaultValue(crmCustomerVehicleData?.vehicleDetails?.color, isLoading)}</Descriptions.Item>
+                                                <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(crmCustomerVehicleData?.vehicleDetails?.modelCode, isLoading)}</Descriptions.Item>
                                             </Descriptions>
                                         </>
                                     )}
@@ -119,14 +117,14 @@ const AddEditFormMain = (props) => {
                             {formActionType?.editMode && (
                                 <Card style={{ backgroundColor: '#F2F2F2' }}>
                                     <Descriptions {...viewProps}>
-                                        <Descriptions.Item label="Request Id">{checkAndSetDefaultValue(chargerInstallationMasterData[0]?.chargerInstDetails?.requestId, isLoading)}</Descriptions.Item>
-                                        <Descriptions.Item label="Request Date">{checkAndSetDefaultValue(chargerInstallationMasterData[0]?.chargerInstDetails?.requestDate, isLoading)}</Descriptions.Item>
-                                        <Descriptions.Item label="Request Status">{checkAndSetDefaultValue(chargerInstallationMasterData[0]?.chargerInstDetails?.requestStatus, isLoading)}</Descriptions.Item>
-                                        <Descriptions.Item label="Model Group">{checkAndSetDefaultValue(chargerInstallationMasterData[0]?.chargerInstDetails?.modelGroup, isLoading)}</Descriptions.Item>
-                                        <Descriptions.Item label="Model Variant">{checkAndSetDefaultValue(chargerInstallationMasterData[0]?.chargerInstDetails?.modelVarient, isLoading)}</Descriptions.Item>
-                                        <Descriptions.Item label="Seating Capacity">{checkAndSetDefaultValue(chargerInstallationMasterData[0]?.chargerInstDetails?.seatingCapacity, isLoading)}</Descriptions.Item>
-                                        <Descriptions.Item label="Color">{checkAndSetDefaultValue(chargerInstallationMasterData[0]?.chargerInstDetails?.color, isLoading)}</Descriptions.Item>
-                                        <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(chargerInstallationMasterData[0]?.chargerInstDetails?.modelCode, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label="Request Id">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.requestId, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label="Request Date">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.requestDate, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label="Request Status">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.requestStatus, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label="Model Group">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelGroup, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label="Model Variant">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelVarient, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label="Seating Capacity">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.seatingCapacity, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label="Color">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.color, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelCode, isLoading)}</Descriptions.Item>
                                     </Descriptions>
                                 </Card>
                             )}
@@ -140,7 +138,7 @@ const AddEditFormMain = (props) => {
                                                     <Typography>Add Request</Typography>
 
                                                     {!formActionType?.viewMode && (
-                                                        <Button type="primary" disabled={disabled} onClick={handleAddRequestChange} icon={<PlusOutlined />}>
+                                                        <Button className={styles.marL10} type="primary" disabled={disabled} onClick={handleAddRequestChange} icon={<PlusOutlined />}>
                                                             Add
                                                         </Button>
                                                     )}
@@ -149,7 +147,7 @@ const AddEditFormMain = (props) => {
                                         }
                                         key="1"
                                     >
-                                        <DataTable tableColumn={optionalServicesColumns(typeData)} tableData={addRequestData} pagination={false} />
+                                        <DataTable tableColumn={addRequestColumns(typeData)} tableData={addRequestData} pagination={false} />
                                     </Panel>
                                 </Collapse>
                             )}

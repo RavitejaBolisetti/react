@@ -187,7 +187,7 @@ export const AddOnDetailsMasterMain = (props) => {
             setRegisterDisabled((prev) => ({ ...prev, [openAccordian]: true }));
             const message = !formData?.[key] ? 'registered' : 'saved';
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: `Scheme has been ${message} successfully` });
-        });
+        }).catch(err => console.error(err));
     };
     const handleAmcDescriptionData = (amcSchemeCode) => {
         const params = [

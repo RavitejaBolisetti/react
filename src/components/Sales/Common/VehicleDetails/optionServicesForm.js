@@ -11,25 +11,37 @@ import { validateRequiredInputField, validateNumberWithTwoDecimalPlaces, validat
 import styles from 'assets/sass/app.module.scss';
 
 const OptionServicesFormMain = (props) => {
-    const { vehicleServiceData, handleCancel, handleFormValueChange, optionalServices, setOptionalServices, selectedOrderId, formData, optionForm } = props;
+    const { vehicleServiceData, handleCancel, handleFormValueChange, optionalServices, setOptionalServices, selectedOrderId, formData, optionForm, editingOptionalData, setEditingOptionalData } = props;
     const [uniqueServiceOptions, setUniqueServiceOptions] = useState(vehicleServiceData);
 
     useEffect(() => {
-        if (optionalServices && optionalServices?.length) {
-            const serviceNameList = optionalServices.map((i) => i.serviceName);
-            setUniqueServiceOptions(uniqueServiceOptions?.map((element) => ({ ...element, disabled: serviceNameList.includes(element.chargeDescription) })));
+        if (optionalServices) {
+            const serviceNameList = optionalServices?.map((i) => i?.serviceName);
+            setUniqueServiceOptions(uniqueServiceOptions?.map((element) => ({ ...element, disabled: serviceNameList?.includes(element?.chargeDescription) })));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [optionalServices]);
 
     const onFinish = () => {
-        optionForm.validateFields().then(() => {
-            const values = optionForm.getFieldsValue();
-            const data = { serviceName: values?.serviceName, amount: values?.amount, taxId: values?.taxId, id: '' };
-            setOptionalServices([...optionalServices, data]);
-            optionForm.resetFields();
-            handleFormValueChange();
-        });
+        optionForm
+            .validateFields()
+            .then((values) => {
+                const data = { serviceName: values?.serviceName, amount: values?.amount, taxId: values?.taxId, id: '' };
+                setOptionalServices((prev) => {
+                    if (Object.keys(editingOptionalData || {})?.length) {
+                        let updatedVal = [...prev];
+                        const index = updatedVal?.findIndex((i) => i?.serviceName === editingOptionalData?.serviceName);
+                        updatedVal?.splice(index, 1, { ...values });
+                        return updatedVal;
+                    } else {
+                        return [...optionalServices, data];
+                    }
+                });
+                optionForm.resetFields();
+                handleFormValueChange();
+                setEditingOptionalData({});
+            })
+            .catch((err) => console.error(err));
     };
 
     return (

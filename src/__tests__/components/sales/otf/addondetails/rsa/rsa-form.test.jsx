@@ -5,11 +5,11 @@ import RSAForm from 'components/Sales/OTF/AddOnDetails/RSA/RSAForm';
 import { Form } from 'antd';
 afterEach(() => {
     jest.restoreAllMocks();
-  }); 
+});
 const FormWrapper = (props) => {
     const [rsaForm] = Form.useForm();
-    return <RSAForm rsaForm={rsaForm} {...props} />
-}
+    return <RSAForm rsaForm={rsaForm} {...props} />;
+};
 
 describe('RSA Form Component', () => {
     it('should render rsa form component', () => {
@@ -17,8 +17,8 @@ describe('RSA Form Component', () => {
     });
 
     it('rsa form input should work', () => {
-        customRender(<FormWrapper setformDataSetter={jest.fn}/>);
-        const rsaInput=screen.getByRole('textbox', { name: 'RSA'});
-        fireEvent.change(rsaInput, { target: { value: 'Test' }})
+        customRender(<FormWrapper setformDataSetter={jest.fn} setFormDataSetter={jest.fn()} />);
+        const rsaInput = screen.getByRole('textbox', { name: 'RSA' });
+        fireEvent.change(rsaInput, { target: { value: 'Test' } });
     });
 });

@@ -81,7 +81,7 @@ const VehicleDetailsMasterBase = (props) => {
     }, [requestPayload]);
 
     useEffect(() => {
-        if (formActionType?.addMode && requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.DMFOC?.key) {
+        if (formActionType?.addMode && requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.MNM_FOC?.key) {
             handleVinSearch();
             setIsReadOnly(true);
             setShowAddEditForm(true);
@@ -99,7 +99,7 @@ const VehicleDetailsMasterBase = (props) => {
     const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
     const addDataTitle = (
         <p className={styles.textCenter}>
-            Please add new contact using <br /> <strong>“Add”</strong> button at top
+            Please add new vehicle using <br /> <strong>“Add”</strong> button at top
         </p>
     );
 
@@ -230,7 +230,7 @@ const VehicleDetailsMasterBase = (props) => {
                                 <>
                                     <Row type="flex" align="middle">
                                         <Text strong> {'Vehicle Details'}</Text>
-                                        {!formActionType?.viewMode && !(formActionType?.addMode && requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.DMFOC?.key) && (
+                                        {!formActionType?.viewMode && !(formActionType?.addMode && requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.MNM_FOC?.key) && (
                                             <Button onClick={addBtnContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isEditing || isAdding}>
                                                 Add
                                             </Button>
@@ -238,7 +238,7 @@ const VehicleDetailsMasterBase = (props) => {
                                     </Row>
                                     <Divider className={styles.marT20} />
                                     {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
-                                    {!contactData?.length && !isAdding && !(formActionType?.addMode && requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.DMFOC?.key) ? <NoDataFound informtion={formActionType?.viewMode ? noDataTitle : addDataTitle} /> : <ViewVehicleList {...formProps} />}
+                                    {!contactData?.length && !isAdding && !(formActionType?.addMode && requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.MNM_FOC?.key) ? <NoDataFound informtion={formActionType?.viewMode ? noDataTitle : addDataTitle} /> : <ViewVehicleList {...formProps} />}
                                 </>
                             )}
                         </Card>

@@ -22,9 +22,8 @@ const CustomerDetailsMasterBase = (props) => {
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [activeKey, setActiveKey] = useState([3]);
     const disabledProps = { disabled: isReadOnly };
-    console.log('requestPayload in customer',requestPayload);
     useEffect(() => {
-        if (formActionType?.addMode && requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.DMFOC?.key) {
+        if (formActionType?.addMode && requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.MNM_FOC?.key) {
             form.setFieldsValue({ customerCode: otfData?.otfDetails[0]?.customerId });
             handleCustomerSearch();
             setIsReadOnly(true);

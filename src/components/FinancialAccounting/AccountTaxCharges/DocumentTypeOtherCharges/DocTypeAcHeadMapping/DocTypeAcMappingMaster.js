@@ -25,7 +25,7 @@ export const DocTypeAcMappingMaster = (props) => {
             forceUpdate();
             setButtonData({ ...buttonData, formBtnActive: true });
             // handleCodeFunction();
-        });
+        }).catch(err => console.error(err));
     };
 
     const cardAttributeProps = {

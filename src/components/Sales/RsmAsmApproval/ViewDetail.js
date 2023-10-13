@@ -13,7 +13,7 @@ import { RsmAsmApprovalButtons } from './RsmAsmApprovalButtons';
 import { getCodeValue } from 'utils/getCodeValue';
 
 const ViewDetailMain = (props) => {
-    const { formData, typeData, isLoading, onCloseAction, buttonData, setButtonData, handleButtonClick, handleRequest } = props;
+    const { formData, workFlowDetails, typeData, isLoading, onCloseAction, buttonData, setButtonData, handleButtonClick, handleRequest } = props;
 
     const viewOneColProps = {
         bordered: false,
@@ -30,6 +30,7 @@ const ViewDetailMain = (props) => {
         handleButtonClick,
         // setRejectRequest,
         handleRequest,
+        workFlowDetails,
     };
 
     return (

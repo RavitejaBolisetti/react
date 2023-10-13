@@ -125,7 +125,7 @@ const VehicleDetailsMasterMain = (props) => {
     useEffect(() => {
         if (vehicleDetailData) {
             setFormData(vehicleDetailData);
-            vehicleDetailData?.optionalServices && setOptionalServices(vehicleDetailData?.optionalServices);
+            vehicleDetailData?.optionalServices && setOptionalServices(vehicleDetailData?.optionalServices || []);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vehicleDetailData]);
@@ -276,6 +276,16 @@ const VehicleDetailsMasterMain = (props) => {
             productModelCode && form.setFieldValue('modalCode', productModelCode);
         };
 
+        const onErrorAction = (message) => {
+            showGlobalNotification({ message: message });
+
+            const { productModelCode, discountAmount, saleType, priceType } = vehicleDetailData;
+            setFilterVehicleData({ ...vehicleData, productModelCode, discountAmount, saleType, priceType });
+
+            setVehicleDetailData(vehicleDetailData);
+            setFormData({ ...vehicleDetailData });
+        };
+
         fetchData({ setIsLoading: listShowLoading, userId, extraParams: extraParams, onSuccessAction, onErrorAction, resetOnError: false });
     };
 
@@ -335,7 +345,7 @@ const VehicleDetailsMasterMain = (props) => {
     };
 
     const onFinishFailed = () => {
-        form.validateFields().then(() => {});
+        form.validateFields().then(() => {}).catch(err => console.error(err));
     };
 
     // const handlePriceTypeChange = (value, option) => {
