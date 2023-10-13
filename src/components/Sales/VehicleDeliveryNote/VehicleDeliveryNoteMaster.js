@@ -35,6 +35,7 @@ import { vehicleChallanDetailsDataActions } from 'store/actions/data/vehicleDeli
 import { DELIVERY_TYPE } from 'constants/modules/vehicleDetailsNotes.js/deliveryType';
 import { FORMTYPE_CONSTANTS } from 'constants/FormtypeConstants';
 
+import { vehicleDeliveryNoteCustomerDetailDataActions } from 'store/actions/data/vehicleDeliveryNote/customerDetails';
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -42,7 +43,8 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             VehicleDeliveryNote: {
                 VehicleDeliveryNoteSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString, isDetailLoaded: isDeliveryDataLoaded = false, detailData: deliveryNoteMasterData = [] },
-                VehicleDetailsChallan: { isLoaded: isChallanDataLoaded = false, isChallanLoading, data: vehicleChallanData = {} },
+                VehicleDetailsChallan: { data: vehicleChallanData = {} },
+                CustomerDetailsDeliveryNote: { data: customerDetailsDataSearched = {} },
             },
         },
     } = state;
@@ -62,6 +64,7 @@ const mapStateToProps = (state) => {
         isDeliveryDataLoaded,
 
         vehicleChallanData,
+        customerDetailsDataSearched,
     };
     return returnValue;
 };
@@ -77,12 +80,16 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: vehicleDeliveryNoteDataActions.listShowLoading,
             setFilterString: vehicleDeliveryNoteDataActions.setFilter,
 
+            fetchCustomerListData: vehicleDeliveryNoteCustomerDetailDataActions.fetchList,
+            listCustomerListLoading: vehicleDeliveryNoteCustomerDetailDataActions.listShowLoading,
+
             cancelDeliveryNote: cancelVehicleDeliveryNoteDataActions.saveData,
             cancelShowLoading: cancelVehicleDeliveryNoteDataActions.listShowLoading,
             cancelChallan: challanCancelVehicleDeliveryNoteDataActions.saveData,
 
             resetCheckListData: DeliverableChecklistMaindataActions.reset,
             resetChallanData: vehicleChallanDetailsDataActions.reset,
+            resetCustomerdata: vehicleDeliveryNoteCustomerDetailDataActions.reset,
 
             showGlobalNotification,
         },
@@ -95,6 +102,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     const { typeData, receiptType, partySegmentType, paymentModeType, documentType, moduleTitle, totalRecords, showGlobalNotification } = props;
     const { filterString, setFilterString, deliveryStatusList, cancelDeliveryNote, cancelShowLoading, cancelChallan, resetCheckListData } = props;
     const { fetchDeliveryNoteMasterData, resetDeliveryNoteMasterData, deliveryNoteMasterData, isDeliveryDataLoaded, vehicleChallanData, resetChallanData } = props;
+    const { fetchCustomerListData, listCustomerListLoading, resetCustomerdata, customerDetailsDataSearched } = props;
 
     const defaultRequestPayload = {
         deliveryNoteInvoiveDetails: {},
@@ -354,6 +362,28 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
 
+    const handleCustomerIdSearch = (customerIdValue = '') => {
+        if (!customerIdValue) {
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Enter customer id to continue' });
+            return false;
+        }
+        const onSuccessAction = (res) => {
+            setSelectedOrder((prev) => ({ ...prev, customerName: res?.data?.customerName, customerId: res?.data?.customerId }));
+            setButtonData({ ...buttonData, formBtnActive: true });
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        };
+
+        const searchParams = [
+            {
+                key: 'customerId',
+                title: 'customerId',
+                value: customerIdValue,
+                name: 'Customer ID',
+            },
+        ];
+        fetchCustomerListData({ setIsLoading: listCustomerListLoading, userId, extraParams: searchParams, onSuccessAction, onErrorAction });
+    };
+
     const handleDeliveryNoteTypeChange = (buttonName) => {
         setDeliveryStatus(buttonName?.key);
         switch (buttonName?.key) {
@@ -544,6 +574,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         const onError = (message) => {
             showGlobalNotification({ message });
         };
+
         const requestData = {
             data: finalPayload,
             method: 'post',
@@ -567,6 +598,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     const onCloseAction = () => {
         resetDeliveryNoteMasterData();
         resetChallanData();
+        resetCustomerdata();
         resetCheckListData();
         form.resetFields();
         form.setFieldsValue();
@@ -826,6 +858,9 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         toolTipContent,
         deliveryNoteMasterData,
         vehicleChallanData,
+        resetCustomerdata,
+        handleCustomerIdSearch,
+        customerDetailsDataSearched,
     };
 
     const reportDetail = EMBEDDED_REPORTS?.DELIVERY_NOTE_DOCUMENT;

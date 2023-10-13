@@ -8,7 +8,6 @@ import { Col, Input, Form, Row, Button, Collapse, Typography, Divider, Switch } 
 import { validateRequiredSelectField, validateNumberWithTwoDecimalPlaces, validateRequiredInputField, compareAmountValidator } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { PlusOutlined } from '@ant-design/icons';
-import { FiEdit } from 'react-icons/fi';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { OptionServicesForm } from './optionServicesForm';
 import dayjs from 'dayjs';
@@ -27,12 +26,13 @@ import { customSelectBox } from 'utils/customSelectBox';
 import { prepareCaption } from 'utils/prepareCaption';
 import styles from 'assets/sass/app.module.scss';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
+import { OTF_STATUS } from 'constants/OTFStatus';
 
 const { Text } = Typography;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { isProductDataLoading, productHierarchyData, toolTipContent, handleFormValueChange, optionalServices, setOptionalServices, formData, openAccordian, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, typeData, vehicleServiceData } = props;
+    const { isProductDataLoading, productHierarchyData, toolTipContent, handleFormValueChange, optionalServices, setOptionalServices, formData, orderStatus, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, typeData, vehicleServiceData } = props;
     const { activeKey, onChange, formActionType, filterVehicleData, handleVehicleDetailChange, viewOnly, showPrintDiscount = false, isOTFModule } = props;
 
     const [optionForm] = Form.useForm();
@@ -132,7 +132,7 @@ const AddEditFormMain = (props) => {
         treeExpandedKeys: [formData?.model],
         placeholder: preparePlaceholderSelect('Model'),
         loading: !viewOnly ? isProductDataLoading : false,
-        treeDisabled: viewOnly,
+        treeDisabled: orderStatus === OTF_STATUS.BOOKED.key ? false : true,
     };
 
     return (
@@ -208,12 +208,12 @@ const AddEditFormMain = (props) => {
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item initialValue={formData?.saleType} name="saleType" label="Sale Type" rules={[validateRequiredSelectField('Sale Type')]}>
-                                        {customSelectBox({ data: typeData['SALE_TYPE'], disabled: viewOnly, onChange: (value) => handleVehicleDetailChange({ ...filterVehicleData, saleType: value }) })}
+                                        {customSelectBox({ data: typeData['SALE_TYPE'], onChange: (value) => handleVehicleDetailChange({ ...filterVehicleData, saleType: value }) })}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item initialValue={formData?.priceType} label="Price Type" name="priceType">
-                                        {customSelectBox({ data: typeData['PRC_TYP'], disabled: viewOnly, onChange: (value) => handleVehicleDetailChange({ ...filterVehicleData, priceType: value }) })}
+                                        {customSelectBox({ data: typeData['PRC_TYP'], onChange: (value) => handleVehicleDetailChange({ ...filterVehicleData, priceType: value }) })}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>

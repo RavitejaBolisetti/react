@@ -22,7 +22,8 @@ import { OtfListMaster as OtfSoMappingUnmappingMaster } from './OtfSoMappingUnma
 import { StockTransferIndentMaster } from './StockTransferIndent';
 import { VehicleDeliveryNoteMaster } from './VehicleDeliveryNote';
 import { EvrDetailsCapturingMaster } from './EvrDetailsCapturing';
+import { VehicleChecklistMaster } from './VehicleChecklistMaster';
 import { RsmAsmApprovalMaster } from './RsmAsmApproval';
 import { CrmScreenEnrolmentMaster } from './crmSchemeEnrolment';
 
-export { OtfMaster, VehicleDetailMaster, OtfBlockMaster, VehicleReceiptMaster, VehiclePurchaseOrderMaster, VehicleRecieptChecklistMaster, OtfSoMappingMaster, ReceiptMaster, HoPriceMappingMaster, DigitalSignatureMaster, VehicleInvoiceMaster, VehicleAllotmentPriorityMaster, VehicleTrackingMaster, OtfSoMappingUnmappingMaster, StockTransferIndentMaster, VehicleDeliveryNoteMaster, EvrDetailsCapturingMaster, CrmScreenEnrolmentMaster, RsmAsmApprovalMaster };
+export { OtfMaster, VehicleDetailMaster, OtfBlockMaster, VehicleReceiptMaster, VehiclePurchaseOrderMaster, VehicleRecieptChecklistMaster, OtfSoMappingMaster, ReceiptMaster, HoPriceMappingMaster, DigitalSignatureMaster, VehicleInvoiceMaster, VehicleAllotmentPriorityMaster, VehicleTrackingMaster, OtfSoMappingUnmappingMaster, StockTransferIndentMaster, VehicleDeliveryNoteMaster, EvrDetailsCapturingMaster, VehicleChecklistMaster, CrmScreenEnrolmentMaster, RsmAsmApprovalMaster };

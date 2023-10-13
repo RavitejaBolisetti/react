@@ -92,38 +92,6 @@ const VehicleDetailsMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
-    // useEffect(() => {
-    //     if (!soldByDealer && !formActionType?.viewMode && userId) {
-    //         const chassi = requestPayload?.deliveryNoteInvoiveDetails?.chassisNumber;
-    //         const engineNo = requestPayload?.deliveryNoteInvoiveDetails?.engineNumber;
-    //         const onSuccessAction = () => {
-    //             form.setFieldsValue({ ...vehicleChallanData });
-    //             setFormData({ ...vehicleChallanData });
-    //             setRequestPayload({ ...requestPayload, vehicleInformationDto: vehicleChallanData });
-    //         };
-    //         if (engineNo && chassi) {
-    //             const extraParams = [
-    //                 {
-    //                     key: 'chassisNumber',
-    //                     title: 'chassisNumber',
-    //                     value: chassi,
-    //                     name: 'Chassis Number',
-    //                 },
-    //                 {
-    //                     key: 'engineNumber',
-    //                     title: 'engineNumber',
-    //                     value: engineNo,
-    //                     name: 'Engine Number',
-    //                 },
-    //             ];
-
-    //             fetchChallanList({ setIsLoading: listChallanShowLoading, extraParams, userId, onErrorAction, onSuccessAction });
-    //         }
-    //     }
-
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [section, formActionType, soldByDealer, userId]);
-
     useEffect(() => {
         if (vehicleData) {
             form.setFieldsValue({ ...vehicleData });

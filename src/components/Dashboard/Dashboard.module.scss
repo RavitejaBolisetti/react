@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 @import 'assets/sass/app.module.scss';
 
 /************Dashboard Contaner****************/
@@ -27,6 +32,7 @@
                     span.ant-typography {
                         color: $primaryRed;
                         line-height: 24px;
+
                         span {
                             color: $neutralGrey3;
                         }
@@ -286,6 +292,7 @@
                     margin-bottom: 12px;
                     border-bottom: 1px solid $neutralGrey1;
                 }
+
                 & :global {
                     h5.ant-typography {
                         margin: 0;
@@ -294,6 +301,7 @@
                         color: $primaryBlack;
                         line-height: 24px;
                     }
+
                     span.ant-typography {
                         color: $neutralGrey3;
                         line-height: 24px;
@@ -323,51 +331,51 @@
         }
     }
 
-    // & :global {
-    //     .ant-card {
-    //         .ant-card-head-title {
-    //             font-size: 16px;
-    //             float: left;
-    //             font-weight: 500 !important;
-    //             line-height: 24px;
-    //         }
+    & :global {
+        .ant-card {
+            .ant-card-head-title {
+                font-size: 16px;
+                float: left;
+                font-weight: 500 !important;
+                line-height: 24px;
+            }
 
-    //         .ant-card-head {
-    //             min-height: 50px;
-    //             background-color: $neutralGrey1;
-    //             padding: 0 16px;
-    //         }
+            .ant-card-head {
+                min-height: 50px;
+                background-color: $neutralGrey1;
+                padding: 0 16px;
+            }
 
-    //         .ant-card-body {
-    //             padding: 0;
-    //             margin-bottom: 0;
-    //             border-radius: 0 0 8px 8px;
-    //             height: 220px;
-    //         }
-    //     }
+            .ant-card-body {
+                padding: 0;
+                margin-bottom: 0;
+                border-radius: 0 0 8px 8px;
+                height: 220px;
+            }
+        }
 
-    //     .ant-carousel {
-    //         .slick-dots {
-    //             li {
-    //                 button {
-    //                     &::after {
-    //                         background-color: $brandColor;
-    //                         inset: 0.5em;
-    //                     }
+        .ant-carousel {
+            .slick-dots {
+                li {
+                    button {
+                        &::after {
+                            background-color: $brandColor;
+                            inset: 0.5em;
+                        }
 
-    //                     margin: 10px 30px 0px 2px;
-    //                     padding: 0px 10px;
-    //                 }
-    //             }
-    //         }
-    //     }
+                        margin: 10px 30px 0px 2px;
+                        padding: 0px 10px;
+                    }
+                }
+            }
+        }
 
-    //     .ant-row {
-    //         display: flex;
-    //         flex-flow: row wrap;
-    //         min-width: 0;
-    //     }
-    // }
+        .ant-row {
+            display: flex;
+            flex-flow: row wrap;
+            min-width: 0;
+        }
+    }
 
     .svgIcon {
         vertical-align: top;

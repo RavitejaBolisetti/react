@@ -330,13 +330,12 @@ export const OtfListMasterBase = (props) => {
     };
     const handleResetData = (type, exception = undefined) => {
         switch (type) {
-            case FORM_TYPE_CONSTANSTS?.FORM_1?.key: {
+            case FORM_TYPE_CONSTANSTS?.FORM_1?.id: {
                 SoForm.setFieldsValue({ FORM_1: setAllkeysToNull(exception) });
                 break;
             }
-            case FORM_TYPE_CONSTANSTS?.FORM_2?.key: {
+            case FORM_TYPE_CONSTANSTS?.FORM_2?.id: {
                 SoForm.setFieldsValue({ FORM_2: setAllkeysToNull(exception) });
-
                 break;
             }
             default: {

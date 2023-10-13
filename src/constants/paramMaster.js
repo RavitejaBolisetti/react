@@ -401,6 +401,10 @@ export const PARAM_MASTER = {
         id: 'SO_RC',
         title: 'OTF SO Mapping',
     },
+    CH_SER: {
+        id: 'CH_SER',
+        title: 'Charger Installation',
+    },
     IRN_PEND_TRN_STATUS: {
         id: 'IRN_PEND_TRN_STATUS',
         title: 'IRN Pending Transaction',
@@ -421,8 +425,20 @@ export const PARAM_MASTER = {
         id: 'CHRG_STATUS',
         title: 'EVR Charging Status',
     },
+    AMC_SCHEME_TYPE: {
+        id: 'AMC_SCHEME_TYPE',
+        title: 'AMC Scheme AMC Type',
+    },
     DEVICE_TYPE: {
         id: 'DVIC_TYP',
         title: 'Device Type',
+    },
+    AMC_SEARCH_TYPE: {
+        id: 'AMC_SEARCH_TYPE',
+        title: 'AMC Search',
+    },
+    AMC_CANCEL_REASON: {
+        id: 'AMC_CANCEL_REASON',
+        title: 'AMC cancellation reason',
     },
 };
