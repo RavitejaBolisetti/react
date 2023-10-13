@@ -103,7 +103,7 @@ const AMCRegistrationDetailsMasterBase = (props) => {
     const handleOnClear = (e) => {
         if (e.target.value === '') {
             setOptions();
-            form.resetFields('managerName');
+            form.resetFields(['managerName']);
         }
     };
     const handleSchemeDescriptionChange = (schemeValue) => {

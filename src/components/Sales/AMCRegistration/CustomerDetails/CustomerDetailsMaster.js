@@ -18,7 +18,6 @@ const CustomerDetailsMasterBase = (props) => {
     const { userId, buttonData, setButtonData, section, isDataLoaded, isLoading } = props;
     const { otfData, form, fetchCustomerList, formActionType, selectedOtfNumber, setSelectedOtfNumber, handleFormValueChange } = props;
     const { FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch } = props;
-    
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [activeKey, setActiveKey] = useState([3]);
     const disabledProps = { disabled: isReadOnly };
@@ -27,6 +26,7 @@ const CustomerDetailsMasterBase = (props) => {
             form.setFieldsValue({ customerCode: otfData?.otfDetails[0]?.customerId });
             handleCustomerSearch();
             setIsReadOnly(true);
+            setButtonData({ ...buttonData, formBtnActive: true });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formActionType]);
@@ -47,6 +47,7 @@ const CustomerDetailsMasterBase = (props) => {
             userId,
             onSuccessAction: (response) => {
                 form.setFieldsValue({ ...response?.data, customerAddress: response?.data?.address, customerCity: response?.data?.city, customerPhoneNumber: response?.data?.mobileNumber });
+                setButtonData({ ...buttonData, formBtnActive: true });
             },
             onErrorAction: () => {},
         });
