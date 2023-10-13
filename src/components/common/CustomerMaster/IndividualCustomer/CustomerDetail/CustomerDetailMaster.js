@@ -96,7 +96,7 @@ const CustomerDetailMasterBase = (props) => {
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, data, saveData, isLoading, resetData, form, handleFormValueChange, onFinishFailed } = props;
     const { selectedCustomer, selectedCustomerId, setSelectedCustomerId, mobNoVerificationData } = props;
     const { buttonData, setButtonData, formActionType, setFormActionType, handleButtonClick, NEXT_ACTION } = props;
-    const { fetchViewDocument, viewListShowLoading, listSupportingDocumentShowLoading, isSupportingDocumentDataLoaded, supportingData, isViewDataLoaded, viewDocument, hideGlobalNotification } = props;
+    const { fetchViewDocument, viewListShowLoading, listSupportingDocumentShowLoading, isSupportingDocumentDataLoaded, supportingData, isViewDataLoaded, viewDocument, hideGlobalNotification, customerType } = props;
     const { sendOTP, validateOTP } = props;
     const [refreshData, setRefreshData] = useState(false);
     const [showForm, setShowForm] = useState(false);
@@ -113,21 +113,19 @@ const CustomerDetailMasterBase = (props) => {
     const [supportingDataView, setSupportingDataView] = useState();
     const [isHistoryVisible, setIsHistoryVisible] = useState(false);
     const [activeKey, setactiveKey] = useState([]);
-    const [inValidOTP, setInValidOTP] = useState(false);
     const [nameChangeRequested, setNameChangeRequested] = useState(false);
     const [whatsAppConfiguration, setWhatsAppConfiguration] = useState({ contactOverWhatsApp: null, contactOverWhatsAppActive: null, sameMobileNoAsWhatsApp: null, sameMobileNoAsWhatsAppActive: null });
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [inValidOTP, setInValidOTP] = useState(false);
     const [numbValidatedSuccess, setNumbValidatedSuccess] = useState(false);
     const [otpInput, setOTPInput] = useState('');
+    const [otpVerified, setOtpVerified] = useState(false);
     const [disableVerifyOTP, setDisableVerifyOTP] = useState(true);
     const RESEND_OTP_TIME = 60;
-
     const [counter, setCounter] = useState(RESEND_OTP_TIME);
     const [otpMessage, setOTPMessage] = useState();
     const [mobileNumber, setMobileNumber] = useState(false);
-
-    const onErrorAction = (message) => {
-        showGlobalNotification({ message });
-    };
 
     useEffect(() => {
         if (data) {
@@ -152,6 +150,10 @@ const CustomerDetailMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isCorporateLovDataLoaded]);
 
+    const onErrorAction = (message) => {
+        showGlobalNotification({ message });
+    };
+
     useEffect(() => {
         if (userId && selectedCustomerId) {
             const extraParams = [
@@ -166,6 +168,161 @@ const CustomerDetailMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomerId, refreshData]);
+
+    useEffect(() => {
+        if (!mobNoVerificationData?.customerMasterDetails?.length && mobileNumber?.length) {
+            sendOTPVerificationCode();
+            setIsModalOpen(true);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [mobNoVerificationData]);
+
+    useEffect(() => {
+        const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+        return () => {
+            clearInterval(timer);
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [counter]);
+
+    const defaultExtraParam = [
+        {
+            key: 'customerType',
+            title: 'Customer Type',
+            value: customerType,
+            canRemove: true,
+        },
+        {
+            key: 'pageSize',
+            title: 'Value',
+            value: 1,
+            canRemove: true,
+        },
+        {
+            key: 'pageNumber',
+            title: 'Value',
+            value: 1,
+            canRemove: true,
+        },
+        {
+            key: 'searchType',
+            title: 'searchType',
+            value: 'mobileNumber',
+            canRemove: true,
+        },
+    ];
+
+    const handleNumberValidation = () => {
+        if (mobileNumber) {
+            const mobNoParam = [
+                {
+                    key: 'searchParam',
+                    title: 'searchParam',
+                    value: mobileNumber,
+                    canRemove: true,
+                },
+            ];
+            setOtpVerified(true);
+            fetchContactMobileNoDetails({ setIsLoading: listContactMobileNoShowLoading, extraParams: [...defaultExtraParam, ...mobNoParam], userId });
+        }
+    };
+
+    const handleOnchangeMobNoInput = (event) => {
+        const Mno = event.target.value;
+        const regex = new RegExp('^([5-9]){1}([0-9]){9}$');
+        if (Mno?.length === 10 && regex.test(Mno)) {
+            setMobileNumber(Mno);
+        }
+    };
+
+    const handleOTPInput = (value) => {
+        setOTPInput(value);
+        setInValidOTP(false);
+        if (value?.length === 6) {
+            setDisableVerifyOTP(false);
+        } else {
+            setDisableVerifyOTP(true);
+        }
+    };
+
+    const onSentOTP = (values) => {
+        if (values) {
+            hideGlobalNotification();
+            handleSendOTP(values);
+        }
+    };
+
+    const sendOTPVerificationCode = () => {
+        const data = { userId: selectedCustomer?.customerId, mobileNumber: form.getFieldValue('mobileNumber'), sentOnMobile: true, sentOnEmail: false, functionality: 'CUST' };
+
+        const onSuccess = (res) => {
+            setCounter(RESEND_OTP_TIME);
+            showGlobalNotification({ notificationType: 'warning', title: 'OTP Sent', message: res?.responseMessage });
+            setOTPMessage(res?.data?.message);
+        };
+        const requestData = {
+            data: data,
+            setIsLoading: () => {},
+            onSuccess,
+        };
+        sendOTP(requestData);
+    };
+
+    const handleVerifyOTP = () => {
+        if (userId) {
+            const data = { userId: selectedCustomer?.customerId, mobileNumber: form.getFieldValue('mobileNumber'), otp: otpInput };
+            const onSuccess = (res) => {
+                showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+                setIsModalOpen(false);
+                setNumbValidatedSuccess(true);
+            };
+            const onError = (message) => {
+                showGlobalNotification({ title: 'ERROR', message: Array.isArray(message[0]) || message });
+                if (otpInput?.length === 6) {
+                    setCounter(0);
+                }
+                setInValidOTP(true);
+                setDisableVerifyOTP(true);
+            };
+            const requestData = {
+                data: data,
+                setIsLoading: () => {},
+                onSuccess,
+                onError,
+            };
+            validateOTP(requestData);
+        }
+    };
+
+    const handleSendOTP = () => {
+        setCounter(RESEND_OTP_TIME);
+        setInValidOTP(false);
+        setOTPInput('');
+        if (selectedCustomer?.customerId) {
+            const data = { userId: selectedCustomer?.customerId, mobileNumber: form.getFieldValue('mobileNumber'), sentOnMobile: true, sentOnEmail: false, functionality: 'CUST' };
+            const onSuccess = (res) => {
+                showGlobalNotification({ notificationType: 'warning', title: 'OTP Sent', message: res?.responseMessage });
+                setOTPMessage(res?.data?.message);
+            };
+            const onError = (message) => {
+                showGlobalNotification({ message });
+            };
+            const requestData = {
+                data: data,
+                userId,
+                setIsLoading: () => {},
+                onError,
+                onSuccess,
+            };
+            sendOTP(requestData);
+        }
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+        setOtpVerified(false);
+        setOTPInput('');
+    };
 
     const downloadFileFromButton = (uploadData) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
@@ -217,14 +374,6 @@ const CustomerDetailMasterBase = (props) => {
         fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, supportingDocument });
     };
 
-    const handleOnchangeMobNoInput = (event) => {
-        const Mno = event.target.value;
-        const regex = new RegExp('^([5-9]){1}([0-9]){9}$');
-        if (Mno?.length === 10 && regex.test(Mno)) {
-            setMobileNumber(Mno);
-        }
-    };
-
     const changeHistoryClose = () => {
         setIsHistoryVisible(false);
     };
@@ -232,12 +381,7 @@ const CustomerDetailMasterBase = (props) => {
     const onViewHistoryChange = () => {
         setIsHistoryVisible(true);
     };
-    const onSentOTP = (values) => {
-        if (values) {
-            hideGlobalNotification();
-            handleSendOTP(values);
-        }
-    };
+
     const onFinish = (values) => {
         if (!numbValidatedSuccess && data?.mobileNumber !== values?.mobileNumber) {
             showGlobalNotification({ message: 'Please verify mobile number to proceed.' });
@@ -247,8 +391,6 @@ const CustomerDetailMasterBase = (props) => {
         setEmptyList(false);
         setUploadedFile();
         let reqdata = { ...values, customerId: selectedCustomer?.customerId };
-        console.log(reqdata, 'reqdata');
-
         if (formActionType?.editMode) {
             const customerCurrentName = {
                 titleCode: formData?.titleCode,
@@ -346,29 +488,6 @@ const CustomerDetailMasterBase = (props) => {
             }
         }
     };
-    const handleSendOTP = () => {
-        setCounter(RESEND_OTP_TIME);
-        setInValidOTP(false);
-        setOTPInput('');
-        if (selectedCustomer?.customerId) {
-            const data = { userId: selectedCustomer?.customerId, mobileNumber: form.getFieldValue('mobileNumber'), sentOnMobile: true, sentOnEmail: false, functionality: 'CUST' };
-            const onSuccess = (res) => {
-                showGlobalNotification({ notificationType: 'warning', title: 'OTP Sent', message: res?.responseMessage });
-                setOTPMessage(res?.data?.message);
-            };
-            const onError = (message) => {
-                showGlobalNotification({ message });
-            };
-            const requestData = {
-                data: data,
-                userId,
-                setIsLoading: () => {},
-                onError,
-                onSuccess,
-            };
-            sendOTP(requestData);
-        }
-    };
 
     const formProps = {
         ...props,
@@ -443,21 +562,22 @@ const CustomerDetailMasterBase = (props) => {
         inValidOTP,
         hideGlobalNotification,
         numbValidatedSuccess,
-        setNumbValidatedSuccess,
         otpInput,
-        setOTPInput,
         setDisableVerifyOTP,
         disableVerifyOTP,
         counter,
         setCounter,
-        RESEND_OTP_TIME,
         otpMessage,
-        setOTPMessage,
         handleSendOTP,
         handleOnchangeMobNoInput,
         mobileNumber,
-        setMobileNumber,
         onSentOTP,
+        handleNumberValidation,
+        handleOTPInput,
+        handleVerifyOTP,
+        handleCancel,
+        otpVerified,
+        isModalOpen,
     };
 
     const viewProps = {

@@ -4,31 +4,19 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 
-import React, { useState } from 'react';
+import React from 'react';
 import OTPInput from 'otp-input-react';
 
 import { Form, Row, Col, Button } from 'antd';
 
 import { TbRefresh } from 'react-icons/tb';
 import { RxCrossCircled } from 'react-icons/rx';
-//import { FiLock } from 'react-icons/fi';
 import { withModal } from 'components/withModal';
 
 import styles from 'assets/sass/app.module.scss';
-// import styles from 'components/Auth/Auth.module.scss'
 const OtpVarificationModalMain = (props) => {
-    const { setInValidOTP, inValidOTP, counter, handleVerifyOTP, otpMessage, disableVerifyOTP, setDisableVerifyOTP, handleSendOTP, otpInput, setOTPInput, onSentOTP } = props;
+    const {  inValidOTP, counter, handleVerifyOTP, otpMessage, disableVerifyOTP, handleSendOTP, otpInput, onSentOTP, handleOTPInput } = props;
     const [form] = Form.useForm();
-
-    const handleOTPInput = (value) => {
-        setOTPInput(value);
-        setInValidOTP(false);
-        if (value?.length === 6) {
-            setDisableVerifyOTP(false);
-        } else {
-            setDisableVerifyOTP(true);
-        }
-    };
     return (
         <div className={styles.centerInner}>
             <div className={styles.otpCustomerForm}>
