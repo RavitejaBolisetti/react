@@ -133,6 +133,12 @@ export const RsmAsmApprovalMasterBase = (props) => {
                     value: 'INVCANCEL',
                     name: 'documentNumber',
                 },
+                {
+                    key: 'state',
+                    title: 'state',
+                    value: 'CR',
+                    name: 'state',
+                },
             ];
             fetchWorkFlow({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
@@ -153,6 +159,7 @@ export const RsmAsmApprovalMasterBase = (props) => {
     const handleButtonQuery = (item) => {
         setInvoiceStatusType(item?.key);
         setFilterString({ current: 1 });
+        setPage((prev) => ({ ...prev, current: 1 }));
         setShowDataLoading(true);
     };
 
@@ -226,7 +233,7 @@ export const RsmAsmApprovalMasterBase = (props) => {
     }, [userId, invoiceStatusType, extraParams]);
 
     useEffect(() => {
-        if (page?.current > 1) {
+        if (page?.current >= 1) {
             setFilterString({ ...filterString, pageSize: 10, current: page?.current });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
