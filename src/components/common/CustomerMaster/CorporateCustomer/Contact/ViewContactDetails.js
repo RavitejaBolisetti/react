@@ -5,8 +5,6 @@
  */
 import React from 'react';
 import { Descriptions, Row, Col, Button } from 'antd';
-import styles from 'assets/sass/app.module.scss';
-
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
 

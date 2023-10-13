@@ -87,38 +87,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const ProductHierarchyMain = ({
-    typeData,
-    isLoading,
-    moduleTitle,
-    viewTitle,
-    skulist,
-    skuData,
-    userId,
-    isDataLoaded,
-    productHierarchyData,
-    fetchList,
-    hierarchyAttributeFetchList,
-    saveData,
-    isChangeHistoryVisible,
-    changeHistoryModelOpen,
-    listShowLoading,
-    isDataAttributeLoaded,
-    attributeData,
-    hierarchyAttributeListShowLoading,
-    showGlobalNotification,
-    unFilteredAttributeData,
-    fetchListHierarchyAttributeName,
-    productHierarchyAttributeData,
-    fetchOrgList,
-    isDataOrgLoaded,
-    manufacturerOrgHierarchyData,
-    organizationId,
-    setSelectedOrganizationId,
-    resetData,
-    fetchProductDetail,
-    productDetail,
-}) => {
+export const ProductHierarchyMain = ({ typeData, isLoading, moduleTitle, viewTitle, skuData, userId, productHierarchyData, fetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, showGlobalNotification, productHierarchyAttributeData, fetchOrgList, isDataOrgLoaded, manufacturerOrgHierarchyData, organizationId, setSelectedOrganizationId, resetData, fetchProductDetail, productDetail }) => {
     const [form] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -295,8 +264,6 @@ export const ProductHierarchyMain = ({
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {};
-
     const myProps = {
         isTreeViewVisible,
         handleTreeViewVisiblity,
@@ -335,7 +302,6 @@ export const ProductHierarchyMain = ({
         buttonData,
         titleOverride: (formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
         onFinish,
-        onFinishFailed,
         isFormBtnActive,
         setFormBtnActive,
         skuAttributes,
@@ -376,7 +342,7 @@ export const ProductHierarchyMain = ({
             <div className={styles.contentHeaderBackground}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={16} lg={16} xl={16}>
-                        <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                        <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish}>
                             <Form.Item label={`${title}`} name="code">
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={12} lg={12} xl={12} data-testid="treeSelectField">

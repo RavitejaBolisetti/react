@@ -109,7 +109,6 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationMasterData
 
     const handleAdd = () => {
         setisVisible(true);
-        // setFormActionType(type);
         setIsReadOnly(false);
     };
 
