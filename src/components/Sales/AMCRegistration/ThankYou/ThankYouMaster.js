@@ -9,6 +9,7 @@ import { Row, Col, Space, Avatar, Typography, Divider, Button } from 'antd';
 import { HiCheck } from 'react-icons/hi';
 import { CopytoClipboard } from 'utils/CopytoClipboard';
 import { AMC_CONSTANTS } from '../utils/AMCConstants';
+import { AMC_REPORT_DOCUMENT_TYPE } from '../utils/amcReportDocumentType';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -61,13 +62,13 @@ export const ThankYouMaster = (props) => {
                             <Space size="middle" direction="vertical">
                                 <Text>Do you want to Print or download invoice and registration certificate</Text>
                                 <Row justify="space-between">
-                                    <Button onClick={() => handlePrintDownload({ ...record, typeRecord: 'invoice_amc' })} danger>
+                                    <Button onClick={() => handlePrintDownload({ ...record, typeRecord: AMC_REPORT_DOCUMENT_TYPE?.INVOICE_AMC?.value })} danger>
                                         {`Invoice`}
                                     </Button>
-                                    <Button onClick={() => handlePrintDownload({ ...record, typeRecord: 'registration_certificate_amc' })} danger style={{ margin: '0 12px' }}>
+                                    <Button onClick={() => handlePrintDownload({ ...record, typeRecord: AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_AMC?.value })} danger style={{ margin: '0 12px' }}>
                                         {`Registration Certificate`}
                                     </Button>
-                                    <Button onClick={() => handlePrintDownload({ ...record, typeRecord: 'registration_incentive_claim_amc' })} danger>
+                                    <Button onClick={() => handlePrintDownload({ ...record, typeRecord: AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_AMC?.value })} danger>
                                         {`Registration Incentive Claim`}
                                     </Button>
                                 </Row>

@@ -29,6 +29,7 @@ import { AMCRegistrationMainContainer } from './AMCRegistrationMainContainer';
 import { AMC_REGISTRATION_SECTION } from 'constants/AMCRegistrationSection';
 import { RejectRequest } from './RequestModal';
 import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
+import { AMC_REPORT_DOCUMENT_TYPE } from './utils/amcReportDocumentType';
 
 import { customerDetailsIndividualDataActions } from 'store/actions/data/customerMaster/customerDetailsIndividual';
 import { employeeSearchDataAction } from 'store/actions/data/amcRegistration/employeeSearch';
@@ -333,7 +334,7 @@ export const AMCRegistrationMasterBase = (props) => {
     }, [currentSection, sectionName]);
 
     const handlePrintDownload = (record) => {
-        let typeRecordKey = record?.typeRecord === `invoice_amc` ? 'amc_registration_hdr_id' : record?.typeRecord === `registration_certificate_amc` ? 'amc_registration_hdr_id' : record?.typeRecord === `registration_incentive_claim_amc` ? 'amc_registration_hdr_id' : null;
+        let typeRecordKey = record?.typeRecord === AMC_REPORT_DOCUMENT_TYPE?.INVOICE_AMC?.value ? AMC_REPORT_DOCUMENT_TYPE?.INVOICE_AMC?.key : record?.typeRecord === AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_AMC?.value ? AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_AMC?.key : record?.typeRecord === AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_AMC?.value ? AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_AMC?.key : null;
         setReportButtonType(record?.typeRecord);
         setReportVisible(true);
         setAdditionalReportParams([
@@ -749,11 +750,11 @@ export const AMCRegistrationMasterBase = (props) => {
     };
 
     useEffect(() => {
-        if (reportButtonType === `invoice_amc`) {
+        if (reportButtonType === AMC_REPORT_DOCUMENT_TYPE?.INVOICE_AMC?.value) {
             setAmcDocumentType(EMBEDDED_REPORTS?.AMC_REGISTRATION_INVOICE_DOCUMENT);
-        } else if (reportButtonType === `registration_certificate_amc`) {
+        } else if (reportButtonType === AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_AMC?.value) {
             setAmcDocumentType(EMBEDDED_REPORTS?.AMC_REGISTRATION_INVOICE_DOCUMENT);
-        } else if (reportButtonType === `registration_incentive_claim_amc`) {
+        } else if (reportButtonType === AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_AMC?.value) {
             setAmcDocumentType(EMBEDDED_REPORTS?.AMC_REGISTRATION_INVOICE_DOCUMENT);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
