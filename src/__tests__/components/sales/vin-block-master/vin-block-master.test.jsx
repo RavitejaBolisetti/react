@@ -6,7 +6,7 @@ import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { VinBlockMaster } from 'components/Sales/VinBlockMaster';
 
 jest.mock('store/actions/data/vehicle/vinBlockMasterAction', () => ({
-    vinBlockMasterAction: {}
+    vinBlockMasterAction: {},
 }));
 
 afterEach(() => {
@@ -14,18 +14,17 @@ afterEach(() => {
 });
 
 describe('Vin Block Master Component', () => {
-
     it('should render vin block master component', async () => {
-        customRender(<VinBlockMaster />);
+        customRender(<VinBlockMaster setFilterString={jest.fn()} />);
     });
 
     it('search should work', async () => {
         customRender(<VinBlockMaster setFilterString={jest.fn()} />);
 
-        const searchBox=screen.getByRole('textbox', { name: '' });
+        const searchBox = screen.getByRole('textbox', { name: '' });
         fireEvent.change(searchBox, { target: { value: 'Kai' } });
 
-        const searchBtn=screen.getByRole('button', { name: 'search' });
+        const searchBtn = screen.getByRole('button', { name: 'search' });
         fireEvent.click(searchBtn);
     });
 
@@ -39,25 +38,26 @@ describe('Vin Block Master Component', () => {
             },
         });
 
-        const fetchVinBlockList=jest.fn();
+        const fetchVinBlockList = jest.fn();
 
         customRender(
             <Provider store={mockStore}>
-                <VinBlockMaster fetchVinBlockList={fetchVinBlockList} />
+                <VinBlockMaster fetchVinBlockList={fetchVinBlockList} setFilterString={jest.fn()} />
             </Provider>
         );
 
         fetchVinBlockList.mock.calls[0][0].onErrorAction();
         fetchVinBlockList.mock.calls[0][0].onSuccessAction();
 
-        await waitFor(() => { expect(screen.getByText('Kai')).toBeInTheDocument() });
-        
-        const viewBtn=screen.getByTestId('view');
+        await waitFor(() => {
+            expect(screen.getByText('Kai')).toBeInTheDocument();
+        });
+
+        const viewBtn = screen.getByTestId('view');
         fireEvent.click(viewBtn);
 
-        const closeBtn=screen.getAllByRole('button', { name: 'Close' });
+        const closeBtn = screen.getAllByRole('button', { name: 'Close' });
         fireEvent.click(closeBtn[1]);
-
     });
 
     it('remove filter and clear button should work', async () => {
@@ -79,9 +79,7 @@ describe('Vin Block Master Component', () => {
         const removeFilter = screen.getAllByTestId('removeFilter');
         fireEvent.click(removeFilter[1]);
 
-        const clearBtn=screen.getByRole('button', { name: 'Clear' });
+        const clearBtn = screen.getByRole('button', { name: 'Clear' });
         fireEvent.click(clearBtn);
-
     });
-
 });

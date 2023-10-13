@@ -19,7 +19,7 @@ import { RoleManagementMenuDataActions } from 'store/actions/data/roleManagement
 import { RoleListDataActions } from 'store/actions/data/roleManagement/roleList';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { validateAlphanumericWithSpaceHyphenPeriod, validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
+import { validateRequiredInputField } from 'utils/validation';
 import { APPLICATION_DEVICE_TYPE } from 'utils/applicationDeviceType';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { expandIcon } from 'utils/accordianExpandIcon';
@@ -79,6 +79,7 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchList: RoleListDataActions.fetchList,
             saveData: RoleManagementMenuDataActions.saveData,
+            menuListShowLoding: RoleManagementMenuDataActions.listShowLoading,
             listShowLoading: RoleListDataActions.listShowLoading,
             fetchMenuList: RoleManagementMenuDataActions.fetchList,
             showGlobalNotification,
@@ -89,7 +90,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const AddEditFormMain = (props) => {
     const { deviceType, setDeviceType, setClosePanels, unFilteredMenuData, setUnFilteredMenuData, formData, onCloseAction, form, formActionType: { viewMode, addMode, editMode } = undefined } = props;
-    const { userId, fetchList, setIsFormVisible, fetchMenuList, listShowLoading, saveData, showGlobalNotification } = props;
+    const { userId, fetchList, setIsFormVisible, fetchMenuList, isDataLoading, isMenuLoading, listShowLoading, menuListShowLoding, saveData, showGlobalNotification } = props;
 
     const APPLICATION_WEB = APPLICATION_DEVICE_TYPE?.WEB?.key;
     const APPLICATION_MOBILE = APPLICATION_DEVICE_TYPE?.MOBILE?.key;
@@ -131,7 +132,7 @@ const AddEditFormMain = (props) => {
                 ];
 
                 fetchMenuList({
-                    setIsLoading: listShowLoading,
+                    setIsLoading: menuListShowLoding,
                     userId,
                     extraParams,
                     onErrorAction,
@@ -183,14 +184,14 @@ const AddEditFormMain = (props) => {
         };
 
         const onError = (message) => {
-            listShowLoading(false);
+            // listShowLoading(false);
             showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottomRight' });
         };
 
         const requestData = {
             data: data,
             method: editMode ? 'put' : 'post',
-            setIsLoading: listShowLoading,
+            setIsLoading: menuListShowLoding,
             userId,
             onError,
             onSuccess,
@@ -217,18 +218,6 @@ const AddEditFormMain = (props) => {
         setSearchValue('');
         searchItem.setFieldValue('search', '');
         setActiveKey(key.pop());
-        // const isPresent = activeKey.includes(values);
-        // if (isPresent) {
-        //     const newActivekeys = [];
-        //     activeKey.forEach((item) => {
-        //         if (item !== values) {
-        //             newActivekeys.push(item);
-        //         }
-        //     });
-        //     setActiveKey(newActivekeys);
-        // } else {
-        //     setActiveKey([...activeKey, values]);
-        // }
     };
 
     const onCheck =
@@ -284,7 +273,7 @@ const AddEditFormMain = (props) => {
                     };
 
                     return (
-                        <div className={styles.managementContainer}>
+                        <div key={el?.value} className={styles.managementContainer}>
                             <Collapse expandIcon={expandIcon} collapsible="icon" activeKey={activeKey} onChange={onCollapseChange} expandIconPosition="end">
                                 <Panel
                                     header={
@@ -329,7 +318,7 @@ const AddEditFormMain = (props) => {
                 items={Object.values(APPLICATION_DEVICE_TYPE)?.map((item) => ({
                     key: item?.key,
                     label: item?.title,
-                    children: showApplicationDataLoading ? <InputSkeleton height={55} count={5} /> : AccordianTreeUtils({ viewMode, menuData: viewMode ? menuTreeData[item?.key]?.filter((i) => i.checked) : menuTreeData[item?.key] }),
+                    children: showApplicationDataLoading || isMenuLoading ? <InputSkeleton height={55} count={5} /> : AccordianTreeUtils({ viewMode, menuData: viewMode ? menuTreeData[item?.key]?.filter((i) => i.checked) : menuTreeData[item?.key] }),
                 }))}
             />
         );
@@ -344,6 +333,7 @@ const AddEditFormMain = (props) => {
         AccordianTreePanel,
         menuTreeData: unFilteredMenuData,
         disableCheckbox: true,
+        isLoading: isDataLoading,
     };
 
     const buttonProps = {
@@ -352,6 +342,7 @@ const AddEditFormMain = (props) => {
         buttonData,
         setButtonData,
         handleButtonClick,
+        isLoadingOnSave: isDataLoading,
     };
     return (
         <>

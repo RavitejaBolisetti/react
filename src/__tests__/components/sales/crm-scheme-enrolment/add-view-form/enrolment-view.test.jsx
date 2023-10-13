@@ -4,15 +4,12 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import '@testing-library/jest-dom/extend-expect';
-import FormProductAttribute from '@components/FinancialAccounting/AccountTaxCharges/TaxAndChargesCategory/TaxAndChargesCal/FormTaxAndChargeCal.js';
+import { screen, fireEvent } from '@testing-library/react';
 import customRender from '@utils/test-utils';
+import { EnrolmentView } from '@components/Sales/crmSchemeEnrolment/addViewForm/EnrolmentView';
 
-afterEach(() => {
-    jest.restoreAllMocks();
+describe('enrolment view component', () => {
+    it('should render enrolment view component', () => {
+        customRender(<EnrolmentView isVisible={true} />);
+    });
 });
-
-describe('FormProductAttribute component', () => {
-    it('render', ()=>{
-        customRender(<FormProductAttribute />);
-    })
-})

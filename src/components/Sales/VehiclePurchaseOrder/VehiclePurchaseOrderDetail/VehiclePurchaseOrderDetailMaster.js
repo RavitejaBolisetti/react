@@ -138,6 +138,9 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
     }, [userId, selectedRecordId, changeView]);
 
     const getDealerlocation = (dealerCode) => {
+        const onSuccessAction = (res) => {
+            setDealerLocation(res?.data);
+        };
         if (dealerCode) {
             const extraParams = [
                 {
@@ -147,9 +150,8 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
                     name: 'Dealer Parent Code',
                 },
             ];
-            fetchDealerLocation({ setIsLoading: listShowLoading, extraParams, onErrorAction });
+            fetchDealerLocation({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction });
         }
-        setDealerLocation(dealerLocationList);
     };
 
     const onFinish = (values) => {
@@ -190,7 +192,7 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = () => { };
+    const onFinishFailed = () => {};
 
     const formProps = {
         ...props,

@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -26,8 +26,6 @@ const CustomEditor = (props) => {
                 isCompatible: true,
                 disableAutoInLine: true,
                 extraPlugins: 'autogrow',
-                // autoGrow_minHeight: 500,
-                // autoGrow_maxHeight: 500,
                 autoGrow_bottomSpace: 50,
             }}
         />

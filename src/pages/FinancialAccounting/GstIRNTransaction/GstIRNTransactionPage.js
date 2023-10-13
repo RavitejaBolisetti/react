@@ -9,7 +9,7 @@ import { PageHeader } from 'pages/common/PageHeader';
 import { GstIRNTransaction } from 'components/FinancialAccounting/GstIRNTransaction';
 
 const GstIRNTransactionPageBase = (props) => {
-    const pageTitle = 'GST IRN Transaction';
+    const pageTitle = 'GST IRN Transaction Pending';
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,
