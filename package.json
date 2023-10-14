@@ -48,7 +48,7 @@
         "web-vitals": "^2.1.4"
     },
     "scripts": {
-        "start": "react-scripts --max-old-space-size=8192 start",
+        "start": "react-scripts start",
         "build": "react-scripts --max-old-space-size=8192 build",
         "test": "cross-env BABEL_ENV=test --max-old-space-size=8192 jest",
         "watch-tests": "cross-env BABEL_ENV=test jest --watch",
