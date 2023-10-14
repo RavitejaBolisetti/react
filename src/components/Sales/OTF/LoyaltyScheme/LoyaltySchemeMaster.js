@@ -75,7 +75,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchCustomerList: customerDetailDataActions.fetchList,
             listCustomerShowLoading: customerDetailDataActions.listShowLoading,
 
-            fetchSchemeLovList: otfSchemeDetailDataActions.fetchList,
+            fetchSchemeLovList: otfSchemeDetailDataActions.fetchFilteredList,
             listSchemeLovShowLoading: otfSchemeDetailDataActions.listShowLoading,
 
             fetchModelLovList: otfLoyaltyModelGroupDataActions.fetchFilteredList,
@@ -279,9 +279,9 @@ const LoyaltySchemeMasterMain = (props) => {
         }
     };
 
-    const handleSchemeChange = (__, value) => {
+    const handleSchemeChange = (__, { option: { amount } = 0 }) => {
         form.setFieldsValue({
-            schemeAmount: value?.amount,
+            schemeAmount: amount,
         });
     };
 

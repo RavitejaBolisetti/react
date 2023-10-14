@@ -159,7 +159,7 @@ const AddEditFormMain = (props) => {
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="schemeAmount" label="Scheme Amount" initialValue={formData?.schemeAmount} rules={[validateNumberWithTwoDecimalPlaces('Scheme Amount')]}>
-                        <Input {...disabledProps} placeholder={preparePlaceholderText('scheme amount')} maxLength={50} />
+                        <Input disabled={true} placeholder={preparePlaceholderText('scheme amount')} maxLength={50} />
                     </Form.Item>
                 </Col>
             </Row>

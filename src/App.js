@@ -4,11 +4,10 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, createContext, useCallback } from 'react';
-import { Offline } from 'react-detect-offline';
-
 import { ConfigProvider, notification } from 'antd';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { connect } from 'react-redux';
+
 import { AiOutlineCheckCircle, AiOutlineInfoCircle, AiOutlineCloseCircle } from 'react-icons/ai';
 import { FcCancel } from 'react-icons/fc';
 
@@ -100,9 +99,7 @@ const AppBase = ({ readFromStorageAndValidateAuth, hideGlobalNotification, notif
             >
                 <NotificationContext.Provider value={informationModalBox}>
                     {contextInformationNotification}
-                    <Offline>
-                        <div className={styles.noInternetConnectivity}>You're Offline. Please check your internet connection and try again</div>
-                    </Offline>
+                    {/* <div className={styles.noInternetConnectivity}>You're Offline. Please check your internet connection and try again</div> */}
                     <MainPage />
                 </NotificationContext.Provider>
             </ConfigProvider>
