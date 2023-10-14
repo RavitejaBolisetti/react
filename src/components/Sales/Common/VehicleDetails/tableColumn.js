@@ -47,7 +47,7 @@ export const optionalServicesColumns = ({ formActionType, handleButtonClick, sty
             width: '25%',
         }),
     ];
-    !formActionType?.viewMode && tableColumn.push(tblActionColumn({ handleButtonClick, styles, width: '15%', canEdit: false, canView: false, canDelete: true, canServerDataEdit: true }));
+    !formActionType?.viewMode && tableColumn.push(tblActionColumn({ handleButtonClick, styles, width: '15%', canEdit: true, canView: false, isDeletable: true }));
 
     return tableColumn;
 };
