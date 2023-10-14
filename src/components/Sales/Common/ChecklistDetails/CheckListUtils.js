@@ -6,22 +6,30 @@
 import React from 'react';
 import moment from 'moment';
 
-import { Col, Input, Form, Row, DatePicker, InputNumber, Select, Switch } from 'antd';
+import { Col, Input, Form, Row, DatePicker, InputNumber, Select, Switch, Typography } from 'antd';
 
 import { convertDateTimedayjs, dateFormatView } from 'utils/formatDateTime';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
-import { validateRequiredInputField, validateRequiredSelectField, validateNegativeNumber, validateNumberWithTwoDecimalPlaces, validateOnlyPositiveNumber } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces, validateOnlyPositiveNumber } from 'utils/validation';
 import { FORMTYPE_CONSTANTS } from 'constants/FormtypeConstants';
 import styles from 'assets/sass/app.module.scss';
-
+const { Text } = Typography;
 export const BindFormAndResult = ({ data, aggregateForm, deliveryChecklist = false }) => {
     const UniqueAnsType = data?.answerType?.toLowerCase() && data?.answerType?.toLowerCase();
     const noDataAvalaible = 'NA';
+    const QuestionLabel =
+        (data?.checklistDescription &&
+            deliveryChecklist &&
+            data?.checklistDescription
+                ?.split(' ')
+                ?.map((item) => item?.charAt(0)?.toUpperCase() + item?.slice(1)?.toLowerCase())
+                ?.join(' ')) ||
+        '';
     let checkResult = '';
     let formItem = (
         <Row gutter={20}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                <Form.Item label="Check Result" name="answerText" rules={[validateRequiredInputField('checkResult')]}>
+                <Form.Item label={QuestionLabel} name="answerText" rules={[validateRequiredInputField('checkResult')]}>
                     <Input maxLength={30} placeholder={preparePlaceholderText('Check Result')} />
                 </Form.Item>
             </Col>
@@ -37,34 +45,39 @@ export const BindFormAndResult = ({ data, aggregateForm, deliveryChecklist = fal
                 checkResult = noDataAvalaible;
             }
             formItem = (
-                <Row gutter={20}>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="From Date" name="answerFromDate" rules={[validateRequiredSelectField('From Date')]} className={styles?.datePicker}>
-                            <DatePicker placeholder={preparePlaceholderSelect('from date')} onChange={() => aggregateForm.setFieldsValue({ answerToDate: undefined })} disabledDate={(current) => current.isBefore(moment().subtract(1, 'day'))} />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="To Date" name="answerToDate" rules={[validateRequiredSelectField('To Date')]} className={styles?.datePicker}>
-                            <DatePicker placeholder={preparePlaceholderSelect('to date')} disabledDate={(current) => current < aggregateForm?.getFieldValue('answerFromDate')} />
-                        </Form.Item>
-                    </Col>
-                </Row>
+                <>
+                    <p className={styles?.marB10}>{QuestionLabel}</p>
+                    <Row gutter={20}>
+                        <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                            <Form.Item name="answerFromDate" rules={[validateRequiredSelectField('From Date')]} className={styles?.datePicker}>
+                                <DatePicker placeholder={preparePlaceholderSelect('from date')} onChange={() => aggregateForm.setFieldsValue({ answerToDate: undefined })} disabledDate={(current) => current.isBefore(moment().subtract(1, 'day'))} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                            <Form.Item name="answerToDate" rules={[validateRequiredSelectField('To Date')]} className={styles?.datePicker}>
+                                <DatePicker placeholder={preparePlaceholderSelect('to date')} disabledDate={(current) => current < aggregateForm?.getFieldValue('answerFromDate')} />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                </>
             );
             break;
         }
 
         case FORMTYPE_CONSTANTS?.TOGGLE_GROUP?.id?.toLowerCase(): {
-            if (data?.answerBoolean === undefined || data?.answerBoolean === null || data?.answerBoolean === '') {
-                checkResult = noDataAvalaible;
+            if (!data?.answerBoolean) {
+                if (data?.answerBoolean === false) {
+                    checkResult = 'No';
+                } else {
+                    checkResult = noDataAvalaible;
+                }
             } else if (data?.answerBoolean) {
                 checkResult = 'Yes';
-            } else {
-                checkResult = 'No';
             }
             formItem = (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item rules={[validateRequiredSelectField('')]} valuePropName="checked" initialValue={data?.answerBoolean ? true : false} labelAlign="left" wrapperCol={{ span: 24 }} name="answerBoolean" label="Check Result">
+                        <Form.Item rules={[validateRequiredSelectField('')]} valuePropName="checked" initialValue={data?.answerBoolean ? true : false} labelAlign="left" wrapperCol={{ span: 24 }} name="answerBoolean" label={QuestionLabel}>
                             <Switch checkedChildren="Yes" unCheckedChildren="No" defaultChecked={data?.answerBoolean ? true : false} onChange={(checked) => (checked ? true : false)} />
                         </Form.Item>
                     </Col>
@@ -81,34 +94,37 @@ export const BindFormAndResult = ({ data, aggregateForm, deliveryChecklist = fal
                 checkResult = noDataAvalaible;
             }
             formItem = (
-                <Row gutter={20}>
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                        <Form.Item label="Min Range" name="answerFromNumber" rules={[validateRequiredInputField('min range'), validateOnlyPositiveNumber('min range')]}>
-                            <InputNumber className={styles.fullWidth} placeholder={preparePlaceholderText('Min Range')} />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                        <Form.Item
-                            label="Max Range"
-                            name="answerToNumber"
-                            rules={[
-                                validateRequiredInputField('max range'),
-                                validateOnlyPositiveNumber('max range'),
-                                {
-                                    validator: (_, value) => {
-                                        if (!value) return;
-                                        if (value < aggregateForm.getFieldValue('answerFromNumber')) {
-                                            return Promise.reject(`Max range can't be less than Min Range`);
-                                        }
-                                        return Promise.resolve();
+                <>
+                    <p className={styles?.marB10}>{QuestionLabel}</p>
+
+                    <Row gutter={20}>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <Form.Item name="answerFromNumber" rules={[validateRequiredInputField('min range'), validateOnlyPositiveNumber('min range')]}>
+                                <InputNumber className={styles.fullWidth} placeholder={preparePlaceholderText('Min Range')} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <Form.Item
+                                name="answerToNumber"
+                                rules={[
+                                    validateRequiredInputField('max range'),
+                                    validateOnlyPositiveNumber('max range'),
+                                    {
+                                        validator: (_, value) => {
+                                            if (!value) return;
+                                            if (value < aggregateForm.getFieldValue('answerFromNumber')) {
+                                                return Promise.reject(`Max range can't be less than Min Range`);
+                                            }
+                                            return Promise.resolve();
+                                        },
                                     },
-                                },
-                            ]}
-                        >
-                            <InputNumber className={styles.fullWidth} placeholder={preparePlaceholderText('Max Range')} />
-                        </Form.Item>
-                    </Col>
-                </Row>
+                                ]}
+                            >
+                                <InputNumber className={styles.fullWidth} placeholder={preparePlaceholderText('Max Range')} />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                </>
             );
             break;
         }
@@ -121,34 +137,36 @@ export const BindFormAndResult = ({ data, aggregateForm, deliveryChecklist = fal
                 checkResult = noDataAvalaible;
             }
             formItem = (
-                <Row gutter={20}>
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                        <Form.Item label="Min Range" name="answerFromNumber" rules={[validateRequiredInputField('min range'), validateNumberWithTwoDecimalPlaces('min range')]}>
-                            <InputNumber className={styles.fullWidth} precision={2} placeholder={preparePlaceholderText('Min Range')} />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                        <Form.Item
-                            label="Max Range"
-                            name="answerToNumber"
-                            rules={[
-                                validateRequiredInputField('max range'),
-                                validateNumberWithTwoDecimalPlaces('max range'),
-                                {
-                                    validator: (_, value) => {
-                                        if (!value) return;
-                                        if (value < aggregateForm.getFieldValue('answerFromNumber')) {
-                                            return Promise.reject(`Max range can't be less than Min Range`);
-                                        }
-                                        return Promise.resolve();
+                <>
+                    <p className={styles?.marB10}>{QuestionLabel}</p>
+                    <Row gutter={20}>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <Form.Item name="answerFromNumber" rules={[validateRequiredInputField('min range'), validateNumberWithTwoDecimalPlaces('min range')]}>
+                                <InputNumber className={styles.fullWidth} precision={2} placeholder={preparePlaceholderText('Min Range')} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <Form.Item
+                                name="answerToNumber"
+                                rules={[
+                                    validateRequiredInputField('max range'),
+                                    validateNumberWithTwoDecimalPlaces('max range'),
+                                    {
+                                        validator: (_, value) => {
+                                            if (!value) return;
+                                            if (value < aggregateForm.getFieldValue('answerFromNumber')) {
+                                                return Promise.reject(`Max range can't be less than Min Range`);
+                                            }
+                                            return Promise.resolve();
+                                        },
                                     },
-                                },
-                            ]}
-                        >
-                            <InputNumber precision={2} className={styles.fullWidth} placeholder={preparePlaceholderText('Max Range')} />
-                        </Form.Item>
-                    </Col>
-                </Row>
+                                ]}
+                            >
+                                <InputNumber precision={2} className={styles.fullWidth} placeholder={preparePlaceholderText('Max Range')} />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                </>
             );
             break;
         }
@@ -168,7 +186,7 @@ export const BindFormAndResult = ({ data, aggregateForm, deliveryChecklist = fal
             formItem = (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item label="Check Result" name="answerText" rules={[validateRequiredSelectField('Check Result')]}>
+                        <Form.Item label={QuestionLabel} name="answerText" rules={[validateRequiredSelectField('Check Result')]}>
                             <Select optionFilterProp="answerDescription" options={data?.checklistAnswerResponses} placeholder={preparePlaceholderSelect('Check Result')} fieldNames={{ label: 'answerDescription', value: 'answerCode' }} allowClear showSearch onChange={AnswerResponseSelction} />
                         </Form.Item>
                         <Form.Item initialValue={data?.answerDescription} name="answerDescription" hidden />
@@ -182,7 +200,7 @@ export const BindFormAndResult = ({ data, aggregateForm, deliveryChecklist = fal
             formItem = (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item label="Check Result" name="answerText" rules={[validateRequiredInputField('checkResult')]}>
+                        <Form.Item label={QuestionLabel} name="answerText" rules={[validateRequiredInputField('checkResult')]}>
                             <Input maxLength={30} placeholder={preparePlaceholderText('Check Result')} />
                         </Form.Item>
                     </Col>
@@ -200,7 +218,7 @@ export const BindFormAndResult = ({ data, aggregateForm, deliveryChecklist = fal
             formItem = (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item label="Number" name="answerFromNumber" rules={[validateRequiredInputField('Number'), validateOnlyPositiveNumber('Number')]}>
+                        <Form.Item label={QuestionLabel} name="answerFromNumber" rules={[validateRequiredInputField('Number'), validateOnlyPositiveNumber('Number')]}>
                             <InputNumber className={styles.fullWidth} placeholder={preparePlaceholderText('Number')} />
                         </Form.Item>
                     </Col>
@@ -217,7 +235,7 @@ export const BindFormAndResult = ({ data, aggregateForm, deliveryChecklist = fal
             formItem = (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item label="Number" name="answerFromNumber" rules={[validateRequiredInputField('Number'), validateNumberWithTwoDecimalPlaces('Number')]}>
+                        <Form.Item label={QuestionLabel} name="answerFromNumber" rules={[validateRequiredInputField('Number'), validateNumberWithTwoDecimalPlaces('Number')]}>
                             <InputNumber precision={2} className={styles.fullWidth} placeholder={preparePlaceholderText('Number')} />
                         </Form.Item>
                     </Col>
@@ -234,7 +252,7 @@ export const BindFormAndResult = ({ data, aggregateForm, deliveryChecklist = fal
             formItem = (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item label="Date" name="answerFromDate" rules={[validateRequiredSelectField('Date')]} className={styles?.datePicker}>
+                        <Form.Item label={QuestionLabel} name="answerFromDate" rules={[validateRequiredSelectField('Date')]} className={styles?.datePicker}>
                             <DatePicker placeholder={preparePlaceholderSelect('from date')} disabledDate={(current) => current.isBefore(moment().subtract(1, 'day'))} />
                         </Form.Item>
                     </Col>

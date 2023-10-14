@@ -84,9 +84,11 @@ export const ChecklistModalForms = (props) => {
             </Row>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
-                    <Form.Item label={checklistDescriptionLabel} name="checklistDescription" rules={[validateRequiredInputField('Remarks')]}>
-                        <TextArea placeholder={preparePlaceholderText('Remarks')} autoSize={{ minRows: 3, maxRows: 5 }} maxLength={300} showCount {...disabledProps} />
-                    </Form.Item>
+                    {!deliveryChecklist && (
+                        <Form.Item label={checklistDescriptionLabel} name="checklistDescription" rules={[validateRequiredInputField('Remarks')]}>
+                            <TextArea placeholder={preparePlaceholderText('Remarks')} autoSize={{ minRows: 3, maxRows: 5 }} maxLength={300} showCount {...disabledProps} />
+                        </Form.Item>
+                    )}
                     <Form.Item name="id" hidden></Form.Item>
                     {deliveryChecklist && <Form.Item initialValue={true} name="status" hidden />}
                 </Col>

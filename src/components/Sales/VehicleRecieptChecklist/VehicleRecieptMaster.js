@@ -501,16 +501,16 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     const onFinish = () => {
         const checklistNumber = ProfileData?.checklistNumber ?? '';
         const chassisNumber = selectedRecord?.chassisNumber ?? '';
-        const checklistModifiedData = checkListDataModified
-            ?.filter((element) => {
-                const { ismodified, index, ...rest } = element;
-                if (ismodified) return rest;
-                return false;
-            })
-            ?.map((item) => {
-                const { ismodified, index, ...rest } = item;
-                return { ...rest, answerFromDate: rest?.answerFromDate?.toISOString(), answerToDate: rest?.answerToDate?.toISOString() };
-            });
+        const checklistModifiedData = checkListDataModified?.flatMap((item) => {
+            if (item?.ismodified) {
+                if (item?.hasOwnProperty('ismodified') && item?.hasOwnProperty('index')) {
+                    const { ismodified, index, ...rest } = item;
+                    return { ...rest, answerFromDate: rest?.answerFromDate?.toISOString(), answerToDate: rest?.answerToDate?.toISOString() };
+                }
+                return { ...item, answerFromDate: item?.answerFromDate?.toISOString(), answerToDate: item?.answerToDate?.toISOString() };
+            }
+            return [];
+        });
 
         const data = {
             checklistDetailList: checklistModifiedData,
