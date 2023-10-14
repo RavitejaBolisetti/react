@@ -110,10 +110,14 @@ const LoyaltySchemeMasterMain = (props) => {
     const [filteredVariantData, setfilteredVariantData] = useState([]);
     const [formData, setformData] = useState([]);
     const disabledProps = { disabled: true };
+    console.log('🚀 ~ file: LoyaltySchemeMaster.js:113 ~ LoyaltySchemeMasterMain ~ formData:', formData);
 
     const fnSetData = (data) => {
         if (data && Object?.keys(data)?.length > 0) {
             form.setFieldsValue({ ...data, customerCode: data?.customerId, oldChassisNumber: data?.chassisNumber, variantCode: data?.variant, vehicleModelGroup: data?.modelGroup, make: data?.make || VEHICLE_COMPANY_MAKE });
+            handleFilterChange('make', data?.make || VEHICLE_COMPANY_MAKE);
+            handleFilterChange('modelGroupCode', data?.modelGroup ?? '');
+            // setformData({ ...formData, ...data, customerCode: data?.customerId, oldChassisNumber: data?.chassisNumber, variantCode: data?.variant, vehicleModelGroup: data?.modelGroup, make: data?.make || VEHICLE_COMPANY_MAKE });
         } else if (data === null) {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'No data found' });
             form.resetFields(['customerCode', 'customerName', 'make', 'vehicleModelGroup', 'variantCode', 'registrationNumber', 'oldChassisNumber', 'customerDOB']);
