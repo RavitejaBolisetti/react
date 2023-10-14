@@ -14,6 +14,7 @@ import styles from 'assets/sass/app.module.scss';
 import { addToolTip } from 'utils/customMenuLink';
 
 import { AiOutlineInfoCircle } from 'react-icons/ai';
+import { DELIVERY_NOTE_STATUS } from '../constants/deliveryNoteStatus';
 
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
@@ -83,7 +84,7 @@ const VehicleDeliveryNoteCard = (props) => {
                     Status:
                     <div className={styles.tooltipAlign}>
                         {checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.DLVR_NT_STS.id], selectedOrder?.deliveryNoteStatus, isLoading))}
-                        {formActionType?.viewMode && selectedOrder?.deliveryNoteStatus === 'C' && <span className={styles.marL5}>{toolTipContent && selectedOrder?.deliveryNoteStatus && <div className={styles.toolTip}>{addToolTip(toolTipContent, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}</div>}</span>}
+                        {formActionType?.viewMode && selectedOrder?.deliveryNoteStatus === DELIVERY_NOTE_STATUS?.CANCELLED?.key && <span className={styles.marL5}>{toolTipContent && selectedOrder?.deliveryNoteStatus && <div className={styles.toolTip}>{addToolTip(toolTipContent, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}</div>}</span>}
                     </div>
                 </div>
 

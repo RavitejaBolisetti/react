@@ -36,7 +36,7 @@ import { DELIVERY_TYPE } from 'constants/modules/vehicleDetailsNotes.js/delivery
 import { FORMTYPE_CONSTANTS } from 'constants/FormtypeConstants';
 
 import { vehicleDeliveryNoteCustomerDetailDataActions } from 'store/actions/data/vehicleDeliveryNote/customerDetails';
-import { STATUS_CONSTANTS } from './Constants';
+import { DELIVERY_NOTE_STATUS } from './constants/deliveryNoteStatus';
 
 const mapStateToProps = (state) => {
     const {
@@ -467,7 +467,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
                 break;
             }
             case deliveryStatus === QUERY_BUTTONS_CONSTANTS?.GENERATED?.key && buttonAction === VIEW_ACTION: {
-                const deliveryButtonVisbility = typeData && record?.deliveryNoteStatus !== STATUS_CONSTANTS?.PENDING_CANCELLATION?.key;
+                const deliveryButtonVisbility = typeData && record?.deliveryNoteStatus !== DELIVERY_NOTE_STATUS?.PENDING_CANCELLATION?.key;
                 btnVisibilityStatus = { printDeliveryNoteBtn: true, cancelDeliveryNoteBtn: deliveryButtonVisbility, nextBtn: true, closeBtn: true };
                 break;
             }
@@ -542,7 +542,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
                 editMode: buttonAction === EDIT_ACTION,
                 viewMode: buttonAction === VIEW_ACTION,
             });
-            const deliveryButtonVisbility = typeData && record?.deliveryNoteStatus !== STATUS_CONSTANTS?.PENDING_CANCELLATION?.key;
+            const deliveryButtonVisbility = typeData && record?.deliveryNoteStatus !== DELIVERY_NOTE_STATUS?.PENDING_CANCELLATION?.key;
             setButtonData({ printDeliveryNoteBtn: true, cancelDeliveryNoteBtn: deliveryButtonVisbility, nextBtn: true, closeBtn: true });
         } else if (deliveryStatus === QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key && buttonAction === VIEW_ACTION) {
             setFormActionType({
