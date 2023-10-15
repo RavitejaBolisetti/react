@@ -21,14 +21,14 @@ export const RsmAsmApprovalButtons = ({ record, onCloseAction, buttonData, workF
                 </Col>
 
                 <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.buttonsGroupRight}>
-                    {buttonData?.rejectApproveBtn &&
-                        workFlowDetails?.allowedActions?.map((element, i) => {
-                            return (
-                                <Button onClick={() => handleRequest({ buttonAction: element?.actionCode })} type="primary" key={i}>
-                                    {element?.actionName}
-                                </Button>
-                            );
-                        })}
+                    {/* buttonData?.rejectApproveBtn && */}
+                    {workFlowDetails?.allowedActions?.map((element, i) => {
+                        return (
+                            <Button onClick={() => handleRequest({ buttonAction: element?.actionCode })} type="primary" key={i}>
+                                {element?.actionName}
+                            </Button>
+                        );
+                    })}
                     {/* {buttonData?.rejectBtn && (
                         <Button onClick={() => handleRequest({ requestType: true })} type="primary">
                             Reject

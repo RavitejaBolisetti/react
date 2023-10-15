@@ -14,6 +14,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'assets/sass/app.module.scss';
 import { convertToUpperCase } from 'utils/convertToUpperCase';
+import { customSelectBox } from 'utils/customSelectBox';
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
@@ -56,32 +57,43 @@ const AddEditFormMain = (props) => {
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Make" name="make" data-testid="make" rules={[validateRequiredSelectField('make')]}>
-                        <Select disabled={true} placeholder="Select" allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData[PARAM_MASTER?.MAKE_NAME?.id]} onChange={(value, selectobj) => handleFilterChange('make', value, selectobj)} />
+                        {customSelectBox({ data: typeData[PARAM_MASTER?.MAKE_NAME?.id], disabled: true, onChange: (value, selectobj) => handleFilterChange('make', value, selectobj) })}
                     </Form.Item>
                 </Col>
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Model Group" name="vehicleModelGroup" data-testid="modelGroup" rules={[validateRequiredSelectField('model group')]}>
-                        <Select disabled={true} placeholder="Select" loading={isModelLoading} allowClear fieldNames={{ label: 'modelGroupDescription', value: 'modelGroupCode' }} options={filteredModelData} onChange={(value, selectobj) => handleFilterChange('modelGroupCode', value, selectobj)} />
+                        {customSelectBox({
+                            data: filteredModelData,
+                            loading: isModelLoading,
+                            disabled: true,
+                            fieldNames: { key: 'modelGroupCode', value: 'modelGroupDescription' },
+                            onChange: (value, selectobj) => handleFilterChange('modelGroupCode', value, selectobj),
+                        })}
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Variant" name="variantCode" data-testid="variant" rules={[validateRequiredSelectField('Variant')]}>
-                        <Select disabled={true} placeholder="Select" loading={isVariantLoading} allowClear fieldNames={{ label: 'variantDescription', value: 'variantCode' }} options={filteredVariantData} />
+                        {customSelectBox({
+                            data: filteredVariantData,
+                            loading: isVariantLoading,
+                            disabled: true,
+                            fieldNames: { key: 'variantCode', value: 'variantDescription' },
+                        })}
                     </Form.Item>
                 </Col>
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="vehicleUsageCode" label="Usage" initialValue={formData?.usageCode} rules={[validateRequiredSelectField('Usage')]}>
-                        <Select {...disabledProps} placeholder="Select" loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['VEHCL_USAG']} />
+                        {customSelectBox({ data: typeData['VEHCL_USAG'], disabled: viewOnly, loading: false })}
                     </Form.Item>
                 </Col>
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="registrationYearCode" label="Year of Registration" initialValue={formData?.yearOfRegistrationCode} rules={[validateRequiredInputField('year of reg')]}>
-                        <Select {...disabledProps} placeholder="Select" allowClear fieldNames={{ label: 'value', value: 'key' }} options={yearsList} />
+                        {customSelectBox({ data: yearsList, disabled: viewOnly, loading: false })}
                     </Form.Item>
                 </Col>
             </Row>
@@ -89,7 +101,7 @@ const AddEditFormMain = (props) => {
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="registrationMonthCode" label="Month of Registration" initialValue={formData?.monthOfRegistrationCode} rules={[validateRequiredSelectField('Month of Registration')]}>
-                        <Select {...disabledProps} loading={isConfigLoading} fieldNames={{ label: 'value', value: 'key' }} options={typeData['MONTH']} placeholder={preparePlaceholderSelect('Month of Registration')} />
+                        {customSelectBox({ data: typeData?.MONTH, disabled: viewOnly, loading: false })}
                     </Form.Item>
                 </Col>
 
@@ -121,7 +133,7 @@ const AddEditFormMain = (props) => {
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="relationCode" label="Relationship" initialValue={formData?.relationship}>
-                        <Select {...disabledProps} placeholder="Select" loading={isConfigLoading} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['REL_TYPE']} />
+                        {customSelectBox({ data: typeData?.REL_TYPE, disabled: viewOnly, loading: isConfigLoading })}
                     </Form.Item>
                 </Col>
 
@@ -141,13 +153,13 @@ const AddEditFormMain = (props) => {
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="schemeCode" label="Scheme Name" initialValue={formData?.schemeCode} rules={[validateRequiredSelectField('Scheme Name')]}>
-                        <Select {...disabledProps} loading={isSchemeLovLoading} fieldNames={{ label: 'value', value: 'key' }} options={schemeLovData} placeholder={preparePlaceholderSelect('Scheme Name')} onChange={handleSchemeChange} />
+                        {customSelectBox({ data: schemeLovData, disabled: viewOnly, loading: isSchemeLovLoading, onChange: handleSchemeChange })}
                     </Form.Item>
                 </Col>
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="schemeAmount" label="Scheme Amount" initialValue={formData?.schemeAmount} rules={[validateNumberWithTwoDecimalPlaces('Scheme Amount')]}>
-                        <Input {...disabledProps} placeholder={preparePlaceholderText('scheme amount')} maxLength={50} />
+                        <Input disabled={true} placeholder={preparePlaceholderText('scheme amount')} maxLength={50} />
                     </Form.Item>
                 </Col>
             </Row>

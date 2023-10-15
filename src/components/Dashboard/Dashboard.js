@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, Card, Button, Space, Divider, Tag, Typography } from 'antd';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
@@ -46,7 +46,6 @@ const data1 = [
     { type: 'Bolero Neo', sales: 75 },
     { type: 'Bolero', sales: 120 },
     { type: 'Scarpio Classic', sales: 50 },
-    
 ];
 
 const mapStateToProps = (state) => {
@@ -170,13 +169,13 @@ const DashboardBase = ({ props }) => {
                                 {keyHightliteData?.map(
                                     (i, index) =>
                                         index === highlightsTextIndex && (
-                                            <>
+                                            <Fragment key={'kh' + index}>
                                                 <Tag color="error">{i?.shortDescription}</Tag>
                                                 <Text color="danger">
                                                     {i?.longDescription}
                                                     <span>{' ' + i?.date}</span>
                                                 </Text>
-                                            </>
+                                            </Fragment>
                                         )
                                 )}
                             </Space>

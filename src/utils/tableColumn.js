@@ -109,6 +109,7 @@ export const tblActionColumn = ({
     canEdit = true,
     canView = true,
     canDelete = false,
+    isDeletable = false,
     canServerDataEdit = false,
     canAdd = false,
     customButton = false,
@@ -160,7 +161,7 @@ export const tblActionColumn = ({
                     </Button>
                 )}
 
-                {canDelete && !record?.id && (
+                {( isDeletable || (canDelete && !record?.id)) && (
                     <Button data-testid="delete" type="link" aria-label="fa-trash" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.DELETE, record, index })}>
                         {addToolTip('Delete')(<RxCross1 size={18} />)}
                     </Button>

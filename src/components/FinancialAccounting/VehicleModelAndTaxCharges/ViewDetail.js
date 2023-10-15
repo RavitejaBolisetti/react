@@ -7,7 +7,7 @@ import React from 'react';
 import { Descriptions } from 'antd';
 
 const ViewDetailMain = (props) => {
-    const { formData, styles } = props;
+    const { formData ,styles} = props;
 
     const viewOneColProps = {
         bordered: false,

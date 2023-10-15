@@ -3,20 +3,25 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-export const DELIVERY_NOTE_INVOICE_STATUS = {
-    PENDING: {
+export const DELIVERY_NOTE_STATUS = {
+    CANCELLED: {
         id: 1,
-        title: 'Pending',
-        key: 'PND',
+        key: 'C',
+        title: 'Cancelled',
     },
-    APPROVED: {
+    GENERATED: {
         id: 2,
-        title: 'Approved',
-        key: 'APR',
+        key: 'D',
+        title: 'Generated',
     },
-    REJECTED: {
+    PENDING: {
         id: 3,
-        title: 'Rejected',
-        key: 'REJ',
+        key: 'P',
+        title: 'Pending',
+    },
+    PENDING_CANCELLATION: {
+        id: 4,
+        key: 'PND',
+        title: 'Pending for Cancellation',
     },
 };

@@ -63,7 +63,7 @@ const DashboardActionItems = () => {
     return (
         <Card className={styles.dashboardActionItemsContent}>
             <Collapse bordered={false} collapsible="icon" expandIcon={expandIcon} expandIconPosition={'start'} activeKey={activeKey} onChange={handleCollapse}>
-                {Object.entries(actionsData || {})?.map(([key, value]) => (
+                {Object.entries(actionsData || {})?.map(([key, value], index) => (
                     <Panel
                         header={
                             <>
@@ -71,12 +71,12 @@ const DashboardActionItems = () => {
                                 <Badge count={value?.actions?.length} />
                             </>
                         }
-                        key={key}
+                        key={'ac' + index}
                     >
                         <Space size={5} direction="vertical">
-                            {value?.actions?.map((i) => (
-                                <Text>
-                                    {i?.actionTitle} <Divider type="vertical" /> <span>{i?.date}</span>
+                            {value?.actions?.map((action, i) => (
+                                <Text key={'aci' + i}>
+                                    {action?.actionTitle} <Divider type="vertical" /> <span>{action?.date}</span>
                                 </Text>
                             ))}
                         </Space>

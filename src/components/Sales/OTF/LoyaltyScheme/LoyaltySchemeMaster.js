@@ -75,7 +75,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchCustomerList: customerDetailDataActions.fetchList,
             listCustomerShowLoading: customerDetailDataActions.listShowLoading,
 
-            fetchSchemeLovList: otfSchemeDetailDataActions.fetchList,
+            fetchSchemeLovList: otfSchemeDetailDataActions.fetchFilteredList,
             listSchemeLovShowLoading: otfSchemeDetailDataActions.listShowLoading,
 
             fetchModelLovList: otfLoyaltyModelGroupDataActions.fetchFilteredList,
@@ -114,6 +114,9 @@ const LoyaltySchemeMasterMain = (props) => {
     const fnSetData = (data) => {
         if (data && Object?.keys(data)?.length > 0) {
             form.setFieldsValue({ ...data, customerCode: data?.customerId, oldChassisNumber: data?.chassisNumber, variantCode: data?.variant, vehicleModelGroup: data?.modelGroup, make: data?.make || VEHICLE_COMPANY_MAKE });
+            handleFilterChange('make', data?.make || VEHICLE_COMPANY_MAKE);
+            handleFilterChange('modelGroupCode', data?.modelGroup ?? '');
+            // setformData({ ...formData, ...data, customerCode: data?.customerId, oldChassisNumber: data?.chassisNumber, variantCode: data?.variant, vehicleModelGroup: data?.modelGroup, make: data?.make || VEHICLE_COMPANY_MAKE });
         } else if (data === null) {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'No data found' });
             form.resetFields(['customerCode', 'customerName', 'make', 'vehicleModelGroup', 'variantCode', 'registrationNumber', 'oldChassisNumber', 'customerDOB']);
@@ -275,9 +278,9 @@ const LoyaltySchemeMasterMain = (props) => {
         }
     };
 
-    const handleSchemeChange = (__, value) => {
+    const handleSchemeChange = (__, { option: { amount } = 0 }) => {
         form.setFieldsValue({
-            schemeAmount: value?.amount,
+            schemeAmount: amount,
         });
     };
 
