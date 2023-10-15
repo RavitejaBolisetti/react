@@ -13,11 +13,12 @@ import ModelForm from './ModelForm';
 const { Text } = Typography;
 
 const ModelCard = (props) => {
-    const { finalFormdata, forceUpdate, modelData, setModelData, setOpenAccordian, changeValue, setChangeValue, modelForm, modelEdit, setModelEdit, uniqueCardEdit, setuniqueCardEdit, internalId, formActionType, modelSwitch, setModelSwitch, modelGroupData, modelEditForm, setButtonData, buttonData, setFormBtnActive } = props;
+    const { finalFormdata, forceUpdate, modelData, setModelData, setOpenAccordian, changeValue, setChangeValue, modelForm, modelEdit, setModelEdit, uniqueCardEdit, setuniqueCardEdit, internalId, formActionType, modelSwitch, setModelSwitch, modelGroupData, modelEditForm, setFormBtnActive } = props;
     const modelName = modelGroupData?.find((e) => e?.modelGroupCode === props?.modelGroupCode)?.modelGroupDescription;
-
+    let id = props?.id ? props?.id : props?.internalId;
+    let IdType = props?.id ? 'id' : 'internalId';
     const onModelEdit = (props) => {
-        setuniqueCardEdit(props?.internalId);
+        setuniqueCardEdit(id);
         setModelEdit(true);
         setFormBtnActive(true);
         setModelSwitch(props?.checklistModelStatus);
@@ -32,8 +33,10 @@ const ModelCard = (props) => {
 
     const modelSave = () => {
         let newFormData = modelEditForm?.getFieldsValue();
+        let id = newFormData?.id ? newFormData?.id : newFormData?.internalId;
         const upd_obj = modelData?.map((obj) => {
-            if (obj?.internalId === newFormData?.internalId) {
+            let idType = newFormData?.id ? 'id' : 'internalId';
+            if (obj[idType] === id) {
                 obj.modelGroupCode = newFormData?.modelGroupCode;
                 obj.checklistModelStatus = newFormData?.checklistModelStatus;
                 obj.internalId = newFormData?.internalId;
@@ -49,7 +52,7 @@ const ModelCard = (props) => {
 
     const modelDelete = (val) => {
         setModelData((prev) => {
-            const indx = prev.findIndex((el) => el.internalId === val?.internalId);
+            const indx = prev.findIndex((el) => el?.internalId === val?.internalId);
             let updatedValue = prev;
             updatedValue?.splice(indx, 1);
             return updatedValue;
@@ -85,7 +88,7 @@ const ModelCard = (props) => {
                 <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18}>
                     <Space direction="vertical">
                         <Text>{modelName}</Text>
-                        <Text>{props?.checklistModelStatus === true || props?.status === true ? 'Active' : 'InActive'}</Text>
+                        <Text>{props?.status === true ? 'Active' : 'Inactive'}</Text>
                     </Space>
                 </Col>
                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6} className={styles.buttonsGroupRight}>
@@ -100,10 +103,10 @@ const ModelCard = (props) => {
                                             onModelEdit(props);
                                         }}
                                     />
-                                    <Button onClick={() => modelDelete(props)} type="link" icon={<FiTrash />} disabled={props?.id ? true : false} />
+                                    <Button onClick={() => modelDelete(props)} type="link" icon={<FiTrash />} disabled={props?.internalId ? false : true} />
                                 </>
                             )}
-                            {modelEdit && props?.internalId === uniqueCardEdit && (
+                            {modelEdit && props[IdType] === uniqueCardEdit && (
                                 <>
                                     <Button type="link" onClick={modelSave}>
                                         Save
@@ -118,7 +121,7 @@ const ModelCard = (props) => {
                 </Col>
             </Row>
 
-            {modelEdit && props?.internalId === uniqueCardEdit && (
+            {modelEdit && props[IdType] === uniqueCardEdit && (
                 <>
                     <Divider />
                     <ModelForm {...FormProductAttributeProp} />

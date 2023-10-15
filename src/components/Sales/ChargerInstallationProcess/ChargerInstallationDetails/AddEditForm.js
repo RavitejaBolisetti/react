@@ -22,8 +22,8 @@ const { Search } = Input;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { formData, typeData, chargerInstallationMasterData, isLoading, formActionType, setChargerDetails, chargerDetails, activeKey, setActiveKey, chargerInstallationForm, crmCustomerVehicleData, setAddRequestVisible, addRequestVisible, handleBookingNumberSearch, handleBookingChange, addRequestForm, addRequestData, setAddRequestData } = props;
-    const [disabled, setDisabled] = useState(false);
+    const { formData, typeData, disabled, setDisabled, chargerInstallationMasterData, isLoading, formActionType, chargerDetails, activeKey, setActiveKey, chargerInstallationForm, crmCustomerVehicleData, setAddRequestVisible, addRequestVisible, handleBookingNumberSearch, handleBookingChange, addRequestForm, addRequestData, setAddRequestData } = props;
+
     const viewProps = {
         bordered: false,
         colon: false,
@@ -77,7 +77,6 @@ const AddEditFormMain = (props) => {
         setAddRequestVisible(true);
         setDisabled(true);
     };
-
     return (
         <>
             <div className={styles.drawerCustomerMaster}>

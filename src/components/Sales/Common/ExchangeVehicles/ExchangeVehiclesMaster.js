@@ -21,7 +21,7 @@ import { exchangeVehicleAlertDataAction } from 'store/actions/data/otf/exchangeV
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { BASE_URL_CUSTOMER_MASTER_VEHICLE_LIST as customURL } from 'constants/routingApi';
+import { BASE_URL_PRODUCT_MODEL_GROUP, BASE_URL_PRODUCT_VARIENT, BASE_URL_CUSTOMER_MASTER_VEHICLE_LIST as customURL } from 'constants/routingApi';
 
 import styles from 'assets/sass/app.module.scss';
 import { SALES_MODULE_TYPE } from 'constants/salesModuleType';
@@ -119,9 +119,6 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoadingVehicleExchangeAlert: exchangeVehicleAlertDataAction.listShowLoading,
             resetVehicleExchangeAlert: exchangeVehicleAlertDataAction.reset,
 
-            fetchProductLovCode: productHierarchyDataActions.fetchFilteredList,
-            ProductLovCodeLoading: productHierarchyDataActions.listShowLoading,
-
             resetData: schemeDataActions.reset,
             showGlobalNotification,
         },
@@ -130,15 +127,15 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ExchangeVehiclesBase = (props) => {
-    const { exchangeData, exchangeDataPass, isLoading, fetchList, userId, listShowLoading, showGlobalNotification, section, fetchProductLovCode, ProductLovCodeLoading, VehicleLovCodeData } = props;
-    const { typeData, selectedOrder, fetchListVehicleExchangeAlert, listShowLoadingVehicleExchangeAlert, exchangeVehicleAlertData, resetVehicleExchangeAlert } = props;
+    const { exchangeData, exchangeDataPass, isLoading, fetchList, userId, listShowLoading, showGlobalNotification, section, VehicleLovCodeData } = props;
+    const { typeData, selectedOrder, fetchListVehicleExchangeAlert, listShowLoadingVehicleExchangeAlert, exchangeVehicleAlertData } = props;
     const { fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading } = props;
     const { isMakeLoading, makeData, isModelDataLoaded, isModelLoading, modelData, isVariantDataLoaded, isVariantLoading, variantData, saveData } = props;
     const { financeLovData, isFinanceLovLoading, fetchFinanceLovList, listFinanceLovShowLoading } = props;
     const { schemeLovData, isSchemeLovLoading, fetchSchemeLovList, listSchemeLovShowLoading } = props;
     const { form, selectedRecordId, selectedOrderId, formActionType, handleFormValueChange, resetData } = props;
     const { fetchCustomerList, listCustomerShowLoading, handleButtonClick, NEXT_ACTION } = props;
-    const { viewOnly = false, modelCode = undefined, buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar, isProductHierarchyDataLoaded, salesModuleType } = props;
+    const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar, isProductHierarchyDataLoaded, salesModuleType } = props;
 
     const [formData, setFormData] = useState('');
     const [filteredModelData, setfilteredModelData] = useState([]);
@@ -168,9 +165,13 @@ const ExchangeVehiclesBase = (props) => {
     useEffect(() => {
         if (isOTFModule && exchangeData) {
             setFormData(exchangeData);
+            exchangeData?.make && handleFilterChange('make', exchangeData?.make ?? '');
+            exchangeData?.modelGroup && handleFilterChange('modelGroup', exchangeData?.modelGroup ?? '');
             setButtonData({ ...buttonData, formBtnActive: false });
         } else if (exchangeDataPass) {
             setFormData(exchangeDataPass);
+            exchangeData?.make && handleFilterChange('make', exchangeData?.make ?? '');
+            exchangeData?.modelGroup && handleFilterChange('modelGroup', exchangeData?.modelGroup ?? '');
             setButtonData({ ...buttonData, formBtnActive: true });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -196,7 +197,7 @@ const ExchangeVehiclesBase = (props) => {
     ];
 
     const onErrorAction = (message) => {
-        showGlobalNotification({ message });
+        // showGlobalNotification({ message });
         setEditableOnSearch(false);
     };
     const onSuccessAction = (res) => {
@@ -218,12 +219,12 @@ const ExchangeVehiclesBase = (props) => {
     }, [variantData]);
 
     useEffect(() => {
-        if (userId && selectedOrder) {
+        if (userId && selectedRecordId) {
             const schemeExtraParams = [
                 {
                     key: 'modelCode',
                     title: 'modelCode',
-                    value: selectedOrder?.modelCode || modelCode,
+                    value: selectedOrder?.modelCode,
                     name: 'Booking Number',
                 },
                 {
@@ -233,12 +234,12 @@ const ExchangeVehiclesBase = (props) => {
                     name: 'Module',
                 },
             ];
-            isOTFModule && fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction, userId });
+            isOTFModule && fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, userId });
             fetchFinanceLovList({ setIsLoading: listFinanceLovShowLoading, userId, onErrorAction });
             fetchSchemeLovList({ setIsLoading: listSchemeLovShowLoading, extraParams: schemeExtraParams, onErrorAction, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOrder, modelCode]);
+    }, [userId, selectedRecordId]);
 
     useEffect(() => {
         return () => {
@@ -247,7 +248,11 @@ const ExchangeVehiclesBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const handleFilterChange = (name, value, selectobj) => {
+    const MAHINDRA_MAKE = 'Mahindra';
+    const isMahindraMake = form.getFieldValue('make') === MAHINDRA_MAKE;
+    console.log('🚀 ~ file: ExchangeVehiclesMaster.js:256 ~ ExchangeVehiclesBase ~ isMahindraMake:', isMahindraMake);
+    const handleFilterChange = (name, value1, selectobj) => {
+        const value = selectobj?.key || value1;
         if (!value) {
             switch (name) {
                 case 'make': {
@@ -284,31 +289,29 @@ const ExchangeVehiclesBase = (props) => {
                 modelGroup: undefined,
                 variant: undefined,
             });
-            fetchModelLovList({ setIsLoading: listModelShowLoading, userId, extraParams: makeExtraParams('make', 'make', value, 'make') });
+
+            if (form.getFieldValue('make') === MAHINDRA_MAKE) {
+                fetchModelLovList({ customURL: BASE_URL_PRODUCT_MODEL_GROUP.concat('/lov'), setIsLoading: listModelShowLoading, userId, extraParams: makeExtraParams('modelGroupCode', 'modelGroupCode', 'ECOM', 'modelGroupCode') });
+            } else {
+                fetchModelLovList({ setIsLoading: listModelShowLoading, userId, extraParams: makeExtraParams('make', 'make', value, 'make') });
+            }
         } else if (name === 'modelGroup') {
             form.setFieldsValue({
                 variant: undefined,
             });
+
             setfilteredVariantData();
-            fetchVariantLovList({ setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('model', 'model', value, 'model') });
+            if (form.getFieldValue('make') === MAHINDRA_MAKE) {
+                fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('modelGroupCode', 'modelGroupCode', 'ECOM', 'modelGroupCode') });
+            } else {
+                fetchVariantLovList({ setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('model', 'model', value, 'model') });
+            }
         }
     };
 
     const showAlert = (val) => {
         setModelGroup((prev) => ({ ...prev, oldModelGroup: val }));
     };
-
-    useEffect(() => {
-        const LovParams = [
-            {
-                key: 'prodctCode',
-                value: selectedOrder?.modelCode,
-            },
-        ];
-        resetVehicleExchangeAlert();
-        fetchProductLovCode({ setIsLoading: ProductLovCodeLoading, userId, onErrorAction, extraparams: LovParams });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedOrder?.modelCode]);
 
     useEffect(() => {
         if (VehicleLovCodeData && isProductHierarchyDataLoaded) {
@@ -356,10 +359,10 @@ const ExchangeVehiclesBase = (props) => {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Verify Customer id to continue' });
             return;
         }
-        const data = { ...values, exchange: values?.exchange ? 1 : 0, id: formData?.id || '', otfId: selectedRecordId, otfNumber: selectedOrderId };
+        const data = { ...values, exchange: values?.exchange ? 1 : 0, id: exchangeData?.id || '', otfId: selectedRecordId, otfNumber: selectedOrderId };
 
         if (onFinishCustom) {
-            !viewOnly && onFinishCustom({ key: formKey, values: data });
+            onFinishCustom({ key: formKey, values: data });
             handleButtonClick({ buttonAction: NEXT_ACTION });
             setButtonData({ ...buttonData, formBtnActive: false });
         } else {
@@ -371,7 +374,7 @@ const ExchangeVehiclesBase = (props) => {
 
             const requestData = {
                 data: data,
-                method: formData?.id ? 'put' : 'post',
+                method: exchangeData?.id ? 'put' : 'post',
                 setIsLoading: listShowLoading,
                 userId,
                 onError: onErrorAction,
@@ -471,6 +474,7 @@ const ExchangeVehiclesBase = (props) => {
         customerList,
         showAlert,
         handleSchemeChange,
+        isMahindraMake,
     };
 
     const viewProps = {

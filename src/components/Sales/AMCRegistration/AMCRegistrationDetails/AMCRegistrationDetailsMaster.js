@@ -39,7 +39,7 @@ const AMCRegistrationDetailsMasterBase = (props) => {
             },
             {
                 key: 'schemeType',
-                value: AMC_CONSTANTS?.SCHM?.key,
+                value: AMC_CONSTANTS?.SCHEME?.key,
             },
         ];
         fetchSchemeList({ setIsLoading: listSchemeShowLoading, userId, extraParams });
@@ -103,7 +103,7 @@ const AMCRegistrationDetailsMasterBase = (props) => {
     const handleOnClear = (e) => {
         if (e.target.value === '') {
             setOptions();
-            form.resetFields('managerName');
+            form.resetFields(['managerName']);
         }
     };
     const handleSchemeDescriptionChange = (schemeValue) => {

@@ -15,13 +15,8 @@ import { addRequestColumnsView } from './tableColumn';
 
 const ViewDetailMain = (props) => {
     const { typeData, isLoading, chargerInstallationMasterData } = props;
-    const [viewData, setViewData] = useState([]);
     const [modal, setModal] = useState(false);
 
-    useEffect(() => {
-        setViewData([chargerInstallationMasterData]);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [chargerInstallationMasterData]);
     const viewProps = {
         bordered: false,
         colon: false,
@@ -54,18 +49,18 @@ const ViewDetailMain = (props) => {
                         <Space style={{ display: 'flex' }} size="middle" direction="vertical">
                             <Card style={{ backgroundColor: '#F2F2F2' }}>
                                 <Descriptions {...viewProps}>
-                                    <Descriptions.Item label="Request Id">{checkAndSetDefaultValue(viewData[0]?.chargerInstDetails?.requestId, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Request Date">{checkAndSetDefaultValue(viewData[0]?.chargerInstDetails?.requestDate, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Request Status">{checkAndSetDefaultValue(viewData[0]?.chargerInstDetails?.requestStatus, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Model Group">{checkAndSetDefaultValue(viewData[0]?.chargerInstDetails?.modelGroup, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Model Variant">{checkAndSetDefaultValue(viewData[0]?.chargerInstDetails?.modelVarient, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Seating Capacity">{checkAndSetDefaultValue(viewData[0]?.chargerInstDetails?.seatingCapacity, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Color">{checkAndSetDefaultValue(viewData[0]?.chargerInstDetails?.color, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(viewData[0]?.chargerInstDetails?.modelCode, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Request Id">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.requestId, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Request Date">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.requestDate, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Request Status">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.requestStatus, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Model Group">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelGroup, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Model Variant">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelVarient, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Seating Capacity">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.seatingCapacity, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Color">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.color, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelCode, isLoading)}</Descriptions.Item>
                                 </Descriptions>
                             </Card>
                             <Card style={{ backgroundColor: '#F2F2F2' }}>
-                                <DataTable tableColumn={addRequestColumnsView(typeData, onHandleModal)} tableData={viewData} pagination={false} scroll={{ x: '1000' }} />
+                                <DataTable tableColumn={addRequestColumnsView(typeData, onHandleModal)} tableData={chargerInstallationMasterData?.chargerInstDetails?.requestDetails} pagination={false} scroll={{ x: '1000' }} />
                             </Card>
                         </Space>
                     </Col>

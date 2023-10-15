@@ -57,11 +57,19 @@ const AddEditFormMain = (props) => {
         if (e.target.checked) {
             setDisabled(true);
             setChecked(true);
-            form?.setFieldsValue({ address: crmCustomerVehicleData?.customerDetails?.customerAddress, pinCode: crmCustomerVehicleData?.customerDetails?.pinCode, city: crmCustomerVehicleData?.customerDetails?.customerCity, state: crmCustomerVehicleData?.customerDetails?.state, customerMobileNumber: crmCustomerVehicleData?.otfDetails?.mobileNumber });
+            if (formActionType?.editMode) {
+                form?.setFieldsValue({ address: chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.address, pinCode: chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.pinCode, city: chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.city, state: chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.state, customerMobileNumber: chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.customerMobileNumber });
+            } else {
+                form?.setFieldsValue({ address: crmCustomerVehicleData?.customerDetails?.customerAddress, pinCode: crmCustomerVehicleData?.customerDetails?.pinCode, city: crmCustomerVehicleData?.customerDetails?.customerCity, state: crmCustomerVehicleData?.customerDetails?.state, customerMobileNumber: crmCustomerVehicleData?.otfDetails?.mobileNumber });
+            }
         } else {
             setDisabled(false);
             setChecked(false);
-            form?.setFieldsValue({ address: undefined, pinCode: undefined, city: undefined, state: undefined, customerMobileNumber: undefined });
+            if (formActionType?.editMode) {
+                form?.setFieldsValue({ address: chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.address, pinCode: chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.pinCode, city: chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.city, state: chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.state, customerMobileNumber: chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.customerMobileNumber });
+            } else {
+                form?.setFieldsValue({ address: undefined, pinCode: undefined, city: undefined, state: undefined, customerMobileNumber: undefined });
+            }
         }
     };
 

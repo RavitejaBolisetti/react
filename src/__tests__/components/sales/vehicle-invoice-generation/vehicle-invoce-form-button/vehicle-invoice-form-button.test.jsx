@@ -29,8 +29,7 @@ describe('Vehicle invoice form-button components', () => {
         const editBtn = screen.getByRole('button', { name: 'Cancel Invoice' });
         fireEvent.click(editBtn);
 
-        const nextBtn = screen.getByRole('button', { name: 'Reject' });
-        fireEvent.click(nextBtn);
+       
         const saveBtn = screen.getByRole('button', { name: 'Save & Next' });
         fireEvent.click(saveBtn);
         const canceReciptBtn = screen.getByRole('button', { name: 'Approve' });

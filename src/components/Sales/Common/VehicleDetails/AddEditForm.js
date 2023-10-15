@@ -26,6 +26,7 @@ import { customSelectBox } from 'utils/customSelectBox';
 import { prepareCaption } from 'utils/prepareCaption';
 import styles from 'assets/sass/app.module.scss';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
+import { ADD_ACTION, EDIT_ACTION, DELETE_ACTION } from 'utils/btnVisiblity';
 import { OTF_STATUS } from 'constants/OTFStatus';
 
 const { Text } = Typography;
@@ -37,6 +38,7 @@ const AddEditFormMain = (props) => {
 
     const [optionForm] = Form.useForm();
     const [confirmRequest, setConfirmRequest] = useState();
+    const [editingOptionalData, setEditingOptionalData] = useState({});
 
     const findUsageType = (usage) => {
         const foundVal = typeData[PARAM_MASTER.VEHCL_TYPE.id]?.find((element, index) => element?.value === usage);
@@ -69,6 +71,33 @@ const AddEditFormMain = (props) => {
         setIsReadOnly(true);
     };
 
+    const handleButtonClick = ({ record, buttonAction }) => {
+        handleFormValueChange();
+        switch (buttonAction) {
+            case EDIT_ACTION:
+                addContactHandeler();
+                optionForm.setFieldsValue({ ...record });
+                setEditingOptionalData(record);
+                break;
+            case DELETE_ACTION:
+                setOptionalServices((prev) => {
+                    let updatedVal = [...prev];
+                    const index = updatedVal?.findIndex((i) => i?.serviceName === record?.serviceName);
+                    const data = updatedVal?.[index];
+                    if(data?.id){
+                        updatedVal?.splice(index, 1, {...record, status: false } );
+                    }else {
+                        updatedVal?.splice(index, 1);
+                    }
+                    return updatedVal;
+                });
+                setEditingOptionalData({});
+                break;
+            default:
+                break;
+        }
+    };
+
     const handleCancel = () => {
         setIsReadOnly(false);
     };
@@ -92,6 +121,8 @@ const AddEditFormMain = (props) => {
         setOptionalServices,
         handleFormValueChange,
         vehicleServiceData,
+        editingOptionalData,
+        setEditingOptionalData,
     };
 
     const handleSelectTreeClick = (value) => {
@@ -288,7 +319,7 @@ const AddEditFormMain = (props) => {
                                     <OptionServicesForm {...OptionServicesFormProps} />
                                 </>
                             )}
-                            <DataTable tableColumn={optionalServicesColumns({ formActionType })} tableData={optionalServices} pagination={false} />
+                            <DataTable tableColumn={optionalServicesColumns({ handleButtonClick, formActionType })} tableData={optionalServices?.filter(i => i?.status)} pagination={false} />
                         </Panel>
                     </Collapse>
                 </Col>

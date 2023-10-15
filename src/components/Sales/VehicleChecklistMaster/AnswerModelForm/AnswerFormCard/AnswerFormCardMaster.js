@@ -24,7 +24,7 @@ export const AnswerFormCardMaster = (props) => {
             answerData?.length > 0 ? setAnswerData((item) => [updateData, ...item]) : setAnswerData([updateData]);
             answerForm.resetFields();
             forceUpdate();
-        });
+        }).catch(err => console.error(err));
     };
 
     const cardAttributeProps = {

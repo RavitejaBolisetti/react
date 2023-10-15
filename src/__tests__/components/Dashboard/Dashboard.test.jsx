@@ -9,7 +9,7 @@ afterEach(() => {
 });
 
 describe('dashboard component render', () => {
-    it('should render dashboard component ', () => {
+    it('hould render dashboard component', () => {
         customRender(<Dashboard />);
         expect(screen.getByText(/Home/i)).toBeInTheDocument();
     });
@@ -21,7 +21,7 @@ describe('dashboard component render', () => {
 });
 
 describe('DashboardSkelton component render', () => {
-    it('should render DashboardSkelton component ', () => {
+    it('should render DashboardSkelton component', () => {
         customRender(<DashboardSkelton />);
     });
 });

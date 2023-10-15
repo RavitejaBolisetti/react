@@ -24,7 +24,7 @@ export const ModelFormCardMaster = (props) => {
             modelData?.length > 0 ? setModelData((item) => [updateData, ...item]) : setModelData([updateData]);
             modelForm.resetFields();
             forceUpdate();
-        });
+        }).catch(err => console.error(err));
     };
 
     const cardAttributeProps = {

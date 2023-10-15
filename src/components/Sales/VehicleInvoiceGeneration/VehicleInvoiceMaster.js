@@ -139,7 +139,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [additionalReportParams, setAdditionalReportParams] = useState();
     const [isReportVisible, setReportVisible] = useState();
     const [confirmRequest, setConfirmRequest] = useState(false);
-    const [previousSection, setpreviousSection] = useState(1);
+    const [previousSection, setPreviousSection] = useState(1);
     const [profileCardData, setProfileCardData] = useState();
 
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
@@ -176,7 +176,6 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
     const onSuccessAction = (res) => {
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
@@ -337,7 +336,7 @@ export const VehicleInvoiceMasterBase = (props) => {
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedOrder?.id, selectedOtfId, formActionType]);
+    }, [selectedOrder?.id, selectedOtfId, formActionType, selectedOtfNumber]);
 
     useEffect(() => {
         const defaultSection = VEHICLE_INVOICE_SECTION.INVOICE_DETAILS.id;
@@ -408,6 +407,7 @@ export const VehicleInvoiceMasterBase = (props) => {
 
     const handleBookingChange = () => {
         setSelectedOtfNumber('');
+        setProfileCardData();
         invoiceDetailForm.setFieldValue();
         setSelectedOrder('');
         resetDetailData();
@@ -489,7 +489,7 @@ export const VehicleInvoiceMasterBase = (props) => {
                 defaultSection && setCurrentSection(defaultSection);
                 resetOtfData();
                 invoiceDetailForm.resetFields();
-                setpreviousSection(1);
+                setPreviousSection(1);
                 setSelectedRecordId('');
                 setSelectedOrderId('');
                 setSelectedOtfNumber('');
@@ -854,12 +854,13 @@ export const VehicleInvoiceMasterBase = (props) => {
         confirmRequest,
         setConfirmRequest,
         previousSection,
-        setpreviousSection,
+        setPreviousSection,
         CustomerForm,
         showGlobalNotification,
         isDataLoaded,
         isInVoiceMasterDetailDataLoaded,
         salesConsultantLovData,
+        resetDetailData,
     };
 
     const cancelInvoiceProps = {

@@ -102,6 +102,7 @@ const CustomerMasterMain = (props) => {
     const [selectedCustomerId, setSelectedCustomerId] = useState();
     const [shouldResetForm, setShouldResetForm] = useState(false);
     const [refreshCustomerList, setRefreshCustomerList] = useState(false);
+
     const [section, setSection] = useState();
     const [defaultSection, setDefaultSection] = useState();
     const [currentSection, setCurrentSection] = useState();
@@ -115,8 +116,7 @@ const CustomerMasterMain = (props) => {
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [ChangeHistoryVisible, setChangeHistoryVisible] = useState(false);
     const [showNameChangeHistory, setShowNameChangeHistory] = useState(false);
-    // const [isUnsavedDataPopup, setIsUnsavedDataPopup] = useState(false);
-    const [nextCurentSection, setNextCurrentSection] = useState('');
+    const [previousSection, setPreviousSection] = useState(1);
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false, changeHistory: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -280,6 +280,7 @@ const CustomerMasterMain = (props) => {
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
+                setPreviousSection(1);
                 break;
             case EDIT_ACTION:
                 setSelectedCustomer(record);
@@ -502,9 +503,8 @@ const CustomerMasterMain = (props) => {
         handleChangeHistory,
         handleResetFilter,
         setShowNameChangeHistory,
-        // setIsUnsavedDataPopup,
-        nextCurentSection,
-        setNextCurrentSection,
+        setPreviousSection,
+        previousSection,
     };
 
     const showAddButton = true;

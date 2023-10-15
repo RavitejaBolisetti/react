@@ -31,7 +31,7 @@ export const taxDetailsColumn = () => {
     return tableColumn;
 };
 
-export const optionalServicesColumns = ({ formActionType, handleButtonClick, styles }) => {
+export const optionalServicesColumns = ({ formActionType, handleButtonClick, styles, record }) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'Service Name',
@@ -47,10 +47,7 @@ export const optionalServicesColumns = ({ formActionType, handleButtonClick, sty
             width: '25%',
         }),
     ];
-
-    // if (!formActionType?.viewMode) {
-    //     tableColumn.push(tblActionColumn({ handleButtonClick, styles, width: '15%', canEdit: true, canView: false, canDelete: true }));
-    // }
+    !formActionType?.viewMode && tableColumn.push(tblActionColumn({ handleButtonClick, styles, width: '15%', canEdit: true, canView: false, isDeletable: true }));
 
     return tableColumn;
 };

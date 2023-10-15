@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Card, Typography, Collapse, Divider, Space, Row, Badge } from 'antd';
+import { Card, Typography, Collapse, Divider, Space, Badge } from 'antd';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import styles from './Dashboard.module.scss';
 
@@ -58,14 +58,6 @@ const DashboardActionItems = () => {
 
     const handleCollapse = (values) => {
         setActiveKey(values);
-        // const isPresent = activeKey?.includes(values);
-        // if (!isPresent && values?.length) {
-        //     setActiveKey( values?.[0] ? [values?.[0]] : []);
-        // } else if (isPresent && values?.length ) {
-        //     setActiveKey([values?.[1]]);
-        // } else {
-        //     setActiveKey([values?.[0]]);
-        // }
     };
 
     return (

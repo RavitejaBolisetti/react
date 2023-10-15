@@ -12,7 +12,7 @@ export const ROUTING_FORGOT_PASSWORD = '/forgot-password';
 export const ROUTING_UPDATE_PASSWORD = '/update-password';
 
 export const ROUTING_DASHBOARD = '/dashboard';
-export const ROUTING_DASHBOARD_NEW = '/dashboard-new';
+export const ROUTING_DASHBOARD_OLD = '/dashboard-old';
 
 export const ROUTING_COMMON = '/common/';
 export const ROUTING_MILE = '/mile/';
