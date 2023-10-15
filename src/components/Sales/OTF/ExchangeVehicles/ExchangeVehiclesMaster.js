@@ -173,8 +173,8 @@ const ExchangeVehiclesBase = (props) => {
             setButtonData({ ...buttonData, formBtnActive: false });
         } else if (exchangeDataPass) {
             setFormData(exchangeDataPass);
-            exchangeData?.make && handleFilterChange('make', exchangeData?.make ?? '');
-            exchangeData?.modelGroup && handleFilterChange('modelGroup', exchangeData?.modelGroup ?? '');
+            exchangeDataPass?.make && handleFilterChange('make', exchangeDataPass?.make ?? '');
+            exchangeDataPass?.modelGroup && handleFilterChange('modelGroup', exchangeDataPass?.modelGroup ?? '');
             setButtonData({ ...buttonData, formBtnActive: true });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -362,14 +362,12 @@ const ExchangeVehiclesBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [exchangeVehicleAlertData]);
 
-    const handleSchemeChange = (__, value) => {
+    const handleSchemeChange = (__, { option: { amount } = 0 }) => {
         form.setFieldsValue({
-            schemeAmount: value?.amount,
+            schemeAmount: amount,
         });
     };
-
     const onFinish = (values) => {
-        console.log('🚀 ~ file: ExchangeVehiclesMaster.js:374 ~ onFinish ~ values:', values, onFinishCustom);
         const { customerName } = values;
         if (values?.exchange && !customerName) {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Verify Customer id to continue' });

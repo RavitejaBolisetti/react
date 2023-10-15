@@ -75,7 +75,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchCustomerList: customerDetailDataActions.fetchList,
             listCustomerShowLoading: customerDetailDataActions.listShowLoading,
 
-            fetchSchemeLovList: otfSchemeDetailDataActions.fetchList,
+            fetchSchemeLovList: otfSchemeDetailDataActions.fetchFilteredList,
             listSchemeLovShowLoading: otfSchemeDetailDataActions.listShowLoading,
 
             fetchModelLovList: otfLoyaltyModelGroupDataActions.fetchFilteredList,
@@ -110,7 +110,6 @@ const LoyaltySchemeMasterMain = (props) => {
     const [filteredVariantData, setfilteredVariantData] = useState([]);
     const [formData, setformData] = useState([]);
     const disabledProps = { disabled: true };
-    console.log('🚀 ~ file: LoyaltySchemeMaster.js:113 ~ LoyaltySchemeMasterMain ~ formData:', formData);
 
     const fnSetData = (data) => {
         if (data && Object?.keys(data)?.length > 0) {
@@ -279,9 +278,9 @@ const LoyaltySchemeMasterMain = (props) => {
         }
     };
 
-    const handleSchemeChange = (__, value) => {
+    const handleSchemeChange = (__, { option: { amount } = 0 }) => {
         form.setFieldsValue({
-            schemeAmount: value?.amount,
+            schemeAmount: amount,
         });
     };
 
