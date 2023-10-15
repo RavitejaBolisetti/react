@@ -368,7 +368,6 @@ const ExchangeVehiclesBase = (props) => {
         });
     };
     const onFinish = (values) => {
-        console.log('🚀 ~ file: ExchangeVehiclesMaster.js:374 ~ onFinish ~ values:', values, onFinishCustom);
         const { customerName } = values;
         if (values?.exchange && !customerName) {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Verify Customer id to continue' });
