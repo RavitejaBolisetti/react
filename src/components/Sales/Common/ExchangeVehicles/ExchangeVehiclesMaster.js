@@ -250,7 +250,6 @@ const ExchangeVehiclesBase = (props) => {
 
     const MAHINDRA_MAKE = 'Mahindra';
     const isMahindraMake = form.getFieldValue('make') === MAHINDRA_MAKE;
-    console.log('🚀 ~ file: ExchangeVehiclesMaster.js:256 ~ ExchangeVehiclesBase ~ isMahindraMake:', isMahindraMake);
     const handleFilterChange = (name, value1, selectobj) => {
         const value = selectobj?.key || value1;
         if (!value) {

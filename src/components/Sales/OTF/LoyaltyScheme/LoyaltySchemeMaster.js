@@ -110,7 +110,6 @@ const LoyaltySchemeMasterMain = (props) => {
     const [filteredVariantData, setfilteredVariantData] = useState([]);
     const [formData, setformData] = useState([]);
     const disabledProps = { disabled: true };
-    console.log('🚀 ~ file: LoyaltySchemeMaster.js:113 ~ LoyaltySchemeMasterMain ~ formData:', formData);
 
     const fnSetData = (data) => {
         if (data && Object?.keys(data)?.length > 0) {

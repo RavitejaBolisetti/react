@@ -173,8 +173,8 @@ const ExchangeVehiclesBase = (props) => {
             setButtonData({ ...buttonData, formBtnActive: false });
         } else if (exchangeDataPass) {
             setFormData(exchangeDataPass);
-            exchangeData?.make && handleFilterChange('make', exchangeData?.make ?? '');
-            exchangeData?.modelGroup && handleFilterChange('modelGroup', exchangeData?.modelGroup ?? '');
+            exchangeDataPass?.make && handleFilterChange('make', exchangeDataPass?.make ?? '');
+            exchangeDataPass?.modelGroup && handleFilterChange('modelGroup', exchangeDataPass?.modelGroup ?? '');
             setButtonData({ ...buttonData, formBtnActive: true });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
