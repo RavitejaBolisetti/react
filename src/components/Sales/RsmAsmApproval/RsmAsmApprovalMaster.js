@@ -322,7 +322,7 @@ export const RsmAsmApprovalMasterBase = (props) => {
             setConfirmRequest({
                 isVisible: true,
                 titleOverride: actionItem?.buttonAction === REQUEST_CONSTANT?.Reject?.value ? REQUEST_CONSTANT?.Reject?.key?.concat(requestModuleTitle) : REQUEST_CONSTANT?.Approve?.key?.concat(requestModuleTitle),
-                text: !actionItem?.buttonAction ? 'Are you sure you want to approve request?' : '',
+                text: actionItem?.buttonAction === REQUEST_CONSTANT?.Approve?.value ? 'Are you sure you want to approve request?' : '',
                 closable: true,
                 icon: false,
                 onCloseAction: rejectModalCloseAction,
