@@ -362,12 +362,11 @@ const ExchangeVehiclesBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [exchangeVehicleAlertData]);
 
-    const handleSchemeChange = (__, value) => {
+    const handleSchemeChange = (__, { option: { amount } = 0 }) => {
         form.setFieldsValue({
-            schemeAmount: value?.amount,
+            schemeAmount: amount,
         });
     };
-
     const onFinish = (values) => {
         console.log('🚀 ~ file: ExchangeVehiclesMaster.js:374 ~ onFinish ~ values:', values, onFinishCustom);
         const { customerName } = values;
