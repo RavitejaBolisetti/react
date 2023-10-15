@@ -783,11 +783,11 @@ export const AMCRegistrationMasterBase = (props) => {
     };
 
     useEffect(() => {
-        if (reportButtonType === `invoice_amc`) {
+        if (reportButtonType === AMC_REPORT_DOCUMENT_TYPE?.INVOICE_AMC?.value) {
             setAmcDocumentType(EMBEDDED_REPORTS?.AMC_REGISTRATION_INVOICE_DOCUMENT);
-        } else if (reportButtonType === `registration_certificate_amc`) {
+        } else if (reportButtonType === AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_AMC?.value) {
             setAmcDocumentType(EMBEDDED_REPORTS?.AMC_REGISTRATION_INVOICE_DOCUMENT);
-        } else if (reportButtonType === `registration_incentive_claim_amc`) {
+        } else if (reportButtonType === AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_AMC?.value) {
             setAmcDocumentType(EMBEDDED_REPORTS?.AMC_REGISTRATION_INVOICE_DOCUMENT);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

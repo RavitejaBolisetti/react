@@ -415,7 +415,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     };
 
     const handleIRNGeneration = () => {
-        const data = { otfNumber: selectedOtfNumber, invoiceNumber: selectedOrder?.invoiceNumber };
+        const data = { id: selectedRecordId, otfNumber: selectedOtfNumber, invoiceNumber: selectedOrder?.invoiceNumber };
         const onSuccess = (res) => {
             setConfirmRequest(false);
             resetOtfData();
@@ -712,7 +712,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     };
 
     const handleCancelReceipt = () => {
-        const recordId = selectedOrderId;
+        const recordId = selectedRecordId;
         const cancelReason = cancelInvoiceForm.getFieldValue().cancelReason;
         const data = { id: recordId ?? '', invoiceNumber: selectedOrderId, cancelReason: cancelReason };
         const onSuccess = (res) => {

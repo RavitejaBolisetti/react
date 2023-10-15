@@ -7,16 +7,16 @@ export const DELIVERY_NOTE_INVOICE_STATUS = {
     PENDING: {
         id: 1,
         title: 'Pending',
-        key: 'P',
+        key: 'PND',
     },
     APPROVED: {
         id: 2,
         title: 'Approved',
-        key: 'A',
+        key: 'APR',
     },
     REJECTED: {
         id: 3,
         title: 'Rejected',
-        key: 'R',
+        key: 'REJ',
     },
 };
