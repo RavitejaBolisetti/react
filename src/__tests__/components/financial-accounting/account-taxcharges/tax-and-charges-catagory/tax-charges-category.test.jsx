@@ -3,18 +3,44 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { fireEvent, screen, act } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { TaxChargesCategory } from '@components/FinancialAccounting/AccountTaxCharges/TaxAndChargesCategory/TaxChargesCategory';
 import customRender from '@utils/test-utils';
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 
+jest.mock('store/actions/data/financialAccounting/taxChargeType', ()=>({
+    taxChargeCategoryTypeDataActions:{}
+}))
+
+const fetchTaxChargeCategoryType = jest.fn();
+
+
 afterEach(() => {
     jest.restoreAllMocks();
 });
 
 describe('TaxChargesCategory component', () => {
+    
+    it("onSuccessAction", ()=>{
+        const mockStore = createMockStore({
+            auth: { userId: 123 },
+            data: {
+                FinancialAccounting: {
+                    TaxChargesCategory: { isLoaded: false, isLoading: false, data: [{id: null,taxCode: null,taxDescription: "Tax Collection at Source 1%",taxType: "TCS"}] },
+                },
+            },
+        });
+
+        customRender(
+            <Provider store={mockStore}>
+                <TaxChargesCategory fetchTaxChargeCategoryType={fetchTaxChargeCategoryType}/>
+            </Provider>
+        );
+
+        fetchTaxChargeCategoryType.mock.calls[0][0].onSuccessAction();
+    })
 
     it("refresh button", ()=>{
         const filterString = {advanceFilter: false, keyword: 'PA05'};
@@ -38,7 +64,7 @@ describe('TaxChargesCategory component', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <TaxChargesCategory advanceFilter={false} filterString={filterString} tableData={tableData} formActionType={formActionType} buttonData={buttonData} />
+                <TaxChargesCategory advanceFilter={false} filterString={filterString} tableData={tableData} formActionType={formActionType} buttonData={buttonData} fetchTaxChargeCategoryType={fetchTaxChargeCategoryType} />
             </Provider>
         );
 
@@ -74,7 +100,7 @@ describe('TaxChargesCategory component', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <TaxChargesCategory advanceFilter={false} filterString={filterString} tableData={tableData} formActionType={formActionType} buttonData={buttonData} />
+                <TaxChargesCategory advanceFilter={false} filterString={filterString} tableData={tableData} formActionType={formActionType} buttonData={buttonData} fetchTaxChargeCategoryType={fetchTaxChargeCategoryType} />
             </Provider>
         );
 
@@ -123,7 +149,7 @@ describe('TaxChargesCategory component', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <TaxChargesCategory />
+                <TaxChargesCategory fetchTaxChargeCategoryType={fetchTaxChargeCategoryType}/>
             </Provider>
         );
     })
@@ -140,7 +166,7 @@ describe('TaxChargesCategory component', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <TaxChargesCategory />
+                <TaxChargesCategory fetchTaxChargeCategoryType={fetchTaxChargeCategoryType}/>
             </Provider>
         )
     })

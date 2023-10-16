@@ -23,6 +23,7 @@ const FormWrapper = (props) =>{
 }
 
 describe('TaxAndChargesCalculationMaster component', () => {
+
     it('formEdit = false', () => {
         customRender(<FormWrapper isVisible={true} formEdit={false} />);
     });
@@ -37,7 +38,7 @@ describe('TaxAndChargesCalculationMaster component', () => {
     });
 
     it('taxChargeCalList', () => {
-        const taxChargeCalList = [{chargeCode:"CPA18",chargeDescription: "Central GST 9%",chargeType: "CGST",id: "311",internalId: '1234',taxMasterId: "123",}]
+        const taxChargeCalList = [{chargeCode:"CPA18", chargeDescription: "Central GST 9%", chargeType: "CGST", id: "311", internalId: '1234', taxMasterId: "123",}]
 
         customRender(<TaxAndChargesCalculationMaster taxChargeCalList={taxChargeCalList}/>)
     });
