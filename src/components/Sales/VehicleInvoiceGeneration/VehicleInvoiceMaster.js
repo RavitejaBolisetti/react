@@ -231,7 +231,7 @@ export const VehicleInvoiceMasterBase = (props) => {
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: page?.current,
+                value: filterString?.current,
                 canRemove: true,
                 filter: false,
             },
@@ -462,6 +462,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const handleInvoiceTypeChange = (buttonName) => {
         setInvoiceStatus(buttonName?.key);
         searchForm.resetFields();
+        setFilterString({ current: 1 });
     };
 
     const handleChange = (e) => {
@@ -642,7 +643,8 @@ export const VehicleInvoiceMasterBase = (props) => {
     const tableProps = {
         dynamicPagination,
         totalRecords,
-        setPage,
+        filterString,
+        setPage: setFilterString,
         tableColumn: tableColumn(handleButtonClick),
         tableData: data,
         showAddButton: false,

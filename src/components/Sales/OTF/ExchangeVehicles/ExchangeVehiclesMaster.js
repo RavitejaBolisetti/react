@@ -165,7 +165,7 @@ const ExchangeVehiclesBase = (props) => {
         }
     };
 
-    useEffect(() => {
+    useEffect(() => {   
         if (isOTFModule && exchangeData) {
             setFormData(exchangeData);
             exchangeData?.make && handleFilterChange('make', exchangeData?.make ?? '');
@@ -291,6 +291,8 @@ const ExchangeVehiclesBase = (props) => {
                 variant: undefined,
             });
             if (form.getFieldValue('make') === MAHINDRA_MAKE || (formActionType?.viewMode && exchangeData?.make === MAHINDRA_MAKE)) {
+                fetchModelLovList({ customURL: BASE_URL_PRODUCT_MODEL_GROUP.concat('/lov'), setIsLoading: listModelShowLoading, userId });
+            } else if (formActionType?.viewMode && exchangeData?.make === MAHINDRA_MAKE) {
                 fetchModelLovList({ customURL: BASE_URL_PRODUCT_MODEL_GROUP.concat('/lov'), setIsLoading: listModelShowLoading, userId });
             } else {
                 fetchModelLovList({ setIsLoading: listModelShowLoading, userId, extraParams: makeExtraParams('make', 'make', value, 'make') });
