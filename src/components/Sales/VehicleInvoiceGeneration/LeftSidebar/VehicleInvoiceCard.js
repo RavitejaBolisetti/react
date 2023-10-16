@@ -47,12 +47,12 @@ const VehicleInvoiceCard = (props) => {
             titleOverride: 'IRN Generation Confirmation',
             text: 'Do you want to generate IRN?',
             submitText: 'Yes',
-            onCloseAction: onConfirmationCloseAction,
+            onCloseAction: onCloseAction,
             onSubmitAction: handleIRNGeneration,
         });
     };
 
-    const onConfirmationCloseAction = () => {
+    const onCloseAction = () => {
         setConfirmRequest({
             ...confirmRequest,
             isVisible: false,
