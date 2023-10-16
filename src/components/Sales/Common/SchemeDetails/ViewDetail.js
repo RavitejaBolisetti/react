@@ -8,6 +8,7 @@ import { Row, Col, Card, Collapse, Descriptions, Divider } from 'antd';
 
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { DATA_TYPE } from 'constants/dataType';
 
 const { Panel } = Collapse;
 const ViewDetailMain = (props) => {
@@ -32,8 +33,8 @@ const ViewDetailMain = (props) => {
                                         <Descriptions.Item label="Scheme Type">{checkAndSetDefaultValue(schemeForm?.schemeType, isLoading)}</Descriptions.Item>
                                         <Descriptions.Item label="Scheme Category">{checkAndSetDefaultValue(schemeForm?.schemeCategory, isLoading)}</Descriptions.Item>
                                         <Descriptions.Item label="Amount">{checkAndSetDefaultValue(schemeForm?.amount, isLoading)}</Descriptions.Item>
-                                        <Descriptions.Item label="Valid From">{checkAndSetDefaultValue(schemeForm?.validFrom, isLoading)}</Descriptions.Item>
-                                        <Descriptions.Item label="Valid To">{checkAndSetDefaultValue(schemeForm?.validTo, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label="Valid From">{checkAndSetDefaultValue(schemeForm?.validFrom, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                                        <Descriptions.Item label="Valid To">{checkAndSetDefaultValue(schemeForm?.validTo, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                                         <Descriptions.Item label="" />
                                         <Descriptions.Item label="Description">{checkAndSetDefaultValue(schemeForm?.description, isLoading)}</Descriptions.Item>
                                     </Descriptions>

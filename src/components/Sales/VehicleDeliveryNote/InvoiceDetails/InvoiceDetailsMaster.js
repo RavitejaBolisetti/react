@@ -231,6 +231,7 @@ export const InvoiceDetailsMasterBase = (props) => {
         typeData,
         soldByDealer,
         handleChassisNoSearch,
+        relationshipManagerData,
     };
 
     return (
