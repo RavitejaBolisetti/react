@@ -84,9 +84,9 @@ const AddEditFormMain = (props) => {
                     let updatedVal = [...prev];
                     const index = updatedVal?.findIndex((i) => i?.serviceName === record?.serviceName);
                     const data = updatedVal?.[index];
-                    if(data?.id){
-                        updatedVal?.splice(index, 1, {...record, status: false } );
-                    }else {
+                    if (data?.id) {
+                        updatedVal?.splice(index, 1, { ...record, status: false });
+                    } else {
                         updatedVal?.splice(index, 1);
                     }
                     return updatedVal;
@@ -319,7 +319,7 @@ const AddEditFormMain = (props) => {
                                     <OptionServicesForm {...OptionServicesFormProps} />
                                 </>
                             )}
-                            <DataTable tableColumn={optionalServicesColumns({ handleButtonClick, formActionType })} tableData={optionalServices?.filter(i => i?.status)} pagination={false} />
+                            <DataTable tableColumn={optionalServicesColumns({ handleButtonClick, formActionType })} tableData={optionalServices?.filter((i) => i?.status)} pagination={false} />
                         </Panel>
                     </Collapse>
                 </Col>

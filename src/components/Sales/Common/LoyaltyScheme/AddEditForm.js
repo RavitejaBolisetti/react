@@ -5,12 +5,11 @@
  */
 import React, { useEffect } from 'react';
 
-import { Col, Input, Form, Row, Card, Select } from 'antd';
-import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { Col, Input, Form, Row, Card } from 'antd';
+import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 import { CustomerListMaster } from 'components/utils/CustomerListModal';
 import { prepareCaption } from 'utils/prepareCaption';
-import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'assets/sass/app.module.scss';
 import { convertToUpperCase } from 'utils/convertToUpperCase';
@@ -57,10 +56,9 @@ const AddEditFormMain = (props) => {
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Make" name="make" data-testid="make" rules={[validateRequiredSelectField('make')]}>
-                        {customSelectBox({ data: typeData[PARAM_MASTER?.MAKE_NAME?.id], disabled: true, onChange: (value, selectobj) => handleFilterChange('make', value, selectobj) })}
+                        {customSelectBox({ data: typeData['VEHCL_MFG'], disabled: true, onChange: (value, selectobj) => handleFilterChange('make', value, selectobj) })}
                     </Form.Item>
                 </Col>
-
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Model Group" name="vehicleModelGroup" data-testid="modelGroup" rules={[validateRequiredSelectField('model group')]}>
                         {customSelectBox({

@@ -113,8 +113,8 @@ const LoyaltySchemeMasterMain = (props) => {
 
     const fnSetData = (data) => {
         if (data && Object?.keys(data)?.length > 0) {
-            form.setFieldsValue({ ...data, customerCode: data?.customerId, oldChassisNumber: data?.chassisNumber, variantCode: data?.variant, vehicleModelGroup: data?.modelGroup, make: data?.make || VEHICLE_COMPANY_MAKE });
-            handleFilterChange('make', data?.make || VEHICLE_COMPANY_MAKE);
+            form.setFieldsValue({ ...data, customerCode: data?.customerId, oldChassisNumber: data?.chassisNumber, variantCode: data?.variant, vehicleModelGroup: data?.modelGroup, make: VEHICLE_COMPANY_MAKE });
+            handleFilterChange('make', VEHICLE_COMPANY_MAKE);
             handleFilterChange('modelGroupCode', data?.modelGroup ?? '');
             // setformData({ ...formData, ...data, customerCode: data?.customerId, oldChassisNumber: data?.chassisNumber, variantCode: data?.variant, vehicleModelGroup: data?.modelGroup, make: data?.make || VEHICLE_COMPANY_MAKE });
         } else if (data === null) {

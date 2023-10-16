@@ -12,7 +12,7 @@ import { getCodeValue } from 'utils/getCodeValue';
 import { disableFieldsOnFutureDate } from 'utils/disableDate';
 
 const ViewDetailMain = (props) => {
-    const { styles, formData, isLoading, soldByDealer, typeData } = props;
+    const { styles, formData, isLoading, soldByDealer, typeData, relationshipManagerData } = props;
 
     const viewProps = {
         bordered: false,
@@ -35,7 +35,7 @@ const ViewDetailMain = (props) => {
                 {soldByDealer && (
                     <>
                         <Descriptions.Item label="Chassis No.">{checkAndSetDefaultValue(formData?.chassisNumber, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Relationship Manager">{checkAndSetDefaultValue(formData?.relationShipManager, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Relationship Manager">{checkAndSetDefaultValue(getCodeValue(relationshipManagerData, formData?.relationShipManagerCode), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Customer Provided Date">{checkAndSetDefaultValue(formData?.customerPromiseDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                         {formData?.customerPromiseDate && disableFieldsOnFutureDate(dayjs(formData?.customerPromiseDate)) && (
                             <>

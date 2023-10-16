@@ -39,7 +39,7 @@ const mapStateToProps = (state) => {
                 VehicleChecklistMasterListAttributeLov: { isLoaded: isVehicleChecklistMasterAtrributeLovLoaded = false, data: VehicleChecklistAttributeLov = [] },
             },
             OTF: {
-                LoyaltyModelGroup: { isLoading: isModelLoading, data: modelGroupData = [] },
+                LoyaltyModelGroup: { isLoading: isModelLoading, filteredListData: modelGroupData = [] },
             },
         },
     } = state;
@@ -77,7 +77,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchVehicleChecklistAttributeLov: vehicleChecklistMasterAttributeLovDataActions.fetchList,
             listShowLoadingVehicleChecklistAttributeLov: vehicleChecklistMasterAttributeLovDataActions.listShowLoading,
 
-            fetchModelLovList: otfLoyaltyModelGroupDataActions.fetchList,
+            fetchModelLovList: otfLoyaltyModelGroupDataActions.fetchFilteredList,
             listModelShowLoading: otfLoyaltyModelGroupDataActions.listShowLoading,
 
             showGlobalNotification,

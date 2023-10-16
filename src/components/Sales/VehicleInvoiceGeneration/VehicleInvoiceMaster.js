@@ -138,7 +138,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [cancelInvoiceVisible, setCancelInvoiceVisible] = useState(false);
     const [additionalReportParams, setAdditionalReportParams] = useState();
     const [isReportVisible, setReportVisible] = useState();
-    const [confirmRequest, setConfirmRequest] = useState(false);
+    const [confirmRequest, setConfirmRequest] = useState();
     const [previousSection, setPreviousSection] = useState(1);
     const [profileCardData, setProfileCardData] = useState();
 
@@ -417,7 +417,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const handleIRNGeneration = () => {
         const data = { id: selectedRecordId, otfNumber: selectedOtfNumber, invoiceNumber: selectedOrder?.invoiceNumber };
         const onSuccess = (res) => {
-            setConfirmRequest(false);
+            setConfirmRequest({ ...confirmRequest, isVisible: false });
             resetOtfData();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             const extraParam = [
