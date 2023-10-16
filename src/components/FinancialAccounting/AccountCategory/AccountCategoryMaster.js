@@ -264,11 +264,11 @@ export const AccountCategoryMain = (props) => {
         }
     };
 
-    const handleResetFilter = (e) => {
-        setFilterString();
-        listFilterForm.resetFields();
-        setShowDataLoading(false);
-    };
+    // const handleResetFilter = (e) => {
+    //     setFilterString();
+    //     listFilterForm.resetFields();
+    //     setShowDataLoading(false);
+    // };
 
     const handleClearInSearch = (e) => {
         if (e.target.value.length > 2) {
@@ -400,7 +400,7 @@ export const AccountCategoryMain = (props) => {
         onFinish,
         onFinishFailed,
         onSearchHandle,
-        handleResetFilter,
+        // handleResetFilter,
         handleClearInSearch,
         handleReferesh,
         handleButtonClick,
