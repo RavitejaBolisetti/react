@@ -11,13 +11,13 @@ export const handleBtnVisibility = ({ toggleButton = undefined, checkKey = undef
         case STOCK_TRANSFER?.RAISED?.key: {
             switch (checkKey) {
                 case ISSUE_ACTION_LIST?.CANCEL?.key: {
-                    return { canReceive: false, canCancel: false, canReturn: false, canPrint: true };
+                    return { canReceive: false, canCancel: false, canReturn: false, canPrint: false };
                 }
                 case ISSUE_ACTION_LIST?.RECEIVED?.key: {
                     return { canReceive: false, canCancel: false, canReturn: false, canPrint: true };
                 }
                 case ISSUE_ACTION_LIST?.RETURNED?.key: {
-                    return { canReceive: false, canCancel: false, canReturn: false, canPrint: true };
+                    return { canReceive: false, canCancel: false, canReturn: false, canPrint: false };
                 }
                 case ISSUE_ACTION_LIST?.ISSUED?.key: {
                     return { canReceive: true, canCancel: false, canReturn: true, canPrint: true };
@@ -30,13 +30,13 @@ export const handleBtnVisibility = ({ toggleButton = undefined, checkKey = undef
         case STOCK_TRANSFER?.RECEIVED?.key: {
             switch (checkKey) {
                 case ISSUE_ACTION_LIST?.CANCEL?.key: {
-                    return { canReceive: false, canCancel: false, canReturn: false, canPrint: true };
+                    return { canReceive: false, canCancel: false, canReturn: false, canPrint: false };
                 }
                 case ISSUE_ACTION_LIST?.RECEIVED?.key: {
                     return { canReceive: false, canCancel: false, canReturn: false, canPrint: true };
                 }
                 case ISSUE_ACTION_LIST?.RETURNED?.key: {
-                    return { canReceive: false, canCancel: false, canReturn: false, canPrint: true };
+                    return { canReceive: false, canCancel: false, canReturn: false, canPrint: false };
                 }
                 case ISSUE_ACTION_LIST?.ISSUED?.key: {
                     return { canReceive: false, canCancel: true, canReturn: false, canPrint: true };

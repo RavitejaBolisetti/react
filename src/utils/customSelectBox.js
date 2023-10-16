@@ -7,7 +7,7 @@ import { Select } from 'antd';
 
 const { Option } = Select;
 
-export const customSelectBox = ({ data, placeholder = 'Select', mode = '', loading = false, onChange = undefined, disabled = false, disableOptionsList, disableOptionsKey, fieldNames = { key: 'key', value: 'value' } }) => {
+export const customSelectBox = ({ data, placeholder = 'Select', mode = '', loading = false, onChange = undefined, disabled = false, disableOptionsList = [], fieldNames = { key: 'key', value: 'value' } }, disableOptionsKey = fieldNames?.key || 'key') => {
     const selectProps = {
         optionFilterProp: 'children',
         showSearch: true,

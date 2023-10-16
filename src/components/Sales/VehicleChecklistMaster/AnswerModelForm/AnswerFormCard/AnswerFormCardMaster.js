@@ -9,7 +9,7 @@ import AnswerForm from './AnswerForm';
 import { Card } from 'antd';
 
 export const AnswerFormCardMaster = (props) => {
-    const { isVisible, editForm, answerForm, formEdit, setFormEdit, answerData, setAnswerData, setFormBtnActive } = props;
+    const { isVisible, editForm, answerForm, formEdit, setFormEdit, answerData, setAnswerData, setFormBtnActive, showGlobalNotification } = props;
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [disableSaveButton, setDisableSaveButton] = useState(false);
     const [changeValue, setChangeValue] = useState(null);
@@ -18,13 +18,30 @@ export const AnswerFormCardMaster = (props) => {
     const [answerSwitch, setAnswerSwitch] = useState(true);
 
     const onFinishAnswerForm = (val) => {
-        answerForm.validateFields().then(() => {
-            let data = answerForm.getFieldsValue();
-            let updateData = { ...data, internalId: Math.floor(Math.random() * 100000000 + 1), id: '' };
-            answerData?.length > 0 ? setAnswerData((item) => [updateData, ...item]) : setAnswerData([updateData]);
-            answerForm.resetFields();
-            forceUpdate();
-        }).catch(err => console.error(err));
+        answerForm
+            .validateFields()
+            .then(() => {
+                let data = answerForm.getFieldsValue();
+                let updateData = { ...data, internalId: Math.floor(Math.random() * 100000000 + 1), id: '' };
+                if (answerData?.length > 0) {
+                    if (answerData?.find((e) => e?.answerCode === updateData?.answerCode)) {
+                        showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'answer code already exists' });
+                        return;
+                    } else if (answerData?.find((e) => e?.answerTitle === updateData?.answerTitle)) {
+                        showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'answer description already exists' });
+                        return;
+                    } else {
+                        setAnswerData((item) => [updateData, ...item]);
+                        answerForm.resetFields();
+                        setFormBtnActive(true);
+                    }
+                } else {
+                    setAnswerData([updateData]);
+                    answerForm.resetFields();
+                    setFormBtnActive(true);
+                }
+            })
+            .catch((err) => console.error(err));
     };
 
     const cardAttributeProps = {

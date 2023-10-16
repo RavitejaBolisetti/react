@@ -463,6 +463,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
         modelEdit,
         setModelEdit,
         listShowLoadingVehicleChecklist,
+        showGlobalNotification,
     };
 
     const viewProps = {
