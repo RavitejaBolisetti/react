@@ -10,7 +10,7 @@ import { getCodeValue } from 'utils/getCodeValue';
 import { prepareCaption } from 'utils/prepareCaption';
 
 const ViewDetailMain = (props) => {
-    const { styles, formData, isLoading, makeData, modelData, variantData, typeData, schemeLovData, financeLovData } = props;
+    const { styles, formData, isLoading, makeData, modelData, variantData, typeData, schemeLovData, financeLovData, MAHINDRA_MAKE } = props;
 
     const viewProps = {
         bordered: false,
@@ -18,7 +18,6 @@ const ViewDetailMain = (props) => {
         layout: 'vertical',
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
-    console.log('modelData', modelData);
     return (
         <Card>
             <Descriptions {...viewProps}>
@@ -29,8 +28,8 @@ const ViewDetailMain = (props) => {
                     <Descriptions {...viewProps} title={prepareCaption('Vehicle Details')}>
                         <Descriptions.Item label="Old Reg. Number">{checkAndSetDefaultValue(formData?.oldRegistrationNumber, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Make">{checkAndSetDefaultValue(getCodeValue(typeData?.VEHCL_MFG, formData?.make), isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Model Group">{checkAndSetDefaultValue(modelData.find((val) => val?.modelGroupCode === formData?.modelGroup)?.modelGroupDescription, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Variant">{checkAndSetDefaultValue(getCodeValue(variantData, formData?.variant), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Model Group">{checkAndSetDefaultValue(MAHINDRA_MAKE === formData?.make ? modelData.find((val) => val?.modelGroupCode === formData?.modelGroup)?.modelGroupDescription : getCodeValue(modelData, formData?.modelGroup), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Variant">{checkAndSetDefaultValue(MAHINDRA_MAKE === formData?.make ? variantData?.find((val) => val?.variantCode === formData?.variant)?.variantDescription : getCodeValue(variantData, formData?.variant), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="KMS">{checkAndSetDefaultValue(formData?.kilometer, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Usage">{checkAndSetDefaultValue(getCodeValue(typeData?.VEHCL_USAG, formData?.usageCode), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Year of Registration">{checkAndSetDefaultValue(formData?.yearOfRegistrationCode, isLoading)}</Descriptions.Item>
