@@ -15,6 +15,7 @@ import DashboardActionItems from './DashboardActionItems';
 // import NewsDrawer from './NewsDrawer';
 import { StatusBar } from './StatusBar';
 import { PieChart } from './PieChart';
+import { dateTimeDuration } from 'utils/formatDateTime';
 
 const { Text, Title } = Typography;
 
@@ -55,8 +56,8 @@ const mapStateToProps = (state) => {
 };
 
 const keyHightliteData = [
-    { shortDescription: 'GST Update', longDescription: "GSTR 1 due date is 10th Oct'23", date: '5 min ago' },
-    { shortDescription: 'GST Update', longDescription: "GSTR 2 due date is 20th Oct'23", date: '5 min ago' },
+    { shortDescription: 'GST Update', longDescription: "GSTR 1 due date is 10th Oct'23", createdDate: '2023-10-14 12:45:00' },
+    { shortDescription: 'GST Update', longDescription: "GSTR 2 due date is 20th Oct'23", createdDate: '2023-10-16 17:45:00' },
 ];
 
 const detailNews = {
@@ -165,7 +166,7 @@ const DashboardBase = ({ props }) => {
                                                 <Tag color="error">{i?.shortDescription}</Tag>
                                                 <Text color="danger">
                                                     {i?.longDescription}
-                                                    <span>{' ' + i?.date}</span>
+                                                    <span> {dateTimeDuration(i?.createdDate)}</span>
                                                 </Text>
                                             </Fragment>
                                         )

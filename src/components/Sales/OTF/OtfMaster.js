@@ -660,11 +660,11 @@ export const OtfMasterBase = (props) => {
 
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
-            return 'View ';
+            return 'View Booking';
         } else if (formActionType?.editMode) {
-            return 'Edit ';
+            return 'Edit Booking';
         } else {
-            return 'Add New ';
+            return 'Add New Booking';
         }
     }, [formActionType]);
     const ChangeHistoryProps = {
@@ -702,7 +702,7 @@ export const OtfMasterBase = (props) => {
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(moduleTitle),
+        titleOverride: drawerTitle,
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,
