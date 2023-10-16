@@ -30,11 +30,11 @@ const ViewDetailMain = (props) => {
                         <Descriptions.Item label="Invoice Date">{checkAndSetDefaultValue(formData?.invoiceDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                     </>
                 )}
-                {!soldByDealer && <Descriptions.Item label="Chassis No.">{checkAndSetDefaultValue(soldByDealer ? formData?.vinNumber : formData?.chassisNumber, isLoading)}</Descriptions.Item>}
+                {!soldByDealer && <Descriptions.Item label="VIN">{checkAndSetDefaultValue(soldByDealer ? formData?.vinNumber : formData?.chassisNumber, isLoading)}</Descriptions.Item>}
                 <Descriptions.Item label="Engine No.">{checkAndSetDefaultValue(formData?.engineNumber, isLoading)}</Descriptions.Item>
                 {soldByDealer && (
                     <>
-                        <Descriptions.Item label="Chassis No.">{checkAndSetDefaultValue(formData?.chassisNumber, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="VIN">{checkAndSetDefaultValue(formData?.chassisNumber, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Relationship Manager">{checkAndSetDefaultValue(getCodeValue(relationshipManagerData, formData?.relationShipManagerCode), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Customer Provided Date">{checkAndSetDefaultValue(formData?.customerPromiseDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                         {formData?.customerPromiseDate && disableFieldsOnFutureDate(dayjs(formData?.customerPromiseDate)) && (

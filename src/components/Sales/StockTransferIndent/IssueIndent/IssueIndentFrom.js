@@ -37,7 +37,7 @@ const IssueIndentFromMain = ({ issueForm, onFinish, handleVinSearch, isReadonly 
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
                         <Form.Item name="vin" label="VIN" rules={[validateRequiredInputField('VIN'), validationFieldLetterAndNumber('VIN')]}>
-                            <Search loading={vehicleVinDataLoading} placeholder={preparePlaceholderText('vin number')} onSearch={handleVinSearch} onChange={handleDependentReset} maxLength={50} />
+                            <Search loading={vehicleVinDataLoading} placeholder={preparePlaceholderText('VIN')} onSearch={handleVinSearch} onChange={handleDependentReset} maxLength={50} />
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>

@@ -17,8 +17,8 @@ const VehicleInfoForm = (props) => {
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item initialValue={formData?.vinNumber} label="VIN No." name="vinNumber">
-                        <Input placeholder={preparePlaceholderText('VIN No.')} disabled={true} />
+                    <Form.Item initialValue={formData?.vinNumber} label="VIN" name="vinNumber">
+                        <Input placeholder={preparePlaceholderText('VIN')} disabled={true} />
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>

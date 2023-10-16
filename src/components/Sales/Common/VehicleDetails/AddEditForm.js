@@ -226,8 +226,8 @@ const AddEditFormMain = (props) => {
                                 )}
 
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item label="VIN Number" name="vinNumber">
-                                        <Input {...disabledProp} placeholder={preparePlaceholderText('VIN number')} />
+                                    <Form.Item label="VIN" name="vinNumber">
+                                        <Input {...disabledProp} placeholder={preparePlaceholderText('VIN')} />
                                     </Form.Item>
                                 </Col>
                             </Row>
