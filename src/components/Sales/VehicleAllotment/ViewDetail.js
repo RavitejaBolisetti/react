@@ -222,7 +222,7 @@ const ViewDetailMain = (props) => {
                         <Descriptions {...viewProps}>
                             <Descriptions.Item label="VIN">{checkAndSetDefaultValue(formData?.vehicleIdentificationNumber, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Age In Days">{checkAndSetDefaultValue(formData?.ageInDays, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="PDI?">{checkAndSetDefaultValue(formData?.pdiDone, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="PDI">{checkAndSetDefaultValue(formData?.pdiDone, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Vehicle Status">{checkAndSetDefaultValue(getCodeValue(typeData?.VEHCL_STATS, formData?.vehicleStatus), isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Supplier Invoice Date">{checkAndSetDefaultValue(formData?.mnmInvoiceDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                             <Descriptions.Item label="Supplier Invoice No.">{checkAndSetDefaultValue(formData?.mnmInvoiceNo, isLoading)}</Descriptions.Item>

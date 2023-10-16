@@ -29,7 +29,7 @@ export default function AdvanceFilter(props) {
         searchForm,
         filterString,
         setFilterString,
-        placeholder: 'Search by VIN No./Chassis No.',
+        placeholder: 'Search by VIN',
         singleFieldKey: 'searchParam',
         setResetAdvanceFilter,
     };
