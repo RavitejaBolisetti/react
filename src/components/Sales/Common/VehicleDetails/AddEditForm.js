@@ -84,9 +84,9 @@ const AddEditFormMain = (props) => {
                     let updatedVal = [...prev];
                     const index = updatedVal?.findIndex((i) => i?.serviceName === record?.serviceName);
                     const data = updatedVal?.[index];
-                    if(data?.id){
-                        updatedVal?.splice(index, 1, {...record, status: false } );
-                    }else {
+                    if (data?.id) {
+                        updatedVal?.splice(index, 1, { ...record, status: false });
+                    } else {
                         updatedVal?.splice(index, 1);
                     }
                     return updatedVal;
@@ -226,8 +226,8 @@ const AddEditFormMain = (props) => {
                                 )}
 
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item label="VIN Number" name="vinNumber">
-                                        <Input {...disabledProp} placeholder={preparePlaceholderText('VIN number')} />
+                                    <Form.Item label="VIN" name="vinNumber">
+                                        <Input {...disabledProp} placeholder={preparePlaceholderText('VIN')} />
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -319,7 +319,7 @@ const AddEditFormMain = (props) => {
                                     <OptionServicesForm {...OptionServicesFormProps} />
                                 </>
                             )}
-                            <DataTable tableColumn={optionalServicesColumns({ handleButtonClick, formActionType })} tableData={optionalServices?.filter(i => i?.status)} pagination={false} />
+                            <DataTable tableColumn={optionalServicesColumns({ handleButtonClick, formActionType })} tableData={optionalServices?.filter((i) => i?.status)} pagination={false} />
                         </Panel>
                     </Collapse>
                 </Col>

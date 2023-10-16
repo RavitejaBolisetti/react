@@ -28,7 +28,7 @@ const ViewDetailMain = (props) => {
                 <Descriptions.Item label="District">{checkAndSetDefaultValue(formData?.district, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="State">{checkAndSetDefaultValue(formData?.state, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Pincode">{checkAndSetDefaultValue(formData?.pinCode, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="E-Mail">{checkAndSetDefaultValue(formData?.email, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Email ID">{checkAndSetDefaultValue(formData?.email, isLoading)}</Descriptions.Item>
             </Descriptions>
         </Card>
     );

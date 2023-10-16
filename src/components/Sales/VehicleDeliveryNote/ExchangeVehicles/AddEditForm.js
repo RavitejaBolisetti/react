@@ -54,8 +54,8 @@ const AddEditFormMain = (props) => {
                     </Row>
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="oldRegistrationNumber" label="Reg Number" rules={[validateRequiredInputField('Reg Number')]}>
-                                <Input placeholder={preparePlaceholderText('Reg Number')} maxLength={50} />
+                            <Form.Item name="oldRegistrationNumber" label="Registration Number" rules={[validateRequiredInputField('Registration Number')]}>
+                                <Input placeholder={preparePlaceholderText('Registration Number')} maxLength={50} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -109,8 +109,8 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="oldChessisNumber" label="VIN Number" rules={[validateRequiredInputField('VIN number')]}>
-                                <Input maxLength={50} placeholder={preparePlaceholderText('vin number')} />
+                            <Form.Item name="oldChessisNumber" label="VIN" rules={[validateRequiredInputField('VIN')]}>
+                                <Input maxLength={50} placeholder={preparePlaceholderText('VIN')} />
                             </Form.Item>
                         </Col>
                     </Row>

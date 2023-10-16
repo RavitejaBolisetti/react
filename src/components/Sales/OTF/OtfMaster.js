@@ -53,7 +53,7 @@ const mapStateToProps = (state) => {
             },
         },
     } = state;
-    const moduleTitle = 'Booking Form';
+    const moduleTitle = 'Booking Management';
     const ChangeHistoryTitle = 'Booking Change History ';
     const otfSoMappingChangeHistoryTitle = 'Booking - SO Mapping & Un-mapping History';
 

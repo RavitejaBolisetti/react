@@ -9,7 +9,6 @@ import { Row, Col, Form } from 'antd';
 import { bindActionCreators } from 'redux';
 
 import { ViewDetail, AddEditForm } from 'components/Sales/Common/FinananceDetails';
-import { otfFinanceDetailDataActions } from 'store/actions/data/otf/financeDetail';
 import { financeLovDataActions } from 'store/actions/data/otf/financeLov';
 import { showGlobalNotification } from 'store/actions/notification';
 
