@@ -171,4 +171,31 @@ describe('Evr details capturing master render', () => {
         fetchList.mock.calls[0][0].onErrorAction();
         fetchProductList.mock.calls[0][0].onCloseAction();
     });
+
+    it('clear button should work', () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                EvrDetailsCapturing: {
+                    EvrDetailsCapturingSearchList: { isLoaded: true, filter: { advanceFilter: true, modelDescription: 'modeltest', model: 'testing', dueFromDate: '01/01/2000', dueToDate: '01/01/2002' }, key: 'searchParam' },
+                },
+            },
+        });
+        const fetchList = jest.fn();
+        customRender(
+            <Provider store={mockStore}>
+                <EvrDetailsCapturingMaster fetchProductList={jest.fn()} fetchList={fetchList} setFilterString={jest.fn()} />
+            </Provider>
+        );
+        const approved = screen.getByRole('button', { name: 'Charged' });
+        fireEvent.click(approved);
+        const searchBox = screen.getByRole('textbox', { name: '' });
+        fireEvent.change(searchBox, { target: { value: 'Kai' } });
+        const searchBtn = screen.getByRole('button', { name: 'search' });
+        fireEvent.click(searchBtn);
+        const advanceFilter = screen.getByPlaceholderText(/Search Model Description/i);
+        fireEvent.change(advanceFilter, { target: { value: 'Test' } });
+        const clearBtn = screen.getByRole('button', { name: /Clear/i });
+        fireEvent.click(clearBtn);
+    });
 });
