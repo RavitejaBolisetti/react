@@ -46,7 +46,7 @@ const ViewDetailMain = (props) => {
             <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(customerData?.mobileNumber, isLoading)}</Descriptions.Item>
             <Descriptions.Item label="Customer ID">{checkAndSetDefaultValue(customerData?.customerId, isLoading)}</Descriptions.Item>
             <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(customerData?.customerName, isLoading)}</Descriptions.Item>
-            <Descriptions.Item label="Email">{checkAndSetDefaultValue(customerData?.email, isLoading)}</Descriptions.Item>
+            <Descriptions.Item label="Email ID">{checkAndSetDefaultValue(customerData?.email, isLoading)}</Descriptions.Item>
             <Descriptions.Item label="Gender">{checkAndSetDefaultValue(getCodeValue(typeData?.GENDER, customerData?.gender), isLoading)}</Descriptions.Item>
             {showAgeGroup && <Descriptions.Item label="Age Group">{checkAndSetDefaultValue(getCodeValue(typeData?.AGE_RANGE, customerData?.ageGroup), isLoading)}</Descriptions.Item>}
             <Descriptions.Item label="Address">{checkAndSetDefaultValue(customerData?.address, isLoading)}</Descriptions.Item>

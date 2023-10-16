@@ -83,8 +83,8 @@ const AddEditFormMain = (props) => {
                                             </Col>
 
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="E-Mail" name="email">
-                                                    <Input placeholder={preparePlaceholderText('Email')} disabled={true} />
+                                                <Form.Item label="Email ID" name="email">
+                                                    <Input placeholder={preparePlaceholderText('Email ID')} disabled={true} />
                                                 </Form.Item>
                                             </Col>
                                         </>

@@ -27,7 +27,7 @@ export const VEHICLE_RECEIPT_STATUS = {
     },
     RETURNED: {
         id: 4,
-        key: 'RTRN',
+        key: 'RTN',
         title: 'Returned',
         desc: 'Returned',
         active: false,

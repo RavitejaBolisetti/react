@@ -62,8 +62,8 @@ const AddEditFormMain = (props) => {
                                     )}
                                     {!soldByDealer && (
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item initialValue={formData?.chassisNumber} label="Chassis No." name="chassisNumber">
-                                                <Select showSearch options={(vinData?.length && vinData) || []} fieldNames={{ label: 'chassisNumber', value: 'chassisNumber' }} placeholder={preparePlaceholderSelect('chassisNumber')} onSelect={(value, valueObj) => handleSelectVinNo(value, valueObj)} optionFilterProp="chassisNumber" />
+                                            <Form.Item initialValue={formData?.chassisNumber} label="VIN" name="chassisNumber">
+                                                <Select showSearch options={(vinData?.length && vinData) || []} fieldNames={{ label: 'chassisNumber', value: 'chassisNumber' }} placeholder={preparePlaceholderSelect('VIN')} onSelect={(value, valueObj) => handleSelectVinNo(value, valueObj)} optionFilterProp="chassisNumber" />
                                             </Form.Item>
                                         </Col>
                                     )}

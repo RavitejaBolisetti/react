@@ -21,11 +21,11 @@ const ModelCard = (props) => {
         setuniqueCardEdit(id);
         setModelEdit(true);
         setFormBtnActive(true);
-        setModelSwitch(props?.checklistModelStatus);
+        setModelSwitch(props?.status);
 
         modelEditForm.setFieldsValue({
             modelGroupCode: props?.modelGroupCode,
-            checklistModelStatus: props?.checklistModelStatus,
+            status: props?.status,
             internalId: props?.internalId,
             id: props?.id,
         });
@@ -38,7 +38,7 @@ const ModelCard = (props) => {
             let idType = newFormData?.id ? 'id' : 'internalId';
             if (obj[idType] === id) {
                 obj.modelGroupCode = newFormData?.modelGroupCode;
-                obj.checklistModelStatus = newFormData?.checklistModelStatus;
+                obj.status = newFormData?.status;
                 obj.internalId = newFormData?.internalId;
                 obj.id = newFormData?.id;
             }

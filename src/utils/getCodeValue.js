@@ -12,6 +12,6 @@ export const getCodeValue = (type, key, title = 'value', defaultSeparator = true
         }
         return itemDetail?.join(', ');
     } else {
-        return type && key ? Object.values(type).find((i) => i.key === key)?.[title] || '' : defaultSeparator ? '-' : '';
+        return type && key ? Object.values(type).find((i) => i.key === key)?.[title] || key : defaultSeparator ? '-' : '';
     }
 };

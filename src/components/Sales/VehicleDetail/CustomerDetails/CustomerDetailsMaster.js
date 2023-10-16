@@ -105,7 +105,7 @@ export const CustomerDetailsMain = (props) => {
             key: 'vin',
             title: 'vin',
             value: selectedRecordId,
-            name: 'VIN Number',
+            name: 'VIN',
         },
     ];
     useEffect(() => {
@@ -242,7 +242,7 @@ export const CustomerDetailsMain = (props) => {
                     key: 'vin',
                     title: 'vin',
                     value: selectedRecordId,
-                    name: 'VIN Number',
+                    name: 'VIN',
                 },
             ];
             fetchList({ setIsLoading: listShowLoading, userId, extraParams });

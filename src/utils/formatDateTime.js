@@ -39,4 +39,6 @@ export const formatDateToCalenderDate = (dateToFormat, converToFormat = 'YYYY-MM
 
 export const formatTime = (dateToFormat, converToFormat = 'HH:mm') => (dateToFormat ? dayjs(dateToFormat, converToFormat) : null);
 
-export const readableDateDifference = (dateToFormat) => (moment.duration(moment(dateToFormat).diff(moment())).humanize())
+export const readableDateDifference = (dateToFormat) => moment.duration(moment(dateToFormat).diff(moment())).humanize();
+
+export const dateTimeDuration = (postDate) => moment.duration(moment(postDate).diff(moment())).humanize() + ' ago';

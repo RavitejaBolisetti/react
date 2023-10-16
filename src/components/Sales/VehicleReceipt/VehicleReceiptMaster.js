@@ -420,6 +420,7 @@ export const VehicleReceiptMasterBase = (props) => {
         }
         setReceiptType(buttonkey);
         searchForm.resetFields();
+        setFilterString({ current: 1 });
     };
 
     const handleChange = (e) => {
