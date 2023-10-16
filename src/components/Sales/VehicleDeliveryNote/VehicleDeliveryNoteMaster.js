@@ -297,7 +297,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: filterString?.current || page?.current,
+                value: filterString?.current,
                 canRemove: true,
                 filter: false,
             },
@@ -406,6 +406,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
                 setActionButtonVisiblity({ canAdd: true, canView: false, canEdit: false });
             }
         }
+        setFilterString({ current: 1 });
     };
 
     const handlePrintDownload = (record) => {
@@ -654,7 +655,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     const tableProps = {
         dynamicPagination: true,
         totalRecords,
-        setPage,
+        setPage: setFilterString,
         page,
         tableColumn: tableColumnDeliveryNoteMaster({ handleButtonClick, actionButtonVisiblity, deliveryType }),
         tableData: data,
