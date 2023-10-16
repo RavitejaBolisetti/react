@@ -10,12 +10,12 @@
 }
 
 .noInternetConnectivity {
-    text-align: 'center';
-    background-color: '#505050';
-    padding: '10px';
-    color: '#ffffff';
-    font-size: '14px';
-    font-family: 'Lato'
+    text-align: center;
+    background-color: #505050;
+    padding: 8px;
+    color: #ffffff;
+    font-size: 14px;
+    font-family: Lato
 }
 
 .fullyCentered {
@@ -1982,8 +1982,8 @@
                         }
                     }
 
-                    > .ant-steps-item-content {
-                        > .ant-steps-item-title {
+                    >.ant-steps-item-content {
+                        >.ant-steps-item-title {
                             // color: $primaryBlack;
                             font-size: 10px;
                             font-weight: 500;
@@ -2002,8 +2002,8 @@
                         }
                     }
 
-                    > .ant-steps-item-content {
-                        > .ant-steps-item-title {
+                    >.ant-steps-item-content {
+                        >.ant-steps-item-title {
                             // color: $primaryBlack;
                             font-size: 10px;
                             font-weight: 500;

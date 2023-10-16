@@ -11,10 +11,10 @@ import { bindActionCreators } from 'redux';
 import { showGlobalNotification } from 'store/actions/notification';
 import { DeliverableChecklistMaindataActions } from 'store/actions/data/vehicleDeliveryNote';
 
-import { AddEditForm } from './AddEditForm';
-import { ViewDetail } from './ViewDetails';
-import { VehicleDeliveryNoteFormButton } from '../VehicleDeliveryNoteFormButton';
+import { AddEditForm } from 'components/Sales/Common/ChecklistDetails';
 import { tableColumn } from './tableCoulmn';
+
+import { VehicleDeliveryNoteFormButton } from '../VehicleDeliveryNoteFormButton';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -64,13 +64,9 @@ const DeliverableChecklistMain = (props) => {
     const [AdvanceformData, setAdvanceformData] = useState([]);
     const [isEditing, setisEditing] = useState();
     const [checkListDataModified, setcheckListDataModified] = useState([]);
-    const defaultPage = { pageSize: 10, current: 1 };
-    const [page, setPage] = useState({});
-
-    // const onSuccessAction = (res) => {
-    //     // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-    // };
-
+    const pageIntialState = { pageSize: 10, current: 1 };
+    const [page, setPage] = useState({ ...pageIntialState });
+    const deliveryChecklist = true;
     const onErrorAction = (message) => {
         showGlobalNotification({ message: message });
     };
@@ -91,7 +87,7 @@ const DeliverableChecklistMain = (props) => {
     useEffect(() => {
         const newArr = requestPayload?.vehicleDeliveryCheckList?.deliveryChecklistDtos;
         newArr?.filter((i) => i?.ismodified)?.length > 0 ? handleFormValueChange() : setButtonData({ ...buttonData, formBtnActive: false });
-        setPage({ ...defaultPage });
+        setPage({ ...pageIntialState });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -132,16 +128,17 @@ const DeliverableChecklistMain = (props) => {
         setisEditing(true);
         setIsReadOnly(true);
     };
-
+    const tableShowData = formActionType?.viewMode ? requestPayload?.vehicleDeliveryCheckList?.deliveryChecklistDtos : checkListDataModified;
+    const tabletotalRecords = formActionType?.viewMode ? requestPayload?.vehicleDeliveryCheckList?.deliveryChecklistDtos?.length : checkListDataModified?.length;
     const tableProps = {
         isLoading: isChecklistDataLoading,
-        tableColumn: tableColumn({ handleButtonClick: handleCheckListClick, formActionType }),
-        tableData: checkListDataModified,
+        tableColumn: tableColumn({ handleButtonClick: handleCheckListClick, formActionType, aggregateForm, deliveryChecklist }),
+        tableData: tableShowData,
         showAddButton: false,
         setPage,
         page,
         dynamicPagination: true,
-        totalRecords: checkListDataModified?.length,
+        totalRecords: tabletotalRecords,
     };
 
     const formProps = {
@@ -164,17 +161,11 @@ const DeliverableChecklistMain = (props) => {
         requestPayload,
         setRequestPayload,
         setPage,
-        defaultPage,
-    };
-
-    const viewProps = {
+        pageIntialState,
+        deliveryChecklist,
+        checklistDescriptionLabel: 'Details',
         styles,
         isChecklistDataLoading,
-        checkListDataModified,
-        setcheckListDataModified,
-        formActionType,
-        tableProps,
-        requestPayload,
     };
 
     return (
@@ -186,7 +177,7 @@ const DeliverableChecklistMain = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                     </Row>
-                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
+                    <AddEditForm {...formProps} />
                 </Col>
             </Row>
             <Row>

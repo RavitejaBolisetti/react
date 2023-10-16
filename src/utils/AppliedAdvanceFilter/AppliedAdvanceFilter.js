@@ -100,7 +100,7 @@ export default function AppliedAdvanceFilter(props) {
                                         ?.map((filter) => {
                                             return (
                                                 filter?.value && (
-                                                    <div className={styles.advanceFilterItem} key={filter?.key}>
+                                                    <div className={styles.advanceFilterItem} key={'rms' + filter?.key}>
                                                         {filter?.name}
                                                         {filter?.canRemove && (
                                                             <span>

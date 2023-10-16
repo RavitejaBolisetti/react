@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Col, Row } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import { VEHICLE_INVOICE_SECTION } from 'constants/VehicleInvoiceSection';
@@ -43,6 +43,9 @@ const VehicleInvoiceMainConatinerMain = (props) => {
         vehicleInvoiceMasterData: requestPayload,
         otfData: profileCardData,
     };
+    const LeftSideBarMenu = useMemo(() => {
+        return <LeftSidebar {...myProps} />;
+    }, [profileCardData]);
 
     const renderElement = () => {
         switch (currentSection) {
@@ -83,7 +86,7 @@ const VehicleInvoiceMainConatinerMain = (props) => {
     return (
         <Row gutter={0}>
             <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6} className={styles.drawerBodyLeft}>
-                <LeftSidebar {...myProps} />
+                {LeftSideBarMenu}
             </Col>
             <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18} className={styles.drawerRightMainContainer}>
                 <div>{renderElement()}</div>

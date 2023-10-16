@@ -156,6 +156,12 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
                     <Form.Item hidden name="partLocationId">
                         <Input />
                     </Form.Item>
+                    <Form.Item hidden name="gndpPrice">
+                        <Input />
+                    </Form.Item>
+                    <Form.Item hidden name="landedCost">
+                        <Input />
+                    </Form.Item>
                 </Row>
             </Form>
             <Row gutter={20} className={styles.marB20}>
