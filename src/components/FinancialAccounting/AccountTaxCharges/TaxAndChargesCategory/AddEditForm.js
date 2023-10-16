@@ -109,6 +109,8 @@ const AddEditFormMain = (props) => {
         styles,
         taxCategory,
         taxCharges: taxChargeCategoryTypeData,
+        stateData,
+        saleData,
     };
 
     const buttonProps = {

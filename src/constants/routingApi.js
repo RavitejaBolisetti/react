@@ -62,8 +62,8 @@ export const BASE_URL_ROLE_MANAGEMENT_ROLES_MENU = BASE_URL + 'application/roles
 
 export const BASE_URL_PRODUCT_HIERARCHY = BASE_URL + 'product';
 export const BASE_URL_PRODUCT_MAKE = BASE_URL_PRODUCT_HIERARCHY + '/make';
-export const BASE_URL_PRODUCT_MODEL_GROUP = BASE_URL_PRODUCT_HIERARCHY + '/modelgroups/lov';
-export const BASE_URL_PRODUCT_VARIENT = BASE_URL_PRODUCT_HIERARCHY + '/variants/lov';
+export const BASE_URL_PRODUCT_MODEL_GROUP = BASE_URL_PRODUCT_HIERARCHY + '/modelgroups';
+export const BASE_URL_PRODUCT_VARIENT = BASE_URL_PRODUCT_HIERARCHY + '/variants';
 export const BASE_URL_PRODUCT_MODEL_FAMILY = BASE_URL_PRODUCT_HIERARCHY + '/family/lov';
 export const BASE_URL_PRODUCT_HIERARCHY_DETAIL = BASE_URL + 'product/details';
 export const BASE_URL_PRODUCT_HIERARCHY_SAVE = BASE_URL + 'product';
@@ -371,4 +371,4 @@ export const BASE_URL_AMC_REGISTRATION_DATA = BASE_URL_AMC_REGISTRATION + '/regi
 export const BASE_URL_AMC_EMPLOYEE_SEARCH = BASE_URL + 'users/search/employees';
 export const BASE_URL_AMC_SCHEMES = BASE_URL_AMC_REGISTRATION + '/scheme';
 export const BASE_URL_GST_DOCID_NAME = BASE_URL + 'finance/gstirnauthentication';
-export const BASE_URL_WORK_FLOW_MASTER = BASE_URL_APPLICATIONS + '/workflow';
+export const BASE_URL_RSM_ASM_APPROVAL_DETAILS = BASE_URL_RSM_ASM_APPROVAL_SEARCH + '/details';

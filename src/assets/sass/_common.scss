@@ -9,6 +9,15 @@
     margin-bottom: 10px;
 }
 
+.noInternetConnectivity {
+    text-align: center;
+    background-color: #505050;
+    padding: 8px;
+    color: #ffffff;
+    font-size: 14px;
+    font-family: Lato
+}
+
 .fullyCentered {
     display: flex;
     align-items: center;
@@ -358,6 +367,7 @@
         }
     }
 }
+
 .modelContentTooltip {
     margin: 0px;
 }
@@ -1207,7 +1217,7 @@
 .formFooter {
     position: relative;
     z-index: 99;
-    background: $primaryWhite;
+    // background: $primaryWhite;
     padding: 12px 20px;
     box-shadow: 0px -1px 1px 0px rgba(0, 0, 0, 0.15);
 
@@ -1227,7 +1237,7 @@
 /*--------------View Contaner Section Strat--------------*/
 
 .viewContainerHeader {
-    background-color: $neutralGrey0;
+    // background-color: $neutralGrey0;
     padding: 16px 20px;
     border-radius: 4px 4px 0px 0px;
     -moz-border-radius: 4px 4px 0px 0px;
@@ -1607,7 +1617,7 @@
 /*--------------Drawer Body left Section Strat--------------*/
 
 .drawerBodyLeft {
-    background: $neutralGrey0;
+    // background: $neutralGrey0;
     padding: 20px;
     height: calc(100vh - 60px);
     overflow-y: overlay;
@@ -1665,7 +1675,7 @@
                                 }
 
                                 span.ant-typography {
-                                    color: $primaryBlack;
+                                    // color: $primaryBlack;
                                     font-size: 12px;
                                     font-weight: 400;
                                     line-height: 20px;
@@ -1800,7 +1810,7 @@
                     p {
                         padding-left: 0 !important;
                         font-size: 14px;
-                        color: $primaryBlack;
+                        // color: $primaryBlack;
                         font-weight: 500;
                         line-height: 23px;
                         cursor: pointer;
@@ -1910,7 +1920,7 @@
         font-size: 12px;
         line-height: 20px;
         font-weight: 500;
-        color: $neutralGrey4;
+        // color: $neutralGrey4;
 
         span {
             // color: $primaryBlack;
@@ -1974,7 +1984,7 @@
 
                     >.ant-steps-item-content {
                         >.ant-steps-item-title {
-                            color: $primaryBlack;
+                            // color: $primaryBlack;
                             font-size: 10px;
                             font-weight: 500;
                             line-height: 17px;
@@ -1994,7 +2004,7 @@
 
                     >.ant-steps-item-content {
                         >.ant-steps-item-title {
-                            color: $primaryBlack;
+                            // color: $primaryBlack;
                             font-size: 10px;
                             font-weight: 500;
                             line-height: 17px;
@@ -2024,7 +2034,7 @@
                     .ant-form-item-control-input {
                         .ant-input {
                             &::placeholder {
-                                color: $neutralGrey2;
+                                // color: $neutralGrey2;
                                 font-size: 14px;
                                 line-height: 23px;
                                 font-weight: 400;
@@ -2226,11 +2236,13 @@
         font-size: 24px;
         font-weight: 700;
         line-height: 36px;
-        color: $primaryBlack;
+        // color: $primaryBlack;
     }
+
     .cardContanerOverflow {
         overflow-y: scroll;
         height: calc(100vh - 200px);
+
         &::-webkit-scrollbar-track {
             background-color: $primaryWhite;
         }
@@ -2251,6 +2263,7 @@
             }
         }
     }
+
     .viewDrawerContainer {
         & :global {
             .ant-space-horizontal {
@@ -2580,7 +2593,7 @@
                 .ant-descriptions {
                     .ant-descriptions-item-label {
                         display: inline-block;
-                        color: $neutralGrey4;
+                        // color: $neutralGrey4;
                         font-weight: 400;
                         font-size: 14px;
                         line-height: 23px;

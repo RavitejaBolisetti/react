@@ -33,7 +33,7 @@ const mapStateToProps = (state) => {
 
         data: {
             Vehicle: {
-                VehicleDetail: { isLoading, vehicleData },
+                VehicleDetail: { isLoaded = false, isLoading, vehicleData },
             },
         },
     } = state;
@@ -42,6 +42,7 @@ const mapStateToProps = (state) => {
         userId,
         isLoading,
         vehicleData,
+        isLoaded,
     };
     return returnValue;
 };
@@ -61,8 +62,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const VehicleDetailsMasterBase = (props) => {
     const { form, section, userId, showGlobalNotification, typeData } = props;
-    const { isLoading, setLastSection, AMConFinish, setRequestPayload, fetchVehicleData, listVehicleShowLoading, requestPayload, buttonData, setButtonData, formActionType, FormActionButton } = props;
-
+    const { isLoaded, isLoading, setLastSection, AMConFinish, setRequestPayload, fetchVehicleData, listVehicleShowLoading, requestPayload, buttonData, setButtonData, formActionType, FormActionButton } = props;
     const [contactform] = Form.useForm();
     const [contactData, setContactData] = useState([]);
     const [showAddEditForm, setShowAddEditForm] = useState(false);
@@ -81,10 +81,11 @@ const VehicleDetailsMasterBase = (props) => {
     }, [requestPayload]);
 
     useEffect(() => {
-        if (formActionType?.addMode && requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.MNM_FOC?.key) {
+        if (formActionType?.addMode && requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.MNM_FOC?.key && !isLoaded) {
             handleVinSearch();
             setIsReadOnly(true);
             setShowAddEditForm(true);
+            setButtonData({ ...buttonData, formBtnActive: true });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [requestPayload]);
@@ -148,7 +149,10 @@ const VehicleDetailsMasterBase = (props) => {
 
     const handleVinSearch = (value) => {
         const onVehicleSearchSuccessAction = (data) => {
-            contactform.setFieldsValue({ ...data?.data?.vehicleSearch[0], modelDescription: data?.data?.vehicleSearch[0].chassisNumber, vehicleRegistrationNumber: data?.data?.vehicleSearch[0].registrationNumber, orignallyWarrantyStartDate: formattedCalendarDate(data?.data?.vehicleSearch[0].chassisNumber) });
+            contactform.setFieldsValue({ ...data?.data?.vehicleSearch[0], modelDescription: data?.data?.vehicleSearch[0].chassisNumber, vehicleRegistrationNumber: data?.data?.vehicleSearch[0].registrationNumber, orignallyWarrantyStartDate: formattedCalendarDate(data?.data?.vehicleSearch[0].orignallyWarrantyStartDate) });
+            if (formActionType?.addMode) {
+                setRequestPayload({ ...requestPayload, amcVehicleDetails: [{ vin: requestPayload?.amcRegistration?.vin }] });
+            }
         };
         const vehicleExtraParams = [
             {

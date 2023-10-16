@@ -1,17 +1,19 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-export const REQUEST_STATUS_CONSTANT = {
-    OPEN: {
-        id: 1,
-        title: 'Open',
-        key: 'O',
+export const MODEL_TITLE = {
+    CHECKLIST_FORM: {
+        title: 'Checklist Details',
     },
-    CANCELLED: {
-        id: 2,
-        title: 'Cancel',
-        key: 'C',
+    ADD: {
+        title: 'Add ',
+    },
+    EDIT: {
+        title: 'Edit ',
+    },
+    VIEW: {
+        title: 'View ',
     },
 };

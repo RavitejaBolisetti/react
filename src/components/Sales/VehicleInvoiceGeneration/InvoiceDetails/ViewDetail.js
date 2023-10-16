@@ -57,8 +57,8 @@ const ViewDetailMain = (props) => {
                             </Descriptions>
                             <Descriptions {...viewProps} title={prepareCaption('Sales Details')}>
                                 <Descriptions.Item label="Sales Consultant Name">{checkAndSetDefaultValue(getCodeValue(salesConsultantLovData, formData?.saleConsultant), isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Influence/Mitra Type">{checkAndSetDefaultValue(formData?.mitraType, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Influence/Mitra Name">{checkAndSetDefaultValue(formData?.mitraName, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Influencer/Mitra Type">{checkAndSetDefaultValue(formData?.mitraType, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Influencer/Mitra Name">{checkAndSetDefaultValue(formData?.mitraName, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         </Panel>
                     </Collapse>

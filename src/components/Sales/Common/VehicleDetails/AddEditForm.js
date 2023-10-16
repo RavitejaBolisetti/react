@@ -72,10 +72,10 @@ const AddEditFormMain = (props) => {
     };
 
     const handleButtonClick = ({ record, buttonAction }) => {
+        handleFormValueChange();
         switch (buttonAction) {
-            case ADD_ACTION:
-                break;
             case EDIT_ACTION:
+                addContactHandeler();
                 optionForm.setFieldsValue({ ...record });
                 setEditingOptionalData(record);
                 break;
@@ -83,7 +83,12 @@ const AddEditFormMain = (props) => {
                 setOptionalServices((prev) => {
                     let updatedVal = [...prev];
                     const index = updatedVal?.findIndex((i) => i?.serviceName === record?.serviceName);
-                    updatedVal?.splice(index, 1);
+                    const data = updatedVal?.[index];
+                    if (data?.id) {
+                        updatedVal?.splice(index, 1, { ...record, status: false });
+                    } else {
+                        updatedVal?.splice(index, 1);
+                    }
                     return updatedVal;
                 });
                 setEditingOptionalData({});
@@ -314,7 +319,7 @@ const AddEditFormMain = (props) => {
                                     <OptionServicesForm {...OptionServicesFormProps} />
                                 </>
                             )}
-                            <DataTable tableColumn={optionalServicesColumns({ handleButtonClick, formActionType })} tableData={optionalServices} pagination={false} />
+                            <DataTable tableColumn={optionalServicesColumns({ handleButtonClick, formActionType })} tableData={optionalServices?.filter((i) => i?.status)} pagination={false} />
                         </Panel>
                     </Collapse>
                 </Col>

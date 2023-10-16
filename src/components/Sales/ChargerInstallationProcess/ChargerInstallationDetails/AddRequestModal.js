@@ -43,8 +43,8 @@ export const AddRequestModalForm = (props) => {
         <Form autoComplete="off" layout="vertical" form={addRequestForm} onFinish={onModalFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Stage" name="requestStage" className={styles?.datePicker} rules={[validateRequiredInputField('from date')]}>
-                        {customSelectBox({ data: typeData?.CHRGR_INST_STG_TYPE, placeholder: preparePlaceholderText('application criticality group') })}
+                    <Form.Item label="Stage" name="requestStage">
+                        {customSelectBox({ data: typeData?.CHRGR_INST_STG_TYPE, placeholder: preparePlaceholderText('Request Stage') })}
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>

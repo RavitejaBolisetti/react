@@ -4,11 +4,11 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
-import { MakeCheckResult } from './CheckListUtils';
 import styles from 'assets/sass/app.module.scss';
+import { BindFormAndResult } from 'components/Sales/Common/ChecklistDetails/CheckListUtils';
 
 export const tableColumn = (props) => {
-    const { handleButtonClick, formActionType } = props;
+    const { handleButtonClick, formActionType, aggregateForm, deliveryChecklist } = props;
     const tableColumn = [
         tblPrepareColumns({
             title: 'Details',
@@ -19,7 +19,7 @@ export const tableColumn = (props) => {
             title: 'Check Result ',
             dataIndex: 'checkResult',
             width: '20%',
-            render: (text, record, index) => MakeCheckResult({ type: record?.answerType, data: record }),
+            render: (text, record, index) => BindFormAndResult({ data: record, aggregateForm, deliveryChecklist })?.checkResult,
         }),
     ];
     if (!formActionType?.viewMode) {

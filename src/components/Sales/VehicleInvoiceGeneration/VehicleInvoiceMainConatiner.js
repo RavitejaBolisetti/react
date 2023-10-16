@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Col, Row } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import { VEHICLE_INVOICE_SECTION } from 'constants/VehicleInvoiceSection';
@@ -43,6 +43,10 @@ const VehicleInvoiceMainConatinerMain = (props) => {
         vehicleInvoiceMasterData: requestPayload,
         otfData: profileCardData,
     };
+
+    // const LeftSideBarMenu = useMemo(() => {
+    //     return <LeftSidebar {...myProps} />;
+    // }, [profileCardData]);
 
     const renderElement = () => {
         switch (currentSection) {
