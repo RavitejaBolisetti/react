@@ -27,25 +27,17 @@ const data = [
     { type: 'Bolero Neo', sales: 75 },
     { type: 'Bolero', sales: 120 },
     { type: 'Scarpio Classic', sales: 50 },
-    { type: 'Scorpio1', sales: 60 },
-    { type: 'XUV7001', sales: 120 },
-    { type: 'Thar1', sales: 80 },
-    { type: 'XUV3001', sales: 50 },
-    { type: 'Marazzo1', sales: 10 },
-    { type: 'Bolero Neo1', sales: 75 },
-    { type: 'Bolero1', sales: 120 },
-    { type: 'Scarpio Classic1', sales: 50 },
 ];
 
 const data1 = [
-    { type: 'Scorpio', sales: 60 },
-    { type: 'XUV700', sales: 120 },
-    { type: 'Thar', sales: 80 },
-    { type: 'XUV300', sales: 50 },
-    { type: 'Marazzo', sales: 10 },
+    { type: 'Scorpio', sales: 30 },
+    { type: 'XUV700', sales: 90 },
+    { type: 'Thar', sales: 70 },
+    { type: 'XUV300', sales: 30 },
+    { type: 'Marazzo', sales: 5 },
     { type: 'Bolero Neo', sales: 75 },
-    { type: 'Bolero', sales: 120 },
-    { type: 'Scarpio Classic', sales: 50 },
+    { type: 'Bolero', sales: 75 },
+    { type: 'Scarpio Classic', sales: 113 },
 ];
 
 const mapStateToProps = (state) => {
