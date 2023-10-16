@@ -316,10 +316,6 @@ export const AccountCategoryMain = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {}).catch(err => console.error(err));
-    };
-
     const onCloseAction = () => {
         setFormEdit(false);
         form.resetFields();
@@ -346,7 +342,6 @@ export const AccountCategoryMain = (props) => {
         formActionType,
         setFormActionType,
         onFinish,
-        onFinishFailed,
 
         isVisible: isFormVisible,
         onCloseAction,
@@ -398,7 +393,6 @@ export const AccountCategoryMain = (props) => {
         filterString,
         from: listFilterForm,
         onFinish,
-        onFinishFailed,
         onSearchHandle,
         handleResetFilter,
         handleClearInSearch,

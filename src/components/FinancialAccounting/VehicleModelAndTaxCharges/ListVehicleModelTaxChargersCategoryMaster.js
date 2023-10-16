@@ -291,10 +291,6 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {}).catch(err => console.error(err));
-    };
-
     const handleReferesh = () => {
         setRefershData(!refershData);
     };
@@ -341,7 +337,6 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
         isVisible: isFormVisible,
         showGlobalNotification,
         onFinish,
-        onFinishFailed,
         onCloseAction,
         titleOverride: drawerTitle.concat(moduleTitle),
         formData,
@@ -384,7 +379,6 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
     const ContentHeaderProps = {
         isProductHierarchyDataLoading,
         Form,
-        onFinishFailed,
         onFinish,
         handleAdd,
         titleHierarchy: 'Model Group',
