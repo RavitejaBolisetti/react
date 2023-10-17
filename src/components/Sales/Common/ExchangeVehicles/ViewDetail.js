@@ -10,7 +10,7 @@ import { getCodeValue } from 'utils/getCodeValue';
 import { prepareCaption } from 'utils/prepareCaption';
 
 const ViewDetailMain = (props) => {
-    const { styles, formData, isLoading, makeData, modelData, variantData, typeData, schemeLovData, financeLovData } = props;
+    const { formData, isLoading, modelData, variantData, typeData, schemeLovData, financeLovData } = props;
 
     const viewProps = {
         bordered: false,
