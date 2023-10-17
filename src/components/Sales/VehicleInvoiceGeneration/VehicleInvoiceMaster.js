@@ -66,6 +66,7 @@ const mapStateToProps = (state) => {
         isInVoiceMasterDetailDataLoaded,
         isSalesConsultantDataLoaded,
         salesConsultantLovData,
+        isLoading: isVehicleInvoiceDataLoading,
     };
     return returnValue;
 };
@@ -173,8 +174,8 @@ export const VehicleInvoiceMasterBase = (props) => {
         loyaltyScheme: {},
         referrals: {},
     };
-    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
+    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
@@ -369,6 +370,17 @@ export const VehicleInvoiceMasterBase = (props) => {
     }, [currentSection, sectionName]);
 
     const handleBookingNumberSearch = (otfNumber = '', selectedRecordId = '') => {
+        if (!(otfNumber && selectedRecordId)) {
+            setSelectedOrderId('');
+            setSelectedOtfNumber('');
+            setSelectedOrder('');
+
+            setSelectedOtfId();
+            setProfileCardData();
+            resetDetailData();
+            resetOtfData();
+        }
+
         if (otfNumber || selectedRecordId) {
             const extraParams = [
                 {
@@ -417,7 +429,7 @@ export const VehicleInvoiceMasterBase = (props) => {
                         extraParams,
                         onErrorAction,
                         onSuccessAction: (response) => {
-                            setRequestPayload({ ...vehicleInvoiceMasterData, vehicleDetails: response?.data });
+                            setRequestPayload({ ...res?.data, vehicleDetails: response?.data });
                         },
                     });
                 }
@@ -514,12 +526,12 @@ export const VehicleInvoiceMasterBase = (props) => {
         setSearchValue(value);
     };
 
-    const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
+    const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true, callApi = true }) => {
         form.resetFields();
         form.setFieldsValue(undefined);
         cancelInvoiceForm.resetFields();
 
-        if (isLastSection) {
+        if (isLastSection && callApi) {
             generateInvoice();
             return false;
         }
@@ -592,40 +604,19 @@ export const VehicleInvoiceMasterBase = (props) => {
     const generateInvoice = () => {
         const { vehicleDetails, financeDetails, insuranceDetails, invoiceDetails } = requestPayload;
         const data = { vehicleDetails, financeDetails, insuranceDetails, invoiceDetails };
+
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
             fetchList({ customURL: BASE_URL_VEHICLE_INVOICE_LIST, setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
+
             const invoiceId = res?.data?.invoiceDetails?.id;
+            const invoiceNumber = res?.data?.invoiceDetails?.invoiceNumber;
+            const otfNumber = res?.data?.invoiceDetails?.otfDetailsRequest?.otfNumber;
             const otfId = res?.data?.invoiceDetails?.otfDetailsRequest?.otfId;
-            setSelectedOrderId(res?.data?.invoiceDetails?.invoiceNumber);
-            if (invoiceId && otfId) {
-                const extraParams = [
-                    {
-                        key: 'invoiceId',
-                        value: invoiceId,
-                        name: 'Invoice Id',
-                    },
-                    {
-                        key: 'otfId',
-                        value: otfId,
-                        name: 'OTF Number',
-                    },
-                ];
 
-                fetchData({
-                    customURL,
-                    setIsLoading: listOTFShowLoading,
-                    userId,
-                    extraParams: extraParams,
-                    onSuccessAction: (res) => {
-                        setProfileCardData(res?.data);
-                    },
-                    onErrorAction,
-                });
-
-                handleBookingNumberSearch(res?.data?.invoiceDetails?.otfDetailsRequest?.bookingNumber || res?.data?.invoiceDetails?.otfDetailsRequest?.otfNumber, res?.data?.invoiceDetails?.id);
-            }
+            const record = { id: invoiceId, invoiceNumber, otfNumber, otfId };
+            handleButtonClick({ record, buttonAction: VIEW_ACTION, callApi: false });
 
             const nextSection = filterActiveSection?.find((i) => i.id > currentSection);
             section && setCurrentSection(nextSection?.id);
@@ -826,11 +817,11 @@ export const VehicleInvoiceMasterBase = (props) => {
 
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
-            return 'View ';
+            return 'View Invoice';
         } else if (formActionType?.editMode) {
-            return 'Edit ';
+            return 'Edit Invoice';
         } else {
-            return 'Add New ';
+            return 'Add New Invoice';
         }
     }, [formActionType]);
 
@@ -843,11 +834,10 @@ export const VehicleInvoiceMasterBase = (props) => {
         invoiceDetailForm,
         formActionType,
         setFormActionType,
-        // onFinish,
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(moduleTitle),
+        titleOverride: drawerTitle,
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,
