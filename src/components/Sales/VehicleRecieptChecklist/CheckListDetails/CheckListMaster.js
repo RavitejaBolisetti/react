@@ -11,10 +11,8 @@ import { bindActionCreators } from 'redux';
 import { showGlobalNotification } from 'store/actions/notification';
 import { VehicleCheclistDetailsdataActions } from 'store/actions/data/VehicleReceiptCheckList/VehicleReceiptChecklistMaster';
 
-import { AddEditForm } from './AddEditForm';
-import { ViewDetail } from './ViewDetails';
+import { AddEditForm, tableColumn } from 'components/Sales/Common/ChecklistDetails';
 import { VehicleCheckListbutton } from '../VehicleRecieptFormButton';
-import { tableColumn } from './tableCoulmn';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -63,16 +61,20 @@ const VehicleRecieptCheckListMain = (props) => {
     const { form, selectedCheckListId, section, formActionType, handleFormValueChange, NEXT_ACTION } = props;
 
     const { chassisNumber } = selectedRecord;
-    const { checkListDataModified, setcheckListDataModified, resetData } = props;
+    const { checkListDataModified, setcheckListDataModified } = props;
+
+    const pageIntialState = {
+        pageSize: 10,
+        current: 1,
+    };
+    const [page, setPage] = useState({ ...pageIntialState });
 
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [aggregateForm] = Form.useForm();
     const [AdvanceformData, setAdvanceformData] = useState([]);
     const [isEditing, setisEditing] = useState();
 
-    const onSuccessAction = (res) => {
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-    };
+    const onSuccessAction = (res) => {};
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message: message });
@@ -127,9 +129,14 @@ const VehicleRecieptCheckListMain = (props) => {
     };
 
     const tableProps = {
+        dynamicPagination: true,
+        showAddButton: false,
+        page,
+        setPage,
         isLoading: isChecklistDataLoading,
-        tableColumn: tableColumn({ handleButtonClick: handleCheckListClick, formActionType }),
+        tableColumn: tableColumn({ handleButtonClick: handleCheckListClick, formActionType, aggregateForm }),
         tableData: checkListDataModified,
+        totalRecords: checkListDataModified?.length,
     };
 
     const formProps = {
@@ -148,15 +155,12 @@ const VehicleRecieptCheckListMain = (props) => {
         setAdvanceformData,
         isEditing,
         setisEditing,
-    };
-
-    const viewProps = {
-        styles,
+        page,
+        setPage,
+        pageIntialState,
+        matchKey: 'ansMstId',
         isChecklistDataLoading,
-        checkListDataModified,
-        setcheckListDataModified,
-        formActionType,
-        tableProps,
+        styles,
     };
 
     return (
@@ -168,7 +172,7 @@ const VehicleRecieptCheckListMain = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                     </Row>
-                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
+                    <AddEditForm {...formProps} />
                 </Col>
             </Row>
             <Row>

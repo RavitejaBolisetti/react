@@ -155,11 +155,11 @@ const LeftSideBarMain = (props) => {
             const isParentMenu = parentMenuId === 'Web';
 
             return subMenu?.length ? (
-                <SubMenu key={menuId} title={prepareLink({ id: menuId, title: menuTitle, menuOrgTitle: menuTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
+                <SubMenu key={parentMenuId + menuId} title={prepareLink({ id: menuId, title: menuTitle, menuOrgTitle: menuTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
                     {prepareMenuItem(subMenu)}
                 </SubMenu>
             ) : (
-                <Item key={menuId} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
+                <Item key={parentMenuId + menuId} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
                     {prepareLink({ id: menuId, title: menuTitle, menuOrgTitle: menuTitle, tooltip: true, icon: true, captlized: isParentMenu, isParentMenu, showTitle: collapsed ? !isParentMenu : true })}
                 </Item>
             );

@@ -66,6 +66,7 @@ const mapStateToProps = (state) => {
         ProfileData,
         ChecklistData: ChecklistData['supportingDocumentList'],
         typeData: typeData['CHK_STATS'],
+        typedataMaster: typeData,
 
         isProductHierarchyDataLoaded,
         isProductHierarchyLoading,
@@ -107,7 +108,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     const { fetchList, listShowLoading, setFilterString, resetCheckListData, saveData, showGlobalNotification } = props;
     const { fetchModel, isModelDataLoaded, isModelDataLoading, vehicleModelData, modelLoading } = props;
     const { fetchProfile, profileLoading, isProfileDataLoaded, ProfileData, resetProfile, ChecklistData, typeData } = props;
-    const { isProductHierarchyDataLoaded, VehicleLovCodeData, fetchProductLovCode, ProductLovLoading, resetCodeData, isProfileDataLoading, isProductHierarchyLoading } = props;
+    const { isProductHierarchyDataLoaded, VehicleLovCodeData, fetchProductLovCode, ProductLovLoading, resetCodeData, isProfileDataLoading, isProductHierarchyLoading, typedataMaster } = props;
 
     const [listFilterForm] = Form.useForm();
 
@@ -191,7 +192,6 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     const [rules, setrules] = useState({ ...rulesIntialstate });
 
     const onSuccessAction = (res) => {
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
@@ -265,7 +265,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
                 key: 'model',
                 title: 'Model',
                 value: filterString?.model,
-                name: vehicleModelData?.find((element, index) => filterString?.model === element?.prodctCode)?.prodctShrtName,
+                name: vehicleModelData?.find((element) => filterString?.model === element?.prodctCode)?.prodctShrtName,
                 canRemove: true,
                 filter: true,
             },
@@ -501,16 +501,16 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     const onFinish = () => {
         const checklistNumber = ProfileData?.checklistNumber ?? '';
         const chassisNumber = selectedRecord?.chassisNumber ?? '';
-        const checklistModifiedData = checkListDataModified
-            ?.filter((element) => {
-                const { ismodified, index, ...rest } = element;
-                if (ismodified) return rest;
-                return false;
-            })
-            ?.map((item) => {
-                const { ismodified, index, ...rest } = item;
-                return { ...rest, answerFromDate: rest?.answerFromDate?.toISOString(), answerToDate: rest?.answerToDate?.toISOString() };
-            });
+        const checklistModifiedData = checkListDataModified?.flatMap((item) => {
+            if (item?.ismodified) {
+                if (item?.hasOwnProperty('ismodified') && item?.hasOwnProperty('index')) {
+                    const { ismodified, index, ...rest } = item;
+                    return { ...rest, answerFromDate: rest?.answerFromDate?.toISOString(), answerToDate: rest?.answerToDate?.toISOString() };
+                }
+                return { ...item, answerFromDate: item?.answerFromDate?.toISOString(), answerToDate: item?.answerToDate?.toISOString() };
+            }
+            return [];
+        });
 
         const data = {
             checklistDetailList: checklistModifiedData,
@@ -682,9 +682,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     };
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
-        // icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
-
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
         filterString,

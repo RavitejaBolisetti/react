@@ -66,6 +66,7 @@
                             text-align: center;
                             padding: 5px 10px;
                             border-radius: 5px;
+                            z-index: 10;
 
                             &:after {
                                 content: '';
@@ -74,11 +75,12 @@
                                 width: 0;
                                 z-index: 1;
                                 border-style: solid;
-                                // border-color: $transparentColor;
+                                border-color: $transparentErrorL $transparentColor;
                                 border-width: 0 10px 10px;
                                 top: -10px;
                                 left: 50%;
                                 margin-left: -10px;
+                                z-index: 10;
                             }
                         }
                     }

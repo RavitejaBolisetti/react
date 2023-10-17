@@ -156,6 +156,7 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
                 customURL,
                 onSuccessAction: (res) => {
                     if(res.data.documentId){
+                        setFileList([]);  
                         setDocData(res.data);
                         setSingleDisabled(true);
                         setDraggerDisable(true);

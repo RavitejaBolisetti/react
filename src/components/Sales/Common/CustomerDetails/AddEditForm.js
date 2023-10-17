@@ -62,7 +62,8 @@ const AddEditFormBase = (props) => {
 
     const handleOnChange = (e) => {
         let bookingCustomer = form.getFieldsValue()?.bookingCustomer || formData?.bookingCustomer;
-        const data = { ...bookingCustomer, birthDate: formattedCalendarDate(bookingCustomer?.birthDate) };
+
+        const data = { ...bookingCustomer, birthDate: !form.getFieldsValue()?.bookingCustomer ? formattedCalendarDate(bookingCustomer?.birthDate) : bookingCustomer?.birthDate };
         if (e.target.checked) {
             setSameAsBookingCustomer(true);
             form?.setFieldsValue({ billingCustomer: data, bookingCustomer: data });

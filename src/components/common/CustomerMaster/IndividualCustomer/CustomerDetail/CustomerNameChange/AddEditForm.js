@@ -16,10 +16,16 @@ import styles from 'assets/sass/app.module.scss';
 
 const AddEditFormMain = (props) => {
     const { typeData, formData, formActionType: { editMode } = undefined, showGlobalNotification, buttonData, setButtonData, fileList } = props;
-    const { form, setActiveKey, customerNameList, setCustomerNameList, downloadFileFromButton, setNameChangeRequested, nameChangeHistoryItemList, setNameChangeHistoryItemList } = props;
+    const { form, setActiveKey, customerNameList, setCustomerNameList, downloadFileFromButton, setNameChangeRequested, nameChangeHistoryItemList, setNameChangeHistoryItemList, setUploadedFile, setFileList } = props;
 
     const [singleDisabled, setSingleDisabled] = useState(false);
     const [uploadedFileInformation, setUploadedFileInformation = undefined] = useState([]);
+
+    const onRemove = () => {
+        setFileList([]);
+        setUploadedFile();
+        setSingleDisabled(false);
+    };
 
     const uploadProps = {
         form: form,
@@ -30,6 +36,7 @@ const AddEditFormMain = (props) => {
         flag: true,
         uploadedFileInformation,
         setUploadedFileInformation,
+        onRemove,
         ...props,
     };
 

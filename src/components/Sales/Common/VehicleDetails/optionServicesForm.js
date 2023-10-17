@@ -16,8 +16,7 @@ const OptionServicesFormMain = (props) => {
 
     useEffect(() => {
         if (optionalServices) {
-            const serviceNameList = optionalServices?.map((i) => i?.serviceName);
-            setUniqueServiceOptions(uniqueServiceOptions?.map((element) => ({ ...element, disabled: serviceNameList?.includes(element?.chargeDescription) })));
+            setUniqueServiceOptions(uniqueServiceOptions?.map((element) => ({ ...element, disabled: optionalServices?.findIndex((i) => i?.serviceName === element?.chargeDescription && i?.status) !== -1 })));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [optionalServices]);
@@ -26,7 +25,7 @@ const OptionServicesFormMain = (props) => {
         optionForm
             .validateFields()
             .then((values) => {
-                const data = { serviceName: values?.serviceName, amount: values?.amount, taxId: values?.taxId, id: '' };
+                const data = { serviceName: values?.serviceName, amount: values?.amount, taxId: values?.taxId, id: values?.id || '', status: values?.status || false };
                 setOptionalServices((prev) => {
                     if (Object.keys(editingOptionalData || {})?.length) {
                         let updatedVal = [...prev];
@@ -57,6 +56,8 @@ const OptionServicesFormMain = (props) => {
                                 <Form.Item hidden name="otfNumber" initialValue={selectedOrderId} />
                                 <Form.Item hidden name="otfId" initialValue={formData?.otfId ?? ''} />
                                 <Form.Item hidden name="serviceName" />
+                                <Form.Item hidden name="status" initialValue={true} />
+                                <Form.Item hidden name="id" />
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Amount" name="amount" rules={[validateRequiredInputField('Amount'), validateNumberWithTwoDecimalPlaces('Amount')]}>

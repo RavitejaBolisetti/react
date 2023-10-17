@@ -39,7 +39,7 @@ const mapStateToProps = (state) => {
                 VehicleChecklistMasterListAttributeLov: { isLoaded: isVehicleChecklistMasterAtrributeLovLoaded = false, data: VehicleChecklistAttributeLov = [] },
             },
             OTF: {
-                LoyaltyModelGroup: { isLoading: isModelLoading, data: modelGroupData = [] },
+                LoyaltyModelGroup: { isLoading: isModelLoading, filteredListData: modelGroupData = [] },
             },
         },
     } = state;
@@ -77,7 +77,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchVehicleChecklistAttributeLov: vehicleChecklistMasterAttributeLovDataActions.fetchList,
             listShowLoadingVehicleChecklistAttributeLov: vehicleChecklistMasterAttributeLovDataActions.listShowLoading,
 
-            fetchModelLovList: otfLoyaltyModelGroupDataActions.fetchList,
+            fetchModelLovList: otfLoyaltyModelGroupDataActions.fetchFilteredList,
             listModelShowLoading: otfLoyaltyModelGroupDataActions.listShowLoading,
 
             showGlobalNotification,
@@ -304,9 +304,11 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
         } else if (values?.attributeLevel === VEHICLE_CHECKLIST_TYPE?.CHECKLIST?.key) {
             if (modelData?.length <= 0) {
                 showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please add atleast one model' });
+                return;
             }
             if (answerType === ANSWER_TYPES?.Fixed?.key && answerData?.length <= 0) {
                 showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please add atleast one answer' });
+                return;
             }
             data = {
                 attributeLevel: values?.attributeLevel,
@@ -346,9 +348,8 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
                     const answerTypeName = typeData?.CHKL_ANS_TYPE?.find((e) => e?.key === res?.data?.checklistDto?.children?.[0]?.answerType)?.value;
                     const attachmentRequiredName = typeData?.ATT_TYPE?.find((e) => e?.key === res?.data?.checklistDto?.children?.[0]?.attachmentRequired)?.value;
                     setFormData({ ...res?.data?.checklistDto?.children?.[0], parentName: attributeParentName, attributeName, answerTypeName, attachmentRequiredName });
-                    setModelData(res?.data?.checklistDto?.children?.[0]?.model?.length > 0 ? [...res?.data?.checklistDto?.children?.[0]?.model] : []);
-                    setAnswerData(res?.data?.checklistDto?.children?.[0]?.answer?.length > 0 ? [...res?.data?.checklistDto?.children?.[0]?.model] : []);
                     setSelectedTreeKey([res?.data?.checklistDto?.children?.[0]?.id]);
+                    setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: false, siblingBtn: true });
                 }
                 setFormActionType(FROM_ACTION_TYPE.VIEW);
                 setFormBtnActive(false);
@@ -462,6 +463,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
         modelEdit,
         setModelEdit,
         listShowLoadingVehicleChecklist,
+        showGlobalNotification,
     };
 
     const viewProps = {

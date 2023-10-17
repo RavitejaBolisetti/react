@@ -16,7 +16,7 @@ import { prepareCaption } from 'utils/prepareCaption';
 import styles from 'assets/sass/app.module.scss';
 
 const AddEditFormMain = (props) => {
-    const { formData, disabledProps, formActionType, typeData, salesConsultantLov,handleDeliveryChange } = props;
+    const { formData, disabledProps, formActionType, typeData, salesConsultantLov, handleDeliveryChange } = props;
 
     return (
         <Card>
@@ -71,9 +71,9 @@ const AddEditFormMain = (props) => {
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.deliveryAt} label="Delivery At" name="deliveryAt" rules={[validateRequiredSelectField('delivery at')]}>
-                        {customSelectBox({ data: typeData['DELIVERYAT_IND'], onChange : handleDeliveryChange })}
+                        {customSelectBox({ data: typeData['DELIVERYAT_IND'], onChange: handleDeliveryChange })}
                     </Form.Item>
-                </Col>  
+                </Col>
             </Row>
 
             <Row gutter={20}>
@@ -107,7 +107,7 @@ const AddEditFormMain = (props) => {
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formActionType?.editMode ? (formData?.referral === 'Y' ? true : false) : false} labelAlign="left" wrapperCol={{ span: 24 }} name="referral" label="Referral" valuePropName="checked">
+                    <Form.Item initialValue={formActionType?.editMode ? (formData?.referral === 'Y' ? true : false) : false} labelAlign="left" wrapperCol={{ span: 24 }} name="referral" label="Referral Scheme" valuePropName="checked">
                         <Switch checkedChildren="Yes" unCheckedChildren="No" valuePropName="checked" onChange={(checked) => (checked ? 'Y' : 'N')} />
                     </Form.Item>
                 </Col>

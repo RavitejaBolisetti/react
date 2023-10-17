@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Card, Typography, Collapse, Divider, Space, Row, Badge } from 'antd';
+import { Card, Typography, Collapse, Divider, Space, Badge } from 'antd';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import styles from './Dashboard.module.scss';
 
@@ -58,20 +58,12 @@ const DashboardActionItems = () => {
 
     const handleCollapse = (values) => {
         setActiveKey(values);
-        // const isPresent = activeKey?.includes(values);
-        // if (!isPresent && values?.length) {
-        //     setActiveKey( values?.[0] ? [values?.[0]] : []);
-        // } else if (isPresent && values?.length ) {
-        //     setActiveKey([values?.[1]]);
-        // } else {
-        //     setActiveKey([values?.[0]]);
-        // }
     };
 
     return (
         <Card className={styles.dashboardActionItemsContent}>
             <Collapse bordered={false} collapsible="icon" expandIcon={expandIcon} expandIconPosition={'start'} activeKey={activeKey} onChange={handleCollapse}>
-                {Object.entries(actionsData || {})?.map(([key, value]) => (
+                {Object.entries(actionsData || {})?.map(([key, value], index) => (
                     <Panel
                         header={
                             <>
@@ -79,12 +71,12 @@ const DashboardActionItems = () => {
                                 <Badge count={value?.actions?.length} />
                             </>
                         }
-                        key={key}
+                        key={'ac' + index}
                     >
                         <Space size={5} direction="vertical">
-                            {value?.actions?.map((i) => (
-                                <Text>
-                                    {i?.actionTitle} <Divider type="vertical" /> <span>{i?.date}</span>
+                            {value?.actions?.map((action, i) => (
+                                <Text key={'aci' + i}>
+                                    {action?.actionTitle} <Divider type="vertical" /> <span>{action?.date}</span>
                                 </Text>
                             ))}
                         </Space>

@@ -27,6 +27,19 @@ const AddEditFormMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pincodeData]);
 
+    useEffect(() => {
+        if (formActionType?.editMode) {
+            form.setFieldsValue({
+                address: chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.address,
+                pinCode: chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.pinCode,
+                city: chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.city,
+                state: chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.state,
+                customerMobileNumber: chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.customerMobileNumber,
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [chargerInstallationMasterData, formActionType]);
+
     const addressProps = {
         bordered: false,
         colon: false,

@@ -71,8 +71,8 @@ export const AddressCommonForm = (props) => {
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'email']} label="Email" initialValue={formData?.email} rules={[validateEmailField('Email')]}>
-                        <Input placeholder={preparePlaceholderText('Email')} maxLength={50} disabled={true} />
+                    <Form.Item name={[formType, 'email']} label="Email ID" initialValue={formData?.email} rules={[validateEmailField('Email ID')]}>
+                        <Input placeholder={preparePlaceholderText('Email ID')} maxLength={50} disabled={true} />
                     </Form.Item>
                 </Col>
 
