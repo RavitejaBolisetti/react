@@ -395,54 +395,54 @@ const ExchangeVehiclesBase = (props) => {
             .catch((err) => {});
     };
 
-    const onSearch = (value) => {
-        if (!value) {
-            return false;
-        }
-        const defaultExtraParam = [
-            {
-                key: 'pageSize',
-                title: 'Value',
-                value: 1000,
-                canRemove: true,
-            },
-            {
-                key: 'pageNumber',
-                title: 'Value',
-                value: 1,
-                canRemove: true,
-            },
+    // const onSearch = (value) => {
+    //     if (!value) {
+    //         return false;
+    //     }
+    //     const defaultExtraParam = [
+    //         {
+    //             key: 'pageSize',
+    //             title: 'Value',
+    //             value: 1000,
+    //             canRemove: true,
+    //         },
+    //         {
+    //             key: 'pageNumber',
+    //             title: 'Value',
+    //             value: 1,
+    //             canRemove: true,
+    //         },
 
-            {
-                key: 'searchType',
-                title: 'Type',
-                value: 'registrationNumber',
-                canRemove: true,
-            },
-            {
-                key: 'searchParam',
-                title: 'Value',
-                value: value,
-                canRemove: true,
-            },
-        ];
+    //         {
+    //             key: 'searchType',
+    //             title: 'Type',
+    //             value: 'registrationNumber',
+    //             canRemove: true,
+    //         },
+    //         {
+    //             key: 'searchParam',
+    //             title: 'Value',
+    //             value: value,
+    //             canRemove: true,
+    //         },
+    //     ];
 
-        fetchCustomerList({
-            setIsLoading: listCustomerShowLoading,
-            extraParams: defaultExtraParam,
-            userId,
-            customURL,
-            onSuccessAction: (res) => {
-                if (res?.data?.customerMasterDetails?.length > 0) {
-                    setCustomerList(res?.data?.customerMasterDetails);
-                } else {
-                    res?.data?.customerMasterDetails && setFormData(res?.data?.customerMasterDetails?.[0]);
-                    handleFormValueChange();
-                }
-            },
-            onErrorAction,
-        });
-    };
+    //     fetchCustomerList({
+    //         setIsLoading: listCustomerShowLoading,
+    //         extraParams: defaultExtraParam,
+    //         userId,
+    //         customURL,
+    //         onSuccessAction: (res) => {
+    //             if (res?.data?.customerMasterDetails?.length > 0) {
+    //                 setCustomerList(res?.data?.customerMasterDetails);
+    //             } else {
+    //                 res?.data?.customerMasterDetails && setFormData(res?.data?.customerMasterDetails?.[0]);
+    //                 handleFormValueChange();
+    //             }
+    //         },
+    //         onErrorAction,
+    //     });
+    // };
 
     const formProps = {
         ...props,
@@ -468,7 +468,7 @@ const ExchangeVehiclesBase = (props) => {
         isVariantLoading,
         variantData,
         isLoading,
-        onSearch,
+        // onSearch, unused code please check this method
         handleFilterChange,
         filteredModelData,
         filteredVariantData,

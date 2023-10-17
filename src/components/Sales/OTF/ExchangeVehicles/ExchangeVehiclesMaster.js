@@ -254,6 +254,7 @@ const ExchangeVehiclesBase = (props) => {
     const MAHINDRA_MAKE = 'MM';
 
     const handleFilterChange = (name, value) => {
+        const isMnM = form.getFieldValue('make') === MAHINDRA_MAKE || exchangeData?.make === MAHINDRA_MAKE;
         if (!value) {
             switch (name) {
                 case 'make': {
@@ -290,22 +291,14 @@ const ExchangeVehiclesBase = (props) => {
                 modelGroup: undefined,
                 variant: undefined,
             });
-            if (form.getFieldValue('make') === MAHINDRA_MAKE || (formActionType?.viewMode && exchangeData?.make === MAHINDRA_MAKE)) {
-                fetchModelLovList({ customURL: BASE_URL_PRODUCT_MODEL_GROUP.concat('/lov'), setIsLoading: listModelShowLoading, userId });
-            } else {
-                fetchModelLovList({ setIsLoading: listModelShowLoading, userId, extraParams: makeExtraParams('make', 'make', value, 'make') });
-            }
+            fetchModelLovList({ customURL: isMnM ? BASE_URL_PRODUCT_MODEL_GROUP.concat('/lov') : undefined, setIsLoading: listModelShowLoading, userId });
         } else if (name === 'modelGroup') {
+            setfilteredVariantData();
             form.setFieldsValue({
                 variant: undefined,
             });
-
-            setfilteredVariantData();
-            if (form.getFieldValue('make') === MAHINDRA_MAKE || (formActionType?.viewMode && exchangeData?.make === MAHINDRA_MAKE)) {
-                fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('modelGroupCode', 'modelGroupCode', value, 'modelGroupCode') });
-            } else {
-                fetchVariantLovList({ setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('model', 'model', value, 'model') });
-            }
+            const extraParams = isMnM ? makeExtraParams('modelGroupCode', 'modelGroupCode', value, 'modelGroupCode') : makeExtraParams('model', 'model', value, 'model');
+            fetchVariantLovList({ customURL: isMnM ? BASE_URL_PRODUCT_VARIENT.concat('/lov') : undefined, setIsLoading: listVariantShowLoading, userId, extraParams });
         }
     };
 
