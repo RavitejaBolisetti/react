@@ -19,7 +19,7 @@ import { dateTimeDuration } from 'utils/formatDateTime';
 
 const { Text, Title } = Typography;
 
-const data = [
+const billingData = [
     { type: 'Scorpio', sales: 60 },
     { type: 'XUV700', sales: 120 },
     { type: 'Thar', sales: 80 },
@@ -30,7 +30,7 @@ const data = [
     { type: 'Scarpio Classic', sales: 50 },
 ];
 
-const data1 = [
+const retailData = [
     { type: 'Scorpio', sales: 30 },
     { type: 'XUV700', sales: 90 },
     { type: 'Thar', sales: 70 },
@@ -60,18 +60,18 @@ const keyHightliteData = [
     { shortDescription: 'GST Update', longDescription: "GSTR 2 due date is 20th Oct'23", createdDate: '2023-10-16 17:45:00' },
 ];
 
-const detailNews = {
-    content:
-        'Mahindra & Mahindra, the popular Indian car manufacturing brand, has recorded its highest ever sales in the month of July 2023. Mahindra & Mahindra is popularly known for their rugged luxury SUV’s such as XUV 700, Scorpio-N, Scorpio Classic, Thar and compact SUV’s such as XUV 300 and XUV 400 EV.Mahindra & Mahindra, the popular Indian car manufacturing brand, has recorded its highest ever sales in the month of July 2023. Mahindra & Mahindra is popularly known for their rugged luxury SUV’s such as XUV 700, Scorpio-N, Scorpio Classic, Thar and compact SUV’s such as XUV. Mahindra & Mahindra, the popular Indian car manufacturing brand, has recorded its highest ever sales in the month of July 2023. Mahindra & Mahindra is popularly known for their rugged luxury SUV’s such as XUV 700, Scorpio-N, Scorpio Classic, Thar and compact SUV’s such as XUV 300 and XUV 400 EV.',
-};
-const newsData = [
-    { shortDescription: 'Mahindra & Mahindra sells 36,205 SUVs in July 2023', longDescription: 'Mahindra & Mahindra, the popular Indian car manufacturing brand.', date: '5 min ago', content: detailNews?.content },
-    { shortDescription: 'Mahindra Sales in July hits highest mark as per TOI Survey', longDescription: 'Mahindra & Mahindra is popularly known for their rugged luxury.', date: '50 min ago', content: detailNews?.content },
-    { shortDescription: 'Mahindra Scorpio Sales Rise By Over 2-Folds', longDescription: 'Mahindra & Mahindra, the popular Indian car manufacturing brand', date: '9 min ago', content: detailNews?.content },
-    { shortDescription: 'Mahindra & Mahindra sells 36,205 SUVs in July 2023', longDescription: 'Mahindra & Mahindra, the popular Indian car manufacturing brand.', date: '5 min ago', content: detailNews?.content },
-    { shortDescription: 'Mahindra Sales in July hits highest mark as per TOI Survey', longDescription: 'Mahindra & Mahindra is popularly known for their rugged luxury.', date: '50 min ago', content: detailNews?.content },
-    { shortDescription: 'Mahindra Scorpio Sales Rise By Over 2-Folds', longDescription: 'Mahindra & Mahindra, the popular Indian car manufacturing brand', date: '9 min ago', content: detailNews?.content },
-];
+// const detailNews = {
+//     content:
+//         'Mahindra & Mahindra, the popular Indian car manufacturing brand, has recorded its highest ever sales in the month of July 2023. Mahindra & Mahindra is popularly known for their rugged luxury SUV’s such as XUV 700, Scorpio-N, Scorpio Classic, Thar and compact SUV’s such as XUV 300 and XUV 400 EV.Mahindra & Mahindra, the popular Indian car manufacturing brand, has recorded its highest ever sales in the month of July 2023. Mahindra & Mahindra is popularly known for their rugged luxury SUV’s such as XUV 700, Scorpio-N, Scorpio Classic, Thar and compact SUV’s such as XUV. Mahindra & Mahindra, the popular Indian car manufacturing brand, has recorded its highest ever sales in the month of July 2023. Mahindra & Mahindra is popularly known for their rugged luxury SUV’s such as XUV 700, Scorpio-N, Scorpio Classic, Thar and compact SUV’s such as XUV 300 and XUV 400 EV.',
+// };
+// const newsData = [
+//     { shortDescription: 'Mahindra & Mahindra sells 36,205 SUVs in July 2023', longDescription: 'Mahindra & Mahindra, the popular Indian car manufacturing brand.', date: '5 min ago', content: detailNews?.content },
+//     { shortDescription: 'Mahindra Sales in July hits highest mark as per TOI Survey', longDescription: 'Mahindra & Mahindra is popularly known for their rugged luxury.', date: '50 min ago', content: detailNews?.content },
+//     { shortDescription: 'Mahindra Scorpio Sales Rise By Over 2-Folds', longDescription: 'Mahindra & Mahindra, the popular Indian car manufacturing brand', date: '9 min ago', content: detailNews?.content },
+//     { shortDescription: 'Mahindra & Mahindra sells 36,205 SUVs in July 2023', longDescription: 'Mahindra & Mahindra, the popular Indian car manufacturing brand.', date: '5 min ago', content: detailNews?.content },
+//     { shortDescription: 'Mahindra Sales in July hits highest mark as per TOI Survey', longDescription: 'Mahindra & Mahindra is popularly known for their rugged luxury.', date: '50 min ago', content: detailNews?.content },
+//     { shortDescription: 'Mahindra Scorpio Sales Rise By Over 2-Folds', longDescription: 'Mahindra & Mahindra, the popular Indian car manufacturing brand', date: '9 min ago', content: detailNews?.content },
+// ];
 // const birthDayData = {
 //     birthDaytoday: [
 //         { name: 'Shally Gupta', date: '17, Feb 2023 Sunday', image: '' },
@@ -207,12 +207,12 @@ const DashboardBase = ({ props }) => {
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Card title={'Billing'}>
-                            <StatusBar data={data} />
+                            <StatusBar data={billingData} />
                         </Card>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Card title={'Retail'}>
-                            <StatusBar data={data1} />
+                            <StatusBar data={retailData} />
                         </Card>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
