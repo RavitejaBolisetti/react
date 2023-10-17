@@ -834,7 +834,6 @@ export const VehicleInvoiceMasterBase = (props) => {
         invoiceDetailForm,
         formActionType,
         setFormActionType,
-        // onFinish,
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
