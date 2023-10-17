@@ -32,6 +32,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { VEHICLE_INVOICE_SECTION } from 'constants/VehicleInvoiceSection';
 import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
 import { OTF_STATUS } from 'constants/OTFStatus';
+import { otfvehicleDetailsDataActions } from 'store/actions/data/otf/vehicleDetails';
 
 const mapStateToProps = (state) => {
     const {
@@ -73,6 +74,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
+            fetchVehcileDetail: otfvehicleDetailsDataActions.fetchList,
+
             fetchList: vehicleInvoiceGenerationDataActions.fetchList,
             listShowLoading: vehicleInvoiceGenerationDataActions.listShowLoading,
             fetchInvoiceMasterData: vehicleInvoiceGenerationDataActions.fetchDetail,
@@ -96,7 +99,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VehicleInvoiceMasterBase = (props) => {
-    const { data, receiptDetailData, userId, fetchList, listShowLoading, showGlobalNotification, fetchInvoiceMasterData } = props;
+    const { data, receiptDetailData, userId, fetchList, fetchVehcileDetail, listShowLoading, showGlobalNotification, fetchInvoiceMasterData } = props;
     const { isVehicleInvoiceDataLoading, listDetailShowLoading } = props;
     const { typeData, receiptType, partySegmentType, saveData, paymentModeType, documentType, moduleTitle, totalRecords } = props;
     const { filterString, setFilterString, invoiceStatusList, vehicleInvoiceMasterData, resetDetailData, resetOtfData } = props;
@@ -382,6 +385,43 @@ export const VehicleInvoiceMasterBase = (props) => {
             ];
 
             const onSuccessAction = (res) => {
+                const { otfId, modelCode, saleType, priceType, discountAmount } = res?.data?.vehicleDetails;
+
+                if (otfId) {
+                    const extraParams = [
+                        {
+                            key: 'otfId',
+                            value: otfId,
+                        },
+                        {
+                            key: 'modelCode',
+                            value: modelCode,
+                        },
+                        {
+                            key: 'saleType',
+                            value: saleType,
+                        },
+                        {
+                            key: 'priceType',
+                            value: priceType,
+                        },
+                        {
+                            key: 'discountAmount',
+                            value: discountAmount,
+                        },
+                    ];
+
+                    fetchVehcileDetail({
+                        setIsLoading: listShowLoading,
+                        userId,
+                        extraParams,
+                        onErrorAction,
+                        onSuccessAction: (response) => {
+                            setRequestPayload({ ...vehicleInvoiceMasterData, vehicleDetails: response?.data });
+                        },
+                    });
+                }
+
                 if (!selectedRecordId && res?.data?.invoiceDetails?.otfDetailsRequest?.orderStatus === OTF_STATUS?.INVOICED?.key) {
                     invoiceDetailForm.setFieldValue();
                     setSelectedOrder();
@@ -686,8 +726,8 @@ export const VehicleInvoiceMasterBase = (props) => {
 
         setAdditionalReportParams([
             {
-                key: 'invoice_id',
-                value: record?.invoiceNumber,
+                key: 'sa_od_invoice_hdr_id',
+                value: record?.id,
             },
         ]);
     };
@@ -698,8 +738,8 @@ export const VehicleInvoiceMasterBase = (props) => {
 
         setAdditionalReportParams([
             {
-                key: 'invoice_id',
-                value: record?.invoiceNumber,
+                key: 'sa_od_invoice_hdr_id',
+                value: record?.id,
             },
         ]);
     };

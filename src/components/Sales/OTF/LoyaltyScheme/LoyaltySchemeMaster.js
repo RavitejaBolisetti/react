@@ -212,7 +212,7 @@ const LoyaltySchemeMasterMain = (props) => {
         if (LoyaltySchemeData) {
             setformData(LoyaltySchemeData);
             LoyaltySchemeData?.make && handleFilterChange('make', LoyaltySchemeData?.make ?? '');
-            LoyaltySchemeData?.vehicleModelGroup && handleFilterChange('modelGroup', LoyaltySchemeData?.vehicleModelGroup ?? '');
+            LoyaltySchemeData?.vehicleModelGroup && handleFilterChange('modelGroupCode', LoyaltySchemeData?.vehicleModelGroup ?? '');
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [LoyaltySchemeData]);
@@ -268,7 +268,7 @@ const LoyaltySchemeMasterMain = (props) => {
                 modelGroup: undefined,
                 variant: undefined,
             });
-            fetchModelLovList({ setIsLoading: listModelShowLoading, userId, extraParams: makeExtraParams('make', 'make', value, 'make') });
+            fetchModelLovList({ setIsLoading: listModelShowLoading, userId });
         } else if (name === 'modelGroupCode') {
             form.setFieldsValue({
                 variant: undefined,
