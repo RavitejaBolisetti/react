@@ -109,7 +109,6 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [invoiceStatus, setInvoiceStatus] = useState(QUERY_BUTTONS_CONSTANTS.INVOICED.key);
     const [requestPayload, setRequestPayload] = useState({});
-    console.log('🚀 ~ file: VehicleInvoiceMaster.js:112 ~ VehicleInvoiceMasterBase ~ requestPayload:', requestPayload);
 
     const [listFilterForm] = Form.useForm();
     const [cancelInvoiceForm] = Form.useForm();
@@ -399,15 +398,15 @@ export const VehicleInvoiceMasterBase = (props) => {
                             value: modelCode,
                         },
                         {
-                            key: 'otfId',
+                            key: 'saleType',
                             value: saleType,
                         },
                         {
-                            key: 'otfId',
+                            key: 'priceType',
                             value: priceType,
                         },
                         {
-                            key: 'otfId',
+                            key: 'discountAmount',
                             value: discountAmount,
                         },
                     ];
