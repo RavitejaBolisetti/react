@@ -24,7 +24,7 @@ export const ThankYouMaster = (props) => {
 
     useEffect(() => {
         return () => {
-            setButtonData({ ...defaultBtnVisiblity, printForm21Btn: true, printInvoiceBtn: true, cancelInvoiceBtn: true });
+            setButtonData({ ...defaultBtnVisiblity, closeBtn: true, printForm21Btn: true, printInvoiceBtn: true, cancelInvoiceBtn: true });
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -61,7 +61,7 @@ export const ThankYouMaster = (props) => {
                                             <path d="M7.64062 1.75V5.425H11.3156" stroke="#FF3E5B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                         </svg>
                                     }
-                                    onClick={() => onPrintInvoice({ id: otfData?.id })}
+                                    onClick={() => onPrintInvoice()}
                                 >
                                     Download/Print Invoice
                                 </Button>

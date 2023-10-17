@@ -3,15 +3,14 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, Descriptions } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
 import { prepareCaption } from 'utils/prepareCaption';
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading, modelData, variantData, typeData, schemeLovData, financeLovData, MAHINDRA_MAKE } = props;
-
+    const { formData, isLoading, modelData, variantData, typeData, schemeLovData, financeLovData, isMahindraMake } = props;
     const viewProps = {
         bordered: false,
         colon: false,
@@ -19,10 +18,28 @@ const ViewDetailMain = (props) => {
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
 
-    const isMnM = MAHINDRA_MAKE === formData?.make;
+    const [nameAttributes, setnameAttributes] = useState({ modelGroupName: '', variantName: '' });
 
-    const modelGroupName = checkAndSetDefaultValue(isMnM ? getCodeValue(modelData, formData?.modelGroup, 'modelGroupDescription', false, 'modelGroupCode') : getCodeValue(modelData, formData?.modelGroup), isLoading);
-    const variantName = checkAndSetDefaultValue(isMnM ? getCodeValue(variantData, formData?.variant, 'variantDescription', false, 'variantCode') : getCodeValue(variantData, formData?.variant), isLoading);
+    useEffect(() => {
+        if (formData && formData?.make && modelData?.length && variantData?.length) {
+            if (isMahindraMake) {
+                const modelGroupName = getCodeValue(modelData, formData?.modelGroup, 'modelGroupDescription', false, 'modelGroupCode');
+                const variantName = getCodeValue(variantData, formData?.variant, 'variantDescription', false, 'variantCode');
+                setnameAttributes({
+                    modelGroupName,
+                    variantName,
+                });
+            } else {
+                const modelGroupName = getCodeValue(modelData, formData?.modelGroup);
+                const variantName = getCodeValue(variantData, formData?.variant);
+                setnameAttributes({
+                    modelGroupName,
+                    variantName,
+                });
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData, isMahindraMake, modelData, variantData]);
 
     return (
         <Card>
@@ -34,8 +51,8 @@ const ViewDetailMain = (props) => {
                     <Descriptions {...viewProps} title={prepareCaption('Vehicle Details')}>
                         <Descriptions.Item label="Old Reg. Number">{checkAndSetDefaultValue(formData?.oldRegistrationNumber, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Make">{checkAndSetDefaultValue(getCodeValue(typeData?.VEHCL_MFG, formData?.make), isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Model Group">{modelGroupName}</Descriptions.Item>
-                        <Descriptions.Item label="Variant">{variantName}</Descriptions.Item>
+                        <Descriptions.Item label="Model Group">{nameAttributes?.modelGroupName}</Descriptions.Item>
+                        <Descriptions.Item label="Variant">{nameAttributes?.variantName}</Descriptions.Item>
                         <Descriptions.Item label="KMS">{checkAndSetDefaultValue(formData?.kilometer, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Usage">{checkAndSetDefaultValue(getCodeValue(typeData?.VEHCL_USAG, formData?.usageCode), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Year of Registration">{checkAndSetDefaultValue(formData?.yearOfRegistrationCode, isLoading)}</Descriptions.Item>

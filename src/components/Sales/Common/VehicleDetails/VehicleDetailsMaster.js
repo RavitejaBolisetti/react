@@ -133,7 +133,7 @@ const VehicleDetailsMasterMain = (props) => {
 
     useEffect(() => {
         if (userId && selectedRecordId) {
-            if (isOTFModule) {
+            if (isOTFModule && !isLoading) {
                 const extraParams = [
                     {
                         key: 'otfId',
@@ -227,7 +227,7 @@ const VehicleDetailsMasterMain = (props) => {
     }, [productAttributeData, isProductHierarchyDataLoaded, userId]);
 
     useEffect(() => {
-        if (vehicleDetailData?.modelCode) {
+        if (vehicleDetailData?.modelCode && !isProductHierarchyDataLoaded) {
             const lovExtraParams = [
                 {
                     key: 'prodctCode',

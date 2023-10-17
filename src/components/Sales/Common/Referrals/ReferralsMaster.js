@@ -13,10 +13,14 @@ import { BASE_URL_CUSTOMER_MASTER_VEHICLE_LIST as customURL } from 'constants/ro
 import { otfReferralsDataActions } from 'store/actions/data/otf/referrals';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { AddEditForm, ViewDetail } from 'components/Sales/Common/Referrals';
+import { AddEditForm } from './AddEditForm';
+import { ViewDetail } from './ViewDetail';
+
+import { formatDate } from 'utils/formatDateTime';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'assets/sass/app.module.scss';
+import { SALES_MODULE_TYPE } from 'constants/salesModuleType';
 
 const mapStateToProps = (state) => {
     const {
@@ -24,7 +28,7 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             OTF: {
-                Referrals: { isLoaded: isDataLoaded = false, isLoading, filter: filterString },
+                Referrals: { isLoaded: isDataLoaded = false, isLoading, data: referralData = [], filter: filterString },
             },
         },
         customer: {
@@ -35,6 +39,7 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         isDataLoaded,
+        referralData,
         isLoading,
         isDataCustomerLoaded,
         isCustomerLoading,
@@ -49,6 +54,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
+            fetchList: otfReferralsDataActions.fetchList,
             fetchCustomerList: otfReferralsDataActions.fetchData,
             setFilterString: otfReferralsDataActions.setFilter,
             listShowLoading: otfReferralsDataActions.listShowLoading,
@@ -61,25 +67,58 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ReferralsMasterBase = (props) => {
-    const { formActionType, showGlobalNotification, listShowLoading, userId, referralData, isLoading } = props;
-    const { form, selectedOrderId, section, handleFormValueChange, onFinishFailed, fetchCustomerList, typeData, handleButtonClick, NEXT_ACTION } = props;
-    const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar } = props;
+    const { formActionType, fetchList, showGlobalNotification, saveData, listShowLoading, userId, referralData, referralDataPass, isLoading } = props;
+    const { form, selectedRecordId, selectedOrderId, section, handleFormValueChange, onFinishFailed, fetchCustomerList, typeData, handleButtonClick, NEXT_ACTION } = props;
+    const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar, salesModuleType } = props;
 
     const [searchForm] = Form.useForm();
-    const [formData, setFormData] = useState(referralData);
+    const [formData, setFormData] = useState();
     const [viewFormData, setViewFormData] = useState();
     const { filterString, setFilterString } = props;
 
     const [customerList, setCustomerList] = useState();
 
+    const isOTFModule = salesModuleType === SALES_MODULE_TYPE.OTF.KEY;
+
     useEffect(() => {
         setFilterString();
-        if (referralData) {
+        if (isOTFModule && referralData) {
             setFormData({ ...referralData });
-            setViewFormData({ ...referralData });
+            setButtonData({ ...buttonData, formBtnActive: false });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [referralData]);
+
+    useEffect(() => {
+        setFilterString();
+        if (referralDataPass) {
+            setFormData({ ...referralDataPass });
+            setViewFormData(referralDataPass);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [referralDataPass]);
+
+    const extraParams = [
+        {
+            key: 'otfId',
+            value: selectedRecordId,
+        },
+    ];
+
+    useEffect(() => {
+        if (isOTFModule && userId && selectedRecordId) {
+            fetchList({
+                setIsLoading: listShowLoading,
+                userId,
+                extraParams,
+                onSuccessAction: (res) => {
+                    setViewFormData(res?.data);
+                },
+                onErrorAction,
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, selectedRecordId]);
 
     useEffect(() => {
         if (userId && filterString?.searchType && filterString?.searchParam) {
@@ -134,11 +173,41 @@ const ReferralsMasterBase = (props) => {
     }, [filterString]);
 
     const onFinish = (values) => {
-        handleButtonClick({ buttonAction: NEXT_ACTION });
+        const data = { ...values, otfId: selectedRecordId, otfNumber: selectedOrderId, dob: formatDate(values?.dob), id: referralData?.id };
+        if (onFinishCustom) {
+            onFinishCustom({ key: formKey, values: data });
+            handleButtonClick({ buttonAction: NEXT_ACTION });
+        } else {
+            const onSuccess = (res) => {
+                form.resetFields();
+                showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+                fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction: onError, userId });
+            };
+
+            const onError = (message) => {
+                showGlobalNotification({ message });
+            };
+
+            const requestData = {
+                data: data,
+                method: referralData?.id ? 'put' : 'post',
+                setIsLoading: listShowLoading,
+                userId,
+                onError,
+                onSuccess,
+            };
+
+            saveData(requestData);
+        }
     };
 
     const onErrorAction = (message) => {
-        showGlobalNotification({ message });
+        // showGlobalNotification({ message });
+    };
+
+    const onSuccessAction = (res) => {
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
     const fnSetData = (data) => {
@@ -159,7 +228,6 @@ const ReferralsMasterBase = (props) => {
         typeData,
         searchForm,
         fnSetData,
-        viewOnly: true,
     };
 
     const viewProps = {
@@ -167,11 +235,6 @@ const ReferralsMasterBase = (props) => {
         formData: viewFormData,
         isLoading,
         typeData,
-    };
-
-    const buttonProps = {
-        ...props,
-        buttonData: { ...buttonData, formBtnActive: true },
     };
 
     return (
@@ -192,7 +255,7 @@ const ReferralsMasterBase = (props) => {
                 </Row>
                 <Row>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <FormActionButton {...buttonProps} />
+                        <FormActionButton {...props} />
                     </Col>
                 </Row>
             </Form>

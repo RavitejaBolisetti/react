@@ -7,9 +7,10 @@ import React from 'react';
 import { Card, Descriptions } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { prepareCaption } from 'utils/prepareCaption';
+import { getCodeValue } from 'utils/getCodeValue';
 
 const ViewDetailMain = (props) => {
-    const { styles, customerForm, isLoading } = props;
+    const { typeData, customerForm, isLoading, modelData, variantData } = props;
 
     const viewProps = {
         bordered: false,
@@ -18,13 +19,15 @@ const ViewDetailMain = (props) => {
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
 
+    const modelGroupName = getCodeValue(modelData, customerForm?.vehicleModelGroup, 'modelGroupDescription', false, 'modelGroupCode');
+    const variantName = getCodeValue(variantData, customerForm?.variantCode, 'variantDescription', false, 'variantCode');
     return (
         <Card>
             <Descriptions {...viewProps} title={prepareCaption('Vehicle Details')}>
                 <Descriptions.Item label="Old Reg. Number">{checkAndSetDefaultValue(customerForm?.registrationNumber, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Make">{checkAndSetDefaultValue(customerForm?.make, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Model Group">{checkAndSetDefaultValue(customerForm?.vehicleModelGroup, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Variant">{checkAndSetDefaultValue(customerForm?.variantName, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Make">{checkAndSetDefaultValue(getCodeValue(typeData?.VEHCL_MFG, customerForm?.make), isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Model Group">{checkAndSetDefaultValue(modelGroupName, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Variant">{checkAndSetDefaultValue(variantName, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Usage">{checkAndSetDefaultValue(customerForm?.vehicleUsage, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Year of Registration">{checkAndSetDefaultValue(customerForm?.registrationYear, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Month of Registration">{checkAndSetDefaultValue(customerForm?.registrationMonth, isLoading)}</Descriptions.Item>

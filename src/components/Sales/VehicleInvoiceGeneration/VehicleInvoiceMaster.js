@@ -295,7 +295,7 @@ export const VehicleInvoiceMasterBase = (props) => {
             setRequestPayload({ ...vehicleInvoiceMasterData });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [vehicleInvoiceMasterData, isInVoiceMasterDetailDataLoaded]);
+    }, [vehicleInvoiceMasterData, isInVoiceMasterDetailDataLoaded, formActionType]);
 
     useEffect(() => {
         if (selectedOrder || selectedOtfId) {
@@ -429,7 +429,8 @@ export const VehicleInvoiceMasterBase = (props) => {
                         extraParams,
                         onErrorAction,
                         onSuccessAction: (response) => {
-                            setRequestPayload({ ...res?.data, vehicleDetails: response?.data });
+                            setRequestPayload((prev) => ({ ...prev, vehicleDetails: response?.data }));
+                            // setRequestPayload({ ...vehicleInvoiceMasterData, vehicleDetails: response?.data });
                         },
                     });
                 }
@@ -711,26 +712,26 @@ export const VehicleInvoiceMasterBase = (props) => {
         setCancelInvoiceVisible(true);
     };
 
-    const onPrintInvoice = (record) => {
+    const onPrintInvoice = () => {
         setReportType(`Invoice`);
         setReportVisible(true);
 
         setAdditionalReportParams([
             {
                 key: 'sa_od_invoice_hdr_id',
-                value: record?.id,
+                value: selectedRecordId,
             },
         ]);
     };
 
-    const onPrintForm21 = (record) => {
+    const onPrintForm21 = () => {
         setReportType(`Form_21`);
         setReportVisible(true);
 
         setAdditionalReportParams([
             {
                 key: 'sa_od_invoice_hdr_id',
-                value: record?.id,
+                value: selectedRecordId,
             },
         ]);
     };

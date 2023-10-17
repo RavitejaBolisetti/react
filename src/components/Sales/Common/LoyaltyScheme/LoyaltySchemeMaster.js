@@ -3,13 +3,12 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Form, Row, Col } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { AddEditForm, ViewDetail } from 'components/Sales/Common/LoyaltyScheme';
-
 import { showGlobalNotification } from 'store/actions/notification';
 import { otfLoyaltySchemeDataActions } from 'store/actions/data/otf/loyaltyAndScheme';
 import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
@@ -20,13 +19,15 @@ import { otfLoyaltyVarientDetailDataActions } from 'store/actions/data/otf/loyal
 import { VEHICLE_COMPANY_MAKE } from 'constants/OTFStatus';
 
 import styles from 'assets/sass/app.module.scss';
+import { BASE_URL_PRODUCT_MODEL_GROUP, BASE_URL_PRODUCT_VARIENT } from 'constants/routingApi';
+import { SALES_MODULE_TYPE } from 'constants/salesModuleType';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
             OTF: {
-                LoyaltyScheme: { isLoaded: isLoyaltySchemeDataLoaded = false, isLoading, data: LoyaltySchemeData = [] },
+                LoyaltyScheme: { isLoaded: isLoyaltySchemeDataLoaded = false, isLoading, data: loyaltySchemeData = [] },
                 SchemeDetail: { isFilteredListLoaded: isSchemeLovDataLoaded = false, isLoading: isSchemeLovLoading, filteredListData: schemeLovData = [] },
                 LoyaltyModelGroup: { isFilteredListLoaded: isModelDataLoaded = false, isLoading: isModelLoading, filteredListData: modelData = [] },
                 LoyaltyVarient: { isFilteredListLoaded: isVariantDataLoaded = false, isLoading: isVariantLoading, filteredListData: variantData = [] },
@@ -45,7 +46,7 @@ const mapStateToProps = (state) => {
         isLoyaltySchemeDataLoaded,
         moduleTitle,
         isLoading,
-        LoyaltySchemeData,
+        loyaltySchemeData,
 
         schemeLovData,
         isSchemeLovLoading,
@@ -98,18 +99,19 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const LoyaltySchemeMasterMain = (props) => {
-    const { isLoyaltySchemeDataLoaded, isLoading, section, listShowLoading, fetchList, LoyaltySchemeData, userId, showGlobalNotification } = props;
+    const { isLoyaltySchemeDataLoaded, isLoading, section, listShowLoading, fetchList, loyaltySchemeData, loyaltySchemeDataPass, userId, showGlobalNotification } = props;
     const { form, selectedOrder, selectedRecordId, formActionType, handleFormValueChange, onFinishFailed, handleButtonClick, NEXT_ACTION } = props;
     const { typeData } = props;
     const { fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading } = props;
     const { isModelDataLoaded, isModelLoading, modelData, isVariantDataLoaded, isVariantLoading, variantData, saveData } = props;
     const { schemeLovData, isSchemeLovLoading, fetchSchemeLovList, listSchemeLovShowLoading } = props;
-    const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar } = props;
+    const { modelCode, formKey, onFinishCustom = undefined, FormActionButton, StatusBar, salesModuleType } = props;
 
     const [filteredModelData, setfilteredModelData] = useState([]);
     const [filteredVariantData, setfilteredVariantData] = useState([]);
     const [formData, setformData] = useState([]);
     const disabledProps = { disabled: true };
+    const [exhangeDataParams, setExchangeDataParams] = useState();
 
     const fnSetData = (data) => {
         if (data && Object?.keys(data)?.length > 0) {
@@ -123,10 +125,20 @@ const LoyaltySchemeMasterMain = (props) => {
         }
     };
 
-    const onErrorAction = (message) => {
-        // showGlobalNotification({ message });
-    };
-    const onSuccessAction = (res) => {};
+    const exhangeDataParamList = useMemo(() => {
+        return exhangeDataParams;
+    }, [exhangeDataParams]);
+
+    useEffect(() => {
+        if (exhangeDataParamList?.make && exhangeDataParamList?.modelGroup) {
+            fetchModelLovList({ customURL: BASE_URL_PRODUCT_MODEL_GROUP.concat('/lov'), setIsLoading: listModelShowLoading, userId });
+            fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('modelGroupCode', 'modelGroupCode', exhangeDataParamList?.modelGroup, 'modelGroupCode') });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [exhangeDataParamList]);
+
+    const onErrorAction = () => {};
+    const onSuccessAction = () => {};
 
     const extraParams = [
         {
@@ -152,12 +164,11 @@ const LoyaltySchemeMasterMain = (props) => {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Verify Customer id to continue' });
             return;
         }
-        const data = { ...values, id: LoyaltySchemeData?.id || '', otfId: selectedRecordId };
+        const data = { ...values, id: loyaltySchemeData?.id || '', otfId: selectedRecordId };
 
         if (onFinishCustom) {
             onFinishCustom({ key: formKey, values: data });
             handleButtonClick({ buttonAction: NEXT_ACTION });
-            setButtonData({ ...buttonData, formBtnActive: false });
         } else {
             const onSuccess = (res) => {
                 form.resetFields();
@@ -177,9 +188,10 @@ const LoyaltySchemeMasterMain = (props) => {
             saveData(requestData);
         }
     };
+    const isOTFModule = salesModuleType === SALES_MODULE_TYPE.OTF.KEY;
 
     useEffect(() => {
-        if (userId && selectedRecordId) {
+        if (isOTFModule && userId && selectedRecordId) {
             const extraParams = [
                 {
                     key: 'otfId',
@@ -192,7 +204,7 @@ const LoyaltySchemeMasterMain = (props) => {
                 {
                     key: 'modelCode',
                     title: 'modelCode',
-                    value: selectedOrder?.modelCode,
+                    value: selectedOrder?.modelCode || modelCode,
                     name: 'Booking Number',
                 },
                 {
@@ -209,13 +221,20 @@ const LoyaltySchemeMasterMain = (props) => {
     }, [userId, selectedRecordId]);
 
     useEffect(() => {
-        if (LoyaltySchemeData) {
-            setformData(LoyaltySchemeData);
-            LoyaltySchemeData?.make && handleFilterChange('make', LoyaltySchemeData?.make ?? '');
-            LoyaltySchemeData?.vehicleModelGroup && handleFilterChange('modelGroupCode', LoyaltySchemeData?.vehicleModelGroup ?? '');
+        if (loyaltySchemeData) {
+            setformData(loyaltySchemeData);
+            setExchangeDataParams({ make: loyaltySchemeData?.make, modelGroup: loyaltySchemeData?.vehicleModelGroup });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [LoyaltySchemeData]);
+    }, [loyaltySchemeData]);
+
+    useEffect(() => {
+        if (loyaltySchemeDataPass) {
+            setformData(loyaltySchemeDataPass);
+            setExchangeDataParams({ make: loyaltySchemeDataPass?.make, modelGroup: loyaltySchemeDataPass?.vehicleModelGroup });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [loyaltySchemeDataPass]);
 
     useEffect(() => {
         if (isModelDataLoaded && modelData) {
@@ -268,13 +287,13 @@ const LoyaltySchemeMasterMain = (props) => {
                 modelGroup: undefined,
                 variant: undefined,
             });
-            fetchModelLovList({ setIsLoading: listModelShowLoading, userId });
+            setExchangeDataParams({ ...exhangeDataParams, make: value });
         } else if (name === 'modelGroupCode') {
             form.setFieldsValue({
                 variant: undefined,
             });
             setfilteredVariantData();
-            fetchVariantLovList({ setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('modelGroupCode', 'modelGroupCode', value, 'modelGroupCode') });
+            setExchangeDataParams({ ...exhangeDataParams, modelGroup: value });
         }
     };
 
@@ -289,7 +308,7 @@ const LoyaltySchemeMasterMain = (props) => {
         form,
         onFinishFailed,
         onFinish,
-        LoyaltySchemeData,
+        loyaltySchemeData,
         formData,
         setformData,
         isLoyaltySchemeDataLoaded,
@@ -298,9 +317,6 @@ const LoyaltySchemeMasterMain = (props) => {
 
         isSchemeLovLoading,
         schemeLovData,
-
-        // isMakeLoading,
-        // makeData,
 
         isModelLoading,
         modelData,
@@ -322,9 +338,12 @@ const LoyaltySchemeMasterMain = (props) => {
 
     const viewProps = {
         styles,
+        modelData,
+        variantData,
         customerForm: formData,
         isLoyaltySchemeDataLoaded,
         isLoading,
+        typeData,
     };
 
     return (
