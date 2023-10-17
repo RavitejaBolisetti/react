@@ -122,7 +122,7 @@ const AddEditFormMain = (props) => {
 
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item name="hypothicatedToCode" label="Hypothecated To" initialValue={formData?.hypothicatedToCode}>
-                                {customSelectBox({ data: financeLovData, disabled: isFinanceLovLoading, loading: isConfigLoading })}
+                                {customSelectBox({ data: financeLovData, disabled: viewOnly, loading: isConfigLoading })}
                             </Form.Item>
                         </Col>
                     </Row>

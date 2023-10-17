@@ -99,6 +99,7 @@ export const EmbeddedReportMasterBase = (props) => {
         sExtraParamsString += '&rdl:reportView=pageView';
 
         const embedUrl = data?.embedReports?.[0]?.embedUrl ? data?.embedReports?.[0]?.embedUrl.concat(sExtraParamsString) : '';
+        console.log('🚀embedUrl:', embedUrl);
 
         setReportConfig({
             type: 'report',
