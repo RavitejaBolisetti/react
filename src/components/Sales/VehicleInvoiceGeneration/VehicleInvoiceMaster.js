@@ -138,7 +138,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [cancelInvoiceVisible, setCancelInvoiceVisible] = useState(false);
     const [additionalReportParams, setAdditionalReportParams] = useState();
     const [isReportVisible, setReportVisible] = useState();
-    const [confirmRequest, setConfirmRequest] = useState(false);
+    const [confirmRequest, setConfirmRequest] = useState();
     const [previousSection, setPreviousSection] = useState(1);
     const [profileCardData, setProfileCardData] = useState();
 
@@ -231,7 +231,7 @@ export const VehicleInvoiceMasterBase = (props) => {
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: page?.current,
+                value: filterString?.current,
                 canRemove: true,
                 filter: false,
             },
@@ -417,7 +417,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const handleIRNGeneration = () => {
         const data = { id: selectedRecordId, otfNumber: selectedOtfNumber, invoiceNumber: selectedOrder?.invoiceNumber };
         const onSuccess = (res) => {
-            setConfirmRequest(false);
+            setConfirmRequest({ ...confirmRequest, isVisible: false });
             resetOtfData();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             const extraParam = [
@@ -462,6 +462,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const handleInvoiceTypeChange = (buttonName) => {
         setInvoiceStatus(buttonName?.key);
         searchForm.resetFields();
+        setFilterString({ current: 1 });
     };
 
     const handleChange = (e) => {
@@ -642,7 +643,8 @@ export const VehicleInvoiceMasterBase = (props) => {
     const tableProps = {
         dynamicPagination,
         totalRecords,
-        setPage,
+        filterString,
+        setPage: setFilterString,
         tableColumn: tableColumn(handleButtonClick),
         tableData: data,
         showAddButton: false,

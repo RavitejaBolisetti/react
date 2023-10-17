@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 // export const VEHICLE_COMPANY_MAKE = 'MAL';
-export const VEHICLE_COMPANY_MAKE = 'LMM';
+export const VEHICLE_COMPANY_MAKE = 'MM';
 
 export const OTF_STATUS = {
     BOOKED: {

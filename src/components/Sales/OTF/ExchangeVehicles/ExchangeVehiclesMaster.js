@@ -290,8 +290,9 @@ const ExchangeVehiclesBase = (props) => {
                 modelGroup: undefined,
                 variant: undefined,
             });
-
             if (form.getFieldValue('make') === MAHINDRA_MAKE) {
+                fetchModelLovList({ customURL: BASE_URL_PRODUCT_MODEL_GROUP.concat('/lov'), setIsLoading: listModelShowLoading, userId });
+            } else if (formActionType?.viewMode && exchangeData?.make === MAHINDRA_MAKE) {
                 fetchModelLovList({ customURL: BASE_URL_PRODUCT_MODEL_GROUP.concat('/lov'), setIsLoading: listModelShowLoading, userId });
             } else {
                 fetchModelLovList({ setIsLoading: listModelShowLoading, userId, extraParams: makeExtraParams('make', 'make', value, 'make') });

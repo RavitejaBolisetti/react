@@ -3,7 +3,6 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -16,6 +15,7 @@ import { notificationDataActions } from 'store/actions/common/notification';
 import { NotificationSkeleton } from 'components/common/Skeleton';
 
 import { NOTIFICATION_STATUS } from 'constants/pushNotification';
+import { dateTimeDuration } from 'utils/formatDateTime';
 
 import styles from './Notification.module.scss';
 
@@ -152,7 +152,7 @@ const NotificationListMaster = (props) => {
                                             <Space>
                                                 <Text>{item?.applicationName}</Text>
                                                 <Divider type="vertical" />
-                                                <Text type="secondary">{moment.duration(moment(item?.createdDate).diff(moment())).humanize() + ' ago'}</Text>
+                                                <Text type="secondary"> {dateTimeDuration(item?.createdDate)}</Text>
                                             </Space>
                                         </>
                                     }
@@ -160,7 +160,6 @@ const NotificationListMaster = (props) => {
                                 <Popover
                                     arrow={false}
                                     placement="bottomRight"
-                                    // trigger={'click'}
                                     overlayClassName={styles.notificationActionButtons}
                                     content={
                                         <>

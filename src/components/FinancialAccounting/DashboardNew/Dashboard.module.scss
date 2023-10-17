@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 @import 'assets/sass/app.module.scss';
 
 /************Dashboard Contaner****************/
@@ -27,6 +32,7 @@
                     span.ant-typography {
                         color: $primaryRed;
                         line-height: 24px;
+
                         span {
                             color: $neutralGrey3;
                         }
@@ -184,7 +190,7 @@
 
         img {
             width: -webkit-fill-available;
-            height: 264px;
+            height: 268px;
         }
     }
 
@@ -286,6 +292,7 @@
                     margin-bottom: 12px;
                     border-bottom: 1px solid $neutralGrey1;
                 }
+
                 & :global {
                     h5.ant-typography {
                         margin: 0;
@@ -294,6 +301,7 @@
                         color: $primaryBlack;
                         line-height: 24px;
                     }
+
                     span.ant-typography {
                         color: $neutralGrey3;
                         line-height: 24px;

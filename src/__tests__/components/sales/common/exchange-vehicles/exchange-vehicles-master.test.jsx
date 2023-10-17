@@ -201,7 +201,6 @@ describe('Exchange vehicles master component render', () => {
         );
     });
 
-    jest.setTimeout(50000);
     it('mockStore', async () => {
         const formActionType = {
             viewMode: false,
@@ -252,7 +251,7 @@ describe('Exchange vehicles master component render', () => {
         const kms = screen.getByRole('textbox', { name: 'KMS' });
         fireEvent.change(kms, { target: { value: 'testing' } });
 
-        const vINNumber = screen.getByRole('textbox', { name: 'VIN Number' });
+        const vINNumber = screen.getByRole('textbox', { name: 'VIN' });
         fireEvent.change(vINNumber, { target: { value: 'testing' } });
 
         const customerName = screen.getByRole('textbox', { name: 'Customer Name' });

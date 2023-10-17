@@ -15,6 +15,7 @@ import DashboardActionItems from './DashboardActionItems';
 // import NewsDrawer from './NewsDrawer';
 import { StatusBar } from './StatusBar';
 import { PieChart } from './PieChart';
+import { dateTimeDuration } from 'utils/formatDateTime';
 
 const { Text, Title } = Typography;
 
@@ -27,25 +28,17 @@ const data = [
     { type: 'Bolero Neo', sales: 75 },
     { type: 'Bolero', sales: 120 },
     { type: 'Scarpio Classic', sales: 50 },
-    { type: 'Scorpio1', sales: 60 },
-    { type: 'XUV7001', sales: 120 },
-    { type: 'Thar1', sales: 80 },
-    { type: 'XUV3001', sales: 50 },
-    { type: 'Marazzo1', sales: 10 },
-    { type: 'Bolero Neo1', sales: 75 },
-    { type: 'Bolero1', sales: 120 },
-    { type: 'Scarpio Classic1', sales: 50 },
 ];
 
 const data1 = [
-    { type: 'Scorpio', sales: 60 },
-    { type: 'XUV700', sales: 120 },
-    { type: 'Thar', sales: 80 },
-    { type: 'XUV300', sales: 50 },
-    { type: 'Marazzo', sales: 10 },
+    { type: 'Scorpio', sales: 30 },
+    { type: 'XUV700', sales: 90 },
+    { type: 'Thar', sales: 70 },
+    { type: 'XUV300', sales: 30 },
+    { type: 'Marazzo', sales: 5 },
     { type: 'Bolero Neo', sales: 75 },
-    { type: 'Bolero', sales: 120 },
-    { type: 'Scarpio Classic', sales: 50 },
+    { type: 'Bolero', sales: 75 },
+    { type: 'Scarpio Classic', sales: 113 },
 ];
 
 const mapStateToProps = (state) => {
@@ -63,8 +56,8 @@ const mapStateToProps = (state) => {
 };
 
 const keyHightliteData = [
-    { shortDescription: 'GST Update', longDescription: "GSTR 1 due date is 10th Oct'23", date: '5 min ago' },
-    { shortDescription: 'GST Update', longDescription: "GSTR 2 due date is 20th Oct'23", date: '5 min ago' },
+    { shortDescription: 'GST Update', longDescription: "GSTR 1 due date is 10th Oct'23", createdDate: '2023-10-14 12:45:00' },
+    { shortDescription: 'GST Update', longDescription: "GSTR 2 due date is 20th Oct'23", createdDate: '2023-10-16 17:45:00' },
 ];
 
 const detailNews = {
@@ -173,7 +166,7 @@ const DashboardBase = ({ props }) => {
                                                 <Tag color="error">{i?.shortDescription}</Tag>
                                                 <Text color="danger">
                                                     {i?.longDescription}
-                                                    <span>{' ' + i?.date}</span>
+                                                    <span> {dateTimeDuration(i?.createdDate)}</span>
                                                 </Text>
                                             </Fragment>
                                         )
