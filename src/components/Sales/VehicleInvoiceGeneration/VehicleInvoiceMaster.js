@@ -417,7 +417,7 @@ export const VehicleInvoiceMasterBase = (props) => {
                         extraParams,
                         onErrorAction,
                         onSuccessAction: (response) => {
-                            setRequestPayload({ ...vehicleInvoiceMasterData, vehicleDetails: response?.data });
+                            setRequestPayload({ ...res?.data, vehicleDetails: response?.data });
                         },
                     });
                 }
