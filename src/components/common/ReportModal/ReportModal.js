@@ -24,9 +24,6 @@ const mapStateToProps = (state) => {
                 Reports: { isLoaded: isDataLoaded = false, isLoading, data },
             },
         },
-        common: {
-            Header: { data: loginUserData = [] },
-        },
     } = state;
 
     let returnValue = {
@@ -35,7 +32,6 @@ const mapStateToProps = (state) => {
         isLoading,
         data,
         reportLink: data?.embedReports?.[0]?.embedUrl || '',
-        loginUserData,
     };
 
     return returnValue;
@@ -54,11 +50,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const EmbeddedReportMasterBase = (props) => {
-    const { userId, data, fetchList, listShowLoading, reportDetail, additionalParams = [], loginUserData } = props;
-    const { dealerLocations = [], parentGroupCode } = loginUserData;
-
-    const locationCode = dealerLocations?.find((i) => i?.isDefault)?.locationCode;
-    console.log('🚀 ~ file: ReportModal.js:61 ~ EmbeddedReportMasterBase ~ dealerLocation:', locationCode, parentGroupCode);
+    const { userId, data, fetchList, listShowLoading, reportDetail, additionalParams = [] } = props;
 
     const [, setReport] = useState();
     const [sampleReportConfig, setReportConfig] = useState({
@@ -103,12 +95,7 @@ export const EmbeddedReportMasterBase = (props) => {
         additionalParams?.forEach((item, index) => {
             sExtraParamsString += item?.value && item?.key ? item?.value && item?.key + '=' + item?.value + '&' : '';
         });
-
         sExtraParamsString = sExtraParamsString.substring(0, sExtraParamsString.length - 1);
-
-        if (parentGroupCode && locationCode) {
-            sExtraParamsString += '&parent_group_code=' + parentGroupCode + '&location_code=' + locationCode;
-        }
         sExtraParamsString += '&rdl:reportView=pageView';
 
         const embedUrl = data?.embedReports?.[0]?.embedUrl ? data?.embedReports?.[0]?.embedUrl.concat(sExtraParamsString) : '';
@@ -157,10 +144,6 @@ export const EmbeddedReportMasterBase = (props) => {
                     }}
                 />
             )}
-            {/* PDF VIEWER */}
-            {/* <object width="100%" height="90vh" data="http://www.africau.edu/images/default/sample.pdf" type="application/pdf">
-                {' '}
-            </object> */}
         </div>
     );
 };
