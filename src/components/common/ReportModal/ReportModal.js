@@ -51,6 +51,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const EmbeddedReportMasterBase = (props) => {
     const { userId, data, fetchList, listShowLoading, reportDetail, additionalParams = [] } = props;
+
     const [, setReport] = useState();
     const [sampleReportConfig, setReportConfig] = useState({
         type: 'report',
@@ -91,11 +92,9 @@ export const EmbeddedReportMasterBase = (props) => {
 
     useEffect(() => {
         let sExtraParamsString = '&rp:';
-
         additionalParams?.forEach((item, index) => {
             sExtraParamsString += item?.value && item?.key ? item?.value && item?.key + '=' + item?.value + '&' : '';
         });
-
         sExtraParamsString = sExtraParamsString.substring(0, sExtraParamsString.length - 1);
         sExtraParamsString += '&rdl:reportView=pageView';
 
@@ -145,10 +144,6 @@ export const EmbeddedReportMasterBase = (props) => {
                     }}
                 />
             )}
-            {/* PDF VIEWER */}
-            {/* <object width="100%" height="90vh" data="http://www.africau.edu/images/default/sample.pdf" type="application/pdf">
-                {' '}
-            </object> */}
         </div>
     );
 };

@@ -4,9 +4,9 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Row, Col, Input, Form, Select, Card, Switch } from 'antd';
+import { Row, Col, Input, Form, Card, Switch } from 'antd';
 
-import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { CustomerListMaster } from 'components/utils/CustomerListModal';
 
 import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
@@ -47,7 +47,7 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                 </Col>
             </Row>
-            {(form.getFieldValue('exchange') || formData?.exchange === 1) && (
+            {(form?.getFieldValue('exchange') || formData?.exchange === 1) && (
                 <>
                     {!viewOnly && <CustomerListMaster fnSetData={fnSetData} defaultOption={'registrationNumber'} />}
 

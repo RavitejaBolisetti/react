@@ -18,10 +18,9 @@ import { schemeDataActions } from 'store/actions/data/otf/exchangeVehicle';
 import { vehicleModelDetailsDataActions } from 'store/actions/data/vehicle/modelDetails';
 import { vehicleVariantDetailsDataActions } from 'store/actions/data/vehicle/variantDetails';
 import { exchangeVehicleAlertDataAction } from 'store/actions/data/otf/exchangeVehicleAlert';
-import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { BASE_URL_PRODUCT_MODEL_GROUP, BASE_URL_PRODUCT_VARIENT, BASE_URL_CUSTOMER_MASTER_VEHICLE_LIST as customURL } from 'constants/routingApi';
+import { BASE_URL_PRODUCT_MODEL_GROUP, BASE_URL_PRODUCT_VARIENT } from 'constants/routingApi';
 
 import styles from 'assets/sass/app.module.scss';
 import { SALES_MODULE_TYPE } from 'constants/salesModuleType';
@@ -134,7 +133,7 @@ const ExchangeVehiclesBase = (props) => {
     const { financeLovData, isFinanceLovLoading, fetchFinanceLovList, listFinanceLovShowLoading } = props;
     const { schemeLovData, isSchemeLovLoading, fetchSchemeLovList, listSchemeLovShowLoading } = props;
     const { form, selectedRecordId, selectedOrderId, formActionType, handleFormValueChange, resetData } = props;
-    const { fetchCustomerList, listCustomerShowLoading, handleButtonClick, NEXT_ACTION } = props;
+    const { handleButtonClick, NEXT_ACTION } = props;
     const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar, isProductHierarchyDataLoaded, salesModuleType } = props;
 
     const [formData, setFormData] = useState('');
@@ -168,14 +167,19 @@ const ExchangeVehiclesBase = (props) => {
             exchangeData?.make && handleFilterChange('make', exchangeData?.make ?? '');
             exchangeData?.modelGroup && handleFilterChange('modelGroup', exchangeData?.modelGroup ?? '');
             setButtonData({ ...buttonData, formBtnActive: false });
-        } else if (exchangeDataPass) {
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isOTFModule, exchangeData]);
+
+    useEffect(() => {
+        if (exchangeDataPass?.exchange && Object?.keys(exchangeDataPass)?.length && !isModelLoading && !isVariantLoading) {
             setFormData(exchangeDataPass);
-            exchangeData?.make && handleFilterChange('make', exchangeData?.make ?? '');
-            exchangeData?.modelGroup && handleFilterChange('modelGroup', exchangeData?.modelGroup ?? '');
+            exchangeDataPass?.make && handleFilterChange('make', exchangeDataPass?.make ?? '');
+            exchangeDataPass?.modelGroup && handleFilterChange('modelGroup', exchangeDataPass?.modelGroup ?? '');
             setButtonData({ ...buttonData, formBtnActive: true });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isOTFModule, exchangeData, exchangeDataPass]);
+    }, [exchangeDataPass?.exchange]);
 
     const makeExtraParams = (key, title, value, name) => {
         const extraParams = [
@@ -289,7 +293,7 @@ const ExchangeVehiclesBase = (props) => {
                 variant: undefined,
             });
 
-            if (form.getFieldValue('make') === MAHINDRA_MAKE) {
+            if (form?.getFieldValue('make') === MAHINDRA_MAKE) {
                 fetchModelLovList({ customURL: BASE_URL_PRODUCT_MODEL_GROUP.concat('/lov'), setIsLoading: listModelShowLoading, userId, extraParams: makeExtraParams('modelGroupCode', 'modelGroupCode', 'ECOM', 'modelGroupCode') });
             } else {
                 fetchModelLovList({ setIsLoading: listModelShowLoading, userId, extraParams: makeExtraParams('make', 'make', value, 'make') });
@@ -390,80 +394,24 @@ const ExchangeVehiclesBase = (props) => {
             .catch((err) => {});
     };
 
-    // const onSearch = (value) => {
-    //     if (!value) {
-    //         return false;
-    //     }
-    //     const defaultExtraParam = [
-    //         {
-    //             key: 'pageSize',
-    //             title: 'Value',
-    //             value: 1000,
-    //             canRemove: true,
-    //         },
-    //         {
-    //             key: 'pageNumber',
-    //             title: 'Value',
-    //             value: 1,
-    //             canRemove: true,
-    //         },
-
-    //         {
-    //             key: 'searchType',
-    //             title: 'Type',
-    //             value: 'registrationNumber',
-    //             canRemove: true,
-    //         },
-    //         {
-    //             key: 'searchParam',
-    //             title: 'Value',
-    //             value: value,
-    //             canRemove: true,
-    //         },
-    //     ];
-
-    //     fetchCustomerList({
-    //         setIsLoading: listCustomerShowLoading,
-    //         extraParams: defaultExtraParam,
-    //         userId,
-    //         customURL,
-    //         onSuccessAction: (res) => {
-    //             if (res?.data?.customerMasterDetails?.length > 0) {
-    //                 setCustomerList(res?.data?.customerMasterDetails);
-    //             } else {
-    //                 res?.data?.customerMasterDetails && setFormData(res?.data?.customerMasterDetails?.[0]);
-    //                 handleFormValueChange();
-    //             }
-    //         },
-    //         onErrorAction,
-    //     });
-    // };
-
     const formProps = {
         ...props,
         form,
         formData,
         onFinishFailed,
         onFinish,
-
         typeData,
-
         isSchemeLovLoading,
         schemeLovData,
-
         isFinanceLovLoading,
         financeLovData,
-
         isMakeLoading,
         makeData,
-
         isModelLoading,
         modelData,
-
         isVariantLoading,
         variantData,
         isLoading,
-        // onSearch, unused code please check this method
         handleFilterChange,
         filteredModelData,
         filteredVariantData,
