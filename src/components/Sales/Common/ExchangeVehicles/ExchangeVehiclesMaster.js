@@ -168,14 +168,19 @@ const ExchangeVehiclesBase = (props) => {
             exchangeData?.make && handleFilterChange('make', exchangeData?.make ?? '');
             exchangeData?.modelGroup && handleFilterChange('modelGroup', exchangeData?.modelGroup ?? '');
             setButtonData({ ...buttonData, formBtnActive: false });
-        } else if (exchangeDataPass) {
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isOTFModule, exchangeData]);
+
+    useEffect(() => {
+        if (exchangeDataPass?.exchange && Object?.keys(exchangeDataPass)?.length && !isModelLoading && !isVariantLoading) {
             setFormData(exchangeDataPass);
-            exchangeData?.make && handleFilterChange('make', exchangeData?.make ?? '');
-            exchangeData?.modelGroup && handleFilterChange('modelGroup', exchangeData?.modelGroup ?? '');
+            exchangeDataPass?.make && handleFilterChange('make', exchangeDataPass?.make ?? '');
+            exchangeDataPass?.modelGroup && handleFilterChange('modelGroup', exchangeDataPass?.modelGroup ?? '');
             setButtonData({ ...buttonData, formBtnActive: true });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isOTFModule, exchangeData, exchangeDataPass]);
+    }, [exchangeDataPass?.exchange]);
 
     const makeExtraParams = (key, title, value, name) => {
         const extraParams = [
@@ -289,7 +294,7 @@ const ExchangeVehiclesBase = (props) => {
                 variant: undefined,
             });
 
-            if (form.getFieldValue('make') === MAHINDRA_MAKE) {
+            if (form?.getFieldValue('make') === MAHINDRA_MAKE) {
                 fetchModelLovList({ customURL: BASE_URL_PRODUCT_MODEL_GROUP.concat('/lov'), setIsLoading: listModelShowLoading, userId, extraParams: makeExtraParams('modelGroupCode', 'modelGroupCode', 'ECOM', 'modelGroupCode') });
             } else {
                 fetchModelLovList({ setIsLoading: listModelShowLoading, userId, extraParams: makeExtraParams('make', 'make', value, 'make') });
