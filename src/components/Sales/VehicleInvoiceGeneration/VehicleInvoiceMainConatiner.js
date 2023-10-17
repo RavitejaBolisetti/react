@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Col, Row } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import { VEHICLE_INVOICE_SECTION } from 'constants/VehicleInvoiceSection';
@@ -27,7 +27,7 @@ import { SALES_MODULE_TYPE } from 'constants/salesModuleType';
 
 const VehicleInvoiceMainConatinerMain = (props) => {
     const { currentSection, handleIRNGeneration, selectedOtfNumber, requestPayload, setRequestPayload, selectedOtfId, profileCardData } = props;
-
+    const formData = { selectedRecordId: selectedOtfId, modelCode: requestPayload?.vehicleDetails?.modelCode, viewOnly: true };
     const onFinishCustom = ({ key, values }) => {
         setRequestPayload({ ...requestPayload, [key]: values });
     };
@@ -43,10 +43,6 @@ const VehicleInvoiceMainConatinerMain = (props) => {
         vehicleInvoiceMasterData: requestPayload,
         otfData: profileCardData,
     };
-
-    // const LeftSideBarMenu = useMemo(() => {
-    //     return <LeftSidebar {...myProps} />;
-    // }, [profileCardData]);
 
     const renderElement = () => {
         switch (currentSection) {
@@ -66,8 +62,7 @@ const VehicleInvoiceMainConatinerMain = (props) => {
                 return <InsuranceDetailsMaster {...myProps} selectedRecordId={selectedOtfId} formData={requestPayload?.insuranceDetails} formKey={'insuranceDetails'} />;
             }
             case VEHICLE_INVOICE_SECTION.EXCHANGE_DETAILS.id: {
-                const formData = { exchangeDataPass: requestPayload?.exchangeDetails, selectedRecordId: selectedOtfId, modelCode: requestPayload?.vehicleDetails?.modelCode, viewOnly: true };
-                return <ExchangeVehiclesMaster {...myProps} {...formData} formKey={'exchangeDetails'} />;
+                return <ExchangeVehiclesMaster {...myProps} exchangeDataPass={requestPayload?.exchangeDetails} {...formData} formKey={'exchangeDetails'} />;
             }
             case VEHICLE_INVOICE_SECTION.LOYALTY_SCHEME.id: {
                 return <LoyaltySchemeMaster {...myProps} formData={requestPayload?.loyaltyScheme} formKey={'loyaltyScheme'} />;
