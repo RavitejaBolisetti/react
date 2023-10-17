@@ -291,7 +291,8 @@ const ExchangeVehiclesBase = (props) => {
                 modelGroup: undefined,
                 variant: undefined,
             });
-            fetchModelLovList({ customURL: isMnM ? BASE_URL_PRODUCT_MODEL_GROUP.concat('/lov') : undefined, setIsLoading: listModelShowLoading, userId });
+            const extraParams = isMnM ? undefined : makeExtraParams('make', 'make', value, 'make');
+            fetchModelLovList({ customURL: isMnM ? BASE_URL_PRODUCT_MODEL_GROUP.concat('/lov') : undefined, setIsLoading: listModelShowLoading, userId, extraParams });
         } else if (name === 'modelGroup') {
             setfilteredVariantData();
             form.setFieldsValue({
