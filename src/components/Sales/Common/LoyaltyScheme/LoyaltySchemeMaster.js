@@ -130,7 +130,7 @@ const LoyaltySchemeMasterMain = (props) => {
     }, [exhangeDataParams]);
 
     useEffect(() => {
-        if (exhangeDataParamList?.make && exhangeDataParamList?.modelGroup) {
+        if (exhangeDataParamList?.make || exhangeDataParamList?.modelGroup) {
             fetchModelLovList({ customURL: BASE_URL_PRODUCT_MODEL_GROUP.concat('/lov'), setIsLoading: listModelShowLoading, userId });
             fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('modelGroupCode', 'modelGroupCode', exhangeDataParamList?.modelGroup, 'modelGroupCode') });
         }

@@ -134,7 +134,7 @@ const ExchangeVehiclesBase = (props) => {
     const { typeData, selectedOrder, fetchListVehicleExchangeAlert, listShowLoadingVehicleExchangeAlert, exchangeVehicleAlertData, resetVehicleExchangeAlert } = props;
     const { fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading } = props;
     const { isMakeLoading, makeData, isModelDataLoaded, isModelLoading, modelData, isVariantDataLoaded, isVariantLoading, variantData, saveData } = props;
-    const { financeLovData, isFinanceLovLoading, fetchFinanceLovList, listFinanceLovShowLoading } = props;
+    const { financeLovData, isFinanceLovLoading, isFinanceLovDataLoaded, fetchFinanceLovList, listFinanceLovShowLoading } = props;
     const { schemeLovData, isSchemeLovLoading, fetchSchemeLovList, listSchemeLovShowLoading } = props;
     const { form, selectedRecordId, selectedOrderId, formActionType, handleFormValueChange, resetData } = props;
     const { fetchCustomerList, listCustomerShowLoading, handleButtonClick, NEXT_ACTION } = props;
@@ -183,13 +183,13 @@ const ExchangeVehiclesBase = (props) => {
     }, [exhangeDataParams]);
 
     useEffect(() => {
-        if (exhangeDataParamList?.make && exhangeDataParamList?.modelGroup) {
+        if (exhangeDataParamList?.make || exhangeDataParamList?.modelGroup) {
             if (isMahindraMake) {
                 fetchModelLovList({ customURL: BASE_URL_PRODUCT_MODEL_GROUP.concat('/lov'), setIsLoading: listModelShowLoading, userId });
-                fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('modelGroupCode', 'modelGroupCode', exhangeDataParamList?.modelGroup, 'modelGroupCode') });
+                exhangeDataParamList?.modelGroup && fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('modelGroupCode', 'modelGroupCode', exhangeDataParamList?.modelGroup, 'modelGroupCode') });
             } else {
-                fetchModelLovList({ setIsLoading: listModelShowLoading, userId, extraParams: makeExtraParams('make', 'make', exhangeDataParamList?.make, 'make') });
-                fetchVariantLovList({ setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('model', 'model', exhangeDataParamList?.modelGroup, 'model') });
+                exhangeDataParamList?.make && fetchModelLovList({ setIsLoading: listModelShowLoading, userId, extraParams: makeExtraParams('make', 'make', exhangeDataParamList?.make, 'make') });
+                exhangeDataParamList?.modelGroup && fetchVariantLovList({ setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('model', 'model', exhangeDataParamList?.modelGroup, 'model') });
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -266,7 +266,7 @@ const ExchangeVehiclesBase = (props) => {
                 },
             ];
             isOTFModule && fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, userId });
-            fetchFinanceLovList({ setIsLoading: listFinanceLovShowLoading, userId, onErrorAction });
+            !isFinanceLovDataLoaded && fetchFinanceLovList({ setIsLoading: listFinanceLovShowLoading, userId, onErrorAction });
             fetchSchemeLovList({ setIsLoading: listSchemeLovShowLoading, extraParams: schemeExtraParams, onErrorAction, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
