@@ -397,42 +397,43 @@ export const VehicleInvoiceMasterBase = (props) => {
             ];
 
             const onSuccessAction = (res) => {
-                const { otfId, modelCode, saleType, priceType, discountAmount } = res?.data?.vehicleDetails;
+                if (formActionType?.addMode) {
+                    const { otfId, modelCode, saleType, priceType, discountAmount } = res?.data?.vehicleDetails;
 
-                if (otfId) {
-                    const extraParams = [
-                        {
-                            key: 'otfId',
-                            value: otfId,
-                        },
-                        {
-                            key: 'modelCode',
-                            value: modelCode,
-                        },
-                        {
-                            key: 'saleType',
-                            value: saleType,
-                        },
-                        {
-                            key: 'priceType',
-                            value: priceType,
-                        },
-                        {
-                            key: 'discountAmount',
-                            value: discountAmount,
-                        },
-                    ];
+                    if (!selectedRecordId && otfId) {
+                        const extraParams = [
+                            {
+                                key: 'otfId',
+                                value: otfId,
+                            },
+                            {
+                                key: 'modelCode',
+                                value: modelCode,
+                            },
+                            {
+                                key: 'saleType',
+                                value: saleType,
+                            },
+                            {
+                                key: 'priceType',
+                                value: priceType,
+                            },
+                            {
+                                key: 'discountAmount',
+                                value: discountAmount,
+                            },
+                        ];
 
-                    fetchVehcileDetail({
-                        setIsLoading: listShowLoading,
-                        userId,
-                        extraParams,
-                        onErrorAction,
-                        onSuccessAction: (response) => {
-                            setRequestPayload((prev) => ({ ...prev, vehicleDetails: response?.data }));
-                            // setRequestPayload({ ...vehicleInvoiceMasterData, vehicleDetails: response?.data });
-                        },
-                    });
+                        fetchVehcileDetail({
+                            setIsLoading: listShowLoading,
+                            userId,
+                            extraParams,
+                            onErrorAction,
+                            onSuccessAction: (response) => {
+                                setRequestPayload((prev) => ({ ...prev, vehicleDetails: response?.data }));
+                            },
+                        });
+                    }
                 }
 
                 if (!selectedRecordId && res?.data?.invoiceDetails?.otfDetailsRequest?.orderStatus === OTF_STATUS?.INVOICED?.key) {

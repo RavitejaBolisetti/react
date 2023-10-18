@@ -16,21 +16,21 @@ import './index.scss';
 
 const store = configureStore({});
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-    <React.StrictMode>
-        <Provider store={store}>
-            <ConfigProvider
-                theme={{
-                    token: {
-                        colorPrimary: '#00b96b',
-                    },
-                }}
-            >
-                <App />
-            </ConfigProvider>
-        </Provider>
-    </React.StrictMode>
+
+const providerWrapper = (
+    <Provider store={store}>
+        <ConfigProvider
+            theme={{
+                token: {
+                    colorPrimary: '#00b96b',
+                },
+            }}
+        >
+            <App />
+        </ConfigProvider>
+    </Provider>
 );
+root.render(process.env.NODE_ENV === 'development' ? providerWrapper : <React.StrictMode>{providerWrapper}</React.StrictMode>);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
