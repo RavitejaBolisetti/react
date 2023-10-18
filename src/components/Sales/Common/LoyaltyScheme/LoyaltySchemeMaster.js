@@ -111,6 +111,7 @@ const LoyaltySchemeMasterMain = (props) => {
     const [filteredVariantData, setfilteredVariantData] = useState([]);
     const [formData, setformData] = useState([]);
     const disabledProps = { disabled: true };
+    const [exhangeDataParams, setExchangeDataParams] = useState();
 
     const fnSetData = (data) => {
         if (data && Object?.keys(data)?.length > 0) {
@@ -123,6 +124,18 @@ const LoyaltySchemeMasterMain = (props) => {
             form.resetFields(['customerCode', 'customerName', 'make', 'vehicleModelGroup', 'variantCode', 'registrationNumber', 'oldChassisNumber', 'customerDOB']);
         }
     };
+
+    const exhangeDataParamList = useMemo(() => {
+        return exhangeDataParams;
+    }, [exhangeDataParams]);
+
+    useEffect(() => {
+        if (exhangeDataParamList?.make || exhangeDataParamList?.modelGroup) {
+            fetchModelLovList({ customURL: BASE_URL_PRODUCT_MODEL_GROUP.concat('/lov'), setIsLoading: listModelShowLoading, userId });
+            fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('modelGroupCode', 'modelGroupCode', exhangeDataParamList?.modelGroup, 'modelGroupCode') });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [exhangeDataParamList]);
 
     const onErrorAction = () => {};
     const onSuccessAction = () => {};
@@ -202,16 +215,15 @@ const LoyaltySchemeMasterMain = (props) => {
                 },
             ];
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
-            !formActionType?.viewMode && fetchSchemeLovList({ setIsLoading: listSchemeLovShowLoading, extraParams: schemeExtraParams, userId });
+            fetchSchemeLovList({ setIsLoading: listSchemeLovShowLoading, extraParams: schemeExtraParams, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedRecordId, formActionType]);
+    }, [userId, selectedRecordId]);
 
     useEffect(() => {
         if (loyaltySchemeData) {
             setformData(loyaltySchemeData);
-            handleFilterChange('make', VEHICLE_COMPANY_MAKE);
-            handleFilterChange('modelGroupCode', loyaltySchemeData?.vehicleModelGroup);
+            setExchangeDataParams({ make: loyaltySchemeData?.make, modelGroup: loyaltySchemeData?.vehicleModelGroup });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [loyaltySchemeData]);
@@ -219,8 +231,7 @@ const LoyaltySchemeMasterMain = (props) => {
     useEffect(() => {
         if (loyaltySchemeDataPass) {
             setformData(loyaltySchemeDataPass);
-            handleFilterChange('make', VEHICLE_COMPANY_MAKE);
-            handleFilterChange('modelGroupCode', loyaltySchemeData?.vehicleModelGroup);
+            setExchangeDataParams({ make: loyaltySchemeDataPass?.make, modelGroup: loyaltySchemeDataPass?.vehicleModelGroup });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [loyaltySchemeDataPass]);
@@ -239,7 +250,7 @@ const LoyaltySchemeMasterMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [variantData]);
 
-    const handleFilterChange = (name, value) => {
+    const handleFilterChange = (name, value, selectobj) => {
         if (!value) {
             switch (name) {
                 case 'make': {
@@ -276,13 +287,13 @@ const LoyaltySchemeMasterMain = (props) => {
                 modelGroup: undefined,
                 variant: undefined,
             });
-            fetchModelLovList({ customURL: BASE_URL_PRODUCT_MODEL_GROUP.concat('/lov'), setIsLoading: listModelShowLoading, userId });
+            setExchangeDataParams({ ...exhangeDataParams, make: value });
         } else if (name === 'modelGroupCode') {
             form.setFieldsValue({
                 variant: undefined,
             });
             setfilteredVariantData();
-            fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('modelGroupCode', 'modelGroupCode', value, 'modelGroupCode') });
+            setExchangeDataParams({ ...exhangeDataParams, modelGroup: value });
         }
     };
 
