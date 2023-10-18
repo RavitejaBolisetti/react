@@ -91,7 +91,7 @@ const VehicleDetailsMasterBase = (props) => {
             key: 'vin',
             title: 'vin',
             value: selectedRecordId,
-            name: 'VIN Number',
+            name: 'VIN',
         },
     ];
     useEffect(() => {
@@ -105,7 +105,7 @@ const VehicleDetailsMasterBase = (props) => {
         const recordId = vehicleDetails.vehicleDetails?.id || '';
         const vin = vehicleDetails.vehicleDetails?.vin || '';
         const registrationNumber = vehicleDetails.vehicleDetails?.registrationNumber || '';
-        if(values.oemPrivilegeCustomer === null || values.oemPrivilegeCustomer === false){
+        if (values.oemPrivilegeCustomer === null || values.oemPrivilegeCustomer === false) {
             values.oemPrivilegeCustomer = false;
         } else {
             values.oemPrivilegeCustomer = true;

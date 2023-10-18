@@ -49,7 +49,7 @@ const ViewDetailMain = (props) => {
                             <Divider />
                             <Descriptions {...viewProps}>
                                 {/* <Descriptions.Item label="Search Vehicle Registration No.">{checkAndSetDefaultValue(formData?.registrationNumber, isLoading)}</Descriptions.Item> */}
-                                <Descriptions.Item label="VIN No.">{checkAndSetDefaultValue(formData?.vinNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="VIN">{checkAndSetDefaultValue(formData?.vinNumber, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Engine Number">{checkAndSetDefaultValue(formData?.engineNumber, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Key Number">{checkAndSetDefaultValue(formData?.keyNumber, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(formData?.modelCode, isLoading)}</Descriptions.Item>

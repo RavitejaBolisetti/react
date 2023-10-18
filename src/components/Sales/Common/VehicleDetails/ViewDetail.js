@@ -53,7 +53,7 @@ const ViewDetailMain = (props) => {
                                         <Descriptions.Item label="SO Status">{checkAndSetDefaultValue(formData?.soStatus, isLoading)}</Descriptions.Item>
                                     </>
                                 )}
-                                <Descriptions.Item label="VIN Number">{checkAndSetDefaultValue(formData?.vinNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="VIN">{checkAndSetDefaultValue(formData?.vinNumber, isLoading)}</Descriptions.Item>
                             </Descriptions>
 
                             <Descriptions {...viewProps} title={prepareCaption('Price Information')}>
