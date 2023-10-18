@@ -187,7 +187,7 @@ const ExchangeVehiclesBase = (props) => {
             fetchModelLovList({ customURL: BASE_URL_PRODUCT_MODEL_GROUP.concat('/lov'), setIsLoading: listModelShowLoading, userId });
             exhangeDataParamList?.modelGroup && fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('modelGroupCode', 'modelGroupCode', exhangeDataParamList?.modelGroup, 'modelGroupCode') });
         } else {
-            fetchModelLovList({ setIsLoading: listModelShowLoading, userId, extraParams: makeExtraParams('make', 'make', exhangeDataParamList?.make, 'make') });
+            exhangeDataParamList?.make && fetchModelLovList({ setIsLoading: listModelShowLoading, userId, extraParams: makeExtraParams('make', 'make', exhangeDataParamList?.make, 'make') });
             exhangeDataParamList?.modelGroup && fetchVariantLovList({ setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('model', 'model', exhangeDataParamList?.modelGroup, 'model') });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
