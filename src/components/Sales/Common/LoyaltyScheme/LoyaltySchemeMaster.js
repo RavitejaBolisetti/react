@@ -130,12 +130,16 @@ const LoyaltySchemeMasterMain = (props) => {
     }, [exhangeDataParams]);
 
     useEffect(() => {
-        if (exhangeDataParamList?.make && exhangeDataParamList?.modelGroup) {
-            fetchModelLovList({ customURL: BASE_URL_PRODUCT_MODEL_GROUP.concat('/lov'), setIsLoading: listModelShowLoading, userId });
+        fetchModelLovList({ customURL: BASE_URL_PRODUCT_MODEL_GROUP.concat('/lov'), setIsLoading: listModelShowLoading, userId });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [exhangeDataParamList?.make]);
+
+    useEffect(() => {
+        if (exhangeDataParamList?.modelGroup) {
             fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('modelGroupCode', 'modelGroupCode', exhangeDataParamList?.modelGroup, 'modelGroupCode') });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [exhangeDataParamList]);
+    }, [exhangeDataParamList?.modelGroup]);
 
     const onErrorAction = () => {};
     const onSuccessAction = () => {};
