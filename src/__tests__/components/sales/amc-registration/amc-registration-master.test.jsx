@@ -2,7 +2,7 @@ import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import AMCRegistrationMaster from '@components/Sales/AMCRegistration/AMCRegistrationMaster';
 import { screen, fireEvent } from '@testing-library/react';
-import { Form, Button } from 'antd';
+import { Form } from 'antd';
 import { Provider } from 'react-redux';
 import createMockStore from '__mocks__/store';
 
