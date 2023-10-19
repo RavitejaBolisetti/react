@@ -24,33 +24,32 @@ const FormWrapper = (props) => {
     };
     return <AdvancedSearch advanceFilterForm={myFormMock} {...props} />;
 };
-
-it('should render calender component', async () => {
-    customRender(<FormWrapper setFilterString={jest.fn()} setAdvanceSearchVisible={jest.fn()} isVisible={true} />);
-    const calendarBtn = screen.getAllByRole('img', { name: 'calendar' });
-    fireEvent.click(calendarBtn[0]);
-    fireEvent.click(calendarBtn[1]);
-});
-
-it('should render advanced search button component', () => {
-    customRender(<FormWrapper isVisible={true} setrules={jest.fn()} />);
-    const closeBtn = screen.getAllByRole('button', { value: 'Close' });
-    fireEvent.click(closeBtn[0]);
-    fireEvent.click(closeBtn[1]);
-
-    const resetBtn = screen.getAllByRole('button', { value: 'Reset' });
-    fireEvent.click(resetBtn[0]);
-    fireEvent.click(resetBtn[1]);
-
-    const applyBtn = screen.getAllByRole('button', { value: 'Apply' });
-    fireEvent.click(applyBtn[0]);
-    fireEvent.click(applyBtn[1]);
-
-    const modelDescription = screen.getByRole('combobox', { value: 'Model Description' });
-    fireEvent.change(modelDescription, { target: { value: 'test123' } });
-});
-
 describe('vehicle reciept checklist Advance Search components', () => {
+    it('should render calender component', async () => {
+        customRender(<FormWrapper setFilterString={jest.fn()} setAdvanceSearchVisible={jest.fn()} isVisible={true} />);
+        const calendarBtn = screen.getAllByRole('img', { name: 'calendar' });
+        fireEvent.click(calendarBtn[0]);
+        fireEvent.click(calendarBtn[1]);
+    });
+
+    it('should render advanced search button component', () => {
+        customRender(<FormWrapper isVisible={true} setrules={jest.fn()} />);
+        const closeBtn = screen.getAllByRole('button', { value: 'Close' });
+        fireEvent.click(closeBtn[0]);
+        fireEvent.click(closeBtn[1]);
+
+        const resetBtn = screen.getAllByRole('button', { value: 'Reset' });
+        fireEvent.click(resetBtn[0]);
+        fireEvent.click(resetBtn[1]);
+
+        const applyBtn = screen.getAllByRole('button', { value: 'Apply' });
+        fireEvent.click(applyBtn[0]);
+        fireEvent.click(applyBtn[1]);
+
+        const modelDescription = screen.getByRole('combobox', { value: 'Model Description' });
+        fireEvent.change(modelDescription, { target: { value: 'test123' } });
+    });
+
     it('should abe to select date without error', async () => {
         customRender(<FormWrapper isVisible={true} setrules={jest.fn()} />);
         const fromDate = screen.getByRole('textbox', { name: 'Receipt From Date' });
