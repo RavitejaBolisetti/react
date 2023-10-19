@@ -13,43 +13,30 @@ const { Panel } = Collapse;
 
 const actionsData = {
     invoice: {
-        title: 'Pending For Invoice Approval',
+        title: 'Open Bookings',
         actions: [
-            { actionTitle: 'Invoice no. 982734987', date: '12 May 2023' },
-            { actionTitle: 'Invoice no. 982734987', date: '12 May 2023' },
-            { actionTitle: 'Invoice no. 982734987', date: '12 May 2023' },
+            { actionTitle: 'Allotted Bookings', date: undefined },
+            { actionTitle: 'Un-Allotted Bookings', date: undefined },
+            { actionTitle: 'Pending for Cancellation', date: undefined },
         ],
     },
     poApproval: {
-        title: 'Pending PO approval & SO created with Amount: 182207.23',
+        title: 'Invoice Generation',
         actions: [
-            { actionTitle: 'Invoice no. 982734987', date: '02 May 2023' },
-            { actionTitle: 'Invoice no. 982734987', date: '12 May 2023' },
+            { actionTitle: 'Allotted But Not Invoiced bookings', date: undefined },
+            { actionTitle: 'Pending For Cancellation', date: undefined },
         ],
     },
     approvalPending: {
-        title: 'Pending For Invoice Approval',
+        title: 'Vehicle Delivery Note',
         actions: [
-            { actionTitle: 'Invoice no. 982734987', date: '12 Dec 2023' },
-            { actionTitle: 'Invoice no. 982734987', date: '25 April 2023' },
-            { actionTitle: 'Invoice no. 982734987', date: '14 May 2023' },
-            { actionTitle: 'Invoice no. 982734987', date: '28 May 2023' },
+            { actionTitle: 'Invoiced But Not Delivered', date: undefined },
+            { actionTitle: 'Pending for Delivery Note Cancellation', date: undefined },
         ],
     },
     invoicePending: {
-        title: 'Pending For Invoice Approval',
-        actions: [
-            { actionTitle: 'Invoice no. 982734987', date: '12 May 2023' },
-            { actionTitle: 'Invoice no. 982734987', date: '12 May 2023' },
-            { actionTitle: 'Invoice no. 982734987', date: '12 May 2023' },
-        ],
-    },
-    poApprovalPending: {
-        title: 'Pending PO approval & SO created with Amount: 182207.23',
-        actions: [
-            { actionTitle: 'Invoice no. 982734987', date: '02 May 2023' },
-            { actionTitle: 'Invoice no. 982734987', date: '12 May 2023' },
-        ],
+        title: 'Vehicle Receipt',
+        actions: [{ actionTitle: 'Billed But Not Delivered', date: undefined }],
     },
 };
 
@@ -68,7 +55,7 @@ const DashboardActionItems = () => {
                         header={
                             <>
                                 <Text>{value?.title}</Text>
-                                <Badge count={value?.actions?.length} />
+                                <Badge showZero count={0} />
                             </>
                         }
                         key={'ac' + index}
@@ -76,7 +63,12 @@ const DashboardActionItems = () => {
                         <Space size={5} direction="vertical">
                             {value?.actions?.map((action, i) => (
                                 <Text key={'aci' + i}>
-                                    {action?.actionTitle} <Divider type="vertical" /> <span>{action?.date}</span>
+                                    {action?.actionTitle}{' '}
+                                    {action?.date && (
+                                        <>
+                                            <Divider type="vertical" /> <span>{action?.date}</span>
+                                        </>
+                                    )}
                                 </Text>
                             ))}
                         </Space>

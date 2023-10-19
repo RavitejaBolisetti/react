@@ -5,16 +5,16 @@
  */
 import React, { useEffect } from 'react';
 
-import { Col, Input, Form, Row, Card, Select } from 'antd';
-import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { Col, Input, Form, Row, Card } from 'antd';
+import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 import { CustomerListMaster } from 'components/utils/CustomerListModal';
 import { prepareCaption } from 'utils/prepareCaption';
-import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'assets/sass/app.module.scss';
 import { convertToUpperCase } from 'utils/convertToUpperCase';
 import { customSelectBox } from 'utils/customSelectBox';
+import { registrationYearList } from 'utils/registrationYearList';
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
@@ -22,12 +22,6 @@ const AddEditFormMain = (props) => {
     const { schemeLovData, typeData } = props;
     const { isConfigLoading, isSchemeLovLoading, isModelLoading, isVariantLoading } = props;
     const { filteredModelData, filteredVariantData, handleFilterChange, fnSetData, handleSchemeChange, viewOnly = false } = props;
-
-    const currentYear = new Date().getFullYear();
-    const yearsList = [];
-    for (let i = currentYear; i >= currentYear - 15; i--) {
-        yearsList.push({ key: i, value: i });
-    }
 
     useEffect(() => {
         if (formData) {
@@ -57,10 +51,9 @@ const AddEditFormMain = (props) => {
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Make" name="make" data-testid="make" rules={[validateRequiredSelectField('make')]}>
-                        {customSelectBox({ data: typeData[PARAM_MASTER?.MAKE_NAME?.id], disabled: true, onChange: (value, selectobj) => handleFilterChange('make', value, selectobj) })}
+                        {customSelectBox({ data: typeData['VEHCL_MFG'], disabled: true, onChange: (value, selectobj) => handleFilterChange('make', value, selectobj) })}
                     </Form.Item>
                 </Col>
-
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Model Group" name="vehicleModelGroup" data-testid="modelGroup" rules={[validateRequiredSelectField('model group')]}>
                         {customSelectBox({
@@ -93,7 +86,7 @@ const AddEditFormMain = (props) => {
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="registrationYearCode" label="Year of Registration" initialValue={formData?.yearOfRegistrationCode} rules={[validateRequiredInputField('year of reg')]}>
-                        {customSelectBox({ data: yearsList, disabled: viewOnly, loading: false })}
+                        {customSelectBox({ data: registrationYearList, disabled: viewOnly, loading: false })}
                     </Form.Item>
                 </Col>
             </Row>

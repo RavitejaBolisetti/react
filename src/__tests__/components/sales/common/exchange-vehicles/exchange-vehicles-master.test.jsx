@@ -105,9 +105,9 @@ describe('Exchange vehicles master component render', () => {
             </Provider>
         );
 
-            const switchBtn = screen.getByRole('switch', { name: 'Exchange' });
-            fireEvent.click(switchBtn);
-            expect(switchBtn).toBeInTheDocument();
+        const switchBtn = screen.getByRole('switch', { name: 'Exchange' });
+        fireEvent.click(switchBtn);
+        expect(switchBtn).toBeInTheDocument();
 
         const combobox = screen.getByRole('combobox', { name: '' });
         fireEvent.change(combobox, { target: { value: 'testing' } });
@@ -201,7 +201,6 @@ describe('Exchange vehicles master component render', () => {
         );
     });
 
-   
     it('mockStore', async () => {
         const formActionType = {
             viewMode: false,
@@ -238,7 +237,7 @@ describe('Exchange vehicles master component render', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper saveData={saveData} schemeLovData={[{ value: 'Name' }]} financeLovData={[{ value: 'Name' }]}  filteredModelData={[{ value: 'Maruti' }]} handleButtonClick={jest.fn()} resetData={jest.fn()} fetchCustomerList={jest.fn()} fetchList={fetchList} typeData="REL_TYPE" StatusBar={StatusBar} formActionType={formActionType} FormActionButton={FormActionButton} {...props} setfilteredModelData={jest.fn()} setfilteredVariantData={jest.fn()} />
+                <FormWrapper saveData={saveData} schemeLovData={[{ value: 'Name' }]} financeLovData={[{ value: 'Name' }]} filteredModelData={[{ value: 'Maruti' }]} handleButtonClick={jest.fn()} resetData={jest.fn()} fetchCustomerList={jest.fn()} fetchList={fetchList} typeData="REL_TYPE" StatusBar={StatusBar} formActionType={formActionType} FormActionButton={FormActionButton} {...props} setfilteredModelData={jest.fn()} setfilteredVariantData={jest.fn()} />
             </Provider>
         );
 
@@ -249,50 +248,50 @@ describe('Exchange vehicles master component render', () => {
         const combobox = screen.getByRole('combobox', { name: '' });
         fireEvent.change(combobox, { target: { value: 'testing' } });
 
-        const kms = screen.getByRole('textbox', {name: 'KMS'})
-        fireEvent.change(kms, { target: { value: 'testing' } })
+        const kms = screen.getByRole('textbox', { name: 'KMS' });
+        fireEvent.change(kms, { target: { value: 'testing' } });
 
-        const vINNumber = screen.getByRole('textbox', {name: 'VIN Number'})
-        fireEvent.change(vINNumber, { target: { value: 'testing' } })
+        const vINNumber = screen.getByRole('textbox', { name: 'VIN' });
+        fireEvent.change(vINNumber, { target: { value: 'testing' } });
 
-        const customerName = screen.getByRole('textbox', {name: 'Customer Name'})
-        fireEvent.change(customerName, { target: { value: 'testing' } })
+        const customerName = screen.getByRole('textbox', { name: 'Customer Name' });
+        fireEvent.change(customerName, { target: { value: 'testing' } });
 
-        const schemeAmount = screen.getByRole('textbox', {name: 'Scheme Amount'})
-        fireEvent.change(schemeAmount, { target: { value: 'testing' } })
+        const schemeAmount = screen.getByRole('textbox', { name: 'Scheme Amount' });
+        fireEvent.change(schemeAmount, { target: { value: 'testing' } });
 
-        const customerExpectedPrice = screen.getByRole('textbox', {name: 'Customer Expected Price'})
-        fireEvent.change(customerExpectedPrice, { target: { value: 'testing' } })
+        const customerExpectedPrice = screen.getByRole('textbox', { name: 'Customer Expected Price' });
+        fireEvent.change(customerExpectedPrice, { target: { value: 'testing' } });
 
-        const procurementPrice = screen.getByRole('textbox', {name: 'Procurement Price'})
-        fireEvent.change(procurementPrice, { target: { value: 'testing' } })
+        const procurementPrice = screen.getByRole('textbox', { name: 'Procurement Price' });
+        fireEvent.change(procurementPrice, { target: { value: 'testing' } });
 
-        const make = screen.getByRole('combobox', {name: 'Make'})
-        fireEvent.change(make, { target: { value: 'testing' } })
+        const make = screen.getByRole('combobox', { name: 'Make' });
+        fireEvent.change(make, { target: { value: 'testing' } });
 
-        const modelGroup = screen.getByRole('combobox', {name: 'Model Group'})
-        fireEvent.change(modelGroup, { target: { value: 'testing' } })
+        const modelGroup = screen.getByRole('combobox', { name: 'Model Group' });
+        fireEvent.change(modelGroup, { target: { value: 'testing' } });
 
-        const variantField = screen.getByRole('combobox', {name: 'Variant'})
-        fireEvent.change(variantField, { target: { value: 'testing' } })
+        const variantField = screen.getByRole('combobox', { name: 'Variant' });
+        fireEvent.change(variantField, { target: { value: 'testing' } });
 
-        const usage = screen.getByRole('combobox', {name: 'Usage'})
-        fireEvent.change(usage, { target: { value: 'testing' } })
+        const usage = screen.getByRole('combobox', { name: 'Usage' });
+        fireEvent.change(usage, { target: { value: 'testing' } });
 
-        const yearofRegistration = screen.getByRole('combobox', {name: 'Year of Registration'})
-        fireEvent.change(yearofRegistration, { target: { value: 'testing' } })
+        const yearofRegistration = screen.getByRole('combobox', { name: 'Year of Registration' });
+        fireEvent.change(yearofRegistration, { target: { value: 'testing' } });
 
-        const monthofRegistration = screen.getByRole('combobox', {name: 'Month of Registration'})
-        fireEvent.change(monthofRegistration, { target: { value: 'testing' } })
+        const monthofRegistration = screen.getByRole('combobox', { name: 'Month of Registration' });
+        fireEvent.change(monthofRegistration, { target: { value: 'testing' } });
 
-        const HypothecatedTo = screen.getByRole('combobox', {name: 'Hypothecated To'})
-        fireEvent.change(HypothecatedTo, { target: { value: 'testing' } })
+        const HypothecatedTo = screen.getByRole('combobox', { name: 'Hypothecated To' });
+        fireEvent.change(HypothecatedTo, { target: { value: 'testing' } });
 
-        const Relationship = screen.getByRole('combobox', {name: 'Relationship'})
-        fireEvent.change(Relationship, { target: { value: 'testing' } })
+        const Relationship = screen.getByRole('combobox', { name: 'Relationship' });
+        fireEvent.change(Relationship, { target: { value: 'testing' } });
 
-        const SchemeName = screen.getByRole('combobox', {name: 'Scheme Name'})
-        fireEvent.change(SchemeName, { target: { value: 'testing' } })
+        const SchemeName = screen.getByRole('combobox', { name: 'Scheme Name' });
+        fireEvent.change(SchemeName, { target: { value: 'testing' } });
 
         const save = screen.getAllByRole('button', { name: 'Save' });
         fireEvent.click(save[0]);
@@ -306,6 +305,5 @@ describe('Exchange vehicles master component render', () => {
 
         saveData.mock.calls[0][0].onSuccess();
         saveData.mock.calls[0][0].onError();
-        
     });
 });

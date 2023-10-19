@@ -20,20 +20,22 @@ const buttonData = {
     saveBtn: true,
     formBtnActive: true,
     otfSoMappingHistoryBtn: true,
-    pendingCancellationOTFBtn: true
+    pendingCancellationOTFBtn: true,
 };
 
-describe('Booking Form Button Component', () => {
+describe('Booking Management Button Component', () => {
     it('should render Booking form button component', () => {
         customRender(<OTFFormButton />);
     });
 
     it('should render Booking form all button', async () => {
         const workFlowDetails = {
-            allowedActions: [{
-                allowedActions: { actionName: "test" }
-            }]
-        }
+            allowedActions: [
+                {
+                    allowedActions: { actionName: 'test' },
+                },
+            ],
+        };
         customRender(<OTFFormButton workFlowDetails={workFlowDetails} setButtonData={jest.fn()} buttonData={buttonData} handleButtonClick={jest.fn()} />);
         const closeBtn = screen.getByRole('button', { name: 'Close' });
         fireEvent.click(closeBtn);

@@ -20,6 +20,7 @@ import { formatDate } from 'utils/formatDateTime';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'assets/sass/app.module.scss';
+import { SALES_MODULE_TYPE } from 'constants/salesModuleType';
 
 const mapStateToProps = (state) => {
     const {
@@ -66,9 +67,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ReferralsMasterBase = (props) => {
-    const { formActionType, fetchList, showGlobalNotification, saveData, listShowLoading, userId, referralData, isLoading } = props;
+    const { formActionType, fetchList, showGlobalNotification, saveData, listShowLoading, userId, referralData, referralDataPass, isLoading } = props;
     const { form, selectedRecordId, selectedOrderId, section, handleFormValueChange, onFinishFailed, fetchCustomerList, typeData, handleButtonClick, NEXT_ACTION } = props;
-    const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar } = props;
+    const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar, salesModuleType } = props;
 
     const [searchForm] = Form.useForm();
     const [formData, setFormData] = useState();
@@ -77,14 +78,25 @@ const ReferralsMasterBase = (props) => {
 
     const [customerList, setCustomerList] = useState();
 
+    const isOTFModule = salesModuleType === SALES_MODULE_TYPE.OTF.KEY;
+
     useEffect(() => {
         setFilterString();
-        if (referralData) {
+        if (isOTFModule && referralData) {
             setFormData({ ...referralData });
             setButtonData({ ...buttonData, formBtnActive: false });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [referralData]);
+
+    useEffect(() => {
+        setFilterString();
+        if (referralDataPass) {
+            setFormData({ ...referralDataPass });
+            setViewFormData(referralDataPass);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [referralDataPass]);
 
     const extraParams = [
         {
@@ -94,7 +106,7 @@ const ReferralsMasterBase = (props) => {
     ];
 
     useEffect(() => {
-        if (userId && selectedRecordId) {
+        if (isOTFModule && userId && selectedRecordId) {
             fetchList({
                 setIsLoading: listShowLoading,
                 userId,
@@ -165,7 +177,6 @@ const ReferralsMasterBase = (props) => {
         if (onFinishCustom) {
             onFinishCustom({ key: formKey, values: data });
             handleButtonClick({ buttonAction: NEXT_ACTION });
-            setButtonData({ ...buttonData, formBtnActive: false });
         } else {
             const onSuccess = (res) => {
                 form.resetFields();

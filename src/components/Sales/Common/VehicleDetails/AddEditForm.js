@@ -26,7 +26,7 @@ import { customSelectBox } from 'utils/customSelectBox';
 import { prepareCaption } from 'utils/prepareCaption';
 import styles from 'assets/sass/app.module.scss';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
-import { ADD_ACTION, EDIT_ACTION, DELETE_ACTION } from 'utils/btnVisiblity';
+import { EDIT_ACTION, DELETE_ACTION } from 'utils/btnVisiblity';
 import { OTF_STATUS } from 'constants/OTFStatus';
 
 const { Text } = Typography;
@@ -58,13 +58,6 @@ const AddEditFormMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
-    // const handleCollapse = (key) => {
-    //     if (key !== 3 && isReadOnly) {
-    //         setIsReadOnly(false);
-    //     }
-    //     setOpenAccordian((prev) => (prev === key ? '' : key));
-    // };
-
     const addContactHandeler = (e) => {
         optionForm.resetFields();
         !activeKey.includes(3) && onChange(3);
@@ -84,9 +77,9 @@ const AddEditFormMain = (props) => {
                     let updatedVal = [...prev];
                     const index = updatedVal?.findIndex((i) => i?.serviceName === record?.serviceName);
                     const data = updatedVal?.[index];
-                    if(data?.id){
-                        updatedVal?.splice(index, 1, {...record, status: false } );
-                    }else {
+                    if (data?.id) {
+                        updatedVal?.splice(index, 1, { ...record, status: false });
+                    } else {
                         updatedVal?.splice(index, 1);
                     }
                     return updatedVal;
@@ -166,6 +159,16 @@ const AddEditFormMain = (props) => {
         treeDisabled: orderStatus === OTF_STATUS.BOOKED.key ? false : true,
     };
 
+    const [timer, setTimer] = useState(null);
+
+    const onDiscountAmountChange = (e) => {
+        clearTimeout(timer);
+        const newTimer = setTimeout(() => {
+            handleVehicleDetailChange({ ...filterVehicleData, discountAmount: e?.target?.value });
+        }, 500);
+        setTimer(newTimer);
+    };
+
     return (
         <>
             <Row gutter={20}>
@@ -226,8 +229,8 @@ const AddEditFormMain = (props) => {
                                 )}
 
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item label="VIN Number" name="vinNumber">
-                                        <Input {...disabledProp} placeholder={preparePlaceholderText('VIN number')} />
+                                    <Form.Item label="VIN" name="vinNumber">
+                                        <Input {...disabledProp} placeholder={preparePlaceholderText('VIN')} />
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -275,7 +278,7 @@ const AddEditFormMain = (props) => {
                                             },
                                         ]}
                                     >
-                                        <Input placeholder={preparePlaceholderText('Dealer Discount with TAX')} onBlur={(e) => handleVehicleDetailChange({ ...filterVehicleData, discountAmount: e?.target?.value })} />
+                                        <Input placeholder={preparePlaceholderText('Dealer Discount with TAX')} onChange={onDiscountAmountChange} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
@@ -319,7 +322,7 @@ const AddEditFormMain = (props) => {
                                     <OptionServicesForm {...OptionServicesFormProps} />
                                 </>
                             )}
-                            <DataTable tableColumn={optionalServicesColumns({ handleButtonClick, formActionType })} tableData={optionalServices?.filter(i => i?.status)} pagination={false} />
+                            <DataTable tableColumn={optionalServicesColumns({ handleButtonClick, formActionType })} tableData={optionalServices?.filter((i) => i?.status)} pagination={false} />
                         </Panel>
                     </Collapse>
                 </Col>

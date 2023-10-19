@@ -13,7 +13,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
-
+    
 import styles from 'assets/sass/app.module.scss';
 
 import { CreditDebitNoteFormButton } from '../CreditDebitFormButton';

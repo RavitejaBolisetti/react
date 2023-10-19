@@ -169,7 +169,7 @@ const ProductDetailMasterMain = (props) => {
 
     useEffect(() => {
         if (userId && selectedRecordId) {
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams: makeExtraParams({ key: 'vin', title: 'vin', value: selectedRecordId, name: 'vin Number' }), onErrorAction, onSuccessAction });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams: makeExtraParams({ key: 'vin', title: 'vin', value: selectedRecordId, name: 'VIN' }), onErrorAction, onSuccessAction });
         }
         return () => {
             resetData();

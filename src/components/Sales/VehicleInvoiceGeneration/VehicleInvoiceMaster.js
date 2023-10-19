@@ -32,6 +32,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { VEHICLE_INVOICE_SECTION } from 'constants/VehicleInvoiceSection';
 import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
 import { OTF_STATUS } from 'constants/OTFStatus';
+import { otfvehicleDetailsDataActions } from 'store/actions/data/otf/vehicleDetails';
 
 const mapStateToProps = (state) => {
     const {
@@ -65,6 +66,7 @@ const mapStateToProps = (state) => {
         isInVoiceMasterDetailDataLoaded,
         isSalesConsultantDataLoaded,
         salesConsultantLovData,
+        isLoading: isVehicleInvoiceDataLoading,
     };
     return returnValue;
 };
@@ -73,6 +75,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
+            fetchVehcileDetail: otfvehicleDetailsDataActions.fetchList,
+
             fetchList: vehicleInvoiceGenerationDataActions.fetchList,
             listShowLoading: vehicleInvoiceGenerationDataActions.listShowLoading,
             fetchInvoiceMasterData: vehicleInvoiceGenerationDataActions.fetchDetail,
@@ -96,7 +100,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VehicleInvoiceMasterBase = (props) => {
-    const { data, receiptDetailData, userId, fetchList, listShowLoading, showGlobalNotification, fetchInvoiceMasterData } = props;
+    const { data, receiptDetailData, userId, fetchList, fetchVehcileDetail, listShowLoading, showGlobalNotification, fetchInvoiceMasterData } = props;
     const { isVehicleInvoiceDataLoading, listDetailShowLoading } = props;
     const { typeData, receiptType, partySegmentType, saveData, paymentModeType, documentType, moduleTitle, totalRecords } = props;
     const { filterString, setFilterString, invoiceStatusList, vehicleInvoiceMasterData, resetDetailData, resetOtfData } = props;
@@ -138,7 +142,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [cancelInvoiceVisible, setCancelInvoiceVisible] = useState(false);
     const [additionalReportParams, setAdditionalReportParams] = useState();
     const [isReportVisible, setReportVisible] = useState();
-    const [confirmRequest, setConfirmRequest] = useState(false);
+    const [confirmRequest, setConfirmRequest] = useState();
     const [previousSection, setPreviousSection] = useState(1);
     const [profileCardData, setProfileCardData] = useState();
 
@@ -170,8 +174,8 @@ export const VehicleInvoiceMasterBase = (props) => {
         loyaltyScheme: {},
         referrals: {},
     };
-    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
+    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
@@ -231,7 +235,7 @@ export const VehicleInvoiceMasterBase = (props) => {
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: page?.current,
+                value: filterString?.current,
                 canRemove: true,
                 filter: false,
             },
@@ -291,7 +295,7 @@ export const VehicleInvoiceMasterBase = (props) => {
             setRequestPayload({ ...vehicleInvoiceMasterData });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [vehicleInvoiceMasterData, isInVoiceMasterDetailDataLoaded]);
+    }, [vehicleInvoiceMasterData, isInVoiceMasterDetailDataLoaded, formActionType]);
 
     useEffect(() => {
         if (selectedOrder || selectedOtfId) {
@@ -366,6 +370,17 @@ export const VehicleInvoiceMasterBase = (props) => {
     }, [currentSection, sectionName]);
 
     const handleBookingNumberSearch = (otfNumber = '', selectedRecordId = '') => {
+        if (!(otfNumber && selectedRecordId)) {
+            setSelectedOrderId('');
+            setSelectedOtfNumber('');
+            setSelectedOrder('');
+
+            setSelectedOtfId();
+            setProfileCardData();
+            resetDetailData();
+            resetOtfData();
+        }
+
         if (otfNumber || selectedRecordId) {
             const extraParams = [
                 {
@@ -382,6 +397,45 @@ export const VehicleInvoiceMasterBase = (props) => {
             ];
 
             const onSuccessAction = (res) => {
+                if (formActionType?.addMode) {
+                    const { otfId, modelCode, saleType, priceType, discountAmount } = res?.data?.vehicleDetails;
+
+                    if (!selectedRecordId && otfId) {
+                        const extraParams = [
+                            {
+                                key: 'otfId',
+                                value: otfId,
+                            },
+                            {
+                                key: 'modelCode',
+                                value: modelCode,
+                            },
+                            {
+                                key: 'saleType',
+                                value: saleType,
+                            },
+                            {
+                                key: 'priceType',
+                                value: priceType,
+                            },
+                            {
+                                key: 'discountAmount',
+                                value: discountAmount,
+                            },
+                        ];
+
+                        fetchVehcileDetail({
+                            setIsLoading: listShowLoading,
+                            userId,
+                            extraParams,
+                            onErrorAction,
+                            onSuccessAction: (response) => {
+                                setRequestPayload((prev) => ({ ...prev, vehicleDetails: response?.data }));
+                            },
+                        });
+                    }
+                }
+
                 if (!selectedRecordId && res?.data?.invoiceDetails?.otfDetailsRequest?.orderStatus === OTF_STATUS?.INVOICED?.key) {
                     invoiceDetailForm.setFieldValue();
                     setSelectedOrder();
@@ -417,7 +471,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const handleIRNGeneration = () => {
         const data = { id: selectedRecordId, otfNumber: selectedOtfNumber, invoiceNumber: selectedOrder?.invoiceNumber };
         const onSuccess = (res) => {
-            setConfirmRequest(false);
+            setConfirmRequest({ ...confirmRequest, isVisible: false });
             resetOtfData();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             const extraParam = [
@@ -462,6 +516,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const handleInvoiceTypeChange = (buttonName) => {
         setInvoiceStatus(buttonName?.key);
         searchForm.resetFields();
+        setFilterString({ current: 1 });
     };
 
     const handleChange = (e) => {
@@ -473,12 +528,12 @@ export const VehicleInvoiceMasterBase = (props) => {
         setSearchValue(value);
     };
 
-    const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
+    const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true, callApi = true }) => {
         form.resetFields();
         form.setFieldsValue(undefined);
         cancelInvoiceForm.resetFields();
 
-        if (isLastSection) {
+        if (isLastSection && callApi) {
             generateInvoice();
             return false;
         }
@@ -551,40 +606,19 @@ export const VehicleInvoiceMasterBase = (props) => {
     const generateInvoice = () => {
         const { vehicleDetails, financeDetails, insuranceDetails, invoiceDetails } = requestPayload;
         const data = { vehicleDetails, financeDetails, insuranceDetails, invoiceDetails };
+
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
             fetchList({ customURL: BASE_URL_VEHICLE_INVOICE_LIST, setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
+
             const invoiceId = res?.data?.invoiceDetails?.id;
+            const invoiceNumber = res?.data?.invoiceDetails?.invoiceNumber;
+            const otfNumber = res?.data?.invoiceDetails?.otfDetailsRequest?.otfNumber;
             const otfId = res?.data?.invoiceDetails?.otfDetailsRequest?.otfId;
-            setSelectedOrderId(res?.data?.invoiceDetails?.invoiceNumber);
-            if (invoiceId && otfId) {
-                const extraParams = [
-                    {
-                        key: 'invoiceId',
-                        value: invoiceId,
-                        name: 'Invoice Id',
-                    },
-                    {
-                        key: 'otfId',
-                        value: otfId,
-                        name: 'OTF Number',
-                    },
-                ];
 
-                fetchData({
-                    customURL,
-                    setIsLoading: listOTFShowLoading,
-                    userId,
-                    extraParams: extraParams,
-                    onSuccessAction: (res) => {
-                        setProfileCardData(res?.data);
-                    },
-                    onErrorAction,
-                });
-
-                handleBookingNumberSearch(res?.data?.invoiceDetails?.otfDetailsRequest?.bookingNumber || res?.data?.invoiceDetails?.otfDetailsRequest?.otfNumber, res?.data?.invoiceDetails?.id);
-            }
+            const record = { id: invoiceId, invoiceNumber, otfNumber, otfId };
+            handleButtonClick({ record, buttonAction: VIEW_ACTION, callApi: false });
 
             const nextSection = filterActiveSection?.find((i) => i.id > currentSection);
             section && setCurrentSection(nextSection?.id);
@@ -642,7 +676,8 @@ export const VehicleInvoiceMasterBase = (props) => {
     const tableProps = {
         dynamicPagination,
         totalRecords,
-        setPage,
+        filterString,
+        setPage: setFilterString,
         tableColumn: tableColumn(handleButtonClick),
         tableData: data,
         showAddButton: false,
@@ -678,26 +713,26 @@ export const VehicleInvoiceMasterBase = (props) => {
         setCancelInvoiceVisible(true);
     };
 
-    const onPrintInvoice = (record) => {
+    const onPrintInvoice = () => {
         setReportType(`Invoice`);
         setReportVisible(true);
 
         setAdditionalReportParams([
             {
-                key: 'invoice_id',
-                value: record?.invoiceNumber,
+                key: 'sa_od_invoice_hdr_id',
+                value: selectedRecordId,
             },
         ]);
     };
 
-    const onPrintForm21 = (record) => {
+    const onPrintForm21 = () => {
         setReportType(`Form_21`);
         setReportVisible(true);
 
         setAdditionalReportParams([
             {
-                key: 'invoice_id',
-                value: record?.invoiceNumber,
+                key: 'sa_od_invoice_hdr_id',
+                value: selectedRecordId,
             },
         ]);
     };
@@ -784,11 +819,11 @@ export const VehicleInvoiceMasterBase = (props) => {
 
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
-            return 'View ';
+            return 'View Invoice';
         } else if (formActionType?.editMode) {
-            return 'Edit ';
+            return 'Edit Invoice';
         } else {
-            return 'Add New ';
+            return 'Add New Invoice';
         }
     }, [formActionType]);
 
@@ -801,11 +836,10 @@ export const VehicleInvoiceMasterBase = (props) => {
         invoiceDetailForm,
         formActionType,
         setFormActionType,
-        // onFinish,
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(moduleTitle),
+        titleOverride: drawerTitle,
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,

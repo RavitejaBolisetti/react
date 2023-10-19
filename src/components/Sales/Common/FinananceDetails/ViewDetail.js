@@ -29,7 +29,7 @@ const ViewDetailMain = (props) => {
                 {formData?.financeArrangedBy && !checkFinanceType(formData?.financeArrangedBy, FINANCE_ARRANGED_BY?.CASH?.key) && (
                     <>
                         {/* <Descriptions.Item label="Print Hypothecation Details?">{checkAndSetDefaultValue(formData?.printHypothecationDetails, isLoading, DATA_TYPE?.BOOL?.key)}</Descriptions.Item> */}
-                        <Descriptions.Item label="Financier">{checkAndSetDefaultValue(formData?.financier, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Financier Name">{checkAndSetDefaultValue(formData?.financier, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Branch">{checkAndSetDefaultValue(formData?.branch, isLoading)}</Descriptions.Item>
                         {formData?.financeArrangedBy && checkFinanceType(formData?.financeArrangedBy, FINANCE_ARRANGED_BY?.DEALER?.key) && (
                             <>
