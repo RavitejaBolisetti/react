@@ -26,7 +26,7 @@ import { customSelectBox } from 'utils/customSelectBox';
 import { prepareCaption } from 'utils/prepareCaption';
 import styles from 'assets/sass/app.module.scss';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
-import { ADD_ACTION, EDIT_ACTION, DELETE_ACTION } from 'utils/btnVisiblity';
+import { EDIT_ACTION, DELETE_ACTION } from 'utils/btnVisiblity';
 import { OTF_STATUS } from 'constants/OTFStatus';
 
 const { Text } = Typography;
@@ -57,13 +57,6 @@ const AddEditFormMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
-
-    // const handleCollapse = (key) => {
-    //     if (key !== 3 && isReadOnly) {
-    //         setIsReadOnly(false);
-    //     }
-    //     setOpenAccordian((prev) => (prev === key ? '' : key));
-    // };
 
     const addContactHandeler = (e) => {
         optionForm.resetFields();
@@ -164,6 +157,16 @@ const AddEditFormMain = (props) => {
         placeholder: preparePlaceholderSelect('Model'),
         loading: !viewOnly ? isProductDataLoading : false,
         treeDisabled: orderStatus === OTF_STATUS.BOOKED.key ? false : true,
+    };
+
+    const [timer, setTimer] = useState(null);
+
+    const onDiscountAmountChange = (e) => {
+        clearTimeout(timer);
+        const newTimer = setTimeout(() => {
+            handleVehicleDetailChange({ ...filterVehicleData, discountAmount: e?.target?.value });
+        }, 500);
+        setTimer(newTimer);
     };
 
     return (
@@ -275,7 +278,7 @@ const AddEditFormMain = (props) => {
                                             },
                                         ]}
                                     >
-                                        <Input placeholder={preparePlaceholderText('Dealer Discount with TAX')} onBlur={(e) => handleVehicleDetailChange({ ...filterVehicleData, discountAmount: e?.target?.value })} />
+                                        <Input placeholder={preparePlaceholderText('Dealer Discount with TAX')} onChange={onDiscountAmountChange} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>

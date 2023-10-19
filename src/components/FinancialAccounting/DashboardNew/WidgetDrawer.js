@@ -30,9 +30,7 @@ const WidgetDrawerMain = (props) => {
     const [checkedKeys, setCheckedKeys] = useState([]);
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
-    const onFinish = () => {
-
-    };
+    const onFinish = () => {};
     const onCheck = (keys) => {
         setCheckedKeys(keys);
         setButtonData({ ...defaultBtnVisiblity, formBtnActive: true });
@@ -62,7 +60,7 @@ const WidgetDrawerMain = (props) => {
     const handleCollapse = () => {};
     const handleFormFieldChange = () => {};
     const onFinishFailed = (error) => {
-        console.log(error);
+        // console.log(error);
     };
 
     return (

@@ -4,9 +4,9 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Row, Col, Input, Form, Select, Card, Switch } from 'antd';
+import { Row, Col, Input, Form, Card, Switch } from 'antd';
 
-import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { CustomerListMaster } from 'components/utils/CustomerListModal';
 
 import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
@@ -15,12 +15,14 @@ import { prepareCaption } from 'utils/prepareCaption';
 import styles from 'assets/sass/app.module.scss';
 import { convertToUpperCase } from 'utils/convertToUpperCase';
 import { customSelectBox } from 'utils/customSelectBox';
+import { registrationYearList } from 'utils/registrationYearList';
 
 const AddEditFormMain = (props) => {
     const { formData, form, formActionType, editableOnSearch, showAlert } = props;
-    const { financeLovData, schemeLovData, typeData } = props;
-    const { isConfigLoading, isSchemeLovLoading, isFinanceLovLoading, isMakeLoading, isModelLoading, isVariantLoading } = props;
-    const { filteredModelData, filteredVariantData, handleFilterChange, fnSetData, handleSchemeChange, viewOnly = false, MAHINDRA_MAKE } = props;
+    const { financeLovData, schemeLovData, typeData, isMahindraMake } = props;
+    const { isConfigLoading, isSchemeLovLoading, isMakeLoading, isModelLoading, isVariantLoading } = props;
+    const { filteredModelData, filteredVariantData, handleFilterChange, fnSetData, handleSchemeChange, viewOnly = false } = props;
+
     useEffect(() => {
         if (formData) {
             form.setFieldsValue({
@@ -30,14 +32,7 @@ const AddEditFormMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
-    const currentYear = new Date().getFullYear();
-    const yearsList = [];
-    for (let i = currentYear; i >= currentYear - 15; i--) {
-        yearsList.push({ key: i, value: i });
-    }
-
     const disabledProps = { disabled: viewOnly };
-    const isMahindraMake = form.getFieldValue('make') === MAHINDRA_MAKE;
     return (
         <Card className={styles.ExchangeCard}>
             <Row gutter={20}>
@@ -47,7 +42,7 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                 </Col>
             </Row>
-            {(form.getFieldValue('exchange') || formData?.exchange === 1) && (
+            {(form?.getFieldValue('exchange') || formData?.exchange === 1) && (
                 <>
                     {!viewOnly && <CustomerListMaster fnSetData={fnSetData} defaultOption={'registrationNumber'} />}
 
@@ -64,7 +59,7 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item label="Make" name="make" data-testid="make" rules={[validateRequiredSelectField('make')]}>
-                                {customSelectBox({ data: typeData['VEHCL_MFG'], disabled: viewOnly, loading: isMakeLoading, onChange: (value, selectobj) => handleFilterChange('make', value, selectobj) })}
+                                {customSelectBox({ data: typeData['VEHCL_MFG'], disabled: viewOnly, loading: isMakeLoading, onChange: (value) => handleFilterChange('make', value) })}
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -74,8 +69,8 @@ const AddEditFormMain = (props) => {
                                     loading: isModelLoading,
                                     disabled: viewOnly,
                                     fieldNames: isMahindraMake ? { key: 'modelGroupCode', value: 'modelGroupDescription' } : undefined,
-                                    onChange: (value, selectobj) => {
-                                        handleFilterChange('modelGroup', value, selectobj);
+                                    onChange: (value) => {
+                                        handleFilterChange('modelGroup', value);
                                         showAlert(value);
                                     },
                                 })}
@@ -106,7 +101,7 @@ const AddEditFormMain = (props) => {
 
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item name="yearOfRegistrationCode" label="Year of Registration" initialValue={formData?.yearOfRegistrationCode} rules={[validateRequiredInputField('year of reg')]}>
-                                {customSelectBox({ data: yearsList, disabled: viewOnly, loading: false })}
+                                {customSelectBox({ data: registrationYearList, disabled: viewOnly, loading: false })}
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -122,7 +117,7 @@ const AddEditFormMain = (props) => {
 
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item name="hypothicatedToCode" label="Hypothecated To" initialValue={formData?.hypothicatedToCode}>
-                                {customSelectBox({ data: financeLovData, disabled: isFinanceLovLoading, loading: isConfigLoading })}
+                                {customSelectBox({ data: financeLovData, disabled: viewOnly, loading: isConfigLoading })}
                             </Form.Item>
                         </Col>
                     </Row>
