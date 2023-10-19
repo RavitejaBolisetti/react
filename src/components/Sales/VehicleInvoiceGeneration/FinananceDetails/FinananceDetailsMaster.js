@@ -51,7 +51,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const FinananceDetailsMasterBase = (props) => {
-    const { userId, formData: financeData, isFinanceLovDataLoaded, setFormActionType, isFinanceLovLoading, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, section, isLoading } = props;
+    const { userId, formData: financeData, setFormActionType, isFinanceLovLoading, FinanceLovData, isFinanceLovDataLoaded, fetchFinanceLovList, listFinanceLovShowLoading, section, isLoading } = props;
     const { typeData, form, selectedOrderId, formActionType, handleFormValueChange, buttonData, handleButtonClick, NEXT_ACTION } = props;
     const { formKey, onFinishCustom = undefined, FormActionButton, pageType } = props;
 

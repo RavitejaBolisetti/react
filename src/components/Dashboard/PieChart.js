@@ -23,28 +23,20 @@ export const PieChart = () => {
 
     const data = [
         {
-            type: '0-15',
+            type: '0-30',
             value: 27,
         },
         {
-            type: '16-30',
+            type: '30-60',
             value: 25,
         },
         {
-            type: '31-60',
+            type: '60-90',
             value: 18,
         },
         {
-            type: '61-75',
+            type: '>90',
             value: 27,
-        },
-        {
-            type: '76-90',
-            value: 25,
-        },
-        {
-            type: '91-120',
-            value: 18,
         },
     ];
     const config = {
@@ -80,14 +72,13 @@ export const PieChart = () => {
                 customHtml: (container, view, datum) => {
                     const { width, height } = container.getBoundingClientRect();
                     const d = Math.sqrt(Math.pow(width / 2, 2) + Math.pow(height / 2, 2));
-                    const text = datum ? datum.type : 'Total';
+                    const text = datum ? datum.type : 'Days';
                     return renderStatistic(d, text, {
                         fontSize: 28,
                     });
                 },
             },
             content: {
-                // offsetY: 4,
                 style: {
                     fontSize: '32px',
                 },
