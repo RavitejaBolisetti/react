@@ -4,9 +4,9 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Row, Col, Input, Form, Select, Card, Switch } from 'antd';
+import { Row, Col, Input, Form, Card, Switch } from 'antd';
 
-import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { CustomerListMaster } from 'components/utils/CustomerListModal';
 
 import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
@@ -14,11 +14,13 @@ import { prepareCaption } from 'utils/prepareCaption';
 
 import styles from 'assets/sass/app.module.scss';
 import { convertToUpperCase } from 'utils/convertToUpperCase';
+import { customSelectBox } from 'utils/customSelectBox';
+import { registrationYearList } from 'utils/registrationYearList';
 
 const AddEditFormMain = (props) => {
     const { formData, form, formActionType, editableOnSearch, showAlert } = props;
-    const { financeLovData, schemeLovData, typeData } = props;
-    const { isConfigLoading, isSchemeLovLoading, isFinanceLovLoading, isMakeLoading, isModelLoading, isVariantLoading } = props;
+    const { financeLovData, schemeLovData, typeData, isMahindraMake } = props;
+    const { isConfigLoading, isSchemeLovLoading, isMakeLoading, isModelLoading, isVariantLoading } = props;
     const { filteredModelData, filteredVariantData, handleFilterChange, fnSetData, handleSchemeChange, viewOnly = false } = props;
 
     useEffect(() => {
@@ -30,12 +32,6 @@ const AddEditFormMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
-    const currentYear = new Date().getFullYear();
-    const yearsList = [];
-    for (let i = currentYear; i >= currentYear - 15; i--) {
-        yearsList.push({ key: i, value: i });
-    }
-
     const disabledProps = { disabled: viewOnly };
     return (
         <Card className={styles.ExchangeCard}>
@@ -46,7 +42,7 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                 </Col>
             </Row>
-            {(form.getFieldValue('exchange') || formData?.exchange === 1) && (
+            {(form?.getFieldValue('exchange') || formData?.exchange === 1) && (
                 <>
                     {!viewOnly && <CustomerListMaster fnSetData={fnSetData} defaultOption={'registrationNumber'} />}
 
@@ -57,36 +53,39 @@ const AddEditFormMain = (props) => {
                     </Row>
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="oldRegistrationNumber" label="Reg Number" rules={[validateRequiredInputField('Reg Number')]}>
-                                <Input {...disabledProps} onInput={convertToUpperCase} placeholder={preparePlaceholderText('Reg Number')} maxLength={50} />
+                            <Form.Item name="oldRegistrationNumber" label="Registration Number" rules={[validateRequiredInputField('Registration Number')]}>
+                                <Input {...disabledProps} onInput={convertToUpperCase} placeholder={preparePlaceholderText('Registration Number')} maxLength={50} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item label="Make" name="make" data-testid="make" rules={[validateRequiredSelectField('make')]}>
-                                <Select {...disabledProps} placeholder="Select" loading={isMakeLoading} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['VEHCL_MFG']} onChange={(value, selectobj) => handleFilterChange('make', value, selectobj)} />
+                                {customSelectBox({ data: typeData['VEHCL_MFG'], disabled: viewOnly, loading: isMakeLoading, onChange: (value) => handleFilterChange('make', value) })}
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item label="Model Group" name="modelGroup" data-testid="modelGroup" rules={[validateRequiredSelectField('model group')]}>
-                                <Select
-                                    placeholder="Select"
-                                    loading={isModelLoading}
-                                    allowClear
-                                    fieldNames={{ label: 'value', value: 'key' }}
-                                    options={filteredModelData}
-                                    {...disabledProps}
-                                    onChange={(value, selectobj) => {
-                                        handleFilterChange('modelGroup', value, selectobj);
+                                {customSelectBox({
+                                    data: filteredModelData,
+                                    loading: isModelLoading,
+                                    disabled: viewOnly,
+                                    fieldNames: isMahindraMake ? { key: 'modelGroupCode', value: 'modelGroupDescription' } : undefined,
+                                    onChange: (value) => {
+                                        handleFilterChange('modelGroup', value);
                                         showAlert(value);
-                                    }}
-                                />
+                                    },
+                                })}
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item label="Variant" name="variant" data-testid="variant" rules={[validateRequiredSelectField('variant')]}>
-                                <Select {...disabledProps} placeholder="Select" loading={isVariantLoading} allowClear fieldNames={{ label: 'value', value: 'key' }} options={filteredVariantData} />
+                                {customSelectBox({
+                                    data: filteredVariantData,
+                                    loading: isVariantLoading,
+                                    disabled: viewOnly,
+                                    fieldNames: isMahindraMake ? { key: 'variantCode', value: 'variantDescription' } : undefined,
+                                })}
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -96,33 +95,29 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item name="usageCode" label="Usage" initialValue={formData?.usageCode} rules={[validateRequiredSelectField('Usage')]}>
-                                <Select {...disabledProps} placeholder="Select" loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['VEHCL_USAG']} />
+                                {customSelectBox({ data: typeData['VEHCL_USAG'], disabled: viewOnly, loading: false })}
                             </Form.Item>
                         </Col>
-                    </Row>
 
-                    <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item name="yearOfRegistrationCode" label="Year of Registration" initialValue={formData?.yearOfRegistrationCode} rules={[validateRequiredInputField('year of reg')]}>
-                                <Select {...disabledProps} placeholder="Select" allowClear fieldNames={{ label: 'value', value: 'key' }} options={yearsList} />
+                                {customSelectBox({ data: registrationYearList, disabled: viewOnly, loading: false })}
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item name="monthOfRegistrationCode" label="Month of Registration" initialValue={formData?.monthOfRegistrationCode} rules={[validateRequiredSelectField('Month of Registration')]}>
-                                <Select {...disabledProps} loading={isConfigLoading} fieldNames={{ label: 'value', value: 'key' }} options={typeData['MONTH']} placeholder={preparePlaceholderSelect('Month of Registration')} />
+                                {customSelectBox({ data: typeData['MONTH'], disabled: viewOnly, loading: isConfigLoading })}
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="oldChessisNumber" label="VIN Number" rules={[validateRequiredInputField('VIN number')]}>
-                                <Input {...disabledProps} onInput={convertToUpperCase} maxLength={50} placeholder={preparePlaceholderText('vin number')} />
+                            <Form.Item name="oldChessisNumber" label="VIN" rules={[validateRequiredInputField('VIN')]}>
+                                <Input {...disabledProps} onInput={convertToUpperCase} maxLength={50} placeholder={preparePlaceholderText('VIN')} />
                             </Form.Item>
                         </Col>
-                    </Row>
 
-                    <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="hypothicatedToCode" label="Hypothecated To" initialValue={formData?.hypothicatedToCode} fieldNames={{ label: 'value', value: 'key' }}>
-                                <Select {...disabledProps} loading={isFinanceLovLoading} fieldNames={{ label: 'value', value: 'key' }} options={financeLovData} placeholder={preparePlaceholderSelect('Finance Company')} />
+                            <Form.Item name="hypothicatedToCode" label="Hypothecated To" initialValue={formData?.hypothicatedToCode}>
+                                {customSelectBox({ data: financeLovData, disabled: viewOnly, loading: isConfigLoading })}
                             </Form.Item>
                         </Col>
                     </Row>
@@ -145,7 +140,7 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item name="relationshipCode" label="Relationship" initialValue={formData?.relationshipCode} rules={[validateRequiredSelectField('Relationship')]}>
-                                <Select {...disabledProps} placeholder="Select" loading={isConfigLoading} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['REL_TYPE']} />
+                                {customSelectBox({ data: typeData['REL_TYPE'], disabled: viewOnly, loading: false })}
                             </Form.Item>
                         </Col>
                     </Row>
@@ -158,7 +153,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item name="schemeCode" label="Scheme Name" initialValue={formData?.schemeCode} rules={[validateRequiredSelectField('Scheme Name')]}>
-                                <Select {...disabledProps} loading={isSchemeLovLoading} fieldNames={{ label: 'value', value: 'key' }} options={schemeLovData} placeholder={preparePlaceholderSelect('Scheme Name')} onChange={handleSchemeChange} />
+                                {customSelectBox({ data: schemeLovData, disabled: viewOnly, loading: isSchemeLovLoading, onChange: handleSchemeChange })}
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>

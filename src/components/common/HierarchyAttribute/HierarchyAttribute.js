@@ -237,7 +237,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => {}).catch(err => console.error(err));
     };
 
     const handleChange = (attributeType) => {

@@ -7,7 +7,6 @@ import { fireEvent, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { Provider } from 'react-redux';
 // eslint-disable-next-line jest/no-mocks-import
-import createMockStore from '__mocks__/store';
 import { StockTransferIndentMaster } from 'components/Sales/StockTransferIndent/StockTransferIndentMaster';
 import customRender from '@utils/test-utils';
 import createMockStore from '__mocks__/store';

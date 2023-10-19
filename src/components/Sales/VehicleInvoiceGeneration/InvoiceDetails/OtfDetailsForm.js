@@ -12,6 +12,7 @@ import { customSelectBox } from 'utils/customSelectBox';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { prepareCaption } from 'utils/prepareCaption';
 import { getCodeValue } from 'utils/getCodeValue';
+import { YES_NO_FLAG } from '../../../../constants/yesNoFlag';
 
 const { Search } = Input;
 
@@ -24,6 +25,8 @@ const OtfDetailsForm = (props) => {
                 [formName]: {
                     ...formData,
                     otfNumber: formData?.bookingNumber || formData?.otfNumber,
+                    taxCalculationType: formData?.taxCalculationType || 'AD',
+                    taxPayableOnReverseCharges: formData?.taxPayableOnReverseCharges || YES_NO_FLAG?.NO?.key,
                     orderDate: formattedCalendarDate(formData?.orderDate),
                     saleConsultantName: getCodeValue(salesConsultantLovData, formData?.saleConsultant),
                 },
@@ -81,13 +84,13 @@ const OtfDetailsForm = (props) => {
                             <Form.Item hidden name={[formName, 'otfId']} />
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formData?.mitraType} label="Influence/Mitra Type" name={[formName, 'mitraType']}>
-                                <Input placeholder={preparePlaceholderText('Influence/Mitra Type')} disabled={true} />
+                            <Form.Item initialValue={formData?.mitraType} label="Influencer/Mitra Type" name={[formName, 'mitraType']}>
+                                <Input placeholder={preparePlaceholderText('Influencer/Mitra Type')} disabled={true} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formData?.mitraName} label="Influence/Mitra Name" name={[formName, 'mitraName']}>
-                                <Input placeholder={preparePlaceholderText('Influence/Mitra Name')} disabled={true} />
+                            <Form.Item initialValue={formData?.mitraName} label="Influencer/Mitra Name" name={[formName, 'mitraName']}>
+                                <Input placeholder={preparePlaceholderText('Influencer/Mitra Name')} disabled={true} />
                             </Form.Item>
                         </Col>
                     </Row>

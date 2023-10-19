@@ -185,6 +185,10 @@ export const AddOnDetailsMasterMain = (props) => {
             mrp: data?.mrp,
             partNumber: data?.partNumber,
             partDescription: data?.partDescription,
+            hsnCode: data?.hsnCode,
+            partLocationId: data?.partLocationId,
+            gndpPrice: data?.gndpPrice,
+            landedCost: data?.landedCost,
             quantity: data?.quantity,
             sellingPrice: data?.sellingPrice,
             type: data?.type,
@@ -198,8 +202,8 @@ export const AddOnDetailsMasterMain = (props) => {
         let detailsRequest = [];
 
         formDataSetter?.partDetailsResponses?.map((element, index) => {
-            const { id, otfId, partNumber, requiredQuantity, type, partDescription, sellingPrice, mrp } = element;
-            detailsRequest.push({ id, otfId, partNumber, requiredQuantity, type, partDescription, sellingPrice, mrp });
+            const { id, otfId, partNumber, partLocationId, hsnCode, gndpPrice, landedCost, requiredQuantity, type, partDescription, sellingPrice, mrp } = element;
+            detailsRequest.push({ id, otfId, partNumber, partLocationId, hsnCode, gndpPrice, landedCost, requiredQuantity, type, partDescription, sellingPrice, mrp });
             return undefined;
         });
 

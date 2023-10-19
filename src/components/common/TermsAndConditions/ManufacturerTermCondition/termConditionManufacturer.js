@@ -223,7 +223,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => {}).catch(err => console.error(err));
     };
 
     const handleReferesh = (e) => {

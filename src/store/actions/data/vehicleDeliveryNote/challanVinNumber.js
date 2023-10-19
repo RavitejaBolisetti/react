@@ -7,7 +7,7 @@ import { dataActions } from 'store/actions/crud/dataAction';
 import { BASE_URL_CHALLAN_VIN_SEARCH as baseURL } from 'constants/routingApi';
 
 const PREFIX = 'VEHICLE_DELIVERY_NOTE_CHALLAN_VIN_NO_';
-const moduleName = 'Challan Delivey Note Vin Number';
+const moduleName = 'Challan Delivey Note VIN';
 
 export const RECEIVE_DATA_LOADING_ACTION_CONSTANT = PREFIX + 'LOADING_DATA';
 export const RECEIVE_DATA_ACTION_CONSTANT = PREFIX + 'LIST_RECIEVE_DATA';

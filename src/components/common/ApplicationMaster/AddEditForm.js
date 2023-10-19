@@ -17,7 +17,7 @@ import { accordianExpandIcon } from 'utils/accordianExpandIcon';
 
 const { Panel } = Collapse;
 
-const AddEditFormMain = ({ setSelectedTreeKey, selectedTreeKey, showGlobalNotification, setparentAppCode, parentAppCode, applicationForm, setFinalFormdata, finalFormdata, onFinish, isReadOnly, criticalityGroupData, configurableParamData, actions, menuData, isApplicatinoOnSaveLoading, isFieldDisable, onCloseAction, isBtnDisabled, setIsBtnDisabled }) => {
+const AddEditFormMain = ({ setSelectedTreeKey, selectedTreeKey, showGlobalNotification, setParentAppCode, parentAppCode, applicationForm, setFinalFormdata, finalFormdata, onFinish, isReadOnly, criticalityGroupData, configurableParamData, actions, menuData, isApplicatinoOnSaveLoading, isFieldDisable, onCloseAction, isBtnDisabled, setIsBtnDisabled }) => {
     const [openAccordian, setOpenAccordian] = useState('');
     const [isRestrictedLocation, setIsRestrictedLocation] = useState(false);
     const [isDocumentToGenerate, setIsDocumentToGenerate] = useState(true);
@@ -61,7 +61,7 @@ const AddEditFormMain = ({ setSelectedTreeKey, selectedTreeKey, showGlobalNotifi
                         criticalityGroupData={criticalityGroupData}
                         configurableParamData={configurableParamData}
                         menuData={menuData}
-                        setparentAppCode={setparentAppCode}
+                        setParentAppCode={setParentAppCode}
                         parentAppCode={parentAppCode}
                         setCanFormSave={setCanFormSave}
                         isApplicatinoOnSaveLoading={isApplicatinoOnSaveLoading}
@@ -117,18 +117,6 @@ const AddEditFormMain = ({ setSelectedTreeKey, selectedTreeKey, showGlobalNotifi
                     )}
                 </div>
             </Spin>
-            {/* <Row gutter={20} className={style.formFooter}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={style.buttonsGroupLeft}>
-                    <Button danger onClick={onCloseAction}>
-                        Cancel
-                    </Button>
-                </Col>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={style.buttonsGroupRight}>
-                    <Button disabled={isApplicatinoOnSaveLoading || !canFormSave} loading={isApplicatinoOnSaveLoading} htmlType="submit" form="myForm" key="saveBtm" type="primary">
-                        Save
-                    </Button>
-                </Col>
-            </Row> */}
         </>
     );
 };

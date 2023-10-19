@@ -7,8 +7,8 @@ import React from 'react';
 import MenuNav from './MenuNav';
 import VehicleDeliveryNoteCard from './VehicleDeliveryNoteCard';
 const LeftSidebar = (props) => {
-    const { previousSection, setpreviousSection, currentSection } = props;
-    if (currentSection > previousSection) setpreviousSection(currentSection);
+    const { previousSection, setPreviousSection, currentSection } = props;
+    if (currentSection > previousSection) setPreviousSection(currentSection);
 
     return (
         <>

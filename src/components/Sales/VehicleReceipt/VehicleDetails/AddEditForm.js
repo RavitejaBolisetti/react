@@ -16,6 +16,7 @@ import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/prepareP
 import { VEHICLE_RECEIPT_STATUS } from 'constants/VehicleReceiptStatus';
 import { PHYSICAL_STATUS } from 'constants/PhysicalStatus';
 import { YES_NO_FLAG } from 'constants/yesNoFlag';
+import { GRN_TYPE_CONSTANT } from '../utils/GrnTypeConstant';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -24,7 +25,7 @@ const { Text } = Typography;
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { formData, setFinalData, buttonData, setButtonData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailForm, receiptType } = props;
+    const { formData, selectedRecord, setFinalData, buttonData, setButtonData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailForm, receiptType } = props;
 
     const [activeKey, setactiveKey] = useState([]);
     const [statusType, setstatusType] = useState([]);
@@ -38,22 +39,36 @@ const AddEditFormMain = (props) => {
     }, [formData]);
     useEffect(() => {
         if (vehicleStatusType?.length) {
+            const skippable = selectedRecord?.grnType === GRN_TYPE_CONSTANT?.CO_DEALER?.desc || selectedRecord?.grnType === GRN_TYPE_CONSTANT?.CO_DEALER?.key;
             setstatusType(
                 vehicleStatusType?.map((item) => {
                     if (receiptType === VEHICLE_RECEIPT_STATUS?.RECEIVED?.key) {
                         if (item?.key === VEHICLE_RECEIPT_STATUS?.IN_TRANSIT?.key) {
                             return { ...item, disabled: true };
                         } else {
-                            return { ...item, disabled: false };
+                            if (item?.key === VEHICLE_RECEIPT_STATUS?.RETURNED?.key && skippable) {
+                                return { ...item, disabled: true };
+                            } else {
+                                return { ...item, disabled: false };
+                            }
                         }
                     } else if (receiptType === VEHICLE_RECEIPT_STATUS?.RETURNED?.key) {
                         if (item?.key === VEHICLE_RECEIPT_STATUS?.IN_TRANSIT?.key || item?.key === VEHICLE_RECEIPT_STATUS?.RECEIVED?.key) {
                             return { ...item, disabled: true };
                         } else {
+                            if (item?.key === VEHICLE_RECEIPT_STATUS?.RETURNED?.key && skippable) {
+                                return { ...item, disabled: true };
+                            } else {
+                                return { ...item, disabled: false };
+                            }
+                        }
+                    } else {
+                        if (item?.key === VEHICLE_RECEIPT_STATUS?.RETURNED?.key && skippable) {
+                            return { ...item, disabled: true };
+                        } else {
                             return { ...item, disabled: false };
                         }
                     }
-                    return { ...item, disabled: false };
                 })
             );
         }
@@ -78,18 +93,24 @@ const AddEditFormMain = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        vehicleDetailForm.validateFields().then((values) => {});
+        vehicleDetailForm
+            .validateFields()
+            .then((values) => {})
+            .catch((err) => console.error(err));
     };
 
     const handleSave = (indexId) => {
-        vehicleDetailForm.validateFields().then(() => {
-            const vehicleDetailData = vehicleDetailForm?.getFieldsValue();
-            const filteredFormData = formData?.filter((element, i) => i !== indexId);
-            const finalData = { ...filteredFormData, ...vehicleDetailData };
-            setFinalData(finalData);
-            setButtonData({ ...buttonData, formBtnActive: true });
-            setactiveKey([]);
-        });
+        vehicleDetailForm
+            .validateFields()
+            .then(() => {
+                const vehicleDetailData = vehicleDetailForm?.getFieldsValue();
+                const filteredFormData = formData?.filter((element, i) => i !== indexId);
+                const finalData = { ...filteredFormData, ...vehicleDetailData };
+                setFinalData(finalData);
+                setButtonData({ ...buttonData, formBtnActive: true });
+                setactiveKey([]);
+            })
+            .catch((err) => console.error(err));
     };
 
     const handleCancelFormEdit = () => {
@@ -218,30 +239,32 @@ const AddEditFormMain = (props) => {
                                             </Select>
                                         </Form.Item>
                                     </Col>
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={item?.physicalStatus ?? PHYSICAL_STATUS?.NO_DAMAGE?.key} label="Physical Status" name={[index, 'physicalStatus']} rules={[validateRequiredSelectField('Physical Status')]}>
-                                            <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps}>
-                                                {physicalStatusType?.map((item) => (
-                                                    <Option key={'ps' + item.key} value={item.key}>
-                                                        {item.value}
-                                                    </Option>
-                                                ))}
-                                            </Select>
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                                <Row gutter={20}>
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={item?.shortage ?? YES_NO_FLAG?.NO?.key} label="Shortage" name={[index, 'shortage']}>
-                                            <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps}>
-                                                {shortageType?.map((item) => (
-                                                    <Option key={'st' + item.key} value={item.key}>
-                                                        {item.value}
-                                                    </Option>
-                                                ))}
-                                            </Select>
-                                        </Form.Item>
-                                    </Col>
+                                    {selectedRecord?.grnType !== GRN_TYPE_CONSTANT?.CO_DEALER?.desc && (
+                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                            <Form.Item initialValue={item?.physicalStatus ?? PHYSICAL_STATUS?.NO_DAMAGE?.key} label="Physical Status" name={[index, 'physicalStatus']} rules={[validateRequiredSelectField('Physical Status')]}>
+                                                <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps}>
+                                                    {physicalStatusType?.map((item) => (
+                                                        <Option key={'ps' + item.key} value={item.key}>
+                                                            {item.value}
+                                                        </Option>
+                                                    ))}
+                                                </Select>
+                                            </Form.Item>
+                                        </Col>
+                                    )}
+                                    {selectedRecord?.grnType !== GRN_TYPE_CONSTANT?.CO_DEALER?.desc && (
+                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                            <Form.Item initialValue={item?.shortage ?? YES_NO_FLAG?.NO?.key} label="Shortage" name={[index, 'shortage']}>
+                                                <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps}>
+                                                    {shortageType?.map((item) => (
+                                                        <Option key={'st' + item.key} value={item.key}>
+                                                            {item.value}
+                                                        </Option>
+                                                    ))}
+                                                </Select>
+                                            </Form.Item>
+                                        </Col>
+                                    )}
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item initialValue={item?.vehicleRecieptCheckListNumber} label="Vehicle Receipt Checklist No." name={[index, 'vehicleRecieptCheckListNumber']}>

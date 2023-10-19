@@ -292,9 +292,6 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
-    };
     const tableProps = {
         tableColumn: tableColumn,
         tableData: searchData,
@@ -330,7 +327,6 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
         },
         titleOverride: drawerTitle.concat(moduleTitle),
         onFinish,
-        onFinishFailed,
         isFormBtnActive,
         setFormBtnActive,
         configData,

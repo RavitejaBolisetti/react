@@ -62,7 +62,7 @@ export const ViewTaxChargesMain = (props) => {
                                         <Panel header="Model Group" key="1">
                                             <Divider />
                                             {modelData?.map((item) => (
-                                                <ModelCard key={'groupCode' + item?.modelGroupCode} modelGroupCode={item?.modelGroupCode} status={item?.status} {...cardProps} />
+                                                <ModelCard key={'groupCode' + item?.modelGroupCode} modelGroupCode={item?.modelGroupCode} status={item?.status} id={item?.id} {...cardProps} />
                                             ))}
                                         </Panel>
                                     </Collapse>
@@ -74,7 +74,7 @@ export const ViewTaxChargesMain = (props) => {
                                         <Panel header="Answers" key="2">
                                             <Divider />
                                             {answerData?.map((item) => (
-                                                <AnswerCard key={'' + item?.answerCode} answerCode={item?.answerCode} answerTitle={item?.answerTitle} answerStatus={item?.answerStatus} {...cardProps} />
+                                                <AnswerCard key={'' + item?.answerCode} answerCode={item?.answerCode} answerTitle={item?.answerTitle} answerStatus={item?.answerStatus} id={item?.id} {...cardProps} />
                                             ))}
                                         </Panel>
                                     </Collapse>

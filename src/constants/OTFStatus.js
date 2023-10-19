@@ -3,7 +3,8 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-export const VEHICLE_COMPANY_MAKE = 'MAL';
+// export const VEHICLE_COMPANY_MAKE = 'MAL';
+export const VEHICLE_COMPANY_MAKE = 'MM';
 
 export const OTF_STATUS = {
     BOOKED: {
@@ -11,7 +12,7 @@ export const OTF_STATUS = {
         key: 'O',
         title: 'Booked',
         desc: 'Booked',
-        displayOnView: true,
+        displayonview: true,
         filter: true,
     },
     ALLOTED: {
@@ -19,7 +20,7 @@ export const OTF_STATUS = {
         key: 'A',
         title: 'Allotted',
         desc: 'Allotted',
-        displayOnView: true,
+        displayonview: true,
         filter: true,
     },
     CANCELLED: {
@@ -27,7 +28,7 @@ export const OTF_STATUS = {
         key: 'C',
         title: 'Cancelled',
         desc: 'Cancelled',
-        displayOnView: true,
+        displayonview: true,
         filter: true,
     },
     INVOICED: {
@@ -35,7 +36,7 @@ export const OTF_STATUS = {
         key: 'I',
         title: 'Invoiced',
         desc: 'Invoiced',
-        displayOnView: true,
+        displayonview: true,
         filter: true,
     },
     DELIVERED: {
@@ -43,7 +44,7 @@ export const OTF_STATUS = {
         key: 'D',
         title: 'Delivered',
         desc: 'Delivered',
-        displayOnView: true,
+        displayonview: true,
         filter: true,
     },
     TRANSFERRED: {
@@ -51,7 +52,7 @@ export const OTF_STATUS = {
         key: 'T',
         title: 'Transferred',
         desc: 'Transferred',
-        displayOnView: false,
+        displayonview: false,
         filter: true,
     },
     PENDING_FOR_CANCELLATION: {
@@ -59,7 +60,7 @@ export const OTF_STATUS = {
         key: 'PND',
         title: 'Pending for Cancellation',
         desc: 'Pending for Cancellation',
-        displayOnView: true,
+        displayonview: true,
         filter: true,
     },
     CANCELLATION_REQUESTED: {
@@ -67,27 +68,27 @@ export const OTF_STATUS = {
         key: 'Cancellation Requested',
         title: 'Cancellation Requested',
         desc: 'Cancellation Requested',
-        displayOnView: false,
+        displayonview: false,
     },
     REJECTED: {
         id: 9,
         key: 'Rejected',
         title: 'Rejected',
         desc: 'Rejected',
-        displayOnView: false,
+        displayonview: false,
     },
     DELIVERY_NOTE: {
         id: 9,
         key: 'N',
         title: 'Delivery Note',
         desc: 'Delivery Note',
-        displayOnView: false,
+        displayonview: false,
     },
     UNALLOTED: {
         id: 10,
         key: 'UN',
         title: 'Un-Alloted',
         desc: 'Un-Alloted',
-        displayOnView: false,
+        displayonview: false,
     },
 };

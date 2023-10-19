@@ -7,7 +7,7 @@ export const SALES_MODULE_TYPE = {
     OTF: {
         ID: 1,
         KEY: 'otf',
-        TITLE: 'Booking Form',
+        TITLE: 'Booking Management',
     },
     INVOICE: {
         ID: 2,

@@ -102,6 +102,7 @@ const CustomerMasterMain = (props) => {
     const [selectedCustomerId, setSelectedCustomerId] = useState();
     const [shouldResetForm, setShouldResetForm] = useState(false);
     const [refreshCustomerList, setRefreshCustomerList] = useState(false);
+
     const [section, setSection] = useState();
     const [defaultSection, setDefaultSection] = useState();
     const [currentSection, setCurrentSection] = useState();
@@ -115,16 +116,19 @@ const CustomerMasterMain = (props) => {
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [ChangeHistoryVisible, setChangeHistoryVisible] = useState(false);
     const [showNameChangeHistory, setShowNameChangeHistory] = useState(false);
-    // const [isUnsavedDataPopup, setIsUnsavedDataPopup] = useState(false);
-    const [nextCurentSection, setNextCurrentSection] = useState('');
+    const [previousSection, setPreviousSection] = useState(1);
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false, changeHistory: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
-    const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
+
+    useEffect(() => {
+        setFilterString({ current: 1, customerType: CUSTOMER_TYPE?.INDIVIDUAL.id, pageSize: 10 });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const defaultExtraParam = useMemo(() => {
         return [
@@ -137,34 +141,34 @@ const CustomerMasterMain = (props) => {
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: page?.pageSize,
+                value: filterString?.pageSize,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: filterString?.current || page?.current,
+                value: filterString?.current,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'sortBy',
                 title: 'Sort By',
-                value: page?.sortBy,
+                value: filterString?.sortBy,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'sortIn',
                 title: 'Sort Type',
-                value: page?.sortType,
+                value: filterString?.sortType,
                 canRemove: true,
                 filter: false,
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [customerType, filterString, page]);
+    }, [filterString]);
 
     const extraParams = useMemo(() => {
         if (filterString) {
@@ -237,16 +241,9 @@ const CustomerMasterMain = (props) => {
     }, []);
 
     useEffect(() => {
-        if (page?.current > 1) {
-            setFilterString({ ...filterString, pageSize: 10, current: undefined });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [page]);
-
-    useEffect(() => {
         if (customerType) {
-            setPage({ pageSize: 10, current: 1 });
-            setFilterString({ current: 1 });
+            // setFilterString({ current: 1 });
+            setFilterString({ ...filterString, customerType });
             const defaultSection = customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION.CUSTOMER_DETAILS.id : CUSTOMER_CORPORATE_SECTION.CUSTOMER_DETAILS.id;
             setSetionName(customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION : CUSTOMER_CORPORATE_SECTION);
             setDefaultSection(defaultSection);
@@ -267,12 +264,12 @@ const CustomerMasterMain = (props) => {
     }, [currentSection, sectionName]);
 
     useEffect(() => {
-        if (userId && customerType && extraParams) {
+        if (userId && extraParams) {
             setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams: refreshCustomerList ? defaultExtraParam : extraParams || defaultExtraParam, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, customerType, extraParams, refreshCustomerList]);
+    }, [userId, extraParams, refreshCustomerList]);
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
@@ -280,6 +277,7 @@ const CustomerMasterMain = (props) => {
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
+                setPreviousSection(1);
                 break;
             case EDIT_ACTION:
                 setSelectedCustomer(record);
@@ -327,15 +325,18 @@ const CustomerMasterMain = (props) => {
     //     setButtonData({ ...buttonData, formBtnActive: false });
     // };
 
+    const setPage = (page) => {
+        setFilterString({ ...filterString, ...page });
+    };
+
     const tableProps = {
         dynamicPagination,
         totalRecords,
         filterString,
-        page,
-        setPage,
         isLoading: isLoading,
         tableData: data,
         tableColumn: tableColumn(handleButtonClick),
+        setPage,
     };
 
     // const onChange = (sorter, filters) => {
@@ -374,8 +375,8 @@ const CustomerMasterMain = (props) => {
     }, [formActionType]);
 
     const handleCustomerTypeChange = (id) => {
-        setFilterString({ current: 1 });
         setCustomerType(id);
+        setFilterString({ current: 1, customerType: id, pageSize: 10 });
         searchForm.resetFields();
     };
 
@@ -394,11 +395,10 @@ const CustomerMasterMain = (props) => {
     };
 
     const handleResetFilter = (e) => {
-        const { pageSize } = filterString;
         if (filterString) {
             setShowDataLoading(true);
         }
-        setFilterString({ pageSize, current: 1 });
+        setFilterString({ pageSize: 10, current: 1, customerType: customerType });
         setShowDataLoading(true);
         searchForm.resetFields();
     };
@@ -502,9 +502,8 @@ const CustomerMasterMain = (props) => {
         handleChangeHistory,
         handleResetFilter,
         setShowNameChangeHistory,
-        // setIsUnsavedDataPopup,
-        nextCurentSection,
-        setNextCurrentSection,
+        setPreviousSection,
+        previousSection,
     };
 
     const showAddButton = true;

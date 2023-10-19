@@ -41,7 +41,7 @@ const ChargerInstallatioDetailsMasterBase = (props) => {
     };
 
     const onFinish = () => {
-        if (addRequestData?.length <= 0) {
+        if (!!addRequestData) {
             showGlobalNotification({ message: 'Please Add Request' });
         } else {
             handleButtonClick({ buttonAction: NEXT_ACTION });

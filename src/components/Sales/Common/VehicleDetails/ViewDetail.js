@@ -48,12 +48,12 @@ const ViewDetailMain = (props) => {
 
                                         <Descriptions.Item label="PO Number">{checkAndSetDefaultValue(formData?.poNumber, isLoading)}</Descriptions.Item>
                                         <Descriptions.Item label="PO Date">{checkAndSetDefaultValue(formData?.poDate ? formData?.poDate : undefined, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                                        <Descriptions.Item label="PO Status">{checkAndSetDefaultValue(getCodeValue(typeData?.PO_STATS, formData?.poStatus), isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label="PO Status">{checkAndSetDefaultValue(formData?.poStatus, isLoading)}</Descriptions.Item>
                                         <Descriptions.Item label="SO Number">{checkAndSetDefaultValue(formData?.soNumber, isLoading)}</Descriptions.Item>
                                         <Descriptions.Item label="SO Status">{checkAndSetDefaultValue(formData?.soStatus, isLoading)}</Descriptions.Item>
                                     </>
                                 )}
-                                <Descriptions.Item label="VIN Number">{checkAndSetDefaultValue(formData?.vinNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="VIN">{checkAndSetDefaultValue(formData?.vinNumber, isLoading)}</Descriptions.Item>
                             </Descriptions>
 
                             <Descriptions {...viewProps} title={prepareCaption('Price Information')}>

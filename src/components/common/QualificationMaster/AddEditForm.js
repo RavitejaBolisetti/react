@@ -16,7 +16,7 @@ import { DrawerFormButton } from 'components/common/Button';
 import styles from 'assets/sass/app.module.scss';
 
 const AddEditFormMain = (props) => {
-    const { form, formData, onCloseAction, formActionType, onFinish, onFinishFailed } = props;
+    const { form, formData, onCloseAction, formActionType, onFinish } = props;
 
     const { buttonData, setButtonData, handleButtonClick } = props;
 
@@ -43,7 +43,7 @@ const AddEditFormMain = (props) => {
     };
 
     return (
-        <Form autocomplete="off" layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form autocomplete="off" layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBody}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     {!formActionType.viewMode ? (

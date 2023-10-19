@@ -12,7 +12,7 @@ import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 import styles from './../ApplicationMaster.module.scss';
 
-const ApplicationActionsForm = ({ finalFormdata, form, onFinish, status, name, id, isEditing, isBtnDisabled, actions, disableStatus, setIsBtnDisabled, onFieldsChange }) => {
+const ApplicationActionsForm = ({ finalFormdata, form, onFinish, isEditing, isBtnDisabled, actions, disableStatus, onFieldsChange }) => {
     const onFinishFailed = (err) => {
         console.error(err);
     };

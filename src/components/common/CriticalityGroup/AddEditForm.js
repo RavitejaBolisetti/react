@@ -15,7 +15,7 @@ import AllowedTimingList from './AllowedTimings/AllowedTimingList';
 import styles from 'assets/sass/app.module.scss';
 
 const AddEditFormMain = (props) => {
-    const { formActionType, setIsFormVisible, forceUpdate, showGlobalNotification, onFinish, onFinishFailed, form, formData, setFormData, defaultBtnVisiblity, timeData, setTimeData } = props;
+    const { formActionType, setIsFormVisible, forceUpdate, showGlobalNotification, onFinish, form, formData, setFormData, defaultBtnVisiblity, timeData, setTimeData } = props;
     const { isLoadingOnSave, deletedTime, setDeletedTime, buttonData, setButtonData, handleButtonClick } = props;
     const [TimesegmentLengthTracker, setTimesegmentLengthTracker] = useState(generateRandomNumber());
     const [isAddTimeVisible, setIsAddTimeVisible] = useState(false);
@@ -94,7 +94,7 @@ const AddEditFormMain = (props) => {
     return (
         <>
             <div className={styles.drawerBodyNew}>
-                <Form form={form} id="myForm" autoComplete="off" layout="vertical" colon={false} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                <Form form={form} id="myForm" autoComplete="off" layout="vertical" colon={false} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>
                     {!formActionType?.viewMode ? (
                         <>
                             <Row gutter={20}>

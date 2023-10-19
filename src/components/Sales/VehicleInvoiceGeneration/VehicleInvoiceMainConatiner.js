@@ -16,8 +16,8 @@ import { VehicleDetailsMaster } from 'components/Sales/Common/VehicleDetails';
 import { SchemeDetailsMaster } from 'components/Sales/VehicleInvoiceGeneration/SchemeDetails';
 import { FinananceDetailsMaster } from 'components/Sales/VehicleInvoiceGeneration/FinananceDetails';
 import { ExchangeVehiclesMaster } from 'components/Sales/Common/ExchangeVehicles';
-import { LoyaltySchemeMaster } from 'components/Sales/VehicleInvoiceGeneration/LoyaltyScheme';
-import { ReferralsMaster } from 'components/Sales/VehicleInvoiceGeneration/Referrals';
+import { LoyaltySchemeMaster } from 'components/Sales/Common/LoyaltyScheme';
+import { ReferralsMaster } from 'components/Sales/Common/Referrals';
 import { ThankYouMaster } from 'components/Sales/VehicleInvoiceGeneration/ThankYou';
 
 import { VehicleInvoiceFormButton } from './VehicleInvoiceFormButton';
@@ -27,13 +27,14 @@ import { SALES_MODULE_TYPE } from 'constants/salesModuleType';
 
 const VehicleInvoiceMainConatinerMain = (props) => {
     const { currentSection, handleIRNGeneration, selectedOtfNumber, requestPayload, setRequestPayload, selectedOtfId, profileCardData } = props;
-
+    const formData = { selectedRecordId: selectedOtfId, modelCode: requestPayload?.vehicleDetails?.modelCode, viewOnly: true };
     const onFinishCustom = ({ key, values }) => {
         setRequestPayload({ ...requestPayload, [key]: values });
     };
 
     const myProps = {
         ...props,
+        ...formData,
         wrapForm: false,
         salesModuleType: SALES_MODULE_TYPE.INVOICE.KEY,
         handleIRNGeneration,
@@ -41,9 +42,8 @@ const VehicleInvoiceMainConatinerMain = (props) => {
         selectedOrderId: selectedOtfNumber,
         FormActionButton: VehicleInvoiceFormButton,
         vehicleInvoiceMasterData: requestPayload,
-        otfData: profileCardData,
+        otfData: { ...profileCardData },
     };
-
     const renderElement = () => {
         switch (currentSection) {
             case VEHICLE_INVOICE_SECTION.INVOICE_DETAILS.id: {
@@ -62,14 +62,13 @@ const VehicleInvoiceMainConatinerMain = (props) => {
                 return <InsuranceDetailsMaster {...myProps} selectedRecordId={selectedOtfId} formData={requestPayload?.insuranceDetails} formKey={'insuranceDetails'} />;
             }
             case VEHICLE_INVOICE_SECTION.EXCHANGE_DETAILS.id: {
-                const formData = { exchangeDataPass: requestPayload?.exchangeDetails, selectedRecordId: selectedOtfId, modelCode: requestPayload?.vehicleDetails?.modelCode, viewOnly: true };
-                return <ExchangeVehiclesMaster {...myProps} {...formData} formKey={'exchangeDetails'} />;
+                return <ExchangeVehiclesMaster {...myProps} exchangeDataPass={requestPayload?.exchangeDetails} formKey={'exchangeDetails'} />;
             }
             case VEHICLE_INVOICE_SECTION.LOYALTY_SCHEME.id: {
-                return <LoyaltySchemeMaster {...myProps} formData={requestPayload?.loyaltyScheme} formKey={'loyaltyScheme'} />;
+                return <LoyaltySchemeMaster {...myProps} loyaltySchemeDataPass={requestPayload?.loyaltyScheme} formKey={'loyaltyScheme'} />;
             }
             case VEHICLE_INVOICE_SECTION.REFERRALS.id: {
-                return <ReferralsMaster {...myProps} referralData={requestPayload?.referrals} formKey={'referrals'} />;
+                return <ReferralsMaster {...myProps} referralDataPass={requestPayload?.referrals} formKey={'referrals'} />;
             }
             case VEHICLE_INVOICE_SECTION.THANK_YOU_PAGE.id: {
                 return <ThankYouMaster {...myProps} />;

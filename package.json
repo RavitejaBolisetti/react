@@ -48,7 +48,7 @@
         "web-vitals": "^2.1.4"
     },
     "scripts": {
-        "start": "react-scripts --max-old-space-size=8192 start",
+        "start": "react-scripts start",
         "build": "react-scripts --max-old-space-size=8192 build",
         "test": "cross-env BABEL_ENV=test --max-old-space-size=8192 jest",
         "watch-tests": "cross-env BABEL_ENV=test jest --watch",
@@ -112,6 +112,7 @@
         "@testing-library/jest-dom": "^5.16.5",
         "@testing-library/react": "^14.0.0",
         "@testing-library/user-event": "^14.4.3",
+        "@types/react-detect-offline": "^2.4.1",
         "babel-jest": "^27.5.1",
         "husky": "^8.0.3",
         "jest": "^27.5.1",

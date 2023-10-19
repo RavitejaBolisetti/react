@@ -64,10 +64,9 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const GstIRNTransactionMain = (props) => {
     const { userId, typeData, showGlobalNotification } = props;
-    const { fetchList, listShowLoading, data, filterString, setFilterString } = props;
+    const { fetchList, listShowLoading, data, filterString, setFilterString, isDataLoading } = props;
     const { fetchGSTINList, viewDocument, uploadDocument } = props;
     const [searchForm] = Form.useForm();
-    const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [advanceFilterForm] = Form.useForm();
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
@@ -86,6 +85,14 @@ export const GstIRNTransactionMain = (props) => {
         setShowDataLoading(false);
         showGlobalNotification({ message });
     };
+
+    useEffect(() => {
+        setFilterString({ ...filterString, pageSize: 10, current: 1 });
+        return () => {
+            setFilterString();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const extraParams = useMemo(() => {
         return [
@@ -123,20 +130,34 @@ export const GstIRNTransactionMain = (props) => {
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: page?.current,
+                value: filterString?.current,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: page?.pageSize,
+                value: filterString?.pageSize,
+                canRemove: true,
+                filter: false,
+            },
+            {
+                key: 'sortBy',
+                title: 'Sort By',
+                value: filterString?.sortBy,
+                canRemove: true,
+                filter: false,
+            },
+            {
+                key: 'sortIn',
+                title: 'Sort Type',
+                value: filterString?.sortType,
                 canRemove: true,
                 filter: false,
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, page]);
+    }, [filterString]);
 
     useEffect(() => {
         if (userId) {
@@ -198,7 +219,11 @@ export const GstIRNTransactionMain = (props) => {
     };
 
     const handleResetFilter = (e) => {
-        setFilterString();
+        const { pageSize } = filterString;
+        if (filterString) {
+            setShowDataLoading(true);
+        }
+        setFilterString({ pageSize, current: 1 });
         advanceFilterForm.resetFields();
         searchForm.resetFields();
         setAdvanceSearchVisible(false);
@@ -206,13 +231,16 @@ export const GstIRNTransactionMain = (props) => {
 
     const onClickAction = (values) => {};
 
+    const setCurrentPage = (page) => {
+        setFilterString({ ...filterString, ...page });
+    };
+
     const tableProps = {
         dynamicPagination,
         filterString,
         totalRecords: data?.totalRecords,
-        page,
-        setPage,
-        isLoading: showDataLoading,
+        setPage: setCurrentPage,
+        isLoading: isDataLoading,
         tableColumn: tableColumn(handleButtonClick),
         tableData: data?.paginationData,
         showAddButton: false,
@@ -220,7 +248,6 @@ export const GstIRNTransactionMain = (props) => {
 
     const ListDataTableProps = {
         ...tableProps,
-        isLoading: false,
     };
 
     const advanceFilterResultProps = {

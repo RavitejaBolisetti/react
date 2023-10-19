@@ -166,5 +166,11 @@ export const EMBEDDED_REPORTS = {
         type: 'Report',
         slug: 'rsa-report',
     },
-
+    AMC_REGISTRATION_INVOICE_DOCUMENT: {
+        id: 23,
+        key: 'AMC_Registration_Invoice_document',
+        title: 'AMC Registration Invoice Document ',
+        type: 'Document',
+        slug: '-report',
+    },
 };

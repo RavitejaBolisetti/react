@@ -11,7 +11,7 @@ const { Panel } = Collapse;
 
 const expandIcon = ({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />);
 
-const ViewDetailBase = ({ formData, styles, parameterType, taxCharges, taxCategory, setDisabledEdit }) => {
+const ViewDetailBase = ({ styles, taxCharges, taxCategory, setDisabledEdit, stateData, saleData }) => {
     const viewOneColProps = {
         bordered: false,
         colon: false,
@@ -30,8 +30,8 @@ const ViewDetailBase = ({ formData, styles, parameterType, taxCharges, taxCatego
                             <Collapse expandIcon={expandIcon} collapsible="icon" className={styles.fullWidth}>
                                 <Panel header="Tax & Charges Calculation" key="2">
                                     <Divider />
-                                    {taxCategory?.taxCategoryDetail?.map((item, index) => (
-                                        <CardProductAttribute key={'tax' + item?.taxChargeTypeCode} chargeCode={item?.chargeCode} chargeDescription={item?.chargeDescription} chargeType={item?.chargeType} id={item?.id} setDisabledEdit={setDisabledEdit} taxCharges={taxCharges} />
+                                    {taxCategory?.taxCategoryDetail?.map((item) => (
+                                        <CardProductAttribute key={'tax' + item?.taxChargeTypeCode} chargeCode={item?.chargeCode} chargeDescription={item?.chargeDescription} chargeType={item?.chargeType} id={item?.id} setDisabledEdit={setDisabledEdit} taxCharges={taxCharges} stateCode={item?.stateCode} saleType={item?.saleType} stateData={stateData} saleData={saleData} />
                                     ))}
                                 </Panel>
                             </Collapse>

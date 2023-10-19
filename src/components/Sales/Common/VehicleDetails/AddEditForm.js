@@ -8,7 +8,6 @@ import { Col, Input, Form, Row, Button, Collapse, Typography, Divider, Switch } 
 import { validateRequiredSelectField, validateNumberWithTwoDecimalPlaces, validateRequiredInputField, compareAmountValidator } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { PlusOutlined } from '@ant-design/icons';
-import { FiEdit } from 'react-icons/fi';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { OptionServicesForm } from './optionServicesForm';
 import dayjs from 'dayjs';
@@ -27,6 +26,7 @@ import { customSelectBox } from 'utils/customSelectBox';
 import { prepareCaption } from 'utils/prepareCaption';
 import styles from 'assets/sass/app.module.scss';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
+import { EDIT_ACTION, DELETE_ACTION } from 'utils/btnVisiblity';
 import { OTF_STATUS } from 'constants/OTFStatus';
 
 const { Text } = Typography;
@@ -38,6 +38,7 @@ const AddEditFormMain = (props) => {
 
     const [optionForm] = Form.useForm();
     const [confirmRequest, setConfirmRequest] = useState();
+    const [editingOptionalData, setEditingOptionalData] = useState({});
 
     const findUsageType = (usage) => {
         const foundVal = typeData[PARAM_MASTER.VEHCL_TYPE.id]?.find((element, index) => element?.value === usage);
@@ -57,17 +58,37 @@ const AddEditFormMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
-    // const handleCollapse = (key) => {
-    //     if (key !== 3 && isReadOnly) {
-    //         setIsReadOnly(false);
-    //     }
-    //     setOpenAccordian((prev) => (prev === key ? '' : key));
-    // };
-
     const addContactHandeler = (e) => {
         optionForm.resetFields();
         !activeKey.includes(3) && onChange(3);
         setIsReadOnly(true);
+    };
+
+    const handleButtonClick = ({ record, buttonAction }) => {
+        handleFormValueChange();
+        switch (buttonAction) {
+            case EDIT_ACTION:
+                addContactHandeler();
+                optionForm.setFieldsValue({ ...record });
+                setEditingOptionalData(record);
+                break;
+            case DELETE_ACTION:
+                setOptionalServices((prev) => {
+                    let updatedVal = [...prev];
+                    const index = updatedVal?.findIndex((i) => i?.serviceName === record?.serviceName);
+                    const data = updatedVal?.[index];
+                    if (data?.id) {
+                        updatedVal?.splice(index, 1, { ...record, status: false });
+                    } else {
+                        updatedVal?.splice(index, 1);
+                    }
+                    return updatedVal;
+                });
+                setEditingOptionalData({});
+                break;
+            default:
+                break;
+        }
     };
 
     const handleCancel = () => {
@@ -93,6 +114,8 @@ const AddEditFormMain = (props) => {
         setOptionalServices,
         handleFormValueChange,
         vehicleServiceData,
+        editingOptionalData,
+        setEditingOptionalData,
     };
 
     const handleSelectTreeClick = (value) => {
@@ -134,6 +157,16 @@ const AddEditFormMain = (props) => {
         placeholder: preparePlaceholderSelect('Model'),
         loading: !viewOnly ? isProductDataLoading : false,
         treeDisabled: orderStatus === OTF_STATUS.BOOKED.key ? false : true,
+    };
+
+    const [timer, setTimer] = useState(null);
+
+    const onDiscountAmountChange = (e) => {
+        clearTimeout(timer);
+        const newTimer = setTimeout(() => {
+            handleVehicleDetailChange({ ...filterVehicleData, discountAmount: e?.target?.value });
+        }, 500);
+        setTimer(newTimer);
     };
 
     return (
@@ -196,8 +229,8 @@ const AddEditFormMain = (props) => {
                                 )}
 
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item label="VIN Number" name="vinNumber">
-                                        <Input {...disabledProp} placeholder={preparePlaceholderText('VIN number')} />
+                                    <Form.Item label="VIN" name="vinNumber">
+                                        <Input {...disabledProp} placeholder={preparePlaceholderText('VIN')} />
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -209,12 +242,12 @@ const AddEditFormMain = (props) => {
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item initialValue={formData?.saleType} name="saleType" label="Sale Type" rules={[validateRequiredSelectField('Sale Type')]}>
-                                        {customSelectBox({ data: typeData['SALE_TYPE'], disabled: viewOnly, onChange: (value) => handleVehicleDetailChange({ ...filterVehicleData, saleType: value }) })}
+                                        {customSelectBox({ data: typeData['SALE_TYPE'], onChange: (value) => handleVehicleDetailChange({ ...filterVehicleData, saleType: value }) })}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item initialValue={formData?.priceType} label="Price Type" name="priceType">
-                                        {customSelectBox({ data: typeData['PRC_TYP'], disabled: viewOnly, onChange: (value) => handleVehicleDetailChange({ ...filterVehicleData, priceType: value }) })}
+                                        {customSelectBox({ data: typeData['PRC_TYP'], onChange: (value) => handleVehicleDetailChange({ ...filterVehicleData, priceType: value }) })}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
@@ -245,7 +278,7 @@ const AddEditFormMain = (props) => {
                                             },
                                         ]}
                                     >
-                                        <Input placeholder={preparePlaceholderText('Dealer Discount with TAX')} onBlur={(e) => handleVehicleDetailChange({ ...filterVehicleData, discountAmount: e?.target?.value })} />
+                                        <Input placeholder={preparePlaceholderText('Dealer Discount with TAX')} onChange={onDiscountAmountChange} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
@@ -289,7 +322,7 @@ const AddEditFormMain = (props) => {
                                     <OptionServicesForm {...OptionServicesFormProps} />
                                 </>
                             )}
-                            <DataTable tableColumn={optionalServicesColumns({ formActionType })} tableData={optionalServices} pagination={false} />
+                            <DataTable tableColumn={optionalServicesColumns({ handleButtonClick, formActionType })} tableData={optionalServices?.filter((i) => i?.status)} pagination={false} />
                         </Panel>
                     </Collapse>
                 </Col>

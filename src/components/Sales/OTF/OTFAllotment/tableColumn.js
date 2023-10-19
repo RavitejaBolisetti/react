@@ -10,7 +10,7 @@ import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'VIN/Chasis no.',
+            title: 'VIN',
             dataIndex: 'vehicleIdentificationNumber',
             width: '20%',
         }),

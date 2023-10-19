@@ -13,7 +13,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 const { Search } = Input;
 
 const EnrolmentAdd = (props) => {
-    const { typeData, salesConsultantLov, onHandleRegistrationNumber } = props;
+    const { typeData, salesConsultantLovData, onHandleRegistrationNumber, isSearchLoading, isSalesConsultantDataLoading } = props;
 
     return (
         <>
@@ -25,7 +25,7 @@ const EnrolmentAdd = (props) => {
                 </Col>
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                     <Form.Item label="Vehicle Registration Number" name="vin" rules={[validateRequiredInputField('Vehicle Registration Number')]}>
-                        <Search placeholder={preparePlaceholderText('Vehicle Registration Number')} allowClear onSearch={onHandleRegistrationNumber} />
+                        <Search placeholder={preparePlaceholderText('Vehicle Registration Number')} allowClear onSearch={onHandleRegistrationNumber} loading={isSearchLoading} />
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
@@ -36,7 +36,7 @@ const EnrolmentAdd = (props) => {
                 </Col>
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                     <Form.Item label="Enrolled By" name="enrolledBy" rules={[validateRequiredInputField('Enrolled By')]}>
-                        {customSelectBox({ data: salesConsultantLov, placeholder: preparePlaceholderSelect('Enrolled By') })}
+                        {customSelectBox({ data: salesConsultantLovData, placeholder: preparePlaceholderSelect('Enrolled By'), loading: isSalesConsultantDataLoading })}
                     </Form.Item>
                 </Col>
             </Row>

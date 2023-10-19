@@ -4,24 +4,64 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 export const AMC_CONSTANTS = {
-    SCHM: {
+    SCHEME: {
+        id: 1,
         key: 'SCHM',
-        value: 'SCHM',
+        title: 'Scheme parameter',
     },
-    DMFOC: {
+    MNM_FOC: {
+        id: 2,
         key: 'DMFOC',
-        value: 'DMFOC',
+        title: 'MNM_FOC',
     },
-    GEN_SUCC: {
-        key: 'GEN_SUCC',
-        value: 'AMC Registration Completed Successfully',
+    GENERATED_SUCCESSFULLY: {
+        id: 3,
+        key: 'GENERATED_SUCCESSFULLY',
+        title: 'AMC Registration Completed Successfully',
     },
-    DLR: {
+    DEALER: {
+        id: 4,
         key: 'DLR',
-        value: 'DLR',
+        title: 'DEALER',
     },
     MNM: {
+        id: 5,
         key: 'MNM',
-        value: 'MNM',
+        title: 'MNM',
+    },
+    PENDING_FOR_APPROVAL: {
+        id: 6,
+        key: 'PENDING_FOR_APPROVAL',
+        title: 'Pending for approval',
+    },
+    PENDING_FOR_CANCELLATION: {
+        id: 7,
+        key: 'PENDING_FOR_CANCELLATION',
+        title: 'Pending for cancellation',
+    },
+    APPROVED: {
+        id: 8,
+        key: 'APPR',
+        title: 'Approved',
+    },
+    REJECTED: {
+        id: 9,
+        key: 'REJD',
+        title: 'Rejected',
+    },
+    OTHERS: {
+        id: 10,
+        key: 'ACR7',
+        title: 'Others in amc cancellation reason',
+    },
+    CANCEL_REQUEST: {
+        id: 11,
+        key: 'CANCEL_REQUEST',
+        title: 'Cancelling Request',
+    },
+    AMC_CANCELLATION: {
+        id: 12,
+        key: 'AMC_CANCELLATION',
+        title: 'AMC cancel',
     },
 };
