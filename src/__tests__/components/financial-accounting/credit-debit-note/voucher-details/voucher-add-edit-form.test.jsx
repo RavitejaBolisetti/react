@@ -36,7 +36,7 @@ describe('AddEditForm component', () => {
     it('voucherTableFormData', ()=>{
         const voucherTableFormData = [{accountCode:'ac00', accountNarration:'test', amount:'567', id:'123'}];
 
-        customRender(<FormWrapper isVisible={true} setIsAccountHeadValidated={jest.fn()} voucherTableFormData={voucherTableFormData} />);
+        customRender(<FormWrapper isVisible={true} setIsAccountHeadValidated={jest.fn()} voucherTableFormData={voucherTableFormData} itemOptions={[{ name: 'Test' }]} setitemOptions={jest.fn()} />);
     });
 
     it('onErrorAction', () => {
@@ -53,6 +53,16 @@ describe('AddEditForm component', () => {
 
     it('saveBtn', () => {
         customRender(<FormWrapper isVisible={true} setIsAccountHeadValidated={jest.fn()} />);
+
+        const accountHead = screen.getByRole('textbox', {name:'Account Head'});
+        fireEvent.change(accountHead, {target:{value:'test'}})
+
+        const saveBtn = screen.getByRole('button', {name:'Save'});
+        fireEvent.click(saveBtn);
+    });
+
+    it('saveBtn isEditing=true', () => {
+        customRender(<FormWrapper isVisible={true} setIsAccountHeadValidated={jest.fn()} isEditing={true} />);
 
         const accountHead = screen.getByRole('textbox', {name:'Account Head'});
         fireEvent.change(accountHead, {target:{value:'test'}})
