@@ -143,7 +143,7 @@ const ExchangeVehiclesBase = (props) => {
     const { typeData, selectedOrder, fetchListVehicleExchangeAlert, listShowLoadingVehicleExchangeAlert, exchangeVehicleAlertData, resetVehicleExchangeAlert } = props;
     const { fetchMakeLovList, listMakeShowLoading, fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading } = props;
     const { isMakeLoading, makeData, isModelDataLoaded, isModelLoading, modelData, isVariantDataLoaded, isVariantLoading, variantData, saveData } = props;
-    const { financeLovData, isFinanceLovLoading, fetchFinanceLovList, listFinanceLovShowLoading } = props;
+    const { financeLovData, isFinanceLovLoading, isFinanceLovDataLoaded, fetchFinanceLovList, listFinanceLovShowLoading } = props;
     const { schemeLovData, isSchemeLovLoading, fetchSchemeLovList, listSchemeLovShowLoading } = props;
     const { form, selectedOrderId, formActionType, handleFormValueChange, isDataLoaded, resetData } = props;
     const { fetchCustomerList, listCustomerShowLoading, handleButtonClick, NEXT_ACTION } = props;
@@ -234,7 +234,7 @@ const ExchangeVehiclesBase = (props) => {
                 },
             ];
             fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction, userId });
-            fetchFinanceLovList({ setIsLoading: listFinanceLovShowLoading, userId });
+            !isFinanceLovDataLoaded && fetchFinanceLovList({ setIsLoading: listFinanceLovShowLoading, userId });
             fetchSchemeLovList({ setIsLoading: listSchemeLovShowLoading, extraParams: schemeExtraParams, userId });
             fetchMakeLovList({ setIsLoading: listMakeShowLoading, userId });
         }

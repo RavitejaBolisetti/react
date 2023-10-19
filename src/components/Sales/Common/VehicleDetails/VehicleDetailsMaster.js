@@ -17,6 +17,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { SALES_MODULE_TYPE } from 'constants/salesModuleType';
 
 import styles from 'assets/sass/app.module.scss';
+import { withSpinner } from 'components/withSpinner';
 
 const mapStateToProps = (state) => {
     const {
@@ -132,7 +133,7 @@ const VehicleDetailsMasterMain = (props) => {
 
     useEffect(() => {
         if (userId && selectedRecordId) {
-            if (isOTFModule) {
+            if (isOTFModule && !isLoading) {
                 const extraParams = [
                     {
                         key: 'otfId',
@@ -226,7 +227,7 @@ const VehicleDetailsMasterMain = (props) => {
     }, [productAttributeData, isProductHierarchyDataLoaded, userId]);
 
     useEffect(() => {
-        if (vehicleDetailData?.modelCode) {
+        if (vehicleDetailData?.modelCode && !isProductHierarchyDataLoaded) {
             const lovExtraParams = [
                 {
                     key: 'prodctCode',
@@ -437,4 +438,4 @@ const VehicleDetailsMasterMain = (props) => {
         </Form>
     );
 };
-export const VehicleDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(VehicleDetailsMasterMain);
+export const VehicleDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(withSpinner(VehicleDetailsMasterMain));
