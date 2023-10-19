@@ -12,69 +12,29 @@ import { Provider } from 'react-redux';
 import { Form } from 'antd';
 
 const FormWrapper = (props) =>{
-    const [form] = Form.useForm();
+    const [taxChargeCalForm] = Form.useForm();
 
     const myMock = {
-        ...form,
-        resetFields:jest.fn()
+        ...taxChargeCalForm,
+        setFieldsValue:jest.fn()
     }
 
-    return(<TaxChargesCategory form={myMock} {...props}/>)
+    return(<TaxChargesCategory taxChargeCalForm={myMock} {...props}/>)
 }
 
 jest.mock('store/actions/data/financialAccounting/taxChargeType', ()=>({
     taxChargeCategoryTypeDataActions:{}
-}))
-
-jest.mock('store/actions/data/financialAccounting/taxChargesCode', ()=>({
-    financialAccTaxChargeCategoryDataActions:{}
-}))
-
-jest.mock('store/actions/data/financialAccounting/taxChargesCategory', ()=>({
-    taxChargeCategoryDataActions:{}
-}))
+}));
 
 const fetchTaxChargeCategoryType = jest.fn();
-const fetchTaxCodeList = jest.fn();
-const fetchTaxChargeCategory = jest.fn();
-
 
 afterEach(() => {
     jest.restoreAllMocks();
 });
 
 describe('TaxChargesCategory component', () => {
-    // it('handleCodeFunction', ()=>{
-    //     const extraParams = [
-    //         {
-    //             key: 'taxChargeType',
-    //             title: 'taxChargeType',
-    //             value: 'UGST',
-    //             name: 'taxChargeType',
-    //         },
-    //     ];
-
-    //     const mockStore = createMockStore({
-    //         auth: { userId: 123 },
-    //         data: {
-    //             FinancialAccounting: {
-    //                 TaxChargeCategoryType: { isLoaded: false, isLoading: false, data: [{id: "779", taxCode: "CGST14", taxDescription: "Central GST 14%", taxType: "CGST"
-    //                 }] },
-
-    //                 TaxChargesCategory: { isLoaded: false, isLoading: false, data: { id: "315", status: true, taxCategoryCode: "PA00",taxCategoryDescription: "NO TAX", taxCategoryDetail:[{chargeCode: 
-    //                 "IGST0", chargeDescription: "NO TAX", chargeType: "IGST", id: "556", saleType: "OSGST", stateCode: "27",stateName: null, taxMasterId: "173"}] }, }
-    //             },
-    //         },
-    //     });
-    //     customRender(
-    //         <Provider store={mockStore}>
-    //             <FormWrapper extraParams={extraParams} formEdit={false} viewMode={false}  fetchTaxCodeList={fetchTaxCodeList} isVisible={true} fetchTaxChargeCategoryType={fetchTaxChargeCategoryType} />
-    //         </Provider>
-    //     ); 
-    // })
     
     it("onSuccessAction", async()=>{
-        const formData = {id: "998", status: true, taxCategoryCode: "123", taxCategoryDescription: "test"}
         const mockStore = createMockStore({
             auth: { userId: 123 },
             data: {
@@ -86,7 +46,7 @@ describe('TaxChargesCategory component', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <TaxChargesCategory fetchTaxChargeCategoryType={fetchTaxChargeCategoryType} formData={formData} fetchTaxChargeCategory={fetchTaxChargeCategory} />
+                <TaxChargesCategory fetchTaxChargeCategoryType={fetchTaxChargeCategoryType} />
             </Provider>
         );
 
@@ -97,9 +57,6 @@ describe('TaxChargesCategory component', () => {
 
         const editIcon = screen.getByTestId('edit');
         fireEvent.click(editIcon);
-
-        const saveBtn = screen.getByRole('button', {name:'Save'});
-        fireEvent.click(saveBtn);
 
         const viewIcon = screen.getByTestId('view');
         fireEvent.click(viewIcon);
