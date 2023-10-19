@@ -9,11 +9,12 @@ import { HiCheck } from 'react-icons/hi';
 import styles from 'assets/sass/app.module.scss';
 import { REGISTRATION } from 'constants/modules/vehicleInvoiceGeneration';
 import { CopytoClipboard } from 'utils/CopytoClipboard';
+import { useEffect } from 'react';
 
 const { Title, Text } = Typography;
 
 export const ThankYouMaster = (props) => {
-    const { FormActionButton, otfData, onPrintInvoice, defaultBtnVisiblity } = props;
+    const { FormActionButton, otfData, onPrintInvoice, defaultBtnVisiblity, setButtonData } = props;
     const title = LANGUAGE_EN.GENERAL.THANK_YOU_PAGE_INVOICE.TITLE;
 
     const myProps = {
@@ -21,6 +22,12 @@ export const ThankYouMaster = (props) => {
         buttonData: { ...defaultBtnVisiblity, closeBtn: true },
     };
 
+    useEffect(() => {
+        return () => {
+            setButtonData({ ...defaultBtnVisiblity, closeBtn: true, printForm21Btn: true, printInvoiceBtn: true, cancelInvoiceBtn: true });
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     return (
         <>
             <Row gutter={20} className={styles.drawerBodyRight}>
@@ -54,7 +61,7 @@ export const ThankYouMaster = (props) => {
                                             <path d="M7.64062 1.75V5.425H11.3156" stroke="#FF3E5B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                         </svg>
                                     }
-                                    onClick={() => onPrintInvoice({ invoiceNumber: otfData?.invoiceNumber })}
+                                    onClick={() => onPrintInvoice()}
                                 >
                                     Download/Print Invoice
                                 </Button>

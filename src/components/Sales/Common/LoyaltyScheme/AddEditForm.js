@@ -14,6 +14,7 @@ import { prepareCaption } from 'utils/prepareCaption';
 import styles from 'assets/sass/app.module.scss';
 import { convertToUpperCase } from 'utils/convertToUpperCase';
 import { customSelectBox } from 'utils/customSelectBox';
+import { registrationYearList } from 'utils/registrationYearList';
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
@@ -21,12 +22,6 @@ const AddEditFormMain = (props) => {
     const { schemeLovData, typeData } = props;
     const { isConfigLoading, isSchemeLovLoading, isModelLoading, isVariantLoading } = props;
     const { filteredModelData, filteredVariantData, handleFilterChange, fnSetData, handleSchemeChange, viewOnly = false } = props;
-
-    const currentYear = new Date().getFullYear();
-    const yearsList = [];
-    for (let i = currentYear; i >= currentYear - 15; i--) {
-        yearsList.push({ key: i, value: i });
-    }
 
     useEffect(() => {
         if (formData) {
@@ -91,7 +86,7 @@ const AddEditFormMain = (props) => {
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="registrationYearCode" label="Year of Registration" initialValue={formData?.yearOfRegistrationCode} rules={[validateRequiredInputField('year of reg')]}>
-                        {customSelectBox({ data: yearsList, disabled: viewOnly, loading: false })}
+                        {customSelectBox({ data: registrationYearList, disabled: viewOnly, loading: false })}
                     </Form.Item>
                 </Col>
             </Row>
