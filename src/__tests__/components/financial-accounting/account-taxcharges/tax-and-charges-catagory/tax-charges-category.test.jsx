@@ -3,18 +3,40 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { fireEvent, screen } from '@testing-library/react';
+import { findByText, fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { TaxChargesCategory } from '@components/FinancialAccounting/AccountTaxCharges/TaxAndChargesCategory/TaxChargesCategory';
 import customRender from '@utils/test-utils';
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
+import { Form } from 'antd';
+
+const FormWrapper = (props) =>{
+    const [form] = Form.useForm();
+
+    const myMock = {
+        ...form,
+        resetFields:jest.fn()
+    }
+
+    return(<TaxChargesCategory form={myMock} {...props}/>)
+}
 
 jest.mock('store/actions/data/financialAccounting/taxChargeType', ()=>({
     taxChargeCategoryTypeDataActions:{}
 }))
 
+jest.mock('store/actions/data/financialAccounting/taxChargesCode', ()=>({
+    financialAccTaxChargeCategoryDataActions:{}
+}))
+
+jest.mock('store/actions/data/financialAccounting/taxChargesCategory', ()=>({
+    taxChargeCategoryDataActions:{}
+}))
+
 const fetchTaxChargeCategoryType = jest.fn();
+const fetchTaxCodeList = jest.fn();
+const fetchTaxChargeCategory = jest.fn();
 
 
 afterEach(() => {
@@ -22,24 +44,65 @@ afterEach(() => {
 });
 
 describe('TaxChargesCategory component', () => {
+    // it('handleCodeFunction', ()=>{
+    //     const extraParams = [
+    //         {
+    //             key: 'taxChargeType',
+    //             title: 'taxChargeType',
+    //             value: 'UGST',
+    //             name: 'taxChargeType',
+    //         },
+    //     ];
+
+    //     const mockStore = createMockStore({
+    //         auth: { userId: 123 },
+    //         data: {
+    //             FinancialAccounting: {
+    //                 TaxChargeCategoryType: { isLoaded: false, isLoading: false, data: [{id: "779", taxCode: "CGST14", taxDescription: "Central GST 14%", taxType: "CGST"
+    //                 }] },
+
+    //                 TaxChargesCategory: { isLoaded: false, isLoading: false, data: { id: "315", status: true, taxCategoryCode: "PA00",taxCategoryDescription: "NO TAX", taxCategoryDetail:[{chargeCode: 
+    //                 "IGST0", chargeDescription: "NO TAX", chargeType: "IGST", id: "556", saleType: "OSGST", stateCode: "27",stateName: null, taxMasterId: "173"}] }, }
+    //             },
+    //         },
+    //     });
+    //     customRender(
+    //         <Provider store={mockStore}>
+    //             <FormWrapper extraParams={extraParams} formEdit={false} viewMode={false}  fetchTaxCodeList={fetchTaxCodeList} isVisible={true} fetchTaxChargeCategoryType={fetchTaxChargeCategoryType} />
+    //         </Provider>
+    //     ); 
+    // })
     
-    it("onSuccessAction", ()=>{
+    it("onSuccessAction", async()=>{
+        const formData = {id: "998", status: true, taxCategoryCode: "123", taxCategoryDescription: "test"}
         const mockStore = createMockStore({
             auth: { userId: 123 },
             data: {
                 FinancialAccounting: {
-                    TaxChargesCategory: { isLoaded: false, isLoading: false, data: [{id: null,taxCode: null,taxDescription: "Tax Collection at Source 1%",taxType: "TCS"}] },
+                    TaxChargesCategory: { isLoaded: false, isLoading: false, data: { pageNumber:'1', pageSize: '10', totalRecords:'1', taxCategoryHeaderListDto:[{id: "532", status: true, taxCategoryCode: "123", taxCategoryDescription: "test"}] } } 
                 },
             },
         });
 
         customRender(
             <Provider store={mockStore}>
-                <TaxChargesCategory fetchTaxChargeCategoryType={fetchTaxChargeCategoryType}/>
+                <TaxChargesCategory fetchTaxChargeCategoryType={fetchTaxChargeCategoryType} formData={formData} fetchTaxChargeCategory={fetchTaxChargeCategory} />
             </Provider>
         );
 
         fetchTaxChargeCategoryType.mock.calls[0][0].onSuccessAction();
+
+        const tableText = await screen.findByText('test');
+        expect(tableText).toBeTruthy();
+
+        const editIcon = screen.getByTestId('edit');
+        fireEvent.click(editIcon);
+
+        const saveBtn = screen.getByRole('button', {name:'Save'});
+        fireEvent.click(saveBtn);
+
+        const viewIcon = screen.getByTestId('view');
+        fireEvent.click(viewIcon);
     })
 
     it("refresh button", ()=>{
