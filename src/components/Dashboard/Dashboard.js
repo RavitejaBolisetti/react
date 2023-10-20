@@ -24,7 +24,6 @@ import { retailDataActions } from 'store/actions/data/dashboard/retail';
 
 const { Text, Title } = Typography;
 
-
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -101,26 +100,22 @@ const keyHightliteData = [
 
 const DashboardBase = (props) => {
     const { userId, fetchStockList, stockListShowLoading, stockData, fetchBillingList, billingListShowLoading, fetchRetailList, retailListShowLoading, retailData, billingData } = props;
-    console.log('stockData', stockData, "retailData", retailData, 'billingData',billingData);
+    console.log('stockData', stockData, 'retailData', retailData, 'billingData', billingData);
 
     const [isVisible, serIsVisible] = useState(false);
     const [isNewsVisible, setIsNewsVisible] = useState(false);
     const [highlightsTextIndex, setHighlightsTextIndex] = useState(0);
     const [record, setRecord] = useState('');
 
-    const onSuccessAction = (res) => {
-        //    showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-    };
-
     const onErrorAction = (message) => {
-        showGlobalNotification({ message });
+        console.error(message);
     };
 
     useEffect(() => {
         if (userId) {
-            fetchStockList({ setIsLoading: stockListShowLoading, userId, onSuccessAction, onErrorAction });
-            fetchBillingList({ setIsLoading: billingListShowLoading, userId, onSuccessAction, onErrorAction });
-            fetchRetailList({ setIsLoading: retailListShowLoading, userId, onSuccessAction, onErrorAction });
+            fetchStockList({ setIsLoading: stockListShowLoading, userId, onErrorAction });
+            fetchBillingList({ setIsLoading: billingListShowLoading, userId, onErrorAction });
+            fetchRetailList({ setIsLoading: retailListShowLoading, userId, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
