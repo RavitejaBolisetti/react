@@ -18,6 +18,7 @@ import { schemeDataActions } from 'store/actions/data/otf/exchangeVehicle';
 import { vehicleModelDetailsDataActions } from 'store/actions/data/vehicle/modelDetails';
 import { vehicleVariantDetailsDataActions } from 'store/actions/data/vehicle/variantDetails';
 import { exchangeVehicleAlertDataAction } from 'store/actions/data/otf/exchangeVehicleAlert';
+import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { showGlobalNotification } from 'store/actions/notification';
 
 import { BASE_URL_PRODUCT_MODEL_GROUP, BASE_URL_PRODUCT_VARIENT, BASE_URL_CUSTOMER_MASTER_VEHICLE_LIST as customURL } from 'constants/routingApi';
@@ -408,6 +409,12 @@ const ExchangeVehiclesBase = (props) => {
         }
     };
 
+    const onFinishFailed = (values1) => {
+        form.validateFields()
+            .then(() => {})
+            .catch((err) => {});
+    };
+
     const onSearch = (value) => {
         if (!value) {
             return false;
@@ -461,6 +468,7 @@ const ExchangeVehiclesBase = (props) => {
         ...props,
         form,
         formData,
+        onFinishFailed,
         onFinish,
 
         typeData,
@@ -515,7 +523,7 @@ const ExchangeVehiclesBase = (props) => {
     };
 
     return (
-        <Form data-testid="exchangeVID" layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
+        <Form data-testid="exchangeVID" layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>
