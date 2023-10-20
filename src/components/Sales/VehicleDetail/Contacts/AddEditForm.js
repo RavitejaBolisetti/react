@@ -12,7 +12,7 @@ import { customSelectBox } from 'utils/customSelectBox';
 import styles from 'assets/sass/app.module.scss';
 
 const AddEditForm = (props) => {
-    const { onSaveFormData, contactform, setShowAddEditForm, setIsEditing, typeData, isEditing, formActionType, handleFormValueChange, setIsAdding, showAddEditForm } = props;
+    const { onSaveFormData, contactform, setShowAddEditForm, setIsEditing, typeData, isEditing, formActionType, handleFormValueChange, setIsAdding } = props;
     const handleCancelFormEdit = () => {
         contactform.resetFields();
         setIsAdding(false);

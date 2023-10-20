@@ -14,20 +14,16 @@ function FormProductAttribute(props) {
     const { attributeForm, isVisible, productHierarchyAttributeData, onAttributeFormFinish, formEdit, editForm, skuAttributes } = props;
     const [changeValue, setChangeValue] = useState(null);
 
-    const onFinishFailed = (err) => {
-        console.error(err);
-    };
-
     const fieldNames = { label: 'attributeCode', value: 'id' };
 
-    const onChange = (val) => {
+    const onChange = () => {
         let newFormData = formEdit ? editForm?.getFieldsValue() : attributeForm?.getFieldsValue();
         setChangeValue(newFormData);
     };
 
     return (
         <>
-            <Form form={formEdit ? editForm : attributeForm} id="myForm" autoComplete="off" layout="vertical" onFinish={onAttributeFormFinish} onFinishFailed={onFinishFailed}>
+            <Form form={formEdit ? editForm : attributeForm} id="myForm" autoComplete="off" layout="vertical" onFinish={onAttributeFormFinish}>
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item label="Attribute Name" name="attributeName" initialValue={props?.code} rules={[validateRequiredSelectField('Attribute Name'), { validator: () => duplicateProductValidator(changeValue, skuAttributes) }]}>

@@ -68,7 +68,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const ReferralsMasterBase = (props) => {
     const { formActionType, fetchList, showGlobalNotification, saveData, listShowLoading, userId, referralData, referralDataPass, isLoading } = props;
-    const { form, selectedRecordId, selectedOrderId, section, handleFormValueChange, onFinishFailed, fetchCustomerList, typeData, handleButtonClick, NEXT_ACTION } = props;
+    const { form, selectedRecordId, selectedOrderId, section, handleFormValueChange, fetchCustomerList, typeData, handleButtonClick, NEXT_ACTION } = props;
     const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar, salesModuleType } = props;
 
     const [searchForm] = Form.useForm();
@@ -202,7 +202,8 @@ const ReferralsMasterBase = (props) => {
         }
     };
 
-    const onErrorAction = (message) => {
+    const onErrorAction = () => {
+        return;
         // showGlobalNotification({ message });
     };
 
@@ -220,7 +221,6 @@ const ReferralsMasterBase = (props) => {
         form,
         formData,
         onFinish,
-        onFinishFailed,
         customerList,
         optionType: typeData[PARAM_MASTER?.CUST_VEH_SEARCH?.id],
         filterString,
@@ -239,7 +239,7 @@ const ReferralsMasterBase = (props) => {
 
     return (
         <>
-            <Form form={form} autoComplete="off" layout="vertical" data-testid="test" colon={false} onFinish={onFinish} onFinishFailed={onFinishFailed} onValuesChange={handleFormValueChange}>
+            <Form form={form} autoComplete="off" layout="vertical" data-testid="test" colon={false} onFinish={onFinish} onValuesChange={handleFormValueChange}>
                 <Row gutter={20} className={styles.drawerBodyRight}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Row>

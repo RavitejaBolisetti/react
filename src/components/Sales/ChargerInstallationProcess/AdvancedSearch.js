@@ -7,7 +7,6 @@ import React, { useEffect } from 'react';
 import { Col, Form, Row, Button, DatePicker } from 'antd';
 
 import { withModal } from 'components/withModal';
-import { customSelectBox } from 'utils/customSelectBox';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 import dayjs from 'dayjs';
@@ -18,7 +17,7 @@ import styles from 'assets/sass/app.module.scss';
 import { validateRequiredInputField } from 'utils/validation';
 
 export const AdvancedSearchFrom = (props) => {
-    const { setAdvanceSearchVisible, typeData } = props;
+    const { setAdvanceSearchVisible } = props;
     const {
         filterString,
         setFilterString,

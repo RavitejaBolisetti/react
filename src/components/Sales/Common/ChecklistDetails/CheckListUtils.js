@@ -13,7 +13,7 @@ import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/prepareP
 import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces, validateOnlyPositiveNumber } from 'utils/validation';
 import { FORMTYPE_CONSTANTS } from 'constants/FormtypeConstants';
 import styles from 'assets/sass/app.module.scss';
-const { Text } = Typography;
+//const { Text } = Typography;
 export const BindFormAndResult = ({ data, aggregateForm, deliveryChecklist = false }) => {
     const UniqueAnsType = data?.answerType?.toLowerCase() && data?.answerType?.toLowerCase();
     const noDataAvalaible = 'NA';

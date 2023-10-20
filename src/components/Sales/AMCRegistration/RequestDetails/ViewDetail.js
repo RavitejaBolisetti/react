@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Card, Row, Col, Divider, Typography, Tag, Descriptions } from 'antd';
 import styles from 'assets/sass/app.module.scss';
 import { convertDateMonthYear } from 'utils/formatDateTime';

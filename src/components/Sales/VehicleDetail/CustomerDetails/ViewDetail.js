@@ -4,13 +4,10 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Col, Row, Collapse, Descriptions, Card, Divider } from 'antd';
+import { Col, Row, Collapse, Descriptions, Divider } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-import { DATA_TYPE } from 'constants/dataType';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { LANGUAGE_EN } from 'language/en';
-import { NoDataFound } from 'utils/noDataFound';
-
 import styles from 'assets/sass/app.module.scss';
 
 const { Panel } = Collapse;
@@ -18,8 +15,8 @@ const { Panel } = Collapse;
 const ViewDetailMain = (props) => {
     const { formData, isLoading } = props;
     const [activeKey, setactiveKey] = useState([]);
-    const { billingCustomer, ownerCustomer, vehicleCustomerLoyaltyDetails, vehicleKeyAccountDetails } = formData;
-    const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
+    const { billingCustomer, ownerCustomer } = formData;
+    //const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
     const viewProps = {
         bordered: false,
         colon: false,

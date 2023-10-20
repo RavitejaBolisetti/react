@@ -19,7 +19,7 @@ const { TextArea } = Input;
 
 export const RejectRequestForm = (props) => {
     const { rejectModalCloseAction, rejectRequest } = props;
-    const { handleCancelRequests, amcWholeCancellation, amcCancellationText, typeData, formData, cancelAMCForm, onFinish, onFinishFailed, userType, buttonText } = props;
+    const { handleCancelRequests, amcWholeCancellation, amcCancellationText, typeData, formData, cancelAMCForm, onFinish, userType, buttonText } = props;
     const [isOtherReason, setIsOtherReason] = useState(false);
     const handleRemarksChange = (value) => {
         if (value === AMC_CONSTANTS?.OTHERS?.key) {
@@ -30,7 +30,7 @@ export const RejectRequestForm = (props) => {
     };
     return (
         <>
-            <Form autoComplete="off" layout="vertical" form={cancelAMCForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Form autoComplete="off" layout="vertical" form={cancelAMCForm} onFinish={onFinish}>
                 {amcWholeCancellation && rejectRequest ? (
                     <>
                         {userType === AMC_CONSTANTS?.DEALER?.key ? (

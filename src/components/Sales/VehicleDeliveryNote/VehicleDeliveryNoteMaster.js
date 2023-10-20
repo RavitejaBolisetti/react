@@ -620,10 +620,6 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        return;
-    };
-
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
@@ -750,7 +746,6 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         setFilterString,
         from: listFilterForm,
         onFinish,
-        onFinishFailed,
         handleResetFilter,
         advanceFilterForm,
         handleButtonClick,
@@ -824,7 +819,6 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         formActionType,
         setFormActionType,
         deliveryNoteOnFinish: onFinish,
-        onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
         titleOverride: drawerTitle.concat(soldByDealer ? moduleTitle : 'Challan'),

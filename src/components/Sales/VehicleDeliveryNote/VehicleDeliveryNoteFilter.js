@@ -15,7 +15,7 @@ import styles from 'assets/sass/app.module.scss';
 import { DELIVERY_TYPE } from 'constants/modules/vehicleDetailsNotes.js/deliveryType';
 
 export default function VehicleDeliveryNoteFilter(props) {
-    const { deliveryType, extraParams, removeFilter, searchForm, typeData, filterString, deliveryStatusList, onDeliveryTabChange, setFilterString, handleResetFilter, advanceFilter = false, handleDeliveryNoteTypeChange, setAdvanceSearchVisible, handleButtonClick, deliveryStatus } = props;
+    const { deliveryType, extraParams, removeFilter, searchForm, typeData, filterString, deliveryStatusList, onDeliveryTabChange, setFilterString, handleResetFilter, advanceFilter = false, handleDeliveryNoteTypeChange, setAdvanceSearchVisible, deliveryStatus } = props;
 
     const serachBoxProps = {
         searchForm,
