@@ -73,11 +73,11 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const InvoiceDetailsMasterBase = (props) => {
-    const { userId, vinData, listvinNumberShowLoading, listEngineNumberShowLoading, fetchvinNumber, selectedOrder, relationshipManagerData, invoiceData, isRelationshipManagerLoaded, setFormActionType, fetchRelationshipManger, listRelationshipMangerShowLoading, isLoading, record } = props;
+    const { userId, vinData, listvinNumberShowLoading, listEngineNumberShowLoading, fetchvinNumber, selectedOrder, relationshipManagerData, invoiceData, isRelationshipManagerLoaded, setFormActionType, fetchRelationshipManger, listRelationshipMangerShowLoading, isLoading } = props;
 
-    const { typeData, form, selectedOrderId, requestPayload, setRequestPayload, soldByDealer, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section, resetData, engineNumberData, chassisNoValue } = props;
+    const { typeData, form, selectedOrderId, requestPayload, setRequestPayload, soldByDealer, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section, engineNumberData, chassisNoValue } = props;
 
-    const { isChallanDataLoaded, isChallanLoading, vehicleChallanData, fetchChallanList, listChallanShowLoading } = props;
+    const { fetchChallanList, listChallanShowLoading } = props;
 
     const { buttonData, setButtonData } = props;
 
