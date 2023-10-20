@@ -32,7 +32,7 @@ const options = {
     'sonar.coverage.exclusions': 'src/components/DashboardOld/**/*, src/components/Sales/ChargerInstallationProcess/**/*,src/components/Sales/common/ChecklistDetails/**/*,src/components/Sales/common/utils/**/*',
 
     // source language
-    'sonar.coverage.exclusions': 'src/__mocks__/**/*, src/mocks/**/*,src/__test__/**/*',
+    //'sonar.coverage.exclusions': 'src/__mocks__/**/*, src/mocks/**/*,src/__test__/**/*',
     'sonar.language': 'js',
 
     'sonar.javascript.lcov.reportPaths': 'src/coverage/lcov.info',
