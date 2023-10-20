@@ -10,7 +10,7 @@ import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
 const { Panel } = Collapse;
 
 const expandIcon = ({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />);
-const ViewDetailBase = ({ formData, styles, parameterType, typeData, docTypeLedger, setDisabledEdit }) => {
+const ViewDetailBase = ({ styles, typeData, docTypeLedger, setDisabledEdit }) => {
     const viewOneColProps = {
         bordered: false,
         colon: false,
