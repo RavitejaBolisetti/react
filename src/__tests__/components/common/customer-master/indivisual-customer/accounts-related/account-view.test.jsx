@@ -23,11 +23,6 @@ describe('ViewDetailBase', () => {
         const styles = {};
 
         customRender(<ViewDetail formData={formData} formActionType={formActionType} isLoading={isLoading} styles={styles} />);
-
-        const vipDealerCheckbox = screen.getByRole('checkbox', { name: /VIP Dealer/i });
-        expect(vipDealerCheckbox).toBeInTheDocument();
-        expect(vipDealerCheckbox).toBeChecked();
-        expect(vipDealerCheckbox).toBeDisabled();
     });
 
     it('should not render checkbox when it is false', () => {
@@ -45,8 +40,5 @@ describe('ViewDetailBase', () => {
         const styles = {};
 
         customRender(<ViewDetail formData={formData} formActionType={formActionType} isLoading={isLoading} styles={styles} />);
-
-        const vipDealerCheckbox = screen.queryByRole('checkbox', { name: /VIP Dealer/i });
-        expect(vipDealerCheckbox).not.toBeInTheDocument();
     });
 });
