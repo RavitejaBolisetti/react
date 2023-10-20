@@ -354,7 +354,6 @@ export const InvoiceCancellationMasterBase = (props) => {
         filterString,
         setFilterString,
         from: listFilterForm,
-
         title: '',
         handleButtonQuery,
         data,
