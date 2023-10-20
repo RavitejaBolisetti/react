@@ -33,6 +33,15 @@ const EditFormWrapper = (props) =>{
     return <CardDocTypeAcMapping editForm={myMoock} {...props} />
 }
 
+const DeleteFormWrapper = (props) =>{
+    const [docTypeHeadMappingForm] = Form.useForm();
+    const myMoock = {
+        ...docTypeHeadMappingForm,
+        resetFields:jest.fn(),
+    }
+    return <CardDocTypeAcMapping docTypeHeadMappingForm={myMoock} {...props} />
+}
+
 describe("CardDocTypeAcMapping component",()=>{
     const cardProps = {
         buttonData: {cancelBtn: true, formBtnActive: false, editBtn: false, saveBtn: true, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false},
@@ -41,6 +50,15 @@ describe("CardDocTypeAcMapping component",()=>{
         viewMode:false,
         isVisible:true,
     }
+
+    it('deletBtn', ()=>{
+        
+        customRender(<DeleteFormWrapper {...cardProps} formEdit={false} setDocTypeHeadMappingList={jest.fn()} setFormEdit={jest.fn()} forceUpdate={jest.fn()} />);
+
+        const editBtn = screen.getAllByRole('button', {name:""});
+        fireEvent.click(editBtn[1]);
+    });
+
     it('Cancel Button', () => {
         const uniqueCardEdit = '1234';
         const internalId = '1234';
@@ -49,7 +67,7 @@ describe("CardDocTypeAcMapping component",()=>{
 
         const cancelBtn = screen.getByRole('button', {name:'Cancel'});
         fireEvent.click(cancelBtn);
-    })
+    });
 
     it('Save Button', () => {
         const docTypeHeadMappingList=[{
@@ -66,26 +84,26 @@ describe("CardDocTypeAcMapping component",()=>{
 
         const cancelBtn = screen.getByRole('button', {name:'Save'});
         fireEvent.click(cancelBtn);
-    })
+    });
 
     it('edit button', ()=>{
         customRender(<EditFormWrapper  {...cardProps}  setFormEdit={jest.fn()} setButtonData={jest.fn()} setSelectedTreeSelectKey={jest.fn()} accDocMapEdit={jest.fn()} setuniqueCardEdit={jest.fn()}/>);
 
         const editBtn = screen.getAllByRole('button', {name:""});
         fireEvent.click(editBtn[0]);
-    })
+    });
 
     it('plus Add button', ()=>{
         customRender(<FormWrapper {...cardProps} setButtonData={jest.fn()}/>);
         
         const plusAdd = screen.getByRole('button', {name:"plus Add"});
         fireEvent.click(plusAdd);
-    })
+    });
 
     it('plus image', ()=>{
         customRender(<FormWrapper {...cardProps} setButtonData={jest.fn()}/>);
         
         const plusImg = screen.getByRole('img', {name:"plus"});
         fireEvent.click(plusImg);
-    })
+    });
 })
