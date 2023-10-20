@@ -26,10 +26,6 @@ export const AdvancedSearchFrom = (props) => {
         setAdvanceSearchVisible(false);
     };
 
-    const onFinishFailed = () => {
-        return;
-    };
-
     const modalProps = {
         reset: true,
         submit: true,

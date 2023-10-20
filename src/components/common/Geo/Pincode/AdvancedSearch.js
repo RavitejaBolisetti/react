@@ -28,10 +28,6 @@ export const AdvancedSearchFrom = (props) => {
         setAdvanceSearchVisible(false);
     };
 
-    const onFinishFailed = () => {
-        return;
-    };
-
     const selectProps = {
         optionFilterProp: 'children',
         showSearch: true,
