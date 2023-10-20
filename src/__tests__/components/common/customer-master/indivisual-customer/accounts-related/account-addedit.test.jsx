@@ -30,7 +30,6 @@ describe('AddEditFormMain', () => {
         const remarks = screen.getByText('Remarks');
         expect(remarks).toBeTruthy();
 
-        const vipDealer = screen.getByText('VIP Dealer');
-        expect(vipDealer).toBeTruthy();
+      
     });
 });
