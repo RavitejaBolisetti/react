@@ -55,6 +55,7 @@ import { VehicleChecklistMaster } from './vehicleChecklistMaster';
 import { stockTransferIndentData } from './stockTransferIndent';
 import { AMCRegistration } from './amcRegistration';
 import { CRMSchemeEnrollmentList } from './crmSchemeEnrollment';
+import { Dashboard } from './dashboard'
 
 export const data = combineReducers({
     Menu,
@@ -108,4 +109,5 @@ export const data = combineReducers({
     EvrDetailsCapturing,
     VehicleChecklistMaster,
     AMCRegistration,
+    Dashboard,
 });

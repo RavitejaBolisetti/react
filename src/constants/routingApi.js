@@ -372,3 +372,6 @@ export const BASE_URL_AMC_EMPLOYEE_SEARCH = BASE_URL + 'users/search/employees';
 export const BASE_URL_AMC_SCHEMES = BASE_URL_AMC_REGISTRATION + '/scheme';
 export const BASE_URL_GST_DOCID_NAME = BASE_URL + 'finance/gstirnauthentication';
 export const BASE_URL_RSM_ASM_APPROVAL_DETAILS = BASE_URL_RSM_ASM_APPROVAL_SEARCH + '/details';
+export const BASE_URL_DASHBOARD_STOCKS_STATICS  = BASE_URL + 'invoice/ibdnstockscount'
+export const BASE_URL_DASHBOARD_BILLING_STATICS  = BASE_URL + 'geography/billingcount'
+export const BASE_URL_DASHBOARD_RETAIL_STATICS  = BASE_URL + 'geography/retailcount'

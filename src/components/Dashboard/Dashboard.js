@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, Card, Button, Space, Divider, Tag, Typography } from 'antd';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
@@ -16,45 +16,59 @@ import DashboardActionItems from './DashboardActionItems';
 import { StatusBar } from './StatusBar';
 import { PieChart } from './PieChart';
 import { dateTimeDuration } from 'utils/formatDateTime';
+import { bindActionCreators } from 'redux';
+import { showGlobalNotification } from 'store/actions/notification';
+import { stockDataActions } from 'store/actions/data/dashboard/stocks';
+import { billingDataActions } from 'store/actions/data/dashboard/billing';
+import { retailDataActions } from 'store/actions/data/dashboard/retail';
 
 const { Text, Title } = Typography;
 
-const billingData = [
-    { type: 'Scorpio', sales: 60 },
-    { type: 'XUV700', sales: 120 },
-    { type: 'Thar', sales: 80 },
-    { type: 'XUV300', sales: 50 },
-    { type: 'Marazzo', sales: 10 },
-    { type: 'Bolero Neo', sales: 75 },
-    { type: 'Bolero', sales: 120 },
-    { type: 'Scarpio Classic', sales: 50 },
-];
-
-const retailData = [
-    { type: 'Scorpio', sales: 30 },
-    { type: 'XUV700', sales: 90 },
-    { type: 'Thar', sales: 70 },
-    { type: 'XUV300', sales: 30 },
-    { type: 'Marazzo', sales: 5 },
-    { type: 'Bolero Neo', sales: 75 },
-    { type: 'Bolero', sales: 75 },
-    { type: 'Scarpio Classic', sales: 113 },
-];
 
 const mapStateToProps = (state) => {
     const {
+        auth: { userId },
         common: {
             LeftSideBar: { collapsed = false },
             Header: { data: loginUserData = [] },
         },
+        data: {
+            Dashboard: {
+                Stock: { data: stockData, isLoaded, isLoading },
+                Billing: { data: billingData, isLoaded: isBillingDataLoaded, isLoading: isBillingDataLoading },
+                Retail: { data: retailData, isLoaded: isRetailDataLoaded, isLoading: isRetailDataLoading },
+            },
+        },
     } = state;
 
     return {
+        userId,
         collapsed,
         firstName: loginUserData?.firstName || '',
+        stockData: stockData?.records || [],
+        billingData: billingData?.records || [],
+        retailData: retailData?.records || [],
     };
 };
 
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    ...bindActionCreators(
+        {
+            fetchStockList: stockDataActions.fetchList,
+            stockListShowLoading: stockDataActions.listShowLoading,
+
+            fetchBillingList: billingDataActions.fetchList,
+            billingListShowLoading: billingDataActions.listShowLoading,
+
+            fetchRetailList: retailDataActions.fetchList,
+            retailListShowLoading: retailDataActions.listShowLoading,
+
+            showGlobalNotification,
+        },
+        dispatch
+    ),
+});
 const keyHightliteData = [
     { shortDescription: 'GST Update', longDescription: "GSTR 1 due date is 10th Oct'23", createdDate: '2023-10-14 12:45:00' },
     { shortDescription: 'GST Update', longDescription: "GSTR 2 due date is 20th Oct'23", createdDate: '2023-10-16 17:45:00' },
@@ -85,11 +99,31 @@ const keyHightliteData = [
 //     ],
 // };
 
-const DashboardBase = ({ props }) => {
+const DashboardBase = (props) => {
+    const { userId, fetchStockList, stockListShowLoading, stockData, fetchBillingList, billingListShowLoading, fetchRetailList, retailListShowLoading, retailData, billingData } = props;
+    console.log('stockData', stockData, "retailData", retailData, 'billingData',billingData);
+
     const [isVisible, serIsVisible] = useState(false);
     const [isNewsVisible, setIsNewsVisible] = useState(false);
     const [highlightsTextIndex, setHighlightsTextIndex] = useState(0);
     const [record, setRecord] = useState('');
+
+    const onSuccessAction = (res) => {
+        //    showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+    };
+
+    const onErrorAction = (message) => {
+        showGlobalNotification({ message });
+    };
+
+    useEffect(() => {
+        if (userId) {
+            fetchStockList({ setIsLoading: stockListShowLoading, userId, onSuccessAction, onErrorAction });
+            fetchBillingList({ setIsLoading: billingListShowLoading, userId, onSuccessAction, onErrorAction });
+            fetchRetailList({ setIsLoading: retailListShowLoading, userId, onSuccessAction, onErrorAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId]);
 
     const handleButtonClick = (direction) => {
         if (direction === 'next') {
@@ -217,7 +251,7 @@ const DashboardBase = ({ props }) => {
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Card title={'Stock in days'}>
-                            <PieChart />
+                            <PieChart data={stockData} />
                         </Card>
                     </Col>
                 </Row>
@@ -233,4 +267,4 @@ const DashboardBase = ({ props }) => {
     );
 };
 
-export const Dashboard = connect(mapStateToProps, null)(DashboardBase);
+export const Dashboard = connect(mapStateToProps, mapDispatchToProps)(DashboardBase);
