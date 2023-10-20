@@ -100,7 +100,6 @@ const keyHightliteData = [
 
 const DashboardBase = (props) => {
     const { userId, fetchStockList, stockListShowLoading, stockData, fetchBillingList, billingListShowLoading, fetchRetailList, retailListShowLoading, retailData, billingData } = props;
-    console.log('stockData', stockData, 'retailData', retailData, 'billingData', billingData);
 
     const [isVisible, serIsVisible] = useState(false);
     const [isNewsVisible, setIsNewsVisible] = useState(false);
