@@ -32,8 +32,6 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import { ChangeHistory } from './ChangeHistory';
 
-import { DisableParent } from 'components/common/ProductHierarchy/ProductHierarchyUtils';
-
 import LeftPanel from '../LeftPanel';
 
 import styles from 'assets/sass/app.module.scss';
