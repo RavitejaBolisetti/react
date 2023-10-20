@@ -112,7 +112,7 @@ export const addRequestColumnsView = (typeData, onHandleModal) => {
         tblPrepareColumns({
             title: 'Activity',
             width: '40%',
-            render: (_, record) => <FiEye onClick={onHandleModal} style={{ color: '#ff3e5b' }} />,
+            render: (_, record) => <FiEye onClick={onHandleModal} style={{ color: '#ff3e5b' }} data-testid="view" />,
         }),
         tblPrepareColumns({
             title: 'Document',
