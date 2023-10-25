@@ -28,7 +28,7 @@ export const convertDateAndTime = (dateToConvert = '', defaultFormat = 'DD MMM Y
 export const convertDateMonthYear = (dateToConvert = moment(), defaultFormat = 'DD MMM YYYY') => moment(dateToConvert).format(defaultFormat);
 
 export const convertDateToCalender = (dateToConvert) => (dateToConvert ? dayjs(dateToConvert, dateFormat) : null);
-export const converDateDayjs = (dateToConvert, dateFormat = 'DD MMM YYYY') => (dateToConvert ? dayjs(dateToConvert).format(dateFormat) : null);
+export const converDateDayjs = (dateToConvert, dateFormat = 'DD MMM YYYY', NodataText = '') => (dateToConvert ? dayjs(dateToConvert).format(dateFormat) : NodataText ? NodataText : null);
 
 export const covertCalenderDateToDate = (dateToConvert = moment(), defaultFormat = 'DD-MM-YYYY') => {
     return dateToConvert ? dayjs(dateToConvert, defaultFormat) : null;
