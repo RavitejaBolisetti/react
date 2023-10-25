@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Form, Row, Col } from 'antd';
 
 import { ViewDetail } from './ViewDetail';
@@ -56,8 +56,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const InstallationAddressDetailsMasterBase = (props) => {
-    const { StatusBar, onCloseAction, fetchList, formActionType, requestPayload, handleButtonClick, chargerInstallationMasterData, crmCustomerVehicleData, fetchPincodeDetail, userId, isDataLoaded, onChargerInstallationFinish, setRequestPayload, showGlobalNotification } = props;
-    const { form, handleFormValueChange, section, isLoading, onFinishFailed, NEXT_ACTION } = props;
+    const { StatusBar, onCloseAction, fetchList, formActionType, requestPayload, chargerInstallationMasterData, crmCustomerVehicleData, fetchPincodeDetail, userId, isDataLoaded, onChargerInstallationFinish, setRequestPayload, showGlobalNotification } = props;
+    const { form, handleFormValueChange, section, isLoading } = props;
     const { FormActionButton, pageType } = props;
     const { insuranceCompanies, pincodeData } = props;
     const [checked, setChecked] = useState(false);
@@ -86,6 +86,7 @@ const InstallationAddressDetailsMasterBase = (props) => {
     };
 
     const onSuccessAction = (res) => {
+        return res;
         // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
@@ -122,7 +123,7 @@ const InstallationAddressDetailsMasterBase = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed} onValuesChange={handleFormValueChange}>
+        <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish} onValuesChange={handleFormValueChange}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

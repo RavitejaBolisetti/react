@@ -7,12 +7,26 @@ import { fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { AddEditForm } from '@components/FinancialAccounting/VehicleModelAndTaxCharges/AddEditForm';
 import customRender from '@utils/test-utils';
+import { Form } from 'antd';
+
+const FormWrapper = (props) =>{
+    const [form] = Form.useForm();
+    const myFormMock = {
+        ...form,
+        setFieldsValue: jest.fn(),
+    };
+    return <AddEditForm form={myFormMock} {...props} />;
+}
 
 afterEach(() => {
     jest.restoreAllMocks();
 });
 
 describe('AddEditForm component', () => {
+
+    it('selectedModelGroup', ()=>{
+        customRender(<FormWrapper isVisible={true} formActionType={{addMode:true}} selectedModelGroup={'ECOM'} />);
+    });
 
     it('should render when taxCategoryId = TaxChargesOptions id',()=>{
         const TaxChargesOptions = [{id:'895'}];

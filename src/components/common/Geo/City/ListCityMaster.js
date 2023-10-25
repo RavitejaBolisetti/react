@@ -341,10 +341,6 @@ export const ListCityMasterBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {}).catch(err => console.error(err));
-    };
-
     const onCloseAction = () => {
         form.resetFields();
         setIsFormVisible(false);
@@ -367,34 +363,27 @@ export const ListCityMasterBase = (props) => {
         formActionType,
         setFormActionType,
         onFinish,
-        onFinishFailed,
-
         isVisible: isFormVisible,
         onCloseAction,
         titleOverride: drawerTitle.concat(moduleTitle),
         tableData: data,
-
         isDataCountryLoaded,
         isCountryLoading,
         countryData,
         defaultCountry,
-
         districtData,
         stateData,
         data,
-
         ADD_ACTION,
         EDIT_ACTION,
         VIEW_ACTION,
         buttonData,
-
         setButtonData,
         handleButtonClick,
     };
     const onAdvanceSearchCloseAction = () => {
         setAdvanceSearchVisible(false);
         advanceFilterForm.resetFields();
-        //  setFilteredDistrictData([]);
     };
 
     const handleResetFilter = () => {
@@ -408,7 +397,6 @@ export const ListCityMasterBase = (props) => {
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
         onCloseAction: onAdvanceSearchCloseAction,
-        //icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
         isDataCountryLoaded,
         isCountryLoading,
@@ -442,7 +430,6 @@ export const ListCityMasterBase = (props) => {
         filterString,
         from: listFilterForm,
         onFinish,
-        onFinishFailed,
         extraParams,
         removeFilter,
         handleResetFilter,

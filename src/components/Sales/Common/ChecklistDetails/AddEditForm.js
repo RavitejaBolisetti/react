@@ -13,20 +13,25 @@ import { ListDataTable } from 'utils/ListDataTable';
 
 const AddEditFormMain = (props) => {
     const { isEditing, setIsReadOnly, isReadOnly } = props;
-    const { aggregateForm, CheckListModuletitle = 'Checklist Details' } = props;
+    const { aggregateForm } = props;
     const { tableProps } = props;
-    const ChecklistFormTitle = useMemo(() => {
+    const CHECKLIST_MODEL_TITLE = useMemo(() => {
+        let title = '';
         switch (isEditing) {
             case true: {
-                return MODEL_TITLE?.EDIT?.title;
+                title = MODEL_TITLE?.EDIT?.title;
+                break;
             }
             case false: {
-                return MODEL_TITLE?.ADD?.title;
+                title = MODEL_TITLE?.ADD?.title;
+                break;
             }
             default: {
-                return MODEL_TITLE?.EDIT?.title;
+                title = MODEL_TITLE?.EDIT?.title;
+                break;
             }
         }
+        return title + ` ${MODEL_TITLE?.CHECKLIST_FORM?.title}`;
     }, [isEditing]);
 
     const onCloseAction = () => {
@@ -38,7 +43,7 @@ const AddEditFormMain = (props) => {
         ...props,
         isVisible: isReadOnly,
         setAdvanceSearchVisible: setIsReadOnly,
-        titleOverride: ChecklistFormTitle.concat(CheckListModuletitle),
+        titleOverride: CHECKLIST_MODEL_TITLE,
         onCloseAction,
     };
 

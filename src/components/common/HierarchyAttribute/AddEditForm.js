@@ -13,7 +13,7 @@ import { DrawerFormButton } from 'components/common/Button';
 
 import styles from 'assets/sass/app.module.scss';
 
-const AddEditFormMain = ({ isViewModeVisible, form, buttonData, setButtonData, handleButtonClick, formActionType, setFormActionType, codeIsReadOnly, editRow, setEditRow, showDrawer, setShowDrawer, setForceReset, onFinish, onFinishFailed, tableData, setsaveandnewclick, setsaveclick, handleEditView, isReadOnly, setIsReadOnly, formBtnDisable, setFormBtnDisable, isLoadingOnSave, onCloseAction }) => {
+const AddEditFormMain = ({ isViewModeVisible, form, buttonData, setButtonData, handleButtonClick, formActionType, setFormActionType, codeIsReadOnly, editRow, setEditRow, showDrawer, setShowDrawer, setForceReset, onFinish, tableData, setsaveandnewclick, setsaveclick, handleEditView, isReadOnly, setIsReadOnly, formBtnDisable, setFormBtnDisable, isLoadingOnSave, onCloseAction }) => {
     const handleFormSubmitBtn = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
@@ -32,7 +32,7 @@ const AddEditFormMain = ({ isViewModeVisible, form, buttonData, setButtonData, h
     };
 
     return (
-        <Form autoComplete="off" id="myForm" form={form} onFieldsChange={handleFormSubmitBtn} onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
+        <Form autoComplete="off" id="myForm" form={form} onFieldsChange={handleFormSubmitBtn} onFinish={onFinish} layout="vertical">
             <Row gutter={20} className={styles.drawerBody}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     {!isViewModeVisible ? (

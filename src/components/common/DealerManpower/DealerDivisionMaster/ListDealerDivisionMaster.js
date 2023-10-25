@@ -191,10 +191,6 @@ export const ListDealerDivisionMasterBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {}).catch(err => console.error(err));
-    };
-
     const onCloseAction = () => {
         form.resetFields();
         setIsFormVisible(false);
@@ -217,18 +213,14 @@ export const ListDealerDivisionMasterBase = (props) => {
         formActionType,
         setFormActionType,
         onFinish,
-        onFinishFailed,
-
         isVisible: isFormVisible,
         onCloseAction,
         titleOverride: drawerTitle.concat('Division'),
         tableData: searchData,
-
         ADD_ACTION,
         EDIT_ACTION,
         VIEW_ACTION,
         buttonData,
-
         setButtonData,
         handleButtonClick,
         handleResetFilter,
@@ -246,7 +238,6 @@ export const ListDealerDivisionMasterBase = (props) => {
         filterString,
         from: listFilterForm,
         onFinish,
-        onFinishFailed,
         onSearchHandle,
         handleResetFilter,
         handleClearInSearch,

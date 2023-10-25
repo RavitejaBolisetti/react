@@ -400,9 +400,9 @@ export const VehicleInvoiceMasterBase = (props) => {
         setIsFormVisible(true);
     };
 
-    const onFinishSearch = (values) => {};
+    // const onFinishSearch = (values) => {};
 
-    const handleResetFilter = (e) => {
+    const handleResetFilter = () => {
         setShowDataLoading(false);
         setFilterString();
         advanceFilterForm.resetFields();
@@ -431,10 +431,6 @@ export const VehicleInvoiceMasterBase = (props) => {
             customURL,
         };
         saveData(requestData);
-    };
-
-    const onFinishFailed = (errorInfo) => {
-        return;
     };
 
     const handleFormValueChange = () => {
@@ -503,8 +499,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         filterString,
         setFilterString,
         from: listFilterForm,
-        // onFinish,
-        onFinishFailed,
+
         handleResetFilter,
         advanceFilterForm,
         handleButtonClick,
@@ -517,7 +512,6 @@ export const VehicleInvoiceMasterBase = (props) => {
         setAdvanceSearchVisible,
         typeData,
         searchForm,
-        onFinishSearch,
     };
 
     const advanceFilterProps = {
@@ -533,7 +527,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         setAdvanceSearchVisible,
         chargerStatusList,
         typeData,
-        onFinishSearch,
+        // onFinishSearch,
     };
 
     const drawerTitle = useMemo(() => {
@@ -553,7 +547,6 @@ export const VehicleInvoiceMasterBase = (props) => {
         formActionType,
         setFormActionType,
         onChargerInstallationFinish,
-        onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
         titleOverride: drawerTitle.concat(moduleTitle),

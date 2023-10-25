@@ -22,41 +22,6 @@ const AddEditForm = (props) => {
         setShowAddEditForm(false);
     };
 
-    const handleNumberValidation = (event) => {
-        const Mno = event.target.value;
-        const regex = new RegExp('^([5-9]){1}([0-9]){9}$');
-        if (Mno?.length === 10 && regex.test(Mno)) {
-            // setmobileLoader(true);
-            // setTimeout(() => {
-            //     setIsModalOpen(true);
-            // }, 1000);
-        } else {
-            // setmobileLoader(false);
-        }
-    };
-
-    // const onCloseActionOnContinue = () => {
-    //     setIsModalOpen(false);
-    //     setmobileLoader(false);
-    //     setContinueWithOldMobNo(true);
-    // };
-
-    // const handleCancel = () => {
-    //     setIsModalOpen(false);
-    //     setmobileLoader(false);
-    //     setContinueWithOldMobNo(false);
-    //     setIsAdding(false);
-    // };
-
-    // const modalProps = {
-    //     isVisible: isModalOpen,
-    //     icon: <BiLockAlt />,
-    //     titleOverride: 'Mobile Number Validation',
-    //     closable: false,
-    //     onCloseAction: handleCancel,
-    //     onCloseActionOnContinue,
-    // };
-
     return (
         <>
             <Form form={contactform} autoComplete="off" onFinish={onSaveFormData} onFieldsChange={handleFormValueChange} layout="vertical">
@@ -72,7 +37,6 @@ const AddEditForm = (props) => {
                         <Form.Item label="Mobile Number" name="mobileNumber" rules={[validateRequiredInputField('mobile number'), validateMobileNoField('mobile number')]}>
                             <Input
                                 maxLength={10}
-                                onChange={handleNumberValidation}
                                 placeholder={preparePlaceholderText('mobile number')}
                                 allowClear
                                 // enterButton="Send OTP"

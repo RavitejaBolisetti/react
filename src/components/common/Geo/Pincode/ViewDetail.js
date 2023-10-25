@@ -6,7 +6,7 @@
 import React from 'react';
 import { Descriptions } from 'antd';
 
-export const ViewDetail = ({ formData, styles, parameterType }) => {
+export const ViewDetail = ({ formData, styles }) => {
     const viewOneColProps = {
         bordered: false,
         colon: false,

@@ -12,7 +12,7 @@ import { getCodeValue } from 'utils/getCodeValue';
 import { disableFieldsOnFutureDate } from 'utils/disableDate';
 
 const ViewDetailMain = (props) => {
-    const { styles, formData, isLoading, soldByDealer, typeData, relationshipManagerData } = props;
+    const { formData, isLoading, soldByDealer, typeData, relationshipManagerData } = props;
 
     const viewProps = {
         bordered: false,

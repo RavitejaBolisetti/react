@@ -81,8 +81,8 @@ describe('User Management Master components', () => {
         );
         const dealer = screen.getByRole('button', { name: 'Dealer' });
         fireEvent.click(dealer);
-        const selectField = screen.getByRole('combobox', { name: '' });
-        fireEvent.change(selectField, { target: { value: 106 } });
+        const selectField = screen.getAllByRole('combobox', { name: '' });
+        fireEvent.change(selectField[0], { target: { value: 106 } });
         await waitFor(() => {
             expect(screen.getByText('Kai')).toBeInTheDocument();
         });

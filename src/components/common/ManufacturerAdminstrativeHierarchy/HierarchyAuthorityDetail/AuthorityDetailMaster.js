@@ -30,7 +30,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            // errorTokenValidate: manufacturerAdminHierarchyDataActions.errorTokenValidate,
             resetData: ManufactureAdminValidateToken.reset,
         },
         dispatch

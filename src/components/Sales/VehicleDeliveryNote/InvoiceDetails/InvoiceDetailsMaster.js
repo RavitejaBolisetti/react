@@ -73,11 +73,11 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const InvoiceDetailsMasterBase = (props) => {
-    const { userId, vinData, listvinNumberShowLoading, listEngineNumberShowLoading, fetchvinNumber, selectedOrder, relationshipManagerData, invoiceData, isRelationshipManagerLoaded, setFormActionType, fetchRelationshipManger, listRelationshipMangerShowLoading, isLoading, record } = props;
+    const { userId, vinData, listvinNumberShowLoading, listEngineNumberShowLoading, fetchvinNumber, selectedOrder, relationshipManagerData, invoiceData, isRelationshipManagerLoaded, setFormActionType, fetchRelationshipManger, listRelationshipMangerShowLoading, isLoading } = props;
 
-    const { typeData, form, selectedOrderId, requestPayload, setRequestPayload, soldByDealer, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section, resetData, engineNumberData, chassisNoValue } = props;
+    const { typeData, form, selectedOrderId, requestPayload, setRequestPayload, soldByDealer, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section, engineNumberData, chassisNoValue } = props;
 
-    const { isChallanDataLoaded, isChallanLoading, vehicleChallanData, fetchChallanList, listChallanShowLoading } = props;
+    const { fetchChallanList, listChallanShowLoading } = props;
 
     const { buttonData, setButtonData } = props;
 
@@ -187,7 +187,6 @@ export const InvoiceDetailsMasterBase = (props) => {
         setButtonData({ ...buttonData, formBtnActive: false });
     };
 
-    const onFinishFailed = () => {};
     const handleRelationShipManagerChange = (value) => {
         form.setFieldValue('relationShipManagerCode', value);
     };
@@ -200,7 +199,6 @@ export const InvoiceDetailsMasterBase = (props) => {
         formActionType,
         setFormActionType,
         onFinish,
-        onFinishFailed,
         isRelationshipManagerLoaded,
         fetchRelationshipManger,
         listRelationshipMangerShowLoading,
@@ -220,7 +218,6 @@ export const InvoiceDetailsMasterBase = (props) => {
         engineNumberData,
         userId,
         handleRelationShipManagerChange,
-        setButtonData,
         getChallanDetails,
     };
 
@@ -235,7 +232,7 @@ export const InvoiceDetailsMasterBase = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

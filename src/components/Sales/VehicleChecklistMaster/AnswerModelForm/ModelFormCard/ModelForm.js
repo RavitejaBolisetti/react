@@ -10,7 +10,7 @@ import { validateRequiredSelectField } from 'utils/validation';
 import { PlusOutlined } from '@ant-design/icons';
 
 const ModelForm = (props) => {
-    const { modelForm, onFinishModelForm, modelEdit, modelEditForm, modelSwitch, setModelSwitch, mainFomEdit, modelGroupData, modelData } = props;
+    const { modelForm, onFinishModelForm, modelEdit, modelEditForm, modelSwitch, setModelSwitch, mainFomEdit, modelGroupData } = props;
 
     return (
         <>
@@ -18,7 +18,7 @@ const ModelForm = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Form.Item label="Model Group Code" name="modelGroupCode" rules={[validateRequiredSelectField('Model Group Code')]}>
-                            <Select options={modelGroupData} fieldNames={{ key: 'modelGroupCode', value: 'modelGroupDescription' }} disabled={mainFomEdit} placeholder={preparePlaceholderSelect('model group code')} showSearch filterOption={(input, option) => option?.modelGroupCode?.toLowerCase()?.includes(input?.toLowerCase()) || option?.modelGroupDescription?.toLowerCase()?.includes(input?.toLowerCase())} />
+                            <Select options={modelGroupData} fieldNames={{ value: 'modelGroupCode', label: 'modelGroupDescription' }} disabled={mainFomEdit} placeholder={preparePlaceholderSelect('model group code')} showSearch filterOption={(input, option) => option?.modelGroupCode?.toLowerCase()?.includes(input?.toLowerCase()) || option?.modelGroupDescription?.toLowerCase()?.includes(input?.toLowerCase())} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} style={{ marginBottom: '12px' }}>

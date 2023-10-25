@@ -5,55 +5,64 @@
  */
 export const FORMTYPE_CONSTANTS = {
     OPEN_TEXT: {
-        id: 'OT',
+        id: 1,
+        key: 'OT',
         value: 'Open Text',
         name: 'Text box',
     },
 
     DATE: {
-        id: 'D',
+        id: 2,
+        key: 'D',
         value: 'Date',
         name: 'Normal Date',
     },
 
     NUMBER_WITH_DECIMAL: {
-        id: 'NWD',
+        id: 3,
+        key: 'NWD',
         value: 'Number With Decimal',
         name: 'Number with a Decimal entry',
     },
 
     NUMBER_WITHOUT_DECIMAL: {
-        id: 'NWTD',
+        id: 4,
+        key: 'NWTD',
         value: 'Number Without Demical',
         name: 'Number without Decimal entry',
     },
 
     DATE_RANGE: {
-        id: 'DR',
+        id: 5,
+        key: 'DR',
         value: 'Date Range',
         name: 'Date range',
     },
 
     TOGGLE_GROUP: {
-        id: 'TG',
+        id: 6,
+        key: 'TG',
         value: 'Toggle',
         name: 'Switch case',
     },
 
     NUMBER_RANGE_WITH_DECIMAL: {
-        id: 'NRWD',
+        id: 7,
+        key: 'NRWD',
         value: 'Number Range With Decimal',
         name: 'Number range with a decimal',
     },
 
     NUMBER_RANGE_WITHOUT_DECIMAL: {
-        id: 'NRWTD',
+        id: 8,
+        key: 'NRWTD',
         value: 'Number Range Without Decimal',
         name: 'Number range without a decimal',
     },
 
     FIXED_OPTIONS: {
-        id: 'FIX',
+        id: 9,
+        key: 'FIX',
         value: 'Fixed',
         name: 'Select with a option size',
     },

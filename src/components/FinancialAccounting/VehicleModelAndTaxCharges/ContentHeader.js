@@ -13,12 +13,12 @@ import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { customSelectBox } from 'utils/customSelectBox';
 
 const ContentHeader = (props) => {
-    const { isProductHierarchyDataLoading, Form, onFinishFailed, onFinish, handleAdd, titleHierarchy, VehicleModelTaxChargesCategoryData, ModelOptions, handleReferesh, handleChange } = props;
+    const { isProductHierarchyDataLoading, Form, onFinish, handleAdd, titleHierarchy, VehicleModelTaxChargesCategoryData, ModelOptions, handleReferesh, handleChange } = props;
     return (
         <div className={styles.contentHeaderBackground}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={16} lg={16} xl={16}>
-                    <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                    <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish}>
                         <Form.Item label={`${titleHierarchy}`} name="code">
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={10} lg={10} xl={10}>

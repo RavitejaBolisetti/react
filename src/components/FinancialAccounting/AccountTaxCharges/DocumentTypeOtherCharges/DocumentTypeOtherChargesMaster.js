@@ -215,10 +215,6 @@ export const DocumentTypeOtherChargesMain = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {}).catch(err => console.error(err));
-    };
-
     const onCloseAction = () => {
         setFormEdit(false);
         form.resetFields();
@@ -245,7 +241,7 @@ export const DocumentTypeOtherChargesMain = (props) => {
         formActionType,
         setFormActionType,
         onFinish,
-        onFinishFailed,
+
         setFilterString,
         isVisible: isFormVisible,
         onCloseAction,

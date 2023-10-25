@@ -10,21 +10,38 @@ import { withModal } from 'components/withModal';
 import { ModalButtons } from 'components/common/Button';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField } from 'utils/validation';
-import { BindFormAndResult } from './CheckListUtils';
+import { BindFormAndResult, FORM_KEYS } from './CheckListUtils';
 import { convertDateTimedayjs, formatDateToCalenderDate } from 'utils/formatDateTime';
+import { MODULE_TYPE_CONSTANTS } from 'constants/modules/vehicleChecklistConstants';
 
 import styles from 'assets/sass/app.module.scss';
 const { TextArea } = Input;
 
 export const ChecklistModalForms = (props) => {
     const { AdvanceformData, setAdvanceformData } = props;
-    const { onCloseAction, handleFormValueChange, checkListDataModified, setcheckListDataModified, aggregateForm } = props;
+    const { handleFormValueChange, checkListDataModified, setcheckListDataModified, aggregateForm } = props;
     const { setAdvanceSearchVisible } = props;
     const { isVisible, setisEditing } = props;
     const { setPage, pageIntialState } = props;
-    const { deliveryChecklist = false, setRequestPayload = () => {}, checklistDescriptionLabel = 'Remarks', matchKey = 'id' } = props;
-    const disabledProps = { disabled: deliveryChecklist };
+    const { checklistType, setRequestPayload = () => {}, checklistDescriptionLabel = 'Remarks', matchKey = 'id' } = props;
     const [saveDisabled, setsaveDisabled] = useState(true);
+    const handleResetChecklist = () => {
+        if (AdvanceformData?.checkResult) {
+            aggregateForm.resetFields();
+            const newArr = checkListDataModified?.map((element) => {
+                if (element?.[matchKey] === AdvanceformData?.[matchKey]) {
+                    const removeCheckListDescription = checklistType === MODULE_TYPE_CONSTANTS?.DELIVERY_NOTE?.key ? element?.checklistDescription : undefined;
+                    return { ...element, checklistDescription: removeCheckListDescription, checkResult: undefined, ...FORM_KEYS, ismodified: false };
+                }
+                return element;
+            });
+            setRequestPayload((prev) => ({ ...prev, vehicleDeliveryCheckList: { vin: prev?.vehicleDetails?.vinNumber, deliveryChecklistDtos: newArr?.filter((i) => i?.ismodified) } }));
+            setcheckListDataModified(newArr);
+        } else {
+            aggregateForm.resetFields();
+            return false;
+        }
+    };
 
     useEffect(() => {
         if (AdvanceformData && isVisible) {
@@ -34,14 +51,18 @@ export const ChecklistModalForms = (props) => {
     }, [AdvanceformData, isVisible]);
 
     const BindResultForm = useMemo(() => {
-        return typeof AdvanceformData === 'object' && Object?.keys(AdvanceformData) && Object?.values(AdvanceformData) && isVisible && BindFormAndResult({ data: AdvanceformData, aggregateForm, deliveryChecklist })?.formItem;
+        if (typeof AdvanceformData === 'object' && Object?.keys(AdvanceformData) && Object?.values(AdvanceformData) && isVisible) {
+            const CancelBtnName = 'Reset';
+            return { formItem: BindFormAndResult({ data: AdvanceformData, aggregateForm, checklistType })?.formItem, CancelBtnName, resetAction: handleResetChecklist, saveBtnName: 'Save' };
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isVisible, AdvanceformData]);
 
     const onFinish = () => {
         aggregateForm
             .validateFields()
             .then((values) => {
-                const data = { ...AdvanceformData, ...values, ismodified: true, checkResult: BindFormAndResult({ data: { ...values, answerType: AdvanceformData?.answerType, checklistAnswerResponses: AdvanceformData?.checklistAnswerResponses, answerToDate: convertDateTimedayjs(values?.answerToDate), answerFromDate: convertDateTimedayjs(values?.answerFromDate) } }, aggregateForm)?.checkResult };
+                const data = { ...AdvanceformData, ...values, ismodified: true, checkResult: BindFormAndResult({ data: { ...values, answerType: AdvanceformData?.answerType, checklistAnswerResponses: AdvanceformData?.checklistAnswerResponses, answerToDate: convertDateTimedayjs(values?.answerToDate), answerFromDate: convertDateTimedayjs(values?.answerFromDate) }, checklistType, aggregateForm })?.checkResult };
                 const newArr = [...checkListDataModified]?.map((element) => {
                     if (element?.[matchKey] === AdvanceformData?.[matchKey]) {
                         return data;
@@ -56,10 +77,7 @@ export const ChecklistModalForms = (props) => {
                 setAdvanceformData();
                 setPage((prev) => ({ pageIntialState, current: prev?.current }));
             })
-            .catch((err) => {});
-    };
-    const onFinishFailed = () => {
-        return;
+            .catch((err) => console.error(err));
     };
     const handleValuesChange = () => {
         setsaveDisabled(false);
@@ -67,30 +85,31 @@ export const ChecklistModalForms = (props) => {
     const modalProps = {
         reset: true,
         submit: true,
-        resetName: 'Cancel',
-        submitName: 'Save',
-        handleResetFilter: onCloseAction,
+        resetName: BindResultForm?.CancelBtnName,
+        submitName: BindResultForm?.saveBtnName,
+        handleResetFilter: BindResultForm?.resetAction,
         htmltype: false,
         onClickAction: onFinish,
         saveDisabled: saveDisabled,
     };
 
     return (
-        <Form autoComplete="off" layout="vertical" form={aggregateForm} onValuesChange={handleValuesChange} onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" layout="vertical" form={aggregateForm} onValuesChange={handleValuesChange}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    {BindResultForm}
+                    {BindResultForm?.formItem}
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
-                    {!deliveryChecklist && (
+                    {checklistType === MODULE_TYPE_CONSTANTS?.RECEIPT_CHECKLIST?.key && (
                         <Form.Item label={checklistDescriptionLabel} name="checklistDescription" rules={[validateRequiredInputField('Remarks')]}>
-                            <TextArea placeholder={preparePlaceholderText('Remarks')} autoSize={{ minRows: 3, maxRows: 5 }} maxLength={300} showCount {...disabledProps} />
+                            <TextArea placeholder={preparePlaceholderText('Remarks')} autoSize={{ minRows: 3, maxRows: 5 }} maxLength={300} showCount />
                         </Form.Item>
                     )}
                     <Form.Item name="id" hidden></Form.Item>
-                    {deliveryChecklist && <Form.Item initialValue={true} name="status" hidden />}
+
+                    {checklistType === MODULE_TYPE_CONSTANTS?.DELIVERY_NOTE?.key && <Form.Item initialValue={true} name="status" hidden />}
                 </Col>
             </Row>
             <ModalButtons {...modalProps} />

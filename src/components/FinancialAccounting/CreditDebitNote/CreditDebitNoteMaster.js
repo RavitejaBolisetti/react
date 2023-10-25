@@ -298,7 +298,7 @@ export const CreditDebitNoteMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
 
-    const handleResetFilter = (e) => {
+    const handleResetFilter = () => {
         if (filterString) {
             setShowDataLoading(true);
             setFilterString();
@@ -347,9 +347,6 @@ export const CreditDebitNoteMasterBase = (props) => {
         }
         setIsFormVisible(true);
     };
-
-    const onFinishSearch = (values) => {};
-
     const handlePrintDownload = (record) => {
         setReportVisible(true);
 
@@ -450,7 +447,6 @@ export const CreditDebitNoteMasterBase = (props) => {
         typeData,
 
         searchForm,
-        onFinishSearch,
         handleResetFilter,
         handleButtonClick,
         setAdvanceSearchVisible,
