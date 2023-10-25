@@ -39,7 +39,6 @@ import styles from 'assets/sass/app.module.scss';
 
 import { OtfSoMappingUnmappingChangeHistory } from './OtfSoMappingUnmappingChangeHistory';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
-import { LeaveUnsaveDataModal } from 'utils/LeaveUnsaveDataModal';
 
 const { confirm } = Modal;
 
@@ -117,7 +116,7 @@ export const OtfMasterBase = (props) => {
     const { ChangeHistoryTitle, otfSoMappingChangeHistoryTitle } = props;
     const { fetchVehicleDetail, updateVehicleAllotmentStatus } = props;
 
-    const { typeData, moduleTitle, transferOTF, cancelOTFWorkflow } = props;
+    const { typeData, transferOTF, cancelOTFWorkflow } = props;
     const { filterString, setFilterString, otfStatusList } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [confirmRequest, setConfirmRequest] = useState();
@@ -151,7 +150,7 @@ export const OtfMasterBase = (props) => {
     const [otfCancellationForm] = Form.useForm();
     const [otfAllotmentForm] = Form.useForm();
     const [isUnsavedDataPopup, setIsUnsavedDataPopup] = useState(false);
-    const [nextCurentSection, setNextCurrentSection] = useState("");
+    const [nextCurentSection, setNextCurrentSection] = useState('');
 
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -356,7 +355,6 @@ export const OtfMasterBase = (props) => {
 
         updateVehicleAllotmentStatus(requestData);
     };
-    
 
     const handleOk = () => {
         setIsUnsavedDataPopup(false);
@@ -365,7 +363,7 @@ export const OtfMasterBase = (props) => {
         setButtonData({ ...buttonData, formBtnActive: false });
     };
 
-    const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true, isNextBtnClick=false }) => {
+    const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true, isNextBtnClick = false }) => {
         form.resetFields();
         form.setFieldsValue(undefined);
         setIsFormVisible(true);
@@ -391,9 +389,6 @@ export const OtfMasterBase = (props) => {
                 break;
             case NEXT_ACTION:
                 const nextSection = Object.values(sectionName)?.find((i) => validateOTFMenu({ item: i, status: selectedOrder?.orderStatus, otfData }) && i.id > currentSection);
-                // section && setCurrentSection(nextSection?.id);
-                // setLastSection(!nextSection?.id);
-                
                 if (buttonData?.formBtnActive && isNextBtnClick) {
                     setIsUnsavedDataPopup(true);
                     setNextCurrentSection(nextSection?.id);
@@ -805,16 +800,20 @@ export const OtfMasterBase = (props) => {
         setShowDataLoading,
     };
 
+    const handleCancelModal = () => {
+        setIsUnsavedDataPopup(false);
+        setNextCurrentSection('');
+    };
+
     const unsavedDataModalProps = {
         isVisible: isUnsavedDataPopup,
-        titleOverride: 'Confirm',
-        information: 'You have modified this work section. You can discard your changes, or cancel to continue editing.',
-        handleCloseModal: () => setIsUnsavedDataPopup(false),
-        onCloseAction: () => setIsUnsavedDataPopup(false),
-        handleOk,
-        closable: true,
-        nextCurentSection,
-        setNextCurrentSection,
+        titleOverride: 'Are you sure you want to leave ?',
+        closable: false,
+        onCloseAction: handleCancelModal,
+        onSubmitAction: handleOk,
+        submitText: 'Leave',
+        showField: false,
+        text: 'You have unsave changes. All changes may lost.',
     };
 
     return (
@@ -833,7 +832,7 @@ export const OtfMasterBase = (props) => {
             {isAllotVisible && <OTFAllotmentMaster {...allotOTFProps} />}
             <OtfSoMappingUnmappingChangeHistory {...OtfSoMappingChangeHistoryProps} />
             <ConfirmationModal {...confirmRequest} />
-            <LeaveUnsaveDataModal {...unsavedDataModalProps} />
+            <ConfirmationModal {...unsavedDataModalProps} />
         </>
     );
 };

@@ -32,7 +32,7 @@ import { CustomerNameChangeHistory } from 'components/common/CustomerMaster/Indi
 import DataTable from 'utils/dataTable/DataTable';
 import { CustomerMainConatiner } from './CustomerMainConatiner';
 import styles from 'assets/sass/app.module.scss';
-import { LeaveUnsaveDataModal } from 'utils/LeaveUnsaveDataModal';
+import { ConfirmationModal } from 'utils/ConfirmationModal';
 
 const mapStateToProps = (state) => {
     const {
@@ -217,13 +217,13 @@ const CustomerMasterMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedCustomerId, defaultExtraParam]);
 
-    const onSuccessAction = () => {
+    const onSuccessAction = (res) => {
         setShowDataLoading(false);
         setRefreshCustomerList(false);
         // setFilterString();
     };
 
-    const onErrorAction = () => {
+    const onErrorAction = (res) => {
         setShowDataLoading(false);
         setRefreshCustomerList(false);
     };
@@ -245,11 +245,13 @@ const CustomerMasterMain = (props) => {
 
     useEffect(() => {
         if (customerType) {
+            // setFilterString({ current: 1 });
             setFilterString({ ...filterString, customerType });
             const defaultSection = customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION.CUSTOMER_DETAILS.id : CUSTOMER_CORPORATE_SECTION.CUSTOMER_DETAILS.id;
             setSetionName(customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION : CUSTOMER_CORPORATE_SECTION);
             setDefaultSection(defaultSection);
             setSection(defaultSection);
+            // setShowDataLoading(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [customerType]);
@@ -347,6 +349,10 @@ const CustomerMasterMain = (props) => {
         setPage,
     };
 
+    // const onChange = (sorter, filters) => {
+    //     form.resetFields();
+    // };
+
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
@@ -398,7 +404,7 @@ const CustomerMasterMain = (props) => {
         }
     };
 
-    const handleResetFilter = () => {
+    const handleResetFilter = (e) => {
         if (filterString) {
             setShowDataLoading(true);
         }
@@ -470,6 +476,7 @@ const CustomerMasterMain = (props) => {
         form,
         formActionType,
         setFormActionType,
+        onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
         titleOverride: drawerTitle.concat(moduleTitle),
@@ -512,16 +519,22 @@ const CustomerMasterMain = (props) => {
     };
 
     const showAddButton = true;
+
+    const handleCancelModal = () => {
+        setIsUnsavedDataPopup(false);
+        setNextCurrentSection('');
+    };
+
     const unsavedDataModalProps = {
         isVisible: isUnsavedDataPopup,
-        titleOverride: 'Confirm',
-        information: 'You have modified this work section. You can discard your changes, or cancel to continue editing.',
-        handleCloseModal: () => setIsUnsavedDataPopup(false),
-        onCloseAction: () => setIsUnsavedDataPopup(false),
-        handleOk,
-        closable: true,
-        nextCurentSection,
-        setNextCurrentSection,
+        titleOverride: 'Are you sure you want to leave ?',
+        closable: false,
+        onCloseAction: handleCancelModal,
+        onSubmitAction: handleOk,
+        submitText: 'Leave',
+        showField: false,
+        text: 'You have unsave changes. All changes may lost.',
+        // text: 'You have modified this work section. You can discard your changes, or cancel to continue editing.',
     };
 
     return (
@@ -552,6 +565,11 @@ const CustomerMasterMain = (props) => {
                                     </Form.Item>
                                 </Form>
                             </Col>
+                            {/* <Col xs={24} sm={24} md={10} lg={10} xl={10} className={styles.advanceFilterClear}>
+                                <Button type="primary" icon={<PlusOutlined />} onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                    Add
+                                </Button>
+                            </Col> */}
                         </Row>
                         {filterString && extraParams.find((i) => i.name) && (
                             <Row gutter={20}>
@@ -617,9 +635,9 @@ const CustomerMasterMain = (props) => {
                 </Col>
             </Row>
             <CustomerMainConatiner {...containerProps} />
-            <LeaveUnsaveDataModal {...unsavedDataModalProps} />
             <CustomerChangeHistory {...changeHistoryProps} />
             <CustomerNameChangeHistory {...nameChangeHistoryProps} />
+            <ConfirmationModal {...unsavedDataModalProps} />
         </>
     );
 };
