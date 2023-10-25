@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Row, Col, Form } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -119,6 +119,9 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoadingVehicleExchangeAlert: exchangeVehicleAlertDataAction.listShowLoading,
             resetVehicleExchangeAlert: exchangeVehicleAlertDataAction.reset,
 
+            fetchProductLovCode: productHierarchyDataActions.fetchFilteredList,
+            ProductLovCodeLoading: productHierarchyDataActions.listShowLoading,
+
             resetData: schemeDataActions.reset,
             showGlobalNotification,
         },
@@ -127,15 +130,15 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ExchangeVehiclesBase = (props) => {
-    const { exchangeData, exchangeDataPass, isLoading, fetchList, userId, listShowLoading, showGlobalNotification, section, VehicleLovCodeData } = props;
-    const { typeData, selectedOrder, fetchListVehicleExchangeAlert, listShowLoadingVehicleExchangeAlert, exchangeVehicleAlertData } = props;
+    const { exchangeData, exchangeDataPass, isLoading, fetchList, userId, listShowLoading, showGlobalNotification, section, fetchProductLovCode, ProductLovCodeLoading, VehicleLovCodeData } = props;
+    const { typeData, selectedOrder, fetchListVehicleExchangeAlert, listShowLoadingVehicleExchangeAlert, exchangeVehicleAlertData, resetVehicleExchangeAlert } = props;
     const { fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading } = props;
     const { isMakeLoading, makeData, isModelDataLoaded, isModelLoading, modelData, isVariantDataLoaded, isVariantLoading, variantData, saveData } = props;
-    const { financeLovData, isFinanceLovLoading, fetchFinanceLovList, listFinanceLovShowLoading } = props;
+    const { financeLovData, isFinanceLovLoading, isFinanceLovDataLoaded, fetchFinanceLovList, listFinanceLovShowLoading } = props;
     const { schemeLovData, isSchemeLovLoading, fetchSchemeLovList, listSchemeLovShowLoading } = props;
     const { form, selectedRecordId, selectedOrderId, formActionType, handleFormValueChange, resetData } = props;
     const { fetchCustomerList, listCustomerShowLoading, handleButtonClick, NEXT_ACTION } = props;
-    const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar, isProductHierarchyDataLoaded, salesModuleType } = props;
+    const { modelCode = undefined, buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar, isProductHierarchyDataLoaded, salesModuleType } = props;
 
     const [formData, setFormData] = useState('');
     const [filteredModelData, setfilteredModelData] = useState([]);
@@ -144,8 +147,53 @@ const ExchangeVehiclesBase = (props) => {
     const [customerList, setCustomerList] = useState();
     const [modalOpen, setModalOpen] = useState(false);
     const [modelGroup, setModelGroup] = useState(null);
+    const [isMahindraMake, setIsMahindraMake] = useState(false);
+
+    const [exhangeDataParams, setExchangeDataParams] = useState();
 
     const isOTFModule = salesModuleType === SALES_MODULE_TYPE.OTF.KEY;
+    useEffect(() => {
+        return () => {
+            resetData();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        if (isOTFModule && exchangeData) {
+            setFormData(exchangeData);
+            setIsMahindraMake(exchangeData?.make === MAHINDRA_MAKE);
+            setExchangeDataParams({ make: exchangeData?.make, modelGroup: exchangeData?.modelGroup });
+            setButtonData({ ...buttonData, formBtnActive: false });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isOTFModule, exchangeData]);
+
+    useEffect(() => {
+        if (exchangeDataPass) {
+            setFormData(exchangeDataPass);
+            setIsMahindraMake(exchangeDataPass?.make === MAHINDRA_MAKE);
+            setExchangeDataParams({ make: exchangeDataPass?.make, modelGroup: exchangeDataPass?.modelGroup });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [exchangeDataPass]);
+
+    const exhangeDataParamList = useMemo(() => {
+        return exhangeDataParams;
+    }, [exhangeDataParams]);
+
+    useEffect(() => {
+        if (exhangeDataParamList?.make || exhangeDataParamList?.modelGroup) {
+            if (isMahindraMake) {
+                fetchModelLovList({ customURL: BASE_URL_PRODUCT_MODEL_GROUP.concat('/lov'), setIsLoading: listModelShowLoading, userId });
+                exhangeDataParamList?.modelGroup && fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('modelGroupCode', 'modelGroupCode', exhangeDataParamList?.modelGroup, 'modelGroupCode') });
+            } else {
+                exhangeDataParamList?.make && fetchModelLovList({ setIsLoading: listModelShowLoading, userId, extraParams: makeExtraParams('make', 'make', exhangeDataParamList?.make, 'make') });
+                exhangeDataParamList?.modelGroup && fetchVariantLovList({ setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('model', 'model', exhangeDataParamList?.modelGroup, 'model') });
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isMahindraMake, exhangeDataParamList]);
 
     const fnSetData = (data) => {
         if (data?.make) {
@@ -161,21 +209,6 @@ const ExchangeVehiclesBase = (props) => {
             form.resetFields(['customerId', 'customerName', 'make', 'modelGroup', 'variant', 'oldRegistrationNumber', 'oldChessisNumber']);
         }
     };
-
-    useEffect(() => {
-        if (isOTFModule && exchangeData) {
-            setFormData(exchangeData);
-            exchangeData?.make && handleFilterChange('make', exchangeData?.make ?? '');
-            exchangeData?.modelGroup && handleFilterChange('modelGroup', exchangeData?.modelGroup ?? '');
-            setButtonData({ ...buttonData, formBtnActive: false });
-        } else if (exchangeDataPass) {
-            setFormData(exchangeDataPass);
-            exchangeData?.make && handleFilterChange('make', exchangeData?.make ?? '');
-            exchangeData?.modelGroup && handleFilterChange('modelGroup', exchangeData?.modelGroup ?? '');
-            setButtonData({ ...buttonData, formBtnActive: true });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isOTFModule, exchangeData, exchangeDataPass]);
 
     const makeExtraParams = (key, title, value, name) => {
         const extraParams = [
@@ -196,13 +229,11 @@ const ExchangeVehiclesBase = (props) => {
         },
     ];
 
-    const onErrorAction = (message) => {
-        // showGlobalNotification({ message });
+    const onErrorAction = () => {
         setEditableOnSearch(false);
     };
-    const onSuccessAction = (res) => {
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-    };
+
+    const onSuccessAction = () => {};
 
     useEffect(() => {
         if (isModelDataLoaded && modelData) {
@@ -224,7 +255,7 @@ const ExchangeVehiclesBase = (props) => {
                 {
                     key: 'modelCode',
                     title: 'modelCode',
-                    value: selectedOrder?.modelCode,
+                    value: selectedOrder?.modelCode || modelCode,
                     name: 'Booking Number',
                 },
                 {
@@ -235,23 +266,14 @@ const ExchangeVehiclesBase = (props) => {
                 },
             ];
             isOTFModule && fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, userId });
-            fetchFinanceLovList({ setIsLoading: listFinanceLovShowLoading, userId, onErrorAction });
+            !isFinanceLovDataLoaded && fetchFinanceLovList({ setIsLoading: listFinanceLovShowLoading, userId, onErrorAction });
             fetchSchemeLovList({ setIsLoading: listSchemeLovShowLoading, extraParams: schemeExtraParams, onErrorAction, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedRecordId]);
 
-    useEffect(() => {
-        return () => {
-            resetData();
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    const MAHINDRA_MAKE = 'Mahindra';
-    const isMahindraMake = form.getFieldValue('make') === MAHINDRA_MAKE;
-    const handleFilterChange = (name, value1, selectobj) => {
-        const value = selectobj?.key || value1;
+    const MAHINDRA_MAKE = 'MM';
+    const handleFilterChange = (name, value) => {
         if (!value) {
             switch (name) {
                 case 'make': {
@@ -288,29 +310,34 @@ const ExchangeVehiclesBase = (props) => {
                 modelGroup: undefined,
                 variant: undefined,
             });
-
-            if (form.getFieldValue('make') === MAHINDRA_MAKE) {
-                fetchModelLovList({ customURL: BASE_URL_PRODUCT_MODEL_GROUP.concat('/lov'), setIsLoading: listModelShowLoading, userId, extraParams: makeExtraParams('modelGroupCode', 'modelGroupCode', 'ECOM', 'modelGroupCode') });
-            } else {
-                fetchModelLovList({ setIsLoading: listModelShowLoading, userId, extraParams: makeExtraParams('make', 'make', value, 'make') });
-            }
+            setIsMahindraMake(value === MAHINDRA_MAKE);
+            setExchangeDataParams({ ...exhangeDataParams, make: value });
         } else if (name === 'modelGroup') {
             form.setFieldsValue({
                 variant: undefined,
             });
-
             setfilteredVariantData();
-            if (form.getFieldValue('make') === MAHINDRA_MAKE) {
-                fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('modelGroupCode', 'modelGroupCode', 'ECOM', 'modelGroupCode') });
-            } else {
-                fetchVariantLovList({ setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('model', 'model', value, 'model') });
-            }
+            setExchangeDataParams({ ...exhangeDataParams, modelGroup: value });
         }
     };
 
     const showAlert = (val) => {
         setModelGroup((prev) => ({ ...prev, oldModelGroup: val }));
     };
+
+    useEffect(() => {
+        if (selectedOrder?.modelCode) {
+            const LovParams = [
+                {
+                    key: 'prodctCode',
+                    value: selectedOrder?.modelCode,
+                },
+            ];
+            resetVehicleExchangeAlert();
+            fetchProductLovCode({ setIsLoading: ProductLovCodeLoading, userId, onErrorAction, extraparams: LovParams });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedOrder?.modelCode]);
 
     useEffect(() => {
         if (VehicleLovCodeData && isProductHierarchyDataLoaded) {
@@ -346,12 +373,11 @@ const ExchangeVehiclesBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [exchangeVehicleAlertData]);
 
-    const handleSchemeChange = (__, value) => {
+    const handleSchemeChange = (__, { option: { amount } = 0 }) => {
         form.setFieldsValue({
-            schemeAmount: value?.amount,
+            schemeAmount: amount,
         });
     };
-
     const onFinish = (values) => {
         const { customerName } = values;
         if (values?.exchange && !customerName) {
@@ -363,7 +389,6 @@ const ExchangeVehiclesBase = (props) => {
         if (onFinishCustom) {
             onFinishCustom({ key: formKey, values: data });
             handleButtonClick({ buttonAction: NEXT_ACTION });
-            setButtonData({ ...buttonData, formBtnActive: false });
         } else {
             const onSuccess = (res) => {
                 form.resetFields();
@@ -384,66 +409,59 @@ const ExchangeVehiclesBase = (props) => {
         }
     };
 
-    const onFinishFailed = (values1) => {
-        form.validateFields()
-            .then(() => {})
-            .catch((err) => {});
+    const onSearch = (value) => {
+        if (!value) {
+            return false;
+        }
+        const defaultExtraParam = [
+            {
+                key: 'pageSize',
+                title: 'Value',
+                value: 1000,
+                canRemove: true,
+            },
+            {
+                key: 'pageNumber',
+                title: 'Value',
+                value: 1,
+                canRemove: true,
+            },
+
+            {
+                key: 'searchType',
+                title: 'Type',
+                value: 'registrationNumber',
+                canRemove: true,
+            },
+            {
+                key: 'searchParam',
+                title: 'Value',
+                value: value,
+                canRemove: true,
+            },
+        ];
+
+        fetchCustomerList({
+            setIsLoading: listCustomerShowLoading,
+            extraParams: defaultExtraParam,
+            userId,
+            customURL,
+            onSuccessAction: (res) => {
+                if (res?.data?.customerMasterDetails?.length > 0) {
+                    setCustomerList(res?.data?.customerMasterDetails);
+                } else {
+                    res?.data?.customerMasterDetails && setFormData(res?.data?.customerMasterDetails?.[0]);
+                    handleFormValueChange();
+                }
+            },
+            onErrorAction,
+        });
     };
-
-    // const onSearch = (value) => {
-    //     if (!value) {
-    //         return false;
-    //     }
-    //     const defaultExtraParam = [
-    //         {
-    //             key: 'pageSize',
-    //             title: 'Value',
-    //             value: 1000,
-    //             canRemove: true,
-    //         },
-    //         {
-    //             key: 'pageNumber',
-    //             title: 'Value',
-    //             value: 1,
-    //             canRemove: true,
-    //         },
-
-    //         {
-    //             key: 'searchType',
-    //             title: 'Type',
-    //             value: 'registrationNumber',
-    //             canRemove: true,
-    //         },
-    //         {
-    //             key: 'searchParam',
-    //             title: 'Value',
-    //             value: value,
-    //             canRemove: true,
-    //         },
-    //     ];
-
-    //     fetchCustomerList({
-    //         setIsLoading: listCustomerShowLoading,
-    //         extraParams: defaultExtraParam,
-    //         userId,
-    //         customURL,
-    //         onSuccessAction: (res) => {
-    //             if (res?.data?.customerMasterDetails?.length > 0) {
-    //                 setCustomerList(res?.data?.customerMasterDetails);
-    //             } else {
-    //                 res?.data?.customerMasterDetails && setFormData(res?.data?.customerMasterDetails?.[0]);
-    //                 handleFormValueChange();
-    //             }
-    //         },
-    //         onErrorAction,
-    //     });
-    // };
 
     const formProps = {
         ...props,
         form,
         formData,
-        onFinishFailed,
         onFinish,
 
         typeData,
@@ -463,7 +481,7 @@ const ExchangeVehiclesBase = (props) => {
         isVariantLoading,
         variantData,
         isLoading,
-        // onSearch, unused code please check this method
+        onSearch,
         handleFilterChange,
         filteredModelData,
         filteredVariantData,
@@ -473,6 +491,7 @@ const ExchangeVehiclesBase = (props) => {
         customerList,
         showAlert,
         handleSchemeChange,
+        MAHINDRA_MAKE,
         isMahindraMake,
     };
 
@@ -486,6 +505,9 @@ const ExchangeVehiclesBase = (props) => {
         typeData,
         schemeLovData,
         financeLovData,
+        MAHINDRA_MAKE,
+        isMahindraMake,
+        setIsMahindraMake,
     };
 
     const VehiclePriorityAlertProp = {
@@ -494,7 +516,7 @@ const ExchangeVehiclesBase = (props) => {
     };
 
     return (
-        <Form data-testid="exchangeVID" layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form data-testid="exchangeVID" layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

@@ -37,7 +37,7 @@ describe("GstIRNTransaction component",()=>{
         customRender(
             <Provider store={mockStore}>
                 <GstIRNTransaction fetchList={fetchList} fetchGSTINList={fetchGSTINList} viewDocument={jest.fn()} 
-                uploadDocument={jest.fn()}/>
+                uploadDocument={jest.fn()} setFilterString={jest.fn()} />
             </Provider>
         )
 
@@ -56,7 +56,7 @@ describe("GstIRNTransaction component",()=>{
     })
 
     it("onAdvanceSearchCloseAction", ()=>{
-        customRender(<GstIRNTransaction />);
+        customRender(<GstIRNTransaction setFilterString={jest.fn()} />);
 
         const advancedBtn = screen.getByRole('button', {name:'Advanced Filters'});
         fireEvent.click(advancedBtn);

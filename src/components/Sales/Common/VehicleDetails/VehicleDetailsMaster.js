@@ -17,6 +17,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { SALES_MODULE_TYPE } from 'constants/salesModuleType';
 
 import styles from 'assets/sass/app.module.scss';
+import { withSpinner } from 'components/withSpinner';
 
 const mapStateToProps = (state) => {
     const {
@@ -97,7 +98,8 @@ const VehicleDetailsMasterMain = (props) => {
     const [vehicleDetailData, setVehicleDetailData] = useState();
     const [filterVehicleData, setFilterVehicleData] = useState([]);
 
-    const onSuccessAction = (res) => {
+    const onSuccessAction = () => {
+        return;
         //showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
@@ -132,7 +134,7 @@ const VehicleDetailsMasterMain = (props) => {
 
     useEffect(() => {
         if (userId && selectedRecordId) {
-            if (isOTFModule) {
+            if (isOTFModule && !isLoading) {
                 const extraParams = [
                     {
                         key: 'otfId',
@@ -226,7 +228,7 @@ const VehicleDetailsMasterMain = (props) => {
     }, [productAttributeData, isProductHierarchyDataLoaded, userId]);
 
     useEffect(() => {
-        if (vehicleDetailData?.modelCode) {
+        if (vehicleDetailData?.modelCode && !isProductHierarchyDataLoaded) {
             const lovExtraParams = [
                 {
                     key: 'prodctCode',
@@ -344,12 +346,6 @@ const VehicleDetailsMasterMain = (props) => {
         }
     };
 
-    const onFinishFailed = () => {
-        form.validateFields()
-            .then(() => {})
-            .catch((err) => console.error(err));
-    };
-
     // const handlePriceTypeChange = (value, option) => {
     //     setPriceType(value);
     //     if (option?.type === 'D') {
@@ -376,7 +372,7 @@ const VehicleDetailsMasterMain = (props) => {
         onErrorAction,
         form,
         onFinish,
-        onFinishFailed,
+
         openAccordian,
         setOpenAccordian,
         isReadOnly,
@@ -415,7 +411,7 @@ const VehicleDetailsMasterMain = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed} data-testid="logRole">
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} data-testid="logRole">
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>
@@ -437,4 +433,4 @@ const VehicleDetailsMasterMain = (props) => {
         </Form>
     );
 };
-export const VehicleDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(VehicleDetailsMasterMain);
+export const VehicleDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(withSpinner(VehicleDetailsMasterMain));

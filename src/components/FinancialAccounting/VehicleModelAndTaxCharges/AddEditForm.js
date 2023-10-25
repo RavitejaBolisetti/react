@@ -23,7 +23,6 @@ const AddEditFormMain = (props) => {
         onCloseAction,
         formActionType: { addMode, editMode, viewMode },
         onFinish,
-        onFinishFailed,
         selectedModelGroup,
     } = props;
 
@@ -85,7 +84,7 @@ const AddEditFormMain = (props) => {
     };
 
     return (
-        <Form form={form} autoComplete="off" layout="vertical" colon={false} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form form={form} autoComplete="off" layout="vertical" colon={false} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBody}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     {!viewMode ? (

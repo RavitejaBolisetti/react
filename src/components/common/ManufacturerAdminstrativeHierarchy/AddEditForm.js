@@ -20,7 +20,7 @@ const AddEditFormMain = (props) => {
     const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, manufacturerAdminHierarchyData } = props;
     const { selectedTreeKey, selectedTreeSelectKey, setSelectedTreeSelectKey, handleSelectTreeClick, flatternData } = props;
     const { isFormBtnActive, setFormBtnActive } = props;
-    const { onFinish, onFinishFailed, EDIT_ACTION } = props;
+    const { onFinish, EDIT_ACTION } = props;
     const { attributeDataOptions, setattributeDataOptions } = props;
     const disabledProps = { disabled: EDIT_ACTION === formActionType ? true : false };
     const [form] = Form.useForm();
@@ -91,7 +91,7 @@ const AddEditFormMain = (props) => {
     return (
         <>
             <div className={styles.drawerBodyNew}>
-                <Form autoComplete="off" form={form} id="myForm" layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                <Form autoComplete="off" form={form} id="myForm" layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item name="attributeKey" label="Attribute Level" initialValue={formData?.attributeKey} rules={[validateRequiredSelectField('attribute level')]}>

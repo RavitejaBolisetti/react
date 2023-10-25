@@ -322,8 +322,6 @@ export const CrmScreenEnrolmentBase = (props) => {
         }
     };
 
-    const onFinishSearch = (values) => {};
-
     const onFinish = (values) => {
         if (formActionType?.addMode) {
             const data = { ...values };
@@ -470,7 +468,6 @@ export const CrmScreenEnrolmentBase = (props) => {
         advanceFilterForm,
         setAdvanceSearchVisible,
         typeData,
-        onFinishSearch,
     };
 
     const formProps = {

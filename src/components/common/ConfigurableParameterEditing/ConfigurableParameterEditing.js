@@ -235,7 +235,7 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
         setRefershData(!refershData);
     };
 
-    const hanndleEditData = (record) => {
+    const hanndleEditData = () => {
         setShowSaveAndAddNewBtn(false);
         setIsViewModeVisible(false);
         setFormActionType('update');

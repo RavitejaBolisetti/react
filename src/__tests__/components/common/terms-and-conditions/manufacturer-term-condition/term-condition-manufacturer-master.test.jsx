@@ -17,10 +17,15 @@ jest.mock('components/common/TermsAndConditions/ManufacturerTermCondition/AddEdi
     const values = {
         termsconditiondescription: 'Hello',
     };
-    const AddEditForm = ({ onFinish }) => (
-        <div>
-            <button onClick={onFinish(values)}>Save</button>
-        </div>
+    const AddEditForm = ({ onCloseAction, onFinish }) => (
+        <>
+            <div>
+                <button onClick={onFinish(values)}>Save</button>
+            </div>
+            <div>
+                <button onClick={onCloseAction}>Cancel</button>
+            </div>
+        </>
     );
     return {
         __esModule: true,
@@ -107,7 +112,6 @@ describe('Term Condition Manufacturer Master components', () => {
         fetchTermCondition.mock.calls[0][0].onErrorAction();
     });
 
-
     it('test for onSuccess', async () => {
         const mockStore = createMockStore({
             auth: { userId: 106 },
@@ -132,6 +136,14 @@ describe('Term Condition Manufacturer Master components', () => {
         await waitFor(() => {
             expect(screen.getByText('Sample Product')).toBeInTheDocument();
         });
+
+        const viewBtn = screen.getByTestId('view');
+
+        fireEvent.click(viewBtn);
+
+        const closeBtn = screen.getByRole('button', { name: 'Cancel' });
+
+        fireEvent.click(closeBtn);
 
         const editBtn = screen.getByTestId('edit');
         fireEvent.click(editBtn);

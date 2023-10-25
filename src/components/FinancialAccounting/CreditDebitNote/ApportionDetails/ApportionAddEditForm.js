@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Col, Input, Form, Row, Select, Button, DatePicker } from 'antd';
+import { Col, Input, Form, Row, Button, DatePicker } from 'antd';
 
 import { withModal } from 'components/withModal';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
@@ -23,7 +23,7 @@ export const AdvanceForm = (props) => {
     const { handleCancel, handleFormValueChange, apportionForm } = props;
     const { setAdvanceSearchVisible } = props;
     const { isVisible, setisEditing, isEditing } = props;
-    const { showGlobalNotification, fetchInvoiceList, listInvoiceShowLoading, userId, apportionTableData, setApportionTableData, isDocumentTypeLoading, documentTypeOptions, setDocumentTypeOptions } = props;
+    const { showGlobalNotification, fetchInvoiceList, listInvoiceShowLoading, userId, apportionTableData, setApportionTableData, documentTypeOptions, setDocumentTypeOptions } = props;
 
     useEffect(() => {
         if (apportionTableFormData && isVisible) {

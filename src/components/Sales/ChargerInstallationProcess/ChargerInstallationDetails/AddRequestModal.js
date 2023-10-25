@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Col, Form, Row, Button, DatePicker } from 'antd';
 
 import { withModal } from 'components/withModal';
@@ -11,12 +11,11 @@ import { customSelectBox } from 'utils/customSelectBox';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 import dayjs from 'dayjs';
-import { dateFormat, convertDateTimedayjs, formatDateToCalenderDate } from 'utils/formatDateTime';
+import { dateFormat } from 'utils/formatDateTime';
 import { disableFutureDate } from 'utils/disableDate';
 
 import styles from 'assets/sass/app.module.scss';
 import { validateRequiredInputField } from 'utils/validation';
-import { showGlobalNotification } from 'store/actions/notification';
 
 export const AddRequestModalForm = (props) => {
     const { onAdvanceSearchCloseAction, typeData } = props;
@@ -26,21 +25,17 @@ export const AddRequestModalForm = (props) => {
     //     // eslint-disable-next-line react-hooks/exhaustive-deps
     // }, [filterString]);
 
-    const onFinishFailed = () => {
-        return;
-    };
-
-    const CheckDateEffectiveTo = (value, effectiveFrom) => {
-        if (!value) return Promise.resolve();
-        const bool = dayjs(value).format('YYYY-MM-DD') >= dayjs(effectiveFrom).format('YYYY-MM-DD');
-        if (bool) {
-            return Promise.resolve();
-        }
-        return Promise.reject(new Error('Date cant be less than Effective from date'));
-    };
+    // const CheckDateEffectiveTo = (value, effectiveFrom) => {
+    //     if (!value) return Promise.resolve();
+    //     const bool = dayjs(value).format('YYYY-MM-DD') >= dayjs(effectiveFrom).format('YYYY-MM-DD');
+    //     if (bool) {
+    //         return Promise.resolve();
+    //     }
+    //     return Promise.reject(new Error('Date cant be less than Effective from date'));
+    // };
 
     return (
-        <Form autoComplete="off" layout="vertical" form={addRequestForm} onFinish={onModalFinish} onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" layout="vertical" form={addRequestForm} onFinish={onModalFinish}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item label="Stage" name="requestStage">

@@ -7,7 +7,7 @@ import React, { useEffect } from 'react';
 import { Col, Input, Form, Row, DatePicker, Card, Select } from 'antd';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
-import { validateRequiredInputField, validateMobileNoField } from 'utils/validation';
+import { validateMobileNoField } from 'utils/validation';
 import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
 
 import { CustomerListMaster } from 'components/utils/CustomerListModal';

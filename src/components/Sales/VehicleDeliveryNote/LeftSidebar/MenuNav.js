@@ -12,7 +12,7 @@ import { getSelectedMenuAttribute } from 'utils/getSelectedMenuAttribute';
 import styles from 'assets/sass/app.module.scss';
 
 const MenuNav = (props) => {
-    const { currentSection, setCurrentSection, previousSection, formActionType, selectedOrder, soldByDealer, deliveryStatus } = props;
+    const { currentSection, setCurrentSection, previousSection, formActionType, selectedOrder, soldByDealer } = props;
     const deliveryNoteSectionList = Object.values(VEHICLE_DELIVERY_NOTE_SECTION);
 
     const className = (id) => {

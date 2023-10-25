@@ -13,7 +13,7 @@ const FormWrapper = (props) => {
     const myFormMock = {
         ...form,
         setFieldsValue: jest.fn(),
-        validateFields: jest.fn().mockReturnValue(['pinCode']),
+        validateFields: jest.fn().mockReturnValue(['']),
     };
     return <AddEditForm form={myFormMock} {...props} />;
 };

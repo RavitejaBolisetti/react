@@ -71,8 +71,7 @@ describe('Family Detail Master component', () => {
         const customerName = screen.getByRole('textbox', { name: 'Customer Name' });
         fireEvent.change(customerName, { target: { value: 'Kai' } });
 
-        const customerId = screen.getByRole('textbox', { name: 'Customer Id' });
-        fireEvent.change(customerId, { target: { value: '106' } });
+   
 
         const relationship = screen.getByRole('combobox', { name: 'Relationship' });
         fireEvent.change(relationship, { target: { value: 'SELF' } });

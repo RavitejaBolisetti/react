@@ -7,13 +7,12 @@ afterEach(() => {
 });
 
 describe('Add Edit Form component', () => {
-
     it('should render the add edit form component', () => {
-        const typeData={
-            'PURPOSE': [{id: 106}],
-            'FAMLY_RELTN': [{id:106}]
-        }
-        customRender(<AddEditForm typeData={typeData} customerType={'IND'}/>);
+        const typeData = {
+            PURPOSE: [{ id: 106 }],
+            FAMLY_RELTN: [{ id: 106 }],
+            REL_TYPE: [{ id: 106 }],
+        };
+        customRender(<AddEditForm typeData={typeData} customerType={'IND'} />);
     });
-
 });

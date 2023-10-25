@@ -82,7 +82,7 @@ describe('Indivisual addedit Master  Component', () => {
         const gender = screen.getByRole('combobox', { name: 'Gender' });
         expect(gender).toBeInTheDocument();
 
-        const maritalstatus = screen.getByRole('combobox', { name: 'Maritial Status' });
+        const maritalstatus = screen.getByRole('combobox', { name: 'Marital Status' });
         expect(maritalstatus).toBeInTheDocument();
 
         const occupation = screen.getByRole('combobox', { name: 'Occupation' });
@@ -147,7 +147,7 @@ describe('Indivisual addedit Master  Component', () => {
 
         customRender(<FormWrapper appCategoryData={appCategoryData} />);
 
-        const maritalstatus = screen.getByRole('combobox', { name: 'Maritial Status' });
+        const maritalstatus = screen.getByRole('combobox', { name: 'Marital Status' });
         fireEvent.change(maritalstatus, { target: { value: 106 } });
 
         act(() => {
@@ -164,7 +164,7 @@ describe('Indivisual addedit Master  Component', () => {
 
         customRender(<FormWrapper appCategoryData={appCategoryData} />);
 
-        const maritalstatus = screen.getByRole('combobox', { name: 'Maritial Status' });
+        const maritalstatus = screen.getByRole('combobox', { name: 'Marital Status' });
         fireEvent.change(maritalstatus, { target: { value: 106 } });
 
         act(() => {
