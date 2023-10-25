@@ -4,24 +4,25 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState } from 'react';
-import { Button, Result, Image, Typography } from 'antd';
-import { useNavigate, useLocation } from 'react-router-dom';
-import IMG_LOGO from 'assets/images/RobinLightTheme.svg';
-
-import * as routing from 'constants/routing';
+import parse from 'html-react-parser';
 import { connect } from 'react-redux';
+import { Button, Result, Image } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
-const { Text } = Typography;
+import { ROBIN_LIGHT_THEME } from 'assets';
+import * as routing from 'constants/routing';
+import { LANGUAGE_EN } from 'language/en';
+
+import styles from './PageNotFound.module.scss';
 
 const mapStateToProps = (state) => ({
-    isLoggedIn: state.auth.isLoggedIn,
-    notification: state.notification,
+    isLoggedIn: state?.auth?.isLoggedIn,
 });
-const PageNotFoundMaster = (props) => {
+
+const PageNotFoundMaster = ({ isLoggedIn }) => {
     const navigate = useNavigate();
-    const location = useLocation();
-    const pagePath = location.pathname;
     const [count, setCount] = useState(10);
+
     useEffect(() => {
         if (count === 0) {
             navigate(routing.ROUTING_DASHBOARD);
@@ -30,49 +31,28 @@ const PageNotFoundMaster = (props) => {
         const TimeOut = setTimeout(() => {
             setCount(count - 1);
         }, 1000);
-
         return () => clearTimeout(TimeOut);
     }, [count, navigate]);
 
-    const Counting = (
-        <p>
-            Sorry, the page you visited does not exist. Redirecting to dashboard in <Text strong>{count} seconds</Text>
-        </p>
-    );
-    const handlePagePath = (pagePath) => {
-        if (pagePath) {
-            if (pagePath?.split('/')?.length && pagePath !== routing.ROUTING_LOGIN && pagePath !== routing.ROUTING_HOME) return true;
-            return false;
-        }
-        return false;
-    };
-    const PageNotFoundStyles = {
-        style: {
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: '100vw',
-            height: '100vh',
-        },
-    };
+    let pageTitle = LANGUAGE_EN.GENERAL.PAGE_NOT_FOUND.TITLE;
+    let pageDescription = LANGUAGE_EN.GENERAL.PAGE_NOT_FOUND.MESSAGE.replace('{COUNTER}', `${count} seconds`);
+
     return (
-        <>
-            {props?.isLoggedIn && handlePagePath(pagePath) && (
-                <div {...PageNotFoundStyles}>
-                    <Result
-                        title="404"
-                        subTitle={Counting}
-                        icon={<Image height={45} width={300} src={IMG_LOGO} preview={false} />}
-                        extra={
-                            <Button danger onClick={() => navigate(routing.ROUTING_DASHBOARD)}>
-                                Back Home
-                            </Button>
-                        }
-                    />
-                </div>
-            )}
-            ;
-        </>
+        isLoggedIn && (
+            <div className={styles.pageNotFoundContainer}>
+                <Result
+                    title={pageTitle}
+                    subTitle={parse(pageDescription)}
+                    icon={<Image height={45} width={300} src={ROBIN_LIGHT_THEME} preview={false} />}
+                    extra={
+                        <Button danger onClick={() => navigate(routing.ROUTING_DASHBOARD)}>
+                            Back Home
+                        </Button>
+                    }
+                />
+            </div>
+        )
     );
 };
+
 export const PageNotFound = connect(mapStateToProps, null)(PageNotFoundMaster);

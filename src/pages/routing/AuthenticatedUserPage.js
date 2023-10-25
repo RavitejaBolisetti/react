@@ -5,7 +5,7 @@
  */
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { DashboardOldPage, DashboardPage } from 'pages/dashboard';
+import { DashboardPage } from 'pages/dashboard';
 import * as routing from 'constants/routing';
 
 import {
