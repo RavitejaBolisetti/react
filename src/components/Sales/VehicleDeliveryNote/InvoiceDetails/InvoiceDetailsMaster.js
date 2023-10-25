@@ -158,12 +158,11 @@ export const InvoiceDetailsMasterBase = (props) => {
                 name: 'All employees',
             },
         ];
-        if (userId && soldByDealer) {
+        if (userId && soldByDealer && section?.id === 1) {
             fetchRelationshipManger({ setIsLoading: listRelationshipMangerShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, soldByDealer, section]);
-
+    }, [userId, soldByDealer, section?.id]);
     const handleChassisNoSearch = (val) => {
         if (!val) return;
 
