@@ -69,6 +69,7 @@ export const CustomerDetailsMain = (props) => {
         setActiveKey,
         formActionType,
         showAgeGroup: false,
+        typeData,
     };
 
     return formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} viewOnly={true} />;
