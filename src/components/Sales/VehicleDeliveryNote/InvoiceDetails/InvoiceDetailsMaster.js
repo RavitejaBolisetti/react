@@ -218,7 +218,6 @@ export const InvoiceDetailsMasterBase = (props) => {
         engineNumberData,
         userId,
         handleRelationShipManagerChange,
-        setButtonData,
         getChallanDetails,
     };
 
