@@ -47,10 +47,6 @@ const ApplicationTreeMain = (props) => {
     const [searchValue, setSearchValue] = useState();
     const [activeKey, setActiveKey] = useState([]);
 
-    const onFinishFailed = (err) => {
-        console.error(err)
-    };
-
     const onTabChange = (newActiveKey) => {
         setDeviceType(newActiveKey);
         setActiveKey('');
@@ -95,7 +91,7 @@ const ApplicationTreeMain = (props) => {
         setSearchValue(event.target.value);
     };
 
-    const AccordianTreeUtils = ({ menuData, roleCode }) => {
+    const AccordianTreeUtils = ({ menuData }) => {
         const menuMapData = menuData?.length > 0 ? menuData : [];
 
         return (
@@ -159,7 +155,7 @@ const ApplicationTreeMain = (props) => {
 
     return (
         <>
-            <Form form={form} onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
+            <Form form={form} onFinish={onFinish} layout="vertical">
                 <Tabs
                     defaultActiveKey={APPLICATION_WEB}
                     onChange={onTabChange}

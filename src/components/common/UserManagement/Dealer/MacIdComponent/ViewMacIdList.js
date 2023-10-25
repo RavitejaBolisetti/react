@@ -27,7 +27,6 @@ const ViewMacIdList = (props) => {
         setOpenAccordian(i);
         setIsEditing(true);
         setEditingData(data);
-        // macIdform.setFieldsValue(data);
         macIdform.setFieldsValue({ ...data, preferredContactTime: [formatTime(data?.preferredContactTimeFrom), formatTime(data?.preferredContactTimeTo)] });
     };
 

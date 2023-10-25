@@ -10,16 +10,13 @@ import AddEditForm from './AddEditForm';
 import { NEXT_ACTION } from 'utils/btnVisiblity';
 
 const BranchMapping = (props) => {
-    const { currentSection, formData, userId, selectedDealerCode, dealerDataList, setButtonData, showGlobalNotification, handleButtonClick, formActionType } = props;
+    const { currentSection, formData, userId, selectedDealerCode, dealerDataList, setButtonData, showGlobalNotification, handleButtonClick } = props;
     const { fetchUsrDlrBranchLocationsList, resetUsrDlrBranchLocationsList, userUsrDlrBrLoactionShowLoading, usrdlrBranchLocationDataList, isUsrDlrBrLocationLoding, isUsrdlrBrLocationsLoaded } = props;
-    const { fetchDlrBranchLocationsList, saveUsrDlrBrLoactionRoleDataList, resetDlrBranchLocationsList, userDlrBrLoactionShowLoading, dlrBranchLocationDataList, isDlrBrLocationLoding, isdlrBrLocationsLoaded } = props;
+    const { fetchDlrBranchLocationsList, saveUsrDlrBrLoactionRoleDataList, resetDlrBranchLocationsList, userDlrBrLoactionShowLoading, dlrBranchLocationDataList, isDlrBrLocationLoding } = props;
     const [form] = Form.useForm();
     const [dealerBranches, setDealerBranches] = useState([]);
-    // const [parentDealerCode, setParentDealerCode] = useState('');
 
     useEffect(() => {
-        // setButtonData((prev) => ({ ...prev, nextBtn: false, nextBtnWthPopMag: false, saveBtn: true, editBtn: formActionType?.viewMode }));
-
         return () => {
             resetUsrDlrBranchLocationsList();
             resetDlrBranchLocationsList();
@@ -29,7 +26,6 @@ const BranchMapping = (props) => {
 
     useEffect(() => {
         const parentGroupId = dealerDataList?.find((el) => el?.dealerCode === selectedDealerCode || el?.dealerCode === formData?.dealerCode)?.dealerParentGroupCode;
-        // setParentDealerCode(parentGroupId);
 
         if (dlrBranchLocationDataList?.length && isUsrdlrBrLocationsLoaded) {
             const defaultBranches = [];
@@ -62,21 +58,13 @@ const BranchMapping = (props) => {
             fetchUsrDlrBranchLocationsList({ setIsLoading: userUsrDlrBrLoactionShowLoading, extraParams, userId });
         }
         if (userId) {
-            // const extraParams = [
-            //     {
-            //         key: 'dealerParentCode',
-            //         title: 'dealerParentCode',
-            //         value: parentDealerCode,
-            //         name: 'dealerParentCode',
-            //     },
-            // ];
             fetchDlrBranchLocationsList({ setIsLoading: userDlrBrLoactionShowLoading, userId });
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
-    const onFinish = (data) => {
+    const onFinish = () => {
         const onErrorAction = (res) => {
             console.error(res);
         };
@@ -100,9 +88,6 @@ const BranchMapping = (props) => {
 
     const handleFormValueChange = () => {
         setButtonData((prev) => ({ ...prev, nextBtn: false, saveBtn: true, formBtnActive: true }));
-    };
-    const onFinishFailed = (err) => {
-        console.error(err);
     };
 
     const formProps = { ...props, currentSection, dealerBranches, setDealerBranches, isUsrDlrBrLocationLoding, isDlrBrLocationLoding };

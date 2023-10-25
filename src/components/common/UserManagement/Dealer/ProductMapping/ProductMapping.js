@@ -9,8 +9,6 @@ import { Input, Form, Row, Col, Card, Empty, Typography, Divider } from 'antd';
 import LeftPanel from 'components/common/LeftPanel';
 import { UserManagementFormButton } from '../../UserManagementFormButton/UserManagementFormButton';
 import { LANGUAGE_EN } from 'language/en';
-
-// import styles from 'assets/sass/app.module.scss';
 import styles from '../../../TreeView.module.scss';
 import { NEXT_ACTION } from 'utils/btnVisiblity';
 
@@ -71,7 +69,7 @@ const ProductMapping = (props) => {
 
     useEffect(() => {
         if (userId) {
-        // setButtonData((prev) => ({ ...prev, nextBtn: false, saveBtn: true, editBtn: formActionType?.viewMode }));
+            // setButtonData((prev) => ({ ...prev, nextBtn: false, saveBtn: true, editBtn: formActionType?.viewMode }));
 
             if (!productHierarchyData?.length) {
                 fetchProductHierarchyList({ setIsLoading: productShowLoding, userId });
@@ -106,7 +104,7 @@ const ProductMapping = (props) => {
         const dataList = [];
         const generateList = (data) => {
             for (let i = 0; i < data?.length; i++) {
-                const { id, prodctCode, subProdct, ...node } = data[i];
+                const { id, subProdct } = data[i];
                 let saveProductId = userProductListData?.find((el) => el?.productCode === id)?.id;
                 dataList.push({
                     id: saveProductId || '',
@@ -138,7 +136,6 @@ const ProductMapping = (props) => {
 
     const myProps = {
         fieldNames,
-        // treeData: productHierarchyData,
         treeData: productTreeList,
         searchValue,
         setSearchValue,
@@ -150,10 +147,7 @@ const ProductMapping = (props) => {
         disableCheckbox: viewMode,
         isLoading: isUserDlrProductListLoding || isProductHierarchyLoading,
     };
-
-    //     handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT });
-
-    const onFinish = (data) => {
+    const onFinish = () => {
         const onErrorAction = (res) => {
             console.error(res);
         };
@@ -165,7 +159,6 @@ const ProductMapping = (props) => {
         };
 
         const filterData = mapProductList?.filter((el) => el?.id || el?.status);
-        // const finalFilter = filterData?.filter((prod, index) => filterData?.findIndex((data) => data?.id === prod?.id) === index)?.map(({ checkable, selectable, disabled, ...i }) => ({ ...i }));
         const requestData = {
             data: filterData,
             setIsLoading: dealerProductShowLoading,
@@ -176,15 +169,12 @@ const ProductMapping = (props) => {
 
         saveDealerProduct(requestData);
     };
-    const onFinishFailed = (err) => {
-        console.error(err);
-    };
 
     const buttonProps = { ...props };
 
     return (
         <>
-            <Form layout="vertical" key={'mainform'} autoComplete="off" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Form layout="vertical" key={'mainform'} autoComplete="off" form={form} onFinish={onFinish}>
                 <Row gutter={20} className={`${styles.drawerBodyRight}`}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <h2>{section?.title}</h2>
