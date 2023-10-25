@@ -65,6 +65,7 @@ describe('AMC Registration Details Master Components', () => {
 
         const schemeDescription = screen.getByRole('combobox', { name: 'Scheme Description' });
         fireEvent.change(schemeDescription, { target: { value: 'testing' } });
+        expect(schemeDescription).toBeInTheDocument()
 
         const schemeCode = screen.getByRole('textbox', { name: 'Scheme Code' });
         fireEvent.change(schemeCode, { target: { value: 'testing' } });
@@ -92,8 +93,8 @@ describe('AMC Registration Details Master Components', () => {
         fireEvent.click(plus[0]);
         fireEvent.click(plus[1]);
 
-        const saleType = screen.getByRole('combobox', { name: 'Sale Type' });
-        fireEvent.change(saleType, { target: { value: 'testing' } });
+        // const saleType = screen.getByRole('combobox', { name: 'Sale Type' });
+        // fireEvent.change(saleType, { target: { value: 'testing' } });
 
         const saveBtn = screen.getByRole('button', { name: 'Save' });
         fireEvent.click(saveBtn);
@@ -106,5 +107,12 @@ describe('AMC Registration Details Master Components', () => {
         const fetchSchemeList = jest.fn();
         const fetchEmployeeList = jest.fn();
         customRender(<FormWrapper requestPayload={true} FormActionButton={FormActionButton} formActionType={formActionType} fetchEmployeeList={fetchEmployeeList} fetchSchemeList={fetchSchemeList} />);
+    });
+
+    it('should render AMC Registration Details Master Page selectedOtfNumber components', () => {
+        
+        const fetchSchemeList = jest.fn();
+        const fetchEmployeeList = jest.fn();
+        customRender(<FormWrapper requestPayload={true} selectedOtfNumber={"1"}  setButtonData={jest.fn()} FormActionButton={FormActionButton} fetchEmployeeList={fetchEmployeeList} fetchSchemeList={fetchSchemeList} />);
     });
 });

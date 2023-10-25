@@ -88,7 +88,7 @@ describe('AMC Registration Master Components', () => {
             data: {
                 AMCRegistration: {
                     AMCRegistrationSearch: {
-                        filter: { advanceFilter: 'Test', fromDate: '06/06/2022', toDate: '06/07/2022', key: 'searchParam' },
+                        filter: { advanceFilter: 'Test', fromDate: '06/06/2022', toDate: '06/07/2022', key: 'searchParam', searchType: 'test' },
                     },
                 },
             },
@@ -106,5 +106,8 @@ describe('AMC Registration Master Components', () => {
 
         const removeFilter = screen.getAllByTestId('removeFilter');
         fireEvent.click(removeFilter[0]);
+
+        const pendingforApproval = screen.getByRole('button', { name: "Pending for Approval" })
+        fireEvent.click(pendingforApproval)
     });
 });
