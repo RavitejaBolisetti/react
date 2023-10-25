@@ -13,15 +13,15 @@ import { dateFormat } from 'utils/formatDateTime';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import styles from 'assets/sass/app.module.scss';
 const AddEditFormMain = (props) => {
-    const { buttonData, setButtonData, onFinishFailed, vehiclePrice, saveData } = props;
+    const { buttonData, setButtonData, onFinishFailed, vehiclePrice, saveData, isLoading } = props;
     const { form, isReadOnly = true, userId, listShowLoading, handleButtonClick, setIsFormVisible, showGlobalNotification } = props;
     const disabledProps = { disabled: isReadOnly };
 
     useEffect(() => {
-        if (vehiclePrice) {
+        if (vehiclePrice && !isLoading) {
             form.setFieldsValue({ ...vehiclePrice });
         }
-    }, [vehiclePrice]);
+    }, [vehiclePrice, isLoading, form]);
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -119,7 +119,6 @@ const AddEditFormMain = (props) => {
                                 <Input maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
-
 
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
                             <Form.Item name="basicOnRoadPrice" label="Basic on Road Price" initialValue={vehiclePrice?.basicOnRoadPrice}>
