@@ -12,6 +12,7 @@ module.exports = {
         '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': '<rootDir>/__mocks__/fileMock.js',
         '\\.(css|scss|sass|less)$': 'identity-obj-proxy',
         '^@components(.*)$': '<rootDir>/components$1',
+        '^@constants(.*)$': '<rootDir>/constants$1',
         '^@pages(.*)$': '<rootDir>/pages$1',
         '^@Icons(.*)$': '<rootDir>/Icons$1',
         '^@store(.*)$': '<rootDir>/store$1',
@@ -34,5 +35,4 @@ module.exports = {
             statements: -10,
         },
     },
-
 };

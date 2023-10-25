@@ -8,7 +8,7 @@ import { BindFormAndResult } from './CheckListUtils';
 import styles from 'assets/sass/app.module.scss';
 
 export const tableColumn = (props) => {
-    const { handleButtonClick, formActionType, aggregateForm, deliveryChecklist = false } = props;
+    const { handleButtonClick, formActionType, aggregateForm, checklistType } = props;
     const tableColumn = [
         tblPrepareColumns({
             title: 'Group',
@@ -30,7 +30,7 @@ export const tableColumn = (props) => {
             title: 'Check Result ',
             dataIndex: 'checkResult',
             width: '20%',
-            render: (text, record, index) => BindFormAndResult({ data: record, aggregateForm, deliveryChecklist })?.checkResult,
+            render: (text, record, index) => BindFormAndResult({ data: record, aggregateForm, checklistType })?.checkResult,
         }),
         tblPrepareColumns({
             title: 'Remarks',
