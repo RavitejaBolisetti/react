@@ -23,15 +23,13 @@ const ShieldForm = ({ formData, shieldForm, setFormDataSetter, formDataSetter, f
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
-
-    const onFinishFailed = () => {};
-    const onValuesChange = (values) => {
+    const onValuesChange = () => {
         const Myvalues = shieldForm.getFieldsValue();
         setFormDataSetter({ ...formDataSetter, shield: { ...Myvalues } });
     };
 
     return (
-        <Form form={shieldForm} onValuesChange={onValuesChange} onFieldsChange={handleFormValueChange} autoComplete="off" layout="vertical" onFinishFailed={onFinishFailed}>
+        <Form form={shieldForm} onValuesChange={onValuesChange} onFieldsChange={handleFormValueChange} autoComplete="off" layout="vertical">
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Shield" name="shieldType">

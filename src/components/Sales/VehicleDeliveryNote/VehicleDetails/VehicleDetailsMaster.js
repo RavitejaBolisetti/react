@@ -104,9 +104,6 @@ const VehicleDetailsMasterBase = (props) => {
         setButtonData({ ...buttonData, formBtnActive: true });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [section]);
-    // const onErrorAction = (message) => {
-    //     showGlobalNotification({ message });
-    // };
 
     const onFinish = (values) => {
         if (!soldByDealer) {

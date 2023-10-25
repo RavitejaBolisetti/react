@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Form, Row, Col } from 'antd';
 
 import { ViewDetail } from './ViewDetail';
@@ -59,18 +59,9 @@ const mapDispatchToProps = (dispatch) => ({
 
 const PartyDetailMasterBase = (props) => {
     const { setReceipt, typeData, partySegmentType, receiptDetailData, partyDetailData } = props;
-    const { userId, buttonData, setButtonData, showGlobalNotification, section, fetchCustomerDetail, fetchPartyDetail, resetData, listShowLoading, isDataLoaded, isLoading } = props;
+    const { userId, buttonData, setButtonData, showGlobalNotification, section, fetchCustomerDetail, fetchPartyDetail, listShowLoading, isDataLoaded, isLoading } = props;
     const { form, partyDetailForm, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
-    const { requestPayload, setRequestPayload, partySegment, setPartySegment, partyId, setPartyId, errorSection } = props;
-    // const [partySegment, setPartySegment] = useState('');
-    // const [partyId, setPartyId] = useState();
-
-    // useEffect(() => {
-    //     return () => {
-    //         resetData();
-    //     };
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [!requestPayload?.partyDetails]);
+    const { requestPayload, setRequestPayload, partySegment, setPartySegment, partyId, setPartyId } = props;
 
     useEffect(() => {
         if (receiptDetailData.partyDetails) {
@@ -79,16 +70,6 @@ const PartyDetailMasterBase = (props) => {
         setReceipt(receiptDetailData?.receiptsDetails?.receiptType);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, receiptDetailData.partyDetails]);
-
-    // useEffect(() => {
-    //     if(errorSection) {
-    //         return () => {
-    //             handleSearch();
-    //         };
-    //     }
-
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [errorSection]);
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -135,14 +116,10 @@ const PartyDetailMasterBase = (props) => {
         setButtonData({ ...buttonData, formBtnActive: false });
     };
 
-    const onFinishFailed = () => {};
-
     const formProps = {
         ...props,
         form,
         partyDetailForm,
-        // onFinish,
-        // onFinishFailed,
         partySegmentType,
         partyId,
         handleChange,
@@ -166,7 +143,7 @@ const PartyDetailMasterBase = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={partyDetailForm} onValuesChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={partyDetailForm} onValuesChange={handleFormValueChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

@@ -8,18 +8,20 @@ import React, { useEffect } from 'react';
 import { Col, Form, Row, DatePicker } from 'antd';
 import { validateRequiredSelectField } from 'utils/validation';
 
-import { formatDate,dateFormat, formatDateToCalenderDate } from 'utils/formatDateTime';
+import { formatDate, dateFormat, formatDateToCalenderDate } from 'utils/formatDateTime';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { withModal } from 'components/withModal';
 import { ModalButtons } from 'components/common/Button';
 import { customSelectBox } from 'utils/customSelectBox';
 import styles from 'assets/sass/app.module.scss';
-// import styles from 'components/common/Common.module.css';
 
 export const AdvancedSearchFrom = (props) => {
     const { filterString, setFilterString, advanceFilterForm, handleResetFilter, setAdvanceSearchVisible } = props;
-    const { productHierarchyList, advanceFilterForm: { resetFields },  } = props;
-    // const {typeData, } = props;
+    const {
+        productHierarchyList,
+        advanceFilterForm: { resetFields },
+    } = props;
+
     useEffect(() => {
         resetFields();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -38,15 +40,6 @@ export const AdvancedSearchFrom = (props) => {
         setAdvanceSearchVisible(false);
     };
 
-    const onFinishFailed = () => {
-        return;
-    };
-    // const selectProps = {
-    //     optionFilterProp: 'children',
-    //     showSearch: true,
-    //     allowClear: true,
-    //     // className: styles.headerSelectField,
-    // };
     const modalProps = {
         reset: true,
         submit: true,
@@ -55,10 +48,9 @@ export const AdvancedSearchFrom = (props) => {
         handleResetFilter,
     };
     return (
-        <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                 
                     <Form.Item initialValue={filterString?.oldModelGroup} label="Old Model" name="oldModelGroup" rules={[validateRequiredSelectField('Old Model')]}>
                         {customSelectBox({ data: productHierarchyList, fieldNames: { key: 'prodctCode', value: 'prodctShrtName' }, placeholder: preparePlaceholderSelect('Old Model Group') })}
                     </Form.Item>
@@ -70,11 +62,9 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
             </Row>
             <Row gutter={16}>
-                     
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item initialValue={formatDateToCalenderDate(filterString?.effectiveFromDate)} label="Effective From Date" name="effectiveFromDate" className={styles?.datePicker}>
                         <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} onChange={() => advanceFilterForm.setFieldsValue({ effectiveToDate: undefined })} />
-                  
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
@@ -83,7 +73,6 @@ export const AdvancedSearchFrom = (props) => {
                     </Form.Item>
                 </Col>
             </Row>
-            
 
             <ModalButtons {...modalProps} />
         </Form>

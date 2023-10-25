@@ -129,12 +129,6 @@ export const OtfListMasterBase = (props) => {
 
         switch (userType) {
             case HEADER_CONSTANTS?.DLR?.key: {
-                // const found = userRoles?.find((element) => element?.roleCode === 'R0L003');
-                // if (found) {
-                //     return data?.filter((i) => i?.key !== hiddenKeys[0]);
-                // } else {
-                //     return data?.filter((i) => !hiddenKeys?.includes(i?.key));
-                // }
                 return data;
             }
             case HEADER_CONSTANTS?.ADMN?.key: {
@@ -326,7 +320,9 @@ export const OtfListMasterBase = (props) => {
                 const formValues = SoForm.getFieldsValue();
                 setfilterString({ otfNumber: formValues[type]?.otfNumber, soNumber: formValues[type]?.soNumber, soStatusCode: type === FORM_TYPE_CONSTANSTS?.FORM_1?.id ? status?.CRD_1 : status?.CRD_2, parentGroupCode: formValues?.parentGroupCode, dealerLocationCode: formValues?.locationCode, formType: type });
             })
-            .catch((err) => {});
+            .catch(() => {
+                return;
+            });
     };
     const handleResetData = (type, exception = undefined) => {
         switch (type) {

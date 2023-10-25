@@ -479,8 +479,6 @@ export const OtfBlockMasterMain = (props) => {
         saveOTFBlockData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {};
-
     const myProps = {
         isTreeViewVisible,
 
@@ -549,8 +547,6 @@ export const OtfBlockMasterMain = (props) => {
         buttonData,
 
         titleOverride: (formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
-
-        onFinishFailed,
 
         isFormBtnActive,
 
@@ -678,7 +674,7 @@ export const OtfBlockMasterMain = (props) => {
             <div className={styles.contentHeaderBackground}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={18} lg={18} xl={18}>
-                        <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinishFailed={onFinishFailed}>
+                        <Form autoComplete="off" colon={false} className={styles.masterListSearchForm}>
                             <Form.Item label={`${title}`} name="code">
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>

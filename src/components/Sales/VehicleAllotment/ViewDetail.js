@@ -166,7 +166,6 @@ const ViewDetailMain = (props) => {
         allowClear: false,
         handleChange,
         valueReset: false,
-        // singleField: true,
     };
 
     const buttonProps = {
@@ -207,11 +206,6 @@ const ViewDetailMain = (props) => {
         tableData: tableDataItem,
         pagination: sorterPagination,
     };
-
-    // const handleResetFilter = () => {
-    //     resetOTFData();
-    //     setFilterStringOTFSearch();
-    // };
 
     return (
         <>

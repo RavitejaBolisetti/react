@@ -7,7 +7,6 @@ import React from 'react';
 import { Collapse, Divider } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
-import { VEHICLE_MFG_WARRANTY } from 'constants/VehicleMfgWarranty';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -28,8 +27,6 @@ const expandIcon = ({ isActive }) =>
 
 const VehicleDetailCard = (props) => {
     const { selectedRecord, selectedRecordId } = props;
-    // const fullName = selectedRecord?.customerName?.split(' ');
-    // const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1]?.slice(0, 1) : '') : '';
     return (
         <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon} collapsible="icon">
             <Panel
