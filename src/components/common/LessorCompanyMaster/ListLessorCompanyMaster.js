@@ -78,7 +78,9 @@ export const ListLessorCompanyMasterBase = (props) => {
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
-    const onErrorAction = () => {};
+    const onErrorAction = () => {
+        return;
+    };
 
     const onSuccessAction = (res) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -213,10 +215,6 @@ export const ListLessorCompanyMasterBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {}).catch(err => console.error(err));
-    };
-
     const onCloseAction = () => {
         form.resetFields();
         setIsFormVisible(false);
@@ -241,7 +239,6 @@ export const ListLessorCompanyMasterBase = (props) => {
         formActionType,
         setFormActionType,
         onFinish,
-        onFinishFailed,
 
         isVisible: isFormVisible,
         onCloseAction,

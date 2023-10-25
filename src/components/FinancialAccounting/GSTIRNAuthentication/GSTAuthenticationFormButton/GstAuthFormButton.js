@@ -9,8 +9,7 @@ import { Button, Row, Col } from 'antd';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'assets/sass/app.module.scss';
 
-
-export const GstAuthFormButton = ({ record, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection, nextBtn }) => {
+export const GstAuthFormButton = ({ record, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, nextBtn }) => {
     return (
         <div className={styles.formFooter}>
             <Row gutter={20}>
@@ -22,9 +21,9 @@ export const GstAuthFormButton = ({ record, onCloseAction, buttonData, setButton
                     )}
 
                     {/* {buttonData?.cancelBtn && ( */}
-                        <Button danger onClick={onCloseAction}>
-                            Cancel
-                        </Button>
+                    <Button danger onClick={onCloseAction}>
+                        Cancel
+                    </Button>
                     {/* )} */}
                 </Col>
 
@@ -47,7 +46,7 @@ export const GstAuthFormButton = ({ record, onCloseAction, buttonData, setButton
                             {saveButtonName}
                             {/* disabled={!buttonData?.formBtnActive}  */}
                         </Button>
-                    )} 
+                    )}
 
                     {}
                 </Col>

@@ -12,7 +12,7 @@ import { FINANCE_ARRANGED_BY } from 'constants/financeArrangedBy';
 import { YES_NO_FLAG } from 'constants/yesNoFlag';
 
 const ViewDetailMain = (props) => {
-    const { styles, formData, isLoading, typeData } = props;
+    const { formData, isLoading, typeData } = props;
 
     const viewProps = {
         bordered: false,

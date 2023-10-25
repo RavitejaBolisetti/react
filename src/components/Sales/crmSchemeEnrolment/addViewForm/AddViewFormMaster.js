@@ -39,7 +39,7 @@ const AddViewFormMain = (props) => {
 
     return (
         <>
-            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>
                 {isEnrolmentGenerated ? (
                     <Row gutter={20} className={styles.drawerBodyRight} justify="center" align="center">
                         <EnrolmentNumberGenerated />

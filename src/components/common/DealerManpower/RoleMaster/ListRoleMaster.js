@@ -256,10 +256,6 @@ export const ListRoleMasterBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {}).catch(err => console.error(err));
-    };
-
     const onCloseAction = () => {
         form.resetFields();
         setIsFormVisible(false);
@@ -282,7 +278,6 @@ export const ListRoleMasterBase = (props) => {
         formActionType,
         setFormActionType,
         onFinish,
-        onFinishFailed,
 
         isVisible: isFormVisible,
         onCloseAction,
@@ -377,7 +372,6 @@ export const ListRoleMasterBase = (props) => {
         filterString,
         from: listFilterForm,
         onFinish,
-        onFinishFailed,
         extraParams,
         removeFilter,
         handleResetFilter,

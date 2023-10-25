@@ -213,9 +213,7 @@ const FamilyDetailMasterBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        return;
-    };
+
 
     const myProps = {
         ...props,
@@ -246,7 +244,7 @@ const FamilyDetailMasterBase = (props) => {
         form,
         onChange,
         onFinish,
-        onFinishFailed,
+
         familyDetailList,
         showForm,
         setShowForm,
@@ -270,7 +268,7 @@ const FamilyDetailMasterBase = (props) => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} >
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <h2>{section?.title} </h2>

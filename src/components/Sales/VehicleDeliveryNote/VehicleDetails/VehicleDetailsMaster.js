@@ -105,9 +105,9 @@ const VehicleDetailsMasterBase = (props) => {
         setButtonData({ ...buttonData, formBtnActive: true });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [section]);
-    const onErrorAction = (message) => {
-        showGlobalNotification({ message });
-    };
+    // const onErrorAction = (message) => {
+    //     showGlobalNotification({ message });
+    // };
 
     const onFinish = (values) => {
         if (!soldByDealer) {
@@ -122,13 +122,10 @@ const VehicleDetailsMasterBase = (props) => {
         setIsFormVisible(false);
     };
 
-    const onFinishFailed = () => {};
-
     const formProps = {
         ...props,
         form,
         onFinish,
-        onFinishFailed,
         fetchList,
         regNumber,
         formActionType,
@@ -164,7 +161,7 @@ const VehicleDetailsMasterBase = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

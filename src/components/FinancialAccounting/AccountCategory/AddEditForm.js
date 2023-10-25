@@ -53,7 +53,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const ViewEditContext = createContext(null);
 
 const AddEditFormMain = (props) => {
-    const { form, formData, onCloseAction, formActionType, formActionType: { editMode, viewMode } = undefined, isVisible, fetchAccountCategoryDetail, userId, handleCodeFunction, taxChargeCategoryCodeData, onFinish, onFinishFailed, editForm, accDocMapForm, dropdownItems, setDropdownItems } = props;
+    const { form, formData, onCloseAction, formActionType, formActionType: { editMode, viewMode } = undefined, isVisible, fetchAccountCategoryDetail, userId, handleCodeFunction, taxChargeCategoryCodeData, onFinish, editForm, accDocMapForm, dropdownItems, setDropdownItems } = props;
     const { buttonData, setButtonData, handleButtonClick, formEdit, setFormEdit, accountDocumentMaps, setAccountDocumentMaps, accountCategoryData, applicationMenuData, financialAccountData, documentDescriptionData, setUserApplicationId, accountCategory, setAccountCategory, selectedTreeSelectKey, setSelectedTreeSelectKey } = props;
     const [openAccordian, setOpenAccordian] = useState(1);
 
@@ -158,7 +158,7 @@ const AddEditFormMain = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBody}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     {viewMode ? (

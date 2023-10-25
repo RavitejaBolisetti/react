@@ -58,9 +58,6 @@ export const ChecklistModalForms = (props) => {
             })
             .catch((err) => {});
     };
-    const onFinishFailed = () => {
-        return;
-    };
     const handleValuesChange = () => {
         setsaveDisabled(false);
     };
@@ -76,7 +73,7 @@ export const ChecklistModalForms = (props) => {
     };
 
     return (
-        <Form autoComplete="off" layout="vertical" form={aggregateForm} onValuesChange={handleValuesChange} onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" layout="vertical" form={aggregateForm} onValuesChange={handleValuesChange}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     {BindResultForm}
