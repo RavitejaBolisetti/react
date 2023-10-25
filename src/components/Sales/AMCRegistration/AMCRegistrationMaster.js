@@ -634,6 +634,7 @@ export const AMCRegistrationMasterBase = (props) => {
             default:
                 return AMC_REQUEST_TITLE_CONSTANTS?.DEALER_AMC_CANCELLATION?.key;
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isRejectModalVisible]);
 
     const handleCancelRequest = () => {

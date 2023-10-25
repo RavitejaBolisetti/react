@@ -59,7 +59,6 @@ const VehicleDetailsMasterBase = (props) => {
     const { form, formActionType, handleButtonClick, handleFormValueChange, section, openAccordian, setOpenAccordian, fetchList, vehicleData, NEXT_ACTION, setRequestPayload } = props;
     const { buttonData, setButtonData } = props;
 
-    const [regNumber, setRegNumber] = useState();
     const [activeKey, setActiveKey] = useState([1, 2]);
     const [otfNumber, setOtfNumber] = useState();
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
@@ -124,7 +123,6 @@ const VehicleDetailsMasterBase = (props) => {
         form,
         onFinish,
         fetchList,
-        regNumber,
         formActionType,
         setFormActionType,
 

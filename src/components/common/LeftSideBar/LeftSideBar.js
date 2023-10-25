@@ -88,7 +88,8 @@ const LeftSideBarMain = (props) => {
     const [openKeys, setOpenKeys] = useState([]);
     const [selectedKeys, setSelectedKeys] = useState([]);
     const [selectedMenuId, setSelectedMenuId] = useState();
-    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+    // const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+    const theme = 'light';
 
     useEffect(() => {
         if (menuId) {

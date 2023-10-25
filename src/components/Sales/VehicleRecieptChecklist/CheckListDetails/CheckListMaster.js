@@ -13,7 +13,7 @@ import { VehicleCheclistDetailsdataActions } from 'store/actions/data/VehicleRec
 
 import { AddEditForm, tableColumn } from 'components/Sales/Common/ChecklistDetails';
 import { VehicleCheckListbutton } from '../VehicleRecieptFormButton';
-
+import { MODULE_TYPE_CONSTANTS } from 'constants/modules/vehicleChecklistConstants';
 import styles from 'assets/sass/app.module.scss';
 
 const mapStateToProps = (state) => {
@@ -28,6 +28,8 @@ const mapStateToProps = (state) => {
     } = state;
 
     const moduleTitle = 'Checklist Details';
+    const paginationDataKey = 'checklistDetailList';
+    const uniqueMatchKey = 'ansMstId';
 
     let returnValue = {
         userId,
@@ -36,6 +38,8 @@ const mapStateToProps = (state) => {
         ChecklistData,
         typeData,
         moduleTitle,
+        paginationDataKey,
+        uniqueMatchKey,
     };
     return returnValue;
 };
@@ -58,7 +62,7 @@ const VehicleRecieptCheckListMain = (props) => {
     const { userId, handleButtonClick, selectedRecord } = props;
     const { isChecklistDataLoaded, isChecklistDataLoading, ChecklistData } = props;
     const { fetchList, listShowLoading, showGlobalNotification } = props;
-    const { form, selectedCheckListId, section, formActionType, handleFormValueChange, NEXT_ACTION } = props;
+    const { form, selectedCheckListId, section, formActionType, handleFormValueChange, NEXT_ACTION, paginationDataKey, uniqueMatchKey } = props;
 
     const { chassisNumber } = selectedRecord;
     const { checkListDataModified, setcheckListDataModified } = props;
@@ -100,10 +104,10 @@ const VehicleRecieptCheckListMain = (props) => {
     }, [userId, chassisNumber, isChecklistDataLoaded]);
 
     useEffect(() => {
-        if (isChecklistDataLoaded && ChecklistData['checklistDetailList']?.length > 0) {
+        if (isChecklistDataLoaded && ChecklistData[paginationDataKey]?.length > 0) {
             if (!checkListDataModified?.find((element) => element?.ismodified) || !checkListDataModified?.length > 0) {
                 setcheckListDataModified(
-                    ChecklistData['checklistDetailList']?.map((element) => {
+                    ChecklistData[paginationDataKey]?.map((element) => {
                         return { ...element, ismodified: false };
                     })
                 );
@@ -121,7 +125,7 @@ const VehicleRecieptCheckListMain = (props) => {
             .then(() => {})
             .catch(() => {});
     };
-    const handleCheckListClick = ({ buttonAction, record, index }) => {
+    const handleCheckListClick = ({ record, index }) => {
         setAdvanceformData({ ...record, index: index });
         aggregateForm.resetFields();
         setisEditing(true);
@@ -134,7 +138,7 @@ const VehicleRecieptCheckListMain = (props) => {
         page,
         setPage,
         isLoading: isChecklistDataLoading,
-        tableColumn: tableColumn({ handleButtonClick: handleCheckListClick, formActionType, aggregateForm }),
+        tableColumn: tableColumn({ handleButtonClick: handleCheckListClick, formActionType, aggregateForm, checklistType: MODULE_TYPE_CONSTANTS?.RECEIPT_CHECKLIST?.key }),
         tableData: checkListDataModified,
         totalRecords: checkListDataModified?.length,
     };
@@ -158,9 +162,10 @@ const VehicleRecieptCheckListMain = (props) => {
         page,
         setPage,
         pageIntialState,
-        matchKey: 'ansMstId',
+        matchKey: uniqueMatchKey,
         isChecklistDataLoading,
         styles,
+        checklistType: MODULE_TYPE_CONSTANTS?.RECEIPT_CHECKLIST?.key,
     };
 
     return (

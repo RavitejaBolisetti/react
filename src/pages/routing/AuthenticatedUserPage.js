@@ -73,6 +73,8 @@ import {
     AMCRegistrationMasterPage,
 } from 'pages/Sales';
 
+import { PageNotFound } from 'components/PageNotFound';
+
 import { SplashPage } from 'pages/splash';
 import { ProfilePage, SettingPage, FaqPage, TrainingPage } from 'pages/user';
 import { BiReportPage } from 'pages/report/BiReport/BiReportPage';
@@ -190,6 +192,7 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_VIN_BLOCK_MASTER} element={<VinBlockMasterPage />} exact />
             <Route path={routing.ROUTING_VEHICLE_CHECKLIST_MASTER} element={<VehicleChecklistMasterPage />} exact />
             <Route path={routing.ROUTING_RSM_ASM_APPROVAL} element={<RsmAsmApprovalPage />} exact />
+            <Route path={routing.PAGE_NOT_FOUND} element={<PageNotFound />} exact />
         </Routes>
     );
 };

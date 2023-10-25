@@ -14,7 +14,6 @@ import ListDataTable from 'utils/ListDataTable/ListDataTable';
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 import { showGlobalNotification } from 'store/actions/notification';
-import { FilterIcon } from 'Icons';
 import { ViewDetail } from './ViewDetail';
 import { OnRoadPriceMasterUpload } from './OnRoadPriceMasterUpload';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, CANCEL_ACTION, btnVisiblity } from 'utils/btnVisiblity';

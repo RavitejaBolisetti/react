@@ -10,7 +10,6 @@ import { withModal } from 'components/withModal';
 import { customSelectBox } from 'utils/customSelectBox';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
-import dayjs from 'dayjs';
 import { dateFormat } from 'utils/formatDateTime';
 import { disableFutureDate } from 'utils/disableDate';
 

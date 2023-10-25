@@ -190,7 +190,7 @@
 }
 
 .scrollTreeDataInner {
-    width: 90%;
+    width: 100%;
     overflow: auto;
     // height: calc(100vh - 286px);
     @include space(padding, all, $sp20);

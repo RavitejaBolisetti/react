@@ -33,7 +33,7 @@ import { challanCancelVehicleDeliveryNoteDataActions } from 'store/actions/data/
 import { DeliverableChecklistMaindataActions } from 'store/actions/data/vehicleDeliveryNote';
 import { vehicleChallanDetailsDataActions } from 'store/actions/data/vehicleDeliveryNote/vehicleChallanDetails';
 import { DELIVERY_TYPE } from 'constants/modules/vehicleDetailsNotes.js/deliveryType';
-import { FORMTYPE_CONSTANTS } from 'constants/FormtypeConstants';
+import { FORMTYPE_CONSTANTS } from 'constants/formTypeConstant';
 
 import { vehicleDeliveryNoteCustomerDetailDataActions } from 'store/actions/data/vehicleDeliveryNote/customerDetails';
 import { DELIVERY_NOTE_STATUS } from './constants/deliveryNoteStatus';
@@ -151,7 +151,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     const [chassisNoValue, setChassisNoValue] = useState();
     const [engineChallanNumber, setEngineChallanNumber] = useState('');
     const [deliveryType, setDeliveryType] = useState(DELIVERY_TYPE.NOTE.key);
-    const [page, setPage] = useState({ pageSize: 10, current: 1 });
+    const page = { pageSize: 10, current: 1 };
 
     const [section, setSection] = useState();
     const [defaultSection, setDefaultSection] = useState();
@@ -178,13 +178,10 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
-    const [formData, setFormData] = useState([]);
-
     const onDeliveryTabChange = (key) => {
         setDeliveryType(key);
-        setPage((prev) => ({ ...prev, current: 1 }));
-        setFilterString({});
-        setFilterString((prev) => ({ ...prev, searchParam: '', current: 1 }));
+        setDeliveryStatus(QUERY_BUTTONS_CONSTANTS?.PENDING?.key);
+        setFilterString({ deliveryType: key, deliveryStatus: QUERY_BUTTONS_CONSTANTS?.PENDING?.key, current: 1 });
         advanceFilterForm.resetFields();
     };
 
@@ -283,21 +280,21 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
             {
                 key: 'deliveryNoteStatus',
                 title: 'Delivery Status',
-                value: deliveryStatus,
+                value: filterString?.deliveryStatus || deliveryStatus,
                 canRemove: false,
                 filter: false,
             },
             {
                 key: 'deliveryNoteType',
                 title: 'Delivery Status',
-                value: deliveryType,
+                value: filterString?.deliveryType || deliveryType,
                 canRemove: false,
                 filter: false,
             },
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: filterString?.current,
+                value: filterString?.current || page?.current,
                 canRemove: true,
                 filter: false,
             },
@@ -341,7 +338,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, deliveryStatus, filterString, deliveryType, page]);
+    }, [userId, filterString]);
 
     useEffect(() => {
         const defaultSection = VEHICLE_DELIVERY_NOTE_SECTION.INVOICE_DETAILS.id;
@@ -387,8 +384,10 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     };
 
     const handleDeliveryNoteTypeChange = (buttonName) => {
-        setDeliveryStatus(buttonName?.key);
-        switch (buttonName?.key) {
+        const buttonKey = buttonName?.key;
+        setDeliveryStatus(buttonKey);
+        setFilterString({ deliveryStatus: buttonKey, current: 1 });
+        switch (buttonKey) {
             case QUERY_BUTTONS_CONSTANTS?.PENDING?.key: {
                 setActionButtonVisiblity({ canAdd: true, canView: false, canEdit: false });
                 break;
@@ -406,7 +405,6 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
                 setActionButtonVisiblity({ canAdd: true, canView: false, canEdit: false });
             }
         }
-        setFilterString({ current: 1 });
     };
 
     const handlePrintDownload = (record) => {
@@ -574,7 +572,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         const vehicleDeliveryChecklist = {
             vin: vehicleDeliveryCheckList?.vin,
             deliveryChecklistDtos: vehicleDeliveryCheckList?.deliveryChecklistDtos?.map((item) => {
-                if (item?.answerType === FORMTYPE_CONSTANTS?.FIXED_OPTIONS?.id) {
+                if (item?.answerType === FORMTYPE_CONSTANTS?.FIXED_OPTIONS?.key) {
                     return { ...item, answerText: item?.answerDescription };
                 }
                 return { ...item };
@@ -652,7 +650,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         dynamicPagination: true,
         totalRecords,
         setPage: setFilterString,
-        page,
+        page: filterString,
         tableColumn: tableColumnDeliveryNoteMaster({ handleButtonClick, actionButtonVisiblity, deliveryType }),
         tableData: data,
         showAddButton: false,
@@ -853,7 +851,6 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         currentSection,
         sectionName,
         setCurrentSection,
-        setFormData,
         handleFormValueChange,
         isLastSection,
         typeData,
