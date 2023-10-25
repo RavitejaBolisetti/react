@@ -111,7 +111,6 @@ const CustomerDetailMasterBase = (props) => {
         if (data) {
             form.setFieldsValue({ ...data });
             setFormData(data);
-            // setWhatsAppConfiguration({ contactOverWhatsApp: data?.whatsappCommunicationIndicator, sameMobileNoAsWhatsApp: data?.mobileNumberAsWhatsappNumber });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data]);
@@ -284,11 +283,11 @@ const CustomerDetailMasterBase = (props) => {
         fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, selectedDocument });
         setSupportingDataView(supportingData);
     };
-    const handleFormFieldChange = (data = undefined) => {
+    const handleFormFieldChange = () => {
         const { whatsappCommunicationIndicator, mobileNumberAsWhatsappNumber, whatsAppNumber, mobileNumber } = form.getFieldsValue();
 
         if (whatsappCommunicationIndicator) {
-            if (whatsappCommunicationIndicator && mobileNumberAsWhatsappNumber) {
+            if (mobileNumberAsWhatsappNumber) {
                 form.setFieldsValue({ whatsAppNumber: mobileNumber });
                 setWhatsAppConfiguration({ contactOverWhatsAppActive: true, sameMobileNoAsWhatsApp: true, contactOverWhatsApp: true });
             } else {

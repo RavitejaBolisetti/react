@@ -27,7 +27,9 @@ const AddEditForm = (props) => {
         showGlobalNotification({ message });
     };
 
-    const onSuccessAction = () => {};
+    const onSuccessAction = () => {
+        return;
+    };
 
     useEffect(() => {
         const pinOption = pincodeData?.map((item) => ({
