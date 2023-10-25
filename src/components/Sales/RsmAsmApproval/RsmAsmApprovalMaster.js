@@ -313,6 +313,7 @@ export const RsmAsmApprovalMasterBase = (props) => {
     const onCloseAction = () => {
         form.resetFields();
         form.setFieldsValue();
+        setSelectedId();
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
     };

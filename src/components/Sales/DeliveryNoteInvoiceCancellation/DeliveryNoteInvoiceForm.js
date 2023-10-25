@@ -41,7 +41,7 @@ export const DeliveryNoteInvoiceForm = () => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
                     <Form.Item name="invoiceStatus" label="Invoice Status" rules={[validateRequiredInputField('Invoice Status')]}>
-                        <Input maxLength={30} placeholder={preparePlaceholderText('Invoice ID')} disabled={true} />
+                        <Input maxLength={30} placeholder={preparePlaceholderText('Invoice Status')} disabled={true} />
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
