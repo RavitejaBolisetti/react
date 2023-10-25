@@ -32,6 +32,7 @@ import { CustomerNameChangeHistory } from 'components/common/CustomerMaster/Indi
 import DataTable from 'utils/dataTable/DataTable';
 import { CustomerMainConatiner } from './CustomerMainConatiner';
 import styles from 'assets/sass/app.module.scss';
+import { LeaveUnsaveDataModal } from 'utils/LeaveUnsaveDataModal';
 
 const mapStateToProps = (state) => {
     const {
@@ -117,6 +118,8 @@ const CustomerMasterMain = (props) => {
     const [ChangeHistoryVisible, setChangeHistoryVisible] = useState(false);
     const [showNameChangeHistory, setShowNameChangeHistory] = useState(false);
     const [previousSection, setPreviousSection] = useState(1);
+    const [isUnsavedDataPopup, setIsUnsavedDataPopup] = useState(false);
+    const [nextCurentSection, setNextCurrentSection] = useState("");
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false, changeHistory: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -291,8 +294,14 @@ const CustomerMasterMain = (props) => {
                 break;
             case NEXT_ACTION:
                 const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
-                section && setCurrentSection(nextSection?.id);
-                setLastSection(!nextSection?.id);
+                if (buttonData?.formBtnActive) {
+                    setIsUnsavedDataPopup(true);
+                    setNextCurrentSection(nextSection?.id);
+                } else {
+                    section && setCurrentSection(nextSection?.id);
+                    setLastSection(!nextSection?.id);
+                }
+
                 break;
 
             default:
@@ -319,11 +328,12 @@ const CustomerMasterMain = (props) => {
         // form.validateFields().then((values) => {});
     };
 
-    // const handleOk = () => {
-    //     setIsUnsavedDataPopup(false);
-    //     setCurrentSection(nextCurentSection);
-    //     setButtonData({ ...buttonData, formBtnActive: false });
-    // };
+    const handleOk = () => {
+        setIsUnsavedDataPopup(false);
+        setCurrentSection(nextCurentSection);
+        section && setLastSection(!nextCurentSection);
+        setButtonData({ ...buttonData, formBtnActive: false });
+    };
 
     const setPage = (page) => {
         setFilterString({ ...filterString, ...page });
@@ -504,20 +514,22 @@ const CustomerMasterMain = (props) => {
         setShowNameChangeHistory,
         setPreviousSection,
         previousSection,
+        setIsUnsavedDataPopup,
+        setNextCurrentSection
     };
 
     const showAddButton = true;
-    // const unsavedDataModalProps = {
-    //     isVisible: isUnsavedDataPopup,
-    //     titleOverride: 'Confirm',
-    //     information: 'You have modified this work section. You can discard your changes, or cancel to continue editing.',
-    //     handleCloseModal: () => setIsUnsavedDataPopup(false),
-    //     onCloseAction: () => setIsUnsavedDataPopup(false),
-    //     handleOk,
-    //     closable: true,
-    //     nextCurentSection,
-    //     setNextCurrentSection,
-    // };
+    const unsavedDataModalProps = {
+        isVisible: isUnsavedDataPopup,
+        titleOverride: 'Confirm',
+        information: 'You have modified this work section. You can discard your changes, or cancel to continue editing.',
+        handleCloseModal: () => setIsUnsavedDataPopup(false),
+        onCloseAction: () => setIsUnsavedDataPopup(false),
+        handleOk,
+        closable: true,
+        nextCurentSection,
+        setNextCurrentSection,
+    };
 
     return (
         <>
@@ -617,7 +629,7 @@ const CustomerMasterMain = (props) => {
                 </Col>
             </Row>
             <CustomerMainConatiner {...containerProps} />
-            {/* <UnsavedDataPopup {...unsavedDataModalProps} /> */}
+            <LeaveUnsaveDataModal {...unsavedDataModalProps} />
             <CustomerChangeHistory {...changeHistoryProps} />
             <CustomerNameChangeHistory {...nameChangeHistoryProps} />
         </>

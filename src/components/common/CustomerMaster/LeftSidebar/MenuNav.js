@@ -14,7 +14,7 @@ import styles from 'assets/sass/app.module.scss';
 import { getSelectedMenuAttribute } from 'utils/getSelectedMenuAttribute';
 
 const MenuNav = (props) => {
-    const { customerType, currentSection, setCurrentSection, formActionType } = props;
+    const { customerType, currentSection, setCurrentSection, formActionType, buttonData, setIsUnsavedDataPopup, setNextCurrentSection } = props;
     const profileOptions = customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? Object.values(CUSTOMER_INDIVIDUAL_SECTION) : Object.values(CUSTOMER_CORPORATE_SECTION);
     const { previousSection } = props;
 
@@ -23,7 +23,12 @@ const MenuNav = (props) => {
     };
 
     const onHandle = (key) => {
-        setCurrentSection(key);
+        if (buttonData?.formBtnActive) {
+            setIsUnsavedDataPopup(true);
+            setNextCurrentSection(key);
+        } else {
+            setCurrentSection(key);
+        }
     };
 
     const items = profileOptions
