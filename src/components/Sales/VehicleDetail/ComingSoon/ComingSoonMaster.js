@@ -50,10 +50,9 @@ export const ComingSoonMasterBase = (props) => {
     const onFinish = (values) => {
         handleButtonClick({ record: undefined, buttonAction: NEXT_ACTION });
     };
-    const onFinishFailed = () => {};
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

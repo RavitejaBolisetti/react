@@ -80,7 +80,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const CustomerDetailMasterBase = (props) => {
     const { setRefreshCustomerList, handleResetFilter, typeData, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData } = props;
-    const { userId, showGlobalNotification, section, fetchList, listShowLoading, data, saveData, isLoading, resetData, form, handleFormValueChange, onFinishFailed } = props;
+    const { userId, showGlobalNotification, section, fetchList, listShowLoading, data, saveData, isLoading, resetData, form, handleFormValueChange } = props;
     const { selectedCustomer, selectedCustomerId, setSelectedCustomerId } = props;
     const { buttonData, setButtonData, formActionType, setFormActionType, handleButtonClick, NEXT_ACTION } = props;
     const { fetchViewDocument, viewListShowLoading, listSupportingDocumentShowLoading, isSupportingDocumentDataLoaded, supportingData, isViewDataLoaded, viewDocument } = props;
@@ -315,7 +315,6 @@ const CustomerDetailMasterBase = (props) => {
         data,
         corporateLovData,
         setFormActionType,
-        onFinishFailed,
         handleButtonClick,
         showForm,
         fetchCorporateLovList,
@@ -386,7 +385,7 @@ const CustomerDetailMasterBase = (props) => {
 
     return (
         <>
-            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>
                 <Row gutter={20} className={styles.drawerBodyRight}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <h2>{section?.title}</h2>

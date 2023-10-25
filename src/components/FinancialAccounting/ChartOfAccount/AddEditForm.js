@@ -17,7 +17,7 @@ import styles from 'assets/sass/app.module.scss';
 
 const AddEditFormMain = (props) => {
     const { onCloseAction, chartOfAccountHierarchy, selectedTreeSelectKey, setSelectedTreeSelectKey, disableCheckBox } = props;
-    const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed, form, disable, accountTyp, setAccountTyp } = props;
+    const { isFormBtnActive, setFormBtnActive, onFinish, form, disable, accountTyp, setAccountTyp } = props;
     const treeFieldNames = { label: 'accountDescription', value: 'accountCode', children: 'subGroup' };
 
     const handleFormValueChange = () => {
@@ -55,7 +55,7 @@ const AddEditFormMain = (props) => {
     };
 
     return (
-        <Form autoComplete="off" form={form} layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" form={form} layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBody}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <Row gutter={20}>

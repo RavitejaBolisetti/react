@@ -508,10 +508,6 @@ export const AMCRegistrationMasterBase = (props) => {
         advanceFilterForm.resetFields();
     };
 
-    const onFinishFailed = (errorInfo) => {
-        return;
-    };
-
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
@@ -570,8 +566,6 @@ export const AMCRegistrationMasterBase = (props) => {
         filterString,
         setFilterString,
         from: listFilterForm,
-
-        onFinishFailed,
         handleResetFilter,
         advanceFilterForm,
         handleButtonClick,
@@ -694,7 +688,6 @@ export const AMCRegistrationMasterBase = (props) => {
         formActionType,
         setFormActionType,
         AMConFinish: onFinish,
-        onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
         titleOverride: drawerTitle.concat(moduleTitle),

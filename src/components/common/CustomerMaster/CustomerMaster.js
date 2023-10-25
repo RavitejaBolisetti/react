@@ -312,19 +312,6 @@ const CustomerMasterMain = (props) => {
         setIsFormVisible(true);
     };
 
-    // const onFinish = (values, e) => {};
-
-    const onFinishFailed = (errorInfo) => {
-        console.error(errorInfo);
-        // form.validateFields().then((values) => {});
-    };
-
-    // const handleOk = () => {
-    //     setIsUnsavedDataPopup(false);
-    //     setCurrentSection(nextCurentSection);
-    //     setButtonData({ ...buttonData, formBtnActive: false });
-    // };
-
     const setPage = (page) => {
         setFilterString({ ...filterString, ...page });
     };
@@ -466,7 +453,6 @@ const CustomerMasterMain = (props) => {
         form,
         formActionType,
         setFormActionType,
-        onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
         titleOverride: drawerTitle.concat(moduleTitle),

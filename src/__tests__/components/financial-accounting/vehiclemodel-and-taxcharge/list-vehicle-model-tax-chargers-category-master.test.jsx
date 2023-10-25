@@ -3,12 +3,26 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { screen, fireEvent} from '@testing-library/react';
+import { screen, fireEvent, waitFor} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { VehicleModelAndTaxChargersCategory } from '@components/FinancialAccounting/VehicleModelAndTaxCharges/ListVehicleModelTaxChargersCategoryMaster';
 import customRender from '@utils/test-utils';
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
+
+jest.mock('store/actions/data/VehicleModelTaxChargesCategory/VehicleModelTaxChargesCategoryMain.js', ()=>({
+    VehicleTaxChargesDataActions:{}
+}));
+
+const fetchList = jest.fn();
+const resetData = jest.fn();
+
+jest.mock('store/actions/data/VehicleModelTaxChargesCategory/productModelGroup', ()=>({
+    ProductModelGroupsDataActions:{}
+}))
+
+const fetchModelList = jest.fn();
+const resetProductData = jest.fn();
 
 afterEach(() => {
     jest.restoreAllMocks();
@@ -21,7 +35,7 @@ describe('VehicleModelAndTaxChargersCategory component', () => {
         const ModelOptions = [{modelGroupCode: "ECOM", modelGroupDescription: "ECOMOBILE"}]; 
 
         customRender(
-            <VehicleModelAndTaxChargersCategory fieldNames={fieldNames} ModelOptions={ModelOptions} isProductHierarchyDataLoading={false}/>
+            <VehicleModelAndTaxChargersCategory fieldNames={fieldNames} ModelOptions={ModelOptions} isProductHierarchyDataLoading={false}resetData={resetData} resetProductData={resetProductData}/>
         );
 
         const inputBox = screen.getByRole('combobox', { name: '', exact: false});
@@ -29,11 +43,9 @@ describe('VehicleModelAndTaxChargersCategory component', () => {
         fireEvent.click(inputBox);
     })
 
-    it("plus Add butotn", ()=>{
-        const VehicleModelTaxChargesCategoryData = {pageNumber:1, pageSize:10, totalRecords:'5942', vehicleModel: [{
-            accountCategoryCode: "A002",
-            accountCategoryDescription: "Vehicle Sales Account",
-        }] }
+    it("plus Add butotn", async()=>{
+        const VehicleModelTaxChargesCategoryData = {pageNumber:1, pageSize:10, totalRecords:'5942', 
+        vehicleModel: [{modelGroupCode: "JETP"}] }
 
         const mockStore = createMockStore({
             auth:{userId:123},
@@ -46,7 +58,7 @@ describe('VehicleModelAndTaxChargersCategory component', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <VehicleModelAndTaxChargersCategory buttonAction={'add'} />
+                <VehicleModelAndTaxChargersCategory buttonAction={'add'} fetchList={fetchList} resetData={resetData} resetProductData={resetProductData}/>
             </Provider>
         );
 
@@ -74,12 +86,15 @@ describe('VehicleModelAndTaxChargersCategory component', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <VehicleModelAndTaxChargersCategory buttonAction={'add'} />
+                <VehicleModelAndTaxChargersCategory buttonAction={'add'} fetchList={fetchList} resetData={resetData} resetProductData={resetProductData} fetchModelList={fetchModelList} />
             </Provider>
         );
 
         const refreshBtn = screen.getByRole('button', {name:''});
-        fireEvent.click(refreshBtn)
+        fireEvent.click(refreshBtn);
+
+        fetchList.mock.calls[0][0].onSuccessAction();
+        fetchList.mock.calls[0][0].onErrorAction();
     });
 
     it("useEfect data passed", ()=>{
@@ -106,7 +121,7 @@ describe('VehicleModelAndTaxChargersCategory component', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <VehicleModelAndTaxChargersCategory />
+                <VehicleModelAndTaxChargersCategory fetchList={fetchList} resetData={jest.fn()} resetProductData={resetProductData} fetchModelList={fetchModelList} />
             </Provider>
         );
 
@@ -129,7 +144,7 @@ describe('VehicleModelAndTaxChargersCategory component', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <VehicleModelAndTaxChargersCategory buttonAction={'add'} />
+                <VehicleModelAndTaxChargersCategory buttonAction={'add'} fetchList={fetchList} resetData={resetData} fetchModelList={fetchModelList} resetProductData={resetProductData}/>
             </Provider>
         );
 
@@ -140,8 +155,7 @@ describe('VehicleModelAndTaxChargersCategory component', () => {
     it("onFinish", ()=>{
         
         const VehicleModelTaxChargesCategoryData = {pageNumber:1, pageSize:10, totalRecords:'5942', vehicleModel: [{
-            accountCategoryCode: "A002",
-            accountCategoryDescription: "Vehicle Sales Account",
+            accountCategoryCode: "A001", accountCategoryDescription: "Parts Account", modelGroup:"ECOMOBILE", modelGroupCode:"ECOM", taxCategoryId:'3421'
         }] };
 
         const mockStore = createMockStore({
@@ -155,7 +169,7 @@ describe('VehicleModelAndTaxChargersCategory component', () => {
                     ] },
 
                     TaxChargeCategoryLov: { isFilteredListLoaded: true, isLoading: false, filteredListData: [{
-                        id: "234", key: "12", parentKey: null, value: "DESCTESST"
+                        id: "234", key: "12", parentKey: null, value: "NO TAX"
                     }] },
 
                     AccountCategorylov: { isFilteredListLoaded: true, filteredListData: [
@@ -167,7 +181,7 @@ describe('VehicleModelAndTaxChargersCategory component', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <VehicleModelAndTaxChargersCategory />
+                <VehicleModelAndTaxChargersCategory fetchList={fetchList} resetData={resetData} resetProductData={resetProductData} />
             </Provider>
         );
 
@@ -180,8 +194,8 @@ describe('VehicleModelAndTaxChargersCategory component', () => {
         fireEvent.click(modelComboBox);
 
         const taxComboBox = screen.getByRole('combobox', {name:'Tax/Charge Category'});
-        fireEvent.change(taxComboBox, {target:{value:'DESCTESST'}});
-        expect(taxComboBox.value).toBe('DESCTESST');
+        fireEvent.change(taxComboBox, {target:{value:'NO TAX'}});
+        expect(taxComboBox.value).toBe('NO TAX');
         fireEvent.click(taxComboBox);
 
         const accountComboBox = screen.getByRole('combobox', {name:'Account category'});

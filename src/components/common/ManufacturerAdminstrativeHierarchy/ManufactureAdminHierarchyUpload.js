@@ -13,12 +13,11 @@ import { UploadUtil } from 'utils/Upload';
 import styles from 'assets/sass/app.module.scss';
 
 const UploadMain = (props) => {
-    const { downloadFile, form, formData, onCloseAction, onFinishFailed } = props;
+    const { downloadFile, form, formData, onCloseAction } = props;
     const { buttonData, setButtonData, handleButtonClick } = props;
     const { userId, setUploadedFile, listShowLoading, showGlobalNotification, setEmptyList } = props;
     const { organizationId } = props;
     const { setFileList, setUploadedFileName, downloadShowLoading, resetData, authorityShowLoading, saveAuthorityData, uploadedFile, fetchDocumentFileDocId } = props;
-
 
     const onErrorAction = (res) => {
         showGlobalNotification({ notificationType: 'error', title: 'Error', message: res, placement: 'bottomRight' });
@@ -32,8 +31,6 @@ const UploadMain = (props) => {
             resetData();
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
         };
-
-      
 
         const extraParams = [
             {
@@ -151,7 +148,7 @@ const UploadMain = (props) => {
     };
     return (
         <>
-            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>
                 <Row gutter={20} className={styles.drawerBody}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <div className={styles.contentHeaderBackground}>

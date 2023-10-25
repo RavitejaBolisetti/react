@@ -7,7 +7,7 @@ import React from 'react';
 import { Button, Row, Col } from 'antd';
 
 import styles from 'assets/sass/app.module.scss';
-export const VinBlockFormButton = ({ record, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save', handleButtonClick, isLoadingOnSave, formData, isLastSection }) => {
+export const VinBlockFormButton = ({ record, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save', isLoadingOnSave }) => {
     return (
         <div className={styles.formFooter}>
             <Row gutter={20}>
@@ -25,7 +25,6 @@ export const VinBlockFormButton = ({ record, onCloseAction, buttonData, setButto
                 </Col>
 
                 <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.buttonsGroupRight}>
-                    
                     {buttonData?.saveBtn && (
                         <Button loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
                             {saveButtonName}

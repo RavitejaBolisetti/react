@@ -8,18 +8,16 @@ afterEach(() => {
 });
 
 describe('Advance Filter Component', () => {
-
     it('should render advance filter component UI', () => {
-        const filterString={ advanceFilter: true };
-        const extraParams=[{ name: 'Kai', value: 'Kai', filter: 'Kai', canRemove: true }]; 
+        const filterString = { advanceFilter: true };
+        const extraParams = [{ name: 'Kai', value: 'Kai', filter: 'Kai', canRemove: true }];
 
         customRender(<AdvanceFilter filterString={filterString} extraParams={extraParams} handleResetFilter={jest.fn()} removeFilter={jest.fn()} />);
 
-        const removeFilter=screen.getByTestId('removeFilter');
+        const removeFilter = screen.getByTestId('removeFilter');
         fireEvent.click(removeFilter);
 
-        const resetBtn=screen.getByRole('button', { name: 'Clear' });
+        const resetBtn = screen.getByRole('button', { name: 'Clear' });
         fireEvent.click(resetBtn);
     });
-
 });

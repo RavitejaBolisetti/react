@@ -48,9 +48,6 @@ const ChargerInstallatioDetailsMasterBase = (props) => {
             setButtonData({ ...buttonData, formBtnActive: false });
         }
     };
-
-    const onFinishFailed = () => {};
-
     const formProps = {
         ...props,
         formName: 'otfDetailsRequest',
@@ -87,7 +84,7 @@ const ChargerInstallatioDetailsMasterBase = (props) => {
         wrapForm: false,
     };
     return (
-        <Form layout="vertical" autoComplete="off" form={chargerInstallationForm} onValuesChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={chargerInstallationForm} onValuesChange={handleFormValueChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>
