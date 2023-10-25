@@ -13,8 +13,6 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { customSelectBox } from 'utils/customSelectBox';
 import { prepareCaption } from 'utils/prepareCaption';
 
-import styles from 'assets/sass/app.module.scss';
-
 const AddEditFormMain = (props) => {
     const { formData, disabledProps, formActionType, typeData, salesConsultantLov, handleDeliveryChange } = props;
 

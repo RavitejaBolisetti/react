@@ -118,7 +118,6 @@ export const VehicleDetailMasterBase = (props) => {
     const [otfSearchRules, setOtfSearchRules] = useState({ rules: [validateRequiredInputField('search parametar')] });
 
     const onSuccessAction = (res) => {
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
@@ -247,8 +246,6 @@ export const VehicleDetailMasterBase = (props) => {
             setShowDataLoading(true);
         }
         setFilterString();
-        // advanceFilterForm.resetFields();
-        // setAdvanceSearchVisible(false);
     };
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
@@ -323,10 +320,6 @@ export const VehicleDetailMasterBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        return;
-    };
-
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
@@ -374,7 +367,6 @@ export const VehicleDetailMasterBase = (props) => {
         setFilterString,
         from: listFilterForm,
         onFinish,
-        onFinishFailed,
         title,
         data,
         typeData,
@@ -401,7 +393,6 @@ export const VehicleDetailMasterBase = (props) => {
         formActionType,
         setFormActionType,
         onFinish,
-        onFinishFailed,
         setIsFormVisible,
         isVisible: isFormVisible,
         onCloseAction,

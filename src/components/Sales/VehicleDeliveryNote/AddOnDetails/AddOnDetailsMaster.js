@@ -77,7 +77,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const AddOnDetailsMasterMain = (props) => {
-    const { typeData, requestPayload, setRequestPayload, showGlobalNotification, AddonPartsData, AddonDetailsData, userId, onFinishFailed } = props;
+    const { typeData, requestPayload, setRequestPayload, showGlobalNotification, AddonPartsData, AddonDetailsData, userId } = props;
     const { form, section, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick, setButtonData, buttonData, listRelationshipMangerShowLoading, fetchRelationshipManger, relationshipManagerData, deliveryNoteMasterData } = props;
     const { selectedOrder } = props;
 
@@ -120,7 +120,6 @@ export const AddOnDetailsMasterMain = (props) => {
         if (selectedOrder?.invoicehdrId && userId) {
             fetchSheild({ setIsLoading: listSheildLoaing, userId, extraParams, onErrorAction });
             fetchRsa({ setIsLoading: listRsaLoading, userId, extraParams, onErrorAction });
-            // fetchAmc({ setIsLoading: listAmcLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedOrder?.invoicehdrId, userId]);
@@ -177,17 +176,20 @@ export const AddOnDetailsMasterMain = (props) => {
         return data?.find((i) => i?.schemeDescription === key)?.id;
     };
     const onSingleFormFinish = (key, formName) => {
-        formName.validateFields().then(() => {
-            const formDataset = formName?.getFieldsValue();
-            if (formDataset?.schemeCode) {
-                setRequestPayload({ ...requestPayload, deliveryNoteAddOnDetails: { ...requestPayload?.deliveryNoteAddOnDetails, [key]: formDataset } });
-            } else {
-                setRequestPayload({ ...requestPayload, deliveryNoteAddOnDetails: { ...requestPayload?.deliveryNoteAddOnDetails, [key]: { ...formDataset, schemeCode: getCodeValue(schemeDescriptionDatamain[openAccordian], formDataset?.schemeDescription) } } });
-            }
-            setRegisterDisabled((prev) => ({ ...prev, [openAccordian]: true }));
-            const message = !formData?.[key] ? 'registered' : 'saved';
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: `Scheme has been ${message} successfully` });
-        }).catch(err => console.error(err));
+        formName
+            .validateFields()
+            .then(() => {
+                const formDataset = formName?.getFieldsValue();
+                if (formDataset?.schemeCode) {
+                    setRequestPayload({ ...requestPayload, deliveryNoteAddOnDetails: { ...requestPayload?.deliveryNoteAddOnDetails, [key]: formDataset } });
+                } else {
+                    setRequestPayload({ ...requestPayload, deliveryNoteAddOnDetails: { ...requestPayload?.deliveryNoteAddOnDetails, [key]: { ...formDataset, schemeCode: getCodeValue(schemeDescriptionDatamain[openAccordian], formDataset?.schemeDescription) } } });
+                }
+                setRegisterDisabled((prev) => ({ ...prev, [openAccordian]: true }));
+                const message = !formData?.[key] ? 'registered' : 'saved';
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: `Scheme has been ${message} successfully` });
+            })
+            .catch((err) => console.error(err));
     };
     const handleAmcDescriptionData = (amcSchemeCode) => {
         const params = [
@@ -247,7 +249,7 @@ export const AddOnDetailsMasterMain = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

@@ -114,14 +114,10 @@ const DeliverableChecklistMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isChecklistDataLoaded, ChecklistData, formActionType]);
 
-    const onFinish = (values) => {
+    const onFinish = () => {
         deliveryNoteOnFinish();
     };
-    const onFinishFailed = () => {
-        form.validateFields()
-            .then(() => {})
-            .catch(() => {});
-    };
+
     const handleCheckListClick = ({ buttonAction, record, index }) => {
         setAdvanceformData({ ...record, index: index });
         aggregateForm.resetFields();
@@ -169,7 +165,7 @@ const DeliverableChecklistMain = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

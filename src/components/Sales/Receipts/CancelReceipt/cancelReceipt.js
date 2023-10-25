@@ -15,12 +15,8 @@ import styles from 'assets/sass/app.module.scss';
 const { TextArea } = Input;
 
 export const CancelReceiptForm = ({ handleCloseReceipt, handleCancelReceipt, cancelReceiptForm }) => {
-    const onFinishFailed = () => {
-        return;
-    };
-
     return (
-        <Form autoComplete="off" form={cancelReceiptForm} onFinish={handleCancelReceipt} layout="vertical" onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" form={cancelReceiptForm} onFinish={handleCancelReceipt} layout="vertical">
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
                     <Form.Item label="Cancellation Remark" name="cancelRemarks" rules={[validateRequiredInputField('Cancel Remarks')]}>

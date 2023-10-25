@@ -9,7 +9,6 @@ import { FiEye, FiTrash } from 'react-icons/fi';
 
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
-import TreeSelectField from 'components/common/TreeSelectField';
 import { ProductModelHierarchy } from 'components/utils/ProductModelHierarchy';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
@@ -36,8 +35,10 @@ const AddEditFormMain = (props) => {
     const [fileList, setFileList] = useState([]);
     const [singleDisabled, setSingleDisabled] = useState(false);
 
-    const onDrop = (e) => {};
-    const onDownload = (file) => {
+    const onDrop = () => {
+        return;
+    };
+    const onDownload = () => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
 
         // handlePreview(file?.response);
@@ -136,7 +137,6 @@ const AddEditFormMain = (props) => {
         optionFilterProp: 'children',
         showSearch: false,
         allowClear: true,
-        // className: styles.headerSelectField,
     };
 
     const buttonProps = {

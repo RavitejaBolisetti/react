@@ -177,7 +177,7 @@ const OTFAllotmentMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, filterString, searchParamValue, toggleButton, extraParams]);
 
-    const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
+    const handleButtonClick = ({ record = null, buttonAction }) => {
         switch (buttonAction) {
             case ALLOT:
                 handleVehicleAllotment(record, buttonAction);
@@ -256,11 +256,6 @@ const OTFAllotmentMasterBase = (props) => {
         type: 'radio',
         onChange: (selectedRowKeys, selectedRows) => {
             setSelectedOrderVINDetails(selectedRows?.[0]);
-        },
-        getCheckboxProps: (record) => {
-            // return {
-            //     disabled: formData?.allotmentStatus === VEHICLE_TYPE.ALLOTED.key,
-            // };
         },
     };
 

@@ -89,7 +89,6 @@ export const RsmAsmApprovalMasterBase = (props) => {
         closeBtn: true,
         cancelBtn: false,
         formBtnActive: true,
-        // rejectApproveBtn: false,
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -306,10 +305,6 @@ export const RsmAsmApprovalMasterBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        return;
-    };
-
     const onCloseAction = () => {
         form.resetFields();
         form.setFieldsValue();
@@ -368,7 +363,6 @@ export const RsmAsmApprovalMasterBase = (props) => {
         filterString,
         setFilterString,
         from: listFilterForm,
-        onFinishFailed,
         title: '',
         handleButtonQuery,
         data,
@@ -407,7 +401,6 @@ export const RsmAsmApprovalMasterBase = (props) => {
         buttonData,
         setButtonData,
         detailData,
-        // handleCancelRequest,
         invoiceStatusType,
         typeData,
         handleRequest,

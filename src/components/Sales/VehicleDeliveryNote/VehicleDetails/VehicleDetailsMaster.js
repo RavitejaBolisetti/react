@@ -55,7 +55,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const VehicleDetailsMasterBase = (props) => {
     const { typeData, partySegmentType, vehicleChallanData } = props;
-    const { userId, soldByDealer, setFormActionType, showGlobalNotification, isLoading, requestPayload } = props;
+    const { userId, soldByDealer, setFormActionType, isLoading, requestPayload } = props;
     const { form, formActionType, handleButtonClick, handleFormValueChange, section, openAccordian, setOpenAccordian, fetchList, vehicleData, NEXT_ACTION, setRequestPayload } = props;
     const { buttonData, setButtonData } = props;
 
@@ -105,9 +105,6 @@ const VehicleDetailsMasterBase = (props) => {
         setButtonData({ ...buttonData, formBtnActive: true });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [section]);
-    // const onErrorAction = (message) => {
-    //     showGlobalNotification({ message });
-    // };
 
     const onFinish = (values) => {
         if (!soldByDealer) {

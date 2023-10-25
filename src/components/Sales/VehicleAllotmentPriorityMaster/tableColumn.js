@@ -7,9 +7,8 @@ import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { convertDateMonthYear } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
-// import styles from 'components/common/Common.module.css';
 
-export const tableColumn = (handleButtonClick, page, pageSize) => {
+export const tableColumn = (handleButtonClick) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'Old Model',
@@ -38,7 +37,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             sorter: false,
         }),
 
-        tblActionColumn({ handleButtonClick, EditIcon: false, styles,canEdit: false }),
+        tblActionColumn({ handleButtonClick, EditIcon: false, styles, canEdit: false }),
     ];
 
     return tableColumn;

@@ -88,7 +88,7 @@ const MappingMasterMain = (props) => {
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, formBtnActive: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
-    const handleButtonClick = ({ record = null, buttonAction }) => {
+    const handleButtonClick = ({ record = null }) => {
         record && setFormData(record);
         setIsFormVisible(true);
     };

@@ -5,7 +5,7 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { Button, Collapse, Form, Typography, Row, Col, Input, Divider, DatePicker } from 'antd';
+import { Button, Collapse, Form, Typography, Row, Col, Input, Divider } from 'antd';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { DataTable } from 'utils/dataTable';
@@ -17,9 +17,7 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 import { AggregateAddEditForm } from './AggregateAddEditForm';
 import { tableColumn } from './tableCoulmn';
 
-import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
-import { LANGUAGE_EN } from 'language/en';
-import { NoDataFound } from 'utils/noDataFound';
+import { formattedCalendarDate } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -35,12 +33,10 @@ const AddEditFormMain = (props) => {
 
     const [aggregateForm] = Form.useForm();
     const [connectedForm] = Form.useForm();
-    const [InnerCollapse, setInnerCollapse] = useState();
 
     const [isEditing, setisEditing] = useState(false);
     const [AdvanceformData, setAdvanceformData] = useState();
     const AggregateModuleTitle = `Aggregates`;
-    const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
 
     useEffect(() => {
         if (formData?.productAttributeDetail) {
@@ -72,9 +68,6 @@ const AddEditFormMain = (props) => {
         aggregateForm.resetFields();
     };
 
-    const handleInnerCollapse = (key) => {
-        setInnerCollapse((prev) => (prev === key ? '' : key));
-    };
     const AggregateFormProps = {
         handleCancel: handleCanceler,
         aggregateForm,

@@ -14,25 +14,17 @@ import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { tableColumn } from './tableCoulmn';
 
 import { expandIcon } from 'utils/accordianExpandIcon';
-import { LANGUAGE_EN } from 'language/en';
-import { NoDataFound } from 'utils/noDataFound';
 
 const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
-    const { styles, bindCodeValue, bindStatus, formData, collapseProps, tooltTipText, isLoading, optionalServices, formActionType, modelData, variantData, modelFamilyData } = props;
+    const { styles, bindCodeValue, formData, collapseProps, tooltTipText, isLoading, optionalServices, formActionType, modelData, variantData, modelFamilyData } = props;
     const [openAccordian, setOpenAccordian] = useState([]);
-    const [InnerCollapse, setInnerCollapse] = useState([]);
-
-    const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
 
     const handleCollapse = (key) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
-    const handleInnerCollapse = (key) => {
-        setInnerCollapse((prev) => (prev === key ? '' : key));
-    };
-    const { productAttributeDetail, connectedVehicle } = formData;
+    const { productAttributeDetail } = formData;
     const viewProps = {
         bordered: false,
         colon: false,

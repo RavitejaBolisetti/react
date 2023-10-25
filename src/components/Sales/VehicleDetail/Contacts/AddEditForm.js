@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 
-import { Button, Form, Row, Col, Space, Select, Input, TimePicker } from 'antd';
+import { Button, Form, Row, Col, Select, Input, TimePicker } from 'antd';
 import { validateLettersWithWhitespaces, validateRequiredEmailField, validateRequiredInputField, validateRequiredSelectField, validateMobileNoField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { customSelectBox } from 'utils/customSelectBox';

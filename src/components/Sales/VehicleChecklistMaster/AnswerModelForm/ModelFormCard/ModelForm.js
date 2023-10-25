@@ -10,7 +10,7 @@ import { validateRequiredSelectField } from 'utils/validation';
 import { PlusOutlined } from '@ant-design/icons';
 
 const ModelForm = (props) => {
-    const { modelForm, onFinishModelForm, modelEdit, modelEditForm, modelSwitch, setModelSwitch, mainFomEdit, modelGroupData, modelData } = props;
+    const { modelForm, onFinishModelForm, modelEdit, modelEditForm, modelSwitch, setModelSwitch, mainFomEdit, modelGroupData } = props;
 
     return (
         <>

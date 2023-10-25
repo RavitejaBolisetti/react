@@ -109,8 +109,8 @@ const ProductDetailMasterMain = (props) => {
     const collapseProps = { collapsible: 'icon' };
     const disabledProps = { disabled: true };
 
-    const onSuccessAction = (res) => {
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+    const onSuccessAction = () => {
+        return;
     };
 
     const onErrorAction = (message) => {
@@ -243,7 +243,7 @@ const ProductDetailMasterMain = (props) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
-    const onFinish = (values) => {
+    const onFinish = () => {
         const data = { ...formData, vehicleIdentificationNumber: selectedRecordId, aggregates: optionalServices };
         const onSuccess = (res) => {
             setOptionalServices([]);
@@ -268,11 +268,6 @@ const ProductDetailMasterMain = (props) => {
         };
 
         saveData(requestData);
-    };
-    const onFinishFailed = () => {
-        form.validateFields()
-            .then(() => {})
-            .catch(() => {});
     };
 
     const formProps = {

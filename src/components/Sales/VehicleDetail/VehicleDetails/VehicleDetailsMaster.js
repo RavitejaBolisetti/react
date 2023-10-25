@@ -134,13 +134,10 @@ const VehicleDetailsMasterBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = () => {};
-
     const formProps = {
         ...props,
         form,
         onFinish,
-        onFinishFailed,
         fetchList,
         typeData,
         userId,

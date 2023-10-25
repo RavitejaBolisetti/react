@@ -77,12 +77,9 @@ export const AdvanceForm = (props) => {
             })
             .catch((err) => {});
     };
-    const onFinishFailed = () => {
-        return;
-    };
 
     return (
-        <Form autoComplete="off" layout="vertical" form={aggregateForm} onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" layout="vertical" form={aggregateForm}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row gutter={20}>

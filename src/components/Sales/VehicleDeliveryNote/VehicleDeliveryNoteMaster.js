@@ -100,7 +100,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VehicleDeliveryNoteMasterBase = (props) => {
-    const { data, receiptDetailData, userId, resetData, fetchList, listShowLoading, saveData } = props;
+    const { data, receiptDetailData, userId, fetchList, listShowLoading, saveData } = props;
     const { typeData, receiptType, partySegmentType, paymentModeType, documentType, moduleTitle, totalRecords, showGlobalNotification } = props;
     const { filterString, setFilterString, deliveryStatusList, cancelDeliveryNote, cancelShowLoading, cancelChallan, resetCheckListData } = props;
     const { fetchDeliveryNoteMasterData, resetDeliveryNoteMasterData, deliveryNoteMasterData, isDeliveryDataLoaded, vehicleChallanData, resetChallanData } = props;

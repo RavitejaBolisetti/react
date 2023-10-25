@@ -25,7 +25,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             VehicleDeliveryNote: {
-                CustomerDetailsDeliveryNote: { isLoaded, isLoading, data: customerDetailsDataSearched = {} },
+                CustomerDetailsDeliveryNote: { isLoaded, isLoading },
             },
         },
     } = state;
