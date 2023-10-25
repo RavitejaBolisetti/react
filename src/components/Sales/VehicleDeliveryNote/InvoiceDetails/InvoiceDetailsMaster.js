@@ -13,6 +13,7 @@ import { vinNumberNoteDataActions } from 'store/actions/data/vehicleDeliveryNote
 import { vehicleChallanDetailsDataActions } from 'store/actions/data/vehicleDeliveryNote/vehicleChallanDetails';
 import { showGlobalNotification } from 'store/actions/notification';
 import { formattedCalendarDate, convertDate } from 'utils/formatDateTime';
+import { RELATIONSHIP_MANAGER_CONSTANTS } from 'components/Sales/VehicleDeliveryNote/constants/relationShipMangerCodeConstants';
 
 import { VehicleDeliveryNoteFormButton } from '../VehicleDeliveryNoteFormButton';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
@@ -77,7 +78,7 @@ export const InvoiceDetailsMasterBase = (props) => {
 
     const { typeData, form, selectedOrderId, requestPayload, setRequestPayload, soldByDealer, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section, resetData, engineNumberData, chassisNoValue } = props;
 
-    const { isChallanDataLoaded, isChallanLoading, vehicleChallanData, fetchChallanList, listChallanShowLoading } = props;
+    const { fetchChallanList, listChallanShowLoading } = props;
 
     const { buttonData, setButtonData } = props;
 
@@ -151,10 +152,10 @@ export const InvoiceDetailsMasterBase = (props) => {
     useEffect(() => {
         const extraParams = [
             {
-                key: 'allEmployee',
-                title: 'allEmployee',
-                value: 'ALL',
-                name: 'All Employees',
+                key: 'employeeType',
+                title: 'employeeType',
+                value: RELATIONSHIP_MANAGER_CONSTANTS?.RELATIONSHIP_MANAGER?.key,
+                name: 'All employees',
             },
         ];
         if (userId && soldByDealer) {

@@ -441,4 +441,8 @@ export const PARAM_MASTER = {
         id: 'AMC_CANCEL_REASON',
         title: 'AMC cancellation reason',
     },
+    EMP_TYP: {
+        id: 'EMP_TYP',
+        title: 'Delivery note employee key',
+    },
 };

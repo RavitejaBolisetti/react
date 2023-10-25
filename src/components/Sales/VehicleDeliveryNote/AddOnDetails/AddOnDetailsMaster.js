@@ -11,7 +11,7 @@ import { bindActionCreators } from 'redux';
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 import { VehicleDeliveryNoteFormButton } from '../VehicleDeliveryNoteFormButton';
-
+import { RELATIONSHIP_MANAGER_CONSTANTS } from 'components/Sales/VehicleDeliveryNote/constants/relationShipMangerCodeConstants';
 import { relationshipManagerDataActions } from 'store/actions/data/vehicleDeliveryNote/relationshipManager';
 import { schemeDescriptionAmcDataActions, schemeDescriptionRsaDataActions, schemeDescriptionShieldDataActions } from 'store/actions/data/vehicleDeliveryNote';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -171,23 +171,38 @@ export const AddOnDetailsMasterMain = (props) => {
             showGlobalNotification({ message });
         };
 
-        fetchRelationshipManger({ setIsLoading: listRelationshipMangerShowLoading, userId, onErrorAction });
+        fetchRelationshipManger({
+            setIsLoading: listRelationshipMangerShowLoading,
+            userId,
+            onErrorAction,
+            extraParams: [
+                {
+                    key: 'employeeType',
+                    title: 'employeeType',
+                    value: RELATIONSHIP_MANAGER_CONSTANTS?.RELATIONSHIP_MANAGER_SALES_CONSULTANT?.key,
+                    name: 'Sales consultant employees',
+                },
+            ],
+        });
     };
     const getCodeValue = (data, key) => {
         return data?.find((i) => i?.schemeDescription === key)?.id;
     };
     const onSingleFormFinish = (key, formName) => {
-        formName.validateFields().then(() => {
-            const formDataset = formName?.getFieldsValue();
-            if (formDataset?.schemeCode) {
-                setRequestPayload({ ...requestPayload, deliveryNoteAddOnDetails: { ...requestPayload?.deliveryNoteAddOnDetails, [key]: formDataset } });
-            } else {
-                setRequestPayload({ ...requestPayload, deliveryNoteAddOnDetails: { ...requestPayload?.deliveryNoteAddOnDetails, [key]: { ...formDataset, schemeCode: getCodeValue(schemeDescriptionDatamain[openAccordian], formDataset?.schemeDescription) } } });
-            }
-            setRegisterDisabled((prev) => ({ ...prev, [openAccordian]: true }));
-            const message = !formData?.[key] ? 'registered' : 'saved';
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: `Scheme has been ${message} successfully` });
-        }).catch(err => console.error(err));
+        formName
+            .validateFields()
+            .then(() => {
+                const formDataset = formName?.getFieldsValue();
+                if (formDataset?.schemeCode) {
+                    setRequestPayload({ ...requestPayload, deliveryNoteAddOnDetails: { ...requestPayload?.deliveryNoteAddOnDetails, [key]: formDataset } });
+                } else {
+                    setRequestPayload({ ...requestPayload, deliveryNoteAddOnDetails: { ...requestPayload?.deliveryNoteAddOnDetails, [key]: { ...formDataset, schemeCode: getCodeValue(schemeDescriptionDatamain[openAccordian], formDataset?.schemeDescription) } } });
+                }
+                setRegisterDisabled((prev) => ({ ...prev, [openAccordian]: true }));
+                const message = !formData?.[key] ? 'registered' : 'saved';
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: `Scheme has been ${message} successfully` });
+            })
+            .catch((err) => console.error(err));
     };
     const handleAmcDescriptionData = (amcSchemeCode) => {
         const params = [
