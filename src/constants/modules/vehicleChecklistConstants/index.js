@@ -3,15 +3,5 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-export const REQUEST_TYPE_CONSTANT = {
-    INVOICED: {
-        id: 1,
-        title: 'Invoice',
-        key: 'INCA',
-    },
-    DELIVERY: {
-        id: 2,
-        title: 'Delivery Note',
-        key: 'DNCA',
-    },
-};
+import { MODULE_TYPE_CONSTANTS } from './moduleType';
+export { MODULE_TYPE_CONSTANTS };

@@ -3,15 +3,15 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-export const REQUEST_TYPE_CONSTANT = {
-    INVOICED: {
+export const MODULE_TYPE_CONSTANTS = {
+    RECEIPT_CHECKLIST: {
         id: 1,
-        title: 'Invoice',
-        key: 'INCA',
+        key: 'RECEIPT_CHECKLIST',
+        title: 'RECEIPT_CHECKLIST',
     },
-    DELIVERY: {
+    DELIVERY_NOTE: {
         id: 2,
-        title: 'Delivery Note',
-        key: 'DNCA',
+        key: 'DELIVERY_NOTE',
+        title: 'DELIVERY_NOTE',
     },
 };

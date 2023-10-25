@@ -13,6 +13,7 @@ import { InvoiceDetailsForm } from './InvoiceDetailsForm';
 import { REQUEST_TYPE_CONSTANT } from './utils/RequestTypeConstant';
 import { formattedCalendarDate } from 'utils/formatDateTime';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { getCodeValue } from 'utils/getCodeValue';
 
 import { VehicleDetailsForm } from './VehicleDetailsForm';
 import { InvoiceCancellationButtons } from './InvoiceCancellationButtons';
@@ -28,12 +29,14 @@ const AddEditFormMain = (props) => {
             form.setFieldsValue({
                 ...requestDetailData,
                 requestType: typeData[PARAM_MASTER?.DEL_INV_CAN_TYP?.id]?.find((request) => requestDetailData?.requestType === request?.key)?.value,
-                invoiceStatus: typeData[PARAM_MASTER?.INV_DEL_NOT_REQ_TYP?.id]?.find((status) => requestDetailData?.invoiceStatus === status?.key)?.value,
+                invoiceStatus: typeData[PARAM_MASTER?.INVC_STATS?.id]?.find((status) => requestDetailData?.invoiceStatus === status?.key)?.value,
                 requestStatus: typeData[PARAM_MASTER?.CDLR_INV_APP_STATUS?.id]?.find((reqStatus) => requestDetailData?.requestStatus === reqStatus?.key)?.value,
                 requestDate: formattedCalendarDate(requestDetailData?.requestDate),
                 invoiceDate: formattedCalendarDate(requestDetailData?.invoiceDate),
                 deliveryNoteDate: formattedCalendarDate(requestDetailData?.deliveryNoteDate),
+                deliveryNoteStatus: getCodeValue(typeData?.DLVR_NT_STS, requestDetailData?.deliveryNoteStatus),
                 cancelDate: formattedCalendarDate(requestDetailData?.cancelDate),
+                reasonForCancellation: requestDetailData?.requestType === REQUEST_TYPE_CONSTANT?.INVOICED?.key ? getCodeValue(typeData?.INVOICE_CANCEL_REASON, requestDetailData?.reasonForCancellation) : getCodeValue(typeData?.DLVR_CNCL_RSN, requestDetailData?.reasonForCancellation),
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -60,7 +63,7 @@ const AddEditFormMain = (props) => {
                                 <RequestDetailsForm {...requestDetailFormProps} />
                             </Col>
                         </Row>
-                        {requestDetailData?.requestType === REQUEST_TYPE_CONSTANT?.invoice?.key && (
+                        {requestDetailData?.requestType === REQUEST_TYPE_CONSTANT?.INVOICED?.key && (
                             <Row gutter={16}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                     <Row>
@@ -74,7 +77,7 @@ const AddEditFormMain = (props) => {
                             </Row>
                         )}
 
-                        {requestDetailData?.requestType === REQUEST_TYPE_CONSTANT?.delivery?.key && (
+                        {requestDetailData?.requestType === REQUEST_TYPE_CONSTANT?.DELIVERY?.key && (
                             <Row gutter={16}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                     <Row>
