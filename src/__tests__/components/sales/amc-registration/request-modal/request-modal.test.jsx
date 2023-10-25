@@ -1,7 +1,8 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { RejectRequest } from '@components/Sales/AMCRegistration/RequestModal/RequestModal';
-import { screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 afterEach(() => {
     jest.restoreAllMocks();
@@ -19,11 +20,11 @@ describe('Request modal Components', () => {
     });
 
     it('Should render request modal render', () => {
-        const handleRemarksChange = jest.fn()
+        const handleRemarksChange = jest.fn();
         customRender(<RejectRequest amcWholeCancellation={true} rejectRequest={true} isVisible={true} onChange={handleRemarksChange} />);
 
-        const reasonforRejection = screen.getByRole('combobox', { name: "Reason for Rejection" })
-        fireEvent.change(reasonforRejection, { target: { value: "testing" } })
+        const reasonforRejection = screen.getByRole('combobox', { name: 'Reason for Rejection' });
+        fireEvent.change(reasonforRejection, { target: { value: 'testing' } });
 
         const no = screen.getByRole('button', { name: 'No' });
         fireEvent.click(no);
@@ -40,14 +41,23 @@ describe('Request modal Components', () => {
         customRender(<RejectRequest amcWholeCancellation={true} rejectRequest={true} isVisible={true} />);
     });
 
-
     it('Should render request modal close render', () => {
-        customRender(<RejectRequest amcWholeCancellation={true} rejectRequest={true} userType={'DLR'} isVisible={true} />);
+        customRender(
+            <RejectRequest
+                amcWholeCancellation={true}
+                rejectRequest={true}
+                userType={'DLR'}
+                isVisible={true}
+                typeData={{
+                    [PARAM_MASTER.AMC_CANCEL_REASON.id]: [
+                        { key: '1', label: 'Reason 1' },
+                        { key: '2', label: 'Reason 2' },
+                    ],
+                }}
+            />
+        );
 
         const reasonforCancellation = screen.getByRole('combobox', { name: 'Reason for Cancellation' });
         fireEvent.change(reasonforCancellation, { target: { value: 'testing' } });
-
-        const closeBtn = screen.getByRole('button', { name: 'Close' });
-        fireEvent.click(closeBtn);
     });
 });

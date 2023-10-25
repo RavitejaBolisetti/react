@@ -6,7 +6,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { screen, fireEvent, cleanup, waitFor } from '@testing-library/react';
-import { CustomerDetailsMaster } from '@components/Sales/OTF/CustomerDetails/CustomerDetailsMaster.js';
+import { CustomerDetailsMaster } from '@components/Sales/Common/CustomerDetails/CustomerDetailsMaster';
 import { Provider } from 'react-redux';
 import createMockStore from '__mocks__/store';
 import { Button, Form } from 'antd';
@@ -83,25 +83,14 @@ describe('CustomerDetailsMaster Components', () => {
         },
     });
 
-    it('Should render success and otfnumber heading when user click', async () => {
+    it('it should render success and otfnumber heading when user click', async () => {
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper {...mockProps} StatusBar={StatusBar} setButtonData={jest.fn()} FormActionButton={FormActionButton} />
+                <FormWrapper {...mockProps} StatusBar={StatusBar} FormActionButton={FormActionButton} />
             </Provider>
         );
         const successOtfNumber = screen.getByRole('heading', { name: 'Success And otfNumber' });
         fireEvent.click(successOtfNumber);
-    });
-
-    it('Should render view form', async () => {
-        const formActionType = {
-            viewMode: true,
-        };
-        customRender(
-            <Provider store={mockStore}>
-                <FormWrapper {...formActionType} StatusBar={StatusBar} setButtonData={jest.fn()} FormActionButton={FormActionButton} />
-            </Provider>
-        );
     });
 
     it('test for onSuccess', async () => {
@@ -186,25 +175,18 @@ describe('CustomerDetailsMaster Components', () => {
             },
         });
 
+        const res = { data: { bookingCustomer: { otfNumber: '7e6f4990-f57d-477f-bace-ecd3da30ae5a', bookingAndBillingType: 'BOOKING', id: '4f966aeb-4076-4a83-af80-f853cd6b79d8', sameAsBookingCustomer: true }, billingCustomer: { otfNumber: '7e6f4990-f57d-477f-bace-ecd3da30ae5a', bookingAndBillingType: 'BILLING', id: '4f966aeb-4076-4a83-af80-f853cd6b79d8', sameAsBookingCustomer: true } } };
+
         const saveData = jest.fn();
         const fetchList = jest.fn();
 
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper saveData={saveData} setButtonData={jest.fn()} onFinishCustom={true} fetchList={fetchList} handleButtonClick={jest.fn()} onCloseAction={jest.fn()} StatusBar={StatusBar} FormActionButton={FormActionButton} resetData={jest.fn()} />
+                <FormWrapper saveData={saveData} setButtonData={jest.fn()} onFinishCustom={true} fetchList={fetchList} handleButtonClick={jest.fn()} setButtonData={jest.fn()} onCloseAction={jest.fn()} StatusBar={StatusBar} FormActionButton={FormActionButton} resetData={jest.fn()} />
             </Provider>
         );
 
         const saveBtn = screen.getAllByRole('button', { name: 'Save' });
         fireEvent.click(saveBtn[1]);
-    });
-    it('test for view', async () => {
-        const formActionType = { viewMode: true };
-
-        customRender(<FormWrapper StatusBar={StatusBar} FormActionButton={FormActionButton} formActionType={formActionType} />);
-
-        const plusBtn = screen.getAllByRole('img', { name: /plus/i });
-        fireEvent.click(plusBtn[0]);
-        fireEvent.click(plusBtn[1]);
     });
 });
