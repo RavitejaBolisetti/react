@@ -21,19 +21,6 @@ export const AddRequestModalForm = (props) => {
     const { onAdvanceSearchCloseAction, typeData } = props;
     const { addRequestForm, onModalFinish } = props;
 
-    // useEffect(() => {
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [filterString]);
-
-    // const CheckDateEffectiveTo = (value, effectiveFrom) => {
-    //     if (!value) return Promise.resolve();
-    //     const bool = dayjs(value).format('YYYY-MM-DD') >= dayjs(effectiveFrom).format('YYYY-MM-DD');
-    //     if (bool) {
-    //         return Promise.resolve();
-    //     }
-    //     return Promise.reject(new Error('Date cant be less than Effective from date'));
-    // };
-
     return (
         <Form autoComplete="off" layout="vertical" form={addRequestForm} onFinish={onModalFinish}>
             <Row gutter={16}>

@@ -9,7 +9,7 @@ import { withModal } from 'components/withModal';
 import { DataTable } from 'utils/dataTable';
 import { serviceActivityColumns } from './tableColumn';
 
-export const ServiceActivityModalForm = (props) => {
+export const ServiceActivityModalForm = () => {
     return <DataTable tableColumn={serviceActivityColumns()} pagination={false} scroll={{ x: '1000' }} />;
 };
 
