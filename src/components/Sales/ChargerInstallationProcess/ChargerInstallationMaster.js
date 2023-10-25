@@ -23,6 +23,7 @@ import { OTF_STATUS } from 'constants/OTFStatus';
 import { FUEL_TYPE } from './Constants/FuelTypeConstant';
 import { chargerInstallationDataActions } from 'store/actions/data/chargerInstallation/chargerInstallation';
 import { crmCustomerVehicleDataActions } from 'store/actions/data/crmCustomerVehicle';
+import { chargerInstallationGuestDetailsDataActions } from 'store/actions/data/chargerInstallation/chargerInstallationGuestDetails';
 import { showGlobalNotification } from 'store/actions/notification';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
@@ -37,6 +38,7 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             ChargerInstallation: {
                 ChargerInstallationList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString, detailData: chargerInstallationMasterData = [] },
+                ChargerInstallationGuestDetails: { isLoaded: isGuestDataLoaded = false, isLoading: isGuestLoading, data: chargerInstallationGuestDetailsData = [] },
             },
             CRMCustomerVehicle: { isLoaded: isCRMCustomerDataLoaded = false, isCRMCustomerLoading, data: crmCustomerVehicleData = [] },
         },
@@ -56,6 +58,9 @@ const mapStateToProps = (state) => {
         isCRMCustomerDataLoaded,
         isCRMCustomerLoading,
         crmCustomerVehicleData,
+        isGuestDataLoaded,
+        isGuestLoading,
+        chargerInstallationGuestDetailsData,
     };
     return returnValue;
 };
@@ -72,6 +77,10 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: chargerInstallationDataActions.listShowLoading,
             setFilterString: chargerInstallationDataActions.setFilter,
             saveData: chargerInstallationDataActions.saveData,
+
+            fetchGuestDetails: chargerInstallationGuestDetailsDataActions.fetchList,
+            listGuestShowLoading: chargerInstallationGuestDetailsDataActions.listShowLoading,
+
             showGlobalNotification,
         },
         dispatch
@@ -79,9 +88,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VehicleInvoiceMasterBase = (props) => {
-    const { data, userId, chargerInstallationMasterData, fetchList, fetchCustomerVehicleList, listCustomerVehicleShowLoading, crmCustomerVehicleData, listShowLoading, showGlobalNotification, fetchChargerDetails } = props;
+    const { data, userId, chargerInstallationMasterData, fetchGuestDetails, listGuestShowLoading, fetchList, fetchCustomerVehicleList, listCustomerVehicleShowLoading, crmCustomerVehicleData, listShowLoading, showGlobalNotification, fetchChargerDetails } = props;
     const { typeData, saveData, moduleTitle, totalRecords } = props;
-    const { filterString, setFilterString, chargerStatusList, otfData, vehicleInvoiceMasterData } = props;
+    const { filterString, setFilterString, chargerStatusList, otfData, vehicleInvoiceMasterData, chargerInstallationGuestDetailsData } = props;
 
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [chargerStatus, setchargerStatus] = useState(QUERY_BUTTONS_CONSTANTS.SITE_SURVEY.key);
@@ -93,6 +102,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [addRequestData, setAddRequestData] = useState([]);
     const [searchValue, setSearchValue] = useState();
     const [options, setOptions] = useState();
+    const [modal, setModal] = useState(false);
 
     const [selectedOrder, setSelectedOrder] = useState();
     const [selectedOrderId, setSelectedOrderId] = useState();
@@ -239,7 +249,7 @@ export const VehicleInvoiceMasterBase = (props) => {
 
     const filterActiveSection = sectionName && filterActiveMenu(Object.values(sectionName));
     useEffect(() => {
-        if (chargerInstallationMasterData?.chargerInstDetails?.requestDetails[0].requestStage === QUERY_BUTTONS_CONSTANTS?.COMMISSION?.key) {
+        if (chargerInstallationMasterData?.chargerInstDetails?.requestDetails[0].stageStatus === QUERY_BUTTONS_CONSTANTS?.COMMISSION?.key) {
             setButtonData((prev) => ({ ...prev, addRequestBtn: false }));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -270,7 +280,20 @@ export const VehicleInvoiceMasterBase = (props) => {
             fetchChargerDetails({ customURL, setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOtfNumber]);
+    }, [userId, selectedOrderId]);
+
+    const onHandleModal = (record) => {
+        setModal(true);
+        const extraParams = [
+            {
+                key: 'id',
+                title: 'id',
+                value: record?.id,
+                name: 'Id',
+            },
+        ];
+        fetchGuestDetails({ setIsLoading: listGuestShowLoading, userId, extraParams, onErrorAction });
+    };
 
     const handleBookingNumberSearch = (otfNumber) => {
         if (!otfNumber) return false;
@@ -368,7 +391,7 @@ export const VehicleInvoiceMasterBase = (props) => {
                 const Visibility = btnVisiblity({ defaultBtnVisiblity, buttonAction });
                 setButtonData(Visibility);
                 if (buttonAction === VIEW_ACTION) {
-                    if (record?.requestStatus === CHARGER_STATUS.SUCCESS?.key) {
+                    if (record?.stageRequest === CHARGER_STATUS.SUCCESS?.key) {
                         setButtonData((prev) => ({ ...prev, addRequestBtn: true }));
                     }
                 }
@@ -377,9 +400,9 @@ export const VehicleInvoiceMasterBase = (props) => {
         setIsFormVisible(true);
     };
 
-    const onFinishSearch = (values) => {};
+    // const onFinishSearch = (values) => {};
 
-    const handleResetFilter = (e) => {
+    const handleResetFilter = () => {
         setShowDataLoading(false);
         setFilterString();
         advanceFilterForm.resetFields();
@@ -408,10 +431,6 @@ export const VehicleInvoiceMasterBase = (props) => {
             customURL,
         };
         saveData(requestData);
-    };
-
-    const onFinishFailed = (errorInfo) => {
-        return;
     };
 
     const handleFormValueChange = () => {
@@ -480,8 +499,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         filterString,
         setFilterString,
         from: listFilterForm,
-        // onFinish,
-        onFinishFailed,
+
         handleResetFilter,
         advanceFilterForm,
         handleButtonClick,
@@ -494,7 +512,6 @@ export const VehicleInvoiceMasterBase = (props) => {
         setAdvanceSearchVisible,
         typeData,
         searchForm,
-        onFinishSearch,
     };
 
     const advanceFilterProps = {
@@ -510,7 +527,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         setAdvanceSearchVisible,
         chargerStatusList,
         typeData,
-        onFinishSearch,
+        // onFinishSearch,
     };
 
     const drawerTitle = useMemo(() => {
@@ -530,7 +547,6 @@ export const VehicleInvoiceMasterBase = (props) => {
         formActionType,
         setFormActionType,
         onChargerInstallationFinish,
-        onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
         titleOverride: drawerTitle.concat(moduleTitle),
@@ -579,6 +595,10 @@ export const VehicleInvoiceMasterBase = (props) => {
         setAddRequestData,
         options,
         setOptions,
+        modal,
+        setModal,
+        onHandleModal,
+        chargerInstallationGuestDetailsData,
     };
 
     return (

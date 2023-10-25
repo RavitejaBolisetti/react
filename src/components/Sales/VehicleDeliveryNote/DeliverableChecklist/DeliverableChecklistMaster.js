@@ -15,6 +15,7 @@ import { AddEditForm } from 'components/Sales/Common/ChecklistDetails';
 import { tableColumn } from './tableCoulmn';
 
 import { VehicleDeliveryNoteFormButton } from '../VehicleDeliveryNoteFormButton';
+import { MODULE_TYPE_CONSTANTS } from 'constants/modules/vehicleChecklistConstants';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -28,6 +29,9 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
         },
     } = state;
+    const moduleTitle = 'Deliverable checklist details';
+    const paginationDataKey = 'checklistDetailList';
+    const uniqueMatchKey = 'id';
 
     let returnValue = {
         userId,
@@ -35,6 +39,9 @@ const mapStateToProps = (state) => {
         isChecklistDataLoading,
         ChecklistData,
         typeData,
+        moduleTitle,
+        paginationDataKey,
+        uniqueMatchKey,
     };
     return returnValue;
 };
@@ -58,6 +65,7 @@ const DeliverableChecklistMain = (props) => {
     const { selectedOrder, setButtonData, buttonData } = props;
     const { fetchList, listShowLoading, showGlobalNotification } = props;
     const { form, selectedCheckListId, section, formActionType, handleFormValueChange, requestPayload, setRequestPayload } = props;
+    const { uniqueMatchKey } = props;
 
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [aggregateForm] = Form.useForm();
@@ -66,7 +74,7 @@ const DeliverableChecklistMain = (props) => {
     const [checkListDataModified, setcheckListDataModified] = useState([]);
     const pageIntialState = { pageSize: 10, current: 1 };
     const [page, setPage] = useState({ ...pageIntialState });
-    const deliveryChecklist = true;
+
     const onErrorAction = (message) => {
         showGlobalNotification({ message: message });
     };
@@ -114,15 +122,11 @@ const DeliverableChecklistMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isChecklistDataLoaded, ChecklistData, formActionType]);
 
-    const onFinish = (values) => {
+    const onFinish = () => {
         deliveryNoteOnFinish();
     };
-    const onFinishFailed = () => {
-        form.validateFields()
-            .then(() => {})
-            .catch(() => {});
-    };
-    const handleCheckListClick = ({ buttonAction, record, index }) => {
+
+    const handleCheckListClick = ({ record, index }) => {
         setAdvanceformData({ ...record, index: index });
         aggregateForm.resetFields();
         setisEditing(true);
@@ -132,7 +136,7 @@ const DeliverableChecklistMain = (props) => {
     const tabletotalRecords = formActionType?.viewMode ? requestPayload?.vehicleDeliveryCheckList?.deliveryChecklistDtos?.length : checkListDataModified?.length;
     const tableProps = {
         isLoading: isChecklistDataLoading,
-        tableColumn: tableColumn({ handleButtonClick: handleCheckListClick, formActionType, aggregateForm, deliveryChecklist }),
+        tableColumn: tableColumn({ handleButtonClick: handleCheckListClick, formActionType, aggregateForm, checklistType: MODULE_TYPE_CONSTANTS?.DELIVERY_NOTE?.key }),
         tableData: tableShowData,
         showAddButton: false,
         setPage,
@@ -162,14 +166,15 @@ const DeliverableChecklistMain = (props) => {
         setRequestPayload,
         setPage,
         pageIntialState,
-        deliveryChecklist,
+        checklistType: MODULE_TYPE_CONSTANTS?.DELIVERY_NOTE?.key,
         checklistDescriptionLabel: 'Details',
+        matchKey: uniqueMatchKey,
         styles,
         isChecklistDataLoading,
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

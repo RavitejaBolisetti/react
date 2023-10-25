@@ -56,7 +56,6 @@ export const AMCRegistrationFormButton = ({ record, onCloseAction, handleWholeAM
                             {saveButtonName}
                         </Button>
                     )}
-                    {}
                 </Col>
             </Row>
         </div>

@@ -10,8 +10,6 @@ import { validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 
 const FMSForm = ({ formData, fmsForm, setFormDataSetter, formDataSetter, formActionType, handleFormValueChange }) => {
     const [isReadOnly, setisReadOnly] = useState(false);
-
-    const onFinishFailed = () => {};
     useEffect(() => {
         if ((formData === undefined || formData?.id === null || formData?.id === '') && !formActionType?.viewMode) {
             setisReadOnly(false);
@@ -24,13 +22,13 @@ const FMSForm = ({ formData, fmsForm, setFormDataSetter, formDataSetter, formAct
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
-    const onValuesChange = (values) => {
+    const onValuesChange = () => {
         const Myvalues = fmsForm.getFieldsValue();
         setFormDataSetter({ ...formDataSetter, fms: { ...Myvalues } });
     };
 
     return (
-        <Form form={fmsForm} onValuesChange={onValuesChange} onFieldsChange={handleFormValueChange} autoComplete="off" id="shieldForm" layout="vertical" onFinishFailed={onFinishFailed}>
+        <Form form={fmsForm} onValuesChange={onValuesChange} onFieldsChange={handleFormValueChange} autoComplete="off" id="shieldForm" layout="vertical">
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="FMS" name="fms">

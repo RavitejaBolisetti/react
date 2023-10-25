@@ -217,13 +217,13 @@ const CustomerMasterMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedCustomerId, defaultExtraParam]);
 
-    const onSuccessAction = (res) => {
+    const onSuccessAction = () => {
         setShowDataLoading(false);
         setRefreshCustomerList(false);
         // setFilterString();
     };
 
-    const onErrorAction = (res) => {
+    const onErrorAction = () => {
         setShowDataLoading(false);
         setRefreshCustomerList(false);
     };
@@ -245,13 +245,11 @@ const CustomerMasterMain = (props) => {
 
     useEffect(() => {
         if (customerType) {
-            // setFilterString({ current: 1 });
             setFilterString({ ...filterString, customerType });
             const defaultSection = customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION.CUSTOMER_DETAILS.id : CUSTOMER_CORPORATE_SECTION.CUSTOMER_DETAILS.id;
             setSetionName(customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION : CUSTOMER_CORPORATE_SECTION);
             setDefaultSection(defaultSection);
             setSection(defaultSection);
-            // setShowDataLoading(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [customerType]);
@@ -349,10 +347,6 @@ const CustomerMasterMain = (props) => {
         setPage,
     };
 
-    // const onChange = (sorter, filters) => {
-    //     form.resetFields();
-    // };
-
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
@@ -404,7 +398,7 @@ const CustomerMasterMain = (props) => {
         }
     };
 
-    const handleResetFilter = (e) => {
+    const handleResetFilter = () => {
         if (filterString) {
             setShowDataLoading(true);
         }
@@ -476,7 +470,6 @@ const CustomerMasterMain = (props) => {
         form,
         formActionType,
         setFormActionType,
-        onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
         titleOverride: drawerTitle.concat(moduleTitle),
@@ -559,11 +552,6 @@ const CustomerMasterMain = (props) => {
                                     </Form.Item>
                                 </Form>
                             </Col>
-                            {/* <Col xs={24} sm={24} md={10} lg={10} xl={10} className={styles.advanceFilterClear}>
-                                <Button type="primary" icon={<PlusOutlined />} onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                    Add
-                                </Button>
-                            </Col> */}
                         </Row>
                         {filterString && extraParams.find((i) => i.name) && (
                             <Row gutter={20}>

@@ -50,10 +50,6 @@ export const AdvancedSearchFrom = (props) => {
         }
     };
 
-    const onFinishFailed = () => {
-        return;
-    };
-
     const modalProps = {
         reset: true,
         submit: true,
@@ -71,7 +67,7 @@ export const AdvancedSearchFrom = (props) => {
     };
 
     return (
-        <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={filterString?.voucherType} label="Voucher Type" name="voucherType">

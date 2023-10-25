@@ -75,18 +75,6 @@ const ChangeHistoryMain = (props) => {
                     value: organizationId,
                     name: 'manufacturerOrgId',
                 },
-                // {
-                //     key: 'pageNumber',
-                //     title: 'pageNumber',
-                //     value: page?.current,
-                //     name: 'pageNumber',
-                // },
-                // {
-                //     key: 'pageSize',
-                //     title: 'pageSize',
-                //     value: page?.pageSize,
-                //     name: 'pageSize',
-                // },
             ];
             if (activeKey === isAdministrative) {
                 fetchAdminHierarchy({ setIsLoading: changeHistoryAdminShowLoading, userId, extraParams });

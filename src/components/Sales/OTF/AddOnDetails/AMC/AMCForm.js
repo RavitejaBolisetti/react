@@ -24,14 +24,13 @@ const AMCForm = ({ formData, amcForm, setFormDataSetter, formDataSetter, formAct
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
-    const onFinishFailed = () => {};
-    const onValuesChange = (values) => {
+    const onValuesChange = () => {
         const Myvalues = amcForm.getFieldsValue();
         setFormDataSetter({ ...formDataSetter, shield: { ...Myvalues } });
     };
 
     return (
-        <Form form={amcForm} onValuesChange={onValuesChange} onFieldsChange={handleFormValueChange} autoComplete="off" id="rsaForm" layout="vertical" onFinishFailed={onFinishFailed}>
+        <Form form={amcForm} onValuesChange={onValuesChange} onFieldsChange={handleFormValueChange} autoComplete="off" id="rsaForm" layout="vertical">
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="AMC" name="amc">

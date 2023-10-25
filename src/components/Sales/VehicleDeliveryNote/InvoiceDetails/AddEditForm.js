@@ -3,15 +3,15 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import dayjs from 'dayjs';
 
-import { Col, Input, Form, Row, Card, DatePicker, Space, AutoComplete, Select } from 'antd';
+import { Col, Input, Form, Row, Card, DatePicker, Space, Select } from 'antd';
 
 import { disableFutureDate, disableFieldsOnFutureDate } from 'utils/disableDate';
 import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
 import { validateRequiredSelectField } from 'utils/validation';
-import { preparePlaceholderSelect, preparePlaceholderText, preparePlaceholderAutoComplete } from 'utils/preparePlaceholder';
+import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import styles from 'assets/sass/app.module.scss';
 import { customSelectBox } from 'utils/customSelectBox';

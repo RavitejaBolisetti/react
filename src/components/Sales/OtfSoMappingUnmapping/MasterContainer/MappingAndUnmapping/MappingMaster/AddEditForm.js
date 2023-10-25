@@ -6,9 +6,6 @@
 import React, { useEffect } from 'react';
 import { withDrawer } from 'components/withDrawer';
 import styles from 'assets/sass/app.module.scss';
-//import SoStyles from 'components/Sales/OtfSoMappingUnmapping/Somapping.module.css';
-import SoStyles from 'assets/sass/Somapping.module.scss';
-
 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { converDateDayjs } from 'utils/formatDateTime';
@@ -19,7 +16,7 @@ import { DrawerFormButton } from 'components/common/Button';
 const { Search } = Input;
 
 const AddEditFormMain = (props) => {
-    const { isReadOnly = true, formData, form, handleOtfSearch, SearchTableProps, buttonData, setButtonData } = props;
+    const { isReadOnly = true, formData, form, handleOtfSearch, SearchTableProps } = props;
     const disableProps = { disabled: isReadOnly };
     useEffect(() => {
         if (formData) {
@@ -72,7 +69,6 @@ const AddEditFormMain = (props) => {
                         </Card>
                     </Col>
                 </Row>
-               
             </div>
             <DrawerFormButton {...props} />
         </>

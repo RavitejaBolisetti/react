@@ -264,11 +264,11 @@ export const AccountCategoryMain = (props) => {
         }
     };
 
-    const handleResetFilter = (e) => {
-        setFilterString();
-        listFilterForm.resetFields();
-        setShowDataLoading(false);
-    };
+    // const handleResetFilter = (e) => {
+    //     setFilterString();
+    //     listFilterForm.resetFields();
+    //     setShowDataLoading(false);
+    // };
 
     const handleClearInSearch = (e) => {
         if (e.target.value.length > 2) {
@@ -316,10 +316,6 @@ export const AccountCategoryMain = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {}).catch(err => console.error(err));
-    };
-
     const onCloseAction = () => {
         setFormEdit(false);
         form.resetFields();
@@ -346,7 +342,6 @@ export const AccountCategoryMain = (props) => {
         formActionType,
         setFormActionType,
         onFinish,
-        onFinishFailed,
 
         isVisible: isFormVisible,
         onCloseAction,
@@ -398,9 +393,8 @@ export const AccountCategoryMain = (props) => {
         filterString,
         from: listFilterForm,
         onFinish,
-        onFinishFailed,
         onSearchHandle,
-        handleResetFilter,
+        // handleResetFilter,
         handleClearInSearch,
         handleReferesh,
         handleButtonClick,

@@ -17,7 +17,7 @@ import { USER_TYPE_USER } from 'constants/modules/UserManagement/userType';
 
 const { Search } = Input;
 export default function AppliedAdvanceFilter(props) {
-    const { tableData = [], showAddButton = true, advanceFilter = false, title, filterString, from, onFinish, extraParams, removeFilter, handleResetFilter, handleClearInSearch, onSearchHandle, setAdvanceSearchVisible, handleReferesh, handleButtonClick, validator = searchValidator, downloadReport = false, handleDownloadReport = false, showChangeHistoryButton = false, showChangeHistoryList, handleCustomShowAdd = () => false } = props;
+    const { tableData = [], showAddButton = true, advanceFilter = false, title, filterString, from, onFinish, extraParams, removeFilter, handleResetFilter, handleClearInSearch, onSearchHandle, setAdvanceSearchVisible, handleReferesh, handleButtonClick, validator = searchValidator } = props;
     const { currentItem, handleToggleButton, isToggleBtnVisible = false } = props;
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();

@@ -9,8 +9,6 @@ import { Col, Input, Form, Row, Checkbox } from 'antd';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { CustomerListMaster } from 'components/utils/CustomerListModal';
 
-import styles from 'assets/sass/app.module.scss';
-
 export const AddressCommonForm = (props) => {
     const { formType, formData, handleOnChange, fnSetData, data, sameAsBookingCustomer } = props;
     const canUpdate = (formType === 'ownerCustomer' && !data?.ownerCustomer?.customerId) || formType === 'billingCustomer';

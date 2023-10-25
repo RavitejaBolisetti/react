@@ -35,11 +35,12 @@ export const AdvancedSearchFrom = (props) => {
         setFilterString({
             ...filterString,
             ...values,
+            current: 1,
             orderType: values?.orderType,
             fromDate: formatDate(values?.fromDate),
             toDate: formatDate(values?.toDate),
             purchaseOrderStatusCode: values?.status,
-            purchaseOrderNumber: values?.purchaseOrderNumber,
+            purchaseOrderNumber: values?.purchaseOrderNumber?.trim(),
             advanceFilter: true,
         });
         setAdvanceSearchVisible(false);

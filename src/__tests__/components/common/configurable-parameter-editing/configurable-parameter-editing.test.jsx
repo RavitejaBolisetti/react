@@ -23,6 +23,8 @@ const FormWrapper = (props) => {
     return <ConfigurableParameterEditing ConfigForm={myFormMock} {...props} />;
 };
 
+const data = [{ booleanValue: null, configurableParameterType: 'N', controlDescription: 'Kai', controlId: 'ACLOK', fromDate: null, fromNumber: 5, id: '106', isActive: true, textValue: null, toDate: null, toNumber: 6 }];
+
 afterEach(() => {
     jest.restoreAllMocks();
 });
@@ -260,5 +262,34 @@ describe('ConfigurableParameterEditing component button should work', () => {
 
         await waitFor(() => expect(saveData).toHaveBeenCalled());
         saveData.mock.calls[0][0].onSuccess(res);
+
+        fetchList.mock.calls[0][0].onSuccessAction();
+        fetchList.mock.calls[0][0].onErrorAction();
+    });
+
+    it('refresh buttons should work', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                ConfigurableParameterEditing: { isLoaded: true, data: data },
+            },
+        });
+
+        const fetchList = jest.fn();
+
+        customRender(
+            <Provider store={mockStore}>
+                <ConfigurableParameterEditing fetchList={fetchList} fetchDataList={jest.fn()} />
+            </Provider>
+        );
+
+        await waitFor(() => {
+            expect(screen.getByText('Kai')).toBeInTheDocument();
+        });
+
+        const refreshBtn = screen.getByTestId('refresh');
+        fireEvent.click(refreshBtn);
+
+        fetchList.mock.calls[0][0].onSuccessAction();
     });
 });

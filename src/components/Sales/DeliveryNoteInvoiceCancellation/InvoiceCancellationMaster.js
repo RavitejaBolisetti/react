@@ -17,7 +17,7 @@ import { AdvancedSearch } from './AdvancedSearch';
 import { showGlobalNotification } from 'store/actions/notification';
 import { DELIVERY_NOTE_INVOICE_STATUS } from './utils/DeliveryNoteInvoiceStatus';
 import { dateFormatView, converDateDayjs } from 'utils/formatDateTime';
-import { BASE_URL_DELIVERY_NOTE_INVOICE_CANCELLATION_SEARCH as customURL, BASE_URL_APPROVAL_CANCEL_REQUEST_URL } from 'constants/routingApi';
+import { BASE_URL_DELIVERY_NOTE_INVOICE_CANCELLATION_SEARCH as customURL, BASE_URL_DELIVERY_NOTE_INVOICE_CANCELLATION } from 'constants/routingApi';
 
 import { LANGUAGE_EN } from 'language/en';
 import { PARAM_MASTER } from 'constants/paramMaster';
@@ -25,6 +25,7 @@ import { getCodeValue } from 'utils/getCodeValue';
 
 import { deliveryNoteInvoiceCancellationDataAction } from 'store/actions/data/sales/deliveryNoteInvoiceCancellation';
 import AddEditForm from './AddEditForm';
+import { ConfirmationModal } from 'utils/ConfirmationModal';
 import styles from 'assets/sass/app.module.scss';
 
 const mapStateToProps = (state) => {
@@ -83,6 +84,7 @@ export const InvoiceCancellationMasterBase = (props) => {
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [confirmRequest, setConfirmRequest] = useState();
 
     const defaultBtnVisiblity = {
         closeBtn: true,
@@ -96,7 +98,8 @@ export const InvoiceCancellationMasterBase = (props) => {
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: true };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
-    const [page, setPage] = useState({ pageSize: 10, current: 1 });
+    const page = { pageSize: 10, current: 1 };
+
     const dynamicPagination = true;
 
     const [formData, setFormData] = useState([]);
@@ -117,7 +120,7 @@ export const InvoiceCancellationMasterBase = (props) => {
 
     const handleButtonQuery = (item) => {
         setInvoiceStatusType(item?.key);
-        setFilterString({ ...filterString, invoiceActionStatus: item?.key });
+        setFilterString({ ...filterString, invoiceActionStatus: item?.key, current: 1 });
         setShowDataLoading(true);
     };
 
@@ -181,25 +184,25 @@ export const InvoiceCancellationMasterBase = (props) => {
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: page?.pageSize,
+                value: filterString?.pageSize || page?.pageSize,
                 canRemove: true,
             },
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: page?.current,
+                value: filterString?.current || page?.current,
                 canRemove: true,
             },
             {
                 key: 'sortBy',
                 title: 'Sort By',
-                value: page?.sortBy,
+                value: filterString?.sortBy || page?.sortBy,
                 canRemove: true,
             },
             {
                 key: 'sortIn',
                 title: 'Sort Type',
-                value: page?.sortType,
+                value: filterString?.sortType || page?.sortType,
                 canRemove: true,
             },
         ];
@@ -212,13 +215,13 @@ export const InvoiceCancellationMasterBase = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId, customURL, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, extraParams]);
+    }, [userId, filterString]);
 
     useEffect(() => {
         const extraParams = [
             {
                 key: 'invoiceId',
-                value: formData?.invoiceId,
+                value: formData?.id,
             },
         ];
         if (userId && isFormVisible) {
@@ -243,10 +246,31 @@ export const InvoiceCancellationMasterBase = (props) => {
         setAdvanceSearchVisible(false);
     };
 
+    const rejectModalCloseAction = () => {
+        setConfirmRequest({
+            ...confirmRequest,
+            isVisible: false,
+        });
+        form.resetFields();
+    };
+
     const handleCancelRequest = () => {
+        setConfirmRequest({
+            isVisible: true,
+            titleOverride: 'Cancel Delivery/Invoice Cancellation Request',
+            text: 'Are you sure you want to cancel request?',
+            closable: true,
+            icon: false,
+            onCloseAction: rejectModalCloseAction,
+            onSubmitAction: (values) => onFinish(values),
+            submitText: 'Yes, Cancel',
+            showField: false,
+        });
+    };
+
+    const onFinish = (values) => {
+        setConfirmRequest({ isVisible: false });
         const data = {
-            // invoiceId: formData?.invoiceId,
-            // requestStatus: REQUEST_STATUS_CONSTANT?.OPEN?.key,
             id: formData?.id,
             action: DELIVERY_NOTE_INVOICE_STATUS?.REJECTED?.key,
             deliveryOrInvoiceId: formData?.invoiceId,
@@ -256,7 +280,6 @@ export const InvoiceCancellationMasterBase = (props) => {
             setShowDataLoading(true);
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, customURL, extraParams, onSuccessAction, onErrorAction });
-
             setButtonData({ ...buttonData, formBtnActive: false });
             setIsFormVisible(false);
         };
@@ -266,7 +289,7 @@ export const InvoiceCancellationMasterBase = (props) => {
         };
 
         const requestData = {
-            customURL: BASE_URL_APPROVAL_CANCEL_REQUEST_URL,
+            customURL: BASE_URL_DELIVERY_NOTE_INVOICE_CANCELLATION,
             data: data,
             method: 'put',
             setIsLoading: listShowLoading,
@@ -309,10 +332,6 @@ export const InvoiceCancellationMasterBase = (props) => {
         setFilterString({ ...filterString, advanceFilter: true, searchType: 'requestNumber', searchParam: `${searchValue}` });
     };
 
-    const onFinishFailed = (errorInfo) => {
-        return;
-    };
-
     const onCloseAction = () => {
         form.resetFields();
         form.setFieldsValue();
@@ -323,13 +342,15 @@ export const InvoiceCancellationMasterBase = (props) => {
     const tableProps = {
         dynamicPagination,
         totalRecords,
-        setPage,
+        setPage: setFilterString,
+        page: filterString,
         tableColumn: tableColumn({ handleButtonClick, typeData }),
         tableData: data,
         showAddButton: false,
         handleAdd: handleButtonClick,
         noMessge: LANGUAGE_EN.GENERAL.LIST_NO_DATA_FOUND.TITLE,
         invoiceStatusType,
+        filterString,
     };
 
     const removeFilter = (key) => {
@@ -358,7 +379,6 @@ export const InvoiceCancellationMasterBase = (props) => {
         filterString,
         setFilterString,
         from: listFilterForm,
-        onFinishFailed,
         title: '',
         handleButtonQuery,
         data,
@@ -416,6 +436,7 @@ export const InvoiceCancellationMasterBase = (props) => {
                 </Col>
             </Row>
             {formActionType?.viewMode && <AddEditForm {...formProps} />}
+            <ConfirmationModal {...confirmRequest} />
         </>
     );
 };

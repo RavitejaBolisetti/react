@@ -152,7 +152,7 @@ const ContactMain = (props) => {
                     setContactData((prev) => {
                         let formData = prev?.length ? [...prev] : [];
                         const index = formData?.findIndex((el) => el?.purposeOfContact === editingData?.purposeOfContact && el?.mobileNumber === editingData?.mobileNumber && el?.FirstName === editingData?.FirstName);
-                        formData.splice(index, 1, { relationCode: '', ...value});
+                        formData.splice(index, 1, { relationCode: '', ...value });
                         return [...formData];
                     });
                 } else {
@@ -268,9 +268,6 @@ const ContactMain = (props) => {
         contactform.resetFields();
     };
 
-    const onFinishFailed = (err) => {
-        console.error(err);
-    };
     const formSkeleton = (
         <Row>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -281,7 +278,7 @@ const ContactMain = (props) => {
 
     return (
         <>
-            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
                 <Row gutter={20} className={styles.drawerBodyRight}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <h2>{section?.title} </h2>

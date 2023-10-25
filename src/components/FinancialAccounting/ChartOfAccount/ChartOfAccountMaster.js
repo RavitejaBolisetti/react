@@ -95,7 +95,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, chartOfAccountExportCOAData, fetchChartOfExportCoaAccount, listShowLoadingChartOfExportCoaAccount, typeData, moduleTitle, viewTitle, userId, saveData, showGlobalNotification, fetchDealerCompanyLov, listShowLoadingDealerCompanyLov, dealerCompanyLovData, fetchChartOfAccountHierarchy, isDealerCompanyDataLoaded, listShowLoadingChartOfAccountHierachy, chartOfAccountHierarchy, isChartOfAccountLoaded, chartOfAccountData, listShowLoadingChartOfAccount, fetchChartOfAccount }) => {
+export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, fetchChartOfExportCoaAccount, listShowLoadingChartOfExportCoaAccount, typeData, moduleTitle, viewTitle, userId, saveData, showGlobalNotification, fetchDealerCompanyLov, listShowLoadingDealerCompanyLov, dealerCompanyLovData, fetchChartOfAccountHierarchy, isDealerCompanyDataLoaded, listShowLoadingChartOfAccountHierachy, chartOfAccountHierarchy, chartOfAccountData, listShowLoadingChartOfAccount, fetchChartOfAccount }) => {
     const [form] = Form.useForm();
     const [exportCoaForm] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
@@ -233,7 +233,7 @@ export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, chartOfA
 
     const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
 
-    const handleTreeViewClick = (keys, tree) => {
+    const handleTreeViewClick = (keys) => {
         form.resetFields();
         setViewData(null);
         setSelectedTreeKey(keys);
@@ -284,46 +284,40 @@ export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, chartOfA
     };
 
     const onCoaFinish = () => {
-        exportCoaForm
-            .validateFields()
-            .then(() => {
-                let data = exportCoaForm.getFieldsValue();
+        exportCoaForm.validateFields().then(() => {
+            let data = exportCoaForm.getFieldsValue();
+            const extraParams = [
+                {
+                    key: 'companyCode',
+                    value: companyCode,
+                },
+                {
+                    key: 'fromDate',
+                    value: formatDate(data?.fromDate),
+                },
+                {
+                    key: 'toDate',
+                    value: formatDate(data?.toDate),
+                },
+            ];
+
+            const onSuccessAction = (res) => {
                 const extraParams = [
                     {
-                        key: 'companyCode',
-                        value: companyCode,
-                    },
-                    {
-                        key: 'fromDate',
-                        value: formatDate(data?.fromDate),
-                    },
-                    {
-                        key: 'toDate',
-                        value: formatDate(data?.toDate),
+                        key: 'docId',
+                        title: 'docId',
+                        value: res?.data?.docId,
+                        name: 'docId',
                     },
                 ];
+                downloadFile({ setIsLoading: downloadShowLoading, userId, extraParams });
+                //resetData();
+            };
 
-                const onSuccessAction = (res) => {
-                    const extraParams = [
-                        {
-                            key: 'docId',
-                            title: 'docId',
-                            value: res?.data?.docId,
-                            name: 'docId',
-                        },
-                    ];
-                    downloadFile({ setIsLoading: downloadShowLoading, userId, extraParams });
-                    //resetData();
-                };
+            fetchChartOfExportCoaAccount({ setIsLoading: listShowLoadingChartOfExportCoaAccount, userId, extraParams, onSuccessAction });
 
-                fetchChartOfExportCoaAccount({ setIsLoading: listShowLoadingChartOfExportCoaAccount, userId, extraParams, onSuccessAction });
-
-                setModalOpen(false);
-            })
-    };
-
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { }).catch(err => console.error(err));
+            setModalOpen(false);
+        });
     };
 
     const handleButtonClick = (type) => {
@@ -355,7 +349,6 @@ export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, chartOfA
         setSelectedTreeKey,
         formActionType,
         isVisible: isFormVisible,
-        onFinishFailed,
         onCloseAction,
         titleOverride: (formActionType === FROM_ACTION_TYPE?.EDIT ? 'Edit ' : 'Add ').concat(moduleTitle),
         onFinish,
@@ -386,7 +379,6 @@ export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, chartOfA
         setModalOpen,
         exportCoaForm,
         onCoaFinish,
-        onFinishFailed,
     };
 
     const noDataTitle = 'Please choose Financial Company to view data';

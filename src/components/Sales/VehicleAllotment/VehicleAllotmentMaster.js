@@ -28,7 +28,6 @@ import { BASE_URL_VEHICLE_ALLOTMENT as customURL } from 'constants/routingApi';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { DisableParent, FindProductName } from 'components/common/ProductHierarchy/ProductHierarchyUtils';
 
-import { FilterIcon } from 'Icons';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
 
 const mapStateToProps = (state) => {

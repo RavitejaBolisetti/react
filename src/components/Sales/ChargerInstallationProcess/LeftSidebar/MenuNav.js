@@ -9,9 +9,8 @@ import { Timeline } from 'antd';
 import { CHARGER_INSTALLATION_SECTION } from 'constants/ChargerInstallationConstant';
 import { getSelectedMenuAttribute } from 'utils/getSelectedMenuAttribute';
 
-
 const MenuNav = (props) => {
-    const { currentSection, setCurrentSection, selectedOtfNumber, formActionType, vehicleInvoiceMasterData, selectedOrder: { orderStatus = false } = {} } = props;
+    const { currentSection, setCurrentSection, selectedOtfNumber, formActionType } = props;
     const receiptSectionList = Object.values(CHARGER_INSTALLATION_SECTION);
 
     const onHandle = (key) => {
@@ -20,13 +19,11 @@ const MenuNav = (props) => {
 
     const items = receiptSectionList
         ?.filter((i) => i?.displayOnList)
-        ?.map(
-            (item) => ({
-                dot: getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType })?.menuNavIcon,
-                children: <p onClick={() => onHandle(item?.id)}>{item?.title}</p>,
-                className: getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType })?.activeClassName,
-            })
-        );
+        ?.map((item) => ({
+            dot: getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType })?.menuNavIcon,
+            children: <p onClick={() => onHandle(item?.id)}>{item?.title}</p>,
+            className: getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType })?.activeClassName,
+        }));
 
     const finalItem = items?.filter((i) => i);
 

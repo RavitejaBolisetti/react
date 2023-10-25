@@ -37,7 +37,7 @@ jest.mock('@components/Sales/HoPriceMappingDealer/AddEditForm', () => {
 
 describe('HoPriceMappingMaster Component', () => {
     it('should render HoPriceMappingMaster component UI', () => {
-        customRender(<HoPriceMappingMaster />);       
+        customRender(<HoPriceMappingMaster />);
     });
 
     it('should render component with data', () => {
@@ -82,9 +82,9 @@ describe('HoPriceMappingMaster Component', () => {
     });
 
     it('advanced filters and apply button should work', async () => {
-        const value = ""
-        const handleFilterChange = jest.fn('stateCode', value)
-        customRender(<HoPriceMappingMaster handleFilterChange={handleFilterChange}/>);
+        const value = '';
+        const handleFilterChange = jest.fn('stateCode', value);
+        customRender(<HoPriceMappingMaster handleFilterChange={handleFilterChange} />);
         const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
         fireEvent.click(advanceFilter);
 
@@ -124,7 +124,7 @@ describe('HoPriceMappingMaster Component', () => {
 
         const fetchList = jest.fn();
         const fetchProductList = jest.fn();
-        const removeFilter = jest.fn('stateCode')
+        const removeFilter = jest.fn('stateCode');
 
         customRender(
             <Provider store={mockStore}>
@@ -193,7 +193,7 @@ describe('HoPriceMappingMaster Component', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <HoPriceMappingMaster isVisible={true} setButtonData={jest.fn()}  setIsFormVisible={jest.fn()} showGlobalNotification={jest.fn()} fetchProductList={jest.fn()} handleButtonClick={jest.fn()} resetData={jest.fn()} fetchList={fetchList} buttonData={buttonData} saveData={saveData} setFilterString={jest.fn()} />
+                <HoPriceMappingMaster isVisible={true} setButtonData={jest.fn()} setIsFormVisible={jest.fn()} showGlobalNotification={jest.fn()} fetchProductList={jest.fn()} handleButtonClick={jest.fn()} resetData={jest.fn()} fetchList={fetchList} buttonData={buttonData} saveData={saveData} setFilterString={jest.fn()} />
             </Provider>
         );
 
@@ -265,6 +265,82 @@ describe('HoPriceMappingMaster Component', () => {
                 <HoPriceMappingMaster isVisible={true} formActionType={formActionType} fetchProductList={jest.fn()} handleButtonClick={jest.fn()} resetData={jest.fn()} fetchList={fetchList} saveData={saveData} setFilterString={jest.fn()} />
             </Provider>
         );
+    });
 
+    it('test1', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                HoPriceMapping: {
+                    HoPriceMappingSearchList: { isLoaded: true, data: { paginationData: [{ city: 'JAGRA', dealerBranch: 'CHOWPATTY', dealerParent: 'GARG MOTORS', dealerSelectOnRoadPrice: true, enabledBy: 'Vimal', enabledDate: '2017-07-03T00:00:00.000+00:00', id: 'a75c676e-dd7e-4f05-ad12-aa4f9ded8fa5', modelDealerMapResponse: null, state: 'Jammu and Kashmir' }] } },
+                },
+            },
+        });
+
+        const fetchList = jest.fn();
+        const saveData = jest.fn();
+        const fetchDetail = jest.fn();
+        const buttonData = { editBtn: true };
+
+        customRender(
+            <Provider store={mockStore}>
+                <HoPriceMappingMaster isVisible={true} fetchDetail={fetchDetail} fetchProductList={jest.fn()} handleButtonClick={jest.fn()} resetData={jest.fn()} fetchList={fetchList} buttonData={buttonData} saveData={saveData} setFilterString={jest.fn()} />
+            </Provider>
+        );
+
+        fetchList.mock.calls[0][0].onErrorAction();
+
+        fetchList.mock.calls[0][0].onSuccessAction();
+
+        await waitFor(() => {
+            expect(screen.getByText('JAGRA')).toBeInTheDocument();
+        });
+
+        const viewBtn = screen.getByRole('button', { name: /fa-edit/i });
+
+        fireEvent.click(viewBtn);
+
+        const save = screen.getByRole('button', { name: 'Save' });
+        fireEvent.click(save);
+    });
+
+    it('test2', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                HoPriceMapping: {
+                    HoPriceMappingSearchList: { isLoaded: true, data: { paginationData: [{ city: 'JAGRA', dealerBranch: 'CHOWPATTY', dealerParent: 'GARG MOTORS', dealerSelectOnRoadPrice: true, enabledBy: 'Vimal', enabledDate: '2017-07-03T00:00:00.000+00:00', id: 'a75c676e-dd7e-4f05-ad12-aa4f9ded8fa5', modelDealerMapResponse: null, state: 'Jammu and Kashmir' }] } },
+                },
+            },
+        });
+
+        const fetchList = jest.fn();
+        const saveData = jest.fn();
+        const fetchDetail = jest.fn();
+        const buttonData = { editBtn: true };
+
+        customRender(
+            <Provider store={mockStore}>
+                <HoPriceMappingMaster isVisible={true} fetchDetail={fetchDetail} fetchProductList={jest.fn()} handleButtonClick={jest.fn()} resetData={jest.fn()} fetchList={fetchList} buttonData={buttonData} saveData={saveData} setFilterString={jest.fn()} />
+            </Provider>
+        );
+
+        fetchList.mock.calls[0][0].onErrorAction();
+
+        fetchList.mock.calls[0][0].onSuccessAction();
+
+        await waitFor(() => {
+            expect(screen.getByText('JAGRA')).toBeInTheDocument();
+        });
+
+        const viewBtn = screen.getByRole('button', { name: /ai-view/i });
+
+        fireEvent.click(viewBtn);
+
+        const editBtn = screen.getAllByRole('button', { name: /edit/i });
+        fireEvent.click(editBtn[0]);
+
+        const save = screen.getByRole('button', { name: 'Save' });
+        fireEvent.click(save);
     });
 });

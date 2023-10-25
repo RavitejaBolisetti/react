@@ -41,7 +41,6 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         detailData,
-        //isDataLoaded,
     };
     return returnValue;
 };
@@ -60,12 +59,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const AddEditFormMain = (props) => {
-    const { form, formData, onCloseAction, formActionType, formActionType: { viewMode } = undefined, onFinish, onFinishFailed, typeData } = props;
+    const { form, formData, onCloseAction, formActionType, formActionType: { viewMode } = undefined, onFinish, typeData } = props;
     const { buttonData, setButtonData, handleButtonClick } = props;
-    const { data, productHierarchyList, viewVehicleAllotData, roleData, filterDesignationDropdownList,setFilterDesignationDropdownList } = props;
-    // const{ formEdit, setFormEdit, editForm} = props;
-    // const { filterDesignationList, setFilterDesignationList, } = props;
-    // const [openAccordian, setOpenAccordian] = useState(1);
+    const { data, productHierarchyList, viewVehicleAllotData, roleData } = props;
 
     const getRoleName = (value) => {
         return roleData?.find((i) => i?.key === value)?.value;
@@ -82,15 +78,10 @@ const AddEditFormMain = (props) => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
 
-    // const handleCollapse = (key) => {
-    //     setOpenAccordian((prev) => (prev === key ? '' : key));
-    // };
-
     const viewProps = {
         isVisible: viewMode,
         formData: viewVehicleAllotData,
         styles,
-        // vehiclePriority,
         typeData,
         formActionType,
         roleData,
@@ -114,7 +105,7 @@ const AddEditFormMain = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBody}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     {viewMode ? (
@@ -141,23 +132,22 @@ const AddEditFormMain = (props) => {
                                     {/* <Form.Item label="Effective To Date" initialValue={formatDateToCalenderDate(formData?.effectiveToDate)} name="effectiveToDate" rules={[validateRequiredInputField('Effective To Date')]}>
                                         <DatePicker disabled={formActionType?.editMode ? true : false} disabledDate={disablePastDate} format={dateFormat} placeholder={prepareDatePickerText(dateFormat)} />
                                     </Form.Item> */}
-                    <Form.Item
-                        initialValue={formatDateToCalenderDate(formData?.effectiveToDate)}
-                        label="Effective To Date"
-                        name="effectiveToDate"
-                        rules={[
-                            validateRequiredSelectField('Effective To Date'),
-                            {
-                                validator: (_, value) => {
-                                    return form.getFieldValue('effectiveFromDate') ? CheckDateEffectiveTo(value, form?.getFieldValue('effectiveFromDate')) : null;
-                                },
-                            },
-                        ]}
-                        className={styles?.datePicker}
-                        
-                    >
-                        <DatePicker format={dateFormat} placeholder={prepareDatePickerText(dateFormat)} disabledDate={disablePastDate} className={styles.fullWidth} />
-                    </Form.Item>
+                                    <Form.Item
+                                        initialValue={formatDateToCalenderDate(formData?.effectiveToDate)}
+                                        label="Effective To Date"
+                                        name="effectiveToDate"
+                                        rules={[
+                                            validateRequiredSelectField('Effective To Date'),
+                                            {
+                                                validator: (_, value) => {
+                                                    return form.getFieldValue('effectiveFromDate') ? CheckDateEffectiveTo(value, form?.getFieldValue('effectiveFromDate')) : null;
+                                                },
+                                            },
+                                        ]}
+                                        className={styles?.datePicker}
+                                    >
+                                        <DatePicker format={dateFormat} placeholder={prepareDatePickerText(dateFormat)} disabledDate={disablePastDate} className={styles.fullWidth} />
+                                    </Form.Item>
                                 </Col>
                             </Row>
 
@@ -183,10 +173,10 @@ const AddEditFormMain = (props) => {
                                     ))}
                                 </>
                             )}
-                            {formActionType.addMode === true && (                                 
+                            {formActionType.addMode === true && (
                                 <Card style={{ backgroundColor: '#BEBEBE1A' }}>
                                     <NotificationDetailMaster {...props} />
-                                </Card>                                
+                                </Card>
                             )}
                         </>
                     )}

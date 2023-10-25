@@ -13,7 +13,8 @@ const FormWrapper = (props) =>{
     const [apportionForm] = Form.useForm();
     const myMock = {
         ...apportionForm,
-        setFieldsValue:jest.fn()
+        setFieldsValue:jest.fn(),
+        validateFields:jest.fn()
     }
     return <ApportionAddEditForm apportionForm={myMock} {...props} />
 }
@@ -23,6 +24,18 @@ afterEach(() => {
 });
 
 describe('ApportionAddEditForm component', () => {
+    it('apportionTableData',()=>{
+        const documentTypeOptions = [{voucherNumber:'123', voucherType:'CRN'}];
+        const apportionTableData = [{documentType:'abc00', documentDescription:'test60'}];
+
+        customRender(<FormWrapper isVisible={true} apportionTableData={apportionTableData} documentTypeOptions={documentTypeOptions} setDocumentTypeOptions={jest.fn()} />);
+
+    })
+    it('apportionTableFormData', ()=>{
+        const apportionTableFormData = {documentType:'ac00', documentNumber:'4001', documentAmount:'67', settledAmount:'97', balancedAmount:'74', writeOffAmount:'76', apportionAmount:'70', id:'123'};
+
+        customRender(<FormWrapper isVisible={true} apportionTableFormData={apportionTableFormData} />);
+    })
     
     it("close button",()=>{
         customRender(<ApportionAddEditForm isVisible={true} />);
@@ -37,16 +50,4 @@ describe('ApportionAddEditForm component', () => {
         const searchBtn = screen.getByRole('button', {name:"search"});
         fireEvent.click(searchBtn);
     });
-
-    it("Cancel button",()=>{
-        customRender(<ApportionAddEditForm isVisible={true} />);
-
-        const cancelBtn = screen.getByRole('button', {name:"Cancel"});
-        fireEvent.click(cancelBtn);
-    })
-
-    it('render textbox and save Button', ()=>{
-        const documentTypeOptions = [{documentDescription:'abc', documentCode:'123', documentType:'test'}];
-        customRender(<FormWrapper isVisible={true}  documentTypeOptions={documentTypeOptions} setDocumentTypeOptions={jest.fn()} />);
-    })
 })

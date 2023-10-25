@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Form, Col, Row, Button, Divider } from 'antd';
+import { Form, Col, Row, Button } from 'antd';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import TreeSelectField from 'components/common/TreeSelectField';

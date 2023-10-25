@@ -31,12 +31,6 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             width: '20%',
         }),
 
-        // tblPrepareColumns({
-        //     title: 'Mobile No.',
-        //     dataIndex: 'mobileNumber',
-        //     width: '14%',
-        // }),
-
         tblPrepareColumns({
             title: 'Model Description',
             dataIndex: 'model',

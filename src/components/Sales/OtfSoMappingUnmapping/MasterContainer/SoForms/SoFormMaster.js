@@ -4,9 +4,8 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useMemo } from 'react';
-import { Card, Row, Col, Space, Divider, Typography, Button, Form, Select } from 'antd';
+import { Card, Row, Col, Space, Typography, Button, Form, Select } from 'antd';
 import styles from 'assets/sass/app.module.scss';
-//import SoStyles from 'components/Sales/OtfSoMappingUnmapping/Somapping.module.css';
 import SoStyles from 'assets/sass/Somapping.module.scss';
 import { AddEditForm } from './AddEditForm';
 import { PARAM_MASTER } from 'constants/paramMaster';
@@ -16,7 +15,7 @@ import { FORM_TYPE_CONSTANSTS, OTF_SO_MAPPING_UNMAPPING_CONSTANTS, CARD_TITLE_CO
 const { Text } = Typography;
 
 const SoFormMasterMain = (props) => {
-    const { selectedKey, isReadOnly = true, status, SoForm, handleFormChange, onFinish, onFinishFailed, handleCancel, typeData, DealerParentData, handleDealerParent, LocationData, handleClear } = props;
+    const { selectedKey, isReadOnly = true, status, SoForm, handleFormChange, onFinish, handleCancel, typeData, DealerParentData, handleDealerParent, LocationData, handleClear } = props;
     const { isLocationLoading = false } = props;
     const disabledProps = { disabled: isReadOnly };
     const handleTitle = useMemo(() => {
@@ -46,7 +45,6 @@ const SoFormMasterMain = (props) => {
                         form={SoForm}
                         onFieldsChange={handleFormChange}
                         onFinish={onFinish}
-                        onFinishFailed={onFinishFailed}
                         colon={false}
                         layout="horizontal"
                     >
@@ -66,7 +64,7 @@ const SoFormMasterMain = (props) => {
                                         </Col>
                                     </Row>
                                     <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} >
+                                        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                                             <Space direction="vertical" size="small" className={SoStyles.otfMappingContaner}>
                                                 <Text className={SoStyles.headerBg}> {handleTitle?.title1} </Text>
                                                 <Card className={SoStyles.fullHeight}>
@@ -74,7 +72,7 @@ const SoFormMasterMain = (props) => {
                                                 </Card>
                                             </Space>
                                         </Col>
-                                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} >
+                                        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                                             <Space direction="vertical" size="small" className={SoStyles.otfMappingContaner}>
                                                 <Text className={SoStyles.headerBg}> {handleTitle?.title2} </Text>
                                                 <Card className={SoStyles.fullHeight}>
@@ -84,7 +82,7 @@ const SoFormMasterMain = (props) => {
                                         </Col>
                                     </Row>
                                     <Row gutter={20} className={SoStyles.descriptionSection}>
-                                        <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} >
+                                        <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                             <Form.Item label="Reason Category" name="resonCategoryCode" rules={[validateRequiredSelectField('reason category')]}>
                                                 <Select options={typeData[PARAM_MASTER?.SO_RC?.id]} fieldNames={{ label: 'value', value: 'key' }} placeholder="Select" allowClear showSearch optionFilterProp="value" />
                                             </Form.Item>

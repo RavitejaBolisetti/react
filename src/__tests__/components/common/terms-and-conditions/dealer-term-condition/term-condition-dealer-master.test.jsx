@@ -17,10 +17,15 @@ jest.mock('components/common/TermsAndConditions/DealerTermCondition/AddEditForm'
     const values = {
         termConditionDescription: 'Hello',
     };
-    const AddEditForm = ({ onFinish }) => (
-        <div>
-            <button onClick={onFinish(values)}>Save</button>
-        </div>
+    const AddEditForm = ({ onCloseAction, onFinish }) => (
+        <>
+            <div>
+                <button onClick={onFinish(values)}>Save</button>
+            </div>
+            <div>
+                <button onClick={onCloseAction}>Cancel</button>
+            </div>
+        </>
     );
     return {
         __esModule: true,
@@ -136,6 +141,10 @@ describe('Term Condition Dealer Master components', () => {
 
         const editBtn = screen.getByTestId('edit');
         fireEvent.click(editBtn);
+
+        const closeBtn = screen.getByRole('button', { name: 'Cancel' });
+
+        fireEvent.click(closeBtn);
 
         const saveBtn = screen.getByRole('button', { name: 'Save' });
         fireEvent.click(saveBtn);

@@ -6,25 +6,57 @@
 import React from 'react';
 import moment from 'moment';
 
-import { Col, Input, Form, Row, DatePicker, InputNumber, Select, Switch, Typography } from 'antd';
+import { Col, Input, Form, Row, DatePicker, InputNumber, Select, Switch } from 'antd';
 
 import { convertDateTimedayjs, dateFormatView } from 'utils/formatDateTime';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces, validateOnlyPositiveNumber } from 'utils/validation';
-import { FORMTYPE_CONSTANTS } from 'constants/FormtypeConstants';
+import { MODULE_TYPE_CONSTANTS } from 'constants/modules/vehicleChecklistConstants';
+import { FORMTYPE_CONSTANTS } from 'constants/formTypeConstant';
+
 import styles from 'assets/sass/app.module.scss';
-const { Text } = Typography;
-export const BindFormAndResult = ({ data, aggregateForm, deliveryChecklist = false }) => {
+
+export const noDataAvalaible = 'NA';
+
+export const FORM_KEYS = {
+    answerText: undefined,
+    answerFromDate: undefined,
+    answerToDate: undefined,
+    answerBoolean: undefined,
+    answerFromNumber: undefined,
+    answerToNumber: undefined,
+    answerDescription: undefined,
+    answerFromNumberDecimal: undefined,
+    answerToNumberDecimal: undefined,
+};
+
+const setQuestionlabel = (checklistType, data) => {
+    switch (checklistType) {
+        case MODULE_TYPE_CONSTANTS?.RECEIPT_CHECKLIST?.key: {
+            return data?.checkPoint
+                ? data?.checkPoint
+                      ?.split(' ')
+                      ?.map((item) => item?.charAt(0)?.toUpperCase() + item?.slice(1)?.toLowerCase())
+                      ?.join(' ')
+                : noDataAvalaible;
+        }
+        case MODULE_TYPE_CONSTANTS?.DELIVERY_NOTE?.key: {
+            return data?.checklistDescription
+                ? data?.checklistDescription
+                      ?.split(' ')
+                      ?.map((item) => item?.charAt(0)?.toUpperCase() + item?.slice(1)?.toLowerCase())
+                      ?.join(' ')
+                : noDataAvalaible;
+        }
+        default: {
+            return noDataAvalaible;
+        }
+    }
+};
+export const BindFormAndResult = ({ data, aggregateForm, checklistType }) => {
     const UniqueAnsType = data?.answerType?.toLowerCase() && data?.answerType?.toLowerCase();
-    const noDataAvalaible = 'NA';
-    const QuestionLabel =
-        (data?.checklistDescription &&
-            deliveryChecklist &&
-            data?.checklistDescription
-                ?.split(' ')
-                ?.map((item) => item?.charAt(0)?.toUpperCase() + item?.slice(1)?.toLowerCase())
-                ?.join(' ')) ||
-        '';
+    const QuestionLabel = setQuestionlabel(checklistType, data);
+
     let checkResult = '';
     let formItem = (
         <Row gutter={20}>
@@ -36,7 +68,7 @@ export const BindFormAndResult = ({ data, aggregateForm, deliveryChecklist = fal
         </Row>
     );
     switch (UniqueAnsType) {
-        case FORMTYPE_CONSTANTS?.DATE_RANGE?.id?.toLowerCase(): {
+        case FORMTYPE_CONSTANTS?.DATE_RANGE?.key?.toLowerCase(): {
             if (data?.answerFromDate && data?.answerToDate) {
                 checkResult = checkResult.concat(data?.answerFromDate ? convertDateTimedayjs(data?.answerFromDate, dateFormatView) : 'NA');
                 checkResult = checkResult.concat('-');
@@ -64,7 +96,7 @@ export const BindFormAndResult = ({ data, aggregateForm, deliveryChecklist = fal
             break;
         }
 
-        case FORMTYPE_CONSTANTS?.TOGGLE_GROUP?.id?.toLowerCase(): {
+        case FORMTYPE_CONSTANTS?.TOGGLE_GROUP?.key?.toLowerCase(): {
             if (!data?.answerBoolean) {
                 if (data?.answerBoolean === false) {
                     checkResult = 'No';
@@ -85,7 +117,7 @@ export const BindFormAndResult = ({ data, aggregateForm, deliveryChecklist = fal
             );
             break;
         }
-        case FORMTYPE_CONSTANTS?.NUMBER_RANGE_WITHOUT_DECIMAL?.id?.toLowerCase(): {
+        case FORMTYPE_CONSTANTS?.NUMBER_RANGE_WITHOUT_DECIMAL?.key?.toLowerCase(): {
             if (data?.answerFromNumber && data?.answerToNumber) {
                 checkResult = checkResult.concat(data?.answerFromNumber ?? 'NA');
                 checkResult = checkResult.concat('-');
@@ -111,7 +143,7 @@ export const BindFormAndResult = ({ data, aggregateForm, deliveryChecklist = fal
                                     validateOnlyPositiveNumber('max range'),
                                     {
                                         validator: (_, value) => {
-                                            if (!value) return;
+                                            if (!value) return Promise.resolve();
                                             if (value < aggregateForm.getFieldValue('answerFromNumber')) {
                                                 return Promise.reject(`Max range can't be less than Min Range`);
                                             }
@@ -128,11 +160,11 @@ export const BindFormAndResult = ({ data, aggregateForm, deliveryChecklist = fal
             );
             break;
         }
-        case FORMTYPE_CONSTANTS?.NUMBER_RANGE_WITH_DECIMAL?.id?.toLowerCase(): {
-            if (data?.answerFromNumber && data?.answerToNumber) {
-                checkResult = checkResult.concat(data?.answerFromNumber ?? 'NA');
+        case FORMTYPE_CONSTANTS?.NUMBER_RANGE_WITH_DECIMAL?.key?.toLowerCase(): {
+            if (data?.answerFromNumberDecimal && data?.answerToNumberDecimal) {
+                checkResult = checkResult.concat(data?.answerFromNumberDecimal ?? 'NA');
                 checkResult = checkResult.concat('-');
-                checkResult = checkResult.concat(data?.answerToNumber ?? 'NA');
+                checkResult = checkResult.concat(data?.answerToNumberDecimal ?? 'NA');
             } else {
                 checkResult = noDataAvalaible;
             }
@@ -141,20 +173,20 @@ export const BindFormAndResult = ({ data, aggregateForm, deliveryChecklist = fal
                     <p className={styles?.marB10}>{QuestionLabel}</p>
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item name="answerFromNumber" rules={[validateRequiredInputField('min range'), validateNumberWithTwoDecimalPlaces('min range')]}>
+                            <Form.Item name="answerFromNumberDecimal" rules={[validateRequiredInputField('min range'), validateNumberWithTwoDecimalPlaces('min range')]}>
                                 <InputNumber className={styles.fullWidth} precision={2} placeholder={preparePlaceholderText('Min Range')} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item
-                                name="answerToNumber"
+                                name="answerToNumberDecimal"
                                 rules={[
                                     validateRequiredInputField('max range'),
                                     validateNumberWithTwoDecimalPlaces('max range'),
                                     {
                                         validator: (_, value) => {
-                                            if (!value) return;
-                                            if (value < aggregateForm.getFieldValue('answerFromNumber')) {
+                                            if (!value) return Promise.resolve();
+                                            if (value < aggregateForm.getFieldValue('answerFromNumberDecimal')) {
                                                 return Promise.reject(`Max range can't be less than Min Range`);
                                             }
                                             return Promise.resolve();
@@ -170,7 +202,7 @@ export const BindFormAndResult = ({ data, aggregateForm, deliveryChecklist = fal
             );
             break;
         }
-        case FORMTYPE_CONSTANTS?.FIXED_OPTIONS?.id?.toLowerCase(): {
+        case FORMTYPE_CONSTANTS?.FIXED_OPTIONS?.key?.toLowerCase(): {
             const AnswerResponseSelction = (value, valueObj) => {
                 if (!value) return false;
                 aggregateForm.setFieldValue('answerDescription', valueObj?.answerDescription);
@@ -195,7 +227,7 @@ export const BindFormAndResult = ({ data, aggregateForm, deliveryChecklist = fal
             );
             break;
         }
-        case FORMTYPE_CONSTANTS?.OPEN_TEXT?.id?.toLowerCase(): {
+        case FORMTYPE_CONSTANTS?.OPEN_TEXT?.key?.toLowerCase(): {
             checkResult = data?.answerText ?? noDataAvalaible;
             formItem = (
                 <Row gutter={20}>
@@ -208,7 +240,7 @@ export const BindFormAndResult = ({ data, aggregateForm, deliveryChecklist = fal
             );
             break;
         }
-        case FORMTYPE_CONSTANTS?.NUMBER_WITHOUT_DECIMAL?.id?.toLowerCase(): {
+        case FORMTYPE_CONSTANTS?.NUMBER_WITHOUT_DECIMAL?.key?.toLowerCase(): {
             if (data?.answerFromNumber) {
                 checkResult = checkResult.concat(data?.answerFromNumber ?? 'NA');
             } else {
@@ -226,16 +258,16 @@ export const BindFormAndResult = ({ data, aggregateForm, deliveryChecklist = fal
             );
             break;
         }
-        case FORMTYPE_CONSTANTS?.NUMBER_WITH_DECIMAL?.id?.toLowerCase(): {
-            if (data?.answerFromNumber) {
-                checkResult = checkResult.concat(data?.answerFromNumber ?? 'NA');
+        case FORMTYPE_CONSTANTS?.NUMBER_WITH_DECIMAL?.key?.toLowerCase(): {
+            if (data?.answerFromNumberDecimal) {
+                checkResult = checkResult.concat(data?.answerFromNumberDecimal ?? 'NA');
             } else {
-                checkResult = data?.answerFromNumber ?? noDataAvalaible;
+                checkResult = data?.answerFromNumberDecimal ?? noDataAvalaible;
             }
             formItem = (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item label={QuestionLabel} name="answerFromNumber" rules={[validateRequiredInputField('Number'), validateNumberWithTwoDecimalPlaces('Number')]}>
+                        <Form.Item label={QuestionLabel} name="answerFromNumberDecimal" rules={[validateRequiredInputField('Number'), validateNumberWithTwoDecimalPlaces('Number')]}>
                             <InputNumber precision={2} className={styles.fullWidth} placeholder={preparePlaceholderText('Number')} />
                         </Form.Item>
                     </Col>
@@ -243,7 +275,7 @@ export const BindFormAndResult = ({ data, aggregateForm, deliveryChecklist = fal
             );
             break;
         }
-        case FORMTYPE_CONSTANTS?.DATE?.id?.toLowerCase(): {
+        case FORMTYPE_CONSTANTS?.DATE?.key?.toLowerCase(): {
             if (data?.answerFromDate) {
                 checkResult = checkResult.concat(data?.answerFromDate ? convertDateTimedayjs(data?.answerFromDate, dateFormatView) : 'NA');
             } else {

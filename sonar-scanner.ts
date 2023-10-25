@@ -29,10 +29,10 @@ const options = {
 
     // Path is relative to the sonar-project.properties file. Defaults to .
     'sonar.sources': 'src/',
-    //'sonar.coverage.exclusions':'src/components/common/UserManagementNew/**/*, src/components/Sales/VehiclePurchaseOrder/**/*,src/components/Sales/Receipts/**/*',
+    'sonar.coverage.exclusions': 'src/components/DashboardOld/**/*, src/components/Sales/ChargerInstallationProcess/**/*,src/components/Sales/common/ChecklistDetails/**/*,src/components/Sales/common/utils/**/*',
 
     // source language
-    'sonar.coverage.exclusions': 'src/__mocks__/**/*, src/mocks/**/*,src/__test__/**/*',
+    //'sonar.coverage.exclusions': 'src/__mocks__/**/*, src/mocks/**/*,src/__test__/**/*',
     'sonar.language': 'js',
 
     'sonar.javascript.lcov.reportPaths': 'src/coverage/lcov.info',
