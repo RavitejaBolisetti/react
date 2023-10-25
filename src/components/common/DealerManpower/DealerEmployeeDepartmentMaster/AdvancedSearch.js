@@ -32,7 +32,6 @@ export const AdvancedSearchFrom = (props) => {
         optionFilterProp: 'children',
         showSearch: true,
         allowClear: true,
-        // className: styles.headerSelectField,
     };
     const modalProps = {
         reset: true,

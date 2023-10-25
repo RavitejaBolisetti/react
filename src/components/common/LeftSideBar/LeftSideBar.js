@@ -90,11 +90,6 @@ const LeftSideBarMain = (props) => {
     const [selectedMenuId, setSelectedMenuId] = useState();
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
 
-    // const onMenuClick = (id = 'Sales') => {
-    // const element = document.getElementById(id)?.closest('ul');
-    // element?.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
-    // };
-
     useEffect(() => {
         if (menuId) {
             setSelectedMenuId(menuId);
@@ -134,12 +129,6 @@ const LeftSideBarMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filter]);
-
-    // const handleThemeChange = () => {
-    //     const changeTheme = theme === 'dark' ? 'light' : 'dark';
-    //     localStorage.setItem('theme', changeTheme);
-    //     setTheme(changeTheme);
-    // };
 
     const onSubmit = (value, type) => {
         setCollapsed(value);

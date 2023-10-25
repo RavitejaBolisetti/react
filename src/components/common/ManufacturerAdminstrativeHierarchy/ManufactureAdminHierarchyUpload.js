@@ -113,24 +113,6 @@ const UploadMain = (props) => {
         });
     };
 
-    // const handleTemplateDownLoad = () => {
-    //     const filteredTypeData = typeData[PARAM_MASTER.FILE_DOWNLOAD_TMPLT.id].filter((value) => value.key === PARAM_MASTER.ADMINAUTHTMPLT.id);
-    //     let templateID = null;
-    //     if (filteredTypeData.length === 1) {
-    //         templateID = filteredTypeData[0];
-    //     }
-    //     const extraParams = [
-    //         {
-    //             key: 'docId',
-    //             title: 'docId',
-    //             value: templateID?.value,
-    //             name: 'docId',
-    //         },
-    //     ];
-
-    //     downloadFile({ setIsLoading: listShowLoading, userId, extraParams });
-    // };
-
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };

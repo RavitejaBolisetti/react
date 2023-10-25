@@ -308,9 +308,6 @@ export const ListRoleMasterBase = (props) => {
         setAdvanceSearchVisible(false);
         advanceFilterForm.resetFields();
         extraParams[0]?.value && setFilteredDepartmentData(departmentData?.filter((i) => i?.parentKey === extraParams[0]?.value));
-
-        // setFilteredDepartmentData([]);
-        // advanceFilterForm.setFieldsValue({ departmentCode: undefined });
     };
 
     const handleResetFilter = () => {
@@ -324,7 +321,6 @@ export const ListRoleMasterBase = (props) => {
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
 
-        //icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
         resetData,
         onCloseAction: onAdvanceSearchCloseAction,

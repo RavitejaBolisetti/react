@@ -3,8 +3,6 @@ import { Alert, Form, Input, Switch, Row, Col, message as antMessage, Select } f
 import { connect } from 'react-redux';
 
 import { geoCountryDataActions } from 'store/actions/data/geo/countries';
-// import { handleCheckUniqueFieldsCommon } from 'utils/checkIfExists';
-
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber, validateAlphanumericWithSpace, validationNumber } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
@@ -66,8 +64,6 @@ export const AddEditFormBase = (props) => {
             }
         }
     }
-
-    // const handleCheckIfExists = handleCheckUniqueFieldsCommon({ urlString: 'countries' })(props.token);
 
     return (
         <div className={styles.addEditFormSection}>
