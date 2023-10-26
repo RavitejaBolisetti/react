@@ -9,7 +9,6 @@ import { Col, Form, Row, DatePicker } from 'antd';
 import { withModal } from 'components/withModal';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { disableFutureDate } from 'utils/disableDate';
-import dayjs from 'dayjs';
 
 import { ModalButtons } from 'components/common/Button';
 import { STOCK_TRANSFER } from 'constants/StockTransfer';

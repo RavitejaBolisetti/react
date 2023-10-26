@@ -24,10 +24,6 @@ export const AddRequestModalForm = (props) => {
     //     // eslint-disable-next-line react-hooks/exhaustive-deps
     // }, [filterString]);
 
-    const onFinishFailed = () => {
-        return;
-    };
-
     // const CheckDateEffectiveTo = (value, effectiveFrom) => {
     //     if (!value) return Promise.resolve();
     //     const bool = dayjs(value).format('YYYY-MM-DD') >= dayjs(effectiveFrom).format('YYYY-MM-DD');

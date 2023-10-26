@@ -251,7 +251,7 @@ export const OnRoadPriceMasterBase = (props) => {
         // showLoading(true);
         setFormData(record);
         setIsFormVisible(true);
-        
+
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
@@ -317,8 +317,6 @@ export const OnRoadPriceMasterBase = (props) => {
             form.resetFields();
             fetchOnRoadPriceList({ setIsLoading: listVehiclePriceShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-
-       
         };
 
         const onError = (res, data) => {
@@ -350,7 +348,9 @@ export const OnRoadPriceMasterBase = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {}).catch(err => console.error(err));
+        form.validateFields()
+            .then((values) => {})
+            .catch((err) => console.error(err));
     };
 
     const onCloseAction = () => {
@@ -525,7 +525,6 @@ export const OnRoadPriceMasterBase = (props) => {
         showGlobalNotification,
     };
 
-
     return (
         <>
             <AdvanceOnRoadPriceMasterFilter {...advanceFilterResultProps} />
@@ -537,7 +536,6 @@ export const OnRoadPriceMasterBase = (props) => {
             <AdvancedSearch {...advanceFilterProps} />
             {formActionType?.editMode ? <AddEditForm {...viewProps} /> : <ViewDetail {...viewProps} />}
 
-            
             <OnRoadPriceMasterUpload {...uploadProps} />
         </>
     );

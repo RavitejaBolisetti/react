@@ -42,7 +42,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         common: {
             Header: {
-                data: { dealerLocations: dealerLocations = [], parentGroupCode },
+                data: { dealerLocations = [], parentGroupCode },
             },
         },
         data: {

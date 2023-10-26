@@ -91,7 +91,6 @@ export const AddOnDetailsMasterMain = (props) => {
     const [addOnItemInfo, setAddOnItemInfo] = useState([]);
     const [openAccordian, setOpenAccordian] = useState();
     const [accessoryForm] = Form.useForm();
-    const [muiltipleFormData, setMultipleFormData] = useState({ ...AddonDetailsData });
     const [shieldForm] = Form.useForm();
     const [rsaForm] = Form.useForm();
     const [amcForm] = Form.useForm();
@@ -256,7 +255,7 @@ export const AddOnDetailsMasterMain = (props) => {
         schemeDescriptionDatamain,
         setRegisterDisabled,
         registerDisabled,
-        muiltipleFormData,
+        muiltipleFormData: AddonDetailsData,
         handleAmcDescriptionData,
     };
 

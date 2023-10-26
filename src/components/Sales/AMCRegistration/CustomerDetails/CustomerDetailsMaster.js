@@ -16,7 +16,7 @@ import styles from 'assets/sass/app.module.scss';
 const CustomerDetailsMasterBase = (props) => {
     const { typeData, selectedOrderId } = props;
     const { userId, buttonData, setButtonData, section, isDataLoaded, isLoading } = props;
-    const { otfData, form, fetchCustomerList, formActionType, selectedOtfNumber, setSelectedOtfNumber, handleFormValueChange } = props;
+    const { otfData, form, fetchCustomerList, formActionType, selectedOtfNumber, setSelectedOtfNumber } = props;
     const { FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch } = props;
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [activeKey, setActiveKey] = useState([3]);
