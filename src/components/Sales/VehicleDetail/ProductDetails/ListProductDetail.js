@@ -30,8 +30,8 @@ const mapStateToProps = (state) => {
                 ProductDetails: { isLoaded: isDataLoaded = false, isLoading, data: ProductDetailsData = [] },
             },
             OTF: {
-                LoyaltyModelGroup: { isLoaded: isModelDataLoaded = false, isLoading: isModelLoading, data: modelData = [] },
-                LoyaltyVarient: { isLoaded: isVariantDataLoaded = false, isLoading: isVariantLoading, data: variantData = [] },
+                LoyaltyModelGroup: { isFilteredListLoaded: isModelDataLoaded = false, isLoading: isModelLoading, filteredListData: modelData = [] },
+                LoyaltyVarient: { isFilteredListLoaded: isVariantDataLoaded = false, isLoading: isVariantLoading, filteredListData: variantData = [] },
                 ModelFamily: { isLoaded: isModelFamilyDataLoaded = false, isLoading: isModelFamilyLoading, data: modelFamilyData = [] },
             },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
@@ -72,11 +72,11 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: productDetailsDataActions.listShowLoading,
             resetData: productDetailsDataActions.reset,
 
-            fetchModelLovList: otfLoyaltyModelGroupDataActions.fetchList,
+            fetchModelLovList: otfLoyaltyModelGroupDataActions.fetchFilteredList,
             listModelShowLoading: otfLoyaltyModelGroupDataActions.listShowLoading,
             resetModel: otfLoyaltyModelGroupDataActions.reset,
 
-            fetchVariantLovList: otfLoyaltyVarientDetailDataActions.fetchList,
+            fetchVariantLovList: otfLoyaltyVarientDetailDataActions.fetchFilteredList,
             listVariantShowLoading: otfLoyaltyVarientDetailDataActions.listShowLoading,
             resetVariant: otfLoyaltyVarientDetailDataActions.reset,
 
@@ -216,12 +216,12 @@ const ProductDetailMasterMain = (props) => {
 
     useEffect(() => {
         if (isModelDataLoaded && isVariantDataLoaded && isModelFamilyDataLoaded) {
-            modelData.length > 0 && form.setFieldsValue({ modelGroup: modelData[0]?.modelGroupDescription });
+            modelData?.length > 0 && form.setFieldsValue({ modelGroup: modelData[0]?.modelGroupDescription });
             modelFamilyData.length > 0 && form.setFieldsValue({ modelFamily: modelFamilyData[0]?.familyDescription });
             variantData.length > 0 && form.setFieldsValue({ modelVariant: variantData[0]?.variantDescription });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [isModelDataLoaded, isVariantDataLoaded, isModelFamilyDataLoaded]);
 
     useEffect(() => {
         if (typeData) {
