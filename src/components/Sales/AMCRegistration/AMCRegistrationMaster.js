@@ -37,6 +37,7 @@ import { amcSchemeDataAction } from 'store/actions/data/amcRegistration/amcSchem
 import { AMC_CONSTANTS } from './utils/AMCConstants';
 import { AMC_REQUEST_TITLE_CONSTANTS } from './utils/AMCRequestTitleConstant';
 import { ReportModal } from 'components/common/ReportModal/ReportModal';
+import { LANGUAGE_EN } from 'language/en';
 
 const mapStateToProps = (state) => {
     const {
@@ -346,7 +347,11 @@ export const AMCRegistrationMasterBase = (props) => {
     const handleBookingNumberSearch = (otfNumber = '') => {
         const onSuccessAction = (res) => {
             registrationForm.setFieldsValue({ vin: res?.data?.otfDetails[0]?.vin });
+            if (!res?.data?.otfDetails[0]?.vin) {
+                showGlobalNotification({ title: 'Error', notificationType: 'error', message: LANGUAGE_EN?.GENERAL?.NO_VIN_FOUND?.MESSAGE });
+            }
         };
+
         if (otfNumber) {
             const extraParams = [
                 {
