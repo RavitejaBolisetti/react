@@ -150,8 +150,6 @@ const UnmappingAndCancellationMain = (props) => {
 
         saveData(requestData);
     };
-    const onFinishFailed = (err) => {};
-
     const tableProps = {
         dynamicPagination,
         totalRecords: otfSomappingData?.totalRecords || 'NA',
@@ -168,7 +166,6 @@ const UnmappingAndCancellationMain = (props) => {
         isVisible: isFormVisible,
         showGlobalNotification,
         onFinish,
-        onFinishFailed,
         onCloseAction,
         titleOverride: buttonType === BUTTON_NAME?.CANCEL?.key ? DRAWER_TITLE_CONSTANTS?.CANCELLATION?.key : DRAWER_TITLE_CONSTANTS?.UNMAPPING?.key,
         buttonData,

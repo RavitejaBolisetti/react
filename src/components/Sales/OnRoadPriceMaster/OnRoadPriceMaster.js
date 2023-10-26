@@ -14,7 +14,6 @@ import ListDataTable from 'utils/ListDataTable/ListDataTable';
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 import { showGlobalNotification } from 'store/actions/notification';
-import { FilterIcon } from 'Icons';
 import { ViewDetail } from './ViewDetail';
 import { OnRoadPriceMasterUpload } from './OnRoadPriceMasterUpload';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, CANCEL_ACTION, btnVisiblity } from 'utils/btnVisiblity';
@@ -111,14 +110,13 @@ export const OnRoadPriceMasterBase = (props) => {
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isUploadFormVisible, setIsUploadFormVisible] = useState(false);
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
-    const [currentPage, setCurrentPage] = useState();
     const [defaultSection, setDefaultSection] = useState();
     const [selectedOrder, setSelectedOrder] = useState();
     const [selectedOrderId, setSelectedOrderId] = useState();
     const [currentSection, setCurrentSection] = useState();
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
-    const [isCancelVisible, setIsCancelVisible] = useState(false);
+    // const [isCancelVisible, setIsCancelVisible] = useState(false);
     const [vehiclePrice, setVehiclePrice] = useState();
     const [isLoading, showLoading] = useState(true);
 
@@ -151,7 +149,7 @@ export const OnRoadPriceMasterBase = (props) => {
                 key: 'priceType',
                 title: 'Pricing Type',
                 value: filterString?.priceType,
-                name: typeData['PRICING_TYPE']?.find((i) => i?.key === filterString?.priceType)?.value,
+                name: typeData['PRC_TYP']?.find((i) => i?.key === filterString?.priceType)?.value,
                 canRemove: true,
                 filter: true,
             },
@@ -250,14 +248,10 @@ export const OnRoadPriceMasterBase = (props) => {
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
-        showLoading(true);
+        // showLoading(true);
         setFormData(record);
         setIsFormVisible(true);
-        if (buttonAction === 'edit') {
-            setCurrentPage('edit');
-        } else {
-            setCurrentPage('view');
-        }
+        
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
@@ -273,7 +267,7 @@ export const OnRoadPriceMasterBase = (props) => {
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case CANCEL_ACTION:
-                setIsCancelVisible(true);
+                // setIsCancelVisible(true);
                 break;
             default:
                 break;
@@ -320,9 +314,11 @@ export const OnRoadPriceMasterBase = (props) => {
             setEmptyList(false);
             setUploadedFile();
             setFileList([]);
-
             form.resetFields();
+            fetchOnRoadPriceList({ setIsLoading: listVehiclePriceShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+
+       
         };
 
         const onError = (res, data) => {
@@ -529,6 +525,7 @@ export const OnRoadPriceMasterBase = (props) => {
         showGlobalNotification,
     };
 
+
     return (
         <>
             <AdvanceOnRoadPriceMasterFilter {...advanceFilterResultProps} />
@@ -538,7 +535,9 @@ export const OnRoadPriceMasterBase = (props) => {
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />
-            {currentPage === 'edit' ? <AddEditForm {...viewProps} /> : <ViewDetail {...viewProps} />}
+            {formActionType?.editMode ? <AddEditForm {...viewProps} /> : <ViewDetail {...viewProps} />}
+
+            
             <OnRoadPriceMasterUpload {...uploadProps} />
         </>
     );

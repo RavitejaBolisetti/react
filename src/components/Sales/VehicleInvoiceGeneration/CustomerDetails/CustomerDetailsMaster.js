@@ -11,7 +11,7 @@ import { AddEditForm, ViewDetail } from 'components/Sales/Common/CustomerDetails
 import styles from 'assets/sass/app.module.scss';
 
 export const CustomerDetailsMain = (props) => {
-    const { isLoading, isDataLoaded, formData, showGlobalNotification, onFinishFailed } = props;
+    const { isLoading, isDataLoaded, formData, showGlobalNotification } = props;
     const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, formActionType, NEXT_ACTION, handleButtonClick } = props;
     const { typeData, selectedOrderId } = props;
     const { buttonData, setButtonData, formKey, onFinishCustom = undefined, activeKey, setActiveKey } = props;
@@ -46,8 +46,6 @@ export const CustomerDetailsMain = (props) => {
         formData,
         formActionType,
         onFinish,
-        onFinishFailed,
-
         listPinCodeShowLoading,
         fetchPincodeDetail,
         isPinCodeLoading,
@@ -69,6 +67,7 @@ export const CustomerDetailsMain = (props) => {
         setActiveKey,
         formActionType,
         showAgeGroup: false,
+        typeData,
     };
 
     return formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} viewOnly={true} />;

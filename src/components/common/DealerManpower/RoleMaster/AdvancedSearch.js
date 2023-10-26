@@ -33,11 +33,6 @@ export const AdvancedSearchFrom = (props) => {
     const { isDivisionDataLoaded, divisionData } = props;
     const { isDepartmentDataLoaded } = props;
 
-    // const handleDivisionChange = (division) => {
-    //     handleFilterChange('divisionCode');
-    //     setFilteredDepartmentData(departmentData?.filter((i) => i?.parentKey === division));
-    // };
-
     const selectProps = {
         optionFilterProp: 'children',
         showSearch: true,

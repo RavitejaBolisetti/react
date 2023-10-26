@@ -12,7 +12,7 @@ describe('Advance Filter Component', () => {
         const filterString = { advanceFilter: true };
         const extraParams = [{ name: 'Kai', value: 'Kai', filter: 'Kai', canRemove: true }];
 
-        customRender(<AdvanceFilter filterString={filterString} extraParams={extraParams} removeFilter={jest.fn()} handleResetFilter={jest.fn()} />);
+        customRender(<AdvanceFilter filterString={filterString} extraParams={extraParams} handleResetFilter={jest.fn()} removeFilter={jest.fn()} />);
 
         const removeFilter = screen.getByTestId('removeFilter');
         fireEvent.click(removeFilter);

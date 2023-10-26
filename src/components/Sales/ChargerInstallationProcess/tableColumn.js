@@ -6,7 +6,7 @@
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import styles from 'assets/sass/app.module.scss';
 import { ChargerStatusTag } from './ChargerStatusTag';
-export const tableColumn = (handleButtonClick, page, pageSize) => {
+export const tableColumn = (handleButtonClick) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'Booking No.',

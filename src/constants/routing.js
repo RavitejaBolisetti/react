@@ -5,6 +5,8 @@
  */
 export const ROUTING_HOME = '/';
 
+export const PAGE_NOT_FOUND = '*';
+
 export const ROUTING_SSO_LOGIN = '/adidaccess';
 
 export const ROUTING_LOGIN = '/login';

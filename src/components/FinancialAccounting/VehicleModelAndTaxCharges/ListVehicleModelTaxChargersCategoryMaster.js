@@ -9,7 +9,6 @@ import { bindActionCreators } from 'redux';
 import { Row, Col, Form } from 'antd';
 import { showGlobalNotification } from 'store/actions/notification';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { filterFunction } from 'utils/filterFunction';
 import { ListDataTable } from 'utils/ListDataTable';
 import { btnVisiblity } from 'utils/btnVisiblity';
 import { tableColumn } from './tableColumn';
@@ -174,7 +173,7 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ page, selectedModelGroup]);
+    }, [page, selectedModelGroup]);
 
     useEffect(() => {
         if (userId) {
@@ -250,7 +249,7 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
 
             //     setSearchdata(filterDataItem);
             // } else {
-                setSearchdata(VehicleModelTaxChargesCategoryData['vehicleModel']?.map((el, i) => ({ ...el, srl: i + 1 })));
+            setSearchdata(VehicleModelTaxChargesCategoryData['vehicleModel']?.map((el, i) => ({ ...el, srl: i + 1 })));
             // }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

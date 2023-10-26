@@ -99,7 +99,6 @@ const AllowedTimingList = (props) => {
                                         setIsAddTimeVisible(!isAddTimeVisible);
                                         timingForm.resetFields();
                                     }}
-                                    // icon={<PlusOutlined />}
                                 >
                                     Add Time
                                 </Button>

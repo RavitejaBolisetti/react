@@ -28,16 +28,10 @@ const mapStateToProps = (state) => {
             OTF: {
                 LoyaltyScheme: { isLoaded: isLoyaltySchemeDataLoaded = false, isLoading, data: LoyaltySchemeData = [] },
                 SchemeDetail: { isLoaded: isSchemeLovDataLoaded = false, isLoading: isSchemeLovLoading, data: schemeLovData = [] },
-                // LoyaltyMake: { isLoaded: isMakeDataLoaded = false, isLoading: isMakeLoading, filteredListData: makeData = [] },
                 LoyaltyModelGroup: { isLoaded: isModelDataLoaded = false, isLoading: isModelLoading, data: modelData = [] },
                 LoyaltyVarient: { isLoaded: isVariantDataLoaded = false, isLoading: isVariantLoading, data: variantData = [] },
             },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            // Vehicle: {
-            //     MakeVehicleDetails: { isLoaded: isMakeDataLoaded = false, isLoading: isMakeLoading, data: makeData = [] },
-            //     ModelVehicleDetails: { isLoaded: isModelDataLoaded = false, isLoading: isModelLoading, data: modelData = [] },
-            //     VariantVehicleDetails: { isLoaded: isVariantDataLoaded = false, isLoading: isVariantLoading, data: variantData = [] },
-            // },
         },
         customer: {
             customerDetail: { isLoaded: isDataCustomerLoaded = false, isLoading: isCustomerLoading = false, data: customerDetail = [] },
@@ -58,11 +52,6 @@ const mapStateToProps = (state) => {
         isSchemeLovDataLoaded,
 
         typeData,
-
-        // isMakeDataLoaded,
-        // isMakeLoading,
-        // makeData,
-
         isModelDataLoaded,
         isModelLoading,
         modelData,
@@ -87,10 +76,6 @@ const mapDispatchToProps = (dispatch) => ({
 
             fetchSchemeLovList: otfSchemeDetailDataActions.fetchList,
             listSchemeLovShowLoading: otfSchemeDetailDataActions.listShowLoading,
-
-            // fetchMakeLovList: otfLoyaltyMakeDetailDataActions.fetchFilteredList,
-            // listMakeShowLoading: otfLoyaltyMakeDetailDataActions.listShowLoading,
-
             fetchModelLovList: otfLoyaltyModelGroupDataActions.fetchList,
             listModelShowLoading: otfLoyaltyModelGroupDataActions.listShowLoading,
             resetModel: otfLoyaltyModelGroupDataActions.reset,
@@ -112,7 +97,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const LoyaltySchemeMasterMain = (props) => {
     const { isLoyaltySchemeDataLoaded, isLoading, section, listShowLoading, fetchList, LoyaltySchemeData, userId, showGlobalNotification } = props;
-    const { form, selectedOrder, selectedOrderId, formActionType, handleFormValueChange, onFinishFailed, handleButtonClick, NEXT_ACTION } = props;
+    const { form, selectedOrder, selectedOrderId, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION } = props;
     const { typeData } = props;
     const { fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading } = props;
     const { isModelDataLoaded, isModelLoading, modelData, isVariantDataLoaded, isVariantLoading, variantData, saveData } = props;
@@ -213,7 +198,6 @@ const LoyaltySchemeMasterMain = (props) => {
             ];
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
             fetchSchemeLovList({ setIsLoading: listSchemeLovShowLoading, extraParams: schemeExtraParams, userId });
-            // fetchMakeLovList({ setIsLoading: listMakeShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);
@@ -299,7 +283,6 @@ const LoyaltySchemeMasterMain = (props) => {
     const formProps = {
         ...props,
         form,
-        onFinishFailed,
         onFinish,
         LoyaltySchemeData,
         formData,
@@ -310,10 +293,6 @@ const LoyaltySchemeMasterMain = (props) => {
 
         isSchemeLovLoading,
         schemeLovData,
-
-        // isMakeLoading,
-        // makeData,
-
         isModelLoading,
         modelData,
 
@@ -340,7 +319,7 @@ const LoyaltySchemeMasterMain = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

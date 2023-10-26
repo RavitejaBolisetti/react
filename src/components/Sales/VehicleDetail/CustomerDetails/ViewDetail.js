@@ -7,7 +7,6 @@ import React, { useState } from 'react';
 import { Col, Row, Collapse, Descriptions, Divider } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { expandIcon } from 'utils/accordianExpandIcon';
-import { LANGUAGE_EN } from 'language/en';
 import styles from 'assets/sass/app.module.scss';
 
 const { Panel } = Collapse;

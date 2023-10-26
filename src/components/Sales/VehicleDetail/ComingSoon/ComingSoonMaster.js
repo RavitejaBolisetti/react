@@ -27,8 +27,8 @@ export const ComingSoonMasterBase = (props) => {
             name: 'VIN ',
         },
     ];
-    const errorAction = (message) => {
-        // showGlobalNotification(message);
+    const errorAction = () => {
+        return;
     };
 
     const onSuccessAction = (res) => {
@@ -47,7 +47,7 @@ export const ComingSoonMasterBase = (props) => {
         buttonData: { ...props.buttonData, nextBtn: true, saveBtn: false },
     };
 
-    const onFinish = (values) => {
+    const onFinish = () => {
         handleButtonClick({ record: undefined, buttonAction: NEXT_ACTION });
     };
 

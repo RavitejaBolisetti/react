@@ -224,7 +224,6 @@ const CustomerNameChangeMasterBase = (props) => {
             },
         ];
         fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, selectedDocument, onSuccessAction });
-        // setSupportingDataView(supportingData);
     };
 
     const onViewHistoryChange = () => {
@@ -280,12 +279,12 @@ const CustomerNameChangeMasterBase = (props) => {
         setActiveKey(currentKey);
     };
 
-    const customerName = ({ currentKey, formData, requestPending, changeAllowed, canEdit }) => {
+    const customerName = ({ currentKey, formData, requestPending, canEdit }) => {
         return checkAndSetDefaultValue(
             <>
                 <Typography className={styles.verticallyCentered}>
                     <div className={styles.flexDirectionColumn}>
-                        {getCodeValue(typeData?.TITLE, formData?.titleCode, '',false) + ' ' + (formData?.firstName || '') + ' ' + (formData?.middleName || '') + ' ' + (formData?.lastName || '')}
+                        {getCodeValue(typeData?.TITLE, formData?.titleCode, '', false) + ' ' + (formData?.firstName || '') + ' ' + (formData?.middleName || '') + ' ' + (formData?.lastName || '')}
                         {customerNameChangeRequest && (
                             <Text type="secondary" style={{ fontSize: '12px', fontWeight: 'normal' }}>
                                 {requestPending ? 'Current' : 'Previous'} Name
@@ -326,7 +325,7 @@ const CustomerNameChangeMasterBase = (props) => {
                 ) : (
                     nameChangeHistoryItemList?.map((item) => {
                         return (
-                            <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={(value) => setActiveKey(value)} expandIconPosition="end" collapsible="icon">
+                            <Collapse key={item?.id} expandIcon={expandIcon} activeKey={activeKey} onChange={(value) => setActiveKey(value)} expandIconPosition="end" collapsible="icon">
                                 <Panel
                                     header={
                                         <Row justify="space-between" className={styles.fullWidth}>

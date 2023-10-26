@@ -126,12 +126,6 @@ export const CustomerDetailsMain = (props) => {
     useEffect(() => {
         if (userId && filterString?.searchType && filterString?.searchParam) {
             const searchParams = [
-                // {
-                //     key: 'customerType',
-                //     title: 'Customer Type',
-                //     value: 'ALL',
-                //     canRemove: true,
-                // },
                 {
                     key: 'searchType',
                     title: 'Type',
@@ -152,10 +146,7 @@ export const CustomerDetailsMain = (props) => {
                 setIsLoading: listShowLoading,
                 extraParams: searchParams,
                 onSuccessAction: (res) => {
-                    // res?.data?.referralData && setFormData(res?.data?.referralData?.[0]);
                     res?.data?.ownerCustomer && setFormData(res?.data?.ownerCustomer?.[0]);
-
-                    // res?.data?.referralData?.referralDetails.length === 1 ? setFormData(res?.data?.referralData?.referralDetails[0]);
                 },
                 onErrorAction,
                 userId,
@@ -272,7 +263,6 @@ export const CustomerDetailsMain = (props) => {
 
         const requestData = {
             data: finaldata,
-            // method: data?.ownerCustomer || data?.billingCustomer ? 'put' : 'post',
             method: 'put',
             setIsLoading: listShowLoading,
             userId,

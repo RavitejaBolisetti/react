@@ -129,8 +129,6 @@ const ApportionDetailMasterBase = (props) => {
         values && fetchInvoiceList({ setIsLoading: listInvoiceShowLoading, onErrorAction, onSuccessAction, userId, extraParams });
     };
 
-    const onFinishFailed = () => {};
-
     const formProps = {
         ...props,
         form,
@@ -143,8 +141,7 @@ const ApportionDetailMasterBase = (props) => {
         setDocumentAmount,
         receivedAmount,
         setReceivedAmount,
-        // onFinish,
-        onFinishFailed,
+
         fetchList,
         userId,
         isLoading,
@@ -170,7 +167,7 @@ const ApportionDetailMasterBase = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFinish={receiptOnFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFinish={receiptOnFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

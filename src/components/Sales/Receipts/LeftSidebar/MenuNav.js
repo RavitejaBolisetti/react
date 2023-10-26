@@ -15,7 +15,7 @@ import { FaCheckCircle } from 'react-icons/fa';
 import styles from 'assets/sass/app.module.scss';
 
 const MenuNav = (props) => {
-    const { currentSection, setCurrentSection, receipt, formActionType, selectedOrder: { orderStatus = false } = {} } = props;
+    const { currentSection, setCurrentSection, receipt, formActionType } = props;
     const receiptSectionList = Object.values(RECEIPT_SECTION);
 
     const onHandle = (key) => {
@@ -37,8 +37,7 @@ const MenuNav = (props) => {
                             {item.title}
                         </div>
                     ),
-                    className: getSelectedMenuAttribute(item?.id)? 'active' : 'noactive',
-
+                    className: getSelectedMenuAttribute(item?.id) ? 'active' : 'noactive',
                 }
         );
     const finalItem = items?.filter((i) => i);

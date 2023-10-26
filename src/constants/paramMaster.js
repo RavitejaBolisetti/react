@@ -441,4 +441,8 @@ export const PARAM_MASTER = {
         id: 'AMC_CANCEL_REASON',
         title: 'AMC cancellation reason',
     },
+    ONRDPRCMSTTMPLT: {
+        id: 'ONRDPRCMSTTMPLT',
+        title: 'OnRoad Price Master template download',
+    },
 };

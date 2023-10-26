@@ -88,7 +88,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, saveData, listOrgLoading, showGlobalNotification, manufacturerOrgHierarchyData, fetchOrgList, isDataOrgLoaded, productHierarchyData, setSelectedOrganizationId, organizationId, fetchProductDataList, fetchOtfList, listOtfSoMappingShowLoading, resetData, otfSoMappingData, otfSoUserMappingData, isDataOtfSoMappingLoaded, isDataOtfSoUserMappingLoaded, fetchOtfUserList, listOtfSoUserMappingShowLoading, listProductLoading }) => {
+export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, saveData, listOrgLoading, showGlobalNotification, manufacturerOrgHierarchyData, fetchOrgList, isDataOrgLoaded, productHierarchyData, setSelectedOrganizationId, organizationId, fetchProductDataList, fetchOtfList, listOtfSoMappingShowLoading, resetData, otfSoMappingData, otfSoUserMappingData, fetchOtfUserList, listOtfSoUserMappingShowLoading, listProductLoading }) => {
     const [form] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -267,11 +267,7 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {}).catch(err => console.error(err));
-    };
-
-    const handleButtonClick = (type) => {
+    const handleButtonClick = () => {
         setFormData([]);
         form.resetFields();
         setIsFormVisible(true);
@@ -311,7 +307,6 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
         setSelectedTreeKey,
         formActionType,
         isVisible: isFormVisible,
-        onFinishFailed,
         onCloseAction: () => {
             setIsFormVisible(false);
         },

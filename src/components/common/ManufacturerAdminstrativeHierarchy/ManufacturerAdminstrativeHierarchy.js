@@ -261,11 +261,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataOrgLoaded, userId]);
 
-    // useEffect(() => {
-    //     manufacturerOrgHierarchyData?.map((i) => DisableParent(i));
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [manufacturerOrgHierarchyData]);
-
     const onChange = (e) => {
         setSearchValue(e.target.value);
     };
@@ -567,7 +562,9 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         titleOverride: 'Change History',
         organizationId,
     };
-    const onfinishHeader = (value) => {};
+    const onfinishHeader = () => {
+        return;
+    };
 
     return (
         <>

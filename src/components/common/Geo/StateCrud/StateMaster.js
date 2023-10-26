@@ -43,9 +43,4 @@ export const StateMaster = crudMasterPage({
     editAction: editStateActions,
     mapStateToProps: mapStateToProps,
     advanceFilter: true,
-    // canViewRight: RIGHTS.MASTER.VIEW_MASTER.ID,
-    // canAddRight: RIGHTS.MASTER.ADD_MASTER.ID,
-    // canEditRight: RIGHTS.MASTER.EDIT_MASTER.ID,
-    // canDeleteRight: RIGHTS.MASTER.DELETE_MASTER.ID,
-    // moduleType: MODULE_TYPES.MASTER.name,
 });

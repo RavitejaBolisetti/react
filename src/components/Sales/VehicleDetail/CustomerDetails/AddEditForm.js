@@ -62,22 +62,6 @@ const AddEditFormBase = (props) => {
         fnSetData: (data) => fnSetData(data, 'billingCustomer'),
     };
 
-    // const keyAccountDetailsProps = {
-    //     ...props,
-    //     AutoComplete,
-    //     typeData,
-    //     formData: formData?.vehicleKeyAccountDetails,
-    //     formType: 'vehicleKeyAccountDetails',
-    // };
-
-    // const loyaltyProps = {
-    //     ...props,
-    //     AutoComplete,
-    //     typeData,
-    //     formData: formData?.vehicleCustomerLoyaltyDetails,
-    //     formType: 'vehicleCustomerLoyaltyDetails',
-    // };
-
     const handleCancel = () => {
         setIsModalOpen(false);
     };

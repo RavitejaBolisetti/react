@@ -114,7 +114,7 @@ const AssignUserRole = (props) => {
     const onErrorAction = (data) => {
         console.error(data);
     };
-    
+
     const onSuccessAction = (res) => {
         if (res?.data?.role?.applications?.mobileApplications?.length || res?.data?.role?.applications?.webApplications?.length) {
             selectedRoleId && setDisableMdlSaveBtn(false);
@@ -175,7 +175,6 @@ const AssignUserRole = (props) => {
             form.resetFields();
             resetUsrDlrRoleAppDataList();
             setisModalVisible(false);
-            // setButtonData((prev) => ({ ...defaultBtnVisiblity, saveBtn: true, formBtnActive: true }));
             fetchUserRoleFn();
             setDisableMdlSaveBtn(true);
         };
@@ -238,10 +237,6 @@ const AssignUserRole = (props) => {
         dynamicPagination: false,
         tableColumn: tableColumn(handleButtonClickModal, formActionType),
     };
-
-    const handleFormFieldChange = () => {};
-    const onFinishFailed = (error) => console.error(error);
-
     useEffect(() => {
         if ((userType === USER_TYPE_USER?.DEALER?.id && isDlrAppLoaded && dlrAppList?.employeeCode) || (userType === USER_TYPE_USER?.MANUFACTURER?.id && isMnmAppLoaded && mnmAppList?.employeeCode)) {
             let webApps = [];
@@ -275,7 +270,6 @@ const AssignUserRole = (props) => {
         setisModalVisible(true);
     };
     const handleSelectRole = (roleId) => {
-        // setRecord({ roleId });
         setSelectedRoleId(roleId);
     };
 
@@ -302,8 +296,6 @@ const AssignUserRole = (props) => {
         form,
         handleSaveUserRoleAppliactions,
         handleCancelModal,
-        handleFormFieldChange,
-        onFinishFailed,
         userRoleDataList,
         roleListdata: roleListdata?.filter((i) => i?.roleType === userType),
         handleSelectRole,
@@ -326,7 +318,7 @@ const AssignUserRole = (props) => {
 
     return (
         <>
-            <Form layout="vertical" key={'mainform'} autoComplete="off" form={mainform} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Form layout="vertical" key={'mainform'} autoComplete="off" form={mainform} onFinish={onFinish}>
                 <Row gutter={20} className={styles.drawerBodyRight}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <h2>{section?.title}</h2>

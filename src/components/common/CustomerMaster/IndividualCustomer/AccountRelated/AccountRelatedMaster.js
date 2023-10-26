@@ -98,9 +98,6 @@ export const AccountRelatedMasterBase = (props) => {
     }, [userId, selectedCustomerId]);
 
     const onFinish = (values) => {
-        // if(buttonData?.formBtnActive){
-
-        // }
         const data = { ...values, customerId: selectedCustomerId };
 
         const onSuccess = (res) => {

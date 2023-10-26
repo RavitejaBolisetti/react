@@ -7,7 +7,7 @@ import React from 'react';
 import { Descriptions } from 'antd';
 import { HIERARCHY_DEFAULT_PARENT } from 'constants/constants';
 
-export const ViewManufacturerOrgtDetailMain = ({ viewTitle, buttonData, attributeData, selectedTreeData, handleEditBtn, handleRootChildBtn, handleChildBtn, handleSiblingBtn, setClosePanels, styles }) => {
+export const ViewManufacturerOrgtDetailMain = ({ viewTitle, selectedTreeData, styles }) => {
     const viewOneColProps = {
         bordered: false,
         colon: false,

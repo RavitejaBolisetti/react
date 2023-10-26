@@ -31,17 +31,17 @@ const ChargerInstallatioDetailsMasterBase = (props) => {
                 setRequestPayload((prev) => ({ ...prev, chargerInstDetails: { requestDetails: [{ id: chargerInstallationMasterData?.chargerInstDetails?.requestDetails[0].id || '', stageRequestDate: convertDateTimedayjs(new Date()), requestStage: values?.requestStage, visitTimeSlotOne: convertDateTimedayjs(values?.visitTimeSlotOne), visitTimeSlotTwo: convertDateTimedayjs(values?.visitTimeSlotTwo, 'YYYY-MM-DD HH:mm:ss', true), visitTimeSlotThree: convertDateTimedayjs(values?.visitTimeSlotThree, 'YYYY-MM-DD HH:mm:ss', true) }] } }));
                 handleFormValueChange();
             })
-            .catch((err) => {
+            .catch(() => {
                 showGlobalNotification({ message: 'Please add Request' });
             });
     };
 
-    const handleChange = (e) => {
+    const handleChange = () => {
         setButtonData({ ...buttonData, formBtnActive: false });
     };
 
     const onFinish = () => {
-        if (!!addRequestData) {
+        if (!addRequestData) {
             showGlobalNotification({ message: 'Please Add Request' });
         } else {
             handleButtonClick({ buttonAction: NEXT_ACTION });

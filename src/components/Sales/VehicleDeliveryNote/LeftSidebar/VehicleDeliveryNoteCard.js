@@ -48,6 +48,7 @@ const VehicleDeliveryNoteCard = (props) => {
                 return { invoiceType: 'Delivery Note', deliveryDate: 'Delivery Note Date', fullName, userAvatar };
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedOrder]);
     return (
         <Collapse bordered={true} expandIcon={expandIcon} collapsible="icon">
