@@ -113,6 +113,7 @@ const VehicleDetailsMasterBase = (props) => {
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
+        contactform.resetFields(['vehicleRegistrationNumber', 'orignallyWarrantyStartDate', 'modelGroup', 'modelFamily', 'modelDescription']);
     };
     const checkDuplicate = (vehicleRegistrationNumber) => contactData.find((value) => value?.vehicleRegistrationNumber === vehicleRegistrationNumber);
 
@@ -156,12 +157,19 @@ const VehicleDetailsMasterBase = (props) => {
         setShowAddEditForm(true);
     };
 
+    const handleVINChange = (e) => {
+        if (!e?.target?.value) {
+            contactform.resetFields(['vehicleRegistrationNumber', 'orignallyWarrantyStartDate', 'modelGroup', 'modelFamily', 'modelDescription']);
+        }
+        setButtonData({ ...buttonData, formBtnActive: false });
+    };
+
     const handleVinSearch = (value) => {
         if (!value && formActionType?.addMode) {
             return false;
         }
         const onVehicleSearchSuccessAction = (data) => {
-            contactform.setFieldsValue({ ...data?.data?.vehicleSearch[0], modelDescription: data?.data?.vehicleSearch[0].chassisNumber, vehicleRegistrationNumber: data?.data?.vehicleSearch[0].registrationNumber, orignallyWarrantyStartDate: formattedCalendarDate(data?.data?.vehicleSearch[0].orignallyWarrantyStartDate) });
+            contactform.setFieldsValue({ ...data?.data?.vehicleSearch[0], modelDescription: data?.data?.vehicleSearch[0].modelDescription, vehicleRegistrationNumber: data?.data?.vehicleSearch[0].registrationNumber, orignallyWarrantyStartDate: formattedCalendarDate(data?.data?.vehicleSearch[0].orignallyWarrantyStartDate) });
             if (formActionType?.addMode) {
                 setRequestPayload({ ...requestPayload, amcVehicleDetails: [{ vin: requestPayload?.amcRegistration?.vin }] });
             }
@@ -216,6 +224,7 @@ const VehicleDetailsMasterBase = (props) => {
         buttonData,
         handleVinSearch,
         disabledProps,
+        handleVINChange,
     };
 
     const onFinish = () => {

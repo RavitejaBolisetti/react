@@ -33,5 +33,6 @@ export const LANGUAGE_EN = {
         DELIVERY_NOTE_MESSAGE: { TITLE: 'Delivery {NAME} created successfully', MESSAGE: 'Delivery Note No.: {ORDER_ID}' },
         USER_NOT_FOUND: { TITLE: 'User not found', MESSAGE: 'User does not exist, do you want to create user?' },
         PAGE_NOT_FOUND: { TITLE: 'Page Not Found', MESSAGE: '<p>Sorry, the page you visited does not exist. Redirecting to dashboard in <b>{COUNTER}</b></p>' },
+        NO_EMPLOYEES_FOUND : { TITLE : 'Employees not found',MESSAGE: 'No employees found for searched name' }
     },
 };
