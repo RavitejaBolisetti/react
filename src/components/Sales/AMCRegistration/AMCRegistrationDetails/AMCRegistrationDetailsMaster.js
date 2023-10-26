@@ -36,7 +36,7 @@ const AMCRegistrationDetailsMasterBase = (props) => {
         const extraParams = [
             {
                 key: 'vin',
-                value: registrationForm.getFieldValue('vin'),
+                value: registrationForm.getFieldValue('vin') || requestPayload?.amcRegistration?.vin,
             },
             {
                 key: 'schemeType',
