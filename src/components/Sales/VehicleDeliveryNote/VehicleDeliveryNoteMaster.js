@@ -341,8 +341,8 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     }, [userId, filterString]);
 
     useEffect(() => {
-        const defaultSection = VEHICLE_DELIVERY_NOTE_SECTION.INVOICE_DETAILS.id;
-        setDefaultSection(defaultSection);
+        const defaultSection = VEHICLE_DELIVERY_NOTE_SECTION.INVOICE_DETAILS;
+        setDefaultSection(defaultSection?.id);
         setSetionName(VEHICLE_DELIVERY_NOTE_SECTION);
         setSection(defaultSection);
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -350,9 +350,6 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
 
     useEffect(() => {
         if (currentSection && sectionName) {
-            const section = Object.values(sectionName)?.find((i) => i.id === currentSection);
-            setSection(section);
-
             const nextSection = Object.values(sectionName)?.find((i) => i?.displayOnList && i.id > currentSection);
             setLastSection(!nextSection?.id);
         }
@@ -874,6 +871,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         resetCustomerdata,
         handleCustomerIdSearch,
         customerDetailsDataSearched,
+        setSection,
     };
 
     const reportDetail = EMBEDDED_REPORTS?.DELIVERY_NOTE_DOCUMENT;

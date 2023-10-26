@@ -447,6 +447,7 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
         matchDesignationList,
         filterDesignationDropdownList,
         setFilterDesignationDropdownList,
+        showDataLoading,
     };
 
     const title = 'Vehicle Allotment List';

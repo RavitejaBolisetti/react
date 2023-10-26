@@ -92,7 +92,7 @@ const VehicleDetailsMasterBase = (props) => {
     }, [formData]);
 
     useEffect(() => {
-        if (vehicleData) {
+        if (vehicleData && section?.id) {
             form.setFieldsValue({ ...vehicleData });
             setFormData({ ...vehicleData });
         }
@@ -112,7 +112,6 @@ const VehicleDetailsMasterBase = (props) => {
         handleButtonClick({ buttonAction: NEXT_ACTION });
         setButtonData({ ...buttonData, formBtnActive: false });
     };
-
     const onCloseAction = () => {
         form.resetFields();
         setIsFormVisible(false);

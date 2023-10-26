@@ -91,7 +91,6 @@ export const AddOnDetailsMasterMain = (props) => {
     const [addOnItemInfo, setAddOnItemInfo] = useState([]);
     const [openAccordian, setOpenAccordian] = useState();
     const [accessoryForm] = Form.useForm();
-    const [muiltipleFormData, setMultipleFormData] = useState({ ...AddonDetailsData });
     const [shieldForm] = Form.useForm();
     const [rsaForm] = Form.useForm();
     const [amcForm] = Form.useForm();
@@ -135,7 +134,7 @@ export const AddOnDetailsMasterMain = (props) => {
     }, [isAmcLoaded, isRsaLoaded, isShieldLoaded, deliveryNoteMasterData, schemeAmcData]);
 
     useEffect(() => {
-        if (AddonDetailsData && section?.id === 6) {
+        if (AddonDetailsData && section?.id) {
             form.setFieldsValue({ ...AddonDetailsData });
             setFormData({ ...AddonDetailsData });
             if (AddonDetailsData?.sheildRequest) {
@@ -150,14 +149,14 @@ export const AddOnDetailsMasterMain = (props) => {
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [AddonDetailsData, section?.id]);
+    }, [AddonDetailsData, section]);
 
     useEffect(() => {
-        if (userId && section?.id === 6) handleEmployeeSearch();
+        if (userId && section?.id) handleEmployeeSearch();
         setButtonData({ ...buttonData, formBtnActive: true });
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [section?.id, userId]);
+    }, [section, userId]);
 
     const handleOnChange = (e) => {
         form.setFieldsValue({
@@ -256,7 +255,7 @@ export const AddOnDetailsMasterMain = (props) => {
         schemeDescriptionDatamain,
         setRegisterDisabled,
         registerDisabled,
-        muiltipleFormData,
+        muiltipleFormData: AddonDetailsData,
         handleAmcDescriptionData,
     };
 

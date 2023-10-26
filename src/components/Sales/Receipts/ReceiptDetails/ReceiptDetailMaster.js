@@ -68,7 +68,6 @@ const ReceiptDetailMasterBase = (props) => {
     const [editingListData, setEditingListData] = useState({});
     const [showAddEditForm, setShowAddEditForm] = useState(false);
     const [isAdding, setIsAdding] = useState(false);
-    const [receiptData, setReceiptData] = useState([]);
     const [paymentMode, setPaymentMode] = useState('');
     const [paymentDataList, setPaymentDataList] = useState([]);
     const [partyId, setPartyId] = useState();
@@ -222,7 +221,6 @@ const ReceiptDetailMasterBase = (props) => {
 
         setOpenAccordian,
         receiptForm,
-        setReceiptData,
         setPaymentDataList,
         receiptData: receiptDetailData?.receiptsDetails ? receiptDetailData?.receiptsDetails : requestPayload?.receiptsDetails,
 
@@ -256,7 +254,6 @@ const ReceiptDetailMasterBase = (props) => {
         showAddEditForm,
         setShowAddEditForm,
         receiptData: receiptDetailData?.receiptsDetails,
-        setReceiptData,
         receiptType,
         paymentDataList: formActionType?.addMode ? paymentDataList : receiptDetailData?.receiptsDetails?.paymentDetails,
         styles,
