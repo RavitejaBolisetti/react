@@ -113,24 +113,16 @@ export const InvoiceDetailsMasterBase = (props) => {
     };
     useEffect(() => {
         if (formActionType.addMode && !soldByDealer) {
-            form.setFieldsValue({
-                deliveryNoteFor: 'Directly Billed Vehicle',
-            });
             const disableFormButton = invoiceData?.chassisNumber && invoiceData?.engineNumber;
             setButtonData({ ...buttonData, formBtnActive: disableFormButton });
             setFormData((prev) => ({ ...prev, deliveryNoteFor: 'Directly Billed Vehicle' }));
-        } else {
-            form.setFieldsValue({
-                deliveryNoteFor: 'Vehicle Sold By Dealer',
-            });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [section]);
+    }, [section, soldByDealer]);
 
     useEffect(() => {
-        if (invoiceData) {
-            form.setFieldsValue({ ...invoiceData, invoiceDate: formattedCalendarDate(invoiceData?.invoiceDate), customerPromiseDate: formattedCalendarDate(invoiceData?.customerPromiseDate) });
-            setFormData((prev) => ({ ...prev, ...invoiceData }));
+        if (invoiceData && Object?.keys(invoiceData)?.length > 0) {
+            setFormData((prev) => ({ ...invoiceData, deliveryNoteFor: 'Vehicle Sold By Dealer' }));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [invoiceData, section]);
@@ -158,11 +150,12 @@ export const InvoiceDetailsMasterBase = (props) => {
                 name: 'All employees',
             },
         ];
-        if (userId && soldByDealer && section?.id === 1) {
+        if (userId && soldByDealer && section?.id) {
             fetchRelationshipManger({ setIsLoading: listRelationshipMangerShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, soldByDealer, section?.id]);
+    }, [userId, soldByDealer, section]);
+
     const handleChassisNoSearch = (val) => {
         if (!val) return;
 
