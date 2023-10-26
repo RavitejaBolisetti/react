@@ -33,7 +33,7 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             RsmAsmApproval: {
-                RsmAsmApprovalSearch: { isDetailLoaded = false, data, filter: filterString, detailData: detailData = [] },
+                RsmAsmApprovalSearch: { isDetailLoaded = false, data, filter: filterString, detailData = [] },
             },
         },
     } = state;
@@ -89,7 +89,6 @@ export const RsmAsmApprovalMasterBase = (props) => {
         closeBtn: true,
         cancelBtn: false,
         formBtnActive: true,
-        // rejectApproveBtn: false,
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -100,7 +99,6 @@ export const RsmAsmApprovalMasterBase = (props) => {
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
 
-    const [formData, setFormData] = useState([]);
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [invoiceStatusType, setInvoiceStatusType] = useState(DELIVERY_NOTE_INVOICE_STATUS?.PENDING?.key);
 
@@ -252,11 +250,9 @@ export const RsmAsmApprovalMasterBase = (props) => {
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
-        setFormData([]);
         setButtonData({ ...defaultBtnVisiblity });
         // record?.requestStatus === DELIVERY_NOTE_INVOICE_STATUS?.PENDING?.key ? setButtonData({ ...defaultBtnVisiblity, rejectApproveBtn: true }) : setButtonData({ ...defaultBtnVisiblity, rejectApproveBtn: false });
         setFormActionType({ viewMode: buttonAction === VIEW_ACTION });
-        record && setFormData(record);
         record && setSelectedId(record?.id);
         setIsFormVisible(true);
     };
@@ -304,10 +300,6 @@ export const RsmAsmApprovalMasterBase = (props) => {
         };
 
         saveData(requestData);
-    };
-
-    const onFinishFailed = (errorInfo) => {
-        return;
     };
 
     const onCloseAction = () => {
@@ -369,7 +361,6 @@ export const RsmAsmApprovalMasterBase = (props) => {
         filterString,
         setFilterString,
         from: listFilterForm,
-        onFinishFailed,
         title: '',
         handleButtonQuery,
         data,
@@ -408,7 +399,6 @@ export const RsmAsmApprovalMasterBase = (props) => {
         buttonData,
         setButtonData,
         detailData,
-        // handleCancelRequest,
         invoiceStatusType,
         typeData,
         handleRequest,

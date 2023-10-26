@@ -55,6 +55,7 @@ export const ChecklistModalForms = (props) => {
             const CancelBtnName = 'Reset';
             return { formItem: BindFormAndResult({ data: AdvanceformData, aggregateForm, checklistType })?.formItem, CancelBtnName, resetAction: handleResetChecklist, saveBtnName: 'Save' };
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isVisible, AdvanceformData]);
 
     const onFinish = () => {
@@ -78,9 +79,6 @@ export const ChecklistModalForms = (props) => {
             })
             .catch((err) => console.error(err));
     };
-    const onFinishFailed = () => {
-        return;
-    };
     const handleValuesChange = () => {
         setsaveDisabled(false);
     };
@@ -96,7 +94,7 @@ export const ChecklistModalForms = (props) => {
     };
 
     return (
-        <Form autoComplete="off" layout="vertical" form={aggregateForm} onValuesChange={handleValuesChange} onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" layout="vertical" form={aggregateForm} onValuesChange={handleValuesChange}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     {BindResultForm?.formItem}

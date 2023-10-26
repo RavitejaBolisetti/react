@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { Fragment, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Card, Row, Button, Divider, Typography, Space } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 import styles from 'assets/sass/app.module.scss';
@@ -63,7 +63,9 @@ const CardAccountAndDocumentMapping = (props) => {
                 setFormEdit(false);
                 forceUpdate();
             })
-            .catch((err) => {});
+            .catch((err) => {
+                return err;
+            });
     };
 
     const onAccAndMapDelete = (val) => {

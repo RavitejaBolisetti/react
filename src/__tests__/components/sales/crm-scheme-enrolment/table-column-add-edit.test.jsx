@@ -15,19 +15,18 @@ afterEach(() => {
 
 describe('tableColumn', () => {
     it('should render the table column correctly', () => {
-        // const typeData = {
-        //     PARAM_MASTER: {
-        //         YES_NO_FLG: { key: '123', type: 'test123' },
-        //     },
-        // };
+        const typeData = {
+            PARAM_MASTER: {
+                YES_NO_FLG: { key: '123', type: 'test123' },
+                id: 'test123',
+            },
+        };
         const props = {
             handleCheckBox: jest.fn(),
             formActionType: {
                 viewMode: true,
             },
-            PARAM_MASTER: {
-                YES_NO_FLG: { key: '123', type: 'test123' },
-            },
+            typeData: typeData,
         };
 
         const columns = tableColumnAddEdit(props);

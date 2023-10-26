@@ -332,10 +332,6 @@ export const InvoiceCancellationMasterBase = (props) => {
         setFilterString({ ...filterString, advanceFilter: true, searchType: 'requestNumber', searchParam: `${searchValue}` });
     };
 
-    const onFinishFailed = (errorInfo) => {
-        return;
-    };
-
     const onCloseAction = () => {
         form.resetFields();
         form.setFieldsValue();
@@ -383,7 +379,6 @@ export const InvoiceCancellationMasterBase = (props) => {
         filterString,
         setFilterString,
         from: listFilterForm,
-        onFinishFailed,
         title: '',
         handleButtonQuery,
         data,

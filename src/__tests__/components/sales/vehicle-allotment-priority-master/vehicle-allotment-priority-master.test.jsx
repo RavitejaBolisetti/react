@@ -212,7 +212,7 @@ describe('vehicle allotment priority master component', () => {
                 Vehicle: {
                     VehicleAllotPriorDetail: {
                         data: [{ effectiveFromDate: '2023-09-08', effectiveToDate: '2023-09-18', id: '123', newModelGroup: 'ALTSMM81813337450', oldModelGroup: 'ALTSMM81813337441' }],
-                        filter: [{ advanceFilter: 'Test', fromDate: '06/06/2022' }],
+                        filter: { advanceFilter: 'Test', effectiveFromDate: '06/06/2022', effectiveToDate: '06/06/2022', key: 'searchParam' },
                     },
                 },
             },
@@ -226,7 +226,7 @@ describe('vehicle allotment priority master component', () => {
         const advanceFilter = screen.getByPlaceholderText(/Search/i);
         fireEvent.change(advanceFilter, { target: { value: 'Test' } });
 
-        const removeFilter = screen.getByTestId('removeFilter');
+        const removeFilter = screen.getByTestId('removeBtn');
         fireEvent.click(removeFilter);
     });
 
@@ -237,14 +237,14 @@ describe('vehicle allotment priority master component', () => {
                 Vehicle: {
                     VehicleAllotPriorityDetail: {
                         data: [{ effectiveFromDate: '2023-09-08', effectiveToDate: '2023-09-18', id: '123', newModelGroup: 'ALTSMM81813337450', oldModelGroup: 'ALTSMM81813337441' }],
-                        filter: [{ advanceFilter: 'Test', fromDate: '06/06/2022' }],
+                        filter: { advanceFilter: 'Test', effectiveFromDate: '06/06/2022', effectiveToDate: '06/06/2022', key: 'searchParam' },
                     },
                 },
             },
         });
         customRender(
             <Provider store={mockStore}>
-                <VehicleAllotmentPriorityMaster fetchList={jest.fn()} setFilterString={jest.fn()} />
+                <VehicleAllotmentPriorityMaster fetchList={jest.fn()} handleResetFilter={jest.fn()} setFilterString={jest.fn()} />
             </Provider>
         );
 

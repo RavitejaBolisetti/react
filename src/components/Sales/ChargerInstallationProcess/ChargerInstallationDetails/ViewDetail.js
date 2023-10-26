@@ -3,19 +3,19 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Col, Row, Descriptions, Space, Card } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { ServiceActivity } from './ServiceActivity';
 import { FilterIcon } from 'Icons';
+import { getCodeValue } from 'utils/getCodeValue';
 
 import styles from 'assets/sass/app.module.scss';
 import { DataTable } from 'utils/dataTable';
 import { addRequestColumnsView } from './tableColumn';
 
 const ViewDetailMain = (props) => {
-    const { typeData, isLoading, chargerInstallationMasterData } = props;
-    const [modal, setModal] = useState(false);
+    const { typeData, isLoading, chargerInstallationMasterData, onHandleModal, modal, setModal } = props;
 
     const viewProps = {
         bordered: false,
@@ -31,16 +31,13 @@ const ViewDetailMain = (props) => {
         ...props,
         isVisible: modal,
         icon: <FilterIcon size={20} />,
-        titleOverride: 'Add Request',
+        titleOverride: 'Service Activity:' + getCodeValue(typeData?.CHRGR_INST_STG_TYPE, chargerInstallationMasterData?.chargerInstDetails?.requestDetails[0].stageStatus),
         onCloseAction: onAdvanceSearchCloseAction,
         onAdvanceSearchCloseAction,
         setModal,
         typeData,
     };
 
-    const onHandleModal = () => {
-        setModal(true);
-    };
     return (
         <>
             <div className={styles.viewDrawerContainer}>

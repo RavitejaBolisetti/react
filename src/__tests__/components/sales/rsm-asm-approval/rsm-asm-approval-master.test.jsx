@@ -6,7 +6,7 @@
 import React from 'react';
 import RsmAsmApprovalMaster from 'components/Sales/RsmAsmApproval/RsmAsmApprovalMaster';
 import customRender from '@utils/test-utils';
-import { screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import createMockStore from '__mocks__/store';
 
@@ -23,6 +23,11 @@ describe('Rsm Asm Approval Master Component', () => {
         customRender(<RsmAsmApprovalMaster setFilterString={jest.fn()} />);
     });
 
+    it('test for view detail', () => {
+        const formActionType = { viewMode: true };
+        customRender(<RsmAsmApprovalMaster formActionType={formActionType} setFilterString={jest.fn()} />);
+    });
+
     it('reset button should work', () => {
         customRender(<RsmAsmApprovalMaster setFilterString={jest.fn()} />);
         const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
@@ -32,7 +37,7 @@ describe('Rsm Asm Approval Master Component', () => {
     });
 
     it('test for closing the advance filter', () => {
-        customRender(<RsmAsmApprovalMaster setFilterString={jest.fn()} />);
+        customRender(<RsmAsmApprovalMaster setFilterString={jest.fn()} onCloseAction={jest.fn()} />);
         const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
         fireEvent.click(advanceFilter);
         const closeBtn = screen.getByRole('button', { name: /Close/i });
@@ -99,5 +104,45 @@ describe('Rsm Asm Approval Master Component', () => {
 
         const clearBtn = screen.getByRole('button', { name: /Clear/i });
         fireEvent.click(clearBtn);
+    });
+
+    it('test1', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+
+            data: {
+                RsmAsmApproval: {
+                    RsmAsmApprovalSearch: {
+                        data: { paginationData: [{ dealerName: 'Kai', deliveryOrInvoiceDate: '2019-07-31T00:00:00.000+00:00', deliveryOrInvoiceId: 'INV20D000349', id: 'fd67660e-c1e6-49a4-8ea9-0830dd93b804', requestDate: '2019-08-19T00:00:00.000+00:00', requestNumber: 'IVC20D000016', requestStatus: 'PND', requestType: 'INCA', workflowMasterDetails: null }] },
+                    },
+                },
+            },
+        });
+
+        const fetchList = jest.fn();
+        const fetchDetail = jest.fn();
+        const saveData = jest.fn();
+        const buttonData = { viewBtn: true };
+
+        customRender(
+            <Provider store={mockStore}>
+                <RsmAsmApprovalMaster fetchList={fetchList} fetchDetail={fetchDetail} saveData={saveData} setFilterString={jest.fn()} resetData={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} />
+            </Provider>
+        );
+
+        fetchList.mock.calls[0][0].onErrorAction();
+
+        fetchList.mock.calls[0][0].onSuccessAction();
+
+        await waitFor(() => {
+            expect(screen.getByText('Kai')).toBeInTheDocument();
+        });
+
+        const viewBtn = screen.getByRole('button', { name: /ai-view/i });
+
+        fireEvent.click(viewBtn);
+
+        const closeBtn = screen.getAllByRole('button', { name: /close/i });
+        fireEvent.click(closeBtn[1]);
     });
 });

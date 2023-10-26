@@ -206,10 +206,6 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {}).catch(err => console.error(err));
-    };
-
     const onCloseAction = () => {
         form.resetFields();
         setIsFormVisible(false);
@@ -254,7 +250,6 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         formActionType,
         setFormActionType,
         onFinish,
-        onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
         titleOverride: drawerTitle.concat('Department'),
@@ -280,7 +275,6 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
         onCloseAction: onAdvanceSearchCloseAction,
-        // icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
         divisionData,
         filterString,
@@ -323,7 +317,6 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         filterString,
         from: listFilterForm,
         onFinish,
-        onFinishFailed,
         extraParams,
         removeFilter,
         handleResetFilter,

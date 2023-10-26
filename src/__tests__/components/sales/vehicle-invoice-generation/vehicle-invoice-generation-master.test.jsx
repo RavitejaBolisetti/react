@@ -9,13 +9,20 @@ afterEach(() => {
     jest.restoreAllMocks();
 });
 
-
 jest.mock('store/actions/data/invoiceGeneration/irnGeneration', () => ({
     vehicleIrnGenerationDataActions: {},
 }));
 
 jest.mock('store/actions/data/sales/vehicleInvoiceGeneration', () => ({
     vehicleInvoiceGenerationDataActions: {},
+}));
+
+jest.mock('store/actions/data/otf/salesConsultant', () => ({
+    salesConsultantActions: {},
+}));
+
+jest.mock('store/actions/data/otf/vehicleDetails', () => ({
+    otfvehicleDetailsDataActions: {},
 }));
 
 const mockData = {
@@ -32,7 +39,7 @@ const mockData = {
             VehicleInvoiceSearchList: {
                 isLoaded: true,
                 data: {
-                    paginationData: [{ invoiceNumber: '106' }],
+                    paginationData: [{ bookingNumber: 'OTF23D002075', customerName: 'SHAHID', digitalSignature: 'N', id: '1a6cc630-db19-480e-a5eb-59aa5ed2fcf1', invoiceDate: '2023-10-25', invoiceNumber: 'INV24D010001', invoiceStatus: 'I', mobileNumber: '9820767616', modelDescription: 'XUV700 AX7 DSL AT 7 SEATER BLK', otfId: '61c55e70-600c-4253-9725-3890e5f641a5', otfNumber: 'OTF23D002075' }],
                 },
                 filter: { advanceFilter: true, searchType: 'Name', searchParam: 'Name', fromDate: '01/01/2000', toDate: '01/01/2023', digitalSignature: 'Yes' },
             },
@@ -81,7 +88,7 @@ describe('Vehicle Invoice Generation Master components', () => {
     });
 
     it('test for closing the advance filter', () => {
-        customRender(<VehicleInvoiceMaster />);
+        customRender(<VehicleInvoiceMaster setFilterString={jest.fn()} />);
 
         const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
         fireEvent.click(advanceFilter);
@@ -93,21 +100,23 @@ describe('Vehicle Invoice Generation Master components', () => {
         const mockStore = createMockStore({
             auth: { userId: 106 },
             data: {
-                VehicleInvoiceGeneration: {
-                    VehicleInvoiceSearchList: { filter: { advanceFilter: 'Test', fromDate: '06/06/2022', toDate: '06/06/2022' } },
+                Sales: {
+                    VehicleInvoiceGeneration: { filter: { advanceFilter: 'Test', fromDate: '06/06/2022', toDate: '06/06/2022' } },
                 },
             },
         });
         customRender(
             <Provider store={mockStore}>
-                <VehicleInvoiceMaster fetchList={jest.fn()} setFilterString={jest.fn()} />
+                <VehicleInvoiceMaster advanceFilter={true} fetchList={jest.fn()} setFilterString={jest.fn()} fetchSalesConsultant={jest.fn()} />
             </Provider>
         );
 
         const advanceFilter = screen.getByPlaceholderText(/Search/i);
         fireEvent.change(advanceFilter, { target: { value: 'Test' } });
+        const removeFilter = screen.getAllByTestId('removeFilter');
+        fireEvent.click(removeFilter[0]);
 
-        const clearBtn = screen.getByRole('button', { name: /clear/i });
+        const clearBtn = screen.getByRole('button', { name: /Clear/i });
         fireEvent.click(clearBtn);
     });
 
@@ -122,18 +131,18 @@ describe('Vehicle Invoice Generation Master components', () => {
         });
         customRender(
             <Provider store={mockStore}>
-                <VehicleInvoiceMaster fetchList={jest.fn()} setFilterString={jest.fn()} />
+                <VehicleInvoiceMaster fetchList={jest.fn()} setFilterString={jest.fn()} fetchSalesConsultant={jest.fn()} />
             </Provider>
         );
 
         const advanceFilter = screen.getByPlaceholderText(/Search/i);
         fireEvent.change(advanceFilter, { target: { value: 'Test' } });
-        const removeFilter = screen.getByRole('img',{name:/close-circle/i});
+        const removeFilter = screen.getByRole('img', { name: /close-circle/i });
         fireEvent.click(removeFilter);
     });
 
     it('query buttons should work', async () => {
-        customRender(<VehicleInvoiceMaster />);
+        customRender(<VehicleInvoiceMaster setFilterString={jest.fn()} />);
 
         const cancelledBtn = screen.getByRole('button', { name: 'Cancelled' });
         fireEvent.click(cancelledBtn);
@@ -163,30 +172,191 @@ describe('Vehicle Invoice Generation Master components', () => {
         fireEvent.click(saveAndNext);
     });
 
-    jest.setTimeout(50000);
-    it('irn generation should work', async () => {
-        const mockStore = createMockStore(mockData);
+    it('Should click on view button and close Action call', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+
+            data: {
+                Sales: {
+                    VehicleInvoiceGeneration: {
+                        data: {
+                            paginationData: [
+                                {
+                                    bookingNumber: 'OTF23D002075',
+                                    customerName: 'SHAHID',
+                                    digitalSignature: 'N',
+                                    id: '1a6cc630-db19-480e-a5eb-59aa5ed2fcf1',
+                                    invoiceDate: '2023-10-25',
+                                    invoiceNumber: 'INV24D010001',
+                                    invoiceStatus: 'I',
+                                    mobileNumber: '9820767616',
+                                    modelDescription: 'XUV700 AX7 DSL AT 7 SEATER BLK',
+                                    otfId: '61c55e70-600c-4253-9725-3890e5f641a5',
+                                    otfNumber: 'OTF23D002075',
+                                },
+                            ],
+                        },
+                    },
+                },
+            },
+        });
 
         const fetchList = jest.fn();
         const irnGeneration = jest.fn();
+        const fetchVehcileDetail = jest.fn();
+        const fetchInvoiceMasterData = jest.fn();
+        const fetchOTFDetail = jest.fn();
+        const fetchSalesConsultant = jest.fn();
+        const fetchData = jest.fn();
+        const saveData = jest.fn();
+        const buttonData = { viewBtn: true };
 
         customRender(
             <Provider store={mockStore}>
-                <VehicleInvoiceMaster fetchList={fetchList} resetDetailData={jest.fn()} irnGeneration={irnGeneration} fetchInvoiceMasterData={jest.fn()} />
+                <VehicleInvoiceMaster fetchList={fetchList} buttonData={buttonData} saveData={saveData} fetchData={fetchData} fetchSalesConsultant={fetchSalesConsultant} fetchVehcileDetail={fetchVehcileDetail} fetchOTFDetail={fetchOTFDetail} fetchInvoiceMasterData={fetchInvoiceMasterData} resetDetailData={jest.fn()} irnGeneration={irnGeneration} />
             </Provider>
         );
 
-        fetchList.mock.calls[0][0].onSuccessAction();
         fetchList.mock.calls[0][0].onErrorAction();
 
+        fetchList.mock.calls[0][0].onSuccessAction();
+
         await waitFor(() => {
-            expect(screen.getByText(/106/i)).toBeInTheDocument();
+            expect(screen.getByText('SHAHID')).toBeInTheDocument();
         });
 
-        const viewBtn = screen.getByTestId('view');
+        const viewBtn = screen.getByRole('button', { name: /ai-view/i });
+
         fireEvent.click(viewBtn);
 
-        const closeBtn = screen.getAllByRole('button', { name: 'Close' });
+        const closeBtn = screen.getAllByRole('button', { name: /close/i });
+        fireEvent.click(closeBtn[1]);
+    });
+
+    it('test2', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+
+            data: {
+                Sales: {
+                    VehicleInvoiceGeneration: {
+                        data: {
+                            paginationData: [
+                                {
+                                    bookingNumber: 'OTF23D002075',
+                                    customerName: 'SHAHID',
+                                    digitalSignature: 'N',
+                                    id: '1a6cc630-db19-480e-a5eb-59aa5ed2fcf1',
+                                    invoiceDate: '2023-10-25',
+                                    invoiceNumber: 'INV24D010001',
+                                    invoiceStatus: 'I',
+                                    mobileNumber: '9820767616',
+                                    modelDescription: 'XUV700 AX7 DSL AT 7 SEATER BLK',
+                                    otfId: '61c55e70-600c-4253-9725-3890e5f641a5',
+                                    otfNumber: 'OTF23D002075',
+                                },
+                            ],
+                        },
+                    },
+                },
+            },
+        });
+
+        const fetchList = jest.fn();
+        const irnGeneration = jest.fn();
+        const fetchVehcileDetail = jest.fn();
+        const fetchInvoiceMasterData = jest.fn();
+        const fetchOTFDetail = jest.fn();
+        const fetchSalesConsultant = jest.fn();
+        const fetchData = jest.fn();
+        const saveData = jest.fn();
+        const buttonData = { viewBtn: true };
+
+        customRender(
+            <Provider store={mockStore}>
+                <VehicleInvoiceMaster fetchList={fetchList} buttonData={buttonData} saveData={saveData} fetchData={fetchData} fetchSalesConsultant={fetchSalesConsultant} fetchVehcileDetail={fetchVehcileDetail} fetchOTFDetail={fetchOTFDetail} fetchInvoiceMasterData={fetchInvoiceMasterData} resetDetailData={jest.fn()} irnGeneration={irnGeneration} />
+            </Provider>
+        );
+
+        fetchList.mock.calls[0][0].onErrorAction();
+
+        fetchList.mock.calls[0][0].onSuccessAction();
+
+        await waitFor(() => {
+            expect(screen.getByText('SHAHID')).toBeInTheDocument();
+        });
+
+        const viewBtn = screen.getByRole('button', { name: /ai-view/i });
+
+        fireEvent.click(viewBtn);
+
+        const cancelBtn = screen.getByRole('button', { name: /print form 21/i });
+        fireEvent.click(cancelBtn);
+
+        const closeBtn = screen.getAllByRole('img', { name: /close/i });
+        fireEvent.click(closeBtn[1]);
+    });
+    it('test3', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+
+            data: {
+                Sales: {
+                    VehicleInvoiceGeneration: {
+                        data: {
+                            paginationData: [
+                                {
+                                    bookingNumber: 'OTF23D002075',
+                                    customerName: 'SHAHID',
+                                    digitalSignature: 'N',
+                                    id: '1a6cc630-db19-480e-a5eb-59aa5ed2fcf1',
+                                    invoiceDate: '2023-10-25',
+                                    invoiceNumber: 'INV24D010001',
+                                    invoiceStatus: 'I',
+                                    mobileNumber: '9820767616',
+                                    modelDescription: 'XUV700 AX7 DSL AT 7 SEATER BLK',
+                                    otfId: '61c55e70-600c-4253-9725-3890e5f641a5',
+                                    otfNumber: 'OTF23D002075',
+                                },
+                            ],
+                        },
+                    },
+                },
+            },
+        });
+
+        const fetchList = jest.fn();
+        const irnGeneration = jest.fn();
+        const fetchVehcileDetail = jest.fn();
+        const fetchInvoiceMasterData = jest.fn();
+        const fetchOTFDetail = jest.fn();
+        const fetchSalesConsultant = jest.fn();
+        const fetchData = jest.fn();
+        const saveData = jest.fn();
+        const buttonData = { viewBtn: true };
+
+        customRender(
+            <Provider store={mockStore}>
+                <VehicleInvoiceMaster fetchList={fetchList} buttonData={buttonData} saveData={saveData} fetchData={fetchData} fetchSalesConsultant={fetchSalesConsultant} fetchVehcileDetail={fetchVehcileDetail} fetchOTFDetail={fetchOTFDetail} fetchInvoiceMasterData={fetchInvoiceMasterData} resetDetailData={jest.fn()} irnGeneration={irnGeneration} />
+            </Provider>
+        );
+
+        fetchList.mock.calls[0][0].onErrorAction();
+
+        fetchList.mock.calls[0][0].onSuccessAction();
+
+        await waitFor(() => {
+            expect(screen.getByText('SHAHID')).toBeInTheDocument();
+        });
+
+        const viewBtn = screen.getByRole('button', { name: /ai-view/i });
+
+        fireEvent.click(viewBtn);
+
+        const cancelBtn = screen.getByRole('button', { name: /print invoice/i });
+        fireEvent.click(cancelBtn);
+
+        const closeBtn = screen.getAllByRole('img', { name: /close/i });
         fireEvent.click(closeBtn[1]);
     });
 });

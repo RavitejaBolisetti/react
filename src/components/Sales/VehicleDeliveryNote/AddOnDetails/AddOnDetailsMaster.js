@@ -77,7 +77,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const AddOnDetailsMasterMain = (props) => {
-    const { typeData, requestPayload, setRequestPayload, showGlobalNotification, AddonPartsData, AddonDetailsData, userId, onFinishFailed } = props;
+    const { typeData, requestPayload, setRequestPayload, showGlobalNotification, AddonPartsData, AddonDetailsData, userId } = props;
     const { form, section, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick, setButtonData, buttonData, listRelationshipMangerShowLoading, fetchRelationshipManger, relationshipManagerData, deliveryNoteMasterData } = props;
     const { selectedOrder } = props;
 
@@ -91,7 +91,6 @@ export const AddOnDetailsMasterMain = (props) => {
     const [addOnItemInfo, setAddOnItemInfo] = useState([]);
     const [openAccordian, setOpenAccordian] = useState();
     const [accessoryForm] = Form.useForm();
-    const [muiltipleFormData, setMultipleFormData] = useState({ ...AddonDetailsData });
     const [shieldForm] = Form.useForm();
     const [rsaForm] = Form.useForm();
     const [amcForm] = Form.useForm();
@@ -120,7 +119,6 @@ export const AddOnDetailsMasterMain = (props) => {
         if (selectedOrder?.invoicehdrId && userId) {
             fetchSheild({ setIsLoading: listSheildLoaing, userId, extraParams, onErrorAction });
             fetchRsa({ setIsLoading: listRsaLoading, userId, extraParams, onErrorAction });
-            // fetchAmc({ setIsLoading: listAmcLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedOrder?.invoicehdrId, userId]);
@@ -257,12 +255,12 @@ export const AddOnDetailsMasterMain = (props) => {
         schemeDescriptionDatamain,
         setRegisterDisabled,
         registerDisabled,
-        muiltipleFormData,
+        muiltipleFormData: AddonDetailsData,
         handleAmcDescriptionData,
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

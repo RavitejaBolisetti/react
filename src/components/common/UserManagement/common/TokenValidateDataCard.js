@@ -13,7 +13,7 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 import { USER_TYPE_USER } from 'constants/modules/UserManagement/userType';
 
-const TokenValidateDataCard = ({ tokenData, selectedDealer, handleButtonClick, userType, isLoding }) => {
+const TokenValidateDataCard = ({ tokenData, handleButtonClick, userType, isLoding }) => {
     return (
         <div className={styles.dataDisplay}>
             <Row gutter={20}>

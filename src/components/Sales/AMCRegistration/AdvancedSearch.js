@@ -42,11 +42,6 @@ export const AdvancedSearchFrom = (props) => {
         });
         setAdvanceSearchVisible(false);
     };
-
-    const onFinishFailed = () => {
-        return;
-    };
-
     const CheckDateEffectiveTo = (value, effectiveFrom) => {
         if (!value) return Promise.resolve();
         const bool = dayjs(value).format('YYYY-MM-DD') >= dayjs(effectiveFrom).format('YYYY-MM-DD');
@@ -57,7 +52,7 @@ export const AdvancedSearchFrom = (props) => {
     };
 
     return (
-        <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             {userType === AMC_CONSTANTS?.MNM?.key && (
                 <Row gutter={16}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>

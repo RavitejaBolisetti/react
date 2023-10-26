@@ -114,24 +114,33 @@ const VehicleDetailsMasterBase = (props) => {
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
+    const checkDuplicate = (vehicleRegistrationNumber) => contactData.find((value) => value?.vehicleRegistrationNumber === vehicleRegistrationNumber);
 
     const onSaveFormData = () => {
         contactform
             .validateFields()
             .then((value) => {
-                setContactData((prev) => {
-                    if (prev) {
-                        return [...prev, value];
-                    } else {
-                        return [{ value }];
-                    }
-                });
+                if (checkDuplicate(value?.vehicleRegistrationNumber)) {
+                    showGlobalNotification({ title: 'Error', notificationType: 'error', message: 'Vehicle is duplicate' });
+                    return false;
+                } else if (!value?.vehicleRegistrationNumber) {
+                    showGlobalNotification({ title: 'Error', notificationType: 'error', message: 'Please add vehicle registration number to continue' });
+                    return false;
+                } else {
+                    setContactData((prev) => {
+                        if (prev) {
+                            return [...prev, value];
+                        } else {
+                            return [{ value }];
+                        }
+                    });
 
-                setShowAddEditForm(false);
-                setIsEditing(false);
-                setEditingData({});
-                setIsAdding(false);
-                contactform.resetFields();
+                    setShowAddEditForm(false);
+                    setIsEditing(false);
+                    setEditingData({});
+                    setIsAdding(false);
+                    contactform.resetFields();
+                }
             })
             .catch((err) => console.error(err));
     };
@@ -148,6 +157,9 @@ const VehicleDetailsMasterBase = (props) => {
     };
 
     const handleVinSearch = (value) => {
+        if (!value && formActionType?.addMode) {
+            return false;
+        }
         const onVehicleSearchSuccessAction = (data) => {
             contactform.setFieldsValue({ ...data?.data?.vehicleSearch[0], modelDescription: data?.data?.vehicleSearch[0].chassisNumber, vehicleRegistrationNumber: data?.data?.vehicleSearch[0].registrationNumber, orignallyWarrantyStartDate: formattedCalendarDate(data?.data?.vehicleSearch[0].orignallyWarrantyStartDate) });
             if (formActionType?.addMode) {
@@ -210,9 +222,6 @@ const VehicleDetailsMasterBase = (props) => {
         AMConFinish(requestPayload);
     };
 
-    const onFinishFailed = (err) => {
-        console.error(err);
-    };
     const formSkeleton = (
         <Row>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -223,7 +232,7 @@ const VehicleDetailsMasterBase = (props) => {
 
     return (
         <>
-            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
                 <Row gutter={20} className={styles.drawerBodyRight}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <h2>{section?.title} </h2>

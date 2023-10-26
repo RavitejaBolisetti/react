@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Descriptions, Card, Checkbox } from 'antd';
+import { Descriptions, Card } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 const ViewDetailBase = (props) => {
@@ -16,21 +16,21 @@ const ViewDetailBase = (props) => {
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
 
-    const renderCheckbox = (value) => {
-        if (value) {
-            return (
-                <>
-                    <Descriptions.Item>
-                        <Checkbox valuePropName="checked" checked={formData?.vipDealerInd} defaultChecked={formData?.vipDealerInd} disabled>
-                            VIP Dealer
-                        </Checkbox>
-                    </Descriptions.Item>
-                </>
-            );
-        } else {
-            return;
-        }
-    };
+    // const renderCheckbox = (value) => {
+    //     if (value) {
+    //         return (
+    //             <>
+    //                 <Descriptions.Item>
+    //                     <Checkbox valuePropName="checked" checked={formData?.vipDealerInd} defaultChecked={formData?.vipDealerInd} disabled>
+    //                         VIP Dealer
+    //                     </Checkbox>
+    //                 </Descriptions.Item>
+    //             </>
+    //         );
+    //     } else {
+    //         return;
+    //     }
+    // };
     return (
         <div className={styles.viewDrawerContainer}>
             <Card>
@@ -41,7 +41,6 @@ const ViewDetailBase = (props) => {
                     <Descriptions.Item label="Parts Discount">{checkAndSetDefaultValue(formData?.partsDiscount, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Labour Discount">{checkAndSetDefaultValue(formData?.labourDiscount, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Remarks">{checkAndSetDefaultValue(formData?.remarks, isLoading)}</Descriptions.Item>
-                    {/* {renderCheckbox(formData?.vipDealerInd)} */}
                 </Descriptions>
             </Card>
         </div>

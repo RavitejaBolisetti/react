@@ -95,7 +95,7 @@ const ProductDetailMasterMain = (props) => {
     const { fetchList, resetData, saveData, listShowLoading, showGlobalNotification, typeData } = props;
     const { form, selectedRecordId, section, formActionType, handleFormValueChange, NEXT_ACTION } = props;
     const { fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading } = props;
-    const { isModelDataLoaded, isModelLoading, modelData, isVariantDataLoaded, isVariantLoading, variantData, isModelFamilyDataLoaded, isModelFamilyLoading, modelFamilyData, fetchModelFamilyLovList, listFamilyShowLoading, resetFamily } = props;
+    const { isModelDataLoaded, isModelLoading, modelData, isVariantDataLoaded, isVariantLoading, variantData, isModelFamilyDataLoaded, isModelFamilyLoading, modelFamilyData, fetchModelFamilyLovList, listFamilyShowLoading } = props;
 
     const [formData, setformData] = useState({});
     const [optionalServices, setOptionalServices] = useState([]);
@@ -109,8 +109,8 @@ const ProductDetailMasterMain = (props) => {
     const collapseProps = { collapsible: 'icon' };
     const disabledProps = { disabled: true };
 
-    const onSuccessAction = (res) => {
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+    const onSuccessAction = () => {
+        return;
     };
 
     const onErrorAction = (message) => {
@@ -243,7 +243,7 @@ const ProductDetailMasterMain = (props) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
-    const onFinish = (values) => {
+    const onFinish = () => {
         const data = { ...formData, vehicleIdentificationNumber: selectedRecordId, aggregates: optionalServices };
         const onSuccess = (res) => {
             setOptionalServices([]);
@@ -268,11 +268,6 @@ const ProductDetailMasterMain = (props) => {
         };
 
         saveData(requestData);
-    };
-    const onFinishFailed = () => {
-        form.validateFields()
-            .then(() => {})
-            .catch(() => {});
     };
 
     const formProps = {
@@ -328,7 +323,7 @@ const ProductDetailMasterMain = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

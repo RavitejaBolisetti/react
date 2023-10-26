@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState } from 'react';
-import { Col, Input, Form, Row, Select, Card, DatePicker, Space } from 'antd';
+import { Col, Input, Form, Row, Card, DatePicker, Space } from 'antd';
 
 import { disableFutureDate } from 'utils/disableDate';
 import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
@@ -19,7 +19,7 @@ import { FINANCE_ARRANGED_BY } from 'constants/financeArrangedBy';
 import styles from 'assets/sass/app.module.scss';
 
 const AddEditFormMain = (props) => {
-    const { formData, FinanceLovData, typeData, form, pageType } = props;
+    const { formData, FinanceLovData, typeData, form } = props;
     const [doReceived, setDoReceived] = useState();
     const [financeArrangedBy, setFinanceArrangedBy] = useState();
     const checkFinanceType = (type, key) => (type ? type === key : false);
@@ -53,12 +53,12 @@ const AddEditFormMain = (props) => {
     //     }
     // };
 
-    const selectProps = {
-        optionFilterProp: 'children',
-        showSearch: true,
-        allowClear: true,
-        className: styles.headerSelectField,
-    };
+    // const selectProps = {
+    //     optionFilterProp: 'children',
+    //     showSearch: true,
+    //     allowClear: true,
+    //     className: styles.headerSelectField,
+    // };
 
     const handleFinanceArrangedBy = (value) => {
         setFinanceArrangedBy(value);

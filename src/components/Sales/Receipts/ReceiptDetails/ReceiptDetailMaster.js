@@ -68,7 +68,6 @@ const ReceiptDetailMasterBase = (props) => {
     const [editingListData, setEditingListData] = useState({});
     const [showAddEditForm, setShowAddEditForm] = useState(false);
     const [isAdding, setIsAdding] = useState(false);
-    const [receiptData, setReceiptData] = useState([]);
     const [paymentMode, setPaymentMode] = useState('');
     const [paymentDataList, setPaymentDataList] = useState([]);
     const [partyId, setPartyId] = useState();
@@ -109,10 +108,6 @@ const ReceiptDetailMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formActionType, receiptDetailData?.receiptsDetails]);
-
-    const handleSave = () => {
-        //save receipt information
-    };
 
     const handleChange = (e) => {
         resetData();
@@ -185,26 +180,23 @@ const ReceiptDetailMasterBase = (props) => {
 
             return;
         }
-        receiptForm.validateFields().then((data) => {
-            let finaldata = { ...data, paymentDetails: paymentDataList };
+        receiptForm
+            .validateFields()
+            .then((data) => {
+                let finaldata = { ...data, paymentDetails: paymentDataList };
 
-            if (receipt === ReceiptType?.ADVANCE?.key) {
-                setApportionList([]);
-                requestPayload && receiptOnFinish(finaldata);
-                setRequestPayload({ ...requestPayload, receiptsDetails: finaldata });
-            } else {
-                setRequestPayload({ ...requestPayload, receiptsDetails: finaldata });
-                handleButtonClick({ buttonAction: NEXT_ACTION });
-            }
-            setButtonData({ ...buttonData, formBtnActive: false });
-        }).catch(err => console.error(err));
+                if (receipt === ReceiptType?.ADVANCE?.key) {
+                    setApportionList([]);
+                    requestPayload && receiptOnFinish(finaldata);
+                    setRequestPayload({ ...requestPayload, receiptsDetails: finaldata });
+                } else {
+                    setRequestPayload({ ...requestPayload, receiptsDetails: finaldata });
+                    handleButtonClick({ buttonAction: NEXT_ACTION });
+                }
+                setButtonData({ ...buttonData, formBtnActive: false });
+            })
+            .catch((err) => console.error(err));
     };
-
-    const handleFormValueChange = () => {
-        // setButtonData({ ...buttonData, formBtnActive: true });
-    };
-
-    const onFinishFailed = () => {};
 
     const handleCollapse = (key) => {
         openAccordian?.includes(key) ? setOpenAccordian([]) : setOpenAccordian([key]);
@@ -216,7 +208,6 @@ const ReceiptDetailMasterBase = (props) => {
         setShowAddEditForm,
         form,
         onFinish,
-        onFinishFailed,
         fetchList,
         typeData,
         receiptType,
@@ -230,7 +221,6 @@ const ReceiptDetailMasterBase = (props) => {
 
         setOpenAccordian,
         receiptForm,
-        setReceiptData,
         setPaymentDataList,
         receiptData: receiptDetailData?.receiptsDetails ? receiptDetailData?.receiptsDetails : requestPayload?.receiptsDetails,
 
@@ -239,7 +229,6 @@ const ReceiptDetailMasterBase = (props) => {
         isAdding,
         editingListData,
         setEditingListData,
-        handleSave,
         handleCancelFormEdit,
         setPaymentMode,
         paymentMode,
@@ -247,7 +236,6 @@ const ReceiptDetailMasterBase = (props) => {
         setReceipt,
         openAccordian,
         handleCollapse,
-        handleFormValueChange,
         setIsListEditing,
         isListEditing,
         totalReceivedAmount,
@@ -266,7 +254,6 @@ const ReceiptDetailMasterBase = (props) => {
         showAddEditForm,
         setShowAddEditForm,
         receiptData: receiptDetailData?.receiptsDetails,
-        setReceiptData,
         receiptType,
         paymentDataList: formActionType?.addMode ? paymentDataList : receiptDetailData?.receiptsDetails?.paymentDetails,
         styles,
@@ -280,12 +267,11 @@ const ReceiptDetailMasterBase = (props) => {
         handleSavepaymenttForm,
         formActionType,
         buttonData,
-        handleFormValueChange,
         totalReceivedAmount,
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={receiptForm} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={receiptForm} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

@@ -13,7 +13,7 @@ import styles from 'assets/sass/app.module.scss';
 const { Search } = Input;
 
 const CustomerDetailsForm = (props) => {
-    const { handleCustomerSearch, disabledProps, formData } = props;
+    const { handleCustomerChange, handleCustomerSearch, disabledProps, formData } = props;
 
     return (
         <>
@@ -25,7 +25,7 @@ const CustomerDetailsForm = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={24} sm={8} md={8} lg={8} xl={8}>
                                         <Form.Item initialValue={formData?.customerId} label="Customer ID" name="customerCode">
-                                            <Search {...disabledProps} placeholder={preparePlaceholderText('Customer ID')} onSearch={handleCustomerSearch} allowClear />
+                                            <Search {...disabledProps} placeholder={preparePlaceholderText('Customer ID')} onChange={handleCustomerChange} onSearch={handleCustomerSearch} allowClear />
                                         </Form.Item>
                                     </Col>
                                 </Row>

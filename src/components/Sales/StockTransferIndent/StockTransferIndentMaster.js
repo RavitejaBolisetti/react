@@ -17,7 +17,6 @@ import { stockTransferIndent } from 'store/actions/data/sales/stockTransfer/Stoc
 import { StockIndentIssueDataAction } from 'store/actions/data/sales/stockTransfer';
 import { DealerBranchLocationDataActions } from 'store/actions/data/userManagement/dealerBranchLocation';
 import { otfvehicleDetailsLovDataActions } from 'store/actions/data/otf/vehicleDetailsLov';
-import { vehicleDetailDataActions } from 'store/actions/data/vehicle/vehicleDetail';
 import { vehicleAllotment } from 'store/actions/data/vehicleAllotment/VehicleAllotment';
 
 import { reportDataActions } from 'store/actions/data/report/reports';
@@ -43,7 +42,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         common: {
             Header: {
-                data: { dealerLocations: dealerLocations = [], parentGroupCode },
+                data: { dealerLocations = [], parentGroupCode },
             },
         },
         data: {
@@ -58,9 +57,6 @@ const mapStateToProps = (state) => {
             OTF: {
                 VehicleDetailsLov: { filteredListData: productHierarchyData },
             },
-            // Vehicle: {
-            //     VehicleDetail: { data: vehicleVinData, isLoading: vehicleVinDataLoading = false },
-            // },
             Report: {
                 Reports: { data: reportData },
             },
@@ -113,9 +109,6 @@ const mapDispatchToProps = (dispatch) => ({
             setFilterString: stockTransferIndent.setFilter,
             resetData: stockTransferIndent.reset,
             saveData: stockTransferIndent.saveData,
-
-            // fetchVinDetails: vehicleDetailDataActions.fetchList,
-            // resetVinDetails: vehicleDetailDataActions.reset,
             fetchVinDetails: vehicleAllotment.fetchList,
             resetVinDetails: vehicleAllotment.reset,
 
@@ -135,7 +128,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const StockTransferIndentMasterBase = (props) => {
-    const { data, filterString, setFilterString, resetData, isFetchDataLoading, fetchReportDetail, dealerLocations } = props;
+    const { data, filterString, setFilterString, resetData, isFetchDataLoading, dealerLocations } = props;
     const { userId, typeData, parentGroupCode, showGlobalNotification } = props;
     const { indentLocationList, requestedByDealerList, productHierarchyData, isLoadingDealerLoc } = props;
     const { fetchIndentList, fetchIndentLocation, fetchIndentDetails, fetchRequestedByList, listShowLoading, saveData, ProductLovLoading, fetchProductLov, fetchVinDetails, vehicleVinData, saveIssueDetail, resetVinDetails, fetchIssueList, resetIssueList, listIssueLoading } = props;
@@ -186,7 +179,6 @@ export const StockTransferIndentMasterBase = (props) => {
     const onSuccessAction = (res) => {
         setshowVinLoading(false);
         setShowDataLoading(false);
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
     const onErrorAction = (message) => {
@@ -245,8 +237,7 @@ export const StockTransferIndentMasterBase = (props) => {
             {
                 key: 'searchType',
                 title: 'Type',
-                value: 'status', //filterString?.searchType,
-                //name: typeData?.[PARAM_MASTER.INDNT_TYP.id]?.find((i) => i?.key === toggleButton)?.value,
+                value: 'status',
                 canRemove: false,
                 filter: false,
             },
@@ -302,12 +293,7 @@ export const StockTransferIndentMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, extraParams, defaultDealerLocationCode]);
-
-    const onFinishFailed = (errorInfo) => {
-        return;
-    };
-
-    const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
+    const handleButtonClick = ({ record = null, buttonAction }) => {
         switch (buttonAction) {
             case ADD_ACTION:
                 break;
@@ -538,7 +524,6 @@ export const StockTransferIndentMasterBase = (props) => {
         setFilterString,
         toggleButton,
         setToggleButton,
-        onFinishFailed,
         handleResetFilter,
         setAdvanceSearchVisible,
         searchForm,

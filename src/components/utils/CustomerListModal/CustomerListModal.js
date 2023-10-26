@@ -14,7 +14,7 @@ import { tableColumn } from './tableColumn';
 import styles from 'assets/sass/app.module.scss';
 
 export const CustomerListBase = (props) => {
-    const { data, handleSelectedData, setSelectedRowData, buttonData, setButtonData } = props;
+    const { data, handleSelectedData, setSelectedRowData } = props;
     const [formBtnActive, setFormBtnActive] = useState(false);
     const [selectedRows, setSelectedRows] = useState([]);
 

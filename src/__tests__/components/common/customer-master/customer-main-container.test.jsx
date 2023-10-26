@@ -18,22 +18,23 @@ jest.mock('components/common/CustomerMaster/LeftSidebar', () => {
     return {
         __esModule: true,
         LeftSidebar: () => null,
-    }
+    };
 });
 
 const FormWrapper = (props) => {
     const [form] = Form.useForm();
 
-    const myFormMock={
+    const myFormMock = {
         ...form,
-        setFieldsValue: jest.fn(),
-        getFieldValue: jest.fn()
-    }
-    return <CustomerMainConatiner form={myFormMock} {...props} />
-}
+        setFieldsValue: jest.fn().mockResolvedValue([{ name: 'Kai' }]),
+        validateFields: jest.fn().mockResolvedValue([{ name: 'Kai' }]),
+        resetFields: jest.fn(),
+        getFieldsValue: jest.fn().mockResolvedValue([{ name: 'Kai' }]),
+    };
+    return <CustomerMainConatiner form={myFormMock} {...props} />;
+};
 
 describe('Customer Main Container component', () => {
-
     it('should render the customer main container component', () => {
         customRender(<CustomerMainConatiner isVisible={true} resetViewData={jest.fn()} {...props} />);
     });
@@ -71,11 +72,11 @@ describe('Customer Main Container component', () => {
     });
 
     it('should render the CorporateCustomerDetailMaster component', () => {
-        customRender(<CustomerMainConatiner isVisible={true} customerType={'CRP'} currentSection={1} {...props}/>);
+        customRender(<CustomerMainConatiner isVisible={true} customerType={'CRP'} currentSection={1} {...props} />);
     });
 
     it('should render the CorporateCompanyProfileMaster component', () => {
-        customRender(<CustomerMainConatiner isVisible={true} customerType={'CRP'} currentSection={2} {...props}/>);
+        customRender(<CustomerMainConatiner isVisible={true} customerType={'CRP'} currentSection={2} {...props} />);
     });
 
     it('should render the CorporateCompanyAddressMaster component', () => {
@@ -97,5 +98,4 @@ describe('Customer Main Container component', () => {
     it('should return empty corporate', () => {
         customRender(<CustomerMainConatiner isVisible={true} customerType={'CRP'} currentSection={0} {...props} />);
     });
-
 });

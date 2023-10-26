@@ -6,12 +6,12 @@
 import React, { useEffect } from 'react';
 import dayjs from 'dayjs';
 
-import { Col, Input, Form, Row, Card, DatePicker, Space, AutoComplete, Select } from 'antd';
+import { Col, Input, Form, Row, Card, DatePicker, Space, Select } from 'antd';
 
 import { disableFutureDate, disableFieldsOnFutureDate } from 'utils/disableDate';
 import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
 import { validateRequiredSelectField } from 'utils/validation';
-import { preparePlaceholderSelect, preparePlaceholderText, preparePlaceholderAutoComplete } from 'utils/preparePlaceholder';
+import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import styles from 'assets/sass/app.module.scss';
 import { customSelectBox } from 'utils/customSelectBox';

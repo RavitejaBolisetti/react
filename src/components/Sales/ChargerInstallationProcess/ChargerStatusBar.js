@@ -17,17 +17,12 @@ export const ChargerStatusBar = (props) => {
     const otfStatusList = Object.values(QUERY_BUTTONS_CONSTANTS);
     const currentStatusId = otfStatusList?.find((i) => i.key === status)?.id;
 
-    let displayItem = '';
     if (status === QUERY_BUTTONS_CONSTANTS.SITE_SURVEY.key) {
-        displayItem = otfStatusList.filter((i) => i.displayOnView && i?.id === QUERY_BUTTONS_CONSTANTS.SITE_SURVEY.id);
+        otfStatusList.filter((i) => i.displayOnView && i?.id === QUERY_BUTTONS_CONSTANTS.SITE_SURVEY.id);
     } else if (status === QUERY_BUTTONS_CONSTANTS.SITE_VALIDATION.key) {
-        displayItem = otfStatusList.filter((i) => (i.displayOnView && i?.id === QUERY_BUTTONS_CONSTANTS.SITE_SURVEY.id) || QUERY_BUTTONS_CONSTANTS.SITE_VALIDATION.id);
+        otfStatusList.filter((i) => (i.displayOnView && i?.id === QUERY_BUTTONS_CONSTANTS.SITE_SURVEY.id) || QUERY_BUTTONS_CONSTANTS.SITE_VALIDATION.id);
     }
-    // } else if (status === QUERY_BUTTONS_CONSTANTS.INSTALLATION.key) {
-    //     displayItem = otfStatusList.filter((i) => i?.id === QUERY_BUTTONS_CONSTANTS.INSTALLATION.id);
-    // } else {
-    //     displayItem = otfStatusList.filter((i) => i.displayOnView && i?.id !== QUERY_BUTTONS_CONSTANTS.COMMISSION.id);
-    // }
+
     return (
         <Steps
             current={0}

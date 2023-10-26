@@ -171,4 +171,71 @@ describe('Evr details capturing master render', () => {
         fetchList.mock.calls[0][0].onErrorAction();
         fetchProductList.mock.calls[0][0].onCloseAction();
     });
+
+    it('clear button should work', () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                EvrDetailsCapturing: {
+                    EvrDetailsCapturingSearchList: { isLoaded: true, filter: { advanceFilter: true, modelDescription: 'modeltest', model: 'testing', dueFromDate: '01/01/2000', dueToDate: '01/01/2002' }, key: 'searchParam' },
+                },
+            },
+        });
+        const fetchList = jest.fn();
+        customRender(
+            <Provider store={mockStore}>
+                <EvrDetailsCapturingMaster fetchProductList={jest.fn()} fetchList={fetchList} setFilterString={jest.fn()} />
+            </Provider>
+        );
+        const approved = screen.getByRole('button', { name: 'Charged' });
+        fireEvent.click(approved);
+        const searchBox = screen.getByRole('textbox', { name: '' });
+        fireEvent.change(searchBox, { target: { value: 'Kai' } });
+        const searchBtn = screen.getByRole('button', { name: 'search' });
+        fireEvent.click(searchBtn);
+        const advanceFilter = screen.getByPlaceholderText(/Search Model Description/i);
+        fireEvent.change(advanceFilter, { target: { value: 'Test' } });
+        const clearBtn = screen.getByRole('button', { name: /Clear/i });
+        fireEvent.click(clearBtn);
+    });
+
+    it('test1', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+
+            data: {
+                EvrDetailsCapturing: {
+                    EvrDetailsCapturingSearchList: {
+                        data: { paginationData: [{ chargingStatus: 'CHARGED', id: '81b5f880-7a07-4a5e-aa34-629c9eeedeb8', modelCode: 'ALFLMM8585890582', modelDescription: 'Kai', modelGroupCode: 'LOGN' }] },
+                    },
+                },
+            },
+        });
+
+        const fetchList = jest.fn();
+        const fetchProductList = jest.fn();
+        const fetchDetail = jest.fn();
+        const saveData = jest.fn();
+
+        customRender(
+            <Provider store={mockStore}>
+                <EvrDetailsCapturingMaster fetchList={fetchList} fetchDetail={fetchDetail} fetchProductList={fetchProductList} saveData={saveData} setFilterString={jest.fn()} resetData={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} />
+            </Provider>
+        );
+
+        fetchList.mock.calls[0][0].onErrorAction();
+
+        fetchList.mock.calls[0][0].onSuccessAction();
+
+        await waitFor(() => {
+            expect(screen.getByText('CHARGED')).toBeInTheDocument();
+        });
+
+        const viewBtn = screen.getByRole('button', { name: /fa-edit/i });
+
+        fireEvent.click(viewBtn);
+
+        const saveBtn = screen.getByRole('button', { name: /save/i });
+        fireEvent.click(saveBtn);
+    });
 });

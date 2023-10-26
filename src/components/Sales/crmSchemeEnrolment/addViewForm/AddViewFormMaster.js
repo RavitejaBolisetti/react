@@ -18,7 +18,7 @@ import styles from 'assets/sass/app.module.scss';
 const { Panel } = Collapse;
 
 const AddViewFormMain = (props) => {
-    const { form, formData, buttonData, setButtonData, handleButtonClick, onCloseAction, formActionType, onFinish, onFinishFailed, isEnrolmentGenerated, activeKey, onChange } = props;
+    const { form, formData, buttonData, setButtonData, handleButtonClick, onCloseAction, formActionType, onFinish, isEnrolmentGenerated, activeKey, onChange } = props;
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -39,7 +39,7 @@ const AddViewFormMain = (props) => {
 
     return (
         <>
-            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>
                 {isEnrolmentGenerated ? (
                     <Row gutter={20} className={styles.drawerBodyRight} justify="center" align="center">
                         <EnrolmentNumberGenerated />

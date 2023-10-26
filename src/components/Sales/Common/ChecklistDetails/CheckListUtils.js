@@ -6,7 +6,7 @@
 import React from 'react';
 import moment from 'moment';
 
-import { Col, Input, Form, Row, DatePicker, InputNumber, Select, Switch, Typography } from 'antd';
+import { Col, Input, Form, Row, DatePicker, InputNumber, Select, Switch } from 'antd';
 
 import { convertDateTimedayjs, dateFormatView } from 'utils/formatDateTime';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
@@ -26,11 +26,10 @@ export const FORM_KEYS = {
     answerFromNumber: undefined,
     answerToNumber: undefined,
     answerDescription: undefined,
-    answerFromDate: undefined,
-    answerToDate: undefined,
     answerFromNumberDecimal: undefined,
     answerToNumberDecimal: undefined,
 };
+
 const setQuestionlabel = (checklistType, data) => {
     switch (checklistType) {
         case MODULE_TYPE_CONSTANTS?.RECEIPT_CHECKLIST?.key: {

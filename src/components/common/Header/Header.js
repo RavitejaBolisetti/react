@@ -224,12 +224,6 @@ const HeaderMain = (props) => {
         });
     };
 
-    // const fyMenuOption = [
-    //     customMenuLink({
-    //         title: finacialYear,
-    //     }),
-    // ];
-
     const userSettingMenu = [
         customMenuLink({
             key: 1,
@@ -242,18 +236,6 @@ const HeaderMain = (props) => {
                 disabled: role?.isDefault,
             })),
         }),
-        // customMenuLink({
-        //     key: '1',
-        //     title: 'My Profile',
-        //     link: routing.ROUTING_USER_PROFILE,
-        //     icon: <FiUser size={18} />,
-        // }),
-        // customMenuLink({
-        //     key: '2',
-        //     title: 'Account Settings',
-        //     link: routing.ROUTING_USER_SETTING,
-        //     icon: <FiSettings size={18} />,
-        // }),
     ];
 
     userType === USER_TYPE?.DEALER?.key &&
@@ -282,7 +264,7 @@ const HeaderMain = (props) => {
         setCollapsed(!collapsed);
     };
 
-    const isDashboard = false; //pagePath === routing.ROUTING_DASHBOARD;
+    const isDashboard = false;
 
     useEffect(() => {
         const interval = setInterval(() => {

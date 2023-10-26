@@ -19,7 +19,7 @@ const { TextArea } = Input;
 
 export const RejectRequestForm = (props) => {
     const { rejectModalCloseAction, rejectRequest } = props;
-    const { handleCancelRequests, amcWholeCancellation, amcCancellationText, typeData, formData, cancelAMCForm, onFinish, onFinishFailed, userType, buttonText } = props;
+    const { handleCancelRequests, amcWholeCancellation, amcCancellationText, typeData, formData, cancelAMCForm, onFinish, userType, buttonText } = props;
     const [isOtherReason, setIsOtherReason] = useState(false);
     const handleRemarksChange = (value) => {
         if (value === AMC_CONSTANTS?.OTHERS?.key) {
@@ -30,14 +30,14 @@ export const RejectRequestForm = (props) => {
     };
     return (
         <>
-            <Form autoComplete="off" layout="vertical" form={cancelAMCForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Form autoComplete="off" layout="vertical" form={cancelAMCForm} onFinish={onFinish}>
                 {amcWholeCancellation && rejectRequest ? (
                     <>
                         {userType === AMC_CONSTANTS?.DEALER?.key ? (
                             <Row gutter={16}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
                                     <Form.Item label="Reason for Cancellation" name="amcCancelRemarks" rules={[validateRequiredInputField('remarks')]} initialValue={formData?.amcCancelRemarks}>
-                                        {customSelectBox({ data: typeData?.[PARAM_MASTER.AMC_CANCEL_REASON.id], placeholder: preparePlaceholderSelect('reason for cancellation'), onChange: handleRemarksChange })}
+                                        {customSelectBox({ data: typeData?.[PARAM_MASTER.AMC_CANCEL_REASON.id], testId: "select-test", placeholder: preparePlaceholderSelect('reason for cancellation'), onChange: handleRemarksChange })}
                                     </Form.Item>
                                 </Col>
                             </Row>

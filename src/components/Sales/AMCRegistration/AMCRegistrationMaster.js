@@ -403,13 +403,13 @@ export const AMCRegistrationMasterBase = (props) => {
                 setSelectedAMC('');
                 break;
             case EDIT_ACTION:
-                fetchDetail({ setIsLoading: listShowLoading, userId, extraParams: detailExtraParams, customURL, onSuccessAction, onErrorAction });
+                fetchDetail({ setIsLoading: listShowLoading, userId, extraParams: detailExtraParams, customURL, onErrorAction });
 
                 record && setSelectedAMC(record);
                 openDefaultSection && setCurrentSection(defaultSection);
                 break;
             case VIEW_ACTION:
-                fetchDetail({ setIsLoading: listShowLoading, userId, extraParams: detailExtraParams, customURL, onSuccessAction, onErrorAction });
+                fetchDetail({ setIsLoading: listShowLoading, userId, extraParams: detailExtraParams, customURL, onErrorAction });
                 record && setSelectedAMC(record);
                 defaultSection && setCurrentSection(defaultSection);
                 setIsPendingForCancellation(record?.status === AMC_CONSTANTS?.PENDING_FOR_CANCELLATION?.title);
@@ -508,10 +508,6 @@ export const AMCRegistrationMasterBase = (props) => {
         advanceFilterForm.resetFields();
     };
 
-    const onFinishFailed = (errorInfo) => {
-        return;
-    };
-
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
@@ -570,8 +566,6 @@ export const AMCRegistrationMasterBase = (props) => {
         filterString,
         setFilterString,
         from: listFilterForm,
-
-        onFinishFailed,
         handleResetFilter,
         advanceFilterForm,
         handleButtonClick,
@@ -640,6 +634,7 @@ export const AMCRegistrationMasterBase = (props) => {
             default:
                 return AMC_REQUEST_TITLE_CONSTANTS?.DEALER_AMC_CANCELLATION?.key;
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isRejectModalVisible]);
 
     const handleCancelRequest = () => {
@@ -694,7 +689,6 @@ export const AMCRegistrationMasterBase = (props) => {
         formActionType,
         setFormActionType,
         AMConFinish: onFinish,
-        onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
         titleOverride: drawerTitle.concat(moduleTitle),

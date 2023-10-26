@@ -84,8 +84,6 @@ describe('CustomerDetailsMaster Components', () => {
     });
 
     it('Should render success and otfnumber heading when user click', async () => {
-        
-
         customRender(
             <Provider store={mockStore}>
                 <FormWrapper {...mockProps} StatusBar={StatusBar} setButtonData={jest.fn()} FormActionButton={FormActionButton} />
@@ -193,11 +191,20 @@ describe('CustomerDetailsMaster Components', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper saveData={saveData} setButtonData={jest.fn()} onFinishCustom={true} fetchList={fetchList} handleButtonClick={jest.fn()} setButtonData={jest.fn()} onCloseAction={jest.fn()} StatusBar={StatusBar} FormActionButton={FormActionButton} resetData={jest.fn()} />
+                <FormWrapper saveData={saveData} setButtonData={jest.fn()} onFinishCustom={true} fetchList={fetchList} handleButtonClick={jest.fn()} onCloseAction={jest.fn()} StatusBar={StatusBar} FormActionButton={FormActionButton} resetData={jest.fn()} />
             </Provider>
         );
 
         const saveBtn = screen.getAllByRole('button', { name: 'Save' });
         fireEvent.click(saveBtn[1]);
+    });
+    it('test for view', async () => {
+        const formActionType = { viewMode: true };
+
+        customRender(<FormWrapper StatusBar={StatusBar} FormActionButton={FormActionButton} formActionType={formActionType} />);
+
+        const plusBtn = screen.getAllByRole('img', { name: /plus/i });
+        fireEvent.click(plusBtn[0]);
+        fireEvent.click(plusBtn[1]);
     });
 });

@@ -68,15 +68,12 @@ const AuthorityFormMin = (props) => {
     const { isMainForm, handleFormValueChange, tokenValidationData, recordId = '', viewMode, userId, onFinish, form, isEditing, isBtnDisabled, listShowLoading, searchList, documentTypesList } = props;
     const { setselectedValueOnUpdate, searchLoading, authTypeDropdownData, errorMessage, setErrorMessage, formType, setFormType, resetData, record } = props;
     const disableAddBtn = { disabled: isBtnDisabled || !tokenValidationData?.manufacturerUserName };
-    const onFinishFailed = (err) => {
-        console.error(err);
-    };
 
     const onErrorAction = (message) => {
         setErrorMessage(message);
     };
 
-    const onSearchHandle = (recordId) => (data) => {
+    const onSearchHandle = () => (data) => {
         setFormType(isMainForm);
         const extraParams = [
             {
@@ -104,7 +101,7 @@ const AuthorityFormMin = (props) => {
     const fieldNames = { label: 'value', value: 'key' };
 
     return (
-        <Form autoComplete="off" form={form} id="myForm" onFinish={onFinish} layout="vertical" onFieldsChange={handleFormValueChange} onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" form={form} id="myForm" onFinish={onFinish} layout="vertical" onFieldsChange={handleFormValueChange}>
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item label="Authority Type" name="authorityTypeCode" rules={[validateRequiredInputField('Authority Type'), { validator: (rule, value) => duplicateValidator(value, 'authorityTypeCode', documentTypesList, record?.authorityTypeCode) }]}>

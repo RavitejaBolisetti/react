@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Button, Row, Col, Input, Form } from 'antd';
+import { Button, Row, Col, Form } from 'antd';
 import { FilterIcon } from 'Icons';
 import { PlusOutlined } from '@ant-design/icons';
 import { RxCross2 } from 'react-icons/rx';
@@ -75,7 +75,7 @@ export default function ChargerInstallationFilter(props) {
                                                 {filter?.name}
                                                 {filter?.canRemove && (
                                                     <span>
-                                                        <RxCross2 onClick={() => removeFilter(filter?.key)} />
+                                                        <RxCross2 onClick={() => removeFilter(filter?.key)} data-testid="removeFilter" />
                                                     </span>
                                                 )}
                                             </div>

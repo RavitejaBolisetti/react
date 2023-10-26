@@ -32,8 +32,6 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import { ChangeHistory } from './ChangeHistory';
 
-import { DisableParent } from 'components/common/ProductHierarchy/ProductHierarchyUtils';
-
 import LeftPanel from '../LeftPanel';
 
 import styles from 'assets/sass/app.module.scss';
@@ -263,11 +261,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataOrgLoaded, userId]);
 
-    // useEffect(() => {
-    //     manufacturerOrgHierarchyData?.map((i) => DisableParent(i));
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [manufacturerOrgHierarchyData]);
-
     const onChange = (e) => {
         setSearchValue(e.target.value);
     };
@@ -397,9 +390,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
 
         saveData(requestData);
     };
-
-    const onFinishFailed = (errorInfo) => {};
-
     const myProps = {
         isTreeViewVisible,
         handleTreeViewVisiblity,
@@ -434,7 +424,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         handleResetBtn,
         buttonData,
         titleOverride: (formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
-        onFinishFailed,
+
         isFormBtnActive,
         setFormBtnActive,
         documentTypesList,
@@ -572,14 +562,16 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         titleOverride: 'Change History',
         organizationId,
     };
-    const onfinishHeader = (value) => {};
+    const onfinishHeader = () => {
+        return;
+    };
 
     return (
         <>
             <div className={styles.contentHeaderBackground}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={18} lg={18} xl={18}>
-                        <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onfinishHeader} onFinishFailed={onFinishFailed}>
+                        <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onfinishHeader}>
                             <Form.Item label={`${title}`} name="code">
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>

@@ -9,13 +9,12 @@ import { Col, Form, Row, DatePicker } from 'antd';
 import { withModal } from 'components/withModal';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { disableFutureDate } from 'utils/disableDate';
-import dayjs from 'dayjs';
 
 import { ModalButtons } from 'components/common/Button';
 import { STOCK_TRANSFER } from 'constants/StockTransfer';
 
 import { dateFormat, formatDate, formatDateToCalenderDate } from 'utils/formatDateTime';
-import { compareFromToDate, validateRequiredSelectField, campareDate } from 'utils/validation';
+import { validateRequiredSelectField, campareDate } from 'utils/validation';
 import { customSelectBox } from 'utils/customSelectBox';
 
 import styles from 'assets/sass/app.module.scss';
@@ -56,10 +55,6 @@ export const AdvancedSearchFrom = (props) => {
         advanceFilterForm.resetFields();
     };
 
-    const onFinishFailed = () => {
-        return;
-    };
-
     const modalProps = {
         reset: true,
         submit: true,
@@ -75,16 +70,8 @@ export const AdvancedSearchFrom = (props) => {
         label: toggleButton === STOCK_TRANSFER?.RAISED.key ? 'Indent Raised To' : 'Indent Received From',
     };
 
-    const CheckDateEffectiveTo = (value, effectiveFrom) => {
-        const bool = dayjs(value).format('YYYY-MM-DD') >= dayjs(effectiveFrom).format('YYYY-MM-DD');
-        if (bool) {
-            return Promise.resolve();
-        }
-        return Promise.reject(new Error('Date cant be less than Effective from date'));
-    };
-
     return (
-        <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={filterString?.indent} label="Indent" name="indent">

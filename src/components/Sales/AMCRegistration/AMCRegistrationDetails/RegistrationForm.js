@@ -37,7 +37,6 @@ const RegistrationForm = (props) => {
                                 <Form.Item
                                     label="VIN"
                                     name="vin"
-                                    // rules={[validateRequiredInputField('vin')]}
                                 >
                                     <Input disabled maxLength={50} placeholder={preparePlaceholderText('vin')} />
                                 </Form.Item>
@@ -55,7 +54,6 @@ const RegistrationForm = (props) => {
                         <Form.Item
                             label="Manager Name"
                             name="managerName"
-                            // rules={[validateRequiredInputField('Manager Name')]}
                         >
                             <Input disabled maxLength={50} placeholder={preparePlaceholderText('Manager Name')} />
                         </Form.Item>
