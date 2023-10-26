@@ -403,13 +403,13 @@ export const AMCRegistrationMasterBase = (props) => {
                 setSelectedAMC('');
                 break;
             case EDIT_ACTION:
-                fetchDetail({ setIsLoading: listShowLoading, userId, extraParams: detailExtraParams, customURL, onSuccessAction, onErrorAction });
+                fetchDetail({ setIsLoading: listShowLoading, userId, extraParams: detailExtraParams, customURL, onErrorAction });
 
                 record && setSelectedAMC(record);
                 openDefaultSection && setCurrentSection(defaultSection);
                 break;
             case VIEW_ACTION:
-                fetchDetail({ setIsLoading: listShowLoading, userId, extraParams: detailExtraParams, customURL, onSuccessAction, onErrorAction });
+                fetchDetail({ setIsLoading: listShowLoading, userId, extraParams: detailExtraParams, customURL, onErrorAction });
                 record && setSelectedAMC(record);
                 defaultSection && setCurrentSection(defaultSection);
                 setIsPendingForCancellation(record?.status === AMC_CONSTANTS?.PENDING_FOR_CANCELLATION?.title);

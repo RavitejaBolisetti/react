@@ -31,26 +31,30 @@ const CustomerDetailsMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formActionType]);
 
-    const handleCustomerSearch = () => {
-        const extraParams = [
-            {
-                key: 'customerId',
-                title: 'customerId',
-                value: form.getFieldValue('customerCode'),
-                name: 'Customer ID',
-            },
-        ];
-        fetchCustomerList({
-            customURL,
-            setIsLoading: () => {},
-            extraParams,
-            userId,
-            onSuccessAction: (response) => {
-                form.setFieldsValue({ ...response?.data, customerAddress: response?.data?.address, customerCity: response?.data?.city, customerPhoneNumber: response?.data?.mobileNumber });
-                setButtonData({ ...buttonData, formBtnActive: true });
-            },
-            onErrorAction: () => {},
-        });
+    const handleCustomerSearch = (value) => {
+        if (!value) {
+            return false;
+        } else {
+            const extraParams = [
+                {
+                    key: 'customerId',
+                    title: 'customerId',
+                    value: form.getFieldValue('customerCode'),
+                    name: 'Customer ID',
+                },
+            ];
+            fetchCustomerList({
+                customURL,
+                setIsLoading: () => {},
+                extraParams,
+                userId,
+                onSuccessAction: (response) => {
+                    form.setFieldsValue({ ...response?.data, customerAddress: response?.data?.address, customerCity: response?.data?.city, customerPhoneNumber: response?.data?.mobileNumber });
+                    setButtonData({ ...buttonData, formBtnActive: true });
+                },
+                onErrorAction: () => {},
+            });
+        }
     };
 
     const handleChange = (e) => {
@@ -62,6 +66,16 @@ const CustomerDetailsMasterBase = (props) => {
         handleButtonClick({ buttonAction: NEXT_ACTION });
         setButtonData({ ...buttonData, formBtnActive: false });
     };
+
+    const onFinishFailed = () => {};
+
+    const handleCustomerChange = (e) => {
+        if (!e?.target?.value) {
+            form.resetFields();
+        }
+        setButtonData({ ...buttonData, formBtnActive: false });
+    };
+
     const formProps = {
         ...props,
         form,
@@ -81,6 +95,7 @@ const CustomerDetailsMasterBase = (props) => {
         styles,
         handleCustomerSearch,
         disabledProps,
+        handleCustomerChange,
     };
 
     const viewProps = {
@@ -94,7 +109,7 @@ const CustomerDetailsMasterBase = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
+        <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

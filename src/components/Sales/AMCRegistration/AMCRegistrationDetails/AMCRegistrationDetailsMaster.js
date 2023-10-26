@@ -19,13 +19,13 @@ const AMCRegistrationDetailsMasterBase = (props) => {
 
     const { schemeForm, FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch, employeeData, fetchEmployeeList, listEmployeeShowLoading, fetchSchemeList, listSchemeShowLoading, schemeData } = props;
 
-    const [activeKey, setActiveKey] = useState([3]);
+    const [activeKey, setActiveKey] = useState([]);
     const [options, setOptions] = useState(false);
     const [selectedEmployees, setSelectedEmployee] = useState(false);
 
     useEffect(() => {
         if (requestPayload) {
-            registrationForm.setFieldsValue({ ...requestPayload?.amcRegistration });
+            registrationForm.setFieldsValue({ ...requestPayload?.amcRegistration, employeeName: employeeData?.find((value) => requestPayload?.amcRegistration?.employeeName === value?.employeeCode)?.employeeName });
             schemeForm.setFieldsValue({ ...requestPayload?.amcSchemeDetails });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -114,9 +114,23 @@ const AMCRegistrationDetailsMasterBase = (props) => {
     };
 
     const onFinish = () => {
-        setRequestPayload({ ...requestPayload, amcRegistration: { ...registrationForm.getFieldsValue(), employeeName: selectedEmployees?.employeeCode }, amcSchemeDetails: schemeForm.getFieldsValue() });
-        handleButtonClick({ buttonAction: NEXT_ACTION });
-        setButtonData({ ...buttonData, formBtnActive: false });
+        registrationForm
+            .validateFields()
+            .then(() => {
+                schemeForm
+                    .validateFields()
+                    .then(() => {
+                        if (activeKey.length === 1 && formActionType?.addMode && (schemeForm?.getFieldValue('schemeCode').hasOwnProperty('schemeCode') || registrationForm.getFieldValue('saleType').hasOwnProperty('saleType'))) {
+                            setActiveKey([1, 2]);
+                        } else {
+                            setRequestPayload({ ...requestPayload, amcRegistration: { ...registrationForm.getFieldsValue(), employeeName: selectedEmployees?.employeeCode || employeeData?.find((value) => requestPayload?.amcRegistration?.employeeName === value?.employeeCode)?.employeeCode }, amcSchemeDetails: schemeForm.getFieldsValue() });
+                            handleButtonClick({ buttonAction: NEXT_ACTION });
+                            setButtonData({ ...buttonData, formBtnActive: false });
+                        }
+                    })
+                    .catch((err) => console.error(err));
+            })
+            .catch((err) => console.error(err));
     };
     const formProps = {
         ...props,
