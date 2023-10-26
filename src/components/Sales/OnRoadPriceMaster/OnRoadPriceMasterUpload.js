@@ -22,20 +22,21 @@ const OnRoadPriceMasterUploadMain = (uploadProps) => {
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
     const handleTemplateDownLoad = () => {
-        // const filteredTypeData = typeData[PARAM_MASTER.FILE_DOWNLOAD_TMPLT.id].filter((value) => value.key === PARAM_MASTER.VCLPRCMSTTMPLT.id);
-        // let templateID = null;
-        // if (filteredTypeData.length === 1) {
-        //     templateID = filteredTypeData[0];
-        // }
-        // const extraParams = [
-        //     {
-        //         key: 'docId',
-        //         title: 'docId',
-        //         value: templateID?.value,
-        //         name: 'docId',
-        //     },
-        // ];
-        // downloadFile({ setIsLoading: listShowLoading, userId, extraParams });
+        const filteredTypeData = typeData[PARAM_MASTER.FILE_DOWNLOAD_TMPLT.id].filter((value) => value.key === PARAM_MASTER.ONRDPRCMSTTMPLT.id);
+
+        let templateID = null;
+        if (filteredTypeData.length === 1) {
+            templateID = filteredTypeData[0];
+        }
+        const extraParams = [
+            {
+                key: 'docId',
+                title: 'docId',
+                value: templateID?.value,
+                name: 'docId',
+            },
+        ];
+        downloadFile({ setIsLoading: listShowLoading, userId, extraParams });
     };
 
     const handleFormValueChange = () => {

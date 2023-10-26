@@ -53,7 +53,7 @@ export const addRequestColumnsView = (typeData, onHandleModal) => {
             title: 'Request Change',
             dataIndex: 'stage',
             width: '40%',
-            render: (_, record) => getCodeValue(typeData?.CHRGR_INST_STG_TYPE, record?.requestStage),
+            render: (_, record) => getCodeValue(typeData?.CHRGR_INST_STG_TYPE, record?.stageStatus),
         }),
 
         tblPrepareColumns({
@@ -112,7 +112,7 @@ export const addRequestColumnsView = (typeData, onHandleModal) => {
         tblPrepareColumns({
             title: 'Activity',
             width: '40%',
-            render: (_, record) => <FiEye onClick={onHandleModal} style={{ color: '#ff3e5b' }} data-testid="view" />,
+            render: (_, record) => <FiEye onClick={() => onHandleModal(record)} style={{ color: '#ff3e5b' }} />,
         }),
         tblPrepareColumns({
             title: 'Document',
@@ -130,15 +130,15 @@ export const serviceActivityColumns = () => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'Service Activities',
-            dataIndex: 'activity',
-            key: 'activity',
+            dataIndex: 'key',
+            key: 'key',
             width: '50%',
         }),
 
         tblPrepareColumns({
             title: 'Response',
-            dataIndex: 'response',
-            key: 'response',
+            dataIndex: 'value',
+            key: 'value',
             width: '50%',
         }),
     ];

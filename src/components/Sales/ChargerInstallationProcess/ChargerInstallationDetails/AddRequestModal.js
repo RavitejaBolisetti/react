@@ -20,11 +20,28 @@ export const AddRequestModalForm = (props) => {
     const { onAdvanceSearchCloseAction, typeData } = props;
     const { addRequestForm, onModalFinish } = props;
 
+    // useEffect(() => {
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [filterString]);
+
+    const onFinishFailed = () => {
+        return;
+    };
+
+    // const CheckDateEffectiveTo = (value, effectiveFrom) => {
+    //     if (!value) return Promise.resolve();
+    //     const bool = dayjs(value).format('YYYY-MM-DD') >= dayjs(effectiveFrom).format('YYYY-MM-DD');
+    //     if (bool) {
+    //         return Promise.resolve();
+    //     }
+    //     return Promise.reject(new Error('Date cant be less than Effective from date'));
+    // };
+
     return (
         <Form autoComplete="off" layout="vertical" form={addRequestForm} onFinish={onModalFinish}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Stage" name="requestStage">
+                    <Form.Item label="Stage" name="requestStage" rules={[validateRequiredInputField('Stage')]}>
                         {customSelectBox({ data: typeData?.CHRGR_INST_STG_TYPE, placeholder: preparePlaceholderText('Request Stage') })}
                     </Form.Item>
                 </Col>

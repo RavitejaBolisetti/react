@@ -117,7 +117,7 @@ export const AdvancedSearchFrom = (props) => {
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item label="Pricing Type" initialValue={filterString?.priceType} name="priceType" rules={[validateRequiredSelectField('Pricing Type')]}>
                         <Select placeholder="Select" {...selectProps}>
-                            {typeData['PRICING_TYPE']?.map((item) => (
+                            {typeData['PRC_TYP']?.map((item) => (
                                 <Option value={item?.key}>{item?.value}</Option>
                             ))}
                         </Select>

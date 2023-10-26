@@ -69,7 +69,12 @@ const mapDispatchToProps = (dispatch) => ({
 export const VehiclePurchaseOrderMasterBase = (props) => {
     const { fetchList, saveData, listShowLoading, userId, data, vehicleDetailData, totalRecords } = props;
     const { typeData, moduleTitle, showGlobalNotification } = props;
-    const { filterString, setFilterString, vehicleDetailStatusList, vpoTypeList, resetData } = props;
+    const {
+        //  filterString, setFilterString,
+        vehicleDetailStatusList,
+        vpoTypeList,
+        resetData,
+    } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [listFilterForm] = Form.useForm();
     const [selectedRecord, setSelectedRecord] = useState();
@@ -81,7 +86,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
     const [currentSection, setCurrentSection] = useState();
     const [sectionName, setSetionName] = useState();
     const [isLastSection, setLastSection] = useState(false);
-    const [page, setPage] = useState({ pageSize: 10, current: 1 });
+    const [filterString, setFilterString] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
 
     const [form] = Form.useForm();
@@ -124,19 +129,13 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
+        // setFilterString({...filterString, current: undefined});
     };
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
         setShowDataLoading(false);
     };
-
-    useEffect(() => {
-        if (filterString) {
-            setPage({ ...page, current: 1 });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString]);
 
     const extraParams = useMemo(() => {
         return [
@@ -183,34 +182,34 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: page?.pageSize,
+                value: filterString?.pageSize,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: page?.current,
+                value: filterString?.current,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'sortBy',
                 title: 'Sort By',
-                value: page?.sortBy,
+                value: filterString?.sortBy,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'sortIn',
                 title: 'Sort Type',
-                value: page?.sortType,
+                value: filterString?.sortType,
                 canRemove: true,
                 filter: false,
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, page]);
+    }, [filterString]);
 
     useEffect(() => {
         return () => {
@@ -303,7 +302,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         let data = { ...values, parentId: recordId };
         const onSuccess = (res) => {
             form.resetFields();
-            setShowDataLoading(true);
+            setShowDataLoading(false);
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
             setButtonData({ ...buttonData, formBtnActive: false });
@@ -351,8 +350,8 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         tableColumn: tableColumn(handleButtonClick),
         tableData: data,
         showAddButton: false,
-        page,
-        setPage,
+        filterString,
+        setPage: setFilterString,
     };
     const removeFilter = (key) => {
         if (key === 'searchParam') {
@@ -368,7 +367,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         if (filterString) {
             setShowDataLoading(true);
         }
-        setFilterString();
+        setFilterString({ current: 1, pageSize: 10 });
         advanceFilterForm.resetFields();
         setAdvanceSearchVisible(false);
     };
@@ -376,7 +375,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         if (filterString) {
             setShowDataLoading(true);
         }
-        setFilterString();
+        setFilterString({ current: 1, pageSize: 10 });
         advanceFilterForm.resetFields();
     };
 
