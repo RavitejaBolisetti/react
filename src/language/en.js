@@ -33,5 +33,6 @@ export const LANGUAGE_EN = {
         DELIVERY_NOTE_MESSAGE: { TITLE: 'Delivery {NAME} created successfully', MESSAGE: 'Delivery Note No.: {ORDER_ID}' },
         USER_NOT_FOUND: { TITLE: 'User not found', MESSAGE: 'User does not exist, do you want to create user?' },
         PAGE_NOT_FOUND: { TITLE: 'Page Not Found', MESSAGE: '<p>Sorry, the page you visited does not exist. Redirecting to dashboard in <b>{COUNTER}</b></p>' },
+        UNSAVE_DATA_WARNING: { TITLE: 'Are you sure you want to leave ?', MESSAGE: 'You have unsave changes. All changes may lost.'},
     },
 };

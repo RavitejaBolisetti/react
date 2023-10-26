@@ -356,15 +356,20 @@ export const OtfMasterBase = (props) => {
         updateVehicleAllotmentStatus(requestData);
     };
 
-    const handleOk = () => {
-        setIsUnsavedDataPopup(false);
-        setCurrentSection(nextCurentSection);
-        section && setLastSection(!nextCurentSection);
-        setButtonData({ ...buttonData, formBtnActive: false });
+    const handleOkUnsavedModal = () => {
+        if (nextCurentSection) {
+            setIsUnsavedDataPopup(false);
+            setCurrentSection(nextCurentSection);
+            section && setLastSection(!nextCurentSection);
+            setButtonData({ ...buttonData, formBtnActive: false });
+            setNextCurrentSection('');
+        } else {
+            onCloseAction();
+        }
     };
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true, isNextBtnClick = false }) => {
-        form.resetFields();
+        buttonAction !== NEXT_ACTION && form.resetFields();
         form.setFieldsValue(undefined);
         setIsFormVisible(true);
         setIsCancelVisible(false);
@@ -516,6 +521,7 @@ export const OtfMasterBase = (props) => {
     const onCloseAction = () => {
         form.resetFields();
         form.setFieldsValue();
+        setIsUnsavedDataPopup(false);
 
         advanceFilterForm.resetFields();
         advanceFilterForm.setFieldsValue();
@@ -708,6 +714,14 @@ export const OtfMasterBase = (props) => {
         selectedRecordId,
     };
 
+    const onCloseDrawer = () => {
+        if (buttonData?.formBtnActive) {
+            setIsUnsavedDataPopup(true);
+        } else {
+            onCloseAction();
+        }
+    };
+
     const containerProps = {
         record: selectedOrder,
         form,
@@ -716,7 +730,7 @@ export const OtfMasterBase = (props) => {
         onFinish,
         onFinishFailed,
         isVisible: isFormVisible,
-        onCloseAction,
+        onCloseAction: onCloseDrawer,
         titleOverride: drawerTitle,
         tableData: data,
         ADD_ACTION,
@@ -800,20 +814,20 @@ export const OtfMasterBase = (props) => {
         setShowDataLoading,
     };
 
-    const handleCancelModal = () => {
+    const handleCancelUnsaveDataModal = () => {
         setIsUnsavedDataPopup(false);
         setNextCurrentSection('');
     };
 
     const unsavedDataModalProps = {
         isVisible: isUnsavedDataPopup,
-        titleOverride: 'Are you sure you want to leave ?',
+        titleOverride: LANGUAGE_EN.GENERAL.UNSAVE_DATA_WARNING.TITLE,
         closable: false,
-        onCloseAction: handleCancelModal,
-        onSubmitAction: handleOk,
+        onCloseAction: handleCancelUnsaveDataModal,
+        onSubmitAction: handleOkUnsavedModal,
         submitText: 'Leave',
         showField: false,
-        text: 'You have unsave changes. All changes may lost.',
+        text: LANGUAGE_EN.GENERAL.UNSAVE_DATA_WARNING.MESSAGE,
     };
 
     return (
