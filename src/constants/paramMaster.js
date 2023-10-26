@@ -445,4 +445,8 @@ export const PARAM_MASTER = {
         id: 'ONRDPRCMSTTMPLT',
         title: 'OnRoad Price Master template download',
     },
+    EMP_TYP: {
+        id: 'EMP_TYP',
+        title: 'Delivery note employee key',
+    },
 };

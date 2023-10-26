@@ -11,7 +11,7 @@ import { bindActionCreators } from 'redux';
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 import { VehicleDeliveryNoteFormButton } from '../VehicleDeliveryNoteFormButton';
-
+import { RELATIONSHIP_MANAGER_CONSTANTS } from 'components/Sales/VehicleDeliveryNote/constants/relationShipMangerCodeConstants';
 import { relationshipManagerDataActions } from 'store/actions/data/vehicleDeliveryNote/relationshipManager';
 import { schemeDescriptionAmcDataActions, schemeDescriptionRsaDataActions, schemeDescriptionShieldDataActions } from 'store/actions/data/vehicleDeliveryNote';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -135,7 +135,7 @@ export const AddOnDetailsMasterMain = (props) => {
     }, [isAmcLoaded, isRsaLoaded, isShieldLoaded, deliveryNoteMasterData, schemeAmcData]);
 
     useEffect(() => {
-        if (AddonDetailsData) {
+        if (AddonDetailsData && section?.id === 6) {
             form.setFieldsValue({ ...AddonDetailsData });
             setFormData({ ...AddonDetailsData });
             if (AddonDetailsData?.sheildRequest) {
@@ -150,14 +150,14 @@ export const AddOnDetailsMasterMain = (props) => {
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [AddonDetailsData, section]);
+    }, [AddonDetailsData, section?.id]);
 
     useEffect(() => {
-        if (userId) handleEmployeeSearch();
+        if (userId && section?.id === 6) handleEmployeeSearch();
         setButtonData({ ...buttonData, formBtnActive: true });
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [section, userId]);
+    }, [section?.id, userId]);
 
     const handleOnChange = (e) => {
         form.setFieldsValue({
@@ -170,7 +170,19 @@ export const AddOnDetailsMasterMain = (props) => {
             showGlobalNotification({ message });
         };
 
-        fetchRelationshipManger({ setIsLoading: listRelationshipMangerShowLoading, userId, onErrorAction });
+        fetchRelationshipManger({
+            setIsLoading: listRelationshipMangerShowLoading,
+            userId,
+            onErrorAction,
+            extraParams: [
+                {
+                    key: 'employeeType',
+                    title: 'employeeType',
+                    value: RELATIONSHIP_MANAGER_CONSTANTS?.RELATIONSHIP_MANAGER_SALES_CONSULTANT?.key,
+                    name: 'Sales consultant employees',
+                },
+            ],
+        });
     };
     const getCodeValue = (data, key) => {
         return data?.find((i) => i?.schemeDescription === key)?.id;

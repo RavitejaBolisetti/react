@@ -13,6 +13,7 @@ import { vinNumberNoteDataActions } from 'store/actions/data/vehicleDeliveryNote
 import { vehicleChallanDetailsDataActions } from 'store/actions/data/vehicleDeliveryNote/vehicleChallanDetails';
 import { showGlobalNotification } from 'store/actions/notification';
 import { formattedCalendarDate, convertDate } from 'utils/formatDateTime';
+import { RELATIONSHIP_MANAGER_CONSTANTS } from 'components/Sales/VehicleDeliveryNote/constants/relationShipMangerCodeConstants';
 
 import { VehicleDeliveryNoteFormButton } from '../VehicleDeliveryNoteFormButton';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
@@ -151,18 +152,17 @@ export const InvoiceDetailsMasterBase = (props) => {
     useEffect(() => {
         const extraParams = [
             {
-                key: 'allEmployee',
-                title: 'allEmployee',
-                value: 'ALL',
-                name: 'All Employees',
+                key: 'employeeType',
+                title: 'employeeType',
+                value: RELATIONSHIP_MANAGER_CONSTANTS?.RELATIONSHIP_MANAGER?.key,
+                name: 'All employees',
             },
         ];
-        if (userId && soldByDealer) {
+        if (userId && soldByDealer && section?.id === 1) {
             fetchRelationshipManger({ setIsLoading: listRelationshipMangerShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, soldByDealer, section]);
-
+    }, [userId, soldByDealer, section?.id]);
     const handleChassisNoSearch = (val) => {
         if (!val) return;
 
