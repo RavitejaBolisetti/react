@@ -13,7 +13,7 @@ import ModelForm from './ModelForm';
 const { Text } = Typography;
 
 const ModelCard = (props) => {
-    const { finalFormdata, forceUpdate, modelData, setModelData, setOpenAccordian, changeValue, setChangeValue, modelForm, modelEdit, setModelEdit, uniqueCardEdit, setuniqueCardEdit, internalId, formActionType, modelSwitch, setModelSwitch, modelGroupData, modelEditForm, setFormBtnActive } = props;
+    const { finalFormdata, forceUpdate, modelData, setModelData, setOpenAccordian, changeValue, setChangeValue, modelForm, modelEdit, setModelEdit, uniqueCardEdit, setuniqueCardEdit, internalId, formActionType, modelSwitch, setModelSwitch, modelGroupData, modelEditForm, setFormBtnActive, disabledModelGroupData } = props;
     const modelName = modelGroupData?.find((e) => e?.modelGroupCode === props?.modelGroupCode)?.modelGroupDescription;
     let id = props?.id ? props?.id : props?.internalId;
     let IdType = props?.id ? 'id' : 'internalId';
@@ -80,6 +80,7 @@ const ModelCard = (props) => {
         modelGroupData,
         modelData,
         modelEditForm,
+        disabledModelGroupData,
     };
 
     return (
