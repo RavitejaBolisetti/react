@@ -399,9 +399,6 @@ export const VehicleInvoiceMasterBase = (props) => {
         }
         setIsFormVisible(true);
     };
-
-    // const onFinishSearch = (values) => {};
-
     const handleResetFilter = () => {
         setShowDataLoading(false);
         setFilterString();
@@ -527,7 +524,6 @@ export const VehicleInvoiceMasterBase = (props) => {
         setAdvanceSearchVisible,
         chargerStatusList,
         typeData,
-        // onFinishSearch,
     };
 
     const drawerTitle = useMemo(() => {
