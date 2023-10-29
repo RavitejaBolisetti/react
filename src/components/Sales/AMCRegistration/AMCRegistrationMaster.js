@@ -344,11 +344,41 @@ export const AMCRegistrationMasterBase = (props) => {
         ]);
     };
 
+    const schemeList = () => {
+        const extraParams = [
+            {
+                key: 'vin',
+                value: registrationForm.getFieldValue('vin') || requestPayload?.amcRegistration?.vin,
+            },
+            {
+                key: 'schemeType',
+                value: AMC_CONSTANTS?.SCHEME?.key,
+            },
+        ];
+
+        const onSuccessAction = (res) => {
+            console.log('🚀 ~ file: AMCRegistrationDetailsMaster.js:48 ~ onSuccessAction ~ res:', res);
+            if (!res?.data?.length) {
+                registrationForm.resetFields(['schemeDescription']);
+            }
+        };
+        fetchSchemeList({ setIsLoading: listSchemeShowLoading, userId, extraParams, onSuccessAction });
+    };
+
+    const handleSaleTypeChange = (e) => {
+        schemeList();
+    };
+
     const handleBookingNumberSearch = (otfNumber = '') => {
         const onSuccessAction = (res) => {
-            registrationForm.setFieldsValue({ vin: res?.data?.otfDetails[0]?.vin });
+            console.log('🚀 ~ file: AMCRegistrationMaster.js:349 ~ onSuccessAction ~ res:', res);
             if (!res?.data?.otfDetails[0]?.vin) {
                 showGlobalNotification({ title: 'Error', notificationType: 'error', message: LANGUAGE_EN?.GENERAL?.NO_VIN_FOUND?.MESSAGE });
+                setButtonData({ ...buttonData, formBtnActive: false });
+            } else {
+                setButtonData({ ...buttonData, formBtnActive: true });
+                registrationForm.setFieldsValue({ vin: res?.data?.otfDetails[0]?.vin });
+                schemeList();
             }
         };
 
@@ -762,6 +792,8 @@ export const AMCRegistrationMasterBase = (props) => {
         isPendingForCancellation,
         setIsPendingForCancellation,
         handlePrintDownload,
+
+        handleSaleTypeChange,
     };
 
     const cancelModalProps = {

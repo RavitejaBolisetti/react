@@ -18,7 +18,7 @@ const AMCRegistrationDetailsMasterBase = (props) => {
     const { userId, buttonData, setButtonData, section, isDataLoaded, isLoading, form } = props;
     const { registrationForm, formActionType, selectedOtfNumber, setSelectedOtfNumber, handleFormValueChange, showGlobalNotification } = props;
 
-    const { schemeForm, FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch, employeeData, fetchEmployeeList, listEmployeeShowLoading, fetchSchemeList, listSchemeShowLoading, schemeData } = props;
+    const { schemeForm, FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch, employeeData, fetchEmployeeList, listEmployeeShowLoading, handleSaleTypeChange, schemeData } = props;
 
     const [activeKey, setActiveKey] = useState([]);
     const [options, setOptions] = useState(false);
@@ -32,20 +32,10 @@ const AMCRegistrationDetailsMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [requestPayload]);
 
-    useEffect(() => {
-        const extraParams = [
-            {
-                key: 'vin',
-                value: registrationForm.getFieldValue('vin') || requestPayload?.amcRegistration?.vin,
-            },
-            {
-                key: 'schemeType',
-                value: AMC_CONSTANTS?.SCHEME?.key,
-            },
-        ];
-        fetchSchemeList({ setIsLoading: listSchemeShowLoading, userId, extraParams });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [registrationForm.getFieldValue('vin'), registrationForm.getFieldValue('saleType')]);
+    // useEffect(() => {
+
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [registrationForm.getFieldValue('vin'), registrationForm.getFieldValue('saleType')]);
 
     useEffect(() => {
         const employeeOption = employeeData?.map((item) => ({
@@ -79,6 +69,9 @@ const AMCRegistrationDetailsMasterBase = (props) => {
     const handleChange = (e) => {
         setButtonData({ ...buttonData, formBtnActive: false });
     };
+    const handleBookingNumberChange = (e) => {
+        registrationForm.resetFields(['vin']);
+    };
 
     const handleEmployeeNameSearch = (searchValue) => {
         const extraParams = [
@@ -92,7 +85,7 @@ const AMCRegistrationDetailsMasterBase = (props) => {
             if (!res?.data?.length) {
                 showGlobalNotification({ notificationType: 'error', title: 'Error', message: LANGUAGE_EN?.GENERAL?.NO_EMPLOYEES_FOUND?.MESSAGE });
                 setButtonData({ ...buttonData, formBtnActive: false });
-            }
+            } else setButtonData({ ...buttonData, formBtnActive: true });
         };
 
         fetchEmployeeList({ setIsLoading: listEmployeeShowLoading, userId, extraParams, onSuccessAction });
@@ -108,11 +101,9 @@ const AMCRegistrationDetailsMasterBase = (props) => {
             });
         }
     };
-    const handleOnClear = (e) => {
-        if (e.target.value === '') {
-            setOptions();
-            form.resetFields(['managerName']);
-        }
+    const handleOnClear = () => {
+        setOptions();
+        form.resetFields(['managerName']);
     };
     const handleSchemeDescriptionChange = (schemeValue) => {
         const selectedScheme = schemeData.find((value) => {
@@ -128,8 +119,14 @@ const AMCRegistrationDetailsMasterBase = (props) => {
                 schemeForm
                     .validateFields()
                     .then(() => {
-                        if (activeKey.length === 1 && formActionType?.addMode && (schemeForm?.getFieldValue('schemeCode').hasOwnProperty('schemeCode') || registrationForm.getFieldValue('saleType').hasOwnProperty('saleType'))) {
+                        if (activeKey.length === 1 && formActionType?.addMode && (schemeForm?.getFieldsValue()?.hasOwnProperty('schemeCode') || registrationForm.getFieldsValue()?.hasOwnProperty('saleType'))) {
                             setActiveKey([1, 2]);
+                        } else if (registrationForm.getFieldValue('saleType') === AMC_CONSTANTS?.MNM_FOC?.key && !registrationForm.getFieldValue('vin')) {
+                            showGlobalNotification({ notificationType: 'error', title: 'Error', message: LANGUAGE_EN?.GENERAL?.NO_VIN_FOUND?.MESSAGE });
+                            setButtonData({ ...buttonData, formBtnActive: false });
+                        } else if (!options?.length) {
+                            setButtonData({ ...buttonData, formBtnActive: false });
+                            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Employee name is not correct' });
                         } else {
                             setRequestPayload({ ...requestPayload, amcRegistration: { ...registrationForm.getFieldsValue(), employeeCode: selectedEmployees?.employeeCode || employeeData?.find((value) => requestPayload?.amcRegistration?.employeeCode === value?.employeeCode)?.employeeCode }, amcSchemeDetails: schemeForm.getFieldsValue() });
                             handleButtonClick({ buttonAction: NEXT_ACTION });
@@ -163,6 +160,8 @@ const AMCRegistrationDetailsMasterBase = (props) => {
         options,
         handleOnSelect,
         handleOnClear,
+        handleBookingNumberChange,
+        handleSaleTypeChange,
     };
 
     const viewProps = {
