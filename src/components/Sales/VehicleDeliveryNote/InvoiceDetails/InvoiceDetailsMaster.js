@@ -13,6 +13,7 @@ import { vinNumberNoteDataActions } from 'store/actions/data/vehicleDeliveryNote
 import { vehicleChallanDetailsDataActions } from 'store/actions/data/vehicleDeliveryNote/vehicleChallanDetails';
 import { showGlobalNotification } from 'store/actions/notification';
 import { formattedCalendarDate, convertDate } from 'utils/formatDateTime';
+import { RELATIONSHIP_MANAGER_CONSTANTS } from 'components/Sales/VehicleDeliveryNote/constants/relationShipMangerCodeConstants';
 
 import { VehicleDeliveryNoteFormButton } from '../VehicleDeliveryNoteFormButton';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
@@ -34,6 +35,7 @@ const mapStateToProps = (state) => {
     } = state;
 
     const moduleTitle = 'Insurance Details';
+    const codeSetName = 'relationShipManagerCode';
 
     let returnValue = {
         userId,
@@ -49,6 +51,7 @@ const mapStateToProps = (state) => {
         isChallanDataLoaded,
         isChallanLoading,
         vehicleChallanData,
+        codeSetName,
     };
     return returnValue;
 };
@@ -73,13 +76,13 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const InvoiceDetailsMasterBase = (props) => {
-    const { userId, vinData, listvinNumberShowLoading, listEngineNumberShowLoading, fetchvinNumber, selectedOrder, relationshipManagerData, invoiceData, isRelationshipManagerLoaded, setFormActionType, fetchRelationshipManger, listRelationshipMangerShowLoading, isLoading, record } = props;
+    const { userId, vinData, listvinNumberShowLoading, listEngineNumberShowLoading, fetchvinNumber, selectedOrder, relationshipManagerData, invoiceData, isRelationshipManagerLoaded, setFormActionType, fetchRelationshipManger, listRelationshipMangerShowLoading, isLoading } = props;
 
-    const { typeData, form, selectedOrderId, requestPayload, setRequestPayload, soldByDealer, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section, resetData, engineNumberData, chassisNoValue } = props;
+    const { typeData, form, selectedOrderId, requestPayload, setRequestPayload, soldByDealer, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section, engineNumberData, chassisNoValue } = props;
 
-    const { isChallanDataLoaded, isChallanLoading, vehicleChallanData, fetchChallanList, listChallanShowLoading } = props;
+    const { fetchChallanList, listChallanShowLoading } = props;
 
-    const { buttonData, setButtonData } = props;
+    const { buttonData, setButtonData, codeSetName } = props;
 
     const [formData, setFormData] = useState({});
 
@@ -112,24 +115,17 @@ export const InvoiceDetailsMasterBase = (props) => {
     };
     useEffect(() => {
         if (formActionType.addMode && !soldByDealer) {
-            form.setFieldsValue({
-                deliveryNoteFor: 'Directly Billed Vehicle',
-            });
             const disableFormButton = invoiceData?.chassisNumber && invoiceData?.engineNumber;
             setButtonData({ ...buttonData, formBtnActive: disableFormButton });
             setFormData((prev) => ({ ...prev, deliveryNoteFor: 'Directly Billed Vehicle' }));
-        } else {
-            form.setFieldsValue({
-                deliveryNoteFor: 'Vehicle Sold By Dealer',
-            });
         }
+       
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [section]);
+    }, [section, soldByDealer]);
 
     useEffect(() => {
-        if (invoiceData) {
-            form.setFieldsValue({ ...invoiceData, invoiceDate: formattedCalendarDate(invoiceData?.invoiceDate), customerPromiseDate: formattedCalendarDate(invoiceData?.customerPromiseDate) });
-            setFormData((prev) => ({ ...prev, ...invoiceData }));
+        if (invoiceData && Object?.keys(invoiceData)?.length > 0) {
+            setFormData((prev) => ({ ...invoiceData, deliveryNoteFor: 'Vehicle Sold By Dealer' }));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [invoiceData, section]);
@@ -151,13 +147,13 @@ export const InvoiceDetailsMasterBase = (props) => {
     useEffect(() => {
         const extraParams = [
             {
-                key: 'allEmployee',
-                title: 'allEmployee',
-                value: 'ALL',
-                name: 'All Employees',
+                key: 'employeeType',
+                title: 'employeeType',
+                value: RELATIONSHIP_MANAGER_CONSTANTS?.RELATIONSHIP_MANAGER?.key,
+                name: 'All employees',
             },
         ];
-        if (userId && soldByDealer) {
+        if (userId && soldByDealer && section?.id) {
             fetchRelationshipManger({ setIsLoading: listRelationshipMangerShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -187,9 +183,8 @@ export const InvoiceDetailsMasterBase = (props) => {
         setButtonData({ ...buttonData, formBtnActive: false });
     };
 
-    const onFinishFailed = () => {};
     const handleRelationShipManagerChange = (value) => {
-        form.setFieldValue('relationShipManagerCode', value);
+        form.setFieldValue(codeSetName, value);
     };
 
     const formProps = {
@@ -200,7 +195,6 @@ export const InvoiceDetailsMasterBase = (props) => {
         formActionType,
         setFormActionType,
         onFinish,
-        onFinishFailed,
         isRelationshipManagerLoaded,
         fetchRelationshipManger,
         listRelationshipMangerShowLoading,
@@ -220,7 +214,6 @@ export const InvoiceDetailsMasterBase = (props) => {
         engineNumberData,
         userId,
         handleRelationShipManagerChange,
-        setButtonData,
         getChallanDetails,
     };
 
@@ -235,7 +228,7 @@ export const InvoiceDetailsMasterBase = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

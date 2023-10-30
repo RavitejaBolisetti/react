@@ -55,7 +55,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CustomerListBase = (props) => {
-    const { listShowLoading, userId, referralData, fnSetData = undefined, disabled = false, defaultOption = null, buttonData, setButtonData } = props;
+    const { listShowLoading, userId, referralData, fnSetData = undefined, disabled = false, buttonData, setButtonData } = props;
     const { handleFormValueChange, fetchCustomerList, typeData, showGlobalNotification } = props;
 
     const [searchForm] = Form.useForm();

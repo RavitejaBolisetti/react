@@ -9,11 +9,11 @@ import { Row, Col, Form, Button, Space } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import { PARAM_MASTER } from 'constants/paramMaster';
-import { UploadUtil } from 'utils/Upload'; 
+import { UploadUtil } from 'utils/Upload';
 import styles from 'assets/sass/app.module.scss';
 
 const OnRoadPriceMasterUploadMain = (uploadProps) => {
-    const { listShowLoading, downloadFile, form, formData, onCloseAction, onFinish, onFinishFailed } = uploadProps;
+    const { listShowLoading, downloadFile, form, formData, onCloseAction, onFinish } = uploadProps;
 
     const { handleButtonClick } = uploadProps;
     const { typeData, userId } = uploadProps;
@@ -22,20 +22,21 @@ const OnRoadPriceMasterUploadMain = (uploadProps) => {
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
     const handleTemplateDownLoad = () => {
-        // const filteredTypeData = typeData[PARAM_MASTER.FILE_DOWNLOAD_TMPLT.id].filter((value) => value.key === PARAM_MASTER.VCLPRCMSTTMPLT.id);
-        // let templateID = null;
-        // if (filteredTypeData.length === 1) {
-        //     templateID = filteredTypeData[0];
-        // }
-        // const extraParams = [
-        //     {
-        //         key: 'docId',
-        //         title: 'docId',
-        //         value: templateID?.value,
-        //         name: 'docId',
-        //     },
-        // ];
-        // downloadFile({ setIsLoading: listShowLoading, userId, extraParams });
+        const filteredTypeData = typeData[PARAM_MASTER.FILE_DOWNLOAD_TMPLT.id].filter((value) => value.key === PARAM_MASTER.ONRDPRCMSTTMPLT.id);
+
+        let templateID = null;
+        if (filteredTypeData.length === 1) {
+            templateID = filteredTypeData[0];
+        }
+        const extraParams = [
+            {
+                key: 'docId',
+                title: 'docId',
+                value: templateID?.value,
+                name: 'docId',
+            },
+        ];
+        downloadFile({ setIsLoading: listShowLoading, userId, extraParams });
     };
 
     const handleFormValueChange = () => {
@@ -55,7 +56,7 @@ const OnRoadPriceMasterUploadMain = (uploadProps) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBody}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <div className={styles.contentHeaderBackground}>
@@ -63,7 +64,7 @@ const OnRoadPriceMasterUploadMain = (uploadProps) => {
                             <Space className={styles.accordianIconWithText}>On Road Price Master Form</Space>
                             <Space> Please download "OnRoad Price Template" using below button</Space>
                             <Space>
-                                <Button type="primary" onClick={handleTemplateDownLoad} >
+                                <Button type="primary" onClick={handleTemplateDownLoad}>
                                     Download Template
                                 </Button>
                             </Space>

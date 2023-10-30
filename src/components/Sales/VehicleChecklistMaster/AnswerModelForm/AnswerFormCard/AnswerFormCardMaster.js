@@ -24,10 +24,10 @@ export const AnswerFormCardMaster = (props) => {
                 let data = answerForm.getFieldsValue();
                 let updateData = { ...data, internalId: Math.floor(Math.random() * 100000000 + 1), id: '' };
                 if (answerData?.length > 0) {
-                    if (answerData?.find((e) => e?.answerCode === updateData?.answerCode)) {
+                    if (answerData?.find((e) => e?.answerCode?.toLowerCase() === updateData?.answerCode?.toLowerCase())) {
                         showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'answer code already exists' });
                         return;
-                    } else if (answerData?.find((e) => e?.answerTitle === updateData?.answerTitle)) {
+                    } else if (answerData?.find((e) => e?.answerTitle?.toLowerCase() === updateData?.answerTitle?.toLowerCase())) {
                         showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'answer description already exists' });
                         return;
                     } else {

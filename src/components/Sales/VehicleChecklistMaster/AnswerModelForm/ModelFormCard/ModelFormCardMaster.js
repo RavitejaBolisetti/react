@@ -9,7 +9,7 @@ import ModelForm from './ModelForm';
 import { Card } from 'antd';
 
 export const ModelFormCardMaster = (props) => {
-    const { isVisible, modelEditForm, modelForm, modelEdit, setModelEdit, modelData, setModelData, modelGroupData, setFormBtnActive } = props;
+    const { isVisible, modelEditForm, modelForm, modelEdit, setModelEdit, modelData, setModelData, modelGroupData, setFormBtnActive, disabledModelGroupData } = props;
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [disableSaveButton, setDisableSaveButton] = useState(false);
     const [changeValue, setChangeValue] = useState(null);
@@ -51,6 +51,7 @@ export const ModelFormCardMaster = (props) => {
         setModelSwitch,
         modelGroupData,
         setFormBtnActive,
+        disabledModelGroupData,
     };
 
     const formProductAttributeProps = {

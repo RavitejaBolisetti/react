@@ -90,7 +90,6 @@ export const CriticalityGroupMain = (props) => {
     const onSuccessAction = (res) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setRefershData(false);
-        //setShowDataLoading(false);
     };
 
     useEffect(() => {

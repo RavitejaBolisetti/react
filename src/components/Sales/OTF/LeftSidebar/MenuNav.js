@@ -14,11 +14,16 @@ import { validateOTFMenu } from '../utils/validateOTFMenu';
 import styles from 'assets/sass/app.module.scss';
 
 const MenuNav = (props) => {
-    const { currentSection, setCurrentSection, otfData, selectedOrder: { orderStatus = false } = {} } = props;
+    const { currentSection, setCurrentSection, otfData, selectedOrder: { orderStatus = false } = {}, buttonData, setIsUnsavedDataPopup, setNextCurrentSection } = props;
     const otfSectionList = Object.values(OTF_SECTION);
 
     const onHandle = (key) => {
-        setCurrentSection(key);
+        if (buttonData?.formBtnActive) {
+            setIsUnsavedDataPopup(true);
+            setNextCurrentSection(key);
+        } else {
+            setCurrentSection(key);
+        }
     };
 
     const items = otfSectionList

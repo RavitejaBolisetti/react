@@ -3,11 +3,12 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { fireEvent, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import  CardProductAttribute  from '@components/FinancialAccounting/AccountTaxCharges/TaxAndChargesCategory/TaxAndChargesCalculation/CardTaxAndChargeCal';
 import customRender from '@utils/test-utils';
 import { Form } from 'antd';
+import React from 'react';
 
 const FormWrapper = (props) =>{
     const [editForm] = Form.useForm();
@@ -15,7 +16,7 @@ const FormWrapper = (props) =>{
         ...editForm,
         setFieldsValue:jest.fn(),
         validateFields:jest.fn(),
-        getFieldsValue:jest.fn(),
+        getFieldsValue:jest.fn().mockResolvedValue([{chargeDescription:'No TCS', taxMasterId:'731'}]),
     }
     return <CardProductAttribute editForm={myMoock} {...props} />
 }
@@ -39,16 +40,31 @@ describe('CardProductAttribute component', () => {
         formActionType: {addMode: false, editMode: true, viewMode: false},
         viewMode:false,
         isVisible:true,
-    }
+    };
+
+    it('pass data globally', ()=>{
+        const taxCharges = [{taxType:  'TCS'}];
+        const stateData = [{gstStateCode: '43'}];
+        const saleData = [{key: 'OSGST'}];
+
+        customRender(<CardProductAttribute taxCharges={taxCharges} chargeType={'TCS'} stateData={stateData} stateCode={'43'} saleData={saleData} saleType={'OSGST'}/>);
+    })
 
     it('Cancel Button', () => {
         const uniqueCardEdit = '1234';
         const internalId = '1234';
+
+        const setDropdownItems = jest.fn();
+        jest.spyOn(React, 'useState').mockReturnValue([null, setDropdownItems]);
         
-        customRender(<FormWrapper formEdit={true} internalId={internalId} uniqueCardEdit={uniqueCardEdit} setButtonData={jest.fn()} {...cardProps} setFormEdit={jest.fn()} setDropdownItems={jest.fn()} />);
+        render(<FormWrapper formEdit={true} internalId={internalId} uniqueCardEdit={uniqueCardEdit} setButtonData={jest.fn()} {...cardProps} setFormEdit={jest.fn()} setDropdownItems={setDropdownItems} />);
 
         const cancelBtn = screen.getByRole('button', {name:'Cancel'});
         fireEvent.click(cancelBtn);
+
+        expect(setDropdownItems).toHaveBeenCalledWith(expect.any(Function));
+        const setDropdownItemsFunction = setDropdownItems.mock.calls[0][0];
+        setDropdownItemsFunction([]);
     })
 
     it('Save Button', () => {
@@ -62,15 +78,22 @@ describe('CardProductAttribute component', () => {
         }]
         const uniqueCardEdit = '1234';
         const internalId = '1234';
+
+        const setDropdownItems = jest.fn();
+        jest.spyOn(React, 'useState').mockReturnValue([null, setDropdownItems]);
         
-        customRender(<FormWrapper formEdit={true} internalId={internalId} uniqueCardEdit={uniqueCardEdit} setButtonData={jest.fn()} {...cardProps} setFormEdit={jest.fn()} setDropdownItems={jest.fn()} taxChargeCalList={taxChargeCalList} setTaxChargeCalList={jest.fn()} forceUpdate={jest.fn()} />);
+        render(<FormWrapper formEdit={true} internalId={internalId} uniqueCardEdit={uniqueCardEdit} setButtonData={jest.fn()} {...cardProps} setFormEdit={jest.fn()} setDropdownItems={setDropdownItems} taxChargeCalList={taxChargeCalList} setTaxChargeCalList={jest.fn()} forceUpdate={jest.fn()} />);
 
         const saveBtn = screen.getByRole('button', {name:'Save'});
         fireEvent.click(saveBtn);
+
+        expect(setDropdownItems).toHaveBeenCalledWith(expect.any(Function));
+        const setDropdownItemsFunction = setDropdownItems.mock.calls[0][0];
+        setDropdownItemsFunction([]);
     })
 
     it('delete button should work and formEdit=false', () => {
-        customRender(<EditDocFormWrapper  {...cardProps} setFormEdit={jest.fn()} setuniqueCardEdit={jest.fn()} setTaxChargeCalList={jest.fn()} forceUpdate={jest.fn()} formEdit={false} handleCodeFunction={jest.fn()}/>);
+        render(<EditDocFormWrapper  {...cardProps} setFormEdit={jest.fn()} setuniqueCardEdit={jest.fn()} setTaxChargeCalList={jest.fn()} forceUpdate={jest.fn()} formEdit={false} handleCodeFunction={jest.fn()}/>);
 
         const deleteBtn = screen.getAllByRole('button', {name:""});
         fireEvent.click(deleteBtn[1]);

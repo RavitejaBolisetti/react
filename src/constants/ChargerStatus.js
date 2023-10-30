@@ -3,7 +3,6 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-export const VEHICLE_COMPANY_MAKE = 'MAL';
 
 export const CHARGER_STATUS = {
     IN_PROGRESS: {
@@ -14,11 +13,11 @@ export const CHARGER_STATUS = {
         displayOnView: true,
         filter: true,
     },
-    FAILED: {
+    REJECTED: {
         id: 2,
-        key: 'Failed',
-        title: 'Failed',
-        desc: 'Failed',
+        key: 'Rejected',
+        title: 'Rejected',
+        desc: 'Rejected',
         displayOnView: true,
         filter: true,
     },

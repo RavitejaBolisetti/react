@@ -28,7 +28,6 @@ const ViewList = (props) => {
         setOpenAccordian(i);
         setIsEditing(true);
         setEditingData(data);
-        // contactform.setFieldsValue(data);
         contactform.setFieldsValue({ ...data, preferredContactTime: [formatTime(data?.preferredContactTimeFrom), formatTime(data?.preferredContactTimeTo)] });
     };
 

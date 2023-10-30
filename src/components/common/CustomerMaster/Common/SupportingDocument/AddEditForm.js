@@ -19,7 +19,6 @@ const AddEditForm = (uploadProps) => {
         optionFilterProp: 'children',
         showSearch: true,
         allowClear: true,
-        // className: styles.headerSelectField,
     };
 
     return (

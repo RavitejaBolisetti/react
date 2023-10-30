@@ -17,17 +17,15 @@ export const AccountAndDocumentMappingMaster = (props) => {
     const [mainSelectedKey, setMainSelectedKey] = useState(null);
     const [appSelectName, setAppSelectName] = useState(null);
 
-    const addDocAndMapp = (val) => {
-        accDocMapForm
-            .validateFields()
-            .then(() => {
-                let data = accDocMapForm.getFieldsValue();
-                let updateData = { ...data, internalId: Math.floor(Math.random() * 100000000 + 1), accountDocumentMapId: '', financialAccountHead: financialAccountData?.find((e) => e?.key === data?.financialAccountHeadCode)?.value, documentDescription: documentDescriptionData?.find((e) => e?.key === data?.documentTypeCode)?.value };
-                setAccountDocumentMaps((item) => [updateData, ...item]);
-                accDocMapForm.resetFields();
-                setMainSelectedKey(null);
-                setButtonData({ ...buttonData, formBtnActive: true });
-            })
+    const addDocAndMapp = () => {
+        accDocMapForm.validateFields().then(() => {
+            let data = accDocMapForm.getFieldsValue();
+            let updateData = { ...data, internalId: Math.floor(Math.random() * 100000000 + 1), accountDocumentMapId: '', financialAccountHead: financialAccountData?.find((e) => e?.key === data?.financialAccountHeadCode)?.value, documentDescription: documentDescriptionData?.find((e) => e?.key === data?.documentTypeCode)?.value };
+            setAccountDocumentMaps((item) => [updateData, ...item]);
+            accDocMapForm.resetFields();
+            setMainSelectedKey(null);
+            setButtonData({ ...buttonData, formBtnActive: true });
+        });
     };
 
     const handleSelectTreeClick = (value, treeObj) => {

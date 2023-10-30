@@ -3,11 +3,14 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
+import { Link } from 'react-router-dom';
+import { tblPrepareColumns } from 'utils/tableColumn';
 import { convertDateMonthYear, converDateDayjs } from 'utils/formatDateTime';
 import { ChargerStatusTag } from '../ChargerStatusTag';
 import { FiEye } from 'react-icons/fi';
 import { getCodeValue } from 'utils/getCodeValue';
+import * as IMAGES from 'assets';
+
 export const addRequestColumns = (typeData) => {
     const tableColumn = [
         tblPrepareColumns({
@@ -53,7 +56,7 @@ export const addRequestColumnsView = (typeData, onHandleModal) => {
             title: 'Request Change',
             dataIndex: 'stage',
             width: '40%',
-            render: (_, record) => getCodeValue(typeData?.CHRGR_INST_STG_TYPE, record?.requestStage),
+            render: (_, record) => getCodeValue(typeData?.CHRGR_INST_STG_TYPE, record?.stageType),
         }),
 
         tblPrepareColumns({
@@ -79,10 +82,10 @@ export const addRequestColumnsView = (typeData, onHandleModal) => {
         }),
         tblPrepareColumns({
             title: 'Status',
-            dataIndex: 'Status',
-            key: 'Status',
+            dataIndex: 'response',
+            key: 'response',
             width: '40%',
-            render: (_, record) => ChargerStatusTag(record?.requestStatus),
+            render: (_, record) => ChargerStatusTag(record?.response),
         }),
         tblPrepareColumns({
             title: 'Service Id',
@@ -99,8 +102,8 @@ export const addRequestColumnsView = (typeData, onHandleModal) => {
         }),
         tblPrepareColumns({
             title: 'Response Status',
-            dataIndex: 'status',
-            key: 'status',
+            dataIndex: 'response',
+            key: 'response',
             width: '40%',
         }),
         tblPrepareColumns({
@@ -112,14 +115,18 @@ export const addRequestColumnsView = (typeData, onHandleModal) => {
         tblPrepareColumns({
             title: 'Activity',
             width: '40%',
-            render: (_, record) => <FiEye onClick={onHandleModal} style={{ color: '#ff3e5b' }} />,
+            render: (_, record) => <FiEye onClick={() => onHandleModal(record)} style={{ color: '#ff3e5b' }} />,
         }),
         tblPrepareColumns({
             title: 'Document',
             dataIndex: 'document',
             key: 'document',
             width: '40%',
-            // render: (_, record) => record?.serviceId,
+            render: (_, record) => (
+                <a href={record?.supportingDocumentUrl} target="_blank">
+                    <img src={IMAGES.FILE} alt="logo-images" href={record?.supportingDocumentUrl} />,
+                </a>
+            ),
         }),
     ];
 
@@ -130,15 +137,15 @@ export const serviceActivityColumns = () => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'Service Activities',
-            dataIndex: 'activity',
-            key: 'activity',
+            dataIndex: 'key',
+            key: 'key',
             width: '50%',
         }),
 
         tblPrepareColumns({
             title: 'Response',
-            dataIndex: 'response',
-            key: 'response',
+            dataIndex: 'value',
+            key: 'value',
             width: '50%',
         }),
     ];

@@ -11,15 +11,16 @@ import AddEditForm from './AddEditForm';
 
 import { AMC_CONSTANTS } from '../utils/AMCConstants';
 import styles from 'assets/sass/app.module.scss';
+import { LANGUAGE_EN } from 'language/en';
 
 const AMCRegistrationDetailsMasterBase = (props) => {
     const { typeData, selectedOrderId } = props;
     const { userId, buttonData, setButtonData, section, isDataLoaded, isLoading, form } = props;
-    const { registrationForm, formActionType, selectedOtfNumber, setSelectedOtfNumber, handleFormValueChange } = props;
+    const { registrationForm, formActionType, selectedOtfNumber, setSelectedOtfNumber, handleFormValueChange, showGlobalNotification } = props;
 
     const { schemeForm, FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch, employeeData, fetchEmployeeList, listEmployeeShowLoading, fetchSchemeList, listSchemeShowLoading, schemeData } = props;
 
-    const [activeKey, setActiveKey] = useState([3]);
+    const [activeKey, setActiveKey] = useState([]);
     const [options, setOptions] = useState(false);
     const [selectedEmployees, setSelectedEmployee] = useState(false);
 
@@ -35,7 +36,7 @@ const AMCRegistrationDetailsMasterBase = (props) => {
         const extraParams = [
             {
                 key: 'vin',
-                value: registrationForm.getFieldValue('vin'),
+                value: registrationForm.getFieldValue('vin') || requestPayload?.amcRegistration?.vin,
             },
             {
                 key: 'schemeType',
@@ -87,7 +88,14 @@ const AMCRegistrationDetailsMasterBase = (props) => {
             },
         ];
 
-        fetchEmployeeList({ setIsLoading: listEmployeeShowLoading, userId, extraParams });
+        const onSuccessAction = (res) => {
+            if (!res?.data?.length) {
+                showGlobalNotification({ notificationType: 'error', title: 'Error', message: LANGUAGE_EN?.GENERAL?.NO_EMPLOYEES_FOUND?.MESSAGE });
+                setButtonData({ ...buttonData, formBtnActive: false });
+            }
+        };
+
+        fetchEmployeeList({ setIsLoading: listEmployeeShowLoading, userId, extraParams, onSuccessAction });
     };
 
     const handleOnSelect = (key) => {
@@ -114,13 +122,24 @@ const AMCRegistrationDetailsMasterBase = (props) => {
     };
 
     const onFinish = () => {
-        setRequestPayload({ ...requestPayload, amcRegistration: { ...registrationForm.getFieldsValue(), employeeName: selectedEmployees?.employeeCode }, amcSchemeDetails: schemeForm.getFieldsValue() });
-        handleButtonClick({ buttonAction: NEXT_ACTION });
-        setButtonData({ ...buttonData, formBtnActive: false });
+        registrationForm
+            .validateFields()
+            .then(() => {
+                schemeForm
+                    .validateFields()
+                    .then(() => {
+                        if (activeKey.length === 1 && formActionType?.addMode && (schemeForm?.getFieldValue('schemeCode').hasOwnProperty('schemeCode') || registrationForm.getFieldValue('saleType').hasOwnProperty('saleType'))) {
+                            setActiveKey([1, 2]);
+                        } else {
+                            setRequestPayload({ ...requestPayload, amcRegistration: { ...registrationForm.getFieldsValue(), employeeCode: selectedEmployees?.employeeCode || employeeData?.find((value) => requestPayload?.amcRegistration?.employeeCode === value?.employeeCode)?.employeeCode }, amcSchemeDetails: schemeForm.getFieldsValue() });
+                            handleButtonClick({ buttonAction: NEXT_ACTION });
+                            setButtonData({ ...buttonData, formBtnActive: false });
+                        }
+                    })
+                    .catch((err) => console.error(err));
+            })
+            .catch((err) => console.error(err));
     };
-
-    const onFinishFailed = () => {};
-
     const formProps = {
         ...props,
         schemeForm,
@@ -157,7 +176,7 @@ const AMCRegistrationDetailsMasterBase = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

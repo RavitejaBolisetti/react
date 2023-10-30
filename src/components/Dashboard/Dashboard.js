@@ -86,10 +86,10 @@ const keyHightliteData = [
 // };
 
 const DashboardBase = ({ props }) => {
-    const [isVisible, serIsVisible] = useState(false);
-    const [isNewsVisible, setIsNewsVisible] = useState(false);
+    // const [isVisible, serIsVisible] = useState(false);
+    // const [isNewsVisible, setIsNewsVisible] = useState(false);
     const [highlightsTextIndex, setHighlightsTextIndex] = useState(0);
-    const [record, setRecord] = useState('');
+    // const [record, setRecord] = useState('');
 
     const handleButtonClick = (direction) => {
         if (direction === 'next') {
@@ -106,19 +106,19 @@ const DashboardBase = ({ props }) => {
             }
         }
     };
-    const onCloseAction = () => {
-        serIsVisible(false);
-        setIsNewsVisible(false);
-    };
+    // const onCloseAction = () => {
+    //     serIsVisible(false);
+    //     setIsNewsVisible(false);
+    // };
 
-    const onAddWidget = () => {
-        serIsVisible(true);
-    };
+    // const onAddWidget = () => {
+    //     serIsVisible(true);
+    // };
 
-    const handleNewsClick = (data) => {
-        setIsNewsVisible(true);
-        setRecord(data);
-    };
+    // const handleNewsClick = (data) => {
+    //     setIsNewsVisible(true);
+    //     setRecord(data);
+    // };
 
     // const WidgetDrawerProps = {
     //     isVisible,

@@ -19,7 +19,7 @@ import styles from 'assets/sass/app.module.scss';
 
 const { Search } = Input;
 const AddEditFormMain = (props) => {
-    const { buttonData, setButtonData, formActionType, onFinish, onFinishFailed, productHierarchyList, getDealerlocation, setDealerLocation, dealerLocation } = props;
+    const { buttonData, setButtonData, formActionType, onFinish, productHierarchyList, getDealerlocation, setDealerLocation, dealerLocation } = props;
     const { form, formData, typeData, isReadOnly = true } = props;
     const disabledProps = { disabled: isReadOnly };
     const [dealerFlag, setDealerFlag] = useState();
@@ -33,7 +33,6 @@ const AddEditFormMain = (props) => {
     };
 
     const handleChangeOrderType = (value) => {
-        
         if (value === 'CDLR') {
             setDealerFlag(value);
         } else {
@@ -48,13 +47,12 @@ const AddEditFormMain = (props) => {
 
     const handleOnClear = (e) => {
         if (!e.target.value) {
-            // form.resetFields();
             setDealerLocation(undefined);
         }
     };
 
     return (
-        <Form form={form} layout="vertical" autocomplete="off" colon="false" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form form={form} layout="vertical" autocomplete="off" colon="false" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBody}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     {!formActionType?.viewMode ? (

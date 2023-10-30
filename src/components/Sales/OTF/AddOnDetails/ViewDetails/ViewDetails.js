@@ -7,7 +7,7 @@ import React from 'react';
 import { Descriptions } from 'antd';
 
 const ViewDetailMain = (props) => {
-    const { name, data, isLoading } = props;
+    const { name, data } = props;
     const viewProps = {
         bordered: false,
         colon: false,

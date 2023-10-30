@@ -35,22 +35,19 @@ export const AdvancedSearchFrom = (props) => {
         setFilterString({
             ...filterString,
             ...values,
+            current: 1,
             orderType: values?.orderType,
             fromDate: formatDate(values?.fromDate),
             toDate: formatDate(values?.toDate),
             purchaseOrderStatusCode: values?.status,
-            purchaseOrderNumber: values?.purchaseOrderNumber,
+            purchaseOrderNumber: values?.purchaseOrderNumber?.trim(),
             advanceFilter: true,
         });
         setAdvanceSearchVisible(false);
     };
 
-    const onFinishFailed = () => {
-        return;
-    };
-
     return (
-        <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={filterString?.orderType} label="Order Type" name="orderType" rules={[validateRequiredSelectField('Order Type')]}>

@@ -185,4 +185,24 @@ describe('Qualification Master Test', () => {
         await waitFor(() => expect(saveData).toHaveBeenCalled());
         saveData.mock.calls[0][0].onSuccess(res);
     });
+
+    it('test1', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 123 },
+            data: {
+                QualificationMaster: {
+                    isLoaded: false,
+                    data: [{ id: '106', qualificationCode: 'QC07', qualificationDescription: null, qualificationName: 'Test', status: 0 }],
+                },
+            },
+        });
+
+        const fetchList = jest.fn();
+
+        customRender(
+            <Provider store={mockStore}>
+                <QualificationMaster onSuccessAction={jest.fn()} errorAction={jest.fn()} fetchList={fetchList} />
+            </Provider>
+        );
+    });
 });

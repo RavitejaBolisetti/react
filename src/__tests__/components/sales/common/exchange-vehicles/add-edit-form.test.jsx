@@ -1,0 +1,47 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
+import '@testing-library/jest-dom/extend-expect';
+import customRender from '@utils/test-utils';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
+import { AddEditForm } from 'components/Sales/Common/ExchangeVehicles/AddEditForm';
+import { Form } from 'antd';
+
+const FormWrapper = (props) => {
+    const [form] = Form.useForm();
+    const myMock = {
+        ...form,
+    };
+
+    return <AddEditForm form={myMock} {...props} />;
+};
+
+describe('Add Edit Form Component', () => {
+
+    it('should render add edit form component', () => {
+        customRender(<AddEditForm />);
+    });
+
+    it('fields should work', async () => {
+        const typeData={ VEHCL_MFG: [{ key: 106, value: 'Kai' }] };
+        const filteredModelData=[{ key: 106, value: 'Hello' }];
+        customRender(<FormWrapper typeData={typeData} formData={{exchange: 1}} handleFilterChange={jest.fn()} filteredModelData={filteredModelData} showAlert={jest.fn()} />);
+
+        const make=screen.getByRole('combobox', { name: 'Make' });
+        fireEvent.change(make, { target: { value: 'Kai' } });
+        await waitFor(() => { expect(screen.getByText('Kai')).toBeInTheDocument() });
+        fireEvent.click(screen.getByText('Kai'));
+
+        const modelGroup=screen.getByRole('combobox', { name: 'Model Group' });
+        fireEvent.change(modelGroup, { target: { value: 'Hello' } });
+        await waitFor(() => { expect(screen.getByText('Hello')).toBeInTheDocument() });
+        fireEvent.click(screen.getByText('Hello'));
+
+        const exchange=screen.getByRole('switch', { name: 'Exchange' });
+        fireEvent.click(exchange);
+
+    });
+
+});

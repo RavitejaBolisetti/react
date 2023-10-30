@@ -9,7 +9,6 @@ import { bindActionCreators } from 'redux';
 import { Row, Col, Form } from 'antd';
 import { showGlobalNotification } from 'store/actions/notification';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { filterFunction } from 'utils/filterFunction';
 import { ListDataTable } from 'utils/ListDataTable';
 import { btnVisiblity } from 'utils/btnVisiblity';
 import { tableColumn } from './tableColumn';
@@ -110,8 +109,6 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
     const [AccountDataOptions, setAccountDataOptions] = useState([]);
 
     const [refershData, setRefershData] = useState(false);
-
-    const [filterString, setFilterString] = useState();
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const [selectedModelGroup, setselectedModelGroup] = useState('');
 
@@ -142,13 +139,6 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
         setRefershData(false);
         setshowDataLoading(false);
     };
-
-    useEffect(() => {
-        if (filterString) {
-            setPage({ ...page, current: 1 });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString]);
     const extraParams = useMemo(() => {
         return [
             {
@@ -174,7 +164,7 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, page, selectedModelGroup]);
+    }, [page, selectedModelGroup]);
 
     useEffect(() => {
         if (userId) {
@@ -244,17 +234,10 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
 
     useEffect(() => {
         if (VehicleModelTaxChargesCategoryDataLoaded && VehicleModelTaxChargesCategoryData['vehicleModel'] && userId) {
-            if (filterString) {
-                const keyword = filterString?.keyword;
-                const filterDataItem = VehicleModelTaxChargesCategoryData['vehicleModel']?.filter((item) => (keyword ? filterFunction(keyword)(item?.modelGroup) || filterFunction(keyword)(item?.accountCategoryDescription) : true));
-
-                setSearchdata(filterDataItem);
-            } else {
-                setSearchdata(VehicleModelTaxChargesCategoryData['vehicleModel']?.map((el, i) => ({ ...el, srl: i + 1 })));
-            }
+            setSearchdata(VehicleModelTaxChargesCategoryData['vehicleModel']?.map((el, i) => ({ ...el, srl: i + 1 })));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, VehicleModelTaxChargesCategoryDataLoaded, VehicleModelTaxChargesCategoryData['vehicleModel'], userId]);
+    }, [VehicleModelTaxChargesCategoryDataLoaded, VehicleModelTaxChargesCategoryData['vehicleModel'], userId]);
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
@@ -291,10 +274,6 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {}).catch(err => console.error(err));
-    };
-
     const handleReferesh = () => {
         setRefershData(!refershData);
     };
@@ -322,9 +301,6 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
     };
-    // const handleResetFilter = (e) => {
-    //     setFilterString();
-    // };
 
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
@@ -341,7 +317,6 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
         isVisible: isFormVisible,
         showGlobalNotification,
         onFinish,
-        onFinishFailed,
         onCloseAction,
         titleOverride: drawerTitle.concat(moduleTitle),
         formData,
@@ -360,18 +335,6 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
         AccountDataOptions,
         selectedModelGroup,
     };
-
-    const handleClearInSearch = (e) => {
-        if (e?.target?.value === '') {
-            setFilterString();
-        }
-    };
-
-    const onSearchHandle = (value) => {
-        if (value?.trim()?.length >= 3) {
-            setFilterString({ ...filterString, advanceFilter: false, keyword: value });
-        }
-    };
     const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
     const handleChange = (modelValue) => {
         if (!modelValue) {
@@ -384,17 +347,13 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
     const ContentHeaderProps = {
         isProductHierarchyDataLoading,
         Form,
-        onFinishFailed,
         onFinish,
         handleAdd,
         titleHierarchy: 'Model Group',
         VehicleModelTaxChargesCategoryData: VehicleModelTaxChargesCategoryData['vehicleModel'],
-        setFilterString,
         ModelOptions,
         handleReferesh,
         handleChange,
-        onSearchHandle,
-        onChangeHandle: handleClearInSearch,
     };
 
     const listNotableData = !showDataLoading && !VehicleModelTaxChargesCategoryData['vehicleModel']?.length;

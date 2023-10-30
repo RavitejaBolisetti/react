@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Col, Form, Row, Select, DatePicker } from 'antd';
+import { Col, Form, Row, DatePicker } from 'antd';
 
 import { withModal } from 'components/withModal';
 import { validateRequiredSelectField } from 'utils/validation';
@@ -48,13 +48,6 @@ export const AdvancedSearchFrom = (props) => {
 
     const onFinishFailed = () => {
         return;
-    };
-
-    const selectProps = {
-        optionFilterProp: 'children',
-        showSearch: true,
-        allowClear: true,
-        className: styles.headerSelectField,
     };
 
     const modalProps = {

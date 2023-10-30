@@ -9,7 +9,7 @@ import { Button, Row, Col } from 'antd';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'assets/sass/app.module.scss';
 
-export const ChargerInstallationFormButton = ({ formActionType, record, onCloseAction, onCancelInvoice, onApproveCancel, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection, onPrintInvoice }) => {
+export const ChargerInstallationFormButton = ({ record, onCloseAction, onApproveCancel, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
     return (
         <div className={styles.formFooter}>
             <Row gutter={20}>

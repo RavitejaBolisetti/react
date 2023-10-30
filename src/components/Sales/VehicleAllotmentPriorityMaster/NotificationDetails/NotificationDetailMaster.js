@@ -18,38 +18,36 @@ export const NotificationDetailMaster = (props) => {
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
-    const addDocHeadMapping = (val) => {
-        notificationDetailForm
-            .validateFields()
-            .then(() => {
-                let data = notificationDetailForm.getFieldsValue();
-                let updateData = { ...data, id: '' };
-                let flagExistValue = false;
-                if (docTypeHeadMappingList?.length > 0) {
-                    for (let i = 0; i < docTypeHeadMappingList?.length; i++) {
-                        if (updateData?.roleCode === docTypeHeadMappingList[i]?.roleCode && updateData?.designationCode === docTypeHeadMappingList[i]?.designationCode) {
-                            flagExistValue = true;
-                            break;
-                        }
+    const addDocHeadMapping = () => {
+        notificationDetailForm.validateFields().then(() => {
+            let data = notificationDetailForm.getFieldsValue();
+            let updateData = { ...data, id: '' };
+            let flagExistValue = false;
+            if (docTypeHeadMappingList?.length > 0) {
+                for (let i = 0; i < docTypeHeadMappingList?.length; i++) {
+                    if (updateData?.roleCode === docTypeHeadMappingList[i]?.roleCode && updateData?.designationCode === docTypeHeadMappingList[i]?.designationCode) {
+                        flagExistValue = true;
+                        break;
                     }
-                    if (!flagExistValue) {
-                        setDocTypeHeadMappingList((item) => [updateData, ...item]);
-                        notificationDetailForm.resetFields();
-                        forceUpdate();
-                        setButtonData({ ...buttonData, formBtnActive: true });
-                    } else {
-                        onErrorAction('Desigination has been already added.');
-                    }
-                } else {
+                }
+                if (!flagExistValue) {
                     setDocTypeHeadMappingList((item) => [updateData, ...item]);
                     notificationDetailForm.resetFields();
                     forceUpdate();
-
-                    notificationDetailForm.setFieldValue('designationCode', undefined);
-                    setFilterDesignationList();
                     setButtonData({ ...buttonData, formBtnActive: true });
+                } else {
+                    onErrorAction('Desigination has been already added.');
                 }
-            })
+            } else {
+                setDocTypeHeadMappingList((item) => [updateData, ...item]);
+                notificationDetailForm.resetFields();
+                forceUpdate();
+
+                notificationDetailForm.setFieldValue('designationCode', undefined);
+                setFilterDesignationList();
+                setButtonData({ ...buttonData, formBtnActive: true });
+            }
+        });
     };
 
     const cardAttributeProps = {

@@ -24,6 +24,7 @@ import { MODEL_TYPE } from 'constants/modules/hoPricingMapping/index';
 import { BASE_URL_EVR_DETAILS_CAPTURING_DETAIL as customURL } from 'constants/routingApi';
 
 import { showGlobalNotification } from 'store/actions/notification';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 const mapStateToProps = (state) => {
     const {
@@ -52,6 +53,7 @@ const mapStateToProps = (state) => {
         isEvrDetailLoading,
         evrDetailData,
         isDetailLoaded,
+        grnStatusType: typeData[PARAM_MASTER?.GRN_STATS?.id],
     };
     return returnValue;
 };
@@ -77,7 +79,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const EvrDetailsCapturingMasterBase = (props) => {
     const { filterString, setFilterString, fetchList, evrDetailData, isDetailLoaded, isEvrDetailLoading, saveData, listShowLoading, userId, data, fetchDetail, listProductMainShowLoading, fetchProductList } = props;
-    const { typeData, evrStatusList, filteredStateData, productHierarchyData, totalRecords, showGlobalNotification } = props;
+    const { typeData, evrStatusList, filteredStateData, productHierarchyData, totalRecords, showGlobalNotification, grnStatusType } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [modelCodeName, setModelCodeName] = useState();
     const [modelGroupProductData, setModelGroupProductData] = useState([]);
@@ -361,8 +363,6 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         }
     };
 
-    const onFinishSearch = (values) => {};
-
     const onFinish = (values) => {
         const { vin, modelGroup, modelCode, modelDescription, grnId, grnDate, grnStatus, vehicleStatus, ageInDays, chargingStatus, ...rest } = values;
         const data = { ...rest, id: formData?.id };
@@ -392,10 +392,6 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         };
 
         saveData(requestData);
-    };
-
-    const onFinishFailed = (errorInfo) => {
-        return;
     };
 
     const onCloseAction = () => {
@@ -458,7 +454,6 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         filterString,
         setFilterString,
         onFinish,
-        onFinishFailed,
         handleResetFilter,
         advanceFilterForm,
         handleButtonClick,
@@ -486,7 +481,6 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         advanceFilterForm,
         setAdvanceSearchVisible,
         typeData,
-        onFinishSearch,
         productHierarchyData,
         handleSelectTreeClick,
         selectedTreeSelectKey,
@@ -510,6 +504,8 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         setSelectedTreeSelectKey,
         productHierarchyData,
         isEvrDetailLoading,
+        grnStatusType,
+        typeData,
     };
 
     return (

@@ -9,6 +9,12 @@ import { AddEditForm } from '@components/Sales/StockTransferIndent/AddEditForm';
 import customRender from '@utils/test-utils';
 
 describe("AddEditForm",()=>{
+    it("indentLocationList", ()=>{
+        const indentLocationList = [{ locationCode: "NB01" }];
+
+        customRender(<AddEditForm isVisible={true} tableDataItem={[]} indentLocationList={indentLocationList} />);
+    });
+
     it("Close Button", ()=>{
         customRender(<AddEditForm isVisible={true} tableDataItem={[]}/>);
 
@@ -47,10 +53,25 @@ describe("AddEditForm",()=>{
         fireEvent.change(remarks, {target:{value:'test2'}});
     });
 
-    it("Add Button", ()=>{
+    it("cancelBtn", ()=>{
         customRender(<AddEditForm isVisible={true} tableDataItem={[]}/>);
 
         const addBtn = screen.getByRole('button', {name:'Add'});
         fireEvent.click(addBtn);
+
+        const cancelBtn = screen.getByRole('button', {name:'Cancel'});
+        fireEvent.click(cancelBtn);
+    });
+
+    it("saveBtn", ()=>{
+        const values = {index: undefined, modelCode: "ALTSMM81813337437", modelDescription: "ALTSMM81813337437", modelDescriptionName: "ALTURAS G4 2WD BSVI REGAL BLUE", requestedQuantity: "6"};
+
+        customRender(<AddEditForm isVisible={true} tableDataItem={[]} values={values} />);
+
+        const addBtn = screen.getByRole('button', {name:'Add'});
+        fireEvent.click(addBtn);
+
+        const saveBtn = screen.getByRole('button', {name:'Save'});
+        fireEvent.click(saveBtn);
     });
 })

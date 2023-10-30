@@ -9,13 +9,11 @@ import { Form, Row, Col, Empty, Spin } from 'antd';
 import { GstAuthFormButton } from '../GSTAuthenticationFormButton';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-// import { vehicleDetailDataActions } from 'store/actions/data/vehicleReceipt/vehicleDetails';
 import { showGlobalNotification } from 'store/actions/notification';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import LeftPanel from 'components/common/LeftPanel';
 import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
 import { menuDataActions } from 'store/actions/data/menu';
-// import ViewApplicationDetailMain from 'components/common/ApplicationMaster/viewDeatils/ViewApplicationDetail';
 import ViewDetailMain from './ViewDetail';
 
 import { gstIrnTransactionAction } from 'store/actions/data/financialAccounting/gstIrnTransactionAction';
@@ -28,7 +26,6 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             ApplicationMaster: { applicationDetailsData, applicationData, isApplicationDeatilsLoading, isLoading },
-            // ApplicationMaster: { applicationCriticalityGroupData: criticalityGroupData, applicationDetailsData, dealerLocations, applicationData, configurableParamData, actions, isApplicationDeatilsLoading, isApplicatinoOnSaveLoading, isLoading, isActionsLoaded },
             FinancialAccounting: {
                 GstIrnTransactionDetails: { data: gstIrnTreeData = [] },
             },
@@ -39,11 +36,9 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         userId,
-        // isDataLoaded,
+
         vehicleStatusType: typeData[PARAM_MASTER.VEHCL_STATS.id],
-        // physicalStatusType: typeData[PARAM_MASTER.PHYSICAL_STATUS.id],
-        // shortageType: typeData[PARAM_MASTER.YES_NO_FLG.id],
-        // vehicleDetailData: vehicleDetailData?.vehicleDetails,
+
         isLoading,
         moduleTitle,
         menuData: applicationData,
@@ -60,9 +55,6 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchApplication: applicationMasterDataActions.fetchApplicationDetails,
             applicationDetailListShowLoading: applicationMasterDataActions.detailListShowLoading,
-            // fetchApplicationCriticality: applicationMasterDataActions.fetchApplicationCriticalityGroup,
-            // fetchApplicationAction: applicationMasterDataActions.fetchApplicationAction,
-            // fetchCriticalitiData: applicationMasterDataActions.fetchConfigurableParameterList,
             applicationMasterDataShowLoading: applicationMasterDataActions.listShowLoading,
             onSaveShowLoading: applicationMasterDataActions.onSaveShowLoading,
             saveApplicationDetails: applicationMasterDataActions.saveApplicationDetails,
@@ -80,13 +72,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const IrnTransactionListMasterBase = (props) => {
-    // const { typeData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailData } = props;
     const { userId, showGlobalNotification, section, fetchList, listShowLoading } = props;
-    const { form, selectedId, onFinish, onFinishFailed, applicationMasterDataShowLoading } = props;
+    const { form, selectedId, onFinish, applicationMasterDataShowLoading } = props;
     const { applicationDetailsData, isApplicationDeatilsLoading, fetchApplication, applicationDetailListShowLoading, fetchListGstIrnTree, listShowLoadingTree } = props;
     const { gstIrnTreeData } = props;
-    // const { finalData, setFinalData, isDataLoaded, isLoading, menuData, nextBtn,  } = props;
-    // const [vehicleDetailForm] = Form.useForm();
 
     const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -97,7 +86,6 @@ const IrnTransactionListMasterBase = (props) => {
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
     const fieldNames = { title: 'menuTitle', key: 'menuId', children: 'subMenu' };
     const [searchValue, setSearchValue] = useState('');
-    // const [menuType, setMenuType] = useState('W');
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -121,10 +109,6 @@ const IrnTransactionListMasterBase = (props) => {
 
     useEffect(() => {
         if (userId) {
-            // fetchApplicationCriticality({ setIsLoading: applicationMasterDataShowLoading });
-            // fetchApplicationAction({ setIsLoading: applicationMasterDataShowLoading, userId, id: 'Finac' });
-            // fetchCriticalitiData({ setIsLoading: applicationMasterDataShowLoading });
-
             fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, sid: 'APPMST' });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -148,27 +132,8 @@ const IrnTransactionListMasterBase = (props) => {
             ];
             fetchListGstIrnTree({ setIsLoading: listShowLoadingTree, userId, extraParams });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
-
-    // const formProps = {
-    //     ...props,
-    //     form,
-    //     onFinish,
-    //     onFinishFailed,
-    //     typeData,
-    //     vehicleStatusType,
-    //     physicalStatusType,
-    //     shortageType,
-    //     userId,
-    //     isDataLoaded,
-    //     formData: vehicleDetailData,
-    //     isLoading,
-    //     vehicleDetailForm,
-    //     finalData,
-    //     setFinalData,
-    //     setButtonData,
-    //     buttonData,
-    // };
 
     const applicationCall = (key) => {
         fetchApplication({ setIsLoading: applicationDetailListShowLoading, id: key });
@@ -199,7 +164,7 @@ const IrnTransactionListMasterBase = (props) => {
 
     return (
         <>
-            <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish}>
                 <Row gutter={20} className={styles.drawerBodyRight}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Row>

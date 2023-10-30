@@ -218,7 +218,7 @@ export const GstIRNTransactionMain = (props) => {
         }
     };
 
-    const handleResetFilter = (e) => {
+    const handleResetFilter = () => {
         const { pageSize } = filterString;
         if (filterString) {
             setShowDataLoading(true);
@@ -228,9 +228,6 @@ export const GstIRNTransactionMain = (props) => {
         searchForm.resetFields();
         setAdvanceSearchVisible(false);
     };
-
-    const onClickAction = (values) => {};
-
     const setCurrentPage = (page) => {
         setFilterString({ ...filterString, ...page });
     };
@@ -277,7 +274,6 @@ export const GstIRNTransactionMain = (props) => {
         setFilterString,
         advanceFilterForm,
         setAdvanceSearchVisible,
-        onClickAction,
         typeData,
         gSTINList,
         isGSTINListLoading,

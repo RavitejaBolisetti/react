@@ -5,7 +5,7 @@
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { VechilePurchaseOrderStatusTag } from './utils/VechilePurchaseOrderStatusTag';
-import { convertDateMonthYear } from 'utils/formatDateTime';
+import { converDateDayjs, dateFormatView } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -21,7 +21,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             title: 'Purchase Order Date ',
             dataIndex: 'purchaseOrderDate',
             width: '14%',
-            render: (text) => convertDateMonthYear(text),
+            render: (text) => converDateDayjs(text, dateFormatView, '-'),
         }),
 
         tblPrepareColumns({

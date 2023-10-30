@@ -16,7 +16,7 @@ import styles from 'assets/sass/app.module.scss';
 const CustomerDetailsMasterBase = (props) => {
     const { typeData, selectedOrderId } = props;
     const { userId, buttonData, setButtonData, section, isDataLoaded, isLoading } = props;
-    const { otfData, form, fetchCustomerList, formActionType, selectedOtfNumber, setSelectedOtfNumber, handleFormValueChange } = props;
+    const { otfData, form, fetchCustomerList, formActionType, selectedOtfNumber, setSelectedOtfNumber, showGlobalNotification } = props;
     const { FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch } = props;
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [activeKey, setActiveKey] = useState([3]);
@@ -31,29 +31,35 @@ const CustomerDetailsMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formActionType]);
 
-    const handleCustomerSearch = () => {
-        const extraParams = [
-            {
-                key: 'customerId',
-                title: 'customerId',
-                value: form.getFieldValue('customerCode'),
-                name: 'Customer ID',
-            },
-        ];
-        fetchCustomerList({
-            customURL,
-            setIsLoading: () => {},
-            extraParams,
-            userId,
-            onSuccessAction: (response) => {
-                form.setFieldsValue({ ...response?.data, customerAddress: response?.data?.address, customerCity: response?.data?.city, customerPhoneNumber: response?.data?.mobileNumber });
-                setButtonData({ ...buttonData, formBtnActive: true });
-            },
-            onErrorAction: () => {},
-        });
+    const handleCustomerSearch = (value) => {
+        if (!value) {
+            return false;
+        } else {
+            const extraParams = [
+                {
+                    key: 'customerId',
+                    title: 'customerId',
+                    value: form.getFieldValue('customerCode'),
+                    name: 'Customer ID',
+                },
+            ];
+            fetchCustomerList({
+                customURL,
+                setIsLoading: () => {},
+                extraParams,
+                userId,
+                onSuccessAction: (response) => {
+                    form.setFieldsValue({ ...response?.data, customerAddress: response?.data?.address, customerCity: response?.data?.city, customerPhoneNumber: response?.data?.mobileNumber });
+                    setButtonData({ ...buttonData, formBtnActive: true });
+                },
+                onErrorAction: (message) => {
+                    showGlobalNotification({ message });
+                },
+            });
+        }
     };
 
-    const handleChange = (e) => {
+    const handleChange = () => {
         setButtonData({ ...buttonData, formBtnActive: false });
     };
 
@@ -63,7 +69,12 @@ const CustomerDetailsMasterBase = (props) => {
         setButtonData({ ...buttonData, formBtnActive: false });
     };
 
-    const onFinishFailed = () => {};
+    const handleCustomerChange = (e) => {
+        if (!e?.target?.value) {
+            form.resetFields();
+        }
+        setButtonData({ ...buttonData, formBtnActive: false });
+    };
 
     const formProps = {
         ...props,
@@ -84,6 +95,7 @@ const CustomerDetailsMasterBase = (props) => {
         styles,
         handleCustomerSearch,
         disabledProps,
+        handleCustomerChange,
     };
 
     const viewProps = {
@@ -97,7 +109,7 @@ const CustomerDetailsMasterBase = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

@@ -5,8 +5,8 @@
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import styles from 'assets/sass/app.module.scss';
-import { ChargerStatusTag } from './ChargerStatusTag';
-export const tableColumn = (handleButtonClick, page, pageSize) => {
+import { ChargerSearchStatusTag } from './ChargerStatusTag';
+export const tableColumn = (handleButtonClick, typeData) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'Booking No.',
@@ -22,7 +22,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             title: 'Stage Status',
             dataIndex: 'requestStatus',
             width: '25%',
-            render: (_, record) => ChargerStatusTag(record.requestStatus),
+            render: (_, record) => ChargerSearchStatusTag(record.requestStatus, typeData),
         }),
 
         tblActionColumn({ handleButtonClick, styles, width: '8%', canEdit: false }),

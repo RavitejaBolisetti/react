@@ -73,12 +73,12 @@ export const InvoiceDetailsMasterBase = (props) => {
         setactiveKey([values]);
     };
 
-    const errorAction = (message) => {
-        // showGlobalNotification(message);
+    const errorAction = () => {
+        return;
     };
 
-    const onSuccessAction = (res) => {
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+    const onSuccessAction = () => {
+        return;
     };
 
     useEffect(() => {
@@ -105,14 +105,13 @@ export const InvoiceDetailsMasterBase = (props) => {
     const onFinish = (values) => {
         handleButtonClick({ record: undefined, buttonAction: NEXT_ACTION });
     };
-    const onFinishFailed = () => {};
 
     const displaySection = {
         invoiceInformation: orderStatus === OTF_STATUS?.INVOICED.key || orderStatus === OTF_STATUS?.DELIVERED.key,
         deliveryInformation: orderStatus === OTF_STATUS?.DELIVERED.key,
     };
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

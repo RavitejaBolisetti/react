@@ -78,7 +78,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const CustomerDetailsMain = (props) => {
-    const { wrapForm = true, resetData, saveData, isLoading, userId, isDataLoaded, fetchList, listShowLoading, customerFormData, showGlobalNotification, onFinishFailed } = props;
+    const { wrapForm = true, resetData, saveData, isLoading, userId, isDataLoaded, fetchList, listShowLoading, customerFormData, showGlobalNotification } = props;
     const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, formActionType, NEXT_ACTION, handleButtonClick, section, fetchCustomerDetailData } = props;
     const { typeData, selectedOrderId } = props;
     const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar } = props;
@@ -200,7 +200,6 @@ export const CustomerDetailsMain = (props) => {
         formData,
         formActionType,
         onFinish,
-        onFinishFailed,
 
         listPinCodeShowLoading,
         fetchPincodeDetail,
@@ -228,14 +227,10 @@ export const CustomerDetailsMain = (props) => {
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
-        // if (sameAsBookingCustomer) {
-        //     let bookingCustomer = form.getFieldsValue()?.bookingCustomer;
-        //     form?.setFieldsValue({ billingCustomer: { ...bookingCustomer } });
-        // }
     };
 
     return wrapForm ? (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

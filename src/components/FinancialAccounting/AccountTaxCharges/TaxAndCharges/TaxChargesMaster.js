@@ -89,38 +89,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const TaxChargesMain = ({
-    typeData,
-    moduleTitle,
-    isChangeHistoryVisible,
-    fetchDocumentDescription,
-    documentDescription,
-    isDocumentDescriptionLoaded,
-    fetchFinancialAccountHead,
-    isFinancialAccountHeadLoaded,
-    financialAccount,
-    fetchChangeHistoryList,
-    viewTitle,
-    userId,
-    changeHistoryModelOpen,
-    isDataLoaded,
-    fetchList,
-    hierarchyAttributeFetchList,
-    saveData,
-    listShowLoading,
-    isDataAttributeLoaded,
-    attributeData,
-    hierarchyAttributeListShowLoading,
-    taxChargeData,
-    showGlobalNotification,
-    unFilteredAttributeData,
-    fetchListTaxCharge,
-    saveDataTaxCharge,
-    listShowLoadingTaxCharge,
-    isTaxChargeLoaded,
-    listShowLoadingFinancialAccountHead,
-    listShowLoadingDocumentDescription,
-}) => {
+export const TaxChargesMain = ({ typeData, moduleTitle, fetchDocumentDescription, documentDescription, isDocumentDescriptionLoaded, fetchFinancialAccountHead, isFinancialAccountHeadLoaded, financialAccount, viewTitle, userId, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, taxChargeData, showGlobalNotification, unFilteredAttributeData, listShowLoadingFinancialAccountHead, listShowLoadingDocumentDescription }) => {
     const [form] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -282,10 +251,6 @@ export const TaxChargesMain = ({
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {}).catch(err => console.error(err));
-    };
-
     const handleResetBtn = () => {
         form.resetFields();
     };
@@ -323,7 +288,6 @@ export const TaxChargesMain = ({
         flatternData,
         formActionType,
         isVisible: isFormVisible,
-        onFinishFailed,
         onCloseAction: () => {
             setIsFormVisible(false);
             setAttributeType();
@@ -383,7 +347,7 @@ export const TaxChargesMain = ({
             <div className={styles.contentHeaderBackground}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form onKeyPress={onKeyPressHandler} autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                        <Form onKeyPress={onKeyPressHandler} autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish}>
                             <Form.Item label={title} name="code" validateTrigger={['onSearch']}>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>

@@ -24,7 +24,6 @@ export default function RegistrationFilter(props) {
         optionType: typeData?.[PARAM_MASTER.AMC_SEARCH_TYPE.id],
         setFilterString,
         allowClear: false,
-        // defaultOption: 'customerName',
     };
 
     return (

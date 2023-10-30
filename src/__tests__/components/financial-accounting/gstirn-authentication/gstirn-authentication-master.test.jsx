@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { GSTIRNAuthenticationMasterBase } from "components/FinancialAccounting/GSTIRNAuthentication/GSTIRNAuthenticationMaster";
+import { GSTIRNAuthenticationMaster } from "components/FinancialAccounting/GSTIRNAuthentication/GSTIRNAuthenticationMaster";
 import customRender from '@utils/test-utils';
 import '@testing-library/jest-dom/extend-expect';
 import createMockStore from "__mocks__/store";
@@ -18,25 +18,74 @@ jest.mock('store/actions/data/financialAccounting/selectGstToDocAction', ()=>({
     selectGstToDocAction:{}
 }));
 
+jest.mock('store/actions/data/financialAccounting/gstIrnLoginAction', ()=>({
+    gstIrnLoginAction:{}
+}));
+
+const saveData = jest.fn();
+const fetchListGstLogin = jest.fn();
+const listShowLoadingGstLogin = jest.fn();
+
 const fetchGstDoc = jest.fn()
+const fetchList = jest.fn()
 
 afterEach(() => {
     // restore replaced property
     jest.restoreAllMocks();
 });
 
-describe("GSTIRNAuthenticationMasterBase components", ()=>{
-    it("fileProps", ()=>{
+describe("GSTIRNAuthenticationMaster components", ()=>{
+
+    it("onFinish", ()=>{
+        const values = {clientId: "AAECS19TXPANP3F", gstinNumber: "19AAECS6807Q1ZL", password: "Shree@#2020", secretId: "1yE3Ssg7MAaOo4IhWvk0", userName: "SHREEAUTO"};
+        
         const mockStore = createMockStore({
             auth: { userId:'test12', accessToken:'345', token:'321' },
-            data:{ FinancialAccounting: {DealerGstDetails: { data: [{documentId:'123', pemFile:'secretkey-1696914838011.pem'}] },} }
+            data:{ FinancialAccounting: {DealerGstDetails: { data: [{key: "823", parentKey: null, value: "GSTIN06"}] }} }
         });
 
         customRender(
             <Provider store={mockStore}>
-                <GSTIRNAuthenticationMasterBase fetchGstDoc={fetchGstDoc} isVisible={true} />
+                <GSTIRNAuthenticationMaster isVisible={true} values={values} fetchList={fetchList}/>
             </Provider>
         );
+    })
+
+    it("fileProps", ()=>{
+        const sectionName = {
+            BRANCH_ACCESSIBLE: {
+                id: 1,
+                title: 'Branch Accessible',
+                displayOnList: true,
+            },
+            IRN_TRANSACTION: {
+                id: 2,
+                title: 'IRN Transaction List',
+                displayOnList: true,
+            },
+        };
+
+        const docData = {documentId:'123', pemFile:'secretkey-1696914838011.pem'}
+
+        const mockStore = createMockStore({
+            auth: { userId:'test12', accessToken:'345', token:'321' },
+            data:{ FinancialAccounting: {DealerGstDetails: { data: [{documentId:'123', pemFile:'secretkey-1696914838011.pem'}] }} }
+        });
+
+        customRender(
+            <Provider store={mockStore}>
+                <GSTIRNAuthenticationMaster fetchGstDoc={fetchGstDoc} isVisible={true} fetchList={fetchList} sectionName={sectionName} currentSection={'1'} docData={docData}/>
+            </Provider>
+        );
+
+        fetchList.mock.lastCall[0].onSuccessAction();
+        fetchList.mock.lastCall[0].onErrorAction();
+
+        const uploadFileBtn = screen.getByRole('button', {name:'Upload File'});
+        fireEvent.click(uploadFileBtn);
+
+        const loginBtn = screen.getByRole('button', {name:'Login & Continue'});
+        fireEvent.click(loginBtn);
     });
 
     it("selectGstCombobox", ()=>{
@@ -49,7 +98,7 @@ describe("GSTIRNAuthenticationMasterBase components", ()=>{
 
         customRender(
             <Provider store={mockStore}>
-                <GSTIRNAuthenticationMasterBase fetchGstDoc={fetchGstDoc} dealerGst={dealerGst} />
+                <GSTIRNAuthenticationMaster fetchGstDoc={fetchGstDoc} dealerGst={dealerGst} fetchList={jest.fn()} />
             </Provider>
         );
 

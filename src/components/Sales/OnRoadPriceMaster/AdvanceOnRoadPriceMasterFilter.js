@@ -33,6 +33,7 @@ export default function AdvanceOnRoadPriceMasterFilter(props) {
         setFilterString,
         placeholder: 'Search By Model',
         singleFieldKey: 'model',
+        maxLength:50
     };
 
     useEffect(() => {

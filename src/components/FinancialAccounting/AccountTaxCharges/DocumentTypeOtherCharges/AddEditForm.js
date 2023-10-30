@@ -50,8 +50,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const AddEditFormMain = (props) => {
-    const { form, formData, onCloseAction, formActionType, formActionType: { viewMode } = undefined, isVisible, fetchDocTypeLedgerDetail, userId, handleCodeFunction, onFinish, onFinishFailed, typeData, editForm, docTypeHeadMappingForm, dropdownItems, setDropdownItems } = props;
-    const { buttonData, setButtonData, handleButtonClick, formEdit, setFormEdit, docTypeHeadMappingList, setDocTypeHeadMappingList, financialAccount } = props;
+    const { form, formData, onCloseAction, formActionType, formActionType: { viewMode } = undefined, isVisible, fetchDocTypeLedgerDetail, userId, handleCodeFunction, onFinish, typeData, editForm, docTypeHeadMappingForm, dropdownItems, setDropdownItems } = props;
+    const { buttonData, setButtonData, handleButtonClick, formEdit, setFormEdit, docTypeHeadMappingList, setDocTypeHeadMappingList, financialAccount, financialAccHeadData, userApplicationId, setUserApplicationId, selectedTreeSelectKey, setSelectedTreeSelectKey } = props;
 
     const [openAccordian, setOpenAccordian] = useState(1);
     const [docTypeLedger, setDocTypeLedger] = useState();
@@ -128,6 +128,11 @@ const AddEditFormMain = (props) => {
         dropdownItems,
         setDropdownItems,
         financialAccount,
+        financialAccHeadData,
+        userApplicationId,
+        setUserApplicationId,
+        selectedTreeSelectKey,
+        setSelectedTreeSelectKey,
     };
 
     const buttonProps = {
@@ -139,7 +144,7 @@ const AddEditFormMain = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBody}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     {viewMode ? (

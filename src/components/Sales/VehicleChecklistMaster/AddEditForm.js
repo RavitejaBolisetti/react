@@ -6,7 +6,7 @@
 import React from 'react';
 import { Col, Input, Form, Row, Switch, Button } from 'antd';
 import TreeSelectField from 'components/common/TreeSelectField';
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, noWhiteSpaceinBeginning } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
 import { AnswerFormCardMaster } from './AnswerModelForm/AnswerFormCard';
 import { ModelFormCardMaster } from './AnswerModelForm/ModelFormCard';
@@ -27,7 +27,7 @@ const AddEditFormMain = (props) => {
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
 
     let treeCodeId = '';
-    let treeCodeReadOnly = formActionType === FROM_ACTION_TYPE?.CHILD || formActionType === FROM_ACTION_TYPE?.SIBLING ? false : true;
+    let treeCodeReadOnly = formActionType === FROM_ACTION_TYPE?.CHILD || formActionType === FROM_ACTION_TYPE?.SIBLING || formActionType === FROM_ACTION_TYPE?.ADD ? false : true;
 
     const treeSelectFieldProps = {
         treeFieldNames,
@@ -66,7 +66,7 @@ const AddEditFormMain = (props) => {
                             </Col>
                         </Row>
 
-                        {attributeType === VEHICLE_CHECKLIST_TYPE?.GROUP?.key ? (
+                        {formActionType === FROM_ACTION_TYPE.ADD || attributeType === VEHICLE_CHECKLIST_TYPE?.GROUP?.key ? (
                             <>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -103,14 +103,14 @@ const AddEditFormMain = (props) => {
                             <>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item name="code" label="Checklist Code" rules={[validateRequiredInputField('Checklist Code')]}>
+                                        <Form.Item name="code" label="Checklist Code" rules={[validateRequiredInputField('Checklist Code'), noWhiteSpaceinBeginning()]}>
                                             <Input maxLength={6} placeholder={preparePlaceholderText('Checklist Code')} disabled={treeCodeReadOnly} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item name="descriptionTitle" label="Checklist Description" rules={[validateRequiredInputField('Checklist Description')]}>
+                                        <Form.Item name="descriptionTitle" label="Checklist Description" rules={[validateRequiredInputField('Checklist Description'), noWhiteSpaceinBeginning()]}>
                                             <TextArea maxLength={300} placeholder={preparePlaceholderText('Checklist Description')} disabled={treeCodeReadOnly} />
                                         </Form.Item>
                                     </Col>

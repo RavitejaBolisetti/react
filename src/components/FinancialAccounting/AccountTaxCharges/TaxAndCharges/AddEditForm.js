@@ -23,7 +23,7 @@ const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
     const { typeData, onCloseAction, unFilteredAttributeData, documentDescription, setSelectedTreeSelectKey, financialAccount, flatternData, fieldNames, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, handleSelectTreeClick, taxChargeData, attributeType, setAttributeType, setCalType, calculationType, setCalculationType } = props;
-    const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed } = props;
+    const { isFormBtnActive, setFormBtnActive, onFinish } = props;
 
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
     const disabledProps = { disabled: isReadOnly };
@@ -112,7 +112,7 @@ const AddEditFormMain = (props) => {
 
     return (
         <>
-            <Form autoComplete="off" form={form} layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Form autoComplete="off" form={form} layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>
                 <Row gutter={20} className={styles.drawerBody}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Row gutter={20}>

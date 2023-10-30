@@ -8,7 +8,7 @@ import { Descriptions } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { DATA_TYPE } from 'constants/dataType';
 
-const ViewDetailMain = ({ formData, styles, parameterType, isLoading = false }) => {
+const ViewDetailMain = ({ formData, styles, isLoading = false }) => {
     const viewOneColProps = {
         bordered: false,
         colon: false,

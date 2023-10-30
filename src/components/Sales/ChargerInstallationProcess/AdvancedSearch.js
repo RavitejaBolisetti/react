@@ -7,7 +7,6 @@ import React, { useEffect } from 'react';
 import { Col, Form, Row, Button, DatePicker } from 'antd';
 
 import { withModal } from 'components/withModal';
-import { customSelectBox } from 'utils/customSelectBox';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 import dayjs from 'dayjs';
@@ -18,7 +17,7 @@ import styles from 'assets/sass/app.module.scss';
 import { validateRequiredInputField } from 'utils/validation';
 
 export const AdvancedSearchFrom = (props) => {
-    const { setAdvanceSearchVisible, typeData } = props;
+    const { setAdvanceSearchVisible } = props;
     const {
         filterString,
         setFilterString,
@@ -44,10 +43,6 @@ export const AdvancedSearchFrom = (props) => {
         setAdvanceSearchVisible(false);
     };
 
-    const onFinishFailed = () => {
-        return;
-    };
-
     const CheckDateEffectiveTo = (value, effectiveFrom) => {
         if (!value) return Promise.resolve();
         const bool = dayjs(value).format('YYYY-MM-DD') >= dayjs(effectiveFrom).format('YYYY-MM-DD');
@@ -58,7 +53,7 @@ export const AdvancedSearchFrom = (props) => {
     };
 
     return (
-        <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="From Date" name="fromDate" className={styles?.datePicker} rules={[validateRequiredInputField('from date')]}>

@@ -267,7 +267,7 @@ export const TaxChargesCategoryMain = (props) => {
         }
     };
 
-    const handleResetFilter = (e) => {
+    const handleResetFilter = () => {
         setFilterString();
         listFilterForm.resetFields();
         setShowDataLoading(false);
@@ -318,10 +318,6 @@ export const TaxChargesCategoryMain = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {}).catch(err => console.error(err));
-    };
-
     const onCloseAction = () => {
         setFormEdit(false);
         form.resetFields();
@@ -348,7 +344,6 @@ export const TaxChargesCategoryMain = (props) => {
         formActionType,
         setFormActionType,
         onFinish,
-        onFinishFailed,
 
         isVisible: isFormVisible,
         onCloseAction,
@@ -395,7 +390,6 @@ export const TaxChargesCategoryMain = (props) => {
         filterString,
         from: listFilterForm,
         onFinish,
-        onFinishFailed,
         onSearchHandle,
         handleResetFilter,
         handleClearInSearch,

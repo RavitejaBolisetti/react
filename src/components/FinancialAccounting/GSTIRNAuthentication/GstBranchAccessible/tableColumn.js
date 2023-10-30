@@ -6,7 +6,7 @@
 import { tblPrepareColumns } from 'utils/tableColumn';
 import styles from 'utils/tableColumn.module.scss';
 
-export const tableColumn = (handleButtonClick, page, pageSize) => {
+export const tableColumn = () => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'Branch Name',

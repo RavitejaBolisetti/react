@@ -69,7 +69,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const SupportingDocumentBase = (props) => {
-    const { isViewDataLoaded, uploadDocumentFile, accessToken, token, onFinishFailed, form } = props;
+    const { isViewDataLoaded, uploadDocumentFile, accessToken, token, form } = props;
 
     const { userId, showGlobalNotification, section, listShowLoading, typeData, saveData, fetchList, supportingData, fetchViewDocument, setIsFormVisible } = props;
     const { buttonData, setButtonData, formActionType } = props;
@@ -270,7 +270,7 @@ const SupportingDocumentBase = (props) => {
         buttonData: { ...props.buttonData, formBtnActive: true },
     };
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} >
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <h2>{section?.title}</h2>

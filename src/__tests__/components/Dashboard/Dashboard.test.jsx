@@ -16,7 +16,7 @@ jest.mock('@ant-design/plots', () => {
         __esModule: true,
         Bar,
         Pie,
-        measureTextWidth
+        measureTextWidth,
     };
 });
 
@@ -27,22 +27,22 @@ afterEach(() => {
 describe('dashboard component render', () => {
     it('should render dashboard component', () => {
         customRender(<Dashboard measureTextWidth={jest.fn()} />);
-        const prevNextButton=screen.getAllByRole('button', { name: '' });
+        const prevNextButton = screen.getAllByRole('button', { name: '' });
         fireEvent.click(prevNextButton[0]);
         fireEvent.click(prevNextButton[1]);
 
         const container = {
             getBoundingClientRect: () => ({ width: 100, height: 100 }),
         };
-        
-        const config = PieChart().props;    
+
+        const config = PieChart().props;
         const titleCustomHtml = config.statistic.title.customHtml;
         let result = titleCustomHtml(container, null, { type: 'Test' });
         expect(result).toContain('Test');
 
         const contentCustomHtml = config.statistic.content.customHtml;
         result = contentCustomHtml(container, null, { value: 50 }, [{ value: 50 }]);
-        expect(result).toContain('50'); 
+        expect(result).toContain('50');
     });
 });
 
@@ -54,14 +54,14 @@ describe('DashboardSkelton component render', () => {
 
 describe('Latest News component render', () => {
     it('should render latest news component', () => {
-        const newsData=[{ shortDescription: 'Kai', longDescription: 'Kai', date: '01/01/2001' }];
+        const newsData = [{ shortDescription: 'Kai', longDescription: 'Kai', date: '01/01/2001' }];
         customRender(<LatestNews newsData={newsData} />);
     });
 });
 
 describe('BirthDay Calender component render', () => {
     it('should render birthday calender component', () => {
-        const birthDayData={ birthDaytoday: [{ name: 'Kai', date: '01/01/2001' }], upcomingBirthDay: [{ name: 'Kai', date: '01/01/2001' }]};
+        const birthDayData = { birthDaytoday: [{ name: 'Kai', date: '01/01/2001' }], upcomingBirthDay: [{ name: 'Kai', date: '01/01/2001' }] };
         customRender(<BirthDayCalender birthDayData={birthDayData} />);
     });
 });
@@ -71,5 +71,3 @@ describe('Widget Drawer component render', () => {
         customRender(<WidgetDrawer isVisible={true} />);
     });
 });
-
-

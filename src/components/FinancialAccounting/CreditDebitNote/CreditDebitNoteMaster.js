@@ -146,8 +146,7 @@ export const CreditDebitNoteMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [creditDebitData, isDetailLoaded, formActionType?.addMode]);
 
-    const onSuccessAction = (res) => {
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+    const onSuccessAction = () => {
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
@@ -298,7 +297,7 @@ export const CreditDebitNoteMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
 
-    const handleResetFilter = (e) => {
+    const handleResetFilter = () => {
         if (filterString) {
             setShowDataLoading(true);
             setFilterString();
@@ -347,9 +346,6 @@ export const CreditDebitNoteMasterBase = (props) => {
         }
         setIsFormVisible(true);
     };
-
-    const onFinishSearch = (values) => {};
-
     const handlePrintDownload = (record) => {
         setReportVisible(true);
 
@@ -388,10 +384,6 @@ export const CreditDebitNoteMasterBase = (props) => {
         };
 
         saveData(requestData);
-    };
-
-    const onFinishFailed = (errorInfo) => {
-        return;
     };
 
     const handleFormValueChange = () => {
@@ -444,13 +436,11 @@ export const CreditDebitNoteMasterBase = (props) => {
         setFilterString,
         from: listFilterForm,
         onFinish,
-        onFinishFailed,
         title,
         data,
         typeData,
 
         searchForm,
-        onFinishSearch,
         handleResetFilter,
         handleButtonClick,
         setAdvanceSearchVisible,
@@ -475,7 +465,6 @@ export const CreditDebitNoteMasterBase = (props) => {
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
-        // icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
@@ -495,7 +484,6 @@ export const CreditDebitNoteMasterBase = (props) => {
         formActionType,
         setFormActionType,
         creditDebitNoteOnFinish: onFinish,
-        onFinishFailed,
         setIsFormVisible,
         isVisible: isFormVisible,
         onCloseAction,

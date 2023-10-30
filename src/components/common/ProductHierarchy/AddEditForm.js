@@ -29,7 +29,7 @@ const AddEditFormMain = (props) => {
     const [openAccordian, setOpenAccordian] = useState(1);
     const [isAddBtnDisabled, setAddBtnDisabled] = useState(false);
 
-    const { onFinish, onFinishFailed } = props;
+    const { onFinish } = props;
 
     const disabledProps = { disabled: isReadOnly };
 
@@ -136,7 +136,7 @@ const AddEditFormMain = (props) => {
     return (
         <>
             <div className={styles.drawerBodyNew}>
-                <Form form={form} id="myForm" autoComplete="off" layout="vertical" onFinish={onFinish} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinishFailed={onFinishFailed}>
+                <Form form={form} id="myForm" autoComplete="off" layout="vertical" onFinish={onFinish} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange}>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level" rules={[validateRequiredSelectField('attribute level')]}>

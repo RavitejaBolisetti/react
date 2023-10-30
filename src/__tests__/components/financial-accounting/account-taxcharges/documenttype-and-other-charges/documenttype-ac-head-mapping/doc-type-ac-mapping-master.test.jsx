@@ -24,7 +24,7 @@ const FormWrapper = (props) =>{
 }
 
 describe('Render components', () => {
-    const formProductAttributeProps = {
+    const props = {
         formActionType: {addMode: false, editMode: true, viewMode: false},
         isVisible: true,
         viewMode: false,
@@ -34,12 +34,22 @@ describe('Render components', () => {
         handleSelectTreeClick:jest.fn()
     }
 
-    it('pass formProductAttributeProps and formEdit = false', () => {
-        customRender(<FormWrapper mainFomEdit={false}  {...formProductAttributeProps} formEdit={false} />);
+    it('docTypeLedger', ()=>{
+        const docTypeLedger = {
+            applicationName: "Financial Accounting", documentType: null, documentTypeCode: "REC", documentTypeId: "698", documentTypeName: "Receipts(Finance)",
+            accountLedgerMappingDtoList:[{
+                chargeCode: "CCRD",chargeCodeDesc: "Credit Card", financialAccountHeadCode: null, financialAccountHeadDesc: "BIMALJEET", financialAccountHeadId: "143", id: "563"
+            }]
+        }
+        customRender(<FormWrapper docTypeLedger={docTypeLedger} setDocTypeHeadMappingList={jest.fn()} />);
+    })
+
+    it('formEdit = false', () => {
+        customRender(<FormWrapper mainFomEdit={false}  {...props} formEdit={false} />);
     });
 
-    it('pass formProductAttributeProps and formEdit = true', () => {
-        customRender(<FormWrapper mainFomEdit={false}  {...formProductAttributeProps} formEdit={true} />);
+    it('formEdit = true', () => {
+        customRender(<FormWrapper mainFomEdit={false}  {...props} formEdit={true} />);
     });
 
     it('should render docTypeHeadMappingList', () => {

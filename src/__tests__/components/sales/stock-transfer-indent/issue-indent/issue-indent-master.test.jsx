@@ -17,22 +17,53 @@ const FormWrapper = (props) => {
         resetFields:jest.fn()
     }
     return <IssueIndentMaster issueForm={myMock} {...props}/>
-}
+};
+
+const fetchIssueList = jest.fn();
+const resetIssueList = jest.fn();
 
 describe("IssueIndentMaster component", ()=>{
+    it("printBtn", ()=>{
+        <FormWrapper isVisible={true} />
+    });
+
+    it("indentIssueDataLoaded", ()=>{
+        const indentIssueData = [{issueNumber:'23', vin:'t23', issueStatus:'active', }];
+
+        customRender(
+            <FormWrapper indentIssueDataLoaded={true} isVisible={true} indentIssueData={indentIssueData} indentIssueDataLoading={false} typeData={['PARAM_MASTER']} fetchIssueList={fetchIssueList} resetIssueList={resetIssueList} />
+        );
+    });
+
+    it("issueModalOpen", ()=>{
+        const vehicleVinData = [{paginationData:[{oemInvoiceDate:'12', grnDate:'3'}]}];
+
+        customRender(
+            <FormWrapper issueModalOpen={true} isVisible={true} typeData={['PARAM_MASTER']} fetchIssueList={fetchIssueList} vehicleVinData={vehicleVinData} resetIssueList={resetIssueList} />
+        );
+    });
 
     it("ViewDetailProps", ()=>{
         const props = {
             formData:{
+                // indentNumber:'12',
+                // modelCode:'98',
+                // issueDate:"23",
+                // oemInvoiceDate:"7",
+                // issueStatus:'test',
+                // grnDate:'4'
+            
+                
                 balancedQuantity:'100',
                 modelDescription:'test',
                 receivedQuantity:'0',
                 cancelledQuantity: 0,
                 vehicleDetails:[{modelDescription:'test', cancelledQuantity: 0, balancedQuantity:'100', receivedQuantity:'0'}]
-            }
+            },
+            typeData:['PARAM_MASTER']
         }
         
-        customRender(<IssueIndentMaster isVisible={true} {...props} typeData={['PARAM_MASTER']} fetchIssueList={jest.fn()} resetIssueList={jest.fn()}/>);
+        customRender(<IssueIndentMaster isVisible={true} {...props}  fetchIssueList={jest.fn()} resetIssueList={jest.fn()}/>);
 
         const closeBtn = screen.getByRole('button', {name:'Close'});
         fireEvent.click(closeBtn);
@@ -100,22 +131,25 @@ describe("IssueIndentMaster component", ()=>{
         fireEvent.click(submitBtn);
     });
 
-    it("issueData", ()=>{
+    it("onErrorAction", ()=>{
         const props = {
             issueData :[{issueNumber: '8'}]
         }
-        customRender(<IssueIndentMaster isVisible={true} {...props} typeData={['PARAM_MASTER']} fetchIssueList={jest.fn()} handleBtnVisibility={jest.fn()} resetIssueList={jest.fn()} handleCollapses={jest.fn(0)}/>);
+        customRender(<IssueIndentMaster isVisible={true} {...props} typeData={['PARAM_MASTER']} fetchIssueList={fetchIssueList} handleBtnVisibility={jest.fn()} resetIssueList={jest.fn()} handleCollapses={jest.fn(0)} showGlobalNotification={jest.fn()} />);
+
+        fetchIssueList.mock.lastCall[0].onErrorAction();
     });
 
     it("IssueVehicleDetailsProps", ()=>{
         const props = {
+            issueModalOpen:true,
             isVisible:true,
-            onCloseAction:jest.fn(),
-            titleOverride:'Issue vehicle Details',
-            onFinish:jest.fn(),
-            cancellationData :{balancedQuantity: '10',},
-            handleVinSearch:jest.fn(),
-            vehicleVinData:[{vehicleSearch:[{invoiceDate:'23', grnDate:'12'}]}],
+            // onCloseAction:jest.fn(),
+            // titleOverride:'Issue vehicle Details',
+            // onFinish:jest.fn(),
+            // cancellationData :{balancedQuantity: '10',},
+            // handleVinSearch:jest.fn(),
+            vehicleVinData:[{paginationData:[{oemInvoiceDate:'23', grnDate:'12'}]}],
         }
 
         customRender(<FormWrapper {...props} typeData={['PARAM_MASTER']} fetchIssueList={jest.fn()} resetIssueList={jest.fn()} />);
