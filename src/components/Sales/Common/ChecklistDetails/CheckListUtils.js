@@ -33,20 +33,10 @@ export const FORM_KEYS = {
 const setQuestionlabel = (checklistType, data) => {
     switch (checklistType) {
         case MODULE_TYPE_CONSTANTS?.RECEIPT_CHECKLIST?.key: {
-            return data?.checkPoint
-                ? data?.checkPoint
-                      ?.split(' ')
-                      ?.map((item) => item?.charAt(0)?.toUpperCase() + item?.slice(1)?.toLowerCase())
-                      ?.join(' ')
-                : noDataAvalaible;
+            return data?.checkPoint ?? noDataAvalaible;
         }
         case MODULE_TYPE_CONSTANTS?.DELIVERY_NOTE?.key: {
-            return data?.checklistDescription
-                ? data?.checklistDescription
-                      ?.split(' ')
-                      ?.map((item) => item?.charAt(0)?.toUpperCase() + item?.slice(1)?.toLowerCase())
-                      ?.join(' ')
-                : noDataAvalaible;
+            return data?.checklistDescription ?? noDataAvalaible;
         }
         default: {
             return noDataAvalaible;
