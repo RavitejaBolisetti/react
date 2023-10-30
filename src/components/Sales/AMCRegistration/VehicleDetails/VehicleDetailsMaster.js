@@ -140,6 +140,7 @@ const VehicleDetailsMasterBase = (props) => {
                     setIsEditing(false);
                     setEditingData({});
                     setIsAdding(false);
+                    handleFormValueChange();
                     contactform.resetFields();
                 }
             })
@@ -217,11 +218,10 @@ const VehicleDetailsMasterBase = (props) => {
         setEditingData,
         typeData,
         setButtonData,
+        buttonData,
         handleFormValueChange,
-
         isAdding,
         setIsAdding,
-        buttonData,
         handleVinSearch,
         disabledProps,
         handleVINChange,

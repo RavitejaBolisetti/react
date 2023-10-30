@@ -7,7 +7,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Col, Form, Row } from 'antd';
+import { Col, Form, Row, Spin } from 'antd';
 import { tableColumn } from './tableColumn';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 
@@ -55,7 +55,7 @@ const mapStateToProps = (state) => {
             },
         },
         common: {
-            Header: { data: loginUserData = [] },
+            Header: { data: loginUserData = [], isLoading: isLoginDataLoading },
         },
     } = state;
 
@@ -84,6 +84,7 @@ const mapStateToProps = (state) => {
         isSchemeDataLoaded,
         isSchemeDataLoading,
         schemeData,
+        isLoginDataLoading,
     };
     return returnValue;
 };
@@ -120,16 +121,18 @@ const mapDispatchToProps = (dispatch) => ({
 export const AMCRegistrationMasterBase = (props) => {
     const { data, userId, fetchList, listShowLoading, showGlobalNotification } = props;
     const { typeData, saveData, documentType, moduleTitle, totalRecords } = props;
-    const { filterString, setFilterString, invoiceStatusList } = props;
+    const { filterString, setFilterString } = props;
     const { fetchDetail, isDataLoaded, fetchCustomerList, listCustomerShowLoading } = props;
     const { amcRegistrationDetailData, isEmployeeDataLoaded, isEmployeeDataLoading, employeeData, fetchEmployeeList, listEmployeeShowLoading, loginUserData } = props;
     const { fetchOTFSearchedList, listOTFShowLoading, otfData } = props;
-    const { fetchSchemeList, listSchemeShowLoading, isSchemeDataLoaded, isSchemeDataLoading, schemeData } = props;
+    const { fetchSchemeList, listSchemeShowLoading, isSchemeDataLoaded, isSchemeDataLoading, schemeData, isLoginDataLoading } = props;
 
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [amcStatus, setAmcStatus] = useState(QUERY_BUTTONS_CONSTANTS.PENDING.key);
     const defaultPayload = { amcRegistration: {}, amcSchemeDetails: {}, amcCustomerDetails: {}, amcVehicleDetails: [{}], amcRequestDetails: {} };
     const [requestPayload, setRequestPayload] = useState(defaultPayload);
+    const [invoiceStatusList, setInvoiceStatusList] = useState([]);
+    const [showSpinnerLoading, setShowSpinnerLoading] = useState(false);
 
     const [listFilterForm] = Form.useForm();
     const [cancelAMCForm] = Form.useForm();
@@ -178,16 +181,18 @@ export const AMCRegistrationMasterBase = (props) => {
     useEffect(() => {
         if (loginUserData?.userType) {
             if (loginUserData?.userType === AMC_CONSTANTS?.DEALER?.key) {
+                setInvoiceStatusList(Object.values(QUERY_BUTTONS_CONSTANTS));
                 setAmcStatus(QUERY_BUTTONS_CONSTANTS.PENDING.key);
                 setUserType(AMC_CONSTANTS?.DEALER?.key);
             } else {
+                setInvoiceStatusList(Object.values(QUERY_BUTTONS_MNM_USER));
                 setAmcStatus(QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.key);
                 setUserType(AMC_CONSTANTS?.MNM?.key);
             }
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [loginUserData?.userType]);
+    }, [loginUserData]);
 
     useEffect(() => {
         if (formActionType?.viewMode) {
@@ -365,10 +370,6 @@ export const AMCRegistrationMasterBase = (props) => {
         fetchSchemeList({ setIsLoading: listSchemeShowLoading, userId, extraParams, onSuccessAction });
     };
 
-    const handleSaleTypeChange = (e) => {
-        schemeList();
-    };
-
     const handleBookingNumberSearch = (otfNumber = '') => {
         const onSuccessAction = (res) => {
             console.log('🚀 ~ file: AMCRegistrationMaster.js:349 ~ onSuccessAction ~ res:', res);
@@ -485,7 +486,8 @@ export const AMCRegistrationMasterBase = (props) => {
     const onFinishSearch = (values) => {};
 
     const onFinish = ({ type = null }) => {
-        let finalPayload;
+        setShowSpinnerLoading(true);
+        let finalPayload = {};
         if (!type) {
             finalPayload = { ...requestPayload, amcId: selectedAMC?.amcId, amcRegistrationNumber: selectedAMC?.amcRegistrationNumber };
         } else if (type === AMC_CONSTANTS?.CANCEL_REQUEST?.key) {
@@ -495,9 +497,11 @@ export const AMCRegistrationMasterBase = (props) => {
         }
 
         const onError = (res) => {
+            setShowSpinnerLoading(false);
             showGlobalNotification({ message: res?.responseMessage });
         };
         const onSuccess = (res) => {
+            setShowSpinnerLoading(false);
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
 
             if (type === AMC_CONSTANTS?.CANCEL_REQUEST?.key) {
@@ -759,7 +763,6 @@ export const AMCRegistrationMasterBase = (props) => {
         isLastSection,
         typeData,
         documentType,
-
         saveButtonName: isLastSection ? 'Submit' : 'Save and Next',
         setLastSection,
         handleBookingNumberSearch,
@@ -792,10 +795,8 @@ export const AMCRegistrationMasterBase = (props) => {
         isPendingForCancellation,
         setIsPendingForCancellation,
         handlePrintDownload,
-
-        handleSaleTypeChange,
+        schemeList,
     };
-
     const cancelModalProps = {
         isVisible: isRejectModalVisible,
         cancelAMCForm,
@@ -835,7 +836,7 @@ export const AMCRegistrationMasterBase = (props) => {
     };
 
     return (
-        <>
+        <Spin spinning={isLoginDataLoading || showSpinnerLoading}>
             <RegistrationFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
@@ -846,7 +847,7 @@ export const AMCRegistrationMasterBase = (props) => {
             <AMCRegistrationMainContainer {...containerProps} />
             <RejectRequest {...cancelModalProps} />
             <ReportModal {...reportProps} reportDetail={reportDetail} />
-        </>
+        </Spin>
     );
 };
 

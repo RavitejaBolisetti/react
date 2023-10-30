@@ -15,7 +15,7 @@ const { Search } = Input;
 const { TextArea } = Input;
 
 const RegistrationForm = (props) => {
-    const { options, handleOnSelect, handleOnClear, registrationForm, formData, typeData, handleFormValueChange, handleBookingNumberSearch, isEmployeeDataLoading, handleEmployeeNameSearch, isVehicleInvoiceDataLoading, handleBookingNumberChange, handleSaleTypeChange } = props;
+    const { options, handleOnSelect, handleOnClear, registrationForm, formData, typeData, handleFormValueChange, handleBookingNumberSearch, isEmployeeDataLoading, handleEmployeeNameSearch, isVehicleInvoiceDataLoading, handleBookingNumberChange, handleSaleTypeChange, selectedSaleType } = props;
 
     return (
         <>
@@ -26,7 +26,7 @@ const RegistrationForm = (props) => {
                             {customSelectBox({ data: typeData?.[PARAM_MASTER.DLVR_SALE_TYP.id], placeholder: preparePlaceholderSelect('Sale Type'), onChange: handleSaleTypeChange })}
                         </Form.Item>
                     </Col>
-                    {registrationForm.getFieldValue('saleType') === AMC_CONSTANTS?.MNM_FOC?.key && (
+                    {selectedSaleType === AMC_CONSTANTS?.MNM_FOC?.key && (
                         <>
                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                 <Form.Item label="Booking Number" name="bookingNumber" rules={[validateRequiredInputField('Booking Number')]}>

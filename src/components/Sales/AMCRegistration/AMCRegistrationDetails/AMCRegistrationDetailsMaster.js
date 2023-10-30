@@ -18,11 +18,12 @@ const AMCRegistrationDetailsMasterBase = (props) => {
     const { userId, buttonData, setButtonData, section, isDataLoaded, isLoading, form } = props;
     const { registrationForm, formActionType, selectedOtfNumber, setSelectedOtfNumber, handleFormValueChange, showGlobalNotification } = props;
 
-    const { schemeForm, FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch, employeeData, fetchEmployeeList, listEmployeeShowLoading, handleSaleTypeChange, schemeData } = props;
+    const { schemeForm, FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch, employeeData, fetchEmployeeList, listEmployeeShowLoading, schemeData, schemeList } = props;
 
     const [activeKey, setActiveKey] = useState([]);
-    const [options, setOptions] = useState(false);
+    const [options, setOptions] = useState([]);
     const [selectedEmployees, setSelectedEmployee] = useState(false);
+    const [selectedSaleType, setselectedSaleType] = useState('');
 
     useEffect(() => {
         if (requestPayload) {
@@ -31,12 +32,6 @@ const AMCRegistrationDetailsMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [requestPayload]);
-
-    // useEffect(() => {
-
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [registrationForm.getFieldValue('vin'), registrationForm.getFieldValue('saleType')]);
-
     useEffect(() => {
         const employeeOption = employeeData?.map((item) => ({
             label: item?.employeeName,
@@ -46,18 +41,6 @@ const AMCRegistrationDetailsMasterBase = (props) => {
         setOptions(employeeOption);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [employeeData]);
-
-    useEffect(() => {
-        return () => {
-            setOptions();
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    useEffect(() => {
-        setOptions();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     useEffect(() => {
         if (selectedOtfNumber) {
@@ -102,12 +85,11 @@ const AMCRegistrationDetailsMasterBase = (props) => {
         }
     };
     const handleOnClear = () => {
-        setOptions();
         form.resetFields(['managerName']);
     };
-    const handleSchemeDescriptionChange = (schemeValue) => {
-        const selectedScheme = schemeData.find((value) => {
-            return value?.schemeCode === schemeValue;
+    const handleSchemeDescriptionChange = (code) => {
+        const selectedScheme = schemeData.find((i) => {
+            return i?.schemeCode === code;
         });
         schemeForm.setFieldsValue({ schemeCode: selectedScheme?.schemeCode, schemeBasicAmount: selectedScheme?.schemeAmount, id: selectedScheme?.id });
     };
@@ -137,6 +119,10 @@ const AMCRegistrationDetailsMasterBase = (props) => {
             })
             .catch((err) => console.error(err));
     };
+    const handleSaleTypeChange = (value) => {
+        schemeList();
+        setselectedSaleType(value);
+    };
     const formProps = {
         ...props,
         schemeForm,
@@ -162,6 +148,7 @@ const AMCRegistrationDetailsMasterBase = (props) => {
         handleOnClear,
         handleBookingNumberChange,
         handleSaleTypeChange,
+        selectedSaleType,
     };
 
     const viewProps = {

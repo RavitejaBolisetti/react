@@ -14,41 +14,35 @@ const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
     const { activeKey, setActiveKey } = props;
-
-    const onChange = (values) => {
-        const isPresent = activeKey.includes(values);
-
-        if (isPresent) {
-            const newActivekeys = [];
-
-            activeKey.forEach((item) => {
-                if (item !== values) {
-                    newActivekeys.push(item);
+    const onChange = (collapseKey) => {
+        if (activeKey?.includes(collapseKey)) {
+            const newKeyarr = activeKey?.reduce((prev, curr) => {
+                if (curr !== collapseKey) {
+                    prev.push(curr);
                 }
-            });
-            setActiveKey(newActivekeys);
+                return prev;
+            }, []);
+            setActiveKey(newKeyarr);
         } else {
-            setActiveKey([...activeKey, values]);
+            setActiveKey([...activeKey, collapseKey]);
         }
     };
 
     return (
         <Row gutter={20}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                <Space style={{ display: 'flex' }} size="middle" direction="vertical">
-                    <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
-                        <Panel header="Registration Information" key="1">
-                            <Divider />
-                            <RegistrationForm  {...props} />
-                        </Panel>
-                    </Collapse>
-                    <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
-                        <Panel header="Scheme Details" key="2">
-                            <Divider />
-                            <SchemeDetailsForm {...props} />
-                        </Panel>
-                    </Collapse>
-                </Space>
+                <Collapse collapsible="icon" expandIcon={expandIcon} onChange={() => onChange('regKey')} expandIconPosition="end">
+                    <Panel header="Registration Information" key="regKey">
+                        <Divider />
+                        <RegistrationForm {...props} />
+                    </Panel>
+                </Collapse>
+                <Collapse collapsible="icon" expandIcon={expandIcon} onChange={() => onChange('schemeKey')} expandIconPosition="end">
+                    <Panel header="Scheme Details" key="schemeKey">
+                        <Divider />
+                        <SchemeDetailsForm {...props} />
+                    </Panel>
+                </Collapse>
             </Col>
         </Row>
     );
