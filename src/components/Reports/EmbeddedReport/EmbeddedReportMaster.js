@@ -98,11 +98,11 @@ export const EmbeddedReportMasterMain = (props) => {
             let embedUrl = data?.embedReports?.[0]?.embedUrl;
 
             if (reportDetail?.type === REPORT_TYPE) {
-                let param = `&filter=Query1/parent_group_code eq '${headerData?.parentGroupCode}'`;
+                let locationCode = headerData?.dealerLocations?.find((e) => e?.isDefault === true)?.locationCode;
+                let param = `&filter=Query1/parent_group_code eq '${headerData?.parentGroupCode}' and Query1/location_code eq '${locationCode}'`;
                 embedUrl += param;
             }
 
-            console.log('🚀 ~ file: EmbeddedReportMaster.js:103 ~ useEffect ~ embedUrl:', embedUrl);
             setReportConfig({
                 type: 'report',
                 id: data?.embedReports?.[0]?.reportId.substr(46, 92),
