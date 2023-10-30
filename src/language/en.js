@@ -35,5 +35,6 @@ export const LANGUAGE_EN = {
         PAGE_NOT_FOUND: { TITLE: 'Page Not Found', MESSAGE: '<p>Sorry, the page you visited does not exist. Redirecting to dashboard in <b>{COUNTER}</b></p>' },
         NO_EMPLOYEES_FOUND: { TITLE: 'Employees not found', MESSAGE: 'No employees found for searched name' },
         NO_VIN_FOUND: { TITLE: 'VIN not found', MESSAGE: 'No VIN found for searched Booking Number' },
+        UNSAVE_DATA_WARNING: { TITLE: 'Are you sure you want to leave ?', MESSAGE: 'You have unsave changes. All changes may lost.'},
     },
 };

@@ -32,6 +32,8 @@ import { CustomerNameChangeHistory } from 'components/common/CustomerMaster/Indi
 import DataTable from 'utils/dataTable/DataTable';
 import { CustomerMainConatiner } from './CustomerMainConatiner';
 import styles from 'assets/sass/app.module.scss';
+import { ConfirmationModal } from 'utils/ConfirmationModal';
+import { LANGUAGE_EN } from 'language/en';
 
 const mapStateToProps = (state) => {
     const {
@@ -117,6 +119,8 @@ const CustomerMasterMain = (props) => {
     const [ChangeHistoryVisible, setChangeHistoryVisible] = useState(false);
     const [showNameChangeHistory, setShowNameChangeHistory] = useState(false);
     const [previousSection, setPreviousSection] = useState(1);
+    const [isUnsavedDataPopup, setIsUnsavedDataPopup] = useState(false);
+    const [nextCurentSection, setNextCurrentSection] = useState("");
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false, changeHistory: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -214,13 +218,13 @@ const CustomerMasterMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedCustomerId, defaultExtraParam]);
 
-    const onSuccessAction = () => {
+    const onSuccessAction = (res) => {
         setShowDataLoading(false);
         setRefreshCustomerList(false);
         // setFilterString();
     };
 
-    const onErrorAction = () => {
+    const onErrorAction = (res) => {
         setShowDataLoading(false);
         setRefreshCustomerList(false);
     };
@@ -242,11 +246,13 @@ const CustomerMasterMain = (props) => {
 
     useEffect(() => {
         if (customerType) {
+            // setFilterString({ current: 1 });
             setFilterString({ ...filterString, customerType });
             const defaultSection = customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION.CUSTOMER_DETAILS.id : CUSTOMER_CORPORATE_SECTION.CUSTOMER_DETAILS.id;
             setSetionName(customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION : CUSTOMER_CORPORATE_SECTION);
             setDefaultSection(defaultSection);
             setSection(defaultSection);
+            // setShowDataLoading(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [customerType]);
@@ -269,8 +275,8 @@ const CustomerMasterMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, extraParams, refreshCustomerList]);
 
-    const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
-        form.resetFields();
+    const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true, isNextBtnClick = false }) => {
+        buttonAction !== NEXT_ACTION && form.resetFields();
 
         switch (buttonAction) {
             case ADD_ACTION:
@@ -289,8 +295,14 @@ const CustomerMasterMain = (props) => {
                 break;
             case NEXT_ACTION:
                 const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
-                section && setCurrentSection(nextSection?.id);
-                setLastSection(!nextSection?.id);
+                if (buttonData?.formBtnActive && isNextBtnClick) {
+                    setIsUnsavedDataPopup(true);
+                    setNextCurrentSection(nextSection?.id);
+                } else {
+                    section && setCurrentSection(nextSection?.id);
+                    setLastSection(!nextSection?.id);
+                }
+
                 break;
 
             default:
@@ -310,6 +322,25 @@ const CustomerMasterMain = (props) => {
         setIsFormVisible(true);
     };
 
+    // const onFinish = (values, e) => {};
+
+    const onFinishFailed = (errorInfo) => {
+        console.error(errorInfo);
+        // form.validateFields().then((values) => {});
+    };
+
+    const handleOkUnsavedModal = () => {
+        if (nextCurentSection) {
+            setIsUnsavedDataPopup(false);
+            setCurrentSection(nextCurentSection);
+            section && setLastSection(!nextCurentSection);
+            setButtonData({ ...buttonData, formBtnActive: false });
+            setNextCurrentSection('');
+        } else {
+            onCloseAction();
+        }
+    };
+
     const setPage = (page) => {
         setFilterString({ ...filterString, ...page });
     };
@@ -324,6 +355,10 @@ const CustomerMasterMain = (props) => {
         setPage,
     };
 
+    // const onChange = (sorter, filters) => {
+    //     form.resetFields();
+    // };
+
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
@@ -335,6 +370,7 @@ const CustomerMasterMain = (props) => {
     const onCloseAction = () => {
         form.resetFields();
         form.setFieldsValue({});
+        setIsUnsavedDataPopup(false);
 
         setIsFormVisible(false);
         setFormActionType(defaultFormActionType);
@@ -375,7 +411,7 @@ const CustomerMasterMain = (props) => {
         }
     };
 
-    const handleResetFilter = () => {
+    const handleResetFilter = (e) => {
         if (filterString) {
             setShowDataLoading(true);
         }
@@ -442,13 +478,23 @@ const CustomerMasterMain = (props) => {
         changeHistoryData,
     };
 
+    const onCloseDrawer = () => {
+        if (buttonData?.formBtnActive) {
+            setIsUnsavedDataPopup(true);
+        } else {
+            onCloseAction();
+
+        }
+    };
+
     const containerProps = {
         record: selectedCustomer,
         form,
         formActionType,
         setFormActionType,
+        onFinishFailed,
         isVisible: isFormVisible,
-        onCloseAction,
+        onCloseAction: onCloseDrawer,
         titleOverride: drawerTitle.concat(moduleTitle),
         tableData: data,
         customerType,
@@ -484,9 +530,27 @@ const CustomerMasterMain = (props) => {
         setShowNameChangeHistory,
         setPreviousSection,
         previousSection,
+        setIsUnsavedDataPopup,
+        setNextCurrentSection
     };
 
     const showAddButton = true;
+
+    const handleCancelUnsaveDataModal = () => {
+        setIsUnsavedDataPopup(false);
+        setNextCurrentSection('');
+    };
+
+    const unsavedDataModalProps = {
+        isVisible: isUnsavedDataPopup,
+        titleOverride: LANGUAGE_EN.GENERAL.UNSAVE_DATA_WARNING.TITLE,
+        closable: false,
+        onCloseAction: handleCancelUnsaveDataModal,
+        onSubmitAction: handleOkUnsavedModal,
+        submitText: 'Leave',
+        showField: false,
+        text: LANGUAGE_EN.GENERAL.UNSAVE_DATA_WARNING.MESSAGE,
+    };
 
     return (
         <>
@@ -516,6 +580,11 @@ const CustomerMasterMain = (props) => {
                                     </Form.Item>
                                 </Form>
                             </Col>
+                            {/* <Col xs={24} sm={24} md={10} lg={10} xl={10} className={styles.advanceFilterClear}>
+                                <Button type="primary" icon={<PlusOutlined />} onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                    Add
+                                </Button>
+                            </Col> */}
                         </Row>
                         {filterString && extraParams.find((i) => i.name) && (
                             <Row gutter={20}>
@@ -583,6 +652,7 @@ const CustomerMasterMain = (props) => {
             <CustomerMainConatiner {...containerProps} />
             <CustomerChangeHistory {...changeHistoryProps} />
             <CustomerNameChangeHistory {...nameChangeHistoryProps} />
+            <ConfirmationModal {...unsavedDataModalProps} />
         </>
     );
 };
