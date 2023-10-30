@@ -23,8 +23,14 @@ const AddEditFormMain = (props) => {
 
     useEffect(() => {
         if (formData && Object?.keys(formData)?.length > 0) {
-            if (formData?.invoiceDate && formData?.customerPromiseDate && soldByDealer) form.setFieldsValue({ ...formData, invoiceDate: formattedCalendarDate(formData?.invoiceDate), customerPromiseDate: formattedCalendarDate(formData?.customerPromiseDate) });
-            else if (!soldByDealer) form.setFieldsValue({ ...formData });
+            if (formData?.invoiceDate && formData?.customerPromiseDate && soldByDealer) {
+                if (!disableFieldsOnFutureDate(dayjs(formData?.customerPromiseDate))) {
+                    setButtonData((prev) => ({ ...prev, formBtnActive: true }));
+                } else {
+                    setButtonData((prev) => ({ ...prev, formBtnActive: false }));
+                }
+                form.setFieldsValue({ ...formData, invoiceDate: formattedCalendarDate(formData?.invoiceDate), customerPromiseDate: formattedCalendarDate(formData?.customerPromiseDate) });
+            } else if (!soldByDealer) form.setFieldsValue({ ...formData });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
