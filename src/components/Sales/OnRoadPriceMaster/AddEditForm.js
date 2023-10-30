@@ -9,7 +9,7 @@ import { withDrawer } from 'components/withDrawer';
 import { validateRequiredInputField, validateOnlyPositiveNumber, valueBetween0to100 } from 'utils/validation';
 
 import { OnRoadPriceFormButton } from './OnRoadPriceFormButton';
-import { dateFormat } from 'utils/formatDateTime';
+import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import styles from 'assets/sass/app.module.scss';
 const AddEditFormMain = (props) => {
@@ -18,8 +18,8 @@ const AddEditFormMain = (props) => {
     const disabledProps = { disabled: isReadOnly };
 
     useEffect(() => {
-        if (vehiclePrice && !isLoading) {
-            form.setFieldsValue({ ...vehiclePrice });
+        if (vehiclePrice) {
+            form.setFieldsValue({ ...vehiclePrice, currentExShowroomDate: formattedCalendarDate(vehiclePrice?.currentExShowroomDate) });
         }
     }, [vehiclePrice, isLoading, form]);
 

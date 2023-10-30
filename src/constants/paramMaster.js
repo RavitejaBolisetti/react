@@ -448,5 +448,5 @@ export const PARAM_MASTER = {
     EMP_TYP: {
         id: 'EMP_TYP',
         title: 'Delivery note employee key',
-    },
+    }
 };
