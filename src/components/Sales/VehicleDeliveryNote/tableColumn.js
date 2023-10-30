@@ -23,7 +23,7 @@ export const tableColumnDeliveryNoteMaster = ({ handleButtonClick, actionButtonV
         }),
 
         tblPrepareColumns({
-            title: 'Delivery Note No. & Date',
+            title: deliveryType === DELIVERY_TYPE?.NOTE?.key ? 'Delivery Note No. & Date' : 'Challan No. & Date' ,
             dataIndex: 'vehicleDeliveryNote',
             width: '20%',
             render: (_, value) => {

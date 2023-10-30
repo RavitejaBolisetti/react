@@ -369,7 +369,7 @@ const AddEditFormMain = (props) => {
                                         </Col>
                                     </Row>
                                     <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
                                             <Form.Item initialValue={formData?.roleDescription} label="Role Description" name="roleDescription" rules={[validateRequiredInputField('description')]}>
                                                 <TextArea
                                                     placeholder={preparePlaceholderText('description')}
