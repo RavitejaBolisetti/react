@@ -3,6 +3,9 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
+
+export const REPORT_TYPE = 'Report';
+export const DOCUMENT_TYPE = 'Document';
 export const EMBEDDED_REPORTS = {
     OTF: {
         id: 1,

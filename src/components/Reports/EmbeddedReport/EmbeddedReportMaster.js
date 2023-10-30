@@ -14,6 +14,7 @@ import { reportDataActions } from 'store/actions/data/report/reports';
 import { showGlobalNotification } from 'store/actions/notification';
 
 import styles from './EmbeddedReportMaster.module.scss';
+import { REPORT_TYPE } from 'constants/EmbeddedReports';
 
 const mapStateToProps = (state) => {
     const {
@@ -23,6 +24,9 @@ const mapStateToProps = (state) => {
                 Reports: { isLoaded: isDataLoaded = false, isLoading, data },
             },
         },
+        common: {
+            Header: { data: headerData },
+        },
     } = state;
 
     let returnValue = {
@@ -30,6 +34,7 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         isLoading,
         data,
+        headerData,
         reportLink: data?.embedReports?.[0]?.embedUrl || '',
     };
 
@@ -49,7 +54,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const EmbeddedReportMasterMain = (props) => {
-    const { userId, data, fetchList, listShowLoading, reportDetail } = props;
+    const { userId, data, fetchList, listShowLoading, reportDetail, headerData } = props;
     const [, setReport] = useState();
     const [sampleReportConfig, setReportConfig] = useState({
         type: 'report',
@@ -89,23 +94,33 @@ export const EmbeddedReportMasterMain = (props) => {
     }, [userId, reportDetail]);
 
     useEffect(() => {
-        setReportConfig({
-            type: 'report',
-            id: data?.embedReports?.[0]?.reportId.substr(46, 92),
-            embedUrl: data?.embedReports?.[0]?.embedUrl,
-            // embedUrl: data?.embedReports?.[0]?.embedUrl ? data?.embedReports?.[0]?.embedUrl.concat('?rp:sa_od_invoice_hdr_id=3452fd40-3e43-453a-a7b7-85b1f280f016') : '',
-            accessToken: data.embedToken,
-            tokenType: models.TokenType.Embed,
-            settings: {
-                panes: {
-                    filters: {
-                        expanded: false,
-                        visible: false,
+        if (data && headerData) {
+            let embedUrl = data?.embedReports?.[0]?.embedUrl;
+
+            if (reportDetail?.type === REPORT_TYPE) {
+                let param = `&filter=Query1/parent_group_code eq '${headerData?.parentGroupCode}'`;
+                embedUrl += param;
+            }
+
+            console.log('🚀 ~ file: EmbeddedReportMaster.js:103 ~ useEffect ~ embedUrl:', embedUrl);
+            setReportConfig({
+                type: 'report',
+                id: data?.embedReports?.[0]?.reportId.substr(46, 92),
+                //embedUrl: data?.embedReports?.[0]?.embedUrl,
+                embedUrl: embedUrl,
+                accessToken: data.embedToken,
+                tokenType: models.TokenType.Embed,
+                settings: {
+                    panes: {
+                        filters: {
+                            expanded: false,
+                            visible: false,
+                        },
                     },
                 },
-            },
-        });
-    }, [data]);
+            });
+        }
+    }, [data, headerData, reportDetail]);
 
     // Map of event handlers to be applied to the embedding report
     const eventHandlersMap = new Map([
