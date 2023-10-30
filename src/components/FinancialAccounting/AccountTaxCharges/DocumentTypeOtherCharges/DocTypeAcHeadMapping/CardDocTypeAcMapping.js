@@ -13,17 +13,18 @@ import FormDocTypeAcMapping from './FormDocTypeAcMapping';
 const { Text } = Typography;
 
 const CardDocTypeAcMapping = (props) => {
-    const { finalFormdata, docTypeHeadMappingForm, forceUpdate, taxCharges, financialAccount, typeData, productHierarchyAttributeData, docTypeHeadMappingList, setDocTypeHeadMappingList, objTaxCharge, setOpenAccordian, changeValue, setChangeValue, editForm, formEdit, setFormEdit, uniqueCardEdit, setuniqueCardEdit, buttonData, setButtonData, dropdownItems, setDropdownItems, viewMode, internalId } = props;
+    const { finalFormdata, docTypeHeadMappingForm, forceUpdate, taxCharges, financialAccount, typeData, productHierarchyAttributeData, docTypeHeadMappingList, setDocTypeHeadMappingList, objTaxCharge, setOpenAccordian, changeValue, setChangeValue, editForm, formEdit, setFormEdit, uniqueCardEdit, setuniqueCardEdit, buttonData, setButtonData, dropdownItems, setDropdownItems, viewMode, internalId, financialAccHeadData, financialAccHeadName, setSelectedTreeSelectKey, selectedTreeSelectKey, handleSelectTreeClick } = props;
 
     const docTypeHeadMappingEdit = (props) => {
         setuniqueCardEdit(props?.internalId);
         setFormEdit(true);
         setButtonData({ ...buttonData, formBtnActive: true });
-
+        setSelectedTreeSelectKey(props?.financialAccountHeadId);
         editForm.setFieldsValue({
             chargeCode: props?.chargeCode,
             internalId: props?.internalId,
             financialAccountHeadId: props?.financialAccountHeadId,
+            financialAccountHeadDesc: props?.financialAccountHeadDesc,
         });
     };
 
@@ -79,8 +80,13 @@ const CardDocTypeAcMapping = (props) => {
         docTypeHeadMappingForm,
         dropdownItems,
         financialAccount,
+        financialAccHeadData,
+        financialAccHeadName,
         typeData,
         internalId,
+        setSelectedTreeSelectKey,
+        selectedTreeSelectKey,
+        handleSelectTreeClick,
     };
 
     useEffect(() => {
@@ -91,7 +97,7 @@ const CardDocTypeAcMapping = (props) => {
     }, [formEdit]);
 
     const chargeCodeDescName = typeData?.find((e) => e?.key === props?.chargeCode)?.value;
-    const financialAccountHeadName = financialAccount?.find((e) => e?.id === props?.financialAccountHeadId)?.value;
+    const financialAccountHeadName = financialAccHeadData?.find((e) => e?.id === props?.financialAccountHeadId)?.value;
 
     return (
         <Card>
