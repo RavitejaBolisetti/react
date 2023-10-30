@@ -13,7 +13,7 @@ export const tableColumn = (handleButtonClick) => {
         tblPrepareColumns({
             title: 'Role ID',
             dataIndex: 'roleId',
-            width: '15%',
+            width: '14%',
         }),
 
         tblPrepareColumns({

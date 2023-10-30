@@ -279,7 +279,7 @@ const AddEditFormMain = (props) => {
                                     header={
                                         <>
                                             {el?.label}
-                                            {allowedAccess?.length > 0 && <Tag color="default" className={styles.marL20}>{`${allowedAccess?.length >= 2 ? `${allowedAccess?.length} Accesses Provided` : `${allowedAccess?.length} Access Provided`}`}</Tag>}
+                                            {allowedAccess?.length > 0 && <Tag color="default" className={styles.marL10}>{`${allowedAccess?.length >= 2 ? `${allowedAccess?.length} Accesses Provided` : `${allowedAccess?.length} Access Provided`}`}</Tag>}
                                         </>
                                     }
                                     key={el?.value}
@@ -370,7 +370,7 @@ const AddEditFormMain = (props) => {
                                     </Row>
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
-                                            <Form.Item initialValue={formData?.roleDescription} label="Role Description" name="roleDescription" rules={[validateRequiredInputField('description')]}>
+                                            <Form.Item initialValue={formData?.roleDescription}  label="Role Description" name="roleDescription" rules={[validateRequiredInputField('description')]}>
                                                 <TextArea
                                                     placeholder={preparePlaceholderText('description')}
                                                     autoSize={{
