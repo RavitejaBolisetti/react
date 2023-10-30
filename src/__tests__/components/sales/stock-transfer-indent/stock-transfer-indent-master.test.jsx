@@ -10,7 +10,6 @@ import { Provider } from 'react-redux';
 import { StockTransferIndentMaster } from 'components/Sales/StockTransferIndent/StockTransferIndentMaster';
 import customRender from '@utils/test-utils';
 import createMockStore from '__mocks__/store';
-import { Provider } from 'react-redux';
 
 jest.mock('components/Sales/StockTransferIndent/ViewDetail', () => {
     const ViewDetail = ({ onCloseAction, updateVehicleDetails }) => {
@@ -70,20 +69,59 @@ jest.mock('store/actions/data/otf/vehicleDetailsLov', () => ({
     otfvehicleDetailsLovDataActions: {},
 }));
 
+const resetData = jest.fn();
+const fetchIndentList = jest.fn();
+
 describe('StockTransferIndentMaster component', () => {
-    it('Clear Button', () => {
+    it("Print/Download", ()=>{
+        const props = {
+            checkKey : "REC",
+            toggleButton : "INDNT_RECV",
+            defaultVisibility : {
+                canCancel: true,
+                canReturn: false,
+                canReceive: false,
+                canPrint: true,
+                canAdd: true,
+            }
+        }
+
+        const handleBtnVisibility = jest.fn();
+        handleBtnVisibility(props)
+        
+
         const mockStore = createMockStore({
             auth: { userId: 123 },
             data: {
                 stockTransferIndentData: {
-                    stockTransferIndent: { isLoading: false, filter: { advanceFilter: true, current: 1, pageSize: undefined, searchParam: 'STR1694606620526' } },
+                    stockTransferIndent: { data: {id: "816",indentDate: "10",indentNumber: "STR23A010021",indentStatus: "REC",indentToLocation: "ANDHERI",indentToParent: "NBS INTERNATIONAL LTD",remarks: "123",requestedBy: "Reena Harikishan",
+                        vehicleDetails:[{
+                            balancedQuantity: 0,cancelledQuantity: 3, id: "858", issuedAndNotReceivedQuantity: 0, modelCode: "SCNM033417183875", modelDescription: "SCORPIO-N D AT 2WD Z6 7S XH", receivedQuantity: 1, requestedQuantity: 4
+                        }]
+                    }},
+                    IndentIssue: { data: [{ issueNumber: "STI23D010021", vin: "MA1TJ2YGTP6H96793", issueStatus: "CNCL"},{ issueNumber: "STI23D010024", vin: "MA1TJ2YGTP6H96793", issueStatus: "REC"}] },
                 },
             },
         });
 
         customRender(
             <Provider store={mockStore}>
-                <StockTransferIndentMaster />
+                <StockTransferIndentMaster resetData={resetData} fetchIndentList={fetchIndentList} indentIssueDataLoading={false} handleBtnVisibility={handleBtnVisibility} recordType={"REC"}/>
+            </Provider>
+        );
+    });
+
+    it('Clear Button', () => {
+        const mockStore = createMockStore({
+            auth: { userId: 123 },
+            data: {
+                stockTransferIndentData: { stockTransferIndent: { isLoading: false, filter: { advanceFilter: true, current: 1, pageSize: undefined, searchParam: 'STR1694606620526' } }, },
+            },
+        });
+
+        customRender(
+            <Provider store={mockStore}>
+                <StockTransferIndentMaster resetData={jest.fn()} fetchIndentList={jest.fn()} setFilterString={jest.fn()} />
             </Provider>
         );
 
@@ -99,16 +137,8 @@ describe('StockTransferIndentMaster component', () => {
     });
 
     it('Remove Filter', () => {
-        const extraParams = [
-            {
-                canRemove: true,
-                filter: true,
-                key: 'indentNo',
-                name: 'STR1694606620526',
-                title: 'Value',
-                value: 'STR1694606620526',
-            },
-        ];
+        const extraParams = [{canRemove: true, filter: true, key: 'indentNo', name: 'STR1694606620526', title: 'Value', value: 'STR1694606620526'}];
+
         const mockStore = createMockStore({
             auth: { userId: 123 },
             data: {
@@ -121,7 +151,7 @@ describe('StockTransferIndentMaster component', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <StockTransferIndentMaster extraParams={extraParams} advanceFilter={true} />
+                <StockTransferIndentMaster extraParams={extraParams} advanceFilter={true} resetData={jest.fn()} fetchIndentList={jest.fn()} setFilterString={jest.fn()} />
             </Provider>
         );
 
@@ -152,6 +182,7 @@ describe('StockTransferIndentMaster component', () => {
         });
 
         const res = { data: [{ indentNumber: 106, indentDate: '01/01/2000', fromLocation: 'Agra', toLocation: 'Noida', requestedBy: 'Kai', indentRaisedStatus: 'Active', vehicleDetails: [{ modelDescription: 'Hello', modelCode: 'MAHINDRA XUV300 W6 PG BS6 MT XH' }] }] };
+
         const fetchIndentList = jest.fn();
         const fetchIndentDetails = jest.fn();
         const saveData = jest.fn();
@@ -180,8 +211,11 @@ describe('StockTransferIndentMaster component', () => {
         const saveBtn = screen.getAllByRole('button', { name: 'Save' });
         fireEvent.click(saveBtn[1]);
 
+        fetchIndentDetails.mock.lastCall[0].onSuccessAction()
+
         saveData.mock.calls[0][0].onSuccess();
         saveData.mock.calls[0][0].onError();
+        
     });
 
     it('add indent should work', async () => {
@@ -210,16 +244,16 @@ describe('StockTransferIndentMaster component', () => {
 
         const fromDate = screen.getByRole('textbox', { name: 'Indent From Date' });
         fireEvent.click(fromDate);
-        await waitFor(() => {
+        // await waitFor(() => {
             expect(screen.getByText('Today')).toBeInTheDocument();
-        });
+        // });
         fireEvent.click(screen.getByText('Today'));
 
         const toDate = screen.getByRole('textbox', { name: 'Indent To Date' });
         fireEvent.click(toDate);
-        await waitFor(() => {
+        // await waitFor(() => {
             expect(screen.getAllByText('Today')[1]).toBeInTheDocument();
-        });
+        // });
         fireEvent.click(screen.getAllByText('Today')[1]);
 
         const applyBtn = screen.getByRole('button', { name: 'Apply' });

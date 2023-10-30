@@ -17,7 +17,7 @@ const AnswerCard = (props) => {
     let id = props?.id ? props?.id : props?.internalId;
     let IdType = props?.id ? 'id' : 'internalId';
     const answerEdit = (props) => {
-        setuniqueCardEdit(id);
+        setuniqueCardEdit(id); 
         setFormEdit(true);
         setFormBtnActive(true);
         setAnswerSwitch(props?.answerStatus);
@@ -57,7 +57,7 @@ const AnswerCard = (props) => {
         });
 
         setFormEdit(false);
-        answerForm.resetFields();
+        answerForm?.resetFields();
         forceUpdate();
     };
 
@@ -101,8 +101,9 @@ const AnswerCard = (props) => {
                                         onClick={() => {
                                             answerEdit(props);
                                         }}
+                                        data-testid="edit"
                                     />
-                                    <Button onClick={() => answerDelete(props)} type="link" icon={<FiTrash />} disabled={props?.internalId ? false : true} />
+                                    <Button onClick={() => answerDelete(props)} type="link" icon={<FiTrash />} disabled={props?.internalId ? false : true} data-testid="delete" />
                                 </>
                             )}
                             {formEdit && props[IdType] === uniqueCardEdit && (

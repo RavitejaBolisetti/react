@@ -9,18 +9,6 @@ import { TaxChargesCategory } from '@components/FinancialAccounting/AccountTaxCh
 import customRender from '@utils/test-utils';
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
-import { Form } from 'antd';
-
-const FormWrapper = (props) =>{
-    const [taxChargeCalForm] = Form.useForm();
-
-    const myMock = {
-        ...taxChargeCalForm,
-        setFieldsValue:jest.fn()
-    }
-
-    return(<TaxChargesCategory taxChargeCalForm={myMock} {...props}/>)
-}
 
 jest.mock('store/actions/data/financialAccounting/taxChargeType', ()=>({
     taxChargeCategoryTypeDataActions:{}

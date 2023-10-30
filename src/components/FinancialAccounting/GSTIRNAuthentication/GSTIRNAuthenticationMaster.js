@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Card, Col, Form, Row } from 'antd';
@@ -17,7 +17,7 @@ import { UploadUtil } from 'utils/Upload';
 import { ViewSupportingDocDetail } from './ViewSupportingDocDetail';
 import { GSTLoginForm } from './GSTLoginForm';
 import { dealerGstAction } from 'store/actions/data/financialAccounting/dealerGstAction';
-import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
+// import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 import { gstIrnLoginAction } from 'store/actions/data/financialAccounting/gstIrnLoginAction';
 import { selectGstToDocAction } from 'store/actions/data/financialAccounting/selectGstToDocAction';
@@ -32,9 +32,6 @@ const mapStateToProps = (state) => {
             FinancialAccounting: {
                 DealerGstDetails: { data: dealerGstData = [] },
             },
-            CustomerMaster: {
-                ViewDocument: { isLoaded: isViewDataLoaded = false, data: viewDocument },
-            },
         },
     } = state;
 
@@ -45,8 +42,6 @@ const mapStateToProps = (state) => {
         token,
         moduleTitle,
         dealerGstData,
-        viewDocument,
-        isViewDataLoaded,
     };
     return returnValue;
 };
@@ -57,11 +52,6 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchList: dealerGstAction.fetchList,
             listShowLoadingGst: dealerGstAction.listShowLoading,
-
-            fetchViewDocument: documentViewDataActions.fetchList,
-            viewListShowLoading: documentViewDataActions.listShowLoading,
-            resetViewData: documentViewDataActions.reset,
-
             downloadFile: supportingDocumentDataActions.downloadFile,
             listShowLoading: supportingDocumentDataActions.listShowLoading,
 
@@ -80,7 +70,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const GSTIRNAuthenticationMasterBase = (props) => {
     const { userId, data, showGlobalNotification } = props;
-    const { typeData, moduleTitle } = props;
+    const { typeData } = props;
     const { filterString, setFilterString, listShowLoadingGst, fetchList, dealerGstData } = props;
     const { listShowLoadingGstLogin, fetchListGstLogin, listShowLoading, saveData } = props;
     const { fetchGstDoc, downloadFile } = props;
@@ -275,18 +265,7 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
-    const removeFilter = (key) => {
-        if (key === 'searchParam') {
-            const { searchType, searchParam, ...rest } = filterString;
-            setFilterString({ ...rest });
-        } else {
-            const { [key]: names, ...rest } = filterString;
-            setFilterString({ ...rest });
-        }
-    };
-
     const advanceFilterResultProps = {
-        removeFilter,
         advanceFilter: true,
         filterString,
         setFilterString,
@@ -302,16 +281,6 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         handleGstinNumber,
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View ';
-        } else if (formActionType?.editMode) {
-            return 'Edit ';
-        } else {
-            return 'Add New ';
-        }
-    }, [formActionType]);
-
     const containerProps = {
         record: selectedRecord,
         form,
@@ -320,7 +289,6 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(moduleTitle),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,

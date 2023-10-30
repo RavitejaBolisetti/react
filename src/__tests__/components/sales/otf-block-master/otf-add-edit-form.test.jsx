@@ -2,8 +2,8 @@ import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { AddEditForm } from '@components/Sales/OtfBlockMaster/AddEditForm';
 import { fireEvent, screen } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
 import createMockStore from '__mocks__/store';
+import { Provider } from 'react-redux';
 import { Form } from 'antd';
 
 afterEach(() => {
@@ -15,7 +15,7 @@ const FormWrapper = (props) => {
 
     const myFormMock = {
         ...form,
-        setFieldsValue: jest.fn()
+        setFieldsValue: jest.fn(),
     };
     return <AddEditForm form={myFormMock} {...props} />;
 };
@@ -26,6 +26,7 @@ const mockStore = createMockStore({
         ManufacturerAdmin: {
             ManufacturerAdminHierarchy: { isLoaded: false, isLoading: false, data: [{ id: 1, value: 'testValue', key: 1 }] },
         },
+        DealerBlockMaster: { isLoaded: true, data: [{ id: 1, value: 'testValue', key: 1 }] }
     },
 });
 
@@ -54,5 +55,13 @@ describe('AddEditForm Components', () => {
 
         const hierarchyMstId = screen.getByRole('combobox', { name: '' });
         fireEvent.change(hierarchyMstId, { target: { value: 'Dmatest' } });
+    });
+
+    it('Should render userId components', () => {
+        const formData = { status: true, dealerCode: "test2" }
+        customRender(<Provider store={mockStore}><FormWrapper formData={formData} isVisible={true} handleFormValueChange={jest.fn()} handleFormFieldChange={jest.fn()}/></Provider>);
+
+        const hierarchyMstId = screen.getByRole('combobox', { name: '' });
+        fireEvent.change(hierarchyMstId, { target: { value: 'Dmatest' } })
     });
 });

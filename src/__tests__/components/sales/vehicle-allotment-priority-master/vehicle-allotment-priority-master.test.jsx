@@ -208,7 +208,7 @@ describe('vehicle allotment priority master component', () => {
         fireEvent.click(saveBtn);
     });
 
-    it('should be able to search value', () => {
+    it('should be able to search values', () => {
         const mockStore = createMockStore({
             auth: { userId: 106 },
             data: {
@@ -286,6 +286,8 @@ describe('vehicle allotment priority master component', () => {
             auth: { userId: 106 },
 
             data: {
+                ConfigurableParameterEditing: { filteredListData: [{ id: 1, value: 'kai' }] },
+                TermCondition: { ProductHierarchyData: { data: [{ id: 1, value: 'kai' }] } },
                 Vehicle: {
                     VehicleAllotPriorityDetail: {
                         data: {
@@ -300,7 +302,9 @@ describe('vehicle allotment priority master component', () => {
                             ],
                         },
                     },
+                    VehicleAllotPriorDetail: { effectiveFromDate: '2023-09-27', effectiveToDate: '2023-10-10', id: '96fe045e-4a66-4e49-b72d-7ab0c4748333', newModelGroup: 'ALTURAS', oldModelGroup: 'ALTURAS G4 2WD HIGH BSVI DSAT SILVER' },
                 },
+                DealerManpower: { RoleMaster: { filteredListData: [{ id: 1, value: 'kai' }] }, DesignationMaster: [{ id: 1, value: 'kai' }] },
             },
         });
 
@@ -311,12 +315,17 @@ describe('vehicle allotment priority master component', () => {
         const fetchFinancialAccountHead = jest.fn();
         const fetchList = jest.fn();
         const fetchRoleLovList = jest.fn();
+        const saveDataAllot = jest.fn();
+        const saveData = jest.fn();
+        const productHierarchyList = [{ oldModelGroup: 'Kai' }];
 
         const buttonData = { viewBtn: true };
 
+        const res = { effectiveFromDate: '2023-10-27', effectiveToDate: '2023-10-31', id: '', newModelGroup: 'ALTSMM81813337437', oldModelGroup: 'ALTSMM81813337446', roleData: [{ designationCode: 'DS0003', id: '', roleCode: 'RL0024' }] };
+
         customRender(
             <Provider store={mockStore}>
-                <VehicleAllotmentPriorityMaster fetchRoleLovList={fetchRoleLovList} fetchList={fetchList} fetchFinancialAccountHead={fetchFinancialAccountHead} fetchProductList={fetchProductList} fetchDocTypeLedger={fetchDocTypeLedger} resetDataList={jest.fn()} fetchVehicleAllotList={fetchVehicleAllotList} fetchVehicleList={fetchVehicleList} buttonData={buttonData} setFilterString={jest.fn()} setButtonData={jest.fn()} />
+                <VehicleAllotmentPriorityMaster saveData={saveData} productHierarchyList={productHierarchyList} saveDataAllot={saveDataAllot} fetchRoleLovList={fetchRoleLovList} fetchList={fetchList} fetchFinancialAccountHead={fetchFinancialAccountHead} fetchProductList={fetchProductList} fetchDocTypeLedger={fetchDocTypeLedger} resetDataList={jest.fn()} fetchVehicleAllotList={fetchVehicleAllotList} fetchVehicleList={fetchVehicleList} buttonData={buttonData} setFilterString={jest.fn()} setButtonData={jest.fn()} />
             </Provider>
         );
 
@@ -359,7 +368,23 @@ describe('vehicle allotment priority master component', () => {
 
         fireEvent.click(todayToFromDate[1]);
 
+        const roleName = screen.getByRole('combobox', { name: /role name/i });
+        fireEvent.change(roleName, { target: { value: 'RL0024' } });
+
+        const designationName = screen.getByRole('combobox', { name: /designation name/i });
+        fireEvent.change(designationName, { target: { value: 'DS0003' } });
+
+        const add = screen.getAllByRole('button', { name: /Add/i });
+        fireEvent.click(add[1]);
+
         const saveBtn = screen.getByRole('button', { name: /save/i });
         fireEvent.click(saveBtn);
+
+        await waitFor(() => {
+            expect(saveDataAllot).toHaveBeenCalled();
+        });
+
+        saveDataAllot.mock.calls[0][0].onSuccess(res);
+        saveDataAllot.mock.calls[0][0].onError();
     });
 });

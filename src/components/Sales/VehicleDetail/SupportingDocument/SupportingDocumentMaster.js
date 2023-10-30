@@ -302,7 +302,7 @@ const SupportingDocumentBase = (props) => {
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <h2>{section?.title}</h2>
-                    <AddEditForm uploadProps={uploadProps} {...formProps} />
+                    <AddEditForm uploadProps={uploadProps} {...formProps} /> 
                 </Col>
             </Row>
             <Row>

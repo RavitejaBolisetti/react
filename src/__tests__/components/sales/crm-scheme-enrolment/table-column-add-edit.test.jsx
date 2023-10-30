@@ -6,7 +6,6 @@
 import '@testing-library/jest-dom/extend-expect';
 import { screen, fireEvent } from '@testing-library/react';
 import { render } from '@testing-library/react';
-import customRender from '@utils/test-utils';
 import { tableColumnAddEdit } from '@components/Sales/crmSchemeEnrolment/tableColumnAddEdit';
 
 afterEach(() => {
@@ -23,13 +22,14 @@ describe('tableColumn', () => {
         };
         const props = {
             handleCheckBox: jest.fn(),
-            formActionType: {
-                viewMode: true,
-            },
+            formActionType: { viewMode: false },
             typeData: typeData,
         };
 
         const columns = tableColumnAddEdit(props);
         render(<div>{columns[1].render('Test')}</div>);
+
+        const checkboxBtn = screen.getByRole('checkbox', { name: '' });
+        fireEvent.click(checkboxBtn);
     });
 });

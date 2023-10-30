@@ -7,13 +7,11 @@ import React, { useEffect, useState } from 'react';
 import { Col, Input, Form, Row, Button, Switch } from 'antd';
 import { connect } from 'react-redux';
 import { customSelectBox } from 'utils/customSelectBox';
-
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { ManufacturerAdminHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy/manufacturerAdminHierarchy';
 import { dealerBlockMasterDataAction } from 'store/actions/data/dealerBlockMaster';
 import { showGlobalNotification } from 'store/actions/notification';
-
 import TreeSelectField from '../../common/TreeSelectField';
 import { bindActionCreators } from 'redux';
 
