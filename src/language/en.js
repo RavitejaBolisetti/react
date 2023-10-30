@@ -36,5 +36,6 @@ export const LANGUAGE_EN = {
         NO_EMPLOYEES_FOUND: { TITLE: 'Employees not found', MESSAGE: 'No employees found for searched name' },
         NO_VIN_FOUND: { TITLE: 'VIN not found', MESSAGE: 'No VIN found for searched Booking Number' },
         APPROVE_CONFIRMATION: { TITLE: 'Approve Name', MESSAGE: 'Are you sure want to approve the changes within the current name?' },
+        UNSAVE_DATA_WARNING: { TITLE: 'Are you sure you want to leave ?', MESSAGE: 'You have unsave changes. All changes may lost.'},
     },
 };
