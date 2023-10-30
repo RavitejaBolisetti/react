@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import { configureStore } from './store/configureStore';
-
+import './i18n';
 import { App } from './App';
 
 import './index.scss';
