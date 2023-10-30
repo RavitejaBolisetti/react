@@ -103,7 +103,7 @@ export const EmbeddedReportMasterMain = (props) => {
                 embedUrl += param;
             }
 
-            console.log('🚀 ~ file: EmbeddedReportMaster.js:104 ~ useEffect ~ embedUrl:', embedUrl);
+            console.log('embedUrl:', embedUrl);
             setReportConfig({
                 type: 'report',
                 id: data?.embedReports?.[0]?.reportId.substr(46, 92),
