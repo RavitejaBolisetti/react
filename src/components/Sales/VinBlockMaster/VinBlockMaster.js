@@ -87,15 +87,14 @@ export const VinBlockMasterBase = (props) => {
     useEffect(() => {
         setFilterString({ ...filterString, pageSize: 10, current: 1 });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);    
-    
+    }, []);
+
     const dynamicPagination = true;
 
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
-        // setRefershData(false);
         setShowDataLoading(false);
     };
 
@@ -103,8 +102,6 @@ export const VinBlockMasterBase = (props) => {
         showGlobalNotification({ message: res });
     };
 
-   
-    
     const extraParams = useMemo(() => {
         return [
             {
@@ -164,12 +161,11 @@ export const VinBlockMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
 
-    
     useEffect(() => {
         if (userId && extraParams?.find((i) => i.key === 'pageNumber')?.value > 0) {
             setShowDataLoading(true);
             fetchVinBlockList({ setIsLoading: listVinShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
-}
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, extraParams]);
 
@@ -238,7 +234,6 @@ export const VinBlockMasterBase = (props) => {
     }, [formActionType]);
     const handleOnClick = () => {
         setButtonData({ ...defaultBtnVisiblity, saveAndNewBtn: false, cancelBtn: false, saveBtn: true });
-        // setIsUploadFormVisible(true);
     };
 
     const handleSearch = (value) => {
@@ -299,7 +294,6 @@ export const VinBlockMasterBase = (props) => {
         handleButtonClick,
         userId,
         form,
-        // NEXT_ACTION,
         isFormVisible,
         setIsFormVisible,
         showGlobalNotification,

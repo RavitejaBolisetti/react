@@ -25,9 +25,6 @@ import { RoleListtDataActions } from 'store/actions/data/userManagement/roleList
 import { SearchBox } from 'components/utils/SearchBox';
 import { UserMainContainer } from './UserMainContainer';
 
-// import TokenValidateDataCard from './common/TokenValidateDataCard';
-// import TokenErrorCard from './common/TokenErrorCard';
-
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { USER_TYPE_USER } from 'constants/modules/UserManagement/userType';
 import { DEALER_USER_SECTION } from 'constants/modules/UserManagement/DealerUserSection';
@@ -59,10 +56,9 @@ const mapStateToProps = (state) => {
                 UserRoleList: { isLoaded: isUserRoleListLoaded, isLoading: isUserRoleListLoding, data: userRoleDataList },
                 DealerBranchLocation: { isLoaded: isdlrBrLocationsLoaded, isLoading: isDlrBrLocationLoding, data: dlrBranchLocationDataList },
                 UserDealerBranchLocation: { isLoaded: isUsrdlrBrLocationsLoaded, isLoading: isUsrDlrBrLocationLoding, data: usrdlrBranchLocationDataList },
-                // UserDealerBranchLocation: { isLoaded: isUserDlrProductListLoaded, isLoading: isUserDlrProductListLoding, data: userDlrProductList },
                 DealerProduct: { isLoaded: isProductLoaded, data: userProductListData, isLoading: isProductLoading },
             },
-            ConfigurableParameterEditing: { filteredListData: typeData = []},
+            ConfigurableParameterEditing: { filteredListData: typeData = [] },
             ProductHierarchy: { isLoading: isProductHierarchyLoading = false, data: productHierarchyData = [] },
         },
     } = state;
@@ -109,10 +105,6 @@ const mapStateToProps = (state) => {
 
         isProductHierarchyLoading,
         productHierarchyData,
-
-        // userDlrProductList,
-        // isUserDlrProductListLoding,
-        // isUserDlrProductListLoaded,
 
         isProductLoaded,
         userProductListData,
@@ -219,7 +211,6 @@ const UserManagementMain = (props) => {
     const [finalFormdata, setfinalFormdata] = useState({
         userDevices: [],
         userRoleMapBaseRequestList: [],
-        // branches: [...initialDealerBranches],
         products: [],
     });
 
@@ -324,7 +315,7 @@ const UserManagementMain = (props) => {
         hideGlobalNotification();
     };
 
-    const createUserConfirmationModal = (res) => {
+    const createUserConfirmationModal = () => {
         let message;
 
         let resMessage = notFoundText?.MESSAGE;
@@ -382,12 +373,6 @@ const UserManagementMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, userType, page?.pageSize, page?.current, filterString?.searchParam, isFormVisible, selectedDealerCode, canUserCreate]);
 
-    const onFinish = (values, e) => {};
-
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {}).catch(err => console.error(err));
-    };
-
     const handleButtonClick = ({ buttonAction, record = null, openDefaultSection = true }) => {
         switch (buttonAction) {
             case FROM_ACTION_TYPE?.ADD:
@@ -438,11 +423,6 @@ const UserManagementMain = (props) => {
         }
     };
 
-    const hanndleEditData = (record) => {
-        setFormActionType({ ...defaultFormActionType, editMode: true });
-        setIsReadOnly(false);
-    };
-
     const onChangeSearchHandler = (event) => {
         if (!event.target.value) {
             setFilterString((prev) => ({ ...prev, searchParam: '', pageSize: filterString?.pageSize, current: 1 }));
@@ -480,8 +460,6 @@ const UserManagementMain = (props) => {
         ...props,
         filterString,
         isVisible: isFormVisible,
-        onFinishFailed,
-        onFinish,
         form,
         drawer,
         setDrawer,
@@ -494,7 +472,6 @@ const UserManagementMain = (props) => {
         onCloseAction,
         finalFormdata,
         setfinalFormdata,
-        hanndleEditData,
         AccessMacid,
         setAccessMacid,
         userType,
@@ -576,7 +553,7 @@ const UserManagementMain = (props) => {
                                                     <Select className={styles.marR20} style={{ width: '60%' }} onChange={handleDealerChange} optionFilterProp="children" placeholder="Select dealer" showSearch allowClear>
                                                         {dealerDataList?.map((item) => (
                                                             <Option key={item?.dealerCode} value={item?.dealerCode}>
-                                                                {item?.dealerCode +' - '+ item?.dealerName}
+                                                                {item?.dealerCode + ' - ' + item?.dealerName}
                                                             </Option>
                                                         ))}
                                                     </Select>

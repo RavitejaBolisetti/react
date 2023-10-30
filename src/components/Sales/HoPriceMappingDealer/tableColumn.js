@@ -8,7 +8,7 @@ import { convertDateMonthYear } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
 
-export const tableColumn = (handleButtonClick, page, pageSize) => {
+export const tableColumn = (handleButtonClick) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'State',

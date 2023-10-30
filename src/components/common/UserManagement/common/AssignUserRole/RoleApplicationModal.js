@@ -30,7 +30,6 @@ const RoleApplicationModalrMain = (props) => {
         reset: true,
         submit: true,
         hideSaveBtn: formActionType?.viewMode,
-        // saveDisabled: false,
         saveDisabled: disableMdlSaveBtn,
         htmltype: false,
         resetName: 'Cancel',

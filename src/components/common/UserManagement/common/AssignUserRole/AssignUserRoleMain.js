@@ -262,7 +262,7 @@ const AssignUserRole = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dlrAppList?.employeeCode, mnmAppList?.employeeCode, deviceType]);
 
-    const handleShowRoleAppModal = (data) => {
+    const handleShowRoleAppModal = () => {
         setRecord({});
         setSelectedRoleId('');
         mainform.resetFields();

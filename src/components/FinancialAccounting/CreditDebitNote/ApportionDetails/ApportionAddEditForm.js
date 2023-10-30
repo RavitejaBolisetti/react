@@ -92,9 +92,6 @@ export const AdvanceForm = (props) => {
             })
             .catch((err) => {});
     };
-    const onFinishFailed = () => {
-        return;
-    };
 
     const handleDocumentNumberSearch = (values) => {
         const extraParams = [
@@ -124,7 +121,7 @@ export const AdvanceForm = (props) => {
     };
 
     return (
-        <Form autoComplete="off" layout="vertical" form={apportionForm} onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" layout="vertical" form={apportionForm}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row gutter={20}>

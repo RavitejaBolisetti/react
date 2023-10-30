@@ -13,7 +13,7 @@ import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import styles from 'assets/sass/app.module.scss';
 const AddEditFormMain = (props) => {
-    const { buttonData, setButtonData, onFinishFailed, vehiclePrice, saveData, isLoading } = props;
+    const { buttonData, setButtonData, vehiclePrice, saveData, isLoading } = props;
     const { form, isReadOnly = true, userId, listShowLoading, handleButtonClick, setIsFormVisible, showGlobalNotification } = props;
     const disabledProps = { disabled: isReadOnly };
 
@@ -53,7 +53,7 @@ const AddEditFormMain = (props) => {
         saveData(requestData);
     };
     return (
-        <Form form={form} layout="vertical" autocomplete="off" colon="false" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form form={form} layout="vertical" autocomplete="off" colon="false" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBody}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <Row gutter={20}>

@@ -34,7 +34,7 @@ export const SchemeDetailsMaster = (props) => {
         schemeData: formData,
     };
 
-    const onFinish = (values) => {
+    const onFinish = () => {
         handleButtonClick({ buttonAction: NEXT_ACTION });
     };
 

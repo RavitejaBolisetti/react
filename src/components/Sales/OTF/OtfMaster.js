@@ -116,7 +116,7 @@ export const OtfMasterBase = (props) => {
     const { ChangeHistoryTitle, otfSoMappingChangeHistoryTitle } = props;
     const { fetchVehicleDetail, updateVehicleAllotmentStatus } = props;
 
-    const { typeData, moduleTitle, transferOTF, cancelOTFWorkflow } = props;
+    const { typeData, transferOTF, cancelOTFWorkflow } = props;
     const { filterString, setFilterString, otfStatusList } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [confirmRequest, setConfirmRequest] = useState();

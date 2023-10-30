@@ -102,7 +102,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const VehicleInvoiceMasterBase = (props) => {
     const { data, receiptDetailData, userId, fetchList, fetchVehcileDetail, listShowLoading, showGlobalNotification, fetchInvoiceMasterData } = props;
     const { isVehicleInvoiceDataLoading, listDetailShowLoading } = props;
-    const { typeData, receiptType, partySegmentType, saveData, paymentModeType, documentType, moduleTitle, totalRecords } = props;
+    const { typeData, receiptType, partySegmentType, saveData, paymentModeType, documentType, totalRecords } = props;
     const { filterString, setFilterString, invoiceStatusList, vehicleInvoiceMasterData, resetDetailData, resetOtfData } = props;
     const { isInVoiceMasterDetailDataLoaded, fetchData, listOTFShowLoading, isDataLoaded } = props;
     const { isSalesConsultantDataLoaded, fetchSalesConsultant, salesConsultantLovData, listConsultantShowLoading } = props;
@@ -179,7 +179,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
-    const onSuccessAction = (res) => {
+    const onSuccessAction = () => {
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
@@ -586,7 +586,6 @@ export const VehicleInvoiceMasterBase = (props) => {
             } else {
                 const Visibility = btnVisiblity({ defaultBtnVisiblity, buttonAction });
                 setButtonData(Visibility);
-                // setButtonData({ ...Visibility, cancelReceiptBtn: true });
                 if (buttonAction === VIEW_ACTION) {
                     invoiceStatus === QUERY_BUTTONS_CONSTANTS.INVOICED.key ? setButtonData({ ...Visibility, printForm21Btn: true, printInvoiceBtn: true, cancelInvoiceBtn: true }) : setButtonData({ ...Visibility, cancelInvoiceBtn: false });
                 }
@@ -594,10 +593,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         }
         setIsFormVisible(true);
     };
-
-    const onFinishSearch = (values) => {};
-
-    const handleResetFilter = (e) => {
+    const handleResetFilter = () => {
         setShowDataLoading(false);
         setFilterString();
         advanceFilterForm.resetFields();
@@ -639,11 +635,6 @@ export const VehicleInvoiceMasterBase = (props) => {
         };
         saveData(requestData);
     };
-
-    const onFinishFailed = (errorInfo) => {
-        return;
-    };
-
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
@@ -783,8 +774,6 @@ export const VehicleInvoiceMasterBase = (props) => {
         filterString,
         setFilterString,
         from: listFilterForm,
-        // onFinish,
-        onFinishFailed,
         handleResetFilter,
         advanceFilterForm,
         handleButtonClick,
@@ -797,14 +786,13 @@ export const VehicleInvoiceMasterBase = (props) => {
         setAdvanceSearchVisible,
         typeData,
         searchForm,
-        onFinishSearch,
     };
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
         receiptType,
         partySegmentType,
-        // icon: <FilterIcon size={20} />,
+
         titleOverride: 'Advance Filters',
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
@@ -814,7 +802,6 @@ export const VehicleInvoiceMasterBase = (props) => {
         setAdvanceSearchVisible,
         invoiceStatusList,
         typeData,
-        onFinishSearch,
     };
 
     const drawerTitle = useMemo(() => {
@@ -836,7 +823,6 @@ export const VehicleInvoiceMasterBase = (props) => {
         invoiceDetailForm,
         formActionType,
         setFormActionType,
-        onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
         titleOverride: drawerTitle,

@@ -13,7 +13,6 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 import { convertToUpperCase } from 'utils/convertToUpperCase';
 
 import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
-// import { UploadUtil } from 'utils/Upload';
 
 const { Panel } = Collapse;
 const { Option } = Select;
@@ -21,28 +20,15 @@ const { Option } = Select;
 const AddEditFormMain = (props) => {
     const { formData, appCategoryData, form } = props;
     const { isReadOnly = false } = props;
-    // const { viewDocument, uploadedFile, setUploadedFile, emptyList, setEmptyList, fileList, setFileList, setUploadedFileName, uploadedFileName } = props;
-    // const { handleFormValueChange, fetchViewDocument } = props;
+
     const [isRead, setIsRead] = useState(false);
     const [customer, setCustomer] = useState(false);
     const [activeKey, setActiveKey] = useState([1]);
-    // const [isAuthorityMandatory, setIsAuthorityMandatory] = useState(false);
-    // const [singleDisabled, setSingleDisabled] = useState(false);
 
     useEffect(() => {
         setCustomer(formData?.customerCategory);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData?.customerCategory]);
-
-    // useEffect(() => {
-    //     if (form.getFieldValue('personName')?.length > 0 || form.getFieldValue('companyName')?.length > 0) {
-    //         setIsAuthorityMandatory(true);
-    //     } else {
-    //         setIsAuthorityMandatory(false);
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [form.getFieldValue('personName'), form.getFieldValue('companyName')]);
-
     useEffect(() => {
         form.setFieldsValue({
             ...formData,
@@ -67,12 +53,6 @@ const AddEditFormMain = (props) => {
     const onCustomerCategoryChange = (values) => {
         setCustomer(values);
     };
-
-    // const handleValidate = (e) => {
-    //     if (e.target.value === '') {
-    //         form.resetFields(['personName', 'companyName']);
-    //     }
-    // };
 
     const handleOnChange = (e) => {
         const values = e;
@@ -102,61 +82,6 @@ const AddEditFormMain = (props) => {
             setActiveKey([...activeKey, values]);
         }
     };
-
-    // const ImageProps = {
-    //     fetchViewDocument,
-    //     viewDocument,
-    //     isReplaceEnabled: true,
-    //     fileList,
-    //     setFileList,
-    //     setUploadedFile,
-    //     uploadedFile,
-    //     formData,
-    //     emptyList,
-    //     setEmptyList,
-    //     uploadedFileName,
-    //     setUploadedFileName,
-    //     handleFormValueChange,
-
-    //     uploadButtonName: 'Upload File',
-    //     messageText: <>Upload Your Profile Picture</>,
-    //     validationText: <>(File type should be .png and .jpg and max file size to be 8Mb)</>,
-    //     supportedFileTypes: ['image/png', 'image/jpeg', 'image/jpg'],
-    //     maxSize: 8,
-    //     single: true,
-    // };
-
-    // const consentFormProps = {
-    //     isReplaceEnabled: false,
-    //     fileList: fileConsentList,
-    //     setFileList: setFileConsentList,
-    //     setUploadedFile: setUploadedConsentFile,
-    //     uploadedFile: uploadedConsentFile,
-    //     emptyList: emptyConsentList,
-    //     setEmptyList: setEmptyConsentList,
-    //     uploadedFileName: uploadedConsentFileName,
-    //     setUploadedFileName: setUploadedConsentFileName,
-    //     handleFormValueChange,
-
-    //     uploadButtonName: 'Upload File',
-    //     messageText: (
-    //         <>
-    //             Click or drop your file here
-    //             <br /> to upload the signed and scanned customer form
-    //         </>
-    //     ),
-    //     validationText: <>(File type should be png, jpg or pdf and max file size to be 5Mb)</>,
-    //     supportedFileTypes: ['image/png', 'image/jpg', 'image/jpeg', 'application/pdf'],
-    //     maxSize: 5,
-    //     single: true,
-    //     singleDisabled,
-    //     setSingleDisabled,
-    //     onRemove: () => {
-    //         setFileList([]);
-    //         setSingleDisabled(false);
-    //     },
-    // };
-
     const disabledProps = { disabled: isReadOnly };
     return (
         <>
@@ -164,8 +89,6 @@ const AddEditFormMain = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
                         <Panel header="Individual Information" key="1">
-                            {/* <Divider />
-                            <UploadUtil key={1} {...ImageProps} /> */}
                             <Divider />
                             <Row gutter={20}>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -265,19 +188,7 @@ const AddEditFormMain = (props) => {
                                         </Select>
                                     </Form.Item>
                                 </Col>
-                                {/* <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="Religion" initialValue={formData?.religion} name="religion">
-                                        <Select placeholder={preparePlaceholderSelect('religion')} {...disabledProps}>
-                                            {appCategoryData?.RELGION?.map((item) => (
-                                                <Option key={'ct' + item.key} value={item.key}>
-                                                    {item.value}
-                                                </Option>
-                                            ))}
-                                        </Select>
-                                    </Form.Item>
-                                </Col> */}
-                                {/* </Row>
-                            <Row gutter={20}> */}
+
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label="PAN" name="panNumber" initialValue={formData?.panNumber} rules={[validatePanField('pan'), validateRequiredInputField('pan')]}>
                                         <Input maxLength={10} onInput={convertToUpperCase} placeholder={preparePlaceholderText('pan')} {...disabledProps} />
@@ -358,141 +269,6 @@ const AddEditFormMain = (props) => {
                             )}
                         </Panel>
                     </Collapse>
-                    {/* <Collapse collapsible="icon" expandIcon={expandIcon} expandIconPosition="end">
-                        <Panel header="Social Profile" key="2">
-                            <Divider />
-                            <Row gutter={20}>
-                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="M1-MMFSL" initialValue={formData?.mmfsl} name="mmfsl">
-                                        <Input maxLength={50} placeholder={preparePlaceholderText('Enter id')} />
-                                    </Form.Item>
-                                </Col>
-
-                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="Facebook Link" initialValue={formData?.facebookLink} name="facebookLink" rules={[validatFacebookProfileUrl('facebookLink')]}>
-                                        <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} />
-                                    </Form.Item>
-                                </Col>
-
-                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="Twitter Link" initialValue={formData?.twitterLink} name="twitterLink" rules={[validattwitterProfileUrl('twitterLink')]}>
-                                        <Input maxLength={50} placeholder={preparePlaceholderText('Enter Link')} />
-                                    </Form.Item>
-                                </Col>
-                            </Row>
-                            <Row gutter={20}>
-                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="Instagram Link" initialValue={formData?.instagramLink} name="instagramLink" rules={[validatInstagramProfileUrl('instagramLink')]}>
-                                        <Input maxLength={50} placeholder={preparePlaceholderText('Enter id')} />
-                                    </Form.Item>
-                                </Col>
-
-                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="Youtube Channel" initialValue={formData?.youtubeChannelLink} name="youtubeChannelLink" rules={[validatYoutubeProfileUrl('youtubeChannelLink')]}>
-                                        <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} />
-                                    </Form.Item>
-                                </Col>
-
-                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="Team BHP Link" initialValue={formData?.teamBhpLink} name="teamBhpLink">
-                                        <Input maxLength={50} placeholder={preparePlaceholderText('Enter Link')} />
-                                    </Form.Item>
-                                </Col>
-                            </Row>
-                        </Panel>
-                    </Collapse> */}
-                    {/* <Collapse collapsible='icon'defaultActiveKey={['3']} expandIcon={expandIcon} expandIconPosition="end">
-                             <Panel header="Key Account details" key="3">
-                                 <Divider />
-                                 <Row gutter={20}>
-                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                         <Form.Item label="Account Code" name="accountCode" initialValue={formData?.keyAccountDetails?.accountCode}>
-                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter account code')} disabled />
-                                         </Form.Item>
-                                     </Col>
- 
-                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                         <Form.Item label="Account Name" name="accountName" initialValue={formData?.keyAccountDetails?.accountName}>
-                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} disabled />
-                                         </Form.Item>
-                                     </Col>
- 
-                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                         <Form.Item label="Account Segement" name="accountSegment" initialValue={formData?.keyAccountDetails?.accountSegment}>
-                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter Link')} disabled />
-                                         </Form.Item>
-                                     </Col>
-                                 </Row>
-                                 <Row gutter={20}>
-                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                         <Form.Item label="Account Client Name" name="accountClientName" initialValue={formData?.keyAccountDetails?.accountClientName}>
-                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter id')} disabled />
-                                         </Form.Item>
-                                     </Col>
- 
-                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                         <Form.Item label="Account Mapping Date" name="accountMappingDate" initialValue={formData?.keyAccountDetails?.accountMappingDate}>
-                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} disabled />
-                                         </Form.Item>
-                                     </Col>
-                                 </Row>
-                             </Panel>
-	                         </Collapse> */}
-                    {/* <Collapse collapsible="icon" expandIcon={expandIcon} expandIconPosition="end">
-                        <Panel header="Authority Details (Who Knowns Whom)" key="4">
-                            <Divider />
-                            <Row gutter={20}>
-                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="Name of Person" initialValue={formData?.authorityDetails?.personName} name="personName" onChange={handleValidate} rules={isAuthorityMandatory ? [validateRequiredInputField('Name of Person')] : ''}>
-                                        <Input maxLength={50} placeholder={preparePlaceholderText('Enter name of person')} />
-                                    </Form.Item>
-                                </Col>
-
-                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="Position" initialValue={formData?.authorityDetails?.postion} name="postion">
-                                        <Input maxLength={50} placeholder={preparePlaceholderText('Enter position')} />
-                                    </Form.Item>
-                                </Col>
-
-                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="Company Name" initialValue={formData?.authorityDetails?.companyName} name="companyName" onChange={handleValidate} rules={isAuthorityMandatory ? [validateRequiredInputField('Company Name')] : ''}>
-                                        <Input maxLength={50} placeholder={preparePlaceholderText('Enter company name')} />
-                                    </Form.Item>
-                                </Col>
-
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                    <Form.Item label="Remarks" initialValue={formData?.authorityDetails?.remarks} name="remarks">
-                                        <TextArea showCount maxLength={300} placeholder={preparePlaceholderText('Remarks')} />
-                                    </Form.Item>
-                                </Col>
-                            </Row>
-                        </Panel>
-                    </Collapse> */}
-                    {/* <Collapse collapsible="icon" expandIcon={expandIcon} expandIconPosition="end">
-                        <Panel header="Upload Customer Form" key="4">
-                            <>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item initialValue={formData?.customerConsent === 'true' ? true : false} valuePropName="checked" name="customerConsent">
-                                            <Checkbox> I Consent to share my details with Mahindra & Mahindra</Checkbox>
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <UploadUtil key={2} {...consentFormProps} />
-                                    </Col>
-                                </Row>
-                                {formData?.customerConsentForm && (
-                                    <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Card className={styles.viewDocumentStrip} key={formData?.customerConsentForm} title={formData?.customerConsentDocumentName} extra={<FiDownload />} onClick={downloadFileFromButton}></Card>
-                                        </Col>
-                                    </Row>
-                                )}
-                            </>
-                        </Panel>
-                    </Collapse> */}
                 </Col>
             </Row>
         </>

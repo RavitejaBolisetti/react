@@ -47,7 +47,6 @@ const mapStateToProps = (state) => {
         dealerGstData,
         viewDocument,
         isViewDataLoaded,
-        
     };
     return returnValue;
 };
@@ -84,8 +83,7 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
     const { typeData, moduleTitle } = props;
     const { filterString, setFilterString, listShowLoadingGst, fetchList, dealerGstData } = props;
     const { listShowLoadingGstLogin, fetchListGstLogin, listShowLoading, saveData } = props;
-    const { fetchGstDoc,downloadFile   } = props;
-    
+    const { fetchGstDoc, downloadFile } = props;
 
     const [listFilterForm] = Form.useForm();
     const [selectedRecord, setSelectedRecord] = useState();
@@ -100,8 +98,6 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
-
-    // const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [uploadedFile, setUploadedFile] = useState();
     const [emptyList, setEmptyList] = useState(true);
@@ -111,8 +107,6 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
     const [currentGst, setCurrentGst] = useState();
     const [draggerDisable, setDraggerDisable] = useState(true);
     const [docData, setDocData] = useState();
-
-    
 
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -129,56 +123,51 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
     const [formData, setFormData] = useState([]);
-    const onSuccessAction = (res) => {
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+    const onSuccessAction = () => {
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
-        // setShowDataLoading(false);
     };
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
-        // setShowDataLoading(false);
     };
 
     const handleGstinNumber = (value) => {
-        setCurrentGst(value);        
-        // To call a service for file name and docId       
-            fetchGstDoc({
+        setCurrentGst(value);
+        // To call a service for file name and docId
+        fetchGstDoc({
             setIsLoading: () => {},
-                userId,
-                extraParams: [
-                    {
-                        key: 'gstin',
-                        value: value,
-                    },
-                ],
-                customURL,
-                onSuccessAction: (res) => {
-                    if(res.data.documentId){
-                        setFileList([]);  
-                        setDocData(res.data);
-                        setSingleDisabled(true);
-                        setDraggerDisable(true);
-                     showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-
-                    } 
+            userId,
+            extraParams: [
+                {
+                    key: 'gstin',
+                    value: value,
                 },
-                onErrorAction: (res) => { 
-                    setDocData();
-                    setSingleDisabled(false);
-                    setDraggerDisable(false);
-                    showGlobalNotification({ notificationType: 'error', title: 'Error', message: res });
-
+            ],
+            customURL,
+            onSuccessAction: (res) => {
+                if (res.data.documentId) {
+                    setFileList([]);
+                    setDocData(res.data);
+                    setSingleDisabled(true);
+                    setDraggerDisable(true);
+                    showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
                 }
-            });
-        
+            },
+            onErrorAction: (res) => {
+                setDocData();
+                setSingleDisabled(false);
+                setDraggerDisable(false);
+                showGlobalNotification({ notificationType: 'error', title: 'Error', message: res });
+            },
+        });
     };
 
     useEffect(() => {
         if (userId) {
             fetchList({ setIsLoading: listShowLoadingGst, userId, onSuccessAction, onErrorAction });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
     useEffect(() => {
@@ -198,6 +187,7 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         }
         form.resetFields();
         form.setFieldsValue(undefined);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
@@ -238,22 +228,16 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         }
         setIsFormVisible(true);
     };
-
-    const onFinishSearch = (values) => {};
-
-    const handleResetFilter = (e) => {
-        // setShowDataLoading(false);
+    const handleResetFilter = () => {
         setFilterString();
         advanceFilterForm.resetFields();
     };
 
     const onFinish = (values) => {
-
         const data = { ...values, docId: uploadedFile ? uploadedFile : docData.documentId };
 
         const onSuccess = (res) => {
             form.resetFields();
-            // setShowDataLoading(true);
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchListGstLogin({ setIsLoading: listShowLoadingGstLogin, userId, onSuccessAction, onErrorAction });
 
@@ -276,23 +260,16 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        // form.validateFields().then((values) => {});
-        return;
-    };
-
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
 
     const onCloseAction = () => {
-        setDocData();  
+        setDocData();
         form.resetFields();
         form.setFieldsValue();
         advanceFilterForm.resetFields();
         advanceFilterForm.setFieldsValue();
-        // setAdvanceSearchVisible(false);
-
         setSelectedRecord();
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
@@ -315,13 +292,11 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         setFilterString,
         from: listFilterForm,
         onFinish,
-        onFinishFailed,
         handleResetFilter,
         advanceFilterForm,
         data,
         typeData,
         searchForm,
-        onFinishSearch,
         userId,
         dealerGstData,
         handleGstinNumber,
@@ -343,7 +318,6 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         formActionType,
         setFormActionType,
         onFinish,
-        onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
         titleOverride: drawerTitle.concat(moduleTitle),
@@ -383,12 +357,9 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
 
     const loginProps = {
         onFinish,
-        onFinishFailed,
     };
 
-    const onDrop = (e) => {};     
-
-    const onDownload = (file) => {
+    const onDownload = () => {
         const onSuccessAction = (res) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage || 'Your download will start soon' });
         };
@@ -403,14 +374,11 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         downloadFile({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction });
     };
 
-
-    const onRemove = (value) => {        
+    const onRemove = () => {
         setDocData();
         setSingleDisabled(false);
         setDraggerDisable(false);
-  
-
-};
+    };
     const uploadProps = {
         messageText: 'Click or drop your file here to upload',
         validationText: 'File type should be .pem and max file size to be 5Mb',
@@ -430,7 +398,6 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
             showProgress: true,
         },
         progress: { strokeWidth: 3, showInfo: true },
-        onDrop,
         uploadedFile,
         setUploadedFile,
         uploadedFileName,
@@ -442,21 +409,18 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         undefinedType: true,
         draggerDisable,
         setDraggerDisable,
-        downloadFile
-
+        downloadFile,
     };
-   
 
-    const fileProps ={
+    const fileProps = {
         docData,
         setDocData,
-        onDrop,
         onDownload,
         onRemove,
-    }
+    };
     return (
         <>
-            <Form form={form} name="login_from" layout="vertical" autocomplete="off" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Form form={form} name="login_from" layout="vertical" autocomplete="off" onFinish={onFinish}>
                 <GSTIRNFilter {...advanceFilterResultProps} />
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
@@ -464,12 +428,9 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
                             <div className={styles.marB20}>
                                 <UploadUtil {...uploadProps} handleFormValueChange={handleFormValueChange} />
 
-                                <ViewSupportingDocDetail {...fileProps}/>
+                                <ViewSupportingDocDetail {...fileProps} />
                             </div>
-                             
                         </Card>
-
-                        
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Card>

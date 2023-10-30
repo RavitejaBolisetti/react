@@ -14,8 +14,6 @@ import { customSelectBox } from 'utils/customSelectBox';
 
 import { YES_NO_FLAG } from 'constants/yesNoFlag';
 import { FINANCE_ARRANGED_BY } from 'constants/financeArrangedBy';
-// import { PAGE_TYPE } from 'components/Sales/VehicleDeliveryNote/utils/pageType';
-
 import styles from 'assets/sass/app.module.scss';
 
 const AddEditFormMain = (props) => {
@@ -40,25 +38,6 @@ const AddEditFormMain = (props) => {
     const handleDOChange = (item) => {
         setDoReceived(item);
     };
-
-    // const onLoanChange = () => {
-    //     form.validateFields(['emi']);
-    // };
-
-    // const emiLessThanAmount = (value) => {
-    //     if (Number(form.getFieldsValue(['loanAmount'])?.loanAmount) < Number(value)) {
-    //         return Promise.reject('EMI cannot exceed loan amount');
-    //     } else {
-    //         return Promise.resolve();
-    //     }
-    // };
-
-    // const selectProps = {
-    //     optionFilterProp: 'children',
-    //     showSearch: true,
-    //     allowClear: true,
-    //     className: styles.headerSelectField,
-    // };
 
     const handleFinanceArrangedBy = (value) => {
         setFinanceArrangedBy(value);

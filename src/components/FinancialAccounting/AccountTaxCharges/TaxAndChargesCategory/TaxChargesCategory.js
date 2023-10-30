@@ -267,7 +267,7 @@ export const TaxChargesCategoryMain = (props) => {
         }
     };
 
-    const handleResetFilter = (e) => {
+    const handleResetFilter = () => {
         setFilterString();
         listFilterForm.resetFields();
         setShowDataLoading(false);

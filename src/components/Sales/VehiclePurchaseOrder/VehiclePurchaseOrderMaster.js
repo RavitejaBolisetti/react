@@ -69,12 +69,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const VehiclePurchaseOrderMasterBase = (props) => {
     const { fetchList, saveData, listShowLoading, userId, data, vehicleDetailData, totalRecords } = props;
     const { typeData, moduleTitle, showGlobalNotification } = props;
-    const {
-        //  filterString, setFilterString,
-        vehicleDetailStatusList,
-        vpoTypeList,
-        resetData,
-    } = props;
+    const { vehicleDetailStatusList, vpoTypeList, resetData } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [listFilterForm] = Form.useForm();
     const [selectedRecord, setSelectedRecord] = useState();
@@ -124,12 +119,10 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
     const [isCancelVisible, setIsCancelVisible] = useState(false);
     const [changeView, setChangeView] = useState(false);
 
-    const onSuccessAction = (res) => {
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+    const onSuccessAction = () => {
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
-        // setFilterString({...filterString, current: undefined});
     };
 
     const onErrorAction = (message) => {
@@ -294,9 +287,6 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
             setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction, orderStatus: record?.orderStatus }));
         }
     };
-
-    const onFinishSearch = (values) => {};
-
     const onFinish = (values) => {
         const recordId = formData?.parentId || form.getFieldValue('parentId');
         let data = { ...values, parentId: recordId };
@@ -323,10 +313,6 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         };
 
         saveData(requestData);
-    };
-
-    const onFinishFailed = (errorInfo) => {
-        return;
     };
 
     const handleFormValueChange = () => {
@@ -363,7 +349,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         }
     };
 
-    const handleResetFilter = (e) => {
+    const handleResetFilter = () => {
         if (filterString) {
             setShowDataLoading(true);
         }
@@ -371,7 +357,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         advanceFilterForm.resetFields();
         setAdvanceSearchVisible(false);
     };
-    const handleCancelFilter = (e) => {
+    const handleCancelFilter = () => {
         if (filterString) {
             setShowDataLoading(true);
         }
@@ -391,14 +377,12 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         setFilterString,
         from: listFilterForm,
         onFinish,
-        onFinishFailed,
         title,
         data,
         typeData,
         otfSearchRules,
         setOtfSearchRules,
         searchForm,
-        onFinishSearch,
         setAdvanceSearchVisible,
         handleButtonClick,
         handleResetFilter,
@@ -445,7 +429,6 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
     };
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
-        // icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
@@ -455,7 +438,6 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         setAdvanceSearchVisible,
         typeData,
         handleCancelFilter,
-        onFinishSearch,
     };
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
@@ -473,7 +455,6 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         formActionType,
         setFormActionType,
         onFinish,
-        onFinishFailed,
         setIsFormVisible,
         isVisible: isFormVisible,
         onCloseAction,

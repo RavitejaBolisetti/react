@@ -10,6 +10,6 @@ afterEach(() => {
 
 describe('Render components', () => {
     it('should render components', () => {
-        customRender(<ApportionDetailsMaster />);
+        customRender(<ApportionDetailsMaster fetchDocumentTypeList={jest.fn()} />);
     });
 });

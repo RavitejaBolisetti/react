@@ -118,7 +118,6 @@ const LoyaltySchemeMasterMain = (props) => {
             form.setFieldsValue({ ...data, customerCode: data?.customerId, oldChassisNumber: data?.chassisNumber, variantCode: data?.variant, vehicleModelGroup: data?.modelGroup, make: VEHICLE_COMPANY_MAKE });
             handleFilterChange('make', VEHICLE_COMPANY_MAKE);
             handleFilterChange('modelGroupCode', data?.modelGroup ?? '');
-            // setformData({ ...formData, ...data, customerCode: data?.customerId, oldChassisNumber: data?.chassisNumber, variantCode: data?.variant, vehicleModelGroup: data?.modelGroup, make: data?.make || VEHICLE_COMPANY_MAKE });
         } else if (data === null) {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'No data found' });
             form.resetFields(['customerCode', 'customerName', 'make', 'vehicleModelGroup', 'variantCode', 'registrationNumber', 'oldChassisNumber', 'customerDOB']);

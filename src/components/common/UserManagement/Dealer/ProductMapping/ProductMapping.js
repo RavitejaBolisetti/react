@@ -52,7 +52,6 @@ const ProductMapping = (props) => {
         data?.[0]?.attributeType !== 'MF'
             ? data?.map((item) => ({
                   ...item,
-                  //   disabled: item?.attributeType !== "MG",
                   checkable: item?.attributeType === 'MG',
                   selectable: item?.attributeType !== 'MG',
                   subProdct: item?.subProdct && item?.attributeType !== 'MF' ? mapSelectedKeyData({ data: item?.subProdct }) : null,
@@ -69,8 +68,6 @@ const ProductMapping = (props) => {
 
     useEffect(() => {
         if (userId) {
-            // setButtonData((prev) => ({ ...prev, nextBtn: false, saveBtn: true, editBtn: formActionType?.viewMode }));
-
             if (!productHierarchyData?.length) {
                 fetchProductHierarchyList({ setIsLoading: productShowLoding, userId });
             }

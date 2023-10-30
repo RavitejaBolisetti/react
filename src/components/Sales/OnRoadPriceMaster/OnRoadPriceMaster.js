@@ -109,7 +109,7 @@ export const OnRoadPriceMasterBase = (props) => {
     const [formData, setFormData] = useState([]);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isUploadFormVisible, setIsUploadFormVisible] = useState(false);
-    const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);   
+    const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
     const [vehiclePrice, setVehiclePrice] = useState();
@@ -223,7 +223,6 @@ export const OnRoadPriceMasterBase = (props) => {
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
-        // showLoading(true);
         setFormData(record);
         setIsFormVisible(true);
         setVehiclePrice();
@@ -267,7 +266,6 @@ export const OnRoadPriceMasterBase = (props) => {
                 });
                 break;
             case CANCEL_ACTION:
-                // setIsCancelVisible(true);
                 break;
             default:
                 break;
@@ -307,7 +305,7 @@ export const OnRoadPriceMasterBase = (props) => {
         resetData();
     };
 
-    const onFinish = (values) => {
+    const onFinish = () => {
         let data = { docId: uploadedFile };
         const onSuccess = (res) => {
             setIsUploadFormVisible(false);
@@ -347,12 +345,6 @@ export const OnRoadPriceMasterBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields()
-            .then((values) => {})
-            .catch((err) => console.error(err));
-    };
-
     const onCloseAction = () => {
         form.resetFields();
         setIsFormVisible(false);
@@ -390,14 +382,12 @@ export const OnRoadPriceMasterBase = (props) => {
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
         onCloseAction: onAdvanceSearchCloseAction,
-        // icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
         isCityDataLoaded,
         cityData,
         filterString,
         setFilterString,
         advanceFilterForm,
-        // resetData,
         handleResetFilter,
         onSearchHandle,
         setAdvanceSearchVisible,
@@ -438,7 +428,6 @@ export const OnRoadPriceMasterBase = (props) => {
         setFilterString,
         from: listFilterForm,
         onFinish,
-        onFinishFailed,
         handleResetFilter,
         advanceFilterForm,
         title,
@@ -497,7 +486,6 @@ export const OnRoadPriceMasterBase = (props) => {
         formData,
         onCloseAction,
         buttonData: { ...defaultBtnVisiblity },
-        // buttonData,
         setButtonData,
         handleButtonClick,
     };

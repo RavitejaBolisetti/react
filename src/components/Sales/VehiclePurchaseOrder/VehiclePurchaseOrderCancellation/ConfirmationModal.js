@@ -13,7 +13,6 @@ import { validateRequiredSelectField } from 'utils/validation';
 import styles from 'assets/sass/app.module.scss';
 
 export const ConfirmationModalFrom = (props) => {
-    // const { handleCloseModal } = props;
     const { vpoCancellationForm, onFinishVPOCancellation } = props;
     const { buttonData, setButtonData, typeData, setIsCancelVisible } = props;
 

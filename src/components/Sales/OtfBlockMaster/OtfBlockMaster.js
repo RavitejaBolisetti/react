@@ -362,8 +362,6 @@ export const OtfBlockMasterMain = (props) => {
 
         setSelectedTreeKey([]);
 
-        //selectedTreeSelectKey([])
-
         setFormActionType(FROM_ACTION_TYPE.VIEW);
 
         setSelectedId('');

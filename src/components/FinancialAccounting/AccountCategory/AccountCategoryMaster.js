@@ -263,13 +263,6 @@ export const AccountCategoryMain = (props) => {
             setFilterString({ ...filterString, advanceFilter: false, keyword: value });
         }
     };
-
-    // const handleResetFilter = (e) => {
-    //     setFilterString();
-    //     listFilterForm.resetFields();
-    //     setShowDataLoading(false);
-    // };
-
     const handleClearInSearch = (e) => {
         if (e.target.value.length > 2) {
             listFilterForm.validateFields(['code']);
@@ -394,7 +387,6 @@ export const AccountCategoryMain = (props) => {
         from: listFilterForm,
         onFinish,
         onSearchHandle,
-        // handleResetFilter,
         handleClearInSearch,
         handleReferesh,
         handleButtonClick,

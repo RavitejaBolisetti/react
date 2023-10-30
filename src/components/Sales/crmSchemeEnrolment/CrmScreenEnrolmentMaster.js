@@ -361,11 +361,6 @@ export const CrmScreenEnrolmentBase = (props) => {
             }
         }
     };
-
-    const onFinishFailed = (errorInfo) => {
-        return;
-    };
-
     const onCloseAction = () => {
         form.resetFields();
         setKeyValue([]);
@@ -442,7 +437,6 @@ export const CrmScreenEnrolmentBase = (props) => {
         filterString,
         setFilterString,
         onFinish,
-        onFinishFailed,
         handleResetFilter,
         advanceFilterForm,
         handleButtonClick,

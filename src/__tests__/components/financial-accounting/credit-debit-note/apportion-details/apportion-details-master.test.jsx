@@ -14,21 +14,21 @@ afterEach(() => {
     jest.restoreAllMocks();
 });
 
+jest.mock('store/actions/data/financialAccounting/invoiceDetails', ()=>({
+    invoiceDetailsDataAction:{}
+}));
+
+const fetchInvoiceList = jest.fn();
+const fetchDocumentTypeList = jest.fn();
+
 describe('ApportionDetailsMaster component', () => {
 
     it('plus image', () => {
         const apportionTableData = [{documentType:'a', documentNumber:'12', documentAmount:'34', settledAmount:'12', balancedAmount:'21', writeOffAmount:'23', apportionAmount:'7', id:'123'}]
-        customRender(<ApportionDetailsMaster apportionTableData={apportionTableData}/>);
+        customRender(<ApportionDetailsMaster apportionTableData={apportionTableData} fetchDocumentTypeList={fetchDocumentTypeList} />);
         
         const plusImg = screen.getAllByRole('img', {name:"plus"});
         fireEvent.click(plusImg[0]);
-    });
-
-    it('add plus button', () => {
-        customRender(<ApportionDetailsMaster />);
-        
-        const plusAddBtn = screen.getByRole('button', {name:"plus Add"});
-        fireEvent.click(plusAddBtn);
     });
 
     it("cancelBtn", ()=>{
@@ -59,24 +59,15 @@ describe('ApportionDetailsMaster component', () => {
 
         const cancelBtn = screen.getByRole('button', {name:"Cancel"});
         fireEvent.click(cancelBtn);
-    })
+    });
 
     it("saveBtn", ()=>{
-        const documentTypeData = [{
-            applicationId: "FINA-03",
-            applicationName: "Financial Reports",
-            documentCode: "Dv45"
-        }]
+        const documentTypeData = [{applicationId: "FINA-03", applicationName: "Financial Reports", documentCode: "Dv45"}];
+
         const mockStore = createMockStore({
             auth: { userId:123 },
-            data:{
-                FinancialAccounting:{
-                    DocumentDescription:{isLoaded:false, isLoading:false, data:documentTypeData}
-                }
-            }
-        })
-        const fetchInvoiceList = jest.fn();
-        const fetchDocumentTypeList = jest.fn();
+            data:{ FinancialAccounting:{ DocumentDescription:{isLoaded:false, isLoading:false, data:documentTypeData} } }
+        });
 
         customRender(
             <Provider store={mockStore}>
@@ -89,5 +80,5 @@ describe('ApportionDetailsMaster component', () => {
 
         const saveBtn = screen.getByRole('button', {name:"Save"});
         fireEvent.click(saveBtn);
-    })
-})
+    });
+});

@@ -85,9 +85,8 @@ const InstallationAddressDetailsMasterBase = (props) => {
         showGlobalNotification({ message: message });
     };
 
-    const onSuccessAction = (res) => {
-        return res;
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+    const onSuccessAction = () => {
+        return;
     };
 
     const viewProps = {

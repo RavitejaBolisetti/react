@@ -53,7 +53,7 @@ describe("GstIRNTransaction component",()=>{
         fireEvent.click(uploadBtn);
 
         fetchList.mock.calls[0][0].onErrorAction();
-    })
+    });
 
     it("onAdvanceSearchCloseAction", ()=>{
         customRender(<GstIRNTransaction setFilterString={jest.fn()} />);
@@ -63,7 +63,7 @@ describe("GstIRNTransaction component",()=>{
 
         const closeImg = screen.getByRole('img', {name:'close'});
         fireEvent.click(closeImg)
-    })
+    });
 
     it("resetBtn", ()=>{
         customRender(<GstIRNTransaction setFilterString={jest.fn()}/>);
@@ -73,7 +73,7 @@ describe("GstIRNTransaction component",()=>{
 
         const resetBtn = screen.getByRole('button', {name:'Reset'});
         fireEvent.click(resetBtn)
-    })
+    });
 
     it("applyBtn", ()=>{
         customRender(<GstIRNTransaction setFilterString={jest.fn()}/>);
@@ -83,7 +83,7 @@ describe("GstIRNTransaction component",()=>{
 
         const applyBtn = screen.getByRole('button', {name:'Apply'});
         fireEvent.click(applyBtn)
-    })
+    });
 
     it("clearBtn",()=>{
         const extraParams = [{ name: "INV22C000617" }];
@@ -122,7 +122,7 @@ describe("GstIRNTransaction component",()=>{
 
         const clearBtn = screen.getByRole('button', {name:'Clear'});
         fireEvent.click(clearBtn);
-    })
+    });
 
 })
 

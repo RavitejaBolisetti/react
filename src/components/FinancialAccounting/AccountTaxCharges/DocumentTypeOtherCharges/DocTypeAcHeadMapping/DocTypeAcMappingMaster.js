@@ -26,7 +26,6 @@ export const DocTypeAcMappingMaster = (props) => {
                 docTypeHeadMappingForm.resetFields();
                 forceUpdate();
                 setButtonData({ ...buttonData, formBtnActive: true });
-                // handleCodeFunction();
             })
             .catch((err) => console.error(err));
     };

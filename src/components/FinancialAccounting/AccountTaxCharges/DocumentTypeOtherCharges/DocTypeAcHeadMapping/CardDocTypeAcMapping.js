@@ -25,8 +25,6 @@ const CardDocTypeAcMapping = (props) => {
             internalId: props?.internalId,
             financialAccountHeadId: props?.financialAccountHeadId,
         });
-
-        // handleCodeFunction(props?.financialAccountHead);
     };
 
     const docTypeHeadMappingSave = () => {
@@ -78,7 +76,6 @@ const CardDocTypeAcMapping = (props) => {
         setOpenAccordian,
         changeValue,
         setChangeValue,
-        // handleCodeFunction,
         docTypeHeadMappingForm,
         dropdownItems,
         financialAccount,
