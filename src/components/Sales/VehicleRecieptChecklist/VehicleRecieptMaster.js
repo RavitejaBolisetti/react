@@ -413,7 +413,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         form.resetFields();
         form.setFieldsValue(undefined);
         const handleProfile = () => {
-            if (record?.grnNumber && record?.chassisNumber) {
+            if (record?.grnNumber && record?.chassisNumber && record?.id) {
                 const myParams = [
                     {
                         key: 'grnNumber',
@@ -424,6 +424,11 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
                         key: 'chassisNumber',
                         title: 'chassisNumber',
                         value: record?.chassisNumber,
+                    },
+                    {
+                        key: 'id',
+                        title: 'id',
+                        value: record?.id,
                     },
                 ];
 

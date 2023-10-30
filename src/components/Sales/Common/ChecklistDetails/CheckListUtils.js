@@ -110,7 +110,7 @@ export const BindFormAndResult = ({ data, aggregateForm, checklistType }) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item rules={[validateRequiredSelectField('')]} valuePropName="checked" initialValue={data?.answerBoolean ? true : false} labelAlign="left" wrapperCol={{ span: 24 }} name="answerBoolean" label={QuestionLabel}>
-                            <Switch checkedChildren="Yes" unCheckedChildren="No" defaultChecked={data?.answerBoolean ? true : false} onChange={(checked) => (checked ? true : false)} />
+                            <Switch checkedChildren="Yes" unCheckedChildren="No" defaultChecked={!!data?.answerBoolean} onChange={(checked) => (checked ? true : false)} />
                         </Form.Item>
                     </Col>
                 </Row>
