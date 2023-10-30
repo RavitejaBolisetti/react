@@ -15,6 +15,7 @@ export const customSelectBox = ({ data, placeholder = 'Select', mode = '', loadi
         loading,
         disabled,
     };
+    console.log('disableOptionsList', disableOptionsList);
     return (
         <Select placeholder={placeholder} mode={mode} onChange={onChange} {...selectProps} data-testid={testId}>
             {data?.map((item) => (

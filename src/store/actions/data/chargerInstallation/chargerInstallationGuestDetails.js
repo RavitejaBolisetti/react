@@ -6,8 +6,8 @@
 import { dataActions } from 'store/actions/crud/dataAction';
 import { BASE_URL_CHARGER_INSTALLATION_GUEST_DETAILS as baseURL } from 'constants/routingApi';
 
-const PREFIX = 'CHARGER_INSTALLATION_SEARCH_';
-const moduleName = 'Charger Installation Search';
+const PREFIX = 'CHARGER_INSTALLATION_GUEST_DETAILS_';
+const moduleName = 'Charger Installation Guest Details';
 
 export const RECEIVE_DATA_LOADING_ACTION_CONSTANT = PREFIX + 'LOADING_DATA';
 export const RECEIVE_DATA_ACTION_CONSTANT = PREFIX + 'LIST_RECIEVE_DATA';

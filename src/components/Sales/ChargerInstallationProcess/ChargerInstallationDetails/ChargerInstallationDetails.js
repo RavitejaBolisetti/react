@@ -92,7 +92,7 @@ const ChargerInstallatioDetailsMasterBase = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            {!formActionType?.addMode && <StatusBar status={chargerInstallationMasterData?.chargerInstDetails?.requestDetails[0].requestStage} />}
+                            {!formActionType?.addMode && <StatusBar status={chargerInstallationMasterData?.chargerInstDetails?.requestDetails[0].stageType} />}
                         </Col>
                     </Row>
                     {formActionType?.viewMode ? (
