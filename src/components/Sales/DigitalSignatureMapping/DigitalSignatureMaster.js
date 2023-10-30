@@ -18,7 +18,6 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { receiptDataActions } from 'store/actions/data/receipt/receipt';
 import { receiptDetailDataActions } from 'store/actions/data/receipt/receiptDetails';
-import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -27,27 +26,11 @@ import { showGlobalNotification } from 'store/actions/notification';
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
-        // data: {
-        //     ConfigurableParameterEditing: { filteredListData: typeData = [] },
-        //     Receipt: {
-        //         ReceiptSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString },
-        //         ReceiptDetails: { isLoaded: isDetailedDataLoaded = false, isLoading, data: receiptDetailData = [] },
-        //     },
-        // },
     } = state;
     const moduleTitle = 'Map New Digital Signature';
     let returnValue = {
         userId,
-        // typeData,
-        // data: data?.paginationData,
-        // totalRecords: data?.totalRecords || [],
-        // receiptDetailData,
-        // isLoading,
-         moduleTitle,
-        // isSearchLoading,
-        // isSearchDataLoaded,
-        // isDetailedDataLoaded,
-        // filterString,
+        moduleTitle,
     };
     return returnValue;
 };
@@ -73,10 +56,6 @@ export const DigitalSignatureMasterBase = (props) => {
     const { fetchList, listShowLoading, userId, fetchReceiptDetails, data, resetData } = props;
     const { typeData, moduleTitle, totalRecords, showGlobalNotification } = props;
     const { filterString, setFilterString } = props;
-
-    //const [searchValue, setSearchValue] = useState();
-
-    //const [selectedOrder, setSelectedOrder] = useState();
     const [selectedOrderId, setSelectedOrderId] = useState();
 
     const [form] = Form.useForm();
@@ -154,8 +133,6 @@ export const DigitalSignatureMasterBase = (props) => {
             {
                 key: 'searchParam',
                 title: 'searchParam',
-               // value: searchValue,
-                //name: searchValue,
                 canRemove: false,
                 filter: false,
             },
@@ -191,11 +168,10 @@ export const DigitalSignatureMasterBase = (props) => {
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ filterString, page]);
+    }, [filterString, page]);
 
     useEffect(() => {
         if (userId) {
-            // setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -227,35 +203,6 @@ export const DigitalSignatureMasterBase = (props) => {
         setIsFormVisible(true);
     };
 
-    // const onFinish = (values) => {
-    //     const data = { ...values };
-
-    //     const onSuccess = (res) => {
-    //         form.resetFields();
-    //         setShowDataLoading(true);
-    //         showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage + 'Receipt No.:' + res?.data?.receiptsDetails?.receiptNumber });
-    //         fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
-    //         setButtonData({ ...buttonData, formBtnActive: false });
-    //         setIsFormVisible(false);
-    //     };
-
-    //     const onError = (message) => {
-    //         showGlobalNotification({ message });
-    //     };
-
-    //     const requestData = {
-    //         data: data,
-    //         method: 'post',
-    //         setIsLoading: listShowLoading,
-    //         userId,
-    //         onError,
-    //         errorData: true,
-    //         onSuccess,
-    //     };
-
-    //     saveData(requestData);
-    // };
-
     const onCloseAction = () => {
         resetData();
         fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
@@ -266,7 +213,6 @@ export const DigitalSignatureMasterBase = (props) => {
         advanceFilterForm.resetFields();
         advanceFilterForm.setFieldsValue();
 
-        //setSelectedOrder();
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
     };
@@ -281,9 +227,6 @@ export const DigitalSignatureMasterBase = (props) => {
         showAddButton: false,
         typeData,
     };
-
-    //const title = 'Dealer Sig-Dealer Code Mapping';
-
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
             return 'View ';
@@ -297,7 +240,6 @@ export const DigitalSignatureMasterBase = (props) => {
     const searchBoxProps = {
         searchForm,
         filterString,
-        // optionType: typeData[PARAM_MASTER?.CUST_VEH_SEARCH?.id],
         setFilterString,
         selectWide: true,
     };

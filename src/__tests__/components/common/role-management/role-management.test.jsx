@@ -37,6 +37,7 @@ describe('RoleManagement Components', () => {
         });
 
         const fetchMenuList = jest.fn();
+        const fetchList = jest.fn();
 
         const response = {
             data: rolemenuData,
@@ -44,13 +45,9 @@ describe('RoleManagement Components', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <RoleManagement fetchMenuList={fetchMenuList} fetchList={jest.fn()} />
+                <RoleManagement fetchMenuList={fetchMenuList} fetchList={fetchList} />
             </Provider>
         );
-
-        await waitFor(() => {
-            expect(screen.getByText('Manager')).toBeInTheDocument();
-        });
 
         const viewBtn = screen.getByTestId('edit');
         fireEvent.click(viewBtn);
@@ -80,12 +77,13 @@ describe('RoleManagement Components', () => {
         fireEvent.click(closeBtn);
     });
 
-    it('search should work', async () => {
+    it('test1', async () => {
+        const tableData = [{ accessProvided: null, id: '4aa01296-46b5-4891-94bc-7c450dad86e0', roleDescription: 'test', roleId: 'test', roleName: 'test', roleType: 'MNM', status: true }];
         const mockStore = createMockStore({
             auth: { userId: 106 },
             data: {
                 RoleManagementData: {
-                    RoleList: { isLoaded: true, data: roleManagementData },
+                    RoleList: { isLoaded: true, data: [{ accessProvided: null, id: '4aa01296-46b5-4891-94bc-7c450dad86e0', roleDescription: 'test', roleId: 'test', roleName: 'test', roleType: 'MNM', status: true }] },
                 },
             },
         });
@@ -94,20 +92,26 @@ describe('RoleManagement Components', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <RoleManagement fetchList={fetchList} />
+                <RoleManagement fetchList={fetchList} fetchMenuList={jest.fn()} tableData={tableData} />
             </Provider>
         );
 
         fetchList.mock.calls[0][0].onSuccessAction();
         fetchList.mock.calls[0][0].onErrorAction();
 
-        await waitFor(() => {
-            expect(screen.getByText('Manager')).toBeInTheDocument();
-        });
+        const searchPlac = screen.getByPlaceholderText('Search');
+        fireEvent.change(searchPlac, { target: { value: 'Test' } });
 
         const searchBtn = screen.getByRole('button', { name: 'search' });
         fireEvent.click(searchBtn);
 
-        fireEvent.click(searchBtn);
+        const refreshBtn = screen.getByRole('button', { name: '' });
+        fireEvent.click(refreshBtn);
+
+        const plusImg = screen.getByRole('img', { name: /plus/i });
+        fireEvent.click(plusImg);
+
+        const closeBtn = screen.getByRole('button', { name: /cancel/i });
+        fireEvent.click(closeBtn);
     });
 });

@@ -12,7 +12,6 @@ import { customSelectBox } from 'utils/customSelectBox';
 
 import styles from 'assets/sass/app.module.scss';
 
-const { Search } = Input;
 const CommonForm = ({ formData, typeData, formKey = 'Shield', addOnForm, openAccordian, formActionType, onSingleFormFinish, registerDisabled, relationshipManagerData, schemeDescriptionDatamain, isReadOnly = false, handleEditRegister, handleCancelRegister, disableKey, muiltipleFormData, handleAmcDescriptionData }) => {
     const disableProps = { disabled: isReadOnly };
     const handleChange = (values) => {

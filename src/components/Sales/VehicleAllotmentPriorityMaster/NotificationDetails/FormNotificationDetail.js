@@ -10,15 +10,11 @@ import { validateRequiredSelectField } from 'utils/validation';
 import { customSelectBox } from 'utils/customSelectBox';
 
 import styles from 'assets/sass/app.module.scss';
-// import styles from 'components/common/Common.module.css';
 
 function FormNotificationDetail(props) {
-    
     const { notificationDetailForm, addDocHeadMapping, formEdit, editForm } = props;
-    const { roleData, handleRoleFunction, data, filterDesignationList, } = props;
-    //  const typeData = data;
+    const { roleData, handleRoleFunction, filterDesignationList } = props;
 
-     
     return (
         <Form form={formEdit ? editForm : notificationDetailForm} id="myForm" autoComplete="off" layout="vertical">
             <Row gutter={20}>
@@ -28,7 +24,7 @@ function FormNotificationDetail(props) {
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                     <Form.Item label="Designation Name" name="designationCode" initialValue={props?.designationCode} rules={[validateRequiredSelectField('Designation')]}>
+                    <Form.Item label="Designation Name" name="designationCode" initialValue={props?.designationCode} rules={[validateRequiredSelectField('Designation')]}>
                         {customSelectBox({ data: filterDesignationList, fieldNames: { key: 'designationCode', value: 'designationDescription' }, placeholder: preparePlaceholderSelect('designation') })}
                     </Form.Item>
                 </Col>

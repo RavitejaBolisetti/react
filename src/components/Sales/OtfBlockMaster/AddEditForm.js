@@ -4,26 +4,20 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState } from 'react';
-import { Col, Input, Form, Row, Button, Switch, AutoComplete } from 'antd';
+import { Col, Input, Form, Row, Button, Switch } from 'antd';
 import { connect } from 'react-redux';
 import { customSelectBox } from 'utils/customSelectBox';
-
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
-import { preparePlaceholderSelect, preparePlaceholderText, preparePlaceholderAutoComplete } from 'utils/preparePlaceholder';
+import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { ManufacturerAdminHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy/manufacturerAdminHierarchy';
 import { dealerBlockMasterDataAction } from 'store/actions/data/dealerBlockMaster';
 import { showGlobalNotification } from 'store/actions/notification';
-
 import TreeSelectField from '../../common/TreeSelectField';
 import { bindActionCreators } from 'redux';
-import { debounce } from 'utils/debounce';
 
 import { withDrawer } from 'components/withDrawer';
 
-//import styles from 'components/common/Common.module.css';
 import styles from 'assets/sass/app.module.scss';
-
-const { Search } = Input;
 
 const mapStateToProps = (state) => {
     const {
@@ -32,7 +26,7 @@ const mapStateToProps = (state) => {
             ManufacturerAdmin: {
                 ManufacturerAdminHierarchy: { isLoaded: isDataLoaded = false, isLoading: ManufacturerAdminHierarchyLoading, data: manufacturerAdminHierarchyData = [] },
             },
-            DealerBlockMaster: { isLoaded: isDealerDataLoaded = false, isLoading: dealerBlockLoading, data: dealerBlockData = [] }
+            DealerBlockMaster: { isLoaded: isDealerDataLoaded = false, isLoading: dealerBlockLoading, data: dealerBlockData = [] },
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -68,30 +62,13 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 const AddEditFormMain = (props) => {
-    const { onCloseAction, setSearchDealerValue, formData, selectedProductName, userId, options, setOptions, fetchList, organizationId, makeExtraparms, listShowLoading, manufacturerAdminHierarchyData, selectedTreeKey, dealerDataList, onErrorAction, selectedTreeSelectKey, selectedOrganizationCode, handleSelectTreeClick, flatternData, formActionType, EDIT_ACTION, VIEW_ACTION } = props;
-    const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed, dealerBlockData, form, fetchDealerList, listDealerShowLoading } = props;
+    const { onCloseAction, formData, selectedProductName, userId, fetchList, organizationId, makeExtraparms, listShowLoading, manufacturerAdminHierarchyData, onErrorAction, selectedTreeSelectKey, selectedOrganizationCode, handleSelectTreeClick, formActionType, EDIT_ACTION, VIEW_ACTION } = props;
+    const { isFormBtnActive, setFormBtnActive, onFinish, dealerBlockData, form, fetchDealerList, listDealerShowLoading } = props;
     const organizationFieldNames = { title: 'manufactureAdminShortName', key: 'id', children: 'subManufactureAdmin' };
     const treeFieldNames = { ...organizationFieldNames, label: organizationFieldNames.title, value: organizationFieldNames.key };
     const [attributeKey, setAttribteKey] = useState();
     const [selectedValue, setSelectedValue] = useState();
 
-    // useEffect(() => {
-    //     if (dealerBlockData) {
-
-    //         const data = dealerBlockData ? Object.values(dealerBlockData) : undefined;
-    //         const dealerOption = {
-    //             label: data?.[0]?.dealerCode,
-    //             value: data?.[0]?.dealerCode,
-    //             key: data?.[0]?.dealerCode,
-    //         };
-    //         setOptions([dealerOption]);
-    //     } else {
-    //         setOptions(["All"]);
-
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [dealerDataList]);
-    
     useEffect(() => {
         if (attributeKey && selectedValue && userId) {
             const extraParams = [
@@ -119,8 +96,9 @@ const AddEditFormMain = (props) => {
     }, [userId, organizationId]);
 
     useEffect(() => {
-        form.setFieldsValue({ hierarchyMstId: formData?.hierarchyMstName })
-    }, [formData])
+        form.setFieldsValue({ hierarchyMstId: formData?.hierarchyMstName });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData]);
 
     const handleFormValueChange = () => {
         setFormBtnActive(true);
@@ -130,19 +108,18 @@ const AddEditFormMain = (props) => {
         setFormBtnActive(true);
     };
 
-
     let treeCodeId = '';
     let treeCodeReadOnly = false;
     if (formActionType === EDIT_ACTION || formActionType === VIEW_ACTION) {
         treeCodeId = formData?.parntProdctId;
-    } 
+    }
 
     const treeSelectFieldProps = {
         treeFieldNames,
         treeData: manufacturerAdminHierarchyData,
         treeDisabled: treeCodeReadOnly,
         onSelects: (value, treeObj, obj) => {
-            setAttribteKey(treeObj?.attributeKey)
+            setAttribteKey(treeObj?.attributeKey);
             setSelectedValue(value);
         },
         selectedTreeSelectKey,
@@ -151,11 +128,9 @@ const AddEditFormMain = (props) => {
         placeholder: preparePlaceholderSelect('parent'),
     };
 
-
-
     return (
         <>
-            <Form autoComplete="off" form={form} layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Form autoComplete="off" form={form} layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>
                 <Row gutter={20} className={styles.drawerBody}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Row gutter={20}>
@@ -179,7 +154,6 @@ const AddEditFormMain = (props) => {
                                         <Search  onChange={handleOnClear} placeholder={preparePlaceholderAutoComplete(' / Search Dealer Name')} type="text" allowClear />
                                     </AutoComplete> */}
                                     {customSelectBox({ data: dealerBlockData, fieldNames: { key: 'dealerCode', value: 'dealerCode' }, placeholder: preparePlaceholderSelect('Dealer Code') })}
-
                                 </Form.Item>
                             </Col>
                         </Row>

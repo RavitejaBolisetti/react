@@ -21,14 +21,9 @@ export const tableColumnDeliveryNoteMaster = ({ handleButtonClick, actionButtonV
             dataIndex: 'modelGroup',
             width: '14%',
         }),
-        // tblPrepareColumns({
-        //     title: 'Booking No.',
-        //     dataIndex: 'otfNumber',
-        //     width: '14%',
-        //     render: (_, record) => record?.bookingNumber || record?.otfNumber,
-        // }),
+
         tblPrepareColumns({
-            title: 'Delivery Note No. & Date',
+            title: deliveryType === DELIVERY_TYPE?.NOTE?.key ? 'Delivery Note No. & Date' : 'Challan No. & Date' ,
             dataIndex: 'vehicleDeliveryNote',
             width: '20%',
             render: (_, value) => {

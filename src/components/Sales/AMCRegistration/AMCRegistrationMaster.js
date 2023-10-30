@@ -37,6 +37,7 @@ import { amcSchemeDataAction } from 'store/actions/data/amcRegistration/amcSchem
 import { AMC_CONSTANTS } from './utils/AMCConstants';
 import { AMC_REQUEST_TITLE_CONSTANTS } from './utils/AMCRequestTitleConstant';
 import { ReportModal } from 'components/common/ReportModal/ReportModal';
+import { LANGUAGE_EN } from 'language/en';
 
 const mapStateToProps = (state) => {
     const {
@@ -346,7 +347,11 @@ export const AMCRegistrationMasterBase = (props) => {
     const handleBookingNumberSearch = (otfNumber = '') => {
         const onSuccessAction = (res) => {
             registrationForm.setFieldsValue({ vin: res?.data?.otfDetails[0]?.vin });
+            if (!res?.data?.otfDetails[0]?.vin) {
+                showGlobalNotification({ title: 'Error', notificationType: 'error', message: LANGUAGE_EN?.GENERAL?.NO_VIN_FOUND?.MESSAGE });
+            }
         };
+
         if (otfNumber) {
             const extraParams = [
                 {
@@ -403,13 +408,13 @@ export const AMCRegistrationMasterBase = (props) => {
                 setSelectedAMC('');
                 break;
             case EDIT_ACTION:
-                fetchDetail({ setIsLoading: listShowLoading, userId, extraParams: detailExtraParams, customURL, onSuccessAction, onErrorAction });
+                fetchDetail({ setIsLoading: listShowLoading, userId, extraParams: detailExtraParams, customURL, onErrorAction });
 
                 record && setSelectedAMC(record);
                 openDefaultSection && setCurrentSection(defaultSection);
                 break;
             case VIEW_ACTION:
-                fetchDetail({ setIsLoading: listShowLoading, userId, extraParams: detailExtraParams, customURL, onSuccessAction, onErrorAction });
+                fetchDetail({ setIsLoading: listShowLoading, userId, extraParams: detailExtraParams, customURL, onErrorAction });
                 record && setSelectedAMC(record);
                 defaultSection && setCurrentSection(defaultSection);
                 setIsPendingForCancellation(record?.status === AMC_CONSTANTS?.PENDING_FOR_CANCELLATION?.title);
@@ -508,10 +513,6 @@ export const AMCRegistrationMasterBase = (props) => {
         advanceFilterForm.resetFields();
     };
 
-    const onFinishFailed = (errorInfo) => {
-        return;
-    };
-
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
@@ -570,8 +571,6 @@ export const AMCRegistrationMasterBase = (props) => {
         filterString,
         setFilterString,
         from: listFilterForm,
-
-        onFinishFailed,
         handleResetFilter,
         advanceFilterForm,
         handleButtonClick,
@@ -640,6 +639,7 @@ export const AMCRegistrationMasterBase = (props) => {
             default:
                 return AMC_REQUEST_TITLE_CONSTANTS?.DEALER_AMC_CANCELLATION?.key;
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isRejectModalVisible]);
 
     const handleCancelRequest = () => {
@@ -694,7 +694,6 @@ export const AMCRegistrationMasterBase = (props) => {
         formActionType,
         setFormActionType,
         AMConFinish: onFinish,
-        onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
         titleOverride: drawerTitle.concat(moduleTitle),

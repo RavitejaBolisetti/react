@@ -7,16 +7,27 @@ export const STATUS = {
     PENDING: {
         id: 'PENDING',
         title: 'Pending',
-        key: 'Pending',
+        key: 'PND',
     },
     APPROVED: {
         id: 'APPROVED',
-        title: 'Approved',
-        key: 'Approved',
+        title: 'Approve',
+        key: 'WFACTAPR',
     },
     REJECTED: {
         id: 'REJECTED',
-        title: 'Rejected',
-        key: 'Rejected',
+        title: 'Reject',
+        key: 'WFACTREJ',
     },
 };
+
+    export const STATUS_CHANGE_HISTORY = {
+        APPROVED: {
+            id: 'APPROVED',
+            key: 'APR',
+        },
+        REJECTED: {
+            id: 'REJECTED',
+            key: 'REJ',
+        },
+    };

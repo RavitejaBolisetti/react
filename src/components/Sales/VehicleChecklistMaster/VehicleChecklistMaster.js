@@ -105,7 +105,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
     const [formActionType, setFormActionType] = useState('');
 
     const [formData, setFormData] = useState([]);
-
+    const [disabledModelGroupData, setDisabledModelGroupData] = useState([]);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [searchValue, setSearchValue] = useState('');
     const [attributeType, setAttributeType] = useState();
@@ -114,7 +114,6 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
     const [answerType, setAnswerType] = useState(null);
     const [answerData, setAnswerData] = useState([]);
     const [modelData, setModelData] = useState([]);
-    const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
 
     const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -160,6 +159,21 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
         setSelectedTreeKey([]);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [buttonType]);
+
+    useEffect(() => {
+        if (modelGroupData?.length > 0) {
+            setDisabledModelGroupData([]);
+            for (let i = 0; i < modelGroupData?.length; i++) {
+                let data = modelData?.find((f) => f?.modelGroupCode === modelGroupData?.[i]?.modelGroupCode);
+                if (data) {
+                    setDisabledModelGroupData((prev) => [...prev, { ...modelGroupData?.find((e) => e?.modelGroupCode === data?.modelGroupCode), disabled: true }]);
+                } else {
+                    setDisabledModelGroupData((prev) => [...prev, modelGroupData[i]]);
+                }
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [modelGroupData, modelData, formActionType]);
 
     useEffect(() => {
         let obj = {
@@ -379,7 +393,13 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
     const handleAdd = () => {
         setFormBtnActive(false);
         setIsFormVisible(true);
-        setIsAddBtnClicked(() => !isAddBtnClicked);
+        //setIsAddBtnClicked(() => !isAddBtnClicked);
+        setFormActionType(FROM_ACTION_TYPE.ADD);
+        form.setFieldsValue({
+            attributeLevel: VEHICLE_CHECKLIST_TYPE?.GROUP?.key,
+            parentCode: 'DMS',
+        });
+        setSelectedTreeSelectKey('DMS');
     };
 
     const handleButtonClick = (type) => {
@@ -464,6 +484,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
         setModelEdit,
         listShowLoadingVehicleChecklist,
         showGlobalNotification,
+        disabledModelGroupData,
     };
 
     const viewProps = {

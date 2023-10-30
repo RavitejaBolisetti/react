@@ -8,7 +8,6 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { Col, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
-import { FilterIcon } from 'Icons';
 
 import { financialAccountHeadDataActions } from 'store/actions/data/financialAccounting/financialAccountHead';
 import { documentTypeLedgerDataActions } from 'store/actions/data/financialAccounting/documentTypeLedger';
@@ -28,7 +27,6 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { ListDataTable } from 'utils/ListDataTable';
 import { btnVisiblity } from 'utils/btnVisiblity';
-import { TbUserExclamation } from 'react-icons/tb';
 
 const mapStateToProps = (state) => {
     const {
@@ -50,15 +48,10 @@ const mapStateToProps = (state) => {
     } = state;
 
     const moduleTitle = 'Vehicle Allotment Priority Master';
-
-    // const ChangeHistoryTitle = 'Vehicle Priority Master History ';
-
     let returnValue = {
         userId,
         moduleTitle,
         typeData: typeData,
-        // financialAccount,
-        // docTypeLedgerData: docTypeLedgerData?.paginationData,
         totalRecords: vehicleAllotData?.totalRecords,
         productHierarchyList,
         vehicleAllotData,
@@ -180,7 +173,7 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
             setFilterDesignationDropdownList(matchDesignationList);
         } else {
             notificationDetailForm.setFieldValue('designationCode', undefined);
-            setFilterDesignationList(); 
+            setFilterDesignationList();
             onErrorAction('Designations are not exist.');
         }
     };
@@ -353,10 +346,6 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
         saveDataAllot(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {}).catch(err => console.error(err));
-    };
-
     const removeFilter = (key) => {
         if (key === 'searchParam') {
             const { searchType, searchParam, ...rest } = filterString;
@@ -372,7 +361,6 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
         }
         setFilterString();
         advanceFilterForm.resetFields();
-        // setAdvanceSearchVisible(false);
     };
     const onCloseAction = () => {
         setFormEdit(false);
@@ -390,14 +378,14 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
         }
     };
 
-    const handleClearInSearch = (e) => {
-        if (e?.target?.value === '') {
-            setFilterString();
-            listFilterForm.resetFields();
-        } else if (e.target.value.length > 2) {
-            listFilterForm.validateFields(['code']);
-        }
-    };
+    // const handleClearInSearch = (e) => {
+    //     if (e?.target?.value === '') {
+    //         setFilterString();
+    //         listFilterForm.resetFields();
+    //     } else if (e.target.value.length > 2) {
+    //         listFilterForm.validateFields(['code']);
+    //     }
+    // };
 
     const handleReferesh = () => {
         setRefershData(!refershData);
@@ -424,7 +412,6 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
         formActionType,
         setFormActionType,
         onFinish,
-        onFinishFailed,
         setFilterString,
         isVisible: isFormVisible,
         onCloseAction,
@@ -447,7 +434,6 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
         dropdownItems,
         setDropdownItems,
         isFormBtnActive,
-        // financialAccount,
         typeData,
         productHierarchyList,
         viewVehicleAllotData,
@@ -461,6 +447,7 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
         matchDesignationList,
         filterDesignationDropdownList,
         setFilterDesignationDropdownList,
+        showDataLoading,
     };
 
     const title = 'Vehicle Allotment List';
@@ -471,14 +458,13 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
         filterString,
         from: listFilterForm,
         onSearchHandle,
-        handleClearInSearch,
+        // handleClearInSearch,
         handleReferesh,
         handleButtonClick,
         title,
         extraParams,
         setFilterString,
         onFinish,
-        onFinishFailed,
         advanceFilterForm,
         setAdvanceSearchVisible,
         typeData: typeData?.['VEH_PR_MOD_GR'],
@@ -490,7 +476,6 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
         onCloseAction: onAdvanceSearchCloseAction,
-        // icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
 
         filterString,

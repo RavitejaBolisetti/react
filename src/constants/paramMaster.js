@@ -441,4 +441,16 @@ export const PARAM_MASTER = {
         id: 'AMC_CANCEL_REASON',
         title: 'AMC cancellation reason',
     },
+    ONRDPRCMSTTMPLT: {
+        id: 'ONRDPRCMSTTMPLT',
+        title: 'OnRoad Price Master template download',
+    },
+    CHRGR_INST_HDR_STAT: {
+        id: 'CHRGR_INST_HDR_STAT',
+        title: 'Charger Installation Status',
+    },
+    EMP_TYP: {
+        id: 'EMP_TYP',
+        title: 'Delivery note employee key',
+    }
 };

@@ -15,11 +15,7 @@ const { Text } = Typography;
 
 // const expandIcon = ({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />);
 const ViewDetailBase = (props) => {
-    const { formData, styles, isLoading, roleData, data, productHierarchyList } = props;
-
-    // const currentRole = formData?.roleData?.find((i) => i?.key === props?.roleCode)?.value;
-    // const currentDestination =  filterDesignationList?.find((i) => i?.designationCode === props?.designationCode)?.designationDescription;
-
+    const { formData, styles, isLoading, roleData, data } = props;
     const viewOneColProps = {
         bordered: false,
         colon: false,
@@ -33,21 +29,6 @@ const ViewDetailBase = (props) => {
     const getDesignationName = (value) => {
         return data?.find((i) => i?.designationCode === value)?.designationDescription;
     };
-
-    const getOldModelGroup = (value) => {
-        return productHierarchyList?.find((i) => i?.prodctCode === value)?.prodctShrtName;
-    };
-
-    const getNewModelGroup = (value) => {
-        return productHierarchyList?.find((i) => i?.prodctCode === value)?.prodctShrtName;
-    };
-
-    //  const getOldModelGroup = (value) => {
-    //     return productHierarchyList?.find((i) => i?.prodctCode === value)?.prodctShrtName;
-    //  };
-    //  const getNewModelGroup = (value) => {
-    //     return productHierarchyList?.find((i) => i?.prodctCode === value)?.prodctShrtName;
-    //  };
 
     return (
         <>

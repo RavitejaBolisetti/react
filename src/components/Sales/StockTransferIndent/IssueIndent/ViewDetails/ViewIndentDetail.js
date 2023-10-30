@@ -7,7 +7,6 @@ import React from 'react';
 import { Card, Descriptions } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { converDateDayjs } from 'utils/formatDateTime';
-import styles from 'assets/sass/app.module.scss';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
 const ViewIndentDetailMain = (props) => {

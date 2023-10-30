@@ -64,31 +64,6 @@ const AddEditFormMain = (props) => {
         setCustomerCategory(value);
     };
 
-    // const consentFormProps = {
-    //     isReplaceEnabled: false,
-    //     fileList,
-    //     setFileList,
-    //     setUploadedFile,
-    //     uploadedFile,
-    //     emptyList,
-    //     setEmptyList,
-    //     uploadedFileName,
-    //     setUploadedFileName,
-    //     handleFormValueChange,
-
-    //     uploadButtonName: 'Upload File',
-    //     messageText: (
-    //         <>
-    //             Click or drop your file here to upload the signed and <br />
-    //             scanned customer form
-    //         </>
-    //     ),
-    //     validationText: <>File type should be png, jpg or pdf and max file size to be 5Mb</>,
-    //     supportedFileTypes: ['image/png', 'image/jpg', 'image/jpeg', 'application/pdf'],
-    //     maxSize: 5,
-    //     single: true,
-    // };
-
     return (
         <>
             <Row gutter={20}>
@@ -180,31 +155,6 @@ const AddEditFormMain = (props) => {
                         </Panel>
                     </Collapse>
 
-                    {/* <Collapse defaultActiveKey={['2']} expandIcon={expandIcon} expandIconPosition="end">
-                            <Panel key="2" header="Social Profiles">
-                                <Divider />
-                                <Row gutter={20}>
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="M1-MMFSL" initialValue={formData?.m1mmfsl} name="mmfsl">
-                                            <Input maxLength={50} placeholder={preparePlaceholderText('Enter Link')} />
-                                        </Form.Item>
-                                    </Col>
-
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Facebook Link" initialValue={formData?.facebookLink} name="facebookLink" rules={[validatFacebookProfileUrl('facebookLink')]}>
-                                            <Input maxLength={50} placeholder={preparePlaceholderText('Enter Link')} />
-                                        </Form.Item>
-                                    </Col>
-
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Twitter Link" initialValue={formData?.twitterLink} name="twitterLink" rules={[validattwitterProfileUrl('twitterLink')]}>
-                                            <Input maxLength={50} placeholder={preparePlaceholderText('Enter Link')} />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                            </Panel>
-                        </Collapse> */}
-
                     <Collapse defaultActiveKey={['3']} expandIcon={expandIcon} expandIconPosition="end" collapsible="icon">
                         <Panel key="3" header="Key Account Details">
                             <Divider />
@@ -241,58 +191,6 @@ const AddEditFormMain = (props) => {
                             </Row>
                         </Panel>
                     </Collapse>
-
-                    {/* <Collapse defaultActiveKey={['4']} expandIcon={expandIcon} expandIconPosition="end">
-                            <Panel key="4" header="Authority Details(Who Knows Whom)">
-                                <Divider />
-                                <Row gutter={20}>
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Name Of Person" initialValue={formData?.authorityDetails && formData?.authorityDetails?.personName} name="personName" rules={[validateRequiredInputField('Person Name'), validateLettersWithWhitespaces('Person Name')]}>
-                                            <Input maxLength={50} placeholder={preparePlaceholderText('Name Of Person')} />
-                                        </Form.Item>
-                                    </Col>
-
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Position" initialValue={formData?.authorityDetails && formData?.authorityDetails?.postion} name="postion">
-                                            <Input maxLength={50} placeholder={preparePlaceholderText('Position')} />
-                                        </Form.Item>
-                                    </Col>
-
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Company Name" initialValue={formData?.authorityDetails && formData?.authorityDetails?.companyName} name="companyName" rules={[validateRequiredInputField('Company Name')]}>
-                                            <Input maxLength={50} placeholder={preparePlaceholderText('Company Name')} />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                        <Form.Item label="Remarks" initialValue={formData?.authorityDetails && formData?.authorityDetails?.remarks} name="remarks">
-                                            <TextArea showCount maxLength={300} placeholder={preparePlaceholderText('Remarks')} />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                            </Panel>
-                        </Collapse> */}
-
-                    {/*  DON'T REMOVE BELOW COMMENTED CODE
-                        <Collapse defaultActiveKey={['5']} expandIcon={expandIcon} expandIconPosition="end">
-                            <Panel key="5" header="Upload Customer Form">
-                                <Divider />
-                                <Space direction="vertical">
-                                    <Form.Item initialValue={formData?.customerConsent} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="customerConsent">
-                                        <Checkbox>I Consent to share my details with Mahindra & Mahindra. </Checkbox>
-                                    </Form.Item>
-                                    <UploadUtil key={2} {...consentFormProps} />
-                                </Space>
-                                {formData?.customerFormDocId && (
-                                    <>
-                                        <div className={styles.viewDrawerContainer}>
-                                            <Card className={styles.viewDocumentStrip} key={viewDocument?.fileName} title={viewDocument?.fileName} extra={<FiDownload onClick={handleOnClick} />}></Card>
-                                        </div>
-                                    </>
-                                )}
-                            </Panel>
-                        </Collapse> */}
                 </Col>
             </Row>
         </>

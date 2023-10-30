@@ -8,12 +8,12 @@ export const MODEL_TITLE = {
         title: 'Checklist Details',
     },
     ADD: {
-        title: 'Add ',
+        title: 'Add',
     },
     EDIT: {
-        title: 'Edit ',
+        title: 'Edit',
     },
     VIEW: {
-        title: 'View ',
+        title: 'View',
     },
 };

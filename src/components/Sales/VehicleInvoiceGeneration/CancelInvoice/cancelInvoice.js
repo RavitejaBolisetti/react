@@ -15,12 +15,8 @@ import { validateRequiredInputField } from 'utils/validation';
 import styles from 'assets/sass/app.module.scss';
 
 export const CancelInvoiceForm = ({ handleCloseReceipt, handleCancelReceipt, cancelInvoiceForm, typeData }) => {
-    const onFinishFailed = () => {
-        return;
-    };
-
     return (
-        <Form autoComplete="off" form={cancelInvoiceForm} onFinish={handleCancelReceipt} layout="vertical" onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" form={cancelInvoiceForm} onFinish={handleCancelReceipt} layout="vertical">
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item label="Reason for Cancellation" name="cancelReason" rules={[validateRequiredInputField('Reason for Cancellation')]}>

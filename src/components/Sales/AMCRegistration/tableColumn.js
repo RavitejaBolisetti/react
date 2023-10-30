@@ -8,7 +8,7 @@ import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import styles from 'assets/sass/app.module.scss';
 import { AMC_CONSTANTS } from './utils/AMCConstants';
 
-export const tableColumn = ({ handleButtonClick, page, pageSize, userType }) => {
+export const tableColumn = ({ handleButtonClick, userType }) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'AMC Registration No. & Date',

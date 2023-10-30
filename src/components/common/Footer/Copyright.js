@@ -5,15 +5,19 @@
  */
 import React from 'react';
 import moment from 'moment';
+import { useTranslation } from 'react-i18next';
+import parser from 'html-react-parser';
 import { convertDateTime } from 'utils/formatDateTime';
 
 import styles from './Footer.module.scss';
-function Copyright({ alignRight }) {
+
+const Copyright = ({ alignRight }) => {
+    const { t: translate } = useTranslation();
     return (
         <div className={alignRight ? styles.footerRight : styles.footerText}>
-            <span>Copyright &copy; {convertDateTime(moment(), 'Y ')} ROBIN.</span>
+            <span>{parser(translate('footer.copyright').replace('{YEAR}', convertDateTime(moment(), 'Y ')))}</span>
         </div>
     );
-}
+};
 
 export default Copyright;

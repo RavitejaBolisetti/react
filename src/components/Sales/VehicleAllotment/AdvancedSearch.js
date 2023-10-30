@@ -46,11 +46,6 @@ export const AdvancedSearchFrom = (props) => {
     const handleResetFilter = (e) => {
         advanceFilterForm.resetFields();
     };
-
-    const onFinishFailed = () => {
-        return;
-    };
-
     const handleSelectTreeClick = (value) => {
         setParentAppCode(value);
         advanceFilterForm.setFieldValue('model', value);
@@ -72,7 +67,7 @@ export const AdvancedSearchFrom = (props) => {
     };
 
     return (
-        <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     {/* <Form.Item initialValue={filterString?.model} label="Model Description" name="model">

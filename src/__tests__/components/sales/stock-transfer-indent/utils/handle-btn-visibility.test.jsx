@@ -100,7 +100,7 @@ describe("handleBtnVisibility component", ()=>{
         handleBtnVisibility(props);
     });
 
-    it("defaultVisibility, canAdd: true", ()=>{
+    it("default", ()=>{
         const props = {
             defaultVisibility : {
                 canCancel: true,

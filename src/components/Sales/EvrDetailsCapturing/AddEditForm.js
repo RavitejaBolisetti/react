@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Row, Col, Input, Form, Switch, DatePicker } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
@@ -14,16 +14,18 @@ import { disableFutureDate } from 'utils/disableDate';
 import { ViewDetail } from './ViewDetail';
 
 import styles from 'assets/sass/app.module.scss';
+import { getCodeValue } from 'utils/getCodeValue';
 
 const { TextArea } = Input;
 const AddEditFormMain = (props) => {
-    const { form, formData, buttonData, setButtonData, typeData, isEvrDetailLoading, handleButtonClick, onCloseAction, formActionType, onFinish, onFinishFailed } = props;
+    const { form, formData, buttonData, setButtonData, typeData, isEvrDetailLoading, handleButtonClick, onCloseAction, formActionType, onFinish, grnStatusType } = props;
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
 
     const buttonProps = {
+        saveButtonName: 'Submit',
         formData,
         onCloseAction,
         buttonData,
@@ -38,11 +40,21 @@ const AddEditFormMain = (props) => {
         typeData,
         formActionType,
         isLoading: isEvrDetailLoading,
+        grnStatusType,
     };
+
+    useEffect(() => {
+        if (formData?.grnStatus) {
+            form.setFieldsValue({
+                grnStatus: getCodeValue(grnStatusType, formData?.grnStatus),
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData]);
 
     return (
         <>
-            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
                 <Row gutter={20} className={styles.drawerBody}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         {formActionType?.viewMode ? (

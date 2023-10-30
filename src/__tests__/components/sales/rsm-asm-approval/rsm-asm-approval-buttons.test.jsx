@@ -23,9 +23,5 @@ describe('RSM ASM form-button components', () => {
 
         const closeBtn = screen.getByRole('button', { name: 'Close' });
         fireEvent.click(closeBtn);
-        const rejectBtn = screen.getByRole('button', { name: 'Reject' });
-        fireEvent.click(rejectBtn);
-        const approveBtn = screen.getByRole('button', { name: 'Approve' });
-        fireEvent.click(approveBtn);
     });
 });

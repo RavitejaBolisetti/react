@@ -386,7 +386,7 @@ export const VehiclePriceMasterBase = (props) => {
             }
         };
 
-    const onFinish = (values) => {
+    const onFinish = () => {
         let data = { docId: uploadedFile };
         const onSuccess = (res) => {
             setIsUploadFormVisible(false);
@@ -425,11 +425,6 @@ export const VehiclePriceMasterBase = (props) => {
 
         saveData(requestData);
     };
-
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {}).catch(err => console.error(err));
-    };
-
     const onCloseAction = () => {
         form.resetFields();
         setIsFormVisible(false);
@@ -463,21 +458,9 @@ export const VehiclePriceMasterBase = (props) => {
             listFilterForm.setFieldsValue({ code: undefined });
         }
     };
-
-    // const handleClearInSearch = (e) => {
-    //     if (e.target.value.length > 2) {
-    //         listFilterForm.validateFields(['code']);
-    //     } else if (e?.target?.value === '') {
-    //         setFilterString();
-    //         listFilterForm.resetFields();
-    //         setShowDataLoading(false);
-    //     }
-    // };
-
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
         onCloseAction: onAdvanceSearchCloseAction,
-        // icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
         isDataCountryLoaded,
         isCountryLoading,
@@ -496,7 +479,6 @@ export const VehiclePriceMasterBase = (props) => {
         filterString,
         setFilterString,
         advanceFilterForm,
-        // resetData,
         handleResetFilter,
         onSearchHandle,
         setAdvanceSearchVisible,
@@ -542,7 +524,6 @@ export const VehiclePriceMasterBase = (props) => {
         setFilterString,
         from: listFilterForm,
         onFinish,
-        onFinishFailed,
         handleResetFilter,
         advanceFilterForm,
 

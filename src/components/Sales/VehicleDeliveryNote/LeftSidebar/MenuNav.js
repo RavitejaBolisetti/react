@@ -12,7 +12,7 @@ import { getSelectedMenuAttribute } from 'utils/getSelectedMenuAttribute';
 import styles from 'assets/sass/app.module.scss';
 
 const MenuNav = (props) => {
-    const { currentSection, setCurrentSection, previousSection, formActionType, selectedOrder, soldByDealer, deliveryStatus } = props;
+    const { currentSection, setCurrentSection, previousSection, formActionType, selectedOrder, soldByDealer, sectionName, setSection } = props;
     const deliveryNoteSectionList = Object.values(VEHICLE_DELIVERY_NOTE_SECTION);
 
     const className = (id) => {
@@ -20,8 +20,9 @@ const MenuNav = (props) => {
         return formActionType?.addMode && id > previousSection ? styles.cursorNotAllowed : styles.cursorPointer;
     };
 
-    const onHandle = (key) => {
+    const onHandle = ({ key, item }) => {
         selectedOrder && setCurrentSection(key);
+        selectedOrder && setSection(item);
     };
 
     const items = deliveryNoteSectionList
@@ -31,7 +32,7 @@ const MenuNav = (props) => {
                 validateDeliveryNote({ item, soldByDealer }) && {
                     dot: getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType })?.menuNavIcon,
                     children: (
-                        <div className={className(item?.id)} onClick={() => ((!formActionType?.addMode || (formActionType?.addMode && item?.id <= previousSection)) && currentSection !== VEHICLE_DELIVERY_NOTE_SECTION.THANK_YOU_PAGE.id ? onHandle(item?.id) : '')}>
+                        <div className={className(item?.id)} onClick={() => ((!formActionType?.addMode || (formActionType?.addMode && item?.id <= previousSection)) && currentSection !== VEHICLE_DELIVERY_NOTE_SECTION.THANK_YOU_PAGE.id ? onHandle({ item, key: item?.id }) : '')}>
                             {item.title}
                         </div>
                     ),

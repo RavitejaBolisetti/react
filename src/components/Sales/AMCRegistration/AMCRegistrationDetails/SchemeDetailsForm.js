@@ -5,15 +5,21 @@
  */
 import React from 'react';
 import { Row, Col, Form, DatePicker, Input } from 'antd';
-import { validateRequiredSelectField, validateRequiredInputField } from 'utils/validation';
+import { validateRequiredSelectField, validateRequiredInputField, validateOnlyPositiveNumber } from 'utils/validation';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { customSelectBox } from 'utils/customSelectBox';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
-
-
 const SchemeDetailsForm = (props) => {
-    const {  schemeForm, formData, typeData, handleFormValueChange, handleSchemeDescriptionChange, schemeData } = props;
+    const { schemeForm, formData, typeData, handleFormValueChange, handleSchemeDescriptionChange, schemeData } = props;
+
+    const isDiscountLessThanAmount = (value) => {
+        if (Number(schemeForm.getFieldValue('schemeBasicAmount')) < Number(value)) {
+            return Promise.reject('Discount cannot exceed Scheme amount');
+        } else {
+            return Promise.resolve();
+        }
+    };
 
     return (
         <Form layout="vertical" autoComplete="off" form={schemeForm} onFieldsChange={handleFormValueChange}>
@@ -43,7 +49,7 @@ const SchemeDetailsForm = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item label="Scheme Discount" name="schemeDiscount" rules={[validateRequiredInputField('Scheme Discount')]}>
+                    <Form.Item label="Scheme Discount" name="schemeDiscount" rules={[validateRequiredInputField('Scheme Discount'), validateOnlyPositiveNumber('Scheme Discount'), { validator: (__, value) => isDiscountLessThanAmount(value) }]}>
                         <Input maxLength={50} placeholder={preparePlaceholderText('Scheme Discount')} />
                     </Form.Item>
                 </Col>

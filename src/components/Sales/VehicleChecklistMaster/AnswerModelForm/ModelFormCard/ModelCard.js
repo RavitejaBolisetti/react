@@ -13,7 +13,7 @@ import ModelForm from './ModelForm';
 const { Text } = Typography;
 
 const ModelCard = (props) => {
-    const { finalFormdata, forceUpdate, modelData, setModelData, setOpenAccordian, changeValue, setChangeValue, modelForm, modelEdit, setModelEdit, uniqueCardEdit, setuniqueCardEdit, internalId, formActionType, modelSwitch, setModelSwitch, modelGroupData, modelEditForm, setFormBtnActive } = props;
+    const { finalFormdata, forceUpdate, modelData, setModelData, setOpenAccordian, changeValue, setChangeValue, modelForm, modelEdit, setModelEdit, uniqueCardEdit, setuniqueCardEdit, internalId, formActionType, modelSwitch, setModelSwitch, modelGroupData, modelEditForm, setFormBtnActive, disabledModelGroupData } = props;
     const modelName = modelGroupData?.find((e) => e?.modelGroupCode === props?.modelGroupCode)?.modelGroupDescription;
     let id = props?.id ? props?.id : props?.internalId;
     let IdType = props?.id ? 'id' : 'internalId';
@@ -23,7 +23,7 @@ const ModelCard = (props) => {
         setFormBtnActive(true);
         setModelSwitch(props?.status);
 
-        modelEditForm.setFieldsValue({
+        modelEditForm?.setFieldsValue({
             modelGroupCode: props?.modelGroupCode,
             status: props?.status,
             internalId: props?.internalId,
@@ -59,7 +59,7 @@ const ModelCard = (props) => {
         });
 
         setModelEdit(false);
-        modelForm.resetFields();
+        modelForm?.resetFields();
         forceUpdate();
     };
 
@@ -80,6 +80,7 @@ const ModelCard = (props) => {
         modelGroupData,
         modelData,
         modelEditForm,
+        disabledModelGroupData,
     };
 
     return (
@@ -102,8 +103,9 @@ const ModelCard = (props) => {
                                         onClick={() => {
                                             onModelEdit(props);
                                         }}
+                                        data-testid="edit"
                                     />
-                                    <Button onClick={() => modelDelete(props)} type="link" icon={<FiTrash />} disabled={props?.internalId ? false : true} />
+                                    <Button onClick={() => modelDelete(props)} type="link" icon={<FiTrash />} disabled={props?.internalId ? false : true} data-testid="delete" />
                                 </>
                             )}
                             {modelEdit && props[IdType] === uniqueCardEdit && (

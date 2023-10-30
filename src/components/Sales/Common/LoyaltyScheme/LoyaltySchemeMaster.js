@@ -100,7 +100,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const LoyaltySchemeMasterMain = (props) => {
     const { isLoyaltySchemeDataLoaded, isLoading, section, listShowLoading, fetchList, loyaltySchemeData, loyaltySchemeDataPass, userId, showGlobalNotification } = props;
-    const { form, selectedOrder, selectedRecordId, formActionType, handleFormValueChange, onFinishFailed, handleButtonClick, NEXT_ACTION } = props;
+    const { form, selectedOrder, selectedRecordId, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION } = props;
     const { typeData } = props;
     const { fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading } = props;
     const { isModelDataLoaded, isModelLoading, modelData, isVariantDataLoaded, isVariantLoading, variantData, saveData } = props;
@@ -118,7 +118,6 @@ const LoyaltySchemeMasterMain = (props) => {
             form.setFieldsValue({ ...data, customerCode: data?.customerId, oldChassisNumber: data?.chassisNumber, variantCode: data?.variant, vehicleModelGroup: data?.modelGroup, make: VEHICLE_COMPANY_MAKE });
             handleFilterChange('make', VEHICLE_COMPANY_MAKE);
             handleFilterChange('modelGroupCode', data?.modelGroup ?? '');
-            // setformData({ ...formData, ...data, customerCode: data?.customerId, oldChassisNumber: data?.chassisNumber, variantCode: data?.variant, vehicleModelGroup: data?.modelGroup, make: data?.make || VEHICLE_COMPANY_MAKE });
         } else if (data === null) {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'No data found' });
             form.resetFields(['customerCode', 'customerName', 'make', 'vehicleModelGroup', 'variantCode', 'registrationNumber', 'oldChassisNumber', 'customerDOB']);
@@ -306,7 +305,6 @@ const LoyaltySchemeMasterMain = (props) => {
     const formProps = {
         ...props,
         form,
-        onFinishFailed,
         onFinish,
         loyaltySchemeData,
         formData,
@@ -347,7 +345,7 @@ const LoyaltySchemeMasterMain = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

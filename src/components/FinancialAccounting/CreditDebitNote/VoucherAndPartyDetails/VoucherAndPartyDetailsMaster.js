@@ -68,7 +68,6 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VoucherAndPartyDetailsMasterMain = (props) => {
-    const { onFinishFailed } = props;
     const { formActionType, NEXT_ACTION, handleButtonClick } = props;
     const { handleFormValueChange, creditDebitData, isDetailLoaded } = props;
     const { showGlobalNotification, userId, setButtonData, buttonData, fetchList, listShowLoading, listPartyShowLoading, fetchDetail, requestPayload, setRequestPayload, typeData } = props;
@@ -214,7 +213,7 @@ export const VoucherAndPartyDetailsMasterMain = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}

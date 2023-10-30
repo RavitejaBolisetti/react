@@ -13,6 +13,11 @@ afterEach(() => {
     jest.restoreAllMocks();
 });
 
+jest.mock('store/actions/data/financialAccounting/documentTypeLedger', ()=>({
+    documentTypeLedgerDataActions:{}
+}));
+const fetchDocTypeLedgerDetail = jest.fn();
+
 const FormWrapper = (props) =>{
     const [form] = Form.useForm();
     const myMock = {
@@ -25,18 +30,27 @@ const FormWrapper = (props) =>{
 
 
 describe('Render components', () => {
+    it('documentTypeId', ()=>{
+        const formData = {documentTypeId: "798"};
+
+        customRender(<FormWrapper isVisible={true} formActionType={{}} formData={formData} fetchDocTypeLedgerDetail={fetchDocTypeLedgerDetail} />);
+
+        fetchDocTypeLedgerDetail.mock.calls[0][0].onSuccessAction();
+        fetchDocTypeLedgerDetail.mock.calls[0][0].onErrorAction();
+    });
+
     it('should render viewMode=true', () => {
         customRender(<FormWrapper isVisible={true} viewMode={true} formActionType={{}}/>);
         
         const closeBtn = screen.getByRole('button', {name:'Close'});
         fireEvent.click(closeBtn)
-    })
+    });
 
     it('should render viewMode=false', () => {
         customRender(<FormWrapper isVisible={true} viewMode={false} formActionType={{}}/>);
         
         const closeBtn = screen.getByRole('button', {name:'Close'});
         fireEvent.click(closeBtn)
-    })
+    });
 })
 

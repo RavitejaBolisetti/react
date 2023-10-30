@@ -5,7 +5,7 @@
  */
 
 import React, { useState } from 'react';
-import { Space, Collapse, Divider } from 'antd';
+import { Collapse, Divider } from 'antd';
 import { DataTable } from 'utils/dataTable';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { tableColumn } from './tableColumn';

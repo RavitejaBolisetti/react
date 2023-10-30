@@ -15,7 +15,7 @@ import { VEHICLE_TYPE } from 'constants/VehicleType';
 import { SearchBox } from 'components/utils/SearchBox';
 
 export default function AdvanceFilter(props) {
-    const { resetAdvanceFilter, setResetAdvanceFilter, setFilterString, setAdvanceSearchVisible, handleResetFilter, toggleButton, settoggleButton, advanceFilter, removeFilter, filterString, extraParams } = props;
+    const { setResetAdvanceFilter, setFilterString, setAdvanceSearchVisible, handleResetFilter, toggleButton, settoggleButton, advanceFilter, removeFilter, filterString, extraParams } = props;
 
     const [searchForm] = Form.useForm();
 

@@ -13,7 +13,7 @@ import { dateFormat } from 'utils/formatDateTime';
 const { Search } = Input;
 
 const AddEditForm = (props) => {
-    const { requestPayload, onSaveFormData, handleVinSearch, contactform, setShowAddEditForm, setIsEditing, formActionType, handleFormValueChange, setIsAdding } = props;
+    const { requestPayload, onSaveFormData, handleVinSearch, contactform, setShowAddEditForm, setIsEditing, formActionType, handleFormValueChange, setIsAdding, handleVINChange } = props;
 
     const handleCancelFormEdit = () => {
         contactform.resetFields();
@@ -29,7 +29,7 @@ const AddEditForm = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item label="VIN" name="vin">
-                                <Search placeholder={preparePlaceholderText('VIN')} onSearch={handleVinSearch} allowClear />
+                                <Search placeholder={preparePlaceholderText('VIN')} onChange={handleVINChange} onSearch={handleVinSearch} allowClear />
                             </Form.Item>
                         </Col>
                     </Row>

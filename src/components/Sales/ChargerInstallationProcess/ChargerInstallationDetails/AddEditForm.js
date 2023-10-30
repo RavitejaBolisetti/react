@@ -3,13 +3,14 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Row, Col, Form, Input, Collapse, Typography, Divider, Button, Descriptions, Card, Space } from 'antd';
 import styles from 'assets/sass/app.module.scss';
 import { expandIcon } from 'utils/accordianExpandIcon';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 import { DataTable } from 'utils/dataTable';
-import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField } from 'utils/validation';
 import { PlusOutlined } from '@ant-design/icons';
 import { AddRequestModal } from './AddRequestModal';
@@ -93,7 +94,7 @@ const AddEditFormMain = (props) => {
                                         </Col>
                                         {chargerDetails && (
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item initialValue={getCodeValue(crmCustomerVehicleData?.otfDetails?.orderStatus, typeData['ORDR_STATS'])} label="Booking Status" name="bookingStatus">
+                                                <Form.Item initialValue={getCodeValue(typeData['ORDR_STATS'], crmCustomerVehicleData?.otfDetails?.orderStatus)} label="Booking Status" name="bookingStatus">
                                                     <Input placeholder={preparePlaceholderText('Booking Status')} disabled={true} />
                                                 </Form.Item>
                                             </Col>
@@ -119,7 +120,7 @@ const AddEditFormMain = (props) => {
                                     <Descriptions {...viewProps}>
                                         <Descriptions.Item label="Request Id">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.requestId, isLoading)}</Descriptions.Item>
                                         <Descriptions.Item label="Request Date">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.requestDate, isLoading)}</Descriptions.Item>
-                                        <Descriptions.Item label="Request Status">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.requestStatus, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label="Request Status">{checkAndSetDefaultValue(getCodeValue(typeData?.[PARAM_MASTER.CHRGR_INST_HDR_STAT.id], chargerInstallationMasterData?.chargerInstDetails?.requestStatus), isLoading)}</Descriptions.Item>
                                         <Descriptions.Item label="Model Group">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelGroup, isLoading)}</Descriptions.Item>
                                         <Descriptions.Item label="Model Variant">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelVarient, isLoading)}</Descriptions.Item>
                                         <Descriptions.Item label="Seating Capacity">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.seatingCapacity, isLoading)}</Descriptions.Item>

@@ -11,7 +11,7 @@ import styles from 'assets/sass/app.module.scss';
 
 export const InsuranceDetailsMaster = (props) => {
     const { formData: insuranceData, onCloseAction, formActionType, userId, isDataLoaded } = props;
-    const { form, selectedRecordId, selectedOrderId, handleFormValueChange, section, isLoading, NEXT_ACTION, handleButtonClick, onFinishFailed } = props;
+    const { form, selectedRecordId, selectedOrderId, handleFormValueChange, section, isLoading, NEXT_ACTION, handleButtonClick } = props;
     const { buttonData, formKey, onFinishCustom = undefined, FormActionButton, pageType } = props;
     const [formData, setFormData] = useState();
 
@@ -52,7 +52,7 @@ export const InsuranceDetailsMaster = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed} onValuesChange={handleFormValueChange}>
+        <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish} onValuesChange={handleFormValueChange}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

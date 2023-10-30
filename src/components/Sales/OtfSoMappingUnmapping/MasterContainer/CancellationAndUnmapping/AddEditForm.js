@@ -16,7 +16,7 @@ import { BUTTON_NAME } from 'components/Sales/OtfSoMappingUnmapping/Constants';
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { isReadOnly = true, formData, form, handleFormValueChange, onFinish, onFinishFailed, buttonType } = props;
+    const { isReadOnly = true, formData, form, handleFormValueChange, onFinish, buttonType } = props;
     const disableProps = { disabled: isReadOnly };
     const showFields = BUTTON_NAME?.CANCEL?.key === buttonType;
     useEffect(() => {
@@ -29,7 +29,7 @@ const AddEditFormMain = (props) => {
     return (
         <>
             <div className={styles.drawerBodyNew}>
-                <Form form={form} id="myForm" autoComplete="off" layout="vertical" colon={false} onValuesChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                <Form form={form} id="myForm" autoComplete="off" layout="vertical" colon={false} onValuesChange={handleFormValueChange} onFinish={onFinish}>
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item name="soNumber" label="SO Number">

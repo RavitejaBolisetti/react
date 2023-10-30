@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -14,7 +14,6 @@ import { tblPrepareColumns, tblStatusColumn } from 'utils/tableCloumn';
 import { DataTable } from 'utils/dataTable';
 import { withDrawer } from 'components/withDrawer';
 import styles from 'components/common/ChangeHistory/ChangeHistory.module.scss';
-//import styles from 'components/common/ChangeHistory/ChangeHistory.module.css';
 
 const mapStateToProps = (state) => {
     const {
@@ -48,7 +47,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, isLoading, userId, isHistoryLoaded, changeHistoryData }) => {
     useEffect(() => {
-        if ( userId) {
+        if (userId) {
             fetchChangeHistoryList({ setIsLoading: changeHistoryShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

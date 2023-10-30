@@ -10,9 +10,6 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 import { validateRequiredSelectField } from 'utils/validation';
-
-import styles from 'assets/sass/app.module.scss';
-
 const { Search } = Input;
 const { Option } = Select;
 
@@ -45,13 +42,8 @@ const AddEditFormMain = (props) => {
         setButtonData({ ...buttonData, formBtnActive: false });
     };
 
-    // const handleSave = () => {};
-
-    // const onFinishFailed = () => {};
-
     return (
         <Card>
-            {/* <Form form={partyDetailForm} id="myAdd" onFinish={handleSave} autoComplete="off" layout="vertical" onFinishFailed={onFinishFailed}> */}
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={formData?.partySegment} label="Party Segment" name="partySegment" rules={[validateRequiredSelectField('Party Segment')]}>
@@ -109,9 +101,6 @@ const AddEditFormMain = (props) => {
                     </Row>
                 </>
             )}
-
-            {/* {RenderCustomerForm(partySegment)} */}
-            {/* </Form> */}
         </Card>
     );
 };

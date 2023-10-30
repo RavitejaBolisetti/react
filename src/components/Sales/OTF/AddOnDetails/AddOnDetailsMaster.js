@@ -85,8 +85,8 @@ export const AddOnDetailsMasterMain = (props) => {
     const [amcForm] = Form.useForm();
     const [fmsForm] = Form.useForm();
 
-    const onSuccessAction = (res) => {
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+    const onSuccessAction = () => {
+        return;
     };
 
     const onErrorAction = (message) => {

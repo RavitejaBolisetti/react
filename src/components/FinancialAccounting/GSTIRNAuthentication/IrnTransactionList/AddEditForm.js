@@ -24,7 +24,6 @@ const AddEditFormMain = (props) => {
     const { formData, setFinalData, buttonData, setButtonData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailForm } = props;
 
     const [activeKey, setactiveKey] = useState([]);
-    // const [vehicleDetailList, setVehicleDetailList] = useState([]);
 
     useEffect(() => {
         if (formData) {
@@ -49,11 +48,6 @@ const AddEditFormMain = (props) => {
             setactiveKey([...activeKey, values]);
         }
     };
-
-    const onFinishFailed = (errorInfo) => {
-        vehicleDetailForm.validateFields().then((values) => {}).catch(err => console.error(err));
-    };
-
     const handleSave = (indexId) => {
         vehicleDetailForm
             .validateFields()
@@ -83,7 +77,7 @@ const AddEditFormMain = (props) => {
 
     return (
         <>
-            <Form form={vehicleDetailForm} id="myAdd" onFinish={handleSave} autoComplete="off" layout="vertical" onFinishFailed={onFinishFailed}>
+            <Form form={vehicleDetailForm} id="myAdd" onFinish={handleSave} autoComplete="off" layout="vertical">
                 {formData?.map((item, index) => (
                     <div className={styles.accessInfo}>
                         <Collapse defaultActiveKey={index} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(index)} expandIconPosition="end" {...collapseProps}>

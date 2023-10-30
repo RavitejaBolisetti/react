@@ -88,12 +88,8 @@ const LeftSideBarMain = (props) => {
     const [openKeys, setOpenKeys] = useState([]);
     const [selectedKeys, setSelectedKeys] = useState([]);
     const [selectedMenuId, setSelectedMenuId] = useState();
-    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
-
-    // const onMenuClick = (id = 'Sales') => {
-    // const element = document.getElementById(id)?.closest('ul');
-    // element?.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
-    // };
+    // const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+    const theme = 'light';
 
     useEffect(() => {
         if (menuId) {
@@ -135,12 +131,6 @@ const LeftSideBarMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filter]);
 
-    const handleThemeChange = () => {
-        const changeTheme = theme === 'dark' ? 'light' : 'dark';
-        localStorage.setItem('theme', changeTheme);
-        setTheme(changeTheme);
-    };
-
     const onSubmit = (value, type) => {
         setCollapsed(value);
         setOpenKeys(getHierarchyParents({ subMenu: menuData }, selectedMenuId, fieldNames));
@@ -151,7 +141,7 @@ const LeftSideBarMain = (props) => {
     };
 
     const prepareMenuItem = (data) => {
-        return data.map(({ menuId, menuTitle, menuOrgTitle = '', parentMenuId = '', subMenu = [] }) => {
+        return data.map(({ menuId, menuTitle, parentMenuId = '', subMenu = [] }) => {
             const isParentMenu = parentMenuId === 'Web';
 
             return subMenu?.length ? (
@@ -186,7 +176,7 @@ const LeftSideBarMain = (props) => {
         setFilter(value);
     };
 
-    const onSelect = (menuId, label) => {
+    const onSelect = (menuId) => {
         menuForm.setFieldValue('searchKeyword', undefined);
         if (menuId && getMenuValue(MenuConstant, menuId, 'link')) {
             const menuLink = menuId && getMenuValue(MenuConstant, menuId, 'link') ? getMenuValue(MenuConstant, menuId, 'link').replace(':slug', getMenuValue(MenuConstant, menuId, 'slug')) : '#';

@@ -12,41 +12,15 @@ import { PlusOutlined } from '@ant-design/icons';
 
 import styles from 'assets/sass/app.module.scss';
 export default function AdvanceVehicleAllotMasterFilter(props) {
-    const {
-        extraParams,
-        removeFilter,
-        handleResetFilter,
-        advanceFilter = false,
-        otfFilter = false,
-        title,
-        filterString,
-        setFilterString,
-        typeData,
-        setAdvanceSearchVisible,
-        searchForm,
-        searchForm: { setFieldsValue },
-        // handleOnClick,
-        // tableData = [],
-        showAddButton = true,
-        // handleRefresh,
-        handleButtonClick,
-        // showChangeHistoryList,
-        // handleChangeHistory,
-        // buttonData,
-    } = props;
+    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, otfFilter = false, title, filterString, setFilterString, typeData, setAdvanceSearchVisible, searchForm, showAddButton = true, handleButtonClick } = props;
 
     const serachBoxProps = {
         searchForm,
         filterString,
         optionType: typeData,
         setFilterString,
-        maxLength: '50'
+        maxLength: '50',
     };
-
-    // useEffect(() => {
-    //     setFieldsValue({ searchParam: filterString?.searchParam, searchType: filterString?.searchType });
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [filterString]);
 
     return (
         <div className={styles.contentHeaderBackground}>

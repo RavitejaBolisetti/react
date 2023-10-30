@@ -18,7 +18,7 @@ import styles from 'assets/sass/app.module.scss';
 import style from 'components/common/TreeView.module.scss';
 
 const RoleApplicationModalrMain = (props) => {
-    const { form, formActionType, handleFormFieldChange, onFinishFailed, isLoading, roleListdata, handleSaveUserRoleAppliactions, handleCancelModal, handleSelectRole } = props;
+    const { form, formActionType, handleFormFieldChange, isLoading, roleListdata, handleSaveUserRoleAppliactions, handleCancelModal, handleSelectRole } = props;
     const { dlrAppList, mnmAppList, selectedRoleId, userRoleDataList, disableMdlSaveBtn, setDisableMdlSaveBtn, record } = props;
 
     useEffect(() => {
@@ -30,7 +30,6 @@ const RoleApplicationModalrMain = (props) => {
         reset: true,
         submit: true,
         hideSaveBtn: formActionType?.viewMode,
-        // saveDisabled: false,
         saveDisabled: disableMdlSaveBtn,
         htmltype: false,
         resetName: 'Cancel',
@@ -42,7 +41,7 @@ const RoleApplicationModalrMain = (props) => {
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Form autoComplete="off" key={'modalForm'} layout="vertical" form={form} onValuesChange={handleFormFieldChange} onFieldsChange={handleFormFieldChange} onFinishFailed={onFinishFailed}>
+                    <Form autoComplete="off" key={'modalForm'} layout="vertical" form={form} onValuesChange={handleFormFieldChange} onFieldsChange={handleFormFieldChange}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                                 <Form.Item label="Role" name="roleId">
@@ -58,7 +57,7 @@ const RoleApplicationModalrMain = (props) => {
                     ) : (
                         <ApplicationTree {...props} setDisableMdlSaveBtn={setDisableMdlSaveBtn} />
                     )}
-                    <div className={style.footerBorder} ></div>
+                    <div className={style.footerBorder}></div>
                     <ModalButtons {...modalBtnProps} />
                 </Col>
             </Row>

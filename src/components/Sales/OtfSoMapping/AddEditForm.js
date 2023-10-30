@@ -15,7 +15,7 @@ import styles from 'assets/sass/app.module.scss';
 
 const AddEditFormMain = (props) => {
     const { onCloseAction, otfSoUserMappingData } = props;
-    const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed, form } = props;
+    const { isFormBtnActive, setFormBtnActive, onFinish, form } = props;
 
     const handleFormValueChange = () => {
         setFormBtnActive(true);
@@ -27,7 +27,7 @@ const AddEditFormMain = (props) => {
 
     return (
         <>
-            <Form autoComplete="off" form={form} layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Form autoComplete="off" form={form} layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>
                 <Row gutter={20} className={styles.drawerBody}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Row gutter={20}>

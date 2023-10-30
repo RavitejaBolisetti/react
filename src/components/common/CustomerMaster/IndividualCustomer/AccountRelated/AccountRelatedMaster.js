@@ -54,7 +54,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const AccountRelatedMasterBase = (props) => {
-    const { form, handleFormValueChange, onFinishFailed } = props;
+    const { form, handleFormValueChange } = props;
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, accountData, saveData, isDataLoaded, isLoading, resetData } = props;
     const { formActionType, selectedCustomerId, handleButtonClick, NEXT_ACTION } = props;
 
@@ -98,9 +98,6 @@ export const AccountRelatedMasterBase = (props) => {
     }, [userId, selectedCustomerId]);
 
     const onFinish = (values) => {
-        // if(buttonData?.formBtnActive){
-
-        // }
         const data = { ...values, customerId: selectedCustomerId };
 
         const onSuccess = (res) => {
@@ -135,7 +132,7 @@ export const AccountRelatedMasterBase = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <h2>{section?.title} </h2>

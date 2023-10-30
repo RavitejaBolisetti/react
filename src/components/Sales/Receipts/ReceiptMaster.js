@@ -19,7 +19,6 @@ import { CancelReceipt } from './CancelReceipt';
 import { QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
 import { RECEIPT_SECTION } from 'constants/ReceiptSection';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
-// import { reportDataActions } from 'store/actions/data/report/reports';
 import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
 
 import { showGlobalNotification } from 'store/actions/notification';
@@ -30,8 +29,6 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { partyDetailDataActions } from 'store/actions/data/receipt/partyDetails';
 import { ReportModal } from 'components/common/ReportModal/ReportModal';
 
-// import { FilterIcon } from 'Icons';
-
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -40,7 +37,6 @@ const mapStateToProps = (state) => {
             Receipt: {
                 ReceiptSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString },
                 ReceiptDetails: { isLoaded: isDetailedDataLoaded = false, isLoading, data: receiptDetailData = [] },
-                //Reports: { data: reportData },
             },
         },
     } = state;
@@ -79,9 +75,6 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: receiptDataActions.listShowLoading,
 
             resetPartyDetailData: partyDetailDataActions.reset,
-
-            // fetchReportDetail: reportDataActions.fetchData,
-            // listReportShowLoading: reportDataActions.listShowLoading,
 
             showGlobalNotification,
         },
@@ -220,7 +213,6 @@ export const ReceiptMasterBase = (props) => {
                 key: 'receiptStatus',
                 title: 'Receipt Status',
                 value: receiptStatus,
-                // name: typeData?.[PARAM_MASTER.INDNT_STATS.id]?.find((i) => i?.key === receiptStatus)?.value,
                 canRemove: false,
                 filter: false,
             },
@@ -305,8 +297,7 @@ export const ReceiptMasterBase = (props) => {
             const nextSection = Object.values(sectionName)?.find((i) => i?.displayOnList && i.id > currentSection);
             setLastSection(!nextSection?.id);
         }
-        // form.resetFields();
-        // form.setFieldsValue(undefined);
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
 
@@ -325,8 +316,6 @@ export const ReceiptMasterBase = (props) => {
     };
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
-        // form.resetFields();
-        // form.setFieldsValue(undefined);
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
@@ -366,7 +355,6 @@ export const ReceiptMasterBase = (props) => {
             } else {
                 const Visibility = btnVisiblity({ defaultBtnVisiblity, buttonAction });
                 setButtonData(Visibility);
-                // setButtonData({ ...Visibility, cancelReceiptBtn: true });
                 if (buttonAction === VIEW_ACTION) {
                     receiptStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: false, printReceiptBtn: true }) : receiptStatus === QUERY_BUTTONS_CONSTANTS.APPORTION.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: true, printReceiptBtn: true }) : setButtonData({ ...Visibility, editBtn: true, cancelReceiptBtn: true, printReceiptBtn: true });
                 }
@@ -375,9 +363,7 @@ export const ReceiptMasterBase = (props) => {
         setIsFormVisible(true);
     };
 
-    const onFinishSearch = (values) => {};
-
-    const handleResetFilter = (e) => {
+    const handleResetFilter = () => {
         setShowDataLoading(false);
         setFilterString();
         advanceFilterForm.resetFields();
@@ -430,11 +416,6 @@ export const ReceiptMasterBase = (props) => {
 
         saveData(requestData);
     };
-
-    const onFinishFailed = (errorInfo) => {
-        return;
-    };
-
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
@@ -546,7 +527,6 @@ export const ReceiptMasterBase = (props) => {
         setFilterString,
         from: listFilterForm,
         onFinish,
-        onFinishFailed,
         handleResetFilter,
         advanceFilterForm,
         handleButtonClick,
@@ -559,15 +539,12 @@ export const ReceiptMasterBase = (props) => {
         setAdvanceSearchVisible,
         typeData,
         searchForm,
-        onFinishSearch,
     };
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
         receiptType,
         partySegmentType,
-
-        // icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
 
         onCloseAction: onAdvanceSearchCloseAction,
@@ -578,7 +555,6 @@ export const ReceiptMasterBase = (props) => {
         setAdvanceSearchVisible,
         receiptStatusList,
         typeData,
-        onFinishSearch,
     };
 
     const drawerTitle = useMemo(() => {
@@ -598,7 +574,6 @@ export const ReceiptMasterBase = (props) => {
         formActionType,
         setFormActionType,
         receiptOnFinish: onFinish,
-        onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
         titleOverride: drawerTitle.concat(moduleTitle),

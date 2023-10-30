@@ -54,12 +54,9 @@ const UploadUtilsMain = (props) => {
     const [isReplacing, setIsReplacing] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
-    const onError = (msg) => {
+    const onError = () => {
         setIsLoading(false);
     };
-
-    const onDrop = (e) => {};
-
     const onReplaceClick = () => {
         setIsReplacing(true);
     };
@@ -117,20 +114,16 @@ const UploadUtilsMain = (props) => {
         },
         progress: { size: 3, showInfo: true },
         accept: 'image/png, image/jpeg',
-        onDrop,
         onChange: (info) => {
             const { status } = info.file;
-            if (status === 'uploading') {
-                // setButtonData({ ...buttonData, formBtnActive: false });
-            } else if (status === 'done') {
+            if(status === 'done'){
                 setUploadedFile(info?.file?.response?.docId);
                 setUploadImgDocId(info?.file?.response?.docId);
                 message.success(`${info.file.name} file uploaded successfully.`);
-                // setButtonData({ ...buttonData, formBtnActive: true });
                 setIsReplacing(false);
-            } else if (status === 'error') {
+            } 
+            else(status === 'error'){
                 message.error(`${info.file.name} file upload failed.`);
-                // setButtonData({ ...buttonData, formBtnActive: true });
             }
         },
     };
@@ -151,12 +144,7 @@ const UploadUtilsMain = (props) => {
             accessToken,
             userId,
             onSuccess,
-            // onSuccess: (data) => {
-            //     setUploadedFile(data?.data?.docId);
-            //     setUploadImgDocId(data?.data?.docId);
-            //     setIsLoading(false);
-            //     setIsReplacing(false);
-            // },
+      
             onError,
             onTimeout: () => onError('Request timed out, Please try again'),
             postRequest: () => {},
