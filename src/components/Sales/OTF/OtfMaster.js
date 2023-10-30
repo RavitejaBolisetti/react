@@ -39,6 +39,7 @@ import styles from 'assets/sass/app.module.scss';
 
 import { OtfSoMappingUnmappingChangeHistory } from './OtfSoMappingUnmappingChangeHistory';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
+import { UnSaveDataConfirmation } from 'utils/UnSaveDataConfirmation';
 
 const { confirm } = Modal;
 
@@ -821,13 +822,8 @@ export const OtfMasterBase = (props) => {
 
     const unsavedDataModalProps = {
         isVisible: isUnsavedDataPopup,
-        titleOverride: LANGUAGE_EN.GENERAL.UNSAVE_DATA_WARNING.TITLE,
-        closable: false,
         onCloseAction: handleCancelUnsaveDataModal,
         onSubmitAction: handleOkUnsavedModal,
-        submitText: 'Leave',
-        showField: false,
-        text: LANGUAGE_EN.GENERAL.UNSAVE_DATA_WARNING.MESSAGE,
     };
 
     return (
@@ -846,7 +842,7 @@ export const OtfMasterBase = (props) => {
             {isAllotVisible && <OTFAllotmentMaster {...allotOTFProps} />}
             <OtfSoMappingUnmappingChangeHistory {...OtfSoMappingChangeHistoryProps} />
             <ConfirmationModal {...confirmRequest} />
-            <ConfirmationModal {...unsavedDataModalProps} />
+            <UnSaveDataConfirmation {...unsavedDataModalProps} />
         </>
     );
 };
