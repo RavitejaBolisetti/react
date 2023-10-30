@@ -17,6 +17,7 @@ import { STATUS } from '../statusConstant';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
 import { getCodeValue } from 'utils/getCodeValue';
+import { LANGUAGE_EN } from 'language/en';
 
 const mapStateToProps = (state) => {
     const {
@@ -33,6 +34,7 @@ const mapStateToProps = (state) => {
         data,
         isDataLoaded,
         isLoading,
+        REJECT_TITLE: 'Reject Name',
     };
     return returnValue;
 };
@@ -51,7 +53,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 const ViewDetailMain = (props) => {
     const { styles, userId, selectedCustomerId, formData, typeData, downloadFileFromButton, customerNameList, showGlobalNotification, setRefreshCustomerList, saveNameChangeData, listShowLoading } = props;
-    const { setRefreshData, showApproveNameChangeRequestBtn = false } = props;
+    const { setRefreshData, showApproveNameChangeRequestBtn = false, REJECT_TITLE } = props;
+    let actionData = formData?.customerNameChangeRequest?.workFlowDetails?.allowedActions;
 
     const [confirmRequest, setConfirmRequest] = useState();
     const onCloseAction = () => {
@@ -89,29 +92,17 @@ const ViewDetailMain = (props) => {
     };
 
     const handleRequest = (type) => {
-        if (type === STATUS?.APPROVED?.key) {
-            setConfirmRequest({
-                isVisible: true,
-                titleOverride: 'Approve Name',
-                closable: true,
-                icon: false,
-                onCloseAction,
-                onSubmitAction: () => onStatusChange({ status: STATUS?.APPROVED?.title }),
-                submitText: 'Yes, Approve',
-                text: 'Are you sure want to approve the changes within the current name?',
-            });
-        } else if (type === STATUS?.REJECTED?.key) {
-            setConfirmRequest({
-                isVisible: true,
-                titleOverride: 'Reject Name',
-                closable: true,
-                icon: false,
-                onCloseAction,
-                onSubmitAction: (values) => onStatusChange({ ...values, status: STATUS?.REJECTED?.title }),
-                submitText: 'Yes, Reject',
-                showField: true,
-            });
-        }
+        setConfirmRequest({
+            isVisible: true,
+            titleOverride: STATUS?.APPROVED?.key === type ? LANGUAGE_EN.GENERAL.APPROVE_CONFIRMATION.TITLE : REJECT_TITLE,
+            closable: true,
+            icon: false,
+            onCloseAction,
+            onSubmitAction: (values) => onStatusChange({ ...values, status: type }),
+            submitText: STATUS?.APPROVED?.key === type ? 'Yes, Approve' : 'Yes, Reject',
+            text: STATUS?.APPROVED?.key === type && LANGUAGE_EN.GENERAL.APPROVE_CONFIRMATION.MESSAGE,
+            showField: STATUS?.REJECTED?.key === type,
+        });
     };
 
     const canApproveNameChangeRequest = true;
@@ -158,13 +149,14 @@ const ViewDetailMain = (props) => {
             ))}
             {canApproveNameChangeRequest && showApproveNameChangeRequestBtn && (
                 <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Button type="primary" className={styles.marR20} onClick={() => handleRequest(STATUS?.APPROVED?.key)}>
-                            Approve
-                        </Button>
-                        <Button danger className={styles.marB20} onClick={() => handleRequest(STATUS?.REJECTED?.key)}>
-                            Reject
-                        </Button>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.marB20}>
+                        {actionData?.map((i) => {
+                            return (
+                                <Button key={STATUS?.APPROVED.id} type={i?.actionName === STATUS?.APPROVED?.title ? 'primary' : undefined} danger={i?.actionName === STATUS?.REJECTED?.title} className={styles.marR20} onClick={() => handleRequest(i?.actionCode)}>
+                                    {i?.actionName}
+                                </Button>
+                            );
+                        })}
                     </Col>
                 </Row>
             )}
