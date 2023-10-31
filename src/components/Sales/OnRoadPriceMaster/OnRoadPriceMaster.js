@@ -110,13 +110,8 @@ export const OnRoadPriceMasterBase = (props) => {
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isUploadFormVisible, setIsUploadFormVisible] = useState(false);
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
-    const [defaultSection, setDefaultSection] = useState();
-    const [selectedOrder, setSelectedOrder] = useState();
-    const [selectedOrderId, setSelectedOrderId] = useState();
-    const [currentSection, setCurrentSection] = useState();
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
-    // const [isCancelVisible, setIsCancelVisible] = useState(false);
     const [vehiclePrice, setVehiclePrice] = useState();
     const [isLoading, showLoading] = useState(true);
 
@@ -226,48 +221,51 @@ export const OnRoadPriceMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, extraParams]);
 
-    useEffect(() => {
-        if (formData?.id) {
-            fetchOnRoadViewPriceDetail({
-                setIsLoading: () => {},
-                userId,
-                extraParams: [
-                    {
-                        key: 'id',
-                        value: formData?.id,
-                    },
-                ],
-                onSuccessAction: (res) => {
-                    setVehiclePrice(res.data);
-                    showLoading(false);
-                },
-            });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData]);
-
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
-        // showLoading(true);
         setFormData(record);
         setIsFormVisible(true);
+        setVehiclePrice();
 
         switch (buttonAction) {
             case ADD_ACTION:
-                defaultSection && setCurrentSection(defaultSection);
+                // defaultSection && setCurrentSection(defaultSection);
                 break;
             case EDIT_ACTION:
-                setSelectedOrder(record);
-                record && setSelectedOrderId(record?.id);
-                openDefaultSection && setCurrentSection(defaultSection);
+                fetchOnRoadViewPriceDetail({
+                    setIsLoading: () => {},
+                    userId,
+                    extraParams: [
+                        {
+                            key: 'id',
+                            value: record?.id,
+                        },
+                    ],
+                    onErrorAction,
+                    onSuccessAction: (res) => {
+                        setVehiclePrice(res.data);
+                        showLoading(false);                       
+                    },
+                });
                 break;
             case VIEW_ACTION:
-                setSelectedOrder(record);
-                record && setSelectedOrderId(record?.id);
-                defaultSection && setCurrentSection(defaultSection);
+                fetchOnRoadViewPriceDetail({
+                    setIsLoading: () => {},
+                    userId,
+                    extraParams: [
+                        {
+                            key: 'id',
+                            value: record?.id,
+                        },
+                    ],
+                    onErrorAction,
+                    onSuccessAction: (res) => {
+                        setVehiclePrice(res.data);
+                        showLoading(false);                        
+                    },
+                });
                 break;
             case CANCEL_ACTION:
-                // setIsCancelVisible(true);
                 break;
             default:
                 break;
@@ -307,7 +305,7 @@ export const OnRoadPriceMasterBase = (props) => {
         resetData();
     };
 
-    const onFinish = (values) => {
+    const onFinish = () => {
         let data = { docId: uploadedFile };
         const onSuccess = (res) => {
             setIsUploadFormVisible(false);
@@ -347,12 +345,6 @@ export const OnRoadPriceMasterBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields()
-            .then((values) => {})
-            .catch((err) => console.error(err));
-    };
-
     const onCloseAction = () => {
         form.resetFields();
         setIsFormVisible(false);
@@ -390,14 +382,12 @@ export const OnRoadPriceMasterBase = (props) => {
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
         onCloseAction: onAdvanceSearchCloseAction,
-        // icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
         isCityDataLoaded,
         cityData,
         filterString,
         setFilterString,
         advanceFilterForm,
-        // resetData,
         handleResetFilter,
         onSearchHandle,
         setAdvanceSearchVisible,
@@ -438,7 +428,6 @@ export const OnRoadPriceMasterBase = (props) => {
         setFilterString,
         from: listFilterForm,
         onFinish,
-        onFinishFailed,
         handleResetFilter,
         advanceFilterForm,
         title,
@@ -497,7 +486,6 @@ export const OnRoadPriceMasterBase = (props) => {
         formData,
         onCloseAction,
         buttonData: { ...defaultBtnVisiblity },
-        // buttonData,
         setButtonData,
         handleButtonClick,
     };

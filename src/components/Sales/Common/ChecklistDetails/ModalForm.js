@@ -35,6 +35,7 @@ export const ChecklistModalForms = (props) => {
                 }
                 return element;
             });
+            aggregateForm.setFieldsValue({ answerBoolean: false });
             setRequestPayload((prev) => ({ ...prev, vehicleDeliveryCheckList: { vin: prev?.vehicleDetails?.vinNumber, deliveryChecklistDtos: newArr?.filter((i) => i?.ismodified) } }));
             setcheckListDataModified(newArr);
         } else {

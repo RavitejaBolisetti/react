@@ -225,7 +225,6 @@ export const InvoiceCancellationMasterBase = (props) => {
             },
         ];
         if (userId && isFormVisible) {
-            // setShowDataLoading(true);
             fetchDetail({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
 
@@ -268,7 +267,7 @@ export const InvoiceCancellationMasterBase = (props) => {
         });
     };
 
-    const onFinish = (values) => {
+    const onFinish = () => {
         setConfirmRequest({ isVisible: false });
         const data = {
             id: formData?.id,
@@ -301,7 +300,7 @@ export const InvoiceCancellationMasterBase = (props) => {
         saveData(requestData);
     };
 
-    const handleResetFilter = (e) => {
+    const handleResetFilter = () => {
         form.resetFields();
         advanceFilterForm.resetFields();
         advanceFilterForm.setFieldsValue();
@@ -393,7 +392,6 @@ export const InvoiceCancellationMasterBase = (props) => {
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
-        // icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
 
         onCloseAction: onAdvanceSearchCloseAction,

@@ -33,20 +33,10 @@ export const FORM_KEYS = {
 const setQuestionlabel = (checklistType, data) => {
     switch (checklistType) {
         case MODULE_TYPE_CONSTANTS?.RECEIPT_CHECKLIST?.key: {
-            return data?.checkPoint
-                ? data?.checkPoint
-                      ?.split(' ')
-                      ?.map((item) => item?.charAt(0)?.toUpperCase() + item?.slice(1)?.toLowerCase())
-                      ?.join(' ')
-                : noDataAvalaible;
+            return data?.checkPoint ?? noDataAvalaible;
         }
         case MODULE_TYPE_CONSTANTS?.DELIVERY_NOTE?.key: {
-            return data?.checklistDescription
-                ? data?.checklistDescription
-                      ?.split(' ')
-                      ?.map((item) => item?.charAt(0)?.toUpperCase() + item?.slice(1)?.toLowerCase())
-                      ?.join(' ')
-                : noDataAvalaible;
+            return data?.checklistDescription ?? noDataAvalaible;
         }
         default: {
             return noDataAvalaible;
@@ -110,7 +100,7 @@ export const BindFormAndResult = ({ data, aggregateForm, checklistType }) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item rules={[validateRequiredSelectField('')]} valuePropName="checked" initialValue={data?.answerBoolean ? true : false} labelAlign="left" wrapperCol={{ span: 24 }} name="answerBoolean" label={QuestionLabel}>
-                            <Switch checkedChildren="Yes" unCheckedChildren="No" defaultChecked={data?.answerBoolean ? true : false} onChange={(checked) => (checked ? true : false)} />
+                            <Switch checkedChildren="Yes" unCheckedChildren="No" defaultChecked={!!data?.answerBoolean} onChange={(checked) => (checked ? true : false)} />
                         </Form.Item>
                     </Col>
                 </Row>

@@ -7,11 +7,10 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Col, Form, Row } from 'antd';
+import { Col, Form, Row, Tag } from 'antd';
 import { tableColumn } from './tableColumn';
 import ChargerInstallationFilter from './ChargerInstallationFilter';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
-
 import { ChargerInstallationMainConatiner } from './ChargerInstallationMainConatiner';
 import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
@@ -87,11 +86,10 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const VehicleInvoiceMasterBase = (props) => {
+export const ChargerInstallationMasterBase = (props) => {
     const { data, userId, chargerInstallationMasterData, fetchGuestDetails, listGuestShowLoading, fetchList, fetchCustomerVehicleList, listCustomerVehicleShowLoading, crmCustomerVehicleData, listShowLoading, showGlobalNotification, fetchChargerDetails } = props;
     const { typeData, saveData, moduleTitle, totalRecords } = props;
     const { filterString, setFilterString, chargerStatusList, otfData, vehicleInvoiceMasterData, chargerInstallationGuestDetailsData } = props;
-
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [chargerStatus, setchargerStatus] = useState(QUERY_BUTTONS_CONSTANTS.SITE_SURVEY.key);
     const [requestPayload, setRequestPayload] = useState({ chargerInstDetails: {}, chargerInstAddressDetails: {} });
@@ -391,7 +389,7 @@ export const VehicleInvoiceMasterBase = (props) => {
                 const Visibility = btnVisiblity({ defaultBtnVisiblity, buttonAction });
                 setButtonData(Visibility);
                 if (buttonAction === VIEW_ACTION) {
-                    if (record?.stageRequest === CHARGER_STATUS.SUCCESS?.key) {
+                    if (chargerInstallationMasterData?.chargerInstDetails?.requestDetails[0]?.response === CHARGER_STATUS.SUCCESS?.key) {
                         setButtonData((prev) => ({ ...prev, addRequestBtn: true }));
                     }
                 }
@@ -453,12 +451,11 @@ export const VehicleInvoiceMasterBase = (props) => {
         setOptions();
         setButtonData({ ...defaultBtnVisiblity });
     };
-
     const tableProps = {
         dynamicPagination,
         totalRecords,
         setPage,
-        tableColumn: tableColumn(handleButtonClick),
+        tableColumn: tableColumn(handleButtonClick, typeData),
         tableData: data,
         showAddButton: false,
         typeData,
@@ -611,4 +608,4 @@ export const VehicleInvoiceMasterBase = (props) => {
     );
 };
 
-export const ChargerInstallationMaster = connect(mapStateToProps, mapDispatchToProps)(VehicleInvoiceMasterBase);
+export const ChargerInstallationMaster = connect(mapStateToProps, mapDispatchToProps)(ChargerInstallationMasterBase);

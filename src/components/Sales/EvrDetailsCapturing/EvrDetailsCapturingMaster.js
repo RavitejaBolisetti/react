@@ -363,8 +363,6 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         }
     };
 
-    const onFinishSearch = (values) => {};
-
     const onFinish = (values) => {
         const { vin, modelGroup, modelCode, modelDescription, grnId, grnDate, grnStatus, vehicleStatus, ageInDays, chargingStatus, ...rest } = values;
         const data = { ...rest, id: formData?.id };
@@ -394,10 +392,6 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         };
 
         saveData(requestData);
-    };
-
-    const onFinishFailed = (errorInfo) => {
-        return;
     };
 
     const onCloseAction = () => {
@@ -460,7 +454,6 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         filterString,
         setFilterString,
         onFinish,
-        onFinishFailed,
         handleResetFilter,
         advanceFilterForm,
         handleButtonClick,
@@ -488,7 +481,6 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         advanceFilterForm,
         setAdvanceSearchVisible,
         typeData,
-        onFinishSearch,
         productHierarchyData,
         handleSelectTreeClick,
         selectedTreeSelectKey,

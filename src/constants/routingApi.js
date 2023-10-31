@@ -199,7 +199,7 @@ export const BASE_URL_INVOICE_DETAIL = BASE_URL_INVOICE + 'details';
 
 export const BASE_URL_VEHICLE = BASE_URL + 'vehicle/';
 export const BASE_URL_CHARGER_INSTALLATION_SEARCH = BASE_URL_VEHICLE + 'charger/installation/search';
-export const BASE_URL_CHARGER_INSTALLATION_GUEST_DETAILS = BASE_URL_VEHICLE + 'charger/installation/guestdetails';
+export const BASE_URL_CHARGER_INSTALLATION_GUEST_DETAILS = BASE_URL_VEHICLE + 'charger/installation/questdetails';
 export const BASE_URL_CHARGER_INSTALLATION = BASE_URL_VEHICLE + 'charger/installation';
 export const BASE_URL_VEHICLE_SEARCH = BASE_URL_VEHICLE + 'search';
 export const BASE_URL_VIEW_VEHICLE_DETAILS = BASE_URL_VEHICLE + 'details';

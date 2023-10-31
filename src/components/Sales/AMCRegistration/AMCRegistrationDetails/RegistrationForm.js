@@ -10,6 +10,7 @@ import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/prepareP
 import { customSelectBox } from 'utils/customSelectBox';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { AMC_CONSTANTS } from '../utils/AMCConstants';
+import styles from 'assets/sass/app.module.scss';
 
 const { Search } = Input;
 const { TextArea } = Input;
@@ -52,7 +53,7 @@ const RegistrationForm = (props) => {
                             <Input disabled maxLength={50} placeholder={preparePlaceholderText('Manager Name')} />
                         </Form.Item>
                     </Col>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
                         <Form.Item initialValue={formData?.remarks} label="Remarks" name="remarks" rules={[validateRequiredSelectField('Remarks')]}>
                             <TextArea maxLength={300} placeholder={preparePlaceholderText('Remarks')} showCount />
                         </Form.Item>

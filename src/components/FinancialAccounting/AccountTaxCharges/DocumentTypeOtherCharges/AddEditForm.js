@@ -51,7 +51,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType, formActionType: { viewMode } = undefined, isVisible, fetchDocTypeLedgerDetail, userId, handleCodeFunction, onFinish, typeData, editForm, docTypeHeadMappingForm, dropdownItems, setDropdownItems } = props;
-    const { buttonData, setButtonData, handleButtonClick, formEdit, setFormEdit, docTypeHeadMappingList, setDocTypeHeadMappingList, financialAccount } = props;
+    const { buttonData, setButtonData, handleButtonClick, formEdit, setFormEdit, docTypeHeadMappingList, setDocTypeHeadMappingList, financialAccount, financialAccHeadData, userApplicationId, setUserApplicationId, selectedTreeSelectKey, setSelectedTreeSelectKey } = props;
 
     const [openAccordian, setOpenAccordian] = useState(1);
     const [docTypeLedger, setDocTypeLedger] = useState();
@@ -128,6 +128,11 @@ const AddEditFormMain = (props) => {
         dropdownItems,
         setDropdownItems,
         financialAccount,
+        financialAccHeadData,
+        userApplicationId,
+        setUserApplicationId,
+        selectedTreeSelectKey,
+        setSelectedTreeSelectKey,
     };
 
     const buttonProps = {

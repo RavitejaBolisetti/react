@@ -9,7 +9,7 @@ import { FiEye } from 'react-icons/fi';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'assets/sass/app.module.scss';
 
-export const tblActionColumn = ({ styles, handleButtonClick, width = '10%', fixed = '', AddIcon = false, EditIcon = false, EyeIcon = false }) => {
+export const tblActionColumn = ({ handleButtonClick, width = '10%', fixed = '' }) => {
     return {
         title: 'Action',
         dataIndex: '',

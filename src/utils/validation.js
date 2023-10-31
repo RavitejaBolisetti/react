@@ -5,10 +5,16 @@
  */
 import dayjs from 'dayjs';
 import { GetAge } from './getAge';
+import i18n from '../i18n';
+
+const translateContent = (key) => {
+    const translate = i18n.t;
+    return translate(key);
+};
 
 export const validateRequiredInputField = (fieldName, lowercase = true) => ({
     required: true,
-    message: 'Please enter ' + (lowercase ? fieldName?.toLowerCase() : fieldName),
+    message: translateContent('global.validation.input').concat(lowercase ? fieldName?.toLowerCase() : fieldName),
 });
 
 export const validateRequiredInputFieldMinLength = (fieldName, lowercase = true) => ({

@@ -5,8 +5,6 @@
  */
 import React from 'react';
 import { Card, Descriptions } from 'antd';
-import styles from 'assets/sass/app.module.scss';
-
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { DATA_TYPE } from 'constants/dataType';
 import { getCodeValue } from 'utils/getCodeValue';

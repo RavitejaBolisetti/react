@@ -8,27 +8,43 @@ import CardDocTypeAcMapping from './CardDocTypeAcMapping';
 import FormDocTypeAcMapping from './FormDocTypeAcMapping';
 
 export const DocTypeAcMappingMaster = (props) => {
-    const { isVisible, selectedTreeData, showGlobalNotification, taxChargeCategoryTypeData, docTypeLedger, form, editForm, docTypeHeadMappingForm, formEdit, setFormEdit, docTypeHeadMappingList, setDocTypeHeadMappingList, buttonData, setButtonData, viewMode, dropdownItems, setDropdownItems, typeData, financialAccount } = props;
+    const { isVisible, selectedTreeData, showGlobalNotification, taxChargeCategoryTypeData, docTypeLedger, form, editForm, docTypeHeadMappingForm, formEdit, setFormEdit, docTypeHeadMappingList, setDocTypeHeadMappingList, buttonData, setButtonData, viewMode, dropdownItems, setDropdownItems, typeData, financialAccount, financialAccHeadData, selectedTreeSelectKey, setSelectedTreeSelectKey, userApplicationId, setUserApplicationId } = props;
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [disableSaveButton, setDisableSaveButton] = useState(false);
     const [changeValue, setChangeValue] = useState(null);
     const [uniqueCardEdit, setuniqueCardEdit] = useState(null);
     const [mainFomEdit, setMainFormEdit] = useState(false);
+    const [mainSelectedKey, setMainSelectedKey] = useState(null);
+    const [financialAccHeadName, setFinancialAccHeadName] = useState();
 
     const addDocHeadMapping = () => {
         docTypeHeadMappingForm
             .validateFields()
             .then(() => {
                 let data = docTypeHeadMappingForm.getFieldsValue();
-
                 let updateData = { ...data, internalId: Math.floor(Math.random() * 100000000 + 1), id: '' };
                 setDocTypeHeadMappingList((item) => [updateData, ...item]);
                 docTypeHeadMappingForm.resetFields();
+                setMainSelectedKey(null);
                 forceUpdate();
                 setButtonData({ ...buttonData, formBtnActive: true });
-                // handleCodeFunction();
             })
             .catch((err) => console.error(err));
+    };
+
+    const handleSelectTreeClick = (value, name) => {
+        const obj = {
+            financialAccountHeadId: value,
+            financialAccountHeadDesc: name[0],
+        };
+        setFinancialAccHeadName(name);
+        if (formEdit) {
+            editForm.setFieldsValue(obj);
+            setSelectedTreeSelectKey(value);
+        } else {
+            docTypeHeadMappingForm.setFieldsValue(obj);
+            setMainSelectedKey(value);
+        }
     };
 
     const cardAttributeProps = {
@@ -59,6 +75,10 @@ export const DocTypeAcMappingMaster = (props) => {
         dropdownItems,
         setDropdownItems,
         financialAccount,
+        financialAccHeadData,
+        handleSelectTreeClick,
+        financialAccHeadName,
+        setSelectedTreeSelectKey,
     };
 
     const formProductAttributeProps = {
@@ -90,11 +110,11 @@ export const DocTypeAcMappingMaster = (props) => {
 
     return (
         <>
-            <FormDocTypeAcMapping {...formProductAttributeProps} mainFomEdit={mainFomEdit} />
+            <FormDocTypeAcMapping {...formProductAttributeProps} mainFomEdit={mainFomEdit} selectedTreeSelectKey={mainSelectedKey} financialAccHeadName={financialAccHeadName} />
 
             {docTypeHeadMappingList?.length > 0 &&
                 docTypeHeadMappingList?.map((action) => {
-                    return <CardDocTypeAcMapping {...cardAttributeProps} chargeCode={action?.chargeCode} internalId={action?.internalId} id={action?.id} financialAccountHeadId={action?.financialAccountHeadId} financialAccountHeadDesc={action?.financialAccountHeadDesc} chargeCodeDesc={action?.chargeCodeDesc} />;
+                    return <CardDocTypeAcMapping {...cardAttributeProps} chargeCode={action?.chargeCode} internalId={action?.internalId} id={action?.id} financialAccountHeadId={action?.financialAccountHeadId} financialAccountHeadDesc={action?.financialAccountHeadDesc} chargeCodeDesc={action?.chargeCodeDesc} selectedTreeSelectKey={selectedTreeSelectKey} financialAccHeadName={financialAccHeadName} />;
                 })}
         </>
     );

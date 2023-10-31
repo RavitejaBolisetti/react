@@ -501,7 +501,6 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
                 record && setSelectedOrderId(record?.invoiceId);
                 record && setSelectedOtfNumber(record?.otfNumber);
                 openDefaultSection && setCurrentSection(defaultSection);
-
                 break;
             case VIEW_ACTION:
                 setSelectedOrder(record);
@@ -518,6 +517,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
                     return false;
                 }
                 section && setCurrentSection(nextSection?.id);
+                setSection(nextSection);
                 setLastSection(!nextSection?.id);
                 break;
 

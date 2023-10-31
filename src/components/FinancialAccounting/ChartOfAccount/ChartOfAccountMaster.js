@@ -311,7 +311,6 @@ export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, fetchCha
                     },
                 ];
                 downloadFile({ setIsLoading: downloadShowLoading, userId, extraParams });
-                //resetData();
             };
 
             fetchChartOfExportCoaAccount({ setIsLoading: listShowLoadingChartOfExportCoaAccount, userId, extraParams, onSuccessAction });

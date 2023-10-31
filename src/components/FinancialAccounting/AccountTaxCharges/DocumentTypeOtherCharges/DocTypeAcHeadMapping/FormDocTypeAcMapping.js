@@ -11,10 +11,22 @@ import { customSelectBox } from 'utils/customSelectBox';
 import { PlusOutlined } from '@ant-design/icons';
 
 import styles from 'assets/sass/app.module.scss';
+import TreeSelectField from 'components/common/TreeSelectField';
 
 function FormDocTypeAcMapping(props) {
-    const { docTypeHeadMappingForm, typeData, addDocHeadMapping, formEdit, editForm, financialAccount } = props;
-    const fieldNames = { key: 'id', id: 'key', value: 'value' };
+    const { docTypeHeadMappingForm, typeData, addDocHeadMapping, formEdit, editForm, financialAccount, financialAccHeadData, handleSelectTreeClick, selectedTreeSelectKey, financialAccHeadName } = props;
+
+    const fieldNames = { title: 'accountDescription', key: 'id', children: 'subGroup' };
+    const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
+
+    const treeSelectFieldProps = {
+        treeFieldNames,
+        treeData: financialAccHeadData,
+        handleSelectTreeClick,
+        selectedTreeSelectKey,
+        defaultParent: false,
+        placeholder: preparePlaceholderSelect('Financial Account Head'),
+    };
     return (
         <Form form={formEdit ? editForm : docTypeHeadMappingForm} id="myForm" autoComplete="off" layout="vertical">
             <Row gutter={20}>
@@ -25,19 +37,14 @@ function FormDocTypeAcMapping(props) {
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item label="Financial Account Head" name="financialAccountHeadId" initialValue={props?.financialAccountHeadId} rules={[validateRequiredSelectField('Financial Account Head')]}>
-                        {customSelectBox({ data: financialAccount, fieldNames: fieldNames, placeholder: preparePlaceholderSelect('Financial Account Head') })}
+                        <TreeSelectField {...treeSelectFieldProps} />
                     </Form.Item>
                 </Col>
 
-                <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
-                    <Form.Item name="internalId" label="Internal Id" />
-                </Col>
-                <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
-                    <Form.Item name="financialAccountHeadDesc" label="financialAccountHeadDesc" />
-                </Col>
-                <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
-                    <Form.Item name="id" label="Id" />
-                </Col>
+                <Form.Item name="internalId" label="Internal Id" hidden />
+                <Form.Item name="financialAccountHeadDesc" label="financialAccountHeadDesc" hidden />
+                <Form.Item name="id" label="Id" hidden />
+
                 {!props?.internalId && (
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Button

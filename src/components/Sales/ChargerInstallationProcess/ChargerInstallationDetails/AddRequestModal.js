@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Col, Form, Row, Button, DatePicker } from 'antd';
 
 import { withModal } from 'components/withModal';
@@ -17,12 +17,8 @@ import styles from 'assets/sass/app.module.scss';
 import { validateRequiredInputField } from 'utils/validation';
 
 export const AddRequestModalForm = (props) => {
-    const { onAdvanceSearchCloseAction, typeData } = props;
+    const { onAdvanceSearchCloseAction, typeData, chargerStatus, formActionType } = props;
     const { addRequestForm, onModalFinish } = props;
-
-    // useEffect(() => {
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [filterString]);
 
     // const CheckDateEffectiveTo = (value, effectiveFrom) => {
     //     if (!value) return Promise.resolve();
@@ -38,7 +34,18 @@ export const AddRequestModalForm = (props) => {
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item label="Stage" name="requestStage" rules={[validateRequiredInputField('Stage')]}>
-                        {customSelectBox({ data: typeData?.CHRGR_INST_STG_TYPE, placeholder: preparePlaceholderText('Request Stage') })}
+                        {customSelectBox({
+                            data: typeData?.CHRGR_INST_STG_TYPE,
+                            placeholder: preparePlaceholderText('Request Stage'),
+                            disableOptionsList:
+                                !formActionType?.addMode &&
+                                typeData?.CHRGR_INST_STG_TYPE?.flatMap((item) => {
+                                    if (item?.key === chargerStatus) {
+                                        return item;
+                                    }
+                                }),
+                            disableOptionsKey: 'key',
+                        })}
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>

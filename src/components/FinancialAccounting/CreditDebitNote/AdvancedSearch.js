@@ -43,7 +43,7 @@ export const AdvancedSearchFrom = (props) => {
         setAdvanceSearchVisible(false);
     };
 
-    const handleResetFilter = (e) => {
+    const handleResetFilter = () => {
         advanceFilterForm.resetFields();
         if (!filterString?.searchParam && !filterString?.searchType) {
             setFilterString();

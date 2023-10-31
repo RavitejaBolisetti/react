@@ -378,14 +378,14 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
         }
     };
 
-    const handleClearInSearch = (e) => {
-        if (e?.target?.value === '') {
-            setFilterString();
-            listFilterForm.resetFields();
-        } else if (e.target.value.length > 2) {
-            listFilterForm.validateFields(['code']);
-        }
-    };
+    // const handleClearInSearch = (e) => {
+    //     if (e?.target?.value === '') {
+    //         setFilterString();
+    //         listFilterForm.resetFields();
+    //     } else if (e.target.value.length > 2) {
+    //         listFilterForm.validateFields(['code']);
+    //     }
+    // };
 
     const handleReferesh = () => {
         setRefershData(!refershData);
@@ -458,7 +458,7 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
         filterString,
         from: listFilterForm,
         onSearchHandle,
-        handleClearInSearch,
+        // handleClearInSearch,
         handleReferesh,
         handleButtonClick,
         title,

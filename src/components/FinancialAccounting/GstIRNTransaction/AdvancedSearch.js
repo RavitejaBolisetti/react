@@ -4,16 +4,13 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Col, Form, Row, Input, Select } from 'antd';
+import { Col, Form, Row } from 'antd';
 
 import { withModal } from 'components/withModal';
-import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { validateRequiredSelectField } from 'utils/validation';
+import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { customSelectBox } from 'utils/customSelectBox';
-
 import { ModalButtons } from 'components/common/Button';
-import styles from 'assets/sass/app.module.scss';
 
 export const AdvancedSearchFrom = (props) => {
     const { setAdvanceSearchVisible, onClickAction, typeData, gSTINList, isGSTINListLoading } = props;
@@ -40,16 +37,12 @@ export const AdvancedSearchFrom = (props) => {
         setAdvanceSearchVisible(false);
     };
 
-    const handleResetFilter = (e) => {
+    const handleResetFilter = () => {
         advanceFilterForm.setFieldsValue({
             irnStatus: null,
             gstin: null,
         });
         setFilterString();
-    };
-
-    const onFinishFailed = () => {
-        return;
     };
 
     const modalProps = {
@@ -62,7 +55,7 @@ export const AdvancedSearchFrom = (props) => {
     };
 
     return (
-        <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                     <Form.Item label="IRN Status" name="irnStatus">

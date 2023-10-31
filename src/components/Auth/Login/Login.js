@@ -24,6 +24,8 @@ import notificationStyles from 'App.module.scss';
 
 import * as IMAGES from 'assets';
 import ReactRecaptcha3 from 'react-google-recaptcha3';
+import { useTranslation } from 'react-i18next';
+
 import Footer from '../Footer';
 
 const mapStateToProps = (state) => {
@@ -63,6 +65,10 @@ const mapDispatchToProps = {
 const GOOGLE_CAPTCHA_SITE_KEY = process.env.REACT_APP_GOOGLE_SITE_KEY;
 const Login = (props) => {
     const { doLogin, authPostLogin, authPreLogin, showGlobalNotification, hideGlobalNotification, doCloseLoginError } = props;
+
+    const { t: translate } = useTranslation();
+    // i18n.changeLanguage('en-US');
+
     const [form] = Form.useForm();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
@@ -134,7 +140,7 @@ const Login = (props) => {
                 }
             },
             (error) => {
-                message.error(error || 'Please select Captcha');
+                message.error(error || translate('login.validation.google_captcha'));
                 setIsLoading(false);
             }
         );
@@ -151,8 +157,7 @@ const Login = (props) => {
         const { userRegisteredDevice, passwordStatus } = data;
         const { errorMessage: message } = userRegisteredDevice;
 
-        const title = 'Unauthorized Access';
-
+        const title = translate('login.heading.unauthorized_access');
         const handleSkip = () => {
             if (passwordStatus) {
                 authPreLogin(data);
@@ -166,7 +171,7 @@ const Login = (props) => {
         const btn = (
             <Space className={styles.floatLeft}>
                 <Button onClick={handleSkip} danger size="small">
-                    Continue
+                    {translate('login.button.continue')}
                 </Button>
             </Space>
         );
@@ -193,11 +198,11 @@ const Login = (props) => {
             <Space>
                 {status === 'A' && (
                     <Button onClick={shandleSkipForNow} danger size="small">
-                        Skip For Now
+                        {translate('login.button.skip_for_now')}
                     </Button>
                 )}
                 <Button onClick={handleUpdatePassword} type="primary" size="small">
-                    Update Password
+                    {translate('login.button.update_password')}
                 </Button>
             </Space>
         );
@@ -246,7 +251,7 @@ const Login = (props) => {
                         <img src={IMAGES.RL_LOGO} className={styles.mainLogo} alt="" />
                         <br></br>
                         <img src={IMAGES.LINE} className={styles.mainLogoLine} alt="" />
-                        <div className={styles.logoText}>Dealer Management System</div>
+                        <div className={styles.logoText}>{translate('login.heading.Dealer Management System')}</div>
                     </div>
                     <div className={styles.loginWrap}>
                         <Form form={form} name="login_from" autoComplete="off" onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -256,25 +261,25 @@ const Login = (props) => {
                                         <div className={styles.centerInner}>
                                             <div className={styles.loginForm}>
                                                 <div className={styles.loginHeading}>
-                                                    <h1>Welcome</h1>
-                                                    <div className={styles.loginSubHeading}>Please enter your credentials to login</div>
+                                                    <h1>{translate('login.heading.Welcome')}</h1>
+                                                    <div className={styles.loginSubHeading}>{translate('login.heading.Please enter your credentials to login')}</div>
                                                 </div>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.inputLabelPlaceholder}>
-                                                        <Form.Item name="userId" data-testid="userIdInput" rules={[validateRequiredInputField('user id')]} className={styles.inputBox}>
+                                                        <Form.Item name="userId" data-testid="userIdInput" rules={[validateRequiredInputField(translate('user id'))]} className={styles.inputBox}>
                                                             {<Input data-testid="userNameInput" ref={userIdRef} prefix={<BiUser size={16} />} type="text" maxLength={25} onChange={handleFormChange('userId')} />}
                                                         </Form.Item>
-                                                        {!fieldData?.userId && <label onClick={handleFieldFocus(userIdRef)}>User ID (MILE ID.Parent ID)</label>}
+                                                        {!fieldData?.userId && <label onClick={handleFieldFocus(userIdRef)}>{translate('login.label.username')}</label>}
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.inputLabelPlaceholder}>
-                                                        <Form.Item name="password" data-testid="password" rules={[validateRequiredInputField('password')]} className={styles.inputBox}>
+                                                        <Form.Item name="password" data-testid="password" rules={[validateRequiredInputField(translate('password'))]} className={styles.inputBox}>
                                                             <Input data-testid="inputPassword" ref={passwordInputRef} type={showPassword ? 'text' : 'password'} prefix={<FiLock size={16} />} suffix={passowrdSuffix} onChange={handleFormChange('password')} />
                                                         </Form.Item>
-                                                        {!fieldData?.password && <label onClick={handleFieldFocus(passwordInputRef)}>Password</label>}
+                                                        {!fieldData?.password && <label onClick={handleFieldFocus(passwordInputRef)}>{translate('login.label.password')}</label>}
                                                         <div className={styles.forgotPasswordLink}>
-                                                            <Link to={ROUTING_FORGOT_PASSWORD}>Forgot Password?</Link>
+                                                            <Link to={ROUTING_FORGOT_PASSWORD}>{translate('login.heading.forgot_password')}</Link>
                                                         </div>
                                                     </Col>
                                                 </Row>
@@ -282,14 +287,14 @@ const Login = (props) => {
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.mt20}>
                                                         <Button icon={<FiLock size={18} />} data-testid="Login" disabled={loginButtonDisabled} className={styles.button} type="primary" htmlType="submit" loading={isLoading}>
-                                                            Login
+                                                            {translate('login.button.login')}
                                                         </Button>
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <div className={styles.loginFooter}>
-                                                            <Link to={process.env.REACT_APP_SSO_LOGIN_URL}>M&M User Login</Link>
+                                                            <Link to={process.env.REACT_APP_SSO_LOGIN_URL}>{translate('login.link.mnm_login')}</Link>
                                                         </div>
                                                     </Col>
                                                 </Row>

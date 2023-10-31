@@ -10,6 +10,8 @@ import { bindActionCreators } from 'redux';
 
 import { financialAccountHeadDataActions } from 'store/actions/data/financialAccounting/financialAccountHead';
 import { documentTypeLedgerDataActions } from 'store/actions/data/financialAccounting/documentTypeLedger';
+import { chartOfAccountDataHierarchyActions } from 'store/actions/data/financialAccounting/chartOfAccount/chartOfAccountHierarchy';
+
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { BASE_URL_DOCUMENT_TYPE_LEDGER_SEARCH as customURL } from 'constants/routingApi';
@@ -29,6 +31,9 @@ const mapStateToProps = (state) => {
             FinancialAccounting: {
                 DocumentTypeLedger: { isLoaded: isDocumentTypeLedgerLoaded = false, isLoading: isDocumentTypeLedgerLoading = false, data: docTypeLedgerData = [] },
                 FinancialAccountHead: { isLoaded: isFinancialAccountHeadLoaded = false, data: financialAccount = [] },
+                ChartOfAccountMaster: {
+                    ChartOfAccountHierarchy: { isLoaded: isChartOfAccountHierarchyLoaded = false, data: chartOfAccountHierarchy = [] },
+                },
             },
         },
     } = state;
@@ -45,6 +50,8 @@ const mapStateToProps = (state) => {
         financialAccount,
         docTypeLedgerData: docTypeLedgerData?.paginationData,
         totalRecords: docTypeLedgerData?.totalRecords,
+        isChartOfAccountHierarchyLoaded,
+        financialAccHeadData: chartOfAccountHierarchy,
     };
     return returnValue;
 };
@@ -59,6 +66,9 @@ const mapDispatchToProps = (dispatch) => ({
 
             fetchFinancialAccountHead: financialAccountHeadDataActions.fetchList,
 
+            fetchFinanacialAccHeadHierarchy: chartOfAccountDataHierarchyActions.fetchList,
+            listShowLoadingFinanacialAccHead: chartOfAccountDataHierarchyActions.listShowLoading,
+
             showGlobalNotification,
         },
         dispatch
@@ -66,7 +76,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const DocumentTypeOtherChargesMain = (props) => {
-    const { moduleTitle, saveData, userId, showGlobalNotification, typeData, fetchFinancialAccountHead, financialAccount, isFinancialAccountHeadLoaded, taxChargeCategoryTypeData, fetchDocTypeLedger, listShowLoadingDocTypeLedger, totalRecords, docTypeLedgerData } = props;
+    const { moduleTitle, saveData, userId, showGlobalNotification, typeData, isChartOfAccountHierarchyLoaded, financialAccHeadData, fetchFinancialAccountHead, financialAccount, isFinancialAccountHeadLoaded, taxChargeCategoryTypeData, fetchDocTypeLedger, listShowLoadingDocTypeLedger, totalRecords, docTypeLedgerData, fetchFinanacialAccHeadHierarchy, listShowLoadingFinanacialAccHead } = props;
     const [form] = Form.useForm();
 
     const [showDataLoading, setShowDataLoading] = useState(true);
@@ -91,6 +101,8 @@ export const DocumentTypeOtherChargesMain = (props) => {
     const [formEdit, setFormEdit] = useState(false);
     const [docTypeHeadMappingList, setDocTypeHeadMappingList] = useState([]);
     const [dropdownItems, setDropdownItems] = useState([]);
+    const [userApplicationId, setUserApplicationId] = useState();
+    const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState(null);
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -162,11 +174,11 @@ export const DocumentTypeOtherChargesMain = (props) => {
     }, [userId, refershData, extraParams]);
 
     useEffect(() => {
-        if (!isFinancialAccountHeadLoaded && userId) {
-            fetchFinancialAccountHead({ setIsLoading: listShowLoadingDocTypeLedger, userId, onSuccessAction });
+        if (!isChartOfAccountHierarchyLoaded && userId) {
+            fetchFinanacialAccHeadHierarchy({ setIsLoading: listShowLoadingFinanacialAccHead, userId, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isFinancialAccountHeadLoaded, userId]);
+    }, [isChartOfAccountHierarchyLoaded, userId]);
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
@@ -254,6 +266,7 @@ export const DocumentTypeOtherChargesMain = (props) => {
 
         setButtonData,
         handleButtonClick,
+        // handleSelectTreeClick,
         taxChargeCategoryTypeData,
         editForm,
         docTypeHeadMappingForm,
@@ -266,6 +279,11 @@ export const DocumentTypeOtherChargesMain = (props) => {
         isFormBtnActive,
         financialAccount,
         typeData,
+        financialAccHeadData,
+        userApplicationId,
+        setUserApplicationId,
+        selectedTreeSelectKey,
+        setSelectedTreeSelectKey,
     };
 
     const tableProps = {

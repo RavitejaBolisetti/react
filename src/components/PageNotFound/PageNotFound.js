@@ -18,13 +18,14 @@ import styles from './PageNotFound.module.scss';
 const mapStateToProps = (state) => ({
     isLoggedIn: state?.auth?.isLoggedIn,
 });
+const routeExclusion = [routing?.ROUTING_LOGIN, routing?.ROUTING_DASHBOARD];
 
 const PageNotFoundMaster = ({ isLoggedIn }) => {
     const navigate = useNavigate();
     const [count, setCount] = useState(10);
 
     useEffect(() => {
-        if (count === 0) {
+        if (count <= 0) {
             navigate(routing.ROUTING_DASHBOARD);
             return;
         }
@@ -34,11 +35,13 @@ const PageNotFoundMaster = ({ isLoggedIn }) => {
         return () => clearTimeout(TimeOut);
     }, [count, navigate]);
 
-    let pageTitle = LANGUAGE_EN.GENERAL.PAGE_NOT_FOUND.TITLE;
-    let pageDescription = LANGUAGE_EN.GENERAL.PAGE_NOT_FOUND.MESSAGE.replace('{COUNTER}', `${count} seconds`);
+    const pageTitle = LANGUAGE_EN.GENERAL.PAGE_NOT_FOUND.TITLE;
+    const pageDescription = LANGUAGE_EN.GENERAL.PAGE_NOT_FOUND.MESSAGE.replace('{COUNTER}', `${count} seconds`);
+    const backButtonName = `Back to dashboard`;
 
     return (
-        isLoggedIn && (
+        isLoggedIn &&
+        !routeExclusion?.includes(window?.location?.pathname) && (
             <div className={styles.pageNotFoundContainer}>
                 <Result
                     title={pageTitle}
@@ -46,7 +49,7 @@ const PageNotFoundMaster = ({ isLoggedIn }) => {
                     icon={<Image height={45} width={300} src={ROBIN_LIGHT_THEME} preview={false} />}
                     extra={
                         <Button danger onClick={() => navigate(routing.ROUTING_DASHBOARD)}>
-                            Back Home
+                            {backButtonName}
                         </Button>
                     }
                 />

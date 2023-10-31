@@ -23,7 +23,7 @@ const ModelCard = (props) => {
         setFormBtnActive(true);
         setModelSwitch(props?.status);
 
-        modelEditForm.setFieldsValue({
+        modelEditForm?.setFieldsValue({
             modelGroupCode: props?.modelGroupCode,
             status: props?.status,
             internalId: props?.internalId,
@@ -59,7 +59,7 @@ const ModelCard = (props) => {
         });
 
         setModelEdit(false);
-        modelForm.resetFields();
+        modelForm?.resetFields();
         forceUpdate();
     };
 
@@ -103,8 +103,9 @@ const ModelCard = (props) => {
                                         onClick={() => {
                                             onModelEdit(props);
                                         }}
+                                        data-testid="edit"
                                     />
-                                    <Button onClick={() => modelDelete(props)} type="link" icon={<FiTrash />} disabled={props?.internalId ? false : true} />
+                                    <Button onClick={() => modelDelete(props)} type="link" icon={<FiTrash />} disabled={props?.internalId ? false : true} data-testid="delete" />
                                 </>
                             )}
                             {modelEdit && props[IdType] === uniqueCardEdit && (

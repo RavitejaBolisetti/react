@@ -64,7 +64,7 @@ describe('Deliverable checklist Master components', () => {
         const editBtn = screen.getByRole('button', { name: /fa-edit/i });
         fireEvent.click(editBtn);
 
-        const clearBtn = screen.getByRole('button', { name: /Cancel/i });
-        fireEvent.click(clearBtn);
+        const closeBtn = screen.getByRole('button', { name: /Close/i });
+        fireEvent.click(closeBtn);
     });
 });

@@ -35,6 +35,7 @@ const mapStateToProps = (state) => {
     } = state;
 
     const moduleTitle = 'Insurance Details';
+    const codeSetName = 'relationShipManagerCode';
 
     let returnValue = {
         userId,
@@ -50,6 +51,7 @@ const mapStateToProps = (state) => {
         isChallanDataLoaded,
         isChallanLoading,
         vehicleChallanData,
+        codeSetName,
     };
     return returnValue;
 };
@@ -80,7 +82,7 @@ export const InvoiceDetailsMasterBase = (props) => {
 
     const { fetchChallanList, listChallanShowLoading } = props;
 
-    const { buttonData, setButtonData } = props;
+    const { buttonData, setButtonData, codeSetName } = props;
 
     const [formData, setFormData] = useState({});
 
@@ -117,6 +119,7 @@ export const InvoiceDetailsMasterBase = (props) => {
             setButtonData({ ...buttonData, formBtnActive: disableFormButton });
             setFormData((prev) => ({ ...prev, deliveryNoteFor: 'Directly Billed Vehicle' }));
         }
+       
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [section, soldByDealer]);
 
@@ -181,7 +184,7 @@ export const InvoiceDetailsMasterBase = (props) => {
     };
 
     const handleRelationShipManagerChange = (value) => {
-        form.setFieldValue('relationShipManagerCode', value);
+        form.setFieldValue(codeSetName, value);
     };
 
     const formProps = {

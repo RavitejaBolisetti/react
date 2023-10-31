@@ -10,6 +10,10 @@ afterEach(() => {
     jest.restoreAllMocks();
 });
 
+jest.mock('store/actions/data/amcRegistration/amcRegistration', () => ({
+    amcRegistrationDataAction: {},
+}));
+
 const FormWrapper = (props) => {
     const [registrationForm, schemeForm] = Form.useForm();
     const myForm = {
@@ -24,11 +28,11 @@ const FormWrapper = (props) => {
 
 describe('AMC Registration Master Components', () => {
     it('Should render AMC registration master basic render', () => {
-        customRender(<AMCRegistrationMaster />);
+        customRender(<AMCRegistrationMaster setFilterString={jest.fn()} />);
     });
 
     it('Should render AMC registration master search render', () => {
-        customRender(<AMCRegistrationMaster />);
+        customRender(<AMCRegistrationMaster setFilterString={jest.fn()} />);
 
         const searchText = screen.getByPlaceholderText('Search');
         fireEvent.change(searchText, { target: { value: 'testing' } });
@@ -41,7 +45,7 @@ describe('AMC Registration Master Components', () => {
     });
 
     it('Should render AMC registration master Registration Filter apply render', () => {
-        customRender(<FormWrapper />);
+        customRender(<FormWrapper setFilterString={jest.fn()} />);
 
         const advancedFiltersBtn = screen.getByRole('button', { name: 'Advanced Filters' });
         fireEvent.click(advancedFiltersBtn);
@@ -57,7 +61,7 @@ describe('AMC Registration Master Components', () => {
     });
 
     it('Should render AMC registration master Registration Filter reset render', () => {
-        customRender(<FormWrapper />);
+        customRender(<FormWrapper setFilterString={jest.fn()} />);
 
         const advancedFiltersBtn = screen.getByRole('button', { name: 'Advanced Filters' });
         fireEvent.click(advancedFiltersBtn);
@@ -73,7 +77,7 @@ describe('AMC Registration Master Components', () => {
     });
 
     it('Should render AMC registration master Registration Filter close render', () => {
-        customRender(<FormWrapper />);
+        customRender(<FormWrapper setFilterString={jest.fn()} />);
 
         const advancedFiltersBtn = screen.getByRole('button', { name: 'Advanced Filters' });
         fireEvent.click(advancedFiltersBtn);
@@ -97,7 +101,7 @@ describe('AMC Registration Master Components', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <AMCRegistrationMaster fetchList={fetchList} showAddButton={true} />
+                <AMCRegistrationMaster setFilterString={jest.fn()} fetchList={fetchList} showAddButton={true} />
             </Provider>
         );
 
@@ -106,8 +110,130 @@ describe('AMC Registration Master Components', () => {
 
         const removeFilter = screen.getAllByTestId('removeFilter');
         fireEvent.click(removeFilter[0]);
+    });
 
-        const pendingforApproval = screen.getByRole('button', { name: "Pending for Approval" })
-        fireEvent.click(pendingforApproval)
+    it('Should render AMC registration master component', async() => {
+        const loginUserData = {
+            userType: 'DLR',
+        };
+        const buttonAction = {
+            ADD_ACTION: 'add',
+            EDIT_ACTION: 'edit',
+            VIEW_ACTION: 'view',
+            NEXT_ACTION: 'next',
+        };
+
+        const mockStore = createMockStore({
+            auth: { userId: 123 },
+            data: {
+                AMCRegistration: {
+                    AMCRegistrationSearch: {
+                        isLoaded: true,
+                        data: [
+                            {
+                                id: 'c3bc4c10-be25-461c-a6ed-ed54c4c09fb0',
+                                schemeAmount: 21500,
+                                schemeCode: 'AM006',
+                                schemeDescription: 'Alturas G4 Retail Service Plan  3Yrs 50000 KMS',
+                                schemeEndDate: null,
+                                schemeStartDate: null,
+                                schemeTaxAmount: null,
+                                schemeType: 'SCHM',
+                            },
+                        ],
+                    },
+                },
+            },
+        });
+
+        const saveData = jest.fn();
+        const fetchList = jest.fn();
+
+        customRender(
+            <Provider store={mockStore}>
+                <AMCRegistrationMaster saveData={saveData} AMConFinish={jest.fn()} fetchList={fetchList} setButtonData={jest.fn()} setFilterString={jest.fn()} loginUserData={loginUserData} buttonAction={buttonAction} />
+            </Provider>
+        );
+
+        const plusAdd = screen.getByRole('button', { name: 'plus Add' });
+        fireEvent.click(plusAdd);
+
+        const plusImg = screen.getAllByRole('img', { name: 'plus' });
+        fireEvent.click(plusImg[0]);
+        fireEvent.click(plusImg[1]);
+
+        const saleType = screen.getByRole('combobox', { name: 'Sale Type' });
+        fireEvent.change(saleType, { target: { value: 'Sale Type' } });
+
+        const employeeName = screen.getByRole('combobox', { name: 'Employee Name' });
+        fireEvent.change(employeeName, { target: { value: 'Sale Type test' } });
+
+        const searchBtn = screen.getAllByRole('button', { name: 'search' });
+        fireEvent.click(searchBtn[1]);
+
+        const managerName = screen.getByRole('textbox', { name: 'Manager Name' });
+        fireEvent.change(managerName, { target: { value: 'testing' } });
+
+        const remarks = screen.getByRole('textbox', { name: 'Remarks' });
+        fireEvent.change(remarks, { target: { value: 'testing' } });
+        fireEvent.click(plusImg[2]);
+
+        const aMCType = screen.getByRole('combobox', { name: 'AMC Type' });
+        fireEvent.change(aMCType, { target: { value: 'AMC Type' } });
+
+        const schemeDescription = screen.getByRole('combobox', { name: 'Scheme Description' });
+        fireEvent.change(schemeDescription, { target: { value: 'AMC Type' } });
+
+        const schemeCode = screen.getByRole('textbox', { name: 'Scheme Code' });
+        fireEvent.change(schemeCode, { target: { value: 'testing' } });
+
+        const schemeBasicAmount = screen.getByRole('textbox', { name: 'Scheme Basic Amount' });
+        fireEvent.change(schemeBasicAmount, { target: { value: 'testing' } });
+
+        const schemeDiscount = screen.getByRole('textbox', { name: 'Scheme Discount' });
+        fireEvent.change(schemeDiscount, { target: { value: 'testing' } });
+
+        const saveandNext = screen.getByRole('button', { name: 'Save and Next' });
+        fireEvent.click(saveandNext);       
+    });
+
+    it('Should render AMC registration master cancel component', () => {
+        customRender(<AMCRegistrationMaster setFilterString={jest.fn()} />);
+
+        const plusAdd = screen.getByRole('button', { name: 'plus Add' });
+        fireEvent.click(plusAdd);
+
+        const cancel = screen.getByRole('button', { name: 'Cancel' });
+        fireEvent.click(cancel);
+    });
+
+    it('Should render AMC registration master close component', () => {
+        customRender(<AMCRegistrationMaster setFilterString={jest.fn()} />);
+
+        const plusAdd = screen.getByRole('button', { name: 'plus Add' });
+        fireEvent.click(plusAdd);
+
+        const cancel = screen.getByRole('button', { name: 'Close' });
+        fireEvent.click(cancel);
+    });
+    it('Should render userid', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 1237 },
+        });
+        const fetchList = jest.fn();
+
+        const formActionType = { viewMode: true };
+
+        customRender(
+            <Provider store={mockStore}>
+                <AMCRegistrationMaster currentSection={'2'} setFilterString={jest.fn()} fetchList={fetchList} formActionType={formActionType} EDIT_ACTION={'edit'} />
+            </Provider>
+        );
+
+        const plusAdd = screen.getByRole('button', { name: 'Pending for Approval' });
+        fireEvent.click(plusAdd);
+
+        const pendingforCancellation = screen.getByRole('button', { name: 'Pending for Cancellation' });
+        fireEvent.click(pendingforCancellation);
     });
 });

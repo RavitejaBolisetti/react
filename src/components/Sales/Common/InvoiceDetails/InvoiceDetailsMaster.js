@@ -73,14 +73,12 @@ export const InvoiceDetailsMasterBase = (props) => {
         setactiveKey([values]);
     };
 
-    const errorAction = (message) => {
-        return message;
-        // showGlobalNotification(message);
+    const errorAction = () => {
+        return;
     };
 
-    const onSuccessAction = (res) => {
-        return res;
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+    const onSuccessAction = () => {
+        return;
     };
 
     useEffect(() => {

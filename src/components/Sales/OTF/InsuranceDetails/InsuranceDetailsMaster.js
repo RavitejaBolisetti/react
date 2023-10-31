@@ -121,6 +121,7 @@ const InsuranceDetailsMasterBase = (props) => {
             setButtonData({ ...buttonData, formBtnActive: false });
         } else {
             const onSuccess = (res) => {
+                setButtonData({ ...buttonData, formBtnActive: false });
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
                 fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction });

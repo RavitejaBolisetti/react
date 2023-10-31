@@ -15,7 +15,7 @@ import { UploadUtil } from 'utils/Upload';
 import styles from 'assets/sass/app.module.scss';
 
 const VehiclePriceMasterUploadMain = (uploadProps) => {
-    const { listShowLoading, downloadFile, form, formData, onCloseAction, onFinish, onFinishFailed } = uploadProps;
+    const { listShowLoading, downloadFile, form, formData, onCloseAction, onFinish } = uploadProps;
 
     const { handleButtonClick } = uploadProps;
     const { typeData, userId } = uploadProps;
@@ -58,7 +58,7 @@ const VehiclePriceMasterUploadMain = (uploadProps) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBody}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <div className={styles.contentHeaderBackground}>

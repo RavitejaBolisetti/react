@@ -59,7 +59,7 @@ const CustomerDetailsMasterBase = (props) => {
         }
     };
 
-    const handleChange = (e) => {
+    const handleChange = () => {
         setButtonData({ ...buttonData, formBtnActive: false });
     };
 
@@ -68,8 +68,6 @@ const CustomerDetailsMasterBase = (props) => {
         handleButtonClick({ buttonAction: NEXT_ACTION });
         setButtonData({ ...buttonData, formBtnActive: false });
     };
-
-    const onFinishFailed = () => {};
 
     const handleCustomerChange = (e) => {
         if (!e?.target?.value) {
@@ -111,7 +109,7 @@ const CustomerDetailsMasterBase = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

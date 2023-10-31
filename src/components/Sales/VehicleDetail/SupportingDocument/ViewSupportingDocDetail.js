@@ -25,13 +25,13 @@ export const ViewSupportingDocDetail = (props) => {
                                 title={uploadData?.documentTitle}
                                 extra={
                                     <>
-                                        <FiDownload onClick={() => downloadFileFromButton(uploadData)} />
+                                        <FiDownload onClick={() => downloadFileFromButton(uploadData)} data-testid="downloadFile" />
                                         {/* {!viewMode && <FiTrash onClick={() => deleteFile(uploadData)} />} */}
                                     </>
                                 }
                             ></Card>
                         );
-                    })}
+                    })} 
                 </div>
             ) : (
                 // viewMode &&

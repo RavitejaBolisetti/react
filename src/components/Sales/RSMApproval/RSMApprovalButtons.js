@@ -8,7 +8,7 @@ import { Row, Col, Button } from 'antd';
 
 import styles from 'assets/sass/app.module.scss';
 
-export const RSMApprovalButtons = ({ record, onCloseAction, buttonData, setButtonData, handleButtonClick, handleRequest }) => {
+export const RSMApprovalButtons = ({ onCloseAction, buttonData, handleRequest }) => {
     return (
         <div className={styles.formFooter}>
             <Row gutter={20}>

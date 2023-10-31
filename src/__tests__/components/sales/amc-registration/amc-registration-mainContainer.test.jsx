@@ -3,6 +3,7 @@ import customRender from '@utils/test-utils';
 import {AMCRegistrationMainContainer} from '@components/Sales/AMCRegistration/AMCRegistrationMainContainer';
 import { screen, fireEvent } from '@testing-library/react';
 import { Form } from 'antd';
+import { AMC_REGISTRATION_SECTION } from 'constants/AMCRegistrationSection';
 
 afterEach(() => {
     jest.restoreAllMocks();
@@ -26,6 +27,11 @@ describe('Amc registration main container Components', () => {
 
         const plus = screen.getAllByRole('img', { name: "plus" })
         fireEvent.click(plus[0])
+    });
+
+    it('Should render Amc registration main container basic 2 render', () => {
+        customRender(<FormWrapper isVisible={true} fetchSchemeList={jest.fn()} currentSection={AMC_REGISTRATION_SECTION.CUSTOMER_DETAILS.id} />);
+
     });
 
 });

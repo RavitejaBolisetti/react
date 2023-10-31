@@ -288,10 +288,10 @@ export const CrmScreenEnrolmentBase = (props) => {
         setKeyValue(1);
     };
 
-    const handleSearch = (value) => {
-        setFilterString({ ...filterString, dealerParent: value, advanceFilter: true });
-        searchForm.resetFields();
-    };
+    // const handleSearch = (value) => {
+    //     setFilterString({ ...filterString, dealerParent: value, advanceFilter: true });
+    //     searchForm.resetFields();
+    // };
 
     const handleResetFilter = () => {
         setShowDataLoading(false);
@@ -321,6 +321,8 @@ export const CrmScreenEnrolmentBase = (props) => {
             fetchDetail({ setIsLoading: listDetailShowLoading, userId, extraParams, customURL });
         }
     };
+
+    const onFinishSearch = (values) => {};
 
     const onFinish = (values) => {
         if (formActionType?.addMode) {
@@ -361,11 +363,6 @@ export const CrmScreenEnrolmentBase = (props) => {
             }
         }
     };
-
-    const onFinishFailed = (errorInfo) => {
-        return;
-    };
-
     const onCloseAction = () => {
         form.resetFields();
         setKeyValue([]);
@@ -442,11 +439,10 @@ export const CrmScreenEnrolmentBase = (props) => {
         filterString,
         setFilterString,
         onFinish,
-        onFinishFailed,
         handleResetFilter,
         advanceFilterForm,
         handleButtonClick,
-        handleSearch,
+        // handleSearch,
         title,
         data,
         setAdvanceSearchVisible,
@@ -468,6 +464,7 @@ export const CrmScreenEnrolmentBase = (props) => {
         advanceFilterForm,
         setAdvanceSearchVisible,
         typeData,
+        onFinishSearch,
     };
 
     const formProps = {

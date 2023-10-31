@@ -32,7 +32,7 @@ const AddEditFormMain = (props) => {
 
     const voucherModuleTitle = `Voucher`;
 
-    const addContactHandeler = (e) => {
+    const addContactHandeler = () => {
         voucherForm.resetFields();
         setOpenAccordian('voucher');
         setIsReadOnly(true);

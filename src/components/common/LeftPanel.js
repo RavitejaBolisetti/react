@@ -10,7 +10,7 @@ import styles from './TreeView.module.scss';
 import { InputSkeleton } from './Skeleton';
 
 const LeftPanel = (props) => {
-    const { selectedTreeKey, callOnForm = false, treeData, fieldNames, handleTreeViewClick, isOpenInModal, checkedKeys, expendedKeys: defaultExpandedKeys = [] } = props;
+    const { selectedTreeKey, callOnForm = false, treeData, fieldNames, handleTreeViewClick, isOpenInModal, checkedKeys } = props;
     const { isTreeViewVisible, checkable, onCheck = () => {}, selectable = true } = props;
     const { isLoading = false, searchValue, setSearchValue, disabled = false, showLine = true } = props;
 

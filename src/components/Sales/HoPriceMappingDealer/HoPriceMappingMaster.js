@@ -338,9 +338,6 @@ export const HoPriceMappingMasterBase = (props) => {
             fetchDetail({ setIsLoading: listDetailShowLoading, userId, extraParams });
         }
     };
-
-    const onFinishSearch = (values) => {};
-
     const disableExceptModelGroup = (node) => {
         if (node?.attributeType === MODEL_TYPE.MODAL_GROUP.key && (node?.parntProdctCode !== ATTRIBUTE_TYPE.SERVICE.key || node?.parntProdctCode === null)) {
             node[`selectable`] = false;
@@ -441,10 +438,6 @@ export const HoPriceMappingMasterBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        return;
-    };
-
     const onCloseAction = () => {
         form.resetFields();
         setIsFormVisible(false);
@@ -514,7 +507,6 @@ export const HoPriceMappingMasterBase = (props) => {
         filterString,
         setFilterString,
         onFinish,
-        onFinishFailed,
         handleResetFilter,
         advanceFilterForm,
         handleButtonClick,
@@ -530,7 +522,6 @@ export const HoPriceMappingMasterBase = (props) => {
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
-        // icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
         filteredStateData,
         filteredCityData,
@@ -544,7 +535,6 @@ export const HoPriceMappingMasterBase = (props) => {
         advanceFilterForm,
         setAdvanceSearchVisible,
         typeData,
-        onFinishSearch,
         setFilteredCityData,
         isProductLoading,
         isStateLoading,

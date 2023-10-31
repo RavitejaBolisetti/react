@@ -144,15 +144,15 @@ export const RoleManagementMain = (props) => {
 
     const onSearchHandle = (value) => {
         if (value?.trim()?.length >= 3) {
-            setFilterString({ ...filterString, advanceFilter: false, keyword: value });
+            setFilterString({ ...filterString, keyword: value });
         }
     };
 
-    const handleResetFilter = () => {
-        setFilterString();
-        listFilterForm.resetFields();
-        setShowDataLoading(false);
-    };
+    // const handleResetFilter = () => {
+    //     setFilterString();
+    //     listFilterForm.resetFields();
+    //     setShowDataLoading(false);
+    // };
 
     const handleClearInSearch = (e) => {
         if (e.target.value.length > 2) {
@@ -220,11 +220,11 @@ export const RoleManagementMain = (props) => {
     };
 
     const advanceFilterResultProps = {
-        advanceFilter: false,
-        filterString,
+        //advanceFilter: false,
+        //filterString,
         from: listFilterForm,
         onSearchHandle,
-        handleResetFilter,
+        //handleResetFilter,
         handleClearInSearch,
         handleReferesh,
         handleButtonClick,

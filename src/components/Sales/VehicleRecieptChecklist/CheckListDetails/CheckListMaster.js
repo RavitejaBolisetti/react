@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Form, Row, Col } from 'antd';
 
 import { connect } from 'react-redux';
@@ -81,23 +81,18 @@ const VehicleRecieptCheckListMain = (props) => {
     const onSuccessAction = (res) => {};
 
     const onErrorAction = (message) => {
-        showGlobalNotification({ message: message });
+        showGlobalNotification({ message });
     };
-    const makeExtraParams = ({ key, title, value, name }) => {
-        const params = [
-            {
-                key: key,
-                title: title,
-                value: value,
-                name: name,
-            },
+    const checklistDetailsParams = useMemo(() => {
+        return [
+            { key: 'chassisNumber', title: 'chassisNumber', value: chassisNumber, name: 'Chassis Number' },
+            { key: 'id', title: 'id', value: selectedRecord?.id, name: 'id' },
         ];
-        return params;
-    };
+    }, [chassisNumber, userId]);
 
     useEffect(() => {
         if (userId && chassisNumber && !isChecklistDataLoaded) {
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams: makeExtraParams({ key: 'chassisNumber', title: 'chassisNumber', value: chassisNumber, name: 'Chassis Number' }), onErrorAction, onSuccessAction });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams: checklistDetailsParams, onErrorAction, onSuccessAction });
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -123,7 +118,7 @@ const VehicleRecieptCheckListMain = (props) => {
     const onFinishFailed = () => {
         form.validateFields()
             .then(() => {})
-            .catch(() => {});
+            .catch((err) => console.err(err));
     };
     const handleCheckListClick = ({ record, index }) => {
         setAdvanceformData({ ...record, index: index });

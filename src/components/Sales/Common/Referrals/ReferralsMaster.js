@@ -204,7 +204,6 @@ const ReferralsMasterBase = (props) => {
 
     const onErrorAction = () => {
         return;
-        // showGlobalNotification({ message });
     };
 
     const onSuccessAction = (res) => {

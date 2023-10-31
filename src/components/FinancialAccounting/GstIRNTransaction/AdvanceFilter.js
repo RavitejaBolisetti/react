@@ -13,8 +13,8 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import styles from 'assets/sass/app.module.scss';
 
 export default function AdvanceFilter(props) {
-    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, filter = false, title, filterString, setFilterString, typeData, setAdvanceSearchVisible, searchForm } = props;
-    
+    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, title, filterString, setFilterString, typeData, setAdvanceSearchVisible, searchForm } = props;
+
     const serachBoxProps = {
         searchForm,
         filterString,

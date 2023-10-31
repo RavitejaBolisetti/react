@@ -6,7 +6,7 @@
 import React from 'react';
 import { Input, Form, Col, Row, Button, Switch } from 'antd';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-import { validateRequiredInputField } from 'utils/validation';
+import { validateRequiredInputField, noWhiteSpaceinBeginning } from 'utils/validation';
 import { PlusOutlined } from '@ant-design/icons';
 
 const { TextArea } = Input;
@@ -19,12 +19,12 @@ const AnswerForm = (props) => {
             <Form form={formEdit ? editForm : answerForm} id="myForm" autoComplete="off" layout="vertical">
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Form.Item name="answerCode" label="Answer Code" rules={[validateRequiredInputField('Answer Code')]}>
+                        <Form.Item name="answerCode" label="Answer Code" rules={[validateRequiredInputField('Answer Code'), noWhiteSpaceinBeginning()]}>
                             <Input maxLength={6} placeholder={preparePlaceholderText('Answer Code')} disabled={mainFomEdit} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Form.Item name="answerTitle" label="Answer Description" rules={[validateRequiredInputField('Answer Description')]}>
+                        <Form.Item name="answerTitle" label="Answer Description" rules={[validateRequiredInputField('Answer Description'), noWhiteSpaceinBeginning()]}>
                             <TextArea maxLength={300} placeholder={preparePlaceholderText('Answer Description')} disabled={mainFomEdit} />
                         </Form.Item>
                     </Col>

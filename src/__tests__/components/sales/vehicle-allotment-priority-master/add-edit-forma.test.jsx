@@ -54,11 +54,11 @@ describe('add edit form component', () => {
 
         const dateTime1 = screen.getAllByText('28');
         fireEvent.click(dateTime1[0]);
-        fireEvent.click(dateTime1[1]);
+        // fireEvent.click(dateTime1[1]);
 
         const dateTime2 = screen.getAllByText('29');
         fireEvent.click(dateTime2[0]);
-        fireEvent.click(dateTime2[1]);
+        // fireEvent.click(dateTime2[1]);
 
         const oldModel = screen.getByRole('combobox', { name: 'Old Model(Exchange)' });
         fireEvent.click(oldModel);

@@ -65,8 +65,12 @@ const BranchMapping = (props) => {
     }, [userId]);
 
     const onFinish = () => {
-        const onErrorAction = (res) => {
-            console.error(res);
+        if (!dealerBranches?.length) {
+            return;
+        }
+        const onError = (message) => {
+            console.log('🚀 ~ file: BranchMapping.js:72 ~ onError ~ message:', message);
+            showGlobalNotification({ message });
         };
 
         const onSuccess = (res) => {
@@ -79,7 +83,7 @@ const BranchMapping = (props) => {
             data: dealerBranches?.filter((el) => el?.id || el?.status),
             setIsLoading: userUsrDlrBrLoactionShowLoading,
             userId,
-            onErrorAction,
+            onError,
             onSuccess,
         };
 
