@@ -36,13 +36,15 @@ const AddViewFormMain = (props) => {
         handleButtonClick,
         saveButtonName: formActionType?.addMode ? 'Save & Next' : 'Next',
     };
+    console.log("🚀 ~ file: AddViewFormMaster.js:39 ~ AddViewFormMain ~ buttonProps.formData:", formData)
+
 
     return (
         <>
             <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>
                 {isEnrolmentGenerated ? (
                     <Row gutter={20} className={styles.drawerBodyRight} justify="center" align="center">
-                        <EnrolmentNumberGenerated />
+                        <EnrolmentNumberGenerated {...props} />
                     </Row>
                 ) : (
                     <Row gutter={20} className={styles.drawerBodyRight}>
