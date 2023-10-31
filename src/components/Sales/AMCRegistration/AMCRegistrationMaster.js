@@ -203,7 +203,7 @@ const mapStateToProps = (state) => {
         isSearchLoading,
         isSearchDataLoaded,
         filterString,
-        loginUserData: [MNMADMIN_DATA, DEALER_DATA][Math.floor(Math.random() * 2)], //For flow testing random scenario is generated
+        loginUserData: [MNMADMIN_DATA, DEALER_DATA][0], //For flow testing random scenario is generated change between 0 and 1 to change data
         amcRegistrationDetailData,
 
         isEmployeeDataLoaded,
