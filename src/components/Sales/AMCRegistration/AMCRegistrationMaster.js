@@ -38,141 +38,7 @@ import { AMC_CONSTANTS } from './utils/AMCConstants';
 import { AMC_REQUEST_TITLE_CONSTANTS } from './utils/AMCRequestTitleConstant';
 import { ReportModal } from 'components/common/ReportModal/ReportModal';
 import { LANGUAGE_EN } from 'language/en';
-const MNMADMIN_DATA = {
-    header: null,
-    tickerMessage: 'Ticker Message',
-    notificationCount: 2,
-    userType: 'MNM',
-    firstName: 'Vishal Gaurav',
-    lastName: null,
-    mobileNo: '+919900060706',
-    emailId: '50003940@mahindra.com',
-    userId: 'gaurav.vishal',
-    dealerId: null,
-    dealerName: 'Mahindra & Mahindra LTD',
-    mnmLocation: 'Mumbai',
-    dealerLocations: null,
-    userRoles: [
-        {
-            roleId: '96cb838f-a4ea-4978-8489-c12d74dcde28',
-            roleCode: 'R0L005',
-            roleName: 'M&M ADMIN',
-            isDefault: true,
-        },
-    ],
-    dealerImage: null,
-    parentGroupCode: null,
-};
-const DEALER_DATA = {
-    header: null,
-    tickerMessage: 'Ticker Message',
-    notificationCount: 2,
-    userType: 'DLR',
-    firstName: 'Reena',
-    lastName: 'Harikishan',
-    mobileNo: '9999000014',
-    emailId: 'santosh.chaudhary@wipro.com',
-    userId: 'reena',
-    dealerId: 'a33b1add-9593-4c1c-abff-891bf519c090',
-    dealerName: 'NBS INTERNATIONAL LTD',
-    mnmLocation: null,
-    dealerLocations: [
-        {
-            locationId: 'bdbfa385-cd3e-4e68-a10e-4506cd20d351',
-            locationCode: 'NB05',
-            locationName: 'GOREGAON_WS',
-            locationPrefix: 'E',
-            stateCode: '13',
-            cityCode: 'AAA',
-            areaOffice: 'A140',
-            zonalHead: '203245',
-            productDivision: null,
-            isDefault: false,
-        },
-        {
-            locationId: '0c5d823c-b6b0-42e9-9aed-cb0ad337a1e6',
-            locationCode: 'NB06',
-            locationName: 'KANDIVALI_SH',
-            locationPrefix: 'F',
-            stateCode: '13',
-            cityCode: 'AAA',
-            areaOffice: 'A140',
-            zonalHead: '205885',
-            productDivision: null,
-            isDefault: false,
-        },
-        {
-            locationId: 'e5e0c333-4b48-49eb-ab93-cc8cf465901f',
-            locationCode: 'NB01',
-            locationName: 'CHOWPATTY',
-            locationPrefix: 'A',
-            stateCode: '13',
-            cityCode: 'AAA',
-            areaOffice: 'A140',
-            zonalHead: '203245',
-            productDivision: null,
-            isDefault: false,
-        },
-        {
-            locationId: '7b5cc2e8-5403-4b33-ac13-601bb638e202',
-            locationCode: 'NB04',
-            locationName: 'ANDHERI',
-            locationPrefix: 'D',
-            stateCode: '13',
-            cityCode: 'AAA',
-            areaOffice: 'A140',
-            zonalHead: '203245',
-            productDivision: null,
-            isDefault: true,
-        },
-        {
-            locationId: 'ea863bf5-aff4-4fc0-8369-8441b180675a',
-            locationCode: 'NB07',
-            locationName: 'MUMBRA STOCKYARD',
-            locationPrefix: 'G',
-            stateCode: '13',
-            cityCode: 'AMX',
-            areaOffice: 'A140',
-            zonalHead: '205885',
-            productDivision: null,
-            isDefault: false,
-        },
-    ],
-    userRoles: [
-        {
-            roleId: '591dc6e5-4cec-4493-8a41-7ece3a3a5649',
-            roleCode: 'ROL002',
-            roleName: 'Area Manager',
-            isDefault: null,
-        },
-        {
-            roleId: 'd585e600-ec7b-465e-84f2-e38ef8185f9c',
-            roleCode: 'ROL001',
-            roleName: 'Sales Executive',
-            isDefault: null,
-        },
-        {
-            roleId: '6b69a0dd-1bad-404c-9265-c7167f9cfc63',
-            roleCode: 'SL11',
-            roleName: 'SL111',
-            isDefault: null,
-        },
-        {
-            roleId: 'fa403ef6-bf98-4644-b245-ad78e486f967',
-            roleCode: 'R0L003',
-            roleName: 'Dealer Admin',
-            isDefault: true,
-        },
-        {
-            roleId: '16074f48-807c-49f2-a36a-ae95106d4dde',
-            roleCode: 'R0L011',
-            roleName: 'HR/CRM',
-            isDefault: null,
-        },
-    ],
-    dealerImage: null,
-    parentGroupCode: 'NB001',
-};
+
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -188,9 +54,9 @@ const mapStateToProps = (state) => {
                 OtfSearchList: { isLoaded: isOTFDataLoaded = false, isLoading: isOTFSearchLoading, data: otfData = [] },
             },
         },
-        // common: {
-        //     Header: { data: loginUserData = [], isLoading: isLoginDataLoading },
-        // },
+        common: {
+            Header: { data: loginUserData = [], isLoading: isLoginDataLoading = false },
+        },
     } = state;
 
     const moduleTitle = 'AMC Registration Details';
@@ -203,7 +69,7 @@ const mapStateToProps = (state) => {
         isSearchLoading,
         isSearchDataLoaded,
         filterString,
-        loginUserData: [MNMADMIN_DATA, DEALER_DATA][0], //For flow testing random scenario is generated change between 0 and 1 to change data
+        loginUserData,
         amcRegistrationDetailData,
 
         isEmployeeDataLoaded,
@@ -217,7 +83,7 @@ const mapStateToProps = (state) => {
         isSchemeDataLoaded,
         isSchemeDataLoading,
         schemeData,
-        isLoginDataLoading: false,
+        isLoginDataLoading,
     };
     return returnValue;
 };
@@ -355,7 +221,6 @@ export const AMCRegistrationMasterBase = (props) => {
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
-        setSelectedAMC(res?.data?.paginationData[0]);
     };
 
     const onErrorAction = (message) => {
@@ -655,7 +520,7 @@ export const AMCRegistrationMasterBase = (props) => {
                 registrationForm.resetFields();
                 schemeForm.resetFields();
                 customerForm.resetFields();
-                setSelectedAMC();
+                setSelectedAMC({ amcRegistrationNumber: res?.responseMessage.split(' ')[3], amcRegistrationDate: res?.data?.amcRegistration?.amcRegistrationDate, status: res?.data?.amcRegistration?.amcStatus });
                 setRequestPayload(defaultPayload);
             }
             cancelAMCForm.resetFields();
