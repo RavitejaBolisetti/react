@@ -14,7 +14,7 @@ const RequestDetailsMasterBase = (props) => {
     const { typeData } = props;
     const { buttonData, setButtonData, section, isLoading } = props;
     const { selectedAMC, formActionType, handleCancelRequest, handleMNMApproval, handleMNMRejection } = props;
-    const { form, FormActionButton, requestPayload, handleButtonClick, NEXT_ACTION, isPendingForCancellation, setIsPendingForCancellation } = props;
+    const { form, FormActionButton, requestPayload, handleButtonClick, NEXT_ACTION, isPendingForCancellation, setIsPendingForCancellation, userType } = props;
 
     const onFinish = () => {
         handleButtonClick({ buttonAction: NEXT_ACTION });
@@ -33,6 +33,7 @@ const RequestDetailsMasterBase = (props) => {
         handleMNMRejection,
         isPendingForCancellation,
         setIsPendingForCancellation,
+        userType,
     };
 
     return (

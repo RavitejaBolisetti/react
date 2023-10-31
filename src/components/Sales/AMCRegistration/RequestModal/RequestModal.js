@@ -37,7 +37,7 @@ export const RejectRequestForm = (props) => {
                             <Row gutter={16}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
                                     <Form.Item label="Reason for Cancellation" name="amcCancelRemarks" rules={[validateRequiredInputField('remarks')]} initialValue={formData?.amcCancelRemarks}>
-                                        {customSelectBox({ data: typeData?.[PARAM_MASTER.AMC_CANCEL_REASON.id], testId: "select-test", placeholder: preparePlaceholderSelect('reason for cancellation'), onChange: handleRemarksChange })}
+                                        {customSelectBox({ data: typeData?.[PARAM_MASTER.AMC_CANCEL_REASON.id], testId: 'select-test', placeholder: preparePlaceholderSelect('reason for cancellation'), onChange: handleRemarksChange })}
                                     </Form.Item>
                                 </Col>
                             </Row>

@@ -7,7 +7,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Col, Form, Row, Spin } from 'antd';
+import { Col, Form, Row, Spin, message } from 'antd';
 import { tableColumn } from './tableColumn';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 
@@ -624,14 +624,14 @@ export const AMCRegistrationMasterBase = (props) => {
         if (!type) {
             finalPayload = { ...requestPayload, amcId: selectedAMC?.amcId, amcRegistrationNumber: selectedAMC?.amcRegistrationNumber };
         } else if (type === AMC_CONSTANTS?.CANCEL_REQUEST?.key) {
-            finalPayload = { ...requestPayload, amcId: selectedAMC?.amcId, amcRegistrationNumber: selectedAMC?.amcRegistrationNumber, amcRequestDetails: { ...requestPayload?.amcRequestDetails, amcStatus: QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key } };
+            finalPayload = { ...requestPayload, amcId: selectedAMC?.amcId, amcRegistrationNumber: selectedAMC?.amcRegistrationNumber, amcRequestDetails: { ...requestPayload?.amcRequestDetails, amcStatus: userType === AMC_CONSTANTS?.MNM?.key ? (isMNMApproval ? QUERY_BUTTONS_CONSTANTS?.APPROVED?.key : QUERY_BUTTONS_CONSTANTS?.REJECTED?.key) : QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key, ...cancelAMCForm.getFieldsValue() } };
         } else if (type === AMC_CONSTANTS?.AMC_CANCELLATION?.key) {
-            finalPayload = { ...requestPayload, amcId: selectedAMC?.amcId, amcRegistrationNumber: selectedAMC?.amcRegistrationNumber, amcRequestDetails: { ...requestPayload?.amcRequestDetails, amcStatus: userType === AMC_CONSTANTS?.MNM?.key ? QUERY_BUTTONS_CONSTANTS?.REJECTED?.key : QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key, ...cancelAMCForm.getFieldsValue() } };
+            finalPayload = { ...requestPayload, amcId: selectedAMC?.amcId, amcRegistrationNumber: selectedAMC?.amcRegistrationNumber, amcRequestDetails: { ...requestPayload?.amcRequestDetails, amcStatus: QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key, ...cancelAMCForm.getFieldsValue() } };
         }
 
-        const onError = (res) => {
+        const onError = (message) => {
             setShowSpinnerLoading(false);
-            showGlobalNotification({ message: res?.responseMessage });
+            showGlobalNotification({ message });
         };
         const onSuccess = (res) => {
             setShowSpinnerLoading(false);
@@ -829,6 +829,8 @@ export const AMCRegistrationMasterBase = (props) => {
             onFinish({ type: AMC_CONSTANTS?.CANCEL_REQUEST?.key });
         } else if (!isMNMApproval && userType === AMC_CONSTANTS?.MNM?.key) {
             setRejectRequest(true);
+            setAmcWholeCancellation(true);
+            rejectRequest && onFinish({ type: AMC_CONSTANTS?.CANCEL_REQUEST?.key });
         } else if (!isMNMApproval && userType === AMC_CONSTANTS?.MNM?.key && rejectRequest) {
             onFinish({ type: AMC_CONSTANTS?.AMC_CANCELLATION?.key });
         } else if (rejectRequest && amcWholeCancellation) {

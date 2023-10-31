@@ -21,6 +21,7 @@ const ViewDetail = (props) => {
         layout: 'vertical',
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
+
     return (
         <>
             {formData &&
@@ -49,7 +50,8 @@ const ViewDetail = (props) => {
                                     <>
                                         {selectedAMC?.status === AMC_CONSTANTS?.PENDING_FOR_CANCELLATION?.title && (
                                             <>
-                                                <Descriptions>
+                                                <Divider className={styles.marB20} />
+                                                <Descriptions {...viewProps} column={{ xs: 1, sm: 1, lg: 1, xl: 1, xxl: 1 }}>
                                                     <Descriptions.Item label="Reason for Cancellation Request">{checkAndSetDefaultValue(formData?.amcRequestDetails?.amcCancelRemarks)}</Descriptions.Item>
                                                     <Descriptions.Item label="Remark for Cancellation">{checkAndSetDefaultValue(formData?.amcRequestDetails?.otherReason)}</Descriptions.Item>
                                                 </Descriptions>
@@ -57,15 +59,16 @@ const ViewDetail = (props) => {
                                         )}
 
                                         <Row gutter={20} className={styles.marB20}>
-                                            <Col xs={4} sm={4} md={4} lg={4}>
+                                            <Col xs={8} sm={8} md={8} lg={8}>
                                                 <Button type="primary" onClick={handleMNMApproval}>
                                                     Approve
                                                 </Button>
-                                            </Col>
-                                            <Col xs={4} sm={4} md={4} lg={4}>
-                                                <Button type="danger" onClick={handleMNMRejection}>
-                                                    Reject
-                                                </Button>
+
+                                                <span className={styles.marL5}>
+                                                    <Button danger onClick={handleMNMRejection}>
+                                                        Reject
+                                                    </Button>
+                                                </span>
                                             </Col>
                                         </Row>
                                     </>
@@ -73,7 +76,7 @@ const ViewDetail = (props) => {
                                     <>
                                         {isPendingForCancellation && (
                                             <>
-                                                <Descriptions>
+                                                <Descriptions {...viewProps}>
                                                     <Descriptions.Item label="Reason for Cancellation Request">{checkAndSetDefaultValue(formData?.amcRequestDetails?.amcCancelRemarks)}</Descriptions.Item>
                                                     <Descriptions.Item label="Remark for Cancellation">{checkAndSetDefaultValue(formData?.amcRequestDetails?.otherReason)}</Descriptions.Item>
                                                 </Descriptions>
