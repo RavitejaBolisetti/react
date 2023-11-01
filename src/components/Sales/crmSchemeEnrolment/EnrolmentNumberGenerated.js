@@ -11,7 +11,7 @@ import { CopytoClipboard } from 'utils/CopytoClipboard';
 const { Title, Text } = Typography;
 
 export const EnrolmentNumberGenerated = (props) => {
-    const { formData } = props;
+    const { formData, generatedData } = props;
 
     const title = 'Enrolment Number Generated Successfully';
 

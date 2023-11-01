@@ -18,7 +18,7 @@ import styles from 'assets/sass/app.module.scss';
 const { Panel } = Collapse;
 
 const AddViewFormMain = (props) => {
-    const { form, formData, buttonData, setButtonData, handleButtonClick, onCloseAction, formActionType, onFinish, isEnrolmentGenerated, activeKey, onChange } = props;
+    const { form, formData, buttonData, setButtonData, handleButtonClick, onCloseAction, formActionType, onFinish, isEnrolmentGenerated, activeKey, onChange, generatedData } = props;
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -36,7 +36,11 @@ const AddViewFormMain = (props) => {
         handleButtonClick,
         saveButtonName: formActionType?.addMode ? 'Save & Next' : 'Next',
     };
-    console.log("🚀 ~ file: AddViewFormMaster.js:39 ~ AddViewFormMain ~ buttonProps.formData:", formData)
+
+    const myProps = {
+        ...props,
+        generatedData,
+    };
 
 
     return (
@@ -44,7 +48,7 @@ const AddViewFormMain = (props) => {
             <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>
                 {isEnrolmentGenerated ? (
                     <Row gutter={20} className={styles.drawerBodyRight} justify="center" align="center">
-                        <EnrolmentNumberGenerated {...props} />
+                        <EnrolmentNumberGenerated {...myProps} />
                     </Row>
                 ) : (
                     <Row gutter={20} className={styles.drawerBodyRight}>

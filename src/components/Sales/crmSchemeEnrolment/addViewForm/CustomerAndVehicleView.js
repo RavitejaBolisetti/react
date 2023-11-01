@@ -58,7 +58,7 @@ const CustomerAndVehicleViewMain = (props) => {
                     <Divider />
                     <Card>
                         <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Vehicle No.">{checkAndSetDefaultValue(vehicleDataDetails?.vehicleNumber, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Vehicle No.">{checkAndSetDefaultValue(vehicleDataDetails?.vin, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Model">
                                 {checkAndSetDefaultValue(vehicleDataDetails?.model, isLoading)}
                                 <Tooltip title={modelInfo} placement="bottom" color="#6495ED" key="#6495ED">
