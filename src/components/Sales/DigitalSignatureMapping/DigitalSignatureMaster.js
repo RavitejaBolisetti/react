@@ -119,7 +119,6 @@ export const DigitalSignatureMasterBase = (props) => {
         setIsFormVisible(true);
     };
 
-
     const tableProps = {
         dynamicPagination,
         totalRecords,
