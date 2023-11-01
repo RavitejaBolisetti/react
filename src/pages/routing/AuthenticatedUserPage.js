@@ -77,11 +77,8 @@ import { PageNotFound } from 'components/PageNotFound';
 
 import { SplashPage } from 'pages/splash';
 import { ProfilePage, SettingPage, FaqPage, TrainingPage } from 'pages/user';
-import { BiReportPage } from 'pages/report/BiReport/BiReportPage';
-import { PaginatedReportPage } from 'pages/report/PaginatedReport/PaginatedReportPage';
 import { EmbeddedReportPage } from 'pages/report/EmbeddedReport/EmbeddedReportPage';
 import { EmbeddedDocumentPage } from 'pages/report/EmbeddedDocument/EmbeddedDocumentPage';
-import { URLFilterReportPage } from 'pages/report/URLFilterReport/URLFilterReportPage';
 
 import { CMSPage } from 'pages/cms';
 import { DealerCompanyPage } from 'pages/common/Dealer';
@@ -132,11 +129,8 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_USER_SETTING} element={<SettingPage />} exact />
             <Route path={routing.ROUTING_USER_FAQ} element={<FaqPage />} exact />
 
-            <Route path={routing.ROUTING_REPORT_BI_REPORT} element={<BiReportPage />} exact />
-            <Route path={routing.ROUTING_REPORT_PAGINATED_REPORT} element={<PaginatedReportPage />} exact />
             <Route path={routing.ROUTING_REPORT_EMBEDDED_REPORT} element={<EmbeddedReportPage />} exact />
             <Route path={routing.ROUTING_REPORT_EMBEDDED_DOCUMENT} element={<EmbeddedDocumentPage />} exact />
-            <Route path={routing.ROUTING_REPORT_URL_FILTER_REPORT} element={<URLFilterReportPage />} exact />
 
             <Route path={routing.ROUTING_USER_SETTING} element={<SettingPage />} exact />
             <Route path={routing.ROUTING_USER_FAQ} element={<FaqPage />} exact />
