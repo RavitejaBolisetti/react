@@ -134,6 +134,7 @@ export const EMBEDDED_REPORTS = {
         type: 'Document',
         slug: '',
     },
+
     FORM_21_DOCUMENT: {
         id: 18,
         key: 'Form21',
@@ -175,5 +176,12 @@ export const EMBEDDED_REPORTS = {
         title: 'AMC Registration Invoice Document ',
         type: 'Document',
         slug: '-report',
+    },
+    CHALLAN_DOCUMENT: {
+        id: 24,
+        key: 'Challan_Document',
+        title: 'Challan Document',
+        type: 'Document',
+        slug: '',
     },
 };
