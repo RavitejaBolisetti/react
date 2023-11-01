@@ -5,6 +5,18 @@ import { Provider } from 'react-redux';
 import customRender from '@utils/test-utils';
 import { ForgotPassword } from 'components/Auth/ForgotPassword/ForgotPassword';
 
+jest.mock('react-i18next', () => ({
+    useTranslation: () => {
+        return {
+            t: str => str
+        }
+    },
+    initReactI18next: {
+        type: 'Kai',
+        init: () => {},
+    }
+}));
+
 afterEach(() => {
     jest.restoreAllMocks();
 });
@@ -15,7 +27,7 @@ jest.mock('store/actions/data/forgotPassword', () => ({
 
 describe('ForgotPassword Component render', () => {
     it('should render ForgotPassword component page', async () => {
-        customRender(<ForgotPassword />);
+        customRender(<ForgotPassword isLoading={false} listShowLoading={true} />);
     });
 
     it('should check all steps to update password', async () => {
@@ -38,7 +50,7 @@ describe('ForgotPassword Component render', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <ForgotPassword verifyUser={verifyUser} sendOTP={sendOTP} validateOTP={validateOTP} updatePassword={updatePassword} />
+                <ForgotPassword verifyUser={verifyUser} sendOTP={sendOTP} validateOTP={validateOTP} updatePassword={updatePassword} listShowLoading={true} />
             </Provider>
         );
 
