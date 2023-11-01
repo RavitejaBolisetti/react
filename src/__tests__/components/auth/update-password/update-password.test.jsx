@@ -12,6 +12,18 @@ jest.mock('store/actions/auth', () => ({
     })
 }));
 
+jest.mock('react-i18next', () => ({
+    useTranslation: () => {
+        return {
+            t: str => str
+        }
+    },
+    initReactI18next: {
+        type: 'Kai',
+        init: () => {},
+    }
+}));
+
 jest.mock('store/actions/data/updatePassword', () => ({
     updatePasswordActions: {}
 }))
