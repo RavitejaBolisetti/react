@@ -7,7 +7,7 @@ import customRender from '@utils/test-utils';
 import { deliveryNoteInvoiceCancellationDataAction } from 'store/actions/data/sales/deliveryNoteInvoiceCancellation';
 
 jest.mock('store/actions/data/sales/deliveryNoteInvoiceCancellation', () => ({
-    deliveryNoteInvoiceCancellationDataAction: { },
+    deliveryNoteInvoiceCancellationDataAction: {},
 }));
 
 afterEach(() => {
@@ -18,9 +18,7 @@ const data = {
     pageSize: 10,
     pageNumber: 1,
     totalRecords: 2,
-    paginationData: [
-        { id: '617fa4fa-b3e3-4027-aaa0-aecb0704ef9e', requestType: 'DNCA', requestNumber: 'REQ003', invoiceId: 'INV11000004', requestStatus: 'O', invoiceDate: '2011-02-18', requestDate: '2021-12-07', dealerName: null, status: 'Pending' },
-    ],
+    paginationData: [{ id: '617fa4fa-b3e3-4027-aaa0-aecb0704ef9e', requestType: 'DNCA', requestNumber: 'REQ003', invoiceId: 'INV11000004', requestStatus: 'O', invoiceDate: '2011-02-18', requestDate: '2021-12-07', dealerName: null, status: 'Pending' }],
 };
 
 describe('InvoiceCancellationMaster Component', () => {
@@ -50,18 +48,23 @@ describe('InvoiceCancellationMaster Component', () => {
         fetchList.mock.calls[0][0].onErrorAction();
         fetchList.mock.calls[0][0].onSuccessAction();
 
-        await waitFor(() => { expect(screen.getByText('INV11000004')).toBeInTheDocument() });
+        await waitFor(() => {
+            expect(screen.getByText('INV11000004')).toBeInTheDocument();
+        });
 
-        const editBtn=screen.getByTestId('view');
+        const editBtn = screen.getByTestId('view');
         fireEvent.click(editBtn);
 
-        const cancelReq=screen.getByRole('button', { name: 'Cancel Request' });
+        const cancelReq = screen.getByRole('button', { name: 'Cancel Request' });
         fireEvent.click(cancelReq);
+
+        const yesBtn = screen.getByRole('button', { name: /yes, cancel/i });
+        fireEvent.click(yesBtn);
 
         saveData.mock.calls[0][0].onError();
         saveData.mock.calls[0][0].onSuccess();
 
-        const cancelBtn=screen.getAllByRole('button', { name: 'Close' });
+        const cancelBtn = screen.getAllByRole('button', { name: 'Close' });
         fireEvent.click(cancelBtn[1]);
 
         const pending = screen.getByRole('button', { name: 'Pending' });

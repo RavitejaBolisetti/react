@@ -6,6 +6,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import { screen } from '@testing-library/react';
 import customRender from '@utils/test-utils';
+
 import { VechilePurchaseOrderStatusTag } from '@components/Sales/VehiclePurchaseOrder/utils/VechilePurchaseOrderStatusTag';
 
 describe('vechile purchase order status tag render', () => {
@@ -14,42 +15,34 @@ describe('vechile purchase order status tag render', () => {
     });
 
     it('Po submitted tag should render', () => {
-        const status = 4;
-        customRender(<VechilePurchaseOrderStatusTag status={status} />);
+        customRender(<VechilePurchaseOrderStatusTag status={'Hold'} />);
     });
 
     it('cancel tag should render', () => {
-        const status = 1;
-        customRender(<VechilePurchaseOrderStatusTag status={status} />);
+        customRender(<VechilePurchaseOrderStatusTag status={'PO Submitted'} />);
     });
 
     it('cancelled requested tag should render', () => {
-        const status = 2;
-        customRender(<VechilePurchaseOrderStatusTag status={status} />);
+        customRender(<VechilePurchaseOrderStatusTag status={'Cancel'} />);
     });
 
     it('hold tag should render', () => {
-        const status = 3;
-        customRender(<VechilePurchaseOrderStatusTag status={status} />);
+        customRender(<VechilePurchaseOrderStatusTag status={'Cancellation Requested'} />);
     });
 
     it('release tag should render', () => {
-        const status = 5;
-        customRender(<VechilePurchaseOrderStatusTag status={status} />);
+        customRender(<VechilePurchaseOrderStatusTag status={'Release'} />);
     });
 
     it('received tag should render', () => {
-        const status = 6;
-        customRender(<VechilePurchaseOrderStatusTag status={status} />);
+        customRender(<VechilePurchaseOrderStatusTag status={'Received'} />);
     });
 
     it('So generated tag should render', () => {
-        const status = 7;
-        customRender(<VechilePurchaseOrderStatusTag sstatus={status} />);
+        customRender(<VechilePurchaseOrderStatusTag sstatus={'SO Generated'} />);
     });
 
     it('invoiced requested tag should render', () => {
-        const status = 8;
-        customRender(<VechilePurchaseOrderStatusTag status={status} />);
+        customRender(<VechilePurchaseOrderStatusTag status={'Invoiced'} />);
     });
 });

@@ -2,7 +2,7 @@
 import React from 'react';
 import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { ReferralsMaster } from '@components/Sales/OTF/Referrals/ReferralsMaster';
+import { ReferralsMaster } from '@components/Sales/Common/Referrals/ReferralsMaster';
 import customRender from '@utils/test-utils';
 import { Form, Button } from 'antd';
 import createMockStore from '__mocks__/store';

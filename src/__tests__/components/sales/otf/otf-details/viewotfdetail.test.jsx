@@ -35,7 +35,7 @@ describe('Booking View Details Component render', () => {
         const deliveryAt = screen.getByText('Delivery At');
         expect(deliveryAt).toBeTruthy();
 
-        const referal = screen.getByText('Referral');
+        const referal = screen.getByText('Referral Scheme');
         expect(referal).toBeTruthy();
 
         const mitraType = screen.getByText('Influencer/Mitra Type');

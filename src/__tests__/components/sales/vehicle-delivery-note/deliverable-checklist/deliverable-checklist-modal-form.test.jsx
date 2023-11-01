@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom/extend-expect';
-import { ModalForm } from '@components/Sales/VehicleDeliveryNote/DeliverableChecklist/ModalForm';
+import { ModalForm } from '@components/Sales/Common/ChecklistDetails/ModalForm';
 import customRender from '@utils/test-utils';
 import { Form } from 'antd';
 

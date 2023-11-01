@@ -182,7 +182,7 @@ describe('CustomerDetailsMaster Components', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper saveData={saveData} setButtonData={jest.fn()} onFinishCustom={true} fetchList={fetchList} handleButtonClick={jest.fn()} setButtonData={jest.fn()} onCloseAction={jest.fn()} StatusBar={StatusBar} FormActionButton={FormActionButton} resetData={jest.fn()} />
+                <FormWrapper saveData={saveData} setButtonData={jest.fn()} onFinishCustom={true} fetchList={fetchList} handleButtonClick={jest.fn()} onCloseAction={jest.fn()} StatusBar={StatusBar} FormActionButton={FormActionButton} resetData={jest.fn()} />
             </Provider>
         );
 

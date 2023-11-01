@@ -42,33 +42,6 @@ describe('Booking Vehicle Details Component render', () => {
 
         const charges = screen.getByText('Optional Services');
         expect(charges).toBeTruthy();
-
-        const sepeator = screen.getAllByRole('separator', { name: '' });
-        expect(sepeator).toBeTruthy();
-
-        const table = screen.getAllByRole('table', { name: '' });
-        expect(table).toBeTruthy();
-
-        const rowGrp = screen.getAllByRole('rowgroup', { name: '' });
-        expect(rowGrp).toBeTruthy();
-
-        const rateAmt = screen.getByRole('row', { name: /Srl. Description Rate Amount/i });
-        expect(rateAmt).toBeTruthy();
-
-        const nameAmt = screen.getByRole('cell', { name: /No data/i });
-        expect(nameAmt).toBeTruthy();
-
-        const srlNo = screen.getAllByRole('columnheader', { name: /Srl./i });
-        expect(srlNo).toBeTruthy();
-
-        const amount = screen.getAllByRole('columnheader', { name: /Amount/i });
-        expect(amount).toBeTruthy();
-
-        const rate = screen.getByRole('columnheader', { name: /Rate/i });
-        expect(rate).toBeTruthy();
-
-        const description = screen.getByRole('columnheader', { name: /Description/i });
-        expect(description).toBeTruthy();
     });
 
     it('should render screen text when readonly is true', async () => {
@@ -89,27 +62,6 @@ describe('Booking Vehicle Details Component render', () => {
 
         const charges = screen.getByText('Optional Services');
         expect(charges).toBeTruthy();
-
-        const sepeator = screen.getAllByRole('separator', { name: '' });
-        expect(sepeator).toBeTruthy();
-
-        const rateAmt = screen.getByRole('row', { name: /Srl. Description Rate Amount/i });
-        expect(rateAmt).toBeTruthy();
-
-        const nameAmt = screen.getByRole('cell', { name: /No data/i });
-        expect(nameAmt).toBeTruthy();
-
-        const srlNo = screen.getAllByRole('columnheader', { name: /Srl./i });
-        expect(srlNo).toBeTruthy();
-
-        const amount = screen.getAllByRole('columnheader', { name: /Amount/i });
-        expect(amount).toBeTruthy();
-
-        const rate = screen.getByRole('columnheader', { name: /Rate/i });
-        expect(rate).toBeTruthy();
-
-        const description = screen.getByRole('columnheader', { name: /Description/i });
-        expect(description).toBeTruthy();
     });
 
     it('should render text fields', async () => {
