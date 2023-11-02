@@ -39,15 +39,24 @@ export const AdvancedSearchFrom = (props) => {
             fromDate: values?.fromDate.format('YYYY-MM-DD'),
             toDate: values?.toDate.format('YYYY-MM-DD'),
             advanceFilter: true,
+            current: 1,
         });
         setAdvanceSearchVisible(false);
     };
 
     const handleResetFilter = () => {
-        advanceFilterForm.resetFields();
+        const { pageSize } = filterString;
         if (!filterString?.searchParam && !filterString?.searchType) {
-            setFilterString();
+            setFilterString({
+                current: 1,
+                pageSize,
+            });
         }
+        setFilterString({
+            current: 1,
+            pageSize,
+        });
+        advanceFilterForm.resetFields();
     };
 
     const modalProps = {
