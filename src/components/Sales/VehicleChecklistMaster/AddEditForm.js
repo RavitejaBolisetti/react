@@ -70,13 +70,13 @@ const AddEditFormMain = (props) => {
                             <>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item label="Group Code" name="code" rules={[validateRequiredInputField('Group Code')]}>
+                                        <Form.Item label="Group Code" name="code" rules={[validateRequiredInputField('Group Code'), noWhiteSpaceinBeginning()]}>
                                             <Input maxLength={6} placeholder={preparePlaceholderText('Group Code')} disabled={treeCodeReadOnly} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.textareaError}>
-                                        <Form.Item label="Group Description" name="descriptionTitle" rules={[validateRequiredInputField('Group Description')]}>
+                                        <Form.Item label="Group Description" name="descriptionTitle" rules={[validateRequiredInputField('Group Description'), noWhiteSpaceinBeginning()]}>
                                             <TextArea maxLength={300} placeholder={preparePlaceholderText('Group Description')} showCount disabled={treeCodeReadOnly} />
                                         </Form.Item>
                                     </Col>
@@ -86,14 +86,14 @@ const AddEditFormMain = (props) => {
                             <>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item name="code" label="Sub Group Code" rules={[validateRequiredInputField('Document Description')]}>
+                                        <Form.Item name="code" label="Sub Group Code" rules={[validateRequiredInputField('Document Description'), noWhiteSpaceinBeginning()]}>
                                             <Input maxLength={6} placeholder={preparePlaceholderText('Group Code')} disabled={treeCodeReadOnly} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item name="descriptionTitle" label="Sub Group Description" rules={[validateRequiredInputField('Financial Account Head')]}>
+                                        <Form.Item name="descriptionTitle" label="Sub Group Description" rules={[validateRequiredInputField('Financial Account Head'), noWhiteSpaceinBeginning()]}>
                                             <TextArea maxLength={300} placeholder={preparePlaceholderText('Group Description')} showCount disabled={treeCodeReadOnly} />
                                         </Form.Item>
                                     </Col>
