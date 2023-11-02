@@ -71,7 +71,7 @@ const ApportionDetailMasterBase = (props) => {
 
     const [apportionForm] = Form.useForm();
 
-    const financeDocumentContant = 'Finance';
+    const financeDocumentContant = 'ISFINANCE';
     const financeModuleContant = 'MODULE';
     const financeActiveContant = 1;
     useEffect(() => {
