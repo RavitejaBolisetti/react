@@ -187,9 +187,9 @@ export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, fetchCha
             setDisable(true);
             setSelectedTreeSelectKey(chartOfAccountData?.parentAccountDescription);
             setAccountTyp(null);
-            if (chartOfAccountData?.parentAccountCode === '') {
+            if (chartOfAccountData?.accountType === COA_ACCOUNT_TYPE?.LEDGER_ACCOUNT?.key) {
                 isChildAdd(false);
-            } else {
+            } else if (chartOfAccountData?.accountType === COA_ACCOUNT_TYPE?.GROUP_ACCOUNT?.key) {
                 isChildAdd(true);
             }
             form.setFieldValue('parentAccountCode', chartOfAccountData?.parentAccountCode);
@@ -387,8 +387,6 @@ export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, fetchCha
     const leftCol = chartOfAccountHierarchy?.length > 0 ? 14 : 24;
     const rightCol = chartOfAccountHierarchy?.length > 0 ? 10 : 24;
     const title = 'Financial Company';
-
-    console.log(`chartOfAccountData`, chartOfAccountData);
 
     return (
         <>
