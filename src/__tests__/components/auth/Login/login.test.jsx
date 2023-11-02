@@ -8,13 +8,13 @@ import { doLogin } from 'store/actions/auth';
 jest.mock('react-i18next', () => ({
     useTranslation: () => {
         return {
-            t: str => str
-        }
+            t: (str) => str,
+        };
     },
     initReactI18next: {
         type: 'Kai',
         init: () => {},
-    }
+    },
 }));
 
 jest.mock('react-google-recaptcha3', () => {
@@ -55,10 +55,10 @@ describe('Login Form Component', () => {
 
         customRender(<Logins doCloseLoginError={jest.fn()} authPostLogin={jest.fn()} authPreLogin={jest.fn()} />);
 
-        const loginBtn=screen.getByRole('button', { name: /Login/i });
+        const loginBtn = screen.getByRole('button', { name: /Login/i });
         fireEvent.click(loginBtn);
 
-        const userId=screen.getByRole('textbox', { name: '' });
+        const userId = screen.getByRole('textbox', { name: '' });
         fireEvent.change(userId, { target: { value: 'Kai' } });
 
         const password = screen.getByTestId('inputPassword');
@@ -83,7 +83,7 @@ describe('Login Form Component', () => {
         const password = screen.getByTestId('inputPassword');
         fireEvent.change(password, { target: { value: 'K' } });
 
-        const loginBtn=screen.getByRole('button', { name: /Login/i });
+        const loginBtn = screen.getByRole('button', { name: /Login/i });
         fireEvent.click(loginBtn);
 
         await waitFor(() => expect(ReactRecaptcha3.getToken).toHaveBeenCalled());
