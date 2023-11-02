@@ -82,7 +82,7 @@ export const VinBlockMasterBase = (props) => {
     const [vinInfo, setvinInfo] = useState();
     const [isLoading, showLoading] = useState(true);
 
-    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
+    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: true, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     useEffect(() => {
         setFilterString({ ...filterString, pageSize: 10, current: 1 });
