@@ -94,7 +94,7 @@ export const AdvancedSearchFrom = (props) => {
                         ]}
                         className={styles?.datePicker}
                     >
-                        <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} disabledDate={disableFutureDate} className={styles.fullWidth} />
+                        <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} />
                     </Form.Item>
                 </Col>
             </Row>
