@@ -121,7 +121,7 @@ export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, fetchCha
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [modalOpen, setModalOpen] = useState(false);
     const companyFieldNames = { value: 'companyName', key: 'id' };
-    const fieldNames = { title: 'accountDescription', key: 'accountCode', children: 'subGroup' };
+    const fieldNames = { title: 'accountDescription', key: 'id', children: 'subGroup' };
 
     useEffect(() => {
         if (userId && !isDealerCompanyDataLoaded) {
@@ -150,7 +150,7 @@ export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, fetchCha
 
     const extraParams = [
         {
-            key: 'accountCode',
+            key: 'id',
             value: selectedTreeKey,
         },
     ];
@@ -245,6 +245,7 @@ export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, fetchCha
         setDisableCheckBox(false);
         setIsFormVisible(true);
         setFormBtnActive(false);
+        setAccountTyp(null);
     };
 
     const onCoaModelOpen = () => {
@@ -264,7 +265,7 @@ export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, fetchCha
                 fetchChartOfAccountHierarchy({ setIsLoading: listShowLoadingChartOfAccountHierachy, extraParams: [{ key: 'companyCode', value: companyCode }], userId });
                 setFormBtnActive(false);
                 setIsFormVisible(false);
-                setSelectedTreeKey([res?.data?.accountCode]);
+                setSelectedTreeKey([res?.data?.id]);
             }
         };
 
@@ -386,6 +387,8 @@ export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, fetchCha
     const leftCol = chartOfAccountHierarchy?.length > 0 ? 14 : 24;
     const rightCol = chartOfAccountHierarchy?.length > 0 ? 10 : 24;
     const title = 'Financial Company';
+
+    console.log(`chartOfAccountData`, chartOfAccountData);
 
     return (
         <>
