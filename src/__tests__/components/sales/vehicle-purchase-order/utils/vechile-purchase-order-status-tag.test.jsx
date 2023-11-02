@@ -4,45 +4,17 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import '@testing-library/jest-dom/extend-expect';
-import { screen } from '@testing-library/react';
-import customRender from '@utils/test-utils';
-
-import { VechilePurchaseOrderStatusTag } from '@components/Sales/VehiclePurchaseOrder/utils/VechilePurchaseOrderStatusTag';
+import { VechilePurchaseOrderStatusTag } from 'components/Sales/VehiclePurchaseOrder/utils/VechilePurchaseOrderStatusTag';
 
 describe('vechile purchase order status tag render', () => {
     it('should render vehicle detail status tag component', () => {
-        customRender(<VechilePurchaseOrderStatusTag />);
-    });
-
-    it('Po submitted tag should render', () => {
-        customRender(<VechilePurchaseOrderStatusTag status={'Hold'} />);
-    });
-
-    it('cancel tag should render', () => {
-        customRender(<VechilePurchaseOrderStatusTag status={'PO Submitted'} />);
-    });
-
-    it('cancelled requested tag should render', () => {
-        customRender(<VechilePurchaseOrderStatusTag status={'Cancel'} />);
-    });
-
-    it('hold tag should render', () => {
-        customRender(<VechilePurchaseOrderStatusTag status={'Cancellation Requested'} />);
-    });
-
-    it('release tag should render', () => {
-        customRender(<VechilePurchaseOrderStatusTag status={'Release'} />);
-    });
-
-    it('received tag should render', () => {
-        customRender(<VechilePurchaseOrderStatusTag status={'Received'} />);
-    });
-
-    it('So generated tag should render', () => {
-        customRender(<VechilePurchaseOrderStatusTag sstatus={'SO Generated'} />);
-    });
-
-    it('invoiced requested tag should render', () => {
-        customRender(<VechilePurchaseOrderStatusTag status={'Invoiced'} />);
+        VechilePurchaseOrderStatusTag('POS');
+        VechilePurchaseOrderStatusTag('C');
+        VechilePurchaseOrderStatusTag('CR');
+        VechilePurchaseOrderStatusTag('H');
+        VechilePurchaseOrderStatusTag('R');
+        VechilePurchaseOrderStatusTag('REC');
+        VechilePurchaseOrderStatusTag('SOG');
+        VechilePurchaseOrderStatusTag('INV');
     });
 });

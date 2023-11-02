@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom/extend-expect';
-import { VehicleDeliveryNoteMaster } from '@components/Sales/VehicleDeliveryNote/VehicleDeliveryNoteMaster';
+import { VehicleDeliveryNoteMaster } from 'components/Sales/VehicleDeliveryNote/VehicleDeliveryNoteMaster';
 import customRender from '@utils/test-utils';
-import { screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import createMockStore from '__mocks__/store';
 
@@ -14,24 +14,13 @@ jest.mock('store/actions/data/vehicleDeliveryNote/vehicleDeliveryNote', () => ({
 }));
 
 describe('Vehicle Delivery Note Master components', () => {
-    it('should render components', () => {
-        customRender(<VehicleDeliveryNoteMaster resetDeliveryNoteMasterData={jest.fn()} setFilterString={jest.fn()} />);
 
-        const pendingBtn = screen.getAllByRole('button', { name: /Pending/i });
-        fireEvent.click(pendingBtn[0]);
-
-        const generatedBtn = screen.getAllByRole('button', { naem: /Generated/i });
-        fireEvent.click(generatedBtn[0]);
-
-        const cancelledBtn = screen.getAllByRole('button', { naem: /Cancelled/i });
-        fireEvent.click(cancelledBtn[0]);
-    });
-    it('On successAction and On closeAction should work', () => {
+    it('view and close button should work', async () => {
         const mockStore = createMockStore({
             auth: { userId: 106 },
             data: {
                 VehicleDeliveryNote: {
-                    VehicleDeliveryNoteSearchList: { filter: { advanceFilter: 'Test', invoiceFromDate: '06/06/2022', invoiceToDate: '06/06/2022', deliveryNoteFromDate: '06/06/2022', deliveryNoteToDate: '06/06/2022', key: 'searchParam' } },
+                    VehicleDeliveryNoteSearchList: { data: { deliveryNoteDetails: [{ vehicleSoldByDealer: true, customerName: 'Kai', modelGroup: 'Model', vehicleDeliveryNote: 'Vehicle', invoiceId: 106 }] }, filter: { advanceFilter: 'Test', invoiceFromDate: '06/06/2022', invoiceToDate: '06/06/2022', deliveryNoteFromDate: '06/06/2022', deliveryNoteToDate: '06/06/2022', key: 'searchParam' } },
                 },
             },
         });
@@ -44,8 +33,140 @@ describe('Vehicle Delivery Note Master components', () => {
             </Provider>
         );
 
-        fetchList.mock.calls[0][0].onSuccessAction();
         fetchList.mock.calls[0][0].onErrorAction();
+        fetchList.mock.calls[0][0].onSuccessAction();
+
+        await waitFor(() => { expect(screen.getByText('Kai')).toBeInTheDocument() });
+
+        const cancelledBtn = screen.getByRole('button', { name: /Cancelled/i });
+        fireEvent.click(cancelledBtn);
+
+        const viewBtn=screen.getByTestId('view');
+        fireEvent.click(viewBtn);
+
+        const closeBtn=screen.getAllByRole('button', { name: 'Close' });
+        fireEvent.click(closeBtn[1]);
+
+        fireEvent.click(viewBtn);
+
+        const nextBtn=screen.getByRole('button', { name: 'Next' });
+        fireEvent.click(nextBtn);
+        
+    });
+
+    it('print delivery note button should work', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                VehicleDeliveryNote: {
+                    VehicleDeliveryNoteSearchList: { data: { deliveryNoteDetails: [{deliveryNoteStatus: 'D', vehicleSoldByDealer: true, customerName: 'Kai', modelGroup: 'Model', vehicleDeliveryNote: 'Vehicle', invoiceId: 106}] }, filter: { advanceFilter: 'Test', invoiceFromDate: '06/06/2022', invoiceToDate: '06/06/2022', deliveryNoteFromDate: '06/06/2022', deliveryNoteToDate: '06/06/2022', key: 'searchParam' } },
+                },
+            },
+        });
+
+        const fetchList = jest.fn();
+
+        customRender(
+            <Provider store={mockStore}>
+                <VehicleDeliveryNoteMaster fetchDeliveryNoteMasterData={jest.fn()} fetchList={fetchList} setFilterString={jest.fn()} resetDeliveryNoteMasterData={jest.fn()} />
+            </Provider>
+        );
+
+        fetchList.mock.calls[0][0].onErrorAction();
+        fetchList.mock.calls[0][0].onSuccessAction();
+
+        await waitFor(() => { expect(screen.getByText('Kai')).toBeInTheDocument() });
+
+        const cancelledBtn = screen.getByRole('button', { name: /Generated/i });
+        fireEvent.click(cancelledBtn);
+
+        const viewBtn=screen.getByTestId('view');
+        fireEvent.click(viewBtn);
+
+        const printDelivery=screen.getByRole('button', { name: 'Print Delivery Note' });
+        fireEvent.click(printDelivery);
+
+        const cancelDelivery=screen.getByRole('button', { name: 'Cancel Delivery Note' });
+        fireEvent.click(cancelDelivery);
+        
+    });
+
+    it('cancel delivery note button should work', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                VehicleDeliveryNote: {
+                    VehicleDeliveryNoteSearchList: { data: { deliveryNoteDetails: [{deliveryNoteStatus: 'D', vehicleSoldByDealer: true, customerName: 'Kai', modelGroup: 'Model', vehicleDeliveryNote: 'Vehicle', invoiceId: 106}] }, filter: { advanceFilter: 'Test', invoiceFromDate: '06/06/2022', invoiceToDate: '06/06/2022', deliveryNoteFromDate: '06/06/2022', deliveryNoteToDate: '06/06/2022', key: 'searchParam' } },
+                },
+            },
+        });
+
+        const fetchList = jest.fn();
+
+        customRender(
+            <Provider store={mockStore}>
+                <VehicleDeliveryNoteMaster fetchDeliveryNoteMasterData={jest.fn()} fetchList={fetchList} setFilterString={jest.fn()} resetDeliveryNoteMasterData={jest.fn()} />
+            </Provider>
+        );
+
+        fetchList.mock.calls[0][0].onErrorAction();
+        fetchList.mock.calls[0][0].onSuccessAction();
+
+        await waitFor(() => { expect(screen.getByText('Kai')).toBeInTheDocument() });
+
+        const cancelledBtn = screen.getByRole('button', { name: /Generated/i });
+        fireEvent.click(cancelledBtn);
+
+        const viewBtn=screen.getByTestId('view');
+        fireEvent.click(viewBtn);
+
+        const cancelDelivery=screen.getByRole('button', { name: 'Cancel Delivery Note' });
+        fireEvent.click(cancelDelivery);
+        
+    });
+
+    it('add and continue button should work', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                VehicleDeliveryNote: {
+                    VehicleDeliveryNoteSearchList: { data: { deliveryNoteDetails: [{ vehicleSoldByDealer: true, customerName: 'Kai', modelGroup: 'Model', vehicleDeliveryNote: 'Vehicle', invoiceId: 106 }] }, filter: { advanceFilter: 'Test', invoiceFromDate: '06/06/2022', invoiceToDate: '06/06/2022', deliveryNoteFromDate: '06/06/2022', deliveryNoteToDate: '06/06/2022', key: 'searchParam' } },
+                },
+            },
+        });
+
+        const fetchList = jest.fn();
+
+        customRender(
+            <Provider store={mockStore}>
+                <VehicleDeliveryNoteMaster fetchList={fetchList} setFilterString={jest.fn()} resetDeliveryNoteMasterData={jest.fn()} />
+            </Provider>
+        );
+
+        fetchList.mock.calls[0][0].onErrorAction();
+        fetchList.mock.calls[0][0].onSuccessAction();
+
+        await waitFor(() => { expect(screen.getByText('Kai')).toBeInTheDocument() });
+
+        const plusBtn=screen.getByRole('button', { name: 'fa-add' });
+        fireEvent.click(plusBtn);
+
+        const continueBtn=screen.getByRole('button', { name: 'Continue' });
+        fireEvent.click(continueBtn);
+        
+    });
+
+    it('add button should work', () => {
+        customRender(<VehicleDeliveryNoteMaster setFilterString={jest.fn()} resetDeliveryNoteMasterData={jest.fn()} />);
+
+        const pendingBtn = screen.getByRole('button', { name: /Pending/i });
+        fireEvent.click(pendingBtn);
+
+        const generatedBtn = screen.getByRole('button', { name: /Generated/i });
+        fireEvent.click(generatedBtn);
+
+        const cancelledBtn = screen.getByRole('button', { name: /Cancelled/i });
+        fireEvent.click(cancelledBtn);
     });
 
     it('reset button should work', () => {
@@ -110,7 +231,7 @@ describe('Vehicle Delivery Note Master components', () => {
         fireEvent.click(removeFilter[0]);
     });
 
-    it('test1', async () => {
+    it('advanced filters should work', async () => {
         const mockStore = createMockStore({
             auth: { userId: 106 },
             data: {
