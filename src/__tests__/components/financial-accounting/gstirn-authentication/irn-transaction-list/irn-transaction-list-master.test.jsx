@@ -5,14 +5,47 @@
  */
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
+import createMockStore from '__mocks__/store';
 import { IrnTransactionListMaster } from "components/FinancialAccounting/GSTIRNAuthentication/IrnTransactionList";
+import { Provider } from 'react-redux';
+import { fireEvent, screen } from "@testing-library/react";
+import { Form } from 'antd';
+
+const FormWrapper = (props) => {
+    const [form] = Form.useForm();
+
+    const myMock = {
+        ...form,
+        resetFields:jest.fn()
+    }
+    return(<IrnTransactionListMaster form={myMock} {...props}/>)
+}
 
 afterEach(() => {
     jest.restoreAllMocks();
 });
 
 describe("IrnTransactionListMaster components", ()=>{
-    it("render", ()=>{
-        customRender(<IrnTransactionListMaster />);
+
+    it("treeText", ()=>{
+        const mockStore = createMockStore({
+            auth:{userId:'123'},
+            data:{
+                ApplicationMaster: { applicationDetailsData:[{applicationId: "HR", applicationName: "HR & MILE"}]},
+                FinancialAccounting: {
+                    GstIrnTransactionDetails: { data: [{ menuId: "HR", menuTitle: "HR & MILE" }] },
+                },
+            }
+        });
+
+        customRender(
+            <Provider store={mockStore}>
+                <FormWrapper isTreeViewVisible={true} isVisible={true} />
+            </Provider>
+        );
+
+        const treeText = screen.getAllByText('HR & MILE')
+        fireEvent.click(treeText[0]);
     });
+
 })
