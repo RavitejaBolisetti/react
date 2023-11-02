@@ -71,7 +71,10 @@ import {
     RsmAsmApprovalPage,
     ChargerInstallationPage,
     AMCRegistrationMasterPage,
+    RSARegistrationPage,
 } from 'pages/Sales';
+
+import { ShieldSchemeRegistrationPage } from 'pages/Services';
 
 import { PageNotFound } from 'components/PageNotFound';
 
@@ -179,6 +182,9 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_HO_PRICE_MAPPING} element={<HoPriceMappingMasterPage />} exact />
             <Route path={routing.ROUTING_EVR_DETAILS_CAPTURING} element={<EvrDetailsCapturingMasterPage />} exact />
             <Route path={routing.STOCK_TRANSFER_INDENT} element={<StockTransferIndentMasterPage />} exact />
+
+            <Route path={routing.ROUTING_SHIELD_SCHEME_REGISTER} element={<ShieldSchemeRegistrationPage />} exact />
+            <Route path={routing.ROUTING_RSM_ASM_APPROVAL} element={<RsmAsmApprovalPage />} exact />
             <Route path={routing.ROUTING_AMC_REGISTRATION} element={<AMCRegistrationMasterPage />} exact />
 
             <Route path={routing.ROUTING_RSM_ASM_APPROVAL} element={<RsmAsmApprovalPage />} exact />
@@ -186,6 +192,7 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_VIN_BLOCK_MASTER} element={<VinBlockMasterPage />} exact />
             <Route path={routing.ROUTING_VEHICLE_CHECKLIST_MASTER} element={<VehicleChecklistMasterPage />} exact />
             <Route path={routing.ROUTING_RSM_ASM_APPROVAL} element={<RsmAsmApprovalPage />} exact />
+            <Route path={routing.ROUTING_RSA_REGISTRATION} element={<RSARegistrationPage />} exact />
             <Route path={routing.PAGE_NOT_FOUND} element={<PageNotFound />} exact />
         </Routes>
     );

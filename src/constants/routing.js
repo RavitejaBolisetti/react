@@ -134,5 +134,9 @@ export const ROUTING_AMC_REGISTRATION = ROUTING_SALES.concat('amc-registration')
 export const ROUTING_RSM_ASM_APPROVAL = ROUTING_SALES.concat('rsm-asm-approval');
 export const ROUTING_EVR_DETAILS_CAPTURING = ROUTING_SALES.concat('evr-details-capturing');
 
+export const ROUTING_SERVICES = '/services/';
+export const ROUTING_SHIELD_SCHEME_REGISTER = ROUTING_SERVICES.concat('shield-scheme-registration');
+
 export const ROUTING_VIN_BLOCK_MASTER = ROUTING_SALES.concat('vin-block-master');
 export const ROUTING_GST_IRN_TRANSACTION = ROUTING_FINANCIAL_ACCOUNTING.concat('gst-irn-transaction');
+export const ROUTING_RSA_REGISTRATION = ROUTING_SALES.concat('rsa-registration');

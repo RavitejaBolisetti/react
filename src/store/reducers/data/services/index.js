@@ -5,12 +5,10 @@
  */
 import { combineReducers } from 'redux';
 
-import { DealerCompany } from './dealerCompany';
-import { DealerParent } from './dealerParent';
-import { DealerParentsLov } from './dealerParentsLov';
+import { ShieldSchemeSearch } from './shieldSchemeSearch';
+import { SchemeDescription } from './schemeDescriptionLov';
 
-export const DealerHierarchy = combineReducers({
-    DealerParent,
-    DealerCompany,
-    DealerParentsLov,
+export const ShieldSchemeRegistration = combineReducers({
+    ShieldSchemeSearch,
+    SchemeDescription,
 });
