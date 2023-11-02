@@ -10,6 +10,7 @@ import { convertDateMonthYear } from 'utils/formatDateTime';
 import { AMC_CONSTANTS } from '../utils/AMCConstants';
 import { QUERY_BUTTONS_CONSTANTS, QUERY_BUTTONS_MNM_USER } from '../utils/ShieldRegistrationContant';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { SchemeStatusTag } from '../utils/schemeStatusTag';
 import { getCodeValue } from 'utils/getCodeValue';
 import { DATA_TYPE } from 'constants/dataType';
 const { Text } = Typography;
@@ -47,7 +48,8 @@ const ViewDetail = (props) => {
                         <Text strong>{checkAndSetDefaultValue(formData?.customerName)}</Text>
                         <Divider type="vertical" />
                         <Text strong>{selectedOrder?.shieldRegistrationNumber}</Text>
-                        <Tag style={{ float: 'right' }}>{getCodeValue(typeData?.AMC_REG_APRVL_STAT, selectedOrder?.status)}</Tag>
+                        <div style={{ float: 'right' }}>{SchemeStatusTag(selectedOrder?.status)}</div>
+                        {/* <Tag style={{ float: 'right' }}>{getCodeValue(typeData?.AMC_REG_APRVL_STAT, selectedOrder?.status)}</Tag> */}
                     </Col>
                 </Row>
                 <Row type="flex" align="middle">
