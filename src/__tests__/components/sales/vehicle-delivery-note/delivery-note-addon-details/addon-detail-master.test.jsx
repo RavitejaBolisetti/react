@@ -36,9 +36,9 @@ jest.mock('components/Sales/VehicleDeliveryNote/AddOnDetails/CommonForm', () => 
     };
 });
 
-jest.mock('store/actions/data/vehicleDeliveryNote/addOnDetails', () => ({
-    vehicleAddOnDetailDataActions: {},
-}));
+// jest.mock('store/actions/data/vehicleDeliveryNote/addOnDetails', () => ({
+//     vehicleAddOnDetailDataActions: {},
+// }));
 
 const FormWrapper = (props) => {
     const [form] = Form.useForm();
