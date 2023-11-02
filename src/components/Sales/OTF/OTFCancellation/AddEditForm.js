@@ -92,7 +92,8 @@ const AddEditFormMain = (props) => {
     }, 300);
 
     const handleSelect = (value) => {
-        let dealerDetails = Object.values(dealerDataList)?.find((dealer) => dealer?.dealerName === value);
+        let dealerCd = value.split('-');
+        let dealerDetails = Object.values(dealerDataList)?.find((dealer) => dealer?.dealerCode === dealerCd[dealerCd?.length - 1]);
         otfCancellationForm.setFieldsValue({ dealerCode: dealerDetails?.dealerCode });
     };
 
@@ -120,8 +121,8 @@ const AddEditFormMain = (props) => {
         else {
             let finalLocations = Object.values(dealerDataList)?.map((item) => {
                 return {
-                    label: item?.dealerName,
-                    value: item?.dealerName,
+                    label: `${item?.dealerName}-${item?.dealerCode}`,
+                    value: `${item?.dealerName}-${item?.dealerCode}`,
                 };
             });
             return finalLocations;

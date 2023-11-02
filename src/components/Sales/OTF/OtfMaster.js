@@ -791,6 +791,7 @@ export const OtfMasterBase = (props) => {
         onFinishOTFCancellation,
         setUploadedFile,
         uploadedFile,
+        handleButtonClick: () => {},
     };
 
     const transferOTFProps = {
