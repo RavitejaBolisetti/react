@@ -21,10 +21,10 @@ const AddEditFormMain = (props) => {
     const [activeKey, setactiveKey] = useState([1]);
 
     useEffect(() => {
-        form.setFieldsValue({
+        form?.setFieldsValue({
             ...formData,
         });
-        form.setFieldsValue({
+        form?.setFieldsValue({
             gstin: formData?.gstinNumber,
             personName: formData?.authorityDetails?.personName,
             postion: formData?.authorityDetails?.postion,

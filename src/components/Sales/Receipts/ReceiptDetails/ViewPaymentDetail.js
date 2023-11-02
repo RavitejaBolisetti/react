@@ -63,7 +63,7 @@ const ViewPaymentDetailBase = (props) => {
                             </>
                         )}
 
-                        {formData?.paymentMode === PAYMENT_MODE?.NEFT?.KEY || PAYMENT_MODE?.WALLET?.KEY ? (
+                        {formData?.paymentMode === PAYMENT_MODE?.NEFT?.KEY || formData?.paymentMode === PAYMENT_MODE?.WALLET?.KEY ? (
                             <>
                                 <Descriptions.Item label="Transaction No.">{checkAndSetDefaultValue(formData?.transactionNumber, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Transaction Date">{checkAndSetDefaultValue(formData?.transactionDate, isLoading, DATA_TYPE?.DAYJS?.key)}</Descriptions.Item>

@@ -8,6 +8,12 @@ import '@testing-library/jest-dom/extend-expect';
 import { AdvancedSearch } from '@components/Sales/StockTransferIndent/AdvancedSearch';
 import customRender from '@utils/test-utils';
 import { Form } from 'antd';
+import createMockStore from '__mocks__/store';
+import { Provider } from 'react-redux';
+
+jest.mock('store/actions/data/sales/stockTransfer/StockTransferIndent', () => ({
+    stockTransferIndent: {},
+}));
 
 const FornWrapper = (props) => {
     const [advanceFilterForm] = Form.useForm();
@@ -22,24 +28,57 @@ const FornWrapper = (props) => {
 
 
 describe("AdvancedSearch",()=>{
-    it("calendar img", ()=>{
-        customRender(<FornWrapper isVisible={true} CheckDateEffectiveTo={jest.fn()} />);
-        
-        const calenderImg = screen.getAllByRole('img', {name:'calendar'});
-        fireEvent.click(calenderImg[0]);
-    })
 
-    it("calendar img1", ()=>{
-        customRender(<FornWrapper isVisible={true} CheckDateEffectiveTo={jest.fn()} />);
-        
-        const calenderImg = screen.getAllByRole('img', {name:'calendar'});
-        fireEvent.click(calenderImg[1]);
-    })
+    it("handleResetFilter", ()=>{
+        const modalProps = {
+            reset: true,
+            resetName: 'Reset',
+        };    
+        customRender(<FornWrapper isVisible={true} {...modalProps} />);
 
-    it("Indent", ()=>{
-        customRender(<FornWrapper isVisible={true} indentSaerchList={jest.fn()} />);
-        
-        const indent = screen.getByRole('combobox', {name:'Indent'})
-        fireEvent.change(indent, {target:{value:'test'}});
-    })
+        const resetBtn = screen.getByRole('button', {name:'Reset'});
+        fireEvent.click(resetBtn);
+    });
+
+    it("applyBtn", ()=>{
+        const modalProps = {
+            submitName: 'Apply',
+        };    
+
+        const mockStore = createMockStore({
+            auth: { userId: 123 },
+            data: {
+                stockTransferIndentData: {
+                    stockTransferIndent: { filter: {  advanceFilter: true, fromDate: "2023-10-30", toDate: "2023-10-31"} },
+                },
+            },
+        });
+
+        customRender(
+            <Provider store={mockStore}>
+                <FornWrapper isVisible={true} {...modalProps} />
+            </Provider>
+        );
+
+        const fromDate = screen.getByRole('textbox', {name:'Indent From Date'});
+        fireEvent.change(fromDate, {target:{value:'2023-10-30'}});
+
+        const toDate = screen.getByRole('textbox', {name:'Indent To Date'});
+        fireEvent.change(toDate, {target:{value:'2023-10-31'}});
+
+        const applyBtn = screen.getByRole('button', {name:'Apply'});
+        fireEvent.click(applyBtn);
+    });
+
+    it("searchList", ()=>{
+        const searchList = [{key:"REC_TO", parentKey: "INDENT", value: "Receive From"}];
+
+        customRender(<FornWrapper isVisible={true} searchList={searchList} toggleButton={'INDNT_RAISED'} />);
+    });
+
+    it("INDNT_RECV", ()=>{
+        const searchList = [{key:"REC_TO", parentKey: "INDENT", value: "Receive From"}];
+
+        customRender(<FornWrapper isVisible={true} searchList={searchList} toggleButton={'INDNT_RECV'} />);
+    });
 })

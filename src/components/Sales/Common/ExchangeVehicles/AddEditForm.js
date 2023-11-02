@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Row, Col, Input, Form, Card, Switch } from 'antd';
 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -11,7 +11,7 @@ import { CustomerListMaster } from 'components/utils/CustomerListModal';
 
 import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 import { prepareCaption } from 'utils/prepareCaption';
-
+import { getCodeValue } from 'utils/getCodeValue';
 import styles from 'assets/sass/app.module.scss';
 import { convertToUpperCase } from 'utils/convertToUpperCase';
 import { customSelectBox } from 'utils/customSelectBox';
@@ -22,6 +22,7 @@ const AddEditFormMain = (props) => {
     const { financeLovData, schemeLovData, typeData, isMahindraMake } = props;
     const { isConfigLoading, isSchemeLovLoading, isMakeLoading, isModelLoading, isVariantLoading } = props;
     const { filteredModelData, filteredVariantData, handleFilterChange, fnSetData, handleSchemeChange, viewOnly = false } = props;
+    const [visible, setVisible] = useState(false);
 
     useEffect(() => {
         if (formData) {
@@ -32,17 +33,22 @@ const AddEditFormMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
+    useEffect(() => {
+        setVisible(!!formData?.exchange);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData?.exchange]);
+
     const disabledProps = { disabled: viewOnly };
     return (
         <Card className={styles.ExchangeCard}>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formActionType?.editMode ? (formData?.exchange === 1 ? true : false) : false} labelAlign="left" wrapperCol={{ span: 24 }} name="exchange" label="Exchange" valuePropName="checked">
-                        <Switch {...disabledProps} checkedChildren="Yes" unCheckedChildren="No" onChange={(checked) => (checked ? 1 : 0)} />
+                        <Switch {...disabledProps} checkedChildren="Yes" unCheckedChildren="No" onClick={(value) => setVisible(value)} onChange={(checked) => (checked ? 1 : 0)} />
                     </Form.Item>
                 </Col>
             </Row>
-            {(form?.getFieldValue('exchange') || formData?.exchange === 1) && (
+            {visible && (
                 <>
                     {!viewOnly && <CustomerListMaster fnSetData={fnSetData} defaultOption={'registrationNumber'} />}
 
@@ -53,17 +59,17 @@ const AddEditFormMain = (props) => {
                     </Row>
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="oldRegistrationNumber" label="Registration Number" rules={[validateRequiredInputField('Registration Number')]}>
+                            <Form.Item name="oldRegistrationNumber" initialValue={formData?.oldRegistrationNumber} label="Registration Number" rules={[validateRequiredInputField('Registration Number')]}>
                                 <Input {...disabledProps} onInput={convertToUpperCase} placeholder={preparePlaceholderText('Registration Number')} maxLength={50} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item label="Make" name="make" data-testid="make" rules={[validateRequiredSelectField('make')]}>
+                            <Form.Item label="Make" name="make" data-testid="make" initialValue={getCodeValue(typeData['VEHCL_MFG'], formData?.make)} rules={[validateRequiredSelectField('make')]}>
                                 {customSelectBox({ data: typeData['VEHCL_MFG'], disabled: viewOnly, loading: isMakeLoading, onChange: (value) => handleFilterChange('make', value) })}
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item label="Model Group" name="modelGroup" data-testid="modelGroup" rules={[validateRequiredSelectField('model group')]}>
+                            <Form.Item label="Model Group" name="modelGroup" initialValue={formData?.modelGroup} data-testid="modelGroup" rules={[validateRequiredSelectField('model group')]}>
                                 {customSelectBox({
                                     data: filteredModelData,
                                     loading: isModelLoading,
@@ -79,7 +85,7 @@ const AddEditFormMain = (props) => {
                     </Row>
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item label="Variant" name="variant" data-testid="variant" rules={[validateRequiredSelectField('variant')]}>
+                            <Form.Item label="Variant" name="variant" data-testid="variant" initialValue={formData?.variant} rules={[validateRequiredSelectField('variant')]}>
                                 {customSelectBox({
                                     data: filteredVariantData,
                                     loading: isVariantLoading,

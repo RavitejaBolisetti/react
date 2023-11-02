@@ -81,31 +81,11 @@ const IrnTransactionListMasterBase = (props) => {
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
-    const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
+    // const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
     const fieldNames = { title: 'menuTitle', key: 'menuId', children: 'subMenu' };
     const [searchValue, setSearchValue] = useState('');
-
-    const onErrorAction = (message) => {
-        showGlobalNotification({ message });
-    };
-
-    useEffect(() => {
-        if (userId && selectedId) {
-            setButtonData({ ...buttonData, formBtnActive: false });
-            const extraParams = [
-                {
-                    key: 'supplierInvoiceNumber',
-                    title: 'supplierInvoiceNumber',
-                    value: selectedId,
-                    name: 'Supplier Invoice Number',
-                },
-            ];
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedId]);
 
     useEffect(() => {
         if (userId) {
@@ -150,7 +130,7 @@ const IrnTransactionListMasterBase = (props) => {
     };
     const myProps = {
         isTreeViewVisible,
-        handleTreeViewVisiblity,
+        // handleTreeViewVisiblity,
         selectedTreeKey,
         selectedTreeSelectKey,
         setSelectedTreeSelectKey,

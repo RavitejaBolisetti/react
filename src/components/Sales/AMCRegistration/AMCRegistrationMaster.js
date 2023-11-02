@@ -34,6 +34,9 @@ import { AMC_REPORT_DOCUMENT_TYPE } from './utils/amcReportDocumentType';
 import { customerDetailsIndividualDataActions } from 'store/actions/data/customerMaster/customerDetailsIndividual';
 import { employeeSearchDataAction } from 'store/actions/data/amcRegistration/employeeSearch';
 import { amcSchemeDataAction } from 'store/actions/data/amcRegistration/amcScheme';
+import { dealerParentDataActions } from 'store/actions/data/dealer/dealerParent';
+import { BASE_URL_APPLICATION_DEALER_LOCATION as customLocationURL } from 'constants/routingApi';
+import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
 import { AMC_CONSTANTS } from './utils/AMCConstants';
 import { AMC_REQUEST_TITLE_CONSTANTS } from './utils/AMCRequestTitleConstant';
 import { ReportModal } from 'components/common/ReportModal/ReportModal';
@@ -49,10 +52,13 @@ const mapStateToProps = (state) => {
                 EmployeeData: { isLoaded: isEmployeeDataLoaded = false, isLoading: isEmployeeDataLoading, data: employeeData = [] },
                 AMCScheme: { isLoaded: isSchemeDataLoaded = false, isLoading: isSchemeDataLoading, filteredListData: schemeData = [] },
             },
-
             OTF: {
                 OtfSearchList: { isLoaded: isOTFDataLoaded = false, isLoading: isOTFSearchLoading, data: otfData = [] },
             },
+            DealerHierarchy: {
+                DealerParent: { filteredListData: dealerParentsLovList },
+            },
+            ApplicationMaster: { dealerLocations = [] },
         },
         common: {
             Header: { data: loginUserData = [], isLoading: isLoginDataLoading = false },
@@ -84,6 +90,9 @@ const mapStateToProps = (state) => {
         isSchemeDataLoading,
         schemeData,
         isLoginDataLoading,
+
+        dealerParentsLovList,
+        dealerLocations,
     };
     return returnValue;
 };
@@ -101,6 +110,7 @@ const mapDispatchToProps = (dispatch) => ({
 
             fetchEmployeeList: employeeSearchDataAction.fetchList,
             listEmployeeShowLoading: employeeSearchDataAction.listShowLoading,
+            resetEmployeeData: employeeSearchDataAction.reset,
 
             fetchDetail: amcRegistrationDataAction.fetchDetail,
             saveData: amcRegistrationDataAction.saveData,
@@ -110,6 +120,12 @@ const mapDispatchToProps = (dispatch) => ({
 
             fetchSchemeList: amcSchemeDataAction.fetchFilteredList,
             listSchemeShowLoading: amcSchemeDataAction.listShowLoading,
+
+            fetchDealerParentsLovList: dealerParentDataActions.fetchFilteredList,
+            listDealerParentShowLoading: dealerParentDataActions.listShowLoading,
+
+            fetchDealerLocations: applicationMasterDataActions.fetchDealerLocations,
+            locationDataLoding: applicationMasterDataActions.locationDataLoding,
 
             showGlobalNotification,
         },
@@ -122,9 +138,9 @@ export const AMCRegistrationMasterBase = (props) => {
     const { typeData, saveData, documentType, moduleTitle, totalRecords } = props;
     const { filterString, setFilterString } = props;
     const { fetchDetail, isDataLoaded, fetchCustomerList, listCustomerShowLoading } = props;
-    const { amcRegistrationDetailData, isEmployeeDataLoaded, isEmployeeDataLoading, employeeData, fetchEmployeeList, listEmployeeShowLoading, loginUserData } = props;
-    const { fetchOTFSearchedList, listOTFShowLoading, otfData } = props;
-    const { fetchSchemeList, listSchemeShowLoading, isSchemeDataLoaded, isSchemeDataLoading, schemeData, isLoginDataLoading } = props;
+    const { amcRegistrationDetailData, isEmployeeDataLoaded, isEmployeeDataLoading, employeeData, fetchEmployeeList, listEmployeeShowLoading, resetEmployeeData, loginUserData } = props;
+    const { fetchOTFSearchedList, listOTFShowLoading, otfData, fetchDealerLocations, locationDataLoding, dealerLocations } = props;
+    const { fetchSchemeList, listSchemeShowLoading, isSchemeDataLoaded, isSchemeDataLoading, schemeData, isLoginDataLoading, fetchDealerParentsLovList, listDealerParentShowLoading, dealerParentsLovList } = props;
 
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [amcStatus, setAmcStatus] = useState(QUERY_BUTTONS_CONSTANTS.PENDING.key);
@@ -199,6 +215,10 @@ export const AMCRegistrationMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [amcRegistrationDetailData]);
+
+    const handleDealerParentChange = (parentGroupCode) => {
+        fetchDealerLocations({ customURL: customLocationURL + '&parentGroupCode=' + parentGroupCode, setIsLoading: locationDataLoding, userId });
+    };
 
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -314,8 +334,12 @@ export const AMCRegistrationMasterBase = (props) => {
         setDefaultSection(defaultSection);
         setSetionName(AMC_REGISTRATION_SECTION);
         setSection(defaultSection);
+        if (userId) {
+            fetchDealerParentsLovList({ setIsLoading: listDealerParentShowLoading, userId });
+        }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [userId]);
 
     const filterActiveMenu = (items) => {
         return items;
@@ -347,11 +371,11 @@ export const AMCRegistrationMasterBase = (props) => {
         ]);
     };
 
-    const schemeList = () => {
+    const schemeList = (value) => {
         const extraParams = [
             {
                 key: 'vin',
-                value: registrationForm.getFieldValue('vin') || requestPayload?.amcRegistration?.vin,
+                value,
             },
             {
                 key: 'schemeType',
@@ -360,24 +384,28 @@ export const AMCRegistrationMasterBase = (props) => {
         ];
 
         const onSuccessAction = (res) => {
-            console.log('🚀 ~ file: AMCRegistrationDetailsMaster.js:48 ~ onSuccessAction ~ res:', res);
             if (!res?.data?.length) {
-                registrationForm.resetFields(['schemeDescription']);
+                schemeForm.resetFields(['schemeDescription']);
+                showGlobalNotification({ message: 'No Schemes present for this VIN' });
             }
         };
-        fetchSchemeList({ setIsLoading: listSchemeShowLoading, userId, extraParams, onSuccessAction });
+        const onErrorAction = (message) => {
+            showGlobalNotification({ message });
+            schemeForm.resetFields(['schemeDescription']);
+        };
+
+        fetchSchemeList({ setIsLoading: listSchemeShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
     };
 
     const handleBookingNumberSearch = (otfNumber = '') => {
         const onSuccessAction = (res) => {
-            console.log('🚀 ~ file: AMCRegistrationMaster.js:349 ~ onSuccessAction ~ res:', res);
             if (!res?.data?.otfDetails[0]?.vin) {
                 showGlobalNotification({ title: 'Error', notificationType: 'error', message: LANGUAGE_EN?.GENERAL?.NO_VIN_FOUND?.MESSAGE });
                 setButtonData({ ...buttonData, formBtnActive: false });
             } else {
                 setButtonData({ ...buttonData, formBtnActive: true });
                 registrationForm.setFieldsValue({ vin: res?.data?.otfDetails[0]?.vin });
-                schemeList();
+                schemeList(res?.data?.otfDetails[0]?.vin);
             }
         };
 
@@ -504,7 +532,7 @@ export const AMCRegistrationMasterBase = (props) => {
 
             if (type === AMC_CONSTANTS?.CANCEL_REQUEST?.key) {
                 setRejectModalVisible(false);
-            } else if (type === AMC_CONSTANTS?.AMC_CANCELLATION?.key) {
+            } else if (type === AMC_CONSTANTS?.AMC_CANCELLATION?.key || userType === AMC_CONSTANTS?.MNM?.key) {
                 setRejectModalVisible(false);
                 setIsFormVisible(false);
                 setSelectedAMC();
@@ -559,6 +587,7 @@ export const AMCRegistrationMasterBase = (props) => {
         setRequestPayload(defaultPayload);
         customerForm.resetFields();
         setIsPendingForCancellation(false);
+        resetEmployeeData();
     };
 
     const tableProps = {
@@ -635,6 +664,9 @@ export const AMCRegistrationMasterBase = (props) => {
         typeData,
         onFinishSearch,
         userType,
+        dealerParentsLovList,
+        dealerLocations,
+        handleDealerParentChange,
     };
 
     const drawerTitle = useMemo(() => {

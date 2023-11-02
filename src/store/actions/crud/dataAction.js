@@ -111,15 +111,17 @@ export const dataActions = (params) => {
         }),
 
         fetchFilteredList: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-            const { setIsLoading, data, extraParams = [] } = params;
+            const { setIsLoading, data, extraParams = [], onSuccessAction = undefined, onErrorAction = undefined } = params;
             setIsLoading(true);
 
-            const onError = () => {
+            const onError = (message) => {
+                onErrorAction && onErrorAction(message);
                 dispatch(filteredRecieveData([]));
             };
 
             const onSuccess = (res) => {
                 if (res?.data) {
+                    onSuccessAction && onSuccessAction(res);
                     dispatch(filteredRecieveData(res?.data));
                 } else {
                     onError(LANGUAGE_EN.INTERNAL_SERVER_ERROR);

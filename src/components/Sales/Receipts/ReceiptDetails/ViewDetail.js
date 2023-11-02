@@ -31,7 +31,7 @@ const ViewDetailMain = (props) => {
                             <Divider />
                             <Descriptions {...viewProps}>
                                 <Descriptions.Item label="Actual Receipt Date ">{checkAndSetDefaultValue(receiptData?.receiptDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                                <Descriptions.Item label="Receipt Type">{checkAndSetDefaultValue(getCodeValue(receiptType, receiptData?.receiptType, isLoading))}</Descriptions.Item>
+                                <Descriptions.Item label="Receipt Type">{checkAndSetDefaultValue(getCodeValue(receiptType, receiptData?.receiptType), isLoading)}</Descriptions.Item>
                             </Descriptions>
                             <Divider />
                             <Descriptions {...viewProps}>

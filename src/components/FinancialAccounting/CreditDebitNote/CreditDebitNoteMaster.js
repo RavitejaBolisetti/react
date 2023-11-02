@@ -122,7 +122,6 @@ export const CreditDebitNoteMasterBase = (props) => {
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
-    const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
 
     const [transactionType, setTransactionType] = useState(TRANSACTION_TYPE?.Credit?.value);
@@ -134,6 +133,11 @@ export const CreditDebitNoteMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formActionType]);
+
+    useEffect(() => {
+        setFilterString({ ...filterString, pageSize: 10, current: 1 });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         if (creditDebitData && isDetailLoaded && formActionType?.addMode) {
@@ -157,19 +161,13 @@ export const CreditDebitNoteMasterBase = (props) => {
         setShowDataLoading(false);
     };
 
-    useEffect(() => {
-        if (filterString) {
-            setPage({ ...page, current: 1 });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString]);
     const extraParams = useMemo(() => {
         return [
             {
                 key: 'searchType',
                 title: 'Type',
                 value: filterString?.searchType,
-                name: 'Voucher Number',
+                name: filterString?.searchType ? 'Voucher Number' : filterString?.searchType,
                 canRemove: false,
                 filter: true,
             },
@@ -218,30 +216,30 @@ export const CreditDebitNoteMasterBase = (props) => {
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: page?.pageSize,
+                value: filterString?.pageSize ?? 10,
                 canRemove: true,
             },
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: page?.current,
+                value: filterString?.current,
                 canRemove: true,
             },
             {
                 key: 'sortBy',
                 title: 'Sort By',
-                value: page?.sortBy,
+                value: filterString?.sortBy,
                 canRemove: true,
             },
             {
                 key: 'sortIn',
                 title: 'Sort Type',
-                value: page?.sortType,
+                value: filterString?.sortType,
                 canRemove: true,
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, page]);
+    }, [filterString]);
 
     useEffect(() => {
         if (userId && extraParams) {
@@ -298,10 +296,11 @@ export const CreditDebitNoteMasterBase = (props) => {
     }, [currentSection, sectionName]);
 
     const handleResetFilter = () => {
+        const { pageSize } = filterString;
         if (filterString) {
             setShowDataLoading(true);
-            setFilterString();
         }
+        setFilterString({ pageSize, current: 1 });
         advanceFilterForm.resetFields();
     };
 
@@ -400,11 +399,15 @@ export const CreditDebitNoteMasterBase = (props) => {
         setApportionTableData([]);
     };
 
+    const setPage = (page) => {
+        setFilterString({ ...filterString, ...page });
+    };
+
     const tableProps = {
         dynamicPagination,
+        filterString,
         totalRecords,
-        page,
-        setPage,
+        setPage: setPage,
         tableColumn: tableColumn({ handleButtonClick, typeData }),
         tableData: data,
         showAddButton: false,
@@ -413,11 +416,13 @@ export const CreditDebitNoteMasterBase = (props) => {
     };
 
     const removeFilter = (key) => {
+        const { pageSize } = filterString;
         if (key === 'searchParam') {
             const { searchType, searchParam, ...rest } = filterString;
+            console.log('🚀 ~ file: CreditDebitNoteMaster.js:423 ~ removeFilter ~ rest:', rest);
             setFilterString({ ...rest });
         } else if (key === 'fromDate' || key === 'toDate') {
-            setFilterString();
+            setFilterString({ current: 1, pageSize });
             advanceFilterForm.resetFields();
         } else {
             const { [key]: names, ...rest } = filterString;

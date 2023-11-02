@@ -3,7 +3,6 @@ import { render, fireEvent } from '@testing-library/react';
 import { Form } from 'antd'; // Mock Form component if needed
 import { BindFormItems, FORMTYPE_CONSTANTS, MakeCheckResult } from '@components/VehicleDeliveryNote/DeliverableChecklist/CheckListUtils'; // Replace 'YourComponent' with your actual component path
 
-import { FORMTYPE_CONSTANTS } from '';
 describe('BindFormItems', () => {
     it('should render Input field for answerType "Input"', () => {
         const AdvanceformData = { answerType: FORMTYPE_CONSTANTS.INPUT.key };

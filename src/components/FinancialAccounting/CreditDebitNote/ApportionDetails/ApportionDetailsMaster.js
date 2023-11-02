@@ -80,7 +80,7 @@ export const ApportionDetailsMasterMain = (props) => {
         if (key === 'voucher' && isReadOnly) return;
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
-    const financeDocumentContant = 'ISFINANCE';
+    const financeDocumentContant = 'Finance';
     const financeModuleContant = 'MODULE';
     const financeActiveContant = 1;
 
