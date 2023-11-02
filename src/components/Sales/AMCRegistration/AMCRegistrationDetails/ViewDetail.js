@@ -9,11 +9,12 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 import styles from 'assets/sass/app.module.scss';
 import { expandIcon } from 'utils/accordianExpandIcon';
+import { AMC_CONSTANTS } from '../utils/AMCConstants';
 
 const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading } = props;
+    const { formData, isLoading, selectedSaleType } = props;
     const [activeKey, setactiveKey] = useState([]);
     const viewProps = {
         bordered: false,
@@ -48,6 +49,12 @@ const ViewDetailMain = (props) => {
                             <Divider />
                             <Descriptions {...viewProps}>
                                 <Descriptions.Item label="Sale Type">{checkAndSetDefaultValue(formData?.amcRegistration?.saleType, isLoading)}</Descriptions.Item>
+                                {selectedSaleType === AMC_CONSTANTS?.MNM_FOC?.key && (
+                                    <>
+                                        <Descriptions.Item label="Booking Number">{checkAndSetDefaultValue(formData?.amcRegistration?.bookingNumber, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label="VIN">{checkAndSetDefaultValue(formData?.amcRegistration?.vin, isLoading)}</Descriptions.Item>
+                                    </>
+                                )}
                                 <Descriptions.Item label="Employee Name">{checkAndSetDefaultValue(formData?.amcRegistration?.employeeName, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Manager Name">{checkAndSetDefaultValue(formData?.amcRegistration?.managerName, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Remarks">{checkAndSetDefaultValue(formData?.amcRegistration?.remarks, isLoading)}</Descriptions.Item>

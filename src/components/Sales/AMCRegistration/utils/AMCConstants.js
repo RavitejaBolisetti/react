@@ -64,4 +64,9 @@ export const AMC_CONSTANTS = {
         key: 'AMC_CANCELLATION',
         title: 'AMC cancel',
     },
+    CUSTOMER_MOBILE_NO: {
+        id: 13,
+        key: 'vincustomerMobileNo',
+        title: 'Customer Mobile number in filter',
+    },
 };
