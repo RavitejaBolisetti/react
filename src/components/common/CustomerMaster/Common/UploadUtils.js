@@ -116,13 +116,12 @@ const UploadUtilsMain = (props) => {
         accept: 'image/png, image/jpeg',
         onChange: (info) => {
             const { status } = info.file;
-            if(status === 'done'){
+            if (status === 'done') {
                 setUploadedFile(info?.file?.response?.docId);
                 setUploadImgDocId(info?.file?.response?.docId);
                 message.success(`${info.file.name} file uploaded successfully.`);
                 setIsReplacing(false);
-            } 
-            else(status === 'error'){
+            } else if (status === 'error') {
                 message.error(`${info.file.name} file upload failed.`);
             }
         },
@@ -144,7 +143,7 @@ const UploadUtilsMain = (props) => {
             accessToken,
             userId,
             onSuccess,
-      
+
             onError,
             onTimeout: () => onError('Request timed out, Please try again'),
             postRequest: () => {},
