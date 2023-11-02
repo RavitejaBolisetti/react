@@ -67,6 +67,7 @@ const mapStateToProps = (state) => {
     } = state;
 
     let returnValue = {
+        DEFAULT_PAGINATION: { pageSize: 10, current: 1 },
         userId,
         dealerLocations,
         typeData,
@@ -106,7 +107,7 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: stockTransferIndent.listShowLoading,
             fetchIndentList: stockTransferIndent.fetchList,
             fetchIndentDetails: stockTransferIndent.fetchDetail,
-            setFilterString: stockTransferIndent.setFilter,
+            // setFilterString: stockTransferIndent.setFilter,
             resetData: stockTransferIndent.reset,
             saveData: stockTransferIndent.saveData,
             fetchVinDetails: vehicleAllotment.fetchList,
@@ -128,7 +129,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const StockTransferIndentMasterBase = (props) => {
-    const { data, filterString, setFilterString, resetData, isFetchDataLoading, dealerLocations } = props;
+    const { data, DEFAULT_PAGINATION, resetData, isFetchDataLoading, dealerLocations } = props;
     const { userId, typeData, parentGroupCode, showGlobalNotification } = props;
     const { indentLocationList, requestedByDealerList, productHierarchyData, isLoadingDealerLoc } = props;
     const { fetchIndentList, fetchIndentLocation, fetchIndentDetails, fetchRequestedByList, listShowLoading, saveData, ProductLovLoading, fetchProductLov, fetchVinDetails, vehicleVinData, saveIssueDetail, resetVinDetails, fetchIssueList, resetIssueList, listIssueLoading } = props;
@@ -148,7 +149,7 @@ export const StockTransferIndentMasterBase = (props) => {
     const [tableDataItem, setTableDataItem] = useState([]);
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [showVinLoading, setshowVinLoading] = useState(false);
-    const [page, setPage] = useState({ pageSize: 10, current: 1 });
+    const [filterString, setFilterString] = useState(DEFAULT_PAGINATION);
     const [additionalReportParams, setAdditionalReportParams] = useState();
     const [isReportVisible, setReportVisible] = useState();
     const [selectedRecord, setSelectedRecord] = useState();
@@ -188,9 +189,9 @@ export const StockTransferIndentMasterBase = (props) => {
     };
 
     useEffect(() => {
-        setPage({ ...page, current: 1 });
+        setFilterString(DEFAULT_PAGINATION);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, toggleButton]);
+    }, [toggleButton]);
 
     useEffect(() => {
         return () => {
@@ -232,7 +233,7 @@ export const StockTransferIndentMasterBase = (props) => {
     }, [userId, refershIndentData, selectedRecord]);
 
     const extraParams = useMemo(() => {
-        const defaultPage = defaultPageProps(page);
+        const defaultPage = defaultPageProps(filterString);
         return [
             {
                 key: 'searchType',
@@ -284,7 +285,7 @@ export const StockTransferIndentMasterBase = (props) => {
             ...defaultPage,
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [page, filterString]);
+    }, [filterString]);
 
     useEffect(() => {
         if (userId) {
@@ -507,8 +508,7 @@ export const StockTransferIndentMasterBase = (props) => {
         dynamicPagination,
         filterString,
         totalRecords: data?.totalRecords,
-        page,
-        setPage,
+        setPage: setFilterString,
         isLoading: showDataLoading,
         tableColumn: tableColumn(handleButtonClick, toggleButton),
         tableData: data?.paginationData,
