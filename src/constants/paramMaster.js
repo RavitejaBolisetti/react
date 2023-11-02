@@ -452,5 +452,9 @@ export const PARAM_MASTER = {
     EMP_TYP: {
         id: 'EMP_TYP',
         title: 'Delivery note employee key',
-    }
+    },
+    DLVR_CHLN_SER: {
+        id: 'DLVR_CHLN_SER',
+        title: 'Delivery Challan Search',
+    },
 };

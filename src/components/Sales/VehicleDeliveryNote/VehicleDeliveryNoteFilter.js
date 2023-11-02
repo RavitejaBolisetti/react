@@ -10,17 +10,17 @@ import { RxCross2 } from 'react-icons/rx';
 import { QueryButtons } from 'components/Sales/VehicleRecieptChecklist/QueryButtons';
 import { SearchBox } from 'components/utils/SearchBox';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { DELIVERY_TYPE } from 'constants/modules/vehicleDetailsNotes.js/deliveryType';
 
 import styles from 'assets/sass/app.module.scss';
-import { DELIVERY_TYPE } from 'constants/modules/vehicleDetailsNotes.js/deliveryType';
 
 export default function VehicleDeliveryNoteFilter(props) {
     const { deliveryType, extraParams, removeFilter, searchForm, typeData, filterString, deliveryStatusList, onDeliveryTabChange, setFilterString, handleResetFilter, advanceFilter = false, handleDeliveryNoteTypeChange, setAdvanceSearchVisible, deliveryStatus } = props;
-
+    const optionData = deliveryType === DELIVERY_TYPE.NOTE.key ? typeData?.[PARAM_MASTER.DLVR_SER.id] : typeData?.[PARAM_MASTER.DLVR_CHLN_SER.id];
     const serachBoxProps = {
         searchForm,
         filterString,
-        optionType: typeData?.[PARAM_MASTER.DLVR_SER.id],
+        optionType: optionData,
         setFilterString,
     };
 
