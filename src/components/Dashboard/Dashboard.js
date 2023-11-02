@@ -16,6 +16,7 @@ import DashboardActionItems from './DashboardActionItems';
 import { StatusBar } from './StatusBar';
 import { PieChart } from './PieChart';
 import { dateTimeDuration } from 'utils/formatDateTime';
+import { withSpinner } from 'components/withSpinner';
 
 const { Text, Title } = Typography;
 
@@ -45,13 +46,14 @@ const mapStateToProps = (state) => {
     const {
         common: {
             LeftSideBar: { collapsed = false },
-            Header: { data: loginUserData = [] },
+            Header: { isLoading, data: loginUserData = [] },
         },
-    } = state;
+    } = state;  
 
     return {
         collapsed,
         firstName: loginUserData?.firstName || '',
+        isLoading,
     };
 };
 
