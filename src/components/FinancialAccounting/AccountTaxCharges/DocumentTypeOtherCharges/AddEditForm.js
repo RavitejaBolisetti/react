@@ -15,6 +15,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { showGlobalNotification } from 'store/actions/notification';
 import { DrawerFormButton } from 'components/common/Button';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -153,7 +154,7 @@ const AddEditFormMain = (props) => {
                         <>
                             <Row gutter={16}>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label="Application Menu" initialValue={formData?.applicationName} name="applicationName">
+                                    <Form.Item label={translateContent("documentTypeOtherChargesMaster.label.applicationMenu")} initialValue={formData?.applicationName} name="applicationName">
                                         <Input placeholder={preparePlaceholderText('application menu')} maxLength={6} disabled={true} />
                                     </Form.Item>
                                 </Col>
