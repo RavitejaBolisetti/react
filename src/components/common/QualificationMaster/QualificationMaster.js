@@ -16,6 +16,7 @@ import { filterFunction } from 'utils/filterFunction';
 import { qualificationDataActions } from 'store/actions/data/qualificationMaster';
 import { AddEditForm } from './AddEditForm';
 import { tableColumn } from './tableColumn';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -28,7 +29,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Qualification Master';
+    const moduleTitle = translateContent('qualificationMaster.heading.title');
 
     let returnValue = {
         collapsed,
