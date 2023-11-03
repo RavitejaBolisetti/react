@@ -92,7 +92,7 @@ const RequestDetailMasterBase = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <VehicleReceiptFormButton {...props} />
+                    <VehicleReceiptFormButton {...props} buttonData={{ ...buttonData, nextBtn: false }} />
                 </Col>
             </Row>
         </Form>

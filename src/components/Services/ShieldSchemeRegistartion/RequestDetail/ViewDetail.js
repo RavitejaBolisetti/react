@@ -52,7 +52,7 @@ const ViewDetail = (props) => {
                         {/* <Tag style={{ float: 'right' }}>{getCodeValue(typeData?.AMC_REG_APRVL_STAT, selectedOrder?.status)}</Tag> */}
                     </Col>
                 </Row>
-                <Row type="flex" align="middle">
+                <Row type="flex" align="middle" className={styles?.marB20}>
                     <Col xs={24} sm={24} md={24} lg={24}>
                         <div className={styles.tableTextColor85}>Requested On: {convertDateMonthYear(formData?.shieldRegistrationDate)}</div>
                     </Col>

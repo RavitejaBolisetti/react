@@ -184,4 +184,11 @@ export const EMBEDDED_REPORTS = {
         type: 'Document',
         slug: '',
     },
+    SHIELD_REGISTRATION_INVOICE_DOCUMENT: {
+        id: 25,
+        key: 'Shield_Registration_Invoice_document',
+        title: 'Shield Registration Invoice Document ',
+        type: 'Document',
+        slug: '-report',
+    },
 };
