@@ -8,7 +8,6 @@ import { connect } from 'react-redux';
 import { Col, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
 
-import { financialAccountHeadDataActions } from 'store/actions/data/financialAccounting/financialAccountHead';
 import { documentTypeLedgerDataActions } from 'store/actions/data/financialAccounting/documentTypeLedger';
 import { chartOfAccountDataHierarchyActions } from 'store/actions/data/financialAccounting/chartOfAccount/chartOfAccountHierarchy';
 
@@ -30,7 +29,6 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             FinancialAccounting: {
                 DocumentTypeLedger: { isLoaded: isDocumentTypeLedgerLoaded = false, isLoading: isDocumentTypeLedgerLoading = false, data: docTypeLedgerData = [] },
-                FinancialAccountHead: { isLoaded: isFinancialAccountHeadLoaded = false, data: financialAccount = [] },
                 ChartOfAccountMaster: {
                     ChartOfAccountHierarchy: { isLoaded: isChartOfAccountHierarchyLoaded = false, data: chartOfAccountHierarchy = [] },
                 },
@@ -45,9 +43,7 @@ const mapStateToProps = (state) => {
         moduleTitle,
         isDocumentTypeLedgerLoaded,
         isDocumentTypeLedgerLoading,
-        isFinancialAccountHeadLoaded,
         typeData: typeData && typeData[PARAM_MASTER.ACC_HEAD.id],
-        financialAccount,
         docTypeLedgerData: docTypeLedgerData?.paginationData,
         totalRecords: docTypeLedgerData?.totalRecords,
         isChartOfAccountHierarchyLoaded,
@@ -64,8 +60,6 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoadingDocTypeLedger: documentTypeLedgerDataActions.listShowLoading,
             saveData: documentTypeLedgerDataActions.saveData,
 
-            fetchFinancialAccountHead: financialAccountHeadDataActions.fetchList,
-
             fetchFinanacialAccHeadHierarchy: chartOfAccountDataHierarchyActions.fetchList,
             listShowLoadingFinanacialAccHead: chartOfAccountDataHierarchyActions.listShowLoading,
 
@@ -76,7 +70,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const DocumentTypeOtherChargesMain = (props) => {
-    const { moduleTitle, saveData, userId, showGlobalNotification, typeData, isChartOfAccountHierarchyLoaded, financialAccHeadData, fetchFinancialAccountHead, financialAccount, isFinancialAccountHeadLoaded, taxChargeCategoryTypeData, fetchDocTypeLedger, listShowLoadingDocTypeLedger, totalRecords, docTypeLedgerData, fetchFinanacialAccHeadHierarchy, listShowLoadingFinanacialAccHead } = props;
+    const { moduleTitle, saveData, userId, showGlobalNotification, typeData, isChartOfAccountHierarchyLoaded, financialAccHeadData, taxChargeCategoryTypeData, fetchDocTypeLedger, listShowLoadingDocTypeLedger, totalRecords, docTypeLedgerData, fetchFinanacialAccHeadHierarchy, listShowLoadingFinanacialAccHead } = props;
     const [form] = Form.useForm();
 
     const [showDataLoading, setShowDataLoading] = useState(true);
@@ -277,7 +271,6 @@ export const DocumentTypeOtherChargesMain = (props) => {
         dropdownItems,
         setDropdownItems,
         isFormBtnActive,
-        financialAccount,
         typeData,
         financialAccHeadData,
         userApplicationId,
