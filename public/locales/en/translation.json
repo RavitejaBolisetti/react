@@ -1,5 +1,6 @@
 {
     "global": {
+        
         "validation": {
             "input": "Please enter "
         },
@@ -11,6 +12,7 @@
             "edit": "Edit ",
             "view": "View"
         }
+        
     },
     "login": {
         "heading": {
@@ -44,8 +46,8 @@
     "qualificationMaster": {
         "heading": {
             "title": "Qualification Master",
-            "welcomeNote": "Welcome",
-            "loginText": "Please enter your credentials to login",
+            "titleName": "Qualification Name",
+            "drawerTitle": "Qualification",
             "forgotPassword": "Forgot Password?",
             "unauthorizedAccess": "Unauthorized Access"
         },
