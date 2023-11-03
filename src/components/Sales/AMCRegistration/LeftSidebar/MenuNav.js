@@ -39,7 +39,7 @@ const MenuNav = (props) => {
                     children: (
                         <div
                             className={className(item?.id)}
-                            onClick={() => (!formActionType?.addMode || (formActionType?.addMode && item?.id <= previousSection) ? onHandle(item?.id) : '')}
+                            onClick={() => (!formActionType?.addMode || (formActionType?.addMode && item?.id <= previousSection) && currentSection !== AMC_REGISTRATION_SECTION.THANK_YOU_PAGE.id ? onHandle(item?.id) : '')}
                         >
                             {item.title}
                         </div>

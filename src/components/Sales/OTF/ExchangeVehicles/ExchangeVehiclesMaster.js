@@ -482,6 +482,7 @@ const ExchangeVehiclesBase = (props) => {
         showAlert,
         handleSchemeChange,
         MAHINDRA_MAKE,
+        setFormData,
     };
 
     const viewProps = {

@@ -1,142 +1,132 @@
 {
-    "name": "dms-ui-application",
-    "version": "0.0.1",
-    "private": true,
-    "dependencies": {
-        "@ant-design/plots": "^1.2.5",
-        "@ckeditor/ckeditor5-build-classic": "^38.0.1",
-        "@ckeditor/ckeditor5-react": "^6.0.0",
-        "@nastyox/rando.js": "^2.0.5",
-        "@reduxjs/toolkit": "^1.9.5",
-        "@testing-library/jest-dom": "^5.16.5",
-        "@testing-library/react": "^13.4.0",
-        "@testing-library/user-event": "^13.5.0",
-        "antd": "^5.6.4",
-        "axios": "^1.2.3",
-        "bizcharts": "^4.1.22",
-        "bootstrap": "^4.6.0",
-        "ckeditor4-react": "^4.2.0",
-        "cross-env": "^7.0.3",
-        "encrypt-storage": "^2.12.14",
-        "env-cmd": "^10.1.0",
-        "google-map-react": "^2.2.1",
-        "history": "^5.3.0",
-        "html-react-parser": "^4.2.9",
-        "jest-sonar": "^0.2.15",
-        "jwt-decode": "^3.1.2",
-        "moment": "^2.29.4",
-        "msw": "^1.2.2",
-        "otp-input-react": "^0.3.0",
-        "powerbi-client-react": "^1.4.0",
-        "react": "^18.2.0",
-        "react-bootstrap": "^2.7.0",
-        "react-checkbox-tree": "^1.8.0",
-        "react-dom": "^18.2.0",
-        "react-helmet": "^6.1.0",
-        "react-icons": "^4.8.0",
-        "react-idle-timer": "^5.6.2",
-        "react-infinite-scroll-component": "^6.1.0",
-        "react-loading-skeleton": "^3.1.0",
-        "react-redux": "^8.0.5",
-        "react-router-dom": "^6.7.0",
-        "react-scripts": "5.0.1",
-        "redux": "^4.2.0",
-        "redux-test-utils": "^1.0.2",
-        "redux-thunk": "^2.4.2",
-        "sass": "^1.57.1",
-        "test-utils": "^1.1.1",
-        "ts-node": "^10.9.1",
-        "web-vitals": "^2.1.4"
-    },
-    "scripts": {
-        "start": "env-cmd -f .env.dev react-scripts start",
-        "start-qa": "env-cmd -f .env.qa react-scripts start",
-        "start-uat": "env-cmd -f .env.uat react-scripts start",
-        "build": "env-cmd -f .env.dev react-scripts --max-old-space-size=8192 build",
-        "build-qa": "env-cmd -f .env.qa react-scripts --max-old-space-size=8192 build",
-        "build-uat": "env-cmd -f .env.uat react-scripts --max-old-space-size=8192 build",
-        "test": "cross-env BABEL_ENV=test --max-old-space-size=8192 jest",
-        "watch-tests": "cross-env BABEL_ENV=test jest --watch",
-        "eject": "react-scripts eject",
-        "clear_jest": "jest --clearCache",
-        "test:coverage": "cross-env BABEL_ENV=test --max-old-space-size=8192 jest --coverage",
-        "prepare": "husky install",
-        "lint-staged": "lint-staged",
-        "pre-commit": "npm run lint-staged && git add .",
-        "lint": "eslint .",
-        "lint:fix": "eslint --fix",
-        "sonar": "ts-node sonar-scanner.ts"
-    },
-    "eslintConfig": {
-        "extends": [
-            "react-app",
-            "react-app/jest"
-        ]
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "lint-staged"
-        }
-    },
-    "lint-staged": {
-        "*.{js,jsx}": [
-            "eslint --fix",
-            "prettier --write"
-        ],
-        "*.{js,jsx,ts,tsx,css,sass,scss,json,md,html,yml}": [
-            "prettier --write"
-        ]
-    },
-    "browserslist": {
-        "production": [
-            ">0.2%",
-            "not dead",
-            "not op_mini all"
-        ],
-        "dev": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ],
-        "qa": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ],
-        "uat": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ]
-    },
-    "devDependencies": {
-        "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-        "@babel/preset-env": "^7.22.10",
-        "@babel/preset-react": "^7.22.5",
-        "@testing-library/dom": "^9.3.1",
-        "@testing-library/jest-dom": "^5.16.5",
-        "@testing-library/react": "^14.0.0",
-        "@testing-library/user-event": "^14.4.3",
-        "@types/react-detect-offline": "^2.4.1",
-        "babel-jest": "^27.5.1",
-        "husky": "^8.0.3",
-        "i18next": "^23.6.0",
-        "i18next-browser-languagedetector": "^7.1.0",
-        "i18next-http-backend": "^2.3.0",
-        "jest": "^27.5.1",
-        "jest-environment-jsdom": "^27.5.1",
-        "lint-staged": "^14.0.1",
-        "prettier": "^3.0.2",
-        "react-app-rewired": "^2.2.1",
-        "react-google-recaptcha3": "^1.0.4",
-        "react-i18next": "^13.3.1",
-        "react-test-renderer": "^18.2.0",
-        "redux-devtools-extension": "^2.13.9",
-        "redux-mock-store": "^1.5.4",
-        "sonarqube-scanner": "^3.0.1",
-        "webpack": "^5.88.2",
-        "webpack-cli": "^5.1.4",
-        "webpack-dev-server": "^4.15.1",
-        "win-node-env": "^0.6.1"
+  "name": "dms-ui-application",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "@ant-design/plots": "^1.2.5",
+    "@ckeditor/ckeditor5-build-classic": "^38.0.1",
+    "@ckeditor/ckeditor5-react": "^6.0.0",
+    "@nastyox/rando.js": "^2.0.5",
+    "@reduxjs/toolkit": "^1.9.5",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "antd": "^5.6.4",
+    "axios": "^1.2.3",
+    "bizcharts": "^4.1.22",
+    "bootstrap": "^4.6.0",
+    "ckeditor4-react": "^4.2.0",
+    "cross-env": "^7.0.3",
+    "encrypt-storage": "^2.12.14",
+    "env-cmd": "^10.1.0",
+    "google-map-react": "^2.2.1",
+    "history": "^5.3.0",
+    "html-react-parser": "^4.2.9",
+    "jest-sonar": "^0.2.15",
+    "jwt-decode": "^3.1.2",
+    "moment": "^2.29.4",
+    "msw": "^1.2.2",
+    "otp-input-react": "^0.3.0",
+    "powerbi-client-react": "^1.4.0",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.7.0",
+    "react-checkbox-tree": "^1.8.0",
+    "react-dom": "^18.2.0",
+    "react-helmet": "^6.1.0",
+    "react-icons": "^4.8.0",
+    "react-idle-timer": "^5.6.2",
+    "react-infinite-scroll-component": "^6.1.0",
+    "react-loading-skeleton": "^3.1.0",
+    "react-redux": "^8.0.5",
+    "react-router-dom": "^6.7.0",
+    "react-scripts": "5.0.1",
+    "redux": "^4.2.0",
+    "redux-test-utils": "^1.0.2",
+    "redux-thunk": "^2.4.2",
+    "sass": "^1.57.1",
+    "test-utils": "^1.1.1",
+    "ts-node": "^10.9.1",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "env-cmd -f .env.dev react-scripts start",
+    "start-qa": "env-cmd -f .env.qa react-scripts start",
+    "start-uat": "env-cmd -f .env.uat react-scripts start",
+    "build": "env-cmd -f .env.dev react-scripts --max-old-space-size=8192 build",
+    "build-qa": "env-cmd -f .env.qa react-scripts --max-old-space-size=8192 build",
+    "build-uat": "env-cmd -f .env.uat react-scripts --max-old-space-size=8192 build",
+    "test": "cross-env BABEL_ENV=test --max-old-space-size=8192 jest",
+    "watch-tests": "cross-env BABEL_ENV=test jest --watch",
+    "eject": "react-scripts eject",
+    "clear_jest": "jest --clearCache",
+    "test:coverage": "cross-env BABEL_ENV=test --max-old-space-size=8192 jest --coverage",
+    "prepare": "husky install",
+    "lint-staged": "lint-staged",
+    "pre-commit": "npm run lint-staged && git add .",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix",
+    "sonar": "ts-node sonar-scanner.ts"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{js,jsx,ts,tsx,css,sass,scss,json,md,html,yml}": [
+      "prettier --write"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/preset-env": "^7.22.10",
+    "@babel/preset-react": "^7.22.5",
+    "@testing-library/dom": "^9.3.1",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/user-event": "^14.4.3",
+    "@types/react-detect-offline": "^2.4.1",
+    "babel-jest": "^27.5.1",
+    "husky": "^8.0.3",
+    "i18next": "^23.6.0",
+    "i18next-browser-languagedetector": "^7.1.0",
+    "i18next-http-backend": "^2.3.0",
+    "jest": "^27.5.1",
+    "jest-environment-jsdom": "^27.5.1",
+    "lint-staged": "^14.0.1",
+    "prettier": "^3.0.2",
+    "react-app-rewired": "^2.2.1",
+    "react-google-recaptcha3": "^1.0.4",
+    "react-i18next": "^13.3.1",
+    "react-test-renderer": "^18.2.0",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-mock-store": "^1.5.4",
+    "sonarqube-scanner": "^3.0.1",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1",
+    "win-node-env": "^0.6.1"
+  }
 }

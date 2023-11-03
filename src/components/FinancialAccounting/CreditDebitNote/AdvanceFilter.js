@@ -23,7 +23,7 @@ export default function AdvanceFilter(props) {
         searchForm
             .validateFields()
             .then((values) => {
-                setFilterString({ ...values, searchType: 'voucherNumber', advanceFilter: true });
+                setFilterString({ ...values, searchType: 'voucherNumber', advanceFilter: true, current: 1 });
                 searchForm.resetFields();
             })
             .catch((err) => {
@@ -91,7 +91,7 @@ export default function AdvanceFilter(props) {
                                                 {filter?.name}
                                                 {filter?.canRemove && (
                                                     <span>
-                                                        <RxCross2 onClick={() => removeFilter(filter?.key)} data-testid='remove-filter'/>
+                                                        <RxCross2 onClick={() => removeFilter(filter?.key)} data-testid="remove-filter" />
                                                     </span>
                                                 )}
                                             </div>

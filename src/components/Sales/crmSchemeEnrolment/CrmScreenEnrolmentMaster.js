@@ -279,7 +279,7 @@ export const CrmScreenEnrolmentBase = (props) => {
                 value: value,
             },
         ];
-        fetchDetail({ setIsLoading: listDetailShowLoading, userId, extraParams, customURL });
+        fetchDetail({ setIsLoading: listDetailShowLoading, userId, extraParams, customURL, onSuccessAction, onErrorAction });
     };
 
     const addFormOpen = () => {

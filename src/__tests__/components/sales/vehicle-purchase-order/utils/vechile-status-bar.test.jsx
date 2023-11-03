@@ -11,5 +11,6 @@ import { VechileStatusBar } from '@components/Sales/VehiclePurchaseOrder/utils/V
 describe('vechile status bar render', () => {
     it('should render vechile status bar component', () => {
         customRender(<VechileStatusBar />);
+        customRender(<VechileStatusBar status={'Cancelled'} />);
     });
 });
