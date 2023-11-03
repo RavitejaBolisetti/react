@@ -215,7 +215,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
         onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat('Qualification'),
+        titleOverride: drawerTitle.concat(translateContent('qualificationMaster.heading.drawerTitle')),
         tableData: searchData,
         ADD_ACTION,
         EDIT_ACTION,
@@ -225,7 +225,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
         handleButtonClick,
         handleResetFilter,
     };
-    const title = 'Qualification Name';
+    const title = translateContent('qualificationMaster.heading.titleName');
 
     const advanceFilterResultProps = {
         advanceFilter: false,

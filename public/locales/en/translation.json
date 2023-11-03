@@ -1,8 +1,18 @@
 {
     "global": {
+        
         "validation": {
             "input": "Please enter "
+        },
+        "notificationSuccess": {
+            "title": "Success"
+        },
+        "drawerTitle": {
+            "add": "Add ",
+            "edit": "Edit ",
+            "view": "View"
         }
+        
     },
     "login": {
         "heading": {
@@ -36,6 +46,36 @@
     "qualificationMaster": {
         "heading": {
             "title": "Qualification Master",
+            "titleName": "Qualification Name",
+            "drawerTitle": "Qualification",
+            "forgotPassword": "Forgot Password?",
+            "unauthorizedAccess": "Unauthorized Access"
+        },
+        "label": {
+            "username": "User ID (MILE ID.Parent ID)",
+            "password": "Password"
+        },
+        "placeholder": {
+            "username": "User ID (MILE ID.Parent ID)",
+            "password": "Password"
+        },
+        "validation": {
+            "googleCaptcha": "Please select Captcha"
+        },
+        "button": {
+            "login": "Login",
+            "skipForNow": "Skip For Now",
+            "updatePassword": "Update Password",
+            "continue": "Continue"
+        },
+        "link": {
+            "mnmLogin": "M&M User Login"
+        }
+    },
+    "LessorCompanyMaster": {
+        "heading": {
+            "pageTitle": "Lessor Company Master (M&M)",
+            "title": "Lessor Company Name",
             "welcomeNote": "Welcome",
             "loginText": "Please enter your credentials to login",
             "forgotPassword": "Forgot Password?",
@@ -94,5 +134,35 @@
     },
     "footer": {
         "copyright": "Copyright &copy; {YEAR} ROBIN."
+    },
+    "vehicleDetail": {
+        "heading": {
+            "mainTitle": "Vehicle Details",
+            "title": "Search Vehicle"
+        },
+        "placeholder": {},
+        "validation": {
+            "searchParameter": "search parametar"
+        },
+        "button": {},
+        "label": {
+            "mnfcWarrEndDate": "Manufacturer Warranty End Date",
+            "manufactureKM": "Expiry KM",
+            "deliveryDate": "Delivery Date",
+            "saleDate": "Sale Date",
+            "soldBy": "Sold By",
+            "lastOdometerReading": "Last Odometer Reading",
+            "averageRun": "Average Run",
+            "nextDueService": "Next Due Service",
+            "relationshipManager": "Relationship Manager",
+            "nextServiceDueDate": "Next Service Due Date",
+            "insuranceExpiryDate": "Insurance Expiry Date",
+            "customerCategorySsi": "Customer Category-SSI",
+            "customerCategoryCsi": "Customer Category-CSI",
+            "customerCategoryIqs": "Customer Category-IQS",
+            "taxiOrNonTaxiKey": "Taxi/Non Taxi",
+            "manageBy": "Managed By",
+            "carePlus": "Care Plus"
+        }
     }
 }

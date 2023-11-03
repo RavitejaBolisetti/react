@@ -11,6 +11,7 @@ import { validateRequiredSelectField } from 'utils/validation';
 import { disablePastDate } from 'utils/disableDate';
 import { USER_TYPE } from 'constants/userType';
 import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -54,57 +55,57 @@ const AddEditFormMain = (props) => {
     return (
         <>
             <Collapse defaultActiveKey={['1']} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" collapsible="icon">
-                <Panel header="Vehicle Details" key="1">
+                <Panel header={translateContent('vehicleDetail.heading.mainTitle')} key="1">
                     <Divider />
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formattedCalendarDate(formData?.mnfcWarrEndDate)} label="Manufacturer Warranty End Date" name="mnfcWarrEndDate">
+                            <Form.Item initialValue={formattedCalendarDate(formData?.mnfcWarrEndDate)} label={translateContent('vehicleDetail.label.mnfcWarrEndDate')} name="mnfcWarrEndDate">
                                 <DatePicker disabledDate={disablePastDate} format={dateFormat} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formData?.manufactureKM} label="Expiry KM" name="manufactureKM">
+                            <Form.Item initialValue={formData?.manufactureKM} label={translateContent('vehicleDetail.label.manufactureKM')} name="manufactureKM">
                                 <Input {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formattedCalendarDate(formData?.deliveryDate)} label="Delivery Date" name="deliveryDate">
+                            <Form.Item initialValue={formattedCalendarDate(formData?.deliveryDate)} label={translateContent('vehicleDetail.label.deliveryDate')} name="deliveryDate">
                                 <DatePicker disabledDate={disablePastDate} format={dateFormat} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formattedCalendarDate(formData?.saleDate)} label="Sale Date" name="saleDate">
+                            <Form.Item initialValue={formattedCalendarDate(formData?.saleDate)} label={translateContent('vehicleDetail.label.saleDate')} name="saleDate">
                                 <DatePicker disabledDate={disablePastDate} format={dateFormat} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="soldBy" label="Sold By" initialValue={formData?.soldBy}>
+                            <Form.Item name="soldBy" label={translateContent('vehicleDetail.label.soldBy')} initialValue={formData?.soldBy}>
                                 <Input maxLength={50} {...disabledProps} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="lastOdometerReading" label="Last Odometer Reading" initialValue={formData?.lastOdometerReading}>
+                            <Form.Item name="lastOdometerReading"  label={translateContent('vehicleDetail.label.lastOdometerReading')} initialValue={formData?.lastOdometerReading}>
                                 <Input maxLength={50} {...disabledProps} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="averageRun" label="Average Run" initialValue={formData?.averageRun}>
+                            <Form.Item name="averageRun"  label={translateContent('vehicleDetail.label.averageRun')} initialValue={formData?.averageRun}>
                                 <Input maxLength={50} {...disabledProps} {...disabledProps} />
                             </Form.Item>
                         </Col>
 
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="nextDueService" label="Next Due Service" initialValue={formData?.nextDueService}>
+                            <Form.Item name="nextDueService"  label={translateContent('vehicleDetail.label.nextDueService')} initialValue={formData?.nextDueService}>
                                 <Input maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="relationshipManager" label="Relationship Manager" initialValue={formData?.relationshipManager}>
+                            <Form.Item name="relationshipManager"  label={translateContent('vehicleDetail.label.relationshipManager')} initialValue={formData?.relationshipManager}>
                                 <Input maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formattedCalendarDate(formData?.nextServiceDueDate)} label="Next Service Due Date" name="nextServiceDueDate">
+                            <Form.Item initialValue={formattedCalendarDate(formData?.nextServiceDueDate)}  label={translateContent('vehicleDetail.label.nextServiceDueDate')} name="nextServiceDueDate">
                                 <DatePicker disabledDate={disablePastDate} format={dateFormat} {...disabledProps} />
                             </Form.Item>
                         </Col>
@@ -115,23 +116,23 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col> */}
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formattedCalendarDate(formData?.insuranceExpiryDate)} label="Insurance Expiry Date" name="insuranceExpiryDate">
+                            <Form.Item initialValue={formattedCalendarDate(formData?.insuranceExpiryDate)}  label={translateContent('vehicleDetail.label.insuranceExpiryDate')} name="insuranceExpiryDate">
                                 <DatePicker disabledDate={disablePastDate} format={dateFormat} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="customerCategorySsi" label="Customer Category-SSI" initialValue={formData?.customerCategorySsi}>
+                            <Form.Item name="customerCategorySsi" label={translateContent('vehicleDetail.label.customerCategorySsi')} initialValue={formData?.customerCategorySsi}>
                                 <Input maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
 
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="customerCategoryCsi" label="Customer Category-CSI" initialValue={formData?.customerCategoryCsi}>
+                            <Form.Item name="customerCategoryCsi"  label={translateContent('vehicleDetail.label.customerCategoryCsi')} initialValue={formData?.customerCategoryCsi}>
                                 <Input maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="customerCategoryIqs" label="Customer Category-IQS" initialValue={formData?.customerCategoryIqs}>
+                            <Form.Item name="customerCategoryIqs"  label={translateContent('vehicleDetail.label.customerCategoryIqs')} initialValue={formData?.customerCategoryIqs}>
                                 <Input maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
@@ -142,7 +143,7 @@ const AddEditFormMain = (props) => {
                         </Col> */}
 
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formData?.taxiOrNonTaxiKey} name="taxiOrNonTaxiKey" label="Taxi/Non Taxi">
+                            <Form.Item initialValue={formData?.taxiOrNonTaxiKey} name="taxiOrNonTaxiKey"  label={translateContent('vehicleDetail.label.taxiOrNonTaxiKey')}>
                                 <Select placeholder="Select" showSearch allowClear options={typeData['VEHCL_TYPE']} fieldNames={{ label: 'value', value: 'key' }} {...disabledProps} />
                             </Form.Item>
                         </Col>
