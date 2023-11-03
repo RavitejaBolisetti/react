@@ -44,12 +44,16 @@ const ViewDetailMain = (props) => {
                     <Descriptions.Item label="Quantity">{checkAndSetDefaultValue(formData?.quantity, isLoading)}</Descriptions.Item>
                 </Descriptions>
             </Card>
-            <h4 className={styles.marB5}> Cancel Reason</h4>
-            <Card className={styles.ExchangeCard1}>
-                <Descriptions {...viewProps}>
-                    <Descriptions.Item label="">{checkAndSetDefaultValue(formData?.cancelRemarks, isLoading)}</Descriptions.Item>
-                </Descriptions>
-            </Card>
+            {formData?.cancelRemarks != null && (
+                <>
+                    <h4 className={styles.marB5}> Cancel Reason</h4>
+                    <Card className={styles.ExchangeCard1}>
+                        <Descriptions {...viewProps}>
+                            <Descriptions.Item label="">{checkAndSetDefaultValue(formData?.cancelRemarks, isLoading)}</Descriptions.Item>
+                        </Descriptions>
+                    </Card>
+                </>
+            )}
         </>
     );
 };

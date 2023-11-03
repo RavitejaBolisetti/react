@@ -41,7 +41,7 @@ export const ViewProductDetailMain = ({ typeData, setSKUAttributes, viewTitle, s
                 <div>
                     {viewData?.skuAttributes?.length > 0 && (
                         <Collapse expandIcon={expandIcon} collapsible="icon">
-                            <Panel header="Product SKU" key="2">
+                            <Panel header="Product Attribute" key="2">
                                 <Divider />
                                 {viewData?.skuAttributes?.map((item) => (
                                     <CardProductAttribute key={'sku' + item?.code} code={item?.code} value={item?.value} id={item?.id} setDisabledEdit={setDisabledEdit} />

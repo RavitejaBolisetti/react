@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import { VehicleReceiptMaster } from '@components/Sales/VehicleReceipt/VehicleReceiptMaster';
 import customRender from '@utils/test-utils';
-import { screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import createMockStore from '__mocks__/store';
 
@@ -175,5 +175,55 @@ describe('Term Condition Manufacturer Master components', () => {
 
         fetchVehicleReceiptList.mock.calls[0][0].onSuccessAction();
         fetchVehicleReceiptList.mock.calls[0][0].onErrorAction();
+    });
+
+    it('test for close actions', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+
+            data: {
+                ConfigurableParameterEditing: { filteredListData: { OTF_SER: [{ name: 'Kai', key: 106 }] } },
+                VehicleReceipt: {
+                    VehicleReceiptSearch: {
+                        data: {
+                            paginationData: [
+                                {
+                                    grnDate: '2023-09-18T10:39:46.637+00:00',
+                                    grnNumber: 'GRN1695033586637',
+                                    grnType: 'Manufacturer',
+                                    status: 'RCV',
+                                    supplierInvoiceDate: '2023-09-12T00:00:00.000+00:00',
+                                    supplierInvoiceNumber: '7501177325',
+                                    supplierName: 'MAHINDRA & MAHINDRA LTD.',
+                                },
+                            ],
+                        },
+                        filter: { current: 106, advanceFilter: 'Test', grnFromDate: '06/06/2022', grnToDate: '06/06/2022', grnType: 'kai', key: 'searchParam' },
+                    },
+                },
+            },
+        });
+
+        const fetchVehicleReceiptList = jest.fn();
+        const buttonData = { viewBtn: true };
+
+        customRender(
+            <Provider store={mockStore}>
+                <VehicleReceiptMaster fetchVehicleReceiptList={fetchVehicleReceiptList} setFilterString={jest.fn()} resetData={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} />
+            </Provider>
+        );
+
+        fetchVehicleReceiptList.mock.calls[0][0].onSuccessAction();
+        fetchVehicleReceiptList.mock.calls[0][0].onErrorAction();
+
+        await waitFor(() => {
+            expect(screen.getByText('Manufacturer')).toBeInTheDocument();
+        });
+
+        const viewBtn = screen.getByRole('button', { name: /ai-view/i });
+        fireEvent.click(viewBtn);
+
+        const yesBtn = screen.getAllByRole('button', { name: /Close/i });
+        fireEvent.click(yesBtn[1]);
     });
 });

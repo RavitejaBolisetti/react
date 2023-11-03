@@ -86,7 +86,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId, isDataAttributeLoaded, showGlobalNotification, fetchVehicleChecklist, listShowLoadingVehicleChecklist, VehicleChecklistMasterList, VehicleChecklistAttributeLov, fetchVehicleChecklistAttributeLov, listShowLoadingVehicleChecklistAttributeLov, fetchModelLovList, listModelShowLoading, modelGroupData, saveData, isConfigLoaded }) => {
+export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId, isDataAttributeLoaded, showGlobalNotification, fetchVehicleChecklist, listShowLoadingVehicleChecklist, VehicleChecklistMasterList, VehicleChecklistAttributeLov, fetchVehicleChecklistAttributeLov, listShowLoadingVehicleChecklistAttributeLov, fetchModelLovList, listModelShowLoading, modelGroupData, saveData }) => {
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
     const [answerForm] = Form.useForm();
@@ -393,7 +393,6 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
     const handleAdd = () => {
         setFormBtnActive(false);
         setIsFormVisible(true);
-        //setIsAddBtnClicked(() => !isAddBtnClicked);
         setFormActionType(FROM_ACTION_TYPE.ADD);
         form.setFieldsValue({
             attributeLevel: VEHICLE_CHECKLIST_TYPE?.GROUP?.key,

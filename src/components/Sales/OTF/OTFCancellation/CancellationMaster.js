@@ -66,7 +66,7 @@ const mapDispatchToProps = (dispatch) => ({
 const CancellationMasterBase = (props) => {
     const { otfData, selectedOrder } = props;
     const { userId, listShowLoading, uploadDocumentFile } = props;
-    const { moduleTitle, setUploadedFile, uploadedFile } = props;
+    const { moduleTitle, setUploadedFile, uploadedFile, handleButtonClick } = props;
     const { productCode, fetchProductHierarchyList, isProductDataLoaded, productHierarchyDataList, onFinishOTFCancellation, fetchDealerList, dealerDataList, resetDealerList } = props;
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, cancelOTFBtn: true };
@@ -147,6 +147,7 @@ const CancellationMasterBase = (props) => {
         parentAppCode,
         setParentAppCode,
         resetDealerList,
+        handleButtonClick,
     };
 
     return <AddEditForm {...formProps} />;

@@ -236,13 +236,14 @@ describe('Vehicle Purchase Order Master component render', () => {
         saveData.mock.calls[0][0].onError();
     });
 
-    it('onSuccess action should work', () => {
+    it('onSuccess action should work', async () => {
         const mockStore = createMockStore({
             auth: { userId: 106 },
             data: {
+                ConfigurableParameterEditing: { filteredListData: { PO_STATS: [{ name: 'Kai', key: 106 }] } },
                 Vehicle: {
                     VehiclePurchaseOrderDetail: {
-                        data: [{ effectiveFromDate: '2023-09-08', effectiveToDate: '2023-09-18', id: '123', newModelGroup: 'ALTSMM81813337450', oldModelGroup: 'ALTSMM81813337441' }],
+                        data: { paginationData: [{ cancelRemarks: null, cancelRemarksCode: null, dealerLocation: null, dealerLocationId: null, dealerParentCode: null, dealerParentName: null, id: '5cecfd5e-f2a8-480e-9211-dc65d8e9a61a', modelCode: null, modelDescription: null, orderType: 'Against Stock', orderTypeCode: 'ASTK', purchaseOrderCancelDate: null, purchaseOrderDate: '2023-10-12', purchaseOrderNumber: 'PO23D000107', purchaseOrderStatus: 'PO Submitted', purchaseOrderStatusCode: 'POS', quantity: null, soDate: null, soNumber: null, soStatus: null, soStatusCode: null }] },
                         filter: [{ advanceFilter: 'Test', fromDate: '06/06/2022' }],
                     },
                 },
@@ -250,14 +251,21 @@ describe('Vehicle Purchase Order Master component render', () => {
         });
         const fetchList = jest.fn();
         const saveData = jest.fn();
-        const fetchDetailList = jest.fn();
-        const filterString = { advanceFilter: true, fromDate: null, orderType: 'ASTK', purchaseOrderNumber: undefined, purchaseOrderStatusCode: undefined, status: undefined, toDate: null };
+        const buttonDataa = { viewBtn: true };
+
         customRender(
             <Provider store={mockStore}>
-                <VehiclePurchaseOrderMaster setFilterString={jest.fn()} fetchDetailList={fetchDetailList} saveData={saveData} filterString={filterString} setIsFormVisible={jest.fn()} handleButtonClick={jest.fn()} fetchList={fetchList} resetData={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} />
+                <VehiclePurchaseOrderMaster setFilterString={jest.fn()} saveData={saveData} filterString={jest.fn()} setIsFormVisible={jest.fn()} handleButtonClick={jest.fn()} fetchList={fetchList} resetData={jest.fn()} buttonDataa={buttonDataa} setButtonData={jest.fn()} />
             </Provider>
         );
         fetchList.mock.calls[0][0].onSuccessAction();
         fetchList.mock.calls[0][0].onErrorAction();
+
+        await waitFor(() => {
+            expect(screen.getByText('PO23D000107')).toBeInTheDocument();
+        });
+
+        const viewBtn = screen.getByRole('button', { name: /ai-view/i });
+        fireEvent.click(viewBtn);
     });
 });

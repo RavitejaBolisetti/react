@@ -88,6 +88,10 @@ const AuthorityFormMin = (props) => {
                 value: data,
                 name: 'employeeCode',
             },
+            {
+                key: 'createUser',
+                value: 'false',
+            },
         ];
         data && searchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
     };

@@ -47,7 +47,7 @@ const AMCRegistrationCard = (props) => {
             >
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Registration Date: <span>{checkAndSetDefaultValue(requestPayload?.amcRegistration?.amcRegistrationDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
+                    Registration Date: <span>{checkAndSetDefaultValue(requestPayload?.amcRegistration?.amcRegistrationDate || selectedAMC?.amcRegistrationDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>

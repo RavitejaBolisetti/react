@@ -18,7 +18,7 @@ import { AMC_CONSTANTS } from './utils/AMCConstants';
 import styles from 'assets/sass/app.module.scss';
 
 export const AdvancedSearchFrom = (props) => {
-    const { setAdvanceSearchVisible, typeData, userType } = props;
+    const { setAdvanceSearchVisible, userType, dealerParentsLovList, dealerLocations, handleDealerParentChange } = props;
     const {
         filterString,
         setFilterString,
@@ -57,12 +57,12 @@ export const AdvancedSearchFrom = (props) => {
                 <Row gutter={16}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item initialValue={filterString?.dealerParent} label="Dealer Parent" name="dealerParent">
-                            {customSelectBox({ data: typeData, placeholder: preparePlaceholderSelect('Dealer Parent') })}
+                            {customSelectBox({ data: dealerParentsLovList, placeholder: preparePlaceholderSelect('Dealer Parent'), onChange: handleDealerParentChange })}
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item initialValue={filterString?.dealerLocation} label="Dealer Location" name="dealerLocation">
-                            {customSelectBox({ data: typeData, placeholder: preparePlaceholderSelect('Dealer Location') })}
+                            {customSelectBox({ data: dealerLocations, placeholder: preparePlaceholderSelect('Dealer Location'), fieldNames: { key: 'locationCode', value: 'dealerLocationName' } })}
                         </Form.Item>
                     </Col>
                 </Row>

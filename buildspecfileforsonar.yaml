@@ -6,7 +6,7 @@ phases:
             # - node -v
             # - npm -v
             - npm install -g sonarqube-scanner
-            - npm i
+            - npm i --force
     build:
         commands:
             # - codebuild-breakpoint

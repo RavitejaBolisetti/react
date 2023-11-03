@@ -132,7 +132,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
 
     const [deliveryStatus, setDeliveryStatus] = useState(QUERY_BUTTONS_CONSTANTS.PENDING.key);
 
-    const [soldByDealer, setSoldByDealer] = useState();
+    const [soldByDealer, setSoldByDealer] = useState(undefined);
     const [selectedCustomerId, setSelectedCustomerId] = useState();
 
     const [retailMonth, setRetailMonth] = useState(false);
@@ -180,7 +180,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
 
     const onDeliveryTabChange = (key) => {
         setDeliveryType(key);
-        setDeliveryStatus(QUERY_BUTTONS_CONSTANTS?.PENDING?.key);
+        handleDeliveryNoteTypeChange(QUERY_BUTTONS_CONSTANTS?.PENDING);
         setFilterString({ deliveryType: key, deliveryStatus: QUERY_BUTTONS_CONSTANTS?.PENDING?.key, current: 1 });
         advanceFilterForm.resetFields();
     };
@@ -404,7 +404,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         }
     };
 
-    const handlePrintDownload = (record) => {
+    const handlePrintDownload = () => {
         setReportVisible(true);
         setAdditionalReportParams([
             {
@@ -675,22 +675,18 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         }
     };
 
-    const handleCancelCheck = (soldByDealer) => {
-        setRetailMonth(false);
-        setYesRetailMonth(false);
-    };
-
     const onCancelDeliveryNote = () => {
         setCancelDeliveryNoteVisible(true);
-        handleCancelCheck(soldByDealer);
+        setRetailMonth(false);
+        setYesRetailMonth(false);
         cancelDeliveryNoteForm.resetFields();
     };
 
-    const onCancelFormFinish = (values) => {
+    const onCancelFormFinish = () => {
         cancelDeliveryNoteForm
             .validateFields()
             .then((values) => {
-                let data;
+                let data = {};
                 if (soldByDealer) {
                     data = { ...values, invoiceHdrId: selectedOrder?.invoicehdrId, deliveryNoteId: selectedOrder?.deliveryHdrId, status: selectedOrder?.deliveryNoteStatus, cancellationReason: cancelDeliveryNoteForm.getFieldValue('cancellationReason') || '' };
                 } else {
@@ -710,7 +706,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
                     showGlobalNotification({ message });
                 };
                 const requestData = {
-                    data: data,
+                    data,
                     method: 'put',
                     setIsLoading: cancelShowLoading,
                     userId,
@@ -792,7 +788,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     const cancelDeliveryNoteProps = {
         isVisible: cancelDeliveryNoteVisible,
         onCloseAction: cancelModalCloseAction,
-        titleOverride: 'Cancel ' + moduleTitle,
+        titleOverride: 'Cancel ' + (soldByDealer ? moduleTitle : 'Challan'),
         cancelDeliveryNoteForm,
         cancelModalCloseAction,
         onFinish: onCancelFormFinish,
@@ -858,6 +854,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         onCancelDeliveryNote,
         saveButtonName: isLastSection ? 'Submit' : 'Continue',
         CancelDeliveryButtonName: soldByDealer ? 'Cancel Delivery Note' : 'Cancel Challan',
+        PrintButtonName: soldByDealer ? 'Print Delivery Note' : 'Print Challan',
         setLastSection,
         customerIdValue,
         setCustomerIdValue,
@@ -874,7 +871,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         setSection,
     };
 
-    const reportDetail = EMBEDDED_REPORTS?.DELIVERY_NOTE_DOCUMENT;
+    const reportDetail = soldByDealer ? EMBEDDED_REPORTS?.DELIVERY_NOTE_DOCUMENT : EMBEDDED_REPORTS?.CHALLAN_DOCUMENT;
     const reportProps = {
         isVisible: isReportVisible,
         titleOverride: reportDetail?.title,

@@ -121,7 +121,7 @@ export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, fetchCha
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [modalOpen, setModalOpen] = useState(false);
     const companyFieldNames = { value: 'companyName', key: 'id' };
-    const fieldNames = { title: 'accountDescription', key: 'accountCode', children: 'subGroup' };
+    const fieldNames = { title: 'accountDescription', key: 'id', children: 'subGroup' };
 
     useEffect(() => {
         if (userId && !isDealerCompanyDataLoaded) {
@@ -150,7 +150,7 @@ export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, fetchCha
 
     const extraParams = [
         {
-            key: 'accountCode',
+            key: 'id',
             value: selectedTreeKey,
         },
     ];
@@ -179,7 +179,6 @@ export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, fetchCha
             setDisable(true);
             setSelectedTreeSelectKey(chartOfAccountData?.accountDescription);
             setAccountTyp(null);
-            isChildAdd(true);
             form.setFieldValue('parentAccountCode', chartOfAccountData?.accountCode);
         } else if (formActionType === FROM_ACTION_TYPE?.SIBLING) {
             form.resetFields();
@@ -187,11 +186,6 @@ export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, fetchCha
             setDisable(true);
             setSelectedTreeSelectKey(chartOfAccountData?.parentAccountDescription);
             setAccountTyp(null);
-            if (chartOfAccountData?.parentAccountCode === '') {
-                isChildAdd(false);
-            } else {
-                isChildAdd(true);
-            }
             form.setFieldValue('parentAccountCode', chartOfAccountData?.parentAccountCode);
         } else if (formActionType === FROM_ACTION_TYPE?.EDIT) {
             form.resetFields();
@@ -227,6 +221,15 @@ export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, fetchCha
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [chartOfAccountHierarchy]);
 
+    useEffect(() => {
+        if (accountTyp === COA_ACCOUNT_TYPE?.GROUP_ACCOUNT?.key) {
+            isChildAdd(true);
+        } else if (accountTyp === COA_ACCOUNT_TYPE?.LEDGER_ACCOUNT?.key) {
+            isChildAdd(false);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [accountTyp]);
+
     const onChange = (e) => {
         setSearchValue(e.target.value);
     };
@@ -245,6 +248,7 @@ export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, fetchCha
         setDisableCheckBox(false);
         setIsFormVisible(true);
         setFormBtnActive(false);
+        setAccountTyp(null);
     };
 
     const onCoaModelOpen = () => {
@@ -264,7 +268,7 @@ export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, fetchCha
                 fetchChartOfAccountHierarchy({ setIsLoading: listShowLoadingChartOfAccountHierachy, extraParams: [{ key: 'companyCode', value: companyCode }], userId });
                 setFormBtnActive(false);
                 setIsFormVisible(false);
-                setSelectedTreeKey([res?.data?.accountCode]);
+                setSelectedTreeKey([res?.data?.id]);
             }
         };
 

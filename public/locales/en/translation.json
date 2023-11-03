@@ -24,7 +24,7 @@
             "google_captcha": "Please select Captcha"
         },
         "button": {
-            "login": "login",
+            "login": "Login",
             "skip_for_now": "Skip For Now",
             "update_password": "Update Password",
             "continue": "Continue"

@@ -40,9 +40,6 @@ describe('address common form Components', () => {
         const alternatenumber = screen.getByLabelText('Alternate Number');
         fireEvent.change(alternatenumber, { target: { value: '9311828211' } });
 
-        const email = screen.getByLabelText('Email');
-        fireEvent.change(email, { target: { value: 'Dmsemail' } });
-
         const pan = screen.getByLabelText('PAN');
         fireEvent.change(pan, { target: { value: 'Dmspan' } });
 

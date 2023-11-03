@@ -76,7 +76,7 @@ describe('OtfMaster component render', () => {
         const rowgroup = screen.getAllByRole('rowgroup', { name: '', exact: false });
         expect(rowgroup).toBeTruthy();
 
-        const rateAmt = screen.getByRole('row', { name: 'Srl. Service Name Amount', exact: false });
+        const rateAmt = screen.getByRole('row', { name: 'Srl. Service Name Amount Action', exact: false });
         expect(rateAmt).toBeTruthy();
 
         const noData = screen.getByRole('row', { name: 'No data', exact: false });

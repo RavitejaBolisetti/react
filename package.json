@@ -18,6 +18,7 @@
         "ckeditor4-react": "^4.2.0",
         "cross-env": "^7.0.3",
         "encrypt-storage": "^2.12.14",
+        "env-cmd": "^10.1.0",
         "google-map-react": "^2.2.1",
         "history": "^5.3.0",
         "html-react-parser": "^4.2.9",
@@ -48,8 +49,12 @@
         "web-vitals": "^2.1.4"
     },
     "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts --max-old-space-size=8192 build",
+        "start": "env-cmd -f .env.dev react-scripts start",
+        "start-qa": "env-cmd -f .env.qa react-scripts start",
+        "start-uat": "env-cmd -f .env.uat react-scripts start",
+        "build": "env-cmd -f .env.dev react-scripts --max-old-space-size=8192 build",
+        "build-qa": "env-cmd -f .env.qa react-scripts --max-old-space-size=8192 build",
+        "build-uat": "env-cmd -f .env.uat react-scripts --max-old-space-size=8192 build",
         "test": "cross-env BABEL_ENV=test --max-old-space-size=8192 jest",
         "watch-tests": "cross-env BABEL_ENV=test jest --watch",
         "eject": "react-scripts eject",
@@ -88,7 +93,7 @@
             "not dead",
             "not op_mini all"
         ],
-        "development": [
+        "dev": [
             "last 1 chrome version",
             "last 1 firefox version",
             "last 1 safari version"
@@ -131,6 +136,7 @@
         "sonarqube-scanner": "^3.0.1",
         "webpack": "^5.88.2",
         "webpack-cli": "^5.1.4",
-        "webpack-dev-server": "^4.15.1"
+        "webpack-dev-server": "^4.15.1",
+        "win-node-env": "^0.6.1"
     }
 }

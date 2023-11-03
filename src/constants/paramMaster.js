@@ -441,6 +441,14 @@ export const PARAM_MASTER = {
         id: 'AMC_CANCEL_REASON',
         title: 'AMC cancellation reason',
     },
+    AMC_REG_APRVL_STAT: {
+        id: 'AMC_REG_APRVL_STAT',
+        title: 'AMC Status',
+    },
+    SHIELD_SEARCH_TYPE: {
+        id: 'SHIELD_SEARCH_TYPE',
+        title: 'Shield Search Type',
+    },
     ONRDPRCMSTTMPLT: {
         id: 'ONRDPRCMSTTMPLT',
         title: 'OnRoad Price Master template download',
@@ -452,5 +460,9 @@ export const PARAM_MASTER = {
     EMP_TYP: {
         id: 'EMP_TYP',
         title: 'Delivery note employee key',
-    }
+    },
+    DLVR_CHLN_SER: {
+        id: 'DLVR_CHLN_SER',
+        title: 'Delivery Challan Search',
+    },
 };

@@ -21,8 +21,8 @@ export const ViewSupportingDocDetail = (props) => {
                         title={docData?.pemFile}
                         extra={
                             <>
-                                <FiEye onClick={() => onDownload(docData.documentId)} />
-                                <FiTrash onClick={() => onRemove(docData.documentId)} />
+                                <FiEye onClick={() => onDownload(docData.documentId)} data-testid="eye_icon" />
+                                <FiTrash onClick={() => onRemove(docData.documentId)} data-testid="delete_icon" />
                             </>
                         }
                     ></Card>

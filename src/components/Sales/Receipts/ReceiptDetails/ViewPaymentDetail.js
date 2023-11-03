@@ -39,7 +39,7 @@ const ViewPaymentDetailBase = (props) => {
                         <Descriptions.Item label="Payment Mode">{checkAndSetDefaultValue(getCodeValue(paymentModeType, formData?.paymentMode))}</Descriptions.Item>
                         <br />
                         <br />
-                        {formData?.paymentMode === PAYMENT_MODE?.CASH?.KEY || PAYMENT_MODE?.CREDIT_CARD?.KEY || PAYMENT_MODE?.CHEQUE_DD?.KEY || PAYMENT_MODE?.RTGS?.KEY ? <Descriptions.Item label="Receive Amount">{checkAndSetDefaultValue(formData?.receivedAmount, isLoading)}</Descriptions.Item> : null}
+                        {formData?.paymentMode === PAYMENT_MODE?.CASH?.KEY || PAYMENT_MODE?.CREDIT_CARD?.KEY || PAYMENT_MODE?.CHEQUE_DD?.KEY || PAYMENT_MODE?.NEFT?.KEY || PAYMENT_MODE?.WALLET?.KEY ? <Descriptions.Item label="Receive Amount">{checkAndSetDefaultValue(formData?.receivedAmount, isLoading)}</Descriptions.Item> : null}
                         {formData?.paymentMode === PAYMENT_MODE?.CASH?.KEY ? <Descriptions.Item label="Transaction Date">{checkAndSetDefaultValue(formData?.transactionDate, isLoading, DATA_TYPE?.DAYJS?.key)}</Descriptions.Item> : null}
 
                         {formData?.paymentMode === PAYMENT_MODE?.CREDIT_CARD?.KEY && (
@@ -63,7 +63,7 @@ const ViewPaymentDetailBase = (props) => {
                             </>
                         )}
 
-                        {formData?.paymentMode === PAYMENT_MODE?.NEFT?.KEY && (
+                        {formData?.paymentMode === PAYMENT_MODE?.NEFT?.KEY || formData?.paymentMode === PAYMENT_MODE?.WALLET?.KEY ? (
                             <>
                                 <Descriptions.Item label="Transaction No.">{checkAndSetDefaultValue(formData?.transactionNumber, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Transaction Date">{checkAndSetDefaultValue(formData?.transactionDate, isLoading, DATA_TYPE?.DAYJS?.key)}</Descriptions.Item>
@@ -71,7 +71,7 @@ const ViewPaymentDetailBase = (props) => {
                                 <Descriptions.Item label="Payment Bank Name">{checkAndSetDefaultValue(formData?.paymentBankName, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Payment Bank Location">{checkAndSetDefaultValue(formData?.paymentBankLocation, isLoading)}</Descriptions.Item>
                             </>
-                        )}
+                        ) : null}
                     </Descriptions>
                 </>
             ) : (

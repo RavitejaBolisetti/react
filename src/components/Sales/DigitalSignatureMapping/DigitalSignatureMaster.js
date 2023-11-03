@@ -88,91 +88,8 @@ export const DigitalSignatureMasterBase = (props) => {
 
     const [formData, setFormData] = useState([]);
 
-    const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-        searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
-        searchForm.resetFields();
-        setShowDataLoading(false);
-    };
-
-    const onErrorAction = (message) => {
-        showGlobalNotification({ message });
-        setShowDataLoading(false);
-    };
-
-    useEffect(() => {
-        if (filterString) {
-            setPage({ ...page, current: 1 });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString]);
-
-    const extraParams = useMemo(() => {
-        return [
-            {
-                key: 'pageNumber',
-                title: 'Value',
-                value: page?.current,
-                canRemove: true,
-                filter: false,
-            },
-            {
-                key: 'pageSize',
-                title: 'Value',
-                value: page?.pageSize,
-                canRemove: true,
-                filter: false,
-            },
-            {
-                key: 'searchType',
-                title: 'Value',
-                value: 'receiptNumber',
-                canRemove: false,
-                filter: false,
-            },
-            {
-                key: 'searchParam',
-                title: 'searchParam',
-                canRemove: false,
-                filter: false,
-            },
-            {
-                key: 'fromDate',
-                title: 'Start Date',
-                value: filterString?.fromDate,
-                name: filterString?.fromDate ? convertDateTime(filterString?.fromDate, dateFormatView) : '',
-                canRemove: true,
-                filter: true,
-            },
-            {
-                key: 'toDate',
-                title: 'End Date',
-                value: filterString?.toDate,
-                name: filterString?.toDate ? convertDateTime(filterString?.toDate, dateFormatView) : '',
-                canRemove: true,
-                filter: true,
-            },
-            {
-                key: 'sortBy',
-                title: 'Sort By',
-                value: page?.sortBy,
-                canRemove: true,
-                filter: false,
-            },
-            {
-                key: 'sortIn',
-                title: 'Sort Type',
-                value: page?.sortType,
-                canRemove: true,
-                filter: false,
-            },
-        ];
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, page]);
-
     useEffect(() => {
         if (userId) {
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, filterString, page]);
@@ -187,7 +104,6 @@ export const DigitalSignatureMasterBase = (props) => {
                     name: 'id',
                 },
             ];
-            fetchReceiptDetails({ setIsLoading: listShowLoading, userId, extraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);
@@ -201,20 +117,6 @@ export const DigitalSignatureMasterBase = (props) => {
 
         record && setFormData(record);
         setIsFormVisible(true);
-    };
-
-    const onCloseAction = () => {
-        resetData();
-        fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-        form.resetFields();
-        form.setFieldsValue();
-        setSelectedOrderId();
-
-        advanceFilterForm.resetFields();
-        advanceFilterForm.setFieldsValue();
-
-        setIsFormVisible(false);
-        setButtonData({ ...defaultBtnVisiblity });
     };
 
     const tableProps = {
@@ -247,9 +149,7 @@ export const DigitalSignatureMasterBase = (props) => {
     const formProps = {
         isVisible: isFormVisible,
         titleOverride: drawerTitle.concat(moduleTitle),
-        handleButtonClick,
         formActionType,
-        onCloseAction,
         ADD_ACTION,
         EDIT_ACTION,
         VIEW_ACTION,

@@ -109,7 +109,7 @@ export const OnRoadPriceMasterBase = (props) => {
     const [formData, setFormData] = useState([]);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isUploadFormVisible, setIsUploadFormVisible] = useState(false);
-    const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
+    const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);   
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
     const [vehiclePrice, setVehiclePrice] = useState();

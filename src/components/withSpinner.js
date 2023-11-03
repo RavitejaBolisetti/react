@@ -5,16 +5,17 @@
  */
 import React from 'react';
 import { Spin } from 'antd';
-
+import * as IMAGES from 'assets';
 import styles from './withSpinner.module.scss';
 
-const antIcon = undefined;
+const spinIndicator = <img src={IMAGES.LOADING_IMG} alt="loading_images" />;
+
 export const withSpinner = (InputComponent, wideSpiner = false) => {
     return (props) => {
         const { isLoading = false } = props;
         return (
-            <div className={styles.loader2}>
-                <Spin spinning={isLoading} indicator={antIcon} key={'spin'} wrapperClassName={wideSpiner ? styles.fullWidth : ''}>
+            <div className={styles.spinner}>
+                <Spin spinning={isLoading} indicator={spinIndicator} key={'spin'} wrapper ClassName={wideSpiner ? styles.fullWidth : ''}>
                     <InputComponent {...props} />
                 </Spin>
             </div>

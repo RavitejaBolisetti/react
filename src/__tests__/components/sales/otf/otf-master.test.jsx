@@ -133,7 +133,6 @@ describe('OtfMaster component render', () => {
 
         const nextBtn=screen.getByRole('button', { name: 'Next' })
         fireEvent.click(nextBtn);
-
     });
 
     it('allot button should work', async () => {
@@ -173,7 +172,7 @@ describe('OtfMaster component render', () => {
                     OtfSearchList: {
                         data: {
                             totalRecords: 1,
-                            otfDetails: [{ otfNumber: '106', model: 'Model106', orderStatus: 'A', customerName: 'Kai', mobileNumber: '8000666345', otfDate: 'null', cpd: null, customerType: 'IND', userProfilePicDocId: '' }],
+                            otfDetails: [{ otfId: 106, otfNumber: '106', model: 'Model106', orderStatus: 'A', customerName: 'Kai', mobileNumber: '8000666345', otfDate: 'null', cpd: null, customerType: 'IND', userProfilePicDocId: '' }],
                         },
                         filter: { current: 1 },
                     },

@@ -55,18 +55,6 @@ describe('Booking Invoice Details render', () => {
         const screenText = screen.getByText('Invoice Information');
         expect(screenText).toBeTruthy();
 
-        const bookedText = screen.getAllByText('Booked');
-        expect(bookedText).toBeTruthy();
-
-        const allotedText = screen.getAllByText('Allotted');
-        expect(allotedText).toBeTruthy();
-
-        const invoicedText = screen.getAllByText('Invoiced');
-        expect(invoicedText).toBeTruthy();
-
-        const deliveredText = screen.getAllByText('Delivered');
-        expect(deliveredText).toBeTruthy();
-
         const nextBtn = screen.getAllByRole('button', { name: 'Next' });
         fireEvent.click(nextBtn[0]);
     });

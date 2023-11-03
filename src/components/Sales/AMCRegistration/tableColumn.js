@@ -5,8 +5,10 @@
  */
 import { Tag } from 'antd';
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
-import styles from 'assets/sass/app.module.scss';
+import { convertDate, dateFormatView } from 'utils/formatDateTime';
 import { AMC_CONSTANTS } from './utils/AMCConstants';
+
+import styles from 'assets/sass/app.module.scss';
 
 export const tableColumn = ({ handleButtonClick, userType }) => {
     const tableColumn = [
@@ -14,6 +16,15 @@ export const tableColumn = ({ handleButtonClick, userType }) => {
             title: 'AMC Registration No. & Date',
             dataIndex: 'amcRegistrationNumber',
             width: '14%',
+
+            render: (__, value) => {
+                return (
+                    <>
+                        <div>{value?.amcRegistrationNumber}</div>
+                        <div className={styles.tableTextColor85}>{convertDate(value?.amcRegistrationDate, dateFormatView)}</div>
+                    </>
+                );
+            },
         }),
         tblPrepareColumns({
             title: 'Dealer Location',

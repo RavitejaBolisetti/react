@@ -8,13 +8,25 @@ import { screen, fireEvent, getByRole } from '@testing-library/react';
 import customRender from '@utils/test-utils';
 import { AddEditForm } from '@components/Sales/EvrDetailsCapturing/AddEditForm';
 import { Tag } from 'antd';
+import { Form } from 'antd';
+
+const FormWrapper = (props) => {
+    const [form] = Form.useForm();
+
+    const myFormMock = {
+        ...form,
+        setFieldValue: jest.fn(),
+        setFieldsValue: jest.fn(),
+    };
+    return <AddEditForm form={myFormMock} {...props} />;
+};
 
 const formData = { ageInDays: '241', chargeIndicator: false, chargingDueDate: '2023-08-18T11:48:51.820+00:00', chargingStatus: 'DUE FOR CHARGING', grnDate: '2023-02-07T00:00:00.000+00:00', grnId: 'GRN23D001298', grnStatus: 'RTRN', id: '61b15a20-a715-4336-8538-9bd0ca80803a', lastChargeDate: '2023-08-03T11:48:51.819+00:00', modelCode: 'ALPLM026117156889', modelDescription: 'MAHINDRA ALFA LC PLUS CNG BSVI WARM RED', modelGroupCode: 'ECOM', remarks: 'CHARGED Vehicle', vehicleStatus: null, vin: 'MA1LV2NT9P5E80476' };
 
 describe('edit form component', () => {
     it('should render add edit form component', () => {
         const formActionType = { editMode: true };
-        customRender(<AddEditForm formActionType={formActionType} setButtonData={jest.fn()} isVisible={true} />);
+        customRender(<FormWrapper formActionType={formActionType} setButtonData={jest.fn()} isVisible={true} />);
 
         const vin = screen.getAllByRole('textbox', { value: 'VIN' });
         fireEvent.change(vin[0], { target: { value: 'testvin' } });
@@ -60,14 +72,14 @@ describe('edit form component', () => {
         const formActionType = { editMode: true };
         const formData = { chargeIndicator: false };
 
-        customRender(<AddEditForm formActionType={formActionType} setButtonData={jest.fn()} isVisible={true} formData={formData} />);
+        customRender(<FormWrapper formActionType={formActionType} setButtonData={jest.fn()} isVisible={true} formData={formData} />);
         const chargedUncharged = screen.getByRole('switch', { value: 'Charged UnCharged' });
         fireEvent.click(chargedUncharged);
     });
 
     it('should render add edit form button', () => {
         const formActionType = { editMode: true };
-        customRender(<AddEditForm formActionType={formActionType} setButtonData={jest.fn()} isVisible={true} />);
+        customRender(<FormWrapper formActionType={formActionType} setButtonData={jest.fn()} isVisible={true} />);
         const cal = screen.getAllByRole('img', { value: 'calendar' });
         fireEvent.click(cal[0]);
         fireEvent.click(cal[1]);
@@ -75,6 +87,6 @@ describe('edit form component', () => {
 
     it('should render view details component', () => {
         const formActionType = { viewMode: true };
-        customRender(<AddEditForm formActionType={formActionType} setButtonData={jest.fn()} isVisible={true} formData={formData} />);
+        customRender(<FormWrapper formActionType={formActionType} setButtonData={jest.fn()} isVisible={true} formData={formData} />);
     });
 });

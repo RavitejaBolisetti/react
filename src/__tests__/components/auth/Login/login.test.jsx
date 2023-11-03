@@ -5,6 +5,18 @@ import { Logins } from 'components/Auth/Login/Login';
 import ReactRecaptcha3 from 'react-google-recaptcha3';
 import { doLogin } from 'store/actions/auth';
 
+jest.mock('react-i18next', () => ({
+    useTranslation: () => {
+        return {
+            t: (str) => str,
+        };
+    },
+    initReactI18next: {
+        type: 'Kai',
+        init: () => {},
+    },
+}));
+
 jest.mock('react-google-recaptcha3', () => {
     return {
         getToken: jest.fn(() => Promise.resolve('mockCaptchaCode')),
@@ -43,14 +55,8 @@ describe('Login Form Component', () => {
 
         customRender(<Logins doCloseLoginError={jest.fn()} authPostLogin={jest.fn()} authPreLogin={jest.fn()} />);
 
-        const loginBtn = screen.getByRole('button', { name: 'Login' });
+        const loginBtn = screen.getByRole('button', { name: /Login/i });
         fireEvent.click(loginBtn);
-
-        const userIdLabel = screen.getByText('User ID (MILE ID.Parent ID)');
-        fireEvent.click(userIdLabel);
-
-        const passwordLabel = screen.getByText('Password');
-        fireEvent.click(passwordLabel);
 
         const userId = screen.getByRole('textbox', { name: '' });
         fireEvent.change(userId, { target: { value: 'Kai' } });
@@ -61,6 +67,9 @@ describe('Login Form Component', () => {
         fireEvent.click(loginBtn);
 
         await waitFor(() => expect(doLogin).toHaveBeenCalled());
+
+        // const continueBtn=screen.getByRole('button', { name: '/Continue/i' });
+        // fireEvent.click(continueBtn);
     });
 
     it('login form should work on captcha failed', async () => {
@@ -74,7 +83,7 @@ describe('Login Form Component', () => {
         const password = screen.getByTestId('inputPassword');
         fireEvent.change(password, { target: { value: 'K' } });
 
-        const loginBtn = screen.getByRole('button', { name: 'Login' });
+        const loginBtn = screen.getByRole('button', { name: /Login/i });
         fireEvent.click(loginBtn);
 
         await waitFor(() => expect(ReactRecaptcha3.getToken).toHaveBeenCalled());

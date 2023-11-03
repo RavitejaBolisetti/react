@@ -373,3 +373,10 @@ export const BASE_URL_AMC_EMPLOYEE_SEARCH = BASE_URL + 'users/search/employees';
 export const BASE_URL_AMC_SCHEMES = BASE_URL_AMC_REGISTRATION + '/scheme';
 export const BASE_URL_GST_DOCID_NAME = BASE_URL + 'finance/gstirnauthentication';
 export const BASE_URL_RSM_ASM_APPROVAL_DETAILS = BASE_URL_RSM_ASM_APPROVAL_SEARCH + '/details';
+
+export const BASE_URL_SHIELD_REGISTRATION = BASE_URL + 'vehicle/shieldschemes/registration';
+export const BASE_URL_SHIELD_REGISTRATION_SEARCH = BASE_URL_SHIELD_REGISTRATION + '/search';
+export const BASE_URL_SCHEME_DESCRIPTION_LOV = BASE_URL + 'vehicle/shieldschemes/lov';
+export const BASE_URL_RSA_REGISTRATION = BASE_URL + 'vehicle/rsa';
+export const BASE_URL_RSA_REGISTRATION_SEARCH = BASE_URL_RSA_REGISTRATION + '/search';
+export const BASE_URL_GET_REGISTRATION_DETAILS = BASE_URL_RSA_REGISTRATION + '/registration/details';

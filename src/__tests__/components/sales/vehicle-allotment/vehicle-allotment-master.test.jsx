@@ -19,7 +19,19 @@ export const createMockStore = (initialState) => {
 
 afterEach(() => {
     jest.restoreAllMocks();
-}); 
+});
+
+jest.mock('store/actions/data/otf/otf', () => ({
+    otfDataActions: {},
+}));
+
+jest.mock('store/actions/data/vehicleAllotment/VehicleAllotment', () => ({
+    vehicleAllotment: {},
+}));
+
+jest.mock('store/actions/data/productHierarchy', () => ({
+    productHierarchyDataActions: {},
+}));
 
 jest.mock('store/actions/data/otf/otf', () => ({
     otfDataActions: {},

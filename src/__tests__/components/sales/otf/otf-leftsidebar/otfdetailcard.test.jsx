@@ -13,7 +13,7 @@ describe('Booking detail card Components', () => {
         customRender(<OTFDetailCard />);
         const customertype = screen.getByText('Booking No.:');
         expect(customertype).toBeInTheDocument();
-        const model = screen.getByText('See more:');
+        const model = screen.getByText('See more');
         expect(model).toBeInTheDocument();
     });
 });
