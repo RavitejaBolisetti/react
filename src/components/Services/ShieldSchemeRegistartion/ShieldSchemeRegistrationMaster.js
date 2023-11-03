@@ -765,7 +765,6 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     };
 
     const handlePrintDownload = (record) => {
-        console.log('🚀 ~ file: ShieldSchemeRegistrationMaster.js:768 ~ handlePrintDownload ~ record:', record);
         let typeRecordKey = record?.typeRecord === SHIELD_REPORT_DOCUMENT_TYPE?.INVOICE_SHIELD?.value ? SHIELD_REPORT_DOCUMENT_TYPE?.INVOICE_SHIELD?.key : record?.typeRecord === SHIELD_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_SHIELD?.value ? SHIELD_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_SHIELD?.key : record?.typeRecord === SHIELD_REPORT_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_SHIELD?.value ? SHIELD_REPORT_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_SHIELD?.key : null;
         setReportButtonType(record?.typeRecord);
         setReportVisible(true);
