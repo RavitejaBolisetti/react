@@ -8,6 +8,7 @@ import { Card, Descriptions } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 import styles from 'assets/sass/app.module.scss';
+import { DATA_TYPE } from 'constants/dataType';
 
 const EnrolmentMain = (props) => {
     const { isLoading, detailData } = props;
@@ -23,7 +24,7 @@ const EnrolmentMain = (props) => {
             <Card>
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="Enrolment Number">{checkAndSetDefaultValue(detailData?.enrolmentDetailsDto?.enrollmentNumber, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Enrolment Date">{checkAndSetDefaultValue(detailData?.enrolmentDetailsDto?.enrollmentDate, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Enrolment Date">{checkAndSetDefaultValue(detailData?.enrolmentDetailsDto?.enrollmentDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                     <Descriptions.Item label="Enrolment Status">{checkAndSetDefaultValue(detailData?.enrolmentDetailsDto?.enrollmentStatus === true ? 'Active' : 'Inactive', isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Scheme Type">{checkAndSetDefaultValue(detailData?.enrolmentDetailsDto?.schemeType, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="VIN">{checkAndSetDefaultValue(detailData?.enrolmentDetailsDto?.vin, isLoading)}</Descriptions.Item>
