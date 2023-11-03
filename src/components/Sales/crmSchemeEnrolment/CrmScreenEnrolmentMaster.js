@@ -159,7 +159,7 @@ export const CrmScreenEnrolmentBase = (props) => {
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: page?.current,
+                value: filterString?.current || page?.current,
             },
             {
                 key: 'pageSize',
@@ -386,7 +386,8 @@ export const CrmScreenEnrolmentBase = (props) => {
         dynamicPagination,
         totalRecords,
         page,
-        setPage,
+        setPage: setFilterString,
+        filterString,
         tableColumn: tableColumn(handleButtonClick),
         tableData: data,
         showAddButton: false,
