@@ -21,6 +21,7 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { filterFunction } from 'utils/filterFunction';
 import { btnVisiblity } from 'utils/btnVisiblity';
 import { USER_TYPE_USER } from 'constants/modules/UserManagement/userType';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -33,17 +34,15 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Role Management';
     let returnValue = {
         userId,
-        moduleTitle,
+        moduleTitle: translateContent('roleManagement.heading.pageTitle'),
         menuTreeData: rolemenuData,
         isDataLoading,
         isMenuLoading,
         isDataLoaded,
         isMenuLoaded,
         roleManagementData: roleManagementData,
-        // roleManagementData: roleManagementData?.map((role) => ({ ...role, roleType: Object.values(USER_TYPE)?.find((i) => i.key === role?.roleType)?.title })),
         rolemenuData,
     };
     return returnValue;
@@ -148,12 +147,6 @@ export const RoleManagementMain = (props) => {
         }
     };
 
-    // const handleResetFilter = () => {
-    //     setFilterString();
-    //     listFilterForm.resetFields();
-    //     setShowDataLoading(false);
-    // };
-
     const handleClearInSearch = (e) => {
         if (e.target.value.length > 2) {
             listFilterForm.validateFields(['code']);
@@ -192,7 +185,7 @@ export const RoleManagementMain = (props) => {
         form,
         setDeviceType,
         isVisible: isFormVisible,
-        titleOverride: drawerTitle.concat('Role'),
+        titleOverride: drawerTitle.concat(translateContent('roleManagement.heading.role')),
         onCloseAction,
 
         formData,
@@ -220,11 +213,8 @@ export const RoleManagementMain = (props) => {
     };
 
     const advanceFilterResultProps = {
-        //advanceFilter: false,
-        //filterString,
         from: listFilterForm,
         onSearchHandle,
-        //handleResetFilter,
         handleClearInSearch,
         handleReferesh,
         handleButtonClick,

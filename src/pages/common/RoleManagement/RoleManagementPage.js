@@ -8,11 +8,12 @@ import React from 'react';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 import { RoleManagement } from 'components/common/RoleManagement/RoleManagement';
+import { translateContent } from 'utils/translateContent';
 
 export const RoleManagementPageBase = (props) => {
-    const pageTitle = 'Role Management ';
+
     const pageHeaderData = {
-        pageTitle,
+        pageTitle: translateContent('roleManagement.heading.pageTitle'),
         canMarkFavourite: true,
         showChangeHisoty: true,
         visibleChangeHistory: false,
