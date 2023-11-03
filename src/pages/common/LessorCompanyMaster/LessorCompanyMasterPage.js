@@ -7,9 +7,10 @@ import React from 'react';
 import { ListLessorCompanyMaster } from 'components/common/LessorCompanyMaster';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
+import { translateContent } from 'utils/translateContent';
 
 export const LessorCompanyMasterBase = (props) => {
-    const pageTitle = 'Lessor Company Master (M&M)';
+    const pageTitle = translateContent('LessorCompanyMaster.heading.pageTitle');
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,
