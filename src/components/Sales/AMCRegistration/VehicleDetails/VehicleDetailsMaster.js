@@ -22,8 +22,8 @@ import { LANGUAGE_EN } from 'language/en';
 import { NoDataFound } from 'utils/noDataFound';
 
 import { AMC_CONSTANTS } from '../utils/AMCConstants';
-import styles from 'assets/sass/app.module.scss';
 import { formattedCalendarDate } from 'utils/formatDateTime';
+import styles from 'assets/sass/app.module.scss';
 
 const { Text } = Typography;
 
@@ -33,7 +33,7 @@ const mapStateToProps = (state) => {
 
         data: {
             Vehicle: {
-                VehicleDetail: { isLoaded = false, isLoading, vehicleData },
+                VehicleDetail: { isLoaded = false, isLoading, vehicleData = [] },
             },
         },
     } = state;
@@ -81,14 +81,14 @@ const VehicleDetailsMasterBase = (props) => {
     }, [requestPayload]);
 
     useEffect(() => {
-        if (formActionType?.addMode && requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.MNM_FOC?.key && !isLoaded) {
+        if ((formActionType?.addMode || !isLoaded) && requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.MNM_FOC?.key) {
             handleVinSearch();
             setIsReadOnly(true);
             setShowAddEditForm(true);
             setButtonData({ ...buttonData, formBtnActive: true });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [requestPayload]);
+    }, [section]);
 
     useEffect(() => {
         if (formActionType?.addMode) {
@@ -166,7 +166,7 @@ const VehicleDetailsMasterBase = (props) => {
     };
 
     const handleVinSearch = (value) => {
-        if (!value && formActionType?.addMode) {
+        if (!value && !formActionType?.addMode) {
             return false;
         }
         const onVehicleSearchSuccessAction = (data) => {
@@ -258,7 +258,7 @@ const VehicleDetailsMasterBase = (props) => {
                                             </Button>
                                         )}
                                     </Row>
-                                    <Divider className={styles.marT20} />
+                                    {!(formActionType?.addMode && requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.MNM_FOC?.key) && <Divider className={styles.marT20} />}
                                     {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
                                     {!contactData?.length && !isAdding && !(formActionType?.addMode && requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.MNM_FOC?.key) ? <NoDataFound informtion={formActionType?.viewMode ? noDataTitle : addDataTitle} /> : <ViewVehicleList {...formProps} />}
                                 </>

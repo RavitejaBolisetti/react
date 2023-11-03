@@ -30,6 +30,9 @@ const AMCRegistrationDetailsMasterBase = (props) => {
             registrationForm.setFieldsValue({ ...requestPayload?.amcRegistration });
             schemeForm.setFieldsValue({ ...requestPayload?.amcSchemeDetails });
         }
+        if (requestPayload && formActionType?.addMode) {
+            setselectedSaleType(requestPayload?.amcRegistration?.saleType);
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [requestPayload]);
     useEffect(() => {
@@ -101,8 +104,8 @@ const AMCRegistrationDetailsMasterBase = (props) => {
                 schemeForm
                     .validateFields()
                     .then(() => {
-                        if (activeKey.length === 1 && formActionType?.addMode && (schemeForm?.getFieldsValue()?.hasOwnProperty('schemeCode') || registrationForm.getFieldsValue()?.hasOwnProperty('saleType'))) {
-                            setActiveKey([1, 2]);
+                        if (activeKey.length === 1 && formActionType?.addMode && (schemeForm?.getFieldsValue()?.hasOwnProperty('schemeDescription') || registrationForm.getFieldsValue()?.hasOwnProperty('saleType'))) {
+                            setActiveKey(['schemeKey', 'regKey']);
                         } else if (registrationForm.getFieldValue('saleType') === AMC_CONSTANTS?.MNM_FOC?.key && !registrationForm.getFieldValue('vin')) {
                             showGlobalNotification({ notificationType: 'error', title: 'Error', message: LANGUAGE_EN?.GENERAL?.NO_VIN_FOUND?.MESSAGE });
                             setButtonData({ ...buttonData, formBtnActive: false });
@@ -115,12 +118,17 @@ const AMCRegistrationDetailsMasterBase = (props) => {
                             setButtonData({ ...buttonData, formBtnActive: false });
                         }
                     })
-                    .catch((err) => console.error(err));
+                    .catch(() => {
+                        setActiveKey(['schemeKey', 'regKey']);
+                    });
             })
-            .catch((err) => console.error(err));
+            .catch(() => {
+                setActiveKey(['schemeKey', 'regKey']);
+            });
     };
     const handleSaleTypeChange = (value) => {
-        schemeList();
+        schemeForm.resetFields(['schemeDescription']);
+        schemeList(null);
         setselectedSaleType(value);
     };
     const formProps = {
@@ -159,6 +167,7 @@ const AMCRegistrationDetailsMasterBase = (props) => {
         isLoading,
         wrapForm: false,
         selectedOrderId,
+        selectedSaleType,
     };
 
     return (

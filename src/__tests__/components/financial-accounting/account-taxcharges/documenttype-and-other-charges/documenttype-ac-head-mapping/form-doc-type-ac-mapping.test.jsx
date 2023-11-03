@@ -40,7 +40,7 @@ describe("FormDocTypeAcMapping Component", ()=>{
         const desc = screen.getByRole('combobox', {name:'Other Charges'});
         fireEvent.change(desc, {target:{value:'test'}})
 
-        const head = screen.getByRole('combobox', {name:'Financial Account Head'});
+        const head = screen.getByRole('combobox', {name:''});
         fireEvent.change(head, {target:{value:'test'}})
 
         const addBtn = screen.getByRole('button', {name:'plus Add'});
@@ -53,7 +53,7 @@ describe("FormDocTypeAcMapping Component", ()=>{
         const desc = screen.getByRole('combobox', {name:'Other Charges'});
         fireEvent.change(desc, {target:{value:'test'}})
 
-        const head = screen.getByRole('combobox', {name:'Financial Account Head'});
+        const head = screen.getByRole('combobox', {name:''});
         fireEvent.change(head, {target:{value:'test'}})
 
         const plusImg = screen.getByRole('img', {name:'plus'});

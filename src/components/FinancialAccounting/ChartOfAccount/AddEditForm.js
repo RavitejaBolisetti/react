@@ -47,7 +47,7 @@ const AddEditFormMain = (props) => {
     const treeSelectFieldProps = {
         treeFieldNames,
         treeData: chartOfAccountHierarchy,
-        treeDisabled: disable,
+        treeDisabled: true,
         selectedTreeSelectKey,
         handleSelectTreeClick,
         defaultValue: selectedTreeSelectKey?.[0],

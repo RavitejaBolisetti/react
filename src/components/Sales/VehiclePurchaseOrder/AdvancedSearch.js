@@ -13,6 +13,7 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 import { dateFormat, formatDate, formatDateToCalenderDate } from 'utils/formatDateTime';
 import { disableFutureDate } from 'utils/disableDate';
 import { customSelectBox } from 'utils/customSelectBox';
+import { PURCHASE_ORDER_TYPE_STATUS } from 'constants/PurchaseOrderTypeStatus';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -50,7 +51,7 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={filterString?.orderType} label="Order Type" name="orderType" rules={[validateRequiredSelectField('Order Type')]}>
+                    <Form.Item initialValue={filterString?.orderType || PURCHASE_ORDER_TYPE_STATUS.AGAINSTSTOCK.key} label="Order Type" name="orderType" rules={[validateRequiredSelectField('Order Type')]}>
                         <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'value', value: 'key' }} options={typeData['PO_TYPE']} className={styles.headerSelectField}></Select>
                     </Form.Item>
                 </Col>

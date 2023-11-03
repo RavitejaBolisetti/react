@@ -461,6 +461,8 @@ export const OtfMasterBase = (props) => {
                 });
                 setButtonData(btnVisiblity({ defaultBtnVisiblity: { ...defaultBtnVisiblity, changeHistory: buttonAction === VIEW_ACTION ? true : false }, buttonAction, orderStatus: record?.orderStatus }));
             }
+        } else {
+            setButtonData((prev) => ({ ...prev, formBtnActive: false }));
         }
     };
 

@@ -24,4 +24,6 @@ import RL_LOGO from './images/RobinDark_theme.svg';
 
 import BANNER_IMG from './images/ad-img.png';
 
-export { R_IMG, O_IMG, B_IMG, I_IMG, N_IMG, ADC, BG_IMG, FILE, LOGO_IMG, ROBIN_LIGHT_THEME, B_LIGHT_THEME, LINE, LOGO, MAH_WHITE_LOGO, RL_LOGO, BANNER_IMG };
+import LOADING_IMG from './images/loading_light.gif';
+
+export { R_IMG, O_IMG, B_IMG, I_IMG, N_IMG, ADC, BG_IMG, FILE, LOGO_IMG, ROBIN_LIGHT_THEME, B_LIGHT_THEME, LINE, LOGO, MAH_WHITE_LOGO, RL_LOGO, BANNER_IMG, LOADING_IMG };

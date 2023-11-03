@@ -27,13 +27,15 @@ const AddEditFormMain = (props) => {
 
     const { buttonData, setButtonData, handleButtonClick } = props;
 
-    const { pincodeData, isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail } = props;
+    const { pincodeData, isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, showGlobalNotification, onSaveShowLoading } = props;
 
     const [options, setOptions] = useState(false);
 
     const disabledProps = { disabled: editMode && formData?.partyCategory === 'Principal' ? true : false };
 
-    const onErrorAction = (res) => {};
+    const onErrorAction = (message) => {
+        showGlobalNotification({ message });
+    };
 
     const onSuccessAction = () => {};
 
@@ -144,6 +146,7 @@ const AddEditFormMain = (props) => {
         buttonData,
         setButtonData,
         handleButtonClick,
+        isLoadingOnSave: onSaveShowLoading,
     };
 
     const selectProps = {

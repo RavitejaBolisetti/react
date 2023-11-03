@@ -74,11 +74,11 @@ const AddEditFormMain = (props) => {
             const extraParams = [
                 {
                     key: 'adminId',
-                    value: '2805f2be-6f05-432c-b1dc-0aac991596b0',
+                    value: selectedValue,
                 },
                 {
                     key: 'type',
-                    value: '24650be8-10f5-4d71-a5eb-721a4ebf1a1d',
+                    value: attributeKey,
                 },
             ];
             fetchDealerList({ setIsLoading: listDealerShowLoading, extraParams });

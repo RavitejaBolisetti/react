@@ -184,20 +184,6 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         form.resetFields();
         form.setFieldsValue(undefined);
         switch (buttonAction) {
-            case ADD_ACTION:
-                defaultSection && setCurrentSection(defaultSection);
-                record && setSelectedId(record?.supplierInvoiceNumber);
-                break;
-            case EDIT_ACTION:
-                setSelectedRecord(record);
-                record && setSelectedId(record?.supplierInvoiceNumber);
-                openDefaultSection && setCurrentSection(defaultSection);
-                break;
-            case VIEW_ACTION:
-                setSelectedRecord(record);
-                record && setSelectedId(record?.supplierInvoiceNumber);
-                defaultSection && setCurrentSection(defaultSection);
-                break;
             case NEXT_ACTION:
                 const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
                 section && setCurrentSection(nextSection?.id);
@@ -217,10 +203,6 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
             setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
         }
         setIsFormVisible(true);
-    };
-    const handleResetFilter = () => {
-        setFilterString();
-        advanceFilterForm.resetFields();
     };
 
     const onFinish = (values) => {
@@ -271,7 +253,6 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         setFilterString,
         from: listFilterForm,
         onFinish,
-        handleResetFilter,
         advanceFilterForm,
         data,
         typeData,

@@ -22,10 +22,6 @@ jest.mock('store/actions/data/financialAccounting/gstIrnLoginAction', ()=>({
     gstIrnLoginAction:{}
 }));
 
-const saveData = jest.fn();
-const fetchListGstLogin = jest.fn();
-const listShowLoadingGstLogin = jest.fn();
-
 const fetchGstDoc = jest.fn()
 const fetchList = jest.fn()
 
@@ -52,21 +48,7 @@ describe("GSTIRNAuthenticationMaster components", ()=>{
     })
 
     it("fileProps", ()=>{
-        const sectionName = {
-            BRANCH_ACCESSIBLE: {
-                id: 1,
-                title: 'Branch Accessible',
-                displayOnList: true,
-            },
-            IRN_TRANSACTION: {
-                id: 2,
-                title: 'IRN Transaction List',
-                displayOnList: true,
-            },
-        };
-
         const docData = {documentId:'123', pemFile:'secretkey-1696914838011.pem'}
-
         const mockStore = createMockStore({
             auth: { userId:'test12', accessToken:'345', token:'321' },
             data:{ FinancialAccounting: {DealerGstDetails: { data: [{documentId:'123', pemFile:'secretkey-1696914838011.pem'}] }} }
@@ -74,18 +56,13 @@ describe("GSTIRNAuthenticationMaster components", ()=>{
 
         customRender(
             <Provider store={mockStore}>
-                <GSTIRNAuthenticationMaster fetchGstDoc={fetchGstDoc} isVisible={true} fetchList={fetchList} sectionName={sectionName} currentSection={'1'} docData={docData}/>
+                <GSTIRNAuthenticationMaster fetchGstDoc={fetchGstDoc} isVisible={true} fetchList={fetchList}
+                 docData={docData}/>
             </Provider>
         );
 
         fetchList.mock.lastCall[0].onSuccessAction();
         fetchList.mock.lastCall[0].onErrorAction();
-
-        const uploadFileBtn = screen.getByRole('button', {name:'Upload File'});
-        fireEvent.click(uploadFileBtn);
-
-        const loginBtn = screen.getByRole('button', {name:'Login & Continue'});
-        fireEvent.click(loginBtn);
     });
 
     it("selectGstCombobox", ()=>{

@@ -94,7 +94,7 @@ describe('AddOn Detail Master components', () => {
         const formActionType = {
             viewMode: true,
         };
-        customRender(<FormWrapper handleFormValueChange={jest.fn()} formActionType={formActionType} setButtonData={jest.fn()} />);
+        customRender(<FormWrapper handleCollapse={jest.fn()} handleFormValueChange={jest.fn()} formActionType={formActionType} setButtonData={jest.fn()} />);
 
         const plusCollapse = screen.getAllByRole('img', { name: 'plus' });
         fireEvent.click(plusCollapse[0]);

@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Row, Col, Collapse, Divider, Space } from 'antd';
+import { Row, Col, Collapse, Divider } from 'antd';
 import { expandIcon } from 'utils/accordianExpandIcon';
 
 import RegistrationForm from './RegistrationForm';
@@ -14,30 +14,32 @@ const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
     const { activeKey, setActiveKey } = props;
-    const onChange = (collapseKey) => {
-        if (activeKey?.includes(collapseKey)) {
-            const newKeyarr = activeKey?.reduce((prev, curr) => {
-                if (curr !== collapseKey) {
-                    prev.push(curr);
+    const onChange = (values) => {
+        const isPresent = activeKey.includes(values);
+
+        if (isPresent) {
+            const newActivekeys = [];
+
+            activeKey.forEach((item) => {
+                if (item !== values) {
+                    newActivekeys.push(item);
                 }
-                return prev;
-            }, []);
-            setActiveKey(newKeyarr);
+            });
+            setActiveKey(newActivekeys);
         } else {
-            setActiveKey([...activeKey, collapseKey]);
+            setActiveKey([...activeKey, values]);
         }
     };
-
     return (
         <Row gutter={20}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                <Collapse collapsible="icon" expandIcon={expandIcon} onChange={() => onChange('regKey')} expandIconPosition="end">
+                <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange('regKey')} expandIconPosition="end">
                     <Panel header="Registration Information" key="regKey">
                         <Divider />
                         <RegistrationForm {...props} />
                     </Panel>
                 </Collapse>
-                <Collapse collapsible="icon" expandIcon={expandIcon} onChange={() => onChange('schemeKey')} expandIconPosition="end">
+                <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange('schemeKey')} expandIconPosition="end">
                     <Panel header="Scheme Details" key="schemeKey">
                         <Divider />
                         <SchemeDetailsForm {...props} />
