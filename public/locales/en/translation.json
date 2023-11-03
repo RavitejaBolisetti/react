@@ -2,6 +2,14 @@
     "global": {
         "validation": {
             "input": "Please enter "
+        },
+        "notificationSuccess": {
+            "title": "Success"
+        },
+        "drawerTitle": {
+            "add": "Add ",
+            "edit": "Edit ",
+            "view": "View"
         }
     },
     "login": {
@@ -60,6 +68,14 @@
         },
         "link": {
             "mnmLogin": "M&M User Login"
+        }
+    },
+    "documentTypeOtherChargesMaster": {
+        "heading": {
+            "title": "Doc Type - Charges & Ledger Mapping"
+        },
+        "label": {
+            "applicationMenu": "Application Menu"
         }
     },
     "footer": {
