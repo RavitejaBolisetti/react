@@ -323,7 +323,7 @@ export const CrmScreenEnrolmentBase = (props) => {
                     value: record?.id,
                 },
             ];
-            fetchDetail({ setIsLoading: listDetailShowLoading, userId, extraParams, customURL });
+            fetchDetail({ setIsLoading: listDetailShowLoading, userId, extraParams, customURL, onErrorAction });
         }
     };
 

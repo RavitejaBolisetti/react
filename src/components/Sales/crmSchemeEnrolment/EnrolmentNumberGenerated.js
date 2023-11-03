@@ -11,7 +11,7 @@ import { CopytoClipboard } from 'utils/CopytoClipboard';
 const { Title, Text } = Typography;
 
 export const EnrolmentNumberGenerated = (props) => {
-    const { formData, generatedData } = props;
+    const { generatedData } = props;
 
     const title = 'Enrolment Number Generated Successfully';
 
@@ -33,9 +33,9 @@ export const EnrolmentNumberGenerated = (props) => {
                             <Col className={styles.fullyCentered} style={{ flexDirection: 'column' }}>
                                 <Space align="center" justify="center">
                                     <Space style={{ backgroundColor: '#F2F2F2', padding: '10px 16px', color: '#858585', borderRadius: '4px' }}>
-                                        Enrolment No.:<span style={{ color: '#0B0B0C' }}>{formData?.enrolmentNumber}</span>
+                                        Enrolment No.:<span style={{ color: '#0B0B0C' }}>{generatedData?.enrolmentNumber}</span>
                                     </Space>
-                                    <CopytoClipboard type={'primary'} buttonText={'Copy'} text={formData?.enrolmentNumber} />
+                                    <CopytoClipboard type={'primary'} buttonText={'Copy'} text={generatedData?.enrolmentNumber} />
                                 </Space>
                                 <Divider style={{ margin: '18px 0' }} />
                                 <Text style={{ color: '#858585', fontWeight: '500' }}>Do you want to Print or download this Document </Text>
