@@ -33,6 +33,47 @@
             "mnm_login": "M&M User Login"
         }
     },
+    "city": {
+        "placeholder": {
+            "select": "Select",
+            "country": "Country",
+            "state_name": "State Name",
+            "district_name": "District Name",
+            "city_code": "City Code",
+            "city_name": "City Name",
+            "search": "Search"
+        },
+        "label": {
+            "country_code": "Country",
+            "state_name": "State Name",
+            "district_name": "District Name",
+            "city_code": "City Code",
+            "city_name": "City Name",
+            "status": "Status",
+            "state": "State",
+            "district": "District"
+        },
+        "validation": {
+            "country": "Country",
+            "state_name": "State Name",
+            "district_name": "District Name",
+            "city_code": "City Code",
+            "city_name": "City Name"
+        },
+        "title": {
+            "success": "Success",
+            "country": "Country",
+            "state": "State",
+            "district": "District",
+            "keyword": "keyword",
+            "SUCCESS": "SUCCESS",
+            "advance_filters": "Advance Filters",
+            "city_name": "City Name",
+            "city_code": "City Code",
+            "district_name": "District Name",
+            "state_name": "State Name"
+        }
+    },
     "footer": {
         "copyright": "Copyright &copy; {YEAR} ROBIN."
     }
