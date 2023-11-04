@@ -142,6 +142,53 @@
         }   
     },
 
+    "dealerParent": {
+        "heading": {
+            "title": "Group Name",
+            "drawerTitle": "Dealer Parent Group",
+            "moduleTitle": "Group Name"
+        },
+
+        "tableColHeading": {
+            "groupCode":"Group Code",
+            "groupName":"Group Name",
+            "title": "Title",
+            "ownerName":"Owner Name",
+            "contactNumber":"Contact Number",
+            "emailId":"Email ID"
+        },
+
+        "label": {
+            "groupCode":"Group Code",
+            "groupName":"Group Name",
+            "title":"Title",
+            "ownerName":"Owner Name",
+            "contactNumber":"Contact Number",
+            "emailId":"Email ID",
+            "Active":"Active",
+            "status":"Status"
+        },
+
+        "validation": {
+            "groupCode":"Group Code",
+            "groupName":"Group Name",
+            "attributeName":"Attribute Name",
+            "ownerName":"Owner Name",
+            "contactNumber":"Contact Number",
+            "emailId":"Email ID"
+        },
+ 
+        "placeholder": {
+           "groupCode":"Group Code", 
+           "groupName":"Group Name",
+           "title":"Title",  
+           "ownerName":"Owner Name",
+           "contactNumber":"Contact Number",
+           "emailId":"Email ID"          
+        }  
+  
+    },
+
     "qualificationMaster": {
         "heading": {
             "title": "Qualification Master",
