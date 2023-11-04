@@ -72,13 +72,13 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <Form.Item label={translateContent('vehicleCheckListMaster.label.groupCode')} name="code" rules={[validateRequiredInputField(translateContent('vehicleCheckListMaster.label.groupCode')), noWhiteSpaceinBeginning()]}>
-                                            <Input maxLength={6} placeholder={preparePlaceholderText(translateContent('vehicleCheckListMaster.label.groupCode'))} disabled={treeCodeReadOnly} />
+                                            <Input maxLength={6} placeholder={preparePlaceholderText(translateContent('vehicleCheckListMaster.label.groupCode'), false)} disabled={treeCodeReadOnly} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.textareaError}>
                                         <Form.Item label={translateContent('vehicleCheckListMaster.label.groupDescription')} name="descriptionTitle" rules={[validateRequiredInputField(translateContent('vehicleCheckListMaster.label.groupDescription')), noWhiteSpaceinBeginning()]}>
-                                            <TextArea maxLength={300} placeholder={preparePlaceholderText(translateContent('vehicleCheckListMaster.label.groupDescription'))} showCount disabled={treeCodeReadOnly} />
+                                            <TextArea maxLength={300} placeholder={preparePlaceholderText(translateContent('vehicleCheckListMaster.label.groupDescription'), false)} showCount disabled={treeCodeReadOnly} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
@@ -88,14 +88,14 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <Form.Item name="code" label={translateContent('vehicleCheckListMaster.label.subGroupCode')} rules={[validateRequiredInputField(translateContent('vehicleCheckListMaster.label.subGroupCode')), noWhiteSpaceinBeginning()]}>
-                                            <Input maxLength={6} placeholder={preparePlaceholderText(translateContent('vehicleCheckListMaster.label.subGroupCode'))} disabled={treeCodeReadOnly} />
+                                            <Input maxLength={6} placeholder={preparePlaceholderText(translateContent('vehicleCheckListMaster.label.subGroupCode'), false)} disabled={treeCodeReadOnly} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <Form.Item name="descriptionTitle" label={translateContent('vehicleCheckListMaster.label.subGroupDescription')} rules={[validateRequiredInputField(translateContent('vehicleCheckListMaster.label.subGroupDescription')), noWhiteSpaceinBeginning()]}>
-                                            <TextArea maxLength={300} placeholder={preparePlaceholderText(translateContent('vehicleCheckListMaster.label.subGroupDescription'))} showCount disabled={treeCodeReadOnly} />
+                                            <TextArea maxLength={300} placeholder={preparePlaceholderText(translateContent('vehicleCheckListMaster.label.subGroupDescription'), false)} showCount disabled={treeCodeReadOnly} />
                                         </Form.Item>
                                     </Col>
                                 </Row>

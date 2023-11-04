@@ -433,80 +433,6 @@
             "endTime": "End time*"
         }
     },
-    "city": {
-        "placeholder": {
-            "select": "Select",
-            "country": "Country",
-            "stateName": "State Name",
-            "districtName": "District Name",
-            "cityCode": "City Code",
-            "cityName": "City Name",
-            "search": "Search"
-        },
-        "label": {
-            "countryCode": "Country",
-            "stateName": "State Name",
-            "districtName": "District Name",
-            "cityCode": "City Code",
-            "cityName": "City Name",
-            "state": "State",
-            "district": "District"
-        },
-        "validation": {
-            "country": "Country",
-            "stateName": "State Name",
-            "districtName": "District Name",
-            "cityCode": "City Code",
-            "cityName": "City Name"
-        },
-        "title": {
-            "country": "Country",
-            "state": "State",
-            "district": "District",
-            "keyword": "keyword",
-            "advanceFilters": "Advance Filters",
-            "cityName": "City Name",
-            "cityCode": "City Code",
-            "districtName": "District Name",
-            "stateName": "State Name"
-        }
-    },
-    "district": {
-        "placeholder": {
-            "country": "Country",
-            "stateName": "State Name",
-            "districtCode": "District Code",
-            "districtName": "District Name"
-        },
-        "label": {
-            "countryCode": "Country",
-            "stateName": "State Name",
-            "districtName": "District Name",
-            "districtCode": "District Code",
-            "state": "State",
-            "district": "District"
-        },
-        "validation": {
-            "country": "Country",
-            "stateName": "State Name",
-            "districtName": "District Name",
-            "districtCode": "district Code"
-        },
-        "message": {
-            "differentState" : " is not active anymore. Please select a different state. "
-        },
-        "title":{
-            "country": "Country",
-            "state": "State",
-            "district": "District",
-            "titleOverride": "Advance Filters",
-            "districtName": "District Name",
-            "districtCode": "District Code",
-            "stateName": "State Name"
-        }
-
-    },
-
     "productHierarchy": {
         "heading": {
             "moduleTitle": "Product Detail",
@@ -665,7 +591,7 @@
             }
         },
         "entitlementsSchemes": {
-            "tableColumn": {
+            "label": {
                 "srl.": "Srl.",
                 "entitlement/SchemeType": "Entitlement/Scheme Type",
                 "entitlement/SchemeDescription": "Entitlement/Scheme Description",
@@ -701,6 +627,27 @@
                 "select": "Select",
                 "enterFileName": "Enter File Name"
             }
+        }
+    },
+    "rsmAsmApproval": {
+        "heading": {
+            "mainTitle": "RSM/ASM Approval",
+            "title": "RSM Approval Summary",
+            "titleOverride": "Advance Filters",
+            "appliedAdvanceFilters": "Applied Advance Filters :"
+        },
+        "label": {
+            "approveReq": "Are you sure you want to approve request?",
+            "requestType": "Request Type",
+            "requestStatus": "Request Status",
+            "requestNumber": "Request Number",
+            "requestDate": "Request Date",
+            "deliveryOrInvoiceId": "Delivery Note/Invoice ID",
+            "deliveryOrInvoiceDate": "Delivery Note/Invoice Date",
+            "dealerName": "Dealer Name",
+            "fromDate": "Request From Date",
+            "toDate": "Request To Date",
+            "searchByDealer": "Search by Dealer Name"
         }
     },
     "userManagement": {
@@ -763,7 +710,78 @@
             "country": "Country"
         }
     },
-
+    "city": {
+        "placeholder": {
+            "select": "Select",
+            "country": "Country",
+            "stateName": "State Name",
+            "districtName": "District Name",
+            "cityCode": "City Code",
+            "cityName": "City Name",
+            "search": "Search"
+        },
+        "label": {
+            "countryCode": "Country",
+            "stateName": "State Name",
+            "districtName": "District Name",
+            "cityCode": "City Code",
+            "cityName": "City Name",
+            "state": "State",
+            "district": "District"
+        },
+        "validation": {
+            "country": "Country",
+            "stateName": "State Name",
+            "districtName": "District Name",
+            "cityCode": "City Code",
+            "cityName": "City Name"
+        },
+        "title": {
+            "country": "Country",
+            "state": "State",
+            "district": "District",
+            "keyword": "keyword",
+            "advanceFilters": "Advance Filters",
+            "cityName": "City Name",
+            "cityCode": "City Code",
+            "districtName": "District Name",
+            "stateName": "State Name"
+        }
+    },
+    "district": {
+        "placeholder": {
+            "country": "Country",
+            "stateName": "State Name",
+            "districtCode": "District Code",
+            "districtName": "District Name"
+        },
+        "label": {
+            "countryCode": "Country",
+            "stateName": "State Name",
+            "districtName": "District Name",
+            "districtCode": "District Code",
+            "state": "State",
+            "district": "District"
+        },
+        "validation": {
+            "country": "Country",
+            "stateName": "State Name",
+            "districtName": "District Name",
+            "districtCode": "district Code"
+        },
+        "message": {
+            "differentState": " is not active anymore. Please select a different state. "
+        },
+        "title": {
+            "country": "Country",
+            "state": "State",
+            "district": "District",
+            "titleOverride": "Advance Filters",
+            "districtName": "District Name",
+            "districtCode": "District Code",
+            "stateName": "State Name"
+        }
+    },
     "tehsil": {
         "heading": {
             "pageTitle": "Tehsil",
@@ -986,6 +1004,364 @@
             "reset": "Reset",
             "apply": "Apply",
             "clear": "Clear"
+        }
+    },
+    "vehicleInvoiceGeneration": {
+        "heading": {
+            "mainTitle": "Invoice Generation",
+            "drawerTitleMain": "Invoice Generation",
+            "drawerTitleMaster": "Invoice",
+            "cancelRequestTitle": "Cancel Request",
+            "sections": {
+                "section1": "Invoice Details",
+                "section2": "Vehicle Details",
+                "section3": "Scheme and Offer Details",
+                "section4": "Insurance Details",
+                "section5": "Finance Details",
+                "section6": "Exchange Details"
+            },
+            "collapse": {
+                "bookingDetails": "Booking Details",
+                "bookingCustomer": "Booking Customer",
+                "billingCustomer": "Billing Customer",
+                "vehicleInformation": "Vehicle Information",
+                "taxDetails": "Tax Details",
+                "optionalService": "Optional Services"
+            },
+            "captions": {
+                "priceInformation": "Price Information",
+                "salesDetails": "Sales Details",
+                "vehicleDetails": "Vehicle Details",
+                "customerDetails": "Customer Details",
+                "Scheme": "Scheme",
+                "Vehicle Price": "Vehicle Price"
+            },
+            "profileCard": {
+                "invoiceNumber": "Invoice No.:",
+                "invoiceDate": "Invoice Date:",
+                "bookingNumber": "Booking No.:",
+                "bookingDate": "Booking Date"
+            }
+        },
+        "label": {
+            "bookingDetails": {
+                "bookingNumber": "Booking Number",
+                "bookingDate": "Booking Date",
+                "taxCalculation": "Tax Calculation",
+                "taxPayableOnReverseCharges": "Tax Payable On Reverse Charges?",
+                "salesConsultantName": "Sales Consultant Name",
+                "influenceMitratype": "Influencer/Mitra Type",
+                "influenceMitraName": "Influencer/Mitra Name"
+            },
+            "bookingCustomerAndBillingCustomer": {
+                "mobileNumber": "Mobile Number",
+                "customerId": "Customer ID",
+                "customerName": "Customer Name",
+                "emailId": "Email ID",
+                "gender": "Gender",
+                "ageGroup": "Age Group",
+                "address": "Address",
+                "cityDistrict": "City/District",
+                "state": "State",
+                "pinCode": "PIN Code",
+                "alternateNumber": "Alternate Number",
+                "pan": "PAN",
+                "gstin": "GSTIN",
+                "birthDate": "Birth Date"
+            },
+            "vehicleDetails": {
+                "modelDescription": "Model Description",
+                "modelCode": "Model Code",
+                "vin": "VIN",
+                "saleType": "Sale Type",
+                "priceType": "Price Type",
+                "vehicleSellingPrice": "Vehicle Selling Price",
+                "vehicleAmount": "Vehicle Amount",
+                "dealerDiscountWithTax": "Dealer Discount with TAX",
+                "consumerSchemeWithTax": "Consumer Scheme with TAX",
+                "printDiscount": "Print Discount?"
+            },
+            "schemeAndOfferDetails": {
+                "schemeType": "Scheme Type",
+                "schemeCategory": "Scheme Category",
+                "Amount": "Amount",
+                "validFrom": "Valid From",
+                "validTo": "Valid To",
+                "description": "Description"
+            },
+            "insuranceDetails": {
+                "insuranceCompany": "Insurance Company",
+                "insuranceCoverNote": "Insurance Cover Note",
+                "insuranceAmount": "Insurance Amount",
+                "insuranceCoverNoteDate": "Insurance Cover Note Date",
+                "registrationNumber": "Registration Number"
+            },
+            "financeDetails": {
+                "financeArrangedBy": "Finance Arranged By",
+                "financierName": "Financier Name",
+                "branch": "Branch",
+                "fileNumber": "File Number",
+                "DoReceived": "D.O. Received",
+                "DoNumber": "D.O. Number",
+                "DoDate": "D.O. Date"
+            },
+            "exchangeDetails": {
+                "exchange": "Exchange",
+                "registrationNumber": "Registration Number",
+                "make": "Make",
+                "modelGroup": "Model Group",
+                "variant": "Variant",
+                "kms": "KMS",
+                "usage": "Usage",
+                "yearOfRegistration": "Year of Registration",
+                "vin": "VIN",
+                "hypotheticatedTo": "Hypothecated To",
+                "customerName": "Customer Name",
+                "relationShip": "Relationship",
+                "schemeName": "Scheme Name",
+                "schemeAmount": "Scheme Amount"
+            },
+            "refferals": {
+                "vehicleRegistrationNumber": "Vehicle Registration Number",
+                "chassisNumber": "Chassis Number",
+                "customerCode": "Customer Code",
+                "customerType": "Customer Type",
+                "customerName": "Customer Name",
+                "mobileNumber": "Mobile Number",
+                "emailId": "Email Id",
+                "dateOfBirth": "Date of Birth"
+            }
+        },
+        "placeholder": {},
+        "validation": {},
+        "button": {},
+        "tableColumn": {
+            "invoiceMaster": {
+                "column1": "Invoice No.",
+                "column2": "Booking Number",
+                "column3": "Customer Name",
+                "column4": "Model Description",
+                "column5": "Invoice Date",
+                "column6": "Digital Signature"
+            },
+            "taxdetails": {
+                "column1": "Description",
+                "column2": "Rate",
+                "column3": "Amount"
+            },
+            "optionalServices": {
+                "column1": "serviceName",
+                "column2": "Rate",
+                "column3": "Amount"
+            }
+        }
+    },
+    "vehicleReceiptChecklist": {
+        "heading": {
+            "mainTitle": "Vehicle Receipt Checklist",
+            "drawerTitleMain": "Vehicle Receipt Checklist",
+            "sections": {
+                "section1": "Checklist Details",
+                "section2": "Supporting Documents"
+            },
+            "collapse": {},
+            "profileCard": {
+                "checklistNumber": "CheckList Number:",
+                "checklistDate": "Checklist Date:",
+                "checklistStatus": "Checklist Status:",
+                "grnNumber": "GRN Number:",
+                "grnDate": "GRN Date",
+                "grnStatus": "GRN Status:",
+                "vin": "VIN:",
+                "model": "Model:"
+            }
+        },
+        "label": {
+            "checklistDetails": {
+                "remarks": "Remarks"
+            },
+            "supportingDocument": {
+                "fileName": "File Name",
+                "documentDescription": "Document Description"
+            }
+        },
+        "placeholder": {},
+        "validation": {},
+        "button": {},
+        "tableColumn": {
+            "checklistMaster": {
+                "column1": "Receipt Number",
+                "column2": "Receipt Date",
+                "column3": "Model Name",
+                "column4": "Chassis Number"
+            },
+            "checklistDetails": {
+                "column1": "Group",
+                "column2": "Sub-Group",
+                "column3": "Check Point",
+                "column4": "Check Result",
+                "column5": "Remarks"
+            }
+        }
+    },
+    "vehiclePriceMaster": {
+        "heading": {
+            "mainTitle": "Vehicle Price Master",
+            "drawerTitleMain": "Vehicle Price Master",
+            "sections": {},
+            "collapse": {},
+            "profileCard": {}
+        },
+        "label": {
+            "effectiveFrom": "Effective From",
+            "effectiveTo": "Effective To",
+            "plant": "Plant",
+            "state": "State",
+            "city": "City",
+            "cityCode": "City Code",
+            "modelCode": "Model Code",
+            "modelGroup": "Model Group",
+            "modelDescription": "Model Description",
+            "distributionChannel": "Distribution Channel",
+            "priceType": "Price Type",
+            "gst": "GST",
+            "cess": "Cess",
+            "gstAmount": "GST Amount",
+            "mnmInvoiceAmount": "MM Invoice Amount",
+            "dealerMargin": "Dealer Margin",
+            "gstAmountDealerMargin": "GST Amount on Dealer Margin",
+            "netDealer": "Net Dealer Price",
+            "sellingPrice": "Selling Price"
+        },
+        "placeholder": {},
+        "validation": {},
+        "button": {},
+        "tableColumn": {}
+    },
+    "vehicleReceipt": {
+        "heading": {
+            "mainTitle": "Vehicle Receipt",
+            "drawerTitleMain": "Vehicle Receipt",
+            "sections": {
+                "section1": "Supplier & Invoice Details",
+                "section2": "Vehicle Details"
+            },
+            "collapse": {},
+            "profileCard": {
+                "grnNumber": "GRN Number:",
+                "grnType": "GRN Type:",
+                "grnDate": "GRN Date:",
+                "grnState": "GRN Status:"
+            }
+        },
+        "label": {
+            "supplierInvoiceDetails": {
+                "supplierType": "Effective From",
+                "supplierName": "Effective To",
+                "supplierInvoiceNumber": "Plant",
+                "supplierInvoiceDate": "State",
+                "roadPermitNumber": "City",
+                "actualDispatchDate": "City Code",
+                "totalInvoiceAmount": "Model Code",
+                "lorryReceiptNumber": "Model Group",
+                "modelDescription": "Model Description",
+                "transporter": "Distribution Channel",
+                "supplierGstNumber": "Price Type",
+                "geoFencingDateAndTime": "GST"
+            },
+            "vehicleDetails": {
+                "modelDescription": "Model Description",
+                "VIN": "VIN",
+                "keyNumber": "Key Number",
+                "mfgDate": "MFG Date",
+                "receivedOn": "Received On",
+                "vehicleCost": "Vehicle Cost",
+                "demoVehicle": "Demo Vehicle",
+                "vehicleStatus": "Vehicle Status",
+                "physicalStatus": "Physical Status",
+                "shortage": "Shortage",
+                "vehicleReceiptChecklistNumber": "Vehicle Receipt Checklist No."
+            }
+        },
+        "placeholder": {},
+        "validation": {},
+        "button": {},
+        "tableColumn": {
+            "vehicleReceiptMaster": {
+                "column1": "GRN Type",
+                "column2": "GRN Number",
+                "column3": "GRN Date",
+                "column4": "Supplier Name",
+                "column5": "Supplier Invoice Number",
+                "column6": "Supplier Invoice Date"
+            }
+        }
+    },
+    "receipts": {
+        "heading": {
+            "mainTitle": "Receipt",
+            "drawerTitleMain": "Receipts",
+            "sections": {
+                "section1": "Party Details",
+                "section2": "Receipt Details",
+                "section3": "Apportion Details"
+            },
+            "collapse": {
+                "receiptInformation": "Receipt Information",
+                "paymentDetails": "Payment Details",
+                "apportionDetails": "Apportion Details"
+            },
+            "profileCard": {
+                "receiptNumber": "Receipt No.:",
+                "receiptDate": "Receipt Date",
+                "status": "status"
+            }
+        },
+        "label": {
+            "partyDetails": {
+                "partySegment": "Party Segment",
+                "partyId": "Party ID",
+                "partyName": "Party Name",
+                "address": "Address",
+                "city": "City",
+                "state": "State",
+                "phone": "Phone",
+                "mitraType": "Model Group"
+            },
+            "receiptDetails": {
+                "actualReceiptDate": "Actual Receipt Date",
+                "receiptType": "Receipt Type",
+                "paymentMode": "Payment Mode",
+                "creditCardTransactionsNumber": "Credit Card Transaction No.",
+                "receiveAmount": "Receive Amount",
+                "serviceChargePercentage": "Service Charge Percentage",
+                "serviceChargeAmount": "Service Charge Amount",
+                "taxOnServiceCharge": "Tax On Service Charge",
+                "chequeDDNumber": "Cheque/DD No.",
+                "chequeDDDate": "Cheque/DD Date",
+                "bankName": "Bank Name",
+                "bankLocation": "Bank Location",
+                "paymentBankPartyId": "Payment Bank Party ID",
+                "paymentBankName": "Payment Bank Name",
+                "paymentBankLocation": "Payment Bank Location"
+            },
+            "apportionDetails": {
+                "documentType": "Document Type",
+                "documentNumber": "Document Number"
+            }
+        },
+        "placeholder": {},
+        "validation": {},
+        "button": {},
+        "tableColumn": {
+            "vehicleReceiptMaster": {
+                "column1": "GRN Type",
+                "column2": "GRN Number",
+                "column3": "GRN Date",
+                "column4": "Supplier Name",
+                "column5": "Supplier Invoice Number",
+                "column6": "Supplier Invoice Date"
+            }
         }
     }
 }
