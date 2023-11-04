@@ -660,7 +660,7 @@
             }
         },
         "entitlementsSchemes": {
-            "tableColumn": {
+            "label": {
                 "srl.": "Srl.",
                 "entitlement/SchemeType": "Entitlement/Scheme Type",
                 "entitlement/SchemeDescription": "Entitlement/Scheme Description",
