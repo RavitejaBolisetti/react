@@ -43,6 +43,29 @@
             "mnmLogin": "एम एंड एम उपयोगकर्ता लॉगिन"
         }
     },
+
+    "LessorCompanyMaster": {
+        "heading": {
+            "pageTitle": "पट्टादाता कंपनी मास्टर (एमएंडएम)",
+            "title": "पट्टादाता कंपनी नाम"
+        },
+        "label": {
+            "companyCode": "कंपनी कोड",
+            "companyName": "कंपनी का नाम",
+            "status": "स्थिति",
+            "active": "सक्रिय",
+            "inactive": "निष्क्रिय"
+        },
+        "placeholder": {
+            "search": "खोज",
+            "companyCode": "कंपनी कोड",
+            "companyName": "कंपनी का नाम"
+        },
+        "validation": {
+            "companyCode": "कंपनी कोड",
+            "companyName": "कंपनी का नाम"
+        }
+    },
     "footer": {
         "copyright": "कॉपीराइट © {YEAR} रॉबिन।"
     }

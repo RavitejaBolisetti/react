@@ -33,16 +33,30 @@
         "generalMessage": {
             "noRecordsFound": "No records found"
         },
+        "changeHistory": {
+            "title": "Change History"
+        },
+        "buttons": {
+            "download": "Download",
+            "add": "Add",
+            "clear": "Clear",
+            "save": "Save",
+            "close": "Close",
+            "cancel": "Cancel",
+            "print/download": "Print/Download",
+            "saveAndNew": "Save and New",
+            "edit": "Edit",
+            "cancelBooking": "Cancel Booking",
+            "transferBooking": "Transfer Booking",
+            "saveCloseBtn": "Save & Close",
+            "seeMore": "See more",
+            "seeLess": "See less",
+            "reset": "Reset",
+            "search": "search"
+        },
         "placeholder": {
             "select": "Select",
             "search": "Search"
-        },
-        "button": {
-            "cancel": "Cancel",
-            "save": "Save",
-            "saveCloseBtn": "Save & Close",
-            "seeMore": "See more",
-            "seeLess": "See less"
         }
     },
     "login": {
@@ -106,38 +120,27 @@
     "LessorCompanyMaster": {
         "heading": {
             "pageTitle": "Lessor Company Master (M&M)",
-            "title": "Lessor Company Name",
-            "welcomeNote": "Welcome",
-            "loginText": "Please enter your credentials to login",
-            "forgotPassword": "Forgot Password?",
-            "unauthorizedAccess": "Unauthorized Access"
+            "title": "Lessor Company Name"
         },
         "label": {
-            "username": "User ID (MILE ID.Parent ID)",
-            "password": "Password"
+            "companyCode": "Company Code",
+            "companyName": "Company Name",
+            "status": "Status",
+            "active": "Active",
+            "inactive": "Inactive"
         },
         "placeholder": {
-            "username": "User ID (MILE ID.Parent ID)",
-            "password": "Password"
+            "companyCode": "company code",
+            "companyName": "company name"
         },
         "validation": {
-            "googleCaptcha": "Please select Captcha"
-        },
-        "button": {
-            "login": "Login",
-            "skipForNow": "Skip For Now",
-            "updatePassword": "Update Password",
-            "continue": "Continue"
-        },
-        "link": {
-            "mnmLogin": "M&M User Login"
+            "companyCode": "company code",
+            "companyName": "company name"
         }
     },
     "vehicleCheckListMaster": {
         "heading": {
-            "title": "Vehicle Checklist",
-            "edit": "Edit ",
-            "add": "Add "
+            "title": "Vehicle Checklist"
         },
         "label": {
             "attributeType": "Attribute Type",
@@ -153,20 +156,18 @@
             "attachmentRequired": "Attachment Required",
             "status": "Status",
             "active": "Active",
-            "inactive": "Inactive"
+            "inactive": "Inactive",
+            "answerCode": "Answer Code",
+            "answerDescription": "Answer Description",
+            "answerStatus": "Answer Status",
+            "modelGroupCode": "Model Group Code"     ,
+            "modelGroupStatus": "Model Group Status"       
         },
-        "placeholder": {
-            "attributeType": "Attribute Type",
-            "parent": "Parent",
-            "groupCode": "Group Code",
-            "groupDescription": "Group Description",
-            "subGroupCode": "Sub Group Code",
-            "subGroupDescription": "Sub Group Description",
-            "checklistCode": "Checklist Code",
-            "checklistDescription": "Checklist Description",
-            "answerType": "Answer Type",
-            "attachmentRequired": "Attachment Required",
-            "status": "Status"
+        "validationMessage": {
+            "modelRequired": "Please add atleast one model",
+            "answerRequired": "Please add atleast one answer",
+            "answerCodeExist": "answer code already exists",
+            "answerDescriptionExist": "answer description already exists"
         }
     },
     "rsmApproval": {
@@ -301,6 +302,44 @@
             "startTime": "Start Time",
             "endTime": "End Time",
             "allowedTimming": "Allowed Timings"
+        }
+    },
+    "city": {
+        "placeholder": {
+            "select": "Select",
+            "country": "Country",
+            "stateName": "State Name",
+            "districtName": "District Name",
+            "cityCode": "City Code",
+            "cityName": "City Name",
+            "search": "Search"
+        },
+        "label": {
+            "countryCode": "Country",
+            "stateName": "State Name",
+            "districtName": "District Name",
+            "cityCode": "City Code",
+            "cityName": "City Name",
+            "state": "State",
+            "district": "District"
+        },
+        "validation": {
+            "country": "Country",
+            "stateName": "State Name",
+            "districtName": "District Name",
+            "cityCode": "City Code",
+            "cityName": "City Name"
+        },
+        "title": {
+            "country": "Country",
+            "state": "State",
+            "district": "District",
+            "keyword": "keyword",
+            "advanceFilters": "Advance Filters",
+            "cityName": "City Name",
+            "cityCode": "City Code",
+            "districtName": "District Name",
+            "stateName": "State Name"
         }
     },
     "footer": {

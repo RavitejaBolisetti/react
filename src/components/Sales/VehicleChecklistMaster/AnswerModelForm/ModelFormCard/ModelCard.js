@@ -6,6 +6,7 @@
 import React from 'react';
 import { Card, Row, Col, Button, Divider, Typography, Space } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
+import { translateContent } from 'utils/translateContent';
 import styles from 'assets/sass/app.module.scss';
 
 import ModelForm from './ModelForm';
@@ -89,7 +90,7 @@ const ModelCard = (props) => {
                 <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18}>
                     <Space direction="vertical">
                         <Text>{modelName}</Text>
-                        <Text>{props?.status === true ? 'Active' : 'Inactive'}</Text>
+                        <Text>{props?.status === true ? translateContent('vehicleCheckListMaster.label.active') : translateContent('vehicleCheckListMaster.label.inactive')}</Text>
                     </Space>
                 </Col>
                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6} className={styles.buttonsGroupRight}>
@@ -111,10 +112,10 @@ const ModelCard = (props) => {
                             {modelEdit && props[IdType] === uniqueCardEdit && (
                                 <>
                                     <Button type="link" onClick={modelSave}>
-                                        Save
+                                        {translateContent('global.buttons.save')}
                                     </Button>
                                     <Button type="link" onClick={modelCancel}>
-                                        Cancel
+                                        {translateContent('global.buttons.cancel')}
                                     </Button>
                                 </>
                             )}
