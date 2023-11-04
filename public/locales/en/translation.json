@@ -6,9 +6,9 @@
             "name": "name",
             "description": "description",
             "dateLessThan": "Date cant be less than Effective from date",
-            "state":"State",
-            "city":"City",
-            "productHierarchy":"Product Hierarchy"
+            "state": "State",
+            "city": "City",
+            "productHierarchy": "Product Hierarchy"
         },
         "notificationSuccess": {
             "success": "Success",
@@ -494,6 +494,64 @@
                 "salutation": "Salutation",
                 "sameAsOwner": "Same As Owner"
             }
+        },
+        "Contacts": {
+            "heading": {
+                "moduleTitle": "Contacts",
+                "supporting/ReferenceDocuments": "Supporting/Reference Documents",
+                "technicalDocuments": "Technical Documents"
+            },
+            "label": {
+                "noSupportingDocumentsFound": "No supporting documents found",
+                "noTechnicalDocumentsFound": "No technical documents found",
+                "documentType": "Document Type",
+                "documentName": "Document Name ",
+                "clickOrDrop": "Click or drop your file here to upload",
+                "FileSize": "File type should be png, jpg or pdf and max file size to be 8Mb",
+                "uploadFile": "Upload File"
+            },
+            "placeholder": {
+                "select": "Select",
+                "enterFileName": "Enter File Name"
+            }
+        },
+        "entitlementsSchemes": {
+            "tableColumn": {
+                "srl.": "Srl.",
+                "entitlement/SchemeType": "Entitlement/Scheme Type",
+                "entitlement/SchemeDescription": "Entitlement/Scheme Description",
+                "entitlement/SchemeDocNo": "Entitlement/Scheme Doc No",
+                "entitlement/SchemeDocDate": "Entitlement/Scheme Doc Date",
+                "entitlement/SchemeBookletNo": "Entitlement/Scheme Booklet No",
+                "validityStartDate": "Validity Start Date",
+                "validityEndDate": "Validity End Date",
+                "validityStartKM": "Validity Start KM",
+                "validityEndKM": "Validity End KM",
+                "status": "Status"
+            },
+            "placeholder": {
+                "noData": "No data"
+            }
+        },
+        "documents": {
+            "heading": {
+                "moduleTitle": "Documents",
+                "supporting/ReferenceDocuments": "Supporting/Reference Documents",
+                "technicalDocuments": "Technical Documents"
+            },
+            "label": {
+                "noSupportingDocumentsFound": "No supporting documents found",
+                "noTechnicalDocumentsFound": "No technical documents found",
+                "documentType": "Document Type",
+                "documentName": "Document Name ",
+                "clickOrDrop": "Click or drop your file here to upload",
+                "FileSize": "File type should be png, jpg or pdf and max file size to be 8Mb",
+                "uploadFile": "Upload File"
+            },
+            "placeholder": {
+                "select": "Select",
+                "enterFileName": "Enter File Name"
+            }
         }
     },
     "userManagement": {
@@ -586,37 +644,36 @@
             "cancel": "Cancel"
         }
     },
-    
+
     "hoPriceMapping": {
         "heading": {
-            "maintitle":"HO Price Upload Mapping",
+            "maintitle": "HO Price Upload Mapping",
             "title": "HO Price Upload Mapping for Dealer",
             "drawerTitleHeading": "HO Price Upload Mapping",
-            "titleOverride":"Advance Filters",
-            "dealerList":"Dealer List",
-            "modelDetails":"Model Details",            
-            "advancedFilter":"Advanced Filter",
-            "appliedAdvanceFilters":"Applied Advance Filters"
+            "titleOverride": "Advance Filters",
+            "dealerList": "Dealer List",
+            "modelDetails": "Model Details",
+            "advancedFilter": "Advanced Filter",
+            "appliedAdvanceFilters": "Applied Advance Filters"
         },
         "label": {
             "state": "State",
             "city": "City",
-            "productHierarchy":"Product Hierarchy",
-            "dealerParent":"Dealer Parent",
-            "dealerLocation":"Dealer Location",
-            "dealerSelectOnRoadPrice":"Dealer Selected for On Road Price?",
-            "enableDate":"Enable Date",
-            "enableBy":"Enable By",
-            "select":"Select",
+            "productHierarchy": "Product Hierarchy",
+            "dealerParent": "Dealer Parent",
+            "dealerLocation": "Dealer Location",
+            "dealerSelectOnRoadPrice": "Dealer Selected for On Road Price?",
+            "enableDate": "Enable Date",
+            "enableBy": "Enable By",
+            "select": "Select",
             "stateCode": "State Code",
-            "searchDealerParent":"Search Dealer Parent"
-        },       
+            "searchDealerParent": "Search Dealer Parent"
+        },
         "button": {
             "continue": "Continue",
-            "reset":"Reset",
-            "apply":"Apply",
-            "clear":"Clear"
-        }      
-        
+            "reset": "Reset",
+            "apply": "Apply",
+            "clear": "Clear"
+        }
     }
 }
