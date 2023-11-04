@@ -88,6 +88,57 @@
             "mnmLogin": "M&M User Login"
         }
     },
+
+    "dealerCompany": {
+        "heading": {
+            "title": "Company Name",
+            "drawerTitle": "Dealer Parent Company",
+            "moduleTitle": "Dealer Parent Company"
+        },
+
+        "tableColHeading": {
+            "parentGroupName":"Parent Group Name",
+           "companyCode":"Company Code",
+            "stateName": "State Name",
+            "Company Name":"Company Name"
+        },
+
+        "label": {
+            "groupCode":"Group Code",
+            "groupName":"Group Name",
+            "parentId":"Parent Id",
+            "companyCode":"Company Code",
+            "companyName":"Company Name",
+            "companyAddress":"Company Address",
+            "pinCode":"Pin Code",
+            "city":"City",
+            "tehsil":"Tehsil",
+            "district":"District",
+            "state":"State",
+            "tin":"TIN",
+            "tan":"TAN",
+            "pan":"PAN",
+            "status":"Status",
+            "parentGroupCode":"Parent Group Code",
+            "parentGroupName": "Parent Group Name"
+        },
+
+        "placeholder": {
+            "groupName": "Group Name",
+            "companyCode":"Company Code",
+            "companyName":"Company Name",
+            "companyAddress":"Company Address",
+            "search":"Search",
+            "city":"City",
+            "tehsil":"Tehsil",
+            "district":"District",
+            "state":"State",
+            "tin":"TIN",
+            "tan":"TAN",
+            "pan":"PAN"       
+        }   
+    },
+
     "qualificationMaster": {
         "heading": {
             "title": "Qualification Master",
@@ -501,4 +552,7 @@
             "cancel": "Cancel"
         }
     }
+
+
+   
 }
