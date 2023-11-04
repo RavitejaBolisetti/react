@@ -24,7 +24,7 @@ import { btnVisiblity } from 'utils/btnVisiblity';
 import { AdvancedSearch } from './AdvancedSearch';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { AddEditForm } from './AddEditForm';
-import { useTranslation } from 'react-i18next';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -75,7 +75,6 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ListStateMasterBase = (props) => {
-    const { t: translate } = useTranslation();
     const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, resetData, showGlobalNotification, moduleTitle } = props;
     const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, fetchCountryList, countryShowLoading } = props;
 
@@ -327,7 +326,7 @@ export const ListStateMasterBase = (props) => {
         }
     };
 
-    const title = translate('state.heading.title');
+    const title = translateContent('state.heading.title');
     const advanceFilterResultProps = {
         advanceFilter: true,
         filterString,
@@ -355,7 +354,6 @@ export const ListStateMasterBase = (props) => {
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />
-            <AddEditForm {...formProps} />
         </>
     );
 };
