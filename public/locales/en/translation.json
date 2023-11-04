@@ -371,5 +371,37 @@
             "country": "Country",
             "status": "Status"
         }
+    },
+
+    "vinBlockMaster": {
+        "heading": {
+            "moduleTitle":"Vin Block Master",
+            "title": "Vin Block Master",            
+            "advancedFilter":"Advanced Filter",
+            "appliedAdvanceFilters":"Applied Advance Filters"
+        },
+        "label": {
+            "vin": "Vin",
+            "modelDescription": "Model Description",
+            "dealerCode":"Dealer Code",
+            "action":"Action",
+            "searchVin":"Search Vin",
+            "modelGroupCode":"Model Group Code",
+            "modelCode":"Model Code",
+            "varientCode":"Varient Code",
+            "color":"Color"
+           
+        },
+        "placeholder": {
+            "searchVin":"Search Vin"
+        },
+        "button": {
+            "close": "Close",
+            "reset":"Reset",
+            "apply":"Apply",
+            "clear":"Clear",
+            "cancel":"Cancel"
+        }
     }
+
 }
