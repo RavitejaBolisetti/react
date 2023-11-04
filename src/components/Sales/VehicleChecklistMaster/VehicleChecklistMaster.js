@@ -528,7 +528,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
                                             })}
                                         </div>
                                         <div className={styles.fullWidth}>
-                                            <Search placeholder="Search" onChange={onChange} allowClear className={styles.headerSearchField} />
+                                            <Search placeholder={translateContent('global.placeholder.search')} onChange={onChange} allowClear className={styles.headerSearchField} />
                                         </div>
                                     </Col>
                                 </Row>
@@ -553,7 +553,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
                                 }
                             >
                                 <Button icon={<PlusOutlined />} type="primary" danger onClick={handleAdd}>
-                                    Add
+                                    {translateContent('global.buttons.add')}
                                 </Button>
                             </Empty>
                         </div>

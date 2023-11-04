@@ -163,7 +163,9 @@
         },
         "validationMessage": {
             "modelRequired": "Please add atleast one model",
-            "answerRequired": "Please add atleast one answer"
+            "answerRequired": "Please add atleast one answer",
+            "answerCodeExist": "answer code already exists",
+            "answerDescriptionExist": "answer description already exists"
         }
     },
     "rsmApproval": {

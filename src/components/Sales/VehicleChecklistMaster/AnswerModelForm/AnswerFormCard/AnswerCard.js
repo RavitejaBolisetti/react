@@ -110,10 +110,10 @@ const AnswerCard = (props) => {
                             {formEdit && props[IdType] === uniqueCardEdit && (
                                 <>
                                     <Button type="link" onClick={answerSave}>
-                                        Save
+                                        {translateContent('global.buttons.save')}
                                     </Button>
                                     <Button type="link" onClick={answerCancel}>
-                                        Cancel
+                                        {translateContent('global.buttons.cancel')}
                                     </Button>
                                 </>
                             )}
