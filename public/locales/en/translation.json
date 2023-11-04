@@ -1,18 +1,18 @@
 {
     "global": {
-        
         "validation": {
             "input": "Please enter "
         },
         "notificationSuccess": {
-            "title": "Success"
+            "success": "Success",
+            "error": "Error",
+            "warning": "Warning"
         },
         "drawerTitle": {
             "add": "Add ",
             "edit": "Edit ",
             "view": "View"
         }
-        
     },
     "login": {
         "heading": {
