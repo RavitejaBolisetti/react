@@ -140,7 +140,9 @@
     },
     "vehicleCheckListMaster": {
         "heading": {
-            "title": "Vehicle Checklist"
+            "title": "Vehicle Checklist",
+            "modelGroup": "Model Group",
+            "answers": "Answers"
         },
         "label": {
             "attributeType": "Attribute Type",
@@ -501,6 +503,34 @@
             "apply": "Apply",
             "clear": "Clear",
             "cancel": "Cancel"
+        }
+    },
+
+    "crmSchemeEnrolment": {
+        "heading": {
+            "drawerTitle": " Scheme Enrolment Details",
+            "title": "CRM Scheme Enrolment Screens",
+            "moduleTitle": "Dealer List",
+            "enrollmentTitle": "Enrolment Number Generated Successfully",
+            "enrolmentDetails": "Enrolment Details",
+            "customerVehicleDetails": "Customer And Vehicle Details"
+        },
+        "label": {
+            "enrolmentNo": "Enrolment No",
+            "enrolmentDate": "Enrolment Date",
+            "bookletNo": "Booklet No",
+            "customerName": "Customer Name",
+            "mobileNo": "Mobile No",
+            "vin": "VIN",
+            "registration": "Registration",
+            "productHierarchy": "Product Hierarchy",
+            "select": "Select"
+        },
+        "button":{
+            "downloadPrint": "Download/Print Document"
+        },
+        "confirmationMessage": {
+            "download": "Do you want to Print or download this Document"
         }
     }
 }
