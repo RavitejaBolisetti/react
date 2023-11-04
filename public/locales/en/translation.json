@@ -6,9 +6,9 @@
             "name": "name",
             "description": "description",
             "dateLessThan": "Date cant be less than Effective from date",
-            "state":"State",
-            "city":"City",
-            "productHierarchy":"Product Hierarchy"
+            "state": "State",
+            "city": "City",
+            "productHierarchy": "Product Hierarchy"
         },
         "notificationSuccess": {
             "success": "Success",
@@ -494,6 +494,18 @@
                 "salutation": "Salutation",
                 "sameAsOwner": "Same As Owner"
             }
+        },
+        "contacts": {
+            "heading": {
+                "moduleTitle": "Customer Details"
+            },
+            "label": {
+                "contactType": "Contact Type",
+                "preferredDayForContact": "Preferred Days For Contact",
+                "name": "Name ",
+                "emailId": "E-mail",
+                "preferredContactTime": "Preferred Contact Time"
+            }
         }
     },
     "userManagement": {
@@ -586,37 +598,36 @@
             "cancel": "Cancel"
         }
     },
-    
+
     "hoPriceMapping": {
         "heading": {
-            "maintitle":"HO Price Upload Mapping",
+            "maintitle": "HO Price Upload Mapping",
             "title": "HO Price Upload Mapping for Dealer",
             "drawerTitleHeading": "HO Price Upload Mapping",
-            "titleOverride":"Advance Filters",
-            "dealerList":"Dealer List",
-            "modelDetails":"Model Details",            
-            "advancedFilter":"Advanced Filter",
-            "appliedAdvanceFilters":"Applied Advance Filters"
+            "titleOverride": "Advance Filters",
+            "dealerList": "Dealer List",
+            "modelDetails": "Model Details",
+            "advancedFilter": "Advanced Filter",
+            "appliedAdvanceFilters": "Applied Advance Filters"
         },
         "label": {
             "state": "State",
             "city": "City",
-            "productHierarchy":"Product Hierarchy",
-            "dealerParent":"Dealer Parent",
-            "dealerLocation":"Dealer Location",
-            "dealerSelectOnRoadPrice":"Dealer Selected for On Road Price?",
-            "enableDate":"Enable Date",
-            "enableBy":"Enable By",
-            "select":"Select",
+            "productHierarchy": "Product Hierarchy",
+            "dealerParent": "Dealer Parent",
+            "dealerLocation": "Dealer Location",
+            "dealerSelectOnRoadPrice": "Dealer Selected for On Road Price?",
+            "enableDate": "Enable Date",
+            "enableBy": "Enable By",
+            "select": "Select",
             "stateCode": "State Code",
-            "searchDealerParent":"Search Dealer Parent"
-        },       
+            "searchDealerParent": "Search Dealer Parent"
+        },
         "button": {
             "continue": "Continue",
-            "reset":"Reset",
-            "apply":"Apply",
-            "clear":"Clear"
-        }      
-        
+            "reset": "Reset",
+            "apply": "Apply",
+            "clear": "Clear"
+        }
     }
 }
