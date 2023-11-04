@@ -24,6 +24,7 @@ import { FaRegEye } from 'react-icons/fa';
 import { formatDate } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Search } = Input;
 
@@ -35,7 +36,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Configurable Parameter Editing';
+    const moduleTitle = translateContent('configurableParameter.heading.mainTitle');
 
     let configDataFinal = [];
     if (typeData) {
@@ -91,7 +92,7 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
     useEffect(() => {
         if (userId) {
             const onSuccessAction = (res) => {
-                refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                refershData && showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             };
             fetchDataList({ setIsLoading: listShowLoading, onSuccessAction, userId });
         }
@@ -167,7 +168,7 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
                 fieldType = fieldType.concat(record?.fromDate).concat('  ').concat(record?.toDate);
                 break;
             case CONFIGURABLE_PARAMETARS_INPUT_TYPE.BOOLEAN.KEY:
-                fieldType = record?.booleanValue ? 'Yes' : 'No';
+                fieldType = record?.booleanValue ? translateContent('global.yesNo.yes') : translateContent('global.yesNo.no');
                 break;
             default:
                 fieldType = undefined;
@@ -179,39 +180,39 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Control ID',
+            title: translateContent('configurableParameter.label.controlId'),
             dataIndex: 'controlName',
             width: '15%',
         }),
 
         tblPrepareColumns({
-            title: 'Control Description',
+            title: translateContent('configurableParameter.label.controlDescription'),
             dataIndex: 'controlDescription',
             width: '20%',
         }),
 
         tblPrepareColumns({
-            title: 'Configurable Parameter Type',
+            title: translateContent('configurableParameter.label.configurableParameterType'),
             dataIndex: 'configurableParameterType',
             render: (text, record, value) => renderTableColumnName(record, 'configurableParameterType', PARAM_MASTER.CFG_PARAM_TYPE.id),
             width: '20%',
         }),
 
         tblPrepareColumns({
-            title: 'Configurable Parameter Values',
+            title: translateContent('configurableParameter.label.configurableParameterValues'),
             width: '18%',
             render: (text, record, value) => renderConfigurableParemetarValue(record),
             sorter: false,
         }),
 
         tblPrepareColumns({
-            title: 'Control Group',
+            title: translateContent('configurableParameter.label.controlGroup'),
             dataIndex: 'controlGroup',
             render: (text, record, value) => renderTableColumnName(record, 'controlGroup', PARAM_MASTER.CTRL_GRP.id),
             width: '12%',
         }),
         {
-            title: 'Action',
+            title: translateContent('configurableParameter.label.action'),
             dataIndex: '',
             width: '10%',
             render: (record) => [
@@ -265,15 +266,15 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
         let data = { ...values, id: recordId, isActive: true, configurableParameterType: parameterType, fromDate: formatDate(values?.fromDate), toDate: formatDate(values?.toDate) };
         const onSuccess = (res) => {
             form.resetFields();
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             fetchDataList({ setIsLoading: listShowLoading, userId });
 
             if (showSaveAndAddNewBtn === true || recordId) {
                 setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             } else {
                 setIsFormVisible(true);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage, placement: 'bottomRight' });
             }
         };
 
@@ -299,11 +300,11 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
 
     const drawerTitle = useMemo(() => {
         if (isViewModeVisible) {
-            return 'View ';
+            return translateContent('global.drawerTitle.view');
         } else if (formData?.id) {
-            return 'Edit ';
+            return translateContent('global.drawerTitle.edit');
         } else {
-            return 'Add ';
+            return translateContent('global.drawerTitle.add');
         }
     }, [isViewModeVisible, formData]);
 
@@ -339,7 +340,7 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
         isLoadingOnSave,
     };
 
-    const title = 'Control Description';
+    const title = translateContent('configurableParameter.heading.title');
 
     return (
         <>
@@ -350,7 +351,7 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
                             <Form.Item label={`${title}`} name="code">
                                 <Row gutter={20}>
                                     <Col xs={24} sm={20} md={20} lg={20} xl={20}>
-                                        <Search placeholder="Search" allowClear onSearch={onSearchHandle} />
+                                        <Search placeholder={translateContent('configurableParameter.placeholder.configSearch')} allowClear onSearch={onSearchHandle} />
                                     </Col>
                                 </Row>
                             </Form.Item>
@@ -361,7 +362,7 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
                         <Col className={styles.buttonsGroupRight} xs={24} sm={24} md={8} lg={8} xl={8}>
                             <Button icon={<TfiReload />} onClick={handleReferesh} danger data-testid="refresh" />
                             <Button icon={<PlusOutlined />} type="primary" onClick={handleAdd}>
-                                Add
+                            {translateContent('global.buttons.add')}
                             </Button>
                         </Col>
                     ) : (
@@ -379,13 +380,12 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
                                     height: 60,
                                 }}
                                 description={
-                                    !configData?.length ? (
+                                !configData?.length ? (
                                         <span>
-                                            No records found. Please add new parameter <br />
-                                            using below button
+                                            {translateContent('configurableParameter.label.noRecordsAdd')}
                                         </span>
                                     ) : (
-                                        <span> No records found.</span>
+                                        <span>{translateContent('global.generalMessage.noRecordsFound')}</span>
                                     )
                                 }
                             >
@@ -393,7 +393,7 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                             <Button icon={<PlusOutlined />} type="primary" onClick={handleAdd}>
-                                                Add
+                                                {translateContent('global.buttons.add')}
                                             </Button>
                                         </Col>
                                     </Row>

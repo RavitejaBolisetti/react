@@ -21,8 +21,8 @@
         "drawerTitle": {
             "add": "Add ",
             "edit": "Edit ",
-            "view": "View",
-            "addNew": "Add New"
+            "view": "View ",
+            "addNew": "Add New "
         },
         "label": {
             "active": "Active",
@@ -64,8 +64,13 @@
             "apply": "Apply"
         },
         "placeholder": {
-            "select": "Select",
+            "input": "Enter ",
+            "select": "Select ",
             "search": "Search"
+        },
+        "yesNo": {
+            "yes": "Yes",
+            "no": "No"
         }
     },
     "login": {
@@ -156,43 +161,42 @@
         },
 
         "tableColHeading": {
-            "groupCode":"Group Code",
-            "groupName":"Group Name",
+            "groupCode": "Group Code",
+            "groupName": "Group Name",
             "title": "Title",
-            "ownerName":"Owner Name",
-            "contactNumber":"Contact Number",
-            "emailId":"Email ID"
+            "ownerName": "Owner Name",
+            "contactNumber": "Contact Number",
+            "emailId": "Email ID"
         },
 
         "label": {
-            "groupCode":"Group Code",
-            "groupName":"Group Name",
-            "title":"Title",
-            "ownerName":"Owner Name",
-            "contactNumber":"Contact Number",
-            "emailId":"Email ID",
-            "Active":"Active",
-            "status":"Status"
+            "groupCode": "Group Code",
+            "groupName": "Group Name",
+            "title": "Title",
+            "ownerName": "Owner Name",
+            "contactNumber": "Contact Number",
+            "emailId": "Email ID",
+            "Active": "Active",
+            "status": "Status"
         },
 
         "validation": {
-            "groupCode":"Group Code",
-            "groupName":"Group Name",
-            "attributeName":"Attribute Name",
-            "ownerName":"Owner Name",
-            "contactNumber":"Contact Number",
-            "emailId":"Email ID"
+            "groupCode": "Group Code",
+            "groupName": "Group Name",
+            "attributeName": "Attribute Name",
+            "ownerName": "Owner Name",
+            "contactNumber": "Contact Number",
+            "emailId": "Email ID"
         },
- 
+
         "placeholder": {
-           "groupCode":"Group Code", 
-           "groupName":"Group Name",
-           "title":"Title",  
-           "ownerName":"Owner Name",
-           "contactNumber":"Contact Number",
-           "emailId":"Email ID"          
-        }  
-  
+            "groupCode": "Group Code",
+            "groupName": "Group Name",
+            "title": "Title",
+            "ownerName": "Owner Name",
+            "contactNumber": "Contact Number",
+            "emailId": "Email ID"
+        }
     },
 
     "qualificationMaster": {
@@ -715,19 +719,19 @@
             "emailId": "Email ID",
             "deviceType": "Device Type",
             "deviceId": "Device Id",
-            "roleAccess":"Role Access",
-            "roles":"Roles",
-            "accessible":"Accessible",
+            "roleAccess": "Role Access",
+            "roles": "Roles",
+            "accessible": "Accessible",
             "default": "Default",
-            "employeeCode":"Employee Code",
-            "dealerName":"Dealer Name",
-            "userRoles":"User Roles",
-            "branch":"Branch",
-            "products":"Products",
-            "mapped":"Mapped",
-            "unmapped":"Unmapped",
-            "role":"Role",
-            "accessProvided":"Access provided"
+            "employeeCode": "Employee Code",
+            "dealerName": "Dealer Name",
+            "userRoles": "User Roles",
+            "branch": "Branch",
+            "products": "Products",
+            "mapped": "Mapped",
+            "unmapped": "Unmapped",
+            "role": "Role",
+            "accessProvided": "Access provided"
         },
         "placeholder": {
             "search": "Search",
@@ -1012,7 +1016,7 @@
             "enrolmentFromDate": "Enrolment From Date",
             "enrolmentToDate": "Enrolment To Date"
         },
-        "button":{
+        "button": {
             "downloadPrint": "Download/Print Document",
             "addScheme": "Add Scheme"
         },
@@ -1416,9 +1420,6 @@
                 "documentNumber": "Document Number"
             }
         },
-        "placeholder": {},
-        "validation": {},
-        "button": {},
         "tableColumn": {
             "vehicleReceiptMaster": {
                 "column1": "GRN Type",
@@ -1428,6 +1429,41 @@
                 "column5": "Supplier Invoice Number",
                 "column6": "Supplier Invoice Date"
             }
+        }
+    },
+    "configurableParameter": {
+        "heading": {
+            "mainTitle": "Configurable Parameter Editing",
+            "title": "Control Description"
+        },
+        "label": {
+            "controlId": "Control Id",
+            "controlDescription": "Control Description",
+            "configurableParameterType": "Configurable Parameter Type",
+            "configurableParameterValues": "Configurable Parameter Values",
+            "controlGroup": "Control Group",
+            "fromNumber": "From Number",
+            "toNumber": "To Number",
+            "fromDate": "From Date",
+            "toDate": "To Date",
+            "action": "Action",
+            "noRecordsAdd": "No records found. Please add new parameter using below button"
+        },
+        "placeholder": {
+            "configSearch": "Search",
+            "parameterTypePlaceHolder": "parameter type",
+            "controlGroupPlaceHolder": "control group",
+            "controlDescriptionPlaceHolder": "Data",
+            "controlIdPlaceholder": "control id"
+        },
+        "validation": {
+            "number": "Number",
+            "toDateValidation": "to date",
+            "formDateValidation": "from date",
+            "configParamValuesValidation": "Config Param Values",
+            "controlGroupValidation": "control group",
+            "descriptionValidation": "control description",
+            "controlIdValidation": "control id"
         }
     }
 }
