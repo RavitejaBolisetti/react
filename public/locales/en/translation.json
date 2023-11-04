@@ -430,79 +430,6 @@
             "endTime": "End time*"
         }
     },
-    "city": {
-        "placeholder": {
-            "select": "Select",
-            "country": "Country",
-            "stateName": "State Name",
-            "districtName": "District Name",
-            "cityCode": "City Code",
-            "cityName": "City Name",
-            "search": "Search"
-        },
-        "label": {
-            "countryCode": "Country",
-            "stateName": "State Name",
-            "districtName": "District Name",
-            "cityCode": "City Code",
-            "cityName": "City Name",
-            "state": "State",
-            "district": "District"
-        },
-        "validation": {
-            "country": "Country",
-            "stateName": "State Name",
-            "districtName": "District Name",
-            "cityCode": "City Code",
-            "cityName": "City Name"
-        },
-        "title": {
-            "country": "Country",
-            "state": "State",
-            "district": "District",
-            "keyword": "keyword",
-            "advanceFilters": "Advance Filters",
-            "cityName": "City Name",
-            "cityCode": "City Code",
-            "districtName": "District Name",
-            "stateName": "State Name"
-        }
-    },
-    "district": {
-        "placeholder": {
-            "country": "Country",
-            "stateName": "State Name",
-            "districtCode": "District Code",
-            "districtName": "District Name"
-        },
-        "label": {
-            "countryCode": "Country",
-            "stateName": "State Name",
-            "districtName": "District Name",
-            "districtCode": "District Code",
-            "state": "State",
-            "district": "District"
-        },
-        "validation": {
-            "country": "Country",
-            "stateName": "State Name",
-            "districtName": "District Name",
-            "districtCode": "district Code"
-        },
-        "message": {
-            "differentState": " is not active anymore. Please select a different state. "
-        },
-        "title": {
-            "country": "Country",
-            "state": "State",
-            "district": "District",
-            "titleOverride": "Advance Filters",
-            "districtName": "District Name",
-            "districtCode": "District Code",
-            "stateName": "State Name"
-        }
-    },
-
     "productHierarchy": {
         "heading": {
             "moduleTitle": "Product Detail",
@@ -759,7 +686,78 @@
             "country": "Country"
         }
     },
-
+    "city": {
+        "placeholder": {
+            "select": "Select",
+            "country": "Country",
+            "stateName": "State Name",
+            "districtName": "District Name",
+            "cityCode": "City Code",
+            "cityName": "City Name",
+            "search": "Search"
+        },
+        "label": {
+            "countryCode": "Country",
+            "stateName": "State Name",
+            "districtName": "District Name",
+            "cityCode": "City Code",
+            "cityName": "City Name",
+            "state": "State",
+            "district": "District"
+        },
+        "validation": {
+            "country": "Country",
+            "stateName": "State Name",
+            "districtName": "District Name",
+            "cityCode": "City Code",
+            "cityName": "City Name"
+        },
+        "title": {
+            "country": "Country",
+            "state": "State",
+            "district": "District",
+            "keyword": "keyword",
+            "advanceFilters": "Advance Filters",
+            "cityName": "City Name",
+            "cityCode": "City Code",
+            "districtName": "District Name",
+            "stateName": "State Name"
+        }
+    },
+    "district": {
+        "placeholder": {
+            "country": "Country",
+            "stateName": "State Name",
+            "districtCode": "District Code",
+            "districtName": "District Name"
+        },
+        "label": {
+            "countryCode": "Country",
+            "stateName": "State Name",
+            "districtName": "District Name",
+            "districtCode": "District Code",
+            "state": "State",
+            "district": "District"
+        },
+        "validation": {
+            "country": "Country",
+            "stateName": "State Name",
+            "districtName": "District Name",
+            "districtCode": "district Code"
+        },
+        "message": {
+            "differentState": " is not active anymore. Please select a different state. "
+        },
+        "title": {
+            "country": "Country",
+            "state": "State",
+            "district": "District",
+            "titleOverride": "Advance Filters",
+            "districtName": "District Name",
+            "districtCode": "District Code",
+            "stateName": "State Name"
+        }
+    },
     "tehsil": {
         "heading": {
             "pageTitle": "Tehsil",
@@ -897,7 +895,7 @@
             "productHierarchy": "Product Hierarchy",
             "select": "Select"
         },
-        "button":{
+        "button": {
             "downloadPrint": "Download/Print Document"
         },
         "confirmationMessage": {
