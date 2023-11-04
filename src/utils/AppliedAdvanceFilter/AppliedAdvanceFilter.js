@@ -42,7 +42,7 @@ export default function AppliedAdvanceFilter(props) {
                                         ]}
                                         validateTrigger={['onSearch']}
                                     >
-                                        <Search placeholder={translateContent('LessorCompanyMaster.placeholder.search')} allowClear onSearch={onSearchHandle} onChange={handleClearInSearch} />
+                                        <Search placeholder={translateContent('global.placeholder.search')} allowClear onSearch={onSearchHandle} onChange={handleClearInSearch} />
                                     </Form.Item>
                                 </Form>
                             </Col>
