@@ -158,8 +158,8 @@
             "answerCode": "Answer Code",
             "answerDescription": "Answer Description",
             "answerStatus": "Answer Status",
-            "modelGroupCode": "Model Group Code"     ,
-            "modelGroupStatus": "Model Group Status"       
+            "modelGroupCode": "Model Group Code",
+            "modelGroupStatus": "Model Group Status"
         },
         "validationMessage": {
             "modelRequired": "Please add atleast one model",
@@ -369,6 +369,30 @@
                 "item": "Item",
                 "make": "Make",
                 "serialNo": "Serial No."
+            }
+        },
+        "customerDetails": {
+            "heading": {
+                "moduleTitle": "Customer Details",
+                "ownerDetails": "Owner Details",
+                "billingDetails": "Billing Customer Details"
+            },
+            "label": {
+                "customerId": "Customer ID",
+                "title": "Title",
+                "customerName": "Customer Name",
+                "address": "Address ",
+                "city": "City",
+                "state": "State",
+                "mobileNumber": "Mobile Number",
+                "pincode": "PIN Code",
+                "email": "Email",
+                "gstin": "GSTIN",
+                "registrationNumber": "Registartion Number",
+                "cityPincode": "City/Pincode",
+                "cityDistrict": "City/District",
+                "salutation": "Salutation",
+                "sameAsOwner": "Same As Owner"
             }
         }
     },
