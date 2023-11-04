@@ -57,7 +57,11 @@
             "seeLess": "See less",
             "upload": "Upload",
             "reset": "Reset",
-            "search": "search"
+            "search": "search",
+            "addIndent": "Add Indent",
+            "apply": "Apply",
+            "submit": "Submit",
+            "continue": "Continue"
         },
         "placeholder": {
             "select": "Select",
@@ -490,9 +494,9 @@
             "districtCode": "district Code"
         },
         "message": {
-            "differentState" : " is not active anymore. Please select a different state. "
+            "differentState": " is not active anymore. Please select a different state. "
         },
-        "title":{
+        "title": {
             "country": "Country",
             "state": "State",
             "district": "District",
@@ -501,7 +505,6 @@
             "districtCode": "District Code",
             "stateName": "State Name"
         }
-
     },
 
     "productHierarchy": {
@@ -867,13 +870,6 @@
         },
         "placeholder": {
             "searchVin": "Search Vin"
-        },
-        "button": {
-            "close": "Close",
-            "reset": "Reset",
-            "apply": "Apply",
-            "clear": "Clear",
-            "cancel": "Cancel"
         }
     },
 
@@ -898,7 +894,7 @@
             "productHierarchy": "Product Hierarchy",
             "select": "Select"
         },
-        "button":{
+        "button": {
             "downloadPrint": "Download/Print Document"
         },
         "confirmationMessage": {
@@ -949,12 +945,6 @@
             "select": "Select",
             "stateCode": "State Code",
             "searchDealerParent": "Search Dealer Parent"
-        },
-        "button": {
-            "continue": "Continue",
-            "reset": "Reset",
-            "apply": "Apply",
-            "clear": "Clear"
         }
     },
     "stockTransferIndent": {
@@ -964,10 +954,33 @@
             },
             "label": {
                 "vin": "VIN",
-                "stIssueNo":"ST issue Note No."
+                "stIssueNo": "ST issue Note No.",
+                "modelDescription": "Model Description",
+                "engineNumber": "Engine Number",
+                "oemInvoiceDate": "Oem Invoice Date",
+                "oemInvoiceNumber": "Oem Invoice Number",
+                "grnDate": "GRN Date",
+                "grnNo": "GRN No",
+                "issueCharge": "Issue Charge",
+                "netDealerPrice": "Net Dealer Price"
             },
             "validation": {
-            "indentFromDate": "Indent From Date "
+                "vin": "vin"
+            },
+            "viewDetails": {
+                "label": {
+                    "indentNumber": "Indent Number",
+                    "indentDate": "Indent Date",
+                    "indentToLocation": "Indent To Location",
+                    "indentStatus": "Indent Status",
+                    "modelDescription": "Model Description",                   
+                    "modelCode": "Model Code",
+                    "requestedQuantity": "Requested Quantity",
+                    "cancelledQuantity": "Cancelled Quantity",
+                    "issuedAndNotReceivedQuantity": "Issued & Not Received Quantity",
+                    "receivedQuantity": "Received Quantity",
+                    "balancedQuantity": "Balanced Quantity"
+                }
             }
         },
         "heading": {
@@ -1020,14 +1033,6 @@
             "indentToParent": "Indent To Parent",
             "indentToLocation": "Indent To Location",
             "requestedBy": "Requested By"
-        },
-        "button": {
-            "addIndent": "Add Indent",
-            "reset": "Reset",
-            "apply": "Apply",
-            "clear": "Clear",
-            "submit": "Submit",
-            "cancel": "Cancel"
         }
     }
 }

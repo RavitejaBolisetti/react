@@ -10,6 +10,7 @@ import { DrawerFormButton } from 'components/common/Button';
 import LeftPanel from 'components/common/LeftPanel';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { ViewDetail } from './ViewDetail';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -74,44 +75,44 @@ const AddEditFormMain = (props) => {
                             <>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                        <h4>Dealer List</h4>
+                                        <h4>{translateContent('hoPriceMapping.heading.dealerList')}</h4>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item initialValue={formData?.state} label="State" name="state">
-                                            <Input placeholder={preparePlaceholderText('State Code')} disabled={true} />
+                                        <Form.Item initialValue={formData?.state} label={translateContent('hoPriceMapping.label.state')} name="state">
+                                            <Input placeholder={preparePlaceholderText(translateContent('hoPriceMapping.label.state'))} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item initialValue={formData?.city} label="City" name="city">
-                                            <Input placeholder={preparePlaceholderText('City')} disabled={true} />
+                                        <Form.Item initialValue={formData?.city} label={translateContent('hoPriceMapping.label.city')} name="city">
+                                            <Input placeholder={preparePlaceholderText(translateContent('hoPriceMapping.label.city'))} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item initialValue={formData?.dealerParent} label="Dealer Parent" name="dealerParent">
-                                            <Input placeholder={preparePlaceholderText('Dealer Parent')} disabled={true} />
+                                        <Form.Item initialValue={formData?.dealerParent} label={translateContent('hoPriceMapping.label.dealerParent')} name="dealerParent">
+                                            <Input placeholder={preparePlaceholderText(translateContent('hoPriceMapping.label.dealerParent'))} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item initialValue={formData?.dealerBranch} label="Dealer Location" name="dealerBranch">
-                                            <Input placeholder={preparePlaceholderText('Dealer Branch')} disabled={true} />
+                                        <Form.Item initialValue={formData?.dealerBranch} label={translateContent('hoPriceMapping.label.dealerLocation')} name="dealerBranch">
+                                            <Input placeholder={preparePlaceholderText(translateContent('hoPriceMapping.label.dealerBranch'))} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
 
                                 <Row gutter={16}>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item initialValue={formData?.dealerSelectOnRoadPrice} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="dealerSelectOnRoadPrice" label="Dealer Selected for On Road Price?">
+                                        <Form.Item initialValue={formData?.dealerSelectOnRoadPrice} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="dealerSelectOnRoadPrice" label={translateContent('hoPriceMapping.label.dealerSelectOnRoadPrice')}>
                                             <Switch checkedChildren="Yes" unCheckedChildren="No" onChange={(checked) => (checked ? 1 : 0)} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                        <h4>Model Details</h4>
+                                        <h4>{translateContent('hoPriceMapping.heading.modelDetails')}</h4>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>

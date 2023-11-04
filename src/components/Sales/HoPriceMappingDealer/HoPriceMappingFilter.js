@@ -81,7 +81,7 @@ export default function HoPriceMappingFilter(props) {
                             </Col>
                             <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
                                 <Button className={styles.clearBtn} onClick={() => setFilterString()} danger>
-                                    {translateContent('hoPriceMapping.button.clear')}
+                                    {translateContent('global.buttons.clear')}
                                 </Button>
                             </Col>
                         </Row>

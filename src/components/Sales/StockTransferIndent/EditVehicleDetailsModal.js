@@ -63,12 +63,12 @@ export const EditVehicleDetailsModalFrom = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
                     <Button onClick={onCloseAction} danger>
-                        {translateContent('stockTransferIndent.button.cancel')}
+                        {translateContent('global.buttons.cancel')}
                     </Button>
                 </Col>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
                     <Button htmlType="submit" type="primary">
-                        {translateContent('stockTransferIndent.button.submit')}
+                        {translateContent('global.buttons.submit')}
                     </Button>
                 </Col>
             </Row>

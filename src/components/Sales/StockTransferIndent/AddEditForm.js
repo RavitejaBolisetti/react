@@ -59,7 +59,7 @@ const AddEditFormMain = (props) => {
     };
 
     const buttonProps = {
-        saveButtonName: 'Submit',
+        saveButtonName: translateContent('global.buttons.submit'),
         formData,
         onCloseAction,
         buttonData,
@@ -169,7 +169,7 @@ const AddEditFormMain = (props) => {
                                                 <Col xs={14} sm={14} md={6} lg={6} xl={6}>
                                                     <Col xs={24} sm={24} md={6} lg={6} xl={6}>
                                                         <Button type="primary" icon={<FiPlus />} className={styles.verticallyCentered} onClick={handleAddVehicleDetails}>
-                                                            Add
+                                                            {translateContent('global.buttons.add')}
                                                         </Button>
                                                     </Col>
                                                 </Col>

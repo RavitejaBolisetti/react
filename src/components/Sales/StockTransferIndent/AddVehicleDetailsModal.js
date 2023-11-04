@@ -48,12 +48,12 @@ export const AddVehicleDetailsModalFrom = (props) => {
                 <Form.Item name="modelDescriptionName" hidden />
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                     <Form.Item label={translateContent('stockTransferIndent.label.modelCode')} name="modelCode" initialValue={formData?.modelCode}>
-                        <Input placeholder={preparePlaceholderText(translateContent('stockTransferIndent.label.modelCode'))} disabled={true}></Input>
+                        <Input placeholder={translateContent('stockTransferIndent.label.modelCode')} disabled={true}></Input>
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                     <Form.Item label={translateContent('stockTransferIndent.label.requestedQuantity')} name="requestedQuantity" initialValue={formData?.requestedQuantity} rules={[validateRequiredInputField(translateContent('stockTransferIndent.validation.requestedQuantity')), validationNumber(translateContent('stockTransferIndent.validation.quantity'))]}>
-                        <Input placeholder={preparePlaceholderText(translateContent('stockTransferIndent.label.requestedQuantity'))}></Input>
+                        <Input placeholder={translateContent('stockTransferIndent.label.requestedQuantity')}></Input>
                     </Form.Item>
                 </Col>
             </Row>
@@ -61,12 +61,12 @@ export const AddVehicleDetailsModalFrom = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
                     <Button onClick={onCloseAction} danger>
-                        Cancel
+                        {translateContent('global.buttons.cancel')}
                     </Button>
                 </Col>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
                     <Button htmlType="submit" type="primary">
-                        Save
+                        {translateContent('global.buttons.save')}
                     </Button>
                 </Col>
             </Row>
