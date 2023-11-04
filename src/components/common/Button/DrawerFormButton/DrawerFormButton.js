@@ -8,20 +8,21 @@ import { Button, Row, Col } from 'antd';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import styles from './DrawerFormButton.module.scss';
+import { translateContent } from 'utils/translateContent';
 
-const DrawerButtons = ({ formData, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save', handleButtonClick, isLoadingOnSave, multipleForm = false }) => {
+const DrawerButtons = ({ formData, onCloseAction, buttonData, setButtonData, saveButtonName = translateContent('global.buttons.save'), handleButtonClick, isLoadingOnSave, multipleForm = false }) => {
     return (
         <Row gutter={20} className={multipleForm ? styles.formFooterNew : ''}>
             <Col xs={24} sm={6} md={6} lg={6} xl={6} className={styles.buttonsGroupLeft}>
                 {buttonData?.closeBtn && (
                     <Button danger onClick={onCloseAction}>
-                        Close
+                        {translateContent('global.buttons.close')}
                     </Button>
                 )}
 
                 {buttonData?.cancelBtn && (
                     <Button danger onClick={onCloseAction}>
-                        Cancel
+                        {translateContent('global.buttons.cancel')}
                     </Button>
                 )}
             </Col>
@@ -29,7 +30,7 @@ const DrawerButtons = ({ formData, onCloseAction, buttonData, setButtonData, sav
             <Col xs={24} sm={18} md={18} lg={18} xl={18} className={styles.buttonsGroupRight}>
                 {buttonData?.printDownloadBtn && (
                     <Button danger onClick={onCloseAction}>
-                        Print/Download
+                        {translateContent('global.buttons.print/download')}
                     </Button>
                 )}
                 {buttonData?.saveBtn && (
@@ -40,25 +41,25 @@ const DrawerButtons = ({ formData, onCloseAction, buttonData, setButtonData, sav
 
                 {buttonData?.saveAndNewBtn && (
                     <Button loading={isLoadingOnSave} htmlType="submit" disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: true })} type="primary">
-                        Save & Add New
+                        {translateContent('global.buttons.saveAndNew')}
                     </Button>
                 )}
 
                 {buttonData?.editBtn && (
                     <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record: formData })} form="configForm" key="submitAndNew" htmlType="submit" type="primary">
-                        Edit
+                        {translateContent('global.buttons.edit')}
                     </Button>
                 )}
 
                 {buttonData?.cancelOTFBtn && (
                     <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF })} type="primary" htmlType="submit">
-                        Cancel Booking
+                        {translateContent('global.buttons.edit')}
                     </Button>
                 )}
 
                 {buttonData?.transferOTFBtn && (
                     <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.TRANSFER_OTF })} type="primary" htmlType="submit">
-                        Transfer Booking
+                        {translateContent('global.buttons.transferBooking')}
                     </Button>
                 )}
             </Col>

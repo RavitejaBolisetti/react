@@ -83,7 +83,7 @@ export const ViewTaxChargesMain = (props) => {
                             )}
                         </>
                     )}
-                    {attributeType !== VEHICLE_CHECKLIST_TYPE?.CHECKLIST?.key && <Descriptions.Item label={translateContent('vehicleCheckListMaster.label.status')}>{formData?.status === true ? 'Active' : 'InActive'}</Descriptions.Item>}
+                    {attributeType !== VEHICLE_CHECKLIST_TYPE?.CHECKLIST?.key && <Descriptions.Item label={translateContent('vehicleCheckListMaster.label.status')}>{formData?.status === true ? translateContent('vehicleCheckListMaster.label.active') : translateContent('vehicleCheckListMaster.label.inactive')}</Descriptions.Item>}
                 </Descriptions>
             </div>
         </>

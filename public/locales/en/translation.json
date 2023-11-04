@@ -10,7 +10,6 @@
             "city":"City",
             "productHierarchy":"Product Hierarchy"
         },
-
         "notificationSuccess": {
             "success": "Success",
             "error": "Error",
@@ -37,12 +36,30 @@
         "generalMessage": {
             "noRecordsFound": "No records found"
         },
-        "button": {
-            "cancel": "Cancel",
+        "changeHistory": {
+            "title": "Change History"
+        },
+        "buttons": {
+            "download": "Download",
+            "add": "Add",
+            "clear": "Clear",
             "save": "Save",
+            "close": "Close",
+            "cancel": "Cancel",
+            "print/download": "Print/Download",
+            "saveAndNew": "Save and New",
+            "edit": "Edit",
+            "cancelBooking": "Cancel Booking",
+            "transferBooking": "Transfer Booking",
             "saveCloseBtn": "Save & Close",
             "seeMore": "See more",
-            "seeLess": "See less"
+            "seeLess": "See less",
+            "reset": "Reset",
+            "search": "search"
+        },
+        "placeholder": {
+            "select": "Select",
+            "search": "Search"
         }
     },
     "login": {
@@ -106,38 +123,27 @@
     "LessorCompanyMaster": {
         "heading": {
             "pageTitle": "Lessor Company Master (M&M)",
-            "title": "Lessor Company Name",
-            "welcomeNote": "Welcome",
-            "loginText": "Please enter your credentials to login",
-            "forgotPassword": "Forgot Password?",
-            "unauthorizedAccess": "Unauthorized Access"
+            "title": "Lessor Company Name"
         },
         "label": {
-            "username": "User ID (MILE ID.Parent ID)",
-            "password": "Password"
+            "companyCode": "Company Code",
+            "companyName": "Company Name",
+            "status": "Status",
+            "active": "Active",
+            "inactive": "Inactive"
         },
         "placeholder": {
-            "username": "User ID (MILE ID.Parent ID)",
-            "password": "Password"
+            "companyCode": "company code",
+            "companyName": "company name"
         },
         "validation": {
-            "googleCaptcha": "Please select Captcha"
-        },
-        "button": {
-            "login": "Login",
-            "skipForNow": "Skip For Now",
-            "updatePassword": "Update Password",
-            "continue": "Continue"
-        },
-        "link": {
-            "mnmLogin": "M&M User Login"
+            "companyCode": "company code",
+            "companyName": "company name"
         }
     },
     "vehicleCheckListMaster": {
         "heading": {
-            "title": "Vehicle Checklist",
-            "edit": "Edit ",
-            "add": "Add "
+            "title": "Vehicle Checklist"
         },
         "label": {
             "attributeType": "Attribute Type",
@@ -153,20 +159,18 @@
             "attachmentRequired": "Attachment Required",
             "status": "Status",
             "active": "Active",
-            "inactive": "Inactive"
+            "inactive": "Inactive",
+            "answerCode": "Answer Code",
+            "answerDescription": "Answer Description",
+            "answerStatus": "Answer Status",
+            "modelGroupCode": "Model Group Code"     ,
+            "modelGroupStatus": "Model Group Status"       
         },
-        "placeholder": {
-            "attributeType": "Attribute Type",
-            "parent": "Parent",
-            "groupCode": "Group Code",
-            "groupDescription": "Group Description",
-            "subGroupCode": "Sub Group Code",
-            "subGroupDescription": "Sub Group Description",
-            "checklistCode": "Checklist Code",
-            "checklistDescription": "Checklist Description",
-            "answerType": "Answer Type",
-            "attachmentRequired": "Attachment Required",
-            "status": "Status"
+        "validationMessage": {
+            "modelRequired": "Please add atleast one model",
+            "answerRequired": "Please add atleast one answer",
+            "answerCodeExist": "answer code already exists",
+            "answerDescriptionExist": "answer description already exists"
         }
     },
     "rsmApproval": {
@@ -303,6 +307,44 @@
             "allowedTimming": "Allowed Timings"
         }
     },
+    "city": {
+        "placeholder": {
+            "select": "Select",
+            "country": "Country",
+            "stateName": "State Name",
+            "districtName": "District Name",
+            "cityCode": "City Code",
+            "cityName": "City Name",
+            "search": "Search"
+        },
+        "label": {
+            "countryCode": "Country",
+            "stateName": "State Name",
+            "districtName": "District Name",
+            "cityCode": "City Code",
+            "cityName": "City Name",
+            "state": "State",
+            "district": "District"
+        },
+        "validation": {
+            "country": "Country",
+            "stateName": "State Name",
+            "districtName": "District Name",
+            "cityCode": "City Code",
+            "cityName": "City Name"
+        },
+        "title": {
+            "country": "Country",
+            "state": "State",
+            "district": "District",
+            "keyword": "keyword",
+            "advanceFilters": "Advance Filters",
+            "cityName": "City Name",
+            "cityCode": "City Code",
+            "districtName": "District Name",
+            "stateName": "State Name"
+        }
+    },
     "footer": {
         "copyright": "Copyright &copy; {YEAR} ROBIN."
     },
@@ -407,6 +449,7 @@
     },
     "state": {
         "heading": {
+            "moduleTitle": "State",
             "title": "State Name"
         },
         "tableColHeading": {
@@ -419,11 +462,9 @@
             "stateCode": "State Code",
             "stateName": "State Name",
             "gstStateCode": "GST State Code",
-            "country": "Country",
-            "status": "Status"
+            "country": "Country"
         },
         "placeholder": {
-            "select": "Select",
             "stateCode": "State Code",
             "stateName": "State Name",
             "gstStateCode": "GST State Code",
@@ -439,32 +480,31 @@
 
     "vinBlockMaster": {
         "heading": {
-            "moduleTitle":"Vin Block Master",
-            "title": "Vin Block Master",            
-            "advancedFilter":"Advanced Filter",
-            "appliedAdvanceFilters":"Applied Advance Filters"
+            "moduleTitle": "Vin Block Master",
+            "title": "Vin Block Master",
+            "advancedFilter": "Advanced Filter",
+            "appliedAdvanceFilters": "Applied Advance Filters"
         },
         "label": {
             "vin": "Vin",
             "modelDescription": "Model Description",
-            "dealerCode":"Dealer Code",
-            "action":"Action",
-            "searchVin":"Search Vin",
-            "modelGroupCode":"Model Group Code",
-            "modelCode":"Model Code",
-            "varientCode":"Varient Code",
-            "color":"Color"
-           
+            "dealerCode": "Dealer Code",
+            "action": "Action",
+            "searchVin": "Search Vin",
+            "modelGroupCode": "Model Group Code",
+            "modelCode": "Model Code",
+            "varientCode": "Varient Code",
+            "color": "Color"
         },
         "placeholder": {
-            "searchVin":"Search Vin"
+            "searchVin": "Search Vin"
         },
         "button": {
             "close": "Close",
-            "reset":"Reset",
-            "apply":"Apply",
-            "clear":"Clear",
-            "cancel":"Cancel"
+            "reset": "Reset",
+            "apply": "Apply",
+            "clear": "Clear",
+            "cancel": "Cancel"
         }
     },
     
@@ -500,5 +540,4 @@
         }      
         
     }
-
 }
