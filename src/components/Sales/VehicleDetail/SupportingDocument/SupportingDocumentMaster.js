@@ -18,6 +18,7 @@ import { VehicleDetailFormButton } from '../VehicleDetailFormButton';
 import AddEditForm from './AddEditForm';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 import { getNameFromKey } from 'utils/checkAndSetDefaultValue';
 
@@ -282,9 +283,9 @@ const SupportingDocumentBase = (props) => {
         fileList,
         setFileList,
 
-        uploadButtonName: 'Upload File',
-        messageText: 'Click or drop your file here to upload',
-        validationText: 'File type should be png, jpg or pdf and max file size to be 8Mb',
+        uploadButtonName: translateContent('vehicleDetail.documents.label.uploadFile'),
+        messageText: translateContent('vehicleDetail.documents.label.clickOrDrop'),
+        validationText: translateContent('vehicleDetail.documents.label.FileSize'),
         supportedFileTypes: ['image/png', 'image/jpeg', 'application/pdf'],
         maxSize: 8,
         supportingDocs: true,
