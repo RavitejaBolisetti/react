@@ -50,7 +50,9 @@
             "transferBooking": "Transfer Booking",
             "saveCloseBtn": "Save & Close",
             "seeMore": "See more",
-            "seeLess": "See less"
+            "seeLess": "See less",
+            "reset": "Reset",
+            "search": "search"
         },
         "placeholder": {
             "select": "Select",
@@ -304,41 +306,38 @@
         "placeholder": {
             "select": "Select",
             "country": "Country",
-            "state_name": "State Name",
-            "district_name": "District Name",
-            "city_code": "City Code",
-            "city_name": "City Name",
+            "stateName": "State Name",
+            "districtName": "District Name",
+            "cityCode": "City Code",
+            "cityName": "City Name",
             "search": "Search"
         },
         "label": {
-            "country_code": "Country",
-            "state_name": "State Name",
-            "district_name": "District Name",
-            "city_code": "City Code",
-            "city_name": "City Name",
-            "status": "Status",
+            "countryCode": "Country",
+            "stateName": "State Name",
+            "districtName": "District Name",
+            "cityCode": "City Code",
+            "cityName": "City Name",
             "state": "State",
             "district": "District"
         },
         "validation": {
             "country": "Country",
-            "state_name": "State Name",
-            "district_name": "District Name",
-            "city_code": "City Code",
-            "city_name": "City Name"
+            "stateName": "State Name",
+            "districtName": "District Name",
+            "cityCode": "City Code",
+            "cityName": "City Name"
         },
         "title": {
-            "success": "Success",
             "country": "Country",
             "state": "State",
             "district": "District",
             "keyword": "keyword",
-            "SUCCESS": "SUCCESS",
-            "advance_filters": "Advance Filters",
-            "city_name": "City Name",
-            "city_code": "City Code",
-            "district_name": "District Name",
-            "state_name": "State Name"
+            "advanceFilters": "Advance Filters",
+            "cityName": "City Name",
+            "cityCode": "City Code",
+            "districtName": "District Name",
+            "stateName": "State Name"
         }
     },
     "footer": {

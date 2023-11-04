@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 /*
  *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
@@ -7,32 +6,31 @@
 import { tblPrepareColumns, tblStatusColumn, tblActionColumn } from 'utils/tableColumn';
 
 import styles from 'assets/sass/app.module.scss';
-import { useTranslation } from 'react-i18next';
+import { translateContent } from 'utils/translateContent';
 
 export const tableColumn = (handleButtonClick) => {
     const tableColumn = [];
-    const { t: translate } = useTranslation();
     tableColumn.push(
         tblPrepareColumns({
-            title: `${translate('city.title.city_code')}`,
+            title: `${translateContent('city.title.cityCode')}`,
             dataIndex: 'code',
             width: '15%',
         }),
 
         tblPrepareColumns({
-            title: `${translate('city.title.city_name')}`,
+            title: `${translateContent('city.title.cityName')}`,
             dataIndex: 'name',
             width: '15%',
         }),
 
         tblPrepareColumns({
-            title: `${translate('city.title.district_name')}`,
+            title: `${translateContent('city.title.districtName')}`,
             dataIndex: 'districtName',
             width: '15%',
         }),
 
         tblPrepareColumns({
-            title: `${translate('city.title.district_name')}`,
+            title: `${translateContent('city.title.districtName')}`,
             dataIndex: 'stateName',
             width: '15%',
         }),
