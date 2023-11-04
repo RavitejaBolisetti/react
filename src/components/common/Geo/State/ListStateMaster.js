@@ -354,6 +354,7 @@ export const ListStateMasterBase = (props) => {
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />
+            <AddEditForm {...formProps} />
         </>
     );
 };
