@@ -123,6 +123,42 @@
             "mnmLogin": "M&M User Login"
         }
     },
+    "vehicleCheckListMaster": {
+        "heading": {
+            "title": "Vehicle Checklist",
+            "edit": "Edit ",
+            "add": "Add "
+        },
+        "label": {
+            "attributeType": "Attribute Type",
+            "attributeLevel": "Attribute Level",
+            "parent": "Parent",
+            "groupCode": "Group Code",
+            "groupDescription": "Group Description",
+            "subGroupCode": "Sub Group Code",
+            "subGroupDescription": "Sub Group Description",
+            "checklistCode": "Checklist Code",
+            "checklistDescription": "Checklist Description",
+            "answerType": "Answer Type",
+            "attachmentRequired": "Attachment Required",
+            "status": "Status",
+            "active": "Active",
+            "inactive": "Inactive"
+        },
+        "placeholder": {
+            "attributeType": "Attribute Type",
+            "parent": "Parent",
+            "groupCode": "Group Code",
+            "groupDescription": "Group Description",
+            "subGroupCode": "Sub Group Code",
+            "subGroupDescription": "Sub Group Description",
+            "checklistCode": "Checklist Code",
+            "checklistDescription": "Checklist Description",
+            "answerType": "Answer Type",
+            "attachmentRequired": "Attachment Required",
+            "status": "Status"
+        }
+    },
     "rsmApproval": {
         "heading": {
             "title": "RSM Approval for Co-Dealer Invoice",
