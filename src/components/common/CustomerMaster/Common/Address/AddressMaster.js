@@ -23,6 +23,7 @@ import { CardSkeleton } from 'components/common/Skeleton';
 import { LANGUAGE_EN } from 'language/en';
 
 import { NoDataFound } from 'utils/noDataFound';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 const { Text } = Typography;
@@ -195,7 +196,6 @@ const AddressMasterBase = (props) => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
 
-
     const onCloseAction = () => {
         addressForm.resetFields();
         setIsFormVisible(false);
@@ -255,7 +255,7 @@ const AddressMasterBase = (props) => {
 
     return (
         <>
-            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} >
+            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
                 <Row gutter={20} className={styles.drawerBodyRight}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <h2>{section?.title} </h2>
@@ -265,7 +265,7 @@ const AddressMasterBase = (props) => {
                             ) : (
                                 <>
                                     <Row type="flex" align="middle">
-                                        <Text strong> {customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id ? 'Individual Address' : 'Company Address'}</Text>
+                                        <Text strong> {customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id ? translateContent('customerMaster.label.Individual') : 'Company Address'}</Text>
                                         {!isViewModeVisible && !formActionType?.viewMode && (
                                             <Button onClick={addAddressHandeler} icon={<PlusOutlined />} type="primary" disabled={isAdding || isEditing}>
                                                 Add

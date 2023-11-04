@@ -8,6 +8,8 @@ import { Input, Form, Col, Row, Button, Select } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField, duplicateProductValidator } from 'utils/validation';
+import { translateContent } from 'utils/translateContent';
+
 
 import styles from 'assets/sass/app.module.scss';
 function FormProductAttribute(props) {
@@ -26,13 +28,13 @@ function FormProductAttribute(props) {
             <Form form={formEdit ? editForm : attributeForm} id="myForm" autoComplete="off" layout="vertical" onFinish={onAttributeFormFinish}>
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Attribute Name" name="attributeName" initialValue={props?.code} rules={[validateRequiredSelectField('Attribute Name'), { validator: () => duplicateProductValidator(changeValue, skuAttributes) }]}>
-                            <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder={preparePlaceholderSelect('attribute name')} options={productHierarchyAttributeData} fieldNames={fieldNames} allowClear labelInValue onChange={onChange} key={productHierarchyAttributeData?.id} value={productHierarchyAttributeData?.attributeCode} />
+                        <Form.Item label={translateContent('productHierarchy.label.attributeName')} name="attributeName" initialValue={props?.code} rules={[validateRequiredSelectField(translateContent('productHierarchy.label.attributeName')), { validator: () => duplicateProductValidator(changeValue, skuAttributes) }]}>
+                            <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder={preparePlaceholderSelect(translateContent('productHierarchy.placeholder.attributeName'))} options={productHierarchyAttributeData} fieldNames={fieldNames} allowClear labelInValue onChange={onChange} key={productHierarchyAttributeData?.id} value={productHierarchyAttributeData?.attributeCode} />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item labelAlign="left" name="value" label="Attribute Value" rules={[validateRequiredInputField('Attribute Value')]} initialValue={props?.value}>
-                            <Input placeholder={preparePlaceholderText('Attribute Value')} />
+                        <Form.Item labelAlign="left" name="value" label={translateContent('productHierarchy.label.attributeValue')} rules={[validateRequiredInputField(translateContent('productHierarchy.label.attributeValue'))]} initialValue={props?.value}>
+                            <Input placeholder={preparePlaceholderText(translateContent('productHierarchy.label.attributeValue'))} />
                         </Form.Item>
                     </Col>
 

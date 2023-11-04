@@ -5,6 +5,7 @@
  */
 import React from 'react';
 import { Descriptions } from 'antd';
+import { translateContent } from 'utils/translateContent';
 
 const ViewDetailBase = ({ formData, styles, parameterType }) => {
     const viewOneColProps = {
@@ -17,21 +18,21 @@ const ViewDetailBase = ({ formData, styles, parameterType }) => {
         <>
             <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
-                    <Descriptions.Item label="Parent Group Code">{formData?.parentCode}</Descriptions.Item>
-                    <Descriptions.Item label="Parent Group Name">{formData?.dealerParentName}</Descriptions.Item>
-                    <Descriptions.Item label="Company Code">{formData?.companyCode}</Descriptions.Item>
-                    <Descriptions.Item label="Company Name">{formData?.companyName}</Descriptions.Item>
-                    <Descriptions.Item label="Company Address">{formData?.address}</Descriptions.Item>
-                    <Descriptions.Item label="Pin Code">{formData?.pinCode}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('dealerCompany.label.parentGroupCode')}>{formData?.parentCode}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('dealerCompany.label.parentGroupName')}>{formData?.dealerParentName}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('dealerCompany.label.companyCode')}>{formData?.companyCode}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('dealerCompany.label.companyName')}>{formData?.companyName}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('dealerCompany.label.companyAddress')}>{formData?.address}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('dealerCompany.label.pinCode')}>{formData?.pinCode}</Descriptions.Item>
                     {/* <Descriptions.Item label="Locality">{formData?.locality}</Descriptions.Item> */}
-                    <Descriptions.Item label="City">{formData?.cityName}</Descriptions.Item>
-                    <Descriptions.Item label="Tehsil">{formData?.tehsilName}</Descriptions.Item>
-                    <Descriptions.Item label="District">{formData?.districtName}</Descriptions.Item>
-                    <Descriptions.Item label="State">{formData?.stateName}</Descriptions.Item>
-                    <Descriptions.Item label="TIN">{formData?.companyTin}</Descriptions.Item>
-                    <Descriptions.Item label="TAN">{formData?.companyTan}</Descriptions.Item>
-                    <Descriptions.Item label="PAN">{formData?.companyPan}</Descriptions.Item>
-                    <Descriptions.Item label="Status">{formData?.status ? 'Active' : 'Inactive'}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('dealerCompany.label.city')}>{formData?.cityName}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('dealerCompany.label.tehsil')}>{formData?.tehsilName}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('dealerCompany.label.district')}>{formData?.districtName}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('dealerCompany.label.state')}>{formData?.stateName}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('dealerCompany.label.tin')}>{formData?.companyTin}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('dealerCompany.label.tan')}>{formData?.companyTan}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('dealerCompany.label.pan')}>{formData?.companyPan}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('dealerCompany.label.status')}>{formData?.status ? 'Active' : 'Inactive'}</Descriptions.Item>
                 </Descriptions>
             </div>
         </>

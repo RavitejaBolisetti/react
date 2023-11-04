@@ -5,6 +5,7 @@
  */
 import React from 'react';
 import { Descriptions } from 'antd';
+import { translateContent } from 'utils/translateContent';
 
 const ViewQualificationListMain = ({ formData, styles }) => {
     const viewOneColProps = {
@@ -17,9 +18,9 @@ const ViewQualificationListMain = ({ formData, styles }) => {
         <>
             <div className={`${styles?.viewContainer} ${styles?.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
-                    <Descriptions.Item label="Qualification Code">{formData?.qualificationCode}</Descriptions.Item>
-                    <Descriptions.Item label="Qualification Name">{formData?.qualificationName}</Descriptions.Item>
-                    <Descriptions.Item label="Status">{formData?.status === 1 ? <text className={styles?.activeText}>Active</text> : <text className={styles?.inactiveText}>InActive</text>}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('qualificationMaster.label.qualificationCode')}>{formData?.qualificationCode}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('qualificationMaster.label.qualificationName')}>{formData?.qualificationName}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('qualificationMaster.label.status')}>{formData?.status === 1 ? <text className={styles?.activeText}>{translateContent('qualificationMaster.label.active')}</text> : <text className={styles?.inactiveText}>{translateContent('qualificationMaster.label.inActive')}</text>}</Descriptions.Item>
                 </Descriptions>
             </div>
         </>

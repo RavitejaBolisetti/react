@@ -9,6 +9,7 @@ import { Col, Form, Row, Button, Select } from 'antd';
 import { withModal } from 'components/withModal';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredSelectField } from 'utils/validation';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -51,8 +52,8 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="State" initialValue={filterString?.stateCode} name="stateCode" rules={[validateRequiredSelectField('state')]}>
-                        <Select placeholder={preparePlaceholderSelect(`State`)} {...selectProps} onChange={handleFilterChange('stateCode')} loading={isStateLoading}>
+                    <Form.Item label={translateContent('hoPriceMapping.label.state')} initialValue={filterString?.stateCode} name="stateCode" rules={[validateRequiredSelectField(translateContent('global.validation.state'))]}>
+                        <Select placeholder={preparePlaceholderSelect(translateContent('hoPriceMapping.label.state'))} {...selectProps} onChange={handleFilterChange('stateCode')} loading={isStateLoading}>
                             {filteredStateData?.map((item) => (
                                 <Option value={item?.key}>{item?.value}</Option>
                             ))}
@@ -60,8 +61,8 @@ export const AdvancedSearchFrom = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="City" initialValue={filterString?.cityCode} name="cityCode" rules={[validateRequiredSelectField('city')]}>
-                        <Select placeholder={preparePlaceholderSelect(`City`)} {...selectProps} onChange={handleFilterChange('cityCode')}>
+                    <Form.Item label={translateContent('hoPriceMapping.label.city')} initialValue={filterString?.cityCode} name="cityCode" rules={[validateRequiredSelectField(translateContent('global.validation.city'))]}>
+                        <Select placeholder={preparePlaceholderSelect(translateContent('hoPriceMapping.label.city'))} {...selectProps} onChange={handleFilterChange('cityCode')}>
                             {filteredCityData?.map((item) => (
                                 <Option value={item?.key}>{item?.value}</Option>
                             ))}
@@ -72,8 +73,8 @@ export const AdvancedSearchFrom = (props) => {
 
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={filterString?.modelCode} label="Product Hierarchy" name="modelCode" rules={[validateRequiredSelectField('Product Hierarchy')]}>
-                        <Select placeholder={preparePlaceholderSelect(`Product Hierarchy`)} {...selectProps} loading={isProductLoading}>
+                    <Form.Item initialValue={filterString?.modelCode} label={translateContent('hoPriceMapping.label.productHierarchy')} name="modelCode" rules={[validateRequiredSelectField(translateContent('global.validation.productHierarchy'))]}>
+                        <Select placeholder={preparePlaceholderSelect(translateContent('hoPriceMapping.label.productHierarchy'))} {...selectProps} loading={isProductLoading}>
                             {productHierarchyList?.map((item) => (
                                 <Option key={'ph' + item.prodctCode} value={item.prodctCode}>
                                     {item.prodctShrtName}
@@ -87,13 +88,13 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
                     <Button onClick={handleResetFilter} danger>
-                        Reset
+                        {translateContent('hoPriceMapping.button.reset')}
                     </Button>
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
                     <Button htmlType="submit" type="primary">
-                        Apply
+                        {translateContent('hoPriceMapping.button.apply')}
                     </Button>
                 </Col>
             </Row>

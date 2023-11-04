@@ -37,7 +37,7 @@ const AddEditFormMain = (props) => {
         selectedTreeSelectKey,
         handleSelectTreeClick,
         defaultValue: treeCodeId,
-        placeholder: preparePlaceholderSelect('Parent'),
+        placeholder: preparePlaceholderSelect(translateContent('vehicleCheckListMaster.label.parent')),
     };
 
     const handleFormValueChange = () => {
@@ -158,13 +158,13 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupLeft}>
                             <Button danger onClick={onCloseAction}>
-                                Cancel
+                                {translateContent('global.buttons.cancel')}
                             </Button>
                         </Col>
 
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
                             <Button data-testid="isFormBtnActive" htmlType="submit" danger disabled={!isFormBtnActive}>
-                                Save
+                                {translateContent('global.buttons.save')}
                             </Button>
                         </Col>
                     </Row>

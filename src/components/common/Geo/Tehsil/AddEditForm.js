@@ -15,6 +15,7 @@ import { DrawerFormButton } from 'components/common/Button';
 import styles from 'assets/sass/app.module.scss';
 
 import dayjs from 'dayjs';
+import { translateContent } from 'utils/translateContent';
 
 const { Option } = Select;
 
@@ -97,8 +98,8 @@ const AddEditFormMain = (props) => {
                         <>
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.countryCode || defaultCountry} label="Country" name="countryCode" placeholder={preparePlaceholderSelect('Country')} rules={[validateRequiredInputField('Country')]}>
-                                        <Select showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear onChange={handleCountryChange}>
+                                    <Form.Item initialValue={formData?.countryCode || defaultCountry} label={translateContent('tehsil.label.countryCode')} name="countryCode" placeholder={preparePlaceholderSelect(translateContent('tehsil.placeholder.country'))} rules={[validateRequiredInputField(translateContent('tehsil.validation.country'))]}>
+                                        <Select showSearch loading={!isDataCountryLoaded} placeholder={translateContent('global.placeholder.select')} allowClear onChange={handleCountryChange}>
                                             {countryData?.map((item) => (
                                                 <Option key={item?.countryCode} value={item?.countryCode}>
                                                     {item?.countryName}
@@ -109,8 +110,8 @@ const AddEditFormMain = (props) => {
                                 </Col>
 
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label="State Name" initialValue={formData?.stateCode} name="stateCode" rules={[validateRequiredSelectField('State Name')]}>
-                                        <Select placeholder={preparePlaceholderSelect('State Name')} {...selectProps} onChange={handleStateChange}>
+                                    <Form.Item label={translateContent('tehsil.label.stateCode')} initialValue={formData?.stateCode} name="stateCode" rules={[validateRequiredSelectField(translateContent('tehsil.validation.stateName'))]}>
+                                        <Select placeholder={preparePlaceholderSelect(translateContent('tehsil.placeholder.stateName'))} {...selectProps} onChange={handleStateChange}>
                                             {filteredStateData?.map((item) => (
                                                 <Option key={item?.key} value={item?.key}>
                                                     {item?.value}
@@ -120,8 +121,8 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label="District Name" initialValue={formData?.districtCode} name="districtCode" rules={[validateRequiredSelectField('District Name')]}>
-                                        <Select placeholder={preparePlaceholderSelect('District Name')} {...selectProps} onChange={handleDistrictChange}>
+                                    <Form.Item label={translateContent('tehsil.label.districtCode')} initialValue={formData?.districtCode} name="districtCode" rules={[validateRequiredSelectField(translateContent('tehsil.validation.districtName'))]}>
+                                        <Select placeholder={preparePlaceholderSelect(translateContent('tehsil.placeholder.districtName'))} {...selectProps} onChange={handleDistrictChange}>
                                             {filteredDistrictData?.map((item) => (
                                                 <Option key={item?.key} value={item?.key}>
                                                     {item?.value}
@@ -133,21 +134,21 @@ const AddEditFormMain = (props) => {
 
                                 {!addMode && (
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item initialValue={formData?.code} label="Tehsil Code" name="code" rules={[validateRequiredInputField('Tehsil Code')]}>
-                                            <Input placeholder={preparePlaceholderText('Tehsil Code')} maxLength={6} disabled={editMode ? true : false} />
+                                        <Form.Item initialValue={formData?.code} label={translateContent('tehsil.label.tehsilCode')} name="code" rules={[validateRequiredInputField(translateContent('tehsil.validation.tehsilCode'))]}>
+                                            <Input placeholder={preparePlaceholderText(translateContent('tehsil.placeholder.tehsilCode'))} maxLength={6} disabled={editMode ? true : false} />
                                         </Form.Item>
                                     </Col>
                                 )}
 
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.name} label="Tehsil Name" name="name" rules={[validateRequiredInputField('Tehsil Name')]}>
-                                        <Input placeholder={preparePlaceholderText('Tehsil Name')} maxLength={50} />
+                                    <Form.Item initialValue={formData?.name} label={translateContent('tehsil.label.tehsilName')} name="name" rules={[validateRequiredInputField(translateContent('tehsil.validation.tehsilName'))]}>
+                                        <Input placeholder={preparePlaceholderText(translateContent('tehsil.placeholder.tehsilName'))} maxLength={50} />
                                     </Form.Item>
                                 </Col>
 
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.tehsilCategoryCode} label="Tehsil Category" name="tehsilCategoryCode">
-                                        <Select placeholder={preparePlaceholderSelect('tehsil category')} allowClear>
+                                    <Form.Item initialValue={formData?.tehsilCategoryCode} label={translateContent('tehsil.label.tehsilCategoryCode')} name="tehsilCategoryCode">
+                                        <Select placeholder={preparePlaceholderSelect(translateContent('tehsil.placeholder.tehsilCategory'))} allowClear>
                                             {tehsilCategoryData?.map((item) => (
                                                 <Option value={item?.key}>{item?.value}</Option>
                                             ))}
@@ -156,14 +157,14 @@ const AddEditFormMain = (props) => {
                                 </Col>
 
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label="Included On" name="includedOn" {...dateInitialValue} rules={[validateRequiredInputField('Included On')]}>
-                                        <DatePicker disabled format={dateFormat} style={{ display: 'auto', width: '100%' }} placeholder={preparePlaceholderSelect('Included On Date')} />
+                                    <Form.Item label={translateContent('tehsil.label.includedOn')} name="includedOn" {...dateInitialValue} rules={[validateRequiredInputField(translateContent('tehsil.validation.includedOn'))]}>
+                                        <DatePicker disabled format={dateFormat} style={{ display: 'auto', width: '100%' }} placeholder={preparePlaceholderSelect(translateContent('tehsil.placeholder.includedOnDate'))} />
                                     </Form.Item>
                                 </Col>
 
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
-                                        <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
+                                    <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label={translateContent('global.label.status')}>
+                                        <Switch checkedChildren={translateContent('global.label.active')} unCheckedChildren={translateContent('global.label.inActive')} onChange={(checked) => (checked ? 1 : 0)} />
                                     </Form.Item>
                                 </Col>
                             </Row>
