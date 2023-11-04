@@ -292,10 +292,8 @@
     "criticalityGroup": {
         "heading": {
             "mainTitle": "Application Criticality Group Details",
-            "title": "Criticality Group Name",
-            "loginText": "Please enter your credentials to login",
-            "forgotPassword": "Forgot Password?",
-            "unauthorizedAccess": "Unauthorized Access"
+            "pageTitle": "Application Criticality Group Master",
+            "title": "Criticality Group Name"
         },
         "label": {
             "criticalityGroupId": "Criticality Group ID",
@@ -305,6 +303,12 @@
             "startTime": "Start Time",
             "endTime": "End Time",
             "allowedTimming": "Allowed Timings"
+        },
+        "validation": {
+            "id": "id",
+            "name": "name",
+            "startTime": "Start time*",
+            "endTime": "End time*"
         }
     },
     "city": {
@@ -345,6 +349,57 @@
             "stateName": "State Name"
         }
     },
+
+    "productHierarchy": {
+        "heading": {
+            "moduleTitle": "Product Detail",
+            "hierarchyDetails": "Hierarchy Details",
+            "pageTitle": "Product Hierarchy",
+            "title": "Hierarchy",
+            "productAttribute": "Product Attribute"
+        },
+        "placeholder": {
+            "organizationHierarchy": "Organization Hierarchy",
+            "search": "Search",
+            "attributeName": "attribute name"
+        },
+        "label": {
+            "noDataTitle": "Please select hierarchy type to view records.",
+            "noDataMessage": "No records found.",
+            "description": "Please select product from left side hierarchy to view “Hierarchy Details”",
+            "attributeLevel": "Attribute Level",
+            "parent": "Parent",
+            "code": "Code",
+            "shortDescription": "Short Description",
+            "longDescription": "Long Description",
+            "status": "Status",
+            "changedDate": "Changed/Modified Date",
+            "changedBy": "Changed By",
+            "attribute": "Attribute",
+            "attributeName": "Attribute Name",
+            "attributeValue": "Attribute Value"
+        },
+        "validation": {
+            "attributeLevel": "attribute level",
+            "parent": "Parent",
+            "code": "code",
+            "shortDescription": "short description",
+            "longDescription": "long description"
+        },
+        "productHierarchType": {
+            "model": "Model",
+            "modelFamily": "Model Family",
+            "modelGroup": "Model Group",
+            "modelVariant": "Model Variant",
+            "productDivision": "Product Division",
+            "productHierarchy": "PRODUCT_HIERARCHY"
+        },
+        "notificationDuplicate": {
+            "title": "Duplicate",
+            "message": "Can not Save having same Attribute Name"
+        }
+    },
+
     "footer": {
         "copyright": "Copyright &copy; {YEAR} ROBIN."
     },
