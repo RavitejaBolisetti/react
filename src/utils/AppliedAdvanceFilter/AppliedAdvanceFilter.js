@@ -15,6 +15,7 @@ import { BsDownload } from 'react-icons/bs';
 import { PlusOutlined } from '@ant-design/icons';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import { translateContent } from 'utils/translateContent';
 
 const { Search } = Input;
 export default function AppliedAdvanceFilter(props) {
@@ -41,7 +42,7 @@ export default function AppliedAdvanceFilter(props) {
                                         ]}
                                         validateTrigger={['onSearch']}
                                     >
-                                        <Search placeholder="Search" allowClear onSearch={onSearchHandle} onChange={handleClearInSearch} />
+                                        <Search placeholder={translateContent('LessorCompanyMaster.placeholder.search')} allowClear onSearch={onSearchHandle} onChange={handleClearInSearch} />
                                     </Form.Item>
                                 </Form>
                             </Col>
@@ -56,7 +57,7 @@ export default function AppliedAdvanceFilter(props) {
                                             setAdvanceSearchVisible(true);
                                         }}
                                     >
-                                        Advanced Filters
+                                        {translateContent('global.advanceFilter.title')}
                                     </Button>
                                 </Col>
                             )}
@@ -66,14 +67,14 @@ export default function AppliedAdvanceFilter(props) {
                         {showChangeHistoryButton && (
                             <>
                                 <Button icon={<FaHistory />} className={styles.verticallyCentered} onClick={showChangeHistoryList} type="primary">
-                                    Change History
+                                    {translateContent('global.changeHistory.title')}
                                 </Button>
                             </>
                         )}
 
                         {advanceFilter && filterString?.advanceFilter && downloadReport && (
                             <Button data-testid="downloadBtn" icon={<BsDownload />} onClick={handleDownloadReport} danger>
-                                Download
+                                {translateContent('global.buttons.download')}
                             </Button>
                         )}
 
@@ -82,7 +83,7 @@ export default function AppliedAdvanceFilter(props) {
                                 <Button icon={<TfiReload />} onClick={handleReferesh} data-testid="refreshBtn" danger />
                                 {showAddButton && (
                                     <Button icon={<PlusOutlined />} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                        Add
+                                        {translateContent('global.buttons.add')}
                                     </Button>
                                 )}
                             </>
@@ -114,7 +115,7 @@ export default function AppliedAdvanceFilter(props) {
                                 </Col>
                                 <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
                                     <Button data-testid="clearBtn" className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
-                                        Clear
+                                        {translateContent('global.buttons.clear')}
                                     </Button>
                                 </Col>
                             </Row>
