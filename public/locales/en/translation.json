@@ -62,6 +62,35 @@
             "mnmLogin": "M&M User Login"
         }
     },
+    "state": {
+        "heading": {
+            "title": "State Name",
+            "welcomeNote": "Welcome",
+            "loginText": "Please enter your credentials to login",
+            "forgotPassword": "Forgot Password?",
+            "unauthorizedAccess": "Unauthorized Access"
+        },
+        "label": {
+            "username": "User ID (MILE ID.Parent ID)",
+            "password": "Password"
+        },
+        "placeholder": {
+            "username": "User ID (MILE ID.Parent ID)",
+            "password": "Password"
+        },
+        "validation": {
+            "googleCaptcha": "Please select Captcha"
+        },
+        "button": {
+            "login": "Login",
+            "skipForNow": "Skip For Now",
+            "updatePassword": "Update Password",
+            "continue": "Continue"
+        },
+        "link": {
+            "mnmLogin": "M&M User Login"
+        }
+    },
     "footer": {
         "copyright": "Copyright &copy; {YEAR} ROBIN."
     }
