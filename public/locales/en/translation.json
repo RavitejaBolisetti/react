@@ -572,6 +572,24 @@
             }
         }
     },
+    "rsmAsmApproval": {
+        "heading": {
+            "mainTitle": "RSM/ASM Approval",
+            "title": "RSM Approval Summary"
+        },
+        "label": {
+            "approveReq": "Are you sure you want to approve request?",
+            "requestType": "Request Type",
+            "requestStatus": "Request Status",
+            "requestNumber": "Request Number",
+            "requestDate": "Request Date",
+            "deliveryOrInvoiceId": "Delivery Note/Invoice ID",
+            "deliveryOrInvoiceDate": "Delivery Note/Invoice Date",
+            "dealerName": "Dealer Name",
+            "fromDate": "Request From Date",
+            "toDate": "Request To Date"
+        }
+    },
     "userManagement": {
         "heading": {
             "pageTitle": "User Management",
