@@ -9,6 +9,7 @@ import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/prepareP
 import { validateRequiredInputField } from 'utils/validation';
 import { customSelectBox } from 'utils/customSelectBox';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { translateContent } from 'utils/translateContent';
 
 const { Search } = Input;
 
@@ -19,24 +20,24 @@ const EnrolmentAdd = (props) => {
         <>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item label="Scheme Type" name="schemeType" rules={[validateRequiredInputField('Scheme Type')]}>
-                        {customSelectBox({ data: typeData[PARAM_MASTER?.CRM_SCHEME_TYPE?.id], placeholder: preparePlaceholderSelect('Scheme Type') })}
+                    <Form.Item label={translateContent('crmSchemeEnrolment.label.schemeType')} name="schemeType" rules={[validateRequiredInputField(translateContent('crmSchemeEnrolment.label.schemeType'))]}>
+                        {customSelectBox({ data: typeData[PARAM_MASTER?.CRM_SCHEME_TYPE?.id], placeholder: preparePlaceholderSelect(translateContent('crmSchemeEnrolment.label.schemeType')) })}
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item label="Vehicle Registration Number" name="vin" rules={[validateRequiredInputField('Vehicle Registration Number')]}>
-                        <Search placeholder={preparePlaceholderText('Vehicle Registration Number')} allowClear onSearch={onHandleRegistrationNumber} loading={isSearchLoading} />
+                    <Form.Item label={translateContent('crmSchemeEnrolment.label.vehicleRegistrationNumber')} name="vin" rules={[validateRequiredInputField(translateContent('crmSchemeEnrolment.label.vehicleRegistrationNumber'))]}>
+                        <Search placeholder={preparePlaceholderText(translateContent('crmSchemeEnrolment.label.vehicleRegistrationNumber'), false)} allowClear onSearch={onHandleRegistrationNumber} loading={isSearchLoading} />
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item label="Booklet Number" name="bookletNumber">
+                    <Form.Item label={translateContent('crmSchemeEnrolment.label.bookletNumber')} name="bookletNumber">
                         {/* //rules={[validateRequiredInputField('Booklet Number')]} */}
-                        <Input placeholder={preparePlaceholderText('Booklet Number')} />
+                        <Input placeholder={preparePlaceholderText(translateContent('crmSchemeEnrolment.label.bookletNumber'), false)} />
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item label="Enrolled By" name="enrolledBy" rules={[validateRequiredInputField('Enrolled By')]}>
-                        {customSelectBox({ data: salesConsultantLovData, placeholder: preparePlaceholderSelect('Enrolled By'), loading: isSalesConsultantDataLoading })}
+                    <Form.Item label={translateContent('crmSchemeEnrolment.label.enrolledBy')} name="enrolledBy" rules={[validateRequiredInputField(translateContent('crmSchemeEnrolment.label.enrolledBy'))]}>
+                        {customSelectBox({ data: salesConsultantLovData, placeholder: preparePlaceholderSelect(translateContent('crmSchemeEnrolment.label.enrolledBy')), loading: isSalesConsultantDataLoading })}
                     </Form.Item>
                 </Col>
             </Row>
