@@ -39,6 +39,7 @@ import { tableColumn as manufacturerTableColumn } from './Manufacturer/tableColu
 
 import styles from 'assets/sass/app.module.scss';
 import { DealerProductActions } from 'store/actions/data/userManagement/dealerProduct';
+import { translateContent } from 'utils/translateContent';
 
 const { Option } = Select;
 
@@ -326,12 +327,12 @@ const UserManagementMain = (props) => {
                     <Row gutter={20} justify="end">
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Button danger className={styles.button} onClick={hideGlobalNotification} size="small">
-                                Cancel
+                                {translateContent('global.button.cancel')}
                             </Button>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Button type="primary" onClick={onConfirm} size="small">
-                                Create User
+                                {translateContent('userManagement.button.createUser')}
                             </Button>
                         </Col>
                     </Row>
@@ -449,11 +450,11 @@ const UserManagementMain = (props) => {
 
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
-            return 'View ';
+            return translateContent('global.drawerTitle.view');
         } else if (formActionType?.editMode) {
-            return 'Edit ';
+            return translateContent('global.drawerTitle.edit');
         } else {
-            return 'Add New ';
+            return translateContent('global.drawerTitle.addNew');
         }
     }, [formActionType]);
     const formProps = {

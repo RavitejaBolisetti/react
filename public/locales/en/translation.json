@@ -33,6 +33,10 @@
         },
         "generalMessage": {
             "noRecordsFound": "No records found"
+        },
+        "button" :{
+            "cancel": "Cancel",
+            "save": "Save"
         }
     },
     "login": {
@@ -207,13 +211,10 @@
             "noApplicationText": "No Application Available"
         },
         "button": {
-            "login": "Login",
-            "skipForNow": "Skip For Now",
-            "updatePassword": "Update Password",
-            "continue": "Continue"
+            
         },
         "link": {
-            "mnmLogin": "M&M User Login"
+            
         }
     },
     "customerMaster": {
@@ -299,7 +300,7 @@
     },
     "userManagement": {
         "heading": {
-            "pageTitle": "Role Management",
+            "pageTitle": "User Management",
             "role": "Role",
             "subPanel": "Application Access"
         },
@@ -315,13 +316,10 @@
             "noApplicationText": "No Application Available"
         },
         "button": {
-            "login": "Login",
-            "skipForNow": "Skip For Now",
-            "updatePassword": "Update Password",
-            "continue": "Continue"
+            "createUser": "Create User"
         },
         "link": {
-            "mnmLogin": "M&M User Login"
+            
         }
     }
 }
