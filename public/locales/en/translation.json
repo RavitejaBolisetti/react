@@ -488,9 +488,9 @@
             "districtCode": "district Code"
         },
         "message": {
-            "differentState" : " is not active anymore. Please select a different state. "
+            "differentState": " is not active anymore. Please select a different state. "
         },
-        "title":{
+        "title": {
             "country": "Country",
             "state": "State",
             "district": "District",
@@ -499,7 +499,6 @@
             "districtCode": "District Code",
             "stateName": "State Name"
         }
-
     },
 
     "productHierarchy": {
