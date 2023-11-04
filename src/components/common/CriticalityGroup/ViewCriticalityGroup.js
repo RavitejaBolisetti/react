@@ -5,6 +5,8 @@
  */
 import React from 'react';
 import { Descriptions } from 'antd';
+import { translateContent } from 'utils/translateContent';
+
 
 const ViewCriticalityGroupMain = (props) => {
     const { formData, styles } = props;
@@ -20,12 +22,12 @@ const ViewCriticalityGroupMain = (props) => {
         <div className={styles?.viewContainer}>
             <>
                 <Descriptions {...viewProps}>
-                    <Descriptions.Item label="Criticality Group Id">{formData?.criticalityGroupCode}</Descriptions.Item>
-                    <Descriptions.Item label="Criticality Group Name">{formData?.criticalityGroupName}</Descriptions.Item>
-                    <Descriptions.Item label="Default Group">
+                    <Descriptions.Item label={translateContent('criticalityGroup.label.criticalityGroupId')}>{formData?.criticalityGroupCode}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('criticalityGroup.label.criticalityGroupName')}>{formData?.criticalityGroupName}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('criticalityGroup.label.defaultGroup')}>
                         <span className={formData?.criticalityDefaultGroup ? styles.activeText : styles?.inactiveText}>{formData?.criticalityDefaultGroup ? 'Active' : 'Inactive'}</span>
                     </Descriptions.Item>
-                    <Descriptions.Item label="Status">
+                    <Descriptions.Item label={translateContent('criticalityGroup.label.status')}>
                         <span className={formData?.activeIndicator ? styles.activeText : styles?.inactiveText}>{formData?.activeIndicator ? 'Active' : 'Inactive'}</span>
                     </Descriptions.Item>
                 </Descriptions>

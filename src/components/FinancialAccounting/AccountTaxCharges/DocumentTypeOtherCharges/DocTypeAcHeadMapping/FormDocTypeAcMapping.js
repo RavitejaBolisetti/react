@@ -12,6 +12,7 @@ import { PlusOutlined } from '@ant-design/icons';
 
 import styles from 'assets/sass/app.module.scss';
 import TreeSelectField from 'components/common/TreeSelectField';
+import { translateContent } from 'utils/translateContent';
 
 function FormDocTypeAcMapping(props) {
     const { docTypeHeadMappingForm, typeData, addDocHeadMapping, formEdit, editForm, financialAccount, financialAccHeadData, handleSelectTreeClick, selectedTreeSelectKey, financialAccHeadName } = props;
@@ -25,18 +26,18 @@ function FormDocTypeAcMapping(props) {
         handleSelectTreeClick,
         selectedTreeSelectKey,
         defaultParent: false,
-        placeholder: preparePlaceholderSelect('Financial Account Head'),
+        placeholder: preparePlaceholderSelect(translateContent('documentTypeOtherChargesMaster.placeholder.financialAccountHead')),
     };
     return (
         <Form form={formEdit ? editForm : docTypeHeadMappingForm} id="myForm" autoComplete="off" layout="vertical">
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Other Charges" name="chargeCode" rules={[validateRequiredSelectField('Other Charges')]}>
-                        {customSelectBox({ data: typeData, placeholder: preparePlaceholderSelect('Other Charges') })}
+                    <Form.Item label={translateContent('documentTypeOtherChargesMaster.label.otherCharges')} name="chargeCode" rules={[validateRequiredSelectField(translateContent('documentTypeOtherChargesMaster.label.otherCharges'))]}>
+                        {customSelectBox({ data: typeData, placeholder: preparePlaceholderSelect(translateContent('documentTypeOtherChargesMaster.label.otherCharges')) })}
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Financial Account Head" name="financialAccountHeadId" initialValue={props?.financialAccountHeadId} rules={[validateRequiredSelectField('Financial Account Head')]}>
+                    <Form.Item label={translateContent('documentTypeOtherChargesMaster.placeholder.financialAccountHead')} name="financialAccountHeadId" initialValue={props?.financialAccountHeadId} rules={[validateRequiredSelectField('Financial Account Head')]}>
                         <TreeSelectField {...treeSelectFieldProps} />
                     </Form.Item>
                 </Col>

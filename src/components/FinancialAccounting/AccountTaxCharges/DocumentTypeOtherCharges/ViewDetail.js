@@ -7,6 +7,7 @@ import React from 'react';
 import { Descriptions, Collapse, Divider } from 'antd';
 import CardDocTypeAcMapping from './DocTypeAcHeadMapping/CardDocTypeAcMapping';
 import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
+import { translateContent } from 'utils/translateContent';
 const { Panel } = Collapse;
 
 const expandIcon = ({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />);
@@ -21,13 +22,13 @@ const ViewDetailBase = ({ styles, typeData, docTypeLedger, setDisabledEdit }) =>
         <>
             <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
-                    <Descriptions.Item label="Application Menu">{docTypeLedger?.applicationName}</Descriptions.Item>
-                    <Descriptions.Item label="Document Name">{docTypeLedger?.documentTypeName}</Descriptions.Item>
-                    <Descriptions.Item label="Document Type">{docTypeLedger?.documentTypeCode}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('documentTypeOtherChargesMaster.label.applicationMenu')}>{docTypeLedger?.applicationName}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('documentTypeOtherChargesMaster.label.documentName')}>{docTypeLedger?.documentTypeName}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('documentTypeOtherChargesMaster.label.documentType')}>{docTypeLedger?.documentTypeCode}</Descriptions.Item>
                     <div>
                         {docTypeLedger?.accountLedgerMappingDtoList?.length > 0 && (
                             <Collapse expandIcon={expandIcon} collapsible="icon" className={styles.fullWidth}>
-                                <Panel header="Doc Type and A/C head Mapping" key="2">
+                                <Panel header={translateContent('documentTypeOtherChargesMaster.label.documentTypeACHeadmapping')} key="2">
                                     <Divider />
                                     {docTypeLedger?.accountLedgerMappingDtoList?.map((item, index) => (
                                         <CardDocTypeAcMapping key={'doc' + item?.financialAccountHeadId} chargeCodeDesc={item?.chargeCodeDesc} financialAccountHeadDesc={item?.financialAccountHeadDesc} id={item?.id} setDisabledEdit={setDisabledEdit} typeData={typeData} />
