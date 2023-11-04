@@ -4,6 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -11,12 +12,12 @@ export const tableColumn = (handleButtonClick) => {
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Application Menu',
+            title: translateContent("documentTypeOtherChargesMaster.label.applicationMenu"),
             dataIndex: 'applicationName',
             width: '15%',
         }),
         tblPrepareColumns({
-            title: 'Document Type',
+            title: translateContent("documentTypeOtherChargesMaster.label.documentType"),
             dataIndex: 'documentTypeCode',
             width: '15%',
         }),
