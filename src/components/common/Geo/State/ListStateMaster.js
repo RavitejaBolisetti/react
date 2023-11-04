@@ -23,7 +23,7 @@ import { btnVisiblity } from 'utils/btnVisiblity';
 
 import { AdvancedSearch } from './AdvancedSearch';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
-import { AddEditForm } from './AddEditForm';
+//import { AddEditForm } from './AddEditForm';
 import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
@@ -354,6 +354,7 @@ export const ListStateMasterBase = (props) => {
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />
+            <AddEditForm {...formProps} />
         </>
     );
 };

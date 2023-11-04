@@ -13,6 +13,7 @@ import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarch
 import { vehicleChecklistMasterDataActions } from 'store/actions/data/sales/vehicleChecklistMaster/VehicleChecklistMaster';
 import { vehicleChecklistMasterAttributeLovDataActions } from 'store/actions/data/sales/vehicleChecklistMaster/attributeHierarchyLov';
 import { otfLoyaltyModelGroupDataActions } from 'store/actions/data/otf/loyaltyModelGroup';
+import { translateContent } from 'utils/translateContent';
 
 import { showGlobalNotification } from 'store/actions/notification';
 
@@ -44,8 +45,8 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Vehicle Checklist';
-    const viewTitle = 'Vehicle Checklist';
+    const moduleTitle = translateContent('vehicleCheckListMaster.heading.title');
+    const viewTitle = translateContent('vehicleCheckListMaster.heading.title');
 
     let returnValue = {
         userId,
@@ -448,7 +449,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
             setAttributeType(formData?.attributeLevel);
             setFormActionType(FROM_ACTION_TYPE?.VIEW);
         },
-        titleOverride: (formActionType === FROM_ACTION_TYPE?.EDIT ? `Edit ` : `Add `).concat(moduleTitle),
+        titleOverride: (formActionType === FROM_ACTION_TYPE?.EDIT ? translateContent('vehicleCheckListMaster.heading.edit') : translateContent('vehicleCheckListMaster.heading.add')).concat(moduleTitle),
         onFinish,
         selectedTreeSelectKey,
         handleResetBtn,
