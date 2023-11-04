@@ -19,6 +19,7 @@ import ViewMacIdList from './ViewMacIdList';
 import styles from 'assets/sass/app.module.scss';
 
 import { UserManagementFormButton } from 'components/common/UserManagement/UserManagementFormButton/UserManagementFormButton';
+import { translateContent } from 'utils/translateContent';
 
 const { Text } = Typography;
 
@@ -96,7 +97,7 @@ const MacIdMasterMain = (props) => {
     }, [userId]);
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        showGlobalNotification({ notificationType: translateContent('global.')+'success', title: 'Success', message: res?.responseMessage });
     };
 
     const onSaveFormData = () => {
@@ -198,7 +199,7 @@ const MacIdMasterMain = (props) => {
 
     const buttonProps = {
         ...props,
-        saveButtonName: 'Save & Close',
+        saveButtonName: translateContent('global.button.saveCloseBtn'),
         buttonData,
     };
 
@@ -217,7 +218,7 @@ const MacIdMasterMain = (props) => {
                                         <Text strong> Device ID</Text>
                                         {!formActionType?.viewMode && (
                                             <Button onClick={addBtnMacIdHandler} icon={<PlusOutlined />} type="primary" disabled={isEditing || isAdding}>
-                                                Add
+                                                {translateContent('global.button.add')}
                                             </Button>
                                         )}
                                     </Row>

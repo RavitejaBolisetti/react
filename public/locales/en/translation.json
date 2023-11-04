@@ -36,6 +36,13 @@
         "placeholder": {
             "select": "Select",
             "search": "Search"
+        },
+        "button": {
+            "cancel": "Cancel",
+            "save": "Save",
+            "saveCloseBtn": "Save & Close",
+            "seeMore": "See more",
+            "seeLess": "See less"
         }
     },
     "login": {
@@ -245,15 +252,8 @@
         "validation": {
             "noApplicationText": "No Application Available"
         },
-        "button": {
-            "login": "Login",
-            "skipForNow": "Skip For Now",
-            "updatePassword": "Update Password",
-            "continue": "Continue"
-        },
-        "link": {
-            "mnmLogin": "M&M User Login"
-        }
+        "button": {},
+        "link": {}
     },
     "customerMaster": {
         "heading": {
@@ -341,8 +341,16 @@
                 "customerCategoryCsi": "Customer Category-CSI",
                 "customerCategoryIqs": "Customer Category-IQS",
                 "taxiOrNonTaxiKey": "Taxi/Non Taxi",
+                "oemPrivilegeCustomer": "OEM Privileged Customer",
+                "keyAccountVehicle": "Key Account Vehicle",
+                "refurbished": "Refurbished",
+                "theftVehicle": "Theft Vehicle",
+                "pdiDone": " PDI Done",
+                "govtVehicle": "Government Vehicle",
+                "mnmCtcVehicle": "M&M CTC Vehicle",
                 "manageBy": "Managed By",
-                "carePlus": "Care Plus"
+                "carePlus": "Care Plus",
+                "buyBackVehicle": "Buy Back Vehicle"
             },
             "validation": {
                 "managedBy": "managed by"
@@ -359,7 +367,8 @@
                 "modelFamily": "Model Family",
                 "modelGroup": "Model Group",
                 "modelVariant": "Model Variant",
-                "model": "Model Description",
+                "modelDescription": "Model Description",
+                "model": "Model ",
                 "item": "Item",
                 "make": "Make",
                 "serialNo": "Serial No."
@@ -368,30 +377,33 @@
     },
     "userManagement": {
         "heading": {
-            "pageTitle": "Role Management",
+            "pageTitle": "User Management",
             "role": "Role",
             "subPanel": "Application Access"
         },
         "label": {
             "roleId": "Role ID",
             "roleName": "Role Name",
-            "roleDescription": "Role Description"
+            "roleDescription": "Role Description",
+            "tokenNumber": "Token No",
+            "userName": "User Name",
+            "designation": "Designation",
+            "mobileNumber": "Mobile Number",
+            "emailId": "Email ID"
         },
         "placeholder": {
-            "search": "Search"
+            "search": "Search",
+            "searchEmployeeCode": "Search Employee Code",
+            "searchTokenNumber": "Search token number",
+            "dealer": "dealer"
         },
         "validation": {
             "noApplicationText": "No Application Available"
         },
         "button": {
-            "login": "Login",
-            "skipForNow": "Skip For Now",
-            "updatePassword": "Update Password",
-            "continue": "Continue"
+            "createUser": "Create User"
         },
-        "link": {
-            "mnmLogin": "M&M User Login"
-        }
+        "link": {}
     },
     "state": {
         "heading": {
