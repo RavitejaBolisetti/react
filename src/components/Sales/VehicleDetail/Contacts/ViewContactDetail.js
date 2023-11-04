@@ -8,6 +8,7 @@ import { Descriptions } from 'antd';
 import AddEditForm from './AddEditForm';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
+import { translateContent } from 'utils/translateContent';
 
 const ViewContactDetailBase = (props) => {
     const { formData, styles } = props;
@@ -33,12 +34,12 @@ const ViewContactDetailBase = (props) => {
             {!isEditing ? (
                 <>
                     <Descriptions {...viewProps}>
-                        <Descriptions.Item label="Contact Type">{checkAndSetDefaultValue(getCodeValue(typeData?.VH_CONTACT_TYPE, formData?.contactType), isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Preferred Days For Contact">{checkAndSetDefaultValue(getCodeValue(typeData?.VH_CONTACT_DAYS, formData?.preferredDayForContact), isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Name">{checkAndSetDefaultValue(formData?.name, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="E-mail">{checkAndSetDefaultValue(formData?.emailId, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Preferred Contact Time">
+                        <Descriptions.Item label={translateContent('vehicleDetail.contacts.label.contactType')}>{checkAndSetDefaultValue(getCodeValue(typeData?.VH_CONTACT_TYPE, formData?.contactType), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('vehicleDetail.contacts.label.preferredDayForContact')}>{checkAndSetDefaultValue(getCodeValue(typeData?.VH_CONTACT_DAYS, formData?.preferredDayForContact), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('vehicleDetail.customerDetails.label.mobileNumber')}>{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('vehicleDetail.contacts.label.name')}>{checkAndSetDefaultValue(formData?.name, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('vehicleDetail.contacts.label.emailId')}>{checkAndSetDefaultValue(formData?.emailId, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('vehicleDetail.contacts.label.preferredContactTime')}>
                             {formData?.preferredContactTimeFrom} - {formData?.preferredContactTimeTo}
                         </Descriptions.Item>
                     </Descriptions>

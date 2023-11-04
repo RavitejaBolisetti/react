@@ -9,6 +9,7 @@ import { FiEdit } from 'react-icons/fi';
 import { AddressCommonForm } from './AddressCommonForm';
 import { expandIconWithText } from 'utils/accordianExpandIcon';
 import { VehicleCustomerSearch } from './VehicleCustomerSearch';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 const AddEditFormBase = (props) => {
@@ -78,13 +79,13 @@ const AddEditFormBase = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Collapse onChange={(e) => handleCollapse(1)} activeKey={activeKey} expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} expandIconPosition="end" collapsible="icon">
-                        <Panel header=" Owner Details" key="1">
+                        <Panel header={translateContent('vehicleDetail.customerDetails.heading.ownerDetails')} key="1">
                             <Divider />
                             <AddressCommonForm key="1" {...ownerCustomerProps} isBillingCustmrForm={false} />
                         </Panel>
                     </Collapse>
                     <Collapse onChange={() => handleCollapse(2)} activeKey={activeKey} expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} expandIconPosition="end" collapsible="icon">
-                        <Panel header=" Billing Customer Details" key="2">
+                        <Panel header={translateContent('vehicleDetail.customerDetails.heading.billingDetails')} key="2">
                             <Divider />
                             <AddressCommonForm key="2" {...bilingCustomerProps} isBillingCustmrForm={true} />
                         </Panel>

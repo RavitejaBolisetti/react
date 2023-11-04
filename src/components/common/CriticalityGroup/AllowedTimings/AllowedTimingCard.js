@@ -22,7 +22,7 @@ const AllowedTimingCard = (props) => {
     const { deletedTime, setDeletedTime, buttonData, setButtonData, formActionType, setIsAddTimeVisible, setTimeData, timeSlotFrom, timeSlotTo, showGlobalNotification } = props;
 
     const handleDeleteAction = (val) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: LANGUAGE_EN.GENERAL.ALLOWED_TIMING_DELETED.MESSAGE, placement: 'bottomRight' });
+        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.title'), message: LANGUAGE_EN.GENERAL.ALLOWED_TIMING_DELETED.MESSAGE, placement: 'bottomRight' });
         setTimeData((prev) => {
             const newList = prev;
             const index = prev?.findIndex((el) => el?.timeSlotFrom === val);
@@ -31,7 +31,7 @@ const AllowedTimingCard = (props) => {
         });
     };
     const handleDeleteActionServer = (val) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: LANGUAGE_EN.GENERAL.ALLOWED_TIMING_DELETED.MESSAGE, placement: 'bottomRight' });
+        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.title'), message: LANGUAGE_EN.GENERAL.ALLOWED_TIMING_DELETED.MESSAGE, placement: 'bottomRight' });
         setButtonData({ ...buttonData, formBtnActive: true });
 
         setTimeData((prev) => {

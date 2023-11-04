@@ -9,6 +9,7 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { DATA_TYPE } from 'constants/dataType';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -42,40 +43,40 @@ const ViewDetailMain = (props) => {
     return (
         <div className={styles.viewDrawerContainer}>
             <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
-                <Panel header="Individual Information" key="1">
+                <Panel header={translateContent('customerMaster.heading.individualTitle')} key="1">
                     <Divider />
                     {/* <div>
                         <Image alt="Uploaded profile picture" width="120" height="100" src={`data:image/png;base64,${viewDocument?.base64}`} />
                     </div>
                     <Divider className={styles.marT20} /> */}
                     <Descriptions {...viewProps}>
-                        <Descriptions.Item label="Date of Birth">{checkAndSetDefaultValue(formData?.dateOfBirth, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                        <Descriptions.Item label="Gender">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.GENDER_CD, formData?.gender), isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Marital Status">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.MARITAL_STATUS, formData?.martialStatus), isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Wedding Anniversary Date">{checkAndSetDefaultValue(formData?.weddingAnniversary, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                        <Descriptions.Item label="Occupation">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.OCCUPATION, formData?.occuption), isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Annual Income">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.Annual_Income, formData?.annualIncome), isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Driving License No.">{checkAndSetDefaultValue(formData?.drivingLicenseNumber, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Aadhar No.">{checkAndSetDefaultValue(formData?.adharNumber, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Voter ID">{checkAndSetDefaultValue(formData?.voterId, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Vehicle Used">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.Vehicle_Used, formData?.vehicleUsed), isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Mother Tongue">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.MOTHER_TOUNGE, formData?.motherTongue), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('customerMaster.label.dateOfBirth')}>{checkAndSetDefaultValue(formData?.dateOfBirth, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('customerMaster.label.gender')}>{checkAndSetDefaultValue(getCodeValue(appCategoryData?.GENDER_CD, formData?.gender), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('customerMaster.label.maritalStatus')}>{checkAndSetDefaultValue(getCodeValue(appCategoryData?.MARITAL_STATUS, formData?.martialStatus), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('customerMaster.label.WeddingDate')}>{checkAndSetDefaultValue(formData?.weddingAnniversary, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('customerMaster.label.Occupation')}>{checkAndSetDefaultValue(getCodeValue(appCategoryData?.OCCUPATION, formData?.occuption), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('customerMaster.label.annualIncome')}>{checkAndSetDefaultValue(getCodeValue(appCategoryData?.Annual_Income, formData?.annualIncome), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('customerMaster.label.drivingLicenseNo')}>{checkAndSetDefaultValue(formData?.drivingLicenseNumber, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('customerMaster.label.aadharNo')}>{checkAndSetDefaultValue(formData?.adharNumber, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('customerMaster.label.voterID')}>{checkAndSetDefaultValue(formData?.voterId, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('customerMaster.label.vehicleUsed')}>{checkAndSetDefaultValue(getCodeValue(appCategoryData?.Vehicle_Used, formData?.vehicleUsed), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('customerMaster.label.motherTongue')}>{checkAndSetDefaultValue(getCodeValue(appCategoryData?.MOTHER_TOUNGE, formData?.motherTongue), isLoading)}</Descriptions.Item>
                         {/* <Descriptions.Item label="Religion">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.RELGION, formData?.religion), isLoading)}</Descriptions.Item> */}
-                        <Descriptions.Item label="PAN">{checkAndSetDefaultValue(formData?.panNumber, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="GSTIN">{checkAndSetDefaultValue(formData?.gstin, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('customerMaster.label.pan')}>{checkAndSetDefaultValue(formData?.panNumber, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('customerMaster.label.gstin')}>{checkAndSetDefaultValue(formData?.gstin, isLoading)}</Descriptions.Item>
                     </Descriptions>
                     <Divider />
                     <Descriptions {...viewProps}>
-                        <Descriptions.Item label="Usage/Application Categorization">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.APP_CAT, formData?.applicationCategorization), isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Usage/Application Sub-Category">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.APP_SUB_CAT, formData?.applicationSubCategory), isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Customer Category">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.CUS_CAT, formData?.customerCategory), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('customerMaster.label.Categorization')}>{checkAndSetDefaultValue(getCodeValue(appCategoryData?.APP_CAT, formData?.applicationCategorization), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('customerMaster.label.SubCategory')}>{checkAndSetDefaultValue(getCodeValue(appCategoryData?.APP_SUB_CAT, formData?.applicationSubCategory), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('customerMaster.label.customerCategory')}>{checkAndSetDefaultValue(getCodeValue(appCategoryData?.CUS_CAT, formData?.customerCategory), isLoading)}</Descriptions.Item>
                     </Descriptions>
                     {formData?.customerCategory === 'CUS_CAT_2' ? (
                         <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Business Details">{checkAndSetDefaultValue(formData?.businessDetails, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Vehicle Deployment Detail">{checkAndSetDefaultValue(formData?.vehicleDeploymentDetails, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Key Role Details">{checkAndSetDefaultValue(formData?.keyRolesDetails, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Major Route Details">{checkAndSetDefaultValue(formData?.majorRouteDetails, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('customerMaster.label.businessDetails')}>{checkAndSetDefaultValue(formData?.businessDetails, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('customerMaster.label.vehicleDeployment')}>{checkAndSetDefaultValue(formData?.vehicleDeploymentDetails, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('customerMaster.label.keyRoleDetails')}>{checkAndSetDefaultValue(formData?.keyRolesDetails, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('customerMaster.label.majorRouteDetails')}>{checkAndSetDefaultValue(formData?.majorRouteDetails, isLoading)}</Descriptions.Item>
                         </Descriptions>
                     ) : null}
                 </Panel>

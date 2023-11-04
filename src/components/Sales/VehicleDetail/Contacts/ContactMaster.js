@@ -22,6 +22,8 @@ import { VEHICLE_DETAIL_SECTION } from 'constants/VehicleDetailSection';
 import { LANGUAGE_EN } from 'language/en';
 import { NoDataFound } from 'utils/noDataFound';
 
+import { translateContent } from 'utils/translateContent';
+
 import styles from 'assets/sass/app.module.scss';
 
 const { Text } = Typography;
@@ -108,7 +110,7 @@ const ContactMasterMain = (props) => {
     }, [vehicleContactData]);
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.title'), message: res?.responseMessage });
     };
 
     const onErrorAction = (message) => {
