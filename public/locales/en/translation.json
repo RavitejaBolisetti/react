@@ -49,6 +49,8 @@
             "cancel": "Cancel",
             "print/download": "Print/Download",
             "saveAndNew": "Save and New",
+            "saveAndNext": "Save & Next",
+            "next": "Next",
             "edit": "Edit",
             "cancelBooking": "Cancel Booking",
             "transferBooking": "Transfer Booking",
@@ -57,7 +59,8 @@
             "seeLess": "See less",
             "upload": "Upload",
             "reset": "Reset",
-            "search": "search"
+            "search": "search",
+            "apply": "Apply"
         },
         "placeholder": {
             "select": "Select",
@@ -885,7 +888,8 @@
             "enrollmentTitle": "Enrolment Number Generated Successfully",
             "enrolmentDetails": "Enrolment Details",
             "customerVehicleDetails": "Customer And Vehicle Details",
-            "customerDetails": "Customer Details"
+            "customerDetails": "Customer Details",
+            "vehicleDetails": "Vehicle Details"
         },
         "label": {
             "enrolmentNo": "Enrolment No",
@@ -896,10 +900,37 @@
             "vin": "VIN",
             "registration": "Registration",
             "productHierarchy": "Product Hierarchy",
-            "select": "Select"
+            "select": "Select",
+            "customerId": "Customer ID",
+            "address": "Address",
+            "locality": "Locality",
+            "tehsil": "Tehsil",
+            "district": "District",
+            "city": "City",
+            "state": "State",
+            "pinCode": "Pin Code",
+            "emailId": "Email ID",
+            "vehicleNo": "Vehicle No.",
+            "model": "Model",
+            "modelCode": "Model Code",
+            "modelDescription": "Model Description",
+            "saleDate": "Sale Date",
+            "soldBy": "Sold By",
+            "color": "Color",
+            "seatingCapacity": "Seating Capacity",
+            "variant": "Variant",
+            "schemeType": "Scheme Type",
+            "vehicleRegistrationNumber": "Vehicle Registration Number",
+            "bookletNumber": "Booklet Number",
+            "enrolledBy": "Enrolled By",
+            "enrolmentNumber": "Enrolment Number",
+            "enrolmentStatus": "Enrolment Status",
+            "enrolmentFromDate": "Enrolment From Date",
+            "enrolmentToDate": "Enrolment To Date"
         },
         "button":{
-            "downloadPrint": "Download/Print Document"
+            "downloadPrint": "Download/Print Document",
+            "addScheme": "Add Scheme"
         },
         "confirmationMessage": {
             "download": "Do you want to Print or download this Document"
