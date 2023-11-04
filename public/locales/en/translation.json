@@ -23,10 +23,10 @@
             "addNew": "Add New"
         },
         "label": {
-            "active":"Active",
-            "inActive":"InActive",
-            "status": "Status" 
-        },       
+            "active": "Active",
+            "inActive": "InActive",
+            "status": "Status"
+        },
         "advanceFilter": {
             "title": "Advance Filters",
             "appliedAdvanceFilter": "Applied Advance Filters :"
@@ -295,6 +295,33 @@
             "taxiOrNonTaxiKey": "Taxi/Non Taxi",
             "manageBy": "Managed By",
             "carePlus": "Care Plus"
+        }
+    },
+    "userManagement": {
+        "heading": {
+            "pageTitle": "Role Management",
+            "role": "Role",
+            "subPanel": "Application Access"
+        },
+        "label": {
+            "roleId": "Role ID",
+            "roleName": "Role Name",
+            "roleDescription": "Role Description"
+        },
+        "placeholder": {
+            "search": "Search"
+        },
+        "validation": {
+            "noApplicationText": "No Application Available"
+        },
+        "button": {
+            "login": "Login",
+            "skipForNow": "Skip For Now",
+            "updatePassword": "Update Password",
+            "continue": "Continue"
+        },
+        "link": {
+            "mnmLogin": "M&M User Login"
         }
     }
 }
