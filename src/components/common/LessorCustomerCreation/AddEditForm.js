@@ -11,7 +11,7 @@ import { DrawerFormButton } from 'components/common/Button';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { UploadUtil } from 'utils/Upload';
-
+import { translateContent } from 'utils/translateContent';
 import styles from 'assets/sass/app.module.scss';
 
 const { Option } = Select;
@@ -43,11 +43,11 @@ const AddEditFormMain = (props) => {
 
     const handleTemplateDownLoad = () => {
         const onSuccessAction = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage, placement: 'bottomRight' });
         };
 
         const onErrorAction = (res) => {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: res, placement: 'bottomRight' });
+            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationSuccess.error'), message: res, placement: 'bottomRight' });
         };
 
         const filteredTypeData = typeData[PARAM_MASTER.FILE_DOWNLOAD_TMPLT.id].filter((value) => value.key === PARAM_MASTER.LSRCUSTTMPLT.id);
@@ -64,7 +64,7 @@ const AddEditFormMain = (props) => {
             },
         ];
         const name = {
-            docName: 'Lessor Template',
+            docName: translateContent('LessorCompanyCreation.message.docName'),
         };
         downloadFile({ setIsLoading: listShowLoading, userId, extraParams, name, onSuccessAction, onErrorAction });
         resetData();
@@ -80,11 +80,11 @@ const AddEditFormMain = (props) => {
 
     const handleDownload = () => {
         const onSuccessAction = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage, placement: 'bottomRight' });
         };
 
         const onErrorAction = (res) => {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: res, placement: 'bottomRight' });
+            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationSuccess.error'), message: res, placement: 'bottomRight' });
         };
 
         if (typeof form.getFieldValue('stateCode') === 'undefined') {
@@ -123,11 +123,11 @@ const AddEditFormMain = (props) => {
                         <>
                             <div className={styles.contentHeaderBackground}>
                                 <Space direction="vertical">
-                                    <Space className={styles.accordianIconWithText}>Lessor Customer Form</Space>
-                                    <Space>Please download "Lessor Customer Template" using below button</Space>
+                                    <Space className={styles.accordianIconWithText}>{translateContent('LessorCompanyCreation.label.LessorCompany')}</Space>
+                                    <Space>{translateContent('LessorCompanyCreation.message.textMessage')}</Space>
                                     <Space>
                                         <Button type="primary" onClick={handleTemplateDownLoad}>
-                                            Download Template
+                                            {translateContent('global.buttons.downloadTemplate')}
                                         </Button>
                                     </Space>
                                 </Space>
@@ -140,8 +140,8 @@ const AddEditFormMain = (props) => {
                         <>
                             <Row>
                                 <Col xs={24} sm={24} md={24} lg={24}>
-                                    <Form.Item label="State Name" name="stateCode">
-                                        <Select placeholder={preparePlaceholderSelect('State Name')} {...selectProps}>
+                                    <Form.Item label={translateContent('LessorCompanyCreation.label.stateName')} name="stateCode">
+                                        <Select placeholder={preparePlaceholderSelect(translateContent('LessorCompanyCreation.placeholder.stateName'))} {...selectProps}>
                                             {stateData?.map((item) => (
                                                 <Option value={item?.key}>{item?.value}</Option>
                                             ))}
@@ -150,7 +150,7 @@ const AddEditFormMain = (props) => {
                                 </Col>
 
                                 <Button type="primary" onClick={handleDownload}>
-                                    Download
+                                    {translateContent('global.buttons.download')}
                                 </Button>
                             </Row>
                         </>
