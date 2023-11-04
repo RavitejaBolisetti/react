@@ -36,6 +36,7 @@ import { INDENT_ACTION_LIST } from './constants';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { defaultPageProps } from 'utils/defaultPageProps';
 import { ReportModal } from 'components/common/ReportModal/ReportModal';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -534,7 +535,7 @@ export const StockTransferIndentMasterBase = (props) => {
     const advanceSearchFilterProps = {
         isVisible: isAdvanceSearchVisible,
         // icon: <FilterIcon size={20} />,
-        titleOverride: 'Advance Filters',
+        titleOverride: translateContent('global.advanceFilter.title'),
         toggleButton,
         onCloseAction,
         handleResetFilter,
@@ -549,7 +550,7 @@ export const StockTransferIndentMasterBase = (props) => {
     const addNewIndentProps = {
         toggleButton,
         isVisible: isAddNewIndentVisible,
-        titleOverride: 'Add Indent Details',
+        titleOverride: translateContent('stockTransferIndent.heading.addIndentDetails'),
         addIndentDetailsForm,
         onFinish,
         onCloseAction: onAddIndentDetailsCloseAction,
@@ -570,7 +571,7 @@ export const StockTransferIndentMasterBase = (props) => {
 
     const viewIndentProps = {
         isVisible: isViewIndentVisible,
-        titleOverride: 'View Indent Details',
+        titleOverride: translateContent('stockTransferIndent.heading.viewIndentDetails'),
         isLoading: isFetchDataLoading,
         formData: selectedOrder,
         openAccordian,

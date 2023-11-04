@@ -6,9 +6,9 @@
             "name": "name",
             "description": "description",
             "dateLessThan": "Date cant be less than Effective from date",
-            "state":"State",
-            "city":"City",
-            "productHierarchy":"Product Hierarchy"
+            "state": "State",
+            "city": "City",
+            "productHierarchy": "Product Hierarchy"
         },
         "notificationSuccess": {
             "success": "Success",
@@ -163,8 +163,8 @@
             "answerCode": "Answer Code",
             "answerDescription": "Answer Description",
             "answerStatus": "Answer Status",
-            "modelGroupCode": "Model Group Code"     ,
-            "modelGroupStatus": "Model Group Status"       
+            "modelGroupCode": "Model Group Code",
+            "modelGroupStatus": "Model Group Status"
         },
         "validationMessage": {
             "modelRequired": "Please add atleast one model",
@@ -507,37 +507,109 @@
             "cancel": "Cancel"
         }
     },
-    
+
     "hoPriceMapping": {
         "heading": {
-            "maintitle":"HO Price Upload Mapping",
+            "maintitle": "HO Price Upload Mapping",
             "title": "HO Price Upload Mapping for Dealer",
             "drawerTitleHeading": "HO Price Upload Mapping",
-            "titleOverride":"Advance Filters",
-            "dealerList":"Dealer List",
-            "modelDetails":"Model Details",            
-            "advancedFilter":"Advanced Filter",
-            "appliedAdvanceFilters":"Applied Advance Filters"
+            "titleOverride": "Advance Filters",
+            "dealerList": "Dealer List",
+            "modelDetails": "Model Details",
+            "advancedFilter": "Advanced Filter",
+            "appliedAdvanceFilters": "Applied Advance Filters"
         },
         "label": {
             "state": "State",
             "city": "City",
-            "productHierarchy":"Product Hierarchy",
-            "dealerParent":"Dealer Parent",
-            "dealerLocation":"Dealer Location",
-            "dealerSelectOnRoadPrice":"Dealer Selected for On Road Price?",
-            "enableDate":"Enable Date",
-            "enableBy":"Enable By",
-            "select":"Select",
+            "productHierarchy": "Product Hierarchy",
+            "dealerParent": "Dealer Parent",
+            "dealerLocation": "Dealer Location",
+            "dealerSelectOnRoadPrice": "Dealer Selected for On Road Price?",
+            "enableDate": "Enable Date",
+            "enableBy": "Enable By",
+            "select": "Select",
             "stateCode": "State Code",
-            "searchDealerParent":"Search Dealer Parent"
-        },       
+            "searchDealerParent": "Search Dealer Parent"
+        },
         "button": {
             "continue": "Continue",
-            "reset":"Reset",
-            "apply":"Apply",
-            "clear":"Clear"
-        }      
-        
+            "reset": "Reset",
+            "apply": "Apply",
+            "clear": "Clear"
+        }
+    },
+    "stockTransferIndent": {
+        "isueIndent": {
+            "heading": {
+                "maintitle": "HO Price Upload Mapping"
+            },
+            "label": {
+                "vin": "VIN",
+                "stIssueNo":"ST issue Note No."
+            },
+            "validation": {
+            "indentFromDate": "Indent From Date "
+            }
+        },
+        "heading": {
+            "maintitle": "HO Price Upload Mapping",
+            "title": "HO Price Upload Mapping for Dealer",
+            "drawerTitleHeading": "HO Price Upload Mapping",
+            "titleOverride": "Advance Filters",
+            "dealerList": "Dealer List",
+            "modelDetails": "Model Details",
+            "vehicleDetails": "Vehicle Details",
+            "addIndentDetails": "Add Indent Details",
+            "viewIndentDetails": "View Indent Details"
+        },
+        "label": {
+            "indentNumber": "Indent Number",
+            "indentDate": "Indent Date",
+            "fromLocation": "From Location",
+            "toLocation": "To Location",
+            "status": "Status",
+            "requestedBy": "Requested By",
+            "selectIndentNo": "Select Indent No",
+            "indent": "Indent",
+            "dealerLocation": "Dealer Location",
+            "indentfromdate": "Indent From Date",
+            "indentTodate": "Indent To Date",
+            "editVehicleDetails": "Edit Vehicle Details",
+            "indentStatus": "Indent Status",
+            "indentToParent": "Indent To Parent",
+            "indentToLocation": "Indent To Location",
+            "remark": "Remark",
+            "modelDescription": "Model Description",
+            "modelCode": "Model Code",
+            "requestedQuantity": "Requested Quantity",
+            "cancelledQuantity": "Cancelled Quantity",
+            "issuedAndNotReceivedQuantity": "Issued & Not Received Quantity",
+            "receivedQuantity": "Received Quantity",
+            "balancedQuantity": "Balanced Quantity"
+        },
+        "validation": {
+            "indentFromDate": "Indent From Date ",
+            "indentToDate": "Indent To Date",
+            "modelDescription": "Model Description",
+            "modelCode": "Model Code",
+            "requestedQuantity": "Requested Quantity",
+            "cancelledQuantity": "Cancelled Quantity",
+            "issuedAndNotReceivedQuantity": "Issued & Not Received Quantity",
+            "receivedQuantity": "Received Quantity",
+            "balancedQuantity": "Balanced Quantity",
+            "quantity": "Quantity",
+            "indentToParent": "Indent To Parent",
+            "indentToLocation": "Indent To Location",
+            "requestedBy": "Requested By"
+        },
+        "button": {
+            "addIndent": "Add Indent",
+            "reset": "Reset",
+            "apply": "Apply",
+            "clear": "Clear",
+            "submit": "Submit",
+            "cancel": "Cancel"
+        }
     }
 }

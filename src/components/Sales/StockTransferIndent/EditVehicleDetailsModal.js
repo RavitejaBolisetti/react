@@ -8,6 +8,7 @@ import { Row, Col, Form, Input, Button } from 'antd';
 import { withModal } from 'components/withModal';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validationNumber, isValidQunatity } from 'utils/validation';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -18,43 +19,43 @@ export const EditVehicleDetailsModalFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={editVehicleDetailsForm} onFinish={onFinish}>
             <Row gutter={24}>
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item label="Model Description" name="modelDescription" initialValue={formData?.modelDescription}>
-                        <Input placeholder={preparePlaceholderText('Model Description')} disabled={true}></Input>
+                    <Form.Item label={translateContent('stockTransferIndent.label.modelDescription')} name="modelDescription" initialValue={formData?.modelDescription}>
+                        <Input placeholder={preparePlaceholderText(translateContent('stockTransferIndent.label.modelDescription'))} disabled={true}></Input>
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item label="Model Code" name="modelCode" initialValue={formData?.modelCode}>
-                        <Input placeholder={preparePlaceholderText('Model Code')} disabled={true}></Input>
+                    <Form.Item label={translateContent('stockTransferIndent.label.modelCode')} name="modelCode" initialValue={formData?.modelCode}>
+                        <Input placeholder={preparePlaceholderText(translateContent('stockTransferIndent.label.modelCode'))} disabled={true}></Input>
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item label="Requested Quantity" name="requestedQuantity" initialValue={formData?.requestedQuantity}>
-                        <Input placeholder={preparePlaceholderText('Requested Quantity')} disabled={true}></Input>
+                    <Form.Item label={translateContent('stockTransferIndent.label.requestedQuantity')} name="requestedQuantity" initialValue={formData?.requestedQuantity}>
+                        <Input placeholder={preparePlaceholderText(translateContent('stockTransferIndent.label.requestedQuantity'))} disabled={true}></Input>
                     </Form.Item>
                 </Col>
             </Row>
 
             <Row gutter={24}>
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item label="Cancelled Quantity" name="cancelledQuantity" initialValue={formData?.cancelledQuantity} rules={[validateRequiredInputField('Cancelled Quantity'), validationNumber('Cancelled Quantity'), { validator: (_, value) => isValidQunatity(value, editVehicleDetailsForm.getFieldValue('balancedQuantity')) }]}>
-                        <Input placeholder={preparePlaceholderText('Cancelled Quantity')}></Input>
+                    <Form.Item label={translateContent('stockTransferIndent.label.cancelledQuantity')} name="cancelledQuantity" initialValue={formData?.cancelledQuantity} rules={[validateRequiredInputField('Cancelled Quantity'), validationNumber('Cancelled Quantity'), { validator: (_, value) => isValidQunatity(value, editVehicleDetailsForm.getFieldValue('balancedQuantity')) }]}>
+                        <Input placeholder={preparePlaceholderText(translateContent('stockTransferIndent.label.cancelledQuantity'))}></Input>
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item label="Issued And Not Received Quantity" name="issuedAndNotReceivedQuantity" initialValue={formData?.issuedAndNotReceivedQuantity}>
-                        <Input placeholder={preparePlaceholderText('Issued And Not Received Quantity')} disabled={true}></Input>
+                    <Form.Item label={translateContent('stockTransferIndent.label.issuedAndNotReceivedQuantity')} name="issuedAndNotReceivedQuantity" initialValue={formData?.issuedAndNotReceivedQuantity}>
+                        <Input placeholder={preparePlaceholderText(translateContent('stockTransferIndent.label.issuedAndNotReceivedQuantity'))} disabled={true}></Input>
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item label="Received Quantity" name="receivedQuantity" initialValue={formData?.receivedQuantity}>
-                        <Input placeholder={preparePlaceholderText('Received Quantity')} disabled={true}></Input>
+                    <Form.Item label={translateContent('stockTransferIndent.label.receivedQuantity')} name="receivedQuantity" initialValue={formData?.receivedQuantity}>
+                        <Input placeholder={preparePlaceholderText(translateContent('stockTransferIndent.label.receivedQuantity'))} disabled={true}></Input>
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={24}>
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item label="Balanced Quantity" name="balancedQuantity" initialValue={formData?.balancedQuantity}>
-                        <Input placeholder={preparePlaceholderText('Balanced Quantity')} disabled={true}></Input>
+                    <Form.Item label={translateContent('stockTransferIndent.label.balancedQuantity')} name="balancedQuantity" initialValue={formData?.balancedQuantity}>
+                        <Input placeholder={preparePlaceholderText(translateContent('stockTransferIndent.label.balancedQuantity'))} disabled={true}></Input>
                     </Form.Item>
                 </Col>
             </Row>
@@ -62,12 +63,12 @@ export const EditVehicleDetailsModalFrom = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
                     <Button onClick={onCloseAction} danger>
-                        Cancel
+                        {translateContent('stockTransferIndent.button.cancel')}
                     </Button>
                 </Col>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
                     <Button htmlType="submit" type="primary">
-                        Submit
+                        {translateContent('stockTransferIndent.button.submit')}
                     </Button>
                 </Col>
             </Row>

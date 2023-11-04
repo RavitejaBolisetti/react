@@ -17,6 +17,7 @@ import { ConfirmationModal } from 'utils/ConfirmationModal';
 import styles from 'assets/sass/app.module.scss';
 import { InputSkeleton } from 'components/common/Skeleton';
 import { FiDownload } from 'react-icons/fi';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -213,7 +214,10 @@ const IssueIndentMasterMain = (props) => {
                                                             <div>
                                                                 <Text> {`ST issue Note No. ${element?.issueNumber ? element?.issueNumber : 'NA'} `}</Text>
                                                                 <Text>|</Text>
-                                                                <Text> VIN: {element?.vin ? element?.vin : 'NA'}</Text>
+                                                                <Text>
+                                                                    {' '}
+                                                                    {translateContent('stockTransferIndent.isueIndent.label.vin')}: {element?.vin ? element?.vin : 'NA'}
+                                                                </Text>
                                                             </div>
                                                             <Text type="secondary">{`Status: ${typeData[PARAM_MASTER?.ISS_STS?.id]?.find((i) => i?.key === element?.issueStatus)?.value} `}</Text>
                                                         </Space>
