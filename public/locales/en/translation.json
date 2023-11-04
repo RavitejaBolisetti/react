@@ -7,7 +7,6 @@
             "description": "description",
             "dateLessThan": "Date cant be less than Effective from date"
         },
-
         "notificationSuccess": {
             "success": "Success",
             "error": "Error",
@@ -33,6 +32,10 @@
         },
         "generalMessage": {
             "noRecordsFound": "No records found"
+        },
+        "placeholder": {
+            "select": "Select",
+            "search": "Search"
         }
     },
     "login": {
@@ -404,11 +407,9 @@
             "stateCode": "State Code",
             "stateName": "State Name",
             "gstStateCode": "GST State Code",
-            "country": "Country",
-            "status": "Status"
+            "country": "Country"
         },
         "placeholder": {
-            "select": "Select",
             "stateCode": "State Code",
             "stateName": "State Name",
             "gstStateCode": "GST State Code",

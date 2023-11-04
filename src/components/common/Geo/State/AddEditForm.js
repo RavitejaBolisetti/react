@@ -60,7 +60,7 @@ const AddEditFormMain = (props) => {
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item initialValue={formData?.countryCode || defaultCountry} label={translateContent('state.label.country')} name="countryCode" placeholder={preparePlaceholderSelect(translateContent('state.placeholder.country'))} rules={[validateRequiredInputField(translateContent('state.validation.country'))]}>
-                                        <Select showSearch loading={!isDataCountryLoaded} placeholder={translateContent('state.placeholder.select')} allowClear onChange={handleCountryChange}>
+                                        <Select showSearch loading={!isDataCountryLoaded} placeholder={translateContent('global.placeholder.select')} allowClear onChange={handleCountryChange}>
                                             {countryData?.map((item) => (
                                                 <Option key={item?.countryCode} value={item?.countryCode}>
                                                     {item?.countryName}
@@ -88,8 +88,8 @@ const AddEditFormMain = (props) => {
                                 </Col>
                                 s
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label={translateContent('state.label.status')}>
-                                        <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
+                                    <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label={translateContent('global.label.status')}>
+                                        <Switch checkedChildren={translateContent('global.label.active')} unCheckedChildren={translateContent('global.label.inActive')} onChange={(checked) => (checked ? 1 : 0)} />
                                     </Form.Item>
                                 </Col>
                             </Row>
