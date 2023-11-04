@@ -370,6 +370,19 @@
             "gstStateCode": "GST State Code",
             "country": "Country",
             "status": "Status"
+        },
+        "placeholder": {
+            "select": "Select",
+            "stateCode": "State Code",
+            "stateName": "State Name",
+            "gstStateCode": "GST State Code",
+            "country": "Country"
+        },
+        "validation": {
+            "stateCode": "State Code",
+            "stateName": "State Name",
+            "gstStateCode": "GST State Code",
+            "country": "Country"
         }
     }
 }
