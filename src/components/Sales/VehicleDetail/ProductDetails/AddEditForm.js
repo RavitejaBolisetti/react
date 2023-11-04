@@ -139,30 +139,30 @@ const AddEditFormMain = (props) => {
                             <Row gutter={20}>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label={translateContent('vehicleDetail.productDetails.label.productDivision')} name="productDivision">
-                                        <Input maxLength={15} placeholder={preparePlaceholderText('product division')} {...disabledProps} />
+                                        <Input maxLength={15} placeholder={preparePlaceholderText(translateContent('vehicleDetail.productDetails.label.productDivision'))} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label={translateContent('vehicleDetail.productDetails.label.modelFamily')} name="modelFamily">
-                                        <Input loading={isModelFamilyLoading} maxLength={15} placeholder={preparePlaceholderText('model familiy')} {...disabledProps} />
+                                        <Input loading={isModelFamilyLoading} maxLength={15} placeholder={preparePlaceholderText(translateContent('vehicleDetail.productDetails.label.modelFamily'))} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label={translateContent('vehicleDetail.productDetails.label.modelGroup')} name="modelGroup">
-                                        <Input loading={isModelLoading} maxLength={15} placeholder={preparePlaceholderText('model group')} {...disabledProps} />
+                                        <Input loading={isModelLoading} maxLength={15} placeholder={preparePlaceholderText(translateContent('vehicleDetail.productDetails.label.modelGroup'))} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                             </Row>
                             <Row gutter={20}>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label={translateContent('vehicleDetail.productDetails.label.modelVariant')} name="modelVariant">
-                                        <Input loading={isVariantLoading} maxLength={15} placeholder={preparePlaceholderText('model variant')} {...disabledProps} />
+                                        <Input loading={isVariantLoading} maxLength={15} placeholder={preparePlaceholderText(translateContent('vehicleDetail.productDetails.label.modelVariant'))} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.modelTooltipView}>
                                     {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={15} />)}
-                                    <Form.Item label={translateContent('vehicleDetail.productDetails.label.model')} name="model">
-                                        <Input title={formData?.productAttributeDetail?.model} maxLength={15} placeholder={preparePlaceholderText('model ')} {...disabledProps} />
+                                    <Form.Item label={translateContent('vehicleDetail.productDetails.label.modelDescription')} name="model">
+                                        <Input title={formData?.productAttributeDetail?.model} maxLength={15} placeholder={preparePlaceholderText(translateContent('vehicleDetail.productDetails.label.modelDescription'))} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                             </Row>

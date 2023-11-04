@@ -12,6 +12,7 @@ import { InputSkeleton } from 'components/common/Skeleton';
 import { addToolTip } from 'utils/customMenuLink';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { tableColumn } from './tableCoulmn';
+import { translateContent } from 'utils/translateContent';
 
 import { expandIcon } from 'utils/accordianExpandIcon';
 
@@ -35,14 +36,14 @@ const ViewDetailMain = (props) => {
     return (
         <div className={styles?.viewDrawerContainer}>
             <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse(1)} expandIconPosition="end" collapsible="icon" {...collapseProps}>
-                <Panel header="Product Attribute Details" key="1">
+                <Panel header={translateContent('vehicleDetail.productDetails.heading.attributeTitle')} key="1">
                     <Divider />
                     <Descriptions {...viewProps}>
-                        <Descriptions.Item label="Product Division">{checkAndSetDefaultValue(productAttributeDetail?.productDivision, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Model Family">{checkAndSetDefaultValue(modelFamilyData?.length > 0 && modelFamilyData[0]?.familyDescription, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Model Group">{checkAndSetDefaultValue(modelData?.length > 0 && modelData[0]?.modelGroupDescription, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('vehicleDetail.productDetails.label.productDivision')}>{checkAndSetDefaultValue(productAttributeDetail?.productDivision, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('vehicleDetail.productDetails.label.modelFamily')}>{checkAndSetDefaultValue(modelFamilyData?.length > 0 && modelFamilyData[0]?.familyDescription, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('vehicleDetail.productDetails.label.modelGroup')}>{checkAndSetDefaultValue(modelData?.length > 0 && modelData[0]?.modelGroupDescription, isLoading)}</Descriptions.Item>
 
-                        <Descriptions.Item label="Model">
+                        <Descriptions.Item label={translateContent('vehicleDetail.productDetails.label.model')}>
                             {isLoading ? (
                                 <InputSkeleton width={'100px'} height={20} theme={'card'} />
                             ) : (
@@ -54,7 +55,7 @@ const ViewDetailMain = (props) => {
                                 </div>
                             )}
                         </Descriptions.Item>
-                        <Descriptions.Item label="Model Variant">{checkAndSetDefaultValue(variantData?.length > 0 && variantData[0]?.variantDescription, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('vehicleDetail.productDetails.label.modelVariant')}>{checkAndSetDefaultValue(variantData?.length > 0 && variantData[0]?.variantDescription, isLoading)}</Descriptions.Item>
                         {/* <Descriptions.Item label="Manufacturer Invoice Date">{!isLoading ? productAttributeDetail?.manufacturerInvoiceDate?.slice(0, 10) ?? '-' : <InputSkeleton width={'100px'} height={20} theme={'card'} />}</Descriptions.Item>
                         <Descriptions.Item label="Manufacturer Warrenty Start Date">{!isLoading ? productAttributeDetail?.manufacturerWarrantyStartDate?.slice(0, 10) ?? '-' : <InputSkeleton width={'100px'} height={20} theme={'card'} />}</Descriptions.Item> */}
                     </Descriptions>
@@ -87,7 +88,7 @@ const ViewDetailMain = (props) => {
                 </Panel>
             </Collapse> */}
             <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse(3)} expandIconPosition="end" collapsible="icon" {...collapseProps}>
-                <Panel header="Aggregates" key="3">
+                <Panel header={translateContent('vehicleDetail.productDetails.heading.aggregateTitle')} key="3">
                     <Divider />
                     <DataTable tableColumn={tableColumn({ formActionType, bindCodeValue })} tableData={optionalServices} pagination={false} />
                 </Panel>
