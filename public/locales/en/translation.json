@@ -95,29 +95,18 @@
         "heading": {
             "title": "Qualification Master",
             "titleName": "Qualification Name",
-            "drawerTitle": "Qualification",
-            "forgotPassword": "Forgot Password?",
-            "unauthorizedAccess": "Unauthorized Access"
+            "drawerTitle": "Qualification"
         },
         "label": {
-            "username": "User ID (MILE ID.Parent ID)",
-            "password": "Password"
-        },
-        "placeholder": {
-            "username": "User ID (MILE ID.Parent ID)",
-            "password": "Password"
+            "qualificationCode": "Qualification Code",
+            "qualificationName": "Qualification Name",
+            "status": "Status",
+            "active": "Active",
+            "inActive": "Inactive"
         },
         "validation": {
-            "googleCaptcha": "Please select Captcha"
-        },
-        "button": {
-            "login": "Login",
-            "skipForNow": "Skip For Now",
-            "updatePassword": "Update Password",
-            "continue": "Continue"
-        },
-        "link": {
-            "mnmLogin": "M&M User Login"
+            "qualificationCode": "code",
+            "qualificationName": "name"
         }
     },
     "LessorCompanyMaster": {
@@ -261,19 +250,94 @@
     },
     "customerMaster": {
         "heading": {
+            "pageTitle": "Customer Master",
             "title": "Customer",
+            "individualTitle": "Individual Information",
+            "customerTitle": "Customer Information",
             "welcomeNote": "Welcome",
             "loginText": "Please enter your credentials to login",
             "forgotPassword": "Forgot Password?",
             "unauthorizedAccess": "Unauthorized Access"
         },
         "label": {
-            "username": "User ID (MILE ID.Parent ID)",
-            "password": "Password"
+            "mobileNumber": "Mobile Number",
+            "customerType": "Customer Type",
+            "emailID": "Email ID",
+            "contactNo": "Contact over WhatsApp?",
+            "WhatsAppNoText": "Want to use mobile no as WhatsApp no",
+            "whatsappNumber": "Whatsapp Number",
+            "corporateType": "Corporate Type",
+            "corporateName": "Corporate Name",
+            "corporateCode": "Corporate Code",
+            "corporateCategory": "Corporate Category",
+            "dateOfBirth": "Date of Birth",
+            "gender": "Gender",
+            "maritalStatus": "Marital Status",
+            "WeddingDate": "Wedding Anniversary Date",
+            "Occupation": "Occupation",
+            "annualIncome": "Annual Income",
+            "drivingLicenseNo": "Driving License No",
+            "aadharNo": "Aadhar No.",
+            "voterID": "Voter ID",
+            "vehicleUsed": "Vehicle Used",
+            "motherTongue": "Mother Tongue",
+            "pan": "PAN",
+            "gstin": "GSTIN",
+            "Categorization": "Usage/Application Categorization",
+            "SubCategory": "Usage/Application Sub-Category",
+            "customerCategory": "Customer Category",
+            "businessDetails": "Business Details",
+            "vehicleDeployment": "Vehicle Deployment Details",
+            "keyRoleDetails": "Key Role Details",
+            "majorRouteDetails": "Major Route Details",
+            "emailId": "Email Id",
+            "contactTxt": "Do you want to contact over whatsapp",
+            "whatsapp": "Want to use Mobile no as whatsapp no?",
+            "address": "Address Type",
+            "addressL": "Address Line 1",
+            "addressLine": "Address Line 2",
+            "addressLines": "Address Line 3",
+            "pinCode": "Pin Code",
+            "tehsil": "Tehsil",
+            "city": "City",
+            "district": "District",
+            "state": "State",
+            "Individual": "Individual Address"
         },
         "placeholder": {
-            "username": "User ID (MILE ID.Parent ID)",
-            "password": "Password"
+            "mobileMumber": "mobile number",
+            "customerType": "customer type",
+            "emailId": "email id",
+            "whatsAppNumber": "WhatsApp Number",
+            "corporateType": "corporate type",
+            "corporateName": "corporate name",
+            "parentCompanyName": "parent company name",
+            "corporateCategory": "corporate category",
+            "gender": "gender",
+            "maritalStatus": "Marital Status",
+            "occupation": "occupation",
+            "annualIncome": "annual income",
+            "drivinglicense": "driving license no",
+            "aadharNumber": "aadhar number",
+            "voterId": "voter id",
+            "vehicleUsed": "vehicle used",
+            "motherTongue": "mother tongue",
+            "pan": "pan",
+            "gstin": "gstin",
+            "category": "usage/application category",
+            "income": "annual income",
+            "businessDetails": "business details",
+            "vehicleDeployment": "vehicle deployment details",
+            "keyRole": "key role details",
+            "route": "major route details",
+            "addresstype": "address type",
+            "address": "address Line 1",
+            "addressL": "address Line 2",
+            "addressLine": "address Line 3",
+            "tehsil": "tehsil",
+            "city": "city",
+            "district": "district",
+            "state": "state"
         },
         "validation": {
             "googleCaptcha": "Please select Captcha"
@@ -566,6 +630,92 @@
             "stateName": "State Name",
             "gstStateCode": "GST State Code",
             "country": "Country"
+        }
+    },
+
+    "tehsil": {
+        "heading": {
+            "pageTitle": "Tehsil",
+            "title": "Tehsil Name"
+        },
+        "tableColHeading": {
+            "tehsilCode": "Tehsil Code",
+            "tehsilName": "Tehsil Name",
+            "districtCode": "District Name",
+            "stateCode": "State Name"
+        },
+        "label": {
+            "countryCode": "Country",
+            "stateCode": "State Name",
+            "districtCode": "District Name",
+            "district": "District",
+            "tehsilCode": "Tehsil Code",
+            "tehsilName": "Tehsil Name",
+            "tehsil": "Tehsil",
+            "tehsilCategoryCode": "Tehsil Category",
+            "includedOn": "Included On"
+        },
+        "placeholder": {
+            "country": "country",
+            "stateName": "State Name",
+            "districtName": "District Name",
+            "tehsilCode": "Tehsil Code",
+            "tehsilName": "Tehsil Name",
+            "tehsilCategoryCode": "Tehsil Category",
+            "includedOnDate": "Included On Date"
+        },
+        "validation": {
+            "country": "country",
+            "stateName": "State Name",
+            "districtName": "District Name",
+            "tehsilCode": "Tehsil Code",
+            "tehsilName": "Tehsil Name",
+            "includedOn": "Included On"
+        }
+    },
+    "pincode": {
+        "heading": {
+            "pageTitle": "Pincode",
+            "title": "Pincode Name"
+        },
+        "tableColHeading": {
+            "pinCode": "Pin Code",
+            "locality": "Locality",
+            "tehsil": "Tehsil",
+            "state": "State",
+            "district": "District",
+            "city": "City"
+        },
+        "label": {
+            "country": "Country",
+            "state": "State",
+            "district": "District",
+            "City": "City",
+            "Tehsil": "Tehsil",
+            "pinCategory": "Pin Category",
+            "pinCode": "Pin Code",
+            "locality": "Locality",
+            "withIn50KmFromGpo": "Is Locality Under 50Km of GPO",
+            "approvalStatus": "Approval Status"
+        },
+        "placeholder": {
+            "country": "Country",
+            "state": "State",
+            "district": "District",
+            "City": "City",
+            "tehsil": "Tehsil",
+            "pinCategory": "Pin Category",
+            "pinCode": "Pin Code",
+            "locality": "Locality"
+        },
+        "validation": {
+            "country": "Country",
+            "state": "State",
+            "district": "District",
+            "City": "City",
+            "tehsil": "Tehsil",
+            "pinCategory": "Pin Category",
+            "pinCode": "Pin Code"
         }
     },
 
