@@ -130,6 +130,42 @@
             "mnmLogin": "M&M User Login"
         }
     },
+    "vehicleCheckListMaster": {
+        "heading": {
+            "title": "Vehicle Checklist",
+            "edit": "Edit ",
+            "add": "Add "
+        },
+        "label": {
+            "attributeType": "Attribute Type",
+            "attributeLevel": "Attribute Level",
+            "parent": "Parent",
+            "groupCode": "Group Code",
+            "groupDescription": "Group Description",
+            "subGroupCode": "Sub Group Code",
+            "subGroupDescription": "Sub Group Description",
+            "checklistCode": "Checklist Code",
+            "checklistDescription": "Checklist Description",
+            "answerType": "Answer Type",
+            "attachmentRequired": "Attachment Required",
+            "status": "Status",
+            "active": "Active",
+            "inactive": "Inactive"
+        },
+        "placeholder": {
+            "attributeType": "Attribute Type",
+            "parent": "Parent",
+            "groupCode": "Group Code",
+            "groupDescription": "Group Description",
+            "subGroupCode": "Sub Group Code",
+            "subGroupDescription": "Sub Group Description",
+            "checklistCode": "Checklist Code",
+            "checklistDescription": "Checklist Description",
+            "answerType": "Answer Type",
+            "attachmentRequired": "Attachment Required",
+            "status": "Status"
+        }
+    },
     "rsmApproval": {
         "heading": {
             "title": "RSM Approval for Co-Dealer Invoice",
@@ -272,29 +308,59 @@
             "mainTitle": "Vehicle Details",
             "title": "Search Vehicle"
         },
-        "placeholder": {},
+        "label": {
+            "vin": "VIN",
+            "registrationNumber": "Registration No.",
+            "customerName": "Customer Name",
+            "model": "Model Description"
+        },
+        "placeholder": {
+            "select": "Select"
+        },
         "validation": {
             "searchParameter": "search parametar"
         },
         "button": {},
-        "label": {
-            "mnfcWarrEndDate": "Manufacturer Warranty End Date",
-            "manufactureKM": "Expiry KM",
-            "deliveryDate": "Delivery Date",
-            "saleDate": "Sale Date",
-            "soldBy": "Sold By",
-            "lastOdometerReading": "Last Odometer Reading",
-            "averageRun": "Average Run",
-            "nextDueService": "Next Due Service",
-            "relationshipManager": "Relationship Manager",
-            "nextServiceDueDate": "Next Service Due Date",
-            "insuranceExpiryDate": "Insurance Expiry Date",
-            "customerCategorySsi": "Customer Category-SSI",
-            "customerCategoryCsi": "Customer Category-CSI",
-            "customerCategoryIqs": "Customer Category-IQS",
-            "taxiOrNonTaxiKey": "Taxi/Non Taxi",
-            "manageBy": "Managed By",
-            "carePlus": "Care Plus"
+        "vehicledetails": {
+            "label": {
+                "mnfcWarrEndDate": "Manufacturer Warranty End Date",
+                "manufactureKM": "Expiry KM",
+                "deliveryDate": "Delivery Date",
+                "saleDate": "Sale Date",
+                "soldBy": "Sold By",
+                "lastOdometerReading": "Last Odometer Reading",
+                "averageRun": "Average Run",
+                "nextDueService": "Next Due Service",
+                "relationshipManager": "Relationship Manager",
+                "nextServiceDueDate": "Next Service Due Date",
+                "insuranceExpiryDate": "Insurance Expiry Date",
+                "customerCategorySsi": "Customer Category-SSI",
+                "customerCategoryCsi": "Customer Category-CSI",
+                "customerCategoryIqs": "Customer Category-IQS",
+                "taxiOrNonTaxiKey": "Taxi/Non Taxi",
+                "manageBy": "Managed By",
+                "carePlus": "Care Plus"
+            },
+            "validation": {
+                "managedBy": "managed by"
+            }
+        },
+        "productDetails": {
+            "heading": {
+                "moduleTitle": "Product Details",
+                "attributeTitle": "Product Attribute Details",
+                "aggregateTitle": "Aggregates"
+            },
+            "label": {
+                "productDivision": "Product Division",
+                "modelFamily": "Model Family",
+                "modelGroup": "Model Group",
+                "modelVariant": "Model Variant",
+                "model": "Model Description",
+                "item": "Item",
+                "make": "Make",
+                "serialNo": "Serial No."
+            }
         }
     },
     "userManagement": {
@@ -326,5 +392,36 @@
             "createUser": "Create User"
         },
         "link": {}
+    },
+    "state": {
+        "heading": {
+            "title": "State Name"
+        },
+        "tableColHeading": {
+            "stateCode": "State Code",
+            "stateName": "State Name",
+            "gstStateCode": "GST State Code",
+            "country": "Country"
+        },
+        "label": {
+            "stateCode": "State Code",
+            "stateName": "State Name",
+            "gstStateCode": "GST State Code",
+            "country": "Country",
+            "status": "Status"
+        },
+        "placeholder": {
+            "select": "Select",
+            "stateCode": "State Code",
+            "stateName": "State Name",
+            "gstStateCode": "GST State Code",
+            "country": "Country"
+        },
+        "validation": {
+            "stateCode": "State Code",
+            "stateName": "State Name",
+            "gstStateCode": "GST State Code",
+            "country": "Country"
+        }
     }
 }
