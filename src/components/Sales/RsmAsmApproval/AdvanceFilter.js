@@ -41,7 +41,7 @@ export default function AdvanceFilter(props) {
                                     setAdvanceSearchVisible(true);
                                 }}
                             >
-                                {translateContent('rsmAsmApproval.label.titleOverride')}
+                                Advanced Filters
                             </Button>
                         </div>
                     )}
