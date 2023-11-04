@@ -22,6 +22,8 @@ import { otfLoyaltyModelGroupDataActions } from 'store/actions/data/otf/loyaltyM
 import { otfLoyaltyVarientDetailDataActions } from 'store/actions/data/otf/loyaltyVarient';
 import { otfModelFamilyDetailDataActions } from 'store/actions/data/otf/modelFamily';
 
+import { translateContent } from 'utils/translateContent';
+
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -38,7 +40,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Product Details';
+    const moduleTitle = translateContent('vehicleDetail.productDetails.heading.moduleTitle');
 
     let returnValue = {
         userId,

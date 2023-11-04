@@ -17,6 +17,7 @@ import { customSelectBox } from 'utils/customSelectBox';
 import { ANSWER_TYPES } from 'constants/modules/VehicleCheckListMaster/AnswerTypes';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+import { translateContent } from 'utils/translateContent';
 
 const { TextArea } = Input;
 
@@ -54,13 +55,13 @@ const AddEditFormMain = (props) => {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item name="attributeLevel" label="Attribute Type" rules={[validateRequiredSelectField('Attribute Type Code')]}>
-                                    {customSelectBox({ data: VehicleChecklistAttributeLov, placeholder: preparePlaceholderSelect('Attribute Type Code'), disabled: true })}
+                                <Form.Item name="attributeLevel" label={translateContent('vehicleCheckListMaster.label.attributeType')} rules={[validateRequiredSelectField(translateContent('vehicleCheckListMaster.label.attributeType'))]}>
+                                    {customSelectBox({ data: VehicleChecklistAttributeLov, placeholder: preparePlaceholderSelect(translateContent('vehicleCheckListMaster.label.attributeType')), disabled: true })}
                                 </Form.Item>
                             </Col>
 
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item label="Parent" name="parentCode">
+                                <Form.Item label={translateContent('vehicleCheckListMaster.label.parent')} name="parentCode">
                                     <TreeSelectField {...treeSelectFieldProps} />
                                 </Form.Item>
                             </Col>
@@ -70,14 +71,14 @@ const AddEditFormMain = (props) => {
                             <>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item label="Group Code" name="code" rules={[validateRequiredInputField('Group Code'), noWhiteSpaceinBeginning()]}>
-                                            <Input maxLength={6} placeholder={preparePlaceholderText('Group Code')} disabled={treeCodeReadOnly} />
+                                        <Form.Item label={translateContent('vehicleCheckListMaster.label.groupCode')} name="code" rules={[validateRequiredInputField(translateContent('vehicleCheckListMaster.label.groupCode')), noWhiteSpaceinBeginning()]}>
+                                            <Input maxLength={6} placeholder={preparePlaceholderText(translateContent('vehicleCheckListMaster.label.groupCode'))} disabled={treeCodeReadOnly} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.textareaError}>
-                                        <Form.Item label="Group Description" name="descriptionTitle" rules={[validateRequiredInputField('Group Description'), noWhiteSpaceinBeginning()]}>
-                                            <TextArea maxLength={300} placeholder={preparePlaceholderText('Group Description')} showCount disabled={treeCodeReadOnly} />
+                                        <Form.Item label={translateContent('vehicleCheckListMaster.label.groupDescription')} name="descriptionTitle" rules={[validateRequiredInputField(translateContent('vehicleCheckListMaster.label.groupDescription')), noWhiteSpaceinBeginning()]}>
+                                            <TextArea maxLength={300} placeholder={preparePlaceholderText(translateContent('vehicleCheckListMaster.label.groupDescription'))} showCount disabled={treeCodeReadOnly} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
@@ -86,15 +87,15 @@ const AddEditFormMain = (props) => {
                             <>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item name="code" label="Sub Group Code" rules={[validateRequiredInputField('Document Description'), noWhiteSpaceinBeginning()]}>
-                                            <Input maxLength={6} placeholder={preparePlaceholderText('Group Code')} disabled={treeCodeReadOnly} />
+                                        <Form.Item name="code" label={translateContent('vehicleCheckListMaster.label.subGroupCode')} rules={[validateRequiredInputField(translateContent('vehicleCheckListMaster.label.subGroupCode')), noWhiteSpaceinBeginning()]}>
+                                            <Input maxLength={6} placeholder={preparePlaceholderText(translateContent('vehicleCheckListMaster.label.subGroupCode'))} disabled={treeCodeReadOnly} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item name="descriptionTitle" label="Sub Group Description" rules={[validateRequiredInputField('Financial Account Head'), noWhiteSpaceinBeginning()]}>
-                                            <TextArea maxLength={300} placeholder={preparePlaceholderText('Group Description')} showCount disabled={treeCodeReadOnly} />
+                                        <Form.Item name="descriptionTitle" label={translateContent('vehicleCheckListMaster.label.subGroupDescription')} rules={[validateRequiredInputField(translateContent('vehicleCheckListMaster.label.subGroupDescription')), noWhiteSpaceinBeginning()]}>
+                                            <TextArea maxLength={300} placeholder={preparePlaceholderText(translateContent('vehicleCheckListMaster.label.subGroupDescription'))} showCount disabled={treeCodeReadOnly} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
@@ -103,34 +104,34 @@ const AddEditFormMain = (props) => {
                             <>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item name="code" label="Checklist Code" rules={[validateRequiredInputField('Checklist Code'), noWhiteSpaceinBeginning()]}>
-                                            <Input maxLength={6} placeholder={preparePlaceholderText('Checklist Code')} disabled={treeCodeReadOnly} />
+                                        <Form.Item name="code" label={translateContent('vehicleCheckListMaster.label.checklistCode')} rules={[validateRequiredInputField(translateContent('vehicleCheckListMaster.label.checklistCode')), noWhiteSpaceinBeginning()]}>
+                                            <Input maxLength={6} placeholder={preparePlaceholderText(translateContent('vehicleCheckListMaster.label.checklistCode'))} disabled={treeCodeReadOnly} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item name="descriptionTitle" label="Checklist Description" rules={[validateRequiredInputField('Checklist Description'), noWhiteSpaceinBeginning()]}>
-                                            <TextArea maxLength={300} placeholder={preparePlaceholderText('Checklist Description')} disabled={treeCodeReadOnly} />
+                                        <Form.Item name="descriptionTitle" label={translateContent('vehicleCheckListMaster.label.checklistDescription')} rules={[validateRequiredInputField(translateContent('vehicleCheckListMaster.label.checklistDescription')), noWhiteSpaceinBeginning()]}>
+                                            <TextArea maxLength={300} placeholder={preparePlaceholderText(translateContent('vehicleCheckListMaster.label.checklistDescription'))} disabled={treeCodeReadOnly} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item name="answerType" label="Answer Type" rules={[validateRequiredSelectField('Answer Type')]}>
-                                            {customSelectBox({ data: typeData?.CHKL_ANS_TYPE, placeholder: preparePlaceholderSelect('Answer Type'), onChange: onChangeAnswerType })}
+                                        <Form.Item name="answerType" label={translateContent('vehicleCheckListMaster.label.answerType')} rules={[validateRequiredSelectField(translateContent('vehicleCheckListMaster.label.answerType'))]}>
+                                            {customSelectBox({ data: typeData?.CHKL_ANS_TYPE, placeholder: preparePlaceholderSelect(translateContent('vehicleCheckListMaster.label.answerType')), onChange: onChangeAnswerType })}
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item name="attachmentRequired" label="Attachment Required" rules={[validateRequiredSelectField('Attachment Required')]}>
-                                            {customSelectBox({ data: typeData?.ATT_TYPE, placeholder: preparePlaceholderSelect('Attachment Required') })}
+                                        <Form.Item name="attachmentRequired" label={translateContent('vehicleCheckListMaster.label.attachmentRequired')} rules={[validateRequiredSelectField(translateContent('vehicleCheckListMaster.label.attachmentRequired'))]}>
+                                            {customSelectBox({ data: typeData?.ATT_TYPE, placeholder: preparePlaceholderSelect(translateContent('vehicleCheckListMaster.label.attachmentRequired')) })}
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <Form.Item label="Status" name="status">
+                                    <Form.Item label={translateContent('vehicleCheckListMaster.label.status')} name="status">
                                         <Switch value={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status ? true : false} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status === true || null || undefined ? true : false} />
                                     </Form.Item>
                                 </Col>
@@ -141,8 +142,8 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             {attributeType !== VEHICLE_CHECKLIST_TYPE?.CHECKLIST?.key && (
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <Form.Item label="Status" name="status">
-                                        <Switch value={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status ? true : false} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status === true || null || undefined ? true : false} />
+                                    <Form.Item label={translateContent('vehicleCheckListMaster.label.status')} name="status">
+                                        <Switch value={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status ? true : false} checkedChildren={translateContent('vehicleCheckListMaster.label.active')} unCheckedChildren={translateContent('vehicleCheckListMaster.label.inactive')} defaultChecked={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status === true || null || undefined ? true : false} />
                                     </Form.Item>
                                 </Col>
                             )}

@@ -116,7 +116,7 @@ const VehicleDetailsMasterBase = (props) => {
         const data = { ...values, id: recordId, vin: vin, mnfcWarrEndDate: values?.mnfcWarrEndDate?.format('YYYY-MM-DD'), deliveryDate: values?.deliveryDate?.format('YYYY-MM-DD'), nextServiceDueDate: values?.nextServiceDueDate?.format('YYYY-MM-DD'), pucExpiryDate: values?.pucExpiryDate?.format('YYYY-MM-DD'), insuranceExpiryDate: values?.insuranceExpiryDate?.format('YYYY-MM-DD'), saleDate: values?.saleDate?.format('YYYY-MM-DD'), registrationNumber: registrationNumber };
         const onSuccess = (res) => {
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.title'), message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, extraParams });
         };
 

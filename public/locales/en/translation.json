@@ -2,9 +2,11 @@
     "global": {
         "validation": {
             "input": "Please enter ",
+            "id": "id",
+            "name": "name",
+            "description": "description",
             "dateLessThan": "Date cant be less than Effective from date"
         },
-
         "notificationSuccess": {
             "success": "Success",
             "error": "Error",
@@ -16,8 +18,13 @@
         "drawerTitle": {
             "add": "Add ",
             "edit": "Edit ",
-            "view": "View ",
+            "view": "View",
             "addNew": "Add New"
+        },
+        "label": {
+            "active": "Active",
+            "inActive": "InActive",
+            "status": "Status"
         },
         "advanceFilter": {
             "title": "Advance Filters",
@@ -40,7 +47,14 @@
             "saveAndNew": "Save and New",
             "edit": "Edit",
             "cancelBooking": "Cancel Booking",
-            "transferBooking": "Transfer Booking"
+            "transferBooking": "Transfer Booking",
+            "saveCloseBtn": "Save & Close",
+            "seeMore": "See more",
+            "seeLess": "See less"
+        },
+        "placeholder": {
+            "select": "Select",
+            "search": "Search"
         }
     },
     "login": {
@@ -123,6 +137,42 @@
             "companyName": "company name"
         }
     },
+    "vehicleCheckListMaster": {
+        "heading": {
+            "title": "Vehicle Checklist",
+            "edit": "Edit ",
+            "add": "Add "
+        },
+        "label": {
+            "attributeType": "Attribute Type",
+            "attributeLevel": "Attribute Level",
+            "parent": "Parent",
+            "groupCode": "Group Code",
+            "groupDescription": "Group Description",
+            "subGroupCode": "Sub Group Code",
+            "subGroupDescription": "Sub Group Description",
+            "checklistCode": "Checklist Code",
+            "checklistDescription": "Checklist Description",
+            "answerType": "Answer Type",
+            "attachmentRequired": "Attachment Required",
+            "status": "Status",
+            "active": "Active",
+            "inactive": "Inactive"
+        },
+        "placeholder": {
+            "attributeType": "Attribute Type",
+            "parent": "Parent",
+            "groupCode": "Group Code",
+            "groupDescription": "Group Description",
+            "subGroupCode": "Sub Group Code",
+            "subGroupDescription": "Sub Group Description",
+            "checklistCode": "Checklist Code",
+            "checklistDescription": "Checklist Description",
+            "answerType": "Answer Type",
+            "attachmentRequired": "Attachment Required",
+            "status": "Status"
+        }
+    },
     "rsmApproval": {
         "heading": {
             "title": "RSM Approval for Co-Dealer Invoice",
@@ -193,31 +243,21 @@
         "heading": {
             "pageTitle": "Role Management",
             "role": "Role",
-            "welcomeNote": "Welcome",
-            "loginText": "Please enter your credentials to login",
-            "forgotPassword": "Forgot Password?",
-            "unauthorizedAccess": "Unauthorized Access"
+            "subPanel": "Application Access"
         },
         "label": {
-            "username": "User ID (MILE ID.Parent ID)",
-            "password": "Password"
+            "roleId": "Role ID",
+            "roleName": "Role Name",
+            "roleDescription": "Role Description"
         },
         "placeholder": {
-            "username": "User ID (MILE ID.Parent ID)",
-            "password": "Password"
+            "search": "Search"
         },
         "validation": {
-            "googleCaptcha": "Please select Captcha"
+            "noApplicationText": "No Application Available"
         },
-        "button": {
-            "login": "Login",
-            "skipForNow": "Skip For Now",
-            "updatePassword": "Update Password",
-            "continue": "Continue"
-        },
-        "link": {
-            "mnmLogin": "M&M User Login"
-        }
+        "button": {},
+        "link": {}
     },
     "customerMaster": {
         "heading": {
@@ -275,29 +315,157 @@
             "mainTitle": "Vehicle Details",
             "title": "Search Vehicle"
         },
-        "placeholder": {},
+        "label": {
+            "vin": "VIN",
+            "registrationNumber": "Registration No.",
+            "customerName": "Customer Name",
+            "model": "Model Description"
+        },
+        "placeholder": {
+            "select": "Select"
+        },
         "validation": {
             "searchParameter": "search parametar"
         },
         "button": {},
+        "vehicledetails": {
+            "label": {
+                "mnfcWarrEndDate": "Manufacturer Warranty End Date",
+                "manufactureKM": "Expiry KM",
+                "deliveryDate": "Delivery Date",
+                "saleDate": "Sale Date",
+                "soldBy": "Sold By",
+                "lastOdometerReading": "Last Odometer Reading",
+                "averageRun": "Average Run",
+                "nextDueService": "Next Due Service",
+                "relationshipManager": "Relationship Manager",
+                "nextServiceDueDate": "Next Service Due Date",
+                "insuranceExpiryDate": "Insurance Expiry Date",
+                "customerCategorySsi": "Customer Category-SSI",
+                "customerCategoryCsi": "Customer Category-CSI",
+                "customerCategoryIqs": "Customer Category-IQS",
+                "taxiOrNonTaxiKey": "Taxi/Non Taxi",
+                "oemPrivilegeCustomer": "OEM Privileged Customer",
+                "keyAccountVehicle": "Key Account Vehicle",
+                "refurbished": "Refurbished",
+                "theftVehicle": "Theft Vehicle",
+                "pdiDone": " PDI Done",
+                "govtVehicle": "Government Vehicle",
+                "mnmCtcVehicle": "M&M CTC Vehicle",
+                "manageBy": "Managed By",
+                "carePlus": "Care Plus",
+                "buyBackVehicle": "Buy Back Vehicle"
+            },
+            "validation": {
+                "managedBy": "managed by"
+            }
+        },
+        "productDetails": {
+            "heading": {
+                "moduleTitle": "Product Details",
+                "attributeTitle": "Product Attribute Details",
+                "aggregateTitle": "Aggregates"
+            },
+            "label": {
+                "productDivision": "Product Division",
+                "modelFamily": "Model Family",
+                "modelGroup": "Model Group",
+                "modelVariant": "Model Variant",
+                "modelDescription": "Model Description",
+                "model": "Model ",
+                "item": "Item",
+                "make": "Make",
+                "serialNo": "Serial No."
+            }
+        }
+    },
+    "userManagement": {
+        "heading": {
+            "pageTitle": "User Management",
+            "role": "Role",
+            "subPanel": "Application Access"
+        },
         "label": {
-            "mnfcWarrEndDate": "Manufacturer Warranty End Date",
-            "manufactureKM": "Expiry KM",
-            "deliveryDate": "Delivery Date",
-            "saleDate": "Sale Date",
-            "soldBy": "Sold By",
-            "lastOdometerReading": "Last Odometer Reading",
-            "averageRun": "Average Run",
-            "nextDueService": "Next Due Service",
-            "relationshipManager": "Relationship Manager",
-            "nextServiceDueDate": "Next Service Due Date",
-            "insuranceExpiryDate": "Insurance Expiry Date",
-            "customerCategorySsi": "Customer Category-SSI",
-            "customerCategoryCsi": "Customer Category-CSI",
-            "customerCategoryIqs": "Customer Category-IQS",
-            "taxiOrNonTaxiKey": "Taxi/Non Taxi",
-            "manageBy": "Managed By",
-            "carePlus": "Care Plus"
+            "roleId": "Role ID",
+            "roleName": "Role Name",
+            "roleDescription": "Role Description",
+            "tokenNumber": "Token No",
+            "userName": "User Name",
+            "designation": "Designation",
+            "mobileNumber": "Mobile Number",
+            "emailId": "Email ID"
+        },
+        "placeholder": {
+            "search": "Search",
+            "searchEmployeeCode": "Search Employee Code",
+            "searchTokenNumber": "Search token number",
+            "dealer": "dealer"
+        },
+        "validation": {
+            "noApplicationText": "No Application Available"
+        },
+        "button": {
+            "createUser": "Create User"
+        },
+        "link": {}
+    },
+    "state": {
+        "heading": {
+            "title": "State Name"
+        },
+        "tableColHeading": {
+            "stateCode": "State Code",
+            "stateName": "State Name",
+            "gstStateCode": "GST State Code",
+            "country": "Country"
+        },
+        "label": {
+            "stateCode": "State Code",
+            "stateName": "State Name",
+            "gstStateCode": "GST State Code",
+            "country": "Country"
+        },
+        "placeholder": {
+            "stateCode": "State Code",
+            "stateName": "State Name",
+            "gstStateCode": "GST State Code",
+            "country": "Country"
+        },
+        "validation": {
+            "stateCode": "State Code",
+            "stateName": "State Name",
+            "gstStateCode": "GST State Code",
+            "country": "Country"
+        }
+    },
+
+    "vinBlockMaster": {
+        "heading": {
+            "moduleTitle": "Vin Block Master",
+            "title": "Vin Block Master",
+            "advancedFilter": "Advanced Filter",
+            "appliedAdvanceFilters": "Applied Advance Filters"
+        },
+        "label": {
+            "vin": "Vin",
+            "modelDescription": "Model Description",
+            "dealerCode": "Dealer Code",
+            "action": "Action",
+            "searchVin": "Search Vin",
+            "modelGroupCode": "Model Group Code",
+            "modelCode": "Model Code",
+            "varientCode": "Varient Code",
+            "color": "Color"
+        },
+        "placeholder": {
+            "searchVin": "Search Vin"
+        },
+        "button": {
+            "close": "Close",
+            "reset": "Reset",
+            "apply": "Apply",
+            "clear": "Clear",
+            "cancel": "Cancel"
         }
     }
 }
