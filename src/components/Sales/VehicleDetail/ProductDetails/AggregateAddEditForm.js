@@ -8,6 +8,7 @@ import { Col, Input, Form, Row, Select, Button } from 'antd';
 
 import { withModal } from 'components/withModal';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { translateContent } from 'utils/translateContent';
 
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 
@@ -84,18 +85,18 @@ export const AdvanceForm = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item name="item" label="Item" rules={[validateRequiredSelectField('Item')]}>
-                                <Select allowClear placeholder={preparePlaceholderSelect('item')} options={itemOptions} fieldNames={ItemFieldNames} />
+                            <Form.Item name="item" label={translateContent('vehicleDetail.productDetails.label.item')} rules={[validateRequiredSelectField('Item')]}>
+                                <Select allowClear placeholder={preparePlaceholderText(translateContent('vehicleDetail.productDetails.label.item'))} options={itemOptions} fieldNames={ItemFieldNames} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item label="Make" name="make" rules={[validateRequiredInputField('Make')]}>
-                                <Select allowClear placeholder={preparePlaceholderSelect('Make')} fieldNames={MakefieldNames} options={makeOptions} />
+                            <Form.Item label={translateContent('vehicleDetail.productDetails.label.make')} name="make" rules={[validateRequiredInputField('Make')]}>
+                                <Select allowClear placeholder={preparePlaceholderText(translateContent('vehicleDetail.productDetails.label.make'))} fieldNames={MakefieldNames} options={makeOptions} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Form.Item label="Serial No." name="serialNo" rules={[validateRequiredInputField('Srl no'), validationFieldLetterAndNumber('Srl no')]}>
-                                <Input maxLength={30} placeholder={preparePlaceholderText('Srl no')} />
+                            <Form.Item label={translateContent('vehicleDetail.productDetails.label.serialNo')} name="serialNo" rules={[validateRequiredInputField('Srl no'), validationFieldLetterAndNumber('Srl no')]}>
+                                <Input maxLength={30} placeholder={preparePlaceholderText(translateContent('vehicleDetail.productDetails.label.serialNo'))} />
                             </Form.Item>
                             <Form.Item name="id" hidden></Form.Item>
                         </Col>

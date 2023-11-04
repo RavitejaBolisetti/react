@@ -1,0 +1,72 @@
+{
+    "global": {
+        "validation": {
+            "please_enter": "कृपया दर्ज करें",
+            "input": "कृपया दर्ज करें"
+        }
+    },
+    "login": {
+        "heading": {
+            "Dealer Management System": "डीलर प्रबंधन प्रणाली",
+            "Welcome": "स्वागत है - एन",
+            "Please enter your credentials to login": "लॉगिन करने के लिए कृपया अपने क्रेडेंशियल दर्ज करें",
+            "forgot_password": "पासवर्ड भूल गए?",
+            "unauthorized_access": "अनधिकृत पहुंच",
+            "mainTitle": "डीलर प्रबंधन प्रणाली",
+            "welcomeNote": "स्वागत",
+            "loginText": "लॉगिन करने के लिए कृपया अपनी साख दर्ज करें",
+            "forgotPassword": "पासवर्ड भूल गए?",
+            "unauthorizedAccess": "अनधिकृत पहुंच"
+        },
+        "label": {
+            "username": "उपयोगकर्ता आईडी (माइल आईडी.अभिभावक आईडी)",
+            "password": "पासवर्ड"
+        },
+        "placeholder": {
+            "username": "उपयोगकर्ता आईडी (माइल आईडी.अभिभावक आईडी)",
+            "password": "पासवर्ड"
+        },
+        "validation": {
+            "google_captcha": "कृपया कैप्चा चुनें",
+            "googleCaptcha": "कृपया कैप्चा चुनें"
+        },
+        "button": {
+            "login": "लॉग इन करें",
+            "skip_for_now": "अभी के लिए छोड़ दे",
+            "update_password": "पासवर्ड अपडेट करें",
+            "continue": "जारी रखना",
+            "skipForNow": "अभी के लिए छोड़ दे",
+            "updatePassword": "पासवर्ड अपडेट करें"
+        },
+        "link": {
+            "mnm_login": "एम एंड एम उपयोगकर्ता लॉगिन",
+            "mnmLogin": "एम एंड एम उपयोगकर्ता लॉगिन"
+        }
+    },
+
+    "LessorCompanyMaster": {
+        "heading": {
+            "pageTitle": "पट्टादाता कंपनी मास्टर (एमएंडएम)",
+            "title": "पट्टादाता कंपनी नाम"
+        },
+        "label": {
+            "companyCode": "कंपनी कोड",
+            "companyName": "कंपनी का नाम",
+            "status": "स्थिति",
+            "active": "सक्रिय",
+            "inactive": "निष्क्रिय"
+        },
+        "placeholder": {
+            "search": "खोज",
+            "companyCode": "कंपनी कोड",
+            "companyName": "कंपनी का नाम"
+        },
+        "validation": {
+            "companyCode": "कंपनी कोड",
+            "companyName": "कंपनी का नाम"
+        }
+    },
+    "footer": {
+        "copyright": "कॉपीराइट © {YEAR} रॉबिन।"
+    }
+}

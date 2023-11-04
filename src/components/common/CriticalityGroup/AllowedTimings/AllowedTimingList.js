@@ -9,6 +9,8 @@ import moment from 'moment';
 import { LANGUAGE_EN } from 'language/en';
 import AddEditForm from './AddEditForm';
 import AllowedTimingCard from './AllowedTimingCard';
+import { translateContent } from 'utils/translateContent';
+
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -89,7 +91,7 @@ const AllowedTimingList = (props) => {
                     <Divider />
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                            <p className={styles.allowedTimingAlignment}>Allowed Timings</p>
+                            <p className={styles.allowedTimingAlignment}>{translateContent('criticalityGroup.label.allowedTimming')}</p>
                         </Col>
                         {!formActionType?.viewMode && (
                             <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
@@ -114,10 +116,10 @@ const AllowedTimingList = (props) => {
                         <div className={styles.timingHeader}>
                             <Row gutter={20}>
                                 <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
-                                    <div className={styles.paddingLeft}>Start Time</div>
+                                    <div className={styles.paddingLeft}>{translateContent('criticalityGroup.label.startTime')}</div>
                                 </Col>
                                 <Col xs={14} sm={14} md={14} lg={14} xl={14} xxl={14}>
-                                    <div className={styles.paddingLeft}>End Time</div>
+                                    <div className={styles.paddingLeft}>{translateContent('criticalityGroup.label.endTime')}</div>
                                 </Col>
                             </Row>
                         </div>

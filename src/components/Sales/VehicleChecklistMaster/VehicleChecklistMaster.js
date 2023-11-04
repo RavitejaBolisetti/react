@@ -13,6 +13,7 @@ import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarch
 import { vehicleChecklistMasterDataActions } from 'store/actions/data/sales/vehicleChecklistMaster/VehicleChecklistMaster';
 import { vehicleChecklistMasterAttributeLovDataActions } from 'store/actions/data/sales/vehicleChecklistMaster/attributeHierarchyLov';
 import { otfLoyaltyModelGroupDataActions } from 'store/actions/data/otf/loyaltyModelGroup';
+import { translateContent } from 'utils/translateContent';
 
 import { showGlobalNotification } from 'store/actions/notification';
 
@@ -44,8 +45,8 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Vehicle Checklist';
-    const viewTitle = 'Vehicle Checklist';
+    const moduleTitle = translateContent('vehicleCheckListMaster.heading.title');
+    const viewTitle = translateContent('vehicleCheckListMaster.heading.title');
 
     let returnValue = {
         userId,
@@ -317,11 +318,11 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
             };
         } else if (values?.attributeLevel === VEHICLE_CHECKLIST_TYPE?.CHECKLIST?.key) {
             if (modelData?.length <= 0) {
-                showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please add atleast one model' });
+                showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: translateContent('vehicleCheckListMaster.validationMessage.modelRequired') });
                 return;
             }
             if (answerType === ANSWER_TYPES?.Fixed?.key && answerData?.length <= 0) {
-                showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please add atleast one answer' });
+                showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: translateContent('vehicleCheckListMaster.validationMessage.answerRequired') });
                 return;
             }
             data = {
@@ -344,7 +345,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
 
             if (res?.data) {
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
                 fetchVehicleChecklist({ setIsLoading: listShowLoadingVehicleChecklist, userId, extraParams });
 
                 const attributeName = VehicleChecklistAttributeLov?.find((e) => e?.key === res?.data?.attributeLevel)?.value;
@@ -448,7 +449,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
             setAttributeType(formData?.attributeLevel);
             setFormActionType(FROM_ACTION_TYPE?.VIEW);
         },
-        titleOverride: (formActionType === FROM_ACTION_TYPE?.EDIT ? `Edit ` : `Add `).concat(moduleTitle),
+        titleOverride: (formActionType === FROM_ACTION_TYPE?.EDIT ? translateContent('global.drawerTitle.edit') : translateContent('global.drawerTitle.add')).concat(moduleTitle),
         onFinish,
         selectedTreeSelectKey,
         handleResetBtn,

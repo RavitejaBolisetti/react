@@ -5,12 +5,8 @@
  */
 import dayjs from 'dayjs';
 import { GetAge } from './getAge';
-import i18n from '../i18n';
+import { translateContent } from 'utils/translateContent';
 
-const translateContent = (key) => {
-    const translate = i18n.t;
-    return translate(key);
-};
 
 export const validateRequiredInputField = (fieldName, lowercase = true) => ({
     required: true,

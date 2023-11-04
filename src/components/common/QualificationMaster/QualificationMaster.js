@@ -16,6 +16,7 @@ import { filterFunction } from 'utils/filterFunction';
 import { qualificationDataActions } from 'store/actions/data/qualificationMaster';
 import { AddEditForm } from './AddEditForm';
 import { tableColumn } from './tableColumn';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -28,7 +29,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Qualification Master';
+    const moduleTitle = translateContent('qualificationMaster.heading.title');
 
     let returnValue = {
         collapsed,
@@ -214,7 +215,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
         onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat('Qualification'),
+        titleOverride: drawerTitle.concat(translateContent('qualificationMaster.heading.drawerTitle')),
         tableData: searchData,
         ADD_ACTION,
         EDIT_ACTION,
@@ -224,7 +225,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
         handleButtonClick,
         handleResetFilter,
     };
-    const title = 'Qualification Name';
+    const title = translateContent('qualificationMaster.heading.titleName');
 
     const advanceFilterResultProps = {
         advanceFilter: false,
