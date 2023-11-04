@@ -575,7 +575,9 @@
     "rsmAsmApproval": {
         "heading": {
             "mainTitle": "RSM/ASM Approval",
-            "title": "RSM Approval Summary"
+            "title": "RSM Approval Summary",
+            "titleOverride": "Advance Filters",
+            "appliedAdvanceFilters": "Applied Advance Filters :"
         },
         "label": {
             "approveReq": "Are you sure you want to approve request?",
@@ -587,7 +589,8 @@
             "deliveryOrInvoiceDate": "Delivery Note/Invoice Date",
             "dealerName": "Dealer Name",
             "fromDate": "Request From Date",
-            "toDate": "Request To Date"
+            "toDate": "Request To Date",
+            "searchByDealer": "Search by Dealer Name"
         }
     },
     "userManagement": {
