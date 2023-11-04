@@ -50,7 +50,9 @@
             "transferBooking": "Transfer Booking",
             "saveCloseBtn": "Save & Close",
             "seeMore": "See more",
-            "seeLess": "See less"
+            "seeLess": "See less",
+            "reset": "Reset",
+            "search": "search"
         },
         "placeholder": {
             "select": "Select",
@@ -300,6 +302,44 @@
             "startTime": "Start Time",
             "endTime": "End Time",
             "allowedTimming": "Allowed Timings"
+        }
+    },
+    "city": {
+        "placeholder": {
+            "select": "Select",
+            "country": "Country",
+            "stateName": "State Name",
+            "districtName": "District Name",
+            "cityCode": "City Code",
+            "cityName": "City Name",
+            "search": "Search"
+        },
+        "label": {
+            "countryCode": "Country",
+            "stateName": "State Name",
+            "districtName": "District Name",
+            "cityCode": "City Code",
+            "cityName": "City Name",
+            "state": "State",
+            "district": "District"
+        },
+        "validation": {
+            "country": "Country",
+            "stateName": "State Name",
+            "districtName": "District Name",
+            "cityCode": "City Code",
+            "cityName": "City Name"
+        },
+        "title": {
+            "country": "Country",
+            "state": "State",
+            "district": "District",
+            "keyword": "keyword",
+            "advanceFilters": "Advance Filters",
+            "cityName": "City Name",
+            "cityCode": "City Code",
+            "districtName": "District Name",
+            "stateName": "State Name"
         }
     },
     "footer": {
