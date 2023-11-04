@@ -2,7 +2,62 @@
     "global": {
         "validation": {
             "please_enter": "कृपया दर्ज करें",
-            "input": "कृपया दर्ज करें"
+            "input": "कृपया दर्ज करें",
+            "id": "पहचान",
+            "name": "नाम",
+            "description": "विवरण",
+            "dateLessThan": "दिनांक दिनांक से प्रभावी नहीं हो सकता"
+        },
+        "notificationSuccess": {
+            "success": "सफलता",
+            "error": "गलती",
+            "warning": "चेतावनी"
+        },
+        "notificationError": {
+            "title": "गलती"
+        },
+        "drawerTitle": {
+            "add": "जोड़ना",
+            "edit": "संपादन करना ",
+            "view": "देखना",
+            "addNew": "नया जोड़ो"
+        },
+        "label": {
+            "active": "सक्रिय",
+            "inActive": "निष्क्रिय",
+            "status": "स्थिति"
+        },
+        "advanceFilter": {
+            "title": "अग्रिम फ़िल्टर",
+            "appliedAdvanceFilter": "एडवांस एप्लाइड एडवांस फिल्टरफिल्टर :"
+        },
+        "generalMessage": {
+            "noRecordsFound": "कोई रिकॉर्ड नहीं मिला"
+        },
+        "changeHistory": {
+            "title": "इतिहास बदलें"
+        },
+        "buttons": {
+            "download": "डाउनलोड करना",
+            "downloadTemplate": "टेम्पलेट डाउनलोड करें",
+            "add": "जोड़ना",
+            "clear": "स्पष्ट",
+            "save": "बचाना",
+            "close": "बंद करना",
+            "cancel": "रद्द करना",
+            "print/download": "प्रिंट/डाउनलोड करें",
+            "saveAndNew": "सहेजें और नया",
+            "edit": "संपादन करना",
+            "cancelBooking": "बुकिंग रद्द करें",
+            "transferBooking": "स्थानांतरण बुकिंग",
+            "saveCloseBtn": "सहेजे बंद करें",
+            "seeMore": "और देखें",
+            "seeLess": "कम देखें",
+            "upload": "डालना"
+        },
+        "placeholder": {
+            "select": "चुनना",
+            "search": "खोज"
         }
     },
     "login": {
@@ -68,5 +123,27 @@
     },
     "footer": {
         "copyright": "कॉपीराइट © {YEAR} रॉबिन।"
+    },
+
+    "LessorCompanyCreation": {
+        "heading": {
+            "pageTitle": "पट्टादाता कंपनी निर्माण",
+            "moduletitle": "पट्टादाता ग्राहक"
+        },
+        "label": {
+            "LessorCompany": "पट्टादाता ग्राहक प्रपत्र",
+            "companyName": "कंपनी का नाम",
+            "stateName": "राज्य का नाम"
+        },
+        "placeholder": {
+            "stateName": "राज्य का नाम"
+        },
+        "message": {
+            "uploadButtonName": "लेसर फॉर्म अपलोड करें",
+            "messageText": "अपलोड करने के लिए अपनी फ़ाइल को यहां क्लिक करें या छोड़ें",
+            "validationText": "फ़ाइल का प्रकार .xlxs और अधिकतम फ़ाइल आकार 8Mb होना चाहिए",
+            "docName": "पट्टादाता टेम्पलेट",
+            "textMessage": "कृपया नीचे दिए गए बटन का उपयोग करके लेसर ग्राहक टेम्पलेट डाउनलोड करेंs"
+        }
     }
 }

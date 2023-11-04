@@ -12,6 +12,7 @@ import styles from 'assets/sass/app.module.scss';
 
 import { ViewDetail } from './ViewDetail';
 import { DrawerFormButton } from 'components/common/Button';
+import { translateContent } from 'utils/translateContent';
 
 const { Option } = Select;
 
@@ -22,7 +23,7 @@ const AddEditFormMain = (props) => {
     const { buttonData, setButtonData, handleButtonClick } = props;
 
     let stateFieldValidation = {
-        rules: [validateRequiredSelectField('State Name')],
+        rules: [validateRequiredSelectField(translateContent('district.validation.stateName'))],
     };
 
     if (stateData && formData?.stateCode) {
@@ -32,7 +33,7 @@ const AddEditFormMain = (props) => {
             const Attribute = unFilteredStateData.find((attribute) => attribute.id === formData?.attributeKey);
             if (Attribute) {
                 stateFieldValidation.initialValue = Attribute?.name;
-                stateFieldValidation.rules.push({ type: 'number', message: Attribute?.name + ' is not active anymore. Please select a different state. ' });
+                stateFieldValidation.rules.push({ type: 'number', message: Attribute?.name + `${translateContent('district.message.differentState')}` });
             }
         }
     }
@@ -85,8 +86,8 @@ const AddEditFormMain = (props) => {
                         <>
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.countryCode || defaultCountry} label="Country" name="countryCode" placeholder={preparePlaceholderSelect('Country')} rules={[validateRequiredSelectField('Country')]}>
-                                        <Select showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear onChange={handleCountryChange}>
+                                    <Form.Item initialValue={formData?.countryCode || defaultCountry} label={translateContent('district.label.countryCode')} name="countryCode" placeholder={preparePlaceholderSelect(translateContent('district.placeholder.country'))} rules={[validateRequiredSelectField(translateContent('district.validation.country'))]}>
+                                        <Select showSearch loading={!isDataCountryLoaded} placeholder={translateContent('global.placeholder.select')} allowClear onChange={handleCountryChange}>
                                             {countryData?.map((item) => (
                                                 <Option key={item?.countryCode} value={item?.countryCode}>
                                                     {item?.countryName}
@@ -97,8 +98,8 @@ const AddEditFormMain = (props) => {
                                 </Col>
 
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.stateCode} label="State Name" name="stateCode" {...stateFieldValidation}>
-                                        <Select placeholder={preparePlaceholderSelect('State Name')} {...selectProps} onChange={handleStateChange}>
+                                    <Form.Item initialValue={formData?.stateCode} label={translateContent('district.label.stateName')} name="stateCode" {...stateFieldValidation}>
+                                        <Select placeholder={preparePlaceholderSelect(translateContent('district.placeholder.stateName'))} {...selectProps} onChange={handleStateChange}>
                                             {stateData?.map((item) => (
                                                 <Option value={item?.key}>{item?.value}</Option>
                                             ))}
@@ -108,20 +109,20 @@ const AddEditFormMain = (props) => {
 
                                 {!addMode && (
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item initialValue={formData?.code} label="District Code" name="code" rules={[validateRequiredInputField('district Code')]}>
-                                            <Input placeholder={preparePlaceholderText('District Code')} maxLength={6} disabled={editMode ? true : false} />
+                                        <Form.Item initialValue={formData?.code} label={translateContent('district.label.districtCode')} name="code" rules={[validateRequiredInputField(translateContent('city.validation.districtCode'))]}>
+                                            <Input placeholder={preparePlaceholderText(translateContent('district.placeholder.districtCode'))} maxLength={6} disabled={editMode ? true : false} />
                                         </Form.Item>
                                     </Col>
                                 )}
 
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.name} label="District Name" name="name" rules={[validateRequiredInputField('District Name')]}>
-                                        <Input placeholder={preparePlaceholderText('District Name')} />
+                                    <Form.Item initialValue={formData?.name} label={translateContent('district.label.districtName')} rules={[validateRequiredInputField(translateContent('district.validation.districtName'))]}>
+                                        <Input placeholder={preparePlaceholderText(translateContent('district.placeholder.districtName'))} />
                                     </Form.Item>
                                 </Col>
 
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
+                                    <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label={translateContent('global.label.status')}>
                                         <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
                                     </Form.Item>
                                 </Col>

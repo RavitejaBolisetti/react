@@ -7,12 +7,12 @@ import { Row, Col, Space, Avatar, Typography, Card, Button, Divider } from 'antd
 import { HiCheck } from 'react-icons/hi';
 import styles from 'assets/sass/app.module.scss';
 import { CopytoClipboard } from 'utils/CopytoClipboard';
+import { translateContent } from 'utils/translateContent';
 
 const { Title, Text } = Typography;
 
 export const EnrolmentNumberGenerated = (props) => {
-
-    const title = 'Enrolment Number Generated Successfully';
+    const title = translateContent('crmSchemeEnrolment.heading.enrollmentTitle');
 
     return (
         <Space justify="center" align="center">
@@ -37,7 +37,7 @@ export const EnrolmentNumberGenerated = (props) => {
                                     <CopytoClipboard type={'primary'} buttonText={'Copy'} text={'ASE VERSHA'} />
                                 </Space>
                                 <Divider style={{ margin: '18px 0' }} />
-                                <Text style={{ color: '#858585', fontWeight: '500' }}>Do you want to Print or download this Document </Text>
+                                <Text style={{ color: '#858585', fontWeight: '500' }}>translateContent('crmSchemeEnrolment.confirmationMessage.download') </Text>
                                 <Button
                                     danger
                                     style={{ margin: '18px 0' }}
@@ -49,7 +49,7 @@ export const EnrolmentNumberGenerated = (props) => {
                                     }
                                     onClick={''}
                                 >
-                                    Download/Print Document
+                                    translateContent('crmSchemeEnrolment.button.downloadPrint')
                                 </Button>
                             </Col>
                         </Card>

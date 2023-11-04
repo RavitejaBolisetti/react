@@ -5,46 +5,47 @@
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { convertDateMonthYear } from 'utils/formatDateTime';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
 export const tableColumn = (handleButtonClick) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Enrolment No',
+            title: translateContent('crmSchemeEnrolment.label.enrolmentNo'),
             dataIndex: 'enrolmentNumber',
             width: '13%',
         }),
 
         tblPrepareColumns({
-            title: 'Enrolment Date',
+            title: translateContent('crmSchemeEnrolment.label.enrolmentDate'),
             dataIndex: 'enrolledDate',
             width: '13%',
             render: (text) => (text ? convertDateMonthYear(text) : 'NA'),
         }),
 
         tblPrepareColumns({
-            title: 'Booklet No',
+            title: translateContent('crmSchemeEnrolment.label.bookletNo'),
             dataIndex: 'bookletNumber',
             width: '13%',
         }),
         tblPrepareColumns({
-            title: 'Customer Name',
+            title: translateContent('crmSchemeEnrolment.label.customerName'),
             dataIndex: 'customerName',
             width: '13%',
         }),
         tblPrepareColumns({
-            title: 'Mobile No',
+            title: translateContent('crmSchemeEnrolment.label.mobileNo'),
             dataIndex: 'mobileNumber',
             width: '13%',
         }),
         tblPrepareColumns({
-            title: 'VIN',
+            title: translateContent('crmSchemeEnrolment.label.vin'),
             dataIndex: 'vin',
             width: '13%',
         }),
         tblPrepareColumns({
-            title: 'Registration',
+            title: translateContent('crmSchemeEnrolment.label.registration'),
             dataIndex: 'registrationNumber',
             width: '13%',
         }),
