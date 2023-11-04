@@ -24,6 +24,7 @@ import { AddEditForm } from './AddEditForm';
 import { AdvancedSearch } from './AdvancedSearch';
 
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -118,7 +119,7 @@ export const ListCityMasterBase = (props) => {
     const VIEW_ONLY_ACTION = FROM_ACTION_TYPE?.VIEW_ONLY;
 
     const onSuccessAction = (res) => {
-        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        refershData && showGlobalNotification({ notificationType: 'success', title: `${translateContent('global.notificationSuccess.success')}`, message: res?.responseMessage });
         setRefershData(false);
         setShowDataLoading(false);
     };
@@ -190,21 +191,21 @@ export const ListCityMasterBase = (props) => {
     const extraParams = [
         {
             key: 'countryCode',
-            title: 'Country',
+            title: `${translateContent('city.title.country')}`,
             value: filterString?.countryCode,
             canRemove: true,
             name: countryData?.find((i) => i?.countryCode === filterString?.countryCode)?.countryName,
         },
         {
             key: 'stateCode',
-            title: 'State',
+            title: `${translateContent('city.title.state')}`,
             value: filterString?.stateCode,
             canRemove: true,
             name: filteredStateData?.find((i) => i?.key === filterString?.stateCode)?.value,
         },
         {
             key: 'districtCode',
-            title: 'District',
+            title: `${translateContent('city.title.district')}`,
             canRemove: true,
             value: filterString?.districtCode,
             name: filteredDistrictData?.find((i) => i?.key === filterString?.districtCode)?.value,
@@ -212,7 +213,7 @@ export const ListCityMasterBase = (props) => {
 
         {
             key: 'keyword',
-            title: 'keyword',
+            title: `${translateContent('city.title.keyword')}`,
             canRemove: true,
             value: filterString?.keyword,
             name: filterString?.keyword,
@@ -312,16 +313,16 @@ export const ListCityMasterBase = (props) => {
             form.resetFields();
             setShowDataLoading(true);
 
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: `${translateContent('global.notificationSuccess.success')}`, message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId });
 
             setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+                showGlobalNotification({ notificationType: 'success', title: `${translateContent('global.notificationSuccess.success')}`, message: res?.responseMessage, placement: 'bottomRight' });
             } else {
                 setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: `${translateContent('global.notificationSuccess.success')}`, message: res?.responseMessage });
             }
         };
 
@@ -397,7 +398,7 @@ export const ListCityMasterBase = (props) => {
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
         onCloseAction: onAdvanceSearchCloseAction,
-        titleOverride: 'Advance Filters',
+        titleOverride: `${translateContent('city.title.advanceFilters')}`,
         isDataCountryLoaded,
         isCountryLoading,
         countryData,
@@ -424,7 +425,7 @@ export const ListCityMasterBase = (props) => {
         showAddButton,
     };
 
-    const title = 'City Name';
+    const title = `${translateContent('city.title.cityName')}`;
     const advanceFilterResultProps = {
         advanceFilter: true,
         filterString,

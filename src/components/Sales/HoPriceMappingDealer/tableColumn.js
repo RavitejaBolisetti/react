@@ -5,41 +5,42 @@
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { convertDateMonthYear } from 'utils/formatDateTime';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
 export const tableColumn = (handleButtonClick) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'State',
+            title: translateContent('hoPriceMapping.label.state'),
             dataIndex: 'state',
             width: '12%',
         }),
 
         tblPrepareColumns({
-            title: 'City',
+            title: translateContent('hoPriceMapping.label.city'),
             dataIndex: 'city',
             width: '12%',
         }),
 
         tblPrepareColumns({
-            title: 'Dealer Parent',
+            title: translateContent('hoPriceMapping.label.dealerParent'),
             dataIndex: 'dealerParent',
             width: '14%',
         }),
         tblPrepareColumns({
-            title: 'Dealer Location',
+            title: translateContent('hoPriceMapping.label.dealerLocation'),
             dataIndex: 'dealerBranch',
             width: '14%',
         }),
         tblPrepareColumns({
-            title: 'Enable Date',
+            title: translateContent('hoPriceMapping.label.enableDate'),
             dataIndex: 'enabledDate',
             width: '12%',
             render: (text) => (text ? convertDateMonthYear(text) : 'NA'),
         }),
         tblPrepareColumns({
-            title: 'Enable By',
+            title: translateContent('hoPriceMapping.label.enableBy'),
             dataIndex: 'enabledBy',
             width: '14%',
         }),
