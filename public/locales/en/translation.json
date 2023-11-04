@@ -5,7 +5,10 @@
             "id": "id",
             "name": "name",
             "description": "description",
-            "dateLessThan": "Date cant be less than Effective from date"
+            "dateLessThan": "Date cant be less than Effective from date",
+            "state":"State",
+            "city":"City",
+            "productHierarchy":"Product Hierarchy"
         },
 
         "notificationSuccess": {
@@ -463,6 +466,39 @@
             "clear":"Clear",
             "cancel":"Cancel"
         }
+    },
+    
+    "hoPriceMapping": {
+        "heading": {
+            "maintitle":"HO Price Upload Mapping",
+            "title": "HO Price Upload Mapping for Dealer",
+            "drawerTitleHeading": "HO Price Upload Mapping",
+            "titleOverride":"Advance Filters",
+            "dealerList":"Dealer List",
+            "modelDetails":"Model Details",            
+            "advancedFilter":"Advanced Filter",
+            "appliedAdvanceFilters":"Applied Advance Filters"
+        },
+        "label": {
+            "state": "State",
+            "city": "City",
+            "productHierarchy":"Product Hierarchy",
+            "dealerParent":"Dealer Parent",
+            "dealerLocation":"Dealer Location",
+            "dealerSelectOnRoadPrice":"Dealer Selected for On Road Price?",
+            "enableDate":"Enable Date",
+            "enableBy":"Enable By",
+            "select":"Select",
+            "stateCode": "State Code",
+            "searchDealerParent":"Search Dealer Parent"
+        },       
+        "button": {
+            "continue": "Continue",
+            "reset":"Reset",
+            "apply":"Apply",
+            "clear":"Clear"
+        }      
+        
     }
 
 }
