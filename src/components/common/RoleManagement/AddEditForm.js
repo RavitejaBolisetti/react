@@ -26,6 +26,7 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 import { flattenData } from 'utils/flattenData';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { TextArea } = Input;
 const { Panel } = Collapse;
@@ -58,10 +59,8 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Role Management';
     let returnValue = {
         userId,
-        moduleTitle,
         menuTreeData: rolemenuData,
         isDataLoading,
         isMenuLoading,
@@ -289,7 +288,7 @@ const AddEditFormMain = (props) => {
                                         <Row>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                                 <Form.Item label={''} name="search" validateTrigger={['onSearch']}>
-                                                    <Search placeholder="Search" initialValue={searchValue} onChange={handleSearchValue} allowClear />
+                                                    <Search placeholder={translateContent('roleManagement.placeholder.search')} initialValue={searchValue} onChange={handleSearchValue} allowClear />
                                                 </Form.Item>
                                             </Col>
                                         </Row>
@@ -306,7 +305,7 @@ const AddEditFormMain = (props) => {
                 })}
             </div>
         ) : (
-            <div>No Application Available</div>
+            <div>{translateContent('roleManagement.validation.noApplicationText')}</div>
         );
     };
 
@@ -358,21 +357,21 @@ const AddEditFormMain = (props) => {
                                 <div>
                                     <Row gutter={20}>
                                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                            <Form.Item initialValue={formData?.roleId} name="roleId" label="Role Id" rules={[validateRequiredInputField('id')]}>
+                                            <Form.Item initialValue={formData?.roleId} name="roleId" label={translateContent('roleManagement.label.roleId')} rules={[validateRequiredInputField(translateContent("global.validation.id"))]}>
                                                 <Input maxLength={6} disabled={editMode ? true : false} placeholder={preparePlaceholderText('id')} />
                                             </Form.Item>
                                         </Col>
                                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                            <Form.Item initialValue={formData?.roleName} name="roleName" label="Role Name" rules={[validateRequiredInputField('name')]}>
+                                            <Form.Item initialValue={formData?.roleName} name="roleName" label={translateContent('roleManagement.label.roleName')} rules={[validateRequiredInputField(translateContent("global.validation.name"))]}>
                                                 <Input maxLength={50} placeholder={preparePlaceholderText('name')} />
                                             </Form.Item>
                                         </Col>
                                     </Row>
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
-                                            <Form.Item initialValue={formData?.roleDescription}  label="Role Description" name="roleDescription" rules={[validateRequiredInputField('description')]}>
+                                            <Form.Item initialValue={formData?.roleDescription} label={translateContent('roleManagement.label.roleDescription')} name="roleDescription" rules={[validateRequiredInputField(translateContent("global.validation.description"))]}>
                                                 <TextArea
-                                                    placeholder={preparePlaceholderText('description')}
+                                                    placeholder={preparePlaceholderText(translateContent('global.validation.description'))}
                                                     autoSize={{
                                                         minRows: 2,
                                                         maxRows: 5,
@@ -385,15 +384,15 @@ const AddEditFormMain = (props) => {
                                     </Row>
                                     <Row gutter={20}>
                                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                            <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
-                                                <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
+                                            <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label={translateContent('global.label.status')}>
+                                                <Switch checkedChildren={translateContent('global.label.active')} unCheckedChildren={translateContent('global.label.inActive')} onChange={(checked) => (checked ? 1 : 0)} />
                                             </Form.Item>
                                         </Col>
                                     </Row>
                                 </div>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.subTitleSec}>
-                                        Application Access<span className={styles.mandatory}>*</span>
+                                        {translateContent('roleManagement.heading.subPanel')}<span className={styles.mandatory}>*</span>
                                     </Col>
                                 </Row>
                                 {AccordianTreePanel({ menuTreeData: unFilteredMenuData })}

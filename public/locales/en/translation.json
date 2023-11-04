@@ -2,7 +2,10 @@
     "global": {
         
         "validation": {
-            "input": "Please enter "
+            "input": "Please enter ",
+            "id": "id",
+            "name": "name",
+            "description": "description"
         },
         "notificationSuccess": {
             "title": "Success"
@@ -11,8 +14,12 @@
             "add": "Add ",
             "edit": "Edit ",
             "view": "View"
-        }
-        
+        },
+        "label": {
+            "active":"Active",
+            "inActive":"InActive",
+            "status": "Status" 
+        }       
     },
     "login": {
         "heading": {
@@ -106,21 +113,18 @@
         "heading": {
             "pageTitle": "Role Management",
             "role": "Role",
-            "welcomeNote": "Welcome",
-            "loginText": "Please enter your credentials to login",
-            "forgotPassword": "Forgot Password?",
-            "unauthorizedAccess": "Unauthorized Access"
+            "subPanel": "Application Access"
         },
         "label": {
-            "username": "User ID (MILE ID.Parent ID)",
-            "password": "Password"
+            "roleId": "Role ID",
+            "roleName": "Role Name",
+            "roleDescription": "Role Description"
         },
         "placeholder": {
-            "username": "User ID (MILE ID.Parent ID)",
-            "password": "Password"
+            "search": "Search"
         },
         "validation": {
-            "googleCaptcha": "Please select Captcha"
+            "noApplicationText": "No Application Available"
         },
         "button": {
             "login": "Login",

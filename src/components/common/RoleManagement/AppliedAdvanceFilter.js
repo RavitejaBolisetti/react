@@ -12,6 +12,7 @@ import { PlusOutlined } from '@ant-design/icons';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { USER_TYPE_USER } from 'constants/modules/UserManagement/userType';
+import { translateContent } from 'utils/translateContent';
 
 const { Search } = Input;
 export default function AppliedAdvanceFilter(props) {
@@ -51,7 +52,7 @@ export default function AppliedAdvanceFilter(props) {
                                                     validateTrigger={['onSearch']}
                                                     style={{ width: '300px' }}
                                                 >
-                                                    <Search placeholder="Search" allowClear onSearch={onSearchHandle} onChange={handleClearInSearch} />
+                                                    <Search placeholder={translateContent('roleManagement.placeholder.search')} allowClear onSearch={onSearchHandle} onChange={handleClearInSearch} />
                                                 </Form.Item>
                                             </div>
                                         </Col>

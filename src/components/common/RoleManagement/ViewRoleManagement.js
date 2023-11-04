@@ -5,6 +5,7 @@
  */
 import React from 'react';
 import { Descriptions } from 'antd';
+import { translateContent } from 'utils/translateContent';
 
 const ViewRoleManagementMain = ({ formData, styles, menuTreeData, AccordianTreePanel }) => {
     const viewProps = {
@@ -26,16 +27,16 @@ const ViewRoleManagementMain = ({ formData, styles, menuTreeData, AccordianTreeP
             <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                 <div className={styles.roleDescription}>
                     <Descriptions {...viewTwoColProps}>
-                        <Descriptions.Item label="Role ID">{formData?.roleId}</Descriptions.Item>
-                        <Descriptions.Item label="Role Name">{formData?.roleName}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('roleManagement.label.roleId')}>{formData?.roleId}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('roleManagement.label.roleName')}>{formData?.roleName}</Descriptions.Item>
                     </Descriptions>
 
                     <Descriptions {...viewOneColProps}>
-                        <Descriptions.Item label="Role Description">{formData?.roleDescription}</Descriptions.Item>
-                        <Descriptions.Item label="Status">{formData?.status ? 'Active' : 'InActive'}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('roleManagement.label.roleDescription')}>{formData?.roleDescription}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('global.label.status')}>{translateContent(formData?.status ? "global.label.active" : "global.label.inActive")}</Descriptions.Item>
                     </Descriptions>
                 </div>
-                <div className={styles.subTitleSec}>Application Access</div>
+                <div className={styles.subTitleSec}>{translateContent('roleManagement.label.roleDescription')}</div>
                 {AccordianTreePanel({ viewMode: true, menuTreeData })}
             </div>
         </>
