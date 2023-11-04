@@ -40,6 +40,7 @@ import { tableColumn as manufacturerTableColumn } from './Manufacturer/tableColu
 import styles from 'assets/sass/app.module.scss';
 import { DealerProductActions } from 'store/actions/data/userManagement/dealerProduct';
 import { translateContent } from 'utils/translateContent';
+import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 const { Option } = Select;
 
@@ -522,7 +523,7 @@ const UserManagementMain = (props) => {
         filterString,
         setFilterString,
         singleField: true,
-        placeholder: userType === USER_TYPE_USER.DEALER.id ? 'Search Employee Code' : 'Search token number',
+        placeholder: translateContent(userType === USER_TYPE_USER.DEALER.id ? 'userManagement.placeholder.searchEmployeeCode' : 'userManagement.placeholder.searchTokenNumber'),
         disabled: disableSearch,
         optionType: selecttypeData,
         defaultValue: 'employeeCode',
@@ -551,7 +552,7 @@ const UserManagementMain = (props) => {
                                                     })}
                                                 </div>
                                                 {userType === USER_TYPE_USER?.DEALER?.id && (
-                                                    <Select className={styles.marR20} style={{ width: '60%' }} onChange={handleDealerChange} optionFilterProp="children" placeholder="Select dealer" showSearch allowClear>
+                                                    <Select className={styles.marR20} style={{ width: '60%' }} onChange={handleDealerChange} optionFilterProp="children" placeholder={preparePlaceholderSelect(translateContent('userManagement.placeholder.dealer'))} showSearch allowClear>
                                                         {dealerDataList?.map((item) => (
                                                             <Option key={item?.dealerCode} value={item?.dealerCode}>
                                                                 {item?.dealerCode + ' - ' + item?.dealerName}

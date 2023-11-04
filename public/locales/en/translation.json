@@ -34,9 +34,12 @@
         "generalMessage": {
             "noRecordsFound": "No records found"
         },
-        "button" :{
+        "button": {
             "cancel": "Cancel",
-            "save": "Save"
+            "save": "Save",
+            "saveCloseBtn": "Save & Close",
+            "seeMore": "See more",
+            "seeLess": "See less"
         }
     },
     "login": {
@@ -210,12 +213,8 @@
         "validation": {
             "noApplicationText": "No Application Available"
         },
-        "button": {
-            
-        },
-        "link": {
-            
-        }
+        "button": {},
+        "link": {}
     },
     "customerMaster": {
         "heading": {
@@ -307,10 +306,18 @@
         "label": {
             "roleId": "Role ID",
             "roleName": "Role Name",
-            "roleDescription": "Role Description"
+            "roleDescription": "Role Description",
+            "tokenNumber": "Token No",
+            "userName": "User Name",
+            "designation": "Designation",
+            "mobileNumber": "Mobile Number",
+            "emailId": "Email ID"
         },
         "placeholder": {
-            "search": "Search"
+            "search": "Search",
+            "searchEmployeeCode": "Search Employee Code",
+            "searchTokenNumber": "Search token number",
+            "dealer": "dealer"
         },
         "validation": {
             "noApplicationText": "No Application Available"
@@ -318,8 +325,6 @@
         "button": {
             "createUser": "Create User"
         },
-        "link": {
-            
-        }
+        "link": {}
     }
 }
