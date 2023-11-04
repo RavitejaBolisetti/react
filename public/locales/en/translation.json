@@ -248,24 +248,13 @@
             "unauthorizedAccess": "Unauthorized Access"
         },
         "label": {
-            "username": "User ID (MILE ID.Parent ID)",
-            "password": "Password"
-        },
-        "placeholder": {
-            "username": "User ID (MILE ID.Parent ID)",
-            "password": "Password"
-        },
-        "validation": {
-            "googleCaptcha": "Please select Captcha"
-        },
-        "button": {
-            "login": "Login",
-            "skipForNow": "Skip For Now",
-            "updatePassword": "Update Password",
-            "continue": "Continue"
-        },
-        "link": {
-            "mnmLogin": "M&M User Login"
+            "criticalityGroupId": "Criticality Group ID",
+            "criticalityGroupName": "Criticality Group Name",
+            "defaultGroup": "Default Group",
+            "status": "Status",
+            "startTime": "Start Time",
+            "endTime": "End Time",
+            "allowedTimming": "Allowed Timings"
         }
     },
     "footer": {
