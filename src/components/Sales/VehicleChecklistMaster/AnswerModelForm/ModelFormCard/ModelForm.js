@@ -36,7 +36,7 @@ const ModelForm = (props) => {
                                         onFinishModelForm();
                                     }}
                                 >
-                                    Add
+                                    {translateContent('global.buttons.add')}
                                 </Button>
                             )}
                         </Row>

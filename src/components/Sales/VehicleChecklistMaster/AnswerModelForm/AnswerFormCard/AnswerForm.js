@@ -43,7 +43,7 @@ const AnswerForm = (props) => {
                                         onFinishAnswerForm();
                                     }}
                                 >
-                                    Add
+                                    {translateContent('global.buttons.add')}
                                 </Button>
                             )}
                         </Row>

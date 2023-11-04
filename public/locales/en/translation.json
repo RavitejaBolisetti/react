@@ -5,7 +5,10 @@
             "id": "id",
             "name": "name",
             "description": "description",
-            "dateLessThan": "Date cant be less than Effective from date"
+            "dateLessThan": "Date cant be less than Effective from date",
+            "state":"State",
+            "city":"City",
+            "productHierarchy":"Product Hierarchy"
         },
         "notificationSuccess": {
             "success": "Success",
@@ -50,7 +53,9 @@
             "transferBooking": "Transfer Booking",
             "saveCloseBtn": "Save & Close",
             "seeMore": "See more",
-            "seeLess": "See less"
+            "seeLess": "See less",
+            "reset": "Reset",
+            "search": "search"
         },
         "placeholder": {
             "select": "Select",
@@ -163,7 +168,9 @@
         },
         "validationMessage": {
             "modelRequired": "Please add atleast one model",
-            "answerRequired": "Please add atleast one answer"
+            "answerRequired": "Please add atleast one answer",
+            "answerCodeExist": "answer code already exists",
+            "answerDescriptionExist": "answer description already exists"
         }
     },
     "rsmApproval": {
@@ -285,10 +292,8 @@
     "criticalityGroup": {
         "heading": {
             "mainTitle": "Application Criticality Group Details",
-            "title": "Criticality Group Name",
-            "loginText": "Please enter your credentials to login",
-            "forgotPassword": "Forgot Password?",
-            "unauthorizedAccess": "Unauthorized Access"
+            "pageTitle": "Application Criticality Group Master",
+            "title": "Criticality Group Name"
         },
         "label": {
             "criticalityGroupId": "Criticality Group ID",
@@ -298,8 +303,103 @@
             "startTime": "Start Time",
             "endTime": "End Time",
             "allowedTimming": "Allowed Timings"
+        },
+        "validation": {
+            "id": "id",
+            "name": "name",
+            "startTime": "Start time*",
+            "endTime": "End time*"
         }
     },
+    "city": {
+        "placeholder": {
+            "select": "Select",
+            "country": "Country",
+            "stateName": "State Name",
+            "districtName": "District Name",
+            "cityCode": "City Code",
+            "cityName": "City Name",
+            "search": "Search"
+        },
+        "label": {
+            "countryCode": "Country",
+            "stateName": "State Name",
+            "districtName": "District Name",
+            "cityCode": "City Code",
+            "cityName": "City Name",
+            "state": "State",
+            "district": "District"
+        },
+        "validation": {
+            "country": "Country",
+            "stateName": "State Name",
+            "districtName": "District Name",
+            "cityCode": "City Code",
+            "cityName": "City Name"
+        },
+        "title": {
+            "country": "Country",
+            "state": "State",
+            "district": "District",
+            "keyword": "keyword",
+            "advanceFilters": "Advance Filters",
+            "cityName": "City Name",
+            "cityCode": "City Code",
+            "districtName": "District Name",
+            "stateName": "State Name"
+        }
+    },
+
+    "productHierarchy": {
+        "heading": {
+            "moduleTitle": "Product Detail",
+            "hierarchyDetails": "Hierarchy Details",
+            "pageTitle": "Product Hierarchy",
+            "title": "Hierarchy",
+            "productAttribute": "Product Attribute"
+        },
+        "placeholder": {
+            "organizationHierarchy": "Organization Hierarchy",
+            "search": "Search",
+            "attributeName": "attribute name"
+        },
+        "label": {
+            "noDataTitle": "Please select hierarchy type to view records.",
+            "noDataMessage": "No records found.",
+            "description": "Please select product from left side hierarchy to view “Hierarchy Details”",
+            "attributeLevel": "Attribute Level",
+            "parent": "Parent",
+            "code": "Code",
+            "shortDescription": "Short Description",
+            "longDescription": "Long Description",
+            "status": "Status",
+            "changedDate": "Changed/Modified Date",
+            "changedBy": "Changed By",
+            "attribute": "Attribute",
+            "attributeName": "Attribute Name",
+            "attributeValue": "Attribute Value"
+        },
+        "validation": {
+            "attributeLevel": "attribute level",
+            "parent": "Parent",
+            "code": "code",
+            "shortDescription": "short description",
+            "longDescription": "long description"
+        },
+        "productHierarchType": {
+            "model": "Model",
+            "modelFamily": "Model Family",
+            "modelGroup": "Model Group",
+            "modelVariant": "Model Variant",
+            "productDivision": "Product Division",
+            "productHierarchy": "PRODUCT_HIERARCHY"
+        },
+        "notificationDuplicate": {
+            "title": "Duplicate",
+            "message": "Can not Save having same Attribute Name"
+        }
+    },
+
     "footer": {
         "copyright": "Copyright &copy; {YEAR} ROBIN."
     },
@@ -428,6 +528,7 @@
     },
     "state": {
         "heading": {
+            "moduleTitle": "State",
             "title": "State Name"
         },
         "tableColHeading": {
@@ -484,5 +585,38 @@
             "clear": "Clear",
             "cancel": "Cancel"
         }
+    },
+    
+    "hoPriceMapping": {
+        "heading": {
+            "maintitle":"HO Price Upload Mapping",
+            "title": "HO Price Upload Mapping for Dealer",
+            "drawerTitleHeading": "HO Price Upload Mapping",
+            "titleOverride":"Advance Filters",
+            "dealerList":"Dealer List",
+            "modelDetails":"Model Details",            
+            "advancedFilter":"Advanced Filter",
+            "appliedAdvanceFilters":"Applied Advance Filters"
+        },
+        "label": {
+            "state": "State",
+            "city": "City",
+            "productHierarchy":"Product Hierarchy",
+            "dealerParent":"Dealer Parent",
+            "dealerLocation":"Dealer Location",
+            "dealerSelectOnRoadPrice":"Dealer Selected for On Road Price?",
+            "enableDate":"Enable Date",
+            "enableBy":"Enable By",
+            "select":"Select",
+            "stateCode": "State Code",
+            "searchDealerParent":"Search Dealer Parent"
+        },       
+        "button": {
+            "continue": "Continue",
+            "reset":"Reset",
+            "apply":"Apply",
+            "clear":"Clear"
+        }      
+        
     }
 }
