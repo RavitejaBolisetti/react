@@ -39,7 +39,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = translateContent('documentTypeOtherChargesMaster.heading.title') ;
+    const moduleTitle = translateContent('documentTypeOtherChargesMaster.heading.moduleTitle');
 
     let returnValue = {
         userId,
@@ -240,11 +240,11 @@ export const DocumentTypeOtherChargesMain = (props) => {
 
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
-            return translateContent("global.drawerTitle.view");
+            return translateContent('global.drawerTitle.view');
         } else if (formActionType?.editMode) {
-            return translateContent("global.drawerTitle.edit");
+            return translateContent('global.drawerTitle.edit');
         } else {
-            return translateContent("global.drawerTitle.add");
+            return translateContent('global.drawerTitle.add');
         }
     }, [formActionType]);
 

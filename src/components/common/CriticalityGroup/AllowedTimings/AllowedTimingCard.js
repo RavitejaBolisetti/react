@@ -12,6 +12,8 @@ import { RxCross2 } from 'react-icons/rx';
 import { BsTrash3 } from 'react-icons/bs';
 
 import { LANGUAGE_EN } from 'language/en';
+import { translateContent } from 'utils/translateContent';
+
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -49,11 +51,11 @@ const AllowedTimingCard = (props) => {
                 <Row>
                     <Col xs={24} sm={24} md={11} lg={11} xl={11} xxl={11}>
                         <p className={styles.timeSlot}>{moment(timeSlotFrom, 'HH:mm').format('hh:mm A')}</p>
-                        <p className={styles.timeLabel}>Start Time</p>
+                        <p className={styles.timeLabel}>{translateContent('criticalityGroup.label.startTime')}</p>
                     </Col>
                     <Col xs={24} sm={24} md={11} lg={11} xl={11} xxl={11}>
                         <p className={styles.timeSlot}>{moment(timeSlotTo, 'HH:mm').format('hh:mm A')}</p>
-                        <p className={styles.timeLabel}>End Time</p>
+                        <p className={styles.timeLabel}>{translateContent('criticalityGroup.label.endTime')}</p>
                     </Col>
                     <Col xs={24} sm={24} md={2} lg={2} xl={2} className={styles.timeSlotClearBtn}>
                         {!formActionType?.viewMode && (!id ? <Button onClick={() => handleDeleteAction(timeSlotFrom)} type="link" icon={<RxCross2 size={20} />} /> : <Button onClick={() => handleDeleteActionServer(id)} type="link" icon={<BsTrash3 size={20} />} />)}
