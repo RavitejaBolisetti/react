@@ -12,6 +12,7 @@ import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import styles from 'assets/sass/app.module.scss';
 import { customSelectBox } from 'utils/customSelectBox';
+import { translateContent } from 'utils/translateContent';
 
 const { TextArea } = Input;
 
@@ -150,7 +151,7 @@ const AddEditFormMain = (props) => {
                         <>
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.parentCode} label="Group Code" rules={[validateRequiredSelectField('Group Code')]} name="parentCode">
+                                    <Form.Item initialValue={formData?.parentCode} label={translateContent('dealerCompany.label.groupCode')} rules={[validateRequiredSelectField('Group Code')]} name="parentCode">
                                         {/* <Select
                                             placeholder={preparePlaceholderSelect('Group Code')}
                                             style={{
@@ -170,40 +171,40 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label="Group Name" initialValue={groupValue ? groupValue : formData?.dealerParentName} name="dealerParentName">
-                                        <Input disabled placeholder={preparePlaceholderText('Group Name')} />
+                                    <Form.Item label={translateContent('dealerCompany.label.groupName')} initialValue={groupValue ? groupValue : formData?.dealerParentName} name="dealerParentName">
+                                        <Input disabled placeholder={translateContent('dealerCompany.placeholder.groupName')} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={0} sm={0} md={0} lg={0} xl={0}>
-                                    <Form.Item label="Parent Id" name="parentId" initialValue={formData?.parentId}>
+                                    <Form.Item label={translateContent('dealerCompany.label.parentId')} name="parentId" initialValue={formData?.parentId}>
                                         <Input />
                                     </Form.Item>
                                 </Col>
                             </Row>
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.companyCode} label="Company Code" name="companyCode" rules={[validateRequiredInputField('Company Code'), [{ validator: searchValidator }]]}>
-                                        <Input placeholder={preparePlaceholderText('Company Code')} maxLength={6} disabled={editMode} />
+                                    <Form.Item initialValue={formData?.companyCode} label={translateContent('dealerCompany.label.companyCode')} name="companyCode" rules={[validateRequiredInputField('Company Code'), [{ validator: searchValidator }]]}>
+                                        <Input placeholder={translateContent('dealerCompany.placeholder.companyCode')} maxLength={6} disabled={editMode} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.companyName} label="Company Name" name="companyName" rules={[validateRequiredInputField('Company Name')]}>
-                                        <Input placeholder={preparePlaceholderText('Company Name')} />
+                                    <Form.Item initialValue={formData?.companyName} label={translateContent('dealerCompany.label.companyName')} name="companyName" rules={[validateRequiredInputField('Company Name')]}>
+                                        <Input placeholder={translateContent('dealerCompany.placeholder.companyName')} />
                                     </Form.Item>
                                 </Col>
                             </Row>
                             <Row gutter={16}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.textareaError}>
-                                    <Form.Item initialValue={formData?.address} label="Company Address" name="address" rules={[validateRequiredInputField('Company Address')]}>
-                                        <TextArea placeholder={preparePlaceholderText('Company Address')} showCount maxLength={300} />
+                                    <Form.Item initialValue={formData?.address} label={translateContent('dealerCompany.label.companyAddress')} name="address" rules={[validateRequiredInputField('Company Address')]}>
+                                        <TextArea placeholder={translateContent('dealerCompany.placeholder.companyAddress')} showCount maxLength={300} />
                                     </Form.Item>
                                 </Col>
                             </Row>
                             <Row gutter={16}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <Form.Item initialValue={formData?.pinCode} label="Pin Code" name="pinCode" rules={[validateRequiredInputField('Pin Code'), validatePincodeField('Pin Code')]}>
+                                    <Form.Item initialValue={formData?.pinCode} label={translateContent('dealerCompany.label.pinCode')} name="pinCode" rules={[validateRequiredInputField('Pin Code'), validatePincodeField('Pin Code')]}>
                                         <AutoComplete options={options} onSelect={handleOnSelect} maxLength={6} onFocus={handleOnfocus} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
-                                            <Input.Search className={styles.removePincodeUpDown} type="text" onSearch={handleOnSearch} onChange={handleOnClear} maxLength={6} placeholder="Search" loading={isPinCodeLoading} allowClear />
+                                            <Input.Search className={styles.removePincodeUpDown} type="text" onSearch={handleOnSearch} onChange={handleOnClear} maxLength={6} placeholder={translateContent('dealerCompany.placeholder.search')} loading={isPinCodeLoading} allowClear />
                                         </AutoComplete>
                                     </Form.Item>
                                 </Col>
@@ -211,70 +212,70 @@ const AddEditFormMain = (props) => {
 
                             <Row gutter={16}>
                                 <Col xs={0} sm={0} md={0} lg={0} xl={0}>
-                                    <Form.Item initialValue={formData?.cityCode} label="City" name="cityCode">
-                                        <Input placeholder={preparePlaceholderText('City')} disabled />
+                                    <Form.Item initialValue={formData?.cityCode} label={translateContent('dealerCompany.label.city')} name="cityCode">
+                                        <Input placeholder={translateContent('dealerCompany.placeholder.city')} disabled />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={0} sm={0} md={0} lg={0} xl={0}>
-                                    <Form.Item initialValue={formData?.tehsilCode} label="Tehsil" name="tehsilCode">
-                                        <Input placeholder={preparePlaceholderText('Tehsil')} disabled />
+                                    <Form.Item initialValue={formData?.tehsilCode} label={translateContent('dealerCompany.label.tehsil')} name="tehsilCode">
+                                        <Input placeholder={translateContent('dealerCompany.placeholder.tehsil')} disabled />
                                     </Form.Item>
                                 </Col>
 
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.cityName} label="City" name="cityName">
-                                        <Input placeholder="City" disabled />
+                                    <Form.Item initialValue={formData?.cityName} label={translateContent('dealerCompany.label.city')} name="cityName">
+                                        <Input placeholder={translateContent('dealerCompany.placeholder.city')} disabled />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.tehsilName} label="Tehsil" name="tehsilName">
-                                        <Input placeholder="Tehsil" disabled />
+                                    <Form.Item initialValue={formData?.tehsilName} label={translateContent('dealerCompany.label.tehsil')} name="tehsilName">
+                                        <Input placeholder={translateContent('dealerCompany.placeholder.tehsil')} disabled />
                                     </Form.Item>
                                 </Col>
                             </Row>
                             <Row gutter={16}>
                                 <Col xs={0} sm={0} md={0} lg={0} xl={0}>
-                                    <Form.Item initialValue={formData?.districtCode} label="District" name="districtCode">
-                                        <Input placeholder={preparePlaceholderText('District')} disabled />
+                                    <Form.Item initialValue={formData?.districtCode} label={translateContent('dealerCompany.label.district')} name="districtCode">
+                                        <Input placeholder={translateContent('dealerCompany.placeholder.District')} disabled />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={0} sm={0} md={0} lg={0} xl={0}>
-                                    <Form.Item initialValue={formData?.stateCode} label="State" name="stateCode">
-                                        <Input placeholder={preparePlaceholderText('State')} disabled />
+                                    <Form.Item initialValue={formData?.stateCode} label={translateContent('dealerCompany.label.state')} name="stateCode">
+                                        <Input placeholder={translateContent('dealerCompany.placeholder.state')} disabled />
                                     </Form.Item>
                                 </Col>
 
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.districtName} label="District" name="districtName">
-                                        <Input placeholder="District" disabled />
+                                    <Form.Item initialValue={formData?.districtName} label={translateContent('dealerCompany.label.district')} name="districtName">
+                                        <Input placeholder={translateContent('dealerCompany.placeholder.district')} disabled />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.stateName} label="State" name="stateName">
-                                        <Input placeholder="State" disabled />
-                                    </Form.Item>
-                                </Col>
-                            </Row>
-                            <Row gutter={16}>
-                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.companyTin} label="TIN" name="companyTin" rules={[validateRequiredInputField('TIN'), validateTin('TIN')]}>
-                                        <Input placeholder={preparePlaceholderText('TIN')} />
-                                    </Form.Item>
-                                </Col>
-                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.companyTan} label="TAN" name="companyTan" rules={[validateRequiredInputField('TAN'), validateTan('TAN')]}>
-                                        <Input placeholder={preparePlaceholderText('TAN')} />
+                                    <Form.Item initialValue={formData?.stateName} label={translateContent('dealerCompany.label.state')} name="stateName">
+                                        <Input placeholder={translateContent('dealerCompany.placeholder.state')} disabled />
                                     </Form.Item>
                                 </Col>
                             </Row>
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.companyPan} label="PAN" name="companyPan" rules={[validateRequiredInputField('PAN'), validatePanField('PAN')]}>
-                                        <Input placeholder={preparePlaceholderText('PAN')} />
+                                    <Form.Item initialValue={formData?.companyTin} label={translateContent('dealerCompany.label.tin')} name="companyTin" rules={[validateRequiredInputField('TIN'), validateTin('TIN')]}>
+                                        <Input placeholder={translateContent('dealerCompany.placeholder.tin')} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
+                                    <Form.Item initialValue={formData?.companyTan} label={translateContent('dealerCompany.label.tan')} name="companyTan" rules={[validateRequiredInputField('TAN'), validateTan('TAN')]}>
+                                        <Input placeholder={translateContent('dealerCompany.placeholder.tan')} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                            <Row gutter={16}>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                    <Form.Item initialValue={formData?.companyPan} label={translateContent('dealerCompany.label.pan')} name="companyPan" rules={[validateRequiredInputField('PAN'), validatePanField('PAN')]}>
+                                        <Input placeholder={translateContent('dealerCompany.placeholder.pan')} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                    <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label={translateContent('dealerCompany.label.status')}>
                                         <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
                                     </Form.Item>
                                 </Col>
