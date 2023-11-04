@@ -338,8 +338,16 @@
                 "customerCategoryCsi": "Customer Category-CSI",
                 "customerCategoryIqs": "Customer Category-IQS",
                 "taxiOrNonTaxiKey": "Taxi/Non Taxi",
+                "oemPrivilegeCustomer": "OEM Privileged Customer",
+                "keyAccountVehicle": "Key Account Vehicle",
+                "refurbished": "Refurbished",
+                "theftVehicle": "Theft Vehicle",
+                "pdiDone": " PDI Done",
+                "govtVehicle": "Government Vehicle",
+                "mnmCtcVehicle": "M&M CTC Vehicle",
                 "manageBy": "Managed By",
-                "carePlus": "Care Plus"
+                "carePlus": "Care Plus",
+                "buyBackVehicle": "Buy Back Vehicle"
             },
             "validation": {
                 "managedBy": "managed by"
@@ -356,7 +364,8 @@
                 "modelFamily": "Model Family",
                 "modelGroup": "Model Group",
                 "modelVariant": "Model Variant",
-                "model": "Model Description",
+                "modelDescription": "Model Description",
+                "model": "Model ",
                 "item": "Item",
                 "make": "Make",
                 "serialNo": "Serial No."
