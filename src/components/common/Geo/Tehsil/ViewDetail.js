@@ -7,6 +7,7 @@ import React from 'react';
 import { Descriptions } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { DATA_TYPE } from 'constants/dataType';
+import { translateContent } from 'utils/translateContent';
 
 const ViewDetailMain = ({ formData, styles, isLoading = false }) => {
     const viewOneColProps = {
@@ -20,13 +21,13 @@ const ViewDetailMain = ({ formData, styles, isLoading = false }) => {
         <>
             <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
-                    <Descriptions.Item label="State Name">{checkAndSetDefaultValue(formData?.stateName, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="District Name">{checkAndSetDefaultValue(formData?.districtName, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Tehsil Code">{checkAndSetDefaultValue(formData?.code, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Tehsil Name">{checkAndSetDefaultValue(formData?.name, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Tehsil Category">{checkAndSetDefaultValue(formData?.tehsilCategory, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Included On">{checkAndSetDefaultValue(formData?.includedOn, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                    <Descriptions.Item label="Status">{checkAndSetDefaultValue(formData?.status ? 'Active' : 'Inactive', isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('tehsil.label.stateCode')}>{checkAndSetDefaultValue(formData?.stateName, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('tehsil.label.districtCode')}>{checkAndSetDefaultValue(formData?.districtName, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('tehsil.label.tehsilCode')}>{checkAndSetDefaultValue(formData?.code, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('tehsil.label.tehsilName')}>{checkAndSetDefaultValue(formData?.name, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('tehsil.label.tehsilCategoryCode')}>{checkAndSetDefaultValue(formData?.tehsilCategory, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('tehsil.label.includedOn')}>{checkAndSetDefaultValue(formData?.includedOn, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('global.label.status')}>{checkAndSetDefaultValue(formData?.status ? translateContent('global.label.active') : translateContent('global.label.inActive'), isLoading)}</Descriptions.Item>
                 </Descriptions>
             </div>
         </>

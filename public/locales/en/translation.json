@@ -432,6 +432,92 @@
         }
     },
 
+    "tehsil": {
+        "heading": {
+            "pageTitle": "Tehsil",
+            "title": "Tehsil Name"
+        },
+        "tableColHeading": {
+            "tehsilCode": "Tehsil Code",
+            "tehsilName": "Tehsil Name",
+            "districtCode": "District Name",
+            "stateCode": "State Name"
+        },
+        "label": {
+            "countryCode": "Country",
+            "stateCode": "State Name",
+            "districtCode": "District Name",
+            "district": "District",
+            "tehsilCode": "Tehsil Code",
+            "tehsilName": "Tehsil Name",
+            "tehsil": "Tehsil",
+            "tehsilCategoryCode": "Tehsil Category",
+            "includedOn": "Included On"
+        },
+        "placeholder": {
+            "country": "country",
+            "stateName": "State Name",
+            "districtName": "District Name",
+            "tehsilCode": "Tehsil Code",
+            "tehsilName": "Tehsil Name",
+            "tehsilCategoryCode": "Tehsil Category",
+            "includedOnDate": "Included On Date"
+        },
+        "validation": {
+            "country": "country",
+            "stateName": "State Name",
+            "districtName": "District Name",
+            "tehsilCode": "Tehsil Code",
+            "tehsilName": "Tehsil Name",
+            "includedOn": "Included On"
+        }
+    },
+    "pincode": {
+        "heading": {
+            "pageTitle": "Pincode",
+            "title": "Pincode Name"
+        },
+        "tableColHeading": {
+            "pinCode": "Pin Code",
+            "locality": "Locality",
+            "tehsil": "Tehsil",
+            "state": "State",
+            "district": "District",
+            "city": "City"
+        },
+        "label": {
+            "country": "Country",
+            "state": "State",
+            "district": "District",
+            "City": "City",
+            "Tehsil": "Tehsil",
+            "pinCategory": "Pin Category",
+            "pinCode": "Pin Code",
+            "locality": "Locality",
+            "withIn50KmFromGpo": "Is Locality Under 50Km of GPO",
+            "approvalStatus": "Approval Status"
+        },
+        "placeholder": {
+            "country": "Country",
+            "state": "State",
+            "district": "District",
+            "City": "City",
+            "tehsil": "Tehsil",
+            "pinCategory": "Pin Category",
+            "pinCode": "Pin Code",
+            "locality": "Locality"
+        },
+        "validation": {
+            "country": "Country",
+            "state": "State",
+            "district": "District",
+            "City": "City",
+            "tehsil": "Tehsil",
+            "pinCategory": "Pin Category",
+            "pinCode": "Pin Code"
+        }
+    },
+
     "vinBlockMaster": {
         "heading": {
             "moduleTitle": "Vin Block Master",
