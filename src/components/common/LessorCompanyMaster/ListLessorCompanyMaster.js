@@ -21,6 +21,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import { filterFunction } from 'utils/filterFunction';
 import { AddEditForm } from './AddEditForm';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -30,7 +31,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Lessor Company';
+    const moduleTitle = translateContent('LessorCompanyMaster.heading.pageTitle');
 
     let returnValue = {
         userId,
@@ -259,7 +260,7 @@ export const ListLessorCompanyMasterBase = (props) => {
         tableData: searchData,
     };
 
-    const title = 'Lessor Company Name';
+    const title = translateContent('LessorCompanyMaster.heading.title');
 
     const advanceFilterResultProps = {
         advanceFilter: false,

@@ -14,6 +14,8 @@ import { bindActionCreators } from 'redux';
 import { viewVehicleDetailDataActions } from 'store/actions/data/vehicle/viewVehicleDetails';
 import { showGlobalNotification } from 'store/actions/notification';
 
+import { translateContent } from 'utils/translateContent';
+
 import styles from 'assets/sass/app.module.scss';
 
 const mapStateToProps = (state) => {
@@ -30,7 +32,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Vehicle Details';
+    const moduleTitle = translateContent('vehicleDetail.heading.mainTitle');
 
     let returnValue = {
         userId,
