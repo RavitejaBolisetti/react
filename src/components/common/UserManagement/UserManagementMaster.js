@@ -39,6 +39,8 @@ import { tableColumn as manufacturerTableColumn } from './Manufacturer/tableColu
 
 import styles from 'assets/sass/app.module.scss';
 import { DealerProductActions } from 'store/actions/data/userManagement/dealerProduct';
+import { translateContent } from 'utils/translateContent';
+import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 const { Option } = Select;
 
@@ -326,12 +328,12 @@ const UserManagementMain = (props) => {
                     <Row gutter={20} justify="end">
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Button danger className={styles.button} onClick={hideGlobalNotification} size="small">
-                                Cancel
+                                {translateContent('global.button.cancel')}
                             </Button>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Button type="primary" onClick={onConfirm} size="small">
-                                Create User
+                                {translateContent('userManagement.button.createUser')}
                             </Button>
                         </Col>
                     </Row>
@@ -449,11 +451,11 @@ const UserManagementMain = (props) => {
 
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
-            return 'View ';
+            return translateContent('global.drawerTitle.view');
         } else if (formActionType?.editMode) {
-            return 'Edit ';
+            return translateContent('global.drawerTitle.edit');
         } else {
-            return 'Add New ';
+            return translateContent('global.drawerTitle.addNew');
         }
     }, [formActionType]);
     const formProps = {
@@ -521,7 +523,7 @@ const UserManagementMain = (props) => {
         filterString,
         setFilterString,
         singleField: true,
-        placeholder: userType === USER_TYPE_USER.DEALER.id ? 'Search Employee Code' : 'Search token number',
+        placeholder: translateContent(userType === USER_TYPE_USER.DEALER.id ? 'userManagement.placeholder.searchEmployeeCode' : 'userManagement.placeholder.searchTokenNumber'),
         disabled: disableSearch,
         optionType: selecttypeData,
         defaultValue: 'employeeCode',
@@ -550,7 +552,7 @@ const UserManagementMain = (props) => {
                                                     })}
                                                 </div>
                                                 {userType === USER_TYPE_USER?.DEALER?.id && (
-                                                    <Select className={styles.marR20} style={{ width: '60%' }} onChange={handleDealerChange} optionFilterProp="children" placeholder="Select dealer" showSearch allowClear>
+                                                    <Select className={styles.marR20} style={{ width: '60%' }} onChange={handleDealerChange} optionFilterProp="children" placeholder={preparePlaceholderSelect(translateContent('userManagement.placeholder.dealer'))} showSearch allowClear>
                                                         {dealerDataList?.map((item) => (
                                                             <Option key={item?.dealerCode} value={item?.dealerCode}>
                                                                 {item?.dealerCode + ' - ' + item?.dealerName}
