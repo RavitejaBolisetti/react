@@ -6,30 +6,30 @@
 import { tblPrepareColumns, tblStatusColumn, tblActionColumn } from 'utils/tableColumn';
 
 import styles from 'assets/sass/app.module.scss';
-
+import { translateContent } from 'utils/translateContent';
 export const tableColumn = (handleButtonClick) => {
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
-            title: 'State Code',
+            title: translateContent('state.tableColHeading.stateCode'),
             dataIndex: 'code',
             width: '15%',
         }),
 
         tblPrepareColumns({
-            title: 'State Name',
+            title: translateContent('state.tableColHeading.stateName'),
             dataIndex: 'name',
             width: '20%',
         }),
 
         tblPrepareColumns({
-            title: 'GST State Code',
+            title: translateContent('state.tableColHeading.gstStateCode'),
             dataIndex: 'gstStateCode',
             width: '15%',
         }),
 
         tblPrepareColumns({
-            title: 'Country',
+            title: translateContent('state.tableColHeading.country'),
             dataIndex: 'countryName',
             width: '15%',
         }),

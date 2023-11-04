@@ -9,6 +9,7 @@ import { HIERARCHY_DEFAULT_PARENT } from 'constants/constants';
 import { VEHICLE_CHECKLIST_TYPE } from 'constants/modules/VehicleCheckListMaster/vehicleChecklistType';
 import ModelCard from './AnswerModelForm/ModelFormCard/ModelCard';
 import AnswerCard from './AnswerModelForm/AnswerFormCard/AnswerCard';
+import { translateContent } from 'utils/translateContent';
 import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
 const { Panel } = Collapse;
 
@@ -35,27 +36,27 @@ export const ViewTaxChargesMain = (props) => {
         <>
             <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
-                    <Descriptions.Item label="Attribute Level">{formData?.attributeName}</Descriptions.Item>
-                    <Descriptions.Item label="Parent">{formData?.parentName || HIERARCHY_DEFAULT_PARENT}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('vehicleCheckListMaster.label.attributeLevel')}>{formData?.attributeName}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('vehicleCheckListMaster.label.parent')}>{formData?.parentName || HIERARCHY_DEFAULT_PARENT}</Descriptions.Item>
                     {attributeType === VEHICLE_CHECKLIST_TYPE?.GROUP?.key && (
                         <>
-                            <Descriptions.Item label="Group Code">{formData?.code}</Descriptions.Item>
-                            <Descriptions.Item label="Group Description">{formData?.descriptionTitle}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vehicleCheckListMaster.label.groupCode')}>{formData?.code}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vehicleCheckListMaster.label.groupDescription')}>{formData?.descriptionTitle}</Descriptions.Item>
                         </>
                     )}
                     {attributeType === VEHICLE_CHECKLIST_TYPE?.SUB_GROUP?.key && (
                         <>
-                            <Descriptions.Item label="Sub Group Code">{formData?.code}</Descriptions.Item>
-                            <Descriptions.Item label="Sub Group Description">{formData?.descriptionTitle}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vehicleCheckListMaster.label.subGroupCode')}>{formData?.code}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vehicleCheckListMaster.label.subGroupDescription')}>{formData?.descriptionTitle}</Descriptions.Item>
                         </>
                     )}
                     {attributeType === VEHICLE_CHECKLIST_TYPE?.CHECKLIST?.key && (
                         <>
-                            <Descriptions.Item label="Checklist Code">{formData?.code}</Descriptions.Item>
-                            <Descriptions.Item label="Checklist Description">{formData?.descriptionTitle}</Descriptions.Item>
-                            <Descriptions.Item label="Answer Type">{formData?.answerTypeName}</Descriptions.Item>
-                            <Descriptions.Item label="Attachment Required">{formData?.attachmentRequiredName}</Descriptions.Item>
-                            <Descriptions.Item label="Status">{formData?.status === true ? 'Active' : 'InActive'}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vehicleCheckListMaster.label.checklistCode')}>{formData?.code}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vehicleCheckListMaster.label.checklistDescription')}>{formData?.descriptionTitle}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vehicleCheckListMaster.label.answerType')}>{formData?.answerTypeName}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vehicleCheckListMaster.label.attachmentRequired')}>{formData?.attachmentRequiredName}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vehicleCheckListMaster.label.status')}>{formData?.status === true ? translateContent('vehicleCheckListMaster.label.active') : translateContent('vehicleCheckListMaster.label.inactive')}</Descriptions.Item>
                             {modelData && modelData?.length > 0 && (
                                 <div>
                                     <Collapse expandIcon={expandIcon} collapsible="icon" className={styles.fullWidth}>
@@ -82,7 +83,7 @@ export const ViewTaxChargesMain = (props) => {
                             )}
                         </>
                     )}
-                    {attributeType !== VEHICLE_CHECKLIST_TYPE?.CHECKLIST?.key && <Descriptions.Item label="Status">{formData?.status === true ? 'Active' : 'InActive'}</Descriptions.Item>}
+                    {attributeType !== VEHICLE_CHECKLIST_TYPE?.CHECKLIST?.key && <Descriptions.Item label={translateContent('vehicleCheckListMaster.label.status')}>{formData?.status === true ? translateContent('vehicleCheckListMaster.label.active') : translateContent('vehicleCheckListMaster.label.inactive')}</Descriptions.Item>}
                 </Descriptions>
             </div>
         </>

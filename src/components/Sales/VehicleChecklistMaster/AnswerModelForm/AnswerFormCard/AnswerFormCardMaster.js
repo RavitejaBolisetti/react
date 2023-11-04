@@ -7,6 +7,7 @@ import React, { useReducer, useState, useEffect } from 'react';
 import AnswerCard from './AnswerCard';
 import AnswerForm from './AnswerForm';
 import { Card } from 'antd';
+import { translateContent } from 'utils/translateContent';
 
 export const AnswerFormCardMaster = (props) => {
     const { isVisible, editForm, answerForm, formEdit, setFormEdit, answerData, setAnswerData, setFormBtnActive, showGlobalNotification } = props;
@@ -25,10 +26,10 @@ export const AnswerFormCardMaster = (props) => {
                 let updateData = { ...data, internalId: Math.floor(Math.random() * 100000000 + 1), id: '' };
                 if (answerData?.length > 0) {
                     if (answerData?.find((e) => e?.answerCode?.toLowerCase() === updateData?.answerCode?.toLowerCase())) {
-                        showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'answer code already exists' });
+                        showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: translateContent('vehicleCheckListMaster.validationMessage.answerCodeExist') });
                         return;
                     } else if (answerData?.find((e) => e?.answerTitle?.toLowerCase() === updateData?.answerTitle?.toLowerCase())) {
-                        showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'answer description already exists' });
+                        showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: translateContent('vehicleCheckListMaster.validationMessage.answerDescriptionExist') });
                         return;
                     } else {
                         setAnswerData((item) => [updateData, ...item]);

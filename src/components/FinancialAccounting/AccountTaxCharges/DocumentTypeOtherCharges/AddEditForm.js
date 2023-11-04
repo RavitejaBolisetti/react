@@ -155,22 +155,22 @@ const AddEditFormMain = (props) => {
                             <Row gutter={16}>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item label={translateContent("documentTypeOtherChargesMaster.label.applicationMenu")} initialValue={formData?.applicationName} name="applicationName">
-                                        <Input placeholder={preparePlaceholderText('application menu')} maxLength={6} disabled={true} />
+                                        <Input placeholder={preparePlaceholderText(translateContent("documentTypeOtherChargesMaster.label.applicationMenu"))} maxLength={6} disabled={true} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label="Document Name" initialValue={docTypeLedger?.documentTypeName} name="documentTypeName">
-                                        <Input placeholder={preparePlaceholderText('document name')} maxLength={50} disabled={true} />
+                                    <Form.Item label={translateContent("documentTypeOtherChargesMaster.label.documentName")} initialValue={docTypeLedger?.documentTypeName} name="documentTypeName">
+                                        <Input placeholder={preparePlaceholderText(translateContent("documentTypeOtherChargesMaster.label.documentName"))} maxLength={50} disabled={true} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label="Document Type" initialValue={formData?.documentTypeCode} name="documentTypeCode">
+                                    <Form.Item label={translateContent("documentTypeOtherChargesMaster.label.documentType")} initialValue={formData?.documentTypeCode} name="documentTypeCode">
                                         <Input placeholder={preparePlaceholderText('document type')} maxLength={50} disabled={true} />
                                     </Form.Item>
                                 </Col>
                             </Row>
                             <Collapse className={openAccordian === 1 ? styles.accordianHeader : ''} onChange={() => handleCollapse(1)} expandIcon={accordianExpandIcon} collapsible="icon">
-                                <Panel header=" Doc Type and A/C head Mapping" key="1">
+                                <Panel header={translateContent("documentTypeOtherChargesMaster.label.documentTypeACHeadmapping")} key="1">
                                     <Divider />
                                     <DocTypeAcMappingMaster {...masterTaxChargeCalProp} />
                                 </Panel>

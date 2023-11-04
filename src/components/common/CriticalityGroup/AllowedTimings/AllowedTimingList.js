@@ -9,6 +9,8 @@ import moment from 'moment';
 import { LANGUAGE_EN } from 'language/en';
 import AddEditForm from './AddEditForm';
 import AllowedTimingCard from './AllowedTimingCard';
+import { translateContent } from 'utils/translateContent';
+
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -21,7 +23,7 @@ const AllowedTimingList = (props) => {
     const validatedDuplicateTime = (timeSlotFrom, timeSlotTo) => {
         const isBefore = moment(timeSlotFrom, 'HH:mm').isBefore(moment(timeSlotTo, 'HH:mm'));
         if (!isBefore) {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: LANGUAGE_EN.GENERAL.START_TIME_GREATER_THAN_END_TIME.MESSAGE, placement: 'bottomRight' });
+            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: LANGUAGE_EN.GENERAL.START_TIME_GREATER_THAN_END_TIME.MESSAGE, placement: 'bottomRight' });
             return true;
         }
         let timeSegments = [...timeData, { timeSlotFrom, timeSlotTo }];
@@ -35,7 +37,7 @@ const AllowedTimingList = (props) => {
             const currentEndTime = timeSegments[i]['timeSlotTo'];
             const nextStartTime = timeSegments[i + 1]['timeSlotFrom'];
             if (currentEndTime > nextStartTime) {
-                showGlobalNotification({ notificationType: 'error', title: 'Error', message: LANGUAGE_EN.GENERAL.TIME_OVERLAPPING.MESSAGE, placement: 'bottomRight' });
+                showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: LANGUAGE_EN.GENERAL.TIME_OVERLAPPING.MESSAGE, placement: 'bottomRight' });
                 return true;
             }
         }
@@ -89,7 +91,7 @@ const AllowedTimingList = (props) => {
                     <Divider />
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                            <p className={styles.allowedTimingAlignment}>Allowed Timings</p>
+                            <p className={styles.allowedTimingAlignment}>{translateContent('criticalityGroup.label.allowedTimming')}</p>
                         </Col>
                         {!formActionType?.viewMode && (
                             <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
@@ -114,10 +116,10 @@ const AllowedTimingList = (props) => {
                         <div className={styles.timingHeader}>
                             <Row gutter={20}>
                                 <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
-                                    <div className={styles.paddingLeft}>Start Time</div>
+                                    <div className={styles.paddingLeft}>{translateContent('criticalityGroup.label.startTime')}</div>
                                 </Col>
                                 <Col xs={14} sm={14} md={14} lg={14} xl={14} xxl={14}>
-                                    <div className={styles.paddingLeft}>End Time</div>
+                                    <div className={styles.paddingLeft}>{translateContent('criticalityGroup.label.endTime')}</div>
                                 </Col>
                             </Row>
                         </div>

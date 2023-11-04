@@ -8,7 +8,7 @@ import { Col, Form, Row, Select, Input } from 'antd';
 import { searchValidator, validateRequiredSelectField } from 'utils/validation';
 import { withModal } from 'components/withModal';
 import { ModalButtons } from 'components/common/Button';
-
+import { translateContent } from 'utils/translateContent';
 const { Option } = Select;
 
 export const AdvancedSearchFrom = (props) => {
@@ -38,9 +38,9 @@ export const AdvancedSearchFrom = (props) => {
         <Form layout="vertical" autoComplete="off" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={defaultCountry} label="Country" name="countryCode" rules={[validateRequiredSelectField('Country')]}>
+                    <Form.Item initialValue={defaultCountry} label={translateContent('state.label.country')} name="countryCode" rules={[validateRequiredSelectField('Country')]}>
                         {defaultCountry && (
-                            <Select defaultValue={defaultCountry} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
+                            <Select defaultValue={defaultCountry} showSearch loading={!isDataCountryLoaded} placeholder={translateContent('global.placeholder.select')} allowClear>
                                 {countryData?.map((item) => (
                                     <Option key={item?.countryCode} value={item?.countryCode}>
                                         {item?.countryName}
@@ -53,7 +53,7 @@ export const AdvancedSearchFrom = (props) => {
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item
-                        label="State Name"
+                        label={translateContent('state.label.stateName')}
                         initialValue={filterString?.keyword}
                         name="keyword"
                         rules={[
@@ -63,7 +63,7 @@ export const AdvancedSearchFrom = (props) => {
                         ]}
                         validateTrigger={['onFinish']}
                     >
-                        <Input placeholder="Search" maxLength={50} allowClear />
+                        <Input placeholder={translateContent('global.placeholder.search')} maxLength={50} allowClear />
                     </Form.Item>
                 </Col>
             </Row>

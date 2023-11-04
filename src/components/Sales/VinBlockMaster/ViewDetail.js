@@ -10,6 +10,7 @@ import styles from 'assets/sass/app.module.scss';
 
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { VinBlockFormButton } from './VinBlockFormButton';
+import { translateContent } from 'utils/translateContent';
 
 const ViewDetailMain = (props) => {
     const { vinInfo, isLoading } = props;
@@ -26,12 +27,12 @@ const ViewDetailMain = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <div className={styles.viewContainer}>
                         <Descriptions {...viewProps}>
-                            <Descriptions.Item label="VIN">{checkAndSetDefaultValue(vinInfo?.vin, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Dealer Code">{checkAndSetDefaultValue(vinInfo?.dealerCode, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Model Group Code">{checkAndSetDefaultValue(vinInfo?.modelGroupCode, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(vinInfo?.modelCode, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Varient Code">{checkAndSetDefaultValue(vinInfo?.variantCode, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Color">{checkAndSetDefaultValue(vinInfo?.color, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vinBlockMaster.label.vin')}>{checkAndSetDefaultValue(vinInfo?.vin, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vinBlockMaster.label.dealerCode')}>{checkAndSetDefaultValue(vinInfo?.dealerCode, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vinBlockMaster.label.modelGroupCode')}>{checkAndSetDefaultValue(vinInfo?.modelGroupCode, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vinBlockMaster.label.modelCode')}>{checkAndSetDefaultValue(vinInfo?.modelCode, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vinBlockMaster.label.varientCode')}>{checkAndSetDefaultValue(vinInfo?.variantCode, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vinBlockMaster.label.color')}>{checkAndSetDefaultValue(vinInfo?.color, isLoading)}</Descriptions.Item>
                         </Descriptions>
                     </div>
                 </Col>

@@ -14,6 +14,7 @@ import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed } = props;
@@ -52,21 +53,21 @@ const AddEditFormMain = (props) => {
                         <>
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.companyCode} label="Company Code" name="companyCode" rules={[validateRequiredInputField('company code')]}>
-                                        <Input placeholder={preparePlaceholderText('company code')} maxLength={6} disabled={editMode ? true : false} />
+                                    <Form.Item initialValue={formData?.companyCode} label={translateContent('LessorCompanyMaster.label.companyCode')} name="companyCode" rules={[validateRequiredInputField(translateContent('LessorCompanyMaster.validation.companyCode'))]}>
+                                        <Input placeholder={preparePlaceholderText(translateContent('LessorCompanyMaster.placeholder.companyCode'))} maxLength={6} disabled={editMode ? true : false} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label="Company Name" initialValue={formData?.companyName} rules={[validateRequiredInputField('company name')]} name="companyName">
-                                        <Input placeholder={preparePlaceholderText('company name')} maxLength={250} disabled={editMode ? true : false} />
+                                    <Form.Item label={translateContent('LessorCompanyMaster.label.companyName')} initialValue={formData?.companyName} rules={[validateRequiredInputField(translateContent('LessorCompanyMaster.validation.companyName'))]} name="companyName">
+                                        <Input placeholder={preparePlaceholderText(translateContent('LessorCompanyMaster.placeholder.companyName'))} maxLength={250} disabled={editMode ? true : false} />
                                     </Form.Item>
                                 </Col>
                             </Row>
 
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
-                                        <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
+                                    <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label={translateContent('LessorCompanyMaster.label.status')}>
+                                        <Switch checkedChildren={translateContent('LessorCompanyMaster.label.active')} unCheckedChildren={translateContent('LessorCompanyMaster.label.inactive')} onChange={(checked) => (checked ? 1 : 0)} />
                                     </Form.Item>
                                 </Col>
                             </Row>

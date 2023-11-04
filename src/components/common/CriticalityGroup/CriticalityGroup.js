@@ -17,6 +17,7 @@ import { btnVisiblity } from 'utils/btnVisiblity';
 import { tableColumn } from './tableColumn';
 import { criticalityDataActions } from 'store/actions/data/criticalityGroup';
 import { AddEditForm } from './AddEditForm';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -29,7 +30,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Application Criticality Group Details';
+    const moduleTitle = translateContent('criticalityGroup.heading.mainTitle');
 
     let returnValue = {
         collapsed,
@@ -59,6 +60,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const CriticalityGroupMain = (props) => {
     const { saveFormShowLoading, isLoadingOnSave, moduleTitle, fetchList, saveData, listShowLoading, isLoading, userId, criticalityGroupData, isDataLoaded, showGlobalNotification } = props;
+
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
     const [refershData, setRefershData] = useState(false);
@@ -88,7 +90,7 @@ export const CriticalityGroupMain = (props) => {
     };
 
     const onSuccessAction = (res) => {
-        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        refershData && showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.title'), message: res?.responseMessage });
         setRefershData(false);
     };
 
@@ -147,10 +149,10 @@ export const CriticalityGroupMain = (props) => {
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
                 setButtonData({ saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.title'), message: res?.responseMessage, placement: 'bottomRight' });
             } else {
                 setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.title'), message: res?.responseMessage });
             }
         };
 
@@ -261,7 +263,7 @@ export const CriticalityGroupMain = (props) => {
         }
     };
 
-    const title = 'Criticality Group Name';
+    const title = translateContent('criticalityGroup.heading.title');
 
     const advanceFilterResultProps = {
         advanceFilter: false,
