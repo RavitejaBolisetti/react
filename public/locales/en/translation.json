@@ -32,11 +32,15 @@
             "appliedAdvanceFilter": "Applied Advance Filters :"
         },
         "generalMessage": {
-            "noRecordsFound": "No records found"
+            "noRecordsFound": "No records found",
+            "noRecordsFoundAddNew": "Please add New {NAME} using below button"
         },
         "button": {
             "cancel": "Cancel",
             "save": "Save",
+            "close": "Close",
+            "edit":"Edit ",
+            "next": "Next",
             "saveCloseBtn": "Save & Close",
             "seeMore": "See more",
             "seeLess": "See less"
@@ -386,13 +390,31 @@
             "userName": "User Name",
             "designation": "Designation",
             "mobileNumber": "Mobile Number",
-            "emailId": "Email ID"
+            "emailId": "Email ID",
+            "deviceType": "Device Type",
+            "deviceId": "Device Id",
+            "roleAccess":"Role Access",
+            "roles":"Roles",
+            "accessible":"Accessible",
+            "default": "Default",
+            "employeeCode":"Employee Code",
+            "dealerName":"Dealer Name",
+            "userRoles":"User Roles",
+            "branch":"Branch",
+            "products":"Products",
+            "mapped":"Mapped",
+            "unmapped":"Unmapped",
+            "role":"Role",
+            "accessProvided":"Access provided"
         },
         "placeholder": {
             "search": "Search",
             "searchEmployeeCode": "Search Employee Code",
             "searchTokenNumber": "Search token number",
             "dealer": "dealer"
+        },
+        "generalMessage": {
+            "dealerTableNoData": "Select dealer to fetch data."
         },
         "validation": {
             "noApplicationText": "No Application Available"

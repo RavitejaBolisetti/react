@@ -18,3 +18,7 @@ export const preparePlaceholderAutoComplete = (name) => {
 export const prepareDatePickerText = (name, prefix = true) => {
     return name;
 };
+
+export const preparePlaceholderSearch = (name='') => {
+    return 'Search' + name?.toLowerCase();
+};
