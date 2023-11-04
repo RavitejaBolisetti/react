@@ -24,6 +24,7 @@ import { btnVisiblity } from 'utils/btnVisiblity';
 import { AdvancedSearch } from './AdvancedSearch';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { AddEditForm } from './AddEditForm';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -35,8 +36,7 @@ const mapStateToProps = (state) => {
             },
         },
     } = state;
-
-    const moduleTitle = 'State';
+    const moduleTitle = 'state';
 
     const finalCountryData = countryData?.map((item, index) => {
         return { ...item, default: index <= 0 || false };
@@ -326,7 +326,7 @@ export const ListStateMasterBase = (props) => {
         }
     };
 
-    const title = 'State Name';
+    const title = translateContent('state.heading.title');
     const advanceFilterResultProps = {
         advanceFilter: true,
         filterString,
@@ -354,7 +354,6 @@ export const ListStateMasterBase = (props) => {
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />
-            <AddEditForm {...formProps} />
         </>
     );
 };

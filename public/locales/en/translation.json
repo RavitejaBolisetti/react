@@ -389,5 +389,23 @@
         "link": {
             "mnmLogin": "M&M User Login"
         }
+    },
+    "state": {
+        "heading": {
+            "title": "State Name"
+        },
+        "tableColHeading": {
+            "stateCode": "State Code",
+            "stateName": "State Name",
+            "gstStateCode": "GST State Code",
+            "country": "Country"
+        },
+        "label": {
+            "stateCode": "State Code",
+            "stateName": "State Name",
+            "gstStateCode": "GST State Code",
+            "country": "Country",
+            "status": "Status"
+        }
     }
 }

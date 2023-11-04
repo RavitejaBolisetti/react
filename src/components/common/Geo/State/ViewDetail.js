@@ -5,7 +5,7 @@
  */
 import React from 'react';
 import { Descriptions } from 'antd';
-
+import { translateContent } from 'utils/translateContent';
 const ViewDetailBase = ({ formData, styles, parameterType }) => {
     const viewOneColProps = {
         bordered: false,
@@ -17,11 +17,11 @@ const ViewDetailBase = ({ formData, styles, parameterType }) => {
         <>
             <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
-                    <Descriptions.Item label="Country">{formData?.countryName}</Descriptions.Item>
-                    <Descriptions.Item label="State Code">{formData?.code}</Descriptions.Item>
-                    <Descriptions.Item label="State Name">{formData?.name}</Descriptions.Item>
-                    <Descriptions.Item label="GST State Code">{formData?.gstStateCode}</Descriptions.Item>
-                    <Descriptions.Item label="Status">{formData?.status ? 'Active' : 'Inactive'}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('state.label.country')}>{formData?.countryName}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('state.label.stateCode')}>{formData?.code}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('state.label.stateName')}>{formData?.name}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('state.label.gstStateCode')}>{formData?.gstStateCode}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('state.label.status')}>{formData?.status ? 'Active' : 'Inactive'}</Descriptions.Item>
                 </Descriptions>
             </div>
         </>
