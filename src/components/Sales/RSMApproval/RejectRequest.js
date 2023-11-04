@@ -11,6 +11,7 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField } from 'utils/validation';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { TextArea } = Input;
 
@@ -39,8 +40,8 @@ export const RejectRequestForm = (props) => {
             {rejectRequest ? (
                 <Row gutter={16}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
-                        <Form.Item label="Rejection Remarks" name="remarks" rules={[validateRequiredInputField('remarks')]} initialValue={formData?.remarks}>
-                            <TextArea showCount maxLength={300} placeholder={preparePlaceholderText('remark')} />
+                        <Form.Item label={translateContent('rsmApproval.label.rejectionRemarks')} name="remarks" rules={[validateRequiredInputField(translateContent('rsmApproval.label.rejectionRemarks'))]} initialValue={formData?.remarks}>
+                            <TextArea showCount maxLength={300} placeholder={preparePlaceholderText(translateContent('rsmApproval.label.rejectionRemarks'))} />
                         </Form.Item>
                     </Col>
                 </Row>
@@ -50,8 +51,8 @@ export const RejectRequestForm = (props) => {
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.modalCheckBox}>
                             <Form.Item initialValue={false} valuePropName="checked" name="status">
                                 <Checkbox className={styles.registered} onChange={handleCheckboxChange}>
-                                    I accept that for the Transferred Vehicle , Claim can be generated from the billed Dealer. <br />
-                                    If more than one transfer happens for the same vehicle then claim is not allowed for any of the dealership.
+                                    {translateContent('rsmApproval.label.acceptanceTermsFirstLine')} <br />
+                                    {translateContent('rsmApproval.label.acceptanceTermsSecondLine')}
                                 </Checkbox>
                             </Form.Item>
                         </Col>

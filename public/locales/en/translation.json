@@ -1,17 +1,30 @@
 {
     "global": {
         "validation": {
-            "input": "Please enter "
+            "input": "Please enter ",
+            "dateLessThan": "Date cant be less than Effective from date"
         },
+
         "notificationSuccess": {
             "success": "Success",
             "error": "Error",
             "warning": "Warning"
         },
+        "notificationError": {
+            "title": "Error"
+        },
         "drawerTitle": {
             "add": "Add ",
             "edit": "Edit ",
-            "view": "View"
+            "view": "View ",
+            "addNew": "Add New"
+        },
+        "advanceFilter": {
+            "title": "Advance Filters",
+            "appliedAdvanceFilter": "Applied Advance Filters :"
+        },
+        "generalMessage": {
+            "noRecordsFound": "No records found"
         }
     },
     "login": {
@@ -102,15 +115,181 @@
             "mnmLogin": "M&M User Login"
         }
     },
-    "documentTypeOtherChargesMaster": {
+    "rsmApproval": {
         "heading": {
-            "title": "Doc Type - Charges & Ledger Mapping"
+            "title": "RSM Approval for Co-Dealer Invoice",
+            "moduleTitle": "RSM Approval",
+            "viewDrawerTitle": "View RSM Approval Details",
+            "requestModuleTitle": " Co-Dealer Invoice"
+        },
+        "validation": {
+            "acceptTerms": "Please accept Terms and Condition"
         },
         "label": {
-            "applicationMenu": "Application Menu"
+            "rejectionRemarks": "Rejection Remarks",
+            "acceptanceTermsFirstLine": "I accept that for the Transferred Vehicle , Claim can be generated from the billed Dealer.",
+            "acceptanceTermsSecondLine": "If more than one transfer happens for the same vehicle then claim is not allowed for any of the dealership."
+        },
+        "placeholder": {
+            "headerSearch": "Search by dealer"
+        }
+    },
+    "evrDetailsCapturing": {
+        "heading": {
+            "title": "EVR Details Capturing",
+            "moduleTitle": "Vehicle Details"
+        },
+        "label": {
+            "productHierarchy": "Product Hierarchy",
+            "dueFromDate": "Due From Date",
+            "dueToDate": "Due To Date",
+            "vin": "VIN",
+            "model": "Model",
+            "modelGroup": "Model Group",
+            "modelCode": "Model Code",
+            "modelDescription": "Model Description",
+            "grnId": "GRN ID",
+            "grnDate": "GRN Date",
+            "grnStatus": "GRN Status",
+            "vehicleStatus": "Vehicle Status",
+            "ageInDays": "Age In Days",
+            "lastChargeDate": "Date of Last Charge",
+            "chargingDueDate": "Charging Due Date",
+            "chargingStatus": "Charging Status",
+            "remarks": "Remarks",
+            "charged": "Charged",
+            "unCharged": "UnCharged",
+            "status": "Status"
+        },
+        "placeholder": {
+            "headerSearch": "Search Model Description"
+        }
+    },
+    "documentTypeOtherChargesMaster": {
+        "heading": {
+            "title": "Document Type, Other Charges & Ledger Mapping",
+            "moduleTitle": "Doc Type - Charges & Ledger Mapping"
+        },
+        "label": {
+            "applicationMenu": "Application Menu",
+            "documentName": "Document Name",
+            "documentType": "Document Type",
+            "documentTypeACHeadmapping": "Doc Type and A/C head Mapping",
+            "otherCharges": "Other Charges"
+        },
+        "placeholder": {
+            "financialAccountHead": "Financial Account Head"
+        }
+    },
+    "roleManagement": {
+        "heading": {
+            "pageTitle": "Role Management",
+            "role": "Role",
+            "welcomeNote": "Welcome",
+            "loginText": "Please enter your credentials to login",
+            "forgotPassword": "Forgot Password?",
+            "unauthorizedAccess": "Unauthorized Access"
+        },
+        "label": {
+            "username": "User ID (MILE ID.Parent ID)",
+            "password": "Password"
+        },
+        "placeholder": {
+            "username": "User ID (MILE ID.Parent ID)",
+            "password": "Password"
+        },
+        "validation": {
+            "googleCaptcha": "Please select Captcha"
+        },
+        "button": {
+            "login": "Login",
+            "skipForNow": "Skip For Now",
+            "updatePassword": "Update Password",
+            "continue": "Continue"
+        },
+        "link": {
+            "mnmLogin": "M&M User Login"
+        }
+    },
+    "customerMaster": {
+        "heading": {
+            "title": "Customer",
+            "welcomeNote": "Welcome",
+            "loginText": "Please enter your credentials to login",
+            "forgotPassword": "Forgot Password?",
+            "unauthorizedAccess": "Unauthorized Access"
+        },
+        "label": {
+            "username": "User ID (MILE ID.Parent ID)",
+            "password": "Password"
+        },
+        "placeholder": {
+            "username": "User ID (MILE ID.Parent ID)",
+            "password": "Password"
+        },
+        "validation": {
+            "googleCaptcha": "Please select Captcha"
+        },
+        "button": {
+            "login": "Login",
+            "skipForNow": "Skip For Now",
+            "updatePassword": "Update Password",
+            "continue": "Continue"
+        },
+        "link": {
+            "mnmLogin": "M&M User Login"
+        }
+    },
+
+    "criticalityGroup": {
+        "heading": {
+            "mainTitle": "Application Criticality Group Details",
+            "title": "Criticality Group Name",
+            "loginText": "Please enter your credentials to login",
+            "forgotPassword": "Forgot Password?",
+            "unauthorizedAccess": "Unauthorized Access"
+        },
+        "label": {
+            "criticalityGroupId": "Criticality Group ID",
+            "criticalityGroupName": "Criticality Group Name",
+            "defaultGroup": "Default Group",
+            "status": "Status",
+            "startTime": "Start Time",
+            "endTime": "End Time",
+            "allowedTimming": "Allowed Timings"
         }
     },
     "footer": {
         "copyright": "Copyright &copy; {YEAR} ROBIN."
+    },
+    "vehicleDetail": {
+        "heading": {
+            "mainTitle": "Vehicle Details",
+            "title": "Search Vehicle"
+        },
+        "placeholder": {},
+        "validation": {
+            "searchParameter": "search parametar"
+        },
+        "button": {},
+        "label": {
+            "mnfcWarrEndDate": "Manufacturer Warranty End Date",
+            "manufactureKM": "Expiry KM",
+            "deliveryDate": "Delivery Date",
+            "saleDate": "Sale Date",
+            "soldBy": "Sold By",
+            "lastOdometerReading": "Last Odometer Reading",
+            "averageRun": "Average Run",
+            "nextDueService": "Next Due Service",
+            "relationshipManager": "Relationship Manager",
+            "nextServiceDueDate": "Next Service Due Date",
+            "insuranceExpiryDate": "Insurance Expiry Date",
+            "customerCategorySsi": "Customer Category-SSI",
+            "customerCategoryCsi": "Customer Category-CSI",
+            "customerCategoryIqs": "Customer Category-IQS",
+            "taxiOrNonTaxiKey": "Taxi/Non Taxi",
+            "manageBy": "Managed By",
+            "carePlus": "Care Plus"
+        }
     }
 }
