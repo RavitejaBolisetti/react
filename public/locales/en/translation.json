@@ -125,9 +125,7 @@
     },
     "vehicleCheckListMaster": {
         "heading": {
-            "title": "Vehicle Checklist",
-            "edit": "Edit ",
-            "add": "Add "
+            "title": "Vehicle Checklist"
         },
         "label": {
             "attributeType": "Attribute Type",
@@ -143,20 +141,16 @@
             "attachmentRequired": "Attachment Required",
             "status": "Status",
             "active": "Active",
-            "inactive": "Inactive"
+            "inactive": "Inactive",
+            "answerCode": "Answer Code",
+            "answerDescription": "Answer Description",
+            "answerStatus": "Answer Status",
+            "modelGroupCode": "Model Group Code"     ,
+            "modelGroupStatus": "Model Group Status"       
         },
-        "placeholder": {
-            "attributeType": "Attribute Type",
-            "parent": "Parent",
-            "groupCode": "Group Code",
-            "groupDescription": "Group Description",
-            "subGroupCode": "Sub Group Code",
-            "subGroupDescription": "Sub Group Description",
-            "checklistCode": "Checklist Code",
-            "checklistDescription": "Checklist Description",
-            "answerType": "Answer Type",
-            "attachmentRequired": "Attachment Required",
-            "status": "Status"
+        "validationMessage": {
+            "modelRequired": "Please add atleast one model",
+            "answerRequired": "Please add atleast one answer"
         }
     },
     "rsmApproval": {
