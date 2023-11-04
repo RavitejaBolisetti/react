@@ -105,14 +105,14 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <Form.Item name="code" label={translateContent('vehicleCheckListMaster.label.checklistCode')} rules={[validateRequiredInputField(translateContent('vehicleCheckListMaster.label.checklistCode')), noWhiteSpaceinBeginning()]}>
-                                            <Input maxLength={6} placeholder={preparePlaceholderText(translateContent('vehicleCheckListMaster.label.checklistCode'))} disabled={treeCodeReadOnly} />
+                                            <Input maxLength={6} placeholder={preparePlaceholderText(translateContent('vehicleCheckListMaster.label.checklistCode'), false)} disabled={treeCodeReadOnly} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <Form.Item name="descriptionTitle" label={translateContent('vehicleCheckListMaster.label.checklistDescription')} rules={[validateRequiredInputField(translateContent('vehicleCheckListMaster.label.checklistDescription')), noWhiteSpaceinBeginning()]}>
-                                            <TextArea maxLength={300} placeholder={preparePlaceholderText(translateContent('vehicleCheckListMaster.label.checklistDescription'))} disabled={treeCodeReadOnly} />
+                                            <TextArea maxLength={300} placeholder={preparePlaceholderText(translateContent('vehicleCheckListMaster.label.checklistDescription'), false)} disabled={treeCodeReadOnly} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
