@@ -12,7 +12,7 @@ import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 
 import styles from 'assets/sass/app.module.scss';
-import { translateContent } from 'utils/translateContent';
+import { translateContent } from 'utils/translateContent'; 
 
 const { Option } = Select;
 
