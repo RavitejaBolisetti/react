@@ -41,6 +41,7 @@
         },
         "buttons": {
             "download": "Download",
+            "downloadTemplate": "Download Template",
             "add": "Add",
             "clear": "Clear",
             "save": "Save",
@@ -54,6 +55,7 @@
             "saveCloseBtn": "Save & Close",
             "seeMore": "See more",
             "seeLess": "See less",
+            "upload": "Upload",
             "reset": "Reset",
             "search": "search"
         },
@@ -464,6 +466,41 @@
             "stateName": "State Name"
         }
     },
+    "district": {
+        "placeholder": {
+            "country": "Country",
+            "stateName": "State Name",
+            "districtCode": "District Code",
+            "districtName": "District Name"
+        },
+        "label": {
+            "countryCode": "Country",
+            "stateName": "State Name",
+            "districtName": "District Name",
+            "districtCode": "District Code",
+            "state": "State",
+            "district": "District"
+        },
+        "validation": {
+            "country": "Country",
+            "stateName": "State Name",
+            "districtName": "District Name",
+            "districtCode": "district Code"
+        },
+        "message": {
+            "differentState" : " is not active anymore. Please select a different state. "
+        },
+        "title":{
+            "country": "Country",
+            "state": "State",
+            "district": "District",
+            "titleOverride": "Advance Filters",
+            "districtName": "District Name",
+            "districtCode": "District Code",
+            "stateName": "State Name"
+        }
+
+    },
 
     "productHierarchy": {
         "heading": {
@@ -838,6 +875,27 @@
         }
     },
 
+    "LessorCompanyCreation": {
+        "heading": {
+            "pageTitle": "Lessor Company Creation",
+            "moduletitle": "Lessor Customer"
+        },
+        "label": {
+            "LessorCompany": "Lessor Customer Form",
+            "companyName": "Company Name",
+            "stateName": "State Name"
+        },
+        "placeholder": {
+            "stateName": "State Name"
+        },
+        "message": {
+            "uploadButtonName": "Upload Lessor Form",
+            "messageText": "Click or drop your file here to upload",
+            "validationText": "File type should be .xlxs and max file size to be 8Mb",
+            "docName": "Lessor Template",
+            "textMessage": "Please download Lessor Customer Template using below button"
+        }
+    },
     "hoPriceMapping": {
         "heading": {
             "maintitle": "HO Price Upload Mapping",
