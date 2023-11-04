@@ -1,6 +1,5 @@
 {
     "global": {
-        
         "validation": {
             "input": "Please enter "
         },
@@ -12,7 +11,6 @@
             "edit": "Edit ",
             "view": "View"
         }
-        
     },
     "login": {
         "heading": {
@@ -134,19 +132,94 @@
     },
     "customerMaster": {
         "heading": {
+            "pageTitle": "Customer Master",
             "title": "Customer",
+            "individualTitle": "Individual Information",
+            "customerTitle": "Customer Information",
             "welcomeNote": "Welcome",
             "loginText": "Please enter your credentials to login",
             "forgotPassword": "Forgot Password?",
             "unauthorizedAccess": "Unauthorized Access"
         },
         "label": {
-            "username": "User ID (MILE ID.Parent ID)",
-            "password": "Password"
+            "mobileNumber": "Mobile Number",
+            "customerType": "Customer Type",
+            "emailID": "Email ID",
+            "contactNo": "Contact over WhatsApp?",
+            "WhatsAppNoText": "Want to use mobile no as WhatsApp no",
+            "whatsappNumber": "Whatsapp Number",
+            "corporateType": "Corporate Type",
+            "corporateName": "Corporate Name",
+            "corporateCode": "Corporate Code",
+            "corporateCategory": "Corporate Category",
+            "dateOfBirth": "Date of Birth",
+            "gender": "Gender",
+            "maritalStatus": "Marital Status",
+            "WeddingDate": "Wedding Anniversary Date",
+            "Occupation": "Occupation",
+            "annualIncome": "Annual Income",
+            "drivingLicenseNo": "Driving License No",
+            "aadharNo": "Aadhar No.",
+            "voterID": "Voter ID",
+            "vehicleUsed": "Vehicle Used",
+            "motherTongue": "Mother Tongue",
+            "pan": "PAN",
+            "gstin": "GSTIN",
+            "Categorization": "Usage/Application Categorization",
+            "SubCategory": "Usage/Application Sub-Category",
+            "customerCategory": "Customer Category",
+            "businessDetails": "Business Details",
+            "vehicleDeployment": "Vehicle Deployment Details",
+            "keyRoleDetails": "Key Role Details",
+            "majorRouteDetails": "Major Route Details",
+            "emailId": "Email Id",
+            "contactTxt": "Do you want to contact over whatsapp",
+            "whatsapp": "Want to use Mobile no as whatsapp no?",
+            "address": "Address Type",
+            "addressL": "Address Line 1",
+            "addressLine": "Address Line 2",
+            "addressLines": "Address Line 3",
+            "pinCode": "Pin Code",
+            "tehsil": "Tehsil",
+            "city": "City",
+            "district": "District",
+            "state": "State",
+            "Individual": "Individual Address"
         },
         "placeholder": {
-            "username": "User ID (MILE ID.Parent ID)",
-            "password": "Password"
+            "mobileMumber": "mobile number",
+            "customerType": "customer type",
+            "emailId": "email id",
+            "whatsAppNumber": "WhatsApp Number",
+            "corporateType": "corporate type",
+            "corporateName": "corporate name",
+            "parentCompanyName": "parent company name",
+            "corporateCategory": "corporate category",
+            "gender": "gender",
+            "maritalStatus": "Marital Status",
+            "occupation": "occupation",
+            "annualIncome": "annual income",
+            "drivinglicense": "driving license no",
+            "aadharNumber": "aadhar number",
+            "voterId": "voter id",
+            "vehicleUsed": "vehicle used",
+            "motherTongue": "mother tongue",
+            "pan": "pan",
+            "gstin": "gstin",
+            "category": "usage/application category",
+            "income": "annual income",
+            "businessDetails": "business details",
+            "vehicleDeployment": "vehicle deployment details",
+            "keyRole": "key role details",
+            "route": "major route details",
+            "addresstype": "address type",
+            "address": "address Line 1",
+            "addressL": "address Line 2",
+            "addressLine": "address Line 3",
+            "tehsil": "tehsil",
+            "city": "city",
+            "district": "district",
+            "state": "state"
         },
         "validation": {
             "googleCaptcha": "Please select Captcha"
@@ -161,9 +234,7 @@
             "mnmLogin": "M&M User Login"
         }
     },
-    "footer": {
-        "copyright": "Copyright &copy; {YEAR} ROBIN."
-    },
+
     "vehicleDetail": {
         "heading": {
             "mainTitle": "Vehicle Details",
