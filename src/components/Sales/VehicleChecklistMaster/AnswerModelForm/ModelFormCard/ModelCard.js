@@ -112,10 +112,10 @@ const ModelCard = (props) => {
                             {modelEdit && props[IdType] === uniqueCardEdit && (
                                 <>
                                     <Button type="link" onClick={modelSave}>
-                                        Save
+                                        {translateContent('global.buttons.save')}
                                     </Button>
                                     <Button type="link" onClick={modelCancel}>
-                                        Cancel
+                                        {translateContent('global.buttons.cancel')}
                                     </Button>
                                 </>
                             )}

@@ -9,6 +9,8 @@ import { connect } from 'react-redux';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 import { CriticalityGroup } from 'components/common/CriticalityGroup';
+import { translateContent } from 'utils/translateContent';
+
 
 const mapStateToProps = (state) => {
     const {
@@ -24,7 +26,7 @@ const mapStateToProps = (state) => {
 };
 
 export const CriticalityGroupPageBase = (props) => {
-    const pageTitle = 'Application Criticality Group Master';
+    const pageTitle = translateContent('criticalityGroup.heading.pageTitle');
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

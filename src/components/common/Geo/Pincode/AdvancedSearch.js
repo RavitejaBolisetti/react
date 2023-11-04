@@ -9,6 +9,7 @@ import { validateRequiredInputField, validateRequiredSelectField, searchValidato
 import { withModal } from 'components/withModal';
 import { ModalButtons } from 'components/common/Button';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Option } = Select;
 
@@ -47,9 +48,9 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={defaultCountry} label="Country" name="countryCode" rules={[validateRequiredInputField('Country')]}>
+                    <Form.Item initialValue={defaultCountry} label={translateContent('pincode.label.country')} name="countryCode" rules={[validateRequiredInputField(translateContent('pincode.validation.country'))]}>
                         {defaultCountry && (
-                            <Select defaultValue={defaultCountry} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear onChange={handleFilterChange('countryCode')}>
+                            <Select defaultValue={defaultCountry} showSearch loading={!isDataCountryLoaded} placeholder={translateContent('global.placeholder.select')} allowClear onChange={handleFilterChange('countryCode')}>
                                 {countryData?.map((item) => (
                                     <Option key={item?.countryCode} value={item?.countryCode}>
                                         {item?.countryName}
@@ -61,8 +62,8 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="State" initialValue={filterString?.stateCode} rules={[validateRequiredInputField('State')]} name="stateCode">
-                        <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('stateCode')}>
+                    <Form.Item label={translateContent('pincode.label.state')}initialValue={filterString?.stateCode} rules={[validateRequiredInputField(translateContent('pincode.validation.state'))]} name="stateCode">
+                        <Select placeholder={translateContent('global.placeholder.select')} {...selectProps} onChange={handleFilterChange('stateCode')}>
                             {filteredStateData?.map((item) => (
                                 <Option key={item?.key} value={item?.key}>
                                     {item?.value}
@@ -75,8 +76,8 @@ export const AdvancedSearchFrom = (props) => {
 
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="District" initialValue={filterString?.districtCode} name="districtCode" rules={[validateRequiredSelectField('District')]}>
-                        <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('districtCode')}>
+                    <Form.Item label={translateContent('pincode.label.district')} initialValue={filterString?.districtCode} name="districtCode" rules={[validateRequiredSelectField(translateContent('pincode.validation.district'))]}>
+                        <Select placeholder={translateContent('global.placeholder.select')} {...selectProps} onChange={handleFilterChange('districtCode')}>
                             {filteredDistrictData?.map((item) => (
                                 <Option key={item?.key} value={item?.key}>
                                     {item?.value}
@@ -87,8 +88,8 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="City" initialValue={filterString?.cityCode} name="cityCode">
-                        <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('cityCode')}>
+                    <Form.Item label={translateContent('pincode.label.city')} initialValue={filterString?.cityCode} name="cityCode">
+                        <Select placeholder={translateContent('global.placeholder.select')} {...selectProps} onChange={handleFilterChange('cityCode')}>
                             {filteredCityData?.map((item) => (
                                 <Option key={item?.code} value={item?.code}>
                                     {item?.name}
@@ -101,8 +102,8 @@ export const AdvancedSearchFrom = (props) => {
 
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Tehsil" initialValue={filterString?.tehsilCode} name="tehsilCode">
-                        <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('tehsilCode')}>
+                    <Form.Item label={translateContent('pincode.label.tehsil')} initialValue={filterString?.tehsilCode} name="tehsilCode">
+                        <Select placeholder={translateContent('global.placeholder.select')} {...selectProps} onChange={handleFilterChange('tehsilCode')}>
                             {filteredTehsilData?.map((item) => (
                                 <Option key={item?.key} value={item?.key}>
                                     {item?.value}
@@ -114,7 +115,7 @@ export const AdvancedSearchFrom = (props) => {
 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item
-                        label="PIN Code"
+                        label={translateContent('pincode.label.pinCode')}
                         initialValue={filterString?.pincode}
                         rules={[
                             {
@@ -123,7 +124,7 @@ export const AdvancedSearchFrom = (props) => {
                         ]}
                         name="pincode"
                     >
-                        <Input placeholder="Search" maxLength={6} allowClear />
+                        <Input placeholder={translateContent('global.placeholder.search')} maxLength={6} allowClear />
                     </Form.Item>
                 </Col>
             </Row>
