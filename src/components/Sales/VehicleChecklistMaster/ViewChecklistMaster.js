@@ -60,7 +60,7 @@ export const ViewTaxChargesMain = (props) => {
                             {modelData && modelData?.length > 0 && (
                                 <div>
                                     <Collapse expandIcon={expandIcon} collapsible="icon" className={styles.fullWidth}>
-                                        <Panel header="Model Group" key="1">
+                                        <Panel header={translateContent('vehicleCheckListMaster.heading.modelGroup')} key="1">
                                             <Divider />
                                             {modelData?.map((item) => (
                                                 <ModelCard key={'groupCode' + item?.modelGroupCode} modelGroupCode={item?.modelGroupCode} status={item?.status} id={item?.id} {...cardProps} />
@@ -72,7 +72,7 @@ export const ViewTaxChargesMain = (props) => {
                             {answerData?.length > 0 && (
                                 <div>
                                     <Collapse expandIcon={expandIcon} collapsible="icon" className={styles.fullWidth}>
-                                        <Panel header="Answers" key="2">
+                                        <Panel header={translateContent('vehicleCheckListMaster.heading.answers')} key="2">
                                             <Divider />
                                             {answerData?.map((item) => (
                                                 <AnswerCard key={'' + item?.answerCode} answerCode={item?.answerCode} answerTitle={item?.answerTitle} answerStatus={item?.answerStatus} id={item?.id} {...cardProps} />
@@ -83,7 +83,7 @@ export const ViewTaxChargesMain = (props) => {
                             )}
                         </>
                     )}
-                    {attributeType !== VEHICLE_CHECKLIST_TYPE?.CHECKLIST?.key && <Descriptions.Item label={translateContent('vehicleCheckListMaster.label.status')}>{formData?.status === true ? 'Active' : 'InActive'}</Descriptions.Item>}
+                    {attributeType !== VEHICLE_CHECKLIST_TYPE?.CHECKLIST?.key && <Descriptions.Item label={translateContent('vehicleCheckListMaster.label.status')}>{formData?.status === true ? translateContent('vehicleCheckListMaster.label.active') : translateContent('vehicleCheckListMaster.label.inactive')}</Descriptions.Item>}
                 </Descriptions>
             </div>
         </>

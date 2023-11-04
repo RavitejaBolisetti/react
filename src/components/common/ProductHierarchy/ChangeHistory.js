@@ -13,6 +13,7 @@ import { convertDateTime, dateFormatView, timeFormatView } from 'utils/formatDat
 import { tblPrepareColumns, tblStatusColumn } from 'utils/tableColumn';
 import { withDrawer } from 'components/withDrawer';
 import { DataTable } from 'utils/dataTable';
+import { translateContent } from 'utils/translateContent';
 
 import styles from '../ChangeHistory/ChangeHistory.module.scss';
 
@@ -57,7 +58,7 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
 
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Changed/Modified Date ',
+            title: translateContent('productHierarchy.label.changedDate'),
             dataIndex: 'changedDate',
             render: (text) => [
                 <div>
@@ -68,27 +69,27 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
             ],
         }),
         tblPrepareColumns({
-            title: 'Changed By',
+            title: translateContent('productHierarchy.label.changedBy'),
             dataIndex: 'changedBy',
         }),
         tblPrepareColumns({
-            title: 'Attribute',
+            title: translateContent('productHierarchy.label.attribute'),
             dataIndex: 'attributeKey',
         }),
         tblPrepareColumns({
-            title: 'Code',
+            title:translateContent('productHierarchy.label.moduleTitle'),
             dataIndex: 'prodctCode',
         }),
         tblPrepareColumns({
-            title: 'Parent',
+            title: translateContent('productHierarchy.heading.parent'),
             dataIndex: 'parentAttributeName',
         }),
         tblPrepareColumns({
-            title: 'Short Description',
+            title: translateContent('productHierarchy.label.shortDescription'),
             dataIndex: 'prodctShrtDescription',
         }),
         tblPrepareColumns({
-            title: 'Long Description',
+            title: translateContent('productHierarchy.label.longDescription'),
             dataIndex: 'prodctLongDiscription',
         }),
 

@@ -11,6 +11,7 @@ import { ViewDetail } from './ViewDetail';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Option } = Select;
 
@@ -58,23 +59,23 @@ const AddEditFormMain = (props) => {
                         <>
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.code} label="Group Code" name="code" rules={[validateRequiredInputField('Group Code')]}>
-                                        <Input placeholder={preparePlaceholderText('Group Code')} maxLength={6} disabled={editMode} />
+                                    <Form.Item initialValue={formData?.code} label={translateContent('dealerParent.label.groupCode')} name="code" rules={[validateRequiredInputField(translateContent('dealerParent.validation.groupCode'))]}>
+                                        <Input placeholder={translateContent('dealerParent.placeholder.groupCode')} maxLength={6} disabled={editMode} />
                                     </Form.Item>
                                 </Col>
 
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.name} label="Group Name" name="name" rules={[validateRequiredInputField('Group Name')]}>
-                                        <Input placeholder={preparePlaceholderText('Group Name')} maxLenght={50} />
+                                    <Form.Item initialValue={formData?.name} label={translateContent('dealerParent.label.groupName')} name="name" rules={[validateRequiredInputField(translateContent('dealerParent.validation.groupName'))]}>
+                                        <Input placeholder={translateContent('dealerParent.placeholder.groupName')} maxLenght={50} />
                                     </Form.Item>
                                 </Col>
                             </Row>
 
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <Form.Item label="Title" name="title" initialValue={formData?.title} rules={[validateRequiredSelectField('Attribute Name')]}>
+                                    <Form.Item label={translateContent('dealerParent.label.title')} name="title" initialValue={formData?.title} rules={[validateRequiredInputField(translateContent('dealerParent.validation.attributeName'))]}>
                                         <Select
-                                            placeholder={preparePlaceholderSelect('Title')}
+                                            placeholder={translateContent('dealerParent.placeholder.title')}
                                             style={{
                                                 width: '100%',
                                             }}
@@ -89,28 +90,28 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.ownerName} label="Owner Name" name="ownerName" rules={[validateRequiredInputField('Owner Name')]}>
-                                        <Input placeholder={preparePlaceholderText('Owner Name')} />
+                                    <Form.Item initialValue={formData?.ownerName} label={translateContent('dealerParent.label.ownerName')} name="ownerName" rules={[validateRequiredInputField(translateContent('dealerParent.validation.ownerName'))]}>
+                                        <Input placeholder={translateContent('dealerParent.placeholder.ownerName')} />
                                     </Form.Item>
                                 </Col>
                             </Row>
 
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.mobileNumber} label="Contact Number" name="mobileNumber" rules={[validateRequiredInputField('Contact Number'), validateMobileNoField('Contact Number')]}>
-                                        <Input placeholder={preparePlaceholderText('Contact Number')} maxLength={10} />
+                                    <Form.Item initialValue={formData?.mobileNumber} label={translateContent('dealerParent.label.contactNumber')} name="mobileNumber" rules={[validateRequiredInputField(translateContent('dealerParent.validation.contactNumber')), validateMobileNoField(translateContent('dealerParent.validation.contactNumber'))]}>
+                                        <Input placeholder={translateContent('dealerParent.placeholder.contactNumber')} maxLength={10} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.emailId} label="Email ID" name="emailId" rules={[validateRequiredInputField('Email ID'), validateEmailField('Email ID')]}>
-                                        <Input placeholder={preparePlaceholderText('Email ID')} />
+                                    <Form.Item initialValue={formData?.emailId} label={translateContent('dealerParent.label.emailId')} name="emailId" rules={[validateRequiredInputField(translateContent('dealerParent.validation.emailId')), validateEmailField(translateContent('dealerParent.validation.emailId'))]}>
+                                        <Input placeholder={translateContent('dealerParent.placeholder.emailId')} />
                                     </Form.Item>
                                 </Col>
                             </Row>
 
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={editMode ? formData.status : true} label="Active" labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status">
+                                    <Form.Item initialValue={editMode ? formData.status : true} label={translateContent('dealerParent.label.groupCode')} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status">
                                         <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
                                     </Form.Item>
                                 </Col>

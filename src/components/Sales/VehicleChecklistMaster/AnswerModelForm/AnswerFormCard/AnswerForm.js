@@ -7,6 +7,7 @@ import React from 'react';
 import { Input, Form, Col, Row, Button, Switch } from 'antd';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, noWhiteSpaceinBeginning } from 'utils/validation';
+import { translateContent } from 'utils/translateContent';
 import { PlusOutlined } from '@ant-design/icons';
 
 const { TextArea } = Input;
@@ -19,19 +20,19 @@ const AnswerForm = (props) => {
             <Form form={formEdit ? editForm : answerForm} id="myForm" autoComplete="off" layout="vertical">
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Form.Item name="answerCode" label="Answer Code" rules={[validateRequiredInputField('Answer Code'), noWhiteSpaceinBeginning()]}>
-                            <Input maxLength={6} placeholder={preparePlaceholderText('Answer Code')} disabled={mainFomEdit} />
+                        <Form.Item name="answerCode" label={translateContent('vehicleCheckListMaster.label.answerCode')} rules={[validateRequiredInputField(translateContent('vehicleCheckListMaster.label.answerCode')), noWhiteSpaceinBeginning()]}>
+                            <Input maxLength={6} placeholder={preparePlaceholderText(translateContent('vehicleCheckListMaster.label.answerCode'), false)} disabled={mainFomEdit} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Form.Item name="answerTitle" label="Answer Description" rules={[validateRequiredInputField('Answer Description'), noWhiteSpaceinBeginning()]}>
-                            <TextArea maxLength={300} placeholder={preparePlaceholderText('Answer Description')} disabled={mainFomEdit} />
+                        <Form.Item name="answerTitle" label={translateContent('vehicleCheckListMaster.label.answerDescription')} rules={[validateRequiredInputField(translateContent('vehicleCheckListMaster.label.answerDescription')), noWhiteSpaceinBeginning()]}>
+                            <TextArea maxLength={300} placeholder={preparePlaceholderText(translateContent('vehicleCheckListMaster.label.answerDescription'), false)} disabled={mainFomEdit} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} style={{ marginBottom: '12px' }}>
                         <Row justify="space-between" align="middle">
-                            <Form.Item label="Answer Status" name="answerStatus" initialValue={answerSwitch}>
-                                <Switch value={answerSwitch} onChange={() => setAnswerSwitch(!answerSwitch)} defaultChecked={answerSwitch} disabled={mainFomEdit} checkedChildren="Active" unCheckedChildren="Inactive" />
+                            <Form.Item label={translateContent('vehicleCheckListMaster.label.answerStatus')} name="answerStatus" initialValue={answerSwitch}>
+                                <Switch value={answerSwitch} onChange={() => setAnswerSwitch(!answerSwitch)} defaultChecked={answerSwitch} disabled={mainFomEdit} checkedChildren={translateContent('vehicleCheckListMaster.label.active')} unCheckedChildren={translateContent('vehicleCheckListMaster.label.inactive')} />
                             </Form.Item>
                             {!props?.internalId && (
                                 <Button
@@ -42,7 +43,7 @@ const AnswerForm = (props) => {
                                         onFinishAnswerForm();
                                     }}
                                 >
-                                    Add
+                                    {translateContent('global.buttons.add')}
                                 </Button>
                             )}
                         </Row>

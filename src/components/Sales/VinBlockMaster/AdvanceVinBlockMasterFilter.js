@@ -8,6 +8,7 @@ import { Button, Row, Col, Form, Input } from 'antd';
 import { RxCross2 } from 'react-icons/rx';
 // import { SearchBox } from 'components/utils/SearchBox';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Search } = Input;
 
@@ -34,23 +35,20 @@ export default function AdvanceVinBlockMasterFilter(props) {
                             <Row gutter={20}>
                                 {vinFilter && (
                                     <Col xs={24} sm={24} md={14} lg={14} xl={14}>
-                                        <Search placeholder="Search Vin" onSearch={handleSearch} allowClear className={styles.headerSearchField} />
-
+                                        <Search placeholder={translateContent('vinBlockMaster.label.searchVin')} onSearch={handleSearch} allowClear className={styles.headerSearchField} />
                                     </Col>
                                 )}
-                                
                             </Row>
                         </Form.Item>
                     </Form>
                 </Col>
- 
             </Row>
             {advanceFilter && filterString?.advanceFilter && extraParams.find((i) => i.name) && (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={22} xl={22} className={styles.advanceFilterContainer}>
-                                <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
+                                <div className={styles.advanceFilterTitle}> {translateContent('vinBlockMaster.heading.appliedAdvanceFilters')} : </div>
                                 {extraParams?.map((filter) => {
                                     return (
                                         filter?.value &&
@@ -69,7 +67,7 @@ export default function AdvanceVinBlockMasterFilter(props) {
                             </Col>
                             <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
                                 <Button className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
-                                    Clear
+                                    translateContent('vinBlockMaster.button.clear')
                                 </Button>
                             </Col>
                         </Row>

@@ -9,6 +9,7 @@ import CardProductAttribute from './ProductAttribute/CardProductAttribute';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { getCodeValue } from 'utils/getCodeValue';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 
@@ -32,16 +33,16 @@ export const ViewProductDetailMain = ({ typeData, setSKUAttributes, viewTitle, s
     return (
         <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
             <Descriptions {...viewOneColProps}>
-                <Descriptions.Item label="Attribute Level"> {checkAndSetDefaultValue(getCodeValue(typeData?.PRD_HIER, viewData?.attributeType), false)}</Descriptions.Item>
-                <Descriptions.Item label="Parent">{viewData?.parentName}</Descriptions.Item>
-                <Descriptions.Item label="Code">{viewData?.prodctCode}</Descriptions.Item>
-                <Descriptions.Item label="Short Description">{viewData?.prodctShrtName}</Descriptions.Item>
-                <Descriptions.Item label="Long Description">{viewData?.prodctLongName}</Descriptions.Item>
-                <Descriptions.Item label="Status">{viewData?.active === true || viewData?.active === null ? 'Active' : 'InActive'}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('productHierarchy.label.attributeLevel')}> {checkAndSetDefaultValue(getCodeValue(typeData?.PRD_HIER, viewData?.attributeType), false)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('productHierarchy.label.parent')}>{viewData?.parentName}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('productHierarchy.label.code')}>{viewData?.prodctCode}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('productHierarchy.label.shortDescription')}>{viewData?.prodctShrtName}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('productHierarchy.label.longDescription')}>{viewData?.prodctLongName}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('productHierarchy.label.status')}>{viewData?.active === true || viewData?.active === null ? 'Active' : 'InActive'}</Descriptions.Item>
                 <div>
                     {viewData?.skuAttributes?.length > 0 && (
                         <Collapse expandIcon={expandIcon} collapsible="icon">
-                            <Panel header="Product Attribute" key="2">
+                            <Panel header={translateContent('productHierarchy.heading.productAttribute')} key="2">
                                 <Divider />
                                 {viewData?.skuAttributes?.map((item) => (
                                     <CardProductAttribute key={'sku' + item?.code} code={item?.code} value={item?.value} id={item?.id} setDisabledEdit={setDisabledEdit} />

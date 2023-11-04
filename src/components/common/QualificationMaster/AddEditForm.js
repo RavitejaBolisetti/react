@@ -14,6 +14,7 @@ import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType, onFinish } = props;
@@ -50,21 +51,21 @@ const AddEditFormMain = (props) => {
                         <>
                             <Row gutter={20}>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <Form.Item initialValue={formData?.qualificationCode} label="Qualification Code" name="qualificationCode" rules={[validateRequiredInputField('code')]}>
-                                        <Input maxLength={6} placeholder={preparePlaceholderText('code')} disabled={formActionType?.editMode ? true : false} />
+                                    <Form.Item initialValue={formData?.qualificationCode} label={translateContent('qualificationMaster.label.qualificationCode')} name="qualificationCode" rules={[validateRequiredInputField(translateContent('qualificationMaster.validation.qualificationCode'))]}>
+                                        <Input maxLength={6} placeholder={preparePlaceholderText(translateContent('qualificationMaster.validation.qualificationCode'))} disabled={formActionType?.editMode ? true : false} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <Form.Item initialValue={formData?.qualificationName} label="Qualification Name" name="qualificationName" rules={[validateRequiredInputField('name')]}>
-                                        <Input maxLength={50} placeholder={preparePlaceholderText('name')} />
+                                    <Form.Item initialValue={formData?.qualificationName} label={translateContent('qualificationMaster.label.qualificationName')} name="qualificationName" rules={[validateRequiredInputField(translateContent('qualificationMaster.validation.qualificationName'))]}>
+                                        <Input maxLength={50} placeholder={preparePlaceholderText(translateContent('qualificationMaster.validation.qualificationName'))} />
                                     </Form.Item>
                                 </Col>
                             </Row>
 
                             <Row gutter={20}>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <Form.Item initialValue={formActionType?.editMode ? formData?.status : true} labelAlign="left" wrapperCol={{ span: 24 }} name="status" label="Status" valuePropName="checked">
-                                        <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} />
+                                    <Form.Item initialValue={formActionType?.editMode ? formData?.status : true} labelAlign="left" wrapperCol={{ span: 24 }} name="status" label={translateContent('qualificationMaster.label.status')} valuePropName="checked">
+                                        <Switch checkedChildren={translateContent('qualificationMaster.label.active')} unCheckedChildren={translateContent('qualificationMaster.label.inActive')} valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} />
                                     </Form.Item>
                                 </Col>
                             </Row>

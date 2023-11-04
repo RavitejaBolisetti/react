@@ -7,9 +7,10 @@ import React from 'react';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 import { RsmAsmApprovalMaster } from 'components/Sales/RsmAsmApproval';
+import { translateContent } from 'utils/translateContent';
 
 const RsmAsmApprovalBase = (props) => {
-    const pageTitle = 'RSM/ASM Approval';
+    const pageTitle = translateContent('rsmAsmApproval.heading.mainTitle');
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

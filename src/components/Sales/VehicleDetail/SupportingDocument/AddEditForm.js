@@ -15,12 +15,13 @@ import styles from 'assets/sass/app.module.scss';
 import { ViewSupportingDocDetail } from './ViewSupportingDocDetail';
 import { ViewTechnicalDocDetail } from './ViewTechnicalDocDetail';
 import { UploadUtil } from 'utils/Upload';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 const { Option } = Select;
 
 const AddEditForm = (props) => {
-    const { formActionType, handleFormValueChange, typeData,handleClearChange } = props;
+    const { formActionType, handleFormValueChange, typeData, handleClearChange } = props;
     const { uploadProps, mandatoryFields } = props;
     const { ...viewProps } = props;
 
@@ -53,13 +54,13 @@ const AddEditForm = (props) => {
     return (
         <>
             <Collapse defaultActiveKey={['1']} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" collapsible="icon">
-                <Panel header="Supporting/Reference Documents" key="1">
+                <Panel header={translateContent('vehicleDetail.documents.heading.moduleTitle')} key="1">
                     <Divider />
                     {!formActionType?.viewMode && (
                         <>
                             <Row gutter={16}>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                    <Form.Item label="Document Type" name="documentTypeCd" rules={mandatoryFields ? [validateRequiredSelectField('document type')] : ''} placeholder={preparePlaceholderSelect('document type')}>
+                                    <Form.Item label={translateContent('vehicleDetail.documents.label.documentType')} name="documentTypeCd" rules={mandatoryFields ? [validateRequiredSelectField('document type')] : ''} placeholder={preparePlaceholderSelect('document type')}>
                                         <Select loading={!(typeData?.length !== 0)} onChange={handleClearChange} placeholder="Select" {...selectProps}>
                                             {typeData?.map((item) => (
                                                 <Option key={item?.key} value={item?.key}>
@@ -70,7 +71,7 @@ const AddEditForm = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                    <Form.Item label="Document Name" name="documentTitle" rules={mandatoryFields ? [validateRequiredInputField('document name')] : ''}>
+                                    <Form.Item label={translateContent('vehicleDetail.documents.label.documentName')} name="documentTitle" rules={mandatoryFields ? [validateRequiredInputField('document name')] : ''}>
                                         <Input onChange={handleClearChange} placeholder={preparePlaceholderText('File Name')} allowClear />
                                     </Form.Item>
                                 </Col>
@@ -86,7 +87,7 @@ const AddEditForm = (props) => {
                 </Panel>
             </Collapse>
             <Collapse defaultActiveKey={['2']} bordered={false} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
-                <Panel header="Technical Documents" key="2">
+                <Panel header={translateContent('vehicleDetail.documents.heading.technicalDocuments')} key="2">
                     <Divider />
                     <ViewTechnicalDocDetail {...viewProps} />
                 </Panel>
