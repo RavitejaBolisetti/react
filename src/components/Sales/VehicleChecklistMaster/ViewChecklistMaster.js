@@ -41,19 +41,19 @@ export const ViewTaxChargesMain = (props) => {
                     {attributeType === VEHICLE_CHECKLIST_TYPE?.GROUP?.key && (
                         <>
                             <Descriptions.Item label={translateContent('vehicleCheckListMaster.label.groupCode')}>{formData?.code}</Descriptions.Item>
-                            <Descriptions.Item label="Group Description">{formData?.descriptionTitle}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vehicleCheckListMaster.label.groupDescription')}>{formData?.descriptionTitle}</Descriptions.Item>
                         </>
                     )}
                     {attributeType === VEHICLE_CHECKLIST_TYPE?.SUB_GROUP?.key && (
                         <>
-                            <Descriptions.Item label="Sub Group Code">{formData?.code}</Descriptions.Item>
-                            <Descriptions.Item label="Sub Group Description">{formData?.descriptionTitle}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vehicleCheckListMaster.label.subGroupCode')}>{formData?.code}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vehicleCheckListMaster.label.subGroupDescription')}>{formData?.descriptionTitle}</Descriptions.Item>
                         </>
                     )}
                     {attributeType === VEHICLE_CHECKLIST_TYPE?.CHECKLIST?.key && (
                         <>
-                            <Descriptions.Item label="Checklist Code">{formData?.code}</Descriptions.Item>
-                            <Descriptions.Item label="Checklist Description">{formData?.descriptionTitle}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vehicleCheckListMaster.label.checklistCode')}>{formData?.code}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vehicleCheckListMaster.label.checklistCode')}>{formData?.descriptionTitle}</Descriptions.Item>
                             <Descriptions.Item label="Answer Type">{formData?.answerTypeName}</Descriptions.Item>
                             <Descriptions.Item label="Attachment Required">{formData?.attachmentRequiredName}</Descriptions.Item>
                             <Descriptions.Item label="Status">{formData?.status === true ? 'Active' : 'InActive'}</Descriptions.Item>

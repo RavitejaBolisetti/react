@@ -7,9 +7,10 @@ import React from 'react';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 import { DocumentTypeOtherChargesMaster } from 'components/FinancialAccounting';
+import { translateContent } from 'utils/translateContent';
 
 const DocumentTypeOtherChargesBase = (props) => {
-    const pageTitle = 'Document Type, Other Charges & Ledger Mapping';
+    const pageTitle = translateContent('documentTypeOtherChargesMaster.heading.title');
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

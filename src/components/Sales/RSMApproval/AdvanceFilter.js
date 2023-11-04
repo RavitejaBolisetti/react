@@ -9,6 +9,7 @@ import { FilterIcon } from 'Icons';
 import { QueryButtons } from 'components/Sales/VehicleRecieptChecklist/QueryButtons';
 
 import { RSM_APPROVAL_STATUS } from './utils/RSMApprovalStatus';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -25,7 +26,7 @@ export default function AdvanceFilter(props) {
                         <Form form={searchForm} className={styles.masterListSearchForm}>
                             <Form.Item name="Search">
                                 <div className={styles.verticallyCentered}>
-                                    <Search placeholder="Search by dealer" allowClear onSearch={handleSearchChange} className={styles.headerSearchField} />
+                                    <Search placeholder={translateContent('rsmApproval.placeholder.headerSearch')} allowClear onSearch={handleSearchChange} className={styles.headerSearchField} />
                                 </div>
                             </Form.Item>
                         </Form>
@@ -51,7 +52,7 @@ export default function AdvanceFilter(props) {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={22} xl={22} className={styles.advanceFilterContainer}>
-                                <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
+                                <div className={styles.advanceFilterTitle}>{translateContent('global.advanceFilter.appliedAdvanceFilter')}</div>
                                 {extraParams?.map((filter) => {
                                     return (
                                         filter?.value &&
