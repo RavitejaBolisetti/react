@@ -12,6 +12,7 @@ import { validateRequiredSelectField } from 'utils/validation';
 import { dateFormat, formatDateToCalenderDate } from 'utils/formatDateTime';
 import { disableFutureDate } from 'utils/disableDate';
 import { ModalButtons } from 'components/common/Button';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -60,17 +61,17 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="Request From Date" name="fromDate" rules={[validateRequiredSelectField('From Date')]} className={styles?.datePicker}>
+                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label={translateContent('rsmAsmApproval.label.fromDate')} name="fromDate" rules={[validateRequiredSelectField(translateContent('rsmAsmApproval.label.fromDate'))]} className={styles?.datePicker}>
                         <DatePicker format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} onChange={() => advanceFilterForm.setFieldsValue({ toDate: undefined })} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         initialValue={formatDateToCalenderDate(filterString?.toDate)}
-                        label="Request To Date"
+                        label={translateContent('rsmAsmApproval.label.toDate')}
                         name="toDate"
                         rules={[
-                            validateRequiredSelectField('To Date'),
+                            validateRequiredSelectField(translateContent('rsmAsmApproval.label.toDate')),
                             {
                                 validator: (_, value) => CheckDateEffectiveTo(value, advanceFilterForm?.getFieldValue('fromDate')),
                             },

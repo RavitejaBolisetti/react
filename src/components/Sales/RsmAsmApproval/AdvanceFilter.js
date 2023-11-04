@@ -10,6 +10,7 @@ import { RxCross2 } from 'react-icons/rx';
 import { QueryButtons } from 'components/Sales/VehicleRecieptChecklist/QueryButtons';
 
 import { DELIVERY_NOTE_INVOICE_STATUS } from './utils/DeliveryNoteInvoiceStatus';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 const { Search } = Input;
@@ -25,7 +26,7 @@ export default function AdvanceFilter(props) {
                         <Form form={searchForm} className={styles.masterListSearchForm}>
                             <Form.Item name="Search">
                                 <div className={styles.verticallyCentered}>
-                                    <Search placeholder="Search by Dealer Name" allowClear onSearch={handleSearchChange} className={styles.headerSearchField} />
+                                    <Search placeholder={translateContent('rsmAsmApproval.label.searchByDealer')} allowClear onSearch={handleSearchChange} className={styles.headerSearchField} />
                                 </div>
                             </Form.Item>
                         </Form>

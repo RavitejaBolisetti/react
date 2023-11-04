@@ -21,12 +21,12 @@ const AnswerForm = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Form.Item name="answerCode" label={translateContent('vehicleCheckListMaster.label.answerCode')} rules={[validateRequiredInputField(translateContent('vehicleCheckListMaster.label.answerCode')), noWhiteSpaceinBeginning()]}>
-                            <Input maxLength={6} placeholder={preparePlaceholderText(translateContent('vehicleCheckListMaster.label.answerCode'))} disabled={mainFomEdit} />
+                            <Input maxLength={6} placeholder={preparePlaceholderText(translateContent('vehicleCheckListMaster.label.answerCode'), false)} disabled={mainFomEdit} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Form.Item name="answerTitle" label={translateContent('vehicleCheckListMaster.label.answerDescription')} rules={[validateRequiredInputField(translateContent('vehicleCheckListMaster.label.answerDescription')), noWhiteSpaceinBeginning()]}>
-                            <TextArea maxLength={300} placeholder={preparePlaceholderText(translateContent('vehicleCheckListMaster.label.answerDescription'))} disabled={mainFomEdit} />
+                            <TextArea maxLength={300} placeholder={preparePlaceholderText(translateContent('vehicleCheckListMaster.label.answerDescription'), false)} disabled={mainFomEdit} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} style={{ marginBottom: '12px' }}>
