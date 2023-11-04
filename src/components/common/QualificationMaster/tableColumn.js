@@ -7,24 +7,25 @@ import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { Tag } from 'antd';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Qualification Code',
+            title: translateContent('qualificationMaster.label.qualificationCode'),
             dataIndex: 'qualificationCode',
             width: '20%',
         }),
         tblPrepareColumns({
-            title: 'Qualification Name',
+            title: translateContent('qualificationMaster.label.qualificationName'),
             dataIndex: 'qualificationName',
             width: '30%',
         }),
         tblPrepareColumns({
-            title: 'Status',
+            title: translateContent('qualificationMaster.label.status'),
             dataIndex: 'status',
-            render: (text) => <>{text === 1 ? <Tag color="success">Active</Tag> : <Tag color="error">Inactive</Tag>}</>,
+            render: (text) => <>{text === 1 ? <Tag color="success">{translateContent('qualificationMaster.label.active')}</Tag> : <Tag color="error">{translateContent('qualificationMaster.label.inActive')}</Tag>}</>,
             width: '15%',
         }),
 

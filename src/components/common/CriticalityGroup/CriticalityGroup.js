@@ -17,7 +17,6 @@ import { btnVisiblity } from 'utils/btnVisiblity';
 import { tableColumn } from './tableColumn';
 import { criticalityDataActions } from 'store/actions/data/criticalityGroup';
 import { AddEditForm } from './AddEditForm';
-import { useTranslation } from 'react-i18next';
 import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
@@ -61,8 +60,6 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const CriticalityGroupMain = (props) => {
     const { saveFormShowLoading, isLoadingOnSave, moduleTitle, fetchList, saveData, listShowLoading, isLoading, userId, criticalityGroupData, isDataLoaded, showGlobalNotification } = props;
-
-    const { t: translate } = useTranslation();
 
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
