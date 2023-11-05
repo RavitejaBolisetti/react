@@ -10,6 +10,7 @@ import { Button, Collapse, Typography, Row, Col, Checkbox, Divider } from 'antd'
 import { FiEdit } from 'react-icons/fi';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { getCodeValue } from 'utils/getCodeValue';
+import { translateContent } from 'utils/translateContent';
 
 import AddEditForm from './AddEditForm';
 
@@ -72,7 +73,7 @@ const ViewAddressList = (props) => {
                                             <Text strong>{getCodeValue(addData, data?.addressType)}</Text>
                                             {!formActionType?.viewMode && (
                                                 <Button onClick={(e) => editContactHandeler(e, data, i)} type="link" icon={<FiEdit />} disabled={isEditing || isAdding} className={styles.verticallyCentered}>
-                                                    Edit
+                                                    {translateContent('global.buttons.edit')}
                                                 </Button>
                                             )}
                                         </Col>
@@ -80,7 +81,7 @@ const ViewAddressList = (props) => {
                                             {!(isEditing || isAdding) && (
                                                 <div className={styles.floatRight}>
                                                     <Checkbox valuePropName="checked" checked={data?.deafultAddressIndicator} defaultChecked={data?.deafultAddressIndicator} onClick={(e) => onCheckdefaultAddClick(e, data)} {...disableProp}>
-                                                        Mark As Default
+                                                        {translateContent('customerMaster.label.mark')}
                                                     </Checkbox>
                                                     {/* <Divider type="vertical" /> */}
                                                     {/* <Text type="secondary">{getCodeValue(addData, data?.addressType)}</Text> */}

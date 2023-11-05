@@ -465,7 +465,8 @@
             "labour": "Labour Discount",
             "documentType": "Document Type",
             "fileName": "File Name",
-            "lastName": "Last Name"
+            "lastName": "Last Name",
+            "mark": "Mark As Default"
         },
         "placeholder": {
             "mobileMumber": "mobile number",
@@ -560,10 +561,8 @@
             "fileName": "file name"
         },
         "button": {
-            "login": "Login",
-            "skipForNow": "Skip For Now",
-            "updatePassword": "Update Password",
-            "continue": "Continue"
+            "viewHistory": "View History",
+            "uploadFile": "Upload File"
         },
         "link": {
             "mnmLogin": "M&M User Login"
@@ -1596,28 +1595,27 @@
             "descriptionValidation": "control description",
             "controlIdValidation": "control id"
         }
-        
     },
-    "hierarchyAttribute":{
-        "heading":{
+    "hierarchyAttribute": {
+        "heading": {
             "mainTitle": "Hierarchy Attribute Master",
             "titleHierarchy": "Hierarchy Attribute Type",
             "title": "Hierarchy Attribute"
         },
-        "label":{
+        "label": {
             "descriptionText": "Please select hierarchy type to view records.",
             "noRecordText": "No records found. Please add new parameter using below button",
             "code": "Code",
             "name": "Name",
             "duplicateAllowed": "Duplicate Allowed?",
-            "duplicateAllowedDiffParent" : "Duplicate Allowed under different parent?",
+            "duplicateAllowedDiffParent": "Duplicate Allowed under different parent?",
             "childAllowed": "Child Allowed?"
         },
-        "placeholder":{
+        "placeholder": {
             "name": "name",
             "code": "code"
         },
-        "validation":{
+        "validation": {
             "nameValidation": "name",
             "codeValidation": "code"
         }

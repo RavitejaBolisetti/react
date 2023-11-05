@@ -170,7 +170,7 @@ const CustomerChangeHistoryMain = ({ fetchCustomerChangeHistory, onCloseAction, 
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Button danger onClick={onCloseAction}>
-                            Close
+                            {translateContent('global.buttons.close')}
                         </Button>
                     </Col>
                 </Row>

@@ -268,7 +268,7 @@ const AddressMasterBase = (props) => {
                                         <Text strong> {customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id ? translateContent('customerMaster.drawerSubHeading.addressTitle') : 'Company Address'}</Text>
                                         {!isViewModeVisible && !formActionType?.viewMode && (
                                             <Button onClick={addAddressHandeler} icon={<PlusOutlined />} type="primary" disabled={isAdding || isEditing}>
-                                                Add
+                                                {translateContent('global.buttons.add')}
                                             </Button>
                                         )}
                                     </Row>

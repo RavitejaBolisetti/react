@@ -292,7 +292,7 @@ const ContactMain = (props) => {
                                         <Text strong> {customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id ? translateContent('customerMaster.drawerSubHeading.contactTitle') : 'Company Contact'}</Text>
                                         {!formActionType?.viewMode && (
                                             <Button onClick={addBtnContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isEditing || isAdding}>
-                                                Add
+                                                {translateContent('global.buttons.add')}
                                             </Button>
                                         )}
                                     </Row>

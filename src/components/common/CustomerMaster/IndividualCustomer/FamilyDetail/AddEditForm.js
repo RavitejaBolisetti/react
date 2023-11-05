@@ -142,7 +142,7 @@ const AddEditFormMain = (props) => {
                         <Typography>{translateContent('customerMaster.drawerSubHeading.familyTitle')}</Typography>
                         {!VIEW_ACTION && (
                             <Button type="primary" icon={<PlusOutlined />} onClick={addFunction} disabled={showForm || editedMode}>
-                                Add
+                                {translateContent('global.buttons.add')}
                             </Button>
                         )}
                     </Row>
@@ -170,7 +170,7 @@ const AddEditFormMain = (props) => {
                                                         disabled={disabled}
                                                         style={{ color: disabled ? 'grey' : 'red' }}
                                                     >
-                                                        Edit
+                                                        {translateContent('global.buttons.edit')}
                                                     </Button>
                                                 )}
                                             </Row>
