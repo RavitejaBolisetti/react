@@ -144,13 +144,13 @@ const AddEditForm = (props) => {
             <Form form={addressForm} id="myAdd" onFinish={handleSave} onFieldsChange={handleFormValueChange} autoComplete="off" layout="vertical">
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label={translateContent('customerMaster.label.address')} name="addressType" rules={[validateRequiredSelectField('Address Type'), { validator: (rule, value) => duplicateValidator(value, 'addressType', addressData, editingData?.addressType) }]}>
+                        <Form.Item label={translateContent('customerMaster.label.address')} name="addressType" rules={[validateRequiredSelectField(translateContent('customerMaster.validation.addressType')), { validator: (rule, value) => duplicateValidator(value, 'addressType', addressData, editingData?.addressType) }]}>
                             <Select {...disabledProps} placeholder={translateContent('customerMaster.placeholder.addresstype')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={addData} allowClear></Select>
                         </Form.Item>
                     </Col>
 
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label={translateContent('customerMaster.label.addressL')} name="addressLine1" rules={[validateRequiredInputField('address Line 1')]}>
+                        <Form.Item label={translateContent('customerMaster.label.addressL')} name="addressLine1" rules={[validateRequiredInputField(translateContent('customerMaster.validation.address'))]}>
                             <Input maxLength={50} placeholder={translateContent('customerMaster.placeholder.address')} />
                         </Form.Item>
                     </Col>
@@ -168,7 +168,7 @@ const AddEditForm = (props) => {
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item initialValue={formData?.pinCode} label={translateContent('customerMaster.label.pinCode')} name="pinCode" rules={[validateRequiredInputField('Pin Code'), validatePincodeField('Pin Code')]}>
+                        <Form.Item initialValue={formData?.pinCode} label={translateContent('customerMaster.label.pinCode')} name="pinCode" rules={[validateRequiredInputField(translateContent('customerMaster.validation.pinCode')), validatePincodeField(translateContent('customerMaster.validation.pinCode'))]}>
                             <AutoComplete {...disabledProps} maxLength={6} options={options} onSelect={handleOnSelect} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
                                 <Search onSearch={handleOnSearch} onChange={handleOnClear} placeholder="Search" loading={isPinCodeLoading} type="text" allowClear />
                             </AutoComplete>

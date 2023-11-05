@@ -19,31 +19,31 @@ const AddEditFormMain = (props) => {
             <Card style={{ backgroundColor: '#F2F2F2' }}>
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label={translateContent('customerMaster.label.creditLimit')} name="creditAmount" initialValue={formData?.creditAmount} rules={[validateNumberWithTwoDecimalPlaces('credit limit')]}>
+                        <Form.Item label={translateContent('customerMaster.label.creditLimit')} name="creditAmount" initialValue={formData?.creditAmount} rules={[validateNumberWithTwoDecimalPlaces(translateContent('customerMaster.validation.creditLimit'))]}>
                             <Input placeholder={translateContent('customerMaster.placeholder.limit')} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label={translateContent('customerMaster.label.limitDays')} name="creditDays" initialValue={formData?.creditDays} rules={[validationNumber('credit limit days')]}>
+                        <Form.Item label={translateContent('customerMaster.label.limitDays')} name="creditDays" initialValue={formData?.creditDays} rules={[validationNumber(translateContent('customerMaster.validation.limitDays'))]}>
                             <Input placeholder={translateContent('customerMaster.placeholder.limit')} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label={translateContent('customerMaster.label.amount')} initialValue={formData?.outstandingAmount} name="outstandingAmount" rules={[validateNumberWithTwoDecimalPlaces('outstanding amount')]}>
+                        <Form.Item label={translateContent('customerMaster.label.amount')} initialValue={formData?.outstandingAmount} name="outstandingAmount" rules={[validateNumberWithTwoDecimalPlaces(translateContent('customerMaster.validation.amount'))]}>
                             <Input placeholder={translateContent('customerMaster.placeholder.amount')} />
                         </Form.Item>
                     </Col>
                 </Row>
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label={translateContent('customerMaster.label.partsDiscount')} name="partsDiscount" initialValue={formData?.partsDiscount} rules={[valueBetween0to100('parts discount')]}>
+                        <Form.Item label={translateContent('customerMaster.label.partsDiscount')} name="partsDiscount" initialValue={formData?.partsDiscount} rules={[valueBetween0to100(translateContent('customerMaster.validation.partsDiscount'))]}>
                             <Input placeholder={translateContent('customerMaster.placeholder.discount')} maxLength={3} />
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label={translateContent('customerMaster.label.labourDiscount')} name="labourDiscount" initialValue={formData?.labourDiscount} rules={[valueBetween0to100('labour discount')]}>
+                        <Form.Item label={translateContent('customerMaster.label.labourDiscount')} name="labourDiscount" initialValue={formData?.labourDiscount} rules={[valueBetween0to100(translateContent('customerMaster.validation.labourDiscount'))]}>
                             <Input placeholder={translateContent('customerMaster.placeholder.discount')} maxLength={3} />
                         </Form.Item>
                     </Col>

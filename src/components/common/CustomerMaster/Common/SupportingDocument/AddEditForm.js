@@ -26,7 +26,7 @@ const AddEditForm = (uploadProps) => {
         <>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Form.Item label={translateContent('customerMaster.label.documentType')} name="documentTypeId" rules={mandatoryFields ? [validateRequiredInputField('document type')] : ''} placeholder={translateContent('customerMaster.placeholder.documentType')}>
+                    <Form.Item label={translateContent('customerMaster.label.documentType')} name="documentTypeId" rules={mandatoryFields ? [validateRequiredInputField(translateContent('customerMaster.validation.documentType'))] : ''} placeholder={translateContent('customerMaster.placeholder.documentType')}>
                         <Select loading={!(typeData?.length !== 0)} onChange={handleClearChange} placeholder="Select" {...selectProps}>
                             {typeData?.map((item) => (
                                 <Option key={item?.key} value={item?.key}>
@@ -37,7 +37,7 @@ const AddEditForm = (uploadProps) => {
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Form.Item label={translateContent('customerMaster.label.fileName')} name="documentName" rules={mandatoryFields ? [validateRequiredInputField('file name')] : ''}>
+                    <Form.Item label={translateContent('customerMaster.label.fileName')} name="documentName" rules={mandatoryFields ? [validateRequiredInputField(translateContent('customerMaster.validation.fileName'))] : ''}>
                         <Input onChange={handleClearChange} placeholder={translateContent('customerMaster.placeholder.fileName')} allowClear />
                     </Form.Item>
                 </Col>
