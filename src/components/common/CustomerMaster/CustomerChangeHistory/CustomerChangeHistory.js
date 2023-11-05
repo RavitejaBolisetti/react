@@ -15,6 +15,7 @@ import styles from 'assets/sass/app.module.scss';
 import { DataTable } from 'utils/dataTable';
 import { withDrawer } from 'components/withDrawer';
 import { BASE_URL_CUSTOMER_MASTER_CHANGE_HISTORY as customURL } from 'constants/routingApi';
+import { translateContent } from 'utils/translateContent';
 
 import { Row, Button, Col } from 'antd';
 
@@ -110,7 +111,7 @@ const CustomerChangeHistoryMain = ({ fetchCustomerChangeHistory, onCloseAction, 
 
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Modified Date & Time',
+            title: translateContent('customerMaster.tableColHeading.modified'),
             dataIndex: 'modifiedDate',
             render: (text) => [
                 <div>
@@ -122,27 +123,27 @@ const CustomerChangeHistoryMain = ({ fetchCustomerChangeHistory, onCloseAction, 
         }),
 
         tblPrepareColumns({
-            title: 'Modified By',
+            title: translateContent('customerMaster.tableColHeading.modifiedBy'),
             dataIndex: 'modifiedBy',
         }),
 
         tblPrepareColumns({
-            title: 'Change Source',
+            title: translateContent('customerMaster.tableColHeading.changeSource'),
             dataIndex: 'source',
         }),
 
         tblPrepareColumns({
-            title: 'Field Name',
+            title: translateContent('customerMaster.tableColHeading.fieldName'),
             dataIndex: 'fieldName',
         }),
 
         tblPrepareColumns({
-            title: 'Old Value',
+            title: translateContent('customerMaster.tableColHeading.oldValue'),
             dataIndex: 'oldValue',
         }),
 
         tblPrepareColumns({
-            title: 'New Value',
+            title: translateContent('customerMaster.tableColHeading.newValue'),
             dataIndex: 'newValue',
         }),
     ];

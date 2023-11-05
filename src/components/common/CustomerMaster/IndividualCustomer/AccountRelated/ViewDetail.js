@@ -6,6 +6,7 @@
 import React from 'react';
 import { Descriptions, Card } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { translateContent } from 'utils/translateContent';
 
 const ViewDetailBase = (props) => {
     const { styles, formData, isLoading } = props;
@@ -35,12 +36,12 @@ const ViewDetailBase = (props) => {
         <div className={styles.viewDrawerContainer}>
             <Card>
                 <Descriptions {...viewProps}>
-                    <Descriptions.Item label="Credit Limit">{checkAndSetDefaultValue(formData?.creditAmount, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Credit Limit Days">{checkAndSetDefaultValue(formData?.creditDays, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Outstanding Amount">{checkAndSetDefaultValue(formData?.outstandingAmount, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Parts Discount">{checkAndSetDefaultValue(formData?.partsDiscount, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Labour Discount">{checkAndSetDefaultValue(formData?.labourDiscount, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Remarks">{checkAndSetDefaultValue(formData?.remarks, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('customerMaster.label.creditLimit')}>{checkAndSetDefaultValue(formData?.creditAmount, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('customerMaster.label.limitDays')}>{checkAndSetDefaultValue(formData?.creditDays, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('customerMaster.label.amount')}>{checkAndSetDefaultValue(formData?.outstandingAmount, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('customerMaster.label.parts')}>{checkAndSetDefaultValue(formData?.partsDiscount, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('customerMaster.label.labour')}>{checkAndSetDefaultValue(formData?.labourDiscount, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('customerMaster.label.remarks')}>{checkAndSetDefaultValue(formData?.remarks, isLoading)}</Descriptions.Item>
                 </Descriptions>
             </Card>
         </div>

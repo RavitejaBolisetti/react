@@ -265,7 +265,7 @@ const AddressMasterBase = (props) => {
                             ) : (
                                 <>
                                     <Row type="flex" align="middle">
-                                        <Text strong> {customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id ? translateContent('customerMaster.label.Individual') : 'Company Address'}</Text>
+                                        <Text strong> {customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id ? translateContent('customerMaster.drawerSubHeading.addressTitle') : 'Company Address'}</Text>
                                         {!isViewModeVisible && !formActionType?.viewMode && (
                                             <Button onClick={addAddressHandeler} icon={<PlusOutlined />} type="primary" disabled={isAdding || isEditing}>
                                                 Add

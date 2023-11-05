@@ -43,7 +43,7 @@ const ViewDetailMain = (props) => {
     return (
         <div className={styles.viewDrawerContainer}>
             <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
-                <Panel header={translateContent('customerMaster.heading.individualTitle')} key="1">
+                <Panel header={translateContent('customerMaster.drawerSubHeading.informationTitle')} key="1">
                     <Divider />
                     {/* <div>
                         <Image alt="Uploaded profile picture" width="120" height="100" src={`data:image/png;base64,${viewDocument?.base64}`} />

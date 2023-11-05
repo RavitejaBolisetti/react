@@ -18,6 +18,7 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
 import { getCodeValue } from 'utils/getCodeValue';
 import { LANGUAGE_EN } from 'language/en';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -111,42 +112,44 @@ const ViewDetailMain = (props) => {
             {canApproveNameChangeRequest && showApproveNameChangeRequestBtn && (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={4} lg={4} xl={4}>
-                        <Form.Item label="Title">{checkAndSetDefaultValue(getCodeValue(typeData?.TITLE, customerNameList?.titleCode))}</Form.Item>
+                        <Form.Item label={translateContent('customerMaster.label.title')}>{checkAndSetDefaultValue(getCodeValue(typeData?.TITLE, customerNameList?.titleCode))}</Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={7} lg={7} xl={7}>
-                        <Form.Item label="First Name">{checkAndSetDefaultValue(customerNameList?.firstName)}</Form.Item>
+                        <Form.Item label={translateContent('customerMaster.label.firstName')}>{checkAndSetDefaultValue(customerNameList?.firstName)}</Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-                        <Form.Item label="Middle Name">{checkAndSetDefaultValue(customerNameList?.middleName)}</Form.Item>
+                        <Form.Item label={translateContent('customerMaster.label.middleName')}>{checkAndSetDefaultValue(customerNameList?.middleName)}</Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={7} lg={7} xl={7}>
-                        <Form.Item label="Last Name">{checkAndSetDefaultValue(customerNameList?.lastName)}</Form.Item>
+                        <Form.Item label={translateContent('customerMaster.label.lastName')}>{checkAndSetDefaultValue(customerNameList?.lastName)}</Form.Item>
                     </Col>
                 </Row>
             )}
             {canApproveNameChangeRequest && !showApproveNameChangeRequestBtn && (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={4} lg={4} xl={4}>
-                        <Form.Item label="Title">{checkAndSetDefaultValue(getCodeValue(typeData?.TITLE, formData?.titleCode))}</Form.Item>
+                        <Form.Item label={translateContent('customerMaster.label.title')}>{checkAndSetDefaultValue(getCodeValue(typeData?.TITLE, formData?.titleCode))}</Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={7} lg={7} xl={7}>
-                        <Form.Item label="First Name">{checkAndSetDefaultValue(formData?.firstName)}</Form.Item>
+                        <Form.Item label={translateContent('customerMaster.label.firstName')}>{checkAndSetDefaultValue(formData?.firstName)}</Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-                        <Form.Item label="Middle Name">{checkAndSetDefaultValue(formData?.middleName)}</Form.Item>
+                        <Form.Item label={translateContent('customerMaster.label.middleName')}>{checkAndSetDefaultValue(formData?.middleName)}</Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={7} lg={7} xl={7}>
-                        <Form.Item label="Last Name">{checkAndSetDefaultValue(formData?.lastName)}</Form.Item>
+                        <Form.Item label={translateContent('customerMaster.label.lastName')}>{checkAndSetDefaultValue(formData?.lastName)}</Form.Item>
                     </Col>
                 </Row>
             )}
-            {canApproveNameChangeRequest && showApproveNameChangeRequestBtn && formData?.customerNameChangeRequest?.supportingDocuments?.map((item) => (
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Card className={styles.viewDocumentStrip} key={item?.documentId} title={item?.documentName} extra={<FiDownload />} data-testid="download" onClick={() => downloadFileFromButton(item)}></Card>
-                    </Col>
-                </Row>
-            ))}
+            {canApproveNameChangeRequest &&
+                showApproveNameChangeRequestBtn &&
+                formData?.customerNameChangeRequest?.supportingDocuments?.map((item) => (
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <Card className={styles.viewDocumentStrip} key={item?.documentId} title={item?.documentName} extra={<FiDownload />} data-testid="download" onClick={() => downloadFileFromButton(item)}></Card>
+                        </Col>
+                    </Row>
+                ))}
             {canApproveNameChangeRequest && showApproveNameChangeRequestBtn && (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.marB20}>
