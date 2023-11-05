@@ -1596,5 +1596,30 @@
             "descriptionValidation": "control description",
             "controlIdValidation": "control id"
         }
+        
+    },
+    "hierarchyAttribute":{
+        "heading":{
+            "mainTitle": "Hierarchy Attribute Master",
+            "titleHierarchy": "Hierarchy Attribute Type",
+            "title": "Hierarchy Attribute"
+        },
+        "label":{
+            "descriptionText": "Please select hierarchy type to view records.",
+            "noRecordText": "No records found. Please add new parameter using below button",
+            "code": "Code",
+            "name": "Name",
+            "duplicateAllowed": "Duplicate Allowed?",
+            "duplicateAllowedDiffParent" : "Duplicate Allowed under different parent?",
+            "childAllowed": "Child Allowed?"
+        },
+        "placeholder":{
+            "name": "name",
+            "code": "code"
+        },
+        "validation":{
+            "nameValidation": "name",
+            "codeValidation": "code"
+        }
     }
 }
