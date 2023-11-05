@@ -535,6 +535,30 @@
         }
     },
 
+    "taxChargeCatagory": {
+        "heading": {
+            "moduleTitle": "Tax & Charges Category",
+            "title": "Tax & Charges Category Code",
+            "panelHeader": "Tax & Charges Calculation"
+        },
+        "validation": {
+            "code": "code"
+        },
+        "label": {
+            "code": "Code",
+            "description": "Description",
+            "status": "Status",
+            "state": "State",
+            "saleType": "Sale Type",
+            "tax/ChargeType": "Tax/Charge Type",
+            "tax/chargeCode": "Tax/Charge Code"
+        },
+        "placeholder": {
+            "taxType": "Tax Type",
+            "taxCode": "Tax Code"
+        }
+    },
+
     "footer": {
         "copyright": "Copyright &copy; {YEAR} ROBIN."
     },
