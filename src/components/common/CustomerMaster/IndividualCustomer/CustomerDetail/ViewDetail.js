@@ -65,7 +65,7 @@ const ViewDetailMain = (props) => {
     return (
         <>
             <div className={styles?.viewDrawerContainer}>
-                <Card header={translateContent('customerMaster.heading.customerTitle')}>
+                <Card header="Customer Information">
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label={translateContent('customerMaster.label.mobileNumber')}>{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label={translateContent('customerMaster.label.customerType')}>{checkAndSetDefaultValue(getCodeValue(typeData?.CUST_TYPE, formData?.customerType), isLoading)}</Descriptions.Item>

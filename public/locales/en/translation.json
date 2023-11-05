@@ -361,8 +361,7 @@
     "customerMaster": {
         "heading": {
             "pageTitle": "Customer Master",
-            "title": "Customer",
-            "customerTitle": "Customer Information"
+            "title": "Customer"
         },
         "tableColHeading": {
             "cusID": "Customer ID",
