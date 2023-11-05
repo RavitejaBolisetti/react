@@ -20,6 +20,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { showGlobalNotification } from 'store/actions/notification';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -37,7 +38,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Lessor Customer';
+    const moduleTitle = translateContent('LessorCompanyCreation.heading.moduletitle');
 
     let returnValue = {
         userId,
@@ -127,11 +128,11 @@ export const ListCustomerCreationBase = (props) => {
             setUploadedFile();
             setUploadedFileName();
             resetData();
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage, placement: 'bottomRight' });
         };
 
         const onErrorAction = (res) => {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: res, placement: 'bottomRight' });
+            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationSuccess.error'), message: res, placement: 'bottomRight' });
         };
 
         const extraParams = [
@@ -154,7 +155,7 @@ export const ListCustomerCreationBase = (props) => {
             setEmptyList(false);
             setUploadedFile();
             form.resetFields();
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         };
 
         const onError = (res, data) => {
@@ -170,7 +171,7 @@ export const ListCustomerCreationBase = (props) => {
                 );
             }
 
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: message });
+            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationSuccess.error'), message: message });
         };
 
         const requestData = {
@@ -192,7 +193,7 @@ export const ListCustomerCreationBase = (props) => {
         resetViewData();
         setFileList([]);
     };
-    const drawerTitle = downloadForm ? 'Download ' : 'Upload ';
+    const drawerTitle = downloadForm ? translateContent('global.buttons.download') : translateContent('global.buttons.upload');
 
     const formProps = {
         ...props,
@@ -266,9 +267,9 @@ export const ListCustomerCreationBase = (props) => {
         fileList,
         setFileList,
 
-        uploadButtonName: 'Upload Lessor Form',
-        messageText: 'Click or drop your file here to upload',
-        validationText: 'File type should be .xlxs and max file size to be 8Mb',
+        uploadButtonName: translateContent('LessorCompanyCreation.message.uploadButtonName'),
+        messageText: translateContent('LessorCompanyCreation.message.messageText'),
+        validationText: translateContent('LessorCompanyCreation.message.validationText'),
         supportedFileTypes,
         maxSize,
     };
@@ -286,7 +287,7 @@ export const ListCustomerCreationBase = (props) => {
         setIsFormVisible(true);
     };
 
-    const title = 'Lessor Customer Details';
+    const title = translateContent('LessorCompanyCreation.heading.title');
 
     return (
         <>
@@ -299,11 +300,11 @@ export const ListCustomerCreationBase = (props) => {
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.buttonsGroupRight}>
                         <Button type="primary" onClick={handleOnClick}>
-                            Upload
+                            {translateContent('global.buttons.upload')};
                         </Button>
 
                         <Button type="primary" onClick={handleDownload}>
-                            Download
+                            {translateContent('global.buttons.download')};
                         </Button>
                     </Col>
                 </Row>

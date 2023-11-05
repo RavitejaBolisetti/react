@@ -585,7 +585,7 @@ const UserManagementMain = (props) => {
                                 imageStyle={{
                                     height: 60,
                                 }}
-                                description={<span>{userType === USER_TYPE_USER?.DEALER?.id && !selectedDealerCode && !tableData?.length ? 'Select dealer to fetch data.' : 'No record found.'}</span>}
+                                description={<span>{translateContent(userType === USER_TYPE_USER?.DEALER?.id && !selectedDealerCode && !tableData?.length ? 'userManagement.generalMessage.dealerTableNoData' : 'global.generalMessage.noRecordsFound')}</span>}
                             ></Empty>
                         )}
                     >

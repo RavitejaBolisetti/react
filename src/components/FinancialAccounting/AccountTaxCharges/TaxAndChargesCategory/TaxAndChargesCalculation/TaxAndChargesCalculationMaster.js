@@ -6,6 +6,8 @@
 import React, { useReducer, useState, useEffect } from 'react';
 import CardProductAttribute from './CardTaxAndChargeCal';
 import FormProductAttribute from './FormTaxAndChargeCal';
+import { translateContent } from 'utils/translateContent';
+
 
 export const TaxAndChargesCalculationMaster = (props) => {
     const { isVisible, selectedTreeData, showGlobalNotification, taxChargeCategoryTypeData, taxCategory, taxChargeCategoryCodeData, handleCodeFunction, form, editForm, taxChargeCalForm, formEdit, setFormEdit, taxChargeCalList, setTaxChargeCalList, buttonData, setButtonData, viewMode, dropdownItems, setDropdownItems, stateData, saleData, isTaxCategoryCodeLoading } = props;

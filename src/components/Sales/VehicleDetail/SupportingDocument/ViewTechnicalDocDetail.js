@@ -7,12 +7,13 @@ import React from 'react';
 import { NoDataFound } from 'utils/noDataFound';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const ViewTechnicalDocDetail = () => {
     return (
         <div className={styles.viewDrawerContainer}>
             {/* {supportingData?.length > 0 ? ( */}
-            <NoDataFound informtion={'No technical documents found'} />
+            <NoDataFound informtion={translateContent('vehicleDetail.documents.label.noTechnicalDocumentsFound')} />
             {/* <Card> */}
             {/* {supportingData?.map((uploadData) => {
                     return (

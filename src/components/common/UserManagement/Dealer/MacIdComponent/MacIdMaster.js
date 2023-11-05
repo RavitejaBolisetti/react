@@ -12,7 +12,6 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import { MacIdDataActions } from 'store/actions/data/userManagement/macid';
 import { CardSkeleton } from 'components/common/Skeleton';
-import { LANGUAGE_EN } from 'language/en';
 
 import AddEditForm from './AddEditForm';
 import ViewMacIdList from './ViewMacIdList';
@@ -59,8 +58,6 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
-
 const MacIdMasterMain = (props) => {
     const { form, section, userId, searchType, fetchMacIdList, listMacIdShowLoading, showGlobalNotification, typeData, macIdDataList, isMacIdLoaded } = props;
     const { saveData, formData, isMacIdLoading } = props;
@@ -97,7 +94,7 @@ const MacIdMasterMain = (props) => {
     }, [userId]);
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: translateContent('global.')+'success', title: 'Success', message: res?.responseMessage });
+        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
     };
 
     const onSaveFormData = () => {
@@ -162,7 +159,7 @@ const MacIdMasterMain = (props) => {
     const onFinish = () => {
         const onSuccess = (res) => {
             macIdform.resetFields();
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             setIsFormVisible(false);
             setButtonData({ ...buttonData, formBtnActive: false });
         };
@@ -234,7 +231,7 @@ const MacIdMasterMain = (props) => {
                                                     }}
                                                     description={
                                                         <span>
-                                                            {noDataTitle} <br />
+                                                            {translateContent('global.generalMessage.noRecordsFoundAddNew')} <br />
                                                         </span>
                                                     }
                                                 ></Empty>

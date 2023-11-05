@@ -10,9 +10,10 @@ import { withDrawer } from 'components/withDrawer';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
 import { ViewConfigDetails } from './ViewConfigDetails';
-import { preparePlaceholderSelect, prepareDatePickerText } from 'utils/preparePlaceholder';
+import { preparePlaceholderSelect, prepareDatePickerText, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { dateFormat } from 'utils/formatDateTime';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { TextArea } = Input;
 const AddEditFormMain = (props) => {
@@ -60,25 +61,25 @@ const AddEditFormMain = (props) => {
                         <>
                             <Row gutter={16}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <Form.Item initialValue={formData?.controlId} label="Control ID" name="controlId" rules={[validateRequiredInputField('Control ID')]}>
-                                        <Select showSearch allowClear placeholder={preparePlaceholderSelect('Select')} onChange={handleControlChange} disabled={isReadOnly} fieldNames={{ label: 'value', value: 'key' }} options={typeData[PARAM_MASTER.CFG_PARAM.id]}></Select>
+                                    <Form.Item initialValue={formData?.controlId} label={translateContent('configurableParameter.label.controlId')} name="controlId" rules={[validateRequiredInputField(translateContent('configurableParameter.validation.controlIdValidation'))]}>
+                                        <Select showSearch allowClear placeholder={preparePlaceholderSelect(translateContent('configurableParameter.placeholder.controlIdPlaceholder'))} onChange={handleControlChange} disabled={isReadOnly} fieldNames={{ label: 'value', value: 'key' }} options={typeData[PARAM_MASTER.CFG_PARAM.id]}></Select>
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.textareaError}>
-                                    <Form.Item label="Control Description" initialValue={formData?.controlDescription} rules={[validateRequiredInputField('Control Description')]} name="controlDescription">
-                                        <TextArea maxLength={300} value={formData?.controlDescription} placeholder="Enter Data" disabled={isReadOnly} showCount />
+                                    <Form.Item label={translateContent('configurableParameter.label.controlDescription')} initialValue={formData?.controlDescription} rules={[validateRequiredInputField(translateContent('configurableParameter.validation.descriptionValidation'))]} name="controlDescription">
+                                        <TextArea maxLength={300} value={formData?.controlDescription} placeholder={preparePlaceholderText(translateContent('configurableParameter.placeholder.controlDescriptionPlaceHolder'))} disabled={isReadOnly} showCount />
                                     </Form.Item>
                                 </Col>
                             </Row>
                             <Row gutter={20}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label="Control Group" initialValue={formData?.controlGroup} name="controlGroup" rules={[validateRequiredSelectField('controlGroup')]}>
-                                        <Select showSearch allowClear placeholder={preparePlaceholderSelect('control group')} disabled={isReadOnly} fieldNames={{ label: 'value', value: 'key' }} options={typeData[PARAM_MASTER.CTRL_GRP.id]}></Select>
+                                    <Form.Item label={translateContent('configurableParameter.label.controlGroup')} initialValue={formData?.controlGroup} name="controlGroup" rules={[validateRequiredSelectField(translateContent('configurableParameter.validation.controlGroupValidation'))]}>
+                                        <Select showSearch allowClear placeholder={preparePlaceholderSelect(translateContent('configurableParameter.placeholder.controlGroupPlaceHolder'))} disabled={isReadOnly} fieldNames={{ label: 'value', value: 'key' }} options={typeData[PARAM_MASTER.CTRL_GRP.id]}></Select>
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label="Configurable Parameter Type" rules={[validateRequiredSelectField('ConfigParamType')]}>
-                                        <Select defaultValue={parameterType} placeholder={preparePlaceholderSelect('Parameter Type')} onChange={changeSelectOptionHandler} disabled={isReadOnly} fieldNames={{ label: 'value', value: 'key' }} options={typeData[PARAM_MASTER.CFG_PARAM_TYPE.id]} allowClear></Select>
+                                    <Form.Item label={translateContent('configurableParameter.label.configurableParameterType')} rules={[validateRequiredSelectField(translateContent('configurableParameter.validation.configParamValuesValidation'))]}>
+                                        <Select defaultValue={parameterType} placeholder={preparePlaceholderSelect(translateContent('configurableParameter.placeholder.parameterTypePlaceHolder'))} onChange={changeSelectOptionHandler} disabled={isReadOnly} fieldNames={{ label: 'value', value: 'key' }} options={typeData[PARAM_MASTER.CFG_PARAM_TYPE.id]} allowClear></Select>
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -86,44 +87,44 @@ const AddEditFormMain = (props) => {
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                     {parameterType && parameterType === CONFIGURABLE_PARAMETARS_INPUT_TYPE.TEXT.KEY ? (
-                                        <Form.Item initialValue={formData?.textValue} label="Configurable Parameter Values" name="textValue" rules={[validateRequiredInputField('ConfigParamValues')]}>
-                                            <Input value={configData?.textValue} placeholder="Enter Data" disabled={isReadOnly} />
+                                        <Form.Item initialValue={formData?.textValue} label={translateContent('configurableParameter.label.configurableParameterValues')} name="textValue" rules={[validateRequiredInputField(translateContent('configurableParameter.validation.configParamValuesValidation'))]}>
+                                            <Input value={configData?.textValue} placeholder={preparePlaceholderText(translateContent('configurableParameter.placeholder.controlDescriptionPlaceHolder'))} disabled={isReadOnly} />
                                         </Form.Item>
                                     ) : parameterType && parameterType === CONFIGURABLE_PARAMETARS_INPUT_TYPE.NUMBER.KEY ? (
                                         <Row gutter={20}>
                                             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                                <Form.Item label="From Number" initialValue={formData?.fromNumber} name="fromNumber" rules={[validateRequiredInputField('Number')]}>
-                                                    <InputNumber min={0} placeholder="From Number" disabled={isReadOnly} />
+                                                <Form.Item label={translateContent('configurableParameter.label.fromNumber')} initialValue={formData?.fromNumber} name="fromNumber" rules={[validateRequiredInputField(translateContent('configurableParameter.validation.number'))]}>
+                                                    <InputNumber min={0} placeholder={preparePlaceholderText('configurableParameter.label.fromDate')} disabled={isReadOnly} />
                                                 </Form.Item>
                                             </Col>
 
                                             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                                <Form.Item label="To Number" initialValue={formData?.toNumber} name="toNumber" rules={[validateRequiredInputField('Number')]}>
-                                                    <InputNumber min={0} placeholder="To Number" disabled={isReadOnly} />
+                                                <Form.Item label={translateContent('configurableParameter.label.toNumber')} initialValue={formData?.toNumber} name="toNumber" rules={[validateRequiredInputField(translateContent('configurableParameter.validation.number'))]}>
+                                                    <InputNumber min={0} placeholder={preparePlaceholderText('configurableParameter.label.toDate')} disabled={isReadOnly} />
                                                 </Form.Item>
                                             </Col>
                                         </Row>
                                     ) : parameterType && parameterType === CONFIGURABLE_PARAMETARS_INPUT_TYPE.DATE_RANGE.KEY ? (
                                         <Row gutter={20}>
                                             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                                <Form.Item label="From Date" name="fromDate" rules={[validateRequiredInputField('from date')]}>
+                                                <Form.Item label={translateContent('configurableParameter.label.fromDate')} name="fromDate" rules={[validateRequiredInputField(translateContent('configurableParameter.validation.fromDateValidaiton'))]}>
                                                     <DatePicker format={dateFormat} placeholder={prepareDatePickerText(dateFormat)} disabled={isReadOnly} />
                                                 </Form.Item>
                                             </Col>
 
                                             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                                <Form.Item label="To Date" name="toDate" rules={[validateRequiredInputField('to date')]}>
+                                                <Form.Item label={translateContent('configurableParameter.label.toDate')} name="toDate" rules={[validateRequiredInputField(translateContent('configurableParameter.validation.toDateValidaiton'))]}>
                                                     <DatePicker format={dateFormat} placeholder={prepareDatePickerText(dateFormat)} disabled={isReadOnly} />
                                                 </Form.Item>
                                             </Col>
                                         </Row>
                                     ) : parameterType && parameterType === CONFIGURABLE_PARAMETARS_INPUT_TYPE.BOOLEAN.KEY ? (
-                                        <Form.Item initialValue={formData?.booleanValue} name="booleanValue" label="Configurable Parameter Values" rules={[validateRequiredInputField('ConfigParamValues')]}>
+                                        <Form.Item initialValue={formData?.booleanValue} name="booleanValue" label={translateContent('configurableParameter.label.configurableParameterValues')} rules={[validateRequiredInputField(translateContent('configurableParameter.validation.configParamValuesValidation'))]}>
                                             <Select
-                                                placeholder="Select"
+                                                placeholder={translateContent('global.placeholder.select')}
                                                 options={[
-                                                    { value: true, label: 'Yes' },
-                                                    { value: false, label: 'No' },
+                                                    { value: true, label: translateContent('global.yesNo.yes') },
+                                                    { value: false, label: translateContent('global.yesNo.no') },
                                                 ]}
                                                 disabled={isReadOnly}
                                             />

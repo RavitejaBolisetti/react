@@ -8,13 +8,13 @@ import { Input, Form, Row, Col, Card, Empty, Typography, Divider } from 'antd';
 
 import LeftPanel from 'components/common/LeftPanel';
 import { UserManagementFormButton } from '../../UserManagementFormButton/UserManagementFormButton';
-import { LANGUAGE_EN } from 'language/en';
 import styles from '../../../TreeView.module.scss';
 import { NEXT_ACTION } from 'utils/btnVisiblity';
+import { translateContent } from 'utils/translateContent';
+import { preparePlaceholderSearch } from 'utils/preparePlaceholder';
 
 const { Text } = Typography;
 const { Search } = Input;
-const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
 
 const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
 
@@ -152,7 +152,7 @@ const ProductMapping = (props) => {
         const onSuccess = (res) => {
             form.resetFields();
             handleButtonClick({ buttonAction: NEXT_ACTION });
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         };
 
         const filterData = mapProductList?.filter((el) => el?.id || el?.status);
@@ -185,7 +185,7 @@ const ProductMapping = (props) => {
                             {productHierarchyData?.length || isUserDlrProductListLoding || isProductHierarchyLoading ? (
                                 <>
                                     <Form.Item label={''} name="search" validateTrigger={['onSearch']}>
-                                        <Search placeholder="Search" initialValue={searchValue} onChange={handleSearchValue} allowClear />
+                                        <Search placeholder={preparePlaceholderSearch()} initialValue={searchValue} onChange={handleSearchValue} allowClear />
                                     </Form.Item>
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={`${styles.marB20}`}>
@@ -203,7 +203,7 @@ const ProductMapping = (props) => {
                                     }}
                                     description={
                                         <span>
-                                            {noDataTitle} <br />
+                                            {translateContent('global.notificationSuccess.success')} <br />
                                         </span>
                                     }
                                 ></Empty>

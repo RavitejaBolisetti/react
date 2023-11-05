@@ -9,6 +9,7 @@ import { validateRequiredInputField } from 'utils/validation';
 import { withModal } from 'components/withModal';
 import { ModalButtons } from 'components/common/Button';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Option } = Select;
 
@@ -56,9 +57,9 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={defaultCountry} label="Country" name="countryCode" rules={[validateRequiredInputField('Country')]}>
+                    <Form.Item initialValue={defaultCountry} label={translateContent('tehsil.label.countryCode')} name="countryCode" rules={[validateRequiredInputField(translateContent(translateContent('tehsil.validation.country')))]}>
                         {defaultCountry && (
-                            <Select defaultValue={defaultCountry} onChange={handleFilterChange('countryCode')} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
+                            <Select defaultValue={defaultCountry} onChange={handleFilterChange('countryCode')} showSearch loading={!isDataCountryLoaded} placeholder={translateContent('global.placeholder.select')} allowClear>
                                 {countryData?.map((item) => (
                                     <Option key={item?.countryCode} value={item?.countryCode}>
                                         {item?.countryName}
@@ -70,8 +71,8 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="State" initialValue={filterString?.stateCode} name="stateCode">
-                        <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('stateCode')}>
+                    <Form.Item label={translateContent('tehsil.label.stateCode')} initialValue={filterString?.stateCode} name="stateCode">
+                        <Select placeholder={translateContent('global.placeholder.select')} {...selectProps} onChange={handleFilterChange('stateCode')}>
                             {filteredStateData?.map((item) => (
                                 <Option key={item?.key} value={item?.key}>
                                     {item?.value}
@@ -84,8 +85,8 @@ export const AdvancedSearchFrom = (props) => {
 
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="District" initialValue={filterString?.districtCode} name="districtCode">
-                        <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('districtCode')}>
+                    <Form.Item label={translateContent('tehsil.label.district')} initialValue={filterString?.districtCode} name="districtCode">
+                        <Select placeholder={translateContent('global.placeholder.select')} {...selectProps} onChange={handleFilterChange('districtCode')}>
                             {filteredDistrictData?.map((item) => (
                                 <Option key={item?.key} value={item?.key}>
                                     {item?.value}
@@ -95,8 +96,8 @@ export const AdvancedSearchFrom = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Tehsil" initialValue={filterString?.keyword} name="keyword">
-                        <Input placeholder="Search" maxLength={50} allowClear />
+                    <Form.Item label={translateContent('tehsil.label.tehsil')} initialValue={filterString?.keyword} name="keyword">
+                        <Input placeholder={translateContent('global.placeholder.search')} maxLength={50} allowClear />
                     </Form.Item>
                 </Col>
             </Row>

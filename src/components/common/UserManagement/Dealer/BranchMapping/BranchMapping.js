@@ -69,7 +69,6 @@ const BranchMapping = (props) => {
             return;
         }
         const onError = (message) => {
-            console.log('🚀 ~ file: BranchMapping.js:72 ~ onError ~ message:', message);
             showGlobalNotification({ message });
         };
 

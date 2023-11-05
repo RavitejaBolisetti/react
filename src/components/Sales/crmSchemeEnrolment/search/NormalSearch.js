@@ -9,6 +9,7 @@ import { FilterIcon } from 'Icons';
 import { RxCross2 } from 'react-icons/rx';
 import { PlusOutlined } from '@ant-design/icons';
 import { SearchBox } from 'components/utils/SearchBox';
+import { translateContent } from 'utils/translateContent';
 import styles from 'assets/sass/app.module.scss';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
@@ -40,7 +41,7 @@ export function NormalSearch(props) {
                                         setAdvanceSearchVisible(true);
                                     }}
                                 >
-                                    Advanced Filters
+                                    {translateContent('global.advanceFilter.title')}
                                 </Button>
                             </Col>
                         </Row>
@@ -48,7 +49,7 @@ export function NormalSearch(props) {
                 </Col>
                 <Col xs={24} sm={4} md={4} lg={4} xl={4} className={styles.buttonsGroupRight}>
                     <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" onClick={addFormOpen}>
-                        Add Scheme
+                        {translateContent('crmSchemeEnrolment.button.addScheme')}
                     </Button>
                 </Col>
             </Row>
@@ -76,7 +77,7 @@ export function NormalSearch(props) {
                             </Col>
                             <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
                                 <Button className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
-                                    Clear
+                                    {translateContent('global.buttons.clear')}
                                 </Button>
                             </Col>
                         </Row>

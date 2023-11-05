@@ -7,26 +7,27 @@
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Token No.',
+            title: translateContent("userManagement.label.tokenNumber"),
             dataIndex: 'employeeCode',
             width: '20%',
         }),
         tblPrepareColumns({
-            title: 'User Name',
+            title: translateContent("userManagement.label.userName"),
             dataIndex: 'manufacturerUserName',
             width: '20%',
         }),
         tblPrepareColumns({
-            title: 'Designation',
+            title: translateContent("userManagement.label.designation"),
             dataIndex: 'designation',
             width: '20%',
         }),
         tblPrepareColumns({
-            title: 'User Roles',
+            title: translateContent("userManagement.label.userRoles"),
             dataIndex: 'userRoleCount',
             width: '20%',
         }),

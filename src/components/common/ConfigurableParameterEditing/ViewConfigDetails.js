@@ -6,6 +6,7 @@
 import React from 'react';
 import { Descriptions } from 'antd';
 import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
+import { translateContent } from 'utils/translateContent';
 
 const ViewConfigDetailsMain = ({ formData, styles, parameterType }) => {
     const viewOneColProps = {
@@ -18,25 +19,25 @@ const ViewConfigDetailsMain = ({ formData, styles, parameterType }) => {
         <>
             <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
-                    <Descriptions.Item label="Control ID">{formData?.controlId}</Descriptions.Item>
-                    <Descriptions.Item label="Control Description">{formData?.controlDescription}</Descriptions.Item>
-                    <Descriptions.Item label="Control Group">{formData?.controlGroup}</Descriptions.Item>
-                    <Descriptions.Item label="Configurable Parameter Type">{parameterType}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('configurableParameter.label.controlId')}>{formData?.controlId}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('configurableParameter.label.controlDescription')}>{formData?.controlDescription}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('configurableParameter.label.controlGroup')}>{formData?.controlGroup}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('configurableParameter.label.configurableParameterType')}>{parameterType}</Descriptions.Item>
 
                     {parameterType === CONFIGURABLE_PARAMETARS_INPUT_TYPE.TEXT.KEY ? (
-                        <Descriptions.Item label="Configurable Parameter Values">{formData?.textValue}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('configurableParameter.label.configurableParameterValues')}>{formData?.textValue}</Descriptions.Item>
                     ) : parameterType === CONFIGURABLE_PARAMETARS_INPUT_TYPE.NUMBER.KEY ? (
                         <>
-                            <Descriptions.Item label="From Number">{formData?.fromNumber}</Descriptions.Item>
-                            <Descriptions.Item label="To Number">{formData?.toNumber}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('configurableParameter.label.fromNumber')}>{formData?.fromNumber}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('configurableParameter.label.toNumber')}>{formData?.toNumber}</Descriptions.Item>
                         </>
                     ) : parameterType === CONFIGURABLE_PARAMETARS_INPUT_TYPE.DATE_RANGE.KEY ? (
                         <>
-                            <Descriptions.Item label="From Date">{formData?.fromDate}</Descriptions.Item>
-                            <Descriptions.Item label="To Date">{formData?.toDate}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('configurableParameter.label.fromDate')}>{formData?.fromDate}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('configurableParameter.label.toDate')}>{formData?.toDate}</Descriptions.Item>
                         </>
                     ) : parameterType === CONFIGURABLE_PARAMETARS_INPUT_TYPE.BOOLEAN.KEY ? (
-                        <Descriptions.Item label="Configurable Parameter Values">{formData?.booleanValue ? 'Yes' : 'No'}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('configurableParameter.label.configurableParameterValues')}>{formData?.booleanValue ? translateContent('global.yesNo.yes') : translateContent('global.yesNo.no')}</Descriptions.Item>
                     ) : null}
                 </Descriptions>
             </div>
