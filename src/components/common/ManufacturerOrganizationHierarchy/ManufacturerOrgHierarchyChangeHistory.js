@@ -118,4 +118,4 @@ const ManufacturerOrgHierarchyChangeHistoryMain = ({ onCloseAction, fetchChangeH
     );
 };
 
-export const ManufacturerOrgHierarchyChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ManufacturerOrgHierarchyChangeHistoryMain, { title: 'Change History', width: '90%' }));
+export const ManufacturerOrgHierarchyChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ManufacturerOrgHierarchyChangeHistoryMain, { title: translateContent('global.changeHistory.title'), width: '90%' }));

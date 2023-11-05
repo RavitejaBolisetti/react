@@ -1657,5 +1657,59 @@
 
             "attributeHierarchyFieldValidation": "is not active anymore. Please select a different attribute."
         }
+    },
+    "manufacturerAdmin":{
+        "heading":{
+            "mainTitle": "Manufacturer Detail",
+            "viewTitle": "Manufacturer Details",
+            "drawerTitle": "Upload Authority Details",
+            "title": "Hierarchy",
+            "changeHistoryTitle": "Admin Change History",
+            "authorityChangeHistoryTitle": "Authority Change History"
+        },
+        "label":{
+            "changedDate": "Changed/Modified Date",
+            "changedBy": "Changed By",
+            "attribute": "Attribute",
+            "code": "Code",
+            "parent" : "Parent",
+            "shortDescription": "Short Description",
+            "longDescription" : "Long Description",
+            "childAllowed": "Child Allowed?",
+            "description": "Please select product from leftside hierarchy to view 'Hierarchy Details' ",
+            "attributeType": "Attribute Type",
+            "hierarchyCode": "Hierarchy Code",
+            "attributeLevel":"Attribute Level",
+            "attributeCode":"Attribute Code",
+            "authorityTypeCode": "Authority Type Code",
+            "employeeName": "Employee Name",
+            "employeeTokenNo": "Employee Token No.",
+            "authorityId": "Authority Id",
+            "effectiveFrom": "Effective From",
+            "effectiveTo": "Effective To",
+            "authorityForm": "Authority Form",
+            "downloadAuthorityForm": "Please download 'Authority Form Template' using below button",
+            "uploadButtonName": "Upload Authority Form",
+            "messageText": "Click or drop your file here to upload",
+            "downloadHere": "Download Here",
+            "selectOrganization": "Please Select Organization from dropdown"
+
+        },
+        "placeholder":{
+            "name": "name",
+            "code": "code",
+            "parent": "Parent",
+            "attributeTypeCode": "attribute type code",
+            "attributeCode": "attribute code",
+            "organizationHierarchy":"Organization Hierarchy"
+        },
+        "validation":{
+            "nameValidation": "name",
+            "codeValidation": "code",
+            "attributeLevel": "attribute level",
+            "attributeTypeCode": "attribute type code",
+            "attributeHierarchyFieldValidation": "is not active anymore. Please select a different attribute.",
+            "validationText": "File type should be .xlxs and max file size to be 8Mb"
+        }
     }
 }
