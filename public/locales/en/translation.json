@@ -27,7 +27,8 @@
         "label": {
             "active": "Active",
             "inActive": "InActive",
-            "status": "Status"
+            "status": "Status",
+            "action": "Action"
         },
         "advanceFilter": {
             "title": "Advance Filters",
@@ -1618,6 +1619,43 @@
         "validation": {
             "nameValidation": "name",
             "codeValidation": "code"
+        }
+    },
+    "manufacturerOrganisation":{
+        "heading":{
+            "mainTitle": "Manufacturer Organisation Detail",
+            "viewTitle": "Manufacturer Details",
+            "title": "Hierarchy"
+        },
+        "label":{
+            "changedDate": "Changed Date",
+            "changedBy": "Changed By",
+            "attribute": "Attribute",
+            "code": "Code",
+            "parent" : "Parent",
+            "shortDescription": "Short Description",
+            "longDescription" : "Long Description",
+            "childAllowed": "Child Allowed?",
+            "description": "Please select product from leftside hierarchy to view 'Hierarchy Details' ",
+            "attributeType": "Attribute Type",
+            "hierarchyCode": "Hierarchy Code",
+            "attributeLevel":"Attribute Level"
+
+        },
+        "placeholder":{
+            "name": "name",
+            "code": "code",
+            "parent": "Parent",
+            "attributeTypeCode": "attribute type code",
+            "attributeCode": "attribute code"
+        },
+        "validation":{
+            "nameValidation": "name",
+            "codeValidation": "code",
+            "attributeLevel": "attribute level",
+            "attributeTypeCode": "attribute type code",
+
+            "attributeHierarchyFieldValidation": "is not active anymore. Please select a different attribute."
         }
     }
 }
