@@ -126,7 +126,7 @@ const IssueIndentMasterMain = (props) => {
             resetVinDetails();
             setRefershIndentData(!refershIndentData);
             setRefershData(!refershData);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         };
 
         const onError = (message) => {
@@ -157,7 +157,7 @@ const IssueIndentMasterMain = (props) => {
             resetVinDetails();
             setRefershData(!refershData);
             setRefershIndentData(!refershIndentData);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         };
 
         const onError = (message) => {

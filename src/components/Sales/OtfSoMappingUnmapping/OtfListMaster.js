@@ -21,6 +21,7 @@ import { MasterContainer } from './MasterContainer';
 import { setAllkeysToNull } from './Constants';
 import { OTF_SO_MAPPING_UNMAPPING_CONSTANTS, HEADER_CONSTANTS, FORM_TYPE_CONSTANSTS } from './Constants';
 import { converDateDayjs } from 'utils/formatDateTime';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -39,7 +40,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Booking SO Mapping And Unmapping';
+    const moduleTitle = translateContent('bookingSoMapping.heading.pageTitle');
 
     let returnValue = {
         collapsed,
@@ -116,7 +117,7 @@ export const OtfListMasterBase = (props) => {
     const [SoForm] = Form.useForm();
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
     };
 
     const onErrorAction = (message) => {
@@ -379,7 +380,7 @@ export const OtfListMasterBase = (props) => {
             SoForm.resetFields();
             resetDealerLocationData();
             setfilterString();
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         };
 
         const onError = (message) => {

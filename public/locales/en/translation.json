@@ -1856,5 +1856,27 @@
             "docName": "Lessor Template",
             "textMessage": "Please download Lessor Customer Template using below button"
         }
+    },
+    "bookingSoMapping": {
+        "heading": {
+            "pageTitle": "Booking SO Mapping And Unmapping",
+            "moduleTitle": "User Type Mapping",
+            "viewTitle": "User Type Mapping"
+        },
+        "label": {
+            "variantCode": "Variant Code",
+            "productVariant": "Product Variant",
+            "userForMappingUnmapping": "User for Mapping/Unmapping"
+        },
+        "placeholder": {
+            "variantCode": "Variant Code",
+            "productVariant": "Product Variant",
+            "userForMappingUnmapping": "User for Mapping/Unmapping"
+        },
+        "validation": {
+            "variantCode": "Variant Code",
+            "productVariant": "Product Variant",
+            "userForMappingUnmapping": "User for Mapping/Unmapping"
+        }
     }
 }
