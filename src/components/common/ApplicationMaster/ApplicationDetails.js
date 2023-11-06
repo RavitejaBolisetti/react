@@ -13,6 +13,7 @@ import { ROOT_PARENT_APPLICATION, ACCESSIBLE_LOCATION_INDICATOR_SELECT_DATA } fr
 import styles from 'assets/sass/app.module.scss';
 import TreeSelectField from '../TreeSelectField';
 import { customSelectBox } from 'utils/customSelectBox';
+import { translateContent } from 'utils/translateContent';
 
 const { Option } = Select;
 const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_CHILD_WARNING;
@@ -60,26 +61,26 @@ const ApplicationDetails = ({ setCanFormSave, form, onFinishFailed = () => {}, p
             <Form form={form} id="myForm" onFieldsChange={onFieldsChange} autoComplete="off" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Application ID" name="applicationId" rules={[validateRequiredInputField('application ID')]}>
-                            <Input disabled={isFieldDisable} maxLength={50} placeholder={preparePlaceholderText('application ID')} />
+                        <Form.Item label={translateContent('applicationMaster.label.applicationId')} name="applicationId" rules={[validateRequiredInputField('applicationMaster.validation.applicationId')]}>
+                            <Input disabled={isFieldDisable} maxLength={50} placeholder={preparePlaceholderText('applicationMaster.placeholder.applicationId')} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Application Name" name="applicationName" rules={[validateRequiredInputField('application name')]}>
-                            <Input disabled={isFieldDisable} maxLength={50} placeholder={preparePlaceholderText('application name')} />
+                        <Form.Item label={translateContent('applicationMaster.label.applicationName')}name="applicationName" rules={[validateRequiredInputField('applicationMaster.validation.applicationName')]}>
+                            <Input disabled={isFieldDisable} maxLength={50} placeholder={preparePlaceholderText('applicationMaster.placeholder.applicationName')} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Application Title" name="applicationTitle" rules={[validateRequiredInputField('application title')]}>
-                            <Input maxLength={50} placeholder={preparePlaceholderText('application title')} />
+                        <Form.Item label={translateContent('applicationMaster.label.applicationTitle')} name="applicationTitle" rules={[validateRequiredInputField('applicationMaster.validation.applicationTitle')]}>
+                            <Input maxLength={50} placeholder={preparePlaceholderText('applicationMaster.placeholder.applicationTitle')} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Application Type" name="applicationType" rules={[validateRequiredSelectField('application type')]}>
-                            <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} maxLength={50} placeholder={preparePlaceholderText('application type')}>
+                        <Form.Item label={translateContent('applicationMaster.label.applicationType')} name="applicationType" rules={[validateRequiredSelectField(translateContent('applicationMaster.validation.applicationType'))]}>
+                            <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} maxLength={50} placeholder={preparePlaceholderText(translateContent('applicationMaster.placeholder.applicationType'))}>
                                 {configurableParamData?.map((type) => (
                                     <Option key={'at' + type.value} value={type?.value}>
                                         {type?.value}
@@ -91,7 +92,7 @@ const ApplicationDetails = ({ setCanFormSave, form, onFinishFailed = () => {}, p
                 </Row>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Form.Item name="parentApplicationId" label="Parent Application" initialValue={ROOT_PARENT_APPLICATION} rules={[validateRequiredSelectField('parent application ID')]}>
+                        <Form.Item name="parentApplicationId" label={translateContent('applicationMaster.label.parentApplicationId')} initialValue={ROOT_PARENT_APPLICATION} rules={[validateRequiredSelectField(translateContent('applicationMaster.validation.parentApplicationId'))]}>
                             <TreeSelectField {...treeSelectFieldProps} />
                         </Form.Item>
                     </Col>
@@ -99,48 +100,48 @@ const ApplicationDetails = ({ setCanFormSave, form, onFinishFailed = () => {}, p
 
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item name="accessableIndicator" label="Accessible Location" rules={[validateRequiredSelectField('Accessible Locations')]}>
-                            {customSelectBox({ data: ACCESSIBLE_LOCATION_INDICATOR_SELECT_DATA, onChange: handleChangeLocations, placeholder: preparePlaceholderSelect('accessible location') })}
+                        <Form.Item name="accessableIndicator" label={translateContent('applicationMaster.label.accessibleLocation')} rules={[validateRequiredSelectField(translateContent('applicationMaster.validation.accessibleLocation'))]}>
+                            {customSelectBox({ data: ACCESSIBLE_LOCATION_INDICATOR_SELECT_DATA, onChange: handleChangeLocations, placeholder: preparePlaceholderSelect(translateContent('applicationMaster.placeholder.accessibleLocation')) })}
                         </Form.Item>
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Application Criticality Group" name="criticalityGroupMasterId" rules={[validateRequiredInputField('Application Criticality Group')]}>
-                            {customSelectBox({ data: criticalityGroupData, fieldNames: { key: 'id', value: 'criticalityGroupName' }, placeholder: preparePlaceholderText('application criticality group') })}
+                        <Form.Item label={translateContent('applicationMaster.label.criticalityGroupName')} name="criticalityGroupMasterId" rules={[validateRequiredInputField(translateContent('applicationMaster.validation.criticalityGroupName'))]}>
+                            {customSelectBox({ data: criticalityGroupData, fieldNames: { key: 'id', value: 'criticalityGroupName' }, placeholder: preparePlaceholderText(translateContent('applicationMaster.placeholder.criticalityGroupName')) })}
                         </Form.Item>
                     </Col>
                 </Row>
 
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item initialValue={false} labelAlign="left" wrapperCol={{ span: 24 }} name="documentNumRequired" label="Document number to be generated" valuePropName="checked">
-                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={handleDocReq} />
+                        <Form.Item initialValue={false} labelAlign="left" wrapperCol={{ span: 24 }} name="documentNumRequired" label={translateContent('applicationMaster.label.documentNumRequired')} valuePropName="checked">
+                            <Switch checkedChildren={translateContent('global.label.active')} unCheckedChildren={translateContent('global.label.inActive')} valuePropName="checked" onChange={handleDocReq} />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="applicationStatus" label="Status" valuePropName="checked">
-                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" />
+                        <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="applicationStatus" label={translateContent('global.label.status')} valuePropName="checked">
+                            <Switch checkedChildren={translateContent('global.label.active')} unCheckedChildren={translateContent('global.label.inActive')} valuePropName="checked" />
                         </Form.Item>
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="termAndConRequired" label="T&C Required" valuePropName="checked">
-                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" />
+                        <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="termAndConRequired" label={translateContent('applicationMaster.label.termAndConRequired')} valuePropName="checked">
+                            <Switch checkedChildren={translateContent('global.label.active')} unCheckedChildren={translateContent('global.label.inActive')} valuePropName="checked" />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="digitalSignatureRequired" label="Digital Signature Required" valuePropName="checked">
-                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" />
+                        <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="digitalSignatureRequired" label={translateContent('applicationMaster.label.digitalSignatureRequired')} valuePropName="checked">
+                            <Switch checkedChildren={translateContent('global.label.active')} unCheckedChildren={translateContent('global.label.inActive')} valuePropName="checked" />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="isFinanceRelated" label="Is Finance Related" valuePropName="checked">
-                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" />
+                        <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="isFinanceRelated" label={translateContent('applicationMaster.label.isFinanceRelated')} valuePropName="checked">
+                            <Switch checkedChildren={translateContent('global.label.active')} unCheckedChildren={translateContent('global.label.inActive')} valuePropName="checked" />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="irnIntegrationRequired" label="IRN Integration Required" valuePropName="checked">
-                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" />
+                        <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="irnIntegrationRequired" label={translateContent('applicationMaster.label.irnIntegrationRequired')} valuePropName="checked">
+                            <Switch checkedChildren={translateContent('global.label.active')} unCheckedChildren={translateContent('global.label.inActive')} valuePropName="checked" />
                         </Form.Item>
                     </Col>
 
@@ -153,12 +154,12 @@ const ApplicationDetails = ({ setCanFormSave, form, onFinishFailed = () => {}, p
                 <Row gutter={20} className={styles.formFooterNew}>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupLeft}>
                         <Button danger onClick={onCloseAction}>
-                            Cancel
+                            {translateContent('global.buttons.cancel')}
                         </Button>
                     </Col>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
                         <Button disabled={isApplicatinoOnSaveLoading || !canFormSave} loading={isApplicatinoOnSaveLoading} htmlType="submit" form="myForm" key="saveBtm" type="primary">
-                            Save
+                            {translateContent('global.buttons.save')}
                         </Button>
                     </Col>
                 </Row>

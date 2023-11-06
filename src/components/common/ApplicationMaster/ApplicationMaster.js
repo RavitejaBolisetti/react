@@ -21,6 +21,7 @@ import styles from 'assets/sass/app.module.scss';
 import { ContentHeader } from 'utils/ContentHeader';
 import { APPLICATION_ACTION_ID, ROOT_PARENT_APPLICATION, SPECIAL_MENU_ID } from 'constants/modules/applicationMaster';
 import { APPLICATION_DEVICE_TYPE } from 'utils/applicationDeviceType';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -94,7 +95,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationMasterData
     const [parentAppCode, setParentAppCode] = useState(ROOT_PARENT_APPLICATION);
     const [isBtnDisabled, setIsBtnDisabled] = useState(false);
 
-    const moduleTitle = 'Application Master';
+    const moduleTitle = translateContent('applicationMaster.title.applicationMaster');
     const fieldNames = { title: 'menuTitle', key: 'menuId', children: 'subMenu' };
 
     useEffect(() => {
@@ -130,7 +131,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationMasterData
         if (res?.data) {
             const { accessibleLocation, applicationAction, documentType, ...rest } = res?.data[0];
 
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, deviceType: menuType, screenId: SPECIAL_MENU_ID });
 
             applicationCall(rest?.applicationId);
@@ -256,7 +257,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationMasterData
         configurableParamData,
         actions,
         menuData,
-        titleOverride: (finalFormdata?.applicationDetails?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
+        titleOverride: (finalFormdata?.applicationDetails?.id ? translateContent('global.buttons.edit') : translateContent('global.buttons.add')).concat(moduleTitle),
         setSelectedTreeKey,
         selectedTreeKey,
         isApplicatinoOnSaveLoading,
@@ -292,7 +293,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationMasterData
                                     }
                                 >
                                     <Button icon={<PlusOutlined />} type="primary" onClick={() => handleAdd('add')}>
-                                        Add
+                                        {translateContent('global.buttons.add')}
                                     </Button>
                                 </Empty>
                             </div>

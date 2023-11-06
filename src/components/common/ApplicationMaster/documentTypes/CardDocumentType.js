@@ -9,6 +9,7 @@ import { FiEdit, FiTrash } from 'react-icons/fi';
 import DocumentTypesForm from './DocumentTypesForm';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Text } = Typography;
 const CardDocumentType = (prop) => {
@@ -81,7 +82,7 @@ const CardDocumentType = (prop) => {
                             <Text strong>{documentTypeDescription}</Text>
                         </div>
                         <div>
-                            <Text type="secondary">Code: {documentTypeCode}</Text>
+                            <Text type="secondary">{translateContent('applicationMaster.text.code')}{documentTypeCode}</Text>
                         </div>
                     </Col>
                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} className={styles.buttonsGroupRight}>
@@ -93,10 +94,10 @@ const CardDocumentType = (prop) => {
                         ) : (
                             <>
                                 <Button type="link" onClick={onUpdate}>
-                                    Save
+                                    {translateContent('global.buttons.add')}
                                 </Button>
                                 <Button type="link" onClick={() => onCancel()}>
-                                    Cancel
+                                    {translateContent('global.buttons.cancel')}
                                 </Button>
                             </>
                         )}
