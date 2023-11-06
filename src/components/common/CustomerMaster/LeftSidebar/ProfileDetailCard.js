@@ -14,7 +14,7 @@ const { Text, Title } = Typography;
 const expandIcon = ({ isActive }) =>
     isActive ? (
         <>
-            <span>See less</span>
+            <span>{translateContent('global.buttons.seeLess')}</span>
             <SlArrowUp size={13} />
         </>
     ) : (
