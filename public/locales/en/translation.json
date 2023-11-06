@@ -897,7 +897,7 @@
             "productHierarchy": "Product Hierarchy",
             "select": "Select"
         },
-        "button":{
+        "button": {
             "downloadPrint": "Download/Print Document"
         },
         "confirmationMessage": {
@@ -954,6 +954,27 @@
             "reset": "Reset",
             "apply": "Apply",
             "clear": "Clear"
+        }
+    },
+    "termConditionDealer": {
+        "heading": {
+            "pageTitle": "Terms & Conditions - Dealer Location",
+            "moduletitle": "Term & Condition"
+        },
+        "label": {
+            "LessorCompany": "Lessor Customer Form",
+            "companyName": "Company Name",
+            "stateName": "State Name"
+        },
+        "placeholder": {
+            "stateName": "State Name"
+        },
+        "message": {
+            "uploadButtonName": "Upload Lessor Form",
+            "messageText": "Click or drop your file here to upload",
+            "validationText": "File type should be .xlxs and max file size to be 8Mb",
+            "docName": "Lessor Template",
+            "textMessage": "Please download Lessor Customer Template using below button"
         }
     }
 }
