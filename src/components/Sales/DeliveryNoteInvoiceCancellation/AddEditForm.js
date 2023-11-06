@@ -17,6 +17,7 @@ import { getCodeValue } from 'utils/getCodeValue';
 
 import { VehicleDetailsForm } from './VehicleDetailsForm';
 import { InvoiceCancellationButtons } from './InvoiceCancellationButtons';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -56,7 +57,7 @@ const AddEditFormMain = (props) => {
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Row>
                                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                        <Text strong>Request Details</Text>
+                                        <Text strong>{translateContent('deliveryNoteInvoiceCancellation.heading.requestDetailsTitle')}</Text>
                                     </Col>
                                 </Row>
                                 <Divider />
@@ -68,7 +69,7 @@ const AddEditFormMain = (props) => {
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                     <Row>
                                         <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                            <Text strong>Invoice Details</Text>
+                                            <Text strong>{translateContent('deliveryNoteInvoiceCancellation.heading.invoiceDetailsTitle')}</Text>
                                         </Col>
                                     </Row>
                                     <Divider />
@@ -82,7 +83,7 @@ const AddEditFormMain = (props) => {
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                     <Row>
                                         <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                            <Text strong>Delivery Note Details</Text>
+                                            <Text strong>{translateContent('deliveryNoteInvoiceCancellation.heading.deliveryNoteTitle')}</Text>
                                         </Col>
                                     </Row>
                                     <Divider />
@@ -96,7 +97,7 @@ const AddEditFormMain = (props) => {
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Row>
                                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                        <Text strong>Vehicle Details</Text>
+                                        <Text strong>{translateContent('deliveryNoteInvoiceCancellation.heading.vehicleDetailsTitle')}</Text>
                                     </Col>
                                 </Row>
                                 <Divider />

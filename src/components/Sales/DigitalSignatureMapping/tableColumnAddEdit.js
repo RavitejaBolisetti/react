@@ -7,25 +7,26 @@ import { tblPrepareColumns } from 'utils/tableColumn';
 import { Switch } from 'antd';
 import { getCodeValue } from 'utils/getCodeValue';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { translateContent } from 'utils/translateContent';
 
 export const tableColumnAddEdit = (props) => {
     const { typeData, formActionType } = props;
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Branch',
+            title: translateContent('digitalSignature.label.branch'),
             dataIndex: 'branch',
             width: '50%',
             sorter: false,
         }),
         tblPrepareColumns({
-            title: 'Accessible',
+            title: translateContent('digitalSignature.label.accessible'),
             dataIndex: 'accessible',
             width: '30%',
             sorter: false,
             render: (text) => {
                 return !formActionType.viewMode ? (
                     <p>
-                        <Switch checkedChildren="Yes" unCheckedChildren="No" onChange={(checked) => (checked ? 1 : 0)} />
+                        <Switch checkedChildren={translateContent('global.yesNo.yes')} unCheckedChildren={translateContent('global.yesNo.no')} onChange={(checked) => (checked ? 1 : 0)} />
                     </p>
                 ) : (
                     <p>{getCodeValue(typeData[PARAM_MASTER.YES_NO_FLG.id], text)}</p>
