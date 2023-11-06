@@ -27,6 +27,7 @@ import { deliveryNoteInvoiceCancellationDataAction } from 'store/actions/data/sa
 import AddEditForm from './AddEditForm';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -40,7 +41,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Invoice Cancellation';
+    const moduleTitle = translateContent('deliveryNoteInvoiceCancellation.heading.moduleTitle');
 
     let returnValue = {
         userId,
@@ -256,13 +257,13 @@ export const InvoiceCancellationMasterBase = (props) => {
     const handleCancelRequest = () => {
         setConfirmRequest({
             isVisible: true,
-            titleOverride: 'Cancel Delivery/Invoice Cancellation Request',
-            text: 'Are you sure you want to cancel request?',
+            titleOverride: translateContent('deliveryNoteInvoiceCancellation.confirmation.title'),
+            text: translateContent('deliveryNoteInvoiceCancellation.confirmation.text'),
             closable: true,
             icon: false,
             onCloseAction: rejectModalCloseAction,
             onSubmitAction: (values) => onFinish(values),
-            submitText: 'Yes, Cancel',
+            submitText: translateContent('deliveryNoteInvoiceCancellation.confirmation.submitText'),
             showField: false,
         });
     };
@@ -277,7 +278,7 @@ export const InvoiceCancellationMasterBase = (props) => {
         };
         const onSuccess = (res) => {
             setShowDataLoading(true);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, customURL, extraParams, onSuccessAction, onErrorAction });
             setButtonData({ ...buttonData, formBtnActive: false });
             setIsFormVisible(false);
@@ -392,7 +393,7 @@ export const InvoiceCancellationMasterBase = (props) => {
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
-        titleOverride: 'Advance Filters',
+        titleOverride: translateContent('global.advanceFilter.title'),
 
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
@@ -410,7 +411,7 @@ export const InvoiceCancellationMasterBase = (props) => {
         isDetailLoaded,
         requestDetailData,
         onCloseAction,
-        titleOverride: 'Delivery Note/Invoice Cancellation Details',
+        titleOverride: translateContent('deliveryNoteInvoiceCancellation.heading.formTitle'),
         handleButtonClick,
         buttonData,
         setButtonData,

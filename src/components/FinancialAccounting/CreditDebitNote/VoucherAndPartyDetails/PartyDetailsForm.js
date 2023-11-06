@@ -11,6 +11,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { validateRequiredInputField, validateRequiredSelectField, noWhiteSpaceinBeginning } from 'utils/validation';
 import { customSelectBox } from 'utils/customSelectBox';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Search } = Input;
 
@@ -23,42 +24,42 @@ export const PartyDetailsForm = (props) => {
         <>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'partySegment']} label="Party Segment" initialValue={formData?.partySegment} rules={[validateRequiredInputField('Party Segment')]}>
-                        {customSelectBox({ disabled: formActionType?.editMode, data: typeData[PARAM_MASTER?.PARTY_CATEG?.id], placeholder: preparePlaceholderSelect('Party Segment'), onChange: handlePartySegmentChange })}
+                    <Form.Item name={[formType, 'partySegment']} label={translateContent('creditDebitNote.voucherAndPartyDetails.label.partySegment')} initialValue={formData?.partySegment} rules={[validateRequiredInputField(translateContent('creditDebitNote.voucherAndPartyDetails.validation.partySegment'))]}>
+                        {customSelectBox({ disabled: formActionType?.editMode, data: typeData[PARAM_MASTER?.PARTY_CATEG?.id], placeholder: preparePlaceholderSelect(translateContent('creditDebitNote.voucherAndPartyDetails.placeholder.partySegment')), onChange: handlePartySegmentChange })}
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'partyId']} label="Party ID" initialValue={formData?.partyId} rules={[validateRequiredSelectField('party id'), noWhiteSpaceinBeginning('party id')]} validateTrigger={['onSearch', 'onChange']}>
-                        {formActionType?.editMode ? <Input {...disabledProps} placeholder={preparePlaceholderText('Party ID')} /> : <Search {...disabledProps} placeholder="Search" maxLength={25} allowClear onSearch={handleSearchParamSearch} onChange={handlePartyIdChange} className={styles.headerSearchField} />}
+                    <Form.Item name={[formType, 'partyId']} label={translateContent('creditDebitNote.voucherAndPartyDetails.label.partyId')} initialValue={formData?.partyId} rules={[validateRequiredSelectField(translateContent('creditDebitNote.voucherAndPartyDetails.validation.partyId')), noWhiteSpaceinBeginning(translateContent('creditDebitNote.voucherAndPartyDetails.validation.partyId'))]} validateTrigger={['onSearch', 'onChange']}>
+                        {formActionType?.editMode ? <Input {...disabledProps} placeholder={preparePlaceholderText(translateContent('creditDebitNote.voucherAndPartyDetails.placeholder.partyId'))} /> : <Search {...disabledProps} placeholder="Search" maxLength={25} allowClear onSearch={handleSearchParamSearch} onChange={handlePartyIdChange} className={styles.headerSearchField} />}
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'partyName']} label="Party Name" initialValue={formData?.partyName}>
-                        <Input placeholder={preparePlaceholderText('Party Name')} disabled={true} />
-                    </Form.Item>
-                </Col>
-            </Row>
-            <Row gutter={20}>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'address']} label="Address" initialValue={formData?.address}>
-                        <Input placeholder={preparePlaceholderText('Address')} disabled={true} />
-                    </Form.Item>
-                </Col>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'city']} label="City" initialValue={formData?.city}>
-                        <Input placeholder={preparePlaceholderText('City')} disabled={true} />
-                    </Form.Item>
-                </Col>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'state']} label="State" initialValue={formData?.state}>
-                        <Input placeholder={preparePlaceholderText('State')} disabled={true} />
+                    <Form.Item name={[formType, 'partyName']} label={translateContent('creditDebitNote.voucherAndPartyDetails.label.partyName')} initialValue={formData?.partyName}>
+                        <Input placeholder={preparePlaceholderText(translateContent('creditDebitNote.voucherAndPartyDetails.placeholder.partyName'))} disabled={true} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'mobileNumber1']} label="Phone No." initialValue={formData?.mobileNumber1}>
-                        <Input placeholder={preparePlaceholderText('Phone No.')} disabled={true} />
+                    <Form.Item name={[formType, 'address']} label={translateContent('creditDebitNote.voucherAndPartyDetails.label.address')} initialValue={formData?.address}>
+                        <Input placeholder={preparePlaceholderText(translateContent('creditDebitNote.voucherAndPartyDetails.placeholder.address'))} disabled={true} />
+                    </Form.Item>
+                </Col>
+                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    <Form.Item name={[formType, 'city']} label={translateContent('creditDebitNote.voucherAndPartyDetails.label.city')} initialValue={formData?.city}>
+                        <Input placeholder={preparePlaceholderText(translateContent('creditDebitNote.voucherAndPartyDetails.placeholder.city'))} disabled={true} />
+                    </Form.Item>
+                </Col>
+                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    <Form.Item name={[formType, 'state']} label={translateContent('creditDebitNote.voucherAndPartyDetails.label.state')} initialValue={formData?.state}>
+                        <Input placeholder={preparePlaceholderText(translateContent('creditDebitNote.voucherAndPartyDetails.placeholder.state'))} disabled={true} />
+                    </Form.Item>
+                </Col>
+            </Row>
+            <Row gutter={20}>
+                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    <Form.Item name={[formType, 'mobileNumber1']} label={translateContent('creditDebitNote.voucherAndPartyDetails.label.phoneNo')} initialValue={formData?.mobileNumber1}>
+                        <Input placeholder={preparePlaceholderText(translateContent('creditDebitNote.voucherAndPartyDetails.placeholder.phoneNo'))} disabled={true} />
                     </Form.Item>
                 </Col>
             </Row>

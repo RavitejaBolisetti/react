@@ -5,6 +5,7 @@
  */
 import React from 'react';
 import { Row, Col, Button } from 'antd';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -15,7 +16,7 @@ export const InvoiceCancellationButtons = ({ record, onCloseAction, buttonData, 
                 <Col xs={24} sm={8} md={6} lg={4} xl={4} className={styles.buttonsGroupLeft}>
                     {buttonData?.closeBtn && (
                         <Button danger onClick={onCloseAction}>
-                            Close
+                            {translateContent('global.buttons.close')}
                         </Button>
                     )}
                 </Col>
@@ -23,7 +24,7 @@ export const InvoiceCancellationButtons = ({ record, onCloseAction, buttonData, 
                 <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.buttonsGroupRight}>
                     {buttonData?.cancelRequest && (
                         <Button onClick={() => handleCancelRequest()} type="primary">
-                            Cancel Request
+                            {translateContent('deliveryNoteInvoiceCancellation.button.cancelRequest')}
                         </Button>
                     )}
                 </Col>

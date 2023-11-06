@@ -4,6 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -12,18 +13,18 @@ export const tableColumn = (props) => {
 
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Account Head',
+            title: translateContent('creditDebitNote.voucherDetails.label.accountHead'),
             dataIndex: 'accountCode',
             width: '20%',
         }),
         tblPrepareColumns({
-            title: 'Narration',
+            title: translateContent('creditDebitNote.voucherDetails.label.accountNarration'),
             dataIndex: 'accountNarration',
             width: '20%',
         }),
 
         tblPrepareColumns({
-            title: 'Amount',
+            title: translateContent('creditDebitNote.voucherDetails.label.amount'),
             dataIndex: 'amount',
             width: '20%',
         }),

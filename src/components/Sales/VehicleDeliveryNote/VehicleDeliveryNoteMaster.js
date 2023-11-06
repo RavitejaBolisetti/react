@@ -789,7 +789,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     const cancelDeliveryNoteProps = {
         isVisible: cancelDeliveryNoteVisible,
         onCloseAction: cancelModalCloseAction,
-        titleOverride: translateContent('vehicleDeliveryNote.cancelTitle.cancelTitle') + (soldByDealer ? moduleTitle : translateContent('vehicleDeliveryNote.cancelTitle.challan')),
+        titleOverride: translateContent('vehicleDeliveryNote.buttons.cancelTitle') + (soldByDealer ? moduleTitle : translateContent('vehicleDeliveryNote.buttons.challan')),
         cancelDeliveryNoteForm,
         cancelModalCloseAction,
         onFinish: onCancelFormFinish,

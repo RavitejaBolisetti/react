@@ -6,18 +6,19 @@
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { getCodeValue } from 'utils/getCodeValue';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
 export const tableColumn = ({ handleButtonClick, typeData }) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Voucher Number',
+            title: translateContent('creditDebitNote.label.voucherNumber'),
             dataIndex: 'voucherNumber',
             width: '18%',
         }),
         tblPrepareColumns({
-            title: 'Voucher Type',
+            title: translateContent('creditDebitNote.label.voucherType'),
             dataIndex: 'voucherType',
             width: '18%',
             render: (value) => {
@@ -26,18 +27,18 @@ export const tableColumn = ({ handleButtonClick, typeData }) => {
         }),
 
         tblPrepareColumns({
-            title: 'Party Segment',
+            title: translateContent('creditDebitNote.label.partySegment'),
             dataIndex: 'partySegment',
             width: '15%',
         }),
 
         tblPrepareColumns({
-            title: 'Customer Name',
+            title: translateContent('creditDebitNote.label.customerName'),
             dataIndex: 'customerName',
             width: '18%',
         }),
         tblPrepareColumns({
-            title: 'Paid Amount',
+            title: translateContent('creditDebitNote.label.paidAmount'),
             dataIndex: 'paidAmount',
             width: '16%',
         }),

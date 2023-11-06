@@ -32,7 +32,8 @@
             "status": "Status",
             "action": "Action",
             "fromDate": "From Date",
-            "toDate": "To Date"
+            "toDate": "To Date",
+            "serialNo": "Srl."
         },
         "advanceFilter": {
             "title": "Advance Filters",
@@ -84,7 +85,11 @@
             "deliveryNote": " Delivery Note",
             "advancedFilter": "Advanced Filters",
             "viewHistory": "View History",
-            "uploadFile": "Upload File"
+            "uploadFile": "Upload File",
+            "register": "Register",
+            "addCreditNote": "Add Credit Note",
+            "addDebitNote": "Add Dedit Note",
+            "printReceipt": "Print Receipt"
         },
         "placeholder": {
             "input": "Enter ",
@@ -349,6 +354,47 @@
             "emailId": "Email ID"
         }
     },
+
+    "roleMaster": {
+        "heading": {
+            "title":"Role Name",
+            "pageTitle": "Dealer Role Master",
+            "titleOverride":"Advance Filters"
+        },
+
+        "tableColHeading": {
+            "roleCode":"Role Code",
+            "roleName":"Role Name",
+            "departmentName":"Department Name",
+            "divisionName":"Division Name"        
+        },
+
+        "label": {
+            "divisionName":"Division Name",
+            "departmentName":"Department Name",
+            "roleName":"Role Name",
+            "roleCode":"Role Code",
+            "status":"Status"  
+        },
+
+        "validation": {
+            "divisionName":"Division Name",
+            "departmentName":"department name",
+            "roleName":"role Name",
+            "roleCode":"role code",
+            "division":"Division"   
+        },
+
+        "placeholder": {
+            "divisionName":"division name",
+            "departmentName":"department name",
+            "select":"Select",
+            "roleName":"role Name",
+            "roleCode":"role code",
+            "search":"Search"      
+        }
+    },
+
 
     "vehicleModelAndTaxCharges": {
         "heading": {
@@ -809,7 +855,10 @@
             "accName": "Account Name",
             "accSegment": "Account Segment",
             "accClient": "Account Client Name",
-            "accDate": "Account Mapping Date"
+            "accDate": "Account Mapping Date",
+            "dealer": "VIP Dealer",
+            "cusType": "Customer Type:",
+            "mobile": " Mobile No.:"
         },
         "placeholder": {
             "mobileMumber": "mobile number",
@@ -2613,7 +2662,14 @@
             "invoiceFromDate": "Invoice From Date",
             "invoiceToDate": "Invoice To Date",
             "deliveryNoteFromDate": "Delivery Note From Date",
-            "deliveryNoteToDate": "Delivery Note To Date"
+            "deliveryNoteToDate": "Delivery Note To Date",
+            "deliveryNoteDate":"Delivery Note Date",
+            "challanDate":"Challan Date",
+            "mobileNo":"Mobile No.:",
+            "status":"Status:",
+            "invoiceNo":" Invoice Number:",
+            "invoiceDate":"Invoice Date:",
+            "bookingNumber":"Booking Number:"
         },
         "placeholder": {
             "select": "Select"
@@ -2676,24 +2732,171 @@
                 "modelDescription": "Model Description"
             }
         },
-        "finanaceDetails": {},
-        "insuranceDetails": {},
-        "addOnDetails": {},
-        "deliverableChecklist": {},
-        "thankYouPage": {}
+        "addOnDetails": {
+            "heading": {
+                "mainTitle": "Add on Details",
+                "shieldInfo": "Shield Information",
+                "rsa": "RSA",
+                "amc": "AMC"
+            },
+            "label": {
+                "color": "Color",
+                "seating": "Seating",
+                "fuel": "Fuel",
+                "variant": "Variant",
+                "name": "Name",
+                "vinNumber": "VIN",
+                "engineNumber": "Engine Number",
+                "keyNumber": "Key Number",
+                "modelCode": "Model Code",
+                "modelDescription": "Model Description",
+                "schemeType": "Scheme Type",
+                "schemeDescription": "Scheme Description",
+                "saleType": "Sale Type",
+                "schemeAmount": "Scheme Amount (With Tax)",
+                "employeeName": "Employee Name",
+                "manager": "Manager",
+                "schemeRegNo": "Scheme Registration No.",
+                "valiFromDate": "Valid From Date",
+                "validToDate": "Valid To Date"
+            }
+        },
+        "deliverableChecklist": {
+            "heading": {
+                "mainTitle": "Deliverable Checklist Details"
+            },
+            "label": {
+                "details": "Details",
+                "checkResult": "Check Result "
+            }
+        },
+        "thankYouPage": {
+            "downloadDeliveryNote": "Do you want to Print or download this Delivery Note",
+            "printDownload": "Download/Print"
+        }
     },
     "creditDebitNote": {
         "heading": {
-            "moduleTitle": "Booking SO Mapping Control"
+            "moduleTitle": "Credit/Debit Note",
+            "pageTitle": "Credit/Debit Note"
         },
         "label": {
-            "variantCode": "Variant Code"
+            "voucherNumber": "Voucher Number",
+            "voucherType": "Voucher Type",
+            "partySegment": "Party Segment",
+            "customerName": "Customer Name",
+            "paidAmount": "Paid Amount",
+            "fromDate": "From Date",
+            "toDate": "To Date"
         },
         "placeholder": {
-            "variantCode": "Variant Code"
+            "searchTitle": "Search Credit/Debit",
+            "voucherNumber": "Search by voucher number",
+            "voucherType": "Voucher Type",
+            "partySegment": "Party Segment",
+            "fromDate": "From Date",
+            "toDate": "To Date"
         },
         "validation": {
-            "variantCode": "Variant Code"
+            "dateCompareValidation": "Date cant be less than Effective from date",
+            "voucherType": "Voucher Type",
+            "partySegment": "Party Segment",
+            "fromDate": "From Date",
+            "toDate": "To Date"
+        },
+        "leftSideBar": {
+            "label": {
+                "voucherNumber": "Voucher Number",
+                "voucherType": "Voucher Type",
+                "voucherDate": "Voucher Date"
+            },
+            "placeholder": {
+                "searchTitle": "Search Credit/Debit",
+                "voucherNumber": "Search by voucher number"
+            },
+            "validation": {
+                "voucherType": "Voucher Type"
+            }
+        },
+        "voucherDetails": {
+            "heading": {
+                "moduleTitle": "Voucher and Party Details",
+                "voucherModuleTitle": "Voucher",
+                "title": "Voucher Details"
+            },
+            "label": {
+                "accountHead": "Account Head",
+                "accountNarration": "Account Narration",
+                "amount": "Amount",
+                "voucherDetails": "Voucher Details"
+            },
+            "placeholder": {
+                "searchTitle": "Search Credit/Debit",
+                "voucherNumber": "Search by voucher number",
+                "accountHead": "Account Head",
+                "accountNarration": "Account Narration",
+                "amount": "Amount"
+            },
+            "validation": {
+                "atLeastOneVoucher": "Please add atleast one voucher record",
+                "accountHead": "Account Head",
+                "accountNarration": "Account Narration",
+                "amount": "Amount"
+            },
+            "message": {
+                "successMessage": "Account Head validated successfully",
+                "errorMessage": "Account Head is not correct"
+            }
+        },
+        "voucherAndPartyDetails": {
+            "heading": {
+                "moduleTitle": "Voucher and Party Details",
+                "voucherModuleTitle": "Voucher",
+                "title": "Voucher Details"
+            },
+            "label": {
+                "accountHead": "Account Head",
+                "accountNarration": "Account Narration",
+                "amount": "Amount",
+                "voucherDetails": "Voucher Details",
+                "partySegment": "Party Segment",
+                "partyId": "Party Id",
+                "partyName": "Party Name",
+                "address": "Address",
+                "city": "City",
+                "state": "State",
+                "phoneNo": "Phone No",
+                "totalSettledAmount": "Total Settled Amount",
+                "totalWrite-OffAmount": "Total Write-Off Amount",
+                "totalApportionedAmount": "Total Apportioned Amount",
+                "totalAmount": "Total Amount",
+                "totalBalancedAmount": "Total Balanced Amount"
+            },
+            "placeholder": {
+                "searchTitle": "Search Credit/Debit",
+                "voucherNumber": "Search by voucher number",
+                "accountHead": "Account Head",
+                "accountNarration": "Account Narration",
+                "amount": "Amount",
+                "partySegment": "Party Segment",
+                "partyId": "Party Id",
+                "partyName": "Party Name",
+                "address": "Address",
+                "city": "City",
+                "state": "State",
+                "phoneNo": "Phone No"
+            },
+            "validation": {
+                "selectPartySegment": "Please select party segment",
+                "detailNotForPartySegment": "Details not available for this party id with selected party segment",
+                "partySegment": "Party Segment",
+                "partyId": "Party Id",
+                "partyName": "Party Name"
+            },
+            "message": {
+                "successMessage": "Account Head validated successfully",
+                "errorMessage": "Account Head is not correct"
+            }
         }
     },
     "vehicleAllotmentPriorityMaster": {
@@ -2866,6 +3069,24 @@
             "accessibleDealerLocation": "Accessible Dealer Location"
         }
     },
+    "digitalSignature": {
+        "heading": {
+            "moduleTitle": "Map New Digital Signature",
+            "branchesAccessible": "Branches Accessible"
+        },
+        "label": {
+            "action": "Action",
+            "dealerName": "Dealer Name",
+            "employeeName": "Employee Name",
+            "status": "Status",
+            "branch": "Branch",
+            "accessible": "Accessible"
+        },
+        "button": {
+            "mapSignature": "Map Signature"
+        }
+    },
+
     "orderDeliveryVehicleAllotment": {
         "heading": {
             "mainTitle": "Vehicle Allotment",
@@ -2904,6 +3125,125 @@
                 "customerName": "Customer Name",
                 "cpd": "CPD"
             }
+        }
+    },
+    "employeeDepartment": {
+        "heading": {
+            "pageTitle": "Empolyee Department",
+            "mainTitle": "Department Name"
+        },
+        "label": {
+            "department": "Department",
+            "division": "Division",
+            "Keyword": "Keyword",
+            "divisionName": "Division Name",
+            "departmentCode": "Department Code",
+            "departmentName": "Department Name"
+        },
+        "placeholder": {},
+        "validation": {},
+        "button": {},
+        "link": {}
+    },
+    "vehicleTracking": {
+        "text": {
+            "timeline": "Timeline",
+            "showOnMap": "Show On Map",
+            "shipmentDetails": "Shipment Details | VIN : ",
+            "expectedDateOfDelivery:": "Expected Date of Delivery:"
+        },
+        "title": {
+            "dispatched": "Dispatched",
+            "inTransit": "In Transit",
+            "delivered": "Delivered",
+            "received": "Received",
+            "viewTimeline": "View Timeline",
+            "search": "Search",
+            "viewMap": "View Map"
+        },
+        "label": {
+            "shipmentId": "Shipment ID",
+            "lrNumber": "LR Number",
+            "lrDate": "LR Date",
+            "transporterName": "Transporter Name",
+            "modeOfTransport": "Mode of transport",
+            "lastUpdatedLocation": "Last Updated Location",
+            "lastUpdatedDateAndTime": "Last Updated Date & Time",
+            "oemInvoiceNumber": "OEM Invoice Number",
+            "oemInvoiceDate": "OEM Invoice Date",
+            "shipmentStatus": "Shipment Status",
+            "currentLatitude": "Current Latitude",
+            "currentLongitude": "Current Longitude",
+            "etaDateAndTime": "ETA Date & Time",
+            "shipmentDeliveryDateAndTime": "Shipment Delivery Date & Time"
+        },
+        "placeholder": {
+            "oemInvoiceNumber": "OEM Invoice Number"
+        },
+        "buttons": {
+            "seeLess": "See Less",
+            "seeMore": "See More"
+        }
+    },
+
+    "deliveryNoteInvoiceCancellation": {
+        "heading": {
+            "pageTitle": "Delivery Note Invoice Cancellation",
+            "moduleTitle": "Invoice Cancellation",
+            "formTitle": "Delivery Note/Invoice Cancellation Details",
+            "requestDetailsTitle": "Request Details",
+            "invoiceDetailsTitle": "Invoice Details",
+            "deliveryNoteTitle": "Delivery Note Details",
+            "vehicleDetailsTitle": "Vehicle Details"
+        },
+        "label": {
+            "requestType": "Request Type",
+            "requestStatus": "Request Status",
+            "requestNumber": "Request Number",
+            "requestDate": "Request Date",
+            "invoiceId": "Delivery Note/Invoice ID",
+            "dealerName": "Dealer Name",
+            "RequestDetailsForm": {
+                "cancelDate": "Cancel Date",
+                "remarks": "Remarks"
+            },
+            "invoiceDetailsForm": {
+                "invoiceId": "Invoice ID",
+                "invoiceDate": "Invoice Date",
+                "deliveryNoteId": "Delivery Note ID",
+                "deliveryNoteDate": "Delivery Note Date",
+                "deliveryNoteStatus": "Delivery Note Status",
+                "customerId": "Customer ID",
+                "customerName": "Customer Name"
+            },
+            "deliveryNoteInvoice": {
+                "deliveryNoteId": "Delivery Note ID",
+                "deliveryNoteDate": "Delivery Note Date",
+                "invoiceId": "Invoice ID",
+                "invoiceDate": "Invoice Date",
+                "invoiceStatus": "Invoice Status",
+                "customerId": "Customer ID",
+                "customerName": "Customer Name"
+            },
+            "vehicleDetails": {
+                "modelGroup": "Model Group",
+                "modelVarient": "Model Varient",
+                "model": "Model Description",
+                "vin": "VIN",
+                "reasonForCancellation": "Reason for Cancellation",
+                "cancellationRemarks": "Cancellation Remarks"
+            }
+        },
+        "placeholder": {
+            "search": "Search by Request Number"
+        },
+        "button": {
+            "cancelRequest": "Cancel Request"
+        },
+        "confirmation": {
+            "title": "Cancel Delivery/Invoice Cancellation Request",
+            "text": "Are you sure you want to cancel request?",
+            "submitText": "Yes, Cancel"
         }
     }
 }

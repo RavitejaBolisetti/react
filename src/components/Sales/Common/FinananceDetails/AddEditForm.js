@@ -15,6 +15,7 @@ import { customSelectBox } from 'utils/customSelectBox';
 import { YES_NO_FLAG } from 'constants/yesNoFlag';
 import { FINANCE_ARRANGED_BY } from 'constants/financeArrangedBy';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const AddEditFormMain = (props) => {
     const { formData, FinanceLovData, typeData, form } = props;
@@ -54,7 +55,7 @@ const AddEditFormMain = (props) => {
                             <Card style={{ backgroundColor: '#F2F2F2' }}>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item name="financeArrangedBy" label="Finance Arranged By" rules={[validateRequiredSelectField('finance arranged by')]}>
+                                        <Form.Item name="financeArrangedBy" label={translateContent('commonModules.label.financeDetails.financeArrangedBy')} rules={[validateRequiredSelectField('finance arranged by')]}>
                                             {customSelectBox({ data: typeData['FNC_ARNGD'], onChange: handleFinanceArrangedBy })}
                                         </Form.Item>
                                     </Col>
@@ -70,20 +71,20 @@ const AddEditFormMain = (props) => {
                                     <>
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="Financier Name" name="financier" placeholder={preparePlaceholderSelect('Select')}>
+                                                <Form.Item label={translateContent('commonModules.label.financeDetails.financeArrangedBy')} name="financier" placeholder={preparePlaceholderSelect('Select')}>
                                                     {customSelectBox({ data: FinanceLovData, onChange: handleDOChange })}
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="Branch" name="branch">
-                                                    <Input placeholder={preparePlaceholderText('branch')} maxLength={55} />
+                                                <Form.Item label={translateContent('commonModules.label.financeDetails.branch')} name="branch">
+                                                    <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.financeDetails.branch'))} maxLength={55} />
                                                 </Form.Item>
                                             </Col>
 
                                             {financeArrangedBy && checkFinanceType(financeArrangedBy, FINANCE_ARRANGED_BY?.DEALER?.key) && (
                                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                    <Form.Item label="File Number" name="fileNumber">
-                                                        <Input placeholder={preparePlaceholderText('file number')} maxLength={30} />
+                                                    <Form.Item label={translateContent('commonModules.label.financeDetails.fileNumber')} name="fileNumber">
+                                                        <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.financeDetails.fileNumber'))} maxLength={30} />
                                                     </Form.Item>
                                                 </Col>
                                             )}
@@ -111,21 +112,21 @@ const AddEditFormMain = (props) => {
                                                     </>
                                                 )} */}
                                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                    <Form.Item label="D.O. Received" name="doReceived">
+                                                    <Form.Item label={translateContent('commonModules.label.financeDetails.DoReceived')} name="doReceived">
                                                         {customSelectBox({ data: typeData?.YES_NO_FLG, onChange: handleDOChange })}
                                                     </Form.Item>
                                                 </Col>
                                                 {doReceived === YES_NO_FLAG?.YES?.key && (
                                                     <>
                                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                            <Form.Item label="D.O. Number" name="doNumber" rules={[validateRequiredInputField('Number')]}>
-                                                                <Input placeholder={preparePlaceholderText('D.O. Number')}></Input>
+                                                            <Form.Item label={translateContent('commonModules.label.financeDetails.DoNumber')} name="doNumber" rules={[validateRequiredInputField('Number')]}>
+                                                                <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.financeDetails.DoNumber'))}></Input>
                                                             </Form.Item>
                                                         </Col>
 
                                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                            <Form.Item label="D.O. Date" name="doDate" rules={[validateRequiredInputField('Date')]}>
-                                                                <DatePicker format={dateFormat} disabledDate={disableFutureDate} placeholder={preparePlaceholderSelect('date')} style={datePickerStyle} />
+                                                            <Form.Item label={translateContent('commonModules.label.financeDetails.DoDate')} name="doDate" rules={[validateRequiredInputField('Date')]}>
+                                                                <DatePicker format={dateFormat} disabledDate={disableFutureDate} placeholder={preparePlaceholderSelect(translateContent('commonModules.label.financeDetails.DoDate'))} style={datePickerStyle} />
                                                             </Form.Item>
                                                         </Col>
                                                     </>
