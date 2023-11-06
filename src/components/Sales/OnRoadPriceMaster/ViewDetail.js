@@ -10,6 +10,7 @@ import styles from 'assets/sass/app.module.scss';
 import { OnRoadPriceFormButton } from './OnRoadPriceFormButton';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { DATA_TYPE } from 'constants/dataType';
+import { translateContent } from 'utils/translateContent';
 
 const ViewDetailMain = (props) => {
     const { vehiclePrice, isLoading } = props;
@@ -25,27 +26,27 @@ const ViewDetailMain = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <div className={styles.viewContainer}>
                         <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Model">{checkAndSetDefaultValue(vehiclePrice?.model, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="State Code">{checkAndSetDefaultValue(vehiclePrice?.stateCode, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="City Code">{checkAndSetDefaultValue(vehiclePrice?.pricingCityCode, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Current EX Showroom Price">{checkAndSetDefaultValue(vehiclePrice?.currentExShowroomPrice, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Current EX Showroom Date">{checkAndSetDefaultValue(vehiclePrice?.currentExShowroomDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                            <Descriptions.Item label="TCS with GST">{checkAndSetDefaultValue(vehiclePrice?.tcsWithGst, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="EPC">{checkAndSetDefaultValue(vehiclePrice?.epc, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Registration Charges">{checkAndSetDefaultValue(vehiclePrice?.registrationCharges, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Fast Tag">{checkAndSetDefaultValue(vehiclePrice?.fastTag, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Insurance Premium(1+3Yr TP)">{checkAndSetDefaultValue(vehiclePrice?.insurancePremiunm, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Add on Zero Dep with Tax">{checkAndSetDefaultValue(vehiclePrice?.addOnZeroDepWithTax, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Comprehensive Insurance">{checkAndSetDefaultValue(vehiclePrice?.comprehensiveInsurance, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Basic on Road Price">{checkAndSetDefaultValue(vehiclePrice?.basicOnRoadPrice, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Consumer Scheme with Tax">{checkAndSetDefaultValue(vehiclePrice?.consumerSchemaWithTax, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="RSA with Tax">{checkAndSetDefaultValue(vehiclePrice?.rsaWithTax, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Shield with Tax">{checkAndSetDefaultValue(vehiclePrice?.shieldWithTax, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="AMC with Tax">{checkAndSetDefaultValue(vehiclePrice?.amcWithTax, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="OD discount%">{checkAndSetDefaultValue(vehiclePrice?.odDiscount, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Dealer discount with Tax">{checkAndSetDefaultValue(vehiclePrice?.dealerDiscountWithTax, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Other Charges">{checkAndSetDefaultValue(vehiclePrice?.otherCharges, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Essential Kit with Tax">{checkAndSetDefaultValue(vehiclePrice?.essentialKitWithTax, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('onRoadPriceMaster.label.model')}>{checkAndSetDefaultValue(vehiclePrice?.model, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('onRoadPriceMaster.label.stateCode')}>{checkAndSetDefaultValue(vehiclePrice?.stateCode, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('onRoadPriceMaster.label.cityCode')}>{checkAndSetDefaultValue(vehiclePrice?.pricingCityCode, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('onRoadPriceMaster.label.currentEXShowroomPrice')}>{checkAndSetDefaultValue(vehiclePrice?.currentExShowroomPrice, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('onRoadPriceMaster.label.currentEXShowroomDate')}>{checkAndSetDefaultValue(vehiclePrice?.currentExShowroomDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('onRoadPriceMaster.label.TCSwithGST')}>{checkAndSetDefaultValue(vehiclePrice?.tcsWithGst, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('onRoadPriceMaster.label.EPC')}>{checkAndSetDefaultValue(vehiclePrice?.epc, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('onRoadPriceMaster.label.registrationCharges')}>{checkAndSetDefaultValue(vehiclePrice?.registrationCharges, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('onRoadPriceMaster.label.fastTag')}>{checkAndSetDefaultValue(vehiclePrice?.fastTag, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('onRoadPriceMaster.label.insurancePremium')}>{checkAndSetDefaultValue(vehiclePrice?.insurancePremiunm, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('onRoadPriceMaster.label.addonZeroDepwithTax')}>{checkAndSetDefaultValue(vehiclePrice?.addOnZeroDepWithTax, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('onRoadPriceMaster.label.comprehensiveInsurance')}>{checkAndSetDefaultValue(vehiclePrice?.comprehensiveInsurance, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('onRoadPriceMaster.label.basicOnRoadPrice')}>{checkAndSetDefaultValue(vehiclePrice?.basicOnRoadPrice, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('onRoadPriceMaster.label.consumerSchemeWithTax')}>{checkAndSetDefaultValue(vehiclePrice?.consumerSchemaWithTax, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('onRoadPriceMaster.label.RSAwithTax')}>{checkAndSetDefaultValue(vehiclePrice?.rsaWithTax, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('onRoadPriceMaster.label.shieldWithTax')}>{checkAndSetDefaultValue(vehiclePrice?.shieldWithTax, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('onRoadPriceMaster.label.AMCwithTax')}>{checkAndSetDefaultValue(vehiclePrice?.amcWithTax, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('onRoadPriceMaster.label.ODdiscount')}>{checkAndSetDefaultValue(vehiclePrice?.odDiscount, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('onRoadPriceMaster.label.dealerDiscountWithTax')}>{checkAndSetDefaultValue(vehiclePrice?.dealerDiscountWithTax, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('onRoadPriceMaster.label.otherCharges')}>{checkAndSetDefaultValue(vehiclePrice?.otherCharges, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('onRoadPriceMaster.label.essentialKitWithTax')}>{checkAndSetDefaultValue(vehiclePrice?.essentialKitWithTax, isLoading)}</Descriptions.Item>
                         </Descriptions>
                     </div>
                 </Col>
