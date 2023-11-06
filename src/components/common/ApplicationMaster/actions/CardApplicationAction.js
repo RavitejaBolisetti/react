@@ -9,6 +9,7 @@ import { FiEdit, FiTrash } from 'react-icons/fi';
 
 import ApplicationActionsForm from './ApplicationActionsForms';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Text } = Typography;
 
@@ -71,13 +72,13 @@ const CardApplicationAction = (props) => {
                 <Row align="middle" className={styles.marB20}>
                     <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Text type="secondary">Status: </Text> {status ? <Text type="success">Active</Text> : <Text type="secondary">Inactive</Text>}
+                            <Text type="secondary">{translateContent('applicationMaster.text.status')}</Text> {status ? <Text type="success">{translateContent('applicationMaster.text.active')}</Text> : <Text type="secondary">{translateContent('applicationMaster.text.inActive')}</Text>}
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             <Text strong>{actionName}</Text>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Text type="secondary">Action ID: {actionId}</Text>
+                            <Text type="secondary">{translateContent('applicationMaster.text.actionId')}{actionId}</Text>
                         </Col>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.buttonsGroupRight}>
@@ -89,10 +90,10 @@ const CardApplicationAction = (props) => {
                         ) : (
                             <>
                                 <Button type="link" onClick={onUpdate}>
-                                    Save
+                                    {translateContent('global.buttons.save')}
                                 </Button>
                                 <Button type="link" onClick={() => onCancel()}>
-                                    Cancel
+                                    {translateContent('global.buttons.cancel')}
                                 </Button>
                             </>
                         )}

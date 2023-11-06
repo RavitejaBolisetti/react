@@ -12,7 +12,7 @@ import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import { CustomEditor } from 'components/common/CustomEditor';
 import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
-
+import { translateContent } from 'utils/translateContent';
 import styles from 'assets/sass/app.module.scss';
 
 const { Option } = Select;
@@ -38,7 +38,7 @@ const AddEditFormMain = (props) => {
         buttonData,
         setButtonData,
         handleButtonClick,
-        saveButtonName: formActionType?.editMode ? 'Revise T&C' : 'Add T&C',
+        saveButtonName: formActionType?.editMode ? translateContent('termConditionManufacturer.fields.reviseT&C') : translateContent('termConditionManufacturer.fields.addT&C'),
     };
 
     const handleFromDateChange = (value) => {
@@ -64,14 +64,14 @@ const AddEditFormMain = (props) => {
                         <>
                             <Row gutter={20}>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <Form.Item initialValue={formActionType?.editMode || formActionType?.viewMode ? 'Revised' : 'Initial'} label="Document Category" name="documentcategory">
-                                        <Input disabled={true} maxLength={10} placeholder={preparePlaceholderText('Document Category')} />
+                                    <Form.Item initialValue={formActionType?.editMode || formActionType?.viewMode ? translateContent('termConditionManufacturer.fields.revised') : translateContent('termConditionManufacturer.fields.initial')} label={translateContent('termConditionManufacturer.label.documentCategory')} name="documentcategory">
+                                        <Input disabled={true} maxLength={10} placeholder={preparePlaceholderText(translateContent('termConditionManufacturer.placeholder.documentCategory'))} />
                                     </Form.Item>
                                 </Col>
 
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <Form.Item initialValue={formData?.productcode} label="Product Hierarchy" name="productcode" rules={[validateRequiredSelectField('Product Hierarchy')]}>
-                                        <Select disabled={formActionType?.viewMode} placeholder="Select Parameter" allowClear>
+                                    <Form.Item initialValue={formData?.productcode} label={translateContent('termConditionManufacturer.label.productHierarchy')} name="productcode" rules={[validateRequiredSelectField(translateContent('termConditionManufacturer.validation.productHierarchy'))]}>
+                                        <Select disabled={formActionType?.viewMode} placeholder={translateContent('termConditionManufacturer.placeholder.selectParameter')} allowClear>
                                             {productHierarchyList?.map((item) => (
                                                 <Option key={'ph' + item.prodctCode} value={item.prodctCode}>
                                                     {item.prodctShrtName}
@@ -83,8 +83,8 @@ const AddEditFormMain = (props) => {
                             </Row>
                             <Row gutter={20}>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <Form.Item initialValue={formData?.documentTypeCode} label="Document Type" name="documentTypeCode" rules={[validateRequiredSelectField('Document Type')]}>
-                                        <Select disabled={formActionType?.viewMode} placeholder="Select Parameter" allowClear>
+                                    <Form.Item initialValue={formData?.documentTypeCode} label={translateContent('termConditionManufacturer.label.documentType')} name="documentTypeCode" rules={[validateRequiredSelectField(translateContent('termConditionManufacturer.validation.documentType'))]}>
+                                        <Select disabled={formActionType?.viewMode} placeholder={translateContent('termConditionManufacturer.placeholder.selectParameter')} allowClear>
                                             {documentTypeList?.map((item) => (
                                                 <Option key={'dt' + item.documentCode} value={item.documentCode}>
                                                     {item.documentCode}
@@ -95,8 +95,8 @@ const AddEditFormMain = (props) => {
                                 </Col>
 
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <Form.Item initialValue={formData?.languageCode} label="Language" name="languageCode" rules={[validateRequiredSelectField('Language')]}>
-                                        <Select disabled={formActionType?.viewMode} placeholder="Select Parameter" allowClear>
+                                    <Form.Item initialValue={formData?.languageCode} label={translateContent('termConditionManufacturer.label.language')} name="languageCode" rules={[validateRequiredSelectField(translateContent('termConditionManufacturer.validation.documentType'))]}>
+                                        <Select disabled={formActionType?.viewMode} placeholder={translateContent('termConditionManufacturer.placeholder.selectParameter')} allowClear>
                                             {languageList?.map((item) => (
                                                 <Option key={'lc' + item.key} value={item.key}>
                                                     {item.value}
@@ -109,12 +109,12 @@ const AddEditFormMain = (props) => {
 
                             <Row gutter={20}>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <Form.Item {...fromDateInitialValue} label="Effective From" name="effectivefrom" rules={[validateRequiredInputField('date')]}>
+                                    <Form.Item {...fromDateInitialValue} label={translateContent('termConditionManufacturer.label.effectivefrom')} name="effectivefrom" rules={[validateRequiredInputField(translateContent('termConditionManufacturer.validation.date'))]}>
                                         <DatePicker format={dateFormat} disabled={formActionType?.viewMode} style={{ width: '100%' }} onChange={handleFromDateChange} disabledDate={disableFromDate} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <Form.Item {...toDateInitialValue} label="Effective To" name="effectiveto">
+                                    <Form.Item {...toDateInitialValue} label={translateContent('termConditionManufacturer.label.effectiveTo')} name="effectiveto">
                                         <DatePicker format={dateFormat} disabled style={{ width: '100%' }} disabledDate={disableToDate} />
                                     </Form.Item>
                                 </Col>
@@ -123,8 +123,8 @@ const AddEditFormMain = (props) => {
                             {(formActionType?.viewMode || formActionType?.editMode) && (
                                 <Row gutter={20}>
                                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                        <Form.Item initialValue={parseInt(formData?.version) + 1.0} label="Version" name="version">
-                                            <Input disabled={true} placeholder={preparePlaceholderText('Version')} />
+                                        <Form.Item initialValue={parseInt(formData?.version) + 1.0} label={translateContent('termConditionManufacturer.label.version')} name="version">
+                                            <Input disabled={true} placeholder={preparePlaceholderText(translateContent('termConditionManufacturer.placeholder.version'))} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
@@ -132,7 +132,7 @@ const AddEditFormMain = (props) => {
 
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                    <Form.Item disabled={formActionType?.viewMode} initialValue={formData?.termsconditiondescription} label="Terms & Conditions" name="termsconditiondescription" rules={[validateRequiredInputField('Terms & Conditions')]}>
+                                    <Form.Item disabled={formActionType?.viewMode} initialValue={formData?.termsconditiondescription} label={translateContent('termConditionManufacturer.label.terms&Condition')} name="termsconditiondescription" rules={[validateRequiredInputField(translateContent('termConditionManufacturer.validation.terms&Condition'))]}>
                                         <CustomEditor onReady={formData?.termsconditiondescription} data={formData?.termsconditiondescription} />
                                     </Form.Item>
                                 </Col>

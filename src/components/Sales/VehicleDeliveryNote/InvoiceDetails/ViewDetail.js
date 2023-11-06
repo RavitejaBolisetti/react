@@ -10,6 +10,7 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { DATA_TYPE } from 'constants/dataType';
 import { getCodeValue } from 'utils/getCodeValue';
 import { disableFieldsOnFutureDate } from 'utils/disableDate';
+import { translateContent } from 'utils/translateContent';
 
 const ViewDetailMain = (props) => {
     const { formData, isLoading, soldByDealer, typeData, relationshipManagerData } = props;
@@ -23,25 +24,25 @@ const ViewDetailMain = (props) => {
     return (
         <Card>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Delivery Note For">{checkAndSetDefaultValue(soldByDealer ? 'Vehicle Sold By Dealer' : 'Directly Billed Vehicle', isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('vehicleDeliveryNote.invoiceDetails.label.deliveryNoteFor')}>{checkAndSetDefaultValue(soldByDealer ? 'Vehicle Sold By Dealer' : 'Directly Billed Vehicle', isLoading)}</Descriptions.Item>
                 {soldByDealer && (
                     <>
-                        <Descriptions.Item label="Invoice No.">{checkAndSetDefaultValue(formData?.invoiceNumber, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Invoice Date">{checkAndSetDefaultValue(formData?.invoiceDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('vehicleDeliveryNote.invoiceDetails.label.invoiceNumber')}>{checkAndSetDefaultValue(formData?.invoiceNumber, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('vehicleDeliveryNote.invoiceDetails.label.invoiceDate')}>{checkAndSetDefaultValue(formData?.invoiceDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                     </>
                 )}
-                {!soldByDealer && <Descriptions.Item label="VIN">{checkAndSetDefaultValue(soldByDealer ? formData?.vinNumber : formData?.chassisNumber, isLoading)}</Descriptions.Item>}
-                <Descriptions.Item label="Engine No.">{checkAndSetDefaultValue(formData?.engineNumber, isLoading)}</Descriptions.Item>
+                {!soldByDealer && <Descriptions.Item label={translateContent('vehicleDeliveryNote.invoiceDetails.label.vin')}>{checkAndSetDefaultValue(soldByDealer ? formData?.vinNumber : formData?.chassisNumber, isLoading)}</Descriptions.Item>}
+                <Descriptions.Item label={translateContent('vehicleDeliveryNote.invoiceDetails.label.engineNumber')}>{checkAndSetDefaultValue(formData?.engineNumber, isLoading)}</Descriptions.Item>
                 {soldByDealer && (
                     <>
-                        <Descriptions.Item label="VIN">{checkAndSetDefaultValue(formData?.chassisNumber, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Relationship Manager">{checkAndSetDefaultValue(getCodeValue(relationshipManagerData, formData?.relationShipManagerCode), isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Customer Provided Date">{checkAndSetDefaultValue(formData?.customerPromiseDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('vehicleDeliveryNote.invoiceDetails.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.chassisNumber, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('vehicleDeliveryNote.invoiceDetails.label.relationShipManager')}>{checkAndSetDefaultValue(getCodeValue(relationshipManagerData, formData?.relationShipManagerCode), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('vehicleDeliveryNote.invoiceDetails.label.customerPromiseDate')}>{checkAndSetDefaultValue(formData?.customerPromiseDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                         {formData?.customerPromiseDate && disableFieldsOnFutureDate(dayjs(formData?.customerPromiseDate)) && (
                             <>
-                                <Descriptions.Item label="Reasons For Delay">{checkAndSetDefaultValue(getCodeValue(typeData['DLVR_DLY_RSN'], formData?.reasonForDelay), isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDeliveryNote.invoiceDetails.label.reasonForDelay')}>{checkAndSetDefaultValue(getCodeValue(typeData['DLVR_DLY_RSN'], formData?.reasonForDelay), isLoading)}</Descriptions.Item>
                                 <br />
-                                <Descriptions.Item label="Remark For Delay">{checkAndSetDefaultValue(formData?.reasonForDelayRemarks, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDeliveryNote.invoiceDetails.label.reasonForDelayRemarks')}>{checkAndSetDefaultValue(formData?.reasonForDelayRemarks, isLoading)}</Descriptions.Item>
                             </>
                         )}
                     </>

@@ -8,6 +8,7 @@ import { Card, Row, Button, Divider, Typography, Space } from 'antd';
 import { FiTrash } from 'react-icons/fi';
 
 import FormNotificationDetail from './FormNotificationDetail';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 const { Text } = Typography;
@@ -98,10 +99,10 @@ const CardNotificationDetail = (props) => {
                     {formEdit && props?.internalId === uniqueCardEdit && (
                         <div className={styles.cardItemBtn}>
                             <Button type="link" onClick={onDocTypeHeadMappingCancel}>
-                                Cancel
+                                {translateContent('global.buttons.cancel')}
                             </Button>
                             <Button type="link" onClick={docTypeHeadMappingSave}>
-                                Save
+                                {translateContent('global.buttons.save')}
                             </Button>
                         </div>
                     )}
