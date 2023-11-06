@@ -8,6 +8,7 @@ import { Col, Row, Collapse, Card, Divider, Typography, Descriptions } from 'ant
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { NoDataFound } from 'utils/noDataFound';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -28,20 +29,20 @@ const ViewDetailMain = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Collapse collapsible="icon" expandIcon={expandIcon} defaultActiveKey={['VI1']} expandIconPosition="end">
-                        <Panel header="Vehicle Information" key="VI1">
+                        <Panel header={translateContent('vehicleDeliveryNote.vehicleDetails.heading.vehicleInfo')} key="VI1">
                             <Divider />
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="VIN">{checkAndSetDefaultValue(formData?.vinNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Engine Number">{checkAndSetDefaultValue(formData?.engineNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Key Number">{checkAndSetDefaultValue(formData?.keyNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(formData?.modelCode, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Modal Description">{checkAndSetDefaultValue(formData?.modelDescription, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDeliveryNote.vehicleDetails.label.vinNumber')}>{checkAndSetDefaultValue(formData?.vinNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDeliveryNote.vehicleDetails.label.engineNumber')}>{checkAndSetDefaultValue(formData?.engineNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDeliveryNote.vehicleDetails.label.keyNumber')}>{checkAndSetDefaultValue(formData?.keyNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDeliveryNote.vehicleDetails.label.modelCode')}>{checkAndSetDefaultValue(formData?.modelCode, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDeliveryNote.vehicleDetails.label.modelDescription')}>{checkAndSetDefaultValue(formData?.modelDescription, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         </Panel>
                     </Collapse>
 
                     <Collapse collapsible="icon" expandIcon={expandIcon} defaultActiveKey={['BD1']} expandIconPosition="end">
-                        <Panel header="Battery Information" key="BD1">
+                        <Panel header={translateContent('vehicleDeliveryNote.vehicleDetails.heading.batteryDetails')} key="BD1">
                             <Divider />
                             <Row gutter={20}>
                                 {formData?.batteryDetail?.length > 0 &&
