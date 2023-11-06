@@ -351,7 +351,7 @@ export const ProductHierarchyMain = ({ typeData, isLoading, moduleTitle, viewTit
                                     </Col>
                                     {organizationId && (
                                         <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                            <Search placeholder={translateContent('productHierarchy.placeholder.search')} allowClear onChange={onChange} />
+                                            <Search placeholder={translateContent('global.placeholder.search')} allowClear onChange={onChange} />
                                         </Col>
                                     )}
                                 </Row>

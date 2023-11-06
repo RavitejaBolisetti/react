@@ -10,6 +10,7 @@ import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { UploadUtil } from 'utils/Upload';
+import { translateContent } from 'utils/translateContent';
 import styles from 'assets/sass/app.module.scss';
 
 const OnRoadPriceMasterUploadMain = (uploadProps) => {
@@ -62,10 +63,10 @@ const OnRoadPriceMasterUploadMain = (uploadProps) => {
                     <div className={styles.contentHeaderBackground}>
                         <Space direction="vertical">
                             <Space className={styles.accordianIconWithText}>On Road Price Master Form</Space>
-                            <Space> Please download "OnRoad Price Template" using below button</Space>
+                            <Space> {translateContent('onRoadPriceMaster.message.downloadMessage')}</Space>
                             <Space>
                                 <Button type="primary" onClick={handleTemplateDownLoad}>
-                                    Download Template
+                                    {translateContent('global.buttons.downloadTemplate')}
                                 </Button>
                             </Space>
                         </Space>

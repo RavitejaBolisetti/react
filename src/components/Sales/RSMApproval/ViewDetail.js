@@ -12,6 +12,7 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { DATA_TYPE } from 'constants/dataType';
 
 import { RSM_APPROVAL_STATUS } from './utils/RSMApprovalStatus';
+import { translateContent } from 'utils/translateContent';
 
 const ViewDetailBase = ({ setRejectRequest, isLoading = false, formData, styles, handleButtonClick, onCloseAction, buttonData, setButtonData, handleRequest, queryButtons }) => {
     const buttonProps = {
@@ -29,13 +30,13 @@ const ViewDetailBase = ({ setRejectRequest, isLoading = false, formData, styles,
         <>
             <Row gutter={20} className={styles?.drawerBody}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles?.rsmApproval}>
-                    <p className={styles?.allowedTimingAlignment}>RSM Approval Summary</p>
+                    <p className={styles?.allowedTimingAlignment}>{translateContent('rsmApproval.label.rsmApprovalSummary')}</p>
                     <br />
                     <Card>
                         <>
                             <Row>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} className={styles?.tableTextColor54}>
-                                    From Dealer Code:
+                                    {translateContent('rsmApproval.label.fromDealerCode')}:
                                 </Col>
 
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} className={styles?.buttonsGroupRight}>
@@ -51,7 +52,7 @@ const ViewDetailBase = ({ setRejectRequest, isLoading = false, formData, styles,
 
                             <Row>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} className={styles?.tableTextColor54}>
-                                    To Dealer Code:
+                                    {translateContent('rsmApproval.label.toDealerCode')}:
                                 </Col>
 
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} className={styles?.buttonsGroupRight}>
@@ -67,7 +68,7 @@ const ViewDetailBase = ({ setRejectRequest, isLoading = false, formData, styles,
 
                             <Row>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} className={styles?.tableTextColor54}>
-                                    Chassis Number:
+                                    {translateContent('rsmApproval.label.chassisNumber')}:
                                 </Col>
 
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} className={styles?.buttonsGroupRight}>
@@ -79,7 +80,7 @@ const ViewDetailBase = ({ setRejectRequest, isLoading = false, formData, styles,
 
                             <Row>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} className={styles?.tableTextColor54}>
-                                    Vehicle Age:
+                                    {translateContent('rsmApproval.label.vehicleAge')}:
                                 </Col>
 
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} className={styles?.buttonsGroupRight}>
@@ -91,7 +92,7 @@ const ViewDetailBase = ({ setRejectRequest, isLoading = false, formData, styles,
 
                             <Row>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} className={styles?.tableTextColor54}>
-                                    Requested Date:
+                                    {translateContent('rsmApproval.label.requestedDate')}:
                                 </Col>
 
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} className={styles?.buttonsGroupRight}>
@@ -103,7 +104,7 @@ const ViewDetailBase = ({ setRejectRequest, isLoading = false, formData, styles,
 
                             <Row>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} className={styles?.tableTextColor54}>
-                                    Status:
+                                    {translateContent('rsmApproval.label.status')}:
                                 </Col>
 
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} className={`${styles?.buttonsGroupRight} ${statusClassName}`}>
@@ -115,7 +116,7 @@ const ViewDetailBase = ({ setRejectRequest, isLoading = false, formData, styles,
 
                             <Row>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} className={styles?.tableTextColor54}>
-                                    Model Description:
+                                    {translateContent('rsmApproval.label.modelDescription')}:
                                 </Col>
 
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} className={styles?.buttonsGroupRight}>

@@ -90,7 +90,7 @@ const UploadBase = (props) => {
         listShowLoading,
         showGlobalNotification,
         setEmptyList,
-        uploadButtonName = translateContent('customerMaster.button.uploadFile'),
+        uploadButtonName = translateContent('global.buttons.uploadFile'),
         supportedFileTypes = [],
         messageText = (
             <>

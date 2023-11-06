@@ -10,6 +10,8 @@ import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/prepareP
 import { customSelectBox } from 'utils/customSelectBox';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { AMC_CONSTANTS } from '../utils/AMCConstants';
+import { translateContent } from 'utils/translateContent';
+
 import styles from 'assets/sass/app.module.scss';
 
 const { Search } = Input;
@@ -23,39 +25,39 @@ const RegistrationForm = (props) => {
             <Form layout="vertical" autoComplete="off" form={registrationForm} onFieldsChange={handleFormValueChange}>
                 <Row gutter={16}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item initialValue={formData?.saleType} label="Sale Type" name="saleType" rules={[validateRequiredSelectField('Sale Type')]}>
-                            {customSelectBox({ data: typeData?.[PARAM_MASTER.DLVR_SALE_TYP.id], placeholder: preparePlaceholderSelect('Sale Type'), onChange: handleSaleTypeChange })}
+                        <Form.Item initialValue={formData?.saleType} label={translateContent('amcRegistration.label.saleType')} name="saleType" rules={[validateRequiredSelectField(translateContent('amcRegistration.label.saleType'))]}>
+                            {customSelectBox({ data: typeData?.[PARAM_MASTER.DLVR_SALE_TYP.id], placeholder: preparePlaceholderSelect(translateContent('amcRegistration.label.saleType')), onChange: handleSaleTypeChange })}
                         </Form.Item>
                     </Col>
                     {selectedSaleType === AMC_CONSTANTS?.MNM_FOC?.key && (
                         <>
                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                <Form.Item label="Booking Number" name="bookingNumber" rules={[validateRequiredInputField('Booking Number')]}>
-                                    <Search maxLength={50} placeholder={preparePlaceholderText('Booking Number')} loading={isVehicleInvoiceDataLoading} onSearch={(value) => handleBookingNumberSearch(value)} onChange={handleBookingNumberChange} allowClear />
+                                <Form.Item label={translateContent('amcRegistration.label.bookingNumber')} name="bookingNumber" rules={[validateRequiredInputField(translateContent('amcRegistration.label.bookingNumber'))]}>
+                                    <Search maxLength={50} placeholder={preparePlaceholderText(translateContent('amcRegistration.label.bookingNumber'))} loading={isVehicleInvoiceDataLoading} onSearch={(value) => handleBookingNumberSearch(value)} onChange={handleBookingNumberChange} allowClear />
                                 </Form.Item>
                             </Col>
                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                <Form.Item label="VIN" name="vin">
-                                    <Input disabled maxLength={50} placeholder={preparePlaceholderText('vin')} />
+                                <Form.Item label={translateContent('amcRegistration.label.vin')} name="vin">
+                                    <Input disabled maxLength={50} placeholder={preparePlaceholderText(translateContent('amcRegistration.label.vin'))} />
                                 </Form.Item>
                             </Col>
                         </>
                     )}
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Employee Name" name="employeeName" rules={[validateRequiredInputField('Employee Name')]}>
+                        <Form.Item label={translateContent('amcRegistration.label.employeeName')} name="employeeName" rules={[validateRequiredInputField(translateContent('amcRegistration.label.employeeName'))]}>
                             <AutoComplete maxLength={50} options={options} onSelect={handleOnSelect} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
-                                <Search onSearch={handleEmployeeNameSearch} onChange={handleOnClear} placeholder="Search" loading={isEmployeeDataLoading} type="text" allowClear />
+                                <Search onSearch={handleEmployeeNameSearch} onChange={handleOnClear} placeholder={translateContent('amcRegistration.placeholder.search')} loading={isEmployeeDataLoading} type="text" allowClear />
                             </AutoComplete>
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Manager Name" name="managerName">
-                            <Input disabled maxLength={50} placeholder={preparePlaceholderText('Manager Name')} />
+                        <Form.Item label={translateContent('amcRegistration.label.managerName')} name="managerName">
+                            <Input disabled maxLength={50} placeholder={preparePlaceholderText(translateContent('amcRegistration.label.managerName'))} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
-                        <Form.Item initialValue={formData?.remarks} label="Remarks" name="remarks" rules={[validateRequiredSelectField('Remarks')]}>
-                            <TextArea maxLength={300} placeholder={preparePlaceholderText('Remarks')} showCount />
+                        <Form.Item initialValue={formData?.remarks} label={translateContent('amcRegistration.label.remarks')} name="remarks" rules={[validateRequiredSelectField(translateContent('amcRegistration.label.remarks'))]}>
+                            <TextArea maxLength={300} placeholder={preparePlaceholderText(translateContent('amcRegistration.label.remarks'))} showCount />
                         </Form.Item>
                     </Col>
                 </Row>

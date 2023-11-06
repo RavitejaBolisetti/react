@@ -68,7 +68,15 @@
             "submit": "Submit",
             "continue": "Continue",
             "addChild": " Add Child",
-            "addSibling": " Add Sibling"
+            "addSibling": " Add Sibling",
+            "transfer": "Transfer",
+            "allot": "Allot",
+            "unAllot": "Un-Allot",
+            "invoice": "Invoice",
+            "deliveryNote": " Delivery Note",
+            "advancedFilter": "Advanced Filters",
+            "viewHistory": "View History",
+            "uploadFile": "Upload File"
         },
         "placeholder": {
             "input": "Enter ",
@@ -279,6 +287,7 @@
         "heading": {
             "title": "Vehicle Checklist",
             "modelGroup": "Model Group",
+            "pageTitle": "Vehicle Checklist Master",
             "answers": "Answers"
         },
         "label": {
@@ -322,7 +331,20 @@
         "label": {
             "rejectionRemarks": "Rejection Remarks",
             "acceptanceTermsFirstLine": "I accept that for the Transferred Vehicle , Claim can be generated from the billed Dealer.",
-            "acceptanceTermsSecondLine": "If more than one transfer happens for the same vehicle then claim is not allowed for any of the dealership."
+            "acceptanceTermsSecondLine": "If more than one transfer happens for the same vehicle then claim is not allowed for any of the dealership.",
+            "fromDate": "From Date",
+            "toDate": "To Date",
+            "fromDealer": "From Dealer",
+            "toDealer": "To Dealer",
+            "code": "Code",
+            "chassisNumber": "Chassis Number",
+            "modelDescription": "Model Description",
+            "vehicleAge": "Vehicle Age",
+            "requestedDate": "Requested Date",
+            "rsmApprovalSummary": "RSM Approval Summary",
+            "fromDealerCode": "From Dealer Code",
+            "toDealerCode": "To Dealer Code",
+            "status": "Status"
         },
         "placeholder": {
             "headerSearch": "Search by dealer"
@@ -375,6 +397,52 @@
             "financialAccountHead": "Financial Account Head"
         }
     },
+    "amcRegistration": {
+        "heading": {
+            "title": "AMC Registration",
+            "moduleTitle": "AMC Registration Details"
+        },
+        "validation": {
+            "noSchemeVIN": "No Schemes present for this VIN",
+            "noVINFound": "No VIN found for searched Booking Number",
+            "noEmployeesFound": "No employees found for searched name",
+            "incorrectEmployeeName": "Employee name is not correct",
+            "discoutGreaterThanScheme": "Discount cannot exceed Scheme amount"
+        },
+        "label": {
+            "amcRegNoDate": "AMC Registration No. & Date",
+            "dealerLocation": "Dealer Location",
+            "vin": "VIN",
+            "status": "Status",
+            "mobileNumber": "Mobile No.",
+            "dealerParent": "Dealer Parent",
+            "amcFromDate": "AMC Registration From Date",
+            "amcToDate": "AMC Registration To Date",
+            "registrationInfo": "Registration Information",
+            "schemeDetails": "Scheme Details",
+            "saleType": "Sale Type",
+            "bookingNumber": "Booking Number",
+            "employeeName": "Employee Name",
+            "managerName": "Manager Name",
+            "remarks": "Remarks",
+            "amcType": "AMC Type",
+            "schemeDescription": "Scheme Description",
+            "schemeCode": "Scheme Code",
+            "schemeBasicAmount": "Scheme Basic Amount",
+            "schemeDiscount": "Scheme Discount",
+            "schemeTaxAmount": "Scheme Tax Amount",
+            "schemeEndDate": "Scheme End Date",
+            "creditNoteNumber": "Credit Note Number",
+            "creditNoteDate": "Credit Note Date",
+            "creditNoteAmount": "Credit Note Amount",
+            "debitNoteNumber": "Debit Note Number",
+            "debitNoteDate": "Debit Note Date",
+            "debitNoteAmount": "Debit Note Amount"
+        },
+        "placeholder": {
+            "search": "Search"
+        }
+    },
     "roleManagement": {
         "heading": {
             "pageTitle": "Role Management",
@@ -419,6 +487,10 @@
             "fieldName": "Field Name",
             "oldValue": "Old Value",
             "newValue": "New Value"
+        },
+        "drawerTitle": {
+            "cusChange": "Customer Change History",
+            "nameChange": "Name Change History"
         },
         "drawerSubHeading": {
             "contactTitle": "Individual Contact",
@@ -597,15 +669,11 @@
             "documentType": "document type",
             "fileName": "file name"
         },
-        "button": {
-            "viewHistory": "View History",
-            "uploadFile": "Upload File"
-        },
+        "button": {},
         "link": {
             "mnmLogin": "M&M User Login"
         }
     },
-
     "criticalityGroup": {
         "heading": {
             "mainTitle": "Application Criticality Group Details",
@@ -735,6 +803,21 @@
         }
     },
 
+    "gstIrnTransaction": {
+        "heading": {
+            "pageTitle": "GST IRN Transaction Pending",
+            "moduleTitle": "GST IRN Pending Transaction",
+            "title": "Search",
+            "documentType": "Document Type",
+            "documentNumber": "Document Number",
+            "documentDate": "Document Date",
+            "location": "Location",
+            "irnResponse": "IRN Server Response",
+            "irnStatus": "IRN Status",
+            "gstin": "GSTIN"
+        }
+    },
+
     "footer": {
         "copyright": "Copyright &copy; {YEAR} ROBIN."
     },
@@ -755,7 +838,6 @@
         "validation": {
             "searchParameter": "search parametar"
         },
-        "button": {},
         "vehicledetails": {
             "label": {
                 "mnfcWarrEndDate": "Manufacturer Warranty End Date",
@@ -1141,6 +1223,7 @@
     "vinBlockMaster": {
         "heading": {
             "moduleTitle": "Vin Block Master",
+            "pageTitle": "Vin Block Master",
             "title": "Vin Block Master",
             "advancedFilter": "Advanced Filter",
             "appliedAdvanceFilters": "Applied Advance Filters"
@@ -1241,6 +1324,7 @@
     "hoPriceMapping": {
         "heading": {
             "maintitle": "HO Price Upload Mapping",
+            "pageTitle": "HO Price Upload Mapping for Dealer",
             "title": "HO Price Upload Mapping for Dealer",
             "drawerTitleHeading": "HO Price Upload Mapping",
             "titleOverride": "Advance Filters",
@@ -1265,9 +1349,6 @@
     },
     "stockTransferIndent": {
         "isueIndent": {
-            "heading": {
-                "maintitle": "HO Price Upload Mapping"
-            },
             "label": {
                 "vin": "VIN",
                 "stIssueNo": "ST issue Note No.",
@@ -1361,7 +1442,8 @@
             "quantity": "Quantity",
             "indentToParent": "Indent To Parent",
             "indentToLocation": "Indent To Location",
-            "requestedBy": "Requested By"
+            "requestedBy": "Requested By",
+            "vehicleLengthValidation": "Please add Vehicle Details"
         }
     },
     "vehicleInvoiceGeneration": {
@@ -1929,6 +2011,51 @@
             "validationText": "File type should be .xlxs and max file size to be 8Mb"
         }
     },
+
+    "onRoadPriceMaster": {
+        "heading": {
+            "uploadTitle": "Upload OnRoad Price Master Form",
+            "moduleTitle": "On Road Price Master"
+        },
+        "label": {
+            "pricingType": "Pricing Type",
+            "model": "Model",
+            "pricingCity": "Pricing City",
+            "changeEXShowroomORG": "Change EX Showroom ORG",
+            "status": "Status",
+            "stateCode": "State Code",
+            "cityCode": "City Code",
+            "currentEXShowroomPrice": "Current EX Showroom Price",
+            "currentEXShowroomDate": "Current EX Showroom Date",
+            "TCSwithGST": "TCS with GST",
+            "EPC": "EPC",
+            "registrationCharges": "Registration Charges",
+            "fastTag": "Fast Tag",
+            "insurancePremium": "Insurance Premium(1+3yr TP)",
+            "addonZeroDepwithTax": "Add on Zero Dep with Tax",
+            "comprehensiveInsurance": "Comprehensive Insurance",
+            "basicOnRoadPrice": "Basic on Road Price",
+            "consumerSchemeWithTax": "Consumer Scheme with Tax",
+            "RSAwithTax": "RSA with Tax",
+            "shieldWithTax": "Shield with Tax",
+            "AMCwithTax": "AMC with Tax",
+            "ODdiscount": "OD Discount%",
+            "dealerDiscountWithTax": "Dealer Discount with Tax",
+            "otherCharges": "Other Charges",
+            "essentialKitWithTax": "Essential Kit with Tax"
+        },
+        "placeholder": {
+            "searchByModel": "Search By Model"
+        },
+        "button": {
+            "uploadButton": "Upload OnRoad Price Master"
+        },
+        "message": {
+            "uploadMessage": "Click or drop your file here to upload",
+            "uploadValidation": "File type should be .xlxs and max file size to be 8Mb",
+            "downloadMessage": "Please download OnRoad Price Template using below button"
+        }
+    },
     "termConditionDealer": {
         "heading": {
             "pageTitle": "Terms & Conditions - Dealer Location",
@@ -1948,6 +2075,42 @@
             "validationText": "File type should be .xlxs and max file size to be 8Mb",
             "docName": "Lessor Template",
             "textMessage": "Please download Lessor Customer Template using below button"
+        }
+    },
+    "bookingSoMapping": {
+        "heading": {
+            "moduleTitle": "Booking SO Mapping Control",
+            "pageTitle": "Booking SO Mapping Control Master",
+            "viewTitle": "User Type Mapping"
+        },
+        "label": {
+            "variantCode": "Variant Code",
+            "productVariant": "Product Variant",
+            "userForMappingUnmapping": "User for Mapping/Unmapping"
+        },
+        "placeholder": {
+            "variantCode": "Variant Code",
+            "productVariant": "Product Variant",
+            "userForMappingUnmapping": "User for Mapping/Unmapping"
+        },
+        "validation": {
+            "variantCode": "Variant Code",
+            "productVariant": "Product Variant",
+            "userForMappingUnmapping": "User for Mapping/Unmapping"
+        }
+    },
+    "creditDebitNote": {
+        "heading": {
+            "moduleTitle": "Booking SO Mapping Control"
+        },
+        "label": {
+            "variantCode": "Variant Code"
+        },
+        "placeholder": {
+            "variantCode": "Variant Code"
+        },
+        "validation": {
+            "variantCode": "Variant Code"
         }
     }
 }
