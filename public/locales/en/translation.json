@@ -457,6 +457,7 @@
         "button": {},
         "link": {}
     },
+
     "customerMaster": {
         "heading": {
             "pageTitle": "Customer Master",
@@ -491,7 +492,9 @@
             "informationTitle": "Individual Information",
             "addressTitle": "Individual Address",
             "familyTitle": "Family Details",
-            "cusTitle": "Customer Name"
+            "cusTitle": "Customer Name",
+            "companyTitle": "Company Information",
+            "accountTitle": "Key Account Details"
         },
         "label": {
             "mobileNumber": "Mobile Number",
@@ -569,7 +572,15 @@
             "documentType": "Document Type",
             "fileName": "File Name",
             "lastName": "Last Name",
-            "mark": "Mark As Default"
+            "mark": "Mark As Default",
+            "companyName": "Company Name",
+            "companyCode": "Parent Company Code",
+            "parentComp": "Parent Company Name",
+            "accCode": "Account Code",
+            "accName": "Account Name",
+            "accSegment": "Account Segment",
+            "accClient": "Account Client Name",
+            "accDate": "Account Mapping Date"
         },
         "placeholder": {
             "mobileMumber": "mobile number",
@@ -593,10 +604,10 @@
             "gstin": "gstin",
             "category": "usage/application category",
             "income": "annual income",
-            "businessDetails": "business details",
+            "businessDetails": "Business details",
             "vehicleDeployment": "vehicle deployment details",
             "keyRole": "key role details",
-            "route": "major route details",
+            "route": "Major route details",
             "addresstype": "address type",
             "address": "address Line 1",
             "addressL": "address Line 2",
@@ -627,7 +638,17 @@
             "discount": "discount",
             "remarks": "remark",
             "documentType": "document type",
-            "fileName": "File Name"
+            "fileName": "File Name",
+            "compName": "company name",
+            "compCode": "parent company code",
+            "corporateCode": "corporate code",
+            "subCategory": "Usage/Application Sub-Category",
+            "cusCategory": "Customer Category",
+            "accCode": "Account Code",
+            "accName": "Account Name",
+            "accSegment": "Account Segment",
+            "accClient": "Account Client Name",
+            "accMapping": "Account Mapping Date"
         },
         "validation": {
             "mobileNumber": "mobile number",
@@ -661,7 +682,9 @@
             "partsDiscount": "parts discount",
             "labourDiscount": "labour discount",
             "documentType": "document type",
-            "fileName": "file name"
+            "fileName": "file name",
+            "compName": "company name",
+            "parentCode": "parent company code"
         },
         "button": {},
         "link": {
@@ -797,11 +820,11 @@
         }
     },
 
-    "locationTypeMaster":{
+    "locationTypeMaster": {
         "heading": {
-            "drawerTitle":"Location Type",
-            "mainTitle":"Dealer Location Type Master",
-            "title":"Location Type Name"
+            "drawerTitle": "Location Type",
+            "mainTitle": "Dealer Location Type Master",
+            "title": "Location Type Name"
         },
         "label": {
             "locationTypeCode": "Location Type Code",
@@ -821,7 +844,7 @@
         }
     },
 
-    "designationMaster":{
+    "designationMaster": {
         "heading": {
             "mainTitle": "Designation Master",
             "drawerTitle": "Designation",
@@ -835,8 +858,8 @@
             "designationType": "Designation Type",
             "designationName": "Designation Name",
             "mileSkill": "Mile Skill",
-            "status":"Status",
-            "manPowerRequired":"Manpower Required",
+            "status": "Status",
+            "manPowerRequired": "Manpower Required",
             "accountsData": "Accounts Data",
             "capability": "Capability (L1/L2/L3)",
             "createUserId": "Create User Id",
@@ -858,11 +881,11 @@
         }
     },
 
-    "divisionMaster":{
+    "divisionMaster": {
         "heading": {
             "mainTitle": "Dealer Division Master",
             "drawerTitle": "Division",
-            "title":"Division Name"
+            "title": "Division Name"
         },
         "label": {
             "divisionCode": "Division Code",
