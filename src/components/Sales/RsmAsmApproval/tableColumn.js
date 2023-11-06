@@ -8,13 +8,14 @@ import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { getCodeValue } from 'utils/getCodeValue';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { convertDate, dateFormatView } from 'utils/formatDateTime';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
 export const tableColumn = ({ handleButtonClick, typeData }) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Request Type',
+            title: translateContent('rsmAsmApproval.label.requestType'),
             dataIndex: 'requestType',
             width: '16%',
             render: (__, value) => {
@@ -22,7 +23,7 @@ export const tableColumn = ({ handleButtonClick, typeData }) => {
             },
         }),
         tblPrepareColumns({
-            title: 'Request Status',
+            title: translateContent('rsmAsmApproval.label.requestStatus'),
             dataIndex: 'requestStatus',
             width: '16%',
             render: (__, value) => {
@@ -31,13 +32,13 @@ export const tableColumn = ({ handleButtonClick, typeData }) => {
         }),
 
         tblPrepareColumns({
-            title: 'Request Number',
+            title: translateContent('rsmAsmApproval.label.requestNumber'),
             dataIndex: 'requestNumber',
             width: '12%',
         }),
 
         tblPrepareColumns({
-            title: 'Request Date',
+            title: translateContent('rsmAsmApproval.label.requestDate'),
             dataIndex: 'requestDate',
             width: '12%',
             render: (value) => {
@@ -45,12 +46,12 @@ export const tableColumn = ({ handleButtonClick, typeData }) => {
             },
         }),
         tblPrepareColumns({
-            title: 'Delivery Note/Invoice ID',
+            title: translateContent('rsmAsmApproval.label.deliveryOrInvoiceId'),
             dataIndex: 'deliveryOrInvoiceId',
             width: '12%',
         }),
         tblPrepareColumns({
-            title: 'Delivery Note/Invoice Date',
+            title: translateContent('rsmAsmApproval.label.deliveryOrInvoiceDate'),
             dataIndex: 'deliveryOrInvoiceDate',
             width: '12%',
             render: (value) => {
@@ -58,7 +59,7 @@ export const tableColumn = ({ handleButtonClick, typeData }) => {
             },
         }),
         tblPrepareColumns({
-            title: 'Dealer Name',
+            title: translateContent('rsmAsmApproval.label.dealerName'),
             dataIndex: 'dealerName',
             width: '12%',
         }),

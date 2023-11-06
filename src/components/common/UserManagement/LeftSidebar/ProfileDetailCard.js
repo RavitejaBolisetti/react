@@ -46,16 +46,6 @@ const ProfileDetailCard = (props) => {
                 key={1}
             >
                 <Divider />
-                {/* {userType === USER_TYPE_USER?.DEALER?.id ? (
-                    <div className={styles.detailCardText}>
-                        Employee Code: <span>{selectedRecord?.employeeCode || 'NA'}</span>
-                    </div>
-                ) : (
-                    <div className={styles.detailCardText}>
-                        Token No: <span>{selectedRecord?.employeeCode || 'NA'}</span>
-                    </div>
-                )}
-                <Divider /> */}
                 <div className={styles.detailCardText}>
                     {translateContent('userManagement.label.userName')}: <span>{selectedRecord?.manufacturerUserName || formData?.userName || 'NA'}</span>
                 </div>

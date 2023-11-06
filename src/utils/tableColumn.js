@@ -18,6 +18,7 @@ import { GST_IRN_STATUS } from 'constants/GSTIRNStatus';
 import { PlusOutlined } from '@ant-design/icons';
 
 import styles from './tableColumn.module.scss';
+import { translateContent } from './translateContent';
 
 const onFilterFn = (value, record) => {
     if (record.ChangeDate !== undefined) {
@@ -69,10 +70,10 @@ export const tblApprovalStatusColumn = ({ width = '15%' }) => {
 
 export const tblStatusColumn = ({ width = '15%', fixed = '' }) => {
     return {
-        title: 'Status',
+        title: translateContent('global.label.status'),
         dataIndex: 'status',
         sorter: (a, b) => (a && b ? String(a['status']).localeCompare(String(b['status']), undefined, { sensitivity: 'base' }) : a),
-        render: (_, record) => (record?.status ? <Tag color="success">Active</Tag> : <Tag color="error">Inactive</Tag>),
+        render: (_, record) => (record?.status ? <Tag color="success">{translateContent('global.label.active')}</Tag> : <Tag color="error">{translateContent('global.label.inActive')}</Tag>),
         width,
         fixed: fixed,
         sortDirections: ['descend', 'ascend'],

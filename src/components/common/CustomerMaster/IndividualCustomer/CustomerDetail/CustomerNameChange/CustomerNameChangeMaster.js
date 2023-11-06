@@ -26,6 +26,7 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 import { getCodeValue } from 'utils/getCodeValue';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Text } = Typography;
 const { Panel } = Collapse;
@@ -293,7 +294,7 @@ const CustomerNameChangeMasterBase = (props) => {
                     </div>
                     {canEdit && (
                         <Button className={`${styles.marL20} ${styles.verticallyCentered}`} disabled={changeNameAllowed} type="link" icon={<FiEdit />} onClick={onEdit(currentKey)}>
-                            Edit
+                            {translateContent('global.buttons.edit')}
                         </Button>
                     )}
                 </Typography>
@@ -308,7 +309,7 @@ const CustomerNameChangeMasterBase = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.verticallyCentered}>
                         <Text style={{ fontSize: '16px' }} strong>
-                            Customer Name
+                            {translateContent('customerMaster.drawerSubHeading.cusTitle')}
                         </Text>
                     </Col>
                     {!addMode && (

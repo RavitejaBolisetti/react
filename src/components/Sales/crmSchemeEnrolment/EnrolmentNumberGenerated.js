@@ -49,7 +49,7 @@ export const EnrolmentNumberGenerated = (props) => {
                                     }
                                     onClick={''}
                                 >
-                                    translateContent('crmSchemeEnrolment.button.downloadPrint')
+                                    {translateContent('crmSchemeEnrolment.button.downloadPrint')}
                                 </Button>
                             </Col>
                         </Card>

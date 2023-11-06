@@ -14,6 +14,7 @@ import { tblPrepareColumns, tblStatusColumn } from 'utils/tableCloumn';
 import { DataTable } from 'utils/dataTable';
 import { withDrawer } from 'components/withDrawer';
 import styles from 'components/common/ChangeHistory/ChangeHistory.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -55,28 +56,28 @@ const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, c
 
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Changed/Modified Date ',
+            title: translateContent('manufacturerAdmin.label.changedDate'),
             dataIndex: 'changedDate',
             render: (text) => convertDateTime(text),
         }),
         tblPrepareColumns({
-            title: 'Changed By',
+            title: translateContent('manufacturerAdmin.label.changedBy'),
             dataIndex: 'changedBy',
         }),
         tblPrepareColumns({
-            title: 'Attribute Code',
+            title: translateContent('manufacturerAdmin.label.attributeCode'),
             dataIndex: 'attributeCode',
         }),
         tblPrepareColumns({
-            title: 'Short Description',
+            title: translateContent('manufacturerAdmin.label.shortDescription'),
             dataIndex: 'shortDescription',
         }),
         tblPrepareColumns({
-            title: 'Long Description',
+            title: translateContent('manufacturerAdmin.label.longDescription'),
             dataIndex: 'longDescription',
         }),
         tblPrepareColumns({
-            title: 'Hierarchy Code',
+            title: translateContent('manufacturerAdmin.label.hierarchyCode'),
             dataIndex: 'code',
         }),
         tblStatusColumn({ styles, width: '15%' }),
@@ -94,6 +95,6 @@ const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, c
     );
 };
 
-const ManufacturerAdminHierarchyChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ManufacturerAdminHierarchyChangeHistoryMain, { title: 'Admin Change History', width: '90%' }));
+const ManufacturerAdminHierarchyChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ManufacturerAdminHierarchyChangeHistoryMain, { title: translateContent('manufacturerAdmin.heading.changeHistoryTitle'), width: '90%' }));
 
 export default ManufacturerAdminHierarchyChangeHistory;

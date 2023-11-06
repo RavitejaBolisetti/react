@@ -6,6 +6,7 @@
 import React from 'react';
 import { Card, Descriptions } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -22,13 +23,13 @@ const EnrolmentMain = (props) => {
         <div className={styles.viewDrawerContainer}>
             <Card>
                 <Descriptions {...viewProps}>
-                    <Descriptions.Item label="Enrolment Number">{checkAndSetDefaultValue(detailData?.enrolmentDetailsDto?.enrollmentNumber, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Enrolment Date">{checkAndSetDefaultValue(detailData?.enrolmentDetailsDto?.enrollmentDate, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Enrolment Status">{checkAndSetDefaultValue(detailData?.enrolmentDetailsDto?.enrollmentStatus === true ? 'Active' : 'Inactive', isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Scheme Type">{checkAndSetDefaultValue(detailData?.enrolmentDetailsDto?.schemeType, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="VIN">{checkAndSetDefaultValue(detailData?.enrolmentDetailsDto?.vin, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Booklet Number">{checkAndSetDefaultValue(detailData?.enrolmentDetailsDto?.bookletNumber, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Enrolled By">{checkAndSetDefaultValue(detailData?.enrolmentDetailsDto?.enrolledBy, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('crmSchemeEnrolment.label.enrolmentNumber')}>{checkAndSetDefaultValue(detailData?.enrolmentDetailsDto?.enrollmentNumber, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('crmSchemeEnrolment.label.enrolmentDate')}>{checkAndSetDefaultValue(detailData?.enrolmentDetailsDto?.enrollmentDate, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('crmSchemeEnrolment.label.enrolmentStatus')}>{checkAndSetDefaultValue(detailData?.enrolmentDetailsDto?.enrollmentStatus === true ? 'Active' : 'Inactive', isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('crmSchemeEnrolment.label.schemeType')}>{checkAndSetDefaultValue(detailData?.enrolmentDetailsDto?.schemeType, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('crmSchemeEnrolment.label.vin')}>{checkAndSetDefaultValue(detailData?.enrolmentDetailsDto?.vin, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('crmSchemeEnrolment.label.bookletNumber')}>{checkAndSetDefaultValue(detailData?.enrolmentDetailsDto?.bookletNumber, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('crmSchemeEnrolment.label.enrolledBy')}>{checkAndSetDefaultValue(detailData?.enrolmentDetailsDto?.enrolledBy, isLoading)}</Descriptions.Item>
                 </Descriptions>
             </Card>
         </div>
