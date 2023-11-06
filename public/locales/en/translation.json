@@ -1312,7 +1312,7 @@
         }
     },
     "stockTransferIndent": {
-        "isueIndent": {             
+        "isueIndent": {
             "label": {
                 "vin": "VIN",
                 "stIssueNo": "ST issue Note No.",
@@ -1407,7 +1407,7 @@
             "indentToParent": "Indent To Parent",
             "indentToLocation": "Indent To Location",
             "requestedBy": "Requested By",
-            "vehicleLengthValidation":"Please add Vehicle Details"
+            "vehicleLengthValidation": "Please add Vehicle Details"
         }
     },
     "vehicleInvoiceGeneration": {
@@ -2017,5 +2017,30 @@
             "productVariant": "Product Variant",
             "userForMappingUnmapping": "User for Mapping/Unmapping"
         }
+    },
+    "vehicleDeliveryNote": {
+        "heading": {
+            "mainTitle": "Delivery Note",
+            "title": "Vehicle Delivery Note"
+        },
+        "label": {},
+        "placeholder": {
+            "select": "Select"
+        },
+        "validation": {},
+        "notificationError": {
+            "customerId": "Enter customer id to continue"
+        },
+        "invoiceDetails": {
+            "label": {},
+            "validation": {}
+        },
+        "customerDetails": {},
+        "vehicleDetails": {},
+        "finanaceDetails": {},
+        "insuranceDetails": {},
+        "addOnDetails": {},
+        "deliverableChecklist": {},
+        "thankYouPage": {}
     }
 }
