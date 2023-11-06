@@ -67,7 +67,12 @@
             "submit": "Submit",
             "continue": "Continue",
             "addChild": " Add Child",
-            "addSibling": " Add Sibling"
+            "addSibling": " Add Sibling",
+            "transfer": "Transfer",
+            "allot": "Allot",
+            "unAllot": "Un-Allot",
+            "invoice": "Invoice",
+            "deliveryNote": " Delivery Note"
         },
         "placeholder": {
             "input": "Enter ",
@@ -724,7 +729,6 @@
         "validation": {
             "searchParameter": "search parametar"
         },
-        "button": {},
         "vehicledetails": {
             "label": {
                 "mnfcWarrEndDate": "Manufacturer Warranty End Date",
