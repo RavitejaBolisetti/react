@@ -315,7 +315,7 @@ const CustomerNameChangeMasterBase = (props) => {
                     {!addMode && (
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
                             <Button type="link" onClick={onViewHistoryChange} icon={<BiTimeFive />} className={styles.verticallyCentered}>
-                                View History
+                                {translateContent('global.buttons.viewHistory')}
                             </Button>
                         </Col>
                     )}
