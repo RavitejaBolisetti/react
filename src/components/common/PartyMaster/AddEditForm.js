@@ -7,13 +7,14 @@ import React, { useEffect, useState } from 'react';
 import { Col, Input, Form, Row, Select, AutoComplete } from 'antd';
 
 import { validateRequiredInputField, searchValidatorPincode, validateMobileNoField, validatePanField, validateGSTIN, validationNumber, valueBetween0to100, validateOnlyPositiveNumber } from 'utils/validation';
-import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+import { preparePlaceholderSearch, preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { ViewDetail } from './ViewDetail';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Option } = Select;
 
@@ -167,8 +168,8 @@ const AddEditFormMain = (props) => {
                             <>
                                 <Row gutter={16}>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item initialValue={formData?.partyCategory} disabled label="Party Category" name="partyCategory" placeholder={preparePlaceholderSelect('party category')} rules={[validateRequiredInputField('party category')]}>
-                                            <Select {...disabledProps} loading={!(typeData?.PTY_CAT?.length !== 0)} placeholder="Select" {...selectProps} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
+                                        <Form.Item initialValue={formData?.partyCategory} disabled label={translateContent('partyMaster.label.partyCategory')} name="partyCategory" placeholder={preparePlaceholderSelect(translateContent('partyMaster.label.partyCategory'))} rules={[validateRequiredInputField(translateContent('partyMaster.label.partyCategory'))]}>
+                                            <Select {...disabledProps} loading={!(typeData?.PTY_CAT?.length !== 0)} placeholder={preparePlaceholderSelect('')} {...selectProps} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
                                                 {typeData?.PTY_CAT?.map((item) => (
                                                     <Option key={'pty' + item?.value} value={item?.value}>
                                                         {item?.value}
@@ -178,25 +179,25 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item label="Party Code" initialValue={formData?.partyCode} rules={[validateRequiredInputField('party code')]} name="partyCode">
-                                            <Input placeholder={preparePlaceholderText('party code')} maxLength={6} disabled={editMode ? true : false} />
+                                        <Form.Item label={translateContent('partyMaster.label.partyCode')} initialValue={formData?.partyCode} rules={[validateRequiredInputField(translateContent('partyMaster.label.partyCode'))]} name="partyCode">
+                                            <Input placeholder={preparePlaceholderText(translateContent('partyMaster.label.partyCode'))} maxLength={6} disabled={editMode ? true : false} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={16}>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item initialValue={formData?.partyName} label="Party Name" name="partyName" rules={[validateRequiredInputField('party name')]}>
+                                        <Form.Item initialValue={formData?.partyName} label={translateContent('partyMaster.label.partyName')} name="partyName" rules={[validateRequiredInputField(translateContent('partyMaster.label.partyName'))]}>
                                             <Input {...disabledProps} placeholder={preparePlaceholderText('party name')} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                         <Form.Item
-                                            label="Contact Person Name"
+                                            label={translateContent('partyMaster.label.contactPersonName')}
                                             initialValue={formData?.contactPersonName}
                                             // rules={[validateRequiredInputField('contact person name')]}
                                             name="contactPersonName"
                                         >
-                                            <Input {...disabledProps} placeholder={preparePlaceholderText('contact person name')} maxLength={50} />
+                                            <Input {...disabledProps} placeholder={preparePlaceholderText(translateContent('partyMaster.label.contactPersonName'))} maxLength={50} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
@@ -204,11 +205,11 @@ const AddEditFormMain = (props) => {
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                         <Form.Item
                                             initialValue={formData?.designation}
-                                            label="Designation"
+                                            label={preparePlaceholderText(translateContent('partyMaster.label.designation'))}
                                             name="designation"
                                             // rules={[validateRequiredInputField('designation')]}
                                         >
-                                            <Input {...disabledProps} placeholder={preparePlaceholderText('designation')} maxLength={50} />
+                                            <Input {...disabledProps} placeholder={preparePlaceholderText(translateContent('partyMaster.label.designation'))} maxLength={50} />
                                         </Form.Item>
                                     </Col>
                                     {/* <Col xs={24} sm={12} md={12} lg={12} xl={12}>
@@ -227,12 +228,12 @@ const AddEditFormMain = (props) => {
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.subTitle}>
-                                        Party Address and Contact Details
+                                        {translateContent('partyMaster.heading.drawerSubheadingAddress')}
                                     </Col>
                                 </Row>
                                 <Row gutter={16}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.textareaError}>
-                                        <Form.Item initialValue={formData?.address} label="Address" name="address" rules={[validateRequiredInputField('address')]}>
+                                        <Form.Item initialValue={formData?.address} label={translateContent('partyMaster.label.address')} name="address" rules={[validateRequiredInputField(translateContent('partyMaster.label.address'))]}>
                                             <TextArea {...disabledProps} placeholder={preparePlaceholderText('Address')} maxLength={300} showCount />
                                         </Form.Item>
                                     </Col>
@@ -241,17 +242,17 @@ const AddEditFormMain = (props) => {
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <Form.Item
                                             initialValue={formData?.pinCode}
-                                            label="Pin Code"
+                                            label={translateContent('partyMaster.label.pinCode')}
                                             name="pinCode"
                                             rules={[
-                                                validateRequiredInputField('pincode'),
+                                                validateRequiredInputField(translateContent('partyMaster.label.pinCode')),
                                                 {
                                                     validator: searchValidatorPincode,
                                                 },
                                             ]}
                                         >
                                             <AutoComplete {...disabledProps} maxLength={6} options={options} onSelect={handleOnSelect} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
-                                                <Search onSearch={handleOnSearch} onChange={handleOnClear} placeholder="Search" loading={isPinCodeLoading} type="text" allowClear />
+                                                <Search onSearch={handleOnSearch} onChange={handleOnClear} placeholder={preparePlaceholderSearch()} loading={isPinCodeLoading} type="text" allowClear />
                                             </AutoComplete>
                                         </Form.Item>
                                     </Col>
@@ -259,106 +260,106 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={16}>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                         <Form.Item
-                                            label="City"
+                                            label={translateContent('partyMaster.label.city')}
                                             initialValue={formData?.city}
                                             //  rules={[validateRequiredInputField('city')]}
                                             name="city"
                                         >
-                                            <Input disabled={true} placeholder={preparePlaceholderText('city')} maxLength={50} />
+                                            <Input disabled={true} placeholder={preparePlaceholderText(translateContent('partyMaster.label.city'))} maxLength={50} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                         <Form.Item
                                             initialValue={formData?.tehsil}
-                                            label="Tehsil"
+                                            label={translateContent('partyMaster.label.tehsil')}
                                             name="tehsil"
                                             //  rules={[validateRequiredInputField('tehsil')]}
                                         >
-                                            <Input disabled={true} placeholder={preparePlaceholderText('tehsil')} maxLength={6} />
+                                            <Input disabled={true} placeholder={preparePlaceholderText(translateContent('partyMaster.label.tehsil'))} maxLength={6} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={16}>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                         <Form.Item
-                                            label="District"
+                                            label={translateContent('partyMaster.label.district')}
                                             initialValue={formData?.district}
                                             // rules={[validateRequiredInputField('district')]}
                                             name="district"
                                         >
-                                            <Input disabled={true} placeholder={preparePlaceholderText('district')} maxLength={50} />
+                                            <Input disabled={true} placeholder={preparePlaceholderText(translateContent('partyMaster.label.district'))} maxLength={50} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                         <Form.Item
                                             initialValue={formData?.state}
-                                            label="State"
+                                            label={translateContent('partyMaster.label.state')}
                                             name="state"
                                             // rules={[validateRequiredInputField('state')]}
                                         >
-                                            <Input disabled={true} placeholder={preparePlaceholderText('state')} maxLength={50} />
+                                            <Input disabled={true} placeholder={preparePlaceholderText(translateContent('partyMaster.label.state'))} maxLength={50} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={16}>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                         <Form.Item
-                                            label="Mobile Number"
+                                            label={translateContent('partyMaster.label.mobileNumber')}
                                             initialValue={formData?.mobileNumber1}
                                             rules={[
                                                 // validateRequiredInputField('party mobile number'),
-                                                validateMobileNoField('mobile number'),
+                                                validateMobileNoField(translateContent('partyMaster.label.mobileNumber')),
                                             ]}
                                             name="mobileNumber1"
                                         >
-                                            <Input {...disabledProps} placeholder={preparePlaceholderText('mobile number')} maxLength={10} />
+                                            <Input {...disabledProps} placeholder={preparePlaceholderText(translateContent('partyMaster.label.mobileNumber'))} maxLength={10} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                         <Form.Item
-                                            label="Alternate Mobile Number"
+                                            label={translateContent('partyMaster.label.alternateMobileNumber')}
                                             initialValue={formData?.alternateMobileNumber}
                                             rules={[
                                                 // validateRequiredInputField('alternate mobile number'),
-                                                validateMobileNoField('alternate mobile number'),
+                                                validateMobileNoField(translateContent('partyMaster.label.alternateMobileNumber')),
                                             ]}
                                             name="alternateMobileNumber"
                                         >
-                                            <Input {...disabledProps} placeholder={preparePlaceholderText('alternate mobile number')} maxLength={10} />
+                                            <Input {...disabledProps} placeholder={preparePlaceholderText(translateContent('partyMaster.label.alternateMobileNumber'))} maxLength={10} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.subTitle}>
-                                        Other Details
+                                        {translateContent('partyMaster.label.drawerSubheadingOtherDetails')}
                                     </Col>
                                 </Row>
                                 <Row gutter={16}>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                         <Form.Item
                                             initialValue={formData?.gstInNumber}
-                                            label="GSTIN number"
+                                            label={translateContent('partyMaster.label.gstinNumber')}
                                             name="gstInNumber"
                                             rules={[
                                                 // validateRequiredInputField('GSTIN number'),
-                                                validateGSTIN('GSTIN number'),
+                                                validateGSTIN(translateContent('partyMaster.label.gstinNumber')),
                                             ]}
                                         >
-                                            <Input {...disabledProps} placeholder={preparePlaceholderText('GSTIN number')} maxLength={15} />
+                                            <Input {...disabledProps} placeholder={preparePlaceholderText(translateContent('partyMaster.label.gstinNumber'))} maxLength={15} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                         <Form.Item
-                                            label="PAN"
+                                            label={translateContent('partyMaster.label.pan')}
                                             initialValue={formData?.panNumber}
                                             rules={[
                                                 // validateRequiredInputField('PAN'),
-                                                validatePanField('PAN'),
+                                                validatePanField(translateContent('partyMaster.label.gstinNumber')),
                                             ]}
                                             name="panNumber"
                                         >
-                                            <Input {...disabledProps} placeholder={preparePlaceholderText('PAN')} maxLength={10} />
+                                            <Input {...disabledProps} placeholder={preparePlaceholderText(translateContent('partyMaster.label.gstinNumber'))} maxLength={10} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
@@ -366,53 +367,53 @@ const AddEditFormMain = (props) => {
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                         <Form.Item
                                             initialValue={formData?.partsDiscount}
-                                            label="Parts Discount(%)"
+                                            label={translateContent('partyMaster.label.partsDiscount') + '(%)'}
                                             name="partsDiscount"
                                             rules={[
                                                 // validateRequiredInputField('part discount'),
-                                                validationNumber('part discount'),
-                                                valueBetween0to100('part discount'),
+                                                validationNumber(translateContent('partyMaster.label.partsDiscount')),
+                                                valueBetween0to100(translateContent('partyMaster.label.partsDiscount')),
                                             ]}
                                         >
-                                            <Input {...disabledProps} placeholder={preparePlaceholderText('part discount')} maxLength={3} />
+                                            <Input {...disabledProps} placeholder={preparePlaceholderText(translateContent('partyMaster.label.partsDiscount'))} maxLength={3} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                         <Form.Item
-                                            label="Credit Limit"
+                                            label={translateContent('partyMaster.label.creditLimit')}
                                             initialValue={formData?.creditLimit}
                                             rules={[
                                                 // validateRequiredInputField('credit limit'),
-                                                validateOnlyPositiveNumber('credit limit'),
+                                                validateOnlyPositiveNumber(translateContent('partyMaster.label.creditLimit')),
                                             ]}
                                             name="creditLimit"
                                         >
-                                            <Input {...disabledProps} placeholder={preparePlaceholderText('credit limit')} maxLength={15} />
+                                            <Input {...disabledProps} placeholder={preparePlaceholderText(translateContent('partyMaster.label.creditLimit'))} maxLength={15} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={16}>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                         <Form.Item
-                                            label="Credit Days"
+                                            label={translateContent('partyMaster.label.creditDays')}
                                             initialValue={formData?.creditDays}
                                             rules={[
                                                 // validateRequiredInputField('credit days'),
-                                                validationNumber('credit days'),
+                                                validationNumber(translateContent('partyMaster.label.creditDays')),
                                             ]}
                                             name="creditDays"
                                         >
-                                            <Input {...disabledProps} placeholder={preparePlaceholderText('credit days')} maxLength={4} />
+                                            <Input {...disabledProps} placeholder={preparePlaceholderText(translateContent('partyMaster.label.creditDays'))} maxLength={4} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                         <Form.Item
-                                            label="Remarks"
+                                            label={translateContent('partyMaster.label.remarks')}
                                             initialValue={formData?.remarks}
                                             // rules={[validateRequiredInputField('remarks')]}
                                             name="remarks"
                                         >
-                                            <Input {...disabledProps} placeholder={preparePlaceholderText('remarks')} maxLength={50} />
+                                            <Input {...disabledProps} placeholder={preparePlaceholderText(translateContent('partyMaster.label.remarks'))} maxLength={50} />
                                         </Form.Item>
                                     </Col>
                                 </Row>

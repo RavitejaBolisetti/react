@@ -22,6 +22,7 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { btnVisiblity } from 'utils/btnVisiblity';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { AddEditForm } from './AddEditForm';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -36,11 +37,9 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Account Category';
-
     let returnValue = {
         userId,
-        moduleTitle,
+        moduleTitle: translateContent('accountCategory.heading.pageTitle'),
         isAccountCategoryLoaded,
         isAccountCategoryLoading,
         accountCategoryData: accountCategoryData?.paginationData,
@@ -79,7 +78,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const AccountCategoryMain = (props) => {
-    const { moduleTitle, userId, showGlobalNotification, taxChargeCategoryCodeData, totalRecords, fetchAccountCategory, listShowLoadingAccountCategory, saveData, accountCategoryData, fetchApplicationMenu, applicationMenuData, listShowLoadingApplicationMenu, fetchFinancialAccountHead, isFinancialAccountHeadLoaded, listShowLoadingFinancialAccountHead, financialAccountData, isDocumentDescriptionLoaded, documentDescriptionData, fetchDocumentDescription, listShowLoadingDocumentDescription } = props;
+    const { moduleTitle, userId, showGlobalNotification, taxChargeCategoryCodeData, totalRecords, fetchAccountCategory, listShowLoadingAccountCategory, saveData, accountCategoryData, fetchApplicationMenu, applicationMenuData, listShowLoadingApplicationMenu, fetchFinancialAccountHead, isFinancialAccountHeadLoaded, listShowLoadingFinancialAccountHead, financialAccountData, isDocumentDescriptionLoaded, documentDescriptionData, fetchDocumentDescription, listShowLoadingDocumentDescription, pageTitle } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
@@ -280,16 +279,16 @@ export const AccountCategoryMain = (props) => {
             form.resetFields();
             setShowDataLoading(true);
 
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             fetchAccountCategory({ setIsLoading: listShowLoadingAccountCategory, userId, customURL, extraParams, onSuccessAction });
 
             setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage, placement: 'bottomRight' });
             } else {
                 setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             }
         };
 
@@ -320,12 +319,13 @@ export const AccountCategoryMain = (props) => {
     };
 
     const drawerTitle = useMemo(() => {
+
         if (formActionType?.viewMode) {
-            return 'View ';
+            return translateContent('global.drawerTitle.view');
         } else if (formActionType?.editMode) {
-            return 'Edit ';
+            return translateContent('global.drawerTitle.edit');
         } else {
-            return 'Add ';
+            return translateContent('global.drawerTitle.add');
         }
     }, [formActionType]);
 
@@ -338,7 +338,7 @@ export const AccountCategoryMain = (props) => {
 
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat('Account Category'),
+        titleOverride: drawerTitle.concat(moduleTitle),
 
         ADD_ACTION,
         EDIT_ACTION,
@@ -379,8 +379,6 @@ export const AccountCategoryMain = (props) => {
         handleButtonClick: () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD }),
     };
 
-    const title = 'Account Category Code';
-
     const advanceFilterResultProps = {
         advanceFilter: false,
         filterString,
@@ -390,7 +388,7 @@ export const AccountCategoryMain = (props) => {
         handleClearInSearch,
         handleReferesh,
         handleButtonClick,
-        title,
+        title: translateContent('accountCategory.label.accountCategoryCode'),
         tableData: accountCategoryData,
     };
 
