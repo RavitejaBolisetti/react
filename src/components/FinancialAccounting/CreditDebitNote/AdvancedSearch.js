@@ -15,6 +15,7 @@ import { ModalButtons } from 'components/common/Button';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { customSelectBox } from 'utils/customSelectBox';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -72,37 +73,37 @@ export const AdvancedSearchFrom = (props) => {
         if (bool) {
             return Promise.resolve();
         }
-        return Promise.reject(new Error('Date cant be less than Effective from date'));
+        return Promise.reject(new Error(translateContent('creditDebitNote.validation.dateCompareValidation')));
     };
 
     return (
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={filterString?.voucherType} label="Voucher Type" name="voucherType">
-                        <Select showSearch allowClear placeholder={preparePlaceholderSelect('Select')} fieldNames={{ label: 'value', value: 'value' }} options={typeData[PARAM_MASTER.VOUCHR_TYPE.id]}></Select>
+                    <Form.Item initialValue={filterString?.voucherType} label={translateContent('creditDebitNote.label.voucherType')} name="voucherType">
+                        <Select showSearch allowClear placeholder={preparePlaceholderSelect(translateContent('creditDebitNote.placeholder.voucherType'))} fieldNames={{ label: 'value', value: 'value' }} options={typeData[PARAM_MASTER.VOUCHR_TYPE.id]}></Select>
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Form.Item name="partySegment" label="Party Segment" initialValue={filterString?.partySegment}>
-                        {customSelectBox({ data: typeData[PARAM_MASTER?.PARTY_CATEG?.id], placeholder: preparePlaceholderSelect('Party Segment') })}
+                    <Form.Item name="partySegment" label={translateContent('creditDebitNote.label.partySegment')} initialValue={filterString?.partySegment}>
+                        {customSelectBox({ data: typeData[PARAM_MASTER?.PARTY_CATEG?.id], placeholder: preparePlaceholderSelect(translateContent('creditDebitNote.placeholder.partySegment')) })}
                     </Form.Item>
                 </Col>
             </Row>
 
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="From Date" name="fromDate" rules={[validateRequiredSelectField('From Date')]} className={styles?.datePicker}>
+                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label={translateContent('creditDebitNote.label.fromDate')} name="fromDate" rules={[validateRequiredSelectField(translateContent('creditDebitNote.validation.fromDate'))]} className={styles?.datePicker}>
                         <DatePicker format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} onChange={() => advanceFilterForm.setFieldsValue({ toDate: undefined })} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         initialValue={formatDateToCalenderDate(filterString?.toDate)}
-                        label="To Date"
+                        label={translateContent('creditDebitNote.label.toDate')}
                         name="toDate"
                         rules={[
-                            validateRequiredSelectField('To Date'),
+                            validateRequiredSelectField(translateContent('creditDebitNote.validation.toDate')),
                             {
                                 validator: (_, value) => {
                                     return advanceFilterForm.getFieldValue('fromDate') ? CheckDateEffectiveTo(value, advanceFilterForm?.getFieldValue('fromDate')) : null;

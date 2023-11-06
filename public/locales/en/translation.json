@@ -76,7 +76,10 @@
             "deliveryNote": " Delivery Note",
             "advancedFilter": "Advanced Filters",
             "viewHistory": "View History",
-            "uploadFile": "Upload File"
+            "uploadFile": "Upload File",
+            "addCreditNote": "Add Credit Note",
+            "addDebitNote": "Add Dedit Note",
+            "printReceipt": "Print Receipt"
         },
         "placeholder": {
             "input": "Enter ",
@@ -2144,32 +2147,92 @@
     },
     "creditDebitNote": {
         "heading": {
-            "moduleTitle": "Booking SO Mapping Control"
+            "moduleTitle": "Credit/Debit Note",
+            "pageTitle": "Credit/Debit Note"
         },
         "label": {
-            "variantCode": "Variant Code"
+            "voucherNumber": "Voucher Number",
+            "voucherType": "Voucher Type",
+            "partySegment": "Party Segment",
+            "customerName": "Customer Name",
+            "paidAmount": "Paid Amount",
+            "fromDate": "From Date",
+            "toDate": "To Date"
         },
         "placeholder": {
-            "variantCode": "Variant Code"
+            "searchTitle": "Search Credit/Debit",
+            "voucherNumber": "Search by voucher number",
+            "voucherType": "Voucher Type",
+            "partySegment": "Party Segment",
+            "fromDate": "From Date",
+            "toDate": "To Date"
         },
         "validation": {
-            "variantCode": "Variant Code"
+            "dateCompareValidation": "Date cant be less than Effective from date",
+            "voucherType": "Voucher Type",
+            "partySegment": "Party Segment",
+            "fromDate": "From Date",
+            "toDate": "To Date"
+        },
+        "leftSideBar": {
+            "label": {
+                "voucherNumber": "Voucher Number",
+                "voucherType": "Voucher Type",
+                "voucherDate": "Voucher Date"
+            },
+            "placeholder": {
+                "searchTitle": "Search Credit/Debit",
+                "voucherNumber": "Search by voucher number"
+            },
+            "validation": {
+                "voucherType": "Voucher Type"
+            }
+        },
+        "voucherDetails": {
+            "heading": {
+                "moduleTitle": "Voucher and Party Details",
+                "voucherModuleTitle": "Voucher",
+                "title":"Voucher Details"
+            },
+            "label": {
+                "accountHead": "Account Head",
+                "accountNarration": "Account Narration",
+                "amount": "Amount",
+                "voucherDetails": "Voucher Details"
+            },
+            "placeholder": {
+                "searchTitle": "Search Credit/Debit",
+                "voucherNumber": "Search by voucher number",
+                "accountHead": "Account Head",
+                "accountNarration": "Account Narration",
+                "amount": "Amount"
+            },
+            "validation": {
+                "atLeastOneVoucher": "Please add atleast one voucher record",
+                "accountHead": "Account Head",
+                "accountNarration": "Account Narration",
+                "amount": "Amount"
+            },
+            "message":{
+                "successMessage": "Account Head validated successfully",
+                "errorMessage": "Account Head is not correct"
+            }
         }
     },
-    "bookingSoMappingControlMaster":{ 
-        "heading":{
+    "bookingSoMappingControlMaster": {
+        "heading": {
             "title": "Hierarchy",
             "noDataTitle": "Please choose organization hierarchy to view data"
         },
-        "placeholder":{
-            "organizationHierarchy": "Organization Hierarchy" 
+        "placeholder": {
+            "organizationHierarchy": "Organization Hierarchy"
         },
-        "validation":{
-            "diffSelection" : "No Product Found"   
+        "validation": {
+            "diffSelection": "No Product Found"
         },
-        "description":{
-            "selectLeft":"Please select from left",
-            "sideHierarchyView":"side hierarchy to view “Details”"
+        "description": {
+            "selectLeft": "Please select from left",
+            "sideHierarchyView": "side hierarchy to view “Details”"
         }
     }
 }
