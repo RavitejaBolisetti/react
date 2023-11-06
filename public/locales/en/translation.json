@@ -65,7 +65,9 @@
             "addIndent": "Add Indent",
             "apply": "Apply",
             "submit": "Submit",
-            "continue": "Continue"
+            "continue": "Continue",
+            "addChild": " Add Child",
+            "addSibling": " Add Sibling"
         },
         "placeholder": {
             "input": "Enter ",
@@ -593,6 +595,9 @@
             "name": "name",
             "startTime": "Start time*",
             "endTime": "End time*"
+        },
+        "button": {
+            "addTime": "Add Time"
         }
     },
     "productHierarchy": {
@@ -601,7 +606,8 @@
             "hierarchyDetails": "Hierarchy Details",
             "pageTitle": "Product Hierarchy",
             "title": "Hierarchy",
-            "productAttribute": "Product Attribute"
+            "productAttribute": "Product Attribute",
+            "panelHeader": "Product Atrribute Details"
         },
         "placeholder": {
             "organizationHierarchy": "Organization Hierarchy",
@@ -666,6 +672,35 @@
         "placeholder": {
             "taxType": "Tax Type",
             "taxCode": "Tax Code"
+        }
+    },
+    "taxCharges": {
+        "heading": {
+            "moduleTitle": "Tax & Charges Detail",
+            "viewTitle": "Tax & Charges Details",
+            "title": "Tax & Charges"
+        },
+        "description": {
+            "noData": " Please select Tax and Charges from left side hierarchy to view “Details”"
+        },
+        "label": {
+            "attributeLevel": "Attribute Type",
+            "parent": "Parent",
+            "taxTypeCode": "Tax/Charge Type Code",
+            "taxTypeDescription": "Tax/Charge Type Descrption",
+            "calculationType": "Calculation Type",
+            "documentDescription": "Document Description",
+            "financialHead": "Financial Account Head",
+            "status": "Status",
+            "percentage": "Percentage",
+            "rate": "Rate"
+        },
+        "validation": {
+            "attributeLevel": "attribute level",
+            "message": "is not active anymore. Please select a different attribute.",
+            "parent": "Parent",
+            "attributeTypeCode": "Attribute Type Code",
+            "decimalPlaces": "rate with two decimal places"
         }
     },
 
@@ -1799,6 +1834,27 @@
             "attributeTypeCode": "attribute type code",
             "attributeHierarchyFieldValidation": "is not active anymore. Please select a different attribute.",
             "validationText": "File type should be .xlxs and max file size to be 8Mb"
+        }
+    },
+    "termConditionDealer": {
+        "heading": {
+            "pageTitle": "Terms & Conditions - Dealer Location",
+            "moduletitle": "Term & Condition"
+        },
+        "label": {
+            "LessorCompany": "Lessor Customer Form",
+            "companyName": "Company Name",
+            "stateName": "State Name"
+        },
+        "placeholder": {
+            "stateName": "State Name"
+        },
+        "message": {
+            "uploadButtonName": "Upload Lessor Form",
+            "messageText": "Click or drop your file here to upload",
+            "validationText": "File type should be .xlxs and max file size to be 8Mb",
+            "docName": "Lessor Template",
+            "textMessage": "Please download Lessor Customer Template using below button"
         }
     }
 }

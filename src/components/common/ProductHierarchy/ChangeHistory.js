@@ -77,7 +77,7 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
             dataIndex: 'attributeKey',
         }),
         tblPrepareColumns({
-            title:translateContent('productHierarchy.label.moduleTitle'),
+            title: translateContent('productHierarchy.label.moduleTitle'),
             dataIndex: 'prodctCode',
         }),
         tblPrepareColumns({
@@ -113,7 +113,7 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Button danger onClick={onCloseAction}>
-                            Close
+                            {translateContent('global.buttons.close')}
                         </Button>
                     </Col>
                 </Row>
@@ -122,4 +122,4 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
     );
 };
 
-export const ChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ChangeHistoryMain, { title: 'Change History', width: '90%' }));
+export const ChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ChangeHistoryMain, { title: translateContent('global.changeHistory.title'), width: '90%' }));
