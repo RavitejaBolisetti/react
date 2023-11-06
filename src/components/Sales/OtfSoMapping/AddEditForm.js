@@ -48,7 +48,7 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Form.Item initialValue={null} label={translateContent('bookingSoMapping.label.userForMappingUnmapping')} name="otfSoMapUnmapBy" rules={[validateRequiredInputField(translateContent('bookingSoMapping.validation.userForMappingUnmapping'))]}>
-                                    {customSelectBox({ data: otfSoUserMappingData, placeholder: translateContent('bookingSoMapping.palaceholder.userForMappingUnmapping') })}
+                                    {customSelectBox({ data: otfSoUserMappingData, placeholder: translateContent('bookingSoMapping.placeholder.userForMappingUnmapping') })}
                                 </Form.Item>
                             </Col>
                         </Row>

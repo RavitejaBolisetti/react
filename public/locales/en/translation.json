@@ -1193,6 +1193,7 @@
     "vinBlockMaster": {
         "heading": {
             "moduleTitle": "Vin Block Master",
+            "pageTitle": "Vin Block Master",
             "title": "Vin Block Master",
             "advancedFilter": "Advanced Filter",
             "appliedAdvanceFilters": "Applied Advance Filters"
@@ -1293,6 +1294,7 @@
     "hoPriceMapping": {
         "heading": {
             "maintitle": "HO Price Upload Mapping",
+            "pageTitle": "HO Price Upload Mapping for Dealer",
             "title": "HO Price Upload Mapping for Dealer",
             "drawerTitleHeading": "HO Price Upload Mapping",
             "titleOverride": "Advance Filters",
@@ -2065,6 +2067,20 @@
             "variantCode": "Variant Code",
             "productVariant": "Product Variant",
             "userForMappingUnmapping": "User for Mapping/Unmapping"
+        }
+    },
+    "creditDebitNote": {
+        "heading": {
+            "moduleTitle": "Booking SO Mapping Control"
+        },
+        "label": {
+            "variantCode": "Variant Code"
+        },
+        "placeholder": {
+            "variantCode": "Variant Code"
+        },
+        "validation": {
+            "variantCode": "Variant Code"
         }
     }
 }
