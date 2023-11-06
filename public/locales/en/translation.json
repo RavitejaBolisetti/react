@@ -2487,7 +2487,14 @@
             "invoiceFromDate": "Invoice From Date",
             "invoiceToDate": "Invoice To Date",
             "deliveryNoteFromDate": "Delivery Note From Date",
-            "deliveryNoteToDate": "Delivery Note To Date"
+            "deliveryNoteToDate": "Delivery Note To Date",
+            "deliveryNoteDate":"Delivery Note Date",
+            "challanDate":"Challan Date",
+            "mobileNo":"Mobile No.:",
+            "status":"Status:",
+            "invoiceNo":" Invoice Number:",
+            "invoiceDate":"Invoice Date:",
+            "bookingNumber":"Booking Number:"
         },
         "placeholder": {
             "select": "Select"
