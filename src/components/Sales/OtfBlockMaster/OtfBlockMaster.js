@@ -1,4 +1,9 @@
 /*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
+/*
 
  *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
 
@@ -47,6 +52,7 @@ import LeftPanel from 'components/common/LeftPanel';
 import styles from 'assets/sass/app.module.scss';
 
 import { LANGUAGE_EN } from 'language/en';
+import { translateContent } from 'utils/translateContent';
 
 const { Search } = Input;
 
@@ -75,9 +81,9 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Booking Block Detail';
+    const moduleTitle = translateContent('bookingBlockMaster.heading.moduleTitle');
 
-    const viewTitle = 'Booking Block';
+    const viewTitle = translateContent('bookingBlockMaster.heading.viewTitle');
 
     let returnValue = {
         collapsed,
@@ -434,7 +440,7 @@ export const OtfBlockMasterMain = (props) => {
             formData && setFormData(data);
 
             if (res?.data) {
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
 
                 fetchList({ setIsLoading: listShowLoading, userId, extraParams: makeExtraparms([{ key: 'manufacturerOrgId', title: 'manufacturerOrgId', value: organizationId, name: 'manufacturerOrgId' }]), errorAction: onErrorAction });
 
@@ -544,7 +550,7 @@ export const OtfBlockMasterMain = (props) => {
 
         buttonData,
 
-        titleOverride: (formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
+        titleOverride: (formData?.id ? translateContent('global.drawerTitle.edit') : translateContent('global.drawerTitle.add')).concat(moduleTitle),
 
         isFormBtnActive,
 
@@ -662,10 +668,10 @@ export const OtfBlockMasterMain = (props) => {
 
         defaultValue: 'organizationId',
 
-        placeholder: preparePlaceholderSelect('Organization Hierarchy'),
+        placeholder: preparePlaceholderSelect(translateContent('bookingBlockMaster.placeholder.organizationHierarchy')),
     };
 
-    const title = 'Hierarchy';
+    const title = translateContent('manufacturerOrganisation.heading.title');
 
     return (
         <>
@@ -681,7 +687,7 @@ export const OtfBlockMasterMain = (props) => {
 
                                     {organizationId && productHierarchyData?.length > 0 && (
                                         <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                            <Search placeholder="Search" allowClear onChange={onChange} />
+                                            <Search placeholder={translateContent('global.placeholder.search')} allowClear onChange={onChange} />
                                         </Col>
                                     )}
                                 </Row>
@@ -706,9 +712,9 @@ export const OtfBlockMasterMain = (props) => {
                                             {noDataTitle} <br /> {noDataMessage}
                                         </span>
                                     ) : !organizationId ? (
-                                        <span className={styles.descriptionText}>Please select hierarchy type to view records.</span>
+                                        <span className={styles.descriptionText}>{translateContent('bookingBlockMaster.label.descriptionText')}</span>
                                     ) : (
-                                        <span className={styles.descriptionText}> No records found.</span>
+                                        <span className={styles.descriptionText}>{translateContent('global.generalMessage.noRecordsFound')}</span>
                                     )
                                 }
                             ></Empty>
@@ -738,8 +744,7 @@ export const OtfBlockMasterMain = (props) => {
                                     }}
                                     description={
                                         <span>
-                                            Please select product from left <br />
-                                            side hierarchy to view “Hierarchy Details”
+                                            {translateContent('bookingBlockMaster.label.viewHierarchyText')}
                                         </span>
                                     }
                                 ></Empty>

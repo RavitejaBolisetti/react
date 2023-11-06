@@ -2069,6 +2069,7 @@
             "parent": "Parent",
             "attributeTypeCode": "attribute type code",
             "attributeCode": "attribute code"
+
         },
         "validation": {
             "nameValidation": "name",
@@ -2365,6 +2366,30 @@
             "effectiveto": "Effective To",
             "version": "Version",
             "termsconditiondescription": "Description"
+        }
+    },
+    "bookingBlockMaster": {
+        "heading": {
+            "pageTitle": "Booking Block Master",
+            "moduleTitle": "Booking Block Detail",
+            "viewTitle": "Booking Block",
+            "noDataTitle": "Please choose organization hierarchy to view data"
+        },
+        "label":{
+            "descriptionText": "Please select hierarchy type to view records.",
+            "viewHierarchyText": "Please select product from left side hierarchy to view “Hierarchy Details”.",
+            "productHierarchy":"Product Hierarchy",
+            "manufacturerAdmin": "Manufacturer Administrative Hierarchy",
+            "dealerCode":"Dealer Code"
+        },
+        "placeholder": {
+            "organizationHierarchy": "Organization Hierarchy",
+            "parent": "parent",
+            "productHierarchy":"product hierarchy"
+
+        },
+        "validation": {
+            "productHierarchy":"Product Hierarchy"
         }
     }
 }

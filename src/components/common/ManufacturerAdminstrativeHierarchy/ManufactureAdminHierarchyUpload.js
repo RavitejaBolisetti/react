@@ -62,7 +62,7 @@ const UploadMain = (props) => {
                     <>
                         {message}
                         <Button type="link" onClick={() => downloadReport(data?.docId)}>
-                            {translateContent('manufacturerAdmin.label.downloadHere')}
+                            {translateContent('adminHierarchy.label.downloadHere')}
                         </Button>
                     </>
                 );
@@ -136,8 +136,8 @@ const UploadMain = (props) => {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <div className={styles.contentHeaderBackground}>
                             <Space direction="vertical">
-                                <Space className={styles.accordianIconWithText}>{translateContent('manufacturerAdmin.label.authorityForm')}</Space>
-                                <Space>{translateContent('manufacturerAdmin.label.downloadAuthorityForm')}</Space>
+                                <Space className={styles.accordianIconWithText}>{translateContent('adminHierarchy.label.authorityForm')}</Space>
+                                <Space>{translateContent('adminHierarchy.label.downloadAuthorityForm')}</Space>
                                 <Space>
                                     <Button type="primary" onClick={getDocIdFromOrgId}>
                                         {translateContent('global.buttons.downloadTemplate')}
@@ -146,7 +146,7 @@ const UploadMain = (props) => {
                             </Space>
                         </div>
 
-                        <UploadUtil {...props} uploadButtonName={translateContent('manufacturerAdmin.label.uploadButtonName')} messageText={translateContent('manufacturerAdmin.label.messageText')} validationText={translateContent('manufacturerAdmin.validation.validationText')} handleFormValueChange={handleFormValueChange} />
+                        <UploadUtil {...props} uploadButtonName={translateContent('adminHierarchy.label.uploadButtonName')} messageText={translateContent('adminHierarchy.label.messageText')} validationText={translateContent('adminHierarchy.validation.validationText')} handleFormValueChange={handleFormValueChange} />
                     </Col>
                 </Row>
 
