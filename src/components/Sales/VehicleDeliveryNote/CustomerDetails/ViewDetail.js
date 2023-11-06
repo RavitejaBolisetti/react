@@ -6,6 +6,7 @@
 import React from 'react';
 import { Card, Descriptions } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { translateContent } from 'utils/translateContent';
 
 const ViewDetailMain = (props) => {
     const { formData, isLoading } = props;
@@ -19,16 +20,16 @@ const ViewDetailMain = (props) => {
     return (
         <Card>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Customer ID">{checkAndSetDefaultValue(formData?.customerId, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Customer Type">{checkAndSetDefaultValue(formData?.customerType, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(formData?.customerName, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Mobile No.">{checkAndSetDefaultValue(formData?.customerPhoneNumber, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Address">{checkAndSetDefaultValue(formData?.customerAddress, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="City">{checkAndSetDefaultValue(formData?.customerCity, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="District">{checkAndSetDefaultValue(formData?.district, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="State">{checkAndSetDefaultValue(formData?.state, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Pincode">{checkAndSetDefaultValue(formData?.pinCode, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Email ID">{checkAndSetDefaultValue(formData?.email, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('vehicleDeliveryNote.customerDetails.label.customerId')}>{checkAndSetDefaultValue(formData?.customerId, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('vehicleDeliveryNote.customerDetails.label.customerType')}>{checkAndSetDefaultValue(formData?.customerType, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('vehicleDeliveryNote.customerDetails.label.customerName')}>{checkAndSetDefaultValue(formData?.customerName, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('vehicleDeliveryNote.customerDetails.label.customerPhoneNumber')}>{checkAndSetDefaultValue(formData?.customerPhoneNumber, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('vehicleDeliveryNote.customerDetails.label.customerAddress')}>{checkAndSetDefaultValue(formData?.customerAddress, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('vehicleDeliveryNote.customerDetails.label.customerCity')}>{checkAndSetDefaultValue(formData?.customerCity, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('vehicleDeliveryNote.customerDetails.label.district')}>{checkAndSetDefaultValue(formData?.district, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('vehicleDeliveryNote.customerDetails.label.state')}>{checkAndSetDefaultValue(formData?.state, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('vehicleDeliveryNote.customerDetails.label.pinCode')}>{checkAndSetDefaultValue(formData?.pinCode, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('vehicleDeliveryNote.customerDetails.label.email')}>{checkAndSetDefaultValue(formData?.email, isLoading)}</Descriptions.Item>
             </Descriptions>
         </Card>
     );
