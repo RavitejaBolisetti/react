@@ -2113,5 +2113,21 @@
         "validation": {
             "variantCode": "Variant Code"
         }
+    },
+    "bookingSoMappingControlMaster":{ 
+        "heading":{
+            "title": "Hierarchy",
+            "noDataTitle": "Please choose organization hierarchy to view data"
+        },
+        "placeholder":{
+            "organizationHierarchy": "Organization Hierarchy" 
+        },
+        "validation":{
+            "diffSelection" : "No Product Found"   
+        },
+        "description":{
+            "selectLeft":"Please select from left",
+            "sideHierarchyView":"side hierarchy to view “Details”"
+        }
     }
 }
