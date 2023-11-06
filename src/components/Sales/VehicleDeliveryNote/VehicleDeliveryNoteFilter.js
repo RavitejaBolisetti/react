@@ -13,6 +13,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { DELIVERY_TYPE } from 'constants/modules/vehicleDetailsNotes.js/deliveryType';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export default function VehicleDeliveryNoteFilter(props) {
     const { deliveryType, extraParams, removeFilter, searchForm, typeData, filterString, deliveryStatusList, onDeliveryTabChange, setFilterString, handleResetFilter, advanceFilter = false, handleDeliveryNoteTypeChange, setAdvanceSearchVisible, deliveryStatus } = props;
@@ -58,7 +59,7 @@ export default function VehicleDeliveryNoteFilter(props) {
                                         setAdvanceSearchVisible(true);
                                     }}
                                 >
-                                    Advanced Filters
+                                    {translateContent('global.advanceFilter.title')}
                                 </Button>
                             </Col>
                         </Row>
@@ -70,7 +71,7 @@ export default function VehicleDeliveryNoteFilter(props) {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={22} xl={22} className={styles.advanceFilterContainer}>
-                                <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
+                                <div className={styles.advanceFilterTitle}> {translateContent('global.advanceFilter.appliedAdvanceFilter')} </div>
                                 {extraParams?.map((filter) => {
                                     return (
                                         filter?.value &&
@@ -89,7 +90,7 @@ export default function VehicleDeliveryNoteFilter(props) {
                             </Col>
                             <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
                                 <Button className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
-                                    Clear
+                                    {translateContent('global.buttons.clear')}
                                 </Button>
                             </Col>
                         </Row>

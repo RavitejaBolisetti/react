@@ -2122,6 +2122,14 @@
             "mainTitle": "Delivery Note",
             "title": "Vehicle Delivery Note"
         },
+        "buttons": {
+            "cancelTitle": "Cancel ",
+            "challan": "Challan",
+            "cancelDeliveryNote": "Cancel Delivery Note",
+            "cancelChallan": "Cancel Challan",
+            "printDeliveryNote": "Print Delivery Note",
+            "printChallan": "Print Challan"
+        },
         "label": {},
         "placeholder": {
             "select": "Select"
@@ -2156,20 +2164,20 @@
             "variantCode": "Variant Code"
         }
     },
-    "bookingSoMappingControlMaster":{ 
-        "heading":{
+    "bookingSoMappingControlMaster": {
+        "heading": {
             "title": "Hierarchy",
             "noDataTitle": "Please choose organization hierarchy to view data"
         },
-        "placeholder":{
-            "organizationHierarchy": "Organization Hierarchy" 
+        "placeholder": {
+            "organizationHierarchy": "Organization Hierarchy"
         },
-        "validation":{
-            "diffSelection" : "No Product Found"   
+        "validation": {
+            "diffSelection": "No Product Found"
         },
-        "description":{
-            "selectLeft":"Please select from left",
-            "sideHierarchyView":"side hierarchy to view “Details”"
+        "description": {
+            "selectLeft": "Please select from left",
+            "sideHierarchyView": "side hierarchy to view “Details”"
         }
     }
 }
