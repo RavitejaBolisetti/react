@@ -34,6 +34,7 @@
             "title": "Advance Filters",
             "appliedAdvanceFilter": "Applied Advance Filters :"
         },
+        "toolTip": {},
         "generalMessage": {
             "noRecordsFound": "No records found",
             "noRecordsFoundAddNew": "Please add New {NAME} using below button"
@@ -65,7 +66,17 @@
             "addIndent": "Add Indent",
             "apply": "Apply",
             "submit": "Submit",
-            "continue": "Continue"
+            "continue": "Continue",
+            "addChild": " Add Child",
+            "addSibling": " Add Sibling",
+            "transfer": "Transfer",
+            "allot": "Allot",
+            "unAllot": "Un-Allot",
+            "invoice": "Invoice",
+            "deliveryNote": " Delivery Note",
+            "advancedFilter": "Advanced Filters",
+            "viewHistory": "View History",
+            "uploadFile": "Upload File"
         },
         "placeholder": {
             "input": "Enter ",
@@ -290,7 +301,20 @@
         "label": {
             "rejectionRemarks": "Rejection Remarks",
             "acceptanceTermsFirstLine": "I accept that for the Transferred Vehicle , Claim can be generated from the billed Dealer.",
-            "acceptanceTermsSecondLine": "If more than one transfer happens for the same vehicle then claim is not allowed for any of the dealership."
+            "acceptanceTermsSecondLine": "If more than one transfer happens for the same vehicle then claim is not allowed for any of the dealership.",
+            "fromDate": "From Date",
+            "toDate": "To Date",
+            "fromDealer": "From Dealer",
+            "toDealer": "To Dealer",
+            "code": "Code",
+            "chassisNumber": "Chassis Number",
+            "modelDescription": "Model Description",
+            "vehicleAge": "Vehicle Age",
+            "requestedDate": "Requested Date",
+            "rsmApprovalSummary": "RSM Approval Summary",
+            "fromDealerCode": "From Dealer Code",
+            "toDealerCode": "To Dealer Code",
+            "status": "Status"
         },
         "placeholder": {
             "headerSearch": "Search by dealer"
@@ -343,6 +367,52 @@
             "financialAccountHead": "Financial Account Head"
         }
     },
+    "amcRegistration": {
+        "heading": {
+            "title": "AMC Registration",
+            "moduleTitle": "AMC Registration Details"
+        },
+        "validation": {
+            "noSchemeVIN": "No Schemes present for this VIN",
+            "noVINFound": "No VIN found for searched Booking Number",
+            "noEmployeesFound": "No employees found for searched name",
+            "incorrectEmployeeName": "Employee name is not correct",
+            "discoutGreaterThanScheme": "Discount cannot exceed Scheme amount"
+        },
+        "label": {
+            "amcRegNoDate": "AMC Registration No. & Date",
+            "dealerLocation": "Dealer Location",
+            "vin": "VIN",
+            "status": "Status",
+            "mobileNumber": "Mobile No.",
+            "dealerParent": "Dealer Parent",
+            "amcFromDate": "AMC Registration From Date",
+            "amcToDate": "AMC Registration To Date",
+            "registrationInfo": "Registration Information",
+            "schemeDetails": "Scheme Details",
+            "saleType": "Sale Type",
+            "bookingNumber": "Booking Number",
+            "employeeName": "Employee Name",
+            "managerName": "Manager Name",
+            "remarks": "Remarks",
+            "amcType": "AMC Type",
+            "schemeDescription": "Scheme Description",
+            "schemeCode": "Scheme Code",
+            "schemeBasicAmount": "Scheme Basic Amount",
+            "schemeDiscount": "Scheme Discount",
+            "schemeTaxAmount": "Scheme Tax Amount",
+            "schemeEndDate": "Scheme End Date",
+            "creditNoteNumber": "Credit Note Number",
+            "creditNoteDate": "Credit Note Date",
+            "creditNoteAmount": "Credit Note Amount",
+            "debitNoteNumber": "Debit Note Number",
+            "debitNoteDate": "Debit Note Date",
+            "debitNoteAmount": "Debit Note Amount"
+        },
+        "placeholder": {
+            "search": "Search"
+        }
+    },
     "roleManagement": {
         "heading": {
             "pageTitle": "Role Management",
@@ -387,6 +457,10 @@
             "fieldName": "Field Name",
             "oldValue": "Old Value",
             "newValue": "New Value"
+        },
+        "drawerTitle": {
+            "cusChange": "Customer Change History",
+            "nameChange": "Name Change History"
         },
         "drawerSubHeading": {
             "contactTitle": "Individual Contact",
@@ -565,15 +639,11 @@
             "documentType": "document type",
             "fileName": "file name"
         },
-        "button": {
-            "viewHistory": "View History",
-            "uploadFile": "Upload File"
-        },
+        "button": {},
         "link": {
             "mnmLogin": "M&M User Login"
         }
     },
-
     "criticalityGroup": {
         "heading": {
             "mainTitle": "Application Criticality Group Details",
@@ -594,6 +664,9 @@
             "name": "name",
             "startTime": "Start time*",
             "endTime": "End time*"
+        },
+        "button": {
+            "addTime": "Add Time"
         }
     },
     "productHierarchy": {
@@ -602,7 +675,8 @@
             "hierarchyDetails": "Hierarchy Details",
             "pageTitle": "Product Hierarchy",
             "title": "Hierarchy",
-            "productAttribute": "Product Attribute"
+            "productAttribute": "Product Attribute",
+            "panelHeader": "Product Atrribute Details"
         },
         "placeholder": {
             "organizationHierarchy": "Organization Hierarchy",
@@ -669,6 +743,50 @@
             "taxCode": "Tax Code"
         }
     },
+    "taxCharges": {
+        "heading": {
+            "moduleTitle": "Tax & Charges Detail",
+            "viewTitle": "Tax & Charges Details",
+            "title": "Tax & Charges"
+        },
+        "description": {
+            "noData": " Please select Tax and Charges from left side hierarchy to view “Details”"
+        },
+        "label": {
+            "attributeLevel": "Attribute Type",
+            "parent": "Parent",
+            "taxTypeCode": "Tax/Charge Type Code",
+            "taxTypeDescription": "Tax/Charge Type Descrption",
+            "calculationType": "Calculation Type",
+            "documentDescription": "Document Description",
+            "financialHead": "Financial Account Head",
+            "status": "Status",
+            "percentage": "Percentage",
+            "rate": "Rate"
+        },
+        "validation": {
+            "attributeLevel": "attribute level",
+            "message": "is not active anymore. Please select a different attribute.",
+            "parent": "Parent",
+            "attributeTypeCode": "Attribute Type Code",
+            "decimalPlaces": "rate with two decimal places"
+        }
+    },
+
+    "gstIrnTransaction": {
+        "heading": {
+            "pageTitle": "GST IRN Transaction Pending",
+            "moduleTitle": "GST IRN Pending Transaction",
+            "title": "Search",
+            "documentType": "Document Type",
+            "documentNumber": "Document Number",
+            "documentDate": "Document Date",
+            "location": "Location",
+            "irnResponse": "IRN Server Response",
+            "irnStatus": "IRN Status",
+            "gstin": "GSTIN"
+        }
+    },
 
     "footer": {
         "copyright": "Copyright &copy; {YEAR} ROBIN."
@@ -690,7 +808,6 @@
         "validation": {
             "searchParameter": "search parametar"
         },
-        "button": {},
         "vehicledetails": {
             "label": {
                 "mnfcWarrEndDate": "Manufacturer Warranty End Date",
@@ -1200,9 +1317,6 @@
     },
     "stockTransferIndent": {
         "isueIndent": {
-            "heading": {
-                "maintitle": "HO Price Upload Mapping"
-            },
             "label": {
                 "vin": "VIN",
                 "stIssueNo": "ST issue Note No.",
@@ -1213,18 +1327,31 @@
                 "grnDate": "GRN Date",
                 "grnNo": "GRN No",
                 "issueCharge": "Issue Charge",
-                "netDealerPrice": "Net Dealer Price"
+                "netDealerPrice": "Net Dealer Price",
+                "status": "Status"
             },
             "validation": {
-                "vin": "vin"
+                "vin": "vin",
+                "issueCharges": "Issue Charges"
             },
             "viewDetails": {
                 "label": {
+                    "stIssueNo": "ST issue Note No.",
+                    "stIssueNoteDate": "ST issue Note Date",
+                    "stIssueNoteStatus": "ST issue Note Status",
+                    "modelDescription": "Model Description",
+                    "vin": "VIN",
+                    "engineNumber": "Engine Number",
+                    "oemInvoiceDate": "Oem Invoice Date",
+                    "oemInvoiceNumber": "Oem Invoice Number",
+                    "grnDate": "GRN Date",
+                    "grnNo": "GRN No",
+                    "issueCharge": "Issue Charge",
+                    "netDealerPrice": "Net Dealer Price",
                     "indentNumber": "Indent Number",
                     "indentDate": "Indent Date",
                     "indentToLocation": "Indent To Location",
                     "indentStatus": "Indent Status",
-                    "modelDescription": "Model Description",                   
                     "modelCode": "Model Code",
                     "requestedQuantity": "Requested Quantity",
                     "cancelledQuantity": "Cancelled Quantity",
@@ -1283,7 +1410,8 @@
             "quantity": "Quantity",
             "indentToParent": "Indent To Parent",
             "indentToLocation": "Indent To Location",
-            "requestedBy": "Requested By"
+            "requestedBy": "Requested By",
+            "vehicleLengthValidation": "Please add Vehicle Details"
         }
     },
     "vehicleInvoiceGeneration": {
@@ -1676,6 +1804,68 @@
             "controlIdValidation": "control id"
         }
     },
+    "partyMaster": {
+        "heading": {
+            "moduleTitle": "Party Master",
+            "drawerSubheadingAddress": "Party Address and Contact Details",
+            "drawerSubheadingOtherDetails": "Other Details"
+        },
+        "label": {
+            "partyName": "Party Name",
+            "partyCategory": "Party Category",
+            "partyCode": "Party Code",
+            "contactPersonName": "Contact Person Name",
+            "designation": "Designation",
+            "address": "Address",
+            "pinCode": "Pin Code",
+            "city": "City",
+            "tehsil": "Tehsil",
+            "district": "District",
+            "state": "State",
+            "mobileNumber": "Mobile Number",
+            "alternateMobileNumber": "Alternate Mobile Number",
+            "gstinNumber": "GSTIN number",
+            "pan": "PAN",
+            "partsDiscount": "Parts Discount",
+            "creditLimit": "Credit Limit",
+            "creditDays": "Credit Days",
+            "remarks": "Remarks"
+        },
+        "placeholder": {
+            "username": "User ID (MILE ID.Parent ID)",
+            "password": "Password"
+        },
+        "validation": {
+            "googleCaptcha": "Please select Captcha"
+        },
+        "button": {
+            "login": "Login"
+        },
+        "link": {
+            "mnmLogin": "M&M User Login"
+        }
+    },
+    "accountCategory": {
+        "heading": {
+            "pageTitle": "Account Category",
+            "drawerSubheading": "Account Category Code",
+            "accountAndDocumentMapping": "Account and Document Mapping"
+        },
+        "label": {
+            "accountCategoryCode": "Account Category Code",
+            "description": "Description",
+            "status": "Status",
+            "applicationMenu": "Application Menu",
+            "documentDescription": "Document Description",
+            "financialAccountHead": "Financial Account Head"
+        },
+        "placeholder": {},
+        "validation": {
+            "code": "code"
+        },
+        "button": {},
+        "link": {}
+    },
     "hierarchyAttribute": {
         "heading": {
             "mainTitle": "Hierarchy Attribute Master",
@@ -1700,35 +1890,34 @@
             "codeValidation": "code"
         }
     },
-    "manufacturerOrganisation":{
-        "heading":{
+    "manufacturerOrganisation": {
+        "heading": {
             "mainTitle": "Manufacturer Organisation Detail",
             "viewTitle": "Manufacturer Details",
             "title": "Hierarchy"
         },
-        "label":{
+        "label": {
             "changedDate": "Changed Date",
             "changedBy": "Changed By",
             "attribute": "Attribute",
             "code": "Code",
-            "parent" : "Parent",
+            "parent": "Parent",
             "shortDescription": "Short Description",
-            "longDescription" : "Long Description",
+            "longDescription": "Long Description",
             "childAllowed": "Child Allowed?",
             "description": "Please select product from leftside hierarchy to view 'Hierarchy Details' ",
             "attributeType": "Attribute Type",
             "hierarchyCode": "Hierarchy Code",
-            "attributeLevel":"Attribute Level"
-
+            "attributeLevel": "Attribute Level"
         },
-        "placeholder":{
+        "placeholder": {
             "name": "name",
             "code": "code",
             "parent": "Parent",
             "attributeTypeCode": "attribute type code",
             "attributeCode": "attribute code"
         },
-        "validation":{
+        "validation": {
             "nameValidation": "name",
             "codeValidation": "code",
             "attributeLevel": "attribute level",
@@ -1737,8 +1926,8 @@
             "attributeHierarchyFieldValidation": "is not active anymore. Please select a different attribute."
         }
     },
-    "manufacturerAdmin":{
-        "heading":{
+    "manufacturerAdmin": {
+        "heading": {
             "mainTitle": "Manufacturer Detail",
             "viewTitle": "Manufacturer Details",
             "drawerTitle": "Upload Authority Details",
@@ -1746,20 +1935,20 @@
             "changeHistoryTitle": "Admin Change History",
             "authorityChangeHistoryTitle": "Authority Change History"
         },
-        "label":{
+        "label": {
             "changedDate": "Changed/Modified Date",
             "changedBy": "Changed By",
             "attribute": "Attribute",
             "code": "Code",
-            "parent" : "Parent",
+            "parent": "Parent",
             "shortDescription": "Short Description",
-            "longDescription" : "Long Description",
+            "longDescription": "Long Description",
             "childAllowed": "Child Allowed?",
             "description": "Please select product from leftside hierarchy to view 'Hierarchy Details' ",
             "attributeType": "Attribute Type",
             "hierarchyCode": "Hierarchy Code",
-            "attributeLevel":"Attribute Level",
-            "attributeCode":"Attribute Code",
+            "attributeLevel": "Attribute Level",
+            "attributeCode": "Attribute Code",
             "authorityTypeCode": "Authority Type Code",
             "employeeName": "Employee Name",
             "employeeTokenNo": "Employee Token No.",
@@ -1772,17 +1961,16 @@
             "messageText": "Click or drop your file here to upload",
             "downloadHere": "Download Here",
             "selectOrganization": "Please Select Organization from dropdown"
-
         },
-        "placeholder":{
+        "placeholder": {
             "name": "name",
             "code": "code",
             "parent": "Parent",
             "attributeTypeCode": "attribute type code",
             "attributeCode": "attribute code",
-            "organizationHierarchy":"Organization Hierarchy"
+            "organizationHierarchy": "Organization Hierarchy"
         },
-        "validation":{
+        "validation": {
             "nameValidation": "name",
             "codeValidation": "code",
             "attributeLevel": "attribute level",
@@ -1834,6 +2022,49 @@
             "uploadMessage": "Click or drop your file here to upload",
             "uploadValidation": "File type should be .xlxs and max file size to be 8Mb",
             "downloadMessage": "Please download OnRoad Price Template using below button"
+        }
+    },
+    "termConditionDealer": {
+        "heading": {
+            "pageTitle": "Terms & Conditions - Dealer Location",
+            "moduletitle": "Term & Condition"
+        },
+        "label": {
+            "LessorCompany": "Lessor Customer Form",
+            "companyName": "Company Name",
+            "stateName": "State Name"
+        },
+        "placeholder": {
+            "stateName": "State Name"
+        },
+        "message": {
+            "uploadButtonName": "Upload Lessor Form",
+            "messageText": "Click or drop your file here to upload",
+            "validationText": "File type should be .xlxs and max file size to be 8Mb",
+            "docName": "Lessor Template",
+            "textMessage": "Please download Lessor Customer Template using below button"
+        }
+    },
+    "bookingSoMapping": {
+        "heading": {
+            "moduleTitle": "Booking SO Mapping Control",
+            "pageTitle": "Booking SO Mapping Control Master",
+            "viewTitle": "User Type Mapping"
+        },
+        "label": {
+            "variantCode": "Variant Code",
+            "productVariant": "Product Variant",
+            "userForMappingUnmapping": "User for Mapping/Unmapping"
+        },
+        "placeholder": {
+            "variantCode": "Variant Code",
+            "productVariant": "Product Variant",
+            "userForMappingUnmapping": "User for Mapping/Unmapping"
+        },
+        "validation": {
+            "variantCode": "Variant Code",
+            "productVariant": "Product Variant",
+            "userForMappingUnmapping": "User for Mapping/Unmapping"
         }
     }
 }

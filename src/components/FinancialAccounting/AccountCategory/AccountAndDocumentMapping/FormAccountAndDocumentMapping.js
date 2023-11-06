@@ -11,6 +11,7 @@ import TreeSelectField from 'components/common/TreeSelectField';
 import { customSelectBox } from 'utils/customSelectBox';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 function FormAccountAndDocumentMapping(props) {
     const { addDocAndMapp, formEdit, editForm, accDocMapForm, applicationMenuData, financialAccountData, documentDescriptionData, selectedTreeSelectKey, mainFomEdit, handleSelectTreeClick } = props;
@@ -24,7 +25,7 @@ function FormAccountAndDocumentMapping(props) {
         handleSelectTreeClick,
         selectedTreeSelectKey,
         defaultParent: false,
-        placeholder: preparePlaceholderSelect('Application Menu'),
+        placeholder: preparePlaceholderSelect(translateContent('accountCategory.label.applicationMenu')),
         treeDisabled: mainFomEdit,
     };
 
@@ -33,18 +34,18 @@ function FormAccountAndDocumentMapping(props) {
             <Form form={formEdit ? editForm : accDocMapForm} id="myForm" autoComplete="off" layout="vertical">
                 <Row gutter={20}>
                     <Col xs={0} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.bigSelectDropdown}>
-                        <Form.Item label="Application Menu" name="applicationId" rules={[validateRequiredSelectField('Application Menu')]}>
+                        <Form.Item label={translateContent('accountCategory.label.applicationMenu')} name="applicationId" rules={[validateRequiredSelectField(translateContent('accountCategory.label.applicationMenu'))]}>
                             <TreeSelectField {...treeSelectFieldProps} />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Document Description" name="documentTypeCode" initialValue={props?.code} rules={[validateRequiredSelectField('Document Description')]}>
-                            {customSelectBox({ disabled: mainFomEdit, data: documentDescriptionData, placeholder: preparePlaceholderSelect('Document Description') })}
+                        <Form.Item label={translateContent('accountCategory.label.documentDescription')} name="documentTypeCode" initialValue={props?.code} rules={[validateRequiredSelectField(translateContent('accountCategory.label.documentDescription'))]}>
+                            {customSelectBox({ disabled: mainFomEdit, data: documentDescriptionData, placeholder: preparePlaceholderSelect(translateContent('accountCategory.label.documentDescription')) })}
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Financial Account Head" name="financialAccountHeadCode" initialValue={props?.chargeDescription} rules={[validateRequiredInputField('Financial Account Head')]}>
-                            {customSelectBox({ disabled: mainFomEdit, data: financialAccountData, placeholder: preparePlaceholderSelect('Financial Account Head') })}
+                        <Form.Item label={translateContent('accountCategory.label.financialAccountHead')} name="financialAccountHeadCode" initialValue={props?.chargeDescription} rules={[validateRequiredInputField(translateContent('accountCategory.label.financialAccountHead'))]}>
+                            {customSelectBox({ disabled: mainFomEdit, data: financialAccountData, placeholder: preparePlaceholderSelect(translateContent('accountCategory.label.financialAccountHead')) })}
                         </Form.Item>
                     </Col>
 
@@ -72,7 +73,7 @@ function FormAccountAndDocumentMapping(props) {
                                     addDocAndMapp();
                                 }}
                             >
-                                Add
+                                {translateContent('global.button.add')}
                             </Button>
                         </Col>
                     )}

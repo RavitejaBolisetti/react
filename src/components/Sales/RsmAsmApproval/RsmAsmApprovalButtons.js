@@ -7,6 +7,7 @@ import React from 'react';
 import { Row, Col, Button } from 'antd';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const RsmAsmApprovalButtons = ({ record, onCloseAction, buttonData, workFlowDetails, handleRequest }) => {
     return (
@@ -15,7 +16,7 @@ export const RsmAsmApprovalButtons = ({ record, onCloseAction, buttonData, workF
                 <Col xs={24} sm={8} md={6} lg={4} xl={4} className={styles.buttonsGroupLeft}>
                     {buttonData?.closeBtn && (
                         <Button danger onClick={onCloseAction}>
-                            Close
+                            {translateContent('global.buttons.close')}
                         </Button>
                     )}
                 </Col>

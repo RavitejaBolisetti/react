@@ -12,6 +12,7 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 import { withDrawer } from 'components/withDrawer';
 import { customSelectBox } from 'utils/customSelectBox';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const AddEditFormMain = (props) => {
     const { onCloseAction, otfSoUserMappingData } = props;
@@ -32,22 +33,22 @@ const AddEditFormMain = (props) => {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item label="Variant Code" name="productAttributeCode" rules={[validateRequiredSelectField('Variant Code')]}>
-                                    <Input maxLength={6} placeholder={preparePlaceholderText('Variant Code')} disabled={true} />
+                                <Form.Item label={translateContent('bookingSoMapping.label.variantCode')} name="productAttributeCode" rules={[validateRequiredSelectField(translateContent('bookingSoMapping.validation.variantCode'))]}>
+                                    <Input maxLength={6} placeholder={translateContent('bookingSoMapping.palaceholder.variantCode')} disabled={true} />
                                 </Form.Item>
                             </Col>
 
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item label="Product Variant" name="productAttributeValue" rules={[validateRequiredSelectField('Product Variant')]}>
-                                    <Input placeholder={preparePlaceholderText('Product Variant')} disabled={true} />
+                                <Form.Item label={translateContent('bookingSoMapping.label.productVariant')} name="productAttributeValue" rules={[validateRequiredSelectField(translateContent('bookingSoMapping.validation.productVariant'))]}>
+                                    <Input placeholder={translateContent('bookingSoMapping.palaceholder.productVariant')} disabled={true} />
                                 </Form.Item>
                             </Col>
                         </Row>
 
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item initialValue={null} label="User for Mapping/Unmapping" name="otfSoMapUnmapBy" rules={[validateRequiredInputField('User for Mapping/Unmapping')]}>
-                                    {customSelectBox({ data: otfSoUserMappingData, placeholder: preparePlaceholderSelect('User for Mapping/Unmapping') })}
+                                <Form.Item initialValue={null} label={translateContent('bookingSoMapping.label.userForMappingUnmapping')} name="otfSoMapUnmapBy" rules={[validateRequiredInputField(translateContent('bookingSoMapping.validation.userForMappingUnmapping'))]}>
+                                    {customSelectBox({ data: otfSoUserMappingData, placeholder: translateContent('bookingSoMapping.palaceholder.userForMappingUnmapping') })}
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -62,13 +63,13 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
                             <Button danger onClick={onCloseAction}>
-                                Cancel
+                                {translateContent('global.buttons.cancel')}
                             </Button>
                         </Col>
 
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
                             <Button data-testid="isFormBtnActive" htmlType="submit" danger disabled={!isFormBtnActive}>
-                                Save
+                                {translateContent('global.buttons.save')}
                             </Button>
                         </Col>
                     </Row>

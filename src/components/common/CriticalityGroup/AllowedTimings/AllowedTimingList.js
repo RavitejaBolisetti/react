@@ -11,7 +11,6 @@ import AddEditForm from './AddEditForm';
 import AllowedTimingCard from './AllowedTimingCard';
 import { translateContent } from 'utils/translateContent';
 
-
 import styles from 'assets/sass/app.module.scss';
 
 const AllowedTimingList = (props) => {
@@ -102,7 +101,7 @@ const AllowedTimingList = (props) => {
                                         timingForm.resetFields();
                                     }}
                                 >
-                                    Add Time
+                                    {translateContent('criticalityGroup.button.addTime')}
                                 </Button>
                             </Col>
                         )}

@@ -20,6 +20,7 @@ import { ViewDetails } from './ViewDetails';
 import LeftPanel from 'components/common/LeftPanel';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -41,8 +42,8 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'User Type Mapping';
-    const viewTitle = 'User Type Mapping';
+    const moduleTitle = translateContent('bookingSoMapping.heading.moduleTitle');
+    const viewTitle = translateContent('bookingSoMapping.heading.viewTitle');
 
     let returnValue = {
         collapsed,
@@ -245,7 +246,7 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
             setButtonData({ ...defaultBtnVisiblity, editBtn: true });
 
             if (res?.data) {
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
                 fetchOtfList({ setIsLoading: listOtfSoMappingShowLoading, userId, extraParams });
                 setFormBtnActive(false);
                 setIsFormVisible(false);

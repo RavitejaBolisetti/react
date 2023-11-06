@@ -125,10 +125,10 @@ const CardProductAttribute = (props) => {
                         ) : (
                             <>
                                 <Button type="link" data-testid="save" onClick={onAttributeSave}>
-                                    Save
+                                    {translateContent('global.buttons.save')}
                                 </Button>
                                 <Button type="link" data-testid="cancel" onClick={onAttributeCancel}>
-                                    Cancel
+                                    {translateContent('global.buttons.cancel')}
                                 </Button>
                             </>
                         )}

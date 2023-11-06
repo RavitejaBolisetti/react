@@ -26,7 +26,7 @@ const AddEditForm = (props) => {
                                 <TimePicker placeholder={translateContent('criticalityGroup.validation.endTime')} use12Hours format="h:mm A" />
                             </Form.Item>
                             <Button disabled={allowedTimingSave} type="link" htmlType="submit" className={styles.marB20}>
-                                Save
+                                {translateContent('global.buttons.save')}
                             </Button>
                         </Space>
                         <Form.Item hidden name={'id'}>

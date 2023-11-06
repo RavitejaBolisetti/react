@@ -10,7 +10,6 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 import { validateRequiredInputField, validateRequiredSelectField, duplicateProductValidator } from 'utils/validation';
 import { translateContent } from 'utils/translateContent';
 
-
 import styles from 'assets/sass/app.module.scss';
 function FormProductAttribute(props) {
     const { attributeForm, isVisible, productHierarchyAttributeData, onAttributeFormFinish, formEdit, editForm, skuAttributes } = props;
@@ -49,7 +48,7 @@ function FormProductAttribute(props) {
                     {isVisible && (
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.marB20}>
                             <Button icon={<PlusOutlined />} type="primary" htmlType="submit">
-                                Add
+                                {translateContent('global.buttons.add')}
                             </Button>
                         </Col>
                     )}

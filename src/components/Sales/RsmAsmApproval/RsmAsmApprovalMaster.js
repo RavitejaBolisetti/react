@@ -379,7 +379,7 @@ export const RsmAsmApprovalMasterBase = (props) => {
         isVisible: isAdvanceSearchVisible,
 
         icon: <FilterIcon size={20} />,
-        titleOverride: 'Advance Filters',
+        titleOverride: translateContent('global.advanceFilter.title'),
 
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,

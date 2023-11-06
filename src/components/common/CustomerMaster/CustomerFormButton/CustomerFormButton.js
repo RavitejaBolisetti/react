@@ -32,7 +32,7 @@ export const CustomerFormButton = ({ record, onCloseAction, buttonData, handleCh
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
                     {buttonData?.changeHistory && (
                         <Button onClick={handleChangeHistory} type="primary">
-                            {translateContent('customerMaster.button.viewHistory')}
+                            {translateContent('global.buttons.viewHistory')}
                         </Button>
                     )}
                     {buttonData?.editBtn && (
