@@ -74,7 +74,9 @@
             "unAllot": "Un-Allot",
             "invoice": "Invoice",
             "deliveryNote": " Delivery Note",
-            "advancedFilter": "Advanced Filters"
+            "advancedFilter": "Advanced Filters",
+            "viewHistory": "View History",
+            "uploadFile": "Upload File"
         },
         "placeholder": {
             "input": "Enter ",
@@ -114,6 +116,30 @@
         "link": {
             "mnmLogin": "M&M User Login"
         }
+    },
+    "dashboard": {
+        "heading": {
+            "pageTitle": "Dashboard",
+            "subTitleAddWidget": "Add Widget",
+            "keyHighlights": "Key Highlights",
+            "actionItems": "Action Items",
+            "dashboardKpi": "Dashboard KPI",
+            "latestNews": "Latest News",
+            "birthdayCalendar": "Birthday Calendar",
+            "todayBirthday": "Today's Birthday",
+            "upcomingBirthdays": "Upcoming Birthdays"
+        },
+        "label": {
+            "billing": "Billing",
+            "retail": "Retail",
+            "stockInDays": "Stock in days"
+        },
+        "placeholder": {},
+        "validation": {},
+        "button": {
+            "addWidget": "Add Widget"
+        },
+        "link": {}
     },
 
     "dealerCompany": {
@@ -255,6 +281,7 @@
         "heading": {
             "title": "Vehicle Checklist",
             "modelGroup": "Model Group",
+            "pageTitle": "Vehicle Checklist Master",
             "answers": "Answers"
         },
         "label": {
@@ -455,6 +482,10 @@
             "oldValue": "Old Value",
             "newValue": "New Value"
         },
+        "drawerTitle": {
+            "cusChange": "Customer Change History",
+            "nameChange": "Name Change History"
+        },
         "drawerSubHeading": {
             "contactTitle": "Individual Contact",
             "informationTitle": "Individual Information",
@@ -632,10 +663,7 @@
             "documentType": "document type",
             "fileName": "file name"
         },
-        "button": {
-            "viewHistory": "View History",
-            "uploadFile": "Upload File"
-        },
+        "button": {},
         "link": {
             "mnmLogin": "M&M User Login"
         }
@@ -1189,6 +1217,7 @@
     "vinBlockMaster": {
         "heading": {
             "moduleTitle": "Vin Block Master",
+            "pageTitle": "Vin Block Master",
             "title": "Vin Block Master",
             "advancedFilter": "Advanced Filter",
             "appliedAdvanceFilters": "Applied Advance Filters"
@@ -1289,6 +1318,7 @@
     "hoPriceMapping": {
         "heading": {
             "maintitle": "HO Price Upload Mapping",
+            "pageTitle": "HO Price Upload Mapping for Dealer",
             "title": "HO Price Upload Mapping for Dealer",
             "drawerTitleHeading": "HO Price Upload Mapping",
             "titleOverride": "Advance Filters",
@@ -1359,6 +1389,7 @@
         },
         "heading": {
             "maintitle": "HO Price Upload Mapping",
+            "pageTitle": "Vehicle Inventory Management",
             "title": "HO Price Upload Mapping for Dealer",
             "drawerTitleHeading": "HO Price Upload Mapping",
             "titleOverride": "Advance Filters",
@@ -1975,25 +2006,93 @@
             "validationText": "File type should be .xlxs and max file size to be 8Mb"
         }
     },
+
+    "onRoadPriceMaster": {
+        "heading": {
+            "uploadTitle": "Upload OnRoad Price Master Form",
+            "moduleTitle": "On Road Price Master"
+        },
+        "label": {
+            "pricingType": "Pricing Type",
+            "model": "Model",
+            "pricingCity": "Pricing City",
+            "changeEXShowroomORG": "Change EX Showroom ORG",
+            "status": "Status",
+            "stateCode": "State Code",
+            "cityCode": "City Code",
+            "currentEXShowroomPrice": "Current EX Showroom Price",
+            "currentEXShowroomDate": "Current EX Showroom Date",
+            "TCSwithGST": "TCS with GST",
+            "EPC": "EPC",
+            "registrationCharges": "Registration Charges",
+            "fastTag": "Fast Tag",
+            "insurancePremium": "Insurance Premium(1+3yr TP)",
+            "addonZeroDepwithTax": "Add on Zero Dep with Tax",
+            "comprehensiveInsurance": "Comprehensive Insurance",
+            "basicOnRoadPrice": "Basic on Road Price",
+            "consumerSchemeWithTax": "Consumer Scheme with Tax",
+            "RSAwithTax": "RSA with Tax",
+            "shieldWithTax": "Shield with Tax",
+            "AMCwithTax": "AMC with Tax",
+            "ODdiscount": "OD Discount%",
+            "dealerDiscountWithTax": "Dealer Discount with Tax",
+            "otherCharges": "Other Charges",
+            "essentialKitWithTax": "Essential Kit with Tax"
+        },
+        "placeholder": {
+            "searchByModel": "Search By Model"
+        },
+        "button": {
+            "uploadButton": "Upload OnRoad Price Master"
+        },
+        "message": {
+            "uploadMessage": "Click or drop your file here to upload",
+            "uploadValidation": "File type should be .xlxs and max file size to be 8Mb",
+            "downloadMessage": "Please download OnRoad Price Template using below button"
+        }
+    },
     "termConditionDealer": {
         "heading": {
             "pageTitle": "Terms & Conditions - Dealer Location",
             "moduletitle": "Term & Condition"
         },
         "label": {
-            "LessorCompany": "Lessor Customer Form",
-            "companyName": "Company Name",
-            "stateName": "State Name"
+            "terms&Condition": "Term & Condition",
+            "documentCategory": "Document Category",
+            "productHierarchy": "Product Hierarchy",
+            "documentType": "Document Type",
+            "language": "Language",
+            "effectivefrom": "Effective From",
+            "effectiveto": "Effective To",
+            "version": "Version",
+            "mfgT&c": "MFG T&C"
+        },
+        "validation": {
+            "terms&Condition": "Term & Condition",
+            "language": "Language",
+            "documentType": "Document Type",
+            "productHierarchy": "Product Hierarchy",
+            "date": "Date"
         },
         "placeholder": {
-            "stateName": "State Name"
+            "version": "Version",
+            "documentCategory": "Document Category",
+            "selectParameter": "Select Parameter"
         },
-        "message": {
-            "uploadButtonName": "Upload Lessor Form",
-            "messageText": "Click or drop your file here to upload",
-            "validationText": "File type should be .xlxs and max file size to be 8Mb",
-            "docName": "Lessor Template",
-            "textMessage": "Please download Lessor Customer Template using below button"
+        "fields": {
+            "reviseT&C": "Revise T&C",
+            "addT&C": "Add T&C",
+            "revised": "Revised",
+            "initial": "Initial"
+        },
+        "changeHistory": {
+            "productName": "Product Hierarchy",
+            "documentTypeCode": "Document Type",
+            "languageDesc": "Language",
+            "effectivefrom": "Effective From",
+            "effectiveto": "Effective To",
+            "version": "Version",
+            "termsconditiondescription": "Description"
         }
     },
     "bookingSoMapping": {
@@ -2042,5 +2141,19 @@
         "addOnDetails": {},
         "deliverableChecklist": {},
         "thankYouPage": {}
+    },
+    "creditDebitNote": {
+        "heading": {
+            "moduleTitle": "Booking SO Mapping Control"
+        },
+        "label": {
+            "variantCode": "Variant Code"
+        },
+        "placeholder": {
+            "variantCode": "Variant Code"
+        },
+        "validation": {
+            "variantCode": "Variant Code"
+        }
     }
 }

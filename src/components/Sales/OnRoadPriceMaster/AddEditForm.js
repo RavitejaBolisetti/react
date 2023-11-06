@@ -11,7 +11,9 @@ import { validateRequiredInputField, validateOnlyPositiveNumber, valueBetween0to
 import { OnRoadPriceFormButton } from './OnRoadPriceFormButton';
 import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { translateContent } from 'utils/translateContent';
 import styles from 'assets/sass/app.module.scss';
+
 const AddEditFormMain = (props) => {
     const { buttonData, setButtonData, vehiclePrice, saveData, isLoading } = props;
     const { form, isReadOnly = true, userId, listShowLoading, handleButtonClick, setIsFormVisible, showGlobalNotification } = props;
@@ -35,7 +37,7 @@ const AddEditFormMain = (props) => {
         let data = { ...values, id: vehiclePrice?.id };
 
         const onSuccess = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             handleButtonClick({ record: res?.data });
             setIsFormVisible(false);
         };
@@ -58,111 +60,111 @@ const AddEditFormMain = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="model" label="Model" initialValue={vehiclePrice?.model}>
+                            <Form.Item name="model" label={translateContent('onRoadPriceMaster.label.model')} initialValue={vehiclePrice?.model}>
                                 <Input maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="stateCode" label="State Code" initialValue={vehiclePrice?.stateCode}>
+                            <Form.Item name="stateCode" label={translateContent('onRoadPriceMaster.label.stateCode')} initialValue={vehiclePrice?.stateCode}>
                                 <Input maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
 
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="pricingCityCode" label="City Code" initialValue={vehiclePrice?.pricingCityCode}>
+                            <Form.Item name="pricingCityCode" label={translateContent('onRoadPriceMaster.label.cityCode')} initialValue={vehiclePrice?.pricingCityCode}>
                                 <Input maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="currentExShowroomPrice" label="Current EX Showroom Price" initialValue={vehiclePrice?.currentExShowroomPrice}>
+                            <Form.Item name="currentExShowroomPrice" label={translateContent('onRoadPriceMaster.label.currentEXShowroomPrice')} initialValue={vehiclePrice?.currentExShowroomPrice}>
                                 <Input maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item initialValue={vehiclePrice?.currentExShowroomDate} label="Current EX Showroom Date" name="currentExShowroomDate" className={styles?.datePicker}>
+                            <Form.Item initialValue={vehiclePrice?.currentExShowroomDate} label={translateContent('onRoadPriceMaster.label.currentEXShowroomDate')} name="currentExShowroomDate" className={styles?.datePicker}>
                                 <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} {...disabledProps} />
                             </Form.Item>
                         </Col>
 
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="tcsWithGst" label="TCS with GST" initialValue={vehiclePrice?.tcsWithGst}>
+                            <Form.Item name="tcsWithGst" label={translateContent('onRoadPriceMaster.label.TCSwithGST')} initialValue={vehiclePrice?.tcsWithGst}>
                                 <Input maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="epc" label="EPC" initialValue={vehiclePrice?.epc}>
+                            <Form.Item name="epc" label={translateContent('onRoadPriceMaster.label.EPC')} initialValue={vehiclePrice?.epc}>
                                 <Input maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="registrationCharges" label="Registration Charges" initialValue={vehiclePrice?.registrationCharges}>
+                            <Form.Item name="registrationCharges" label={translateContent('onRoadPriceMaster.label.registrationCharges')} initialValue={vehiclePrice?.registrationCharges}>
                                 <Input maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="fastTag" label="Fast Tag" initialValue={vehiclePrice?.fastTag}>
+                            <Form.Item name="fastTag" label={translateContent('onRoadPriceMaster.label.fastTag')} initialValue={vehiclePrice?.fastTag}>
                                 <Input maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="insurancePremiunm" label="Insurance Premium(1+3yr TP)" initialValue={vehiclePrice?.insurancePremiunm}>
+                            <Form.Item name="insurancePremiunm" label={translateContent('onRoadPriceMaster.label.insurancePremium')} initialValue={vehiclePrice?.insurancePremiunm}>
                                 <Input maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="addOnZeroDepWithTax" label="Add on Zero Dep with Tax" initialValue={vehiclePrice?.addOnZeroDepWithTax}>
+                            <Form.Item name="addOnZeroDepWithTax" label={translateContent('onRoadPriceMaster.label.addonZeroDepwithTax')} initialValue={vehiclePrice?.addOnZeroDepWithTax}>
                                 <Input maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="comprehensiveInsurance" label="Comprehensive Insurance" initialValue={vehiclePrice?.comprehensiveInsurance}>
+                            <Form.Item name="comprehensiveInsurance" label={translateContent('onRoadPriceMaster.label.comprehensiveInsurance')} initialValue={vehiclePrice?.comprehensiveInsurance}>
                                 <Input maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
 
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="basicOnRoadPrice" label="Basic on Road Price" initialValue={vehiclePrice?.basicOnRoadPrice}>
+                            <Form.Item name="basicOnRoadPrice" label={translateContent('onRoadPriceMaster.label.basicOnRoadPrice')} initialValue={vehiclePrice?.basicOnRoadPrice}>
                                 <Input maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="consumerSchemaWithTax" label="Consumer Scheme with Tax" initialValue={vehiclePrice?.consumerSchemaWithTax}>
+                            <Form.Item name="consumerSchemaWithTax" label={translateContent('onRoadPriceMaster.label.consumerSchemeWithTax')} initialValue={vehiclePrice?.consumerSchemaWithTax}>
                                 <Input maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="rsaWithTax" label="RSA with Tax" initialValue={vehiclePrice?.rsaWithTax}>
+                            <Form.Item name="rsaWithTax" label={translateContent('onRoadPriceMaster.label.RSAwithTax')} initialValue={vehiclePrice?.rsaWithTax}>
                                 <Input maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="shieldWithTax" label="Shield with Tax" initialValue={vehiclePrice?.shieldWithTax}>
+                            <Form.Item name="shieldWithTax" label={translateContent('onRoadPriceMaster.label.shieldWithTax')} initialValue={vehiclePrice?.shieldWithTax}>
                                 <Input maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="amcWithTax" label="AMC with Tax" initialValue={vehiclePrice?.amcWithTax}>
+                            <Form.Item name="amcWithTax" label={translateContent('onRoadPriceMaster.label.AMCwithTax')} initialValue={vehiclePrice?.amcWithTax}>
                                 <Input maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="odDiscount" label="OD Discount%" initialValue={vehiclePrice?.odDiscount} rules={[validateRequiredInputField('OD Discount%'), validateOnlyPositiveNumber('OD Discount%'), valueBetween0to100('OD Discount%')]}>
+                            <Form.Item name="odDiscount" label={translateContent('onRoadPriceMaster.label.ODdiscount')} initialValue={vehiclePrice?.odDiscount} rules={[validateRequiredInputField(translateContent('onRoadPriceMaster.label.ODdiscount')), validateOnlyPositiveNumber(translateContent('onRoadPriceMaster.label.ODdiscount')), valueBetween0to100(translateContent('onRoadPriceMaster.label.ODdiscount'))]}>
                                 <InputNumber maxLength={50} />
                             </Form.Item>
                         </Col>
 
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="dealerDiscountWithTax" label="Dealer Discount with Tax" initialValue={vehiclePrice?.dealerDiscountWithTax} rules={[validateRequiredInputField('Dealer discount with tax'), validateOnlyPositiveNumber('Dealer discount with tax')]}>
+                            <Form.Item name="dealerDiscountWithTax" label={translateContent('onRoadPriceMaster.label.dealerDiscountWithTax')} initialValue={vehiclePrice?.dealerDiscountWithTax} rules={[validateRequiredInputField(translateContent('onRoadPriceMaster.label.dealerDiscountWithTax')), validateOnlyPositiveNumber(translateContent('onRoadPriceMaster.label.dealerDiscountWithTax'))]}>
                                 <Input maxLength={50} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="otherCharges" label="Other Charges" initialValue={vehiclePrice?.otherCharges} rules={[validateRequiredInputField('Other Charges'), validateOnlyPositiveNumber('Other Charges')]}>
+                            <Form.Item name="otherCharges" label={translateContent('onRoadPriceMaster.label.otherCharges')} initialValue={vehiclePrice?.otherCharges} rules={[validateRequiredInputField(translateContent('onRoadPriceMaster.label.otherCharges')), validateOnlyPositiveNumber(translateContent('onRoadPriceMaster.label.otherCharges'))]}>
                                 <Input maxLength={50} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="essentialKitWithTax" label="Essential Kit with Tax" initialValue={vehiclePrice?.essentialKitWithTax} rules={[validateRequiredInputField('Essential kit with tax'), validateOnlyPositiveNumber('Essential kit with tax')]}>
+                            <Form.Item name="essentialKitWithTax" label={translateContent('onRoadPriceMaster.label.essentialKitWithTax')} initialValue={vehiclePrice?.essentialKitWithTax} rules={[validateRequiredInputField(translateContent('onRoadPriceMaster.label.essentialKitWithTax')), validateOnlyPositiveNumber(translateContent('onRoadPriceMaster.label.essentialKitWithTax'))]}>
                                 <Input maxLength={50} />
                             </Form.Item>
                         </Col>
