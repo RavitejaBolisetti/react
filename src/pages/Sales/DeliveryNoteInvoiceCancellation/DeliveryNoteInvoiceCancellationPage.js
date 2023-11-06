@@ -7,9 +7,10 @@ import React from 'react';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 import { InvoiceCancellationMaster } from 'components/Sales/DeliveryNoteInvoiceCancellation';
+import { translateContent } from 'utils/translateContent';
 
 const DeliveryNoteInvoiceCancellationBase = (props) => {
-    const pageTitle = 'Delivery Note Invoice Cancellation';
+    const pageTitle = translateContent('deliveryNoteInvoiceCancellation.heading.pageTitle');
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,
