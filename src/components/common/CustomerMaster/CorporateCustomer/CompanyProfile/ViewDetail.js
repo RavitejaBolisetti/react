@@ -9,6 +9,7 @@ import { Collapse, Descriptions, Divider } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { getCodeValue } from 'utils/getCodeValue';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -45,25 +46,25 @@ const ViewDetailMain = (props) => {
     return (
         <div className={styles.viewDrawerContainer}>
             <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" collapsible="icon">
-                <Panel header="Company Information" key="1">
+                <Panel header={translateContent('customerMaster.drawerSubHeading.companyTitle')} key="1">
                     <Divider />
                     <Descriptions {...viewProps}>
-                        <Descriptions.Item label="PAN">{checkAndSetDefaultValue(formData?.panNumber, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="GSTIN">{checkAndSetDefaultValue(formData?.gstinNumber, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('customerMaster.label.pan')}>{checkAndSetDefaultValue(formData?.panNumber, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('customerMaster.label.gstin')}>{checkAndSetDefaultValue(formData?.gstinNumber, isLoading)}</Descriptions.Item>
                     </Descriptions>
 
                     <Descriptions {...viewProps}>
-                        <Descriptions.Item label="Usage/Application Categorization">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.APP_CAT, formData?.applicationCategorization), isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Usage/Application Sub-Category">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.APP_SUB_CAT, formData?.applicationSubCategory), isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Customer Category">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.CUS_CAT, formData?.customerCategory), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('customerMaster.label.Categorization')}>{checkAndSetDefaultValue(getCodeValue(appCategoryData?.APP_CAT, formData?.applicationCategorization), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('customerMaster.label.SubCategory')}>{checkAndSetDefaultValue(getCodeValue(appCategoryData?.APP_SUB_CAT, formData?.applicationSubCategory), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('customerMaster.label.customerCategory')}>{checkAndSetDefaultValue(getCodeValue(appCategoryData?.CUS_CAT, formData?.customerCategory), isLoading)}</Descriptions.Item>
                     </Descriptions>
                     {formData?.customerCategory === 'CUS_CAT_2' && (
                         <>
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Business Details">{checkAndSetDefaultValue(formData?.businessDetails, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Vehicle Deployment Detail">{checkAndSetDefaultValue(formData?.vechileDeploymentDetails, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Key Role Details">{checkAndSetDefaultValue(formData?.keyRouteDetails, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Major Route Details">{checkAndSetDefaultValue(formData?.majorRouteDetails, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('customerMaster.label.businessDetails')}>{checkAndSetDefaultValue(formData?.businessDetails, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('customerMaster.label.vehicleDeployment')}>{checkAndSetDefaultValue(formData?.vechileDeploymentDetails, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('customerMaster.label.keyRoleDetails')}>{checkAndSetDefaultValue(formData?.keyRouteDetails, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('customerMaster.label.majorRouteDetails')}>{checkAndSetDefaultValue(formData?.majorRouteDetails, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         </>
                     )}
@@ -82,15 +83,15 @@ const ViewDetailMain = (props) => {
                 </Collapse> */}
 
             <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end" collapsible="icon">
-                <Panel header="Key Account Details" key="3">
+                <Panel header={translateContent('customerMaster.drawerSubHeading.accountTitle')} key="3">
                     <Divider />
                     {formData?.keyAccountDetails && (
                         <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Account Code">{checkAndSetDefaultValue(formData?.keyAccountDetails?.accountCode, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Account Name">{checkAndSetDefaultValue(formData?.keyAccountDetails?.accountName, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Account Segment">{checkAndSetDefaultValue(formData?.keyAccountDetails?.accountSegment, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Account Client Name">{checkAndSetDefaultValue(formData?.keyAccountDetails?.accountClientName, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Account Mapping Date">{checkAndSetDefaultValue(formData?.keyAccountDetails?.accountMappingDate, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('customerMaster.label.accCode')}>{checkAndSetDefaultValue(formData?.keyAccountDetails?.accountCode, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('customerMaster.label.accName')}>{checkAndSetDefaultValue(formData?.keyAccountDetails?.accountName, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('customerMaster.label.accSegment')}>{checkAndSetDefaultValue(formData?.keyAccountDetails?.accountSegment, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('customerMaster.label.accClient')}>{checkAndSetDefaultValue(formData?.keyAccountDetails?.accountClientName, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('customerMaster.label.accDate')}>{checkAndSetDefaultValue(formData?.keyAccountDetails?.accountMappingDate, isLoading)}</Descriptions.Item>
                         </Descriptions>
                     )}
                 </Panel>

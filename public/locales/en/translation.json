@@ -753,7 +753,8 @@
             "accName": "Account Name",
             "accSegment": "Account Segment",
             "accClient": "Account Client Name",
-            "accDate": "Account Mapping Date"
+            "accDate": "Account Mapping Date",
+            "dealer": "VIP Dealer"
         },
         "placeholder": {
             "mobileMumber": "mobile number",
