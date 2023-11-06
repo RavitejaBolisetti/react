@@ -2514,39 +2514,9 @@
         },
         "customerDetails": {
             "heading": {
-                "mainTitle": "Customer Details"
+                "mainTitle": "Insurance Details"
             },
-            "label": {
-                "customerId": "Customer ID",
-                "customerType": "Customer Type",
-                "customerName": "Customer Name",
-                "customerPhoneNumber": "Mobile",
-                "customerAddress": "Address",
-                "customerCity": "City",
-                "district": "District",
-                "state": "State",
-                "pinCode": "Pincode",
-                "email": "Email ID"
-            }
-        },
-        "vehicleDetails": {
-            "heading": {
-                "mainTitle": "Vehicle Details",
-                "vehicleInfo": "Vehicle Information",
-                "batteryDetails": "Battery Details"
-            },
-            "label": {
-                "color": "Color",
-                "seating": "Seating",
-                "fuel": "Fuel",
-                "variant": "Variant",
-                "name": "Name",
-                "vinNumber": "VIN",
-                "engineNumber": "Engine Number",
-                "keyNumber": "Key Number",
-                "modelCode": "Model Code",
-                "modelDescription": "Model Description"
-            }
+            "label": {}
         },
 
         "addOnDetails": {
@@ -2573,10 +2543,9 @@
                 "schemeAmount": "Scheme Amount (With Tax)",
                 "employeeName": "Employee Name",
                 "manager": "Manager",
-                "schemeRegNo":"Scheme Registration No.",
-                "valiFromDate":"Valid From Date",
-                "validToDate":"Valid To Date"
-
+                "schemeRegNo": "Scheme Registration No.",
+                "valiFromDate": "Valid From Date",
+                "validToDate": "Valid To Date"
             }
         },
         "deliverableChecklist": {},
@@ -2935,6 +2904,24 @@
             }
         }
     },
+    "employeeDepartment": {
+        "heading": {
+            "pageTitle": "Empolyee Department",
+            "mainTitle": "Department Name"
+        },
+        "label": {
+            "department": "Department",
+            "division": "Division",
+            "Keyword": "Keyword",
+            "divisionName": "Division Name",
+            "departmentCode": "Department Code",
+            "departmentName": "Department Name"
+        },
+        "placeholder": {},
+        "validation": {},
+        "button": {},
+        "link": {}
+    },
     "vehicleTracking": {
         "text": {
             "timeline": "Timeline",
@@ -2975,16 +2962,16 @@
             "seeMore": "See More"
         }
     },
-    
+
     "deliveryNoteInvoiceCancellation": {
         "heading": {
             "pageTitle": "Delivery Note Invoice Cancellation",
             "moduleTitle": "Invoice Cancellation",
-            "formTitle":"Delivery Note/Invoice Cancellation Details",
-            "requestDetailsTitle":"Request Details",
-            "invoiceDetailsTitle":"Invoice Details",
-            "deliveryNoteTitle":"Delivery Note Details",
-            "vehicleDetailsTitle":"Vehicle Details"
+            "formTitle": "Delivery Note/Invoice Cancellation Details",
+            "requestDetailsTitle": "Request Details",
+            "invoiceDetailsTitle": "Invoice Details",
+            "deliveryNoteTitle": "Delivery Note Details",
+            "vehicleDetailsTitle": "Vehicle Details"
         },
         "label": {
             "requestType": "Request Type",
@@ -2993,43 +2980,42 @@
             "requestDate": "Request Date",
             "invoiceId": "Delivery Note/Invoice ID",
             "dealerName": "Dealer Name",
-            "RequestDetailsForm":{
-                "cancelDate":"Cancel Date",
-                "remarks":"Remarks"
+            "RequestDetailsForm": {
+                "cancelDate": "Cancel Date",
+                "remarks": "Remarks"
             },
-            "invoiceDetailsForm":{
-                "invoiceId":"Invoice ID",
-                "invoiceDate":"Invoice Date",
-                "deliveryNoteId":"Delivery Note ID",
-                "deliveryNoteDate":"Delivery Note Date",
-                "deliveryNoteStatus":"Delivery Note Status",
-                "customerId":"Customer ID",
-                "customerName":"Customer Name"
-
+            "invoiceDetailsForm": {
+                "invoiceId": "Invoice ID",
+                "invoiceDate": "Invoice Date",
+                "deliveryNoteId": "Delivery Note ID",
+                "deliveryNoteDate": "Delivery Note Date",
+                "deliveryNoteStatus": "Delivery Note Status",
+                "customerId": "Customer ID",
+                "customerName": "Customer Name"
             },
-            "deliveryNoteInvoice":{
-                "deliveryNoteId":"Delivery Note ID",
-                "deliveryNoteDate":"Delivery Note Date",
-                "invoiceId":"Invoice ID",
-                "invoiceDate":"Invoice Date",
-                "invoiceStatus":"Invoice Status",
-                "customerId":"Customer ID",
-                "customerName":"Customer Name"
+            "deliveryNoteInvoice": {
+                "deliveryNoteId": "Delivery Note ID",
+                "deliveryNoteDate": "Delivery Note Date",
+                "invoiceId": "Invoice ID",
+                "invoiceDate": "Invoice Date",
+                "invoiceStatus": "Invoice Status",
+                "customerId": "Customer ID",
+                "customerName": "Customer Name"
             },
-            "vehicleDetails":{
-                "modelGroup":"Model Group",
-                "modelVarient":"Model Varient",
-                "model":"Model Description",
-                "vin":"VIN",
-                "reasonForCancellation":"Reason for Cancellation",
-                "cancellationRemarks":"Cancellation Remarks"
+            "vehicleDetails": {
+                "modelGroup": "Model Group",
+                "modelVarient": "Model Varient",
+                "model": "Model Description",
+                "vin": "VIN",
+                "reasonForCancellation": "Reason for Cancellation",
+                "cancellationRemarks": "Cancellation Remarks"
             }
         },
         "placeholder": {
             "search": "Search by Request Number"
         },
         "button": {
-            "cancelRequest":"Cancel Request"
+            "cancelRequest": "Cancel Request"
         },
         "confirmation": {
             "title": "Cancel Delivery/Invoice Cancellation Request",
