@@ -14,6 +14,7 @@ import styles from 'assets/sass/app.module.scss';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { HIERARCHY_DEFAULT_PARENT } from 'constants/constants';
+import { translateContent } from 'utils/translateContent';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -26,7 +27,7 @@ const AddEditFormMain = (props) => {
     const disabledProps = { disabled: isReadOnly };
     const [form] = Form.useForm();
     let attributeHierarchyFieldValidation = {
-        rules: [validateRequiredSelectField('attribute level')],
+        rules: [validateRequiredSelectField(translateContent('manufacturerOrganisation.validation.attributeLevel'))],
     };
     if (attributeData && formData?.attributeKey) {
         if (attributeData.find((attribute) => attribute.id === formData?.attributeKey)) {
@@ -35,7 +36,7 @@ const AddEditFormMain = (props) => {
             const Attribute = unFilteredAttributeData?.find((attribute) => attribute.id === formData?.attributeKey);
             if (Attribute) {
                 attributeHierarchyFieldValidation.initialValue = Attribute?.hierarchyAttribueName;
-                attributeHierarchyFieldValidation.rules.push({ type: 'number', message: Attribute?.hierarchyAttribueName + ' is not active anymore. Please select a different attribute. ' });
+                attributeHierarchyFieldValidation.rules.push({ type: 'number', message: Attribute?.hierarchyAttribueName + translateContent('manufactuereOrganisation.validation.attributeHierarchyFieldValidation')});
             }
         }
     }
@@ -66,7 +67,7 @@ const AddEditFormMain = (props) => {
         selectedTreeSelectKey,
         handleSelectTreeClick,
         defaultValue: treeCodeId,
-        placeholder: preparePlaceholderSelect('Parent'),
+        placeholder: preparePlaceholderSelect(translateContent('manufacturerOrganisation.placeholder.parent')),
     };
 
     const handleFormValueChange = () => {
@@ -83,8 +84,8 @@ const AddEditFormMain = (props) => {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Type" rules={[validateRequiredSelectField('Attribute Type Code')]}>
-                                    <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Attribute Type Code')} disabled={formData?.id || isReadOnly} showSearch allowClear>
+                                <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label={'manufacturerOrganisation.label.attributeType'} rules={[validateRequiredSelectField(translateContent('manufacturerOrganisation.validation.attributeTypeCode'))]}>
+                                    <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect(translateContent('manufacturerOrganisation.placeholder.attributeTypeCode'))} disabled={formData?.id || isReadOnly} showSearch allowClear>
                                         {attributeData?.map((item) => (
                                             <Option key={item?.id} value={item?.id}>
                                                 {item?.hierarchyAttribueName}
@@ -94,7 +95,7 @@ const AddEditFormMain = (props) => {
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item initialValue={treeCodeId === 'null' || treeCodeId === '' ? HIERARCHY_DEFAULT_PARENT : treeCodeId} label="Parent" name="manufactureOrgParntId">
+                                <Form.Item initialValue={treeCodeId === 'null' || treeCodeId === '' ? HIERARCHY_DEFAULT_PARENT : treeCodeId} label={translateContent('manufacturerOrganisation.label.parent')} name="manufactureOrgParntId">
                                     <TreeSelectField {...treeSelectFieldProps} />
                                 </Form.Item>
                             </Col>
@@ -102,27 +103,27 @@ const AddEditFormMain = (props) => {
 
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item initialValue={formData?.manufactureOrgCode} label="Hierarchy Code" name="manufactureOrgCode" rules={[validateRequiredInputField('Code')]}>
-                                    <Input maxLength={6} placeholder={preparePlaceholderText('Attribute Code')} disabled={formData?.id || isReadOnly} />
+                                <Form.Item initialValue={formData?.manufactureOrgCode} label={translateContent('manufacturerOrganisation.label.hierarchyCode')} name="manufactureOrgCode" rules={[validateRequiredInputField(translateContent('manufacturerOrganisation.label.code'))]}>
+                                    <Input maxLength={6} placeholder={preparePlaceholderText(translateContent('manufacturerOrganisation.placeholder.attributeCode'))} disabled={formData?.id || isReadOnly} />
                                 </Form.Item>
                             </Col>
 
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item name="manufactureOrgShrtName" label="Short Description" initialValue={formData?.manufactureOrgShrtName} rules={[validateRequiredInputField('Short Description')]}>
-                                    <Input placeholder={preparePlaceholderText('Short Description')} disabled={formData?.id || isReadOnly} />
+                                <Form.Item name="manufactureOrgShrtName" label={translateContent('manufacturerOrganisation.label.shortDescription')} initialValue={formData?.manufactureOrgShrtName} rules={[validateRequiredInputField(translateContent('manufacturerOrganisation.label.shortDescription'))]}>
+                                    <Input placeholder={preparePlaceholderText(translateContent('manufacturerOrganisation.label.shortDescription'))} disabled={formData?.id || isReadOnly} />
                                 </Form.Item>
                             </Col>
                         </Row>
 
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.textareaError}>
-                                <Form.Item name="manufactureOrgLongName" label="Long Description" placeholder={preparePlaceholderSelect('Long Description')} initialValue={formData?.manufactureOrgLongName} rules={[validateRequiredInputField('Long Description')]}>
-                                    <TextArea placeholder={preparePlaceholderText('Long Description')} maxLength={300} disabled={formData?.id || isReadOnly} showCount />
+                                <Form.Item name="manufactureOrgLongName" label={translateContent('manufacturerOrganisation.label.longDescription')} placeholder={preparePlaceholderSelect(translateContent('manufacturerOrganisation.label.longDescription'))} initialValue={formData?.manufactureOrgLongName} rules={[validateRequiredInputField('Long Description')]}>
+                                    <TextArea placeholder={preparePlaceholderText(translateContent('manufacturerOrganisation.label.longDescription'))} maxLength={300} disabled={formData?.id || isReadOnly} showCount />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item initialValue={formData?.active === null || false ? false : true} label="Status" name="active">
-                                    <Switch value={formData?.active === null || false ? false : true} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active === true || null || undefined ? true : false} {...disabledProps} />
+                                <Form.Item initialValue={formData?.active === null || false ? false : true} label={translateContent('global.label.status')} name="active">
+                                    <Switch value={formData?.active === null || false ? false : true} checkedChildren={translateContent('global.label.active')} unCheckedChildren={translateContent('global.label.inActive')} defaultChecked={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active === true || null || undefined ? true : false} {...disabledProps} />
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -133,13 +134,13 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupLeft}>
                             <Button danger onClick={onCloseAction}>
-                                Cancel
+                                {translateContent('global.buttons.cancel')}
                             </Button>
                         </Col>
 
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
                             <Button data-testid="isFormBtnActive" htmlType="submit" type="primary" disabled={!isFormBtnActive}>
-                                Save
+                                {translateContent('global.buttons.save')}
                             </Button>
                         </Col>
                     </Row>

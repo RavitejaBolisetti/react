@@ -5,53 +5,54 @@
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const tableColumnVehicleDetails = ({ handleButtonClick, canEdit = false, canDelete = false, sorter = false, canView = true }) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Model Description',
+            title: translateContent('stockTransferIndent.label.modelDescription'),
             dataIndex: 'modelDescription',
             width: '20%',
             sorter,
         }),
 
         tblPrepareColumns({
-            title: 'Model Code',
+            title: translateContent('stockTransferIndent.label.modelCode'),
             dataIndex: 'modelCode',
             width: '15%',
             sorter,
         }),
 
         tblPrepareColumns({
-            title: 'Requested Quantity',
+            title: translateContent('stockTransferIndent.label.requestedQuantity'),
             dataIndex: 'requestedQuantity',
             width: '10%',
             sorter,
         }),
 
         tblPrepareColumns({
-            title: 'Cancelled Quantity',
+            title: translateContent('stockTransferIndent.label.cancelledQuantity'),
             dataIndex: 'cancelledQuantity',
             width: '10%',
             sorter,
         }),
 
         tblPrepareColumns({
-            title: 'Issued & Not Received Quantity',
+            title: translateContent('stockTransferIndent.label.issuedAndNotReceivedQuantity'),
             dataIndex: 'issuedAndNotReceivedQuantity',
             width: '10%',
             sorter,
         }),
 
         tblPrepareColumns({
-            title: 'Received Quantity',
+            title: translateContent('stockTransferIndent.label.receivedQuantity'),
             dataIndex: 'receivedQuantity',
             width: '10%',
             sorter,
         }),
 
         tblPrepareColumns({
-            title: 'Balance Quantity',
+            title: translateContent('stockTransferIndent.label.balancedQuantity'),
             dataIndex: 'balancedQuantity',
             width: '10%',
             sorter,

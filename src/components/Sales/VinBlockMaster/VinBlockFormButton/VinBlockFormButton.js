@@ -15,12 +15,12 @@ export const VinBlockFormButton = ({ record, onCloseAction, buttonData, setButto
                 <Col xs={24} sm={8} md={6} lg={4} xl={4} className={styles.buttonsGroupLeft}>
                     {buttonData?.closeBtn && (
                         <Button danger onClick={onCloseAction}>
-                            {translateContent('vinBlockMaster.button.close')}
+                            {translateContent('global.buttons.close')}
                         </Button>
                     )}
                     {buttonData?.cancelBtn && (
                         <Button danger onClick={onCloseAction}>
-                            {translateContent('vinBlockMaster.button.cancel')}
+                            {translateContent('global.buttons.cancel')}
                         </Button>
                     )}
                 </Col>

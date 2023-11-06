@@ -7,9 +7,10 @@ import React from 'react';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 import { GstIRNTransaction } from 'components/FinancialAccounting/GstIRNTransaction';
+import { translateContent } from 'utils/translateContent';
 
 const GstIRNTransactionPageBase = (props) => {
-    const pageTitle = 'GST IRN Transaction Pending';
+    const pageTitle = translateContent('gstIrnTransaction.heading.pageTitle');
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

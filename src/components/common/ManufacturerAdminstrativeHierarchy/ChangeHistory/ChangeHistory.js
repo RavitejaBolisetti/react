@@ -18,6 +18,7 @@ import { DataTable } from 'utils/dataTable';
 import { MANUFACTURER_HIERARCHY_TYPE } from 'constants/manufacturerHierarchyType';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -117,7 +118,7 @@ const ChangeHistoryMain = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Button danger onClick={onCloseAction}>
-                            Close
+                            {translateContent('global.buttons.close')}
                         </Button>
                     </Col>
                 </Row>

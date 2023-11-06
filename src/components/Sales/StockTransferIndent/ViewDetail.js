@@ -17,6 +17,7 @@ import { DataTable } from 'utils/dataTable';
 import { tableColumnVehicleDetails } from './tableColumnVehicleDetails';
 
 import { EDIT_ACTION, VIEW_ACTION } from 'utils/btnVisiblity';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 import { STOCK_TRANSFER } from 'constants/StockTransfer';
@@ -85,7 +86,7 @@ const ViewDetailMain = (props) => {
 
     const editVehicleDetailsProps = {
         isVisible: isEditVehicleDetailsVisible,
-        titleOverride: 'Edit Vehicle Details',
+        titleOverride: translateContent('stockTransferIndent.label.editVehicleDetails'),
         editVehicleDetailsForm,
         onFinish,
         formData: editVehicleDetails,
@@ -98,21 +99,21 @@ const ViewDetailMain = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Card>
                         <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Indent Number">{checkAndSetDefaultValue(formData?.indentNumber, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Indent Date">{checkAndSetDefaultValue(formData?.indentDate ? formData?.indentDate : undefined, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                            <Descriptions.Item label="Indent Status">{checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER?.INDNT_RAS?.id], formData?.indentStatus), isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('stockTransferIndent.label.indentNumber')}>{checkAndSetDefaultValue(formData?.indentNumber, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('stockTransferIndent.label.indentDate')}>{checkAndSetDefaultValue(formData?.indentDate ? formData?.indentDate : undefined, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('stockTransferIndent.label.indentStatus')}>{checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER?.INDNT_RAS?.id], formData?.indentStatus), isLoading)}</Descriptions.Item>
                             {/* <Descriptions.Item label="Indent Status">{checkAndSetDefaultValue(formData?.indentStatus, isLoading)}</Descriptions.Item> */}
-                            <Descriptions.Item label="Indent To Parent">{checkAndSetDefaultValue(formData?.indentToParent, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Indent To Location">{checkAndSetDefaultValue(formData?.indentToLocation, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Requested By">{checkAndSetDefaultValue(formData?.requestedBy, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Remark">{checkAndSetDefaultValue(formData?.remarks, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('stockTransferIndent.label.indentToParent')}>{checkAndSetDefaultValue(formData?.indentToParent, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('stockTransferIndent.label.indentToLocation')}>{checkAndSetDefaultValue(formData?.indentToLocation, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('stockTransferIndent.label.requestedBy')}>{checkAndSetDefaultValue(formData?.requestedBy, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('stockTransferIndent.label.remark')}>{checkAndSetDefaultValue(formData?.remarks, isLoading)}</Descriptions.Item>
                         </Descriptions>
                     </Card>
 
                     <Card>
                         <Row gutter={24}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <h4>Vehicle Details</h4>
+                                <h4>{translateContent('stockTransferIndent.heading.vehicleDetails')}</h4>
                                 <Divider />
                             </Col>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>

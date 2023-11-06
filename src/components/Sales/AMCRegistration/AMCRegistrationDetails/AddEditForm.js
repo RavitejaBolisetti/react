@@ -9,6 +9,7 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 
 import RegistrationForm from './RegistrationForm';
 import SchemeDetailsForm from './SchemeDetailsForm';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 
@@ -34,13 +35,13 @@ const AddEditFormMain = (props) => {
         <Row gutter={20}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                 <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange('regKey')} expandIconPosition="end">
-                    <Panel header="Registration Information" key="regKey">
+                    <Panel header={translateContent('amcRegistration.label.registrationInfo')} key="regKey">
                         <Divider />
                         <RegistrationForm {...props} />
                     </Panel>
                 </Collapse>
                 <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange('schemeKey')} expandIconPosition="end">
-                    <Panel header="Scheme Details" key="schemeKey">
+                    <Panel header={translateContent('amcRegistration.label.schemeDetails')} key="schemeKey">
                         <Divider />
                         <SchemeDetailsForm {...props} />
                     </Panel>
