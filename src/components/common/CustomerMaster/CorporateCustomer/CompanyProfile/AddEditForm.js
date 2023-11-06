@@ -74,13 +74,13 @@ const AddEditFormMain = (props) => {
                             <Divider />
                             <Row gutter={20}>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label={translateContent('customerMaster.label.pan')} initialValue={formData?.panNumber} name="panNumber" rules={[validatePanField('pan'), validateRequiredInputField('pan')]}>
+                                    <Form.Item label={translateContent('customerMaster.label.pan')} initialValue={formData?.panNumber} name="panNumber" rules={[validatePanField(translateContent('customerMaster.validation.pan')), validateRequiredInputField(translateContent('customerMaster.validation.pan'))]}>
                                         <Input maxLength={50} onInput={convertToUpperCase} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.pan'))} />
                                     </Form.Item>
                                 </Col>
 
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label={translateContent('customerMaster.label.gstin')} initialValue={formData?.gstinNumber} name="gstin" rules={[validateGSTIN('gstin'), validateRequiredInputField('gstin')]}>
+                                    <Form.Item label={translateContent('customerMaster.label.gstin')} initialValue={formData?.gstinNumber} name="gstin" rules={[validateGSTIN(translateContent('customerMaster.validation.gstin')), validateRequiredInputField(translateContent('customerMaster.validation.gstin'))]}>
                                         <Input maxLength={50} onInput={convertToUpperCase} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.gstin'))} />
                                     </Form.Item>
                                 </Col>

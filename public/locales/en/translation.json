@@ -239,42 +239,40 @@
         }
     },
 
-
     "vehicleModelAndTaxCharges": {
         "heading": {
-            "pageTitle":"Vehicle Model with Accounts and Tax & Charges Mapping",
+            "pageTitle": "Vehicle Model with Accounts and Tax & Charges Mapping",
             "titleHierarchy": "Model Group",
             "moduleTitle": "Account and Tax & Charges mapping"
         },
 
         "tableColHeading": {
-            "modelGroup":"Model Group",
-            "taxChargesCategory":"Tax Charges and Category",
-            "accountCategory":"Account Category" 
+            "modelGroup": "Model Group",
+            "taxChargesCategory": "Tax Charges and Category",
+            "accountCategory": "Account Category"
         },
 
         "label": {
-           "modelGroup":"Model Group (Product Hierarchy)",
-           "taxChargeCategory":"Tax/Charge Category",
-           "accountCategory":"Account category",
-           "modelGroupCode":"Model Group Code",
-           "taxCategoryDescription":"Tax Category Description",
-           "accountCategoryDescription":"Account Category Description"
+            "modelGroup": "Model Group (Product Hierarchy)",
+            "taxChargeCategory": "Tax/Charge Category",
+            "accountCategory": "Account category",
+            "modelGroupCode": "Model Group Code",
+            "taxCategoryDescription": "Tax Category Description",
+            "accountCategoryDescription": "Account Category Description"
         },
 
         "validation": {
             "modelGroup": "Model Group",
-            "taxChargeCategory":"Tax/Charge Category",
-            "accountCategory":"Account category"   
+            "taxChargeCategory": "Tax/Charge Category",
+            "accountCategory": "Account category"
         },
 
         "placeholder": {
-            "modelGroup":"Model Group",
-            "taxChargeCategory":"Tax/Charge Category",
-            "accountCategory":"Account Category"
-        }      
+            "modelGroup": "Model Group",
+            "taxChargeCategory": "Tax/Charge Category",
+            "accountCategory": "Account Category"
+        }
     },
-
 
     "chartOfAccount": {
         "heading": {
@@ -661,7 +659,8 @@
             "accName": "Account Name",
             "accSegment": "Account Segment",
             "accClient": "Account Client Name",
-            "accDate": "Account Mapping Date"
+            "accDate": "Account Mapping Date",
+            "dealer": "VIP Dealer"
         },
         "placeholder": {
             "mobileMumber": "mobile number",
@@ -2129,7 +2128,6 @@
             "parent": "Parent",
             "attributeTypeCode": "attribute type code",
             "attributeCode": "attribute code"
-
         },
         "validation": {
             "nameValidation": "name",
@@ -2493,21 +2491,20 @@
             "viewTitle": "Booking Block",
             "noDataTitle": "Please choose organization hierarchy to view data"
         },
-        "label":{
+        "label": {
             "descriptionText": "Please select hierarchy type to view records.",
             "viewHierarchyText": "Please select product from left side hierarchy to view “Hierarchy Details”.",
-            "productHierarchy":"Product Hierarchy",
+            "productHierarchy": "Product Hierarchy",
             "manufacturerAdmin": "Manufacturer Administrative Hierarchy",
-            "dealerCode":"Dealer Code"
+            "dealerCode": "Dealer Code"
         },
         "placeholder": {
             "organizationHierarchy": "Organization Hierarchy",
             "parent": "parent",
-            "productHierarchy":"product hierarchy"
-
+            "productHierarchy": "product hierarchy"
         },
         "validation": {
-            "productHierarchy":"Product Hierarchy"
+            "productHierarchy": "Product Hierarchy"
         }
     },
     "applicationMaster": {
@@ -2568,6 +2565,4 @@
             "accessibleDealerLocation": "Accessible Dealer Location"
         }
     }
-
-
 }
