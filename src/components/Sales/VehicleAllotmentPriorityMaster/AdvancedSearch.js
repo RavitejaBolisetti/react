@@ -13,6 +13,7 @@ import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { withModal } from 'components/withModal';
 import { ModalButtons } from 'components/common/Button';
 import { customSelectBox } from 'utils/customSelectBox';
+import { translateContent } from 'utils/translateContent';
 import styles from 'assets/sass/app.module.scss';
 
 export const AdvancedSearchFrom = (props) => {
@@ -43,32 +44,32 @@ export const AdvancedSearchFrom = (props) => {
     const modalProps = {
         reset: true,
         submit: true,
-        resetName: 'Reset',
-        submitName: 'Search',
+        resetName: translateContent('global.buttons.reset'),
+        submitName: translateContent('global.buttons.submit'),
         handleResetFilter,
     };
     return (
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={filterString?.oldModelGroup} label="Old Model" name="oldModelGroup" rules={[validateRequiredSelectField('Old Model')]}>
-                        {customSelectBox({ data: productHierarchyList, fieldNames: { key: 'prodctCode', value: 'prodctShrtName' }, placeholder: preparePlaceholderSelect('Old Model Group') })}
+                    <Form.Item initialValue={filterString?.oldModelGroup} label={translateContent('vehicleAllotmentPriorityMaster.label.oldModel')} name="oldModelGroup" rules={[validateRequiredSelectField(translateContent('vehicleAllotmentPriorityMaster.label.oldModel'))]}>
+                        {customSelectBox({ data: productHierarchyList, fieldNames: { key: 'prodctCode', value: 'prodctShrtName' }, placeholder: preparePlaceholderSelect(translateContent('vehicleAllotmentPriorityMaster.label.oldModel')) })}
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={filterString?.newModelGroup} label="New Model" name="newModelGroup" rules={[validateRequiredSelectField('New Model')]}>
-                        {customSelectBox({ data: productHierarchyList, fieldNames: { key: 'prodctCode', value: 'prodctShrtName' }, placeholder: preparePlaceholderSelect('New Model Group') })}
+                    <Form.Item initialValue={filterString?.newModelGroup} label={translateContent('vehicleAllotmentPriorityMaster.label.newModel')} name="newModelGroup" rules={[validateRequiredSelectField(translateContent('vehicleAllotmentPriorityMaster.label.newModel'))]}>
+                        {customSelectBox({ data: productHierarchyList, fieldNames: { key: 'prodctCode', value: 'prodctShrtName' }, placeholder: preparePlaceholderSelect(translateContent('vehicleAllotmentPriorityMaster.label.newModel')) })}
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.effectiveFromDate)} label="Effective From Date" name="effectiveFromDate" className={styles?.datePicker}>
+                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.effectiveFromDate)} label={translateContent('vehicleAllotmentPriorityMaster.label.effectiveFromDate')} name="effectiveFromDate" className={styles?.datePicker}>
                         <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} onChange={() => advanceFilterForm.setFieldsValue({ effectiveToDate: undefined })} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.effectiveToDate)} label="Effective To Date" name="effectiveToDate" className={styles?.datePicker}>
+                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.effectiveToDate)} label={translateContent('vehicleAllotmentPriorityMaster.label.effectiveToDate')} name="effectiveToDate" className={styles?.datePicker}>
                         <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} disabledDate={(current) => current < advanceFilterForm?.getFieldValue('effectiveFromDate')} className={styles.fullWidth} />
                     </Form.Item>
                 </Col>
