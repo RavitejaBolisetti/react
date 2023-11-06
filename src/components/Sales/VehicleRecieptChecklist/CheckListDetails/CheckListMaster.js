@@ -15,6 +15,7 @@ import { AddEditForm, tableColumn } from 'components/Sales/Common/ChecklistDetai
 import { VehicleCheckListbutton } from '../VehicleRecieptFormButton';
 import { MODULE_TYPE_CONSTANTS } from 'constants/modules/vehicleChecklistConstants';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -169,7 +170,7 @@ const VehicleRecieptCheckListMain = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <h2>{section?.title}</h2>
+                            <h2>{translateContent('vehicleReceiptChecklist.heading.section' + section?.id)}</h2>
                         </Col>
                     </Row>
                     <AddEditForm {...formProps} />

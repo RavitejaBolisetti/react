@@ -15,6 +15,7 @@ import { convertDateTimedayjs, formatDateToCalenderDate } from 'utils/formatDate
 import { MODULE_TYPE_CONSTANTS } from 'constants/modules/vehicleChecklistConstants';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 const { TextArea } = Input;
 
 export const ChecklistModalForms = (props) => {
@@ -23,7 +24,7 @@ export const ChecklistModalForms = (props) => {
     const { setAdvanceSearchVisible } = props;
     const { isVisible, setisEditing } = props;
     const { setPage, pageIntialState } = props;
-    const { checklistType, setRequestPayload = () => {}, checklistDescriptionLabel = 'Remarks', matchKey = 'id' } = props;
+    const { checklistType, setRequestPayload = () => {}, checklistDescriptionLabel = translateContent('commonModules.checklistMaster.label.remarks'), matchKey = 'id' } = props;
     const [saveDisabled, setsaveDisabled] = useState(true);
     const handleResetChecklist = () => {
         if (AdvanceformData?.checkResult) {
@@ -104,8 +105,8 @@ export const ChecklistModalForms = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
                     {checklistType === MODULE_TYPE_CONSTANTS?.RECEIPT_CHECKLIST?.key && (
-                        <Form.Item label={checklistDescriptionLabel} name="checklistDescription" rules={[validateRequiredInputField('Remarks')]}>
-                            <TextArea placeholder={preparePlaceholderText('Remarks')} autoSize={{ minRows: 3, maxRows: 5 }} maxLength={300} showCount />
+                        <Form.Item label={checklistDescriptionLabel} name="checklistDescription" rules={[validateRequiredInputField(checklistDescriptionLabel)]}>
+                            <TextArea placeholder={preparePlaceholderText(checklistDescriptionLabel)} autoSize={{ minRows: 3, maxRows: 5 }} maxLength={300} showCount />
                         </Form.Item>
                     )}
                     <Form.Item name="id" hidden></Form.Item>

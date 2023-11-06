@@ -8,6 +8,7 @@ import { Card } from 'antd';
 import { FiDownload } from 'react-icons/fi';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const ViewSupportingDocDetail = (props) => {
     const { downloadFileFromButton, documentData } = props;
@@ -21,7 +22,7 @@ export const ViewSupportingDocDetail = (props) => {
                     })}
                 </div>
             ) : (
-                <Card>No Supporting Document Available</Card>
+                <Card>{translateContent('commonModules.label.supportingDocument.noData.supportingDocument')}</Card>
             )}
         </div>
     );

@@ -173,14 +173,18 @@
             "exchangeDetails.modelGroup": "Model Group",
             "exchangeDetails.variant": "Variant",
             "exchangeDetails.kms": "KMS",
+            "exchangeDetails.kilometer": "kilometer",
             "exchangeDetails.usage": "Usage",
             "exchangeDetails.yearOfRegistration": "Year of Registration",
+            "exchangeDetails.monthOfRegistration": "Month of Registration",
             "exchangeDetails.vin": "VIN",
             "exchangeDetails.hypotheticatedTo": "Hypothecated To",
             "exchangeDetails.customerName": "Customer Name",
             "exchangeDetails.relationShip": "Relationship",
             "exchangeDetails.schemeName": "Scheme Name",
             "exchangeDetails.schemeAmount": "Scheme Amount",
+            "exchangeDetails.customerExpectedPrice": "Customer Expected Price",
+            "exchangeDetails.procurementPrice": "Procurement Price",
 
             "loyaltyScheme.oldRegistrationNumber": "Old Reg. Number",
             "loyaltyScheme.make": "Make",
@@ -207,7 +211,31 @@
             "referrals.customerName": "Customer Name",
             "referrals.mobileNumber": "Mobile Number",
             "referrals.emailId": "Email Id",
-            "referrals.dateOfBirth": "Date of Birth"
+            "referrals.dateOfBirth": "Date of Birth",
+            "noData": {
+                "supportingDocument": "No Supporting Document Available"
+            }
+        },
+        "checklistMaster": {
+            "tableColumnHeading": {
+                "column1": "Group",
+                "column2": "Sub-Group",
+                "column3": "Check Point",
+                "column4": "Check Result",
+                "column5": "Remarks"
+            },
+            "label": {
+                "checklistDetails": "Details",
+                "remarks": "remarks"
+            }
+        },
+        "exchangeVehicle": {
+            "captions": {
+                "sectionOne": "Vehicle Details",
+                "sectionTwo": "Customer Details",
+                "sectionThree": "Scheme",
+                "sectionFour": "Vehicle Price"
+            }
         },
         "validation": {
             "mandatoryBookingCustomer": "Please provide booking customer",
@@ -2011,7 +2039,7 @@
             "captions.salesDetails": "Sales Details",
             "captions.vehicleDetails": "Vehicle Details",
             "captions.customerDetails": "Customer Details",
-            "captions.Scheme": "Scheme",
+            "captions.scheme": "Scheme",
             "captions.VehiclePrice": "Vehicle Price",
 
             "profileCard.invoiceNumber": "Invoice No.:",
@@ -2139,10 +2167,9 @@
         "heading": {
             "mainTitle": "Vehicle Receipt Checklist",
             "drawerTitleMain": "Vehicle Receipt Checklist",
-            "sections": {
-                "section1": "Checklist Details",
-                "section2": "Supporting Documents"
-            },
+            "section.1": "Checklist DetailsS",
+            "section.2": "Supporting Documents",
+
             "collapse": {},
             "profileCard": {
                 "checklistNumber": "CheckList Number:",
@@ -2157,11 +2184,18 @@
         },
         "label": {
             "checklistDetails": {
-                "remarks": "Remarks"
+                "remarks": "Remarks",
+                "details": "Details"
             },
             "supportingDocument": {
                 "fileName": "File Name",
                 "documentDescription": "Document Description"
+            },
+            "advanceFilter": {
+                "fromDate": "Receipt From Date",
+                "toDate": "Receipt To Date",
+                "message1": "Please select from date",
+                "message2": "Please select to date"
             }
         },
         "placeholder": {},
@@ -2196,6 +2230,7 @@
             "effectiveTo": "Effective To",
             "plant": "Plant",
             "state": "State",
+            "district": "District",
             "city": "City",
             "cityCode": "City Code",
             "modelCode": "Model Code",
@@ -2210,7 +2245,23 @@
             "dealerMargin": "Dealer Margin",
             "gstAmountDealerMargin": "GST Amount on Dealer Margin",
             "netDealer": "Net Dealer Price",
-            "sellingPrice": "Selling Price"
+            "sellingPrice": "Selling Price",
+            "model": "Model",
+            "pricingCity": "Pricing City",
+            "endDate": "End Date",
+            "downloadHere": "Download Here",
+            "advanceFilters":"Advance Filters",
+            "uploadVehicle":"Upload Vehicle Price Master Form",
+            "uploadButtonName":"Upload Price Master",
+            "messageText":"Click or drop your file here to upload",
+            "validationText":"File type should be .xlxs and max file size to be 8Mb",
+            "vehiclePriceMasterForm":"Vehicle Price Master Form",
+            "vehiclePriceTemplate":"Please download 'Vehicle Price Template' using below button",
+            "downloadTemplate":"Download Template",
+            "type":"Type",
+            "value":"Value",
+            "sortBy":"Sort By",
+            "sortType":"Sort Type"
         },
         "placeholder": {},
         "validation": {},
