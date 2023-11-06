@@ -15,6 +15,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { AMC_CONSTANTS } from './utils/AMCConstants';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export default function RegistrationFilter(props) {
     const { extraParams, removeFilter, typeData, invoiceStatusList, searchForm, filterString, setFilterString, handleResetFilter, advanceFilter = false, handleInvoiceTypeChange, setAdvanceSearchVisible, handleButtonClick, amcStatus, showAddButton, userType } = props;
