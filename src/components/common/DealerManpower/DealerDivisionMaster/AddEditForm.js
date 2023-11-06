@@ -15,6 +15,8 @@ import { DrawerFormButton } from 'components/common/Button';
 
 import styles from 'assets/sass/app.module.scss';
 
+import { translateContent } from 'utils/translateContent';
+
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish } = props;
 
@@ -52,19 +54,19 @@ const AddEditFormMain = (props) => {
                         <>
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.code} label="Division Code" name="code" rules={[validateRequiredInputField('Division Code')]}>
-                                        <Input placeholder={preparePlaceholderText('Division Code')} maxLength={6} disabled={editMode ? true : false} />
+                                    <Form.Item initialValue={formData?.code} label={translateContent('divisionMaster.label.divisionCode')} name="code" rules={[validateRequiredInputField(translateContent('divisionMaster.validation.divisionCode'))]}>
+                                        <Input placeholder={preparePlaceholderText(translateContent('divisionMaster.placeholder.divisionCode'))} maxLength={6} disabled={editMode ? true : false} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label="Division Name" initialValue={formData?.divisionName} rules={[validateRequiredInputField('Division Name')]} name="divisionName">
-                                        <Input placeholder={preparePlaceholderText('Division Name')} maxLength={50} />
+                                    <Form.Item label={translateContent('divisionMaster.label.divisionName')} initialValue={formData?.divisionName} rules={[validateRequiredInputField(translateContent('divisionMaster.validation.divisionName'))]} name="divisionName">
+                                        <Input placeholder={preparePlaceholderText(translateContent('divisionMaster.placeholder.divisionName'))} maxLength={50} />
                                     </Form.Item>
                                 </Col>
                             </Row>
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
+                                    <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label={translateContent('global.label.status')}>
                                         <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
                                     </Form.Item>
                                 </Col>
