@@ -9,6 +9,7 @@ import styles from 'assets/sass/app.module.scss';
 import { FiEdit, FiEye } from 'react-icons/fi';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { ONROAD_PRICE_MASTER_STATUS } from 'constants/OnRoadPriceMasterStatus';
+import { translateContent } from 'utils/translateContent';
 import { Button, Space } from 'antd';
 
 export const tblActionColumn = ({ handleButtonClick, width = '10%', fixed = '' }) => {
@@ -41,28 +42,28 @@ export const tblActionColumn = ({ handleButtonClick, width = '10%', fixed = '' }
 export const tableColumn = (handleButtonClick) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Pricing Type',
+            title: translateContent('onRoadPriceMaster.label.pricingType'),
             dataIndex: 'priceType',
             width: '15%',
         }),
         tblPrepareColumns({
-            title: 'Model',
+            title: translateContent('onRoadPriceMaster.label.model'),
             dataIndex: 'model',
             width: '15%',
         }),
 
         tblPrepareColumns({
-            title: 'Pricing City',
+            title: translateContent('onRoadPriceMaster.label.pricingCity'),
             dataIndex: 'pricingCity',
             width: '15%',
         }),
         tblPrepareColumns({
-            title: 'Change EX Showroom ORG',
+            title: translateContent('onRoadPriceMaster.label.changeEXShowroomORG'),
             dataIndex: 'changeInExShowroomOrg',
             width: '15%',
         }),
         tblPrepareColumns({
-            title: 'Status',
+            title: translateContent('onRoadPriceMaster.label.status'),
             dataIndex: 'status',
             width: '15%',
             render: (_, record) => OnRoadPriceStatusTag(record.status),
