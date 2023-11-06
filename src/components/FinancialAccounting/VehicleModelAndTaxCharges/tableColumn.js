@@ -6,22 +6,23 @@
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const tableColumn = (handleButtonClick) => {
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Model Group',
+            title: translateContent('vehicleModelAndTaxCharges.tableColHeading.modelGroup'),
             dataIndex: 'modelGroup',
             width: '15%',
         }),
         tblPrepareColumns({
-            title: 'Tax Charges and Category',
+            title: translateContent('vehicleModelAndTaxCharges.tableColHeading.taxChargesCategory'),
             dataIndex: 'taxCategoryDescription',
             width: '15%',
         }),
         tblPrepareColumns({
-            title: 'Account Category',
+            title: translateContent('vehicleModelAndTaxCharges.tableColHeading.accountCategory'),
             dataIndex: 'accountCategoryDescription',
             width: '15%',
         }),

@@ -19,9 +19,9 @@
             "title": "Error"
         },
         "drawerTitle": {
-            "add": "Add ",
-            "edit": "Edit ",
-            "view": "View ",
+            "add": "Add",
+            "edit": "Edit",
+            "view": "View",
             "addNew": "Add New "
         },
         "label": {
@@ -237,6 +237,42 @@
             "contactNumber": "Contact Number",
             "emailId": "Email ID"
         }
+    },
+
+
+    "vehicleModelAndTaxCharges": {
+        "heading": {
+            "pageTitle":"Vehicle Model with Accounts and Tax & Charges Mapping",
+            "titleHierarchy": "Model Group",
+            "moduleTitle": "Account and Tax & Charges mapping"
+        },
+
+        "tableColHeading": {
+            "modelGroup":"Model Group",
+            "taxChargesCategory":"Tax Charges and Category",
+            "accountCategory":"Account Category" 
+        },
+
+        "label": {
+           "modelGroup":"Model Group (Product Hierarchy)",
+           "taxChargeCategory":"Tax/Charge Category",
+           "accountCategory":"Account category",
+           "modelGroupCode":"Model Group Code",
+           "taxCategoryDescription":"Tax Category Description",
+           "accountCategoryDescription":"Account Category Description"
+        },
+
+        "validation": {
+            "modelGroup": "Model Group",
+            "taxChargeCategory":"Tax/Charge Category",
+            "accountCategory":"Account category"   
+        },
+
+        "placeholder": {
+            "modelGroup":"Model Group",
+            "taxChargeCategory":"Tax/Charge Category",
+            "accountCategory":"Account Category"
+        }      
     },
 
 
