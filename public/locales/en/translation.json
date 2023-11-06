@@ -2477,6 +2477,23 @@
             "documentType": "Document Type",
             "accessibleDealerLocation": "Accessible Dealer Location"
         }
+    },
+    "digitalSignature": {
+        "heading": {
+            "moduleTitle": "Map New Digital Signature",
+            "branchesAccessible": "Branches Accessible"
+        },
+        "label": {
+            "action": "Action",
+            "dealerName": "Dealer Name",
+            "employeeName": "Employee Name",
+            "status": "Status",
+            "branch": "Branch",
+            "accessible": "Accessible"
+        },
+        "button": {
+            "mapSignature": "Map Signature"
+        }
     }
 
 
