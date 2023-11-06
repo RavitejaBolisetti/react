@@ -81,7 +81,8 @@
             "deliveryNote": " Delivery Note",
             "advancedFilter": "Advanced Filters",
             "viewHistory": "View History",
-            "uploadFile": "Upload File"
+            "uploadFile": "Upload File",
+            "register": "Register"
         },
         "placeholder": {
             "input": "Enter ",
@@ -1077,9 +1078,9 @@
             "mainTitle": "Charger Installation"
         },
         "label": {
-          "bookingNumber": "Booking No.",
-          "requestNumber": "Request ID",
-          "requestStatus" : "Stage Status"
+            "bookingNumber": "Booking No.",
+            "requestNumber": "Request ID",
+            "requestStatus": "Stage Status"
         },
         "notification": {
             "globalNotification": "Non-EV Booking shouldn't be accepted"
@@ -1136,8 +1137,6 @@
             "gstin": "GSTIN"
         }
     },
-
-    
 
     "footer": {
         "copyright": "Copyright &copy; {YEAR} ROBIN."
@@ -2546,9 +2545,37 @@
                 "modelDescription": "Model Description"
             }
         },
-        "finanaceDetails": {},
-        "insuranceDetails": {},
-        "addOnDetails": {},
+
+        "addOnDetails": {
+            "heading": {
+                "mainTitle": "Add on Details",
+                "shieldInfo": "Shield Information",
+                "rsa": "RSA",
+                "amc": "AMC"
+            },
+            "label": {
+                "color": "Color",
+                "seating": "Seating",
+                "fuel": "Fuel",
+                "variant": "Variant",
+                "name": "Name",
+                "vinNumber": "VIN",
+                "engineNumber": "Engine Number",
+                "keyNumber": "Key Number",
+                "modelCode": "Model Code",
+                "modelDescription": "Model Description",
+                "schemeType": "Scheme Type",
+                "schemeDescription": "Scheme Description",
+                "saleType": "Sale Type",
+                "schemeAmount": "Scheme Amount (With Tax)",
+                "employeeName": "Employee Name",
+                "manager": "Manager",
+                "schemeRegNo":"Scheme Registration No.",
+                "valiFromDate":"Valid From Date",
+                "validToDate":"Valid To Date"
+
+            }
+        },
         "deliverableChecklist": {},
         "thankYouPage": {}
     },
