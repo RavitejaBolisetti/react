@@ -220,7 +220,8 @@
                 "column5": "Remarks"
             },
             "label": {
-                "checklistDetails": "Details"
+                "checklistDetails": "Details",
+                "remarks": "remarks"
             }
         },
         "exchangeVehicle": {
@@ -2147,6 +2148,12 @@
             "supportingDocument": {
                 "fileName": "File Name",
                 "documentDescription": "Document Description"
+            },
+            "advanceFilter": {
+                "fromDate": "Receipt From Date",
+                "toDate": "Receipt To Date",
+                "message1": "Please select from date",
+                "message2": "Please select to date"
             }
         },
         "placeholder": {},

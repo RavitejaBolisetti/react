@@ -168,7 +168,7 @@ const DeliverableChecklistMain = (props) => {
         setPage,
         pageIntialState,
         checklistType: MODULE_TYPE_CONSTANTS?.DELIVERY_NOTE?.key,
-        checklistDescriptionLabel: translateContent('vehicleDeliveryNote.deliverableChecklist.label.details'),
+        checklistDescriptionLabel: translateContent('commonModules.checklistMaster.label.checklistDetails'),
         matchKey: uniqueMatchKey,
         styles,
         isChecklistDataLoading,
