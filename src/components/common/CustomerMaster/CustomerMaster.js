@@ -519,7 +519,7 @@ const CustomerMasterMain = (props) => {
         shouldResetForm,
         handleFormValueChange,
         isLastSection,
-        saveButtonName: !selectedCustomerId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
+        saveButtonName: !selectedCustomerId ? 'Create Customer ID' : isLastSection ? 'Submit' : translateContent('global.buttons.saveAndNext'),
         setIsFormVisible,
         setRefreshCustomerList,
         profileCardLoading,

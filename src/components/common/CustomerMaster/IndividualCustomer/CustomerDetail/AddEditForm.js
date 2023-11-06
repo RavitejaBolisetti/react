@@ -99,12 +99,12 @@ const AddEditFormMain = (props) => {
                             ) : (
                                
                             )} */}
-                        <Form.Item label={translateContent('customerMaster.label.mobileNumber')} initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number'), validateRequiredInputField('mobile number')]}>
+                        <Form.Item label={translateContent('customerMaster.label.mobileNumber')} initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField(translateContent('customerMaster.validation.mobileNumber')), validateRequiredInputField(translateContent('customerMaster.validation.mobileNumber'))]}>
                             <Input placeholder={translateContent('customerMaster.placeholder.mobileMumber')} maxLength={10} size="small" disabled={editMode} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        <Form.Item initialValue={customerType} label={translateContent('customerMaster.label.customerType')} name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>
+                        <Form.Item initialValue={customerType} label={translateContent('customerMaster.label.customerType')} name="customerType" data-testid="customerType" rules={[validateRequiredSelectField(translateContent('customerMaster.validation.customerType'))]}>
                             <Select disabled={true} placeholder={translateContent('customerMaster.placeholder.customerType')} fieldNames={{ label: 'value', value: 'key' }} options={typeData?.[PARAM_MASTER?.CUST_TYPE?.id]} allowClear></Select>
                         </Form.Item>
                     </Col>
@@ -118,7 +118,7 @@ const AddEditFormMain = (props) => {
                 <Divider />
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        <Form.Item label={translateContent('customerMaster.label.emailID')} initialValue={formData?.emailId} name="emailId" data-testid="emailId" rules={[validateEmailField('email id'), validateRequiredInputField('email id')]}>
+                        <Form.Item label={translateContent('customerMaster.label.emailID')} initialValue={formData?.emailId} name="emailId" data-testid="emailId" rules={[validateEmailField(translateContent('customerMaster.validation.emailId')), validateRequiredInputField(translateContent('customerMaster.validation.emailId'))]}>
                             <Input placeholder={translateContent('customerMaster.placeholder.emailId')} />
                         </Form.Item>
                     </Col>
@@ -149,7 +149,7 @@ const AddEditFormMain = (props) => {
                 </Row>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        <Form.Item label={translateContent('customerMaster.label.whatsappNumber')} initialValue={formData?.whatsAppNumber} name="whatsAppNumber" data-testid="whatsAppNumber" rules={[validateMobileNoField('whatsapp number'), { validator: validateSameNumber }]}>
+                        <Form.Item label={translateContent('customerMaster.label.whatsappNumber')} initialValue={formData?.whatsAppNumber} name="whatsAppNumber" data-testid="whatsAppNumber" rules={[validateMobileNoField(translateContent('customerMaster.validation.whatsappNo')), { validator: validateSameNumber }]}>
                             <Input placeholder={translateContent('customerMaster.placeholder.whatsAppNumber')} disabled={contactOverWhatsAppActive} maxLength={10} />
                         </Form.Item>
                     </Col>

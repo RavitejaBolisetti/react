@@ -17,6 +17,7 @@ import { convertDateTime, dateFormatView, timeFormatView } from 'utils/formatDat
 import { DataTable } from 'utils/dataTable';
 import { BASE_URL_CUSTOMER_MASTER_NAME_CHANGE_HISTORY as customURL } from 'constants/routingApi';
 import { STATUS_CHANGE_HISTORY } from '../statusConstant';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -114,15 +115,15 @@ const ChangeHistoryMain = ({ fetchCustomerChangeHistory, onCloseAction, listShow
 
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Current Name',
+            title: translateContent('customerMaster.tableColHeading.currentName'),
             dataIndex: 'currentName',
         }),
         tblPrepareColumns({
-            title: 'Previous Name',
+            title: translateContent('customerMaster.tableColHeading.previousName'),
             dataIndex: 'previousName',
         }),
         tblPrepareColumns({
-            title: 'Request Date',
+            title: translateContent('customerMaster.tableColHeading.requestDate'),
             dataIndex: 'requestDate',
             render: (text) => [
                 <div>
@@ -133,24 +134,24 @@ const ChangeHistoryMain = ({ fetchCustomerChangeHistory, onCloseAction, listShow
             ],
         }),
         tblPrepareColumns({
-            title: 'Approved By/ Rejected By',
+            title: translateContent('customerMaster.tableColHeading.Approved'),
             dataIndex: 'approvedOrRejectedBy',
         }),
 
         tblPrepareColumns({
-            title: 'Remarks',
+            title: translateContent('customerMaster.tableColHeading.remarks'),
             dataIndex: 'remarks',
         }),
 
         tblPrepareColumns({
-            title: 'Documents',
+            title: translateContent('customerMaster.tableColHeading.documents'),
             dataIndex: 'supportingDocuments',
             sorter: false,
             render: () => <img src={IMAGES.FILE} alt="logo-images" onClick={downloadFileFromButton} />,
         }),
 
         tblPrepareColumns({
-            title: 'Status',
+            title: translateContent('customerMaster.tableColHeading.status'),
             dataIndex: 'status',
             sorter: (a, b) => (a && b ? String(a['status']).localeCompare(String(b['status']), undefined, { sensitivity: 'base' }) : a),
             render: (_, record) => (record?.status === STATUS_CHANGE_HISTORY.APPROVED.key ? <Tag color="success">Approved</Tag> : record?.status === STATUS_CHANGE_HISTORY.REJECTED.key ? <Tag color="error">Rejected</Tag> : <Tag color="warning">Pending</Tag>),
@@ -179,7 +180,7 @@ const ChangeHistoryMain = ({ fetchCustomerChangeHistory, onCloseAction, listShow
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Button data-testid="closed" danger onClick={onCloseAction}>
-                            Close
+                            {translateContent('global.buttons.close')}
                         </Button>
                     </Col>
                 </Row>

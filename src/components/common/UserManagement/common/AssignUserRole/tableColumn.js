@@ -5,21 +5,22 @@
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const tableColumn = (handleButtonClick, formActionType) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Role',
+            title: translateContent('userManagement.label.role'),
             dataIndex: 'roleName',
             width: '12%',
         }),
         tblPrepareColumns({
-            title: 'Role ID',
+            title: translateContent('userManagement.label.roleId'),
             dataIndex: 'roleId',
             width: '16%',
         }),
         tblPrepareColumns({
-            title: 'Access provided',
+            title: translateContent('userManagement.label.accessProvided'),
             dataIndex: 'accessProvided',
             width: '16%',
         }),

@@ -144,13 +144,13 @@ const AddEditForm = (props) => {
             <Form form={addressForm} id="myAdd" onFinish={handleSave} onFieldsChange={handleFormValueChange} autoComplete="off" layout="vertical">
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label={translateContent('customerMaster.label.address')} name="addressType" rules={[validateRequiredSelectField('Address Type'), { validator: (rule, value) => duplicateValidator(value, 'addressType', addressData, editingData?.addressType) }]}>
+                        <Form.Item label={translateContent('customerMaster.label.address')} name="addressType" rules={[validateRequiredSelectField(translateContent('customerMaster.validation.addressType')), { validator: (rule, value) => duplicateValidator(value, 'addressType', addressData, editingData?.addressType) }]}>
                             <Select {...disabledProps} placeholder={translateContent('customerMaster.placeholder.addresstype')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={addData} allowClear></Select>
                         </Form.Item>
                     </Col>
 
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label={translateContent('customerMaster.label.addressL')} name="addressLine1" rules={[validateRequiredInputField('address Line 1')]}>
+                        <Form.Item label={translateContent('customerMaster.label.addressL')} name="addressLine1" rules={[validateRequiredInputField(translateContent('customerMaster.validation.address'))]}>
                             <Input maxLength={50} placeholder={translateContent('customerMaster.placeholder.address')} />
                         </Form.Item>
                     </Col>
@@ -168,7 +168,7 @@ const AddEditForm = (props) => {
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item initialValue={formData?.pinCode} label={translateContent('customerMaster.label.pinCode')} name="pinCode" rules={[validateRequiredInputField('Pin Code'), validatePincodeField('Pin Code')]}>
+                        <Form.Item initialValue={formData?.pinCode} label={translateContent('customerMaster.label.pinCode')} name="pinCode" rules={[validateRequiredInputField(translateContent('customerMaster.validation.pinCode')), validatePincodeField(translateContent('customerMaster.validation.pinCode'))]}>
                             <AutoComplete {...disabledProps} maxLength={6} options={options} onSelect={handleOnSelect} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
                                 <Search onSearch={handleOnSearch} onChange={handleOnClear} placeholder="Search" loading={isPinCodeLoading} type="text" allowClear />
                             </AutoComplete>
@@ -230,7 +230,7 @@ const AddEditForm = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Form.Item valuePropName="checked" name="deafultAddressIndicator" initialValue={false}>
-                            <Checkbox>Mark As Default</Checkbox>
+                            <Checkbox>{translateContent('customerMaster.label.mark')}</Checkbox>
                         </Form.Item>
                     </Col>
                 </Row>
@@ -238,10 +238,10 @@ const AddEditForm = (props) => {
                     <Row gutter={20} className={styles.marB20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.buttonsGroupLeft}>
                             <Button onClick={handleSave} type="primary">
-                                Save
+                                {translateContent('global.buttons.save')}
                             </Button>
                             <Button onClick={handleCancelFormEdit} danger>
-                                Cancel
+                                {translateContent('global.buttons.cancel')}
                             </Button>
                         </Col>
                     </Row>

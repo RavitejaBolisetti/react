@@ -89,7 +89,7 @@ const AddEditFormMain = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
-                        <Panel header={translateContent('customerMaster.heading.individualTitle')} key="1">
+                        <Panel header={translateContent('customerMaster.drawerSubHeading.informationTitle')} key="1">
                             <Divider />
                             <Row gutter={20}>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -98,7 +98,7 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label={translateContent('customerMaster.label.gender')} name="gender" initialValue={formData?.gender} rules={[validateRequiredSelectField('gender')]}>
+                                    <Form.Item label={translateContent('customerMaster.label.gender')} name="gender" initialValue={formData?.gender} rules={[validateRequiredSelectField(translateContent('customerMaster.validation.gender'))]}>
                                         <Select placeholder={translateContent('customerMaster.placeholder.gender')} {...disabledProps}>
                                             {appCategoryData?.GENDER_CD?.map((item) => (
                                                 <Option key={'ct' + item.key} value={item.key}>
@@ -151,17 +151,17 @@ const AddEditFormMain = (props) => {
                             </Row>
                             <Row gutter={20}>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label={translateContent('customerMaster.label.drivingLicenseNo')} name="drivingLicenseNumber" initialValue={formData?.drivingLicenseNumber} rules={[validateDrivingLicenseNo('driving license no ')]}>
+                                    <Form.Item label={translateContent('customerMaster.label.drivingLicenseNo')} name="drivingLicenseNumber" initialValue={formData?.drivingLicenseNumber} rules={[validateDrivingLicenseNo(translateContent('customerMaster.validation.licenseNo'))]}>
                                         <Input maxLength={15} onInput={convertToUpperCase} placeholder={translateContent('customerMaster.placeholder.drivinglicense')} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label={translateContent('customerMaster.label.aadharNo')} name="adharNumber" initialValue={formData?.adharNumber} rules={[validateAadhar('aadhar')]}>
+                                    <Form.Item label={translateContent('customerMaster.label.aadharNo')} name="adharNumber" initialValue={formData?.adharNumber} rules={[validateAadhar(translateContent('customerMaster.validation.aadhar'))]}>
                                         <Input maxLength={12} placeholder={translateContent('customerMaster.placeholder.aadharNumber')} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label={translateContent('customerMaster.label.voterID')} name="voterId" initialValue={formData?.voterId} rules={[validateVoterId('voter id')]}>
+                                    <Form.Item label={translateContent('customerMaster.label.voterID')} name="voterId" initialValue={formData?.voterId} rules={[validateVoterId(translateContent('customerMaster.validation.voterId'))]}>
                                         <Input maxLength={10} onInput={convertToUpperCase} placeholder={translateContent('customerMaster.placeholder.voterId')} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
@@ -191,13 +191,13 @@ const AddEditFormMain = (props) => {
                                 </Col>
 
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label={translateContent('customerMaster.label.pan')} name="panNumber" initialValue={formData?.panNumber} rules={[validatePanField('pan'), validateRequiredInputField('pan')]}>
+                                    <Form.Item label={translateContent('customerMaster.label.pan')} name="panNumber" initialValue={formData?.panNumber} rules={[validatePanField(translateContent('customerMaster.validation.pan')), validateRequiredInputField(translateContent('customerMaster.validation.pan'))]}>
                                         <Input maxLength={10} onInput={convertToUpperCase} placeholder={translateContent('customerMaster.placeholder.pan')} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
 
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label={translateContent('customerMaster.label.gstin')} name="gstin" initialValue={formData?.gstin} rules={[validateGSTIN('gstin')]}>
+                                    <Form.Item label={translateContent('customerMaster.label.gstin')} name="gstin" initialValue={formData?.gstin} rules={[validateGSTIN(translateContent('customerMaster.validation.gstin'))]}>
                                         <Input value={null} onInput={convertToUpperCase} placeholder={translateContent('customerMaster.placeholder.gstin')} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
