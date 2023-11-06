@@ -2419,5 +2419,65 @@
         "validation": {
             "productHierarchy":"Product Hierarchy"
         }
+    },
+    "applicationMaster": {
+        "title": {
+            "applicationDetails": "Application Details",
+            "applicationMaster": "Application Master"
+        },
+        "label": {
+            "action": "Action",
+            "code": "Code",
+            "documentName": "document name",
+            "applicationId": "Application ID",
+            "applicationName": "Application Name",
+            "applicationTitle": "Application Title",
+            "applicationType": "Application Type",
+            "parentApplicationId": "Parent Application ID",
+            "accessibleLocation": "Accessible Location",
+            "criticalityGroupName": "Application Criticality Group",
+            "documentNumRequired": "Document number to be generated",
+            "termAndConRequired": "T&C Required",
+            "digitalSignatureRequired": "Digital Signature Required",
+            "isFinanceRelated": "Is Finance Related",
+            "irnIntegrationRequired": "IRN Integration Required"
+        },
+        "validation": {
+            "applicationAction": "application action",
+            "documentCode": "document code",
+            "documentName": "document name",
+            "applicationId": "application ID",
+            "applicationName": "application Name",
+            "applicationTitle": "application title",
+            "applicationType": "application type",
+            "parentApplicationId": "parent application ID",
+            "accessibleLocation": "Accessible Locations",
+            "criticalityGroupName": "Application Criticality Group"
+        },
+        "placeholder": {
+            "applicationAction": " application action",
+            "documentCode": "document code",
+            "documentName": "document name",
+            "applicationId": "application ID",
+            "applicationName": "application name",
+            "applicationTitle": "application title",
+            "applicationType": "application type",
+            "accessibleLocation": "accessible location",
+            "criticalityGroupName": "application criticality group"
+        },
+        "text": {
+            "status": "Status: ",
+            "active": "Active",
+            "inActive": "Inactive",
+            "actionId": "Action ID: ",
+            "code": "Code: ",
+            "yes": "Yes",
+            "no": "No",
+            "applicationActions": "Application Actions",
+            "documentType": "Document Type",
+            "accessibleDealerLocation": "Accessible Dealer Location"
+        }
     }
+
+
 }
