@@ -13,6 +13,8 @@ import { LANGUAGE_EN } from 'language/en';
 import { NoDataFound } from 'utils/noDataFound';
 
 import styles from '../../../TreeView.module.scss';
+import { translateContent } from 'utils/translateContent';
+import { preparePlaceholderSearch } from 'utils/preparePlaceholder';
 
 const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
 
@@ -121,7 +123,11 @@ const ApplicationTreeMain = (props) => {
                                         header={
                                             <>
                                                 {el?.label}
-                                                {allowedAccess?.length > 0 && <Tag color="default" className={styles.marL20}>{`${allowedAccess?.length >= 2 ? `${allowedAccess?.length} Accesses Provided` : `${allowedAccess?.length} Access Provided`}`}</Tag>}
+                                                {allowedAccess?.length > 0 && (
+                                                    <Tag color="default" className={styles.marL20}>
+                                                        {allowedAccess?.length >= 2 ? allowedAccess?.length + ' ' + translateContent('userManagement.label.accessProvided') : allowedAccess?.length + ' ' + translateContent('userManagement.label.accessProvided')}
+                                                    </Tag>
+                                                )}
                                             </>
                                         }
                                         key={el?.value}
@@ -131,7 +137,7 @@ const ApplicationTreeMain = (props) => {
                                             <Row gutter={20}>
                                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                                     <Form.Item label={''} name="search" validateTrigger={['onSearch']}>
-                                                        <Search placeholder="Search" initialValue={searchValue} onChange={handleSearchValue} allowClear />
+                                                        <Search placeholder={preparePlaceholderSearch()} initialValue={searchValue} onChange={handleSearchValue} allowClear />
                                                     </Form.Item>
                                                 </Col>
                                             </Row>

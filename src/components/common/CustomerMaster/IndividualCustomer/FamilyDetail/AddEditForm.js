@@ -16,6 +16,7 @@ import { LANGUAGE_EN } from 'language/en';
 import { NoDataFound } from 'utils/noDataFound';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { YES_NO_FLAG } from 'constants/yesNoFlag';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -138,10 +139,10 @@ const AddEditFormMain = (props) => {
             {!isViewModeVisible ? (
                 <Card data-testid="test-case">
                     <Row type="flex" align="middle">
-                        <Typography>Family Details</Typography>
+                        <Typography>{translateContent('customerMaster.drawerSubHeading.familyTitle')}</Typography>
                         {!VIEW_ACTION && (
                             <Button type="primary" icon={<PlusOutlined />} onClick={addFunction} disabled={showForm || editedMode}>
-                                Add
+                                {translateContent('global.buttons.add')}
                             </Button>
                         )}
                     </Row>
@@ -169,7 +170,7 @@ const AddEditFormMain = (props) => {
                                                         disabled={disabled}
                                                         style={{ color: disabled ? 'grey' : 'red' }}
                                                     >
-                                                        Edit
+                                                        {translateContent('global.buttons.edit')}
                                                     </Button>
                                                 )}
                                             </Row>

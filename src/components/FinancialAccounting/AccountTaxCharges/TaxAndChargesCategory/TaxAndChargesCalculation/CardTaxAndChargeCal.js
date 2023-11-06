@@ -7,6 +7,7 @@ import React, { useEffect } from 'react';
 import { Card, Row, Col, Button, Divider, Typography } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 import FormProductAttribute from './FormTaxAndChargeCal';
 
@@ -138,10 +139,10 @@ const CardProductAttribute = (props) => {
                             {formEdit && props?.internalId === uniqueCardEdit && (
                                 <>
                                     <Button type="link" onClick={taxChargeCalSave}>
-                                        Save
+                                        {translateContent('global.buttons.save')}
                                     </Button>
                                     <Button type="link" onClick={onTaxChargeCalculationCancel}>
-                                        Cancel
+                                        {translateContent('global.buttons.cancel')}
                                     </Button>
                                 </>
                             )}

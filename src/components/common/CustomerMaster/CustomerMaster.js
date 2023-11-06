@@ -34,6 +34,7 @@ import { CustomerMainConatiner } from './CustomerMainConatiner';
 import styles from 'assets/sass/app.module.scss';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
 import { LANGUAGE_EN } from 'language/en';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -50,7 +51,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Customer';
+    const moduleTitle = translateContent('customerMaster.heading.title');
 
     let returnValue = {
         userId,
@@ -120,7 +121,7 @@ const CustomerMasterMain = (props) => {
     const [showNameChangeHistory, setShowNameChangeHistory] = useState(false);
     const [previousSection, setPreviousSection] = useState(1);
     const [isUnsavedDataPopup, setIsUnsavedDataPopup] = useState(false);
-    const [nextCurentSection, setNextCurrentSection] = useState("");
+    const [nextCurentSection, setNextCurrentSection] = useState('');
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false, changeHistory: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -483,7 +484,6 @@ const CustomerMasterMain = (props) => {
             setIsUnsavedDataPopup(true);
         } else {
             onCloseAction();
-
         }
     };
 
@@ -519,7 +519,7 @@ const CustomerMasterMain = (props) => {
         shouldResetForm,
         handleFormValueChange,
         isLastSection,
-        saveButtonName: !selectedCustomerId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
+        saveButtonName: !selectedCustomerId ? 'Create Customer ID' : isLastSection ? 'Submit' : translateContent('global.buttons.saveAndNext'),
         setIsFormVisible,
         setRefreshCustomerList,
         profileCardLoading,
@@ -531,7 +531,7 @@ const CustomerMasterMain = (props) => {
         setPreviousSection,
         previousSection,
         setIsUnsavedDataPopup,
-        setNextCurrentSection
+        setNextCurrentSection,
     };
 
     const showAddButton = true;

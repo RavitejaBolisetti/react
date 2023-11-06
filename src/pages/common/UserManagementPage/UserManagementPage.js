@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 import { UserManagementMaster } from 'components/common/UserManagement';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -24,9 +25,9 @@ const mapStateToProps = (state) => {
 };
 
 const UserManagementPageBase = (props) => {
-    const pageTitle = 'User Management';
+
     const pageHeaderData = {
-        pageTitle,
+        pageTitle: translateContent("userManagement.heading.pageTitle"),
         canMarkFavourite: true,
         showChangeHisoty: true,
         visibleChangeHistory: false,

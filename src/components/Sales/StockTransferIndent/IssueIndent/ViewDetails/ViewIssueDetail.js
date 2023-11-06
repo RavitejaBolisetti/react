@@ -12,6 +12,7 @@ import { BUTTON_NAME_CONSTANTS, ISSUE_ACTION_LIST } from '../../constants';
 import { handleBtnVisibility } from '../../utils';
 import { converDateDayjs } from 'utils/formatDateTime';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -35,24 +36,24 @@ export const ViewIssueDetail = ({ formData, isLoading = false, typeData, handleR
     return (
         <Card>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="ST Issue Note No.">{checkAndSetDefaultValue(viewData?.issueNumber, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="ST Issue Note Date">{checkAndSetDefaultValue(viewData?.issueDate, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="ST Issue Note Status">{checkAndSetDefaultValue(viewData?.issueStatus, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('stockTransferIndent.isueIndent.viewDetails.label.stIssueNo')}>{checkAndSetDefaultValue(viewData?.issueNumber, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('stockTransferIndent.isueIndent.viewDetails.label.stIssueNoteDate')}>{checkAndSetDefaultValue(viewData?.issueDate, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('stockTransferIndent.isueIndent.viewDetails.label.stIssueNoteStatus')}>{checkAndSetDefaultValue(viewData?.issueStatus, isLoading)}</Descriptions.Item>
             </Descriptions>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Model Description">{checkAndSetDefaultValue(viewData?.modelDescription, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="VIN">{checkAndSetDefaultValue(viewData?.vin, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Engine No.">{checkAndSetDefaultValue(viewData?.engineNumber, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('stockTransferIndent.isueIndent.viewDetails.label.modelDescription')}>{checkAndSetDefaultValue(viewData?.modelDescription, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('stockTransferIndent.isueIndent.viewDetails.label.vin')}>{checkAndSetDefaultValue(viewData?.vin, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('stockTransferIndent.isueIndent.viewDetails.label.engineNumber')}>{checkAndSetDefaultValue(viewData?.engineNumber, isLoading)}</Descriptions.Item>
             </Descriptions>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="OEM Invoice No.">{checkAndSetDefaultValue(viewData?.oemInvoiceNumber, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="OEM Invoice Date">{checkAndSetDefaultValue(viewData?.oemInvoiceDate, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="GRN No.">{checkAndSetDefaultValue(viewData?.grnNumber, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('stockTransferIndent.isueIndent.viewDetails.label.oemInvoiceNumber')}>{checkAndSetDefaultValue(viewData?.oemInvoiceNumber, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('stockTransferIndent.isueIndent.viewDetails.label.oemInvoiceDate')}>{checkAndSetDefaultValue(viewData?.oemInvoiceDate, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('stockTransferIndent.isueIndent.viewDetails.label.grnNo')}>{checkAndSetDefaultValue(viewData?.grnNumber, isLoading)}</Descriptions.Item>
             </Descriptions>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="GRN Date">{checkAndSetDefaultValue(viewData?.grnDate, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Issue Charges">{checkAndSetDefaultValue(viewData?.issueCharges, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Net Dealer Price">{checkAndSetDefaultValue(viewData?.netDealerPrice, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('stockTransferIndent.isueIndent.viewDetails.label.grnDate')}>{checkAndSetDefaultValue(viewData?.grnDate, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('stockTransferIndent.isueIndent.viewDetails.label.issueCharge')}>{checkAndSetDefaultValue(viewData?.issueCharges, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('stockTransferIndent.isueIndent.viewDetails.label.netDealerPrice')}>{checkAndSetDefaultValue(viewData?.netDealerPrice, isLoading)}</Descriptions.Item>
             </Descriptions>
             <Row gutter={20} className={styles.marB20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={`${styles.buttonsGroup} ${styles.marB20}`}>

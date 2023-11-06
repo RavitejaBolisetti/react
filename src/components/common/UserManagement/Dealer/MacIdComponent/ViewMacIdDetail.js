@@ -7,6 +7,7 @@ import React from 'react';
 import { Descriptions } from 'antd';
 import AddEditForm from './AddEditForm';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { translateContent } from 'utils/translateContent';
 
 const ViewMacIdDetailBase = (props) => {
     const { formData, styles } = props;
@@ -32,8 +33,8 @@ const ViewMacIdDetailBase = (props) => {
             {!isEditing ? (
                 <>
                     <Descriptions {...viewProps}>
-                        <Descriptions.Item label="Device Type">{checkAndSetDefaultValue(formData?.deviceType, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Device Id">{checkAndSetDefaultValue(formData?.macId, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('userManagement.label.deviceType')}>{checkAndSetDefaultValue(formData?.deviceType, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('userManagement.label.deviceId')}>{checkAndSetDefaultValue(formData?.macId, isLoading)}</Descriptions.Item>
                     </Descriptions>
                 </>
             ) : (

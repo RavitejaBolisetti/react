@@ -16,6 +16,7 @@ import AdvanceVinBlockMasterFilter from './AdvanceVinBlockMasterFilter';
 
 import { vinBlockMasterAction } from 'store/actions/data/vehicle/vinBlockMasterAction';
 import { vinBlockAction } from 'store/actions/data/vehicle/vinBlockAction';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -29,7 +30,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Vin Block Master';
+    const moduleTitle = translateContent('vinBlockMaster.heading.moduleTitle');
 
     let returnValue = {
         userId,
@@ -225,11 +226,11 @@ export const VinBlockMasterBase = (props) => {
 
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
-            return 'View ';
+            return translateContent('global.drawerTitle.view');
         } else if (formActionType?.editMode) {
-            return 'Edit ';
+            return translateContent('global.drawerTitle.edit');
         } else {
-            return 'Add New ';
+            return translateContent('global.drawerTitle.addNew');
         }
     }, [formActionType]);
     const handleOnClick = () => {
@@ -251,7 +252,7 @@ export const VinBlockMasterBase = (props) => {
         }
     };
 
-    const title = 'Vin Block Master';
+    const title = translateContent('vinBlockMaster.heading.title');
 
     const advanceFilterResultProps = {
         extraParams,

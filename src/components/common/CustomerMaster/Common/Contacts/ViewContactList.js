@@ -11,6 +11,7 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 import { getNameFromKey } from 'utils/checkAndSetDefaultValue';
 
 import { ViewDetail } from './ViewContactDetails';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -65,7 +66,7 @@ const ViewContactList = (props) => {
                                             <Text strong> {`${data?.firstName ? data?.firstName : ''} ${data?.middleName ? data?.middleName : ''} ${data?.lastName ? data?.lastName : ''}`}</Text>{' '}
                                             {!formActionType?.viewMode && (
                                                 <Button onClick={(e) => editContactHandeler(e, data, i)} type="link" icon={<FiEdit />} disabled={isEditing || isAdding} className={styles.verticallyCentered}>
-                                                    Edit
+                                                    {translateContent('global.buttons.edit')}
                                                 </Button>
                                             )}
                                         </Col>
@@ -73,7 +74,7 @@ const ViewContactList = (props) => {
                                             <Col xs={10} sm={10} md={10} lg={10} xl={10}>
                                                 <div className={styles.floatRight}>
                                                     <Checkbox valuePropName="checked" checked={data?.defaultContactIndicator} defaultChecked={data?.defaultContactIndicator} onClick={(e) => onCheckdefaultAddClick(e, data)} {...disableProp}>
-                                                        Mark As Default
+                                                        {translateContent('customerMaster.label.mark')}
                                                     </Checkbox>
                                                     <Divider type="vertical" />
                                                     <Text type="secondary">{getNameFromKey(typeData['PURPOSE'], data?.purposeOfContact)}</Text>

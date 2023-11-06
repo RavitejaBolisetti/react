@@ -12,6 +12,7 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 import { CustomerAndVehicleView } from './CustomerAndVehicleView';
 import { EnrolmentView } from './EnrolmentView';
 import { EnrolmentNumberGenerated } from '../EnrolmentNumberGenerated';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -34,7 +35,7 @@ const AddViewFormMain = (props) => {
         buttonData,
         setButtonData,
         handleButtonClick,
-        saveButtonName: formActionType?.addMode ? 'Save & Next' : 'Next',
+        saveButtonName: formActionType?.addMode ? translateContent('global.buttons.saveAndNext') : translateContent('global.buttons.next'),
     };
 
     return (
@@ -48,13 +49,13 @@ const AddViewFormMain = (props) => {
                     <Row gutter={20} className={styles.drawerBodyRight}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Collapse activeKey={activeKey} onChange={() => onChange(1)} expandIcon={expandIcon} expandIconPosition="end" collapsible="icon">
-                                <Panel header="Enrolment Details" key="1">
+                                <Panel header={translateContent('crmSchemeEnrolment.heading.enrolmentDetails')} key="1">
                                     <Divider />
                                     {formActionType?.viewMode ? <EnrolmentView {...props} /> : <EnrolmentAdd {...props} />}
                                 </Panel>
                             </Collapse>
                             <Collapse activeKey={activeKey} onChange={() => onChange(2)} expandIcon={expandIcon} expandIconPosition="end" collapsible="icon">
-                                <Panel header="Customer And Vehicle Details" key="2">
+                                <Panel header={translateContent('crmSchemeEnrolment.heading.customerVehicleDetails')} key="2">
                                     <Divider />
                                     <CustomerAndVehicleView {...props} />
                                 </Panel>

@@ -8,6 +8,7 @@ import { Row, Col, Form, Input, Button, Select } from 'antd';
 import { withModal } from 'components/withModal';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField, validationNumber } from 'utils/validation';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -40,19 +41,19 @@ export const AddVehicleDetailsModalFrom = (props) => {
                 </Form.Item>
 
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item label="Model Description" name="modelDescription" initialValue={formData?.modelDescription} rules={[validateRequiredSelectField('Requested Quantity')]}>
-                        <Select allowClear showSearch options={productHierarchyDataList} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} onChange={handleChangeModel} placeholder={preparePlaceholderSelect('Model Description')} optionFilterProp="prodctShrtName" />
+                    <Form.Item label={translateContent('stockTransferIndent.label.modelDescription')} name="modelDescription" initialValue={formData?.modelDescription} rules={[validateRequiredSelectField(translateContent('stockTransferIndent.validation.modelDescription'))]}>
+                        <Select allowClear showSearch options={productHierarchyDataList} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} onChange={handleChangeModel} placeholder={preparePlaceholderSelect(translateContent('stockTransferIndent.label.modelDescription'))} optionFilterProp="prodctShrtName" />
                     </Form.Item>
                 </Col>
                 <Form.Item name="modelDescriptionName" hidden />
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item label="Model Code" name="modelCode" initialValue={formData?.modelCode}>
-                        <Input placeholder={preparePlaceholderText('Model Code')} disabled={true}></Input>
+                    <Form.Item label={translateContent('stockTransferIndent.label.modelCode')} name="modelCode" initialValue={formData?.modelCode}>
+                        <Input placeholder={translateContent('stockTransferIndent.label.modelCode')} disabled={true}></Input>
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item label="Requested Quantity" name="requestedQuantity" initialValue={formData?.requestedQuantity} rules={[validateRequiredInputField('Requested Quantity'), validationNumber('Quantity')]}>
-                        <Input placeholder={preparePlaceholderText('Requested Quantity')}></Input>
+                    <Form.Item label={translateContent('stockTransferIndent.label.requestedQuantity')} name="requestedQuantity" initialValue={formData?.requestedQuantity} rules={[validateRequiredInputField(translateContent('stockTransferIndent.validation.requestedQuantity')), validationNumber(translateContent('stockTransferIndent.validation.quantity'))]}>
+                        <Input placeholder={translateContent('stockTransferIndent.label.requestedQuantity')}></Input>
                     </Form.Item>
                 </Col>
             </Row>
@@ -60,12 +61,12 @@ export const AddVehicleDetailsModalFrom = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
                     <Button onClick={onCloseAction} danger>
-                        Cancel
+                        {translateContent('global.buttons.cancel')}
                     </Button>
                 </Col>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
                     <Button htmlType="submit" type="primary">
-                        Save
+                        {translateContent('global.buttons.save')}
                     </Button>
                 </Col>
             </Row>

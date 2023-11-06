@@ -6,6 +6,7 @@
 import React from 'react';
 import { Descriptions } from 'antd';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const ViewHierarchyAttributeMain = ({ editRow, style }) => {
     const viewOneColProps = {
@@ -18,12 +19,12 @@ const ViewHierarchyAttributeMain = ({ editRow, style }) => {
         <>
             <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
-                    <Descriptions.Item label="Code">{editRow?.hierarchyAttribueCode}</Descriptions.Item>
-                    <Descriptions.Item label="Name">{editRow?.hierarchyAttribueName}</Descriptions.Item>
-                    <Descriptions.Item label="Duplicate Allowed?">{editRow?.duplicateAllowedAtAttributerLevelInd ? <text className={styles.activeText}>Active</text> : <text className={styles.inactiveText}>InActive</text>}</Descriptions.Item>
-                    <Descriptions.Item label="Duplicate Allowed under different Parent?">{editRow?.duplicateAllowedAtOtherParent ? <text className={styles.activeText}>Active</text> : <text className={styles.inactiveText}>InActive</text>}</Descriptions.Item>
-                    <Descriptions.Item label="Child Allowed?">{editRow?.isChildAllowed ? <text className={styles.activeText}>Active</text> : <text className={styles.inactiveText}>InActive</text>}</Descriptions.Item>
-                    <Descriptions.Item label="Status">{editRow?.status ? <text className={styles.activeText}>Active</text> : <text className={styles.inactiveText}>InActive</text>}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('hierarchyAttribute.label.code')}>{editRow?.hierarchyAttribueCode}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('hierarchyAttribute.label.name')}>{editRow?.hierarchyAttribueName}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('hierarchyAttribute.label.duplicateAllowed')}>{editRow?.duplicateAllowedAtAttributerLevelInd ? <text className={styles.activeText}>{translateContent('global.label.active')}</text> : <text className={styles.inactiveText}>{translateContent('global.label.inActive')}</text>}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('hierarchyAttribute.label.duplicateAllowedDiffParent')}>{editRow?.duplicateAllowedAtOtherParent ? <text className={styles.activeText}>{translateContent('global.label.active')}</text> : <text className={styles.inactiveText}>{translateContent('global.label.inActive')}</text>}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('hierarchyAttribute.label.childAllowed')}>{editRow?.isChildAllowed ? <text className={styles.activeText}>{translateContent('global.label.active')}</text> : <text className={styles.inactiveText}>{translateContent('global.label.inActive')}</text>}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('global.label.status')}>{editRow?.status ? <text className={styles.activeText}>{translateContent('global.label.active')}</text> : <text className={styles.inactiveText}>{translateContent('global.label.inActive')}</text>}</Descriptions.Item>
                 </Descriptions>
             </div>
         </>

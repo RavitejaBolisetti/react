@@ -7,11 +7,13 @@ import React, { useState } from 'react';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { ProductHierarchy } from 'components/common/ProductHierarchy/ProductHierarchy';
 import { PageHeader } from '../PageHeader';
+import { translateContent } from 'utils/translateContent';
+
 
 export const ProductHierarchyBase = () => {
     const [isAttributeVisible, setAttributeVisible] = useState(false);
 
-    const pageTitle = 'Product Hierarchy';
+    const pageTitle = translateContent('productHierarchy.heading.pageTitle');
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

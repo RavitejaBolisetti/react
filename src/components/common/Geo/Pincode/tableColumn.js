@@ -6,6 +6,7 @@
 import { tblPrepareColumns, tblStatusColumn, tblApprovalStatusColumn, tblActionColumn, tblSerialNumberColumn } from 'utils/tableColumn';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [];
@@ -13,13 +14,13 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         tblSerialNumberColumn({ width: '7%', page, pageSize }),
 
         tblPrepareColumns({
-            title: 'PIN Code',
+            title: translateContent('pincode.tableColHeading.pinCode'),
             dataIndex: 'pinCode',
             width: '15%',
         }),
 
         tblPrepareColumns({
-            title: 'Locality',
+            title: translateContent('pincode.tableColHeading.locality'),
             dataIndex: 'localityName',
             width: '200px',
         }),
@@ -29,25 +30,25 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         tblApprovalStatusColumn({ styles }),
 
         tblPrepareColumns({
-            title: 'Tehsil',
+            title: translateContent('pincode.tableColHeading.tehsil'),
             dataIndex: 'tehsilName',
             width: '200px',
         }),
 
         tblPrepareColumns({
-            title: 'City',
+            title: translateContent('pincode.tableColHeading.city'),
             dataIndex: 'cityName',
             width: '200px',
         }),
 
         tblPrepareColumns({
-            title: 'District',
+            title: translateContent('pincode.tableColHeading.district'),
             dataIndex: 'districtName',
             width: '200px',
         }),
 
         tblPrepareColumns({
-            title: 'State',
+            title: translateContent('pincode.tableColHeading.state'),
             dataIndex: 'stateName',
             width: '200px',
         }),

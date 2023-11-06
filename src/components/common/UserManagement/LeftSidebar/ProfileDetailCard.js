@@ -7,18 +7,19 @@ import React from 'react';
 import { Collapse, Space, Avatar, Divider, Typography } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
 
 const expandIcon = ({ isActive }) =>
     isActive ? (
         <>
-            <span>See less</span>
+            <span>{translateContent('global.button.seeLess')}</span>
             <SlArrowUp size={13} />
         </>
     ) : (
         <>
-            <span>See more</span>
+            <span>{translateContent('global.button.seeMore')}</span>
             <SlArrowDown size={13} />
         </>
     );
@@ -37,7 +38,7 @@ const ProfileDetailCard = (props) => {
                             <Avatar size={50}>{userAvatar?.toUpperCase()}</Avatar>
                             <div>
                                 <Title level={5}>{formData?.manufacturerUserName || formData?.userName}</Title>
-                                {selectedRecord?.employeeCode && <Text>{`Token No:  ${selectedRecord?.employeeCode}`} </Text>}
+                                {selectedRecord?.employeeCode && <Text>{`${translateContent('userManagement.label.tokenNumber')}:  ${selectedRecord?.employeeCode}`} </Text>}
                             </div>
                         </Space>
                     </>
@@ -45,30 +46,20 @@ const ProfileDetailCard = (props) => {
                 key={1}
             >
                 <Divider />
-                {/* {userType === USER_TYPE_USER?.DEALER?.id ? (
-                    <div className={styles.detailCardText}>
-                        Employee Code: <span>{selectedRecord?.employeeCode || 'NA'}</span>
-                    </div>
-                ) : (
-                    <div className={styles.detailCardText}>
-                        Token No: <span>{selectedRecord?.employeeCode || 'NA'}</span>
-                    </div>
-                )}
-                <Divider /> */}
                 <div className={styles.detailCardText}>
-                    User Name: <span>{selectedRecord?.manufacturerUserName || formData?.userName || 'NA'}</span>
+                    {translateContent('userManagement.label.userName')}: <span>{selectedRecord?.manufacturerUserName || formData?.userName || 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Designation: <span>{selectedRecord?.designation || 'NA'}</span>
+                    {translateContent('userManagement.label.designation')}: <span>{selectedRecord?.designation || 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Mobile Number: <span>{selectedRecord?.mobileNumber ? `${selectedRecord?.mobileNumber?.slice(selectedRecord?.mobileNumber?.length - 10, selectedRecord?.mobileNumber?.length)}` : 'NA'}</span>
+                    {translateContent('userManagement.label.mobileNumber')}: <span>{selectedRecord?.mobileNumber ? `${selectedRecord?.mobileNumber?.slice(selectedRecord?.mobileNumber?.length - 10, selectedRecord?.mobileNumber?.length)}` : 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Email ID: <span>{selectedRecord?.email || 'NA'}</span>
+                    {translateContent('userManagement.label.emailId')}: <span>{selectedRecord?.email || 'NA'}</span>
                 </div>
             </Panel>
         </Collapse>

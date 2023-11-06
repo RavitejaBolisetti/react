@@ -13,6 +13,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { AiOutlineCloseCircle, AiOutlineClose, AiOutlineEye } from 'react-icons/ai';
 import { HiCheck } from 'react-icons/hi';
 import { UploadBoxIcon } from 'Icons';
+import { translateContent } from 'utils/translateContent';
 
 import styles from './UploadUtil.module.scss';
 
@@ -89,7 +90,7 @@ const UploadBase = (props) => {
         listShowLoading,
         showGlobalNotification,
         setEmptyList,
-        uploadButtonName = 'Upload File',
+        uploadButtonName = translateContent('customerMaster.button.uploadFile'),
         supportedFileTypes = [],
         messageText = (
             <>

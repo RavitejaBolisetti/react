@@ -6,6 +6,7 @@
 import React from 'react';
 import { Card, Row, Col, Button, Divider, Typography, Space } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
+import { translateContent } from 'utils/translateContent';
 import styles from 'assets/sass/app.module.scss';
 
 import AnswerForm from './AnswerForm';
@@ -17,7 +18,7 @@ const AnswerCard = (props) => {
     let id = props?.id ? props?.id : props?.internalId;
     let IdType = props?.id ? 'id' : 'internalId';
     const answerEdit = (props) => {
-        setuniqueCardEdit(id); 
+        setuniqueCardEdit(id);
         setFormEdit(true);
         setFormBtnActive(true);
         setAnswerSwitch(props?.answerStatus);
@@ -87,7 +88,7 @@ const AnswerCard = (props) => {
                         <Text>{props?.answerCode}</Text>
                         <Text>{props?.answerTitle}</Text>
 
-                        <Text>{props?.answerStatus === true ? 'Active' : 'InActive'}</Text>
+                        <Text>{props?.answerStatus === true ? translateContent('vehicleCheckListMaster.label.active') : translateContent('vehicleCheckListMaster.label.inactive')}</Text>
                     </Space>
                 </Col>
                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6} className={styles.buttonsGroupRight}>
@@ -109,10 +110,10 @@ const AnswerCard = (props) => {
                             {formEdit && props[IdType] === uniqueCardEdit && (
                                 <>
                                     <Button type="link" onClick={answerSave}>
-                                        Save
+                                        {translateContent('global.buttons.save')}
                                     </Button>
                                     <Button type="link" onClick={answerCancel}>
-                                        Cancel
+                                        {translateContent('global.buttons.cancel')}
                                     </Button>
                                 </>
                             )}

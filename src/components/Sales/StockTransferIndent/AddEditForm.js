@@ -20,6 +20,7 @@ import { VIEW_ACTION, EDIT_ACTION, DELETE_ACTION } from 'utils/btnVisiblity';
 
 import styles from 'assets/sass/app.module.scss';
 import { STOCK_TRANSFER } from 'constants/StockTransfer';
+import { translateContent } from 'utils/translateContent';
 
 const { TextArea } = Input;
 const { Panel } = Collapse;
@@ -58,7 +59,7 @@ const AddEditFormMain = (props) => {
     };
 
     const buttonProps = {
-        saveButtonName: 'Submit',
+        saveButtonName: translateContent('global.buttons.submit'),
         formData,
         onCloseAction,
         buttonData,
@@ -129,7 +130,7 @@ const AddEditFormMain = (props) => {
                         <Card>
                             <Row gutter={24}>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label="Indent To Location" name="indentToLocation" rules={[validateRequiredSelectField('Indent To Location')]}>
+                                    <Form.Item label={translateContent('stockTransferIndent.label.indentToLocation')} name="indentToLocation" rules={[validateRequiredSelectField(translateContent('stockTransferIndent.validation.indentToLocation'))]}>
                                         {customSelectBox({
                                             data: indentLocationList?.filter((i) => {
                                                 return i?.locationCode !== defaultDealerLocationCode;
@@ -142,7 +143,7 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label="Requested by" name="requestedBy" rules={[validateRequiredSelectField('Requested by')]}>
+                                    <Form.Item label={translateContent('stockTransferIndent.label.requestedBy')} name="requestedBy" rules={[validateRequiredSelectField(translateContent('stockTransferIndent.validation.requestedBy'))]}>
                                         {customSelectBox({ data: requestedByDealerList, fieldNames: { key: 'key', value: 'value' }, placeholder: preparePlaceholderSelect(''), disabled: true })}
                                     </Form.Item>
                                 </Col>
@@ -150,8 +151,8 @@ const AddEditFormMain = (props) => {
 
                             <Row gutter={24}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
-                                    <Form.Item name="remarks" label="Remarks">
-                                        <TextArea maxLength={90} placeholder={preparePlaceholderText('Remarks')} showCount />
+                                    <Form.Item name="remarks" label={translateContent('stockTransferIndent.label.remark')}>
+                                        <TextArea maxLength={90} placeholder={preparePlaceholderText(translateContent('stockTransferIndent.label.remark'))} showCount />
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -164,11 +165,11 @@ const AddEditFormMain = (props) => {
                                         key="1"
                                         header={
                                             <Row gutter={20} className={styles.verticallyCentered}>
-                                                Vehicle Details
+                                                {translateContent('stockTransferIndent.heading.vehicleDetails')}
                                                 <Col xs={14} sm={14} md={6} lg={6} xl={6}>
                                                     <Col xs={24} sm={24} md={6} lg={6} xl={6}>
                                                         <Button type="primary" icon={<FiPlus />} className={styles.verticallyCentered} onClick={handleAddVehicleDetails}>
-                                                            Add
+                                                            {translateContent('global.buttons.add')}
                                                         </Button>
                                                     </Col>
                                                 </Col>
