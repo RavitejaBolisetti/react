@@ -6,20 +6,22 @@
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import styles from 'assets/sass/app.module.scss';
 import { ChargerSearchStatusTag } from './ChargerStatusTag';
+import { translateContent } from 'utils/translateContent';
+
 export const tableColumn = (handleButtonClick, typeData) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Booking No.',
+            title: translateContent('chargerInstallationProcess.label.bookingNumber'),
             dataIndex: 'bookingNumber',
             width: '14%',
         }),
         tblPrepareColumns({
-            title: 'Request ID',
+            title: translateContent('chargerInstallationProcess.label.requestNumber'),
             dataIndex: 'requestNumber',
             width: '14%',
         }),
         tblPrepareColumns({
-            title: 'Stage Status',
+            title: translateContent('chargerInstallationProcess.label.requestStatus'),
             dataIndex: 'requestStatus',
             width: '25%',
             render: (_, record) => ChargerSearchStatusTag(record.requestStatus, typeData),

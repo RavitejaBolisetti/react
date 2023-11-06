@@ -8,7 +8,9 @@
             "dateLessThan": "Date cant be less than Effective from date",
             "state": "State",
             "city": "City",
-            "productHierarchy": "Product Hierarchy"
+            "productHierarchy": "Product Hierarchy",
+            "fromDate": "from date",
+            "toDate": "to date"
         },
         "notificationSuccess": {
             "success": "Success",
@@ -28,7 +30,9 @@
             "active": "Active",
             "inActive": "InActive",
             "status": "Status",
-            "action": "Action"
+            "action": "Action",
+            "fromDate": "From Date",
+            "toDate": "To Date"
         },
         "advanceFilter": {
             "title": "Advance Filters",
@@ -878,6 +882,58 @@
         }
     },
 
+    "chargerInstallationProcess": {
+        "heading": {
+            "title": "Charger Installation",
+            "titleOverride": "Advance Filters",
+            "mainTitle": "Charger Installation"
+        },
+        "label": {
+          "bookingNumber": "Booking No.",
+          "requestNumber": "Request ID",
+          "requestStatus" : "Stage Status"
+        },
+        "notification": {
+            "globalNotification": "Non-EV Booking shouldn't be accepted"
+        },
+        "cardText": {
+            "bookingNo": "Booking No:",
+            "overallStatus": "Overall Status:"
+        }
+    },
+
+    "installationAddressDetials": {
+        "heading": {
+            "mainTitle": "Insurance Details"
+        },
+        "label": {
+            "custName": "Customer Name",
+            "pincode": "Pincode",
+            "city": "City",
+            "state": "State",
+            "custMobNo": "Customer Mobile No.",
+            "custEmailId": "Customer Email Id.",
+            "address": "Address"
+        },
+        "validation": {
+            "installationAddress": "Installation Adress",
+            "pinCode": "Pin Code",
+            "city": "City",
+            "state": "State",
+            "mobNo": "mobile number",
+            "custMobNo": "Customer Mobile Number"
+        }
+    },
+
+    "queryButtons": {
+        "label": {
+            "siteSurvey": "Site Survey",
+            "siteValidation": "Site Validation",
+            "installation": "Installation",
+            "checklistCode": "Commission"
+        }
+    },
+
     "gstIrnTransaction": {
         "heading": {
             "pageTitle": "GST IRN Transaction Pending",
@@ -892,6 +948,8 @@
             "gstin": "GSTIN"
         }
     },
+
+    
 
     "footer": {
         "copyright": "Copyright &copy; {YEAR} ROBIN."
