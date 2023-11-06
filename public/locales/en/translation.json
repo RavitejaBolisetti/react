@@ -33,6 +33,7 @@
             "title": "Advance Filters",
             "appliedAdvanceFilter": "Applied Advance Filters :"
         },
+        "toolTip": {},
         "generalMessage": {
             "noRecordsFound": "No records found",
             "noRecordsFoundAddNew": "Please add New {NAME} using below button"
@@ -1596,5 +1597,67 @@
             "descriptionValidation": "control description",
             "controlIdValidation": "control id"
         }
+    },
+    "partyMaster": {
+        "heading": {
+            "moduleTitle": "Party Master",
+            "drawerSubheadingAddress": "Party Address and Contact Details",
+            "drawerSubheadingOtherDetails": "Other Details"
+        },
+        "label": {
+            "partyName": "Party Name",
+            "partyCategory": "Party Category",
+            "partyCode": "Party Code",
+            "contactPersonName": "Contact Person Name",
+            "designation": "Designation",
+            "address": "Address",
+            "pinCode": "Pin Code",
+            "city": "City",
+            "tehsil": "Tehsil",
+            "district": "District",
+            "state": "State",
+            "mobileNumber": "Mobile Number",
+            "alternateMobileNumber": "Alternate Mobile Number",
+            "gstinNumber": "GSTIN number",
+            "pan": "PAN",
+            "partsDiscount": "Parts Discount",
+            "creditLimit": "Credit Limit",
+            "creditDays": "Credit Days",
+            "remarks": "Remarks"
+        },
+        "placeholder": {
+            "username": "User ID (MILE ID.Parent ID)",
+            "password": "Password"
+        },
+        "validation": {
+            "googleCaptcha": "Please select Captcha"
+        },
+        "button": {
+            "login": "Login"
+        },
+        "link": {
+            "mnmLogin": "M&M User Login"
+        }
+    },
+    "accountCategory": {
+        "heading": {
+            "pageTitle": "Account Category",
+            "drawerSubheading": "Account Category Code",
+            "accountAndDocumentMapping": "Account and Document Mapping"
+        },
+        "label": {
+            "accountCategoryCode": "Account Category Code",
+            "description": "Description",
+            "status": "Status",
+            "applicationMenu": "Application Menu",
+            "documentDescription": "Document Description",
+            "financialAccountHead": "Financial Account Head"
+        },
+        "placeholder": {},
+        "validation": {
+            "code": "code"
+        },
+        "button": {},
+        "link": {}
     }
 }
