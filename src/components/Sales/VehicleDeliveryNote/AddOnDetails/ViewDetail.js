@@ -60,16 +60,16 @@ const ViewDetailMain = (props) => {
                         </Panel>
                     </Collapse>
                     <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
-                        <Panel header="RSA" key="2">
+                        <Panel header={translateContent('vehicleDeliveryNote.heading.rsa')} key="2">
                             <Divider />
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Scheme Registration No.">{checkAndSetDefaultValue(formData?.rsaRequest?.schemeRegistrationId, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Scheme Description">{checkAndSetDefaultValue(formData?.rsaRequest?.schemeDescription, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Sale Type">{checkAndSetDefaultValue(getCodeValue(typeData?.DLVR_SALE_TYP, formData?.rsaRequest?.saleType, isLoading))}</Descriptions.Item>
-                                <Descriptions.Item label="Valid From Date">{checkAndSetDefaultValue(formData?.rsaRequest?.validFrom, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Valid To Date">{checkAndSetDefaultValue(formData?.rsaRequest?.validTo, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Employee Name">{checkAndSetDefaultValue(getCodeValue(relationshipManagerData, formData?.rsaRequest?.employeeCode, isLoading))}</Descriptions.Item>
-                                <Descriptions.Item label="Manager">{checkAndSetDefaultValue(formData?.rsaRequest?.manager, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDeliveryNote.addOnDetails.schemeRegNo')}>{checkAndSetDefaultValue(formData?.rsaRequest?.schemeRegistrationId, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDeliveryNote.addOnDetails.schemeDescription')}>{checkAndSetDefaultValue(formData?.rsaRequest?.schemeDescription, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDeliveryNote.addOnDetails.saleType')}>{checkAndSetDefaultValue(getCodeValue(typeData?.DLVR_SALE_TYP, formData?.rsaRequest?.saleType, isLoading))}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDeliveryNote.addOnDetails.valiFromDate')}>{checkAndSetDefaultValue(formData?.rsaRequest?.validFrom, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDeliveryNote.addOnDetails.validToDate')}>{checkAndSetDefaultValue(formData?.rsaRequest?.validTo, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDeliveryNote.addOnDetails.employeeName')}>{checkAndSetDefaultValue(getCodeValue(relationshipManagerData, formData?.rsaRequest?.employeeCode, isLoading))}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDeliveryNote.addOnDetails.manager')}>{checkAndSetDefaultValue(formData?.rsaRequest?.manager, isLoading)}</Descriptions.Item>
                             </Descriptions>
                             <Descriptions {...viewProps}>
                                 <Descriptions.Item label="Reason Of Rejection">{checkAndSetDefaultValue(formData?.rsaRequest?.reasonOfRejection, isLoading)}</Descriptions.Item>
@@ -77,17 +77,17 @@ const ViewDetailMain = (props) => {
                         </Panel>
                     </Collapse>
                     <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end">
-                        <Panel header="AMC" key="3">
+                        <Panel header={translateContent('vehicleDeliveryNote.heading.amc')} key="3">
                             <Divider />
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Scheme Type">{checkAndSetDefaultValue(formData?.amcRequest?.schemeType, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Scheme Registration No.">{checkAndSetDefaultValue(formData?.amcRequest?.schemeRegistrationId, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Scheme Description">{checkAndSetDefaultValue(formData?.amcRequest?.schemeDescription, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Sale Type">{checkAndSetDefaultValue(getCodeValue(typeData?.DLVR_SALE_TYP, formData?.amcRequest?.saleType, isLoading))}</Descriptions.Item>
-                                <Descriptions.Item label="Valid From Date">{checkAndSetDefaultValue(formData?.amcRequest?.validFrom, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Valid To Date">{checkAndSetDefaultValue(formData?.amcRequest?.validTo, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Employee Name">{checkAndSetDefaultValue(getCodeValue(relationshipManagerData, formData?.amcRequest?.employeeCode, isLoading))}</Descriptions.Item>
-                                <Descriptions.Item label="Manager">{checkAndSetDefaultValue(formData?.amcRequest?.manager, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDeliveryNote.addOnDetails.schemeType')}>{checkAndSetDefaultValue(formData?.amcRequest?.schemeType, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDeliveryNote.addOnDetails.schemeRegNo')}>{checkAndSetDefaultValue(formData?.amcRequest?.schemeRegistrationId, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDeliveryNote.addOnDetails.schemeDescription')}>{checkAndSetDefaultValue(formData?.amcRequest?.schemeDescription, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDeliveryNote.addOnDetails.saleType')}>{checkAndSetDefaultValue(getCodeValue(typeData?.DLVR_SALE_TYP, formData?.amcRequest?.saleType, isLoading))}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDeliveryNote.addOnDetails.valiFromDate')}>{checkAndSetDefaultValue(formData?.amcRequest?.validFrom, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDeliveryNote.addOnDetails.validToDate')}>{checkAndSetDefaultValue(formData?.amcRequest?.validTo, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDeliveryNote.addOnDetails.employeeName')}>{checkAndSetDefaultValue(getCodeValue(relationshipManagerData, formData?.amcRequest?.employeeCode, isLoading))}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDeliveryNote.addOnDetails.manager')}>{checkAndSetDefaultValue(formData?.amcRequest?.manager, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         </Panel>
                     </Collapse>
