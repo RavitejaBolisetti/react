@@ -14,6 +14,7 @@ import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Option } = Select;
 
@@ -54,21 +55,21 @@ const AddEditFormMain = (props) => {
                         <>
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.locationCode} label="Location Type Code" name="locationCode" rules={[validateRequiredInputField('location type code')]}>
-                                        <Input placeholder={preparePlaceholderText('location type code')} maxLength={6} disabled={editMode ? true : false} />
+                                    <Form.Item initialValue={formData?.locationCode} label={translateContent('locationTypeMaster.label.locationTypeCode')} name="locationCode" rules={[validateRequiredInputField(translateContent('locationTypeMaster.validation.locationTypeCode'))]}>
+                                        <Input placeholder={preparePlaceholderText(translateContent('locationTypeMaster.placeholder.locationTypeCode'))} maxLength={6} disabled={editMode ? true : false} />
                                     </Form.Item>
                                 </Col>
 
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label="Location Type Name" initialValue={formData?.locationDescription} rules={[validateRequiredInputField('location type name')]} name="locationDescription">
-                                        <Input placeholder={preparePlaceholderText('location type name')} maxLength={50} />
+                                    <Form.Item label={translateContent('locationTypeMaster.label.locationTypeName')} initialValue={formData?.locationDescription} rules={[validateRequiredInputField(translateContent('locationTypeMaster.validation.locationTypeName'))]} name="locationDescription">
+                                        <Input placeholder={preparePlaceholderText(translateContent('locationTypeMaster.placeholder.locationTypeName'))} maxLength={50} />
                                     </Form.Item>
                                 </Col>
                             </Row>
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label="Applicable To" name="applicableTo" initialValue={formData?.applicableTo} rules={[validateRequiredSelectField('applicable to')]}>
-                                        <Select placeholder={preparePlaceholderSelect('applicable to')} allowClear>
+                                    <Form.Item label={translateContent('locationTypeMaster.label.applicationTo')} name="applicableTo" initialValue={formData?.applicableTo} rules={[validateRequiredSelectField(translateContent('locationTypeMaster.validation.applicationTo'))]}>
+                                        <Select placeholder={preparePlaceholderSelect(translateContent('locationTypeMaster.placeholder.applicationTo'))} allowClear>
                                             {applicableToData?.map((item) => (
                                                 <Option value={item?.key}>{item?.name}</Option>
                                             ))}
@@ -76,7 +77,7 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
+                                    <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label={translateContent('locationTypeMaster.label.status')}>
                                         <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
                                     </Form.Item>
                                 </Col>

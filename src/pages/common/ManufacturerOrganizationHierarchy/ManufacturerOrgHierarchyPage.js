@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 import { ManufacturerOrgHierarchy } from 'components/common/ManufacturerOrganizationHierarchy';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -29,7 +30,7 @@ const ManufacturerOrgHierarchyPageBase = (props) => {
     const handleChangeHistoryClick = (e) => {
         setChangeHistoryVisible(!isChangeHistoryVisible);
     };
-    const pageTitle = 'Manufacturer Organization Hierarchy';
+    const pageTitle = translateContent('manufacturerOrganisation.heading.pageTitle');
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

@@ -145,5 +145,42 @@
             "docName": "पट्टादाता टेम्पलेट",
             "textMessage": "कृपया नीचे दिए गए बटन का उपयोग करके लेसर ग्राहक टेम्पलेट डाउनलोड करेंs"
         }
+    },
+    "manufacturerOrganisation":{
+        "heading":{
+            "pageTitle": "निर्माता संगठन पदानुक्रम",
+            "mainTitle": "निर्माता संगठन विवरण",
+            "viewTitle": "निर्माता विवरण",
+            "title": "पदानुक्रम"
+        },
+        "label":{
+            "changedDate": "बदली गई तारीख",
+            "changedBy": "द्वारा बदला गया",
+            "attribute": "गुण",
+            "code": "कोड",
+            "parent" : "अभिभावक",
+            "shortDescription": "संक्षिप्त वर्णन",
+            "longDescription" : "लंबा विवरण",
+            "childAllowed": "बच्चे को अनुमति?",
+            "description": "कृपया 'पदानुक्रम विवरण' देखने के लिए बाईं ओर के पदानुक्रम से उत्पाद का चयन करें ",
+            "attributeType": "गुण प्रकार",
+            "hierarchyCode": "पदानुक्रम कोड",
+            "attributeLevel":"विशेषता स्तर"
+
+        },
+        "placeholder":{
+            "name": "नाम",
+            "code": "कोड",
+            "parent": "अभिभावक",
+            "attributeTypeCode": "विशेषता प्रकार कोड",
+            "attributeCode": "विशेषता कोड"
+        },
+        "validation":{
+            "nameValidation": "नाम",
+            "codeValidation": "कोड",
+            "attributeLevel": "विशेषता स्तर",
+            "attributeTypeCode": "विशेषता प्रकार कोड",
+            "attributeHierarchyFieldValidation": "अब सक्रिय नहीं है. कृपया कोई भिन्न विशेषता चुनें."
+        }
     }
 }

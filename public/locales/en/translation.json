@@ -69,6 +69,7 @@
             "continue": "Continue",
             "addChild": " Add Child",
             "addSibling": " Add Sibling",
+            "exportCoa":"Export COA",  
             "transfer": "Transfer",
             "allot": "Allot",
             "unAllot": "Un-Allot",
@@ -238,8 +239,54 @@
         }
     },
 
+
+    "chartOfAccount": {
+        "heading": {
+            "title": "Financial Company",
+            "viewTitle": "Chart of Account Hierarchy",
+            "moduleTitle":"Chart of Account Hierarchy",
+            "exportCoa":"Export COA"
+        },
+
+        "label": {
+            "attributeLevel":"Attribute Level",
+            "parent":"Parent",
+            "code":"Code",
+            "description":"Description",
+            "openingBalanceCredit":"Opening Balance Credit",
+            "openingBalanceDebit":"Opening Balance Debit",
+            "status":"Status",
+            "openingBalanceCr":"Opening Balance Cr.",
+            "openingBalanceDr":"Opening Balance Dr",
+            "fromDate":"From Date",
+            "toDate":"To Date"
+        },
+
+        "validation": {
+            "attributeLevel":"Attribute Level",
+            "code":"Code",
+            "accountDescription":"Account description",
+            "openingBalanceCredit":"Opening Balance Credit",
+            "openingBalanceDebit":"Opening Balance Debit"
+
+        },
+
+        "placeholder": {
+            "attributeLevel":"Attribute Level",
+            "code":"Code",
+            "accountdDescription":"Account description",
+            "openingBalanceCredit":"Opening Balance Credit",
+            "openingBalanceDebit":"Opening Balance Debit",
+            "fromDate":"From Date",
+            "toDate":"To Date",
+            "search":"Search"
+        }      
+    },
+
+
     "qualificationMaster": {
         "heading": {
+            "pageTitle": "Qualification Master",
             "title": "Qualification Master",
             "titleName": "Qualification Name",
             "drawerTitle": "Qualification"
@@ -794,6 +841,87 @@
             "parent": "Parent",
             "attributeTypeCode": "Attribute Type Code",
             "decimalPlaces": "rate with two decimal places"
+        }
+    },
+
+    "locationTypeMaster":{
+        "heading": {
+            "drawerTitle":"Location Type",
+            "mainTitle":"Dealer Location Type Master",
+            "title":"Location Type Name"
+        },
+        "label": {
+            "locationTypeCode": "Location Type Code",
+            "locationTypeName": "Location Type Name",
+            "applicationTo": "Applicable To",
+            "status": "Status"
+        },
+        "placeholder": {
+            "locationTypeCode": "location type code",
+            "locationTypeName": "location type name",
+            "applicationTo": "applicable to"
+        },
+        "validation": {
+            "locationTypeCode": "location type code",
+            "locationTypeName": "location type name",
+            "applicationTo": "applicable to"
+        }
+    },
+
+    "designationMaster":{
+        "heading": {
+            "mainTitle": "Designation Master",
+            "drawerTitle": "Designation",
+            "titleOverride": "Advance Filters",
+            "title": "Designation Name "
+        },
+        "label": {
+            "divisionName": "Division Name",
+            "departmentName": "Department Name",
+            "roleDescription": "Role Description",
+            "designationType": "Designation Type",
+            "designationName": "Designation Name",
+            "mileSkill": "Mile Skill",
+            "status":"Status",
+            "manPowerRequired":"Manpower Required",
+            "accountsData": "Accounts Data",
+            "capability": "Capability (L1/L2/L3)",
+            "createUserId": "Create User Id",
+            "roleName": "Role Name",
+            "designationCode": "Designation Code"
+        },
+        "placeholder": {
+            "divisionName": "Division Name",
+            "departmentName": "Department Name",
+            "roleDescription": "Role Description",
+            "designationType": "designation type",
+            "designationName": "Designation Name",
+            "mileSkill": "mileSkill"
+        },
+        "validation": {
+            "divisionName": "Division Name",
+            "designationType": "Designation Type",
+            "designationName": "Designation Name"
+        }
+    },
+
+    "divisionMaster":{
+        "heading": {
+            "mainTitle": "Dealer Division Master",
+            "drawerTitle": "Division",
+            "title":"Division Name"
+        },
+        "label": {
+            "divisionCode": "Division Code",
+            "divisionName": "Division Name"
+        },
+        "placeholder": {
+            "divisionCode": "Division Code",
+            "divisionName": "Division Name"
+        },
+        "validation": {
+            "divisionCode": "Division Code",
+            "divisionName": "Division Name"
         }
     },
 
@@ -1796,6 +1924,7 @@
     },
     "configurableParameter": {
         "heading": {
+            "pageTitle": "Configurable Parameter Editing",
             "mainTitle": "Configurable Parameter Editing",
             "title": "Control Description"
         },
@@ -1893,6 +2022,7 @@
     },
     "hierarchyAttribute": {
         "heading": {
+            "pageTitle": "Hierarchy Attribute Master",
             "mainTitle": "Hierarchy Attribute Master",
             "titleHierarchy": "Hierarchy Attribute Type",
             "title": "Hierarchy Attribute"
@@ -1915,8 +2045,9 @@
             "codeValidation": "code"
         }
     },
-    "manufacturerOrganisation": {
-        "heading": {
+    "manufacturerOrganisation":{
+        "heading":{
+            "pageTitle": "Manufacturer Organization Hierarchy",
             "mainTitle": "Manufacturer Organisation Detail",
             "viewTitle": "Manufacturer Details",
             "title": "Hierarchy"
@@ -1947,22 +2078,24 @@
             "codeValidation": "code",
             "attributeLevel": "attribute level",
             "attributeTypeCode": "attribute type code",
-
             "attributeHierarchyFieldValidation": "is not active anymore. Please select a different attribute."
         }
     },
-    "manufacturerAdmin": {
-        "heading": {
-            "mainTitle": "Manufacturer Detail",
+    "adminHierarchy":{
+        "heading":{
+            "adminPageTitle": "Manufacturer Adminstrative Hierarchy",
+            "adminMainTitle": "Manufacturer Detail",
             "viewTitle": "Manufacturer Details",
             "drawerTitle": "Upload Authority Details",
             "title": "Hierarchy",
             "changeHistoryTitle": "Admin Change History",
-            "authorityChangeHistoryTitle": "Authority Change History"
+            "authorityChangeHistoryTitle": "Authority Change History",
+            "authorityDetailTitle": "Authority Details"
         },
         "label": {
             "changedDate": "Changed/Modified Date",
             "changedBy": "Changed By",
+            "createdBy": "Created By",
             "attribute": "Attribute",
             "code": "Code",
             "parent": "Parent",
@@ -1972,8 +2105,9 @@
             "description": "Please select product from leftside hierarchy to view 'Hierarchy Details' ",
             "attributeType": "Attribute Type",
             "hierarchyCode": "Hierarchy Code",
-            "attributeLevel": "Attribute Level",
-            "attributeCode": "Attribute Code",
+            "attributeLevel":"Attribute Level",
+            "authorityType": "Authority Type",
+            "attributeCode":"Attribute Code",
             "authorityTypeCode": "Authority Type Code",
             "employeeName": "Employee Name",
             "employeeTokenNo": "Employee Token No.",
@@ -1985,7 +2119,11 @@
             "uploadButtonName": "Upload Authority Form",
             "messageText": "Click or drop your file here to upload",
             "downloadHere": "Download Here",
-            "selectOrganization": "Please Select Organization from dropdown"
+            "selectOrganization": "Please Select Organization from dropdown",
+            "token": "Token",
+            "employeeText": "Employee Name : ",
+            "warningMessage": "Validate token to proceed"
+
         },
         "placeholder": {
             "name": "name",
@@ -1993,7 +2131,12 @@
             "parent": "Parent",
             "attributeTypeCode": "attribute type code",
             "attributeCode": "attribute code",
-            "organizationHierarchy": "Organization Hierarchy"
+            "organizationHierarchy":"Organization Hierarchy",
+            "token": "Token",
+            "authorityType": "authority type",
+            "shortDescription": "short description",
+            "longDescription" : "long description",
+            "attributeLevel":"attribute level"
         },
         "validation": {
             "nameValidation": "name",
@@ -2001,7 +2144,15 @@
             "attributeLevel": "attribute level",
             "attributeTypeCode": "attribute type code",
             "attributeHierarchyFieldValidation": "is not active anymore. Please select a different attribute.",
-            "validationText": "File type should be .xlxs and max file size to be 8Mb"
+            "validationText": "File type should be .xlxs and max file size to be 8Mb",
+            "authorityType": "Authority Type",
+            "tokenRequired": "Token Required",
+            "dateRequired" : "Date Required",
+            "shortDescription": "short description",
+            "longDescription" : "long description"
+
+
+
         }
     },
 
