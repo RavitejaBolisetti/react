@@ -595,6 +595,9 @@
             "name": "name",
             "startTime": "Start time*",
             "endTime": "End time*"
+        },
+        "button": {
+            "addTime": "Add Time"
         }
     },
     "productHierarchy": {
@@ -603,7 +606,8 @@
             "hierarchyDetails": "Hierarchy Details",
             "pageTitle": "Product Hierarchy",
             "title": "Hierarchy",
-            "productAttribute": "Product Attribute"
+            "productAttribute": "Product Attribute",
+            "panelHeader": "Product Atrribute Details"
         },
         "placeholder": {
             "organizationHierarchy": "Organization Hierarchy",

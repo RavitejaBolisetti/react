@@ -391,7 +391,7 @@ export const ProductHierarchyMain = ({ typeData, isLoading, moduleTitle, viewTit
                                 {/* {organizationId && (
                                     <div>
                                         <Button icon={<PlusOutlined />} type="primary" onClick={handleAdd}>
-                                            Add
+                                            {translateContent('global.buttons.add')}
                                         </Button>
                                     </div>
                                 )} */}
@@ -418,11 +418,7 @@ export const ProductHierarchyMain = ({ typeData, isLoading, moduleTitle, viewTit
                                     imageStyle={{
                                         height: 60,
                                     }}
-                                    description={
-                                        <span>
-                                            {translateContent('productHierarchy.label.description')}
-                                        </span>
-                                    }
+                                    description={<span>{translateContent('productHierarchy.label.description')}</span>}
                                 ></Empty>
                             </div>
                         )}

@@ -197,20 +197,20 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20} className={styles.formFooterNew}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupLeft}>
                             <Button danger onClick={onCloseAction}>
-                                Cancel
+                                {translateContent('global.buttons.cancel')}
                             </Button>
                         </Col>
 
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
                             <Button htmlType="submit" form="myForm" disabled={!isFormBtnActive} type="primary">
-                                Save
+                                {translateContent('global.buttons.save')}
                             </Button>
                         </Col>
                     </Row>
                 </Form>
                 {showProductAttribute && (
                     <Collapse className={openAccordian === 1 ? styles.accordianHeader : ''} onChange={() => handleCollapse(1)} expandIcon={accordianExpandIcon} collapsible="icon">
-                        <Panel header="Product Atrribute Details" key="1">
+                        <Panel header={translateContent('productHierarchy.heading.panelHeader')} key="1">
                             <Divider />
                             <ProductAttributeMaster {...attributeFormProps} />
                         </Panel>
