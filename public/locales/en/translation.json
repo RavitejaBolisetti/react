@@ -2774,7 +2774,8 @@
                 "customerName": "Customer Name",
                 "cpd": "CPD"
             }
-        },
+        }
+    },
     "vehicleTracking": {
         "text": {
             "timeline": "Timeline",
@@ -2814,7 +2815,5 @@
             "seeLess": "See Less",
             "seeMore": "See More"
         }
-
     }
-}
 }
