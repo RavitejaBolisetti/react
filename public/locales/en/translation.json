@@ -61,7 +61,9 @@
             "upload": "Upload",
             "reset": "Reset",
             "search": "search",
-            "apply": "Apply"
+            "apply": "Apply",
+            "viewHistory": "View History",
+            "uploadFile": "Upload File"
         },
         "placeholder": {
             "input": "Enter ",
@@ -383,6 +385,10 @@
             "oldValue": "Old Value",
             "newValue": "New Value"
         },
+        "drawerTitle": {
+            "cusChange": "Customer Change History",
+            "nameChange": "Name Change History"
+        },
         "drawerSubHeading": {
             "contactTitle": "Individual Contact",
             "informationTitle": "Individual Information",
@@ -560,10 +566,7 @@
             "documentType": "document type",
             "fileName": "file name"
         },
-        "button": {
-            "viewHistory": "View History",
-            "uploadFile": "Upload File"
-        },
+        "button": {},
         "link": {
             "mnmLogin": "M&M User Login"
         }
