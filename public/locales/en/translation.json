@@ -1189,6 +1189,7 @@
     "vinBlockMaster": {
         "heading": {
             "moduleTitle": "Vin Block Master",
+            "pageTitle": "Vin Block Master",
             "title": "Vin Block Master",
             "advancedFilter": "Advanced Filter",
             "appliedAdvanceFilters": "Applied Advance Filters"
@@ -1289,6 +1290,7 @@
     "hoPriceMapping": {
         "heading": {
             "maintitle": "HO Price Upload Mapping",
+            "pageTitle": "HO Price Upload Mapping for Dealer",
             "title": "HO Price Upload Mapping for Dealer",
             "drawerTitleHeading": "HO Price Upload Mapping",
             "titleOverride": "Advance Filters",
@@ -1312,7 +1314,7 @@
         }
     },
     "stockTransferIndent": {
-        "isueIndent": {             
+        "isueIndent": {
             "label": {
                 "vin": "VIN",
                 "stIssueNo": "ST issue Note No.",
@@ -1407,7 +1409,7 @@
             "indentToParent": "Indent To Parent",
             "indentToLocation": "Indent To Location",
             "requestedBy": "Requested By",
-            "vehicleLengthValidation":"Please add Vehicle Details"
+            "vehicleLengthValidation": "Please add Vehicle Details"
         }
     },
     "vehicleInvoiceGeneration": {
@@ -2016,6 +2018,20 @@
             "variantCode": "Variant Code",
             "productVariant": "Product Variant",
             "userForMappingUnmapping": "User for Mapping/Unmapping"
+        }
+    },
+    "creditDebitNote": {
+        "heading": {
+            "moduleTitle": "Booking SO Mapping Control"
+        },
+        "label": {
+            "variantCode": "Variant Code"
+        },
+        "placeholder": {
+            "variantCode": "Variant Code"
+        },
+        "validation": {
+            "variantCode": "Variant Code"
         }
     }
 }
