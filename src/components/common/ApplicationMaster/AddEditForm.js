@@ -14,6 +14,7 @@ import { AccessibleDealerLocations } from './dealerLocations/AccessibleDealerLoc
 import { withDrawer } from 'components/withDrawer';
 
 import { accordianExpandIcon } from 'utils/accordianExpandIcon';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 
@@ -73,7 +74,7 @@ const AddEditFormMain = ({ setSelectedTreeKey, selectedTreeKey, showGlobalNotifi
                         <Panel
                             header={
                                 <>
-                                    <span>Application Actions</span>
+                                    <span>{translateContent('applicationMaster.text.applicationActions')}</span>
                                     <span style={{ color: '#ff3e5b' }}>*</span>
                                 </>
                             }
@@ -88,7 +89,7 @@ const AddEditFormMain = ({ setSelectedTreeKey, selectedTreeKey, showGlobalNotifi
                             <Panel
                                 header={
                                     <>
-                                        <span>Document Type</span>
+                                        <span>{translateContent('applicationMaster.text.documentType')}</span>
                                         <span style={{ color: '#ff3e5b' }}>*</span>
                                     </>
                                 }
@@ -104,7 +105,7 @@ const AddEditFormMain = ({ setSelectedTreeKey, selectedTreeKey, showGlobalNotifi
                             <Panel
                                 header={
                                     <>
-                                        <span>Accessible Dealer Location</span>
+                                        <span>{translateContent('applicationMaster.text.accessibleDealerLocation')}</span>
                                         <span style={{ color: '#ff3e5b' }}>*</span>
                                     </>
                                 }
