@@ -126,7 +126,20 @@
         "label": {
             "rejectionRemarks": "Rejection Remarks",
             "acceptanceTermsFirstLine": "I accept that for the Transferred Vehicle , Claim can be generated from the billed Dealer.",
-            "acceptanceTermsSecondLine": "If more than one transfer happens for the same vehicle then claim is not allowed for any of the dealership."
+            "acceptanceTermsSecondLine": "If more than one transfer happens for the same vehicle then claim is not allowed for any of the dealership.",
+            "fromDate": "From Date",
+            "toDate": "To Date",
+            "fromDealer": "From Dealer",
+            "toDealer": "To Dealer",
+            "code": "Code",
+            "chassisNumber": "Chassis Number",
+            "modelDescription": "Model Description",
+            "vehicleAge": "Vehicle Age",
+            "requestedDate": "Requested Date",
+            "rsmApprovalSummary": "RSM Approval Summary",
+            "fromDealerCode": "From Dealer Code",
+            "toDealerCode": "To Dealer Code",
+            "status": "Status"
         },
         "placeholder": {
             "headerSearch": "Search by dealer"
@@ -177,6 +190,52 @@
         },
         "placeholder": {
             "financialAccountHead": "Financial Account Head"
+        }
+    },
+    "amcRegistration": {
+        "heading": {
+            "title": "AMC Registration",
+            "moduleTitle": "AMC Registration Details"
+        },
+        "validation": {
+            "noSchemeVIN": "No Schemes present for this VIN",
+            "noVINFound": "No VIN found for searched Booking Number",
+            "noEmployeesFound": "No employees found for searched name",
+            "incorrectEmployeeName": "Employee name is not correct",
+            "discoutGreaterThanScheme": "Discount cannot exceed Scheme amount"
+        },
+        "label": {
+            "amcRegNoDate": "AMC Registration No. & Date",
+            "dealerLocation": "Dealer Location",
+            "vin": "VIN",
+            "status": "Status",
+            "mobileNumber": "Mobile No.",
+            "dealerParent": "Dealer Parent",
+            "amcFromDate": "AMC Registration From Date",
+            "amcToDate": "AMC Registration To Date",
+            "registrationInfo": "Registration Information",
+            "schemeDetails": "Scheme Details",
+            "saleType": "Sale Type",
+            "bookingNumber": "Booking Number",
+            "employeeName": "Employee Name",
+            "managerName": "Manager Name",
+            "remarks": "Remarks",
+            "amcType": "AMC Type",
+            "schemeDescription": "Scheme Description",
+            "schemeCode": "Scheme Code",
+            "schemeBasicAmount": "Scheme Basic Amount",
+            "schemeDiscount": "Scheme Discount",
+            "schemeTaxAmount": "Scheme Tax Amount",
+            "schemeEndDate": "Scheme End Date",
+            "creditNoteNumber": "Credit Note Number",
+            "creditNoteDate": "Credit Note Date",
+            "creditNoteAmount": "Credit Note Amount",
+            "debitNoteNumber": "Debit Note Number",
+            "debitNoteDate": "Debit Note Date",
+            "debitNoteAmount": "Debit Note Amount"
+        },
+        "placeholder": {
+            "search": "Search"
         }
     },
     "roleManagement": {
@@ -238,7 +297,6 @@
             "mnmLogin": "M&M User Login"
         }
     },
-
     "criticalityGroup": {
         "heading": {
             "mainTitle": "Application Criticality Group Details",
