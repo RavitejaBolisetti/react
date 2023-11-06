@@ -15,6 +15,7 @@ import { addToolTip } from 'utils/customMenuLink';
 
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { DELIVERY_NOTE_STATUS } from '../constants/deliveryNoteStatus';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
@@ -22,7 +23,7 @@ const { Text, Title } = Typography;
 const expandIcon = ({ isActive }) =>
     isActive ? (
         <>
-            <span>See less</span>
+            <span>{translateContent('global')}</span>
             <SlArrowUp size={13} />
         </>
     ) : (
@@ -108,4 +109,4 @@ const VehicleDeliveryNoteCard = (props) => {
     );
 };
 
-export default VehicleDeliveryNoteCard;
+export default VehicleDeliveryNoteC
