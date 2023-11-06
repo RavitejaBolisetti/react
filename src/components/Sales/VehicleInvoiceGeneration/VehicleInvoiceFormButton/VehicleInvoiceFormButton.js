@@ -46,7 +46,7 @@ export const VehicleInvoiceFormButton = ({ record, onCloseAction, onCancelInvoic
                     )}
 
                     {buttonData?.nextBtn && !isLastSection && (
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record, isNextBtnClick: true })} type="primary">
                             Next
                         </Button>
                     )}
