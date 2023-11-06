@@ -9,6 +9,7 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 
 import { convertDateToCalender } from 'utils/formatDateTime';
 import OtfDetailsForm from './OtfDetailsForm';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 
@@ -49,7 +50,7 @@ const AddEditFormMain = (props) => {
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                 <Space style={{ display: 'flex' }} size="middle" direction="vertical">
                     <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end">
-                        <Panel header="Booking Details" key="3">
+                        <Panel header={translateContent('vehicleInvoiceGeneration.heading.collapse.bookingDetails')} key="3">
                             <Divider />
                             <OtfDetailsForm {...props} />
                         </Panel>

@@ -6,6 +6,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Row, Col } from 'antd';
 import { AddEditForm, ViewDetail } from 'components/Sales/Common/InsuranceDetails';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -57,7 +58,7 @@ export const InsuranceDetailsMaster = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <h2>{section?.title}</h2>
+                            <h2>{translateContent(`vehicleInvoiceGeneration.heading.section.` + section?.id)}</h2>
                         </Col>
                     </Row>
                     {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}

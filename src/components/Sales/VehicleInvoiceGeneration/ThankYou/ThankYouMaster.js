@@ -10,6 +10,7 @@ import styles from 'assets/sass/app.module.scss';
 import { REGISTRATION } from 'constants/modules/vehicleInvoiceGeneration';
 import { CopytoClipboard } from 'utils/CopytoClipboard';
 import { useEffect } from 'react';
+import { translateContent } from 'utils/translateContent';
 
 const { Title, Text } = Typography;
 
@@ -35,7 +36,7 @@ export const ThankYouMaster = (props) => {
                     <Space direction="vertical">
                         <Avatar size={180} icon={<HiCheck />} />
                         <Title level={5} style={{ margin: '18px 0', fontSize: '32px' }}>
-                            {title}
+                            <h2>{translateContent(`global.heading.sectionHeading.thankYou`)}</h2>
                         </Title>
                     </Space>
                 </Col>

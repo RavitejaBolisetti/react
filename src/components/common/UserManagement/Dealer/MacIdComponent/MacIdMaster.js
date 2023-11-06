@@ -196,7 +196,7 @@ const MacIdMasterMain = (props) => {
 
     const buttonProps = {
         ...props,
-        saveButtonName: translateContent('global.button.saveCloseBtn'),
+        saveButtonName: translateContent('global.buttons.saveCloseBtn'),
         buttonData,
     };
 
@@ -215,7 +215,7 @@ const MacIdMasterMain = (props) => {
                                         <Text strong> Device ID</Text>
                                         {!formActionType?.viewMode && (
                                             <Button onClick={addBtnMacIdHandler} icon={<PlusOutlined />} type="primary" disabled={isEditing || isAdding}>
-                                                {translateContent('global.button.add')}
+                                                {translateContent('global.buttons.add')}
                                             </Button>
                                         )}
                                     </Row>
