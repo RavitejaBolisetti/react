@@ -13,6 +13,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { UploadUtil } from 'utils/Upload';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const VehiclePriceMasterUploadMain = (uploadProps) => {
     const { listShowLoading, downloadFile, form, formData, onCloseAction, onFinish } = uploadProps;
@@ -63,11 +64,11 @@ const VehiclePriceMasterUploadMain = (uploadProps) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <div className={styles.contentHeaderBackground}>
                         <Space direction="vertical">
-                            <Space className={styles.accordianIconWithText}>Vehicle Price Master Form</Space>
-                            <Space> Please download "Vehicle Price Template" using below button</Space>
+                            <Space className={styles.accordianIconWithText}>{translateContent('vehiclePriceMaster.label.vehiclePriceMasterForm')}</Space>
+                            <Space> {translateContent('vehiclePriceMaster.label.vehiclePriceTemplate')}</Space>
                             <Space>
                                 <Button type="primary" onClick={handleTemplateDownLoad}>
-                                    Download Template
+                                    {translateContent('vehiclePriceMaster.label.downloadTemplate')}
                                 </Button>
                             </Space>
                         </Space>
