@@ -5,13 +5,14 @@
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { convertDate, dateFormatView } from 'utils/formatDateTime';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
 export const tableColumn = (handleButtonClick) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'From Dealer',
+            title: translateContent('rsmApproval.label.fromDealer'),
             dataIndex: 'fromDealerName',
             width: '20%',
             render: (__, value) => {
@@ -24,39 +25,41 @@ export const tableColumn = (handleButtonClick) => {
             },
         }),
         tblPrepareColumns({
-            title: 'To Dealer',
+            title: translateContent('rsmApproval.label.toDealer'),
             dataIndex: 'toDealerName',
             width: '20%',
             render: (index, value) => {
                 return (
                     <>
                         <div>{value?.toDealerName}</div>
-                        <div className={styles.tableTextColor85}>Code: {` ${value?.toDealerCode}`}</div>
+                        <div className={styles.tableTextColor85}>
+                            {translateContent('rsmApproval.label.code')}: {` ${value?.toDealerCode}`}
+                        </div>
                     </>
                 );
             },
         }),
 
         tblPrepareColumns({
-            title: 'Chassis Number',
+            title: translateContent('rsmApproval.label.chassisNumber'),
             dataIndex: 'chassisNumber',
             width: '12%',
         }),
 
         tblPrepareColumns({
-            title: 'Model Description',
+            title: translateContent('rsmApproval.label.modelDescription'),
             dataIndex: 'modelDescription',
             width: '16%',
             sorter: false,
         }),
 
         tblPrepareColumns({
-            title: 'Vehicle Age',
+            title: translateContent('rsmApproval.label.vehicleAge'),
             dataIndex: 'vehicleAge',
             width: '12%',
         }),
         tblPrepareColumns({
-            title: 'Requested Date',
+            title: translateContent('rsmApproval.label.requestedDate'),
             dataIndex: 'requestedDate',
             width: '12%',
             render: (value) => {

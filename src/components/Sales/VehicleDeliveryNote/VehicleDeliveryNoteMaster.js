@@ -37,6 +37,7 @@ import { FORMTYPE_CONSTANTS } from 'constants/formTypeConstant';
 
 import { vehicleDeliveryNoteCustomerDetailDataActions } from 'store/actions/data/vehicleDeliveryNote/customerDetails';
 import { DELIVERY_NOTE_STATUS } from './constants/deliveryNoteStatus';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -50,7 +51,7 @@ const mapStateToProps = (state) => {
             },
         },
     } = state;
-    const moduleTitle = 'Delivery Note';
+    const moduleTitle = translateContent('vehicleDeliveryNote.heading.mainTitle');
     let returnValue = {
         userId,
         typeData,
@@ -360,7 +361,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
 
     const handleCustomerIdSearch = (customerIdValue = '') => {
         if (!customerIdValue) {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Enter customer id to continue' });
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: translateContent('vehicleDeliveryNote.notificationError.customerId') });
             return false;
         }
         const onSuccessAction = (res) => {
@@ -694,7 +695,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
                 }
                 const onSuccess = (res) => {
                     setShowDataLoading(true);
-                    showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+                    showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
                     fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
                     setButtonData({ ...buttonData, formBtnActive: false });
                     setIsFormVisible(false);

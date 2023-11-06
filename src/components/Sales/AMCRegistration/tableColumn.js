@@ -9,11 +9,12 @@ import { convertDate, dateFormatView } from 'utils/formatDateTime';
 import { AMC_CONSTANTS } from './utils/AMCConstants';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const tableColumn = ({ handleButtonClick, userType }) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'AMC Registration No. & Date',
+            title: translateContent('amcRegistration.label.amcRegNoDate'),
             dataIndex: 'amcRegistrationNumber',
             width: '14%',
 
@@ -27,18 +28,18 @@ export const tableColumn = ({ handleButtonClick, userType }) => {
             },
         }),
         tblPrepareColumns({
-            title: 'Dealer Location',
+            title: translateContent('amcRegistration.label.amcRegNoDate'),
             dataIndex: 'dealerLocation',
             width: '25%',
         }),
         tblPrepareColumns({
-            title: 'VIN',
+            title: translateContent('amcRegistration.label.vin'),
             dataIndex: 'vin',
             width: '14%',
         }),
         userType === AMC_CONSTANTS?.DEALER?.key
             ? tblPrepareColumns({
-                  title: 'Status',
+                  title: translateContent('amcRegistration.label.status'),
                   dataIndex: 'status',
                   width: '14%',
                   render: (status) => {
@@ -46,7 +47,7 @@ export const tableColumn = ({ handleButtonClick, userType }) => {
                   },
               })
             : tblPrepareColumns({
-                  title: 'Mobile No.',
+                  title: translateContent('amcRegistration.label.mobileNumber'),
                   dataIndex: 'mobileNumber',
                   width: '14%',
               }),

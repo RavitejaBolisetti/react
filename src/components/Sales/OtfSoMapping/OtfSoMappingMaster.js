@@ -20,6 +20,7 @@ import { ViewDetails } from './ViewDetails';
 import LeftPanel from 'components/common/LeftPanel';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -41,8 +42,8 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'User Type Mapping';
-    const viewTitle = 'User Type Mapping';
+    const moduleTitle = translateContent('bookingSoMapping.heading.moduleTitle');
+    const viewTitle = translateContent('bookingSoMapping.heading.viewTitle');
 
     let returnValue = {
         collapsed,
@@ -245,7 +246,7 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
             setButtonData({ ...defaultBtnVisiblity, editBtn: true });
 
             if (res?.data) {
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
                 fetchOtfList({ setIsLoading: listOtfSoMappingShowLoading, userId, extraParams });
                 setFormBtnActive(false);
                 setIsFormVisible(false);
@@ -288,7 +289,7 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
             setSelectedOrganizationId(value);
         },
         defaultValue: organizationId,
-        placeholder: preparePlaceholderSelect('Organization Hierarchy'),
+        placeholder: preparePlaceholderSelect(translateContent('bookingSoMappingControlMaster.placeholder.organizationHierarchy')),
     };
 
     const myProps = {
@@ -330,12 +331,12 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
         otfSoUserMappingData,
     };
 
-    const noDataTitle = 'Please choose organization hierarchy to view data';
-    const diffSelection = 'No Product Found';
+    const noDataTitle = translateContent('bookingSoMappingControlMaster.heading.noDataTitle');
+    const diffSelection = translateContent('bookingSoMappingControlMaster.validation.diffSelection');
 
     const leftCol = productHierarchyData?.length > 0 ? 14 : 24;
     const rightCol = productHierarchyData?.length > 0 ? 10 : 24;
-    const title = 'Hierarchy';
+    const title = translateContent('bookingSoMappingControlMaster.heading.title');
 
     return (
         <>
@@ -405,8 +406,8 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
                                     }}
                                     description={
                                         <span>
-                                            Please select from left <br />
-                                            side hierarchy to view “Details”
+                                            {translateContent('bookingSoMappingControlMaster.description.selectLeft')} <br />
+                                            {translateContent('bookingSoMappingControlMaster.description.sideHierarchyView')}
                                         </span>
                                     }
                                 />

@@ -15,6 +15,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { AMC_CONSTANTS } from './utils/AMCConstants';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export default function RegistrationFilter(props) {
     const { extraParams, removeFilter, typeData, invoiceStatusList, searchForm, filterString, setFilterString, handleResetFilter, advanceFilter = false, handleInvoiceTypeChange, setAdvanceSearchVisible, handleButtonClick, amcStatus, showAddButton, userType } = props;
@@ -73,7 +74,7 @@ export default function RegistrationFilter(props) {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={22} xl={22} className={styles.advanceFilterContainer}>
-                                <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
+                                <div className={styles.advanceFilterTitle}>{translateContent('global.advanceFilter.appliedAdvanceFilter')} </div>
                                 {extraParams?.map((filter) => {
                                     return (
                                         filter?.value &&

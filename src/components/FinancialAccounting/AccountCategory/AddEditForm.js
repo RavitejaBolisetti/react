@@ -18,6 +18,7 @@ import { connect } from 'react-redux';
 import { showGlobalNotification } from 'store/actions/notification';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 
@@ -167,24 +168,24 @@ const AddEditFormMain = (props) => {
                         <>
                             <Row gutter={16}>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label="Account Category Code" name="accountCategoryCode" rules={[validateRequiredInputField('Code')]}>
+                                    <Form.Item label={translateContent('accountCategory.label.accountCategoryCode')} name="accountCategoryCode" rules={[validateRequiredInputField(translateContent('accountCategory.validation.code'))]}>
                                         <Input placeholder={preparePlaceholderText('Account Category Code')} maxLength={6} disabled={editMode ? true : false} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label="Description" rules={[validateRequiredInputField('Description')]} name="accountCategoryDescription">
-                                        <Input placeholder={preparePlaceholderText('Description')} maxLength={50} />
+                                    <Form.Item label="Description" rules={[validateRequiredInputField(translateContent('accountCategory.label.description'))]} name="accountCategoryDescription">
+                                        <Input placeholder={preparePlaceholderText(translateContent('accountCategory.label.description'))} maxLength={50} />
                                     </Form.Item>
                                 </Col>
 
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <Form.Item initialValue={editMode ? accountCategory?.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
-                                        <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
+                                    <Form.Item initialValue={editMode ? accountCategory?.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label={translateContent('global.label.status')}>
+                                        <Switch checkedChildren={translateContent('global.label.active')} unCheckedChildren={translateContent('global.label.inActive')} onChange={(checked) => (checked ? 1 : 0)} />
                                     </Form.Item>
                                 </Col>
                             </Row>
                             <Collapse className={openAccordian === 1 ? styles.accordianHeader : ''} onChange={() => handleCollapse(1)} expandIcon={accordianExpandIcon} collapsible="icon">
-                                <Panel header="Account and Document Mapping" key="1">
+                                <Panel header={translateContent('accountCategory.heading.accountAndDocumentMapping')} key="1">
                                     <Divider />
                                     <ViewEditContext.Provider value={viewMode}>
                                         <AccountAndDocumentMappingMaster {...accountDocumentMapsProp} />

@@ -7,6 +7,7 @@ import React from 'react';
 import { Avatar, Col, Row, Space, Typography } from 'antd';
 import imdimg from 'assets/img/img_md.png';
 import styles from './Dashboard.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Title, Text } = Typography;
 
@@ -16,13 +17,13 @@ const BirthDayCalender = (props) => {
     return (
         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
             <div className={styles.dashboardNewsAndCalendar}>
-                <Title level={5}>Birthday Calendar</Title>
+                <Title level={5}>{translateContent('dashboard.heading.birthdayCalendar')}</Title>
                 <div className={styles.dashboardNewsAndCalendarContainer}>
                     {birthDayData?.birthDaytoday?.length > 0 && (
                         <div className={styles.marB20}>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.marB20}>
-                                    <Text>Today's Birthday</Text>
+                                    <Text>{translateContent('dashboard.heading.todayBirthday')}</Text>
                                 </Col>
                             </Row>
                             <Row gutter={20}>
@@ -46,7 +47,7 @@ const BirthDayCalender = (props) => {
                         <div className={styles.marB20}>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.marB20}>
-                                    <Text>Upcoming Birthdays</Text>
+                                    <Text>{translateContent('dashboard.heading.upcomingBirthdays')}</Text>
                                 </Col>
                             </Row>
                             <Row gutter={20}>

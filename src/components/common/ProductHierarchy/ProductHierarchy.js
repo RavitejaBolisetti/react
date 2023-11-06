@@ -351,7 +351,7 @@ export const ProductHierarchyMain = ({ typeData, isLoading, moduleTitle, viewTit
                                     </Col>
                                     {organizationId && (
                                         <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                            <Search placeholder={translateContent('productHierarchy.placeholder.search')} allowClear onChange={onChange} />
+                                            <Search placeholder={translateContent('global.placeholder.search')} allowClear onChange={onChange} />
                                         </Col>
                                     )}
                                 </Row>
@@ -391,7 +391,7 @@ export const ProductHierarchyMain = ({ typeData, isLoading, moduleTitle, viewTit
                                 {/* {organizationId && (
                                     <div>
                                         <Button icon={<PlusOutlined />} type="primary" onClick={handleAdd}>
-                                            Add
+                                            {translateContent('global.buttons.add')}
                                         </Button>
                                     </div>
                                 )} */}
@@ -418,11 +418,7 @@ export const ProductHierarchyMain = ({ typeData, isLoading, moduleTitle, viewTit
                                     imageStyle={{
                                         height: 60,
                                     }}
-                                    description={
-                                        <span>
-                                            {translateContent('productHierarchy.label.description')}
-                                        </span>
-                                    }
+                                    description={<span>{translateContent('productHierarchy.label.description')}</span>}
                                 ></Empty>
                             </div>
                         )}
