@@ -17,6 +17,7 @@ import { CreditDebitNoteFormButton } from '../CreditDebitFormButton';
 import { vehicleCustomerCommonDetailsDataAction } from 'store/actions/data/vehicle/customerCommonDetails';
 import { partyMasterDataActions } from 'store/actions/data/partyMaster';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -32,7 +33,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Voucher and Party Details';
+    const moduleTitle = translateContent('creditDebitNote.voucherAndPartyDetails.heading.moduleTitle');
 
     let returnValue = {
         collapsed,
@@ -137,12 +138,12 @@ export const VoucherAndPartyDetailsMasterMain = (props) => {
 
     const handleSearchParamSearch = (value) => {
         if (!form.getFieldsValue()?.partyDetails?.partySegment) {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please select party segment' });
+            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationSuccess.error'), message: translateContent('creditDebitNote.voucherAndPartyDetails.validation.selectPartySegment') });
             return;
         }
         const onSuccessAction = (res) => {
             if (res?.data?.length === 0) {
-                showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Details not available for this party id with selected party segment' });
+                showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationSuccess.error'), message: translateContent('creditDebitNote.voucherAndPartyDetails.validation.detailNotForPartySegment') });
                 setButtonData({ ...buttonData, formBtnActive: false });
             }
             form.setFieldsValue({ partyDetails: res?.data[0] });
