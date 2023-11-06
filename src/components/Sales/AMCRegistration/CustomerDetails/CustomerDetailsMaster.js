@@ -22,18 +22,17 @@ const CustomerDetailsMasterBase = (props) => {
     const disabledProps = { disabled: isReadOnly };
     useEffect(() => {
         if (formActionType?.addMode) {
-            form.setFieldsValue({ customerCode: otfData?.otfDetails[0]?.customerId });
-            handleCustomerSearch(otfData?.otfDetails[0]?.customerId);
-            requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.MNM_FOC?.key && setIsReadOnly(true);
-            requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.MNM_FOC?.key && setButtonData({ ...buttonData, formBtnActive: true });
+            if (requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.MNM_FOC?.key) {
+                form.setFieldsValue({ customerCode: otfData?.otfDetails[0]?.customerId });
+                setIsReadOnly(true);
+                setButtonData({ ...buttonData, formBtnActive: true });
+                handleCustomerSearch(otfData?.otfDetails[0]?.customerId);
+            } else {
+                handleCustomerSearch(form.getFieldValue('customerCode') || requestPayload?.amcCustomerDetails?.customerCode);
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formActionType, section]);
-    useEffect(() => {
-        if (formActionType?.addMode && requestPayload?.amcRegistration?.saleType !== AMC_CONSTANTS?.MNM_FOC?.key) {
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [section]);
 
     const handleCustomerSearch = (value) => {
         if (!value) {
