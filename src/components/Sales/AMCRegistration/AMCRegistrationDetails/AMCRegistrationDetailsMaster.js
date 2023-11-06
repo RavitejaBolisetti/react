@@ -11,7 +11,7 @@ import AddEditForm from './AddEditForm';
 
 import { AMC_CONSTANTS } from '../utils/AMCConstants';
 import styles from 'assets/sass/app.module.scss';
-import { LANGUAGE_EN } from 'language/en';
+import { translateContent } from 'utils/translateContent';
 
 const AMCRegistrationDetailsMasterBase = (props) => {
     const { typeData, selectedOrderId } = props;
@@ -69,7 +69,7 @@ const AMCRegistrationDetailsMasterBase = (props) => {
 
         const onSuccessAction = (res) => {
             if (!res?.data?.length) {
-                showGlobalNotification({ notificationType: 'error', title: 'Error', message: LANGUAGE_EN?.GENERAL?.NO_EMPLOYEES_FOUND?.MESSAGE });
+                showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: translateContent('amcRegistration.validation.noEmployeesFound') });
                 setButtonData({ ...buttonData, formBtnActive: false });
             } else setButtonData({ ...buttonData, formBtnActive: true });
         };
@@ -107,11 +107,11 @@ const AMCRegistrationDetailsMasterBase = (props) => {
                         if (activeKey.length === 1 && formActionType?.addMode && (schemeForm?.getFieldsValue()?.hasOwnProperty('schemeDescription') || registrationForm.getFieldsValue()?.hasOwnProperty('saleType'))) {
                             setActiveKey(['schemeKey', 'regKey']);
                         } else if (registrationForm.getFieldValue('saleType') === AMC_CONSTANTS?.MNM_FOC?.key && !registrationForm.getFieldValue('vin')) {
-                            showGlobalNotification({ notificationType: 'error', title: 'Error', message: LANGUAGE_EN?.GENERAL?.NO_VIN_FOUND?.MESSAGE });
+                            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: translateContent('amcRegistration.validation.noVINFound') });
                             setButtonData({ ...buttonData, formBtnActive: false });
                         } else if (!options?.length) {
                             setButtonData({ ...buttonData, formBtnActive: false });
-                            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Employee name is not correct' });
+                            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: translateContent('amcRegistration.validation.incorrectEmployeeName')  });
                         } else {
                             setRequestPayload({ ...requestPayload, amcRegistration: { ...registrationForm.getFieldsValue(), employeeCode: selectedEmployees?.employeeCode || employeeData?.find((value) => requestPayload?.amcRegistration?.employeeCode === value?.employeeCode)?.employeeCode }, amcSchemeDetails: schemeForm.getFieldsValue() });
                             handleButtonClick({ buttonAction: NEXT_ACTION });

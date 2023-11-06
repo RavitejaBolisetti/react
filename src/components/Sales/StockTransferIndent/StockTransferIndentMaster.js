@@ -316,7 +316,7 @@ export const StockTransferIndentMasterBase = (props) => {
 
     const onFinish = (values) => {
         if (tableDataItem.length === 0) {
-            let msg = 'Please add Vehicle Details';
+            let msg = translateContent('stockTransferIndent.validation.vehicleLengthValidation');
             showGlobalNotification({ msg });
             return;
         }
@@ -324,7 +324,7 @@ export const StockTransferIndentMasterBase = (props) => {
 
         const onSuccess = (res) => {
             setIsAddNewIndentVisible(false);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             fetchIndentList({ customURL: customURL + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         };
 
@@ -348,7 +348,7 @@ export const StockTransferIndentMasterBase = (props) => {
         let data = { ...selectedOrder, vehicleDetails: [{ ...values }] };
 
         const onSuccess = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
 
             const onSuccessViewIndent = (res) => {
                 setSelectedOrder(res?.data);

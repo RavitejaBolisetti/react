@@ -20,7 +20,6 @@ import { RejectRequest } from './RejectRequest';
 import { RSM_APPROVAL_STATUS } from './utils/RSMApprovalStatus';
 import { dateFormatView, convertDate } from 'utils/formatDateTime';
 
-import { LANGUAGE_EN } from 'language/en';
 import { rsmApprovalSearchDataAction } from 'store/actions/data/sales/rsmApprovalSearch';
 import { rsmApprovalDataAction } from 'store/actions/data/sales/rsmApproval';
 import { translateContent } from 'utils/translateContent';

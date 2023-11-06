@@ -6,34 +6,35 @@
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import styles from 'assets/sass/app.module.scss';
 import { convertDateMonthYear } from 'utils/formatDateTime';
+import { translateContent } from 'utils/translateContent';
 
 export const tableColumn = (handleButtonClick) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Document Type',
+            title: translateContent('gstIrnTransaction.heading.documentType'),
             dataIndex: 'invoiceDocumentType',
             width: '18%',
         }),
         tblPrepareColumns({
-            title: 'Document Number',
+            title: translateContent('gstIrnTransaction.heading.documentNumber'),
             dataIndex: 'invoiceDocumentNumber',
             width: '18%',
         }),
 
         tblPrepareColumns({
-            title: 'Document Date',
+            title: translateContent('gstIrnTransaction.heading.documentDate'),
             dataIndex: 'invoiceDocumentDate',
             width: '16%',
             render: (_, record) => (record?.invoiceDocumentDate ? convertDateMonthYear(record?.invoiceDocumentDate) : ''),
         }),
 
         tblPrepareColumns({
-            title: 'Location',
+            title: translateContent('gstIrnTransaction.heading.location'),
             dataIndex: 'location',
             width: '17%',
         }),
         tblPrepareColumns({
-            title: 'IRN Server Response',
+            title: translateContent('gstIrnTransaction.heading.irnResponse'),
             dataIndex: 'irnStatus',
             width: '16%',
         }),
