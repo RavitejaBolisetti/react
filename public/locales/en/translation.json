@@ -2063,19 +2063,42 @@
             "moduletitle": "Term & Condition"
         },
         "label": {
-            "LessorCompany": "Lessor Customer Form",
-            "companyName": "Company Name",
-            "stateName": "State Name"
+            "terms&Condition": "Term & Condition",
+            "documentCategory": "Document Category",
+            "productHierarchy": "Product Hierarchy",
+            "documentType": "Document Type",
+            "language": "Language",
+            "effectivefrom": "Effective From",
+            "effectiveto": "Effective To",
+            "version": "Version",
+            "mfgT&c": "MFG T&C"
+        },
+        "validation": {
+            "terms&Condition": "Term & Condition",
+            "language": "Language",
+            "documentType": "Document Type",
+            "productHierarchy": "Product Hierarchy",
+            "date": "Date"
         },
         "placeholder": {
-            "stateName": "State Name"
+            "version": "Version",
+            "documentCategory": "Document Category",
+            "selectParameter": "Select Parameter"
         },
-        "message": {
-            "uploadButtonName": "Upload Lessor Form",
-            "messageText": "Click or drop your file here to upload",
-            "validationText": "File type should be .xlxs and max file size to be 8Mb",
-            "docName": "Lessor Template",
-            "textMessage": "Please download Lessor Customer Template using below button"
+        "fields": {
+            "reviseT&C": "Revise T&C",
+            "addT&C": "Add T&C",
+            "revised": "Revised",
+            "initial": "Initial"
+        },
+        "changeHistory": {
+            "productName": "Product Hierarchy",
+            "documentTypeCode": "Document Type",
+            "languageDesc": "Language",
+            "effectivefrom": "Effective From",
+            "effectiveto": "Effective To",
+            "version": "Version",
+            "termsconditiondescription": "Description"
         }
     },
     "bookingSoMapping": {
