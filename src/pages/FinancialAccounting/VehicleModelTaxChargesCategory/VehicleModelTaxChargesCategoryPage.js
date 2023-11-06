@@ -7,9 +7,10 @@ import React from 'react';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 import { VehicleModelAndTaxChargersCategory } from 'components/FinancialAccounting';
+import { translateContent } from 'utils/translateContent';
 
 const VehicleModelTaxChargesCategoryBase = (props) => {
-    const pageTitle = 'Vehicle Model with Accounts and Tax & Charges Mapping';
+    const pageTitle = translateContent('vehicleModelAndTaxCharges.heading.pageTitle');
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,
