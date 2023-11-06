@@ -160,7 +160,7 @@ const AddressMasterBase = (props) => {
 
         const onSuccess = (res) => {
             addressForm.resetFields();
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, extraParams });
             if (res.data) {
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });

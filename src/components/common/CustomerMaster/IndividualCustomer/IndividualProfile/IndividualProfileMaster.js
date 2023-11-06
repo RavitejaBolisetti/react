@@ -20,6 +20,7 @@ import { documentViewDataActions } from 'store/actions/data/customerMaster/docum
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -128,10 +129,10 @@ const IndividualProfileBase = (props) => {
 
     const downloadFileFromButton = () => {
         const onSuccessAction = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         };
         const onErrorAction = (res) => {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: res });
+            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: res });
         };
         const extraParams = [
             {
@@ -205,7 +206,7 @@ const IndividualProfileBase = (props) => {
             form.resetFields();
             setShowDataLoading(true);
 
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             if (res.data) {
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
             }
