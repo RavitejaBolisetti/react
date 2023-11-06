@@ -74,7 +74,7 @@ const ViewDetailMain = (props) => {
             });
             setRefreshCustomerList(true);
             setRefreshData(true);
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Customer name change request updated successfully' });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: 'Customer name change request updated successfully' });
         };
 
         const onError = (message) => {

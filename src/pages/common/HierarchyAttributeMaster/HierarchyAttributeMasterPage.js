@@ -7,13 +7,14 @@ import React, { useState } from 'react';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { HierarchyAttribute } from 'components/common/HierarchyAttribute/HierarchyAttribute';
 import { PageHeader } from '../PageHeader';
+import { translateContent } from 'utils/translateContent';
 
 export const HierarchyAttributeMasterBase = (props) => {
     const [isFavourite, setFavourite] = useState(false);
 
     const handleFavouriteClick = () => setFavourite(!isFavourite);
 
-    const pageTitle = 'Hierarchy Attribute Master';
+    const pageTitle = translateContent('hierarchyAttribute.heading.pageTitle');
     const pageHeaderData = {
         pageTitle,
         showChangeHisoty: true,

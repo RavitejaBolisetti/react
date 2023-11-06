@@ -22,6 +22,7 @@ import { ListDataTable } from 'utils/ListDataTable';
 
 import { AddEditForm } from './AddEditForm';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -34,7 +35,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Dealer Location Type Master';
+    const moduleTitle = translateContent('locationTypeMaster.heading.mainTitle');
 
     let returnValue = {
         userId,
@@ -86,7 +87,7 @@ export const ListDealerLocationTypeMasterBase = (props) => {
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
     const onSuccessAction = (res) => {
-        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        refershData && showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         setRefershData(false);
         setShowDataLoading(false);
     };
@@ -169,10 +170,10 @@ export const ListDealerLocationTypeMasterBase = (props) => {
             setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage, placement: 'bottomRight' });
             } else {
                 setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             }
         };
 
@@ -199,11 +200,11 @@ export const ListDealerLocationTypeMasterBase = (props) => {
 
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
-            return 'View ';
+            return translateContent('global.drawerTitle.view');
         } else if (formActionType?.editMode) {
-            return 'Edit ';
+            return translateContent('global.drawerTitle.edit');
         } else {
-            return 'Add ';
+            return translateContent('global.drawerTitle.add');
         }
     }, [formActionType]);
 
@@ -219,7 +220,7 @@ export const ListDealerLocationTypeMasterBase = (props) => {
 
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat('Location Type'),
+        titleOverride: drawerTitle.concat(translateContent('locationTypeMaster.heading.drawerTitle')),
         tableData: searchData,
 
         ADD_ACTION,
@@ -236,7 +237,7 @@ export const ListDealerLocationTypeMasterBase = (props) => {
         tableData: searchData,
     };
 
-    const title = 'Location Type Name';
+    const title = translateContent('locationTypeMaster.heading.title');
 
     const advanceFilterResultProps = {
         advanceFilter: false,

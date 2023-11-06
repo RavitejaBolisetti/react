@@ -164,7 +164,7 @@ const CustomerNameChangeMasterBase = (props) => {
             a.href = `data:image/png;base64,${res?.data?.base64}`;
             a.download = res?.data?.fileName;
             a.click();
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: 'Your download will start soon' });
         }
     };
 
@@ -184,7 +184,7 @@ const CustomerNameChangeMasterBase = (props) => {
     const deleteFile = (uploadData) => {
         const data = { customerId: uploadData?.customerId, status: false, docId: uploadData?.docId, documentTypeId: uploadData?.documentType, id: uploadData?.id, documentName: uploadData?.documentName };
         const onSuccess = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'File deleted Successfully' });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: 'File deleted Successfully' });
             fetchList({ setIsLoading: listSupportingDocumentShowLoading, userId });
         };
 
@@ -315,7 +315,7 @@ const CustomerNameChangeMasterBase = (props) => {
                     {!addMode && (
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
                             <Button type="link" onClick={onViewHistoryChange} icon={<BiTimeFive />} className={styles.verticallyCentered}>
-                                View History
+                                {translateContent('global.buttons.viewHistory')}
                             </Button>
                         </Col>
                     )}

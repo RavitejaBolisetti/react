@@ -12,11 +12,12 @@ import { PlusOutlined } from '@ant-design/icons';
 
 import { dateFormat, formattedCalendarDate, convertDateToCalender } from 'utils/formatDateTime';
 import { validateRequiredInputField, validateRequiredSelectField, duplicateValidator } from 'utils/validation';
-import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { ManufactureAdminValidateToken } from 'store/actions/data/manufacturerAdminHierarchy/manufactureAdminValidateToken';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Search } = Input;
 const { Text } = Typography;
@@ -108,13 +109,13 @@ const AuthorityFormMin = (props) => {
         <Form autoComplete="off" form={form} id="myForm" onFinish={onFinish} layout="vertical" onFieldsChange={handleFormValueChange}>
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Authority Type" name="authorityTypeCode" rules={[validateRequiredInputField('Authority Type'), { validator: (rule, value) => duplicateValidator(value, 'authorityTypeCode', documentTypesList, record?.authorityTypeCode) }]}>
-                        <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder="Select Authority Type" fieldNames={fieldNames} options={authTypeDropdownData} disabled={isBtnDisabled} onChange={(value, valueObject) => setselectedValueOnUpdate(valueObject)} allowClear />
+                    <Form.Item label={translateContent('adminHierarchy.label.authorityType')} name="authorityTypeCode" rules={[validateRequiredInputField(translateContent('adminHierarchy.validation.authorityType')), { validator: (rule, value) => duplicateValidator(value, 'authorityTypeCode', documentTypesList, record?.authorityTypeCode) }]}>
+                        <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder={preparePlaceholderSelect(translateContent('adminHierarchy.placeholder.authorityType'))} fieldNames={fieldNames} options={authTypeDropdownData} disabled={isBtnDisabled} onChange={(value, valueObject) => setselectedValueOnUpdate(valueObject)} allowClear />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Token" name={'authorityEmployeeTokenNo'} rules={[validateRequiredInputField('Token Required'), { validator: (rule, value) => duplicateValidator(value, 'authorityEmployeeTokenNo', documentTypesList, record?.authorityEmployeeTokenNo) }]}>
-                        <Search loading={searchLoading} disabled={isBtnDisabled} allowClear onChange={onChangeHandle(recordId)} onSearch={onSearchHandle(recordId)} placeholder={preparePlaceholderText('Token')} />
+                    <Form.Item label={translateContent('adminHierarchy.label.token')} name={'authorityEmployeeTokenNo'} rules={[validateRequiredInputField(translateContent('adminHierarchy.validation.tokenRequired')), { validator: (rule, value) => duplicateValidator(value, 'authorityEmployeeTokenNo', documentTypesList, record?.authorityEmployeeTokenNo) }]}>
+                        <Search loading={searchLoading} disabled={isBtnDisabled} allowClear onChange={onChangeHandle(recordId)} onSearch={onSearchHandle(recordId)} placeholder={preparePlaceholderText(translateContent('adminHierarchy.placeholder.token'))} />
                     </Form.Item>
                 </Col>
                 {formType === isMainForm && errorMessage && (
@@ -135,19 +136,19 @@ const AuthorityFormMin = (props) => {
                 <Row gutter={20}>
                     {tokenValidationData?.manufacturerUserName && (
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.marB20}>
-                            <Text strong>Employee Name : {tokenValidationData?.manufacturerUserName} </Text>
+                            <Text strong>{translateContent('adminHierarchy.label.employeeText')}{tokenValidationData?.manufacturerUserName} </Text>
                         </Col>
                     )}
 
                     {(record?.effectiveTo || tokenValidationData?.manufacturerUserName) && (
                         <>
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item label="Effective From" name="effectiveFrom" rules={[validateRequiredSelectField('Date Required')]} initialValue={convertDateToCalender(record?.effectiveFrom)}>
+                                <Form.Item label={translateContent('adminHierarchy.label.effectiveFrom')} name="effectiveFrom" rules={[validateRequiredSelectField(translateContent('adminHierarchy.validation.dateRequired'))]} initialValue={convertDateToCalender(record?.effectiveFrom)}>
                                     <DatePicker onChange={() => form.setFieldsValue({ effectiveTo: undefined })} disabledDate={(current) => current.isBefore(moment().subtract(1, 'day'))} format={dateFormat} />
                                 </Form.Item>
                             </Col>
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item label="Effective To" name="effectiveTo" rules={[validateRequiredSelectField('Date Required')]} initialValue={formattedCalendarDate(record?.effectiveTo)}>
+                                <Form.Item label={translateContent('adminHierarchy.label.effectiveTo')} name="effectiveTo" rules={[validateRequiredSelectField(translateContent('adminHierarchy.validation.dateRequired'))]} initialValue={formattedCalendarDate(record?.effectiveTo)}>
                                     <DatePicker disabledDate={(current) => current < form?.getFieldValue('effectiveFrom')} format={dateFormat} />
                                 </Form.Item>
                             </Col>
@@ -158,7 +159,7 @@ const AuthorityFormMin = (props) => {
 
             {!isEditing && (
                 <Button {...disableAddBtn} icon={<PlusOutlined />} type="primary" onClick={onFinish} className={styles.marB20}>
-                    Add
+                    {translateContent('global.buttons.add')}
                 </Button>
             )}
         </Form>
