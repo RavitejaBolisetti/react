@@ -9,6 +9,7 @@ import styles from 'assets/sass/app.module.scss';
 import { convertDateMonthYear } from 'utils/formatDateTime';
 import { AMC_CONSTANTS } from '../utils/AMCConstants';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { translateContent } from 'utils/translateContent';
 import { DATA_TYPE } from 'constants/dataType';
 const { Text } = Typography;
 
@@ -30,7 +31,7 @@ const ViewDetail = (props) => {
                         <Card>
                             <Row type="flex" align="middle">
                                 <Col xs={24} sm={24} md={24} lg={24}>
-                                    <Text strong>Registration Request</Text>
+                                    <Text strong>{translateContent('amcRegistration.label.registrationRequest')}</Text>
                                     <Divider type="vertical" />
                                     <Text strong>{data?.customerName}</Text>
                                     <Divider type="vertical" />
@@ -40,7 +41,7 @@ const ViewDetail = (props) => {
                             </Row>
                             <Row type="flex" align="middle">
                                 <Col xs={24} sm={24} md={24} lg={24}>
-                                    <div className={styles.tableTextColor85}>Requested On: {convertDateMonthYear(data?.amcRegistrationDate)}</div>
+                                    <div className={styles.tableTextColor85}>{translateContent('amcRegistration.label.requestedOn')}: {convertDateMonthYear(data?.amcRegistrationDate)}</div>
                                 </Col>
                             </Row>
 
@@ -52,8 +53,8 @@ const ViewDetail = (props) => {
                                             <>
                                                 <Divider className={styles.marB20} />
                                                 <Descriptions {...viewProps} column={{ xs: 1, sm: 1, lg: 1, xl: 1, xxl: 1 }}>
-                                                    <Descriptions.Item label="Reason for Cancellation Request">{checkAndSetDefaultValue(formData?.amcRequestDetails?.amcCancelRemarks)}</Descriptions.Item>
-                                                    <Descriptions.Item label="Remark for Cancellation">{checkAndSetDefaultValue(formData?.amcRequestDetails?.otherReason)}</Descriptions.Item>
+                                                    <Descriptions.Item label={translateContent('amcRegistration.label.reasonForCancellationRquest')}>{checkAndSetDefaultValue(formData?.amcRequestDetails?.amcCancelRemarks)}</Descriptions.Item>
+                                                    <Descriptions.Item label={translateContent('amcRegistration.label.remarkForCancellation')}>{checkAndSetDefaultValue(formData?.amcRequestDetails?.otherReason)}</Descriptions.Item>
                                                 </Descriptions>
                                             </>
                                         )}
@@ -77,18 +78,18 @@ const ViewDetail = (props) => {
                                         {isPendingForCancellation && (
                                             <>
                                                 <Descriptions {...viewProps}>
-                                                    <Descriptions.Item label="Reason for Cancellation Request">{checkAndSetDefaultValue(formData?.amcRequestDetails?.amcCancelRemarks)}</Descriptions.Item>
-                                                    <Descriptions.Item label="Remark for Cancellation">{checkAndSetDefaultValue(formData?.amcRequestDetails?.otherReason)}</Descriptions.Item>
+                                                    <Descriptions.Item label={translateContent('amcRegistration.label.reasonForCancellationRquest')}>{checkAndSetDefaultValue(formData?.amcRequestDetails?.amcCancelRemarks)}</Descriptions.Item>
+                                                    <Descriptions.Item label={translateContent('amcRegistration.label.remarkForCancellation')}>{checkAndSetDefaultValue(formData?.amcRequestDetails?.otherReason)}</Descriptions.Item>
                                                 </Descriptions>
                                             </>
                                         )}
                                         <Divider />
                                         <Descriptions {...viewProps}>
-                                            <Descriptions.Item label="Approved/Rejected By">{checkAndSetDefaultValue(formData?.amcRequestDetails?.approvedByOrRejectedBy)}</Descriptions.Item>
-                                            <Descriptions.Item label="User ID">{checkAndSetDefaultValue(formData?.amcRequestDetails?.userId)}</Descriptions.Item>
+                                            <Descriptions.Item label={translateContent('amcRegistration.label.approvedOrRejectedBy')}>{checkAndSetDefaultValue(formData?.amcRequestDetails?.approvedByOrRejectedBy)}</Descriptions.Item>
+                                            <Descriptions.Item label={translateContent('amcRegistration.label.userId')}>{checkAndSetDefaultValue(formData?.amcRequestDetails?.userId)}</Descriptions.Item>
 
-                                            <Descriptions.Item label="Approved Date">{checkAndSetDefaultValue(formData?.amcRequestDetails?.approvedDate, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                                            {selectedAMC?.status !== AMC_CONSTANTS?.REJD?.value && <Descriptions.Item label="Reason for Rejection">{checkAndSetDefaultValue(formData?.amcRequestDetails?.reasonForRejection)}</Descriptions.Item>}
+                                            <Descriptions.Item label={translateContent('amcRegistration.label.approvedDate')}>{checkAndSetDefaultValue(formData?.amcRequestDetails?.approvedDate, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                                            {selectedAMC?.status !== AMC_CONSTANTS?.REJD?.value && <Descriptions.Item label={translateContent('amcRegistration.label.reasonForRejection')}>{checkAndSetDefaultValue(formData?.amcRequestDetails?.reasonForRejection)}</Descriptions.Item>}
                                         </Descriptions>
                                     </>
                                 )

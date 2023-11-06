@@ -9,6 +9,7 @@ import { Row, Col, Form, Input, Divider, Card, Space } from 'antd';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Search } = Input;
 
@@ -24,64 +25,64 @@ const CustomerDetailsForm = (props) => {
                             <Card style={{ backgroundColor: '#F2F2F2' }}>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={formData?.customerId} label="Customer ID" name="customerCode">
-                                            <Search {...disabledProps} placeholder={preparePlaceholderText('Customer ID')} onChange={handleCustomerChange} onSearch={handleCustomerSearch} allowClear />
+                                        <Form.Item initialValue={formData?.customerId} label={translateContent('amcRegistration.label.customerId')} name="customerCode">
+                                            <Search {...disabledProps} placeholder={preparePlaceholderText(translateContent('amcRegistration.label.customerId'))} onChange={handleCustomerChange} onSearch={handleCustomerSearch} allowClear />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Divider />
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={formData?.customerName} label="Customer Name" name="customerName">
-                                            <Input placeholder={preparePlaceholderText('Customer Name')} disabled={true} />
+                                        <Form.Item initialValue={formData?.customerName} label={translateContent('amcRegistration.label.customerName')} name="customerName">
+                                            <Input placeholder={preparePlaceholderText(translateContent('amcRegistration.label.customerName'))} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={formData?.address} label="Address" name="customerAddress">
-                                            <Input placeholder={preparePlaceholderText('Address')} disabled={true} />
+                                        <Form.Item label={translateContent('amcRegistration.label.customerAddress')} name="customerAddress">
+                                            <Input placeholder={preparePlaceholderText(translateContent('amcRegistration.label.customerAddress'))} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item label="State" name="state">
-                                            <Input placeholder={preparePlaceholderText('State')} disabled={true} />
+                                        <Form.Item label={translateContent('amcRegistration.label.state')} name="state">
+                                            <Input placeholder={preparePlaceholderText(translateContent('amcRegistration.label.state'))} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item label="City" name="customerCity">
-                                            <Input placeholder={preparePlaceholderText('City')} disabled={true} />
+                                        <Form.Item label={translateContent('amcRegistration.label.city')} name="customerCity">
+                                            <Input placeholder={preparePlaceholderText(translateContent('amcRegistration.label.city'))} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item label="District" name="district">
-                                            <Input placeholder={preparePlaceholderText('District')} disabled={true} />
+                                        <Form.Item label={translateContent('amcRegistration.label.district')} name="district">
+                                            <Input placeholder={preparePlaceholderText(translateContent('amcRegistration.label.district'))} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item label="Tehsil" name="tehsil">
-                                            <Input placeholder={preparePlaceholderText('Tehsil')} disabled={true} />
+                                        <Form.Item label={translateContent('amcRegistration.label.tehsil')} name="tehsil">
+                                            <Input placeholder={preparePlaceholderText(translateContent('amcRegistration.label.tehsil'))} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item label="Locality" name="locality">
-                                            <Input placeholder={preparePlaceholderText('Locality')} disabled={true} />
-                                        </Form.Item>
-                                    </Col>
-
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item label="Pincode" name="pinCode">
-                                            <Input placeholder={preparePlaceholderText('pincode')} disabled={true} />
+                                        <Form.Item label={translateContent('amcRegistration.label.locality')} name="locality">
+                                            <Input placeholder={preparePlaceholderText(translateContent('amcRegistration.label.locality'))} disabled={true} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={formData?.mobile} label="Mobile" name="customerPhoneNumber">
-                                            <Input placeholder={preparePlaceholderText('Mobile')} disabled={true} />
+                                        <Form.Item label={translateContent('amcRegistration.label.pinCode')} name="pinCode">
+                                            <Input placeholder={preparePlaceholderText(translateContent('amcRegistration.label.pinCode'))} disabled={true} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item label="GSTIN" name="gstin">
-                                            <Input placeholder={preparePlaceholderText('GSTIN')} disabled={true} />
+                                        <Form.Item label={translateContent('amcRegistration.label.mobile')} name="customerPhoneNumber">
+                                            <Input placeholder={preparePlaceholderText(translateContent('amcRegistration.label.mobile'))} disabled={true} />
+                                        </Form.Item>
+                                    </Col>
+
+                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                        <Form.Item label={translateContent('amcRegistration.label.gstin')} name="gstin">
+                                            <Input placeholder={preparePlaceholderText(translateContent('amcRegistration.label.gstin'))} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
