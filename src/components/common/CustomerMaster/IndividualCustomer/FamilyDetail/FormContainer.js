@@ -73,7 +73,7 @@ const FormBase = (props) => {
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={customerType} label={translateContent('customerMaster.label.mCustomer')} name="mnmCustomer" rules={[validateRequiredSelectField(translateContent('customerMaster.validation.customer'))]}>
-                        <Select placeholder={translateContent('customerMaster.placeholder.mCustomer')} onChange={onChange}>
+                        <Select placeholder={preparePlaceholderSelect(translateContent('customerMaster.placeholder.mCustomer'))} onChange={onChange}>
                             {relationData?.YES_NO_FLG?.map((item) => (
                                 <Option key={'yn' + item?.key} value={item.key}>
                                     {item?.value}
@@ -98,13 +98,13 @@ const FormBase = (props) => {
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={null} label={translateContent('customerMaster.label.cusName')} name="customerName" rules={[validateRequiredInputField(translateContent('customerMaster.validation.cusName'))]}>
-                        <Input maxLength={50} placeholder={translateContent('customerMaster.placeholder.cusName')} disabled={customer} />
+                        <Input maxLength={50} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.cusName'))} disabled={customer} />
                     </Form.Item>
                 </Col>
                 {!customer ? (
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item initialValue={null} label={translateContent('customerMaster.label.relationship')} name="relationship" rules={[validateRequiredSelectField(translateContent('customerMaster.validation.relationship'))]}>
-                            <Select placeholder={translateContent('customerMaster.placeholder.relationship')} allowClear onChange={getRelationCode}>
+                            <Select placeholder={preparePlaceholderSelect(translateContent('customerMaster.placeholder.relationship'))} allowClear onChange={getRelationCode}>
                                 {relationData?.REL_TYPE?.map((item) => (
                                     <Option key={'rel' + item?.key} value={item.value}>
                                         {item?.value}
@@ -120,7 +120,7 @@ const FormBase = (props) => {
                 {customer ? (
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item initialValue={null} label={translateContent('customerMaster.label.relationship')} name="relationship" rules={[validateRequiredSelectField(translateContent('customerMaster.validation.relationship'))]}>
-                            <Select placeholder={translateContent('customerMaster.placeholder.relationship')} allowClear onChange={getRelationCode}>
+                            <Select placeholder={preparePlaceholderSelect(translateContent('customerMaster.placeholder.relationship'))} allowClear onChange={getRelationCode}>
                                 {relationData?.REL_TYPE?.map((item) => (
                                     <Option key={'rel' + item?.key} value={item.value}>
                                         {item?.value}
@@ -135,20 +135,20 @@ const FormBase = (props) => {
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label={translateContent('customerMaster.label.birth')} name="dateOfBirth" rules={[validateRequiredInputField(translateContent('customerMaster.validation.dob'))]}>
-                        <DatePicker format={dateFormat} onChange={onDateChange} disabledDate={disableFutureDate} disabled={customer} placeholder={translateContent('customerMaster.placeholder.dateOfBirth')} getPopupContainer={(triggerNode) => triggerNode.parentElement} />
+                        <DatePicker format={dateFormat} onChange={onDateChange} disabledDate={disableFutureDate} disabled={customer} placeholder={preparePlaceholderSelect(translateContent('customerMaster.placeholder.dateOfBirth'))} getPopupContainer={(triggerNode) => triggerNode.parentElement} />
                     </Form.Item>
                 </Col>
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label={translateContent('customerMaster.label.age')} name="relationAge" rules={[validateRequiredInputField(translateContent('customerMaster.validation.age'))]}>
-                        <Input placeholder={translateContent('customerMaster.placeholder.age')} disabled={true} />
+                        <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.age'))} disabled={true} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item label={translateContent('customerMaster.label.remark')} name="remarks">
-                        <TextArea maxLength={300} placeholder={translateContent('customerMaster.placeholder.remark')} disabled={customer} showCount />
+                        <TextArea maxLength={300} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.remark'))} disabled={customer} showCount />
                     </Form.Item>
                 </Col>
             </Row>

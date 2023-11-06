@@ -6,23 +6,24 @@
 import { tblPrepareColumns, tblStatusColumn, tblActionColumn } from 'utils/tableColumn';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const tableColumn = (handleButtonClick) => {
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Location Type Code',
+            title: translateContent('locationTypeMaster.label.locationTypeCode'),
             dataIndex: 'locationCode',
             width: '20%',
         }),
 
         tblPrepareColumns({
-            title: 'Location Type Name',
+            title: translateContent('locationTypeMaster.label.locationTypeName'),
             dataIndex: 'locationDescription',
             width: '30%',
         }),
         tblPrepareColumns({
-            title: 'Applicable To',
+            title: translateContent('locationTypeMaster.label.applicationTo'),
             dataIndex: 'applicableTo',
             width: '20%',
         }),

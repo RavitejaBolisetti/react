@@ -145,39 +145,39 @@ const AddEditForm = (props) => {
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label={translateContent('customerMaster.label.address')} name="addressType" rules={[validateRequiredSelectField(translateContent('customerMaster.validation.addressType')), { validator: (rule, value) => duplicateValidator(value, 'addressType', addressData, editingData?.addressType) }]}>
-                            <Select {...disabledProps} placeholder={translateContent('customerMaster.placeholder.addresstype')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={addData} allowClear></Select>
+                            <Select {...disabledProps} placeholder={preparePlaceholderSelect(translateContent('customerMaster.placeholder.addresstype'))} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={addData} allowClear></Select>
                         </Form.Item>
                     </Col>
 
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label={translateContent('customerMaster.label.addressL')} name="addressLine1" rules={[validateRequiredInputField(translateContent('customerMaster.validation.address'))]}>
-                            <Input maxLength={50} placeholder={translateContent('customerMaster.placeholder.address')} />
+                            <Input maxLength={50} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.address'))} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label={translateContent('customerMaster.label.addressLine')} name="addressLine2">
-                            <Input maxLength={50} placeholder={translateContent('customerMaster.placeholder.addressL')} />
+                            <Input maxLength={50} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.addressL'))} />
                         </Form.Item>
                     </Col>
                 </Row>
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label={translateContent('customerMaster.label.addressLines')} name="addressLine3">
-                            <Input maxLength={50} placeholder={translateContent('customerMaster.placeholder.addressLine')} />
+                            <Input maxLength={50} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.addressLine'))} />
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item initialValue={formData?.pinCode} label={translateContent('customerMaster.label.pinCode')} name="pinCode" rules={[validateRequiredInputField(translateContent('customerMaster.validation.pinCode')), validatePincodeField(translateContent('customerMaster.validation.pinCode'))]}>
                             <AutoComplete {...disabledProps} maxLength={6} options={options} onSelect={handleOnSelect} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
-                                <Search onSearch={handleOnSearch} onChange={handleOnClear} placeholder="Search" loading={isPinCodeLoading} type="text" allowClear />
+                                <Search onSearch={handleOnSearch} onChange={handleOnClear} placeholder={translateContent('global.placeholder.search')} loading={isPinCodeLoading} type="text" allowClear />
                             </AutoComplete>
                         </Form.Item>
                     </Col>
 
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item initialValue={formData?.tehsilName} label={translateContent('customerMaster.label.tehsil')} name="tehsilName">
-                            <Input disabled={true} placeholder={translateContent('customerMaster.placeholder.tehsil')} maxLength={6} />
+                            <Input disabled={true} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.tehsil'))} maxLength={6} />
                         </Form.Item>
                         <Form.Item hidden initialValue={formData?.tehsilCode} name="tehsilCode">
                             <Input />
@@ -187,7 +187,7 @@ const AddEditForm = (props) => {
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label={translateContent('customerMaster.label.city')} initialValue={formData?.cityName} name="cityName">
-                            <Input disabled={true} placeholder={translateContent('customerMaster.placeholder.city')} maxLength={50} />
+                            <Input disabled={true} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.city'))} maxLength={50} />
                         </Form.Item>
                         <Form.Item hidden initialValue={formData?.cityCode} name="cityCode">
                             <Input />
@@ -195,7 +195,7 @@ const AddEditForm = (props) => {
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label={translateContent('customerMaster.label.district')} initialValue={formData?.districtName} name="districtName">
-                            <Input disabled={true} placeholder={translateContent('customerMaster.placeholder.district')} maxLength={50} />
+                            <Input disabled={true} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.district'))} maxLength={50} />
                         </Form.Item>
                         <Form.Item hidden initialValue={formData?.districtCode} name="districtCode">
                             <Input />
@@ -203,7 +203,7 @@ const AddEditForm = (props) => {
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item initialValue={formData?.stateName} label={translateContent('customerMaster.label.state')} name="stateName">
-                            <Input disabled={true} placeholder={translateContent('customerMaster.placeholder.state')} maxLength={50} />
+                            <Input disabled={true} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.state'))} maxLength={50} />
                         </Form.Item>
                         <Form.Item hidden initialValue={formData?.stateCode} name="stateCode">
                             <Input />

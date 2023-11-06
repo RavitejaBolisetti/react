@@ -12,11 +12,15 @@ import * as IMAGES from 'assets';
 import styles from './Dashboard.module.scss';
 import DashboardActionItems from './DashboardActionItems';
 // import WidgetDrawer from './WidgetDrawer';
-// import NewsDrawer from './NewsDrawer';
+import NewsDrawer from './NewsDrawer';
 import { StatusBar } from './StatusBar';
 import { PieChart } from './PieChart';
 import { dateTimeDuration } from 'utils/formatDateTime';
-import { withSpinner } from 'components/withSpinner';
+// import { withSpinner } from 'components/withSpinner';
+import LatestNews from './LatestNews';
+import BirthDayCalender from './BirthDayCalender';
+import { translateContent } from 'utils/translateContent';
+// import { FiPlus } from 'react-icons/fi';
 
 const { Text, Title } = Typography;
 
@@ -48,7 +52,7 @@ const mapStateToProps = (state) => {
             LeftSideBar: { collapsed = false },
             Header: { isLoading, data: loginUserData = [] },
         },
-    } = state;  
+    } = state;
 
     return {
         collapsed,
@@ -62,36 +66,36 @@ const keyHightliteData = [
     { shortDescription: 'GST Update', longDescription: "GSTR 2 due date is 20th Oct'23", createdDate: '2023-10-16 17:45:00' },
 ];
 
-// const detailNews = {
-//     content:
-//         'Mahindra & Mahindra, the popular Indian car manufacturing brand, has recorded its highest ever sales in the month of July 2023. Mahindra & Mahindra is popularly known for their rugged luxury SUV’s such as XUV 700, Scorpio-N, Scorpio Classic, Thar and compact SUV’s such as XUV 300 and XUV 400 EV.Mahindra & Mahindra, the popular Indian car manufacturing brand, has recorded its highest ever sales in the month of July 2023. Mahindra & Mahindra is popularly known for their rugged luxury SUV’s such as XUV 700, Scorpio-N, Scorpio Classic, Thar and compact SUV’s such as XUV. Mahindra & Mahindra, the popular Indian car manufacturing brand, has recorded its highest ever sales in the month of July 2023. Mahindra & Mahindra is popularly known for their rugged luxury SUV’s such as XUV 700, Scorpio-N, Scorpio Classic, Thar and compact SUV’s such as XUV 300 and XUV 400 EV.',
-// };
-// const newsData = [
-//     { shortDescription: 'Mahindra & Mahindra sells 36,205 SUVs in July 2023', longDescription: 'Mahindra & Mahindra, the popular Indian car manufacturing brand.', date: '5 min ago', content: detailNews?.content },
-//     { shortDescription: 'Mahindra Sales in July hits highest mark as per TOI Survey', longDescription: 'Mahindra & Mahindra is popularly known for their rugged luxury.', date: '50 min ago', content: detailNews?.content },
-//     { shortDescription: 'Mahindra Scorpio Sales Rise By Over 2-Folds', longDescription: 'Mahindra & Mahindra, the popular Indian car manufacturing brand', date: '9 min ago', content: detailNews?.content },
-//     { shortDescription: 'Mahindra & Mahindra sells 36,205 SUVs in July 2023', longDescription: 'Mahindra & Mahindra, the popular Indian car manufacturing brand.', date: '5 min ago', content: detailNews?.content },
-//     { shortDescription: 'Mahindra Sales in July hits highest mark as per TOI Survey', longDescription: 'Mahindra & Mahindra is popularly known for their rugged luxury.', date: '50 min ago', content: detailNews?.content },
-//     { shortDescription: 'Mahindra Scorpio Sales Rise By Over 2-Folds', longDescription: 'Mahindra & Mahindra, the popular Indian car manufacturing brand', date: '9 min ago', content: detailNews?.content },
-// ];
-// const birthDayData = {
-//     birthDaytoday: [
-//         { name: 'Shally Gupta', date: '17, Feb 2023 Sunday', image: '' },
-//         { name: 'Vimal Kumar Bhati', date: '21, July 2023 Friday', image: '' },
-//         { name: 'Vivek Verma', date: '07, December 2023 Friday', image: '' },
-//     ],
-//     upcomingBirthDay: [
-//         { name: 'Vishal Gaurav', date: '19, November 2023 Sunday', image: '' },
-//         { name: 'Shally Gupta', date: '17, December 2023 Sunday', image: '' },
-//         { name: 'Vimal Kumar Bhati', date: '21, July 2023 Friday', image: '' },
-//     ],
-// };
+const detailNews = {
+    content:
+        'Mahindra & Mahindra, the popular Indian car manufacturing brand, has recorded its highest ever sales in the month of July 2023. Mahindra & Mahindra is popularly known for their rugged luxury SUV’s such as XUV 700, Scorpio-N, Scorpio Classic, Thar and compact SUV’s such as XUV 300 and XUV 400 EV.Mahindra & Mahindra, the popular Indian car manufacturing brand, has recorded its highest ever sales in the month of July 2023. Mahindra & Mahindra is popularly known for their rugged luxury SUV’s such as XUV 700, Scorpio-N, Scorpio Classic, Thar and compact SUV’s such as XUV. Mahindra & Mahindra, the popular Indian car manufacturing brand, has recorded its highest ever sales in the month of July 2023. Mahindra & Mahindra is popularly known for their rugged luxury SUV’s such as XUV 700, Scorpio-N, Scorpio Classic, Thar and compact SUV’s such as XUV 300 and XUV 400 EV.',
+};
+const newsData = [
+    { shortDescription: 'Mahindra & Mahindra sells 36,205 SUVs in July 2023', longDescription: 'Mahindra & Mahindra, the popular Indian car manufacturing brand.', date: '5 min ago', content: detailNews?.content },
+    { shortDescription: 'Mahindra Sales in July hits highest mark as per TOI Survey', longDescription: 'Mahindra & Mahindra is popularly known for their rugged luxury.', date: '50 min ago', content: detailNews?.content },
+    { shortDescription: 'Mahindra Scorpio Sales Rise By Over 2-Folds', longDescription: 'Mahindra & Mahindra, the popular Indian car manufacturing brand', date: '9 min ago', content: detailNews?.content },
+    { shortDescription: 'Mahindra & Mahindra sells 36,205 SUVs in July 2023', longDescription: 'Mahindra & Mahindra, the popular Indian car manufacturing brand.', date: '5 min ago', content: detailNews?.content },
+    { shortDescription: 'Mahindra Sales in July hits highest mark as per TOI Survey', longDescription: 'Mahindra & Mahindra is popularly known for their rugged luxury.', date: '50 min ago', content: detailNews?.content },
+    { shortDescription: 'Mahindra Scorpio Sales Rise By Over 2-Folds', longDescription: 'Mahindra & Mahindra, the popular Indian car manufacturing brand', date: '9 min ago', content: detailNews?.content },
+];
+const birthDayData = {
+    birthDaytoday: [
+        { name: 'Shally Gupta', date: '17, Feb 2023 Sunday', image: '' },
+        { name: 'Vimal Kumar Bhati', date: '21, July 2023 Friday', image: '' },
+        { name: 'Vivek Verma', date: '07, December 2023 Friday', image: '' },
+    ],
+    upcomingBirthDay: [
+        { name: 'Vishal Gaurav', date: '19, November 2023 Sunday', image: '' },
+        { name: 'Shally Gupta', date: '17, December 2023 Sunday', image: '' },
+        { name: 'Vimal Kumar Bhati', date: '21, July 2023 Friday', image: '' },
+    ],
+};
 
 const DashboardBase = ({ props }) => {
     // const [isVisible, serIsVisible] = useState(false);
-    // const [isNewsVisible, setIsNewsVisible] = useState(false);
+    const [isNewsVisible, setIsNewsVisible] = useState(false);
     const [highlightsTextIndex, setHighlightsTextIndex] = useState(0);
-    // const [record, setRecord] = useState('');
+    const [record, setRecord] = useState('');
 
     const handleButtonClick = (direction) => {
         if (direction === 'next') {
@@ -108,37 +112,37 @@ const DashboardBase = ({ props }) => {
             }
         }
     };
-    // const onCloseAction = () => {
-    //     serIsVisible(false);
-    //     setIsNewsVisible(false);
-    // };
+    const onCloseAction = () => {
+        // serIsVisible(false);
+        setIsNewsVisible(false);
+    };
 
     // const onAddWidget = () => {
     //     serIsVisible(true);
     // };
 
-    // const handleNewsClick = (data) => {
-    //     setIsNewsVisible(true);
-    //     setRecord(data);
-    // };
+    const handleNewsClick = (data) => {
+        setIsNewsVisible(true);
+        setRecord(data);
+    };
 
     // const WidgetDrawerProps = {
     //     isVisible,
     //     onCloseAction,
-    //     titleOverride: 'Add Widget',
+    //     titleOverride: translateContent('dashboard.heading.subTitleAddWidget'),
     // };
 
-    // const newsDrawerProps = {
-    //     isVisible: isNewsVisible,
-    //     onCloseAction,
-    //     titleOverride: 'Latest News',
-    //     handleNewsClick,
-    //     newsData,
-    //     record,
-    // };
-    // const birthDayProps = {
-    //     birthDayData,
-    // };
+    const newsDrawerProps = {
+        isVisible: isNewsVisible,
+        onCloseAction,
+        titleOverride: translateContent('dashboard.heading.latestNews'),
+        handleNewsClick,
+        newsData,
+        record,
+    };
+    const birthDayProps = {
+        birthDayData,
+    };
 
     return (
         <div className={styles.dashboardContainer}>
@@ -147,7 +151,7 @@ const DashboardBase = ({ props }) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             <div className={styles.dashboardPageHeading}>
-                                <span className={styles.headingGradient}>Dashboard</span>
+                                <span className={styles.headingGradient}>{translateContent('dashboard.heading.pageTitle')}</span>
                             </div>
                         </Col>
                     </Row>
@@ -159,7 +163,7 @@ const DashboardBase = ({ props }) => {
                     <div className={styles.keyHighlightBox}>
                         <Row justify="space-between" align="middle">
                             <Space size={10}>
-                                <Title level={5}>Key Highlights</Title>
+                                <Title level={5}>{translateContent('dashboard.heading.keyHighlights')}</Title>
                                 <Divider type="vertical" />
                                 {keyHightliteData?.map(
                                     (i, index) =>
@@ -185,7 +189,7 @@ const DashboardBase = ({ props }) => {
             <Row gutter={30} className={styles.marB20}>
                 <Col xs={24} sm={24} md={16} lg={16} xl={16} xxl={16}>
                     <div className={styles.dashboardActionItems}>
-                        <Title level={5}>Action Items</Title>
+                        <Title level={5}>{translateContent('dashboard.heading.actionItems')}</Title>
                         <DashboardActionItems />
                     </div>
                 </Col>
@@ -197,40 +201,40 @@ const DashboardBase = ({ props }) => {
             </Row>
             <Row gutter={20} className={`${styles.marB20} ${styles.dashboardKPI}`}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className={styles.verticallyCentered}>
-                    <Title level={3}>Dashboard KPI</Title>
+                    <Title level={3}>{translateContent('dashboard.heading.dashboardKpi')}</Title>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className={styles.buttonsGroupRight}>
                     {/* <Button type="primary" icon={<FiPlus />} className={styles.verticallyCentered} onClick={onAddWidget}>
-                        Add Widget
+                        {translateContent('dashboard.heading.dashboardKpi')}
                     </Button> */}
                 </Col>
             </Row>
             <div className={`${styles.marB20} ${styles.dashboardPieChart}`}>
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Card title={'Billing'}>
+                        <Card title={translateContent('dashboard.label.billing')}>
                             <StatusBar data={billingData} />
                         </Card>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Card title={'Retail'}>
+                        <Card title={translateContent('dashboard.label.retail')}>
                             <StatusBar data={retailData} />
                         </Card>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Card title={'Stock in days'}>
+                        <Card title={translateContent('dashboard.label.stockInDays')}>
                             <PieChart />
                         </Card>
                     </Col>
                 </Row>
             </div>
-            {/* <Row gutter={40} className={styles.marB20}>
+            <Row gutter={40} className={styles.marB20}>
                 <LatestNews {...newsDrawerProps} />
                 <BirthDayCalender {...birthDayProps} />
-            </Row> */}
+            </Row>
 
-            {/* <WidgetDrawer {...WidgetDrawerProps} />
-            <NewsDrawer {...newsDrawerProps} /> */}
+            {/* <WidgetDrawer {...WidgetDrawerProps} /> */}
+            <NewsDrawer {...newsDrawerProps} />
         </div>
     );
 };

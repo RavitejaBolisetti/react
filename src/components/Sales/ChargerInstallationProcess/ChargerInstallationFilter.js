@@ -15,6 +15,8 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
 import styles from 'assets/sass/app.module.scss';
 
+import { translateContent } from 'utils/translateContent';
+
 export default function ChargerInstallationFilter(props) {
     const { extraParams, removeFilter, typeData, chargerStatusList, searchForm, filterString, setFilterString, handleResetFilter, advanceFilter = false, handleChargerTypeChange, setAdvanceSearchVisible, handleButtonClick, chargerStatus } = props;
 
@@ -47,7 +49,7 @@ export default function ChargerInstallationFilter(props) {
                                         setAdvanceSearchVisible(true);
                                     }}
                                 >
-                                    Advanced Filters
+                                     {translateContent('global.buttons.add')}
                                 </Button>
                             </Col>
                         </Row>
@@ -56,7 +58,7 @@ export default function ChargerInstallationFilter(props) {
                 {QUERY_BUTTONS_CONSTANTS.SITE_SURVEY.key === chargerStatus && (
                     <Col xs={24} sm={4} md={4} lg={4} xl={4} className={styles.buttonsGroupRight}>
                         <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                            Add
+                            {translateContent('global.buttons.advancedFilter')}
                         </Button>
                     </Col>
                 )}
@@ -66,7 +68,7 @@ export default function ChargerInstallationFilter(props) {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={22} xl={22} className={styles.advanceFilterContainer}>
-                                <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
+                                <div className={styles.advanceFilterTitle}>{translateContent('global.advanceFilter.appliedAdvanceFilter')} </div>
                                 {extraParams?.map((filter) => {
                                     return (
                                         filter?.value &&
@@ -85,7 +87,7 @@ export default function ChargerInstallationFilter(props) {
                             </Col>
                             <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
                                 <Button className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
-                                    Clear
+                                    {translateContent('global.buttons.clear')}
                                 </Button>
                             </Col>
                         </Row>

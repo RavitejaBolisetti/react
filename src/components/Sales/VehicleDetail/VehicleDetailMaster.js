@@ -423,7 +423,7 @@ export const VehicleDetailMasterBase = (props) => {
         isLastSection,
         typeData,
         vehicleDetailData,
-        saveButtonName: isLastSection ? 'Submit' : 'Save & Next',
+        saveButtonName: isLastSection ? translateContent('global.buttons.submit'): translateContent('global.buttons.saveAndNext')
     };
 
     return (
