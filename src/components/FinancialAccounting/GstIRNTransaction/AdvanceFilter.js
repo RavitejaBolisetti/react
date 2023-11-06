@@ -9,11 +9,13 @@ import { FilterIcon } from 'Icons';
 import { RxCross2 } from 'react-icons/rx';
 import { SearchBox } from 'components/utils/SearchBox';
 import { PARAM_MASTER } from 'constants/paramMaster';
+// import { GST_IRN_TRANSACTION_STATUS } from './GstIRNStatus';
 
 import styles from 'assets/sass/app.module.scss';
 
 export default function AdvanceFilter(props) {
     const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, title, filterString, setFilterString, typeData, setAdvanceSearchVisible, searchForm } = props;
+    // const { selectedStatusType, setSelectedStatusType } = props;
 
     const serachBoxProps = {
         searchForm,
@@ -30,6 +32,15 @@ export default function AdvanceFilter(props) {
                     <Form autoComplete="off" colon={false} className={styles.masterListSearchForm}>
                         <Form.Item label={`${title}`}>
                             <Row gutter={20}>
+                                {/* <div className={`${styles.userManagement} ${styles.headingToggle}`}>
+                                    {Object.values(GST_IRN_TRANSACTION_STATUS)?.map((item) => {
+                                        return (
+                                            <Button type={selectedStatusType === item?.key ? 'primary' : 'link'} onClick={() => setSelectedStatusType(item?.key)}>
+                                                {item?.title}
+                                            </Button>
+                                        );
+                                    })}
+                                </div> */}
                                 <Col xs={24} sm={24} md={14} lg={14} xl={14}>
                                     <SearchBox {...serachBoxProps} />
                                 </Col>
