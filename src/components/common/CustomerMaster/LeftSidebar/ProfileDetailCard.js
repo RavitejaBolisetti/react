@@ -7,6 +7,7 @@ import React from 'react';
 import { Collapse, Space, Avatar, Typography, Divider } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
@@ -41,7 +42,7 @@ const ProfileDetailCard = (props) => {
                         </Space>
                         <Divider />
                         <div className={styles.detailCardText}>
-                            Customer Type: <span>{selectedCustomer?.customerTypeName}</span>
+                            {translateContent('customerMaster.label.cusType')} <span>{selectedCustomer?.customerTypeName}</span>
                         </div>
                     </>
                 }
@@ -49,7 +50,7 @@ const ProfileDetailCard = (props) => {
             >
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Mobile No.: <span>{selectedCustomer?.mobileNumber || 'NA'}</span>
+                    {translateContent('customerMaster.label.mobile')} <span>{selectedCustomer?.mobileNumber || 'NA'}</span>
                 </div>
             </Panel>
         </Collapse>

@@ -755,7 +755,9 @@
             "accSegment": "Account Segment",
             "accClient": "Account Client Name",
             "accDate": "Account Mapping Date",
-            "dealer": "VIP Dealer"
+            "dealer": "VIP Dealer",
+            "cusType": "Customer Type:",
+            "mobile": " Mobile No.:"
         },
         "placeholder": {
             "mobileMumber": "mobile number",
@@ -2637,18 +2639,18 @@
                 "accountNarration": "Account Narration",
                 "amount": "Amount",
                 "voucherDetails": "Voucher Details",
-                "partySegment":"Party Segment",
-                "partyId":"Party Id",
-                "partyName":"Party Name",
-                "address":"Address",
-                "city":"City",
-                "state":"State",
-                "phoneNo":"Phone No",
-                "totalSettledAmount":"Total Settled Amount",
-                "totalWrite-OffAmount":"Total Write-Off Amount",
-                "totalApportionedAmount":"Total Apportioned Amount",
-                "totalAmount":"Total Amount",
-                "totalBalancedAmount":"Total Balanced Amount"
+                "partySegment": "Party Segment",
+                "partyId": "Party Id",
+                "partyName": "Party Name",
+                "address": "Address",
+                "city": "City",
+                "state": "State",
+                "phoneNo": "Phone No",
+                "totalSettledAmount": "Total Settled Amount",
+                "totalWrite-OffAmount": "Total Write-Off Amount",
+                "totalApportionedAmount": "Total Apportioned Amount",
+                "totalAmount": "Total Amount",
+                "totalBalancedAmount": "Total Balanced Amount"
             },
             "placeholder": {
                 "searchTitle": "Search Credit/Debit",
@@ -2667,10 +2669,9 @@
             "validation": {
                 "selectPartySegment": "Please select party segment",
                 "detailNotForPartySegment": "Details not available for this party id with selected party segment",
-                "partySegment":"Party Segment",
-                "partyId":"Party Id",
-                "partyName":"Party Name"
-                
+                "partySegment": "Party Segment",
+                "partyId": "Party Id",
+                "partyName": "Party Name"
             },
             "message": {
                 "successMessage": "Account Head validated successfully",
