@@ -2774,6 +2774,46 @@
                 "customerName": "Customer Name",
                 "cpd": "CPD"
             }
+        },
+    "vehicleTracking": {
+        "text": {
+            "timeline": "Timeline",
+            "showOnMap": "Show On Map",
+            "shipmentDetails": "Shipment Details | VIN : ",
+            "expectedDateOfDelivery:": "Expected Date of Delivery:"
+        },
+        "title": {
+            "dispatched": "Dispatched",
+            "inTransit": "In Transit",
+            "delivered": "Delivered",
+            "received": "Received",
+            "viewTimeline": "View Timeline",
+            "search": "Search",
+            "viewMap": "View Map"
+        },
+        "label": {
+            "shipmentId": "Shipment ID",
+            "lrNumber": "LR Number",
+            "lrDate": "LR Date",
+            "transporterName": "Transporter Name",
+            "modeOfTransport": "Mode of transport",
+            "lastUpdatedLocation": "Last Updated Location",
+            "lastUpdatedDateAndTime": "Last Updated Date & Time",
+            "oemInvoiceNumber": "OEM Invoice Number",
+            "oemInvoiceDate": "OEM Invoice Date",
+            "shipmentStatus": "Shipment Status",
+            "currentLatitude": "Current Latitude",
+            "currentLongitude": "Current Longitude",
+            "etaDateAndTime": "ETA Date & Time",
+            "shipmentDeliveryDateAndTime": "Shipment Delivery Date & Time"
+        },
+        "placeholder": {
+            "oemInvoiceNumber": "OEM Invoice Number"
+        },
+        "buttons": {
+            "seeLess": "See Less",
+            "seeMore": "See More"
         }
+
     }
 }

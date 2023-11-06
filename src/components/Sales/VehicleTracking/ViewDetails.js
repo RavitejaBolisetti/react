@@ -10,6 +10,7 @@ import { DATA_TYPE } from 'constants/dataType';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Text } = Typography;
 
@@ -25,11 +26,11 @@ export const ViewDetails = (props) => {
     const actionBtn = (
         <>
             <Button onClick={() => setIsFormVisible(true)} type="primary">
-                Timeline
+                {translateContent('vehicleTracking.text.timeline')}
             </Button>
 
             <Button onClick={() => setIsMapFormVisible(true)} type="primary">
-                Show On Map
+                {translateContent('vehicleTracking.text.showOnMap')}
             </Button>
         </>
     );
@@ -38,7 +39,7 @@ export const ViewDetails = (props) => {
         <Card className={styles.whiteBG}>
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} className={styles.verticallyCentered}>
-                    <Text strong>Shipment Details | VIN : {checkAndSetDefaultValue(formData?.vin, isLoading)} </Text>
+                    <Text strong>{translateContent('vehicleTracking.text.shipmentDetails')} {checkAndSetDefaultValue(formData?.vin, isLoading)} </Text>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
                     {formData?.vin && checkAndSetDefaultValue(actionBtn, isLoading)}
@@ -46,20 +47,20 @@ export const ViewDetails = (props) => {
             </Row>
             <Divider className={styles.marT20} />
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Shipment ID">{checkAndSetDefaultValue(formData?.shipmentId, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="LR Number">{checkAndSetDefaultValue(formData?.lrNumber, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="LR Date">{checkAndSetDefaultValue(formData?.lrDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                <Descriptions.Item label="Transporter Name">{checkAndSetDefaultValue(formData?.transporterName, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Mode of transport">{checkAndSetDefaultValue(formData?.modeOfTransport, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Last Updated Location">{checkAndSetDefaultValue(formData?.lastUpdatedLocation, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Last Update Date & Time">{checkAndSetDefaultValue(`${checkAndSetDefaultValue(formData?.lastUpdatedDateAndTime, isLoading, DATA_TYPE?.DATE?.key)} ${moment(formData?.lastUpdatedDateAndTime).format('LT')}`, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="OEM Invoice Number">{checkAndSetDefaultValue(formData?.oemInvoiceNumber, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="OEM Invoice Date">{checkAndSetDefaultValue(formData?.oemInvoiceDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                <Descriptions.Item label="Shipment Status">{checkAndSetDefaultValue(formData?.shipmentStatus, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Current Latitude">{checkAndSetDefaultValue(formData?.currentLatitude, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Current Logitude">{checkAndSetDefaultValue(formData?.currentLongitude, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="ETA Date & Time">{checkAndSetDefaultValue(`${checkAndSetDefaultValue(formData?.etaDateAndTime, isLoading, DATA_TYPE?.DATE?.key)} ${moment(formData?.etaDateAndTime).format('LT')}`, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Shipment Delivery Date & Time">{checkAndSetDefaultValue(`${checkAndSetDefaultValue(formData?.shipmentDeliveryDateAndTime, isLoading, DATA_TYPE?.DATE?.key)} ${moment(formData?.shipmentDeliveryDateAndTime).format('LT')}`, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('vehicleTracking.label.shipmentId')}>{checkAndSetDefaultValue(formData?.shipmentId, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('vehicleTracking.label.lrNumber')}>{checkAndSetDefaultValue(formData?.lrNumber, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('vehicleTracking.label.lrDate')}>{checkAndSetDefaultValue(formData?.lrDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('vehicleTracking.label.transporterName')}>{checkAndSetDefaultValue(formData?.transporterName, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('vehicleTracking.label.modeOfTransport')}>{checkAndSetDefaultValue(formData?.modeOfTransport, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('vehicleTracking.label.lastUpdatedLocation')}>{checkAndSetDefaultValue(formData?.lastUpdatedLocation, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('vehicleTracking.label.lastUpdatedDateAndTime')}>{checkAndSetDefaultValue(`${checkAndSetDefaultValue(formData?.lastUpdatedDateAndTime, isLoading, DATA_TYPE?.DATE?.key)} ${moment(formData?.lastUpdatedDateAndTime).format('LT')}`, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('vehicleTracking.label.oemInvoiceNumber')}>{checkAndSetDefaultValue(formData?.oemInvoiceNumber, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('vehicleTracking.label.oemInvoiceDate')}>{checkAndSetDefaultValue(formData?.oemInvoiceDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('vehicleTracking.label.shipmentStatus')}>{checkAndSetDefaultValue(formData?.shipmentStatus, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('vehicleTracking.label.currentLatitude')}>{checkAndSetDefaultValue(formData?.currentLatitude, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('vehicleTracking.label.currentLongitude')}>{checkAndSetDefaultValue(formData?.currentLongitude, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('vehicleTracking.label.etaDateAndTime')}>{checkAndSetDefaultValue(`${checkAndSetDefaultValue(formData?.etaDateAndTime, isLoading, DATA_TYPE?.DATE?.key)} ${moment(formData?.etaDateAndTime).format('LT')}`, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('vehicleTracking.label.shipmentDeliveryDateAndTime')}>{checkAndSetDefaultValue(`${checkAndSetDefaultValue(formData?.shipmentDeliveryDateAndTime, isLoading, DATA_TYPE?.DATE?.key)} ${moment(formData?.shipmentDeliveryDateAndTime).format('LT')}`, isLoading)}</Descriptions.Item>
             </Descriptions>
         </Card>
     );
