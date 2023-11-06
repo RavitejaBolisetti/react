@@ -65,7 +65,9 @@
             "addIndent": "Add Indent",
             "apply": "Apply",
             "submit": "Submit",
-            "continue": "Continue"
+            "continue": "Continue",
+            "addChild": " Add Child",
+            "addSibling": " Add Sibling"
         },
         "placeholder": {
             "input": "Enter ",
@@ -668,6 +670,35 @@
             "taxCode": "Tax Code"
         }
     },
+    "taxCharges": {
+        "heading": {
+            "moduleTitle": "Tax & Charges Detail",
+            "viewTitle": "Tax & Charges Details",
+            "title": "Tax & Charges"
+        },
+        "description": {
+            "noData": " Please select Tax and Charges from left side hierarchy to view “Details”"
+        },
+        "label": {
+            "attributeLevel": "Attribute Type",
+            "parent": "Parent",
+            "taxTypeCode": "Tax/Charge Type Code",
+            "taxTypeDescription": "Tax/Charge Type Descrption",
+            "calculationType": "Calculation Type",
+            "documentDescription": "Document Description",
+            "financialHead": "Financial Account Head",
+            "status": "Status",
+            "percentage": "Percentage",
+            "rate": "Rate"
+        },
+        "validation": {
+            "attributeLevel": "attribute level",
+            "message": "is not active anymore. Please select a different attribute.",
+            "parent": "Parent",
+            "attributeTypeCode": "Attribute Type Code",
+            "decimalPlaces": "rate with two decimal places"
+        }
+    },
 
     "footer": {
         "copyright": "Copyright &copy; {YEAR} ROBIN."
@@ -1223,7 +1254,7 @@
                     "indentDate": "Indent Date",
                     "indentToLocation": "Indent To Location",
                     "indentStatus": "Indent Status",
-                    "modelDescription": "Model Description",                   
+                    "modelDescription": "Model Description",
                     "modelCode": "Model Code",
                     "requestedQuantity": "Requested Quantity",
                     "cancelledQuantity": "Cancelled Quantity",
@@ -1699,35 +1730,34 @@
             "codeValidation": "code"
         }
     },
-    "manufacturerOrganisation":{
-        "heading":{
+    "manufacturerOrganisation": {
+        "heading": {
             "mainTitle": "Manufacturer Organisation Detail",
             "viewTitle": "Manufacturer Details",
             "title": "Hierarchy"
         },
-        "label":{
+        "label": {
             "changedDate": "Changed Date",
             "changedBy": "Changed By",
             "attribute": "Attribute",
             "code": "Code",
-            "parent" : "Parent",
+            "parent": "Parent",
             "shortDescription": "Short Description",
-            "longDescription" : "Long Description",
+            "longDescription": "Long Description",
             "childAllowed": "Child Allowed?",
             "description": "Please select product from leftside hierarchy to view 'Hierarchy Details' ",
             "attributeType": "Attribute Type",
             "hierarchyCode": "Hierarchy Code",
-            "attributeLevel":"Attribute Level"
-
+            "attributeLevel": "Attribute Level"
         },
-        "placeholder":{
+        "placeholder": {
             "name": "name",
             "code": "code",
             "parent": "Parent",
             "attributeTypeCode": "attribute type code",
             "attributeCode": "attribute code"
         },
-        "validation":{
+        "validation": {
             "nameValidation": "name",
             "codeValidation": "code",
             "attributeLevel": "attribute level",
@@ -1736,8 +1766,8 @@
             "attributeHierarchyFieldValidation": "is not active anymore. Please select a different attribute."
         }
     },
-    "manufacturerAdmin":{
-        "heading":{
+    "manufacturerAdmin": {
+        "heading": {
             "mainTitle": "Manufacturer Detail",
             "viewTitle": "Manufacturer Details",
             "drawerTitle": "Upload Authority Details",
@@ -1745,20 +1775,20 @@
             "changeHistoryTitle": "Admin Change History",
             "authorityChangeHistoryTitle": "Authority Change History"
         },
-        "label":{
+        "label": {
             "changedDate": "Changed/Modified Date",
             "changedBy": "Changed By",
             "attribute": "Attribute",
             "code": "Code",
-            "parent" : "Parent",
+            "parent": "Parent",
             "shortDescription": "Short Description",
-            "longDescription" : "Long Description",
+            "longDescription": "Long Description",
             "childAllowed": "Child Allowed?",
             "description": "Please select product from leftside hierarchy to view 'Hierarchy Details' ",
             "attributeType": "Attribute Type",
             "hierarchyCode": "Hierarchy Code",
-            "attributeLevel":"Attribute Level",
-            "attributeCode":"Attribute Code",
+            "attributeLevel": "Attribute Level",
+            "attributeCode": "Attribute Code",
             "authorityTypeCode": "Authority Type Code",
             "employeeName": "Employee Name",
             "employeeTokenNo": "Employee Token No.",
@@ -1771,17 +1801,16 @@
             "messageText": "Click or drop your file here to upload",
             "downloadHere": "Download Here",
             "selectOrganization": "Please Select Organization from dropdown"
-
         },
-        "placeholder":{
+        "placeholder": {
             "name": "name",
             "code": "code",
             "parent": "Parent",
             "attributeTypeCode": "attribute type code",
             "attributeCode": "attribute code",
-            "organizationHierarchy":"Organization Hierarchy"
+            "organizationHierarchy": "Organization Hierarchy"
         },
-        "validation":{
+        "validation": {
             "nameValidation": "name",
             "codeValidation": "code",
             "attributeLevel": "attribute level",
