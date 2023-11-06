@@ -2156,20 +2156,65 @@
             "variantCode": "Variant Code"
         }
     },
-    "bookingSoMappingControlMaster":{ 
-        "heading":{
+    "bookingSoMappingControlMaster": {
+        "heading": {
             "title": "Hierarchy",
             "noDataTitle": "Please choose organization hierarchy to view data"
         },
-        "placeholder":{
-            "organizationHierarchy": "Organization Hierarchy" 
+        "placeholder": {
+            "organizationHierarchy": "Organization Hierarchy"
         },
-        "validation":{
-            "diffSelection" : "No Product Found"   
+        "validation": {
+            "diffSelection": "No Product Found"
         },
-        "description":{
-            "selectLeft":"Please select from left",
-            "sideHierarchyView":"side hierarchy to view “Details”"
+        "description": {
+            "selectLeft": "Please select from left",
+            "sideHierarchyView": "side hierarchy to view “Details”"
+        }
+    },
+
+    "termConditionManufacturer": {
+        "heading": {
+            "pageTitle": "Terms & Conditions - Manufacturer Location",
+            "moduletitle": "Term & Condition"
+        },
+        "label": {
+            "terms&Condition": "Term & Condition",
+            "documentCategory": "Document Category",
+            "productHierarchy": "Product Hierarchy",
+            "documentType": "Document Type",
+            "language": "Language",
+            "effectivefrom": "Effective From",
+            "effectiveto": "Effective To",
+            "version": "Version",
+            "mfgT&c": "MFG T&C"
+        },
+        "validation": {
+            "terms&Condition": "Term & Condition",
+            "language": "Language",
+            "documentType": "Document Type",
+            "productHierarchy": "Product Hierarchy",
+            "date": "Date"
+        },
+        "placeholder": {
+            "version": "Version",
+            "documentCategory": "Document Category",
+            "selectParameter": "Select Parameter"
+        },
+        "fields": {
+            "reviseT&C": "Revise T&C",
+            "addT&C": "Add T&C",
+            "revised": "Revised",
+            "initial": "Initial"
+        },
+        "changeHistory": {
+            "productName": "Product Hierarchy",
+            "documentTypeCode": "Document Type",
+            "languageDesc": "Language",
+            "effectivefrom": "Effective From",
+            "effectiveto": "Effective To",
+            "version": "Version",
+            "termsconditiondescription": "Description"
         }
     }
 }
