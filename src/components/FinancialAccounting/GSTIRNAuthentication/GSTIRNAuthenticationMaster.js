@@ -180,7 +180,7 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
 
-    const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
+    const handleButtonClick = ({ buttonAction }) => {
         form.resetFields();
         form.setFieldsValue(undefined);
         switch (buttonAction) {

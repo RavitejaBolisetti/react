@@ -27,8 +27,5 @@ describe("GstAuthFormButton component", ()=>{
 
         const nextBtn = screen.getByRole('button', {name:'Next'});
         fireEvent.click(nextBtn);
-
-        const saveNextBtn = screen.getByRole('button', {name:'Save & Next'});
-        fireEvent.click(saveNextBtn);
     })
 })

@@ -50,7 +50,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const GstBranchAccessibleMasterBase = (props) => {
     const { userId, showGlobalNotification, section, fetchList, listShowLoading } = props;
-    const { form, handleFormValueChange, handleButtonClick, dealerBranchData } = props;
+    const { form, handleFormValueChange, dealerBranchData } = props;
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
@@ -70,7 +70,7 @@ const GstBranchAccessibleMasterBase = (props) => {
     });
 
     const tableProps = {
-        tableColumn: tableColumn(handleButtonClick),
+        tableColumn: tableColumn(),
         tableData: dealerBranchArray, // dealerBranchData,
         showAddButton: false,
     };
