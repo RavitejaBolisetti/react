@@ -11,6 +11,7 @@ import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { customSelectBox } from 'utils/customSelectBox';
 import { ModalButtons } from 'components/common/Button';
+import { translateContent } from 'utils/translateContent';
 
 export const AdvancedSearchFrom = (props) => {
     const { setAdvanceSearchVisible, onClickAction, typeData, gSTINList, isGSTINListLoading } = props;
@@ -48,8 +49,8 @@ export const AdvancedSearchFrom = (props) => {
     const modalProps = {
         reset: true,
         submit: true,
-        resetName: 'Reset',
-        submitName: 'Apply',
+        resetName: translateContent('global.buttons.reset'),
+        submitName: translateContent('global.buttons.apply'),
         handleResetFilter,
         onClickAction,
     };
@@ -58,13 +59,13 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Form.Item label="IRN Status" name="irnStatus">
+                    <Form.Item label={translateContent('gstIrnTransaction.heading.irnStatus')} name="irnStatus">
                         {customSelectBox({ data: typeData?.[PARAM_MASTER.IRN_PEND_TRN_STATUS.id], fieldNames: { key: 'key', value: 'value' }, placeholder: preparePlaceholderSelect('IRN Status') })}
                         {/* <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'desc', value: 'key' }} {...selectProps}></Select> */}
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Form.Item label="GSTIN" name="gstin">
+                    <Form.Item label={translateContent('gstIrnTransaction.heading.gstin')} name="gstin">
                         {customSelectBox({ data: gSTINList, fieldNames: { key: 'key', value: 'value' }, loading: isGSTINListLoading, placeholder: preparePlaceholderSelect('GSTIN') })}
                         {/* <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'desc', value: 'key' }} {...selectProps}></Select> */}
                     </Form.Item>

@@ -7,34 +7,34 @@ import React from 'react';
 import { Button, Row, Col } from 'antd';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { ONROAD_PRICE_MASTER_STATUS } from 'constants/OnRoadPriceMasterStatus';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
-export const OnRoadPriceFormButton = ({ record, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save', handleButtonClick, isLoadingOnSave, formData, isLastSection }) => {
+export const OnRoadPriceFormButton = ({ record, onCloseAction, buttonData, setButtonData, saveButtonName = translateContent('global.buttons.save'), handleButtonClick, isLoadingOnSave, formData }) => {
     return (
         <div className={styles.formFooter}>
             <Row gutter={20}>
                 <Col xs={24} sm={8} md={6} lg={4} xl={4} className={styles.buttonsGroupLeft}>
                     {buttonData?.closeBtn && (
                         <Button danger onClick={onCloseAction}>
-                            Close
+                            {translateContent('global.buttons.close')}
                         </Button>
                     )}
                     {buttonData?.cancelBtn && (
                         <Button danger onClick={onCloseAction}>
-                            Cancel
+                            {translateContent('global.buttons.cancel')}
                         </Button>
                     )}
                 </Col>
 
                 <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.buttonsGroupRight}>
-                    {(formData?.status === ONROAD_PRICE_MASTER_STATUS?.ACTIONED?.title && buttonData.editBtn) && (                
-                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
-                        Edit
-                    </Button>                    
-                    )} 
- 
-                   
+                    {formData?.status === ONROAD_PRICE_MASTER_STATUS?.ACTIONED?.title && buttonData.editBtn && (
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
+                            {translateContent('global.buttons.edit')}
+                        </Button>
+                    )}
+
                     {buttonData?.saveBtn && (
                         <Button loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
                             {saveButtonName}

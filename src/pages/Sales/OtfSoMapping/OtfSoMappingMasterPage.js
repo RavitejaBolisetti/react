@@ -7,9 +7,10 @@ import React from 'react';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 import { OtfSoMappingMaster } from 'components/Sales';
+import { translateContent } from 'utils/translateContent';
 
 const OtfSoMappingMasterBase = (props) => {
-    const pageTitle = 'Booking SO Mapping Control Master';
+    const pageTitle = translateContent('bookingSoMapping.heading.pageTitle');
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

@@ -20,6 +20,7 @@ import { CustomerFormButton } from '../../CustomerFormButton';
 import AddEditForm from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -140,7 +141,7 @@ const SupportingDocumentBase = (props) => {
     const deleteFile = (uploadData) => {
         const data = [{ customerId: uploadData?.customerId, status: false, docId: uploadData?.docId, documentTypeId: uploadData?.documentType, id: uploadData?.id, documentName: uploadData?.documentName }];
         const onSuccess = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'File deleted Successfully' });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: 'File deleted Successfully' });
             fetchList({ setIsLoading: listShowLoading, userId, extraParams });
         };
 
@@ -191,7 +192,7 @@ const SupportingDocumentBase = (props) => {
             saveData(requestData);
         } else {
             if (mandatoryFields) {
-                showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please upload at least one file to continue' });
+                showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: 'Please upload at least one file to continue' });
             } else {
                 showGlobalNotification({ notificationType: 'success', title, message });
                 setFileList([]);
@@ -270,7 +271,7 @@ const SupportingDocumentBase = (props) => {
         buttonData: { ...props.buttonData, formBtnActive: true },
     };
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} >
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <h2>{section?.title}</h2>

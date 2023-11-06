@@ -133,7 +133,7 @@ const ContactMain = (props) => {
     }, [customerData, customerIndData]);
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
     };
 
     const onErrorAction = (message) => {
@@ -233,7 +233,7 @@ const ContactMain = (props) => {
 
         const onSuccess = (res) => {
             contactform.resetFields();
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             setButtonData({ ...buttonData, formBtnActive: false });
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
             if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {

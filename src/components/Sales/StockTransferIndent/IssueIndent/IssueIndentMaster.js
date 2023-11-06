@@ -126,7 +126,7 @@ const IssueIndentMasterMain = (props) => {
             resetVinDetails();
             setRefershIndentData(!refershIndentData);
             setRefershData(!refershData);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         };
 
         const onError = (message) => {
@@ -157,7 +157,7 @@ const IssueIndentMasterMain = (props) => {
             resetVinDetails();
             setRefershData(!refershData);
             setRefershIndentData(!refershIndentData);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         };
 
         const onError = (message) => {
@@ -212,14 +212,17 @@ const IssueIndentMasterMain = (props) => {
                                                     <Space size="middle">
                                                         <Space size="small" direction="vertical">
                                                             <div>
-                                                                <Text> {`ST issue Note No. ${element?.issueNumber ? element?.issueNumber : 'NA'} `}</Text>
+                                                                <Text>
+                                                                    {translateContent('stockTransferIndent.isueIndent.label.stIssueNo')} : {element?.issueNumber ? element?.issueNumber : 'NA'}
+                                                                </Text>
                                                                 <Text>|</Text>
                                                                 <Text>
-                                                                    {' '}
                                                                     {translateContent('stockTransferIndent.isueIndent.label.vin')}: {element?.vin ? element?.vin : 'NA'}
                                                                 </Text>
                                                             </div>
-                                                            <Text type="secondary">{`Status: ${typeData[PARAM_MASTER?.ISS_STS?.id]?.find((i) => i?.key === element?.issueStatus)?.value} `}</Text>
+                                                            <Text type="secondary">
+                                                                {translateContent('stockTransferIndent.isueIndent.label.status')} : {typeData[PARAM_MASTER?.ISS_STS?.id]?.find((i) => i?.key === element?.issueStatus)?.value}
+                                                            </Text>
                                                         </Space>
                                                         {handleBtnVisibility({ toggleButton, checkKey: element?.issueStatus, defaultVisibility })?.canPrint && (
                                                             <Button danger icon={<FiDownload />} onClick={() => handlePrintDownload(element)}>

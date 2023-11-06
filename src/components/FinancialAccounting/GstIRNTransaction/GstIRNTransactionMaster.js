@@ -17,6 +17,7 @@ import { AdvancedSearch } from './AdvancedSearch';
 import { gstIRNTransactionActions } from 'store/actions/data/financialAccounting/gstIRNTransactionPending/gstIRNTransaction';
 import { VIEW_ACTION, UPLOAD_ACTION } from 'utils/btnVisiblity';
 import { BASE_URL_GSTIRN_TRANSACTION_GSTIN as customURL, BASE_URL_GSTIRN_TRANSACTION_VIEW_DOC as customURLView } from 'constants/routingApi';
+import { translateContent } from 'utils/translateContent';
 
 import { FilterIcon } from 'Icons';
 
@@ -31,7 +32,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'GST IRN Pending Transaction';
+    const moduleTitle = translateContent('gstIrnTransaction.heading.moduleTitle');
 
     let returnValue = {
         userId,
@@ -78,7 +79,7 @@ export const GstIRNTransactionMain = (props) => {
 
     const onSuccessAction = (res) => {
         setShowDataLoading(false);
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.title'), message: res?.responseMessage });
     };
 
     const onErrorAction = (message) => {
@@ -185,7 +186,7 @@ export const GstIRNTransactionMain = (props) => {
                 break;
             case UPLOAD_ACTION:
                 const onSuccessActionUpload = (res) => {
-                    showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                    showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.title'), message: res?.responseMessage });
                     setRefreshData(true);
                 };
                 uploadDocument({ customURL: customURLView + '?docId=' + record?.id, setIsLoading: setIsGSTINListLoading, userId, onSuccessAction: onSuccessActionUpload, onErrorAction });
@@ -200,7 +201,7 @@ export const GstIRNTransactionMain = (props) => {
         setAdvanceSearchVisible(false);
     };
 
-    const title = 'Search';
+    const title = translateContent('gstIrnTransaction.heading.title');
 
     const removeFilter = (key) => {
         if (key === 'searchParam') {
@@ -267,7 +268,7 @@ export const GstIRNTransactionMain = (props) => {
         isVisible: isAdvanceSearchVisible,
 
         icon: <FilterIcon size={20} />,
-        titleOverride: 'Advance Filters',
+        titleOverride: translateContent('global.advanceFilter.title'),
 
         onCloseAction: onAdvanceSearchCloseAction,
         filterString,

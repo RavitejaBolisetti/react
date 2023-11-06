@@ -10,6 +10,8 @@ import { withModal } from 'components/withModal';
 import { ModalButtons } from 'components/common/Button';
 import styles from 'assets/sass/app.module.scss';
 
+import { translateContent } from 'utils/translateContent';
+
 const { Option } = Select;
 
 export const AdvancedSearchFrom = (props) => {
@@ -37,16 +39,16 @@ export const AdvancedSearchFrom = (props) => {
     const modalProps = {
         reset: true,
         submit: true,
-        resetName: 'Reset',
-        submitName: 'Search',
+        resetName: translateContent('global.buttons.reset'),
+        submitName: translateContent('global.buttons.search'),
         handleResetFilter,
     };
     return (
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Division Name" name="code" initialValue={filterString?.code} rules={[validateRequiredSelectField('Division Name')]}>
-                        <Select showSearch loading={!isDivisionDataLoaded} onChange={handleFilterChange('code')} placeholder="Select" allowClear>
+                    <Form.Item label={translateContent('designationMaster.label.divisionName')} name="code" initialValue={filterString?.code} rules={[validateRequiredSelectField(translateContent('designationMaster.validation.divisionName'))]}>
+                        <Select showSearch loading={!isDivisionDataLoaded} onChange={handleFilterChange('code')} placeholder={translateContent('global.placeholder.select')} allowClear>
                             {divisionData?.map((item) => (
                                 <Option key={item?.key} value={item?.key}>
                                     {item?.value}
@@ -57,8 +59,8 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Department Name" initialValue={filterString?.departmentCode} name="departmentCode">
-                        <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('departmentCode')}>
+                    <Form.Item label={translateContent('designationMaster.label.departmentName')} initialValue={filterString?.departmentCode} name="departmentCode">
+                        <Select placeholder={translateContent('global.placeholder.select')} {...selectProps} onChange={handleFilterChange('departmentCode')}>
                             {filteredDepartmentData?.map((item) => (
                                 <Option key={item?.key} value={item?.key}>
                                     {item?.value}
@@ -71,8 +73,8 @@ export const AdvancedSearchFrom = (props) => {
 
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Role Name" initialValue={filterString?.roleCode} name="roleCode">
-                        <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('roleCode')}>
+                    <Form.Item label={translateContent('designationMaster.label.roleName')} initialValue={filterString?.roleCode} name="roleCode">
+                        <Select placeholder={translateContent('global.placeholder.select')} {...selectProps} onChange={handleFilterChange('roleCode')}>
                             {filteredRoleData?.map((item) => (
                                 <Option key={item?.key} value={item?.key}>
                                     {item?.value}
@@ -82,8 +84,8 @@ export const AdvancedSearchFrom = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Designation Name" initialValue={filterString?.keyword} name="keyword" rules={[{ validator: searchValidator }]}>
-                        <Input placeholder="Search" allowClear />
+                    <Form.Item label={translateContent('designationMaster.label.designationName')} initialValue={filterString?.keyword} name="keyword" rules={[{ validator: searchValidator }]}>
+                        <Input placeholder={translateContent('global.placeholder.search')} allowClear />
                     </Form.Item>
                 </Col>
             </Row>

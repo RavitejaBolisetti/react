@@ -7,8 +7,10 @@ import React from 'react';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 import { HoPriceMappingMaster } from 'components/Sales';
+import { translateContent } from 'utils/translateContent';
+
 const HoPriceMappingMasterBase = (props) => {
-    const pageTitle = 'HO Price Upload Mapping for Dealer';
+    const pageTitle = translateContent('vinBlockMaster.heading.pageTitle');
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,
