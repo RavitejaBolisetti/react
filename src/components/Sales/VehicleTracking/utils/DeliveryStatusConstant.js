@@ -1,3 +1,5 @@
+import { translateContent } from "utils/translateContent";
+
 /*
  *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
@@ -6,22 +8,22 @@
 export const DELIVERY_STATUS_CONSTANT = {
     DISPATCHED: {
         id: 1,
-        title: 'Dispatched',
+        title: translateContent('vehicleTracking.title.dispatched'),
         key: 'Dispatched',
     },
     INTRANSIT: {
         id: 2,
-        title: 'In Transit',
+        title: translateContent('vehicleTracking.title.inTransit'),
         key: 'InTransit',
     },
     DELIVERED: {
         id: 3,
-        title: 'Delivered',
+        title: translateContent('vehicleTracking.title.delivered'),
         key: 'Delivered',
     },
     RECEIVED: {
         id: 4,
-        title: 'Received',
+        title: translateContent('vehicleTracking.title.received'),
         key: 'Received',
     },
 };

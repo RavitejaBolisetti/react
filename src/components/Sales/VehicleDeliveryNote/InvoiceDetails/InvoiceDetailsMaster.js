@@ -12,7 +12,7 @@ import { relationshipManagerDataActions } from 'store/actions/data/vehicleDelive
 import { vinNumberNoteDataActions } from 'store/actions/data/vehicleDeliveryNote/challanVinNumber';
 import { vehicleChallanDetailsDataActions } from 'store/actions/data/vehicleDeliveryNote/vehicleChallanDetails';
 import { showGlobalNotification } from 'store/actions/notification';
-import { formattedCalendarDate, convertDate } from 'utils/formatDateTime';
+import { convertDate } from 'utils/formatDateTime';
 import { RELATIONSHIP_MANAGER_CONSTANTS } from 'components/Sales/VehicleDeliveryNote/constants/relationShipMangerCodeConstants';
 
 import { VehicleDeliveryNoteFormButton } from '../VehicleDeliveryNoteFormButton';

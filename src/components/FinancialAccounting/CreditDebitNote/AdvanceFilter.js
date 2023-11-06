@@ -12,6 +12,7 @@ import styles from 'assets/sass/app.module.scss';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { SearchBox } from 'components/utils/SearchBox';
 import { RxCross2 } from 'react-icons/rx';
+import { translateContent } from 'utils/translateContent';
 
 export default function AdvanceFilter(props) {
     const { handleButtonClick, extraParams, handleResetFilter, advanceFilter = false, otfFilter = false, title, filterString, setFilterString, setAdvanceSearchVisible, searchForm, removeFilter } = props;
@@ -36,7 +37,7 @@ export default function AdvanceFilter(props) {
         searchForm,
         filterString,
         setFilterString,
-        placeholder: 'Search By Voucher Number',
+        placeholder: translateContent('creditDebitNote.placeholder.voucherNumber'),
         label: title,
         handleSearchWithoutParameter,
     };
@@ -61,7 +62,7 @@ export default function AdvanceFilter(props) {
                                         setAdvanceSearchVisible(true);
                                     }}
                                 >
-                                    Advanced Filters
+                                    {translateContent('global.advanceFilter.title')}
                                 </Button>
                             </Col>
                         )}
@@ -69,10 +70,10 @@ export default function AdvanceFilter(props) {
                 </Col>
                 <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.buttonsGroupRight}>
                     <Button type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD, transactionType: 'credit' })}>
-                        Add Credit Note
+                        {translateContent('global.buttons.addCreditNote')}
                     </Button>
                     <Button type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD, transactionType: 'debit' })}>
-                        Add Debit Note
+                        {translateContent('global.buttons.addDebitNote')}
                     </Button>
                 </Col>
             </Row>
@@ -81,7 +82,7 @@ export default function AdvanceFilter(props) {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={22} xl={22} className={styles.advanceFilterContainer}>
-                                <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
+                                <div className={styles.advanceFilterTitle}>{translateContent('global.advanceFilter.appliedAdvanceFilter')} : </div>
 
                                 {extraParams?.map((filter) => {
                                     return (
@@ -101,7 +102,7 @@ export default function AdvanceFilter(props) {
                             </Col>
                             <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
                                 <Button className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
-                                    Clear
+                                    {translateContent('global.buttons.clear')}
                                 </Button>
                             </Col>
                         </Row>
