@@ -6,11 +6,11 @@
     },
     "login": {
         "heading": {
-            "Dealer Management System": "Dealer Management System",
-            "Welcome": "Welcome",
-            "Please enter your credentials to login": "Please enter your credentials to login",
-            "forgot_password": "Forgot Password?",
-            "unauthorized_access": "Unauthorized Access"
+            "mainTitle": "Dealer Management System",
+            "welcomeNote": "Welcome",
+            "loginText": "Please enter your credentials to login",
+            "forgotPassword": "Forgot Password?",
+            "unauthorizedAccess": "Unauthorized Access"
         },
         "label": {
             "username": "User ID (MILE ID.Parent ID)",
@@ -21,16 +21,16 @@
             "password": "Password"
         },
         "validation": {
-            "google_captcha": "Please select Captcha"
+            "googleCaptcha": "Please select Captcha"
         },
         "button": {
             "login": "Login",
-            "skip_for_now": "Skip For Now",
-            "update_password": "Update Password",
+            "skipForNow": "Skip For Now",
+            "updatePassword": "Update Password",
             "continue": "Continue"
         },
         "link": {
-            "mnm_login": "M&M User Login"
+            "mnmLogin": "M&M User Login"
         }
     },
     "footer": {

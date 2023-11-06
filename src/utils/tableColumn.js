@@ -14,7 +14,7 @@ import { tableColumnActions } from './tableColumnActions';
 import { DEFAULT_PAGE_SIZE } from 'constants/constants';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { DisableItemComponent } from 'utils/disableItemComponent';
-import { GST_IRN_STATUS } from 'constants/GSTIRNStatus';
+import { GST_IRN_TRANSACTION_STATUS } from 'components/FinancialAccounting/GstIRNTransaction/GstIRNStatus';
 import { PlusOutlined } from '@ant-design/icons';
 
 import styles from './tableColumn.module.scss';
@@ -30,7 +30,7 @@ const onFilterFn = (value, record) => {
 };
 
 export const tblPrepareColumns = ({ title, dataIndex, localSort = true, render = undefined, ellipsis = false, filters = undefined, filterMode = 'tree', filterSearch = true, sortFn = undefined, width, sorter = true }) => {
-    const sortingFn = (a, b) => (a && b ? String(a[dataIndex]).localeCompare(String(b[dataIndex]), undefined, {numeric: true, sensitivity: 'base' }) : a);
+    const sortingFn = (a, b) => (a && b ? String(a[dataIndex]).localeCompare(String(b[dataIndex]), undefined, { numeric: true, sensitivity: 'base' }) : a);
     return {
         title,
         dataIndex,
@@ -149,9 +149,9 @@ export const tblActionColumn = ({
                     </Button>
                 )}
 
-                {canUpload && record?.irnStatus !== GST_IRN_STATUS.SUCCESS.title && (
+                {canUpload && record?.irnStatus !== GST_IRN_TRANSACTION_STATUS.SUCCESS.title && (
                     <Button data-testid="upload" type="link" aria-label="fa-upload" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.UPLOAD, record, index })}>
-                        {addToolTip('Upload')(<FiUpload />)}
+                        {record?.irnStatus === GST_IRN_TRANSACTION_STATUS.PENDING.title ? addToolTip('Generate IRN')(<FiUpload />) : addToolTip('Re-Generate IRN')(<FiUpload />)}
                     </Button>
                 )}
 
@@ -161,7 +161,7 @@ export const tblActionColumn = ({
                     </Button>
                 )}
 
-                {( isDeletable || (canDelete && !record?.id)) && (
+                {(isDeletable || (canDelete && !record?.id)) && (
                     <Button data-testid="delete" type="link" aria-label="fa-trash" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.DELETE, record, index })}>
                         {addToolTip('Delete')(<RxCross1 size={18} />)}
                     </Button>
