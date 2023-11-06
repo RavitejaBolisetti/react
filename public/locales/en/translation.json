@@ -239,6 +239,46 @@
         }
     },
 
+    "roleMaster": {
+        "heading": {
+            "title":"Role Name",
+            "pageTitle": "Dealer Role Master",
+            "titleOverride":"Advance Filters"
+        },
+
+        "tableColHeading": {
+            "roleCode":"Role Code",
+            "roleName":"Role Name",
+            "departmentName":"Department Name",
+            "divisionName":"Division Name"        
+        },
+
+        "label": {
+            "divisionName":"Division Name",
+            "departmentName":"Department Name",
+            "roleName":"Role Name",
+            "roleCode":"Role Code",
+            "status":"Status"  
+        },
+
+        "validation": {
+            "divisionName":"Division Name",
+            "departmentName":"department name",
+            "roleName":"role Name",
+            "roleCode":"role code",
+            "division":"Division"   
+        },
+
+        "placeholder": {
+            "divisionName":"division name",
+            "departmentName":"department name",
+            "select":"Select",
+            "roleName":"role Name",
+            "roleCode":"role code",
+            "search":"Search"      
+        }
+    },
+
 
     "vehicleModelAndTaxCharges": {
         "heading": {
