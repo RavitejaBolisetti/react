@@ -17,6 +17,7 @@ import { DATA_TYPE } from 'constants/dataType';
 import { taxDetailsColumn, optionalServicesColumns } from './tableColumn';
 import { getCodeValue } from 'utils/getCodeValue';
 import { prepareCaption } from 'utils/prepareCaption';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 const ViewDetailMain = (props) => {
@@ -56,14 +57,14 @@ const ViewDetailMain = (props) => {
                                 <Descriptions.Item label="VIN">{checkAndSetDefaultValue(formData?.vinNumber, isLoading)}</Descriptions.Item>
                             </Descriptions>
 
-                            <Descriptions {...viewProps} title={prepareCaption('Price Information')}>
+                            <Descriptions {...viewProps} title={prepareCaption(translateContent('vehicleInvoiceGeneration.heading.captions.priceInformation'))}>
                                 <Descriptions.Item label="Sale Type">{checkAndSetDefaultValue(getCodeValue(typeData?.SALE_TYPE, formData?.saleType), isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Price Type">{checkAndSetDefaultValue(getCodeValue(typeData?.PRC_TYP, formData?.priceType), isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Vehicle Selling Price">{checkAndSetDefaultValue(formData?.vehicleSellingPrice, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Vehicle Amount">{checkAndSetDefaultValue(formData?.vehicleAmount, isLoading)}</Descriptions.Item>
                             </Descriptions>
 
-                            <Descriptions {...viewProps} title={prepareCaption('Benefits')}>
+                            <Descriptions {...viewProps} title={prepareCaption(translateContent('vehicleInvoiceGeneration.heading.captions.benefit'))}>
                                 <Descriptions.Item label="Dealer Discount with TAX">{checkAndSetDefaultValue(formData?.discountAmount, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Consumer Scheme with TAX">{checkAndSetDefaultValue(formData?.taxAmount, isLoading)}</Descriptions.Item>
                                 {showPrintDiscount && <Descriptions.Item label="Print Discount">{formData?.printDiscount === 'Y' ? 'Yes' : 'No'}</Descriptions.Item>}

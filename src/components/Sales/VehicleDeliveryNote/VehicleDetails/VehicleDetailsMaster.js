@@ -18,6 +18,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -29,7 +30,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Vehicle Details';
+    const moduleTitle = translateContent('vehicleDeliveryNote.vehicleDetails.heading.mainTitle');
 
     let returnValue = {
         userId,
@@ -72,19 +73,19 @@ const VehicleDetailsMasterBase = (props) => {
         setToolTipContent(
             <div>
                 <p>
-                    Color - <span>{formData?.modelColor ?? 'Na'}</span>
+                    {translateContent('vehicleDeliveryNote.vehicleDetails.label.color')} - <span>{formData?.modelColor ?? 'Na'}</span>
                 </p>
                 <p>
-                    Seating - <span>{formData?.seatingCapacity ?? 'Na'}</span>
+                    {translateContent('vehicleDeliveryNote.vehicleDetails.label.seating')} - <span>{formData?.seatingCapacity ?? 'Na'}</span>
                 </p>
                 <p>
-                    Fuel - <span>{formData?.fuel ?? 'Na'}</span>
+                    {translateContent('vehicleDeliveryNote.vehicleDetails.label.fuel')} - <span>{formData?.fuel ?? 'Na'}</span>
                 </p>
                 <p>
-                    Variant - <span>{formData?.varient ?? 'Na'}</span>
+                    {translateContent('vehicleDeliveryNote.vehicleDetails.label.variant')} - <span>{formData?.varient ?? 'Na'}</span>
                 </p>
                 <p>
-                    Name - <span>{formData?.modelDescription ?? 'Na'}</span>
+                    {translateContent('vehicleDeliveryNote.vehicleDetails.label.name')} - <span>{formData?.modelDescription ?? 'Na'}</span>
                 </p>
             </div>
         );

@@ -9,6 +9,7 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
 
 import { expandIcon } from 'utils/accordianExpandIcon';
+import { translateContent } from 'utils/translateContent';
 
 const { TextArea } = Input;
 const { Panel } = Collapse;
@@ -44,36 +45,36 @@ const AddEditFormMain = (props) => {
                                 <Divider />
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={schemeForm?.schemeType} label="Scheme Type" name="schemeType">
+                                        <Form.Item initialValue={schemeForm?.schemeType} label={translateContent('commonModules.label.schemeAndOfferDetails.schemeType')} name="schemeType">
                                             <Select placeholder={preparePlaceholderSelect('Scheme Type')} {...disabledProps}></Select>
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={schemeForm?.schemeCategory} label="Scheme Category" name="schemeCategory">
+                                        <Form.Item initialValue={schemeForm?.schemeCategory} label={translateContent('commonModules.label.schemeAndOfferDetails.schemeCategory')} name="schemeCategory">
                                             <Input placeholder={preparePlaceholderText('Scheme Category')} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={schemeForm?.amount} label="Amount" name="amount">
+                                        <Form.Item initialValue={schemeForm?.amount} label={translateContent('commonModules.label.schemeAndOfferDetails.Amount')} name="amount">
                                             <Input placeholder={preparePlaceholderText('Amount')} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={formattedCalendarDate(schemeForm?.validFrom)} label="Valid From" name="validFrom">
+                                        <Form.Item initialValue={formattedCalendarDate(schemeForm?.validFrom)} label={translateContent('commonModules.label.schemeAndOfferDetails.validFrom')} name="validFrom">
                                             <DatePicker format={dateFormat} placeholder={preparePlaceholderText('Valid From')} onChange={onChange} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={formattedCalendarDate(schemeForm?.validTo)} label="Valid To" name="validTo">
+                                        <Form.Item initialValue={formattedCalendarDate(schemeForm?.validTo)} label={translateContent('commonModules.label.schemeAndOfferDetails.validTo')} name="validTo">
                                             <DatePicker format={dateFormat} placeholder={preparePlaceholderText('Valid To')} onChange={onChange} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item initialValue={schemeForm?.description} label="Description" name="description">
+                                        <Form.Item initialValue={schemeForm?.description} label={translateContent('commonModules.label.schemeAndOfferDetails.description')} name="description">
                                             <TextArea maxLength={300} placeholder={preparePlaceholderText('Description')} {...disabledProps} showCount />
                                         </Form.Item>
                                     </Col>
@@ -83,7 +84,7 @@ const AddEditFormMain = (props) => {
                     ))
                 ) : (
                     <Card>
-                        <div className={styles?.marB20}>No Scheme and Offer Details Available</div>
+                        <div className={styles?.marB20}>{translateContent('commonModules.label.schemeAndOfferDetails.noScheme')}</div>
                     </Card>
                 )}
             </Col>
