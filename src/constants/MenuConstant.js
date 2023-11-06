@@ -523,6 +523,22 @@ export const MenuConstant = {
         slug: 'vehicle-delivery-note-report',
     },
 
+    [getMenyKey('SACR-05.06')]: {
+        key: 'SACR-05.06',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'SACR-02.05',
+        slug: 'co-dealer-invoice-report',
+    },
+
+    [getMenyKey('SACR-03.01')]: {
+        key: 'SACR-03.01',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'SACT-03',
+        slug: 'on-road-price-detail-summary-Report',
+    },
+
     [getMenyKey('RPT-DLRNOTE')]: {
         key: 'RPT-DLRNOTE',
         link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
@@ -621,7 +637,6 @@ export const MenuConstant = {
         icon: undefined,
         parentMenuId: 'SACT-03',
     },
-    
 
     [getMenyKey('SACT-04.02')]: {
         key: 'SACT-04.02',
@@ -650,5 +665,4 @@ export const MenuConstant = {
         icon: undefined,
         parentMenuId: 'Sales',
     },
-    
 };
