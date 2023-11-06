@@ -67,7 +67,8 @@
             "submit": "Submit",
             "continue": "Continue",
             "addChild": " Add Child",
-            "addSibling": " Add Sibling"
+            "addSibling": " Add Sibling",
+            "exportCoa":"Export COA"   
         },
         "placeholder": {
             "input": "Enter ",
@@ -204,6 +205,51 @@
             "emailId": "Email ID"
         }
     },
+
+
+    "chartOfAccount": {
+        "heading": {
+            "title": "Financial Company",
+            "viewTitle": "Chart of Account Hierarchy",
+            "moduleTitle":"Chart of Account Hierarchy",
+            "exportCoa":"Export COA"
+        },
+
+        "label": {
+            "attributeLevel":"Attribute Level",
+            "parent":"Parent",
+            "code":"Code",
+            "description":"Description",
+            "openingBalanceCredit":"Opening Balance Credit",
+            "openingBalanceDebit":"Opening Balance Debit",
+            "status":"Status",
+            "openingBalanceCr":"Opening Balance Cr.",
+            "openingBalanceDr":"Opening Balance Dr",
+            "fromDate":"From Date",
+            "toDate":"To Date"
+        },
+
+        "validation": {
+            "attributeLevel":"Attribute Level",
+            "code":"Code",
+            "accountDescription":"Account description",
+            "openingBalanceCredit":"Opening Balance Credit",
+            "openingBalanceDebit":"Opening Balance Debit"
+
+        },
+
+        "placeholder": {
+            "attributeLevel":"Attribute Level",
+            "code":"Code",
+            "accountdDescription":"Account description",
+            "openingBalanceCredit":"Opening Balance Credit",
+            "openingBalanceDebit":"Opening Balance Debit",
+            "fromDate":"From Date",
+            "toDate":"To Date",
+            "search":"Search"
+        }      
+    },
+
 
     "qualificationMaster": {
         "heading": {
