@@ -2515,39 +2515,9 @@
         },
         "customerDetails": {
             "heading": {
-                "mainTitle": "Customer Details"
+                "mainTitle": "Insurance Details"
             },
-            "label": {
-                "customerId": "Customer ID",
-                "customerType": "Customer Type",
-                "customerName": "Customer Name",
-                "customerPhoneNumber": "Mobile",
-                "customerAddress": "Address",
-                "customerCity": "City",
-                "district": "District",
-                "state": "State",
-                "pinCode": "Pincode",
-                "email": "Email ID"
-            }
-        },
-        "vehicleDetails": {
-            "heading": {
-                "mainTitle": "Vehicle Details",
-                "vehicleInfo": "Vehicle Information",
-                "batteryDetails": "Battery Details"
-            },
-            "label": {
-                "color": "Color",
-                "seating": "Seating",
-                "fuel": "Fuel",
-                "variant": "Variant",
-                "name": "Name",
-                "vinNumber": "VIN",
-                "engineNumber": "Engine Number",
-                "keyNumber": "Key Number",
-                "modelCode": "Model Code",
-                "modelDescription": "Model Description"
-            }
+            "label": {}
         },
 
         "addOnDetails": {
@@ -2883,6 +2853,24 @@
                 "cpd": "CPD"
             }
         }
+    },
+    "employeeDepartment": {
+        "heading": {
+            "pageTitle": "Empolyee Department",
+            "mainTitle": "Department Name"
+        },
+        "label": {
+            "department": "Department",
+            "division": "Division",
+            "Keyword": "Keyword",
+            "divisionName": "Division Name",
+            "departmentCode": "Department Code",
+            "departmentName": "Department Name"
+        },
+        "placeholder": {},
+        "validation": {},
+        "button": {},
+        "link": {}
     },
     "vehicleTracking": {
         "text": {

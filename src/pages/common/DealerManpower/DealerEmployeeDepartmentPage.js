@@ -7,11 +7,12 @@ import React from 'react';
 import { ListEmployeeDepartmentMaster } from 'components/common/DealerManpower/DealerEmployeeDepartmentMaster/ListEmployeeDepartmentMaster';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
+import { translateContent } from 'utils/translateContent';
 
 export const DealerEmployeeDepartmentPageBase = (props) => {
-    const pageTitle = 'Empolyee Department';
+
     const pageHeaderData = {
-        pageTitle,
+        pageTitle: translateContent('employeeDepartment.heading.pageTitle'),
         canMarkFavourite: true,
         showChangeHisoty: true,
         visibleChangeHistory: false,
