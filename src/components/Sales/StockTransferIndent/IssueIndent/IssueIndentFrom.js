@@ -17,8 +17,8 @@ const IssueIndentFromMain = ({ issueForm, onFinish, handleVinSearch, isReadonly 
     const modalProps = {
         reset: true,
         submit: true,
-        resetName:  translateContent('global.buttons.cancel'),
-        submitName:  translateContent('global.buttons.submit'),
+        resetName: translateContent('global.buttons.cancel'),
+        submitName: translateContent('global.buttons.submit'),
         handleResetFilter: onCloseAction,
     };
     const disabledProps = { disabled: isReadonly };
@@ -37,7 +37,7 @@ const IssueIndentFromMain = ({ issueForm, onFinish, handleVinSearch, isReadonly 
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                        <Form.Item name="vin" label={translateContent('stockTransferIndent.isueIndent.label.vin')} rules={[validateRequiredInputField('VIN'), validationFieldLetterAndNumber('VIN')]}>
+                        <Form.Item name="vin" label={translateContent('stockTransferIndent.isueIndent.label.vin')} rules={[validateRequiredInputField(translateContent('stockTransferIndent.isueIndent.validation.vin')), validationFieldLetterAndNumber(translateContent('stockTransferIndent.isueIndent.validation.vin'))]}>
                             <Search loading={vehicleVinDataLoading} placeholder={translateContent('stockTransferIndent.isueIndent.label.vin')} onSearch={handleVinSearch} onChange={handleDependentReset} maxLength={50} />
                         </Form.Item>
                     </Col>
@@ -71,7 +71,7 @@ const IssueIndentFromMain = ({ issueForm, onFinish, handleVinSearch, isReadonly 
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                        <Form.Item name="issueCharges" label={translateContent('stockTransferIndent.isueIndent.label.issueCharge')} rules={[validateRequiredInputField('issue charges'), validateNumberWithTwoDecimalPlaces('issue charges'), { validator: (_, value) => isIssuePriceValid(value, issueForm.getFieldValue('netDealerPrice')) }]}>
+                        <Form.Item name="issueCharges" label={translateContent('stockTransferIndent.isueIndent.label.issueCharge')} rules={[validateRequiredInputField(translateContent('stockTransferIndent.isueIndent.validation.issueCharges')), validateNumberWithTwoDecimalPlaces(translateContent('stockTransferIndent.isueIndent.validation.issueCharges')), { validator: (_, value) => isIssuePriceValid(value, issueForm.getFieldValue('netDealerPrice')) }]}>
                             <Input placeholder={translateContent('stockTransferIndent.isueIndent.label.issueCharge')} maxLength={50} />
                         </Form.Item>
                     </Col>

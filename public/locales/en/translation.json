@@ -1212,18 +1212,31 @@
                 "grnDate": "GRN Date",
                 "grnNo": "GRN No",
                 "issueCharge": "Issue Charge",
-                "netDealerPrice": "Net Dealer Price"
+                "netDealerPrice": "Net Dealer Price",
+                "status": "Status"
             },
             "validation": {
-                "vin": "vin"
+                "vin": "vin",
+                "issueCharges": "Issue Charges"
             },
             "viewDetails": {
                 "label": {
+                    "stIssueNo": "ST issue Note No.",
+                    "stIssueNoteDate": "ST issue Note Date",
+                    "stIssueNoteStatus": "ST issue Note Status",
+                    "modelDescription": "Model Description",
+                    "vin": "VIN",
+                    "engineNumber": "Engine Number",
+                    "oemInvoiceDate": "Oem Invoice Date",
+                    "oemInvoiceNumber": "Oem Invoice Number",
+                    "grnDate": "GRN Date",
+                    "grnNo": "GRN No",
+                    "issueCharge": "Issue Charge",
+                    "netDealerPrice": "Net Dealer Price",
                     "indentNumber": "Indent Number",
                     "indentDate": "Indent Date",
                     "indentToLocation": "Indent To Location",
                     "indentStatus": "Indent Status",
-                    "modelDescription": "Model Description",                   
                     "modelCode": "Model Code",
                     "requestedQuantity": "Requested Quantity",
                     "cancelledQuantity": "Cancelled Quantity",
@@ -1699,35 +1712,34 @@
             "codeValidation": "code"
         }
     },
-    "manufacturerOrganisation":{
-        "heading":{
+    "manufacturerOrganisation": {
+        "heading": {
             "mainTitle": "Manufacturer Organisation Detail",
             "viewTitle": "Manufacturer Details",
             "title": "Hierarchy"
         },
-        "label":{
+        "label": {
             "changedDate": "Changed Date",
             "changedBy": "Changed By",
             "attribute": "Attribute",
             "code": "Code",
-            "parent" : "Parent",
+            "parent": "Parent",
             "shortDescription": "Short Description",
-            "longDescription" : "Long Description",
+            "longDescription": "Long Description",
             "childAllowed": "Child Allowed?",
             "description": "Please select product from leftside hierarchy to view 'Hierarchy Details' ",
             "attributeType": "Attribute Type",
             "hierarchyCode": "Hierarchy Code",
-            "attributeLevel":"Attribute Level"
-
+            "attributeLevel": "Attribute Level"
         },
-        "placeholder":{
+        "placeholder": {
             "name": "name",
             "code": "code",
             "parent": "Parent",
             "attributeTypeCode": "attribute type code",
             "attributeCode": "attribute code"
         },
-        "validation":{
+        "validation": {
             "nameValidation": "name",
             "codeValidation": "code",
             "attributeLevel": "attribute level",
@@ -1736,8 +1748,8 @@
             "attributeHierarchyFieldValidation": "is not active anymore. Please select a different attribute."
         }
     },
-    "manufacturerAdmin":{
-        "heading":{
+    "manufacturerAdmin": {
+        "heading": {
             "mainTitle": "Manufacturer Detail",
             "viewTitle": "Manufacturer Details",
             "drawerTitle": "Upload Authority Details",
@@ -1745,20 +1757,20 @@
             "changeHistoryTitle": "Admin Change History",
             "authorityChangeHistoryTitle": "Authority Change History"
         },
-        "label":{
+        "label": {
             "changedDate": "Changed/Modified Date",
             "changedBy": "Changed By",
             "attribute": "Attribute",
             "code": "Code",
-            "parent" : "Parent",
+            "parent": "Parent",
             "shortDescription": "Short Description",
-            "longDescription" : "Long Description",
+            "longDescription": "Long Description",
             "childAllowed": "Child Allowed?",
             "description": "Please select product from leftside hierarchy to view 'Hierarchy Details' ",
             "attributeType": "Attribute Type",
             "hierarchyCode": "Hierarchy Code",
-            "attributeLevel":"Attribute Level",
-            "attributeCode":"Attribute Code",
+            "attributeLevel": "Attribute Level",
+            "attributeCode": "Attribute Code",
             "authorityTypeCode": "Authority Type Code",
             "employeeName": "Employee Name",
             "employeeTokenNo": "Employee Token No.",
@@ -1771,17 +1783,16 @@
             "messageText": "Click or drop your file here to upload",
             "downloadHere": "Download Here",
             "selectOrganization": "Please Select Organization from dropdown"
-
         },
-        "placeholder":{
+        "placeholder": {
             "name": "name",
             "code": "code",
             "parent": "Parent",
             "attributeTypeCode": "attribute type code",
             "attributeCode": "attribute code",
-            "organizationHierarchy":"Organization Hierarchy"
+            "organizationHierarchy": "Organization Hierarchy"
         },
-        "validation":{
+        "validation": {
             "nameValidation": "name",
             "codeValidation": "code",
             "attributeLevel": "attribute level",
