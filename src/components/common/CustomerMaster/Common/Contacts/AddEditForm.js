@@ -152,7 +152,7 @@ const AddEditForm = (props) => {
 
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item initialValue={false} valuePropName="checked" name="defaultContactIndicator">
-                            <Checkbox>Mark As Default</Checkbox>
+                            <Checkbox>{translateContent('customerMaster.label.mark')}</Checkbox>
                         </Form.Item>
                     </Col>
                     <Form.Item hidden initialValue={''} name="id">
@@ -172,10 +172,10 @@ const AddEditForm = (props) => {
                     <Row gutter={20} className={styles.marB20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.buttonsGroupLeft}>
                             <Button onClick={onSaveFormData} type="primary">
-                                Save
+                                {translateContent('global.buttons.save')}
                             </Button>
                             <Button onClick={handleCancelFormEdit} danger>
-                                Cancel
+                                {translateContent('global.buttons.cancel')}
                             </Button>
                         </Col>
                     </Row>

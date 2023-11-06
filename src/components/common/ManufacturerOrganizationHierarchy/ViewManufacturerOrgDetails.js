@@ -6,6 +6,7 @@
 import React from 'react';
 import { Descriptions } from 'antd';
 import { HIERARCHY_DEFAULT_PARENT } from 'constants/constants';
+import { translateContent } from 'utils/translateContent';
 
 export const ViewManufacturerOrgtDetailMain = ({ viewTitle, selectedTreeData, styles }) => {
     const viewOneColProps = {
@@ -20,12 +21,12 @@ export const ViewManufacturerOrgtDetailMain = ({ viewTitle, selectedTreeData, st
         <>
             <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
-                    <Descriptions.Item label="Attribute Level">{selectedTreeData?.hierarchyAttribueName}</Descriptions.Item>
-                    <Descriptions.Item label="Parent">{selectedTreeData?.parentName || HIERARCHY_DEFAULT_PARENT}</Descriptions.Item>
-                    <Descriptions.Item label="Code">{selectedTreeData?.manufactureOrgCode}</Descriptions.Item>
-                    <Descriptions.Item label="Short Description">{selectedTreeData?.manufactureOrgShrtName}</Descriptions.Item>
-                    <Descriptions.Item label="Long Description">{selectedTreeData?.manufactureOrgLongName}</Descriptions.Item>
-                    <Descriptions.Item label="Status">{selectedTreeData?.active === true ? 'Active' : 'InActive'}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('manufacturerOrganisation.label.attributeLevel')}>{selectedTreeData?.hierarchyAttribueName}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('manufacturerOrganisation.label.parent')}>{selectedTreeData?.parentName || HIERARCHY_DEFAULT_PARENT}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('manufacturerOrganisation.label.code')}>{selectedTreeData?.manufactureOrgCode}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('manufacturerOrganisation.label.shortDescription')}>{selectedTreeData?.manufactureOrgShrtName}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('manufacturerOrganisation.label.longDescription')}>{selectedTreeData?.manufactureOrgLongName}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('global.label.status')}>{selectedTreeData?.active === true ? translateContent('global.label.active') : translateContent('global.label.inActive')}</Descriptions.Item>
                 </Descriptions>
             </div>
         </>

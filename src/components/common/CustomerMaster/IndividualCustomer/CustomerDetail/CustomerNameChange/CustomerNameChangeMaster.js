@@ -294,7 +294,7 @@ const CustomerNameChangeMasterBase = (props) => {
                     </div>
                     {canEdit && (
                         <Button className={`${styles.marL20} ${styles.verticallyCentered}`} disabled={changeNameAllowed} type="link" icon={<FiEdit />} onClick={onEdit(currentKey)}>
-                            Edit
+                            {translateContent('global.buttons.edit')}
                         </Button>
                     )}
                 </Typography>

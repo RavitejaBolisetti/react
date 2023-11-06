@@ -230,7 +230,7 @@ const AddEditForm = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Form.Item valuePropName="checked" name="deafultAddressIndicator" initialValue={false}>
-                            <Checkbox>Mark As Default</Checkbox>
+                            <Checkbox>{translateContent('customerMaster.label.mark')}</Checkbox>
                         </Form.Item>
                     </Col>
                 </Row>
@@ -238,10 +238,10 @@ const AddEditForm = (props) => {
                     <Row gutter={20} className={styles.marB20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.buttonsGroupLeft}>
                             <Button onClick={handleSave} type="primary">
-                                Save
+                                {translateContent('global.buttons.save')}
                             </Button>
                             <Button onClick={handleCancelFormEdit} danger>
-                                Cancel
+                                {translateContent('global.buttons.cancel')}
                             </Button>
                         </Col>
                     </Row>

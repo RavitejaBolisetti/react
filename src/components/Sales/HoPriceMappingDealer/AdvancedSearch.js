@@ -88,13 +88,13 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
                     <Button onClick={handleResetFilter} danger>
-                        {translateContent('hoPriceMapping.button.reset')}
+                        {translateContent('global.buttons.reset')}
                     </Button>
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
                     <Button htmlType="submit" type="primary">
-                        {translateContent('hoPriceMapping.button.apply')}
+                        {translateContent('global.buttons.apply')}
                     </Button>
                 </Col>
             </Row>

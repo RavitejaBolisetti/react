@@ -119,10 +119,10 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className={`${styles.buttonsGroup} ${styles.marB20}`}>
                             <Button type="primary" form="myNameForm" onClick={onHandleSave}>
-                                Save
+                                {translateContent('global.buttons.save')}
                             </Button>
                             <Button onClick={() => handleCollapse(formType)} danger>
-                                Cancel
+                                {translateContent('global.buttons.cancel')}
                             </Button>
                         </Col>
                     </Row>

@@ -27,7 +27,8 @@
         "label": {
             "active": "Active",
             "inActive": "InActive",
-            "status": "Status"
+            "status": "Status",
+            "action": "Action"
         },
         "advanceFilter": {
             "title": "Advance Filters",
@@ -62,7 +63,12 @@
             "upload": "Upload",
             "reset": "Reset",
             "search": "search",
-            "apply": "Apply"
+            "addIndent": "Add Indent",
+            "apply": "Apply",
+            "submit": "Submit",
+            "continue": "Continue",
+            "addChild": " Add Child",
+            "addSibling": " Add Sibling"
         },
         "placeholder": {
             "input": "Enter ",
@@ -466,7 +472,8 @@
             "labour": "Labour Discount",
             "documentType": "Document Type",
             "fileName": "File Name",
-            "lastName": "Last Name"
+            "lastName": "Last Name",
+            "mark": "Mark As Default"
         },
         "placeholder": {
             "mobileMumber": "mobile number",
@@ -561,10 +568,8 @@
             "fileName": "file name"
         },
         "button": {
-            "login": "Login",
-            "skipForNow": "Skip For Now",
-            "updatePassword": "Update Password",
-            "continue": "Continue"
+            "viewHistory": "View History",
+            "uploadFile": "Upload File"
         },
         "link": {
             "mnmLogin": "M&M User Login"
@@ -591,6 +596,9 @@
             "name": "name",
             "startTime": "Start time*",
             "endTime": "End time*"
+        },
+        "button": {
+            "addTime": "Add Time"
         }
     },
     "productHierarchy": {
@@ -599,7 +607,8 @@
             "hierarchyDetails": "Hierarchy Details",
             "pageTitle": "Product Hierarchy",
             "title": "Hierarchy",
-            "productAttribute": "Product Attribute"
+            "productAttribute": "Product Attribute",
+            "panelHeader": "Product Atrribute Details"
         },
         "placeholder": {
             "organizationHierarchy": "Organization Hierarchy",
@@ -664,6 +673,35 @@
         "placeholder": {
             "taxType": "Tax Type",
             "taxCode": "Tax Code"
+        }
+    },
+    "taxCharges": {
+        "heading": {
+            "moduleTitle": "Tax & Charges Detail",
+            "viewTitle": "Tax & Charges Details",
+            "title": "Tax & Charges"
+        },
+        "description": {
+            "noData": " Please select Tax and Charges from left side hierarchy to view “Details”"
+        },
+        "label": {
+            "attributeLevel": "Attribute Type",
+            "parent": "Parent",
+            "taxTypeCode": "Tax/Charge Type Code",
+            "taxTypeDescription": "Tax/Charge Type Descrption",
+            "calculationType": "Calculation Type",
+            "documentDescription": "Document Description",
+            "financialHead": "Financial Account Head",
+            "status": "Status",
+            "percentage": "Percentage",
+            "rate": "Rate"
+        },
+        "validation": {
+            "attributeLevel": "attribute level",
+            "message": "is not active anymore. Please select a different attribute.",
+            "parent": "Parent",
+            "attributeTypeCode": "Attribute Type Code",
+            "decimalPlaces": "rate with two decimal places"
         }
     },
 
@@ -1090,13 +1128,6 @@
         },
         "placeholder": {
             "searchVin": "Search Vin"
-        },
-        "button": {
-            "close": "Close",
-            "reset": "Reset",
-            "apply": "Apply",
-            "clear": "Clear",
-            "cancel": "Cancel"
         }
     },
 
@@ -1200,12 +1231,107 @@
             "select": "Select",
             "stateCode": "State Code",
             "searchDealerParent": "Search Dealer Parent"
+        }
+    },
+    "stockTransferIndent": {
+        "isueIndent": {
+            "heading": {
+                "maintitle": "HO Price Upload Mapping"
+            },
+            "label": {
+                "vin": "VIN",
+                "stIssueNo": "ST issue Note No.",
+                "modelDescription": "Model Description",
+                "engineNumber": "Engine Number",
+                "oemInvoiceDate": "Oem Invoice Date",
+                "oemInvoiceNumber": "Oem Invoice Number",
+                "grnDate": "GRN Date",
+                "grnNo": "GRN No",
+                "issueCharge": "Issue Charge",
+                "netDealerPrice": "Net Dealer Price",
+                "status": "Status"
+            },
+            "validation": {
+                "vin": "vin",
+                "issueCharges": "Issue Charges"
+            },
+            "viewDetails": {
+                "label": {
+                    "stIssueNo": "ST issue Note No.",
+                    "stIssueNoteDate": "ST issue Note Date",
+                    "stIssueNoteStatus": "ST issue Note Status",
+                    "modelDescription": "Model Description",
+                    "vin": "VIN",
+                    "engineNumber": "Engine Number",
+                    "oemInvoiceDate": "Oem Invoice Date",
+                    "oemInvoiceNumber": "Oem Invoice Number",
+                    "grnDate": "GRN Date",
+                    "grnNo": "GRN No",
+                    "issueCharge": "Issue Charge",
+                    "netDealerPrice": "Net Dealer Price",
+                    "indentNumber": "Indent Number",
+                    "indentDate": "Indent Date",
+                    "indentToLocation": "Indent To Location",
+                    "indentStatus": "Indent Status",
+                    "modelCode": "Model Code",
+                    "requestedQuantity": "Requested Quantity",
+                    "cancelledQuantity": "Cancelled Quantity",
+                    "issuedAndNotReceivedQuantity": "Issued & Not Received Quantity",
+                    "receivedQuantity": "Received Quantity",
+                    "balancedQuantity": "Balanced Quantity"
+                }
+            }
         },
-        "button": {
-            "continue": "Continue",
-            "reset": "Reset",
-            "apply": "Apply",
-            "clear": "Clear"
+        "heading": {
+            "maintitle": "HO Price Upload Mapping",
+            "title": "HO Price Upload Mapping for Dealer",
+            "drawerTitleHeading": "HO Price Upload Mapping",
+            "titleOverride": "Advance Filters",
+            "dealerList": "Dealer List",
+            "modelDetails": "Model Details",
+            "vehicleDetails": "Vehicle Details",
+            "addIndentDetails": "Add Indent Details",
+            "viewIndentDetails": "View Indent Details"
+        },
+        "label": {
+            "indentNumber": "Indent Number",
+            "indentDate": "Indent Date",
+            "fromLocation": "From Location",
+            "toLocation": "To Location",
+            "status": "Status",
+            "requestedBy": "Requested By",
+            "selectIndentNo": "Select Indent No",
+            "indent": "Indent",
+            "dealerLocation": "Dealer Location",
+            "indentfromdate": "Indent From Date",
+            "indentTodate": "Indent To Date",
+            "editVehicleDetails": "Edit Vehicle Details",
+            "indentStatus": "Indent Status",
+            "indentToParent": "Indent To Parent",
+            "indentToLocation": "Indent To Location",
+            "remark": "Remark",
+            "modelDescription": "Model Description",
+            "modelCode": "Model Code",
+            "requestedQuantity": "Requested Quantity",
+            "cancelledQuantity": "Cancelled Quantity",
+            "issuedAndNotReceivedQuantity": "Issued & Not Received Quantity",
+            "receivedQuantity": "Received Quantity",
+            "balancedQuantity": "Balanced Quantity"
+        },
+        "validation": {
+            "indentFromDate": "Indent From Date ",
+            "indentToDate": "Indent To Date",
+            "modelDescription": "Model Description",
+            "modelCode": "Model Code",
+            "requestedQuantity": "Requested Quantity",
+            "cancelledQuantity": "Cancelled Quantity",
+            "issuedAndNotReceivedQuantity": "Issued & Not Received Quantity",
+            "receivedQuantity": "Received Quantity",
+            "balancedQuantity": "Balanced Quantity",
+            "quantity": "Quantity",
+            "indentToParent": "Indent To Parent",
+            "indentToLocation": "Indent To Location",
+            "requestedBy": "Requested By"
         }
     },
     "vehicleInvoiceGeneration": {
@@ -1659,5 +1785,139 @@
         },
         "button": {},
         "link": {}
+    },
+    "hierarchyAttribute": {
+        "heading": {
+            "mainTitle": "Hierarchy Attribute Master",
+            "titleHierarchy": "Hierarchy Attribute Type",
+            "title": "Hierarchy Attribute"
+        },
+        "label": {
+            "descriptionText": "Please select hierarchy type to view records.",
+            "noRecordText": "No records found. Please add new parameter using below button",
+            "code": "Code",
+            "name": "Name",
+            "duplicateAllowed": "Duplicate Allowed?",
+            "duplicateAllowedDiffParent": "Duplicate Allowed under different parent?",
+            "childAllowed": "Child Allowed?"
+        },
+        "placeholder": {
+            "name": "name",
+            "code": "code"
+        },
+        "validation": {
+            "nameValidation": "name",
+            "codeValidation": "code"
+        }
+    },
+    "manufacturerOrganisation": {
+        "heading": {
+            "mainTitle": "Manufacturer Organisation Detail",
+            "viewTitle": "Manufacturer Details",
+            "title": "Hierarchy"
+        },
+        "label": {
+            "changedDate": "Changed Date",
+            "changedBy": "Changed By",
+            "attribute": "Attribute",
+            "code": "Code",
+            "parent": "Parent",
+            "shortDescription": "Short Description",
+            "longDescription": "Long Description",
+            "childAllowed": "Child Allowed?",
+            "description": "Please select product from leftside hierarchy to view 'Hierarchy Details' ",
+            "attributeType": "Attribute Type",
+            "hierarchyCode": "Hierarchy Code",
+            "attributeLevel": "Attribute Level"
+        },
+        "placeholder": {
+            "name": "name",
+            "code": "code",
+            "parent": "Parent",
+            "attributeTypeCode": "attribute type code",
+            "attributeCode": "attribute code"
+        },
+        "validation": {
+            "nameValidation": "name",
+            "codeValidation": "code",
+            "attributeLevel": "attribute level",
+            "attributeTypeCode": "attribute type code",
+
+            "attributeHierarchyFieldValidation": "is not active anymore. Please select a different attribute."
+        }
+    },
+    "manufacturerAdmin": {
+        "heading": {
+            "mainTitle": "Manufacturer Detail",
+            "viewTitle": "Manufacturer Details",
+            "drawerTitle": "Upload Authority Details",
+            "title": "Hierarchy",
+            "changeHistoryTitle": "Admin Change History",
+            "authorityChangeHistoryTitle": "Authority Change History"
+        },
+        "label": {
+            "changedDate": "Changed/Modified Date",
+            "changedBy": "Changed By",
+            "attribute": "Attribute",
+            "code": "Code",
+            "parent": "Parent",
+            "shortDescription": "Short Description",
+            "longDescription": "Long Description",
+            "childAllowed": "Child Allowed?",
+            "description": "Please select product from leftside hierarchy to view 'Hierarchy Details' ",
+            "attributeType": "Attribute Type",
+            "hierarchyCode": "Hierarchy Code",
+            "attributeLevel": "Attribute Level",
+            "attributeCode": "Attribute Code",
+            "authorityTypeCode": "Authority Type Code",
+            "employeeName": "Employee Name",
+            "employeeTokenNo": "Employee Token No.",
+            "authorityId": "Authority Id",
+            "effectiveFrom": "Effective From",
+            "effectiveTo": "Effective To",
+            "authorityForm": "Authority Form",
+            "downloadAuthorityForm": "Please download 'Authority Form Template' using below button",
+            "uploadButtonName": "Upload Authority Form",
+            "messageText": "Click or drop your file here to upload",
+            "downloadHere": "Download Here",
+            "selectOrganization": "Please Select Organization from dropdown"
+        },
+        "placeholder": {
+            "name": "name",
+            "code": "code",
+            "parent": "Parent",
+            "attributeTypeCode": "attribute type code",
+            "attributeCode": "attribute code",
+            "organizationHierarchy": "Organization Hierarchy"
+        },
+        "validation": {
+            "nameValidation": "name",
+            "codeValidation": "code",
+            "attributeLevel": "attribute level",
+            "attributeTypeCode": "attribute type code",
+            "attributeHierarchyFieldValidation": "is not active anymore. Please select a different attribute.",
+            "validationText": "File type should be .xlxs and max file size to be 8Mb"
+        }
+    },
+    "termConditionDealer": {
+        "heading": {
+            "pageTitle": "Terms & Conditions - Dealer Location",
+            "moduletitle": "Term & Condition"
+        },
+        "label": {
+            "LessorCompany": "Lessor Customer Form",
+            "companyName": "Company Name",
+            "stateName": "State Name"
+        },
+        "placeholder": {
+            "stateName": "State Name"
+        },
+        "message": {
+            "uploadButtonName": "Upload Lessor Form",
+            "messageText": "Click or drop your file here to upload",
+            "validationText": "File type should be .xlxs and max file size to be 8Mb",
+            "docName": "Lessor Template",
+            "textMessage": "Please download Lessor Customer Template using below button"
+        }
     }
 }

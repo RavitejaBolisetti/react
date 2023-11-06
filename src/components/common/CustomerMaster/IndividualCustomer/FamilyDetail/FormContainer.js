@@ -174,10 +174,10 @@ const FormBase = (props) => {
                             onSave();
                         }}
                     >
-                        Save
+                        {translateContent('global.buttons.save')}
                     </Button>
                     <Button onClick={onCancel} danger>
-                        Cancel
+                        {translateContent('global.buttons.cancel')}
                     </Button>
                 </Col>
             </Row>

@@ -7,43 +7,44 @@ import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { convertDateMonthYear } from 'utils/formatDateTime';
 import { StockIndentStatusTag } from 'components/Sales/StockTransferIndent/utils/StockIndentStatusTag';
 import { STOCK_TRANSFER } from 'constants/StockTransfer';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
 export const tableColumn = (handleButtonClick, toggleButton) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Indent Number',
+            title: translateContent('stockTransferIndent.label.indentNumber'),
             dataIndex: 'indentNumber',
             width: '18%',
         }),
 
         tblPrepareColumns({
-            title: 'Indent Date',
+            title: translateContent('stockTransferIndent.label.indentDate'),
             dataIndex: 'indentDate',
             width: '12%',
             render: (_, record) => (record?.indentDate ? convertDateMonthYear(record?.indentDate) : ''),
         }),
         tblPrepareColumns({
-            title: 'From Location',
+            title: translateContent('stockTransferIndent.label.fromLocation'),
             dataIndex: 'fromLocation',
             width: '15%',
         }),
 
         tblPrepareColumns({
-            title: 'To Location',
+            title: translateContent('stockTransferIndent.label.toLocation'),
             dataIndex: 'toLocation',
             width: '15%',
         }),
 
         tblPrepareColumns({
-            title: 'Requested By',
+            title: translateContent('stockTransferIndent.label.requestedBy'),
             dataIndex: 'requestedBy',
             width: '19%',
         }),
 
         tblPrepareColumns({
-            title: 'Status',
+            title: translateContent('stockTransferIndent.label.status'),
             dataIndex: toggleButton === STOCK_TRANSFER?.RAISED.key ? 'indentRaisedStatus' : 'indentReceivedStatus',
             width: '13%',
             render: (_, record) => StockIndentStatusTag(toggleButton === STOCK_TRANSFER?.RAISED.key ? record.indentRaisedStatus : record.indentReceivedStatus),
