@@ -7,6 +7,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, Card, Button, Space, Divider, Tag, Typography } from 'antd';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
+import { FiPlus } from 'react-icons/fi';
 import * as IMAGES from 'assets';
 
 import styles from './Dashboard.module.scss';
@@ -21,37 +22,17 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { stockDataActions } from 'store/actions/data/dashboard/stocks';
 import { billingDataActions } from 'store/actions/data/dashboard/billing';
 import { retailDataActions } from 'store/actions/data/dashboard/retail';
+import LatestNews from './LatestNews';
+import BirthDayCalender from './BirthDayCalender';
 
 const { Text, Title } = Typography;
-
-const billingData = [
-    { type: 'Scorpio', sales: 60 },
-    { type: 'XUV700', sales: 120 },
-    { type: 'Thar', sales: 80 },
-    { type: 'XUV300', sales: 50 },
-    { type: 'Marazzo', sales: 10 },
-    { type: 'Bolero Neo', sales: 75 },
-    { type: 'Bolero', sales: 120 },
-    { type: 'Scarpio Classic', sales: 50 },
-];
-
-const retailData = [
-    { type: 'Scorpio', sales: 30 },
-    { type: 'XUV700', sales: 90 },
-    { type: 'Thar', sales: 70 },
-    { type: 'XUV300', sales: 30 },
-    { type: 'Marazzo', sales: 5 },
-    { type: 'Bolero Neo', sales: 75 },
-    { type: 'Bolero', sales: 75 },
-    { type: 'Scarpio Classic', sales: 113 },
-];
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         common: {
             LeftSideBar: { collapsed = false },
-            Header: { isLoading, data: loginUserData = [] },
+            Header: { data: loginUserData = [] },
         },
         data: {
             Dashboard: {
@@ -120,14 +101,13 @@ const birthDayData = {
     ],
 };
 
-
 const DashboardBase = (props) => {
     const { userId, fetchStockList, stockListShowLoading, stockData, fetchBillingList, billingListShowLoading, fetchRetailList, retailListShowLoading, retailData, billingData } = props;
 
     const [isVisible, serIsVisible] = useState(false);
     const [isNewsVisible, setIsNewsVisible] = useState(false);
     const [highlightsTextIndex, setHighlightsTextIndex] = useState(0);
-    // const [record, setRecord] = useState('');
+    const [record, setRecord] = useState('');
 
     const onErrorAction = (message) => {
         console.error(message);
@@ -157,37 +137,37 @@ const DashboardBase = (props) => {
             }
         }
     };
-    // const onCloseAction = () => {
-    //     serIsVisible(false);
-    //     setIsNewsVisible(false);
-    // };
+    const onCloseAction = () => {
+        serIsVisible(false);
+        setIsNewsVisible(false);
+    };
 
-    // const onAddWidget = () => {
-    //     serIsVisible(true);
-    // };
+    const onAddWidget = () => {
+        serIsVisible(true);
+    };
 
-    // const handleNewsClick = (data) => {
-    //     setIsNewsVisible(true);
-    //     setRecord(data);
-    // };
+    const handleNewsClick = (data) => {
+        setIsNewsVisible(true);
+        setRecord(data);
+    };
 
-    // const WidgetDrawerProps = {
-    //     isVisible,
-    //     onCloseAction,
-    //     titleOverride: 'Add Widget',
-    // };
+    const WidgetDrawerProps = {
+        isVisible,
+        onCloseAction,
+        titleOverride: 'Add Widget',
+    };
 
-    // const newsDrawerProps = {
-    //     isVisible: isNewsVisible,
-    //     onCloseAction,
-    //     titleOverride: 'Latest News',
-    //     handleNewsClick,
-    //     newsData,
-    //     record,
-    // };
-    // const birthDayProps = {
-    //     birthDayData,
-    // };
+    const newsDrawerProps = {
+        isVisible: isNewsVisible,
+        onCloseAction,
+        titleOverride: 'Latest News',
+        handleNewsClick,
+        newsData,
+        record,
+    };
+    const birthDayProps = {
+        birthDayData,
+    };
 
     return (
         <div className={styles.dashboardContainer}>
@@ -249,9 +229,9 @@ const DashboardBase = (props) => {
                     <Title level={3}>Dashboard KPI</Title>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className={styles.buttonsGroupRight}>
-                    {/* <Button type="primary" icon={<FiPlus />} className={styles.verticallyCentered} onClick={onAddWidget}>
+                    <Button type="primary" icon={<FiPlus />} className={styles.verticallyCentered} onClick={onAddWidget}>
                         Add Widget
-                    </Button> */}
+                    </Button>
                 </Col>
             </Row>
             <div className={`${styles.marB20} ${styles.dashboardPieChart}`}>
@@ -276,7 +256,7 @@ const DashboardBase = (props) => {
             <Row gutter={40} className={styles.marB20}>
                 <LatestNews {...newsDrawerProps} />
                 <BirthDayCalender {...birthDayProps} />
-            </Row> 
+            </Row>
 
             <WidgetDrawer {...WidgetDrawerProps} />
             <NewsDrawer {...newsDrawerProps} />
