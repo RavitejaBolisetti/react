@@ -182,7 +182,6 @@ const CompanyProfileBase = (props) => {
         saveData(requestData);
     };
 
-
     const onCloseAction = () => {
         form.resetFields();
         setButtonData({ ...defaultBtnVisiblity });
@@ -277,7 +276,7 @@ const CompanyProfileBase = (props) => {
 
     return (
         <>
-            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} >
+            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
                 <Row gutter={20} className={styles.drawerBodyRight}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.box}>
                         <h2>{section?.title}</h2>

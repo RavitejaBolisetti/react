@@ -17,6 +17,7 @@ import { ViewTimeline } from './ViewTimeline';
 import { ViewMap } from './ViewMap';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -31,8 +32,8 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'View Timeline';
-    const viewTitle = 'View Timeline';
+    const moduleTitle = translateContent('vehicleTracking.title.viewTimeline');
+    const viewTitle = translateContent('vehicleTracking.title.viewTimeline');
 
     let returnValue = {
         collapsed,
@@ -93,7 +94,7 @@ export const VehicleTrackingMain = ({ typeData, isLoading, viewTitle, userId, sh
     const onErrorAction = (message) => {
         setSearchCardVisible(false);
         setFormData([]);
-        showGlobalNotification({ notificationType: 'error', notificationTitle: 'Error', message });
+        showGlobalNotification({ notificationType: 'error', notificationTitle: translateContent('global.notificationError.title'), message });
     };
 
     const onSuccessAction = (res) => {
@@ -148,13 +149,13 @@ export const VehicleTrackingMain = ({ typeData, isLoading, viewTitle, userId, sh
         }
     };
 
-    const title = 'Search';
+    const title = translateContent('vehicleTracking.title.search');
 
     const searchBoxProps = {
         singleField: true,
         searchForm,
         selectWide: false,
-        placeholder: 'OEM Invoice Number',
+        placeholder: translateContent('vehicleTracking.placeholder.oemInvoiceNumber'),
         label: title,
         handleSearchWithoutParameter,
         captilized: false,
@@ -171,7 +172,7 @@ export const VehicleTrackingMain = ({ typeData, isLoading, viewTitle, userId, sh
 
     const viewTimelineProps = {
         isVisible: isFormVisible,
-        titleOverride: 'View Timeline',
+        titleOverride: translateContent('vehicleTracking.title.viewTimeline'),
         typeData,
         buttonData,
         setButtonData,
@@ -185,7 +186,7 @@ export const VehicleTrackingMain = ({ typeData, isLoading, viewTitle, userId, sh
     const viewMapProps = {
         formData,
         isVisible: isMapFormVisible,
-        titleOverride: 'View Map',
+        titleOverride: translateContent('vehicleTracking.title.viewMap'),
         buttonData,
         setButtonData,
         handleButtonClick,

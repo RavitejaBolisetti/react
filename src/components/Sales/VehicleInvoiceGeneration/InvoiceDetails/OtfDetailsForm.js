@@ -13,6 +13,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { prepareCaption } from 'utils/prepareCaption';
 import { getCodeValue } from 'utils/getCodeValue';
 import { YES_NO_FLAG } from '../../../../constants/yesNoFlag';
+import { translateContent } from 'utils/translateContent';
 
 const { Search } = Input;
 
@@ -39,7 +40,7 @@ const OtfDetailsForm = (props) => {
         <>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Form.Item label="Booking Number" name={[formName, 'otfNumber']} rules={[validateRequiredInputField('Booking Number')]}>
+                    <Form.Item label={translateContent('commonModules.label.bookingDetails.bookingNumber')} name={[formName, 'otfNumber']} rules={[validateRequiredInputField('Booking Number')]}>
                         <Search maxLength={50} placeholder={preparePlaceholderText('Booking Number')} loading={isVehicleInvoiceDataLoading} onSearch={(value) => handleBookingNumberSearch(value)} allowClear onChange={handleBookingChange} />
                     </Form.Item>
                 </Col>
@@ -49,22 +50,22 @@ const OtfDetailsForm = (props) => {
                     <Divider />
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            {prepareCaption('Price Information')}
+                            {prepareCaption(translateContent('vehicleInvoiceGeneration.heading.captions.priceInformation'))}
                         </Col>
                     </Row>
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item label="Booking Date" name={[formName, 'orderDate']}>
+                            <Form.Item label={translateContent('commonModules.label.bookingDetails.bookingDate')} name={[formName, 'orderDate']}>
                                 <DatePicker format={dateFormat} placeholder={preparePlaceholderText('booking date')} style={{ display: 'auto', width: '100%' }} disabled={true} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formData?.taxCalculationType} label="Tax Calculation" name={[formName, 'taxCalculationType']} rules={[validateRequiredSelectField('Tax Calculation')]}>
+                            <Form.Item initialValue={formData?.taxCalculationType} label={translateContent('commonModules.label.bookingDetails.taxCalculation')} name={[formName, 'taxCalculationType']} rules={[validateRequiredSelectField('Tax Calculation')]}>
                                 {customSelectBox({ data: typeData?.[PARAM_MASTER.TAX_CALCLTN_TYPE.id], placeholder: preparePlaceholderSelect('Tax Calculation') })}
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formData?.taxPayableOnReverseCharges} label="Tax Payable On Reverse Charges?" name={[formName, 'taxPayableOnReverseCharges']} rules={[validateRequiredSelectField('Tax Payable On Reverse Charges')]}>
+                            <Form.Item initialValue={formData?.taxPayableOnReverseCharges} label={translateContent('commonModules.label.bookingDetails.taxPayableOnReverseCharges')} name={[formName, 'taxPayableOnReverseCharges']} rules={[validateRequiredSelectField('Tax Payable On Reverse Charges')]}>
                                 {customSelectBox({ data: typeData?.[PARAM_MASTER.RFRL.id], placeholder: preparePlaceholderSelect('Tax Payable On Reverse Charges') })}
                             </Form.Item>
                         </Col>
@@ -72,24 +73,24 @@ const OtfDetailsForm = (props) => {
 
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            {prepareCaption('Sales Details')}
+                            {prepareCaption(translateContent('vehicleInvoiceGeneration.heading.captions.salesDetails'))}
                         </Col>
                     </Row>
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formData?.saleConsultant} label="Sales Consultant Name" name={[formName, 'saleConsultantName']}>
+                            <Form.Item initialValue={formData?.saleConsultant} label={translateContent('commonModules.label.bookingDetails.salesConsultantName')} name={[formName, 'saleConsultantName']}>
                                 <Input placeholder={preparePlaceholderText('Sales Consultant Name')} disabled={true} />
                             </Form.Item>
                             <Form.Item hidden name={[formName, 'saleConsultant']} />
                             <Form.Item hidden name={[formName, 'otfId']} />
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formData?.mitraType} label="Influencer/Mitra Type" name={[formName, 'mitraType']}>
+                            <Form.Item initialValue={formData?.mitraType} label={translateContent('commonModules.label.bookingDetails.influenceMitratype')} name={[formName, 'mitraType']}>
                                 <Input placeholder={preparePlaceholderText('Influencer/Mitra Type')} disabled={true} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formData?.mitraName} label="Influencer/Mitra Name" name={[formName, 'mitraName']}>
+                            <Form.Item initialValue={formData?.mitraName} label={translateContent('commonModules.label.bookingDetails.influenceMitraName')} name={[formName, 'mitraName']}>
                                 <Input placeholder={preparePlaceholderText('Influencer/Mitra Name')} disabled={true} />
                             </Form.Item>
                         </Col>

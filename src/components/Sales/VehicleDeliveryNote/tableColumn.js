@@ -6,24 +6,25 @@
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { convertDateMonthYear } from 'utils/formatDateTime';
 import { DELIVERY_TYPE } from 'constants/modules/vehicleDetailsNotes.js/deliveryType';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
 export const tableColumnDeliveryNoteMaster = ({ handleButtonClick, actionButtonVisiblity, deliveryType }) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Customer Name',
+            title: translateContent('vehicleDeliveryNote.label.customerName'),
             dataIndex: 'customerName',
             width: '14%',
         }),
         tblPrepareColumns({
-            title: 'Model group',
+            title: translateContent('vehicleDeliveryNote.label.modelGroup'),
             dataIndex: 'modelGroup',
             width: '14%',
         }),
 
         tblPrepareColumns({
-            title: deliveryType === DELIVERY_TYPE?.NOTE?.key ? 'Delivery Note No. & Date' : 'Challan No. & Date' ,
+            title: deliveryType === DELIVERY_TYPE?.NOTE?.key ? translateContent('vehicleDeliveryNote.label.vehicleDeliveryNo') : translateContent('vehicleDeliveryNote.label.challanNoDate'),
             dataIndex: 'vehicleDeliveryNote',
             width: '20%',
             render: (_, value) => {
@@ -36,7 +37,7 @@ export const tableColumnDeliveryNoteMaster = ({ handleButtonClick, actionButtonV
             },
         }),
         tblPrepareColumns({
-            title: 'Invoice No. & Date',
+            title: translateContent('vehicleDeliveryNote.label.invoiceNoDate'),
             dataIndex: 'invoiceId',
             width: '24%',
             render: (__, value) => {
@@ -56,7 +57,7 @@ export const tableColumnDeliveryNoteMaster = ({ handleButtonClick, actionButtonV
             2,
             0,
             tblPrepareColumns({
-                title: 'Booking No.',
+                title: translateContent('vehicleDeliveryNote.label.bookingNo'),
                 dataIndex: 'otfNumber',
                 width: '14%',
                 render: (_, record) => record?.bookingNumber || record?.otfNumber,

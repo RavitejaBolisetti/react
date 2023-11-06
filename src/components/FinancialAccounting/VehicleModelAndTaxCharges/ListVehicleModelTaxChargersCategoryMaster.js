@@ -18,6 +18,7 @@ import { VehicleTaxChargesDataActions } from 'store/actions/data/VehicleModelTax
 import { ProductModelGroupsDataActions } from 'store/actions/data/VehicleModelTaxChargesCategory/productModelGroup';
 import { AccountCategoryLovdataActions } from 'store/actions/data/VehicleModelTaxChargesCategory/accountCategorylov';
 import { TaxChargesLovdataActions } from 'store/actions/data/VehicleModelTaxChargesCategory/taxChargeslov';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -34,7 +35,7 @@ const mapStateToProps = (state) => {
             LeftSideBar: { collapsed = false },
         },
     } = state;
-    const moduleTitle = 'Account and Tax & Charges mapping';
+    const moduleTitle = translateContent('vehicleModelAndTaxCharges.heading.moduleTitle');
 
     let returnValue = {
         collapsed,
@@ -135,7 +136,7 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
     };
 
     const onSuccessAction = (res) => {
-        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        refershData && showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         setRefershData(false);
         setshowDataLoading(false);
     };
@@ -251,10 +252,10 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
                 setButtonData({ saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage, placement: 'bottomRight' });
             } else {
                 setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             }
         };
 
@@ -304,11 +305,11 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
 
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
-            return 'View ';
+            return translateContent('global.drawerTitle.view');
         } else if (formActionType?.editMode) {
-            return 'Edit ';
+            return translateContent('global.drawerTitle.edit');
         } else {
-            return 'Add ';
+            return translateContent('global.drawerTitle.add');
         }
     }, [formActionType]);
 
@@ -349,7 +350,7 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
         Form,
         onFinish,
         handleAdd,
-        titleHierarchy: 'Model Group',
+        titleHierarchy: translateContent('vehicleModelAndTaxCharges.heading.titleHierarchy'),
         VehicleModelTaxChargesCategoryData: VehicleModelTaxChargesCategoryData['vehicleModel'],
         ModelOptions,
         handleReferesh,

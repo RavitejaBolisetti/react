@@ -7,9 +7,10 @@ import React from 'react';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 import { CreditDebitNoteMaster } from 'components/FinancialAccounting';
+import { translateContent } from 'utils/translateContent';
 
 const CreditDebitNoteMasterBase = (props) => {
-    const pageTitle = 'Credit/Debit Note';
+    const pageTitle = translateContent('creditDebitNote.heading.pageTitle');
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

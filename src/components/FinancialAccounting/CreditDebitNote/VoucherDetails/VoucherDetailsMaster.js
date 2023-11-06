@@ -16,6 +16,7 @@ import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 
 import { CreditDebitNoteFormButton } from '../CreditDebitFormButton';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -27,7 +28,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Voucher and Party Details';
+    const moduleTitle = translateContent('creditDebitNote.voucherDetails.heading.moduleTitle');
 
     let returnValue = {
         collapsed,
@@ -90,7 +91,7 @@ export const VoucherDetailsMasterMain = (props) => {
 
     const onFinish = () => {
         if (voucherTableData.length === 0 && formActionType?.addMode) {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please add atleast one voucher record' });
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: translateContent('creditDebitNote.voucherDetails.validation.atLeastOneVoucher') });
         } else {
             handleButtonClick({ buttonAction: NEXT_ACTION });
             setRequestPayload({ ...requestPayload, voucherAccountHeadDetailsDto: voucherTableData });
