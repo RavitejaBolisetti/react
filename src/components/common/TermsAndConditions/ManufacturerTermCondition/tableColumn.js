@@ -5,7 +5,7 @@
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import styles from 'assets/sass/app.module.scss';
-
+import { translateContent } from 'utils/translateContent';
 import { convertDateMonthYear } from 'utils/formatDateTime';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
@@ -13,31 +13,31 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
 
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Product Hierarchy',
+            title: translateContent('termConditionManufacturer.label.productHierarchy'),
             dataIndex: 'productName',
             width: '14%',
         }),
 
         tblPrepareColumns({
-            title: 'Document Type',
+            title: translateContent('termConditionManufacturer.label.documentType'),
             dataIndex: 'documentType',
             width: '14%',
         }),
 
         tblPrepareColumns({
-            title: 'Language',
+            title: translateContent('termConditionManufacturer.label.language'),
             dataIndex: 'languageDesc',
             width: '14%',
         }),
 
         tblPrepareColumns({
-            title: 'Effective From',
+            title: translateContent('termConditionManufacturer.label.effectivefrom'),
             dataIndex: 'effectivefrom',
             width: '12%',
             render: (text) => convertDateMonthYear(text),
         }),
         tblPrepareColumns({
-            title: 'Effective To',
+            title: translateContent('termConditionManufacturer.label.effectiveto'),
             dataIndex: 'effectiveto',
             width: '12%',
             render: (text) => convertDateMonthYear(text),
@@ -51,7 +51,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         // }),
 
         tblPrepareColumns({
-            title: 'Version',
+            title: translateContent('termConditionManufacturer.label.version'),
             dataIndex: 'version',
             width: '2%',
         }),

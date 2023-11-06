@@ -9,6 +9,7 @@ import { RxCross2 } from 'react-icons/rx';
 import { SearchBox } from 'components/utils/SearchBox';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { PlusOutlined } from '@ant-design/icons';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 export default function AdvanceVehicleAllotMasterFilter(props) {
@@ -45,7 +46,7 @@ export default function AdvanceVehicleAllotMasterFilter(props) {
                                                 setAdvanceSearchVisible(true);
                                             }}
                                         >
-                                            Advanced Filters
+                                            {translateContent('global.advanceFilter.title')}
                                         </Button>
                                     </Col>
                                 )}
@@ -57,7 +58,7 @@ export default function AdvanceVehicleAllotMasterFilter(props) {
                 {showAddButton && (
                     <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.buttonsGroupRight}>
                         <Button icon={<PlusOutlined />} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                            Add
+                            {translateContent('global.buttons.add')}
                         </Button>
                     </Col>
                 )}
@@ -86,7 +87,7 @@ export default function AdvanceVehicleAllotMasterFilter(props) {
                             </Col>
                             <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
                                 <Button className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
-                                    Clear
+                                    {translateContent('global.buttons.clear')}
                                 </Button>
                             </Col>
                         </Row>

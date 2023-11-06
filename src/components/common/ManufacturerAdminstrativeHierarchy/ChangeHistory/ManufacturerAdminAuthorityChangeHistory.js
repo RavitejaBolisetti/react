@@ -56,37 +56,37 @@ const ManufacturerAdminAuthorityChangeHistoryMain = ({ fetchAuthorityChangeHisto
 
     const tableColumn = [
         tblPrepareColumns({
-            title: translateContent('manufacturerAdmin.label.createdDate'),
+            title: translateContent('adminHierarchy.label.createdDate'),
             dataIndex: 'createdDate',
             render: (text) => convertDateTime(text),
         }),
         tblPrepareColumns({
-            title: translateContent('manufacturerAdmin.label.createdBy'),
+            title: translateContent('adminHierarchy.label.createdBy'),
             dataIndex: 'createdBy',
         }),
         tblPrepareColumns({
-            title: translateContent('manufacturerAdmin.label.authorityTypeCode'),
+            title: translateContent('adminHierarchy.label.authorityTypeCode'),
             dataIndex: 'authorityTypeCode',
         }),
         tblPrepareColumns({
-            title: translateContent('manufacturerAdmin.label.employeeName'),
+            title: translateContent('adminHierarchy.label.employeeName'),
             dataIndex: 'employeeName',
         }),
         tblPrepareColumns({
-            title: translateContent('manufacturerAdmin.label.employeeTokenNo'),
+            title: translateContent('adminHierarchy.label.employeeTokenNo'),
             dataIndex: 'authorityEmployeeTokenNo',
         }),
         tblPrepareColumns({
-            title: translateContent('manufacturerAdmin.label.authorityId'),
+            title: translateContent('adminHierarchy.label.authorityId'),
             dataIndex: 'manufacturerAdminAuthorityId',
         }),
         tblPrepareColumns({
-            title: translateContent('manufacturerAdmin.label.effectiveFrom'),
+            title: translateContent('adminHierarchy.label.effectiveFrom'),
             dataIndex: 'effectiveFrom',
             render: (text) => convertDateTime(text),
         }),
         tblPrepareColumns({
-            title: translateContent('manufacturerAdmin.label.effectiveTo'),
+            title: translateContent('adminHierarchy.label.effectiveTo'),
             dataIndex: 'effectiveTo',
             render: (text) => convertDateTime(text),
         }),
@@ -104,6 +104,6 @@ const ManufacturerAdminAuthorityChangeHistoryMain = ({ fetchAuthorityChangeHisto
     );
 };
 
-const ManufacturerAdminAuthorityChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ManufacturerAdminAuthorityChangeHistoryMain, { title: translateContent('manufacturerAdmin.heading.authorityChangeHistoryTitle'), width: '90%' }));
+const ManufacturerAdminAuthorityChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ManufacturerAdminAuthorityChangeHistoryMain, { title: translateContent('adminHierarchy.heading.authorityChangeHistoryTitle'), width: '90%' }));
 
 export default ManufacturerAdminAuthorityChangeHistory;

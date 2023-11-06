@@ -12,11 +12,12 @@ import CardLocation from './CardLocation';
 import CardAction from './CardAction';
 
 import { accordianExpandIcon } from 'utils/accordianExpandIcon';
+import { translateContent } from 'utils/translateContent';
 
 const { Text } = Typography;
 const { Panel } = Collapse;
 
-const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = 'Application Details', styles }) => {
+const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = translateContent('applicationMaster.title.applicationDetails'), styles }) => {
     const { applicationAction, documentType, accessibleLocation, ...rest } = applicationDetailsData[0];
     const [openAccordian, setOpenAccordian] = useState('');
 
@@ -36,20 +37,20 @@ const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = 'Applicatio
         <>
             <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
-                    <Descriptions.Item label="Application ID">{rest?.applicationId}</Descriptions.Item>
-                    <Descriptions.Item label="Application Name">{rest?.applicationName || 'NA'}</Descriptions.Item>
-                    <Descriptions.Item label="Application Title">{rest?.applicationTitle || 'NA'}</Descriptions.Item>
-                    <Descriptions.Item label="Application Type">{rest.applicationType || 'NA'}</Descriptions.Item>
-                    <Descriptions.Item label="Parent Application ID">{rest?.parentApplicationId || 'NA'}</Descriptions.Item>
-                    <Descriptions.Item label="Accessible Location">{ACCESSIBLE_LOCATION_INDICATOR[rest?.accessableIndicator] || 'NA'}</Descriptions.Item>
-                    <Descriptions.Item label="Status">{rest?.status ? <Text type="success">Active</Text> : <Text>Inactive</Text>}</Descriptions.Item>
-                    <Descriptions.Item label="Application Criticality Group">{rest?.criticalityGroupName || 'NA'}</Descriptions.Item>
-                    <Descriptions.Item label="Document number to be generated">{rest?.documentNumRequired ? <Text type="success"> Yes </Text> : <Text>No</Text>}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('applicationMaster.label.applicationId')}>{rest?.applicationId}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('applicationMaster.label.applicationName')}>{rest?.applicationName || 'NA'}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('applicationMaster.label.applicationTitle')}>{rest?.applicationTitle || 'NA'}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('applicationMaster.label.applicationType')}>{rest.applicationType || 'NA'}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('applicationMaster.label.parentApplicationId')}>{rest?.parentApplicationId || 'NA'}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('applicationMaster.label.accessibleLocation')}>{ACCESSIBLE_LOCATION_INDICATOR[rest?.accessableIndicator] || 'NA'}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('global.label.status')}>{rest?.status ? <Text type="success">{translateContent('applicationMaster.text.active')}</Text> : <Text>{translateContent('applicationMaster.text.inActive')}</Text>}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('applicationMaster.label.criticalityGroupName')}>{rest?.criticalityGroupName || 'NA'}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('applicationMaster.label.documentNumRequired')}>{rest?.documentNumRequired ? <Text type="success"> {translateContent('applicationMaster.text.yes')} </Text> : <Text>{translateContent('applicationMaster.text.no')}</Text>}</Descriptions.Item>
 
-                    <Descriptions.Item label="T&C Required">{rest?.termAndConRequired ? <Text type="success"> Yes </Text> : <Text>No</Text>}</Descriptions.Item>
-                    <Descriptions.Item label="Digital Signature Required">{rest?.digitalSignatureRequired ? <Text type="success"> Yes </Text> : <Text>No</Text>}</Descriptions.Item>
-                    <Descriptions.Item label="Is Finance Related">{rest?.isFinanceRelated ? <Text type="success"> Yes </Text> : <Text>No</Text>}</Descriptions.Item>
-                    <Descriptions.Item label="IRN Integration Required">{rest?.irnIntegrationRequired ? <Text type="success"> Yes </Text> : <Text>No</Text>}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('applicationMaster.label.termAndConRequired')}>{rest?.termAndConRequired ? <Text type="success"> {translateContent('applicationMaster.text.yes')} </Text> : <Text>{translateContent('applicationMaster.text.no')}</Text>}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('applicationMaster.label.digitalSignatureRequired')}>{rest?.digitalSignatureRequired ? <Text type="success"> {translateContent('applicationMaster.text.yes')} </Text> : <Text>{translateContent('applicationMaster.text.no')}</Text>}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('applicationMaster.label.isFinanceRelated')}>{rest?.isFinanceRelated ? <Text type="success"> {translateContent('applicationMaster.text.yes')} </Text> : <Text>{translateContent('applicationMaster.text.no')}</Text>}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('applicationMaster.label.irnIntegrationRequired')}>{rest?.irnIntegrationRequired ? <Text type="success"> {translateContent('applicationMaster.text.yes')} </Text> : <Text>{translateContent('applicationMaster.text.no')}</Text>}</Descriptions.Item>
 
                     <div>
                         {applicationAction.length > 0 && (
@@ -57,7 +58,7 @@ const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = 'Applicatio
                                 <Panel
                                     header={
                                         <>
-                                            <span>Application Actions</span>
+                                            <span>{translateContent('applicationMaster.text.applicationActions')}</span>
                                             <span style={{ color: '#ff3e5b' }}>*</span>
                                         </>
                                     }
@@ -77,7 +78,7 @@ const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = 'Applicatio
                                 <Panel
                                     header={
                                         <>
-                                            <span>Document Type</span>
+                                            <span>{translateContent('applicationMaster.text.documentType')}</span>
                                             <span style={{ color: '#ff3e5b' }}>*</span>
                                         </>
                                     }
@@ -97,7 +98,7 @@ const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = 'Applicatio
                                 <Panel
                                     header={
                                         <>
-                                            <span>Accessible Dealer Location</span>
+                                            <span>{translateContent('applicationMaster.text.accessibleDealerLocation')}</span>
                                             <span style={{ color: '#ff3e5b' }}>*</span>
                                         </>
                                     }

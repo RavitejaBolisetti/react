@@ -18,6 +18,7 @@ import { bindActionCreators } from 'redux';
 import { withDrawer } from 'components/withDrawer';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -125,7 +126,7 @@ const AddEditFormMain = (props) => {
         selectedTreeSelectKey,
         handleSelectTreeClick,
         defaultValue: treeCodeId,
-        placeholder: preparePlaceholderSelect('parent'),
+        placeholder: preparePlaceholderSelect(translateContent('bookingBlockMaster.placeholder.parent')),
     };
 
     return (
@@ -135,13 +136,13 @@ const AddEditFormMain = (props) => {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item initialValue={selectedProductName} label="Product Hierarchy" name="modelGroupCode" rules={[validateRequiredSelectField('Product Hierarchy')]}>
-                                    <Input placeholder={preparePlaceholderText('Product Hierarchy')} disabled={true} />
+                                <Form.Item initialValue={selectedProductName} label={translateContent('bookingBlockMaster.label.productHierarchy')} name="modelGroupCode" rules={[validateRequiredSelectField(translateContent('bookingBlockMaster.validation.productHierarchy'))]}>
+                                    <Input placeholder={preparePlaceholderText(translateContent('bookingBlockMaster.placeholder.productHierarchy'))} disabled={true} />
                                 </Form.Item>
                             </Col>
 
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item initialValue={formData?.hierarchyMstId} label="Manufacturer Administrative Hierarchy" name="hierarchyMstId" rules={[validateRequiredSelectField('Manufacturer Administrative Hierarchy')]}>
+                                <Form.Item initialValue={formData?.hierarchyMstId} label={translateContent('bookingBlockMaster.label.manufacturerAdmin')} name="hierarchyMstId" rules={[validateRequiredSelectField(translateContent('bookingBlockMaster.label.manufacturerAdmin'))]}>
                                     <TreeSelectField {...treeSelectFieldProps} />
                                 </Form.Item>
                             </Col>
@@ -149,18 +150,18 @@ const AddEditFormMain = (props) => {
 
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item initialValue={formData?.dealerCode} label="Dealer Code" name="dealerCode" rules={[validateRequiredInputField('Dealer Code')]}>
+                                <Form.Item initialValue={formData?.dealerCode} label={translateContent('bookingBlockMaster.label.dealerCode')} name="dealerCode" rules={[validateRequiredInputField(translateContent('bookingBlockMaster.label.dealerCode'))]}>
                                     {/* <AutoComplete options={options} onSelect={handleOnSelect} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
                                         <Search  onChange={handleOnClear} placeholder={preparePlaceholderAutoComplete(' / Search Dealer Name')} type="text" allowClear />
                                     </AutoComplete> */}
-                                    {customSelectBox({ data: dealerBlockData, fieldNames: { key: 'dealerCode', value: 'dealerCode' }, placeholder: preparePlaceholderSelect('Dealer Code') })}
+                                    {customSelectBox({ data: dealerBlockData, fieldNames: { key: 'dealerCode', value: 'dealerCode' }, placeholder: preparePlaceholderSelect(translateContent('bookingBlockMaster.label.dealerCode')) })}
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row gutter={20}>
                             <Col xs={0} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item initialValue={formData?.status} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
-                                    <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
+                                <Form.Item initialValue={formData?.status} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label={translateContent('global.label.status')}>
+                                    <Switch checkedChildren={translateContent('global.label.active')} unCheckedChildren={translateContent('global.label.inActive')} onChange={(checked) => (checked ? 1 : 0)} />
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -170,13 +171,13 @@ const AddEditFormMain = (props) => {
                 <Row gutter={20} className={styles.formFooterNew}>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupLeft}>
                         <Button danger onClick={onCloseAction}>
-                            Cancel
+                            {translateContent('global.buttons.cancel')}
                         </Button>
                     </Col>
 
                     <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
                         <Button htmlType="submit" type="primary" disabled={!isFormBtnActive}>
-                            Save
+                            {translateContent('global.buttons.save')}
                         </Button>
                     </Col>
                 </Row>

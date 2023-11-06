@@ -19,6 +19,7 @@ import { ViewDetail } from './ViewDetail';
 
 import styles from 'assets/sass/app.module.scss';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -30,7 +31,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Customer Details';
+    const moduleTitle = translateContent('vehicleDeliveryNote.customerDetails.heading.mainTitle');
     const resetKeys = ['customerType', 'customerName', 'mobile', 'address', 'customerCity', 'district', 'state', 'pinCode', 'email'];
 
     let returnValue = {

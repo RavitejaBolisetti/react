@@ -63,8 +63,8 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = translateContent('manufacturerAdmin.heading.mainTitle');
-    const viewTitle = translateContent('manufacturerAdmin.haeding.viewTitle');
+    const moduleTitle = translateContent('adminHierarchy.heading.adminMainTitle');
+    const viewTitle = translateContent('adminHierarchy.heading.viewTitle');
 
     let returnValue = {
         collapsed,
@@ -464,7 +464,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const leftCol = manufacturerAdminHierarchyData?.length > 0 && organizationId ? 14 : 24;
     const rightCol = manufacturerAdminHierarchyData?.length > 0 && organizationId ? 10 : 24;
 
-    const noDataTitle = !organizationId ? translateContent('manufacturerAdmin.label.selectOrganization') : LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
+    const noDataTitle = !organizationId ? translateContent('adminHierarchy.label.selectOrganization') : LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
     const noDataMessage = organizationId && LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
     const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_CHILD_WARNING;
 
@@ -474,7 +474,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
-    const drawerTitle = translateContent('manufacturerAdmin.heading.drawerTitle');
+    const drawerTitle = translateContent('adminHierarchy.heading.drawerTitle');
 
     const uploadProps = {
         ...props,
@@ -548,9 +548,9 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
             setSelectedTreeKey(null);
         },
         defaultValue: 'organizationId',
-        placeholder: preparePlaceholderSelect(translateContent('manufacturerAdmin.placeholder.organizationHierarchy')),
+        placeholder: preparePlaceholderSelect(translateContent('adminHierarchy.placeholder.organizationHierarchy')),
     };
-    const title = translateContent('manufacturerAdmin.heading.title');
+    const title = translateContent('adminHierarchy.heading.title');
 
     const handleOnClickUpload = () => {
         setIsUploadDrawer(true);
@@ -653,7 +653,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                                     }}
                                     description={
                                         <span>
-                                            {translateContent('manufacturerAdmin.label.description')}
+                                            {translateContent('adminHierarchy.label.description')}
                                         </span>
                                     }
                                 ></Empty>
