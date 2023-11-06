@@ -6,24 +6,25 @@
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const tableColumn = (handleButtonClick) => {
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Party Code',
+            title: translateContent('partyMaster.label.partyCode'),
             dataIndex: 'partyCode',
             width: '15%',
         }),
 
         tblPrepareColumns({
-            title: 'Party Name',
+            title:translateContent('partyMaster.label.partyName'),
             dataIndex: 'partyName',
             width: '20%',
         }),
 
         tblPrepareColumns({
-            title: 'Party Category',
+            title:translateContent('partyMaster.label.partyCategory'),
             dataIndex: 'partyCategory',
             width: '15%',
         }),
