@@ -46,36 +46,36 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                         <Form.Item initialValue={schemeForm?.schemeType} label={translateContent('commonModules.label.schemeAndOfferDetails.schemeType')} name="schemeType">
-                                            <Select placeholder={preparePlaceholderSelect('Scheme Type')} {...disabledProps}></Select>
+                                            <Select placeholder={preparePlaceholderSelect(translateContent('commonModules.label.schemeAndOfferDetails.schemeType'))} {...disabledProps}></Select>
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                         <Form.Item initialValue={schemeForm?.schemeCategory} label={translateContent('commonModules.label.schemeAndOfferDetails.schemeCategory')} name="schemeCategory">
-                                            <Input placeholder={preparePlaceholderText('Scheme Category')} {...disabledProps} />
+                                            <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.schemeAndOfferDetails.schemeCategory'))} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                         <Form.Item initialValue={schemeForm?.amount} label={translateContent('commonModules.label.schemeAndOfferDetails.Amount')} name="amount">
-                                            <Input placeholder={preparePlaceholderText('Amount')} {...disabledProps} />
+                                            <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.schemeAndOfferDetails.Amount'))} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                         <Form.Item initialValue={formattedCalendarDate(schemeForm?.validFrom)} label={translateContent('commonModules.label.schemeAndOfferDetails.validFrom')} name="validFrom">
-                                            <DatePicker format={dateFormat} placeholder={preparePlaceholderText('Valid From')} onChange={onChange} {...disabledProps} />
+                                            <DatePicker format={dateFormat} placeholder={preparePlaceholderText(translateContent('commonModules.label.schemeAndOfferDetails.validFrom'))} onChange={onChange} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                         <Form.Item initialValue={formattedCalendarDate(schemeForm?.validTo)} label={translateContent('commonModules.label.schemeAndOfferDetails.validTo')} name="validTo">
-                                            <DatePicker format={dateFormat} placeholder={preparePlaceholderText('Valid To')} onChange={onChange} {...disabledProps} />
+                                            <DatePicker format={dateFormat} placeholder={preparePlaceholderText(translateContent('commonModules.label.schemeAndOfferDetails.validTo'))} onChange={onChange} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <Form.Item initialValue={schemeForm?.description} label={translateContent('commonModules.label.schemeAndOfferDetails.description')} name="description">
-                                            <TextArea maxLength={300} placeholder={preparePlaceholderText('Description')} {...disabledProps} showCount />
+                                            <TextArea maxLength={300} placeholder={preparePlaceholderText(translateContent('commonModules.label.schemeAndOfferDetails.description'))} {...disabledProps} showCount />
                                         </Form.Item>
                                     </Col>
                                 </Row>

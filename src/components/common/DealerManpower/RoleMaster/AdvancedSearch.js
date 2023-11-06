@@ -10,6 +10,7 @@ import { validateRequiredSelectField, searchValidator } from 'utils/validation';
 import { withModal } from 'components/withModal';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Option } = Select;
 
@@ -43,8 +44,8 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={filterString?.divisionCode} label="Division Name" name="divisionCode" rules={[validateRequiredSelectField('Division')]}>
-                        <Select showSearch loading={!isDivisionDataLoaded} placeholder="Select" allowClear onChange={handleFilterChange('code')}>
+                    <Form.Item initialValue={filterString?.divisionCode} label={translateContent('roleMaster.label.divisionName')} name="divisionCode" rules={[validateRequiredSelectField(translateContent('roleMaster.validation.division'))]}>
+                        <Select showSearch loading={!isDivisionDataLoaded} placeholder={translateContent('roleMaster.placeholder.select')} allowClear onChange={handleFilterChange('code')}>
                             {divisionData?.map((item) => (
                                 <Option key={item?.key} value={item?.key}>
                                     {item?.value}
@@ -55,8 +56,8 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={filterString?.departmentCode} label="Department Name" name="departmentCode">
-                        <Select {...selectProps} showSearch loading={!isDepartmentDataLoaded} placeholder="Select" allowClear onChange={handleFilterChange('departmentCode')}>
+                    <Form.Item initialValue={filterString?.departmentCode} label={translateContent('roleMaster.label.departmentName')} name="departmentCode">
+                        <Select {...selectProps} showSearch loading={!isDepartmentDataLoaded} placeholder={translateContent('roleMaster.placeholder.select')} allowClear onChange={handleFilterChange('departmentCode')}>
                             {filteredDepartmentData?.map((item) => (
                                 <Option key={item?.key} value={item?.key}>
                                     {item?.value}
@@ -69,8 +70,8 @@ export const AdvancedSearchFrom = (props) => {
 
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Form.Item initialValue={filterString?.keyword} label="Role Name" name="keyword" rules={[{ validator: searchValidator }]}>
-                        <Input maxLength={50} placeholder="Search" allowClear />
+                    <Form.Item initialValue={filterString?.keyword} label={translateContent('roleMaster.label.roleName')} name="keyword" rules={[{ validator: searchValidator }]}>
+                        <Input maxLength={50} placeholder={translateContent('roleMaster.placeholder.search')} allowClear />
                     </Form.Item>
                 </Col>
             </Row>
@@ -78,13 +79,13 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.textLeft}>
                     <Button onClick={handleResetFilter} danger>
-                        Reset
+                        {translateContent('global.buttons.reset')}
                     </Button>
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
                     <Button htmlType="submit" type="primary" data-testid="search">
-                        Search
+                        {translateContent('global.buttons.search')}
                     </Button>
                 </Col>
             </Row>

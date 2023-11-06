@@ -6,29 +6,30 @@
 import { tblPrepareColumns, tblStatusColumn, tblActionColumn } from 'utils/tableColumn';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const tableColumn = (handleButtonClick) => {
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Role Code',
+            title: translateContent('roleMaster.tableColHeading.roleCode'),
             dataIndex: 'roleCode',
             width: '10%',
         }),
         tblPrepareColumns({
-            title: 'Role Name',
+            title: translateContent('roleMaster.tableColHeading.roleName'),
             dataIndex: 'roleDescription',
             width: '20%',
         }),
 
         tblPrepareColumns({
-            title: 'Department Name',
+            title: translateContent('roleMaster.tableColHeading.departmentName'),
             dataIndex: 'departmentName',
             width: '15%',
         }),
 
         tblPrepareColumns({
-            title: 'Division Name',
+            title: translateContent('roleMaster.tableColHeading.divisionName'),
             dataIndex: 'divisionName',
             width: '15%',
         }),

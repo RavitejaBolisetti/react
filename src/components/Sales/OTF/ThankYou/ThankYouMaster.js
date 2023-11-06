@@ -11,12 +11,13 @@ import { LANGUAGE_EN } from 'language/en';
 import { HiCheck } from 'react-icons/hi';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Title, Text } = Typography;
 
 export const ThankYouMaster = (props) => {
-    const title = LANGUAGE_EN.GENERAL.THANK_YOU_PAGE_OTF.TITLE;
-    const message = LANGUAGE_EN.GENERAL.THANK_YOU_PAGE_OTF.MESSAGE.replace('{ORDER_ID}', props?.selectedBookingId || props?.selectedOrderId);
+    const title = translateContent('bookingManagement.validation.bookingUpdatedSuccess');
+    const message = translateContent('bookingManagement.validation.bookingUpdated').replace(translateContent('bookingManagement.validation.replacementText'), props?.selectedBookingId || props?.selectedOrderId);
 
     const myProps = {
         ...props,

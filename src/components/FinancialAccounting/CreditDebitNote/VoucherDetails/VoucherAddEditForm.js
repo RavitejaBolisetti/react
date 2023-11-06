@@ -10,6 +10,7 @@ import { withModal } from 'components/withModal';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -43,10 +44,10 @@ export const AdvanceForm = (props) => {
 
         const onSuccessAction = (res) => {
             if (res.data) {
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Account Head validated successfully ' });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: translateContent('creditDebitNote.voucherDetails.message.successMessage') });
                 setIsAccountHeadValidated(false);
             } else {
-                showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Account Head is not correct' });
+                showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationSuccess.error'), message: translateContent('creditDebitNote.voucherDetails.message.errorMessage') });
             }
         };
         values && fetchFinancialAccountList({ setIsLoading: listFinanceShowLoading, onErrorAction, onSuccessAction, userId, extraParams });
@@ -121,18 +122,18 @@ export const AdvanceForm = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item name="accountCode" label="Account Head" rules={[validateRequiredSelectField('Account Head')]}>
-                                <Search allowClear placeholder={preparePlaceholderText('Account Head')} onChange={handleAccountChange} onSearch={handleFinancialAccountValidate} />
+                            <Form.Item name="accountCode" label={translateContent('creditDebitNote.voucherDetails.label.accountHead')} rules={[validateRequiredSelectField(translateContent('creditDebitNote.voucherDetails.label.accountHead'))]}>
+                                <Search allowClear placeholder={preparePlaceholderText(translateContent('creditDebitNote.voucherDetails.placeholder.accountHead'))} onChange={handleAccountChange} onSearch={handleFinancialAccountValidate} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item label="Narration" name="accountNarration" rules={[validateRequiredInputField('narration')]}>
-                                <Input allowClear placeholder={preparePlaceholderText('narration')} />
+                            <Form.Item label={translateContent('creditDebitNote.voucherDetails.label.accountNarration')} name="accountNarration" rules={[validateRequiredInputField(translateContent('creditDebitNote.voucherDetails.label.accountNarration'))]}>
+                                <Input allowClear placeholder={preparePlaceholderText(translateContent('creditDebitNote.voucherDetails.placeholder.accountNarration'))} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Form.Item label="Amount" name="amount" rules={[validateRequiredInputField('Amount'), validateNumberWithTwoDecimalPlaces('Amount')]}>
-                                <Input maxLength={30} placeholder={preparePlaceholderText('Amount')} />
+                            <Form.Item label={translateContent('creditDebitNote.voucherDetails.label.amount')} name="amount" rules={[validateRequiredInputField(translateContent('creditDebitNote.voucherDetails.label.amount')), validateNumberWithTwoDecimalPlaces(translateContent('creditDebitNote.voucherDetails.label.amount'))]}>
+                                <Input maxLength={30} placeholder={preparePlaceholderText(translateContent('creditDebitNote.voucherDetails.placeholder.amount'))} />
                             </Form.Item>
                             <Form.Item name="id" hidden></Form.Item>
                         </Col>
@@ -140,13 +141,13 @@ export const AdvanceForm = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
                             <Button onClick={handleCancel} danger>
-                                Cancel
+                                {translateContent('global.buttons.cancel')}
                             </Button>
                         </Col>
 
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
                             <Button disabled={isAccountHeadValidated} onClick={onFinish} type="primary">
-                                Save
+                                {translateContent('global.buttons.save')}
                             </Button>
                         </Col>
                     </Row>

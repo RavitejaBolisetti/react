@@ -80,11 +80,11 @@ const ViewDetailMain = (props) => {
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label={translateContent('customerMaster.label.emailId')}>{checkAndSetDefaultValue(formData?.emailId)}</Descriptions.Item>
                         <Descriptions.Item label={translateContent('customerMaster.label.contactTxt')} className={formData?.whatsappCommunicationIndicator ? styles.yesText : styles?.noText}>
-                            {checkAndSetDefaultValue(formData?.whatsappCommunicationIndicator ? 'Yes' : 'No')}
+                            {checkAndSetDefaultValue(formData?.whatsappCommunicationIndicator ? translateContent('global.yesNo.yes') : translateContent('global.yesNo.no'))}
                         </Descriptions.Item>
                         <Descriptions />
                         <Descriptions.Item label={translateContent('customerMaster.label.whatsapp')} className={formData?.mobileNumberAsWhatsappNumber ? styles.yesText : styles?.noText}>
-                            {checkAndSetDefaultValue(formData?.mobileNumberAsWhatsappNumber ? 'Yes' : 'No')}
+                            {checkAndSetDefaultValue(formData?.mobileNumberAsWhatsappNumber ? translateContent('global.yesNo.yes') : translateContent('global.yesNo.no'))}
                         </Descriptions.Item>
                         <Descriptions.Item label={translateContent('customerMaster.label.whatsappNumber')}>{checkAndSetDefaultValue(formData?.whatsAppNumber)}</Descriptions.Item>
                     </Descriptions>

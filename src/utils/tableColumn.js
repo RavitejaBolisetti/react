@@ -31,7 +31,7 @@ const onFilterFn = (value, record) => {
 };
 
 export const tblPrepareColumns = ({ title, dataIndex, localSort = true, render = undefined, ellipsis = false, filters = undefined, filterMode = 'tree', filterSearch = true, sortFn = undefined, width, sorter = true }) => {
-    const sortingFn = (a, b) => (a && b ? String(a[dataIndex]).localeCompare(String(b[dataIndex]), undefined, {numeric: true, sensitivity: 'base' }) : a);
+    const sortingFn = (a, b) => (a && b ? String(a[dataIndex]).localeCompare(String(b[dataIndex]), undefined, { numeric: true, sensitivity: 'base' }) : a);
     return {
         title,
         dataIndex,
@@ -49,7 +49,7 @@ export const tblPrepareColumns = ({ title, dataIndex, localSort = true, render =
 
 export const tblSerialNumberColumn = ({ page = 1, pageSize = DEFAULT_PAGE_SIZE, width = '5%', fixed = '' }) => {
     return {
-        title: 'Srl.',
+        title: translateContent('global.label.serialNo'),
         dataIndex: 'srl',
         render: (_, __, index) => (page - 1) * pageSize + (index + 1),
         fixed: fixed,
@@ -126,7 +126,7 @@ export const tblActionColumn = ({
     },
 }) => {
     return {
-        title: 'Action',
+        title: translateContent('global.label.action'),
         dataIndex: '',
         width,
         fixed: fixed,
@@ -162,7 +162,7 @@ export const tblActionColumn = ({
                     </Button>
                 )}
 
-                {( isDeletable || (canDelete && !record?.id)) && (
+                {(isDeletable || (canDelete && !record?.id)) && (
                     <Button data-testid="delete" type="link" aria-label="fa-trash" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.DELETE, record, index })}>
                         {addToolTip('Delete')(<RxCross1 size={18} />)}
                     </Button>

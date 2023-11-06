@@ -19,6 +19,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import dayjs from 'dayjs';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
