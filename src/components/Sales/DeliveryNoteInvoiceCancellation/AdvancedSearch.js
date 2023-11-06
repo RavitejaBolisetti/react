@@ -15,6 +15,7 @@ import { customSelectBox } from 'utils/customSelectBox';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { ModalButtons } from 'components/common/Button';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -46,8 +47,8 @@ export const AdvancedSearchFrom = (props) => {
     const modalProps = {
         reset: true,
         submit: true,
-        resetName: 'Reset',
-        submitName: 'Search',
+        resetName: translateContent('global.buttons.reset'),
+        submitName: translateContent('global.buttons.search'),
         handleResetFilter,
     };
 
@@ -56,24 +57,24 @@ export const AdvancedSearchFrom = (props) => {
         if (bool) {
             return Promise.resolve();
         }
-        return Promise.reject(new Error('Date cant be less than Effective from date'));
+        return Promise.reject(new Error(translateContent('global.validation.dateLessThan')));
     };
 
     return (
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="From Date" name="fromDate" rules={[validateRequiredSelectField('From Date')]} className={styles?.datePicker}>
+                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label={translateContent('global.label.fromDate')} name="fromDate" rules={[validateRequiredSelectField(translateContent('global.label.fromDate'))]} className={styles?.datePicker}>
                         <DatePicker format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} onChange={() => advanceFilterForm.setFieldsValue({ toDate: undefined })} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         initialValue={formatDateToCalenderDate(filterString?.toDate)}
-                        label="To Date"
+                        label={translateContent('global.label.toDate')}
                         name="toDate"
                         rules={[
-                            validateRequiredSelectField('To Date'),
+                            validateRequiredSelectField(translateContent('global.label.toDate')),
                             {
                                 validator: (_, value) => CheckDateEffectiveTo(value, advanceFilterForm?.getFieldValue('fromDate')),
                             },
@@ -86,8 +87,8 @@ export const AdvancedSearchFrom = (props) => {
             </Row>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item name="requestType" label="Request Type" initialValue={filterString?.requestType}>
-                        {customSelectBox({ data: typeData[PARAM_MASTER?.DEL_INV_CAN_TYP?.id], placeholder: preparePlaceholderSelect('Request Type') })}
+                    <Form.Item name="requestType" label={translateContent('deliveryNoteInvoiceCancellation.label.requestType')} initialValue={filterString?.requestType}>
+                        {customSelectBox({ data: typeData[PARAM_MASTER?.DEL_INV_CAN_TYP?.id], placeholder: preparePlaceholderSelect(translateContent('deliveryNoteInvoiceCancellation.label.requestType')) })}
                     </Form.Item>
                 </Col>
                 {/* <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>

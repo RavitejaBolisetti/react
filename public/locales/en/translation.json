@@ -28,7 +28,9 @@
             "active": "Active",
             "inActive": "InActive",
             "status": "Status",
-            "action": "Action"
+            "action": "Action",
+            "fromDate": "From Date",
+            "toDate": "To Date"
         },
         "advanceFilter": {
             "title": "Advance Filters",
@@ -2170,6 +2172,68 @@
         "description":{
             "selectLeft":"Please select from left",
             "sideHierarchyView":"side hierarchy to view “Details”"
+        }
+    },
+    
+    "deliveryNoteInvoiceCancellation": {
+        "heading": {
+            "pageTitle": "Delivery Note Invoice Cancellation",
+            "moduleTitle": "Invoice Cancellation",
+            "formTitle":"Delivery Note/Invoice Cancellation Details",
+            "requestDetailsTitle":"Request Details",
+            "invoiceDetailsTitle":"Invoice Details",
+            "deliveryNoteTitle":"Delivery Note Details",
+            "vehicleDetailsTitle":"Vehicle Details"
+        },
+        "label": {
+            "requestType": "Request Type",
+            "requestStatus": "Request Status",
+            "requestNumber": "Request Number",
+            "requestDate": "Request Date",
+            "invoiceId": "Delivery Note/Invoice ID",
+            "dealerName": "Dealer Name",
+            "RequestDetailsForm":{
+                "cancelDate":"Cancel Date",
+                "remarks":"Remarks"
+            },
+            "invoiceDetailsForm":{
+                "invoiceId":"Invoice ID",
+                "invoiceDate":"Invoice Date",
+                "deliveryNoteId":"Delivery Note ID",
+                "deliveryNoteDate":"Delivery Note Date",
+                "deliveryNoteStatus":"Delivery Note Status",
+                "customerId":"Customer ID",
+                "customerName":"Customer Name"
+
+            },
+            "deliveryNoteInvoice":{
+                "deliveryNoteId":"Delivery Note ID",
+                "deliveryNoteDate":"Delivery Note Date",
+                "invoiceId":"Invoice ID",
+                "invoiceDate":"Invoice Date",
+                "invoiceStatus":"Invoice Status",
+                "customerId":"Customer ID",
+                "customerName":"Customer Name"
+            },
+            "vehicleDetails":{
+                "modelGroup":"Model Group",
+                "modelVarient":"Model Varient",
+                "model":"Model Description",
+                "vin":"VIN",
+                "reasonForCancellation":"Reason for Cancellation",
+                "cancellationRemarks":"Cancellation Remarks"
+            }
+        },
+        "placeholder": {
+            "search": "Search by Request Number"
+        },
+        "button": {
+            "cancelRequest":"Cancel Request"
+        },
+        "confirmation": {
+            "title": "Cancel Delivery/Invoice Cancellation Request",
+            "text": "Are you sure you want to cancel request?",
+            "submitText": "Yes, Cancel"
         }
     }
 }
