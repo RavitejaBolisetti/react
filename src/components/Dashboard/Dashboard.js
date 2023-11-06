@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, Card, Button, Space, Divider, Tag, Typography } from 'antd';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
@@ -11,12 +11,16 @@ import * as IMAGES from 'assets';
 
 import styles from './Dashboard.module.scss';
 import DashboardActionItems from './DashboardActionItems';
-// import WidgetDrawer from './WidgetDrawer';
-// import NewsDrawer from './NewsDrawer';
+import WidgetDrawer from './WidgetDrawer';
+import NewsDrawer from './NewsDrawer';
 import { StatusBar } from './StatusBar';
 import { PieChart } from './PieChart';
 import { dateTimeDuration } from 'utils/formatDateTime';
-import { withSpinner } from 'components/withSpinner';
+import { bindActionCreators } from 'redux';
+import { showGlobalNotification } from 'store/actions/notification';
+import { stockDataActions } from 'store/actions/data/dashboard/stocks';
+import { billingDataActions } from 'store/actions/data/dashboard/billing';
+import { retailDataActions } from 'store/actions/data/dashboard/retail';
 
 const { Text, Title } = Typography;
 
@@ -44,54 +48,99 @@ const retailData = [
 
 const mapStateToProps = (state) => {
     const {
+        auth: { userId },
         common: {
             LeftSideBar: { collapsed = false },
             Header: { isLoading, data: loginUserData = [] },
         },
-    } = state;  
+        data: {
+            Dashboard: {
+                Stock: { data: stockData, isLoaded, isLoading },
+                Billing: { data: billingData, isLoaded: isBillingDataLoaded, isLoading: isBillingDataLoading },
+                Retail: { data: retailData, isLoaded: isRetailDataLoaded, isLoading: isRetailDataLoading },
+            },
+        },
+    } = state;
 
     return {
+        userId,
         collapsed,
         firstName: loginUserData?.firstName || '',
-        isLoading,
+        stockData: stockData?.records || [],
+        billingData: billingData?.records || [],
+        retailData: retailData?.records || [],
     };
 };
 
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    ...bindActionCreators(
+        {
+            fetchStockList: stockDataActions.fetchList,
+            stockListShowLoading: stockDataActions.listShowLoading,
+
+            fetchBillingList: billingDataActions.fetchList,
+            billingListShowLoading: billingDataActions.listShowLoading,
+
+            fetchRetailList: retailDataActions.fetchList,
+            retailListShowLoading: retailDataActions.listShowLoading,
+
+            showGlobalNotification,
+        },
+        dispatch
+    ),
+});
 const keyHightliteData = [
     { shortDescription: 'GST Update', longDescription: "GSTR 1 due date is 10th Oct'23", createdDate: '2023-10-14 12:45:00' },
     { shortDescription: 'GST Update', longDescription: "GSTR 2 due date is 20th Oct'23", createdDate: '2023-10-16 17:45:00' },
 ];
 
-// const detailNews = {
-//     content:
-//         'Mahindra & Mahindra, the popular Indian car manufacturing brand, has recorded its highest ever sales in the month of July 2023. Mahindra & Mahindra is popularly known for their rugged luxury SUV’s such as XUV 700, Scorpio-N, Scorpio Classic, Thar and compact SUV’s such as XUV 300 and XUV 400 EV.Mahindra & Mahindra, the popular Indian car manufacturing brand, has recorded its highest ever sales in the month of July 2023. Mahindra & Mahindra is popularly known for their rugged luxury SUV’s such as XUV 700, Scorpio-N, Scorpio Classic, Thar and compact SUV’s such as XUV. Mahindra & Mahindra, the popular Indian car manufacturing brand, has recorded its highest ever sales in the month of July 2023. Mahindra & Mahindra is popularly known for their rugged luxury SUV’s such as XUV 700, Scorpio-N, Scorpio Classic, Thar and compact SUV’s such as XUV 300 and XUV 400 EV.',
-// };
-// const newsData = [
-//     { shortDescription: 'Mahindra & Mahindra sells 36,205 SUVs in July 2023', longDescription: 'Mahindra & Mahindra, the popular Indian car manufacturing brand.', date: '5 min ago', content: detailNews?.content },
-//     { shortDescription: 'Mahindra Sales in July hits highest mark as per TOI Survey', longDescription: 'Mahindra & Mahindra is popularly known for their rugged luxury.', date: '50 min ago', content: detailNews?.content },
-//     { shortDescription: 'Mahindra Scorpio Sales Rise By Over 2-Folds', longDescription: 'Mahindra & Mahindra, the popular Indian car manufacturing brand', date: '9 min ago', content: detailNews?.content },
-//     { shortDescription: 'Mahindra & Mahindra sells 36,205 SUVs in July 2023', longDescription: 'Mahindra & Mahindra, the popular Indian car manufacturing brand.', date: '5 min ago', content: detailNews?.content },
-//     { shortDescription: 'Mahindra Sales in July hits highest mark as per TOI Survey', longDescription: 'Mahindra & Mahindra is popularly known for their rugged luxury.', date: '50 min ago', content: detailNews?.content },
-//     { shortDescription: 'Mahindra Scorpio Sales Rise By Over 2-Folds', longDescription: 'Mahindra & Mahindra, the popular Indian car manufacturing brand', date: '9 min ago', content: detailNews?.content },
-// ];
-// const birthDayData = {
-//     birthDaytoday: [
-//         { name: 'Shally Gupta', date: '17, Feb 2023 Sunday', image: '' },
-//         { name: 'Vimal Kumar Bhati', date: '21, July 2023 Friday', image: '' },
-//         { name: 'Vivek Verma', date: '07, December 2023 Friday', image: '' },
-//     ],
-//     upcomingBirthDay: [
-//         { name: 'Vishal Gaurav', date: '19, November 2023 Sunday', image: '' },
-//         { name: 'Shally Gupta', date: '17, December 2023 Sunday', image: '' },
-//         { name: 'Vimal Kumar Bhati', date: '21, July 2023 Friday', image: '' },
-//     ],
-// };
+const detailNews = {
+    content:
+        'Mahindra & Mahindra, the popular Indian car manufacturing brand, has recorded its highest ever sales in the month of July 2023. Mahindra & Mahindra is popularly known for their rugged luxury SUV’s such as XUV 700, Scorpio-N, Scorpio Classic, Thar and compact SUV’s such as XUV 300 and XUV 400 EV.Mahindra & Mahindra, the popular Indian car manufacturing brand, has recorded its highest ever sales in the month of July 2023. Mahindra & Mahindra is popularly known for their rugged luxury SUV’s such as XUV 700, Scorpio-N, Scorpio Classic, Thar and compact SUV’s such as XUV. Mahindra & Mahindra, the popular Indian car manufacturing brand, has recorded its highest ever sales in the month of July 2023. Mahindra & Mahindra is popularly known for their rugged luxury SUV’s such as XUV 700, Scorpio-N, Scorpio Classic, Thar and compact SUV’s such as XUV 300 and XUV 400 EV.',
+};
+const newsData = [
+    { shortDescription: 'Mahindra & Mahindra sells 36,205 SUVs in July 2023', longDescription: 'Mahindra & Mahindra, the popular Indian car manufacturing brand.', date: '5 min ago', content: detailNews?.content },
+    { shortDescription: 'Mahindra Sales in July hits highest mark as per TOI Survey', longDescription: 'Mahindra & Mahindra is popularly known for their rugged luxury.', date: '50 min ago', content: detailNews?.content },
+    { shortDescription: 'Mahindra Scorpio Sales Rise By Over 2-Folds', longDescription: 'Mahindra & Mahindra, the popular Indian car manufacturing brand', date: '9 min ago', content: detailNews?.content },
+    { shortDescription: 'Mahindra & Mahindra sells 36,205 SUVs in July 2023', longDescription: 'Mahindra & Mahindra, the popular Indian car manufacturing brand.', date: '5 min ago', content: detailNews?.content },
+    { shortDescription: 'Mahindra Sales in July hits highest mark as per TOI Survey', longDescription: 'Mahindra & Mahindra is popularly known for their rugged luxury.', date: '50 min ago', content: detailNews?.content },
+    { shortDescription: 'Mahindra Scorpio Sales Rise By Over 2-Folds', longDescription: 'Mahindra & Mahindra, the popular Indian car manufacturing brand', date: '9 min ago', content: detailNews?.content },
+];
+const birthDayData = {
+    birthDaytoday: [
+        { name: 'Shally Gupta', date: '17, Feb 2023 Sunday', image: '' },
+        { name: 'Vimal Kumar Bhati', date: '21, July 2023 Friday', image: '' },
+        { name: 'Vivek Verma', date: '07, December 2023 Friday', image: '' },
+    ],
+    upcomingBirthDay: [
+        { name: 'Vishal Gaurav', date: '19, November 2023 Sunday', image: '' },
+        { name: 'Shally Gupta', date: '17, December 2023 Sunday', image: '' },
+        { name: 'Vimal Kumar Bhati', date: '21, July 2023 Friday', image: '' },
+    ],
+};
 
-const DashboardBase = ({ props }) => {
-    // const [isVisible, serIsVisible] = useState(false);
-    // const [isNewsVisible, setIsNewsVisible] = useState(false);
+
+const DashboardBase = (props) => {
+    const { userId, fetchStockList, stockListShowLoading, stockData, fetchBillingList, billingListShowLoading, fetchRetailList, retailListShowLoading, retailData, billingData } = props;
+
+    const [isVisible, serIsVisible] = useState(false);
+    const [isNewsVisible, setIsNewsVisible] = useState(false);
     const [highlightsTextIndex, setHighlightsTextIndex] = useState(0);
     // const [record, setRecord] = useState('');
+
+    const onErrorAction = (message) => {
+        console.error(message);
+    };
+
+    useEffect(() => {
+        if (userId) {
+            fetchStockList({ setIsLoading: stockListShowLoading, userId, onErrorAction });
+            fetchBillingList({ setIsLoading: billingListShowLoading, userId, onErrorAction });
+            fetchRetailList({ setIsLoading: retailListShowLoading, userId, onErrorAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId]);
 
     const handleButtonClick = (direction) => {
         if (direction === 'next') {
@@ -219,20 +268,20 @@ const DashboardBase = ({ props }) => {
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Card title={'Stock in days'}>
-                            <PieChart />
+                            <PieChart data={stockData} />
                         </Card>
                     </Col>
                 </Row>
             </div>
-            {/* <Row gutter={40} className={styles.marB20}>
+            <Row gutter={40} className={styles.marB20}>
                 <LatestNews {...newsDrawerProps} />
                 <BirthDayCalender {...birthDayProps} />
-            </Row> */}
+            </Row> 
 
-            {/* <WidgetDrawer {...WidgetDrawerProps} />
-            <NewsDrawer {...newsDrawerProps} /> */}
+            <WidgetDrawer {...WidgetDrawerProps} />
+            <NewsDrawer {...newsDrawerProps} />
         </div>
     );
 };
 
-export const Dashboard = connect(mapStateToProps, null)(DashboardBase);
+export const Dashboard = connect(mapStateToProps, mapDispatchToProps)(DashboardBase);
