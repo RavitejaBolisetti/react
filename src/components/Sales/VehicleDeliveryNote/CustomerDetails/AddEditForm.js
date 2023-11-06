@@ -6,6 +6,8 @@
 import React, { useEffect } from 'react';
 import { Col, Input, Form, Row, Card, Space } from 'antd';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import { translateContent } from 'utils/translateContent';
+
 import styles from 'assets/sass/app.module.scss';
 
 const { Search } = Input;

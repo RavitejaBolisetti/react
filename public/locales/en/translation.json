@@ -2130,19 +2130,49 @@
             "printDeliveryNote": "Print Delivery Note",
             "printChallan": "Print Challan"
         },
-        "label": {},
+        "label": {
+            "customerName": "Customer Name",
+            "modelGroup": "Model Group",
+            "vehicleDeliveryNo": "Delivery Note No. & Date",
+            "challanNoDate": "Challan No. & Date",
+            "invoiceNoDate": "Invoice No. & Date",
+            "bookingNo": "Booking No.",
+            "invoiceFromDate": "Invoice From Date",
+            "invoiceToDate": "Invoice To Date",
+            "deliveryNoteFromDate": "Delivery Note From Date",
+            "deliveryNoteToDate": "Delivery Note To Date"
+        },
         "placeholder": {
             "select": "Select"
         },
-        "validation": {},
         "notificationError": {
-            "customerId": "Enter customer id to continue"
+            "enterCustomerId": "Enter customer id to continue"
         },
         "invoiceDetails": {
-            "label": {},
-            "validation": {}
+            "heading": {
+                "mainTitle": "Insurance Details"
+            },
+            "label": {
+                "directlyBilled": "Directly Billed Vehicle",
+                "soldByDealer": "Vehicle Sold By Dealer",
+                "deliveryNoteFor": "Delivery Note For",
+                "invoiceNumber": "Invoice No.",
+                "invoiceDate": "Invoice Date",
+                "vin": "VIN",
+                "engineNumber": "Engine No.",
+                "chassisNumber": "Chassis No.",
+                "relationShipManager": "Relationship Manager",
+                "customerPromiseDate": "Customer Promise Date",
+                "reasonForDelay": "Reasons For Delay",
+                "reasonForDelayRemarks": "Remark For Delay"
+            }
         },
-        "customerDetails": {},
+        "customerDetails": {
+            "heading": {
+                "mainTitle": "Insurance Details"
+            },
+            "label": {}
+        },
         "vehicleDetails": {},
         "finanaceDetails": {},
         "insuranceDetails": {},

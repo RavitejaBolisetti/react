@@ -361,7 +361,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
 
     const handleCustomerIdSearch = (customerIdValue = '') => {
         if (!customerIdValue) {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: translateContent('vehicleDeliveryNote.notificationError.customerId') });
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: translateContent('vehicleDeliveryNote.notificationError.enterCustomerId') });
             return false;
         }
         const onSuccessAction = (res) => {
