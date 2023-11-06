@@ -10,6 +10,7 @@ import { validateRequiredInputField, validatePanField, validateGSTIN } from 'uti
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { convertToUpperCase } from 'utils/convertToUpperCase';
 import { expandIcon } from 'utils/accordianExpandIcon';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 const { Option } = Select;
@@ -69,25 +70,25 @@ const AddEditFormMain = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Collapse defaultActiveKey={['1']} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" collapsible="icon">
-                        <Panel header="Company Information" key="1">
+                        <Panel header={translateContent('customerMaster.drawerSubHeading.companyTitle')} key="1">
                             <Divider />
                             <Row gutter={20}>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="PAN" initialValue={formData?.panNumber} name="panNumber" rules={[validatePanField('pan'), validateRequiredInputField('pan')]}>
-                                        <Input maxLength={50} onInput={convertToUpperCase} placeholder={preparePlaceholderText('PAN')} />
+                                    <Form.Item label={translateContent('customerMaster.label.pan')} initialValue={formData?.panNumber} name="panNumber" rules={[validatePanField(translateContent('customerMaster.validation.pan')), validateRequiredInputField(translateContent('customerMaster.validation.pan'))]}>
+                                        <Input maxLength={50} onInput={convertToUpperCase} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.pan'))} />
                                     </Form.Item>
                                 </Col>
 
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="GSTIN" initialValue={formData?.gstinNumber} name="gstin" rules={[validateGSTIN('gstin'), validateRequiredInputField('gstin')]}>
-                                        <Input maxLength={50} onInput={convertToUpperCase} placeholder={preparePlaceholderText('GSTIN')} />
+                                    <Form.Item label={translateContent('customerMaster.label.gstin')} initialValue={formData?.gstinNumber} name="gstin" rules={[validateGSTIN(translateContent('customerMaster.validation.gstin')), validateRequiredInputField(translateContent('customerMaster.validation.gstin'))]}>
+                                        <Input maxLength={50} onInput={convertToUpperCase} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.gstin'))} />
                                     </Form.Item>
                                 </Col>
                             </Row>
                             <Row gutter={20}>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="Usage/Application Categorization" initialValue={formData?.applicationCategorization} name="applicationCategorization">
-                                        <Select maxLength={50} onChange={handleAppCategoryChange} placeholder={preparePlaceholderSelect('Usage/Application Categorization')}>
+                                    <Form.Item label={translateContent('customerMaster.label.Categorization')} initialValue={formData?.applicationCategorization} name="applicationCategorization">
+                                        <Select maxLength={50} onChange={handleAppCategoryChange} placeholder={preparePlaceholderSelect(translateContent('customerMaster.placeholder.category'))}>
                                             {appCategoryData.APP_CAT?.map((item) => (
                                                 <Option key={'ap' + item.key} value={item.key}>
                                                     {item.value}
@@ -98,8 +99,8 @@ const AddEditFormMain = (props) => {
                                 </Col>
 
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="Usage/Application Sub-Category" initialValue={formData?.applicationSubCategory} name="applicationSubCategory">
-                                        <Select maxLength={50} onChange={handleAppSubCategoryChange} placeholder={preparePlaceholderSelect('Usage/Application Sub-Category')}>
+                                    <Form.Item label={translateContent('customerMaster.label.SubCategory')} initialValue={formData?.applicationSubCategory} name="applicationSubCategory">
+                                        <Select maxLength={50} onChange={handleAppSubCategoryChange} placeholder={preparePlaceholderSelect(translateContent('customerMaster.placeholder.subCategory'))}>
                                             {appCategoryData.APP_SUB_CAT?.map((item) => (
                                                 <Option key={'sc' + item.key} value={item.key}>
                                                     {item.value}
@@ -110,8 +111,8 @@ const AddEditFormMain = (props) => {
                                 </Col>
 
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="Customer Category" initialValue={formData?.customerCategory} name="customerCategory">
-                                        <Select maxLength={50} onChange={handleCategoryChange} placeholder={preparePlaceholderSelect('Customer Category')}>
+                                    <Form.Item label={translateContent('customerMaster.label.customerCategory')} initialValue={formData?.customerCategory} name="customerCategory">
+                                        <Select maxLength={50} onChange={handleCategoryChange} placeholder={preparePlaceholderSelect(translateContent('customerMaster.placeholder.cusCategory'))}>
                                             {appCategoryData.CUS_CAT?.map((item) => (
                                                 <Option key={'ct' + item.key} value={item?.key}>
                                                     {item?.value}
@@ -126,27 +127,27 @@ const AddEditFormMain = (props) => {
                                     <Divider />
                                     <Row gutter={20}>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                            <Form.Item label="Business Details" initialValue={formData?.businessDetails} name="businessDetails">
-                                                <Input maxLength={50} placeholder={preparePlaceholderText('Business Details')} />
+                                            <Form.Item label={translateContent('customerMaster.label.businessDetails')} initialValue={formData?.businessDetails} name="businessDetails">
+                                                <Input maxLength={50} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.businessDetails'))} />
                                             </Form.Item>
                                         </Col>
 
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                            <Form.Item label="Vehicle Deployment Details" initialValue={formData?.vechileDeploymentDetails} name="vechileDeploymentDetails">
-                                                <Input maxLength={50} placeholder={preparePlaceholderText('Vehicle Deployment Details')} />
+                                            <Form.Item label={translateContent('customerMaster.label.vehicleDeployment')} initialValue={formData?.vechileDeploymentDetails} name="vechileDeploymentDetails">
+                                                <Input maxLength={50} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.vehicleDeployment'))} />
                                             </Form.Item>
                                         </Col>
 
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                            <Form.Item label="Key Role Details" initialValue={formData?.keyRouteDetails} name="keyRoleDetails">
-                                                <Input maxLength={50} placeholder={preparePlaceholderText('Key Role Details')} />
+                                            <Form.Item label={translateContent('customerMaster.label.keyRoleDetails')} initialValue={formData?.keyRouteDetails} name="keyRoleDetails">
+                                                <Input maxLength={50} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.keyRole'))} />
                                             </Form.Item>
                                         </Col>
                                     </Row>
                                     <Row gutter={20}>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                            <Form.Item label="Major Route Details" initialValue={formData?.majorRouteDetails} name="majorRouteDetails">
-                                                <Input maxLength={50} placeholder={preparePlaceholderText('Major Route Details')} />
+                                            <Form.Item label={translateContent('customerMaster.label.majorRouteDetails')} initialValue={formData?.majorRouteDetails} name="majorRouteDetails">
+                                                <Input maxLength={50} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.route'))} />
                                             </Form.Item>
                                         </Col>
                                     </Row>
@@ -156,36 +157,36 @@ const AddEditFormMain = (props) => {
                     </Collapse>
 
                     <Collapse defaultActiveKey={['3']} expandIcon={expandIcon} expandIconPosition="end" collapsible="icon">
-                        <Panel key="3" header="Key Account Details">
+                        <Panel key="3" header={translateContent('customerMaster.drawerSubHeading.accountTitle')}>
                             <Divider />
                             <Row gutter={20}>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="Account Code" initialValue={formData?.keyAccountDetails && formData?.keyAccountDetails?.accountCode} name="accountCode">
-                                        <Input maxLength={50} placeholder={preparePlaceholderText('Account Code')} disabled />
+                                    <Form.Item label={translateContent('customerMaster.label.accCode')} initialValue={formData?.keyAccountDetails && formData?.keyAccountDetails?.accountCode} name="accountCode">
+                                        <Input maxLength={50} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.accCode'))} disabled />
                                     </Form.Item>
                                 </Col>
 
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="Account Name" initialValue={formData?.keyAccountDetails && formData?.keyAccountDetails?.accountName} name="accountName">
-                                        <Input maxLength={50} placeholder={preparePlaceholderText('Account Name')} disabled />
+                                    <Form.Item label={translateContent('customerMaster.label.accName')} initialValue={formData?.keyAccountDetails && formData?.keyAccountDetails?.accountName} name="accountName">
+                                        <Input maxLength={50} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.accName'))} disabled />
                                     </Form.Item>
                                 </Col>
 
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="Account Segment" initialValue={formData?.keyAccountDetails && formData?.keyAccountDetails?.accountSegment} name="accountSegment">
-                                        <Input maxLength={50} placeholder={preparePlaceholderText('Account Segment')} disabled />
+                                    <Form.Item label={translateContent('customerMaster.label.accSegment')} initialValue={formData?.keyAccountDetails && formData?.keyAccountDetails?.accountSegment} name="accountSegment">
+                                        <Input maxLength={50} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.accSegment'))} disabled />
                                     </Form.Item>
                                 </Col>
                             </Row>
                             <Row gutter={20}>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="Account Client Name" initialValue={formData?.keyAccountDetails && formData?.keyAccountDetails?.accountClientName} name="accountClientName">
-                                        <Input maxLength={50} placeholder={preparePlaceholderText('Account Client Name')} disabled />
+                                    <Form.Item label={translateContent('customerMaster.label.accClient')} initialValue={formData?.keyAccountDetails && formData?.keyAccountDetails?.accountClientName} name="accountClientName">
+                                        <Input maxLength={50} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.accClient'))} disabled />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="Account Mapping Date" initialValue={formData?.keyAccountDetails && formData?.keyAccountDetails?.accountMappingDate} name="accountMappingDate">
-                                        <Input maxLength={50} placeholder={preparePlaceholderText('Account Mapping Date')} disabled />
+                                    <Form.Item label={translateContent('customerMaster.label.accDate')} initialValue={formData?.keyAccountDetails && formData?.keyAccountDetails?.accountMappingDate} name="accountMappingDate">
+                                        <Input maxLength={50} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.accMapping'))} disabled />
                                     </Form.Item>
                                 </Col>
                             </Row>

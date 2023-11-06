@@ -16,6 +16,7 @@ import { DATA_TYPE } from 'constants/dataType';
 import { DELIVERY_STATUS_CONSTANT } from './utils/DeliveryStatusConstant';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const ViewTimelineMain = (props) => {
     const { buttonData, setButtonData, handleButtonClick, formData, onCloseAction } = props;
@@ -68,15 +69,15 @@ export const ViewTimelineMain = (props) => {
         const id = value?.length;
         switch (true) {
             case id === 1: {
-                value.push({ order: 2, title: 'In Transit', vehicleTrackingLocationResponse: [{ time: '12:00' }] }, { order: 3, title: 'Delivered', vehicleTrackingLocationResponse: [{ time: '12:00' }] }, { order: 4, title: 'Received', vehicleTrackingLocationResponse: [] });
+                value.push({ order: 2, title: translateContent('vehicleTracking.title.inTransit'), vehicleTrackingLocationResponse: [{ time: '12:00' }] }, { order: 3, title: translateContent('vehicleTracking.title.delivered'), vehicleTrackingLocationResponse: [{ time: '12:00' }] }, { order: 4, title: translateContent('vehicleTracking.title.received'), vehicleTrackingLocationResponse: [] });
                 break;
             }
             case id === 2: {
-                value.push({ order: 3, title: 'Delivered', vehicleTrackingLocationResponse: [{ time: '12:00' }] }, { order: 4, title: 'Received', vehicleTrackingLocationResponse: [] });
+                value.push({ order: 3, title: translateContent('vehicleTracking.title.delivered'), vehicleTrackingLocationResponse: [{ time: '12:00' }] }, { order: 4, title: translateContent('vehicleTracking.title.received'), vehicleTrackingLocationResponse: [] });
                 break;
             }
             case id === 3: {
-                value.push({ order: 4, title: 'Received', vehicleTrackingLocationResponse: [] });
+                value.push({ order: 4, title: translateContent('vehicleTracking.title.received'), vehicleTrackingLocationResponse: [] });
                 break;
             }
             default: {
@@ -107,7 +108,7 @@ export const ViewTimelineMain = (props) => {
                                 if (record?.title === DELIVERY_STATUS_CONSTANT?.DELIVERED?.title) {
                                     return (
                                         <Card>
-                                            <span>Expected Date of Delivery: {checkAndSetDefaultValue(formData?.etaDateAndTime, false, DATA_TYPE?.DATE?.key)}</span>
+                                            <span>{translateContent('vehicleTracking.text.expectedDateOfDelivery')} {checkAndSetDefaultValue(formData?.etaDateAndTime, false, DATA_TYPE?.DATE?.key)}</span>
                                         </Card>
                                     );
                                 } else if (record?.title === DELIVERY_STATUS_CONSTANT?.DISPATCHED?.title) {
@@ -126,7 +127,7 @@ export const ViewTimelineMain = (props) => {
                                             )}
                                             {!locationVisiblity && (
                                                 <Button icon={locationVisiblity ? <SlArrowUp /> : <SlArrowDown />} onClick={handleVisiblity} type="link">
-                                                    {locationVisiblity ? 'See Less' : 'See More'}
+                                                    {locationVisiblity ? translateContent('vehicleTracking.buttons.seeLess') : translateContent('vehicleTracking.buttons.seeMore')}
                                                 </Button>
                                             )}
                                         </>
@@ -141,7 +142,7 @@ export const ViewTimelineMain = (props) => {
                                             )}
                                             {locationVisiblity && (
                                                 <Button icon={locationVisiblity ? <SlArrowUp /> : <SlArrowDown />} onClick={handleVisiblity} type="link">
-                                                    {locationVisiblity ? 'See Less' : 'See More'}
+                                                    {locationVisiblity ? translateContent('vehicleTracking.buttons.seeLess') : translateContent('vehicleTracking.buttons.seeMore')}
                                                 </Button>
                                             )}
                                         </>

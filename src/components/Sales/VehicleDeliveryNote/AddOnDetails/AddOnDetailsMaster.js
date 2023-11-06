@@ -17,6 +17,7 @@ import { schemeDescriptionAmcDataActions, schemeDescriptionRsaDataActions, schem
 import { showGlobalNotification } from 'store/actions/notification';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -31,7 +32,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Add on Details';
+    const moduleTitle = translateContent('vehicleDeliveryNote.addOnDetails.heading.mainTitle');
 
     let returnValue = {
         userId,
@@ -198,7 +199,7 @@ export const AddOnDetailsMasterMain = (props) => {
                 }
                 setRegisterDisabled((prev) => ({ ...prev, [openAccordian]: true }));
                 const message = !formData?.[key] ? 'registered' : 'saved';
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: `Scheme has been ${message} successfully` });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: `Scheme has been ${message} successfully` });
             })
             .catch((err) => console.error(err));
     };

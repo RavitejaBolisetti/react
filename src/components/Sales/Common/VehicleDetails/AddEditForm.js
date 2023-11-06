@@ -28,6 +28,7 @@ import styles from 'assets/sass/app.module.scss';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
 import { EDIT_ACTION, DELETE_ACTION } from 'utils/btnVisiblity';
 import { OTF_STATUS } from 'constants/OTFStatus';
+import { translateContent } from 'utils/translateContent';
 
 const { Text } = Typography;
 const { Panel } = Collapse;
@@ -174,18 +175,18 @@ const AddEditFormMain = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" collapsible="icon">
-                        <Panel header="Vehicle Information" key="1">
+                        <Panel header={translateContent('vehicleInvoiceGeneration.heading.collapse.vehicleInformation')} key="1">
                             <Divider />
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={14} lg={14} xl={14}>
-                                    <Form.Item label="Model Description" name="model" data-testid="model">
+                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.modelDescription')} name="model" data-testid="model">
                                         <TreeSelectField {...treeSelectFieldProps} />
                                     </Form.Item>
                                     {toolTipContent && <div className={styles.modelTooltip}>{addToolTip(toolTipContent, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle size={13} />)}</div>}
                                 </Col>
 
                                 <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                    <Form.Item label="Model Code" name="modelCode" data-testid="vehicleVariant" rules={[validateRequiredInputField('Model Code')]}>
+                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.modelCode')} name="modelCode" data-testid="vehicleVariant" rules={[validateRequiredInputField('Model Code')]}>
                                         <Input {...disabledProp} placeholder={preparePlaceholderText('Model Code')} />
                                     </Form.Item>
                                 </Col>
@@ -229,47 +230,47 @@ const AddEditFormMain = (props) => {
                                 )}
 
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item label="VIN" name="vinNumber">
+                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.vin')} name="vinNumber">
                                         <Input {...disabledProp} placeholder={preparePlaceholderText('VIN')} />
                                     </Form.Item>
                                 </Col>
                             </Row>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                    {prepareCaption('Price Information')}
+                                    {prepareCaption(translateContent('vehicleInvoiceGeneration.heading.captions.priceInformation'))}
                                 </Col>
                             </Row>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item initialValue={formData?.saleType} name="saleType" label="Sale Type" rules={[validateRequiredSelectField('Sale Type')]}>
+                                    <Form.Item initialValue={formData?.saleType} name="saleType" label={translateContent('commonModules.label.vehicleDetails.saleType')} rules={[validateRequiredSelectField('Sale Type')]}>
                                         {customSelectBox({ data: typeData['SALE_TYPE'], onChange: (value) => handleVehicleDetailChange({ ...filterVehicleData, saleType: value }) })}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item initialValue={formData?.priceType} label="Price Type" name="priceType">
+                                    <Form.Item initialValue={formData?.priceType} label={translateContent('commonModules.label.vehicleDetails.priceType')} name="priceType">
                                         {customSelectBox({ data: typeData['PRC_TYP'], onChange: (value) => handleVehicleDetailChange({ ...filterVehicleData, priceType: value }) })}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item label="Vehicle Selling Price" name="vehicleSellingPrice">
+                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.vehicleSellingPrice')} name="vehicleSellingPrice">
                                         <Input {...disabledProp} placeholder={preparePlaceholderText('Vehicle Selling Price')} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item label="Vehicle Amount" name="vehicleAmount">
+                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.vehicleAmount')} name="vehicleAmount">
                                         <Input {...disabledProp} placeholder={preparePlaceholderText('Vehicle Amount')} />
                                     </Form.Item>
                                 </Col>
                             </Row>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                    {prepareCaption('Benefits')}
+                                    {prepareCaption(translateContent('vehicleInvoiceGeneration.heading.captions.benefit'))}
                                 </Col>
                             </Row>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item
-                                        label="Dealer Discount with TAX"
+                                        label={translateContent('commonModules.label.vehicleDetails.dealerDiscountWithTax')}
                                         name="discountAmount"
                                         rules={[
                                             validateNumberWithTwoDecimalPlaces('Dealer Discount with TAX'),
@@ -282,13 +283,13 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item label="Consumer Scheme with TAX" name="taxAmount">
+                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.consumerSchemeWithTax')} name="taxAmount">
                                         <Input {...disabledProp} placeholder={preparePlaceholderText('Consumer Scheme with TAX')} />
                                     </Form.Item>
                                 </Col>
                                 {showPrintDiscount && (
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={formActionType?.editMode ? (formData?.printDiscount === 'Y' ? true : false) : false} labelAlign="left" wrapperCol={{ span: 24 }} name="printDiscount" label="Print Discount?">
+                                        <Form.Item initialValue={formActionType?.editMode ? (formData?.printDiscount === 'Y' ? true : false) : false} labelAlign="left" wrapperCol={{ span: 24 }} name="printDiscount" label={translateContent('commonModules.label.vehicleDetails.printDiscount')}>
                                             <Switch checkedChildren="Yes" unCheckedChildren="No" onChange={(checked) => (checked ? 'Y' : 'N')} />
                                         </Form.Item>
                                     </Col>
@@ -297,7 +298,7 @@ const AddEditFormMain = (props) => {
                         </Panel>
                     </Collapse>
                     <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end" collapsible="icon">
-                        <Panel header="Tax Details" key="2">
+                        <Panel header={translateContent('vehicleInvoiceGeneration.heading.collapse.taxDetails')} key="2">
                             <Divider />
                             <DataTable tableColumn={taxDetailsColumn()} tableData={formData['taxDetails']} pagination={false} />
                         </Panel>
@@ -307,7 +308,7 @@ const AddEditFormMain = (props) => {
                             header={
                                 <Row>
                                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                        <Text strong>Optional Services</Text>
+                                        <Text strong>{translateContent('vehicleInvoiceGeneration.heading.collapse.optionalService')}</Text>
                                         <Button className={styles.marL10} onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly}>
                                             Add
                                         </Button>

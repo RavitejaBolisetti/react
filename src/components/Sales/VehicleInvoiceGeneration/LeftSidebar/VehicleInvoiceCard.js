@@ -17,6 +17,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import styles from 'assets/sass/app.module.scss';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
 import { IRN_STATUS } from 'constants/IRNStatus';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
@@ -24,12 +25,12 @@ const { Text, Title } = Typography;
 const expandIcon = ({ isActive }) =>
     isActive ? (
         <>
-            <span>See less</span>
+            <span>{translateContent('global.buttons.seeLess')}</span>
             <SlArrowUp size={13} />
         </>
     ) : (
         <>
-            <span>See more</span>
+            <span>{translateContent('global.buttons.seeMore')}</span>
             <SlArrowDown size={13} />
         </>
     );
@@ -73,7 +74,7 @@ const VehicleInvoiceCard = (props) => {
                         </Space>
                         <Divider />
                         <div className={styles.detailCardText}>
-                            Invoice No.: <span>{checkAndSetDefaultValue(selectedOrder?.invoiceNumber, isLoading)}</span>
+                            {translateContent('vehicleInvoiceGeneration.heading.profileCard.invoiceNumber')} <span>{checkAndSetDefaultValue(selectedOrder?.invoiceNumber, isLoading)}</span>
                         </div>
                     </>
                 }
@@ -81,13 +82,13 @@ const VehicleInvoiceCard = (props) => {
             >
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Invoice Date: <span>{checkAndSetDefaultValue(selectedOrder?.invoiceDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
+                    {translateContent('vehicleInvoiceGeneration.heading.profileCard.invoiceDate')} <span>{checkAndSetDefaultValue(selectedOrder?.invoiceDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
                 </div>
                 <Divider />
                 {formActionType?.viewMode && (
                     <>
                         <div className={styles.detailCardText}>
-                            Status:
+                            {translateContent('vehicleInvoiceGeneration.heading.profileCard.status')}
                             <span className={styles.tooltipAlign}>
                                 {checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.INVC_STATS.id], selectedOrder?.invoiceStatus))}
                                 <span className={styles.marL5}>
@@ -95,13 +96,16 @@ const VehicleInvoiceCard = (props) => {
                                         addToolTip(
                                             <div>
                                                 <p>
-                                                    Cancelled Date: <span>{checkAndSetDefaultValue(selectedOrder?.cancelDate, isLoading, DATA_TYPE?.DATE?.key ?? 'Na')}</span>
+                                                    {translateContent('vehicleInvoiceGeneration.heading.profileCard.cancelDate')}
+                                                    <span>{checkAndSetDefaultValue(selectedOrder?.cancelDate, isLoading, DATA_TYPE?.DATE?.key ?? 'Na')}</span>
                                                 </p>
                                                 <p>
-                                                    Cancel By: <span>{checkAndSetDefaultValue(selectedOrder?.cancelBy ?? 'Na', isLoading)}</span>
+                                                    {translateContent('vehicleInvoiceGeneration.heading.profileCard.cancelBy')}
+                                                    <span>{checkAndSetDefaultValue(selectedOrder?.cancelBy ?? 'Na', isLoading)}</span>
                                                 </p>
                                                 <p>
-                                                    Cancellation Reason: <span>{checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.INVOICE_CANCEL_REASON.id], selectedOrder?.cancelReason))}</span>
+                                                    {translateContent('vehicleInvoiceGeneration.heading.profileCard.cancelReason')}
+                                                    <span>{checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.INVOICE_CANCEL_REASON.id], selectedOrder?.cancelReason))}</span>
                                                 </p>
                                             </div>,
                                             'bottom',
@@ -117,12 +121,12 @@ const VehicleInvoiceCard = (props) => {
                 {formActionType?.viewMode && selectedOrder?.gstin && (selectedOrder?.irnStatus || (selectedOrder?.invoiceNumber && !selectedOrder?.irnStatus && selectedOrder?.invoiceStatus === QUERY_BUTTONS_CONSTANTS.INVOICED.key)) && (
                     <>
                         <div className={styles.detailCardText}>
-                            IRN Status:
+                            {translateContent('vehicleInvoiceGeneration.heading.profileCard.irnStatus')}
                             <div className={styles.buttonsGroupRight}>
                                 {selectedOrder?.invoiceNumber && !selectedOrder?.irnStatus && selectedOrder?.invoiceStatus === QUERY_BUTTONS_CONSTANTS.INVOICED.key ? (
                                     <>
                                         <Button onClick={showConfirmation} danger className={styles.leftPannelButton}>
-                                            Generate
+                                            {translateContent('vehicleInvoiceGeneration.buttons.generate')}
                                         </Button>
                                         <ConfirmationModal {...confirmRequest} />
                                     </>
@@ -135,13 +139,16 @@ const VehicleInvoiceCard = (props) => {
                                                 addToolTip(
                                                     <div>
                                                         <p>
-                                                            IRN Date: <span>{checkAndSetDefaultValue(selectedOrder?.irnDate, isLoading, DATA_TYPE?.DATE?.key ?? 'Na')}</span>
+                                                            {translateContent('vehicleInvoiceGeneration.heading.profileCard.irnDate')}
+                                                            <span>{checkAndSetDefaultValue(selectedOrder?.irnDate, isLoading, DATA_TYPE?.DATE?.key ?? 'Na')}</span>
                                                         </p>
                                                         <p>
-                                                            IRN No.: <span>{checkAndSetDefaultValue(selectedOrder?.irnNumber ?? 'Na', isLoading)}</span>
+                                                            {translateContent('vehicleInvoiceGeneration.heading.profileCard.irnNumber')}
+                                                            <span>{checkAndSetDefaultValue(selectedOrder?.irnNumber ?? 'Na', isLoading)}</span>
                                                         </p>
                                                         <p>
-                                                            Description: <span>{checkAndSetDefaultValue(selectedOrder?.irnDesc ?? 'Na', isLoading)}</span>
+                                                            {translateContent('vehicleInvoiceGeneration.heading.profileCard.description')}
+                                                            <span>{checkAndSetDefaultValue(selectedOrder?.irnDesc ?? 'Na', isLoading)}</span>
                                                         </p>
                                                     </div>,
                                                     'bottom',
@@ -157,11 +164,13 @@ const VehicleInvoiceCard = (props) => {
                     </>
                 )}
                 <div className={styles.detailCardText}>
-                    Booking No.: <span>{checkAndSetDefaultValue(selectedOrder?.bookingNumber || selectedOrder?.otfNumber, isLoading)}</span>
+                    {translateContent('vehicleInvoiceGeneration.heading.profileCard.bookingNumber')}
+                    <span>{checkAndSetDefaultValue(selectedOrder?.bookingNumber || selectedOrder?.otfNumber, isLoading)}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Booking Date: <span>{checkAndSetDefaultValue(selectedOrder?.orderDate ? selectedOrder?.orderDate : selectedOrder?.otfDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
+                    {translateContent('vehicleInvoiceGeneration.heading.profileCard.bookingDate')}
+                    <span>{checkAndSetDefaultValue(selectedOrder?.orderDate ? selectedOrder?.orderDate : selectedOrder?.otfDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
                 </div>
             </Panel>
         </Collapse>
