@@ -9,6 +9,7 @@ import { AuthorityDetailPanel } from './HierarchyAuthorityDetail';
 import { HIERARCHY_DEFAULT_PARENT } from 'constants/constants';
 import { generateList, findParentName } from './generateList';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { translateContent } from 'utils/translateContent';
 
 export const HierarchyViewMain = ({ viewMode, isLoading, viewTitle, authTypeDropdownData, manufacturerAdminHierarchyData, documentTypesList, setDocumentTypesList, attributeData, selectedTreeData, handleEditBtn, handleRootChildBtn, handleChildBtn, handleSiblingBtn, setClosePanels, styles }) => {
     const viewOneColProps = {
@@ -20,17 +21,17 @@ export const HierarchyViewMain = ({ viewMode, isLoading, viewTitle, authTypeDrop
     };
     const manufacturerAdminHierarchyDataFlat = generateList(manufacturerAdminHierarchyData, { children: 'subManufactureAdmin' });
     const finalParentName = findParentName(manufacturerAdminHierarchyDataFlat, selectedTreeData?.manufactureAdminParntId)?.data?.manufactureAdminShortName ?? HIERARCHY_DEFAULT_PARENT;
-    const status = selectedTreeData?.status ? 'Active' : 'InActive';
+    const status = selectedTreeData?.status ? translateContent('global.label.active') : translateContent('global.label.inActive');
     return (
         <>
             <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
-                    <Descriptions.Item label="Attribute Level">{checkAndSetDefaultValue(selectedTreeData?.hierarchyAttribueName, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Parent">{selectedTreeData?.parentName ? checkAndSetDefaultValue(selectedTreeData?.parentName, isLoading) : checkAndSetDefaultValue(finalParentName, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Code">{checkAndSetDefaultValue(selectedTreeData?.manufactureAdminCode, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Short Description">{checkAndSetDefaultValue(selectedTreeData?.manufactureAdminShortName, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Long Description">{checkAndSetDefaultValue(selectedTreeData?.manufactureAdminLongName, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Status">{checkAndSetDefaultValue(status, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('adminHierarchy.label.attributeLevel')}>{checkAndSetDefaultValue(selectedTreeData?.hierarchyAttribueName, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('adminHierarchy.label.parent')}>{selectedTreeData?.parentName ? checkAndSetDefaultValue(selectedTreeData?.parentName, isLoading) : checkAndSetDefaultValue(finalParentName, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('adminHierarchy.label.code')}>{checkAndSetDefaultValue(selectedTreeData?.manufactureAdminCode, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('adminHierarchy.label.shortDescription')}>{checkAndSetDefaultValue(selectedTreeData?.manufactureAdminShortName, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('adminHierarchy.label.longDescription')}>{checkAndSetDefaultValue(selectedTreeData?.manufactureAdminLongName, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('global.label.status')}>{checkAndSetDefaultValue(status, isLoading)}</Descriptions.Item>
                     <Space direction="vertical" size="small">
                         {documentTypesList && documentTypesList.length > 0 && <AuthorityDetailPanel viewMode={viewMode} selectedTreeData={selectedTreeData} documentTypesList={documentTypesList} setDocumentTypesList={setDocumentTypesList} authTypeDropdownData={authTypeDropdownData} />}
                     </Space>

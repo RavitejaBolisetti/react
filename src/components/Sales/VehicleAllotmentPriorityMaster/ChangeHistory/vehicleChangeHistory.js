@@ -15,6 +15,7 @@ import { otfDataActions } from 'store/actions/data/otf/otf';
 import { DataTable } from 'utils/dataTable';
 import { withDrawer } from 'components/withDrawer';
 import { BASE_URL_OTF_CHANGE_HISTORY as customURL } from 'constants/routingApi';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -67,7 +68,7 @@ const ChangeHistoryMain = ({ fetchOTFChangeHistory, onCloseAction, listShowChang
 
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Modified Date & Time',
+            title: translateContent('vehicleAllotmentPriorityMaster.label.modifiedDateTime'),
             dataIndex: 'modifiedDate',
             render: (text) => [
                 <div>
@@ -78,19 +79,19 @@ const ChangeHistoryMain = ({ fetchOTFChangeHistory, onCloseAction, listShowChang
             ],
         }),
         tblPrepareColumns({
-            title: 'Modified By',
+            title: translateContent('vehicleAllotmentPriorityMaster.label.modifiedBy'),
             dataIndex: 'modifiedBy',
         }),
         tblPrepareColumns({
-            title: 'Field Name',
+            title: translateContent('vehicleAllotmentPriorityMaster.label.fieldName'),
             dataIndex: 'fieldName',
         }),
         tblPrepareColumns({
-            title: 'Old Value',
+            title: translateContent('vehicleAllotmentPriorityMaster.label.oldValue'),
             dataIndex: 'oldValue',
         }),
         tblPrepareColumns({
-            title: 'New Value',
+            title: translateContent('vehicleAllotmentPriorityMaster.label.newValue'),
             dataIndex: 'newValue',
         }),
     ];
@@ -112,7 +113,7 @@ const ChangeHistoryMain = ({ fetchOTFChangeHistory, onCloseAction, listShowChang
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Button danger onClick={onCloseAction}>
-                            Close
+                            {translateContent('global.buttons.close')}
                         </Button>
                     </Col>
                 </Row>

@@ -16,6 +16,7 @@ import { getCodeValue } from 'utils/getCodeValue';
 import { AddEditForm } from './AddEditForm';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Text } = Typography;
 
@@ -65,7 +66,7 @@ const AuthorityCardItemMain = (props) => {
         const isPreviousTokenNo = record?.authorityEmployeeTokenNo === tokenNo;
 
         if (!isPreviousTokenNo && !tokenValidationData?.manufacturerUserName) {
-            return showGlobalNotification({ notificationType: 'warning', title: 'Warning', message: 'Validate token to proceed' });
+            return showGlobalNotification({ notificationType: 'warning', title: translateContent('global.notificationSuccess.warning'), message: translateContent('manufaturerAdmin.label.warningMessage') });
         }
 
         form.validateFields()
@@ -133,10 +134,10 @@ const AuthorityCardItemMain = (props) => {
                             ) : (
                                 <>
                                     <Button type="link" onClick={onUpdate}>
-                                        Save
+                                        {translateContent('global.buttons.save')}
                                     </Button>
                                     <Button type="link" onClick={() => onCancel()}>
-                                        Cancel
+                                        {translateContent('global.buttons.cancel')}
                                     </Button>
                                 </>
                             )}

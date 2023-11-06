@@ -99,7 +99,7 @@ const AddEditFormMain = (props) => {
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label={translateContent('customerMaster.label.gender')} name="gender" initialValue={formData?.gender} rules={[validateRequiredSelectField(translateContent('customerMaster.validation.gender'))]}>
-                                        <Select placeholder={translateContent('customerMaster.placeholder.gender')} {...disabledProps}>
+                                        <Select placeholder={preparePlaceholderSelect(translateContent('customerMaster.placeholder.gender'))} {...disabledProps}>
                                             {appCategoryData?.GENDER_CD?.map((item) => (
                                                 <Option key={'ct' + item.key} value={item.key}>
                                                     {item.value}
@@ -110,7 +110,7 @@ const AddEditFormMain = (props) => {
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label={translateContent('customerMaster.label.maritalStatus')} initialValue={formData?.martialStatus} name="martialStatus">
-                                        <Select placeholder={translateContent('customerMaster.placeholder.maritalStatus')} {...disabledProps} onChange={handleOnChange}>
+                                        <Select placeholder={preparePlaceholderSelect(translateContent('customerMaster.placeholder.maritalStatus'))} {...disabledProps} onChange={handleOnChange}>
                                             {appCategoryData?.MARITAL_STATUS?.map((item) => (
                                                 <Option key={'ct' + item.key} value={item.key}>
                                                     {item.value}
@@ -128,7 +128,7 @@ const AddEditFormMain = (props) => {
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label={translateContent('customerMaster.label.Occupation')} initialValue={formData?.occuption} name="occuption">
-                                        <Select placeholder={translateContent('customerMaster.placeholder.occupation')} {...disabledProps}>
+                                        <Select placeholder={preparePlaceholderSelect(translateContent('customerMaster.placeholder.occupation'))} {...disabledProps}>
                                             {appCategoryData?.OCCUPATION?.map((item) => (
                                                 <Option key={'ct' + item.key} value={item.key}>
                                                     {item.value}
@@ -139,7 +139,7 @@ const AddEditFormMain = (props) => {
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label={translateContent('customerMaster.label.annualIncome')} initialValue={formData?.annualIncome} name="annualIncome">
-                                        <Select placeholder={translateContent('customerMaster.placeholder.annualIncome')} {...disabledProps}>
+                                        <Select placeholder={preparePlaceholderSelect(translateContent('customerMaster.placeholder.annualIncome'))} {...disabledProps}>
                                             {appCategoryData?.Annual_Income?.map((item) => (
                                                 <Option key={'ct' + item.key} value={item.key}>
                                                     {item.value}
@@ -152,24 +152,24 @@ const AddEditFormMain = (props) => {
                             <Row gutter={20}>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label={translateContent('customerMaster.label.drivingLicenseNo')} name="drivingLicenseNumber" initialValue={formData?.drivingLicenseNumber} rules={[validateDrivingLicenseNo(translateContent('customerMaster.validation.licenseNo'))]}>
-                                        <Input maxLength={15} onInput={convertToUpperCase} placeholder={translateContent('customerMaster.placeholder.drivinglicense')} {...disabledProps} />
+                                        <Input maxLength={15} onInput={convertToUpperCase} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.drivinglicense'))} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label={translateContent('customerMaster.label.aadharNo')} name="adharNumber" initialValue={formData?.adharNumber} rules={[validateAadhar(translateContent('customerMaster.validation.aadhar'))]}>
-                                        <Input maxLength={12} placeholder={translateContent('customerMaster.placeholder.aadharNumber')} {...disabledProps} />
+                                        <Input maxLength={12} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.aadharNumber'))} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label={translateContent('customerMaster.label.voterID')} name="voterId" initialValue={formData?.voterId} rules={[validateVoterId(translateContent('customerMaster.validation.voterId'))]}>
-                                        <Input maxLength={10} onInput={convertToUpperCase} placeholder={translateContent('customerMaster.placeholder.voterId')} {...disabledProps} />
+                                        <Input maxLength={10} onInput={convertToUpperCase} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.voterId'))} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                             </Row>
                             <Row gutter={20}>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label={translateContent('customerMaster.label.vehicleUsed')} initialValue={formData?.vehicleUsed} name="vehicleUsed">
-                                        <Select placeholder={translateContent('customerMaster.placeholder.vehicleUsed')} {...disabledProps}>
+                                        <Select placeholder={preparePlaceholderSelect(translateContent('customerMaster.placeholder.vehicleUsed'))} {...disabledProps}>
                                             {appCategoryData?.Vehicle_Used?.map((item) => (
                                                 <Option key={'ct' + item.key} value={item.key}>
                                                     {item.value}
@@ -180,7 +180,7 @@ const AddEditFormMain = (props) => {
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label={translateContent('customerMaster.label.motherTongue')} initialValue={formData?.motherTongue} name="motherTongue">
-                                        <Select placeholder={translateContent('customerMaster.placeholder.motherTongue')} {...disabledProps}>
+                                        <Select placeholder={preparePlaceholderSelect(translateContent('customerMaster.placeholder.motherTongue'))} {...disabledProps}>
                                             {appCategoryData?.MOTHER_TOUNGE?.map((item) => (
                                                 <Option key={'ct' + item.key} value={item.key}>
                                                     {item.value}
@@ -192,13 +192,13 @@ const AddEditFormMain = (props) => {
 
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label={translateContent('customerMaster.label.pan')} name="panNumber" initialValue={formData?.panNumber} rules={[validatePanField(translateContent('customerMaster.validation.pan')), validateRequiredInputField(translateContent('customerMaster.validation.pan'))]}>
-                                        <Input maxLength={10} onInput={convertToUpperCase} placeholder={translateContent('customerMaster.placeholder.pan')} {...disabledProps} />
+                                        <Input maxLength={10} onInput={convertToUpperCase} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.pan'))} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
 
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label={translateContent('customerMaster.label.gstin')} name="gstin" initialValue={formData?.gstin} rules={[validateGSTIN(translateContent('customerMaster.validation.gstin'))]}>
-                                        <Input value={null} onInput={convertToUpperCase} placeholder={translateContent('customerMaster.placeholder.gstin')} {...disabledProps} />
+                                        <Input value={null} onInput={convertToUpperCase} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.gstin'))} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -206,7 +206,7 @@ const AddEditFormMain = (props) => {
                             <Row gutter={20}>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label={translateContent('customerMaster.label.Categorization')} initialValue={formData?.applicationCategorization} name="applicationCategorization">
-                                        <Select placeholder={translateContent('customerMaster.placeholder.category')} {...disabledProps}>
+                                        <Select placeholder={preparePlaceholderSelect(translateContent('customerMaster.placeholder.category'))} {...disabledProps}>
                                             {appCategoryData?.APP_CAT?.map((item) => (
                                                 <Option key={'ct' + item.key} value={item.key}>
                                                     {item.value}
@@ -217,7 +217,7 @@ const AddEditFormMain = (props) => {
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label={translateContent('customerMaster.label.SubCategory')} initialValue={formData?.applicationSubCategory} name="applicationSubCategory">
-                                        <Select placeholder={translateContent('customerMaster.placeholder.income')} {...disabledProps}>
+                                        <Select placeholder={preparePlaceholderSelect(translateContent('customerMaster.placeholder.income'))} {...disabledProps}>
                                             {appCategoryData?.APP_SUB_CAT?.map((item) => (
                                                 <Option key={'ct' + item.key} value={item.key}>
                                                     {item.value}
@@ -228,7 +228,7 @@ const AddEditFormMain = (props) => {
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label={translateContent('customerMaster.label.customerCategory')} initialValue={formData?.customerCategory} name="customerCategory">
-                                        <Select placeholder={translateContent('customerMaster.placeholder.income')} {...disabledProps} onChange={onCustomerCategoryChange}>
+                                        <Select placeholder={preparePlaceholderSelect(translateContent('customerMaster.placeholder.income'))} {...disabledProps} onChange={onCustomerCategoryChange}>
                                             {appCategoryData?.CUS_CAT?.map((item) => (
                                                 <Option key={'ct' + item.key} value={item.key}>
                                                     {item.value}
@@ -245,24 +245,24 @@ const AddEditFormMain = (props) => {
                                     <Row gutter={20}>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                             <Form.Item label={translateContent('customerMaster.label.businessDetails')} initialValue={formData?.businessDetails} name="businessDetails">
-                                                <Input maxLength={15} placeholder={translateContent('customerMaster.placeholder.businessDetails')} {...disabledProps} />
+                                                <Input maxLength={15} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.businessDetails'))} {...disabledProps} />
                                             </Form.Item>
                                         </Col>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                             <Form.Item label={translateContent('customerMaster.label.vehicleDeployment')} initialValue={formData?.vehicleDeploymentDetails} name="vehicleDeploymentDetails">
-                                                <Input maxLength={15} placeholder={translateContent('customerMaster.placeholder.vehicleDeployment')} {...disabledProps} />
+                                                <Input maxLength={15} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.vehicleDeployment'))} {...disabledProps} />
                                             </Form.Item>
                                         </Col>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                             <Form.Item label={translateContent('customerMaster.label.keyRoleDetails')} initialValue={formData?.keyRolesDetails} name="keyRolesDetails">
-                                                <Input maxLength={15} placeholder={translateContent('customerMaster.placeholder.keyRole')} {...disabledProps} />
+                                                <Input maxLength={15} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.keyRole'))} {...disabledProps} />
                                             </Form.Item>
                                         </Col>
                                     </Row>
                                     <Row gutter={20}>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                             <Form.Item label={translateContent('customerMaster.label.majorRouteDetails')} initialValue={formData?.majorRouteDetails} name="majorRouteDetails">
-                                                <Input maxLength={15} placeholder={translateContent('customerMaster.label.route')} {...disabledProps} />
+                                                <Input maxLength={15} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.route'))} {...disabledProps} />
                                             </Form.Item>
                                         </Col>
                                     </Row>

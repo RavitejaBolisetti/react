@@ -384,11 +384,11 @@ const CustomerMasterMain = (props) => {
 
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
-            return 'View ';
+            return translateContent('global.drawerTitle.view');
         } else if (formActionType?.editMode) {
-            return 'Edit ';
+            return translateContent('global.drawerTitle.edit');
         } else {
-            return 'Add New ';
+            return translateContent('global.drawerTitle.addNew');
         }
     }, [formActionType]);
 
@@ -459,7 +459,7 @@ const CustomerMasterMain = (props) => {
         onCloseAction: () => {
             setChangeHistoryVisible(false);
         },
-        titleOverride: 'Customer Change History',
+        titleOverride: translateContent('customerMaster.drawerTitle.cusChange'),
         setIsFormVisible,
         buttonData,
         selectedCustomerId,
@@ -469,7 +469,7 @@ const CustomerMasterMain = (props) => {
 
     const nameChangeHistoryProps = {
         isVisible: showNameChangeHistory,
-        titleOverride: 'Name Change History',
+        titleOverride: translateContent('customerMaster.drawerTitle.nameChange'),
         onCloseAction: () => {
             setShowNameChangeHistory(false);
         },
@@ -519,7 +519,7 @@ const CustomerMasterMain = (props) => {
         shouldResetForm,
         handleFormValueChange,
         isLastSection,
-        saveButtonName: !selectedCustomerId ? 'Create Customer ID' : isLastSection ? 'Submit' : translateContent('global.buttons.saveAndNext'),
+        saveButtonName: !selectedCustomerId ? 'Create Customer ID' : isLastSection ? translateContent('global.buttons.submit') : translateContent('global.buttons.saveAndNext'),
         setIsFormVisible,
         setRefreshCustomerList,
         profileCardLoading,

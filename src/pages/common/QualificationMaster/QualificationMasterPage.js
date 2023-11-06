@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 import { QualificationMaster } from 'components/common/QualificationMaster';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -24,7 +25,7 @@ const mapStateToProps = (state) => {
 };
 
 export const QualificationMasterPageBase = (props) => {
-    const pageTitle = 'Qualification Master';
+    const pageTitle = translateContent('qualificationMaster.heading.pageTitle');
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

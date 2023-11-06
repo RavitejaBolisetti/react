@@ -5,6 +5,7 @@
  */
 import React from 'react';
 import { Descriptions } from 'antd';
+import { translateContent } from 'utils/translateContent';
 
 export const ViewMain = (props) => {
     const { viewTitle, viewData, styles, otfSoUserMappingData } = props;
@@ -22,9 +23,9 @@ export const ViewMain = (props) => {
         <>
             <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
-                    <Descriptions.Item label="Variant Code">{viewData?.productAttributeCode}</Descriptions.Item>
-                    <Descriptions.Item label="Product Variant">{viewData?.productAttributeValue}</Descriptions.Item>
-                    <Descriptions.Item label="User for Mapping/Unmapping">{mapName ? mapName : 'NA'}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('bookingSoMapping.label.variantCode')}>{viewData?.productAttributeCode}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('bookingSoMapping.label.productVariant')}>{viewData?.productAttributeValue}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('bookingSoMapping.label.userForMappingUnmapping')}>{mapName ? mapName : 'NA'}</Descriptions.Item>
                 </Descriptions>
             </div>
         </>

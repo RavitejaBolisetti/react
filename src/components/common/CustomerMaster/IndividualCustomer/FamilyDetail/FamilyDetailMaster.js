@@ -18,6 +18,7 @@ import { YES_NO_FLAG } from 'constants/yesNoFlag';
 import { formatDate } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 import dayjs from 'dayjs';
 
@@ -194,7 +195,7 @@ const FamilyDetailMasterBase = (props) => {
         const onSuccess = (res) => {
             form.resetFields();
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             fetchFamilyDetailsList({ setIsLoading: listFamilyDetailsShowLoading, userId, extraParams });
         };
 
@@ -212,8 +213,6 @@ const FamilyDetailMasterBase = (props) => {
 
         saveData(requestData);
     };
-
-
 
     const myProps = {
         ...props,
@@ -268,7 +267,7 @@ const FamilyDetailMasterBase = (props) => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} >
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <h2>{section?.title} </h2>

@@ -8,17 +8,19 @@ import { Collapse, Space, Avatar, Typography, Divider } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import styles from 'assets/sass/app.module.scss';
 
+import { translateContent } from 'utils/translateContent';
+
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
 const expandIcon = ({ isActive }) =>
     isActive ? (
         <>
-            <span>See less</span>
+            <span>{translateContent('global.buttons.seeLess')}</span>
             <SlArrowUp size={13} />
         </>
     ) : (
         <>
-            <span>See more</span>
+            <span>{translateContent('global.buttons.seeMore')}</span>
             <SlArrowDown size={13} />
         </>
     );
@@ -41,7 +43,7 @@ const ProfileDetailCard = (props) => {
                         </Space>
                         <Divider />
                         <div className={styles.detailCardText}>
-                            Booking No: <span>{chargerInstallationMasterData?.bookingNumber}</span>
+                            {translateContent('chargerInstallationProcess.cardText.bookingNo')} <span>{chargerInstallationMasterData?.bookingNumber}</span>
                         </div>
                     </>
                 }
@@ -49,7 +51,7 @@ const ProfileDetailCard = (props) => {
             >
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Overall Status: <span>{chargerInstallationMasterData?.chargerInstDetails?.requestStatus}</span>
+                    {translateContent('chargerInstallationProcess.cardText.overallStatus')} <span>{chargerInstallationMasterData?.chargerInstDetails?.requestStatus}</span>
                 </div>
             </Panel>
         </Collapse>
