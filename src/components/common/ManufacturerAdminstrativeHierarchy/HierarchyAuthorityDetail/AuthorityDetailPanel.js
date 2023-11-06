@@ -8,6 +8,7 @@ import { Collapse, Divider } from 'antd';
 
 import AuthorityDetailMaster from './AuthorityDetailMaster';
 import { accordianExpandIcon } from 'utils/accordianExpandIcon';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 
@@ -33,7 +34,7 @@ const AuthorityDetailPanel = (props) => {
     };
     return (
         <Collapse onChange={() => handleCollapse(1)} expandIcon={accordianExpandIcon} activeKey={openAccordian} collapsible="icon">
-            <Panel header="Authority Details" key="1">
+            <Panel header={translateContent('adminHierarchy.heading.authorityDetailTitle')} key="1">
                 <Divider />
                 <AuthorityDetailMaster {...authorityDetailProps} />
             </Panel>

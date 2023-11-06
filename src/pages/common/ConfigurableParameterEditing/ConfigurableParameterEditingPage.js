@@ -7,9 +7,10 @@ import React from 'react';
 import { ConfigurableParameterEditing } from 'components/common/ConfigurableParameterEditing/ConfigurableParameterEditing';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
+import { translateContent } from 'utils/translateContent';
 
 export const ConfigurableParameterEditingBase = (props) => {
-    const pageTitle = 'Configurable Parameter Editing';
+    const pageTitle = translateContent('configurableParameter.heading.pageTitle');
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

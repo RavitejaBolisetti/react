@@ -240,6 +240,7 @@
 
     "qualificationMaster": {
         "heading": {
+            "pageTitle": "Qualification Master",
             "title": "Qualification Master",
             "titleName": "Qualification Name",
             "drawerTitle": "Qualification"
@@ -1879,6 +1880,7 @@
     },
     "configurableParameter": {
         "heading": {
+            "pageTitle": "Configurable Parameter Editing",
             "mainTitle": "Configurable Parameter Editing",
             "title": "Control Description"
         },
@@ -1976,6 +1978,7 @@
     },
     "hierarchyAttribute": {
         "heading": {
+            "pageTitle": "Hierarchy Attribute Master",
             "mainTitle": "Hierarchy Attribute Master",
             "titleHierarchy": "Hierarchy Attribute Type",
             "title": "Hierarchy Attribute"
@@ -1998,8 +2001,9 @@
             "codeValidation": "code"
         }
     },
-    "manufacturerOrganisation": {
-        "heading": {
+    "manufacturerOrganisation":{
+        "heading":{
+            "pageTitle": "Manufacturer Organization Hierarchy",
             "mainTitle": "Manufacturer Organisation Detail",
             "viewTitle": "Manufacturer Details",
             "title": "Hierarchy"
@@ -2030,22 +2034,24 @@
             "codeValidation": "code",
             "attributeLevel": "attribute level",
             "attributeTypeCode": "attribute type code",
-
             "attributeHierarchyFieldValidation": "is not active anymore. Please select a different attribute."
         }
     },
-    "manufacturerAdmin": {
-        "heading": {
-            "mainTitle": "Manufacturer Detail",
+    "adminHierarchy":{
+        "heading":{
+            "adminPageTitle": "Manufacturer Adminstrative Hierarchy",
+            "adminMainTitle": "Manufacturer Detail",
             "viewTitle": "Manufacturer Details",
             "drawerTitle": "Upload Authority Details",
             "title": "Hierarchy",
             "changeHistoryTitle": "Admin Change History",
-            "authorityChangeHistoryTitle": "Authority Change History"
+            "authorityChangeHistoryTitle": "Authority Change History",
+            "authorityDetailTitle": "Authority Details"
         },
         "label": {
             "changedDate": "Changed/Modified Date",
             "changedBy": "Changed By",
+            "createdBy": "Created By",
             "attribute": "Attribute",
             "code": "Code",
             "parent": "Parent",
@@ -2055,8 +2061,9 @@
             "description": "Please select product from leftside hierarchy to view 'Hierarchy Details' ",
             "attributeType": "Attribute Type",
             "hierarchyCode": "Hierarchy Code",
-            "attributeLevel": "Attribute Level",
-            "attributeCode": "Attribute Code",
+            "attributeLevel":"Attribute Level",
+            "authorityType": "Authority Type",
+            "attributeCode":"Attribute Code",
             "authorityTypeCode": "Authority Type Code",
             "employeeName": "Employee Name",
             "employeeTokenNo": "Employee Token No.",
@@ -2068,7 +2075,11 @@
             "uploadButtonName": "Upload Authority Form",
             "messageText": "Click or drop your file here to upload",
             "downloadHere": "Download Here",
-            "selectOrganization": "Please Select Organization from dropdown"
+            "selectOrganization": "Please Select Organization from dropdown",
+            "token": "Token",
+            "employeeText": "Employee Name : ",
+            "warningMessage": "Validate token to proceed"
+
         },
         "placeholder": {
             "name": "name",
@@ -2076,7 +2087,12 @@
             "parent": "Parent",
             "attributeTypeCode": "attribute type code",
             "attributeCode": "attribute code",
-            "organizationHierarchy": "Organization Hierarchy"
+            "organizationHierarchy":"Organization Hierarchy",
+            "token": "Token",
+            "authorityType": "authority type",
+            "shortDescription": "short description",
+            "longDescription" : "long description",
+            "attributeLevel":"attribute level"
         },
         "validation": {
             "nameValidation": "name",
@@ -2084,7 +2100,15 @@
             "attributeLevel": "attribute level",
             "attributeTypeCode": "attribute type code",
             "attributeHierarchyFieldValidation": "is not active anymore. Please select a different attribute.",
-            "validationText": "File type should be .xlxs and max file size to be 8Mb"
+            "validationText": "File type should be .xlxs and max file size to be 8Mb",
+            "authorityType": "Authority Type",
+            "tokenRequired": "Token Required",
+            "dateRequired" : "Date Required",
+            "shortDescription": "short description",
+            "longDescription" : "long description"
+
+
+
         }
     },
 
