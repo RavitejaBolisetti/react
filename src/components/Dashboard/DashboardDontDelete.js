@@ -7,10 +7,13 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, Card, Button, Space, Divider, Tag, Typography } from 'antd';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
+import { FiPlus } from 'react-icons/fi';
 import * as IMAGES from 'assets';
 
 import styles from './Dashboard.module.scss';
 import DashboardActionItems from './DashboardActionItems';
+import WidgetDrawer from './WidgetDrawer';
+import NewsDrawer from './NewsDrawer';
 import { StatusBar } from './StatusBar';
 import { PieChart } from './PieChart';
 import { dateTimeDuration } from 'utils/formatDateTime';
@@ -19,6 +22,8 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { stockDataActions } from 'store/actions/data/dashboard/stocks';
 import { billingDataActions } from 'store/actions/data/dashboard/billing';
 import { retailDataActions } from 'store/actions/data/dashboard/retail';
+import LatestNews from './LatestNews';
+import BirthDayCalender from './BirthDayCalender';
 
 const { Text, Title } = Typography;
 
@@ -31,9 +36,9 @@ const mapStateToProps = (state) => {
         },
         data: {
             Dashboard: {
-                Stock: { data: stockData },
-                Billing: { data: billingData },
-                Retail: { data: retailData },
+                Stock: { data: stockData, isLoaded, isLoading },
+                Billing: { data: billingData, isLoaded: isBillingDataLoaded, isLoading: isBillingDataLoading },
+                Retail: { data: retailData, isLoaded: isRetailDataLoaded, isLoading: isRetailDataLoading },
             },
         },
     } = state;
@@ -71,10 +76,38 @@ const keyHightliteData = [
     { shortDescription: 'GST Update', longDescription: "GSTR 2 due date is 20th Oct'23", createdDate: '2023-10-16 17:45:00' },
 ];
 
+const detailNews = {
+    content:
+        'Mahindra & Mahindra, the popular Indian car manufacturing brand, has recorded its highest ever sales in the month of July 2023. Mahindra & Mahindra is popularly known for their rugged luxury SUV’s such as XUV 700, Scorpio-N, Scorpio Classic, Thar and compact SUV’s such as XUV 300 and XUV 400 EV.Mahindra & Mahindra, the popular Indian car manufacturing brand, has recorded its highest ever sales in the month of July 2023. Mahindra & Mahindra is popularly known for their rugged luxury SUV’s such as XUV 700, Scorpio-N, Scorpio Classic, Thar and compact SUV’s such as XUV. Mahindra & Mahindra, the popular Indian car manufacturing brand, has recorded its highest ever sales in the month of July 2023. Mahindra & Mahindra is popularly known for their rugged luxury SUV’s such as XUV 700, Scorpio-N, Scorpio Classic, Thar and compact SUV’s such as XUV 300 and XUV 400 EV.',
+};
+const newsData = [
+    { shortDescription: 'Mahindra & Mahindra sells 36,205 SUVs in July 2023', longDescription: 'Mahindra & Mahindra, the popular Indian car manufacturing brand.', date: '5 min ago', content: detailNews?.content },
+    { shortDescription: 'Mahindra Sales in July hits highest mark as per TOI Survey', longDescription: 'Mahindra & Mahindra is popularly known for their rugged luxury.', date: '50 min ago', content: detailNews?.content },
+    { shortDescription: 'Mahindra Scorpio Sales Rise By Over 2-Folds', longDescription: 'Mahindra & Mahindra, the popular Indian car manufacturing brand', date: '9 min ago', content: detailNews?.content },
+    { shortDescription: 'Mahindra & Mahindra sells 36,205 SUVs in July 2023', longDescription: 'Mahindra & Mahindra, the popular Indian car manufacturing brand.', date: '5 min ago', content: detailNews?.content },
+    { shortDescription: 'Mahindra Sales in July hits highest mark as per TOI Survey', longDescription: 'Mahindra & Mahindra is popularly known for their rugged luxury.', date: '50 min ago', content: detailNews?.content },
+    { shortDescription: 'Mahindra Scorpio Sales Rise By Over 2-Folds', longDescription: 'Mahindra & Mahindra, the popular Indian car manufacturing brand', date: '9 min ago', content: detailNews?.content },
+];
+const birthDayData = {
+    birthDaytoday: [
+        { name: 'Shally Gupta', date: '17, Feb 2023 Sunday', image: '' },
+        { name: 'Vimal Kumar Bhati', date: '21, July 2023 Friday', image: '' },
+        { name: 'Vivek Verma', date: '07, December 2023 Friday', image: '' },
+    ],
+    upcomingBirthDay: [
+        { name: 'Vishal Gaurav', date: '19, November 2023 Sunday', image: '' },
+        { name: 'Shally Gupta', date: '17, December 2023 Sunday', image: '' },
+        { name: 'Vimal Kumar Bhati', date: '21, July 2023 Friday', image: '' },
+    ],
+};
+
 const DashboardBase = (props) => {
     const { userId, fetchStockList, stockListShowLoading, stockData, fetchBillingList, billingListShowLoading, fetchRetailList, retailListShowLoading, retailData, billingData } = props;
 
+    const [isVisible, serIsVisible] = useState(false);
+    const [isNewsVisible, setIsNewsVisible] = useState(false);
     const [highlightsTextIndex, setHighlightsTextIndex] = useState(0);
+    const [record, setRecord] = useState('');
 
     const onErrorAction = (message) => {
         console.error(message);
@@ -103,6 +136,37 @@ const DashboardBase = (props) => {
                 setHighlightsTextIndex((prev) => Number(prev) - 1);
             }
         }
+    };
+    const onCloseAction = () => {
+        serIsVisible(false);
+        setIsNewsVisible(false);
+    };
+
+    const onAddWidget = () => {
+        serIsVisible(true);
+    };
+
+    const handleNewsClick = (data) => {
+        setIsNewsVisible(true);
+        setRecord(data);
+    };
+
+    const WidgetDrawerProps = {
+        isVisible,
+        onCloseAction,
+        titleOverride: 'Add Widget',
+    };
+
+    const newsDrawerProps = {
+        isVisible: isNewsVisible,
+        onCloseAction,
+        titleOverride: 'Latest News',
+        handleNewsClick,
+        newsData,
+        record,
+    };
+    const birthDayProps = {
+        birthDayData,
     };
 
     return (
@@ -164,6 +228,11 @@ const DashboardBase = (props) => {
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className={styles.verticallyCentered}>
                     <Title level={3}>Dashboard KPI</Title>
                 </Col>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className={styles.buttonsGroupRight}>
+                    <Button type="primary" icon={<FiPlus />} className={styles.verticallyCentered} onClick={onAddWidget}>
+                        Add Widget
+                    </Button>
+                </Col>
             </Row>
             <div className={`${styles.marB20} ${styles.dashboardPieChart}`}>
                 <Row gutter={20}>
@@ -184,6 +253,13 @@ const DashboardBase = (props) => {
                     </Col>
                 </Row>
             </div>
+            <Row gutter={40} className={styles.marB20}>
+                <LatestNews {...newsDrawerProps} />
+                <BirthDayCalender {...birthDayProps} />
+            </Row>
+
+            <WidgetDrawer {...WidgetDrawerProps} />
+            <NewsDrawer {...newsDrawerProps} />
         </div>
     );
 };
