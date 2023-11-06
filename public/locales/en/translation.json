@@ -700,6 +700,87 @@
         }
     },
 
+    "locationTypeMaster":{
+        "heading": {
+            "drawerTitle":"Location Type",
+            "mainTitle":"Dealer Location Type Master",
+            "title":"Location Type Name"
+        },
+        "label": {
+            "locationTypeCode": "Location Type Code",
+            "locationTypeName": "Location Type Name",
+            "applicationTo": "Applicable To",
+            "status": "Status"
+        },
+        "placeholder": {
+            "locationTypeCode": "location type code",
+            "locationTypeName": "location type name",
+            "applicationTo": "applicable to"
+        },
+        "validation": {
+            "locationTypeCode": "location type code",
+            "locationTypeName": "location type name",
+            "applicationTo": "applicable to"
+        }
+    },
+
+    "designationMaster":{
+        "heading": {
+            "mainTitle": "Designation Master",
+            "drawerTitle": "Designation",
+            "titleOverride": "Advance Filters",
+            "title": "Designation Name "
+        },
+        "label": {
+            "divisionName": "Division Name",
+            "departmentName": "Department Name",
+            "roleDescription": "Role Description",
+            "designationType": "Designation Type",
+            "designationName": "Designation Name",
+            "mileSkill": "Mile Skill",
+            "status":"Status",
+            "manPowerRequired":"Manpower Required",
+            "accountsData": "Accounts Data",
+            "capability": "Capability (L1/L2/L3)",
+            "createUserId": "Create User Id",
+            "roleName": "Role Name",
+            "designationCode": "Designation Code"
+        },
+        "placeholder": {
+            "divisionName": "Division Name",
+            "departmentName": "Department Name",
+            "roleDescription": "Role Description",
+            "designationType": "designation type",
+            "designationName": "Designation Name",
+            "mileSkill": "mileSkill"
+        },
+        "validation": {
+            "divisionName": "Division Name",
+            "designationType": "Designation Type",
+            "designationName": "Designation Name"
+        }
+    },
+
+    "divisionMaster":{
+        "heading": {
+            "mainTitle": "Dealer Division Master",
+            "drawerTitle": "Division",
+            "title":"Division Name"
+        },
+        "label": {
+            "divisionCode": "Division Code",
+            "divisionName": "Division Name"
+        },
+        "placeholder": {
+            "divisionCode": "Division Code",
+            "divisionName": "Division Name"
+        },
+        "validation": {
+            "divisionCode": "Division Code",
+            "divisionName": "Division Name"
+        }
+    },
+
     "footer": {
         "copyright": "Copyright &copy; {YEAR} ROBIN."
     },

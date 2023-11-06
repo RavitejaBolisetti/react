@@ -7,6 +7,7 @@ import React from 'react';
 import { Descriptions } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
+import { translateContent } from 'utils/translateContent';
 
 const ViewDetailBase = ({ formData, styles, typeData }) => {
     const viewOneColProps = {
@@ -19,17 +20,17 @@ const ViewDetailBase = ({ formData, styles, typeData }) => {
         <>
             <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
-                    <Descriptions.Item label="Division Name">{formData?.divisionName}</Descriptions.Item>
-                    <Descriptions.Item label="Department Name">{formData?.departmentName}</Descriptions.Item>
-                    <Descriptions.Item label="Role Name">{formData?.roleDescription}</Descriptions.Item>
-                    <Descriptions.Item label="Designation Type">{checkAndSetDefaultValue(getCodeValue(typeData?.DESG_TYP_ASGN_TO, formData?.designationType))}</Descriptions.Item>
-                    <Descriptions.Item label="Designation Name">{formData?.designationName}</Descriptions.Item>
-                    <Descriptions.Item label="Mile Skill">{formData?.mileSkillId}</Descriptions.Item>
-                    <Descriptions.Item label="Status">{formData?.status ? 'Active' : 'Inactive'}</Descriptions.Item>
-                    <Descriptions.Item label="Manpower Required">{formData?.isManpowerIndicatorRequired ? 'Yes' : 'No'}</Descriptions.Item>
-                    <Descriptions.Item label="Accounts Data">{formData?.isAccountsDataIndicatorRequired ? 'Yes' : 'No'}</Descriptions.Item>
-                    <Descriptions.Item label="Capability (L1/L2/L3)">{formData?.isCapabilityIndicatorRequired ? 'Yes' : 'No'}</Descriptions.Item>
-                    <Descriptions.Item label="Create User Id">{formData?.isCreateUserIdRequired ? 'Yes' : 'No'}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('designationMaster.label.divisionName')}>{formData?.divisionName}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('designationMaster.label.departmentName')}>{formData?.departmentName}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('designationMaster.label.roleName')}>{formData?.roleDescription}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('designationMaster.label.designationType')}>{checkAndSetDefaultValue(getCodeValue(typeData?.DESG_TYP_ASGN_TO, formData?.designationType))}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('designationMaster.label.designationName')}>{formData?.designationName}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('designationMaster.label.mileSkill')}>{formData?.mileSkillId}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('designationMaster.label.status')}>{formData?.status ? 'Active' : 'Inactive'}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('designationMaster.label.manPowerRequired')}>{formData?.isManpowerIndicatorRequired ? 'Yes' : 'No'}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('designationMaster.label.accountsData')}>{formData?.isAccountsDataIndicatorRequired ? 'Yes' : 'No'}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('designationMaster.label.capability')}>{formData?.isCapabilityIndicatorRequired ? 'Yes' : 'No'}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('designationMaster.label.createUserId')}>{formData?.isCreateUserIdRequired ? 'Yes' : 'No'}</Descriptions.Item>
                     {/* <Descriptions.Item label="Designation Code">{formData?.designationCode}</Descriptions.Item> */}
                     {/* <Descriptions.Item label="Designation Type">{formData?.designationDescription}</Descriptions.Item> */}
                 </Descriptions>
