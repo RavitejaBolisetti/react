@@ -2082,5 +2082,33 @@
         "validation": {
             "variantCode": "Variant Code"
         }
+    },
+    "vehicleAllotmentPriorityMaster": {
+        "heading": {
+            "moduleTitle": "Vehicle Allotment Priority Master",
+            "title": "Vehicle Allotment List"
+        },
+        "label": {
+            "oldModel": "Old Model",
+            "newModel": "New Model",
+            "effectiveFromDate": "Effective From Date",
+            "effectiveToDate": "Effective To Date",
+            "oldModelExchange": "Old Model(Exchange)",
+            "newModelBooking": "New Model(Booking)",
+            "modifiedDateTime": "Modified Date & Time",
+            "modifiedBy": "Modified By",
+            "fieldName": "Field Name",
+            "oldValue": "Old Value",
+            "newValue": "New Value",
+            "roleName": "Role Name",
+            "designationName": "Designation Name",
+            "internalId": "Internal Id",
+            "id": "Id"
+        },
+        "message": {
+            "requiredMessage": "Please select role and designation.",
+            "existErrorMessage": "Designations are not exist.",
+            "dateMessage": "Date cant be less than Effective from date"
+        }
     }
 }
