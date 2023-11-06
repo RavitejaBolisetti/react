@@ -328,7 +328,7 @@ const UserManagementMain = (props) => {
                     <Row gutter={20} justify="end">
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Button danger className={styles.button} onClick={hideGlobalNotification} size="small">
-                                {translateContent('global.button.cancel')}
+                                {translateContent('global.buttons.cancel')}
                             </Button>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>

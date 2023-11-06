@@ -15,6 +15,8 @@ import { showGlobalNotification } from 'store/actions/notification';
 import styles from 'assets/sass/app.module.scss';
 import { geoPinCodeDataActions } from 'store/actions/data/geo/pincodes';
 
+import { translateContent } from 'utils/translateContent';
+
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -27,7 +29,7 @@ const mapStateToProps = (state) => {
             },
         },
     } = state;
-    const moduleTitle = 'Insurance Details';
+    const moduleTitle = translateContent('installationAddressDetials.heading.mainTitle');
 
     let returnValue = {
         userId,
