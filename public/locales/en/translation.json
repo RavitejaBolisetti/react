@@ -68,7 +68,8 @@
             "submit": "Submit",
             "continue": "Continue",
             "addChild": " Add Child",
-            "addSibling": " Add Sibling"
+            "addSibling": " Add Sibling",
+            "advancedFilter": "Advanced Filters"
         },
         "placeholder": {
             "input": "Enter ",
@@ -702,6 +703,21 @@
             "parent": "Parent",
             "attributeTypeCode": "Attribute Type Code",
             "decimalPlaces": "rate with two decimal places"
+        }
+    },
+
+    "gstIrnTransaction": {
+        "heading": {
+            "pageTitle": "GST IRN Transaction Pending",
+            "moduleTitle": "GST IRN Pending Transaction",
+            "title": "Search",
+            "documentType": "Document Type",
+            "documentNumber": "Document Number",
+            "documentDate": "Document Date",
+            "location": "Location",
+            "irnResponse": "IRN Server Response",
+            "irnStatus": "IRN Status",
+            "gstin": "GSTIN"
         }
     },
 
