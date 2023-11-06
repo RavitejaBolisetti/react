@@ -12,7 +12,7 @@ import { relationshipManagerDataActions } from 'store/actions/data/vehicleDelive
 import { vinNumberNoteDataActions } from 'store/actions/data/vehicleDeliveryNote/challanVinNumber';
 import { vehicleChallanDetailsDataActions } from 'store/actions/data/vehicleDeliveryNote/vehicleChallanDetails';
 import { showGlobalNotification } from 'store/actions/notification';
-import { formattedCalendarDate, convertDate } from 'utils/formatDateTime';
+import { convertDate } from 'utils/formatDateTime';
 import { RELATIONSHIP_MANAGER_CONSTANTS } from 'components/Sales/VehicleDeliveryNote/constants/relationShipMangerCodeConstants';
 
 import { VehicleDeliveryNoteFormButton } from '../VehicleDeliveryNoteFormButton';
@@ -20,6 +20,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -34,7 +35,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Insurance Details';
+    const moduleTitle = translateContent('vehicleDeliveryNote.invoiceDetails.heading.mainTitle');
     const codeSetName = 'relationShipManagerCode';
 
     let returnValue = {
@@ -117,15 +118,15 @@ export const InvoiceDetailsMasterBase = (props) => {
         if (formActionType.addMode && !soldByDealer) {
             const disableFormButton = invoiceData?.chassisNumber && invoiceData?.engineNumber;
             setButtonData({ ...buttonData, formBtnActive: disableFormButton });
-            setFormData((prev) => ({ ...prev, deliveryNoteFor: 'Directly Billed Vehicle' }));
+            setFormData((prev) => ({ ...prev, deliveryNoteFor: translateContent('vehicleDeliveryNote.invoiceDetails.label.directlyBilled') }));
         }
-       
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [section, soldByDealer]);
 
     useEffect(() => {
         if (invoiceData && Object?.keys(invoiceData)?.length > 0) {
-            setFormData((prev) => ({ ...invoiceData, deliveryNoteFor: 'Vehicle Sold By Dealer' }));
+            setFormData((prev) => ({ ...invoiceData, deliveryNoteFor: translateContent('vehicleDeliveryNote.invoiceDetails.label.soldByDealer') }));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [invoiceData, section]);
@@ -163,7 +164,7 @@ export const InvoiceDetailsMasterBase = (props) => {
         if (!val) return;
 
         const onSuccessAction = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         };
         const searchParams = [
             {

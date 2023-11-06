@@ -9,6 +9,7 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { DATA_TYPE } from 'constants/dataType';
 // import CardNotificationDetail from './NotificationDetails/CardNotificationDetail';
 import { Card, Row, Divider, Typography, Space, Descriptions } from 'antd';
+import { translateContent } from 'utils/translateContent';
 
 // const { Panel } = Collapse;
 const { Text } = Typography;
@@ -34,10 +35,10 @@ const ViewDetailBase = (props) => {
         <>
             <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
-                    <Descriptions.Item label="Old Model">{checkAndSetDefaultValue(formData?.oldModelGroup, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="New Model">{checkAndSetDefaultValue(formData?.newModelGroup, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Effective From Date">{checkAndSetDefaultValue(formData?.effectiveFromDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                    <Descriptions.Item label="Effective To Date">{checkAndSetDefaultValue(formData?.effectiveToDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('vehicleAllotmentPriorityMaster.label.oldModel')}>{checkAndSetDefaultValue(formData?.oldModelGroup, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('vehicleAllotmentPriorityMaster.label.newModel')}>{checkAndSetDefaultValue(formData?.newModelGroup, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('vehicleAllotmentPriorityMaster.label.effectiveFromDate')}>{checkAndSetDefaultValue(formData?.effectiveFromDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('vehicleAllotmentPriorityMaster.label.effectiveToDate')}>{checkAndSetDefaultValue(formData?.effectiveToDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
 
                     {/* <Descriptions.Item label="Old Model">{checkAndSetDefaultValue(formData?.oldModelGroup, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="New Model">{checkAndSetDefaultValue(formData?.newModelGroup, isLoading)}</Descriptions.Item> */}

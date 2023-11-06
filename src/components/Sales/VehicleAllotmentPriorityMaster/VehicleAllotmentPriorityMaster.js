@@ -27,6 +27,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { ListDataTable } from 'utils/ListDataTable';
 import { btnVisiblity } from 'utils/btnVisiblity';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -47,7 +48,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Vehicle Allotment Priority Master';
+    const moduleTitle = translateContent('vehicleAllotmentPriorityMaster.heading.moduleTitle');
     let returnValue = {
         userId,
         moduleTitle,
@@ -139,7 +140,7 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
     };
 
     const onSuccessAction = (res) => {
-        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        refershData && showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         setRefershData(false);
         searchForm.resetFields();
         setShowDataLoading(false);
@@ -174,7 +175,7 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
         } else {
             notificationDetailForm.setFieldValue('designationCode', undefined);
             setFilterDesignationList();
-            onErrorAction('Designations are not exist.');
+            onErrorAction(translateContent('vehicleAllotmentPriorityMaster.message.existErrorMessage'));
         }
     };
 
@@ -318,7 +319,7 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
     const onFinish = (values) => {
         const reqdata = { ...values, id: formData?.id || '', roleData: docTypeHeadMappingList };
         if (reqdata?.roleData?.length <= 0) {
-            onErrorAction('Please select role and designation.');
+            onErrorAction(translateContent('vehicleAllotmentPriorityMaster.message.requiredMessage'));
             return false;
         }
 
@@ -326,7 +327,7 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
             form.resetFields();
             setShowDataLoading(true);
             setIsFormVisible(false);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             fetchVehicleAllotList({ setIsLoading: listShowLoading, userId, onSuccessAction, onErrorAction });
 
             setButtonData({ ...buttonData, formBtnActive: false });
@@ -398,11 +399,11 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
 
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
-            return 'View ';
+            return translateContent('global.drawerTitle.view');
         } else if (formActionType?.editMode) {
-            return 'Edit ';
+            return translateContent('global.drawerTitle.edit');
         } else {
-            return 'Add ';
+            return translateContent('global.drawerTitle.add');
         }
     }, [formActionType]);
 
@@ -450,7 +451,7 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
         showDataLoading,
     };
 
-    const title = 'Vehicle Allotment List';
+    const title = translateContent('vehicleAllotmentPriorityMaster.heading.title');
 
     const advanceFilterResultProps = {
         advanceFilter: true,
@@ -476,7 +477,7 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
         onCloseAction: onAdvanceSearchCloseAction,
-        titleOverride: 'Advance Filters',
+        titleOverride: translateContent('global.advanceFilter.title'),
 
         filterString,
         setFilterString,

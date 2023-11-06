@@ -333,7 +333,7 @@ const AssignUserRole = (props) => {
                                     {!formActionType?.viewMode && (
                                         <>
                                             <Button icon={<PlusOutlined />} onClick={(event, key) => handleShowRoleAppModal(event, key)} className={styles.marR20} type="primary">
-                                                {translateContent('global.button.add')}
+                                                {translateContent('global.buttons.add')}
                                             </Button>
                                         </>
                                     )}

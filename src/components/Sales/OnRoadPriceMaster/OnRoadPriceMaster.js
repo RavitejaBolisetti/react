@@ -397,11 +397,11 @@ export const OnRoadPriceMasterBase = (props) => {
 
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
-            return 'View ';
+            return translateContent('global.drawerTitle.view');
         } else if (formActionType?.editMode) {
-            return 'Edit ';
+            return translateContent('global.drawerTitle.edit');
         } else {
-            return 'Add New ';
+            return translateContent('global.drawerTitle.addNew');
         }
     }, [formActionType]);
     const handleOnClick = () => {

@@ -262,7 +262,7 @@ const AddEditFormMain = (props) => {
                                     <Row gutter={20}>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                             <Form.Item label={translateContent('customerMaster.label.majorRouteDetails')} initialValue={formData?.majorRouteDetails} name="majorRouteDetails">
-                                                <Input maxLength={15} placeholder={preparePlaceholderText(translateContent('customerMaster.label.route'))} {...disabledProps} />
+                                                <Input maxLength={15} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.route'))} {...disabledProps} />
                                             </Form.Item>
                                         </Col>
                                     </Row>

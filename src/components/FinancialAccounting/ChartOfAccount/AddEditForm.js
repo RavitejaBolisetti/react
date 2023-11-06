@@ -12,6 +12,7 @@ import { COA_ACCOUNT_TYPE } from 'constants/modules/ChartOfAccount/coaAccountTyp
 
 import { withDrawer } from 'components/withDrawer';
 import { customSelectBox } from 'utils/customSelectBox';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -60,14 +61,14 @@ const AddEditFormMain = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item label="Attribute Level" name="accountType" rules={[validateRequiredSelectField('Attribute Level')]}>
-                                {customSelectBox({ data: Object.values(COA_ACCOUNT_TYPE), placeholder: preparePlaceholderSelect('Attribute Level'), onChange: onChange, disabled: !disable, fieldNames: { key: 'key', value: 'title' } })}
+                            <Form.Item label={translateContent('chartOfAccount.label.attributeLevel')} name="accountType" rules={[validateRequiredSelectField(translateContent('chartOfAccount.validation.attributeLevel'))]}>
+                                {customSelectBox({ data: Object.values(COA_ACCOUNT_TYPE), placeholder: translateContent('chartOfAccount.placeholder.attributeLevel'), onChange: onChange, disabled: !disable, fieldNames: { key: 'key', value: 'title' } })}
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item label="Parent" name="parentAccountCode">
+                            <Form.Item label={translateContent('chartOfAccount.label.parent')} name="parentAccountCode">
                                 <TreeSelectField {...treeSelectFieldProps} />
                             </Form.Item>
                         </Col>
@@ -75,15 +76,15 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item label="Code" name="accountCode" rules={[validateRequiredInputField('code')]}>
-                                <Input placeholder={preparePlaceholderText('code')} maxLength={36} disabled={!disable} />
+                            <Form.Item label={translateContent('chartOfAccount.label.code')} name="accountCode" rules={[validateRequiredInputField(translateContent('chartOfAccount.validation.code'))]}>
+                                <Input placeholder={translateContent('chartOfAccount.placeholder.code')} maxLength={36} disabled={!disable} />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item label="Description" name="accountDescription" rules={[validateRequiredInputField('Account description')]}>
-                                <Input placeholder={preparePlaceholderText('Account description')} maxLength={50} disabled={!disable} />
+                            <Form.Item label={translateContent('chartOfAccount.label.description')} name="accountDescription" rules={[validateRequiredInputField(translateContent('chartOfAccount.validation.accountDescription'))]}>
+                                <Input placeholder={translateContent('chartOfAccount.placeholder.accountdDescription')} maxLength={50} disabled={!disable} />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -91,16 +92,16 @@ const AddEditFormMain = (props) => {
                         <>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <Form.Item name="openingBalanceCredit" label="Opening Balance Credit" rules={[validateRequiredInputField('Opening Balance Credit'), validateNumberWithTwoDecimalPlaces('Opening Balance Credit')]}>
-                                        <Input placeholder={preparePlaceholderText('Opening Balance Credit')} />
+                                    <Form.Item name="openingBalanceCredit" label={translateContent('chartOfAccount.label.openingBalanceCredit')} rules={[validateRequiredInputField(translateContent('chartOfAccount.validation.openingBalanceCredit')), validateNumberWithTwoDecimalPlaces(translateContent('chartOfAccount.validation.openingBalanceCredit'))]}>
+                                        <Input placeholder={translateContent('chartOfAccount.placeholder.openingBalanceCredit')} />
                                     </Form.Item>
                                 </Col>
                             </Row>
 
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <Form.Item name="openingBalanceDebit" label="Opening Balance Debit" rules={[validateRequiredInputField('Opening Balance Debit'), validateNumberWithTwoDecimalPlaces('Opening Balance Credit')]}>
-                                        <Input placeholder={preparePlaceholderText('Opening Balance Debit')} />
+                                    <Form.Item name="openingBalanceDebit" label={translateContent('chartOfAccount.label.openingBalanceDebit')} rules={[validateRequiredInputField(translateContent('chartOfAccount.validation.openingBalanceDebit')), validateNumberWithTwoDecimalPlaces(translateContent('chartOfAccount.validation.openingBalanceCredit'))]}>
+                                        <Input placeholder={translateContent('chartOfAccount.placeholder.openingBalanceDebit')} />
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -109,7 +110,7 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item initialValue={false} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
+                            <Form.Item initialValue={false} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label={translateContent('chartOfAccount.label.status')}>
                                 <Switch disabled={disableCheckBox} checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
                             </Form.Item>
                         </Col>
@@ -121,13 +122,13 @@ const AddEditFormMain = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
                         <Button danger onClick={onCloseAction}>
-                            Cancel
+                            {translateContent('global.buttons.cancel')}
                         </Button>
                     </Col>
 
                     <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
                         <Button data-testid="isFormBtnActive" htmlType="submit" danger disabled={!isFormBtnActive}>
-                            Save
+                            {translateContent('global.buttons.save')}
                         </Button>
                     </Col>
                 </Row>

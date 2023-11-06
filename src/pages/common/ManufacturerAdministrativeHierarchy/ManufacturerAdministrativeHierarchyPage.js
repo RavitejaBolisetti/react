@@ -10,6 +10,7 @@ import { withLayoutMaster } from 'components/withLayoutMaster';
 import { ManufacturerAdminstrativeHierarchy } from 'components/common/ManufacturerAdminstrativeHierarchy';
 
 import { PageHeader } from '../PageHeader';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -26,7 +27,7 @@ const mapStateToProps = (state) => {
 };
 
 const ManufacturerAdministrativeHierarchyPageBase = () => {
-    const pageTitle = 'Manufacturer Adminstrative Hierarchy';
+    const pageTitle = translateContent('adminHierarchy.heading.adminPageTitle');
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

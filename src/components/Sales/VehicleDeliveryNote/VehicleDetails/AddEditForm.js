@@ -10,6 +10,7 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 import VehicleInfoForm from './VehicleInfoForm';
 import BatteryInfoForm from './BatteryInfoForm';
 import { NoDataFound } from 'utils/noDataFound';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 
@@ -31,13 +32,13 @@ const AddEditFormMain = (props) => {
         <Row gutter={20}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                 <Collapse collapsible="icon" expandIcon={expandIcon} defaultActiveKey={['VI1']} expandIconPosition="end">
-                    <Panel header="Vehicle Information" key="VI1">
+                    <Panel header={translateContent('vehicleDeliveryNote.vehicleDetails.heading.vehicleInfo')} key="VI1">
                         <Divider />
                         <VehicleInfoForm {...vehicleDetailsProps} />
                     </Panel>
                 </Collapse>
                 <Collapse collapsible="icon" expandIcon={expandIcon} defaultActiveKey={['BD1']} expandIconPosition="end">
-                    <Panel header="Battery Details" key="BD1">
+                    <Panel header={translateContent('vehicleDeliveryNote.vehicleDetails.heading.batteryDetails')} key="BD1">
                         <Divider />
                         <Row gutter={20}>
                             {formData?.batteryDetail?.length ? (

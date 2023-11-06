@@ -17,6 +17,8 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'assets/sass/app.module.scss';
 
+import { translateContent } from 'utils/translateContent';
+
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
@@ -75,8 +77,8 @@ const AddEditFormMain = (props) => {
                         <>
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.divisionCode} label="Division Name" name="divisionCode" rules={[validateRequiredSelectField('Division Name')]}>
-                                        <Select {...selectProps} placeholder={preparePlaceholderSelect('Division Name')} allowClear onChange={handleDivisionChange}>
+                                    <Form.Item initialValue={formData?.divisionCode} label={translateContent('designationMaster.label.divisionName')} name="divisionCode" rules={[validateRequiredSelectField(translateContent('designationMaster..validation.divisionName'))]}>
+                                        <Select {...selectProps} placeholder={preparePlaceholderSelect(translateContent('designationMaster.placeholder.divisionName'))} allowClear onChange={handleDivisionChange}>
                                             {divisionData?.map((item) => (
                                                 <Option key={item?.key} value={item?.key}>
                                                     {item?.value}
@@ -86,8 +88,8 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.departmentCode} label="Department Name" name="departmentCode">
-                                        <Select {...selectProps} placeholder={preparePlaceholderSelect('Department Name')} allowClear onChange={handleDepartmentChange}>
+                                    <Form.Item initialValue={formData?.departmentCode} label={translateContent('designationMaster.label.departmentName')} name="departmentCode">
+                                        <Select {...selectProps} placeholder={preparePlaceholderSelect(translateContent('designationMaster.placeholder.departmentName'))} allowClear onChange={handleDepartmentChange}>
                                             {filteredDepartmentData?.map((item) => (
                                                 <Option key={item?.key} value={item?.key}>
                                                     {item?.value}
@@ -99,8 +101,8 @@ const AddEditFormMain = (props) => {
                             </Row>
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.roleCode} label="Role Description" name="roleCode">
-                                        <Select {...selectProps} placeholder={preparePlaceholderSelect('Role Description')} allowClear>
+                                    <Form.Item initialValue={formData?.roleCode} label={translateContent('designationMaster.label.roleDescription')} name="roleCode">
+                                        <Select {...selectProps} placeholder={preparePlaceholderSelect(translateContent('designationMaster.placeholder.roleDescription'))} allowClear>
                                             {filteredRoleData?.map((item) => (
                                                 <Option key={item?.key} value={item?.key}>
                                                     {item?.value}
@@ -115,26 +117,26 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col> */}
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.designationType} label="Designation Type" name="designationType" rules={[validateRequiredSelectField('Designation Type')]}>
-                                        {customSelectBox({ data: typeData[PARAM_MASTER.DESG_TYP_ASGN_TO.id], placeholder: preparePlaceholderSelect('designation type') })}
+                                    <Form.Item initialValue={formData?.designationType} label={translateContent('designationMaster.label.designationType')} name="designationType" rules={[validateRequiredSelectField(translateContent('designationMaster.validation.designationType'))]}>
+                                        {customSelectBox({ data: typeData[PARAM_MASTER.DESG_TYP_ASGN_TO.id], placeholder: preparePlaceholderSelect(translateContent('designationMaster.placeholder.designationType')) })}
                                     </Form.Item>
                                 </Col>
                             </Row>
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label="Designation Name" initialValue={formData?.designationDescription} rules={[validateRequiredInputField('Designation Name')]} name="designationDescription">
-                                        <Input placeholder={preparePlaceholderText('Designation Name')} maxLength={50} />
+                                    <Form.Item label={translateContent('designationMaster.label.designationName')} initialValue={formData?.designationDescription} rules={[validateRequiredInputField(translateContent('designationMaster.validation.designationName'))]} name="designationDescription">
+                                        <Input placeholder={preparePlaceholderText(translateContent('designationMaster.placeholder.designationName'))} maxLength={50} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.mileSkillId} label="Mile Skill" name="mileSkillId">
-                                        {customSelectBox({ data: mileData || [], placeholder: preparePlaceholderSelect('mileSkill') })}
+                                    <Form.Item initialValue={formData?.mileSkillId} label={translateContent('designationMaster.label.mileSkill')} name="mileSkillId">
+                                        {customSelectBox({ data: mileData || [], placeholder: preparePlaceholderSelect(translateContent('designationMaster.placeholder.mileSkill')) })}
                                     </Form.Item>
                                 </Col>
                             </Row>
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
+                                    <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label={translateContent('designationMaster.label.status')}>
                                         <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
                                     </Form.Item>
                                 </Col>
@@ -143,22 +145,22 @@ const AddEditFormMain = (props) => {
                             <Row gutter={16}>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                     <Form.Item initialValue={editMode ? formData.isManpowerIndicatorRequired : false} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="isManpowerIndicatorRequired">
-                                        <Checkbox>Manpower Required</Checkbox>
+                                        <Checkbox>{translateContent('designationMaster.label.manPowerRequired')}</Checkbox>
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                     <Form.Item initialValue={editMode ? formData.isAccountsDataIndicatorRequired : false} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="isAccountsDataIndicatorRequired">
-                                        <Checkbox>Accounts Data</Checkbox>
+                                        <Checkbox>{translateContent('designationMaster.label.accountsData')}</Checkbox>
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                     <Form.Item initialValue={editMode ? formData.isCapabilityIndicatorRequired : false} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="isCapabilityIndicatorRequired">
-                                        <Checkbox>Capability (L1/L2/L3)</Checkbox>
+                                        <Checkbox>{translateContent('designationMaster.label.capability')}</Checkbox>
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                     <Form.Item initialValue={editMode ? formData.isCreateUserIdRequired : false} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="isCreateUserIdRequired">
-                                        <Checkbox>Create User Id</Checkbox>
+                                        <Checkbox>{translateContent('designationMaster.label.createUserId')}</Checkbox>
                                     </Form.Item>
                                 </Col>
                             </Row>

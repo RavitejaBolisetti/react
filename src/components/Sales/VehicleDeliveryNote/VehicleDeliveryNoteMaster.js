@@ -361,7 +361,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
 
     const handleCustomerIdSearch = (customerIdValue = '') => {
         if (!customerIdValue) {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: translateContent('vehicleDeliveryNote.notificationError.customerId') });
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: translateContent('vehicleDeliveryNote.notificationError.enterCustomerId') });
             return false;
         }
         const onSuccessAction = (res) => {
@@ -725,7 +725,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
             });
     };
 
-    const title = 'Vehicle Delivery Note';
+    const title = translateContent('vehicleDeliveryNote.heading.title');
 
     const advanceFilterResultProps = {
         extraParams,
@@ -758,7 +758,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         isVisible: isAdvanceSearchVisible,
         receiptType,
         partySegmentType,
-        titleOverride: 'Advance Filters',
+        titleOverride: translateContent('global.advanceFilter.title'),
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
         filterString,
@@ -789,7 +789,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     const cancelDeliveryNoteProps = {
         isVisible: cancelDeliveryNoteVisible,
         onCloseAction: cancelModalCloseAction,
-        titleOverride: 'Cancel ' + (soldByDealer ? moduleTitle : 'Challan'),
+        titleOverride: translateContent('vehicleDeliveryNote.cancelTitle.cancelTitle') + (soldByDealer ? moduleTitle : translateContent('vehicleDeliveryNote.cancelTitle.challan')),
         cancelDeliveryNoteForm,
         cancelModalCloseAction,
         onFinish: onCancelFormFinish,
@@ -813,7 +813,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         deliveryNoteOnFinish: onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(soldByDealer ? moduleTitle : 'Challan'),
+        titleOverride: drawerTitle.concat(soldByDealer ? moduleTitle : translateContent('vehicleDeliveryNote.cancelTitle.challan')),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,
@@ -853,9 +853,9 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         paymentModeType,
         documentType,
         onCancelDeliveryNote,
-        saveButtonName: isLastSection ? 'Submit' : 'Continue',
-        CancelDeliveryButtonName: soldByDealer ? 'Cancel Delivery Note' : 'Cancel Challan',
-        PrintButtonName: soldByDealer ? 'Print Delivery Note' : 'Print Challan',
+        saveButtonName: isLastSection ? translateContent('global.buttons.submit') :translateContent('global.buttons.continue'),
+        CancelDeliveryButtonName: soldByDealer ? translateContent('vehicleDeliveryNote.buttons.cancelDeliveryNote') : translateContent('vehicleDeliveryNote.buttons.cancelChallan'),
+        PrintButtonName: soldByDealer ? translateContent('vehicleDeliveryNote.buttons.printDeliveryNote') :  translateContent('vehicleDeliveryNote.buttons.printChallan') ,
         setLastSection,
         customerIdValue,
         setCustomerIdValue,
