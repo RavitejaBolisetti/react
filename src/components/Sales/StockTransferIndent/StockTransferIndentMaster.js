@@ -316,7 +316,7 @@ export const StockTransferIndentMasterBase = (props) => {
 
     const onFinish = (values) => {
         if (tableDataItem.length === 0) {
-            let msg = 'Please add Vehicle Details';
+            let msg = translateContent('stockTransferIndent.validation.vehicleLengthValidation');
             showGlobalNotification({ msg });
             return;
         }

@@ -1250,10 +1250,7 @@
         }
     },
     "stockTransferIndent": {
-        "isueIndent": {
-            "heading": {
-                "maintitle": "HO Price Upload Mapping"
-            },
+        "isueIndent": {             
             "label": {
                 "vin": "VIN",
                 "stIssueNo": "ST issue Note No.",
@@ -1347,7 +1344,8 @@
             "quantity": "Quantity",
             "indentToParent": "Indent To Parent",
             "indentToLocation": "Indent To Location",
-            "requestedBy": "Requested By"
+            "requestedBy": "Requested By",
+            "vehicleLengthValidation":"Please add Vehicle Details"
         }
     },
     "vehicleInvoiceGeneration": {
