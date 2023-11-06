@@ -1045,7 +1045,6 @@
         },
         "entitlementsSchemes": {
             "label": {
-                "srl.": "Srl.",
                 "entitlement/SchemeType": "Entitlement/Scheme Type",
                 "entitlement/SchemeDescription": "Entitlement/Scheme Description",
                 "entitlement/SchemeDocNo": "Entitlement/Scheme Doc No",
@@ -1054,8 +1053,7 @@
                 "validityStartDate": "Validity Start Date",
                 "validityEndDate": "Validity End Date",
                 "validityStartKM": "Validity Start KM",
-                "validityEndKM": "Validity End KM",
-                "status": "Status"
+                "validityEndKM": "Validity End KM"
             },
             "placeholder": {
                 "noData": "No data"
