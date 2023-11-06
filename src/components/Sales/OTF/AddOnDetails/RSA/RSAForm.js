@@ -33,13 +33,13 @@ const RSAForm = ({ formData, rsaForm, setFormDataSetter, formDataSetter, formAct
         <Form form={rsaForm} onValuesChange={onValuesChange} onFieldsChange={handleFormValueChange} autoComplete="off" id="rsaForm" layout="vertical">
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item label="RSA" name="rsa">
-                        <Input disabled={isReadOnly} placeholder={preparePlaceholderText('RSA')} />
+                    <Form.Item label={translateContent('bookingManagement.label.rsa')} name="rsa">
+                        <Input disabled={isReadOnly} placeholder={preparePlaceholderText(translateContent('bookingManagement.label.rsa'))} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item label="RSA Rate" name="rsaRate" rules={[validateNumberWithTwoDecimalPlaces('RSA Rate')]}>
-                        <Input disabled={isReadOnly} placeholder={preparePlaceholderText('RSA Rate')} />
+                    <Form.Item label={translateContent('bookingManagement.label.rsaRate')} name="rsaRate" rules={[validateNumberWithTwoDecimalPlaces(translateContent('bookingManagement.label.rsaRate'))]}>
+                        <Input disabled={isReadOnly} placeholder={preparePlaceholderText(translateContent('bookingManagement.label.rsaRate'))} />
                     </Form.Item>
                 </Col>
             </Row>

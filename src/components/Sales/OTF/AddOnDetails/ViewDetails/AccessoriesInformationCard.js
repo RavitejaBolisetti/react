@@ -5,6 +5,7 @@
  */
 import React from 'react';
 import { Descriptions } from 'antd';
+import { translateContent } from 'utils/translateContent';
 
 const AccessoriesInformationCard = ({ formData }) => {
     const viewProps = {
@@ -17,9 +18,9 @@ const AccessoriesInformationCard = ({ formData }) => {
     return (
         <>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Type">{formData?.type ?? 'Na'}</Descriptions.Item>
-                <Descriptions.Item label="Selling Price">{formData?.sellingPrice ?? 'Na'}</Descriptions.Item>
-                <Descriptions.Item label="MRP">{formData?.mrp ?? 'Na'}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('bookingManagement.label.type')}>{formData?.type ?? 'Na'}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('bookingManagement.label.sellingPrice')}>{formData?.sellingPrice ?? 'Na'}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('bookingManagement.label.mrp')}>{formData?.mrp ?? 'Na'}</Descriptions.Item>
             </Descriptions>
         </>
     );

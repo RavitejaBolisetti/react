@@ -10,6 +10,7 @@ import { BsTrash3 } from 'react-icons/bs';
 import styles from 'assets/sass/app.module.scss';
 
 import AddEditForm from './AddEditForm';
+import { translateContent } from 'utils/translateContent';
 const { Text } = Typography;
 
 const CardMapping = ({ index, AddEditFormProps, handleDelete, element, isEditing, setisEditing }) => {
@@ -41,14 +42,14 @@ const CardMapping = ({ index, AddEditFormProps, handleDelete, element, isEditing
                         </Space>
                         <Row style={{ marginBottom: '8px' }}>
                             <Text type="secondary" className={styles.subSection}>
-                                {`Required Quantity: ` + element?.requiredQuantity}
+                                {`${translateContent('bookingManagement.label.requiredQuantity')}: ` + element?.requiredQuantity}
                             </Text>
                         </Row>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.buttonsGroupRight}>
                         <Space size="middle" className={isEditing || addButtonDisabled?.partDetailsResponses ? styles.disabledClass : ''}>
                             <Button disabled={isEditing || addButtonDisabled?.partDetailsResponses} className={styles.verticallyCentered} type="link" icon={<FiEdit />} onClick={() => handleEdit(index)}>
-                                Edit
+                            {translateContent('global.buttons.edit')}
                             </Button>
                             {element?.isDeleting && <Button disabled={isEditing || addButtonDisabled?.partDetailsResponses} onClick={() => handleDelete(index)} className={styles.verticallyCentered} type="link" icon={<BsTrash3 />}></Button>}
                         </Space>
