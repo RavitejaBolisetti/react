@@ -1938,8 +1938,8 @@
     },
     "bookingSoMapping": {
         "heading": {
-            "pageTitle": "Booking SO Mapping And Unmapping",
-            "moduleTitle": "User Type Mapping",
+            "moduleTitle": "Booking SO Mapping Control",
+            "pageTitle": "Booking SO Mapping Control Master",
             "viewTitle": "User Type Mapping"
         },
         "label": {
