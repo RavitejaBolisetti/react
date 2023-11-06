@@ -41,7 +41,9 @@
         "toolTip": {},
         "generalMessage": {
             "noRecordsFound": "No records found",
-            "noRecordsFoundAddNew": "Please add New {NAME} using below button"
+            "noRecordsFoundAddNew": "Please add New {NAME} using below button",
+            "comingSoon": "Coming Soon",
+            "noDataFound": "No data found"
         },
         "changeHistory": {
             "title": "Change History"
@@ -61,6 +63,7 @@
             "edit": "Edit",
             "cancelBooking": "Cancel Booking",
             "transferBooking": "Transfer Booking",
+            "bookingMappingHistory": "Booking Mapping History",
             "saveCloseBtn": "Save & Close",
             "seeMore": "See more",
             "seeLess": "See less",
@@ -169,7 +172,25 @@
             "exchangeDetails.schemeName": "Scheme Name",
             "exchangeDetails.schemeAmount": "Scheme Amount",
 
+            "loyaltyScheme.oldRegistrationNumber": "Old Reg. Number",
+            "loyaltyScheme.make": "Make",
+            "loyaltyScheme.modelGroup": "Model Group",
+            "loyaltyScheme.variant": "Variant",
+            "loyaltyScheme.kms": "KMS",
+            "loyaltyScheme.usage": "Usage",
+            "loyaltyScheme.yearOfRegistration": "Year of Registration",
+            "loyaltyScheme.monthOfRegistration": "Month of Registration",
+            "loyaltyScheme.vin": "VIN",
+            "loyaltyScheme.hypotheticatedTo": "Hypothecated To",
+            "loyaltyScheme.customerName": "Customer Name",
+            "loyaltyScheme.relationShip": "Relationship",
+            "loyaltyScheme.schemeName": "Scheme Name",
+            "loyaltyScheme.schemeAmount": "Scheme Amount",
+            "loyaltyScheme.oldChassisNumber": "Old Chassis Number",
+            "loyaltyScheme.remarks": "Remarks",
+
             "referrals.vehicleRegistrationNumber": "Vehicle Registration Number",
+            "referrals.referralId": "Referral ID",
             "referrals.chassisNumber": "Chassis Number",
             "referrals.customerCode": "Customer Code",
             "referrals.customerType": "Customer Type",
@@ -1109,6 +1130,75 @@
         }
     },
 
+    "bookingManagement": {
+        "heading": {
+            "title": "Booking Management",
+            "bookingManagementChangeHistory": "Booking Change History",
+            "otfSoMappingChangeHistory": "Booking - SO Mapping & Un-mapping History",
+
+            "profileCard.bookingNumber": "Booking No.",
+            "profileCard.bookingDate": "Booking Date",
+            "profileCard.customerType": "Customer Type",
+            "profileCard.mobileNumber": "Mobile No.",
+            "profileCard.model": "Model",
+            "profileCard.cpd": "CPD"
+        },
+        "validation": {
+            "mandatorySelectBooking": "Please select Booking",
+            "unallotBookingConfirmation": "Are you sure want to Un-allot this Booking?",
+            "transferPopup": "Do you want to transfer this",
+            "cancelPopup": "Do you want to cancel this",
+            "bookingCancellation": "Are you sure, you want to",
+            "bookingCancellation2": "the cancellation of",
+            "bookingUpdatedSuccess": "Booking form updated successfully",
+            "bookingUpdated": "Booking number: {ORDER_ID}",
+            "replacementText": "{ORDER_ID}",
+            "verifyCustomerID": "Verify Customer id to continue"
+        },
+        "label": {
+            "unallotBooking": "Un-Allot Booking",
+            "bookingTransfer": "Booking Transfer",
+            "bookingCancel": "Booking Cancel",
+            "approval": "Approval",
+            "rejection": "Rejection",
+            "approve": "approve",
+            "reject": "reject",
+            "viewBooking": "View Booking",
+            "editBooking": "Edit Booking",
+            "addNewBooking": "Add New Booking",
+            "bookingStatus": "Booking Status",
+            "scheme": "Scheme",
+            "bookingDetails": "Booking Details",
+            "salesDetails": "Sales Details",
+            "orderDetails": "Order Details",
+            "bookingAmount": "Booking Amount",
+            "placeOfRegistration": "Place Of Registration",
+            "specialRequest": "Special Request",
+            "modeOfPAyment": "Mode Of Payment",
+            "deliveryDetails": "Delivery Details",
+            "initialPromiseDeliveryDate": "Initial Promise Delivery Date",
+            "customerExpectedDeliveryDate": "Cust. Expected Delivery Date",
+            "deliveryAt": "Delivery At",
+            "saleConsultant": "Sales Consultant",
+            "mitraType": "Influencer/Mitra Type",
+            "mitraName": "Influencer/Mitra Name",
+            "otherDetails": "Other Details",
+            "referralScheme": "Referral Scheme",
+            "loyaltyScheme": "Loyalty Scheme",
+            "invoiceNumber": "Invoice Number",
+            "invoiceDate": "Invoice Date",
+            "invoiceStatus": "Invoice Status",
+            "deliveryNoteNumber": "Delivery Note Number",
+            "deliveryNoteDate": "Delivery Note Date",
+            "deliveryNoteStatus": "Delivery Note Status",
+            "invoiceInformation": "Invoice Information",
+            "deliveryInformation": "Delivery Information"
+        },
+        "placeholder": {
+            "searchBooking": "Search Booking"
+        }
+    },
+
     "chargerInstallationProcess": {
         "heading": {
             "title": "Charger Installation",
@@ -1116,9 +1206,9 @@
             "mainTitle": "Charger Installation"
         },
         "label": {
-          "bookingNumber": "Booking No.",
-          "requestNumber": "Request ID",
-          "requestStatus" : "Stage Status"
+            "bookingNumber": "Booking No.",
+            "requestNumber": "Request ID",
+            "requestStatus": "Stage Status"
         },
         "notification": {
             "globalNotification": "Non-EV Booking shouldn't be accepted"
@@ -1175,8 +1265,6 @@
             "gstin": "GSTIN"
         }
     },
-
-    
 
     "footer": {
         "copyright": "Copyright &copy; {YEAR} ROBIN."
@@ -1925,6 +2013,7 @@
             "exchangeDetails.schemeAmount": "Scheme Amount",
 
             "referrals.vehicleRegistrationNumber": "Vehicle Registration Number",
+            "referrals.referralId": "Referral ID",
             "referrals.chassisNumber": "Chassis Number",
             "referrals.customerCode": "Customer Code",
             "referrals.customerType": "Customer Type",
@@ -1934,7 +2023,9 @@
             "referrals.dateOfBirth": "Date of Birth"
         },
         "placeholder": {},
-        "validation": {},
+        "validation": {
+            "referrals.mobileNumber": "Phone number must be minimum 10 digits Long."
+        },
         "buttons": {
             "generate": "Generate"
         },
