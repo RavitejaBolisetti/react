@@ -13,6 +13,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { TextArea } = Input;
 
@@ -94,13 +95,13 @@ const AddEditFormMain = (props) => {
                 <Form autoComplete="off" form={form} id="myForm" layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item name="attributeKey" label="Attribute Level" initialValue={formData?.attributeKey} rules={[validateRequiredSelectField('attribute level')]}>
-                                <Select options={attributeDataOptions} fieldNames={{ label: 'hierarchyAttribueName', value: 'id' }} onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('attribute level')} {...disabledProps} showSearch allowClear />
+                            <Form.Item name="attributeKey" label={translateContent('adminHierarchy.label.attributeLevel')} initialValue={formData?.attributeKey} rules={[validateRequiredSelectField(translateContent('adminHierarchy.validation.attributeLevel'))]}>
+                                <Select options={attributeDataOptions} fieldNames={{ label: 'hierarchyAttribueName', value: 'id' }} onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect(translateContent('adminHierarchy.placeholder.attributeLevel'))} {...disabledProps} showSearch allowClear />
                             </Form.Item>
                         </Col>
 
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padRight18}>
-                            <Form.Item initialValue={treeCodeId} label="Parent" name="manufactureAdminParntId">
+                            <Form.Item initialValue={treeCodeId} label={translateContent('adminHierarchy.label.parent')} name="manufactureAdminParntId">
                                 <TreeSelectField {...treeSelectFieldProps} />
                             </Form.Item>
                         </Col>
@@ -108,28 +109,28 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item name="manufactureAdminCode" label="Code" initialValue={formData?.manufactureAdminCode} rules={[validateRequiredInputField('code'), validationFieldLetterAndNumber('code')]}>
-                                <Input placeholder={preparePlaceholderText('Code')} maxLength={6} {...disabledProps} />
+                            <Form.Item name="manufactureAdminCode" label={translateContent('adminHierarchy.label.code')} initialValue={formData?.manufactureAdminCode} rules={[validateRequiredInputField(translateContent('adminHierarchy.validation.codeValidation')), validationFieldLetterAndNumber(translateContent('adminHierarchy.validation.codeValidation'))]}>
+                                <Input placeholder={preparePlaceholderText(translateContent('adminHierarchy.placeholder.code'))} maxLength={6} {...disabledProps} />
                             </Form.Item>
                         </Col>
 
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item name="manufactureAdminShortName" label="Short Description" initialValue={formData?.manufactureAdminShortName} rules={[validateRequiredInputField('short description')]}>
-                                <Input placeholder={preparePlaceholderText('short description')} {...disabledProps} />
+                            <Form.Item name="manufactureAdminShortName" label={translateContent('adminHierarchy.label.shortDescription')} initialValue={formData?.manufactureAdminShortName} rules={[validateRequiredInputField(translateContent('adminHierarchy.validation.shortDescription'))]}>
+                                <Input placeholder={preparePlaceholderText(translateContent('adminHierarchy.placeholder.shortDescription'))} {...disabledProps} />
                             </Form.Item>
                         </Col>
                     </Row>
 
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.textareaError}>
-                            <Form.Item name="manufactureAdminLongName" label="Long Description" initialValue={formData?.manufactureAdminLongName} rules={[validateRequiredInputField('long description')]}>
-                                <TextArea maxLength={300} placeholder={preparePlaceholderText('long description')} showCount {...disabledProps} />
+                            <Form.Item name="manufactureAdminLongName" label={translateContent('adminHierarchy.label.longDescription')} initialValue={formData?.manufactureAdminLongName} rules={[validateRequiredInputField(translateContent('adminHierarchy.validation.longDescription'))]}>
+                                <TextArea maxLength={300} placeholder={preparePlaceholderText(translateContent('adminHierarchy.placeholder.longDescription'))} showCount {...disabledProps} />
                             </Form.Item>
                         </Col>
 
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item initialValue={typeof formData?.status === 'boolean' ? formData?.status : true} label="Status" name="status">
-                                <Switch checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={typeof formData?.status === 'boolean' ? formData?.status : true} onChange={(checked) => (checked ? 1 : 0)} />
+                            <Form.Item initialValue={typeof formData?.status === 'boolean' ? formData?.status : true} label={translateContent('global.label.status')} name="status">
+                                <Switch checkedChildren={translateContent('global.label.active')} unCheckedChildren={translateContent('global.label.inActive')} defaultChecked={typeof formData?.status === 'boolean' ? formData?.status : true} onChange={(checked) => (checked ? 1 : 0)} />
                             </Form.Item>
                         </Col>
                         <Col xs={0} sm={0} md={0} lg={0} xl={0}>
@@ -142,13 +143,13 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20} className={styles.formFooterNew}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupLeft}>
                             <Button danger onClick={onCloseAction}>
-                                Cancel
+                                {translateContent('global.buttons.cancel')}
                             </Button>
                         </Col>
 
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
                             <Button htmlType="submit" type="primary" disabled={!isFormBtnActive}>
-                                Save
+                                {translateContent('global.buttons.save')}
                             </Button>
                         </Col>
                     </Row>

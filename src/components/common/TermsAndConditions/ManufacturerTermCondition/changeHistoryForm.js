@@ -8,7 +8,7 @@ import { Row, Col, Button } from 'antd';
 import { tblPrepareColumns } from 'utils/tableColumn';
 import { withDrawer } from 'components/withDrawer';
 import { ListDataTable } from 'utils/ListDataTable';
-
+import { translateContent } from 'utils/translateContent';
 import styles from 'assets/sass/app.module.scss';
 
 import { convertDateMonthYear } from 'utils/formatDateTime';
@@ -19,49 +19,49 @@ const ChangeHistoryMain = (props) => {
 
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Product Hierarchy',
+            title: translateContent('termConditionManufacturer.changeHistory.productName'),
             dataIndex: 'productName',
             width: '15%',
             sorter: false,
         }),
 
         tblPrepareColumns({
-            title: 'Document Type',
+            title: translateContent('termConditionManufacturer.changeHistory.documentTypeCode'),
             dataIndex: 'documentTypeCode',
             width: '15%',
             sorter: false,
         }),
 
         tblPrepareColumns({
-            title: 'Language',
+            title: translateContent('termConditionManufacturer.changeHistory.languageDesc'),
             dataIndex: 'languageDesc',
             width: '10%',
             sorter: false,
         }),
 
         tblPrepareColumns({
-            title: 'Effective From',
+            title: translateContent('termConditionManufacturer.changeHistory.effectivefrom'),
             dataIndex: 'effectivefrom',
             width: '18%',
             render: (text) => convertDateMonthYear(text),
             sorter: false,
         }),
         tblPrepareColumns({
-            title: 'Effective To',
+            title: translateContent('termConditionManufacturer.changeHistory.effectiveto'),
             dataIndex: 'effectiveto',
             width: '18%',
             render: (text) => convertDateMonthYear(text),
             sorter: false,
         }),
         tblPrepareColumns({
-            title: 'Version',
+            title: translateContent('termConditionManufacturer.changeHistory.version'),
             dataIndex: 'version',
             width: '7%',
             sorter: false,
         }),
 
         tblPrepareColumns({
-            title: 'Description',
+            title: translateContent('termConditionManufacturer.changeHistory.termsconditiondescription'),
             dataIndex: 'termsconditiondescription',
             width: '15%',
             sorter: false,
@@ -86,7 +86,7 @@ const ChangeHistoryMain = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Button danger onClick={onCloseAction}>
-                            Close
+                            {translateContent('global.changeHistory.close')}
                         </Button>
                     </Col>
                 </Row>
@@ -95,4 +95,4 @@ const ChangeHistoryMain = (props) => {
     );
 };
 
-export const ChangeHistory = withDrawer(ChangeHistoryMain, { title: 'Change History', width: '90%' });
+export const ChangeHistory = withDrawer(ChangeHistoryMain, { title: translateContent('global.changeHistory.title'), width: '90%' });

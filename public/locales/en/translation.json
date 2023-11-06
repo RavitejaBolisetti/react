@@ -69,6 +69,7 @@
             "continue": "Continue",
             "addChild": " Add Child",
             "addSibling": " Add Sibling",
+            "exportCoa": "Export COA",
             "transfer": "Transfer",
             "allot": "Allot",
             "unAllot": "Un-Allot",
@@ -238,8 +239,51 @@
         }
     },
 
+    "chartOfAccount": {
+        "heading": {
+            "title": "Financial Company",
+            "viewTitle": "Chart of Account Hierarchy",
+            "moduleTitle": "Chart of Account Hierarchy",
+            "exportCoa": "Export COA"
+        },
+
+        "label": {
+            "attributeLevel": "Attribute Level",
+            "parent": "Parent",
+            "code": "Code",
+            "description": "Description",
+            "openingBalanceCredit": "Opening Balance Credit",
+            "openingBalanceDebit": "Opening Balance Debit",
+            "status": "Status",
+            "openingBalanceCr": "Opening Balance Cr.",
+            "openingBalanceDr": "Opening Balance Dr",
+            "fromDate": "From Date",
+            "toDate": "To Date"
+        },
+
+        "validation": {
+            "attributeLevel": "Attribute Level",
+            "code": "Code",
+            "accountDescription": "Account description",
+            "openingBalanceCredit": "Opening Balance Credit",
+            "openingBalanceDebit": "Opening Balance Debit"
+        },
+
+        "placeholder": {
+            "attributeLevel": "Attribute Level",
+            "code": "Code",
+            "accountdDescription": "Account description",
+            "openingBalanceCredit": "Opening Balance Credit",
+            "openingBalanceDebit": "Opening Balance Debit",
+            "fromDate": "From Date",
+            "toDate": "To Date",
+            "search": "Search"
+        }
+    },
+
     "qualificationMaster": {
         "heading": {
+            "pageTitle": "Qualification Master",
             "title": "Qualification Master",
             "titleName": "Qualification Name",
             "drawerTitle": "Qualification"
@@ -797,6 +841,87 @@
         }
     },
 
+    "locationTypeMaster": {
+        "heading": {
+            "drawerTitle": "Location Type",
+            "mainTitle": "Dealer Location Type Master",
+            "title": "Location Type Name"
+        },
+        "label": {
+            "locationTypeCode": "Location Type Code",
+            "locationTypeName": "Location Type Name",
+            "applicationTo": "Applicable To",
+            "status": "Status"
+        },
+        "placeholder": {
+            "locationTypeCode": "location type code",
+            "locationTypeName": "location type name",
+            "applicationTo": "applicable to"
+        },
+        "validation": {
+            "locationTypeCode": "location type code",
+            "locationTypeName": "location type name",
+            "applicationTo": "applicable to"
+        }
+    },
+
+    "designationMaster": {
+        "heading": {
+            "mainTitle": "Designation Master",
+            "drawerTitle": "Designation",
+            "titleOverride": "Advance Filters",
+            "title": "Designation Name "
+        },
+        "label": {
+            "divisionName": "Division Name",
+            "departmentName": "Department Name",
+            "roleDescription": "Role Description",
+            "designationType": "Designation Type",
+            "designationName": "Designation Name",
+            "mileSkill": "Mile Skill",
+            "status": "Status",
+            "manPowerRequired": "Manpower Required",
+            "accountsData": "Accounts Data",
+            "capability": "Capability (L1/L2/L3)",
+            "createUserId": "Create User Id",
+            "roleName": "Role Name",
+            "designationCode": "Designation Code"
+        },
+        "placeholder": {
+            "divisionName": "Division Name",
+            "departmentName": "Department Name",
+            "roleDescription": "Role Description",
+            "designationType": "designation type",
+            "designationName": "Designation Name",
+            "mileSkill": "mileSkill"
+        },
+        "validation": {
+            "divisionName": "Division Name",
+            "designationType": "Designation Type",
+            "designationName": "Designation Name"
+        }
+    },
+
+    "divisionMaster": {
+        "heading": {
+            "mainTitle": "Dealer Division Master",
+            "drawerTitle": "Division",
+            "title": "Division Name"
+        },
+        "label": {
+            "divisionCode": "Division Code",
+            "divisionName": "Division Name"
+        },
+        "placeholder": {
+            "divisionCode": "Division Code",
+            "divisionName": "Division Name"
+        },
+        "validation": {
+            "divisionCode": "Division Code",
+            "divisionName": "Division Name"
+        }
+    },
+
     "gstIrnTransaction": {
         "heading": {
             "pageTitle": "GST IRN Transaction Pending",
@@ -920,7 +1045,6 @@
         },
         "entitlementsSchemes": {
             "label": {
-                "srl.": "Srl.",
                 "entitlement/SchemeType": "Entitlement/Scheme Type",
                 "entitlement/SchemeDescription": "Entitlement/Scheme Description",
                 "entitlement/SchemeDocNo": "Entitlement/Scheme Doc No",
@@ -929,8 +1053,7 @@
                 "validityStartDate": "Validity Start Date",
                 "validityEndDate": "Validity End Date",
                 "validityStartKM": "Validity Start KM",
-                "validityEndKM": "Validity End KM",
-                "status": "Status"
+                "validityEndKM": "Validity End KM"
             },
             "placeholder": {
                 "noData": "No data"
@@ -1798,6 +1921,7 @@
     },
     "configurableParameter": {
         "heading": {
+            "pageTitle": "Configurable Parameter Editing",
             "mainTitle": "Configurable Parameter Editing",
             "title": "Control Description"
         },
@@ -1895,6 +2019,7 @@
     },
     "hierarchyAttribute": {
         "heading": {
+            "pageTitle": "Hierarchy Attribute Master",
             "mainTitle": "Hierarchy Attribute Master",
             "titleHierarchy": "Hierarchy Attribute Type",
             "title": "Hierarchy Attribute"
@@ -1919,6 +2044,7 @@
     },
     "manufacturerOrganisation": {
         "heading": {
+            "pageTitle": "Manufacturer Organization Hierarchy",
             "mainTitle": "Manufacturer Organisation Detail",
             "viewTitle": "Manufacturer Details",
             "title": "Hierarchy"
@@ -1943,28 +2069,31 @@
             "parent": "Parent",
             "attributeTypeCode": "attribute type code",
             "attributeCode": "attribute code"
+
         },
         "validation": {
             "nameValidation": "name",
             "codeValidation": "code",
             "attributeLevel": "attribute level",
             "attributeTypeCode": "attribute type code",
-
             "attributeHierarchyFieldValidation": "is not active anymore. Please select a different attribute."
         }
     },
-    "manufacturerAdmin": {
+    "adminHierarchy": {
         "heading": {
-            "mainTitle": "Manufacturer Detail",
+            "adminPageTitle": "Manufacturer Adminstrative Hierarchy",
+            "adminMainTitle": "Manufacturer Detail",
             "viewTitle": "Manufacturer Details",
             "drawerTitle": "Upload Authority Details",
             "title": "Hierarchy",
             "changeHistoryTitle": "Admin Change History",
-            "authorityChangeHistoryTitle": "Authority Change History"
+            "authorityChangeHistoryTitle": "Authority Change History",
+            "authorityDetailTitle": "Authority Details"
         },
         "label": {
             "changedDate": "Changed/Modified Date",
             "changedBy": "Changed By",
+            "createdBy": "Created By",
             "attribute": "Attribute",
             "code": "Code",
             "parent": "Parent",
@@ -1975,6 +2104,7 @@
             "attributeType": "Attribute Type",
             "hierarchyCode": "Hierarchy Code",
             "attributeLevel": "Attribute Level",
+            "authorityType": "Authority Type",
             "attributeCode": "Attribute Code",
             "authorityTypeCode": "Authority Type Code",
             "employeeName": "Employee Name",
@@ -1987,7 +2117,10 @@
             "uploadButtonName": "Upload Authority Form",
             "messageText": "Click or drop your file here to upload",
             "downloadHere": "Download Here",
-            "selectOrganization": "Please Select Organization from dropdown"
+            "selectOrganization": "Please Select Organization from dropdown",
+            "token": "Token",
+            "employeeText": "Employee Name : ",
+            "warningMessage": "Validate token to proceed"
         },
         "placeholder": {
             "name": "name",
@@ -1995,7 +2128,12 @@
             "parent": "Parent",
             "attributeTypeCode": "attribute type code",
             "attributeCode": "attribute code",
-            "organizationHierarchy": "Organization Hierarchy"
+            "organizationHierarchy": "Organization Hierarchy",
+            "token": "Token",
+            "authorityType": "authority type",
+            "shortDescription": "short description",
+            "longDescription": "long description",
+            "attributeLevel": "attribute level"
         },
         "validation": {
             "nameValidation": "name",
@@ -2003,7 +2141,12 @@
             "attributeLevel": "attribute level",
             "attributeTypeCode": "attribute type code",
             "attributeHierarchyFieldValidation": "is not active anymore. Please select a different attribute.",
-            "validationText": "File type should be .xlxs and max file size to be 8Mb"
+            "validationText": "File type should be .xlxs and max file size to be 8Mb",
+            "authorityType": "Authority Type",
+            "tokenRequired": "Token Required",
+            "dateRequired": "Date Required",
+            "shortDescription": "short description",
+            "longDescription": "long description"
         }
     },
 
@@ -2194,6 +2337,34 @@
             "variantCode": "Variant Code"
         }
     },
+    "vehicleAllotmentPriorityMaster": {
+        "heading": {
+            "moduleTitle": "Vehicle Allotment Priority Master",
+            "title": "Vehicle Allotment List"
+        },
+        "label": {
+            "oldModel": "Old Model",
+            "newModel": "New Model",
+            "effectiveFromDate": "Effective From Date",
+            "effectiveToDate": "Effective To Date",
+            "oldModelExchange": "Old Model(Exchange)",
+            "newModelBooking": "New Model(Booking)",
+            "modifiedDateTime": "Modified Date & Time",
+            "modifiedBy": "Modified By",
+            "fieldName": "Field Name",
+            "oldValue": "Old Value",
+            "newValue": "New Value",
+            "roleName": "Role Name",
+            "designationName": "Designation Name",
+            "internalId": "Internal Id",
+            "id": "Id"
+        },
+        "message": {
+            "requiredMessage": "Please select role and designation.",
+            "existErrorMessage": "Designations are not exist.",
+            "dateMessage": "Date cant be less than Effective from date"
+        }
+    },
     "bookingSoMappingControlMaster": {
         "heading": {
             "title": "Hierarchy",
@@ -2209,5 +2380,134 @@
             "selectLeft": "Please select from left",
             "sideHierarchyView": "side hierarchy to view “Details”"
         }
+    },
+
+    "termConditionManufacturer": {
+        "heading": {
+            "pageTitle": "Terms & Conditions - Manufacturer Location",
+            "moduletitle": "Term & Condition"
+        },
+        "label": {
+            "terms&Condition": "Term & Condition",
+            "documentCategory": "Document Category",
+            "productHierarchy": "Product Hierarchy",
+            "documentType": "Document Type",
+            "language": "Language",
+            "effectivefrom": "Effective From",
+            "effectiveto": "Effective To",
+            "version": "Version",
+            "mfgT&c": "MFG T&C"
+        },
+        "validation": {
+            "terms&Condition": "Term & Condition",
+            "language": "Language",
+            "documentType": "Document Type",
+            "productHierarchy": "Product Hierarchy",
+            "date": "Date"
+        },
+        "placeholder": {
+            "version": "Version",
+            "documentCategory": "Document Category",
+            "selectParameter": "Select Parameter"
+        },
+        "fields": {
+            "reviseT&C": "Revise T&C",
+            "addT&C": "Add T&C",
+            "revised": "Revised",
+            "initial": "Initial"
+        },
+        "changeHistory": {
+            "productName": "Product Hierarchy",
+            "documentTypeCode": "Document Type",
+            "languageDesc": "Language",
+            "effectivefrom": "Effective From",
+            "effectiveto": "Effective To",
+            "version": "Version",
+            "termsconditiondescription": "Description"
+        }
+    },
+    "bookingBlockMaster": {
+        "heading": {
+            "pageTitle": "Booking Block Master",
+            "moduleTitle": "Booking Block Detail",
+            "viewTitle": "Booking Block",
+            "noDataTitle": "Please choose organization hierarchy to view data"
+        },
+        "label":{
+            "descriptionText": "Please select hierarchy type to view records.",
+            "viewHierarchyText": "Please select product from left side hierarchy to view “Hierarchy Details”.",
+            "productHierarchy":"Product Hierarchy",
+            "manufacturerAdmin": "Manufacturer Administrative Hierarchy",
+            "dealerCode":"Dealer Code"
+        },
+        "placeholder": {
+            "organizationHierarchy": "Organization Hierarchy",
+            "parent": "parent",
+            "productHierarchy":"product hierarchy"
+
+        },
+        "validation": {
+            "productHierarchy":"Product Hierarchy"
+        }
+    },
+    "applicationMaster": {
+        "title": {
+            "applicationDetails": "Application Details",
+            "applicationMaster": "Application Master"
+        },
+        "label": {
+            "action": "Action",
+            "code": "Code",
+            "documentName": "document name",
+            "applicationId": "Application ID",
+            "applicationName": "Application Name",
+            "applicationTitle": "Application Title",
+            "applicationType": "Application Type",
+            "parentApplicationId": "Parent Application ID",
+            "accessibleLocation": "Accessible Location",
+            "criticalityGroupName": "Application Criticality Group",
+            "documentNumRequired": "Document number to be generated",
+            "termAndConRequired": "T&C Required",
+            "digitalSignatureRequired": "Digital Signature Required",
+            "isFinanceRelated": "Is Finance Related",
+            "irnIntegrationRequired": "IRN Integration Required"
+        },
+        "validation": {
+            "applicationAction": "application action",
+            "documentCode": "document code",
+            "documentName": "document name",
+            "applicationId": "application ID",
+            "applicationName": "application Name",
+            "applicationTitle": "application title",
+            "applicationType": "application type",
+            "parentApplicationId": "parent application ID",
+            "accessibleLocation": "Accessible Locations",
+            "criticalityGroupName": "Application Criticality Group"
+        },
+        "placeholder": {
+            "applicationAction": " application action",
+            "documentCode": "document code",
+            "documentName": "document name",
+            "applicationId": "application ID",
+            "applicationName": "application name",
+            "applicationTitle": "application title",
+            "applicationType": "application type",
+            "accessibleLocation": "accessible location",
+            "criticalityGroupName": "application criticality group"
+        },
+        "text": {
+            "status": "Status: ",
+            "active": "Active",
+            "inActive": "Inactive",
+            "actionId": "Action ID: ",
+            "code": "Code: ",
+            "yes": "Yes",
+            "no": "No",
+            "applicationActions": "Application Actions",
+            "documentType": "Document Type",
+            "accessibleDealerLocation": "Accessible Dealer Location"
+        }
     }
+
+
 }

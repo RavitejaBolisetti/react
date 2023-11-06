@@ -27,6 +27,7 @@ import { COA_ACCOUNT_TYPE } from 'constants/modules/ChartOfAccount/coaAccountTyp
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Search } = Input;
 
@@ -50,8 +51,8 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Chart of Account Hierarchy';
-    const viewTitle = 'Chart of Account Hierarchy';
+    const moduleTitle = translateContent('chartOfAccount.heading.moduleTitle');
+    const viewTitle = translateContent('chartOfAccount.heading.viewTitle');
 
     let returnValue = {
         collapsed,
@@ -264,7 +265,7 @@ export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, fetchCha
             form.resetFields();
 
             if (res?.data) {
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
                 fetchChartOfAccountHierarchy({ setIsLoading: listShowLoadingChartOfAccountHierachy, extraParams: [{ key: 'companyCode', value: companyCode }], userId });
                 setFormBtnActive(false);
                 setIsFormVisible(false);
@@ -389,7 +390,7 @@ export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, fetchCha
 
     const leftCol = chartOfAccountHierarchy?.length > 0 ? 14 : 24;
     const rightCol = chartOfAccountHierarchy?.length > 0 ? 10 : 24;
-    const title = 'Financial Company';
+    const title = translateContent('chartOfAccount.heading.title');
 
     return (
         <>
@@ -404,7 +405,7 @@ export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, fetchCha
                                     </Col>
                                     {companyCode && chartOfAccountHierarchy?.length > 0 && (
                                         <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                            <Search placeholder="Search" allowClear onChange={onChange} className={`${styles.headerSearchField} ${styles.headerSearchInput}`} />
+                                            <Search placeholder={translateContent('chartOfAccount.placeholder.search')} allowClear onChange={onChange} className={`${styles.headerSearchField} ${styles.headerSearchInput}`} />
                                         </Col>
                                     )}
                                 </Row>
@@ -414,7 +415,7 @@ export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, fetchCha
 
                     <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.buttonsGroupRight}>
                         <Button type="primary" disabled={!companyCode} className={styles.verticallyCentered} onClick={onCoaModelOpen}>
-                            Export COA
+                            {translateContent('global.buttons.exportCoa')}
                         </Button>
                     </Col>
 
@@ -446,7 +447,7 @@ export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, fetchCha
                             >
                                 {companyCode && chartOfAccountHierarchy?.length <= 0 && (
                                     <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
-                                        Add
+                                        {translateContent('global.buttons.add')}
                                     </Button>
                                 )}
                             </Empty>
