@@ -109,6 +109,36 @@
             "mnmLogin": "M&M User Login"
         }
     },
+    "dashboard": {
+        "heading": {
+            "pageTitle": "Dashboard",
+            "subTitleAddWidget": "Add Widget",
+            "keyHighlights": "Key Highlights",
+            "actionItems": "Action Items",
+            "dashboardKpi": "Dashboard KPI",
+            "latestNews": "Latest News",
+            "birthdayCalendar": "Birthday Calendar",
+            "todayBirthday": "Today's Birthday",
+            "upcomingBirthdays": "Upcoming Birthdays"
+        },
+        "label": {
+            "billing": "Billing",
+            "retail": "Retail",
+            "stockInDays": "Stock in days"
+        },
+        "placeholder": {
+
+        },
+        "validation": {
+           
+        },
+        "button": {
+           "addWidget": "Add Widget"
+        },
+        "link": {
+           
+        }
+    },
 
     "dealerCompany": {
         "heading": {

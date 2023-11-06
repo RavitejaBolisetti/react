@@ -6,6 +6,7 @@
 import { Col, Space, Tag, Typography } from 'antd';
 import React from 'react';
 import styles from './Dashboard.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Title, Text } = Typography;
 
@@ -14,7 +15,7 @@ const LatestNews = (props) => {
     return (
         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
             <div className={styles.dashboardNewsAndCalendar}>
-                <Title level={5}>Latest News</Title>
+                <Title level={5}>{translateContent('dashboard.heading.latestNews')}</Title>
                 <div className={styles.dashboardNewsAndCalendarContainer}>
                     {newsData?.map((news) => (
                         <Space onClick={() => handleNewsClick(news)} className={styles.dashboardNewsList}>
