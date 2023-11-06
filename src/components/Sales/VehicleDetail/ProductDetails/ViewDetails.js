@@ -18,7 +18,7 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
-    const { styles, bindCodeValue, formData, collapseProps, tooltTipText, isLoading, optionalServices, formActionType, modelData, variantData, modelFamilyData } = props;
+    const { styles, bindCodeValue, formData, collapseProps, tooltTipText, isLoading, optionalServices, formActionType, modelData, variantData, modelFamilyData, ITEM_TYPE } = props;
     const [openAccordian, setOpenAccordian] = useState([]);
 
     const handleCollapse = (key) => {
@@ -89,7 +89,7 @@ const ViewDetailMain = (props) => {
             <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse(3)} expandIconPosition="end" collapsible="icon" {...collapseProps}>
                 <Panel header="Aggregates" key="3">
                     <Divider />
-                    <DataTable tableColumn={tableColumn({ formActionType, bindCodeValue })} tableData={optionalServices} pagination={false} />
+                    <DataTable tableColumn={tableColumn({ formActionType, bindCodeValue, ITEM_TYPE })} tableData={optionalServices} pagination={false} />
                 </Panel>
             </Collapse>
         </div>
