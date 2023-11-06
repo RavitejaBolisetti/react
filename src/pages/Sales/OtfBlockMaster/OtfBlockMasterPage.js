@@ -7,9 +7,10 @@ import React from 'react';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 import { OtfBlockMaster } from 'components/Sales';
+import { translateContent } from 'utils/translateContent';
 
 const OtfBlockMasterBase = (props) => {
-    const pageTitle = 'Booking Block Master';
+    const pageTitle = translateContent('bookingBlockMaster.heading.pageTitle');
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

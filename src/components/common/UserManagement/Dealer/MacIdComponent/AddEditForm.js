@@ -48,10 +48,10 @@ const AddEditForm = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={`${styles.buttonsGroup} ${styles.marB20}`}>
                             <Button onClick={onSaveFormData} type="primary">
-                                {translateContent('global.button.save')}
+                                {translateContent('global.buttons.save')}
                             </Button>
                             <Button onClick={handleCancelFormEdit} danger>
-                                {translateContent('global.button.cancel')}
+                                {translateContent('global.buttons.cancel')}
                             </Button>
                         </Col>
                     </Row>

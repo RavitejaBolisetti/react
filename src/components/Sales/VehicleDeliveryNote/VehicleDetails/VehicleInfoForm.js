@@ -10,6 +10,7 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { addToolTip } from 'utils/customMenuLink';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const VehicleInfoForm = (props) => {
     const { formData, toolTipContent } = props;
@@ -17,31 +18,31 @@ const VehicleInfoForm = (props) => {
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item initialValue={formData?.vinNumber} label="VIN" name="vinNumber">
-                        <Input placeholder={preparePlaceholderText('VIN')} disabled={true} />
+                    <Form.Item initialValue={formData?.vinNumber} label={translateContent('vehicleDeliveryNote.vehicleDetails.label.vinNumber')} name="vinNumber">
+                        <Input placeholder={preparePlaceholderText(translateContent('vehicleDeliveryNote.vehicleDetails.label.vinNumber'))} disabled={true} />
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item initialValue={formData?.engineNumber} label="Engine Number" name="engineNumber">
-                        <Input placeholder={preparePlaceholderText('Engine Number')} disabled={true} />
+                    <Form.Item initialValue={formData?.engineNumber} label={translateContent('vehicleDeliveryNote.vehicleDetails.label.engineNumber')} name="engineNumber">
+                        <Input placeholder={preparePlaceholderText(translateContent('vehicleDeliveryNote.vehicleDetails.label.engineNumber'))} disabled={true} />
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item initialValue={formData?.keyNumber} label="Key Number" name="keyNumber">
-                        <Input placeholder={preparePlaceholderText('Key Number')} disabled={true} />
+                    <Form.Item initialValue={formData?.keyNumber} label={translateContent('vehicleDeliveryNote.vehicleDetails.label.keyNumber')} name="keyNumber">
+                        <Input placeholder={preparePlaceholderText(translateContent('vehicleDeliveryNote.vehicleDetails.label.keyNumber'))} disabled={true} />
                     </Form.Item>
                 </Col>
             </Row>
 
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.modelCode} label="Model Code" name="modelCode">
-                        <Input placeholder={preparePlaceholderText('Model Code')} disabled={true} />
+                    <Form.Item initialValue={formData?.modelCode} label={translateContent('vehicleDeliveryNote.vehicleDetails.label.modelCode')} name="modelCode">
+                        <Input placeholder={preparePlaceholderText(translateContent('vehicleDeliveryNote.vehicleDetails.label.modelCode'))} disabled={true} />
                     </Form.Item>
                 </Col>
                 <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
-                    <Form.Item initialValue={formData?.modelDescription} label="Model Description" name="modelDescription">
-                        <Input placeholder={preparePlaceholderText('Modal Description')} disabled={true} />
+                    <Form.Item initialValue={formData?.modelDescription} label={translateContent('vehicleDeliveryNote.vehicleDetails.label.modelDescription')} name="modelDescription">
+                        <Input placeholder={preparePlaceholderText(translateContent('vehicleDeliveryNote.vehicleDetails.label.modelDescription'))} disabled={true} />
                     </Form.Item>
                     {toolTipContent && <div className={styles.modelTooltip}>{addToolTip(toolTipContent, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle size={13} />)}</div>}
                 </Col>

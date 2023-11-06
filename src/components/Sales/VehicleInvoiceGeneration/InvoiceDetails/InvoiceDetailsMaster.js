@@ -13,6 +13,7 @@ import { CustomerDetailsMaster } from 'components/Sales/VehicleInvoiceGeneration
 
 import styles from 'assets/sass/app.module.scss';
 import { formattedCalendarDate } from 'utils/formatDateTime';
+import { translateContent } from 'utils/translateContent';
 
 const InvoiceDetailsMasterBase = (props) => {
     const { typeData, vehicleInvoiceMasterData, selectedOrderId } = props;
@@ -102,7 +103,7 @@ const InvoiceDetailsMasterBase = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <h2>{section?.title}</h2>
+                            <h2>{translateContent(`vehicleInvoiceGeneration.heading.section.` + section?.id)}</h2>
                         </Col>
                     </Row>
                     {formActionType?.viewMode ? <ViewDetail {...viewProps} formData={vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest} /> : <AddEditForm {...formProps} formData={vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest} />}

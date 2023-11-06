@@ -52,9 +52,9 @@ const AddEditFormMain = (props) => {
                 const customerCurrentName = { titleCode: formData?.titleCode, firstName: formData?.firstName, middleName: formData?.middleName, lastName: formData?.lastName };
 
                 if (JSON.stringify(customerNameChangeRequest) === JSON.stringify(customerCurrentName)) {
-                    showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Current and previous name are same' });
+                    showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: 'Current and previous name are same' });
                 } else if (fileList.length <= 0 && !formData?.supportingDocuments) {
-                    showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Kindly upload document' });
+                    showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: 'Kindly upload document' });
                 } else {
                     setActiveKey([]);
                     setButtonData({ ...buttonData, formBtnActive: true });

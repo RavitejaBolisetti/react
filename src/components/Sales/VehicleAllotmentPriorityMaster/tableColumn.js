@@ -5,32 +5,33 @@
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { convertDateMonthYear } from 'utils/formatDateTime';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
 export const tableColumn = (handleButtonClick) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Old Model',
+            title: translateContent('vehicleAllotmentPriorityMaster.label.oldModel'),
             dataIndex: 'oldModelGroup',
             width: '15%',
         }),
 
         tblPrepareColumns({
-            title: 'New Model',
+            title: translateContent('vehicleAllotmentPriorityMaster.label.newModel'),
             dataIndex: 'newModelGroup',
             width: '15%',
         }),
 
         tblPrepareColumns({
-            title: 'Effective From Date',
+            title: translateContent('vehicleAllotmentPriorityMaster.label.effectiveFromDate'),
             dataIndex: 'effectiveFromDate',
             width: '14%',
             render: (text) => convertDateMonthYear(text),
             sorter: false,
         }),
         tblPrepareColumns({
-            title: 'Effective To Date',
+            title: translateContent('vehicleAllotmentPriorityMaster.label.effectiveToDate'),
             dataIndex: 'effectiveToDate',
             width: '14%',
             render: (text) => convertDateMonthYear(text),

@@ -8,7 +8,9 @@
             "dateLessThan": "Date cant be less than Effective from date",
             "state": "State",
             "city": "City",
-            "productHierarchy": "Product Hierarchy"
+            "productHierarchy": "Product Hierarchy",
+            "fromDate": "from date",
+            "toDate": "to date"
         },
         "notificationSuccess": {
             "success": "Success",
@@ -19,9 +21,9 @@
             "title": "Error"
         },
         "drawerTitle": {
-            "add": "Add ",
-            "edit": "Edit ",
-            "view": "View ",
+            "add": "Add",
+            "edit": "Edit",
+            "view": "View",
             "addNew": "Add New "
         },
         "label": {
@@ -71,6 +73,7 @@
             "continue": "Continue",
             "addChild": " Add Child",
             "addSibling": " Add Sibling",
+            "exportCoa": "Export COA",
             "transfer": "Transfer",
             "allot": "Allot",
             "unAllot": "Un-Allot",
@@ -88,6 +91,92 @@
         "yesNo": {
             "yes": "Yes",
             "no": "No"
+        },
+        "sectionHeading": {
+            "thankYou": "Thank You"
+        }
+    },
+    "commonModules": {
+        "label": {
+            "bookingDetails.bookingNumber": "Booking Number",
+            "bookingDetails.bookingDate": "Booking Date",
+            "bookingDetails.taxCalculation": "Tax Calculation",
+            "bookingDetails.taxPayableOnReverseCharges": "Tax Payable On Reverse Charges?",
+            "bookingDetails.salesConsultantName": "Sales Consultant Name",
+            "bookingDetails.influenceMitratype": "Influencer/Mitra Type",
+            "bookingDetails.influenceMitraName": "Influencer/Mitra Name",
+
+            "bookingCustomerAndBillingCustomer.mobileNumber": "Mobile Number",
+            "bookingCustomerAndBillingCustomer.customerId": "Customer ID",
+            "bookingCustomerAndBillingCustomer.customerName": "Customer Name",
+            "bookingCustomerAndBillingCustomer.emailId": "Email ID",
+            "bookingCustomerAndBillingCustomer.gender": "Gender",
+            "bookingCustomerAndBillingCustomer.ageGroup": "Age Group",
+            "bookingCustomerAndBillingCustomer.address": "Address",
+            "bookingCustomerAndBillingCustomer.cityDistrict": "City/District",
+            "bookingCustomerAndBillingCustomer.state": "State",
+            "bookingCustomerAndBillingCustomer.pinCode": "PIN Code",
+            "bookingCustomerAndBillingCustomer.alternateNumber": "Alternate Number",
+            "bookingCustomerAndBillingCustomer.pan": "PAN",
+            "bookingCustomerAndBillingCustomer.gstin": "GSTIN",
+            "bookingCustomerAndBillingCustomer.birthDate": "Birth Date",
+
+            "vehicleDetails.modelDescription": "Model Description",
+            "vehicleDetails.modelCode": "Model Code",
+            "vehicleDetails.vin": "VIN",
+            "vehicleDetails.saleType": "Sale Type",
+            "vehicleDetails.priceType": "Price Type",
+            "vehicleDetails.vehicleSellingPrice": "Vehicle Selling Price",
+            "vehicleDetails.vehicleAmount": "Vehicle Amount",
+            "vehicleDetails.dealerDiscountWithTax": "Dealer Discount with TAX",
+            "vehicleDetails.consumerSchemeWithTax": "Consumer Scheme with TAX",
+            "vehicleDetails.printDiscount": "Print Discount?",
+
+            "schemeAndOfferDetails.schemeType": "Scheme Type",
+            "schemeAndOfferDetails.schemeCategory": "Scheme Category",
+            "schemeAndOfferDetails.Amount": "Amount",
+            "schemeAndOfferDetails.validFrom": "Valid From",
+            "schemeAndOfferDetails.validTo": "Valid To",
+            "schemeAndOfferDetails.description": "Description",
+            "schemeAndOfferDetails.noScheme": "No Scheme and Offer Details Available",
+
+            "insuranceDetails.insuranceCompany": "Insurance Company",
+            "insuranceDetails.insuranceCoverNote": "Insurance Cover Note",
+            "insuranceDetails.insuranceAmount": "Insurance Amount",
+            "insuranceDetails.insuranceCoverNoteDate": "Insurance Cover Note Date",
+            "insuranceDetails.registrationNumber": "Registration Number",
+
+            "financeDetails.financeArrangedBy": "Finance Arranged By",
+            "financeDetails.financierName": "Financier Name",
+            "financeDetails.branch": "Branch",
+            "financeDetails.fileNumber": "File Number",
+            "financeDetails.DoReceived": "D.O. Received",
+            "financeDetails.DoNumber": "D.O. Number",
+            "financeDetails.DoDate": "D.O. Date",
+
+            "exchangeDetails.exchange": "Exchange",
+            "exchangeDetails.registrationNumber": "Registration Number",
+            "exchangeDetails.make": "Make",
+            "exchangeDetails.modelGroup": "Model Group",
+            "exchangeDetails.variant": "Variant",
+            "exchangeDetails.kms": "KMS",
+            "exchangeDetails.usage": "Usage",
+            "exchangeDetails.yearOfRegistration": "Year of Registration",
+            "exchangeDetails.vin": "VIN",
+            "exchangeDetails.hypotheticatedTo": "Hypothecated To",
+            "exchangeDetails.customerName": "Customer Name",
+            "exchangeDetails.relationShip": "Relationship",
+            "exchangeDetails.schemeName": "Scheme Name",
+            "exchangeDetails.schemeAmount": "Scheme Amount",
+
+            "referrals.vehicleRegistrationNumber": "Vehicle Registration Number",
+            "referrals.chassisNumber": "Chassis Number",
+            "referrals.customerCode": "Customer Code",
+            "referrals.customerType": "Customer Type",
+            "referrals.customerName": "Customer Name",
+            "referrals.mobileNumber": "Mobile Number",
+            "referrals.emailId": "Email Id",
+            "referrals.dateOfBirth": "Date of Birth"
         }
     },
     "login": {
@@ -240,8 +329,86 @@
         }
     },
 
+    "vehicleModelAndTaxCharges": {
+        "heading": {
+            "pageTitle": "Vehicle Model with Accounts and Tax & Charges Mapping",
+            "titleHierarchy": "Model Group",
+            "moduleTitle": "Account and Tax & Charges mapping"
+        },
+
+        "tableColHeading": {
+            "modelGroup": "Model Group",
+            "taxChargesCategory": "Tax Charges and Category",
+            "accountCategory": "Account Category"
+        },
+
+        "label": {
+            "modelGroup": "Model Group (Product Hierarchy)",
+            "taxChargeCategory": "Tax/Charge Category",
+            "accountCategory": "Account category",
+            "modelGroupCode": "Model Group Code",
+            "taxCategoryDescription": "Tax Category Description",
+            "accountCategoryDescription": "Account Category Description"
+        },
+
+        "validation": {
+            "modelGroup": "Model Group",
+            "taxChargeCategory": "Tax/Charge Category",
+            "accountCategory": "Account category"
+        },
+
+        "placeholder": {
+            "modelGroup": "Model Group",
+            "taxChargeCategory": "Tax/Charge Category",
+            "accountCategory": "Account Category"
+        }
+    },
+
+    "chartOfAccount": {
+        "heading": {
+            "title": "Financial Company",
+            "viewTitle": "Chart of Account Hierarchy",
+            "moduleTitle": "Chart of Account Hierarchy",
+            "exportCoa": "Export COA"
+        },
+
+        "label": {
+            "attributeLevel": "Attribute Level",
+            "parent": "Parent",
+            "code": "Code",
+            "description": "Description",
+            "openingBalanceCredit": "Opening Balance Credit",
+            "openingBalanceDebit": "Opening Balance Debit",
+            "status": "Status",
+            "openingBalanceCr": "Opening Balance Cr.",
+            "openingBalanceDr": "Opening Balance Dr",
+            "fromDate": "From Date",
+            "toDate": "To Date"
+        },
+
+        "validation": {
+            "attributeLevel": "Attribute Level",
+            "code": "Code",
+            "accountDescription": "Account description",
+            "openingBalanceCredit": "Opening Balance Credit",
+            "openingBalanceDebit": "Opening Balance Debit"
+        },
+
+        "placeholder": {
+            "attributeLevel": "Attribute Level",
+            "code": "Code",
+            "accountdDescription": "Account description",
+            "openingBalanceCredit": "Opening Balance Credit",
+            "openingBalanceDebit": "Opening Balance Debit",
+            "fromDate": "From Date",
+            "toDate": "To Date",
+            "search": "Search"
+        }
+    },
+
     "qualificationMaster": {
         "heading": {
+            "pageTitle": "Qualification Master",
             "title": "Qualification Master",
             "titleName": "Qualification Name",
             "drawerTitle": "Qualification"
@@ -459,6 +626,7 @@
         "button": {},
         "link": {}
     },
+
     "customerMaster": {
         "heading": {
             "pageTitle": "Customer Master",
@@ -493,7 +661,9 @@
             "informationTitle": "Individual Information",
             "addressTitle": "Individual Address",
             "familyTitle": "Family Details",
-            "cusTitle": "Customer Name"
+            "cusTitle": "Customer Name",
+            "companyTitle": "Company Information",
+            "accountTitle": "Key Account Details"
         },
         "label": {
             "mobileNumber": "Mobile Number",
@@ -571,7 +741,15 @@
             "documentType": "Document Type",
             "fileName": "File Name",
             "lastName": "Last Name",
-            "mark": "Mark As Default"
+            "mark": "Mark As Default",
+            "companyName": "Company Name",
+            "companyCode": "Parent Company Code",
+            "parentComp": "Parent Company Name",
+            "accCode": "Account Code",
+            "accName": "Account Name",
+            "accSegment": "Account Segment",
+            "accClient": "Account Client Name",
+            "accDate": "Account Mapping Date"
         },
         "placeholder": {
             "mobileMumber": "mobile number",
@@ -595,10 +773,10 @@
             "gstin": "gstin",
             "category": "usage/application category",
             "income": "annual income",
-            "businessDetails": "business details",
+            "businessDetails": "Business details",
             "vehicleDeployment": "vehicle deployment details",
             "keyRole": "key role details",
-            "route": "major route details",
+            "route": "Major route details",
             "addresstype": "address type",
             "address": "address Line 1",
             "addressL": "address Line 2",
@@ -629,7 +807,17 @@
             "discount": "discount",
             "remarks": "remark",
             "documentType": "document type",
-            "fileName": "File Name"
+            "fileName": "File Name",
+            "compName": "company name",
+            "compCode": "parent company code",
+            "corporateCode": "corporate code",
+            "subCategory": "Usage/Application Sub-Category",
+            "cusCategory": "Customer Category",
+            "accCode": "Account Code",
+            "accName": "Account Name",
+            "accSegment": "Account Segment",
+            "accClient": "Account Client Name",
+            "accMapping": "Account Mapping Date"
         },
         "validation": {
             "mobileNumber": "mobile number",
@@ -663,7 +851,9 @@
             "partsDiscount": "parts discount",
             "labourDiscount": "labour discount",
             "documentType": "document type",
-            "fileName": "file name"
+            "fileName": "file name",
+            "compName": "company name",
+            "parentCode": "parent company code"
         },
         "button": {},
         "link": {
@@ -799,6 +989,139 @@
         }
     },
 
+    "locationTypeMaster": {
+        "heading": {
+            "drawerTitle": "Location Type",
+            "mainTitle": "Dealer Location Type Master",
+            "title": "Location Type Name"
+        },
+        "label": {
+            "locationTypeCode": "Location Type Code",
+            "locationTypeName": "Location Type Name",
+            "applicationTo": "Applicable To",
+            "status": "Status"
+        },
+        "placeholder": {
+            "locationTypeCode": "location type code",
+            "locationTypeName": "location type name",
+            "applicationTo": "applicable to"
+        },
+        "validation": {
+            "locationTypeCode": "location type code",
+            "locationTypeName": "location type name",
+            "applicationTo": "applicable to"
+        }
+    },
+
+    "designationMaster": {
+        "heading": {
+            "mainTitle": "Designation Master",
+            "drawerTitle": "Designation",
+            "titleOverride": "Advance Filters",
+            "title": "Designation Name "
+        },
+        "label": {
+            "divisionName": "Division Name",
+            "departmentName": "Department Name",
+            "roleDescription": "Role Description",
+            "designationType": "Designation Type",
+            "designationName": "Designation Name",
+            "mileSkill": "Mile Skill",
+            "status": "Status",
+            "manPowerRequired": "Manpower Required",
+            "accountsData": "Accounts Data",
+            "capability": "Capability (L1/L2/L3)",
+            "createUserId": "Create User Id",
+            "roleName": "Role Name",
+            "designationCode": "Designation Code"
+        },
+        "placeholder": {
+            "divisionName": "Division Name",
+            "departmentName": "Department Name",
+            "roleDescription": "Role Description",
+            "designationType": "designation type",
+            "designationName": "Designation Name",
+            "mileSkill": "mileSkill"
+        },
+        "validation": {
+            "divisionName": "Division Name",
+            "designationType": "Designation Type",
+            "designationName": "Designation Name"
+        }
+    },
+
+    "divisionMaster": {
+        "heading": {
+            "mainTitle": "Dealer Division Master",
+            "drawerTitle": "Division",
+            "title": "Division Name"
+        },
+        "label": {
+            "divisionCode": "Division Code",
+            "divisionName": "Division Name"
+        },
+        "placeholder": {
+            "divisionCode": "Division Code",
+            "divisionName": "Division Name"
+        },
+        "validation": {
+            "divisionCode": "Division Code",
+            "divisionName": "Division Name"
+        }
+    },
+
+    "chargerInstallationProcess": {
+        "heading": {
+            "title": "Charger Installation",
+            "titleOverride": "Advance Filters",
+            "mainTitle": "Charger Installation"
+        },
+        "label": {
+          "bookingNumber": "Booking No.",
+          "requestNumber": "Request ID",
+          "requestStatus" : "Stage Status"
+        },
+        "notification": {
+            "globalNotification": "Non-EV Booking shouldn't be accepted"
+        },
+        "cardText": {
+            "bookingNo": "Booking No:",
+            "overallStatus": "Overall Status:"
+        }
+    },
+
+    "installationAddressDetials": {
+        "heading": {
+            "mainTitle": "Insurance Details"
+        },
+        "label": {
+            "custName": "Customer Name",
+            "pincode": "Pincode",
+            "city": "City",
+            "state": "State",
+            "custMobNo": "Customer Mobile No.",
+            "custEmailId": "Customer Email Id.",
+            "address": "Address"
+        },
+        "validation": {
+            "installationAddress": "Installation Adress",
+            "pinCode": "Pin Code",
+            "city": "City",
+            "state": "State",
+            "mobNo": "mobile number",
+            "custMobNo": "Customer Mobile Number"
+        }
+    },
+
+    "queryButtons": {
+        "label": {
+            "siteSurvey": "Site Survey",
+            "siteValidation": "Site Validation",
+            "installation": "Installation",
+            "checklistCode": "Commission"
+        }
+    },
+
     "gstIrnTransaction": {
         "heading": {
             "pageTitle": "GST IRN Transaction Pending",
@@ -813,6 +1136,8 @@
             "gstin": "GSTIN"
         }
     },
+
+    
 
     "footer": {
         "copyright": "Copyright &copy; {YEAR} ROBIN."
@@ -922,7 +1247,6 @@
         },
         "entitlementsSchemes": {
             "label": {
-                "srl.": "Srl.",
                 "entitlement/SchemeType": "Entitlement/Scheme Type",
                 "entitlement/SchemeDescription": "Entitlement/Scheme Description",
                 "entitlement/SchemeDocNo": "Entitlement/Scheme Doc No",
@@ -931,8 +1255,7 @@
                 "validityStartDate": "Validity Start Date",
                 "validityEndDate": "Validity End Date",
                 "validityStartKM": "Validity Start KM",
-                "validityEndKM": "Validity End KM",
-                "status": "Status"
+                "validityEndKM": "Validity End KM"
             },
             "placeholder": {
                 "noData": "No data"
@@ -1449,148 +1772,147 @@
             "drawerTitleMain": "Invoice Generation",
             "drawerTitleMaster": "Invoice",
             "cancelRequestTitle": "Cancel Request",
-            "sections": {
-                "section1": "Invoice Details",
-                "section2": "Vehicle Details",
-                "section3": "Scheme and Offer Details",
-                "section4": "Insurance Details",
-                "section5": "Finance Details",
-                "section6": "Exchange Details"
-            },
-            "collapse": {
-                "bookingDetails": "Booking Details",
-                "bookingCustomer": "Booking Customer",
-                "billingCustomer": "Billing Customer",
-                "vehicleInformation": "Vehicle Information",
-                "taxDetails": "Tax Details",
-                "optionalService": "Optional Services"
-            },
-            "captions": {
-                "priceInformation": "Price Information",
-                "salesDetails": "Sales Details",
-                "vehicleDetails": "Vehicle Details",
-                "customerDetails": "Customer Details",
-                "Scheme": "Scheme",
-                "Vehicle Price": "Vehicle Price"
-            },
-            "profileCard": {
-                "invoiceNumber": "Invoice No.:",
-                "invoiceDate": "Invoice Date:",
-                "bookingNumber": "Booking No.:",
-                "bookingDate": "Booking Date"
-            }
+
+            "section.1": "Invoice Details",
+            "section.2": "Vehicle Details",
+            "section.3": "Scheme and Offer Details",
+            "section.4": "Insurance Details",
+            "section.5": "Finance Details",
+            "section.6": "Exchange Details",
+            "section.7": "Referrals",
+            "section.8": "Loyalty Scheme",
+
+            "collapse.bookingDetails": "Booking Details",
+            "collapse.bookingCustomer": "Booking Customer",
+            "collapse.billingCustomer": "Billing Customer",
+            "collapse.vehicleInformation": "Vehicle Information",
+            "collapse.taxDetails": "Tax Details",
+            "collapse.optionalService": "Optional Services",
+
+            "captions.priceInformation": "Price Information",
+            "captions.benefit": "Benefits",
+            "captions.salesDetails": "Sales Details",
+            "captions.vehicleDetails": "Vehicle Details",
+            "captions.customerDetails": "Customer Details",
+            "captions.Scheme": "Scheme",
+            "captions.VehiclePrice": "Vehicle Price",
+
+            "profileCard.invoiceNumber": "Invoice No.:",
+            "profileCard.invoiceDate": "Invoice Date:",
+            "profileCard.status": "Status:",
+            "profileCard.irnStatus": " IRN Status:",
+            "profileCard.bookingNumber": "Booking No.:",
+            "profileCard.bookingDate": "Booking Date",
+            "profileCard.irnDate": "IRN Date:",
+            "profileCard.irnNumber": "IRN Number:",
+            "profileCard.description": "Description:",
+            "profileCard.cancelDate": "Cancelled Date:",
+            "profileCard.cancelBy": "Cancel By::",
+            "profileCard.cancelReason": "Cancellation Reason:",
+
+            "notification.allotedOtfMessage": "Only alloted OTF can be invoice",
+            "notification.otfAlreadyInvoiced": "OTF number is already invoiced"
         },
         "label": {
-            "bookingDetails": {
-                "bookingNumber": "Booking Number",
-                "bookingDate": "Booking Date",
-                "taxCalculation": "Tax Calculation",
-                "taxPayableOnReverseCharges": "Tax Payable On Reverse Charges?",
-                "salesConsultantName": "Sales Consultant Name",
-                "influenceMitratype": "Influencer/Mitra Type",
-                "influenceMitraName": "Influencer/Mitra Name"
-            },
-            "bookingCustomerAndBillingCustomer": {
-                "mobileNumber": "Mobile Number",
-                "customerId": "Customer ID",
-                "customerName": "Customer Name",
-                "emailId": "Email ID",
-                "gender": "Gender",
-                "ageGroup": "Age Group",
-                "address": "Address",
-                "cityDistrict": "City/District",
-                "state": "State",
-                "pinCode": "PIN Code",
-                "alternateNumber": "Alternate Number",
-                "pan": "PAN",
-                "gstin": "GSTIN",
-                "birthDate": "Birth Date"
-            },
-            "vehicleDetails": {
-                "modelDescription": "Model Description",
-                "modelCode": "Model Code",
-                "vin": "VIN",
-                "saleType": "Sale Type",
-                "priceType": "Price Type",
-                "vehicleSellingPrice": "Vehicle Selling Price",
-                "vehicleAmount": "Vehicle Amount",
-                "dealerDiscountWithTax": "Dealer Discount with TAX",
-                "consumerSchemeWithTax": "Consumer Scheme with TAX",
-                "printDiscount": "Print Discount?"
-            },
-            "schemeAndOfferDetails": {
-                "schemeType": "Scheme Type",
-                "schemeCategory": "Scheme Category",
-                "Amount": "Amount",
-                "validFrom": "Valid From",
-                "validTo": "Valid To",
-                "description": "Description"
-            },
-            "insuranceDetails": {
-                "insuranceCompany": "Insurance Company",
-                "insuranceCoverNote": "Insurance Cover Note",
-                "insuranceAmount": "Insurance Amount",
-                "insuranceCoverNoteDate": "Insurance Cover Note Date",
-                "registrationNumber": "Registration Number"
-            },
-            "financeDetails": {
-                "financeArrangedBy": "Finance Arranged By",
-                "financierName": "Financier Name",
-                "branch": "Branch",
-                "fileNumber": "File Number",
-                "DoReceived": "D.O. Received",
-                "DoNumber": "D.O. Number",
-                "DoDate": "D.O. Date"
-            },
-            "exchangeDetails": {
-                "exchange": "Exchange",
-                "registrationNumber": "Registration Number",
-                "make": "Make",
-                "modelGroup": "Model Group",
-                "variant": "Variant",
-                "kms": "KMS",
-                "usage": "Usage",
-                "yearOfRegistration": "Year of Registration",
-                "vin": "VIN",
-                "hypotheticatedTo": "Hypothecated To",
-                "customerName": "Customer Name",
-                "relationShip": "Relationship",
-                "schemeName": "Scheme Name",
-                "schemeAmount": "Scheme Amount"
-            },
-            "refferals": {
-                "vehicleRegistrationNumber": "Vehicle Registration Number",
-                "chassisNumber": "Chassis Number",
-                "customerCode": "Customer Code",
-                "customerType": "Customer Type",
-                "customerName": "Customer Name",
-                "mobileNumber": "Mobile Number",
-                "emailId": "Email Id",
-                "dateOfBirth": "Date of Birth"
-            }
+            "bookingDetails.bookingNumber": "Booking Number",
+            "bookingDetails.bookingDate": "Booking Date",
+            "bookingDetails.taxCalculation": "Tax Calculation",
+            "bookingDetails.taxPayableOnReverseCharges": "Tax Payable On Reverse Charges?",
+            "bookingDetails.salesConsultantName": "Sales Consultant Name",
+            "bookingDetails.influenceMitratype": "Influencer/Mitra Type",
+            "bookingDetails.influenceMitraName": "Influencer/Mitra Name",
+
+            "bookingCustomerAndBillingCustomer.mobileNumber": "Mobile Number",
+            "bookingCustomerAndBillingCustomer.customerId": "Customer ID",
+            "bookingCustomerAndBillingCustomer.customerName": "Customer Name",
+            "bookingCustomerAndBillingCustomer.emailId": "Email ID",
+            "bookingCustomerAndBillingCustomer.gender": "Gender",
+            "bookingCustomerAndBillingCustomer.ageGroup": "Age Group",
+            "bookingCustomerAndBillingCustomer.address": "Address",
+            "bookingCustomerAndBillingCustomer.cityDistrict": "City/District",
+            "bookingCustomerAndBillingCustomer.state": "State",
+            "bookingCustomerAndBillingCustomer.pinCode": "PIN Code",
+            "bookingCustomerAndBillingCustomer.alternateNumber": "Alternate Number",
+            "bookingCustomerAndBillingCustomer.pan": "PAN",
+            "bookingCustomerAndBillingCustomer.gstin": "GSTIN",
+            "bookingCustomerAndBillingCustomer.birthDate": "Birth Date",
+
+            "vehicleDetails.modelDescription": "Model Description",
+            "vehicleDetails.modelCode": "Model Code",
+            "vehicleDetails.vin": "VIN",
+            "vehicleDetails.saleType": "Sale Type",
+            "vehicleDetails.priceType": "Price Type",
+            "vehicleDetails.vehicleSellingPrice": "Vehicle Selling Price",
+            "vehicleDetails.vehicleAmount": "Vehicle Amount",
+            "vehicleDetails.dealerDiscountWithTax": "Dealer Discount with TAX",
+            "vehicleDetails.consumerSchemeWithTax": "Consumer Scheme with TAX",
+            "vehicleDetails.printDiscount": "Print Discount?",
+
+            "schemeAndOfferDetails.schemeType": "Scheme Type",
+            "schemeAndOfferDetails.schemeCategory": "Scheme Category",
+            "schemeAndOfferDetails.Amount": "Amount",
+            "schemeAndOfferDetails.validFrom": "Valid From",
+            "schemeAndOfferDetails.validTo": "Valid To",
+            "schemeAndOfferDetails.description": "Description",
+            "schemeAndOfferDetails.noScheme": "No Scheme and Offer Details Available",
+
+            "insuranceDetails.insuranceCompany": "Insurance Company",
+            "insuranceDetails.insuranceCoverNote": "Insurance Cover Note",
+            "insuranceDetails.insuranceAmount": "Insurance Amount",
+            "insuranceDetails.insuranceCoverNoteDate": "Insurance Cover Note Date",
+            "insuranceDetails.registrationNumber": "Registration Number",
+
+            "financeDetails.financeArrangedBy": "Finance Arranged By",
+            "financeDetails.financierName": "Financier Name",
+            "financeDetails.branch": "Branch",
+            "financeDetails.fileNumber": "File Number",
+            "financeDetails.DoReceived": "D.O. Received",
+            "financeDetails.DoNumber": "D.O. Number",
+            "financeDetails.DoDate": "D.O. Date",
+
+            "exchangeDetails.exchange": "Exchange",
+            "exchangeDetails.registrationNumber": "Registration Number",
+            "exchangeDetails.make": "Make",
+            "exchangeDetails.modelGroup": "Model Group",
+            "exchangeDetails.variant": "Variant",
+            "exchangeDetails.kms": "KMS",
+            "exchangeDetails.usage": "Usage",
+            "exchangeDetails.yearOfRegistration": "Year of Registration",
+            "exchangeDetails.vin": "VIN",
+            "exchangeDetails.hypotheticatedTo": "Hypothecated To",
+            "exchangeDetails.customerName": "Customer Name",
+            "exchangeDetails.relationShip": "Relationship",
+            "exchangeDetails.schemeName": "Scheme Name",
+            "exchangeDetails.schemeAmount": "Scheme Amount",
+
+            "referrals.vehicleRegistrationNumber": "Vehicle Registration Number",
+            "referrals.chassisNumber": "Chassis Number",
+            "referrals.customerCode": "Customer Code",
+            "referrals.customerType": "Customer Type",
+            "referrals.customerName": "Customer Name",
+            "referrals.mobileNumber": "Mobile Number",
+            "referrals.emailId": "Email Id",
+            "referrals.dateOfBirth": "Date of Birth"
         },
         "placeholder": {},
         "validation": {},
-        "button": {},
+        "buttons": {
+            "generate": "Generate"
+        },
         "tableColumn": {
-            "invoiceMaster": {
-                "column1": "Invoice No.",
-                "column2": "Booking Number",
-                "column3": "Customer Name",
-                "column4": "Model Description",
-                "column5": "Invoice Date",
-                "column6": "Digital Signature"
-            },
-            "taxdetails": {
-                "column1": "Description",
-                "column2": "Rate",
-                "column3": "Amount"
-            },
-            "optionalServices": {
-                "column1": "serviceName",
-                "column2": "Rate",
-                "column3": "Amount"
-            }
+            "invoiceMaster.columnOne": "Invoice No.",
+            "invoiceMaster.columnTwo": "Booking Number",
+            "invoiceMaster.columnThree": "Customer Name",
+            "invoiceMaster.columnFour": "Model Description",
+            "invoiceMaster.columnFive": "Invoice Date",
+
+            "taxDetails.columnOne": "Description",
+            "taxDetails.columnTwo": "Rate",
+            "taxDetails.columnThree": "Amount",
+
+            "optionalServices.columnOne": "serviceName",
+            "optionalServices.columnTwo": "Rate",
+            "optionalServices.columnThree": "Amount"
         }
     },
     "vehicleReceiptChecklist": {
@@ -1800,6 +2122,7 @@
     },
     "configurableParameter": {
         "heading": {
+            "pageTitle": "Configurable Parameter Editing",
             "mainTitle": "Configurable Parameter Editing",
             "title": "Control Description"
         },
@@ -1897,6 +2220,7 @@
     },
     "hierarchyAttribute": {
         "heading": {
+            "pageTitle": "Hierarchy Attribute Master",
             "mainTitle": "Hierarchy Attribute Master",
             "titleHierarchy": "Hierarchy Attribute Type",
             "title": "Hierarchy Attribute"
@@ -1921,6 +2245,7 @@
     },
     "manufacturerOrganisation": {
         "heading": {
+            "pageTitle": "Manufacturer Organization Hierarchy",
             "mainTitle": "Manufacturer Organisation Detail",
             "viewTitle": "Manufacturer Details",
             "title": "Hierarchy"
@@ -1951,22 +2276,24 @@
             "codeValidation": "code",
             "attributeLevel": "attribute level",
             "attributeTypeCode": "attribute type code",
-
             "attributeHierarchyFieldValidation": "is not active anymore. Please select a different attribute."
         }
     },
-    "manufacturerAdmin": {
+    "adminHierarchy": {
         "heading": {
-            "mainTitle": "Manufacturer Detail",
+            "adminPageTitle": "Manufacturer Adminstrative Hierarchy",
+            "adminMainTitle": "Manufacturer Detail",
             "viewTitle": "Manufacturer Details",
             "drawerTitle": "Upload Authority Details",
             "title": "Hierarchy",
             "changeHistoryTitle": "Admin Change History",
-            "authorityChangeHistoryTitle": "Authority Change History"
+            "authorityChangeHistoryTitle": "Authority Change History",
+            "authorityDetailTitle": "Authority Details"
         },
         "label": {
             "changedDate": "Changed/Modified Date",
             "changedBy": "Changed By",
+            "createdBy": "Created By",
             "attribute": "Attribute",
             "code": "Code",
             "parent": "Parent",
@@ -1977,6 +2304,7 @@
             "attributeType": "Attribute Type",
             "hierarchyCode": "Hierarchy Code",
             "attributeLevel": "Attribute Level",
+            "authorityType": "Authority Type",
             "attributeCode": "Attribute Code",
             "authorityTypeCode": "Authority Type Code",
             "employeeName": "Employee Name",
@@ -1989,7 +2317,10 @@
             "uploadButtonName": "Upload Authority Form",
             "messageText": "Click or drop your file here to upload",
             "downloadHere": "Download Here",
-            "selectOrganization": "Please Select Organization from dropdown"
+            "selectOrganization": "Please Select Organization from dropdown",
+            "token": "Token",
+            "employeeText": "Employee Name : ",
+            "warningMessage": "Validate token to proceed"
         },
         "placeholder": {
             "name": "name",
@@ -1997,7 +2328,12 @@
             "parent": "Parent",
             "attributeTypeCode": "attribute type code",
             "attributeCode": "attribute code",
-            "organizationHierarchy": "Organization Hierarchy"
+            "organizationHierarchy": "Organization Hierarchy",
+            "token": "Token",
+            "authorityType": "authority type",
+            "shortDescription": "short description",
+            "longDescription": "long description",
+            "attributeLevel": "attribute level"
         },
         "validation": {
             "nameValidation": "name",
@@ -2005,7 +2341,12 @@
             "attributeLevel": "attribute level",
             "attributeTypeCode": "attribute type code",
             "attributeHierarchyFieldValidation": "is not active anymore. Please select a different attribute.",
-            "validationText": "File type should be .xlxs and max file size to be 8Mb"
+            "validationText": "File type should be .xlxs and max file size to be 8Mb",
+            "authorityType": "Authority Type",
+            "tokenRequired": "Token Required",
+            "dateRequired": "Date Required",
+            "shortDescription": "short description",
+            "longDescription": "long description"
         }
     },
 
@@ -2124,20 +2465,87 @@
             "mainTitle": "Delivery Note",
             "title": "Vehicle Delivery Note"
         },
-        "label": {},
+        "buttons": {
+            "cancelTitle": "Cancel ",
+            "challan": "Challan",
+            "cancelDeliveryNote": "Cancel Delivery Note",
+            "cancelChallan": "Cancel Challan",
+            "printDeliveryNote": "Print Delivery Note",
+            "printChallan": "Print Challan"
+        },
+        "label": {
+            "customerName": "Customer Name",
+            "modelGroup": "Model Group",
+            "vehicleDeliveryNo": "Delivery Note No. & Date",
+            "challanNoDate": "Challan No. & Date",
+            "invoiceNoDate": "Invoice No. & Date",
+            "bookingNo": "Booking No.",
+            "invoiceFromDate": "Invoice From Date",
+            "invoiceToDate": "Invoice To Date",
+            "deliveryNoteFromDate": "Delivery Note From Date",
+            "deliveryNoteToDate": "Delivery Note To Date"
+        },
         "placeholder": {
             "select": "Select"
         },
-        "validation": {},
         "notificationError": {
-            "customerId": "Enter customer id to continue"
+            "enterCustomerId": "Enter customer id to continue"
         },
         "invoiceDetails": {
-            "label": {},
-            "validation": {}
+            "heading": {
+                "mainTitle": "Insurance Details"
+            },
+            "label": {
+                "directlyBilled": "Directly Billed Vehicle",
+                "soldByDealer": "Vehicle Sold By Dealer",
+                "deliveryNoteFor": "Delivery Note For",
+                "invoiceNumber": "Invoice No.",
+                "invoiceDate": "Invoice Date",
+                "vin": "VIN",
+                "engineNumber": "Engine No.",
+                "chassisNumber": "Chassis No.",
+                "relationShipManager": "Relationship Manager",
+                "customerPromiseDate": "Customer Promise Date",
+                "reasonForDelay": "Reasons For Delay",
+                "reasonForDelayRemarks": "Remark For Delay"
+            }
         },
-        "customerDetails": {},
-        "vehicleDetails": {},
+        "customerDetails": {
+            "heading": {
+                "mainTitle": "Customer Details"
+            },
+            "label": {
+                "customerId": "Customer ID",
+                "customerType": "Customer Type",
+                "customerName": "Customer Name",
+                "customerPhoneNumber": "Mobile",
+                "customerAddress": "Address",
+                "customerCity": "City",
+                "district": "District",
+                "state": "State",
+                "pinCode": "Pincode",
+                "email": "Email ID"
+            }
+        },
+        "vehicleDetails": {
+            "heading": {
+                "mainTitle": "Vehicle Details",
+                "vehicleInfo": "Vehicle Information",
+                "batteryDetails": "Battery Details"
+            },
+            "label": {
+                "color": "Color",
+                "seating": "Seating",
+                "fuel": "Fuel",
+                "variant": "Variant",
+                "name": "Name",
+                "vinNumber": "VIN",
+                "engineNumber": "Engine Number",
+                "keyNumber": "Key Number",
+                "modelCode": "Model Code",
+                "modelDescription": "Model Description"
+            }
+        },
         "finanaceDetails": {},
         "insuranceDetails": {},
         "addOnDetails": {},
@@ -2158,20 +2566,254 @@
             "variantCode": "Variant Code"
         }
     },
-    "bookingSoMappingControlMaster":{ 
-        "heading":{
+    "vehicleAllotmentPriorityMaster": {
+        "heading": {
+            "moduleTitle": "Vehicle Allotment Priority Master",
+            "title": "Vehicle Allotment List"
+        },
+        "label": {
+            "oldModel": "Old Model",
+            "newModel": "New Model",
+            "effectiveFromDate": "Effective From Date",
+            "effectiveToDate": "Effective To Date",
+            "oldModelExchange": "Old Model(Exchange)",
+            "newModelBooking": "New Model(Booking)",
+            "modifiedDateTime": "Modified Date & Time",
+            "modifiedBy": "Modified By",
+            "fieldName": "Field Name",
+            "oldValue": "Old Value",
+            "newValue": "New Value",
+            "roleName": "Role Name",
+            "designationName": "Designation Name",
+            "internalId": "Internal Id",
+            "id": "Id"
+        },
+        "message": {
+            "requiredMessage": "Please select role and designation.",
+            "existErrorMessage": "Designations are not exist.",
+            "dateMessage": "Date cant be less than Effective from date"
+        }
+    },
+    "bookingSoMappingControlMaster": {
+        "heading": {
             "title": "Hierarchy",
             "noDataTitle": "Please choose organization hierarchy to view data"
         },
-        "placeholder":{
-            "organizationHierarchy": "Organization Hierarchy" 
+        "placeholder": {
+            "organizationHierarchy": "Organization Hierarchy"
         },
-        "validation":{
-            "diffSelection" : "No Product Found"   
+        "validation": {
+            "diffSelection": "No Product Found"
         },
-        "description":{
-            "selectLeft":"Please select from left",
-            "sideHierarchyView":"side hierarchy to view “Details”"
+        "description": {
+            "selectLeft": "Please select from left",
+            "sideHierarchyView": "side hierarchy to view “Details”"
+        }
+    },
+
+    "termConditionManufacturer": {
+        "heading": {
+            "pageTitle": "Terms & Conditions - Manufacturer Location",
+            "moduletitle": "Term & Condition"
+        },
+        "label": {
+            "terms&Condition": "Term & Condition",
+            "documentCategory": "Document Category",
+            "productHierarchy": "Product Hierarchy",
+            "documentType": "Document Type",
+            "language": "Language",
+            "effectivefrom": "Effective From",
+            "effectiveto": "Effective To",
+            "version": "Version",
+            "mfgT&c": "MFG T&C"
+        },
+        "validation": {
+            "terms&Condition": "Term & Condition",
+            "language": "Language",
+            "documentType": "Document Type",
+            "productHierarchy": "Product Hierarchy",
+            "date": "Date"
+        },
+        "placeholder": {
+            "version": "Version",
+            "documentCategory": "Document Category",
+            "selectParameter": "Select Parameter"
+        },
+        "fields": {
+            "reviseT&C": "Revise T&C",
+            "addT&C": "Add T&C",
+            "revised": "Revised",
+            "initial": "Initial"
+        },
+        "changeHistory": {
+            "productName": "Product Hierarchy",
+            "documentTypeCode": "Document Type",
+            "languageDesc": "Language",
+            "effectivefrom": "Effective From",
+            "effectiveto": "Effective To",
+            "version": "Version",
+            "termsconditiondescription": "Description"
+        }
+    },
+    "bookingBlockMaster": {
+        "heading": {
+            "pageTitle": "Booking Block Master",
+            "moduleTitle": "Booking Block Detail",
+            "viewTitle": "Booking Block",
+            "noDataTitle": "Please choose organization hierarchy to view data"
+        },
+        "label": {
+            "descriptionText": "Please select hierarchy type to view records.",
+            "viewHierarchyText": "Please select product from left side hierarchy to view “Hierarchy Details”.",
+            "productHierarchy": "Product Hierarchy",
+            "manufacturerAdmin": "Manufacturer Administrative Hierarchy",
+            "dealerCode": "Dealer Code"
+        },
+        "placeholder": {
+            "organizationHierarchy": "Organization Hierarchy",
+            "parent": "parent",
+            "productHierarchy": "product hierarchy"
+        },
+        "validation": {
+            "productHierarchy": "Product Hierarchy"
+        }
+    },
+    "applicationMaster": {
+        "title": {
+            "applicationDetails": "Application Details",
+            "applicationMaster": "Application Master"
+        },
+        "label": {
+            "action": "Action",
+            "code": "Code",
+            "documentName": "document name",
+            "applicationId": "Application ID",
+            "applicationName": "Application Name",
+            "applicationTitle": "Application Title",
+            "applicationType": "Application Type",
+            "parentApplicationId": "Parent Application ID",
+            "accessibleLocation": "Accessible Location",
+            "criticalityGroupName": "Application Criticality Group",
+            "documentNumRequired": "Document number to be generated",
+            "termAndConRequired": "T&C Required",
+            "digitalSignatureRequired": "Digital Signature Required",
+            "isFinanceRelated": "Is Finance Related",
+            "irnIntegrationRequired": "IRN Integration Required"
+        },
+        "validation": {
+            "applicationAction": "application action",
+            "documentCode": "document code",
+            "documentName": "document name",
+            "applicationId": "application ID",
+            "applicationName": "application Name",
+            "applicationTitle": "application title",
+            "applicationType": "application type",
+            "parentApplicationId": "parent application ID",
+            "accessibleLocation": "Accessible Locations",
+            "criticalityGroupName": "Application Criticality Group"
+        },
+        "placeholder": {
+            "applicationAction": " application action",
+            "documentCode": "document code",
+            "documentName": "document name",
+            "applicationId": "application ID",
+            "applicationName": "application name",
+            "applicationTitle": "application title",
+            "applicationType": "application type",
+            "accessibleLocation": "accessible location",
+            "criticalityGroupName": "application criticality group"
+        },
+        "text": {
+            "status": "Status: ",
+            "active": "Active",
+            "inActive": "Inactive",
+            "actionId": "Action ID: ",
+            "code": "Code: ",
+            "yes": "Yes",
+            "no": "No",
+            "applicationActions": "Application Actions",
+            "documentType": "Document Type",
+            "accessibleDealerLocation": "Accessible Dealer Location"
+        }
+    },
+    "orderDeliveryVehicleAllotment": {
+        "heading": {
+            "mainTitle": "Vehicle Allotment",
+            "drawerTitleMain": "Allotment Details"
+        },
+        "label": {
+            "vin": "VIN",
+            "ageInDays": "Age In Days",
+            "pdi": "PDI",
+            "vehicleStatus": "Vehicle Status",
+            "supplierInvoiceDate": "Supplier Invoice Date",
+            "supplierInvoiceNumber": "Supplier Invoice No.",
+            "modelDescription": "Model Description"
+        },
+        "tableColumn": {
+            "vehicleAllotmentMaster": {
+                "unAlloted": {
+                    "column1": "VIN",
+                    "column2": "Booking Number",
+                    "column3": "Model Description",
+                    "column4": "Age in Days",
+                    "column5": "PDI"
+                },
+                "alloted": {
+                    "column1": "VIN",
+                    "column2": "Model Description",
+                    "column3": "Age in Days",
+                    "column4": "PDI",
+                    "column5": "Supplier Invoice",
+                    "column6": "Vehicle Status"
+                }
+            },
+            "allotBooking": {
+                "bookingNumber": "Booking No.",
+                "bookingDate": "Booking Date",
+                "customerName": "Customer Name",
+                "cpd": "CPD"
+            }
+        }
+    },
+    "vehicleTracking": {
+        "text": {
+            "timeline": "Timeline",
+            "showOnMap": "Show On Map",
+            "shipmentDetails": "Shipment Details | VIN : ",
+            "expectedDateOfDelivery:": "Expected Date of Delivery:"
+        },
+        "title": {
+            "dispatched": "Dispatched",
+            "inTransit": "In Transit",
+            "delivered": "Delivered",
+            "received": "Received",
+            "viewTimeline": "View Timeline",
+            "search": "Search",
+            "viewMap": "View Map"
+        },
+        "label": {
+            "shipmentId": "Shipment ID",
+            "lrNumber": "LR Number",
+            "lrDate": "LR Date",
+            "transporterName": "Transporter Name",
+            "modeOfTransport": "Mode of transport",
+            "lastUpdatedLocation": "Last Updated Location",
+            "lastUpdatedDateAndTime": "Last Updated Date & Time",
+            "oemInvoiceNumber": "OEM Invoice Number",
+            "oemInvoiceDate": "OEM Invoice Date",
+            "shipmentStatus": "Shipment Status",
+            "currentLatitude": "Current Latitude",
+            "currentLongitude": "Current Longitude",
+            "etaDateAndTime": "ETA Date & Time",
+            "shipmentDeliveryDateAndTime": "Shipment Delivery Date & Time"
+        },
+        "placeholder": {
+            "oemInvoiceNumber": "OEM Invoice Number"
+        },
+        "buttons": {
+            "seeLess": "See Less",
+            "seeMore": "See More"
         }
     },
     

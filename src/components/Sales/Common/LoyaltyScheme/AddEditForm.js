@@ -15,6 +15,7 @@ import styles from 'assets/sass/app.module.scss';
 import { convertToUpperCase } from 'utils/convertToUpperCase';
 import { customSelectBox } from 'utils/customSelectBox';
 import { registrationYearList } from 'utils/registrationYearList';
+import { translateContent } from 'utils/translateContent';
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
@@ -39,7 +40,7 @@ const AddEditFormMain = (props) => {
             {!viewOnly && <CustomerListMaster fnSetData={fnSetData} defaultOption={'registrationNumber'} />}
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    {prepareCaption('Vehicle Details')}
+                    {prepareCaption(translateContent('vehicleInvoiceGeneration.heading.captions.vehicleDetails'))}
                 </Col>
             </Row>
             <Row gutter={20}>
@@ -113,7 +114,7 @@ const AddEditFormMain = (props) => {
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    {prepareCaption('Customer Details')}
+                    {prepareCaption(translateContent('vehicleInvoiceGeneration.heading.captions.customerDetails'))}
                 </Col>
             </Row>
 
@@ -139,7 +140,8 @@ const AddEditFormMain = (props) => {
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    {prepareCaption('Scheme')}
+                    {prepareCaption(translateContent('vehicleInvoiceGeneration.heading.captions.scheme'))}
+
                 </Col>
             </Row>
 

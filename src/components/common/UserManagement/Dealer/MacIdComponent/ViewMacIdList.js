@@ -66,7 +66,7 @@ const ViewMacIdList = (props) => {
                                             <Text strong>{data?.macId ? data?.macId : ''}</Text>
                                             {!formActionType?.viewMode && (
                                                 <Button onClick={(e) => editMacIdHandler(e, data, i)} type="link" icon={<FiEdit />} disabled={isEditing || isAdding} className={styles.verticallyCentered}>
-                                                   {translateContent('global.button.edit')}
+                                                    {translateContent('global.buttons.edit')}
                                                 </Button>
                                             )}
                                         </Col>

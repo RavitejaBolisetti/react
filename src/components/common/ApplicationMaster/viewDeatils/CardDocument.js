@@ -6,6 +6,7 @@
 import React from 'react';
 import { Col, Card, Row, Typography } from 'antd';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Text } = Typography;
 
@@ -18,7 +19,7 @@ const CardDocument = ({ documentTypeDescription, documentTypeCode }) => {
                         <Text strong>{documentTypeDescription}</Text>
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Text type="secondary">Code: {documentTypeCode}</Text>
+                        <Text type="secondary">{translateContent('applicationMaster.text.code')}{documentTypeCode}</Text>
                     </Col>
                 </Row>
             </Card>

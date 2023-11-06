@@ -15,6 +15,7 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 
 import styles from 'assets/sass/app.module.scss';
 import { customSelectBox } from 'utils/customSelectBox';
+import { translateContent } from 'utils/translateContent';
 
 const { TextArea } = Input;
 const AddEditFormMain = (props) => {
@@ -55,48 +56,48 @@ const AddEditFormMain = (props) => {
                             <Card style={{ backgroundColor: '#F2F2F2' }}>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={formData?.deliveryNoteFor} label="Delivery Note For" name="deliveryNoteFor">
-                                            <Input placeholder={preparePlaceholderText('Delivery Note For')} disabled={true} />
+                                        <Form.Item initialValue={formData?.deliveryNoteFor} label={translateContent('vehicleDeliveryNote.invoiceDetails.label.deliveryNoteFor')} name="deliveryNoteFor">
+                                            <Input placeholder={preparePlaceholderText(translateContent('vehicleDeliveryNote.invoiceDetails.label.deliveryNoteFor'))} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                     {soldByDealer && (
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item initialValue={formData?.invoiceNumber} label="Invoice No." name="invoiceNumber">
-                                                <Input placeholder={preparePlaceholderText('Invoice No.')} disabled={true} />
+                                            <Form.Item initialValue={formData?.invoiceNumber} label={translateContent('vehicleDeliveryNote.invoiceDetails.label.invoiceNumber')} name="invoiceNumber">
+                                                <Input placeholder={preparePlaceholderText(translateContent('vehicleDeliveryNote.invoiceDetails.label.invoiceNumber'))} disabled={true} />
                                             </Form.Item>
                                         </Col>
                                     )}
                                     {soldByDealer && (
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label="Invoice Date" name="invoiceDate">
-                                                <DatePicker format={dateFormat} disabledDate={disableFutureDate} placeholder={preparePlaceholderSelect('Invoice Date')} disabled={true} />
+                                            <Form.Item label={translateContent('vehicleDeliveryNote.invoiceDetails.label.invoiceDate')} name="invoiceDate">
+                                                <DatePicker format={dateFormat} disabledDate={disableFutureDate} placeholder={preparePlaceholderSelect(translateContent('vehicleDeliveryNote.invoiceDetails.label.invoiceDate'))} disabled={true} />
                                             </Form.Item>
                                         </Col>
                                     )}
                                     {!soldByDealer && (
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item initialValue={formData?.chassisNumber} label="VIN" name="chassisNumber">
-                                                <Select showSearch options={(vinData?.length && vinData) || []} fieldNames={{ label: 'chassisNumber', value: 'chassisNumber' }} placeholder={preparePlaceholderSelect('VIN')} onSelect={(value, valueObj) => handleSelectVinNo(value, valueObj)} optionFilterProp="chassisNumber" />
+                                            <Form.Item initialValue={formData?.chassisNumber} label={translateContent('vehicleDeliveryNote.invoiceDetails.label.vin')} name="chassisNumber">
+                                                <Select showSearch options={(vinData?.length && vinData) || []} fieldNames={{ label: 'chassisNumber', value: 'chassisNumber' }} placeholder={preparePlaceholderSelect(translateContent('vehicleDeliveryNote.invoiceDetails.label.vin'))} onSelect={(value, valueObj) => handleSelectVinNo(value, valueObj)} optionFilterProp="chassisNumber" />
                                             </Form.Item>
                                         </Col>
                                     )}
 
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={formData?.engineNumber} label="Engine No." name="engineNumber">
-                                            <Input placeholder={preparePlaceholderText('Engine No.')} maxLength={10} disabled={true} />
+                                        <Form.Item initialValue={formData?.engineNumber} label={translateContent('vehicleDeliveryNote.invoiceDetails.label.engineNumber')} name="engineNumber">
+                                            <Input placeholder={preparePlaceholderText(translateContent('vehicleDeliveryNote.invoiceDetails.label.engineNumber'))} maxLength={10} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                     {soldByDealer && (
                                         <>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item initialValue={formData?.chassisNumber} label="Chassis No." name="chassisNumber">
-                                                    <Input placeholder={preparePlaceholderText('Chassis No.')} maxLength={10} disabled={true} />
+                                                <Form.Item initialValue={formData?.chassisNumber} label={translateContent('vehicleDeliveryNote.invoiceDetails.label.chassisNumber')} name="chassisNumber">
+                                                    <Input placeholder={preparePlaceholderText(translateContent('vehicleDeliveryNote.invoiceDetails.label.chassisNumber'))} maxLength={10} disabled={true} />
                                                 </Form.Item>
                                             </Col>
 
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item initialValue={formData?.relationShipManager} label="Relationship Manager" name="relationShipManager">
-                                                    {customSelectBox({ data: relationshipManagerData, fieldNames: { key: 'key', value: 'value' }, placeholder: preparePlaceholderSelect('Relationship Manager'), onChange: handleRelationShipManagerChange })}
+                                                <Form.Item initialValue={formData?.relationShipManager} label={translateContent('vehicleDeliveryNote.invoiceDetails.label.relationShipManager')} name="relationShipManager">
+                                                    {customSelectBox({ data: relationshipManagerData, fieldNames: { key: 'key', value: 'value' }, placeholder: preparePlaceholderSelect(translateContent('vehicleDeliveryNote.invoiceDetails.label.relationShipManager')), onChange: handleRelationShipManagerChange })}
                                                 </Form.Item>
                                                 <Form.Item hidden initialValue={formData?.relationShipManagerCode} label="Relationship Manager Code" name="relationShipManagerCode">
                                                     <Input />
@@ -110,20 +111,20 @@ const AddEditFormMain = (props) => {
                                     {soldByDealer && (
                                         <>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item initialValue={formattedCalendarDate(formData?.customerPromiseDate)} label="Customer Promise Date" name="customerPromiseDate">
-                                                    <DatePicker format={dateFormat} placeholder={preparePlaceholderSelect('Customer Promise Date')} disabled={true} />
+                                                <Form.Item initialValue={formattedCalendarDate(formData?.customerPromiseDate)} label={translateContent('vehicleDeliveryNote.invoiceDetails.label.customerPromiseDate')} name="customerPromiseDate">
+                                                    <DatePicker format={dateFormat} placeholder={preparePlaceholderSelect(translateContent('vehicleDeliveryNote.invoiceDetails.label.customerPromiseDate'))} disabled={true} />
                                                 </Form.Item>
                                             </Col>
                                             {formData?.customerPromiseDate && disableFieldsOnFutureDate(dayjs(formData?.customerPromiseDate)) && (
                                                 <>
                                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                        <Form.Item initialValue={formData?.reasonForDelay} label="Reasons For Delay" name="reasonForDelay" rules={[validateRequiredSelectField('reasons for delay')]}>
-                                                            {customSelectBox({ data: typeData['DLVR_DLY_RSN'], placeholder: preparePlaceholderSelect('Reasons For Delay') })}
+                                                        <Form.Item initialValue={formData?.reasonForDelay} label={translateContent('vehicleDeliveryNote.invoiceDetails.label.reasonForDelay')} name="reasonForDelay" rules={[validateRequiredSelectField(translateContent('vehicleDeliveryNote.invoiceDetails.label.reasonForDelay'))]}>
+                                                            {customSelectBox({ data: typeData['DLVR_DLY_RSN'], placeholder: preparePlaceholderSelect(translateContent('vehicleDeliveryNote.invoiceDetails.label.reasonForDelay')) })}
                                                         </Form.Item>
                                                     </Col>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                                        <Form.Item label="Remark For Delay" name="reasonForDelayRemarks" initialValue={formData?.reasonForDelayRemarks}>
-                                                            <TextArea showCount maxLength={300} placeholder={preparePlaceholderText('Remark For Delay')} />
+                                                        <Form.Item label={translateContent('vehicleDeliveryNote.invoiceDetails.label.reasonForDelayRemarks')} name="reasonForDelayRemarks" initialValue={formData?.reasonForDelayRemarks}>
+                                                            <TextArea showCount maxLength={300} placeholder={preparePlaceholderText(translateContent('vehicleDeliveryNote.invoiceDetails.label.reasonForDelayRemarks'))} />
                                                         </Form.Item>
                                                     </Col>
                                                 </>
