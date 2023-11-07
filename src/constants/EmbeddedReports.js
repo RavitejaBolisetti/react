@@ -191,4 +191,20 @@ export const EMBEDDED_REPORTS = {
         type: 'Document',
         slug: '',
     },
+    DELIVERY_CHALLAN_REPORT: {
+        id: 26,
+        key: 'Delivery_Challan_Report',
+        title: 'Delivery Challan Report ',
+        type: 'Report',
+        slug: 'delivery-challan-report',
+    },
+    OTF_SO_NOT_MAPPED_REPORT: {
+        id: 27,
+        key: 'OTF_SO_Not_Mapped_Report',
+        title: 'OTF SO Not Mapped Report ',
+        type: 'Report',
+        slug: 'otf_so_not_mapped_report',
+    },
 };
+
+
