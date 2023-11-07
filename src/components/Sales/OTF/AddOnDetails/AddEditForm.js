@@ -16,6 +16,7 @@ import styles from 'assets/sass/app.module.scss';
 
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { OTF_ADDON_SECTION } from 'constants/OTFAddonSection';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
