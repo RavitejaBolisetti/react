@@ -9,8 +9,6 @@ import { Timeline } from 'antd';
 import { RECEIPT_SECTION } from 'constants/ReceiptSection';
 import { validateReceiptMenu } from '../utils/validateReceiptMenu';
 import { getSelectedMenuAttribute } from 'utils/getSelectedMenuAttribute';
-import { BsRecordCircleFill } from 'react-icons/bs';
-import { FaCheckCircle } from 'react-icons/fa';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -31,13 +29,15 @@ const MenuNav = (props) => {
         ?.map(
             (item) =>
                 validateReceiptMenu({ item, receipt }) && {
-                    dot: getSelectedMenuAttribute(item?.id)?.menuNavIcon ? <BsRecordCircleFill className={styles.activeForm} /> : <FaCheckCircle />,
+                    dot: getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType })?.menuNavIcon,
+                    // dot: getSelectedMenuAttribute(item?.id)?.menuNavIcon ? <BsRecordCircleFill className={styles.activeForm} /> : <FaCheckCircle />,
                     children: (
                         <div className={className(item?.id)} onClick={() => (!formActionType?.addMode || (formActionType?.addMode && item?.id < currentSection) ? onHandle(item?.id) : '')}>
                             {item.title}
                         </div>
                     ),
-                    className: getSelectedMenuAttribute(item?.id) ? 'active' : 'noactive',
+                    className: getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType })?.activeClassName,
+                    // className: getSelectedMenuAttribute(item?.id) ? 'active' : 'noactive',
                 }
         );
     const finalItem = items?.filter((i) => i);
