@@ -26,7 +26,6 @@ export const LANGUAGE_EN = {
         THANK_YOU_PAGE_OTF: { TITLE: 'Booking form updated successfully', MESSAGE: 'Booking number: {ORDER_ID}' },
         CUSTOMER_UPDATE: { TITLE: 'Success', MESSAGE: 'Customer detail edited successfully' },
         THANK_YOU_PAGE_INVOICE: { TITLE: 'Invoice number created successfully', MESSAGE: 'Booking number: {ORDER_ID}' },
-
         DOWNLOAD_START: { TITLE: 'Download', MESSAGE: 'Your download will start soon' },
         USER_TOKEN_VALIDATION: { TITLE: 'Error', MESSAGE: 'User token number {DealerSearchvalue} does not exist. Try again with valid token number' },
         APPLICATON_REQUIRE_VALIDATION: { TITLE: 'Error', MESSAGE: 'Please provide {NAME} to proceed' },
@@ -34,7 +33,7 @@ export const LANGUAGE_EN = {
         USER_NOT_FOUND: { TITLE: 'User not found', MESSAGE: 'User does not exist, do you want to create user?' },
         PAGE_NOT_FOUND: { TITLE: 'Page Not Found', MESSAGE: '<p>Sorry, the page you visited does not exist. Redirecting to dashboard in <b>{COUNTER}</b></p>' },
         NO_EMPLOYEES_FOUND: { TITLE: 'Employees not found', MESSAGE: 'No employees found for searched name' },
-        NO_VIN_FOUND: { TITLE: 'VIN not found',     MESSAGE: 'No VIN found for searched Booking Number' },
+        NO_VIN_FOUND: { TITLE: 'VIN not found', MESSAGE: 'No VIN found for searched Booking Number' },
         APPROVE_CONFIRMATION: { TITLE: 'Approve Name', MESSAGE: 'Are you sure want to approve the changes within the current name?' },
         UNSAVE_DATA_WARNING: { TITLE: 'Are you sure you want to leave ?', MESSAGE: 'You have unsave changes. All changes may lost.' },
     },
