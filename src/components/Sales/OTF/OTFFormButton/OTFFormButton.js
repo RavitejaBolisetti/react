@@ -10,7 +10,6 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { translateContent } from 'utils/translateContent';
 import styles from 'assets/sass/app.module.scss';
-import { translateContent } from 'utils/translateContent';
 
 export const OTFFormButton = ({ record, handleChangeHistory, handleOtfSoMappingHistory, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save', handleButtonClick, isLoadingOnSave, isLastSection, workFlowDetails }) => {
     const content = <div>{translateContent('global.generalMessage.comingSoon')}</div>;
