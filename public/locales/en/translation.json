@@ -1435,6 +1435,15 @@
         "validation": {
             "searchParameter": "search parametar"
         },
+        "profileCard": {
+            "vin": "VIN:",
+            "regNo": "Reg No:",
+            "customerId": "Customer ID:",
+            "mobileNo": "Mobile No.:",
+            "model": " Model:",
+            "color": " Color:",
+            "mfgWarrenty": " MFG Warranty: "
+        },
         "vehicledetails": {
             "label": {
                 "mnfcWarrEndDate": "Manufacturer Warranty End Date",
@@ -2306,20 +2315,6 @@
         "tableColumn": {}
     },
     "vehicleReceipt": {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         "heading": {
             "mainTitle": "Vehicle Receipt",
             "drawerTitleMain": "Vehicle Receipt",
@@ -3549,8 +3544,8 @@
         "VehiclePurchaseOrderDetail": {
             "heading": {
                 "moduleTitle": "Vehicle Purchase Order",
-                "productDetails":"Product Details",
-                "cancelReason":"Cancel Reason"
+                "productDetails": "Product Details",
+                "cancelReason": "Cancel Reason"
             },
             "label": {
                 "modal": "Model",
@@ -3561,11 +3556,11 @@
                 "purchaseOrderNumber": "Purchase Order Number",
                 "purchaseOrderDate": "Purchase Order Date",
                 "purchaseOrderStatus": "Purchase Order Status",
-                "modelDescription":"Model Description",
-                "purchaseOrderCancelDate":"Purchase Order Cancel Date",
-                "soNo":"So No",
-                "soDate":"So Date",
-                "soStatus":"So Status"
+                "modelDescription": "Model Description",
+                "purchaseOrderCancelDate": "Purchase Order Cancel Date",
+                "soNo": "So No",
+                "soDate": "So Date",
+                "soStatus": "So Status"
             },
             "placeholder": {
                 "dealerCode": "Enter Dealer Code",
@@ -3576,19 +3571,19 @@
                 "OrderType": "Order Type",
                 "dealerCode": "Dealer Code",
                 "dealerLocation": "Dealer Location",
-                "modelDescription":"Model",
+                "modelDescription": "Model",
                 "purchaseOrderNumber": "Purchase Order Number",
                 "purchaseOrderDate": "Purchase Order Number"
             }
-        },        
-         "vehiclePurchaseOrderCancellation": {
+        },
+        "vehiclePurchaseOrderCancellation": {
             "heading": {
                 "moduleTitle": "Cancel Purchase Order",
-                "titleOverride":"Vehicle Purchase Order Cancellation"               
+                "titleOverride": "Vehicle Purchase Order Cancellation"
             },
             "label": {
                 "cancellationReason": "Cancellation Reason",
-                "quantity": "Quantity"                 
+                "quantity": "Quantity"
             },
             "placeholder": {
                 "dealerCode": "Enter Dealer Code",
