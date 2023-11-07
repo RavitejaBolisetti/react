@@ -224,7 +224,7 @@ export const CreditDebitNoteMasterBase = (props) => {
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: filterString?.current,
+                value: filterString?.current ?? 1,
                 canRemove: true,
             },
             {

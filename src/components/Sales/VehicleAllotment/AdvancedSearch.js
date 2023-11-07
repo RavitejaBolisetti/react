@@ -39,6 +39,7 @@ export const AdvancedSearchFrom = (props) => {
             vehicleStatus: values?.vehicleStatus,
             pdDone: values?.pdDone,
             advanceFilter: true,
+            current: 1,
         });
         setAdvanceSearchVisible(false);
     };

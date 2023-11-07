@@ -154,8 +154,6 @@ const CustomerListBase = (props) => {
         filterString,
         setFilterString,
         handleSelectedData,
-        buttonData,
-        setButtonData,
     };
 
     const searchBoxProps = {
@@ -175,7 +173,7 @@ const CustomerListBase = (props) => {
                     <SearchBox {...searchBoxProps} />
                 </Col>
             </Row>
-            <CustomerListModal {...customerListProps} />
+            <CustomerListModal {...customerListProps} buttonData={buttonData} setButtonData={setButtonData} />
         </>
     );
 };

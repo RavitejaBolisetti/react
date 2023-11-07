@@ -12,6 +12,7 @@ import { ListDataTable } from 'utils/ListDataTable';
 import styles from 'assets/sass/app.module.scss';
 
 import { convertDateMonthYear } from 'utils/formatDateTime';
+import htmlRemover from 'utils/htmlRemover';
 const ChangeHistoryMain = (props) => {
     const { ChangeHistoryTermsConditionsData, onCloseAction } = props;
 
@@ -65,6 +66,9 @@ const ChangeHistoryMain = (props) => {
             dataIndex: 'termsconditiondescription',
             width: '15%',
             sorter: false,
+            render: (value) => {
+                return htmlRemover(value);
+            },
         })
 
         // tblActionColumn({ handleButtonClick, styles, fixed: 'right', width: '10%' })

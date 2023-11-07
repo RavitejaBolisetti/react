@@ -69,7 +69,7 @@ const ViewDetailMain = (props) => {
                                 <Descriptions.Item label="Address">{checkAndSetDefaultValue(partyDetailsDto?.address, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="City">{checkAndSetDefaultValue(partyDetailsDto?.city, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="State">{checkAndSetDefaultValue(partyDetailsDto?.state, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Phone No.">{checkAndSetDefaultValue(partyDetailsDto?.mobileNumber1, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Phone No.">{checkAndSetDefaultValue(partyDetailsDto?.mobileNumber, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         </Panel>
                     </Collapse>

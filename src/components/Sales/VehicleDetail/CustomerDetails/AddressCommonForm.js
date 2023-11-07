@@ -10,7 +10,7 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { CustomerListMaster } from 'components/utils/CustomerListModal';
 
 export const AddressCommonForm = (props) => {
-    const { formType, formData, handleOnChange, fnSetData, data, sameAsBookingCustomer } = props;
+    const { formType, formData, handleOnChange, fnSetData, data, sameAsBookingCustomer, buttonData, setButtonData } = props;
     const canUpdate = (formType === 'ownerCustomer' && !data?.ownerCustomer?.customerId) || formType === 'billingCustomer';
 
     return (
@@ -18,7 +18,7 @@ export const AddressCommonForm = (props) => {
             {canUpdate && (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <CustomerListMaster disabled={sameAsBookingCustomer} fnSetData={fnSetData} />
+                        <CustomerListMaster disabled={sameAsBookingCustomer} fnSetData={fnSetData} buttonData={buttonData} setButtonData={setButtonData} />
                     </Col>
                 </Row>
             )}

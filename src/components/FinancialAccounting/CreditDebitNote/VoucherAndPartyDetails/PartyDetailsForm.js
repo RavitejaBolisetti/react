@@ -57,7 +57,7 @@ export const PartyDetailsForm = (props) => {
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'mobileNumber1']} label="Phone No." initialValue={formData?.mobileNumber1}>
+                    <Form.Item name={[formType, 'mobileNumber']} label="Phone No." initialValue={formData?.mobileNumber}>
                         <Input placeholder={preparePlaceholderText('Phone No.')} disabled={true} />
                     </Form.Item>
                 </Col>

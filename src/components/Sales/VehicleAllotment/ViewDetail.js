@@ -22,6 +22,7 @@ import { DataTable } from 'utils/dataTable';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { tableColumnSearchOTF } from './tableColumnSearchOTF';
 import { VEHICLE_TYPE } from 'constants/VehicleType';
+import { withSpinner } from 'components/withSpinner';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -126,6 +127,9 @@ const ViewDetailMain = (props) => {
         setShowDataLoading(false);
     };
 
+    const tableDataItem = (formData?.vehicleOTFDetails && [formData?.vehicleOTFDetails]) || tableData;
+    const sorterPagination = totalOTFRecords > tableDataItem?.length;
+
     useEffect(() => {
         if (userId && (formData?.modelCd || formData?.modelCode) && toggleButton === VEHICLE_TYPE.UNALLOTED.key && !isOTFSearchLoading && !isVehicleDataLoading) {
             setShowDataLoading(true);
@@ -146,6 +150,12 @@ const ViewDetailMain = (props) => {
         setSelectedOrderOTFDetails();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
+
+    useEffect(() => {
+        if (tableDataItem?.length > 0) {
+            setButtonData({ ...buttonData, formBtnActive: true });
+        } else setButtonData({ ...buttonData, formBtnActive: false });
+    }, [tableDataItem]);
 
     const handleChange = (e) => {
         if (e?.target?.value === '' && e?.nativeEvent?.type === 'click') {
@@ -188,9 +198,6 @@ const ViewDetailMain = (props) => {
             };
         },
     };
-
-    const tableDataItem = (formData?.vehicleOTFDetails && [formData?.vehicleOTFDetails]) || tableData;
-    const sorterPagination = totalOTFRecords > tableDataItem?.length;
 
     const tableProps = {
         srl: false,
@@ -244,4 +251,4 @@ const ViewDetailMain = (props) => {
     );
 };
 
-export const ViewDetail = withDrawer(connect(mapStateToProps, mapDispatchToProps)(ViewDetailMain), { width: '90%', footer: null });
+export const ViewDetail = withDrawer(connect(mapStateToProps, mapDispatchToProps)(withSpinner(ViewDetailMain)), { width: '90%', footer: null });

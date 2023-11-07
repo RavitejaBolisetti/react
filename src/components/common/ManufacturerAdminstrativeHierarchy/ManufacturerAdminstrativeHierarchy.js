@@ -498,7 +498,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         setDownLoadForm,
         resetData,
         organizationId,
-
+        setIsUploadDrawer,
         listShowLoading,
         showGlobalNotification,
         viewDocument,

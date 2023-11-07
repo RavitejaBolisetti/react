@@ -29,7 +29,7 @@ const ViewDetailBase = ({ formData, styles, parameterType }) => {
                     <Descriptions.Item label="Tehsil">{formData?.tehsil}</Descriptions.Item>
                     <Descriptions.Item label="District">{formData?.district}</Descriptions.Item>
                     <Descriptions.Item label="State">{formData?.state}</Descriptions.Item>
-                    <Descriptions.Item label="Mobile Number">{formData?.mobileNumber1}</Descriptions.Item>
+                    <Descriptions.Item label="Mobile Number">{formData?.mobileNumber}</Descriptions.Item>
                     <Descriptions.Item label="Alternate Mobile Number">{formData?.alternateMobileNumber}</Descriptions.Item>
                     <Descriptions.Item label="GSTIN Number">{formData?.gstInNumber}</Descriptions.Item>
                     <Descriptions.Item label="PAN Number">{formData?.panNumber}</Descriptions.Item>

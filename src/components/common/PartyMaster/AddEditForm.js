@@ -304,12 +304,12 @@ const AddEditFormMain = (props) => {
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                         <Form.Item
                                             label="Mobile Number"
-                                            initialValue={formData?.mobileNumber1}
+                                            initialValue={formData?.mobileNumber}
                                             rules={[
                                                 // validateRequiredInputField('party mobile number'),
                                                 validateMobileNoField('mobile number'),
                                             ]}
-                                            name="mobileNumber1"
+                                            name="mobileNumber"
                                         >
                                             <Input {...disabledProps} placeholder={preparePlaceholderText('mobile number')} maxLength={10} />
                                         </Form.Item>

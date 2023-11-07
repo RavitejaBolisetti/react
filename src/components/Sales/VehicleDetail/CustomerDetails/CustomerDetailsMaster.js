@@ -330,6 +330,8 @@ export const CustomerDetailsMain = (props) => {
         isCustomerCommonDetailsLoaded,
         isCustomerCommonDetailsLoading,
         handleCollapse,
+        buttonData,
+        setButtonData,
     };
 
     const viewProps = {

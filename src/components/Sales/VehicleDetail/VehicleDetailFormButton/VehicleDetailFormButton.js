@@ -42,7 +42,7 @@ export const VehicleDetailFormButton = ({ record, onCloseAction, buttonData, set
                     )}
 
                     {buttonData?.allotBtn && (
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.ALLOT, record })} type="primary">
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.ALLOT, record })} disabled={!buttonData?.formBtnActive} type="primary">
                             Allot
                         </Button>
                     )}

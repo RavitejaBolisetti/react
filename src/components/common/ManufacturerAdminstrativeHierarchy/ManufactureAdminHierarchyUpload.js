@@ -16,7 +16,7 @@ const UploadMain = (props) => {
     const { downloadFile, form, formData, onCloseAction } = props;
     const { buttonData, setButtonData, handleButtonClick } = props;
     const { userId, setUploadedFile, listShowLoading, showGlobalNotification, setEmptyList } = props;
-    const { organizationId } = props;
+    const { organizationId, setIsUploadDrawer } = props;
     const { setFileList, setUploadedFileName, downloadShowLoading, resetData, authorityShowLoading, saveAuthorityData, uploadedFile, fetchDocumentFileDocId } = props;
 
     const onErrorAction = (res) => {
@@ -52,6 +52,7 @@ const UploadMain = (props) => {
             setUploadedFile();
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            setIsUploadDrawer(false);
         };
 
         const onError = (res, data) => {
