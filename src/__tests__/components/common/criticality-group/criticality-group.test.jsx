@@ -43,7 +43,7 @@ describe('CriticalityGroup Components', () => {
         const addBtn = screen.getByRole('button', { name: 'plus Add' });
         fireEvent.click(addBtn);
 
-        const groupId = screen.getByRole('textbox', { name: 'Criticality Group Id' });
+        const groupId = screen.getByRole('textbox', { name: 'Criticality Group ID' });
         fireEvent.change(groupId, { target: { value: 106 } });
 
         const groupName = screen.getAllByRole('textbox', { name: 'Criticality Group Name' });

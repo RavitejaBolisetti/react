@@ -22,6 +22,7 @@ import { vehiclePurchaseOrderDataActions } from 'store/actions/data/vehicle/vehi
 import { PoCancellationMaster } from './VehiclePurchaseOrderCancellation/PoCancellationMaster';
 import { VehiclePurchaseOrderDetailMaster } from './VehiclePurchaseOrderDetail';
 import { saveVPODataActions } from 'store/actions/data/vehicle/vehiclePurchaseOrderAction';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -34,7 +35,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Vehicle Purchase Order';
+    const moduleTitle = translateContent('vehiclePurchaseOrder.heading.moduleTitle');
     let returnValue = {
         userId,
         typeData: typeData,
@@ -293,7 +294,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(false);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
             setButtonData({ ...buttonData, formBtnActive: false });
             setIsFormVisible(false);
@@ -365,7 +366,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         advanceFilterForm.resetFields();
     };
 
-    const title = 'Search Vehicle Purchase Order';
+    const title = translateContent('vehiclePurchaseOrder.placeholder.searchVPO');
 
     const advanceFilterResultProps = {
         extraParams,
@@ -398,7 +399,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         };
 
         const onSuccess = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             setShowDataLoading(true);
             setIsCancelVisible(false);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
@@ -429,7 +430,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
     };
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
-        titleOverride: 'Advance Filters',
+        titleOverride: translateContent('global.advanceFilter.title'),
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
         filterString,
@@ -441,11 +442,11 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
     };
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
-            return 'View ';
+            return translateContent('global.drawerTitle.add');
         } else if (formActionType?.editMode) {
-            return 'Edit ';
+            return translateContent('global.drawerTitle.edit');
         } else {
-            return 'Add New ';
+            return translateContent('global.drawerTitle.addNew');
         }
     }, [formActionType]);
 
@@ -483,7 +484,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         isLastSection,
         typeData,
         vehicleDetailData,
-        saveButtonName: isLastSection ? 'Submit' : 'Save & Next',
+        saveButtonName: isLastSection ? translateContent('global.buttons.submit') : translateContent('global.buttons.saveAndNext'),
         setIsCancelVisible,
         extraParamsAfterSave: extraParams,
         showDataLoading,

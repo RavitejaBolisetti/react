@@ -10,6 +10,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { FiEdit, FiEye } from 'react-icons/fi';
 import { PlusOutlined } from '@ant-design/icons';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -45,14 +46,14 @@ export const tableColumn = ({ handleButtonClick, page, pageSize, tableIconsVisib
     const tableColumn = [
         tblPrepareColumns({
             ...localSort,
-            title: 'GRN Type',
+            title: translateContent('vehicleReceipt.tableColumn.vehicleReceiptMaster.column1'),
             dataIndex: 'grnType',
             width: '12%',
         }),
 
         tblPrepareColumns({
             ...localSort,
-            title: 'GRN Number',
+            title: translateContent('vehicleReceipt.tableColumn.vehicleReceiptMaster.column2'),
             dataIndex: 'grnNumber',
             width: '12%',
             render: (text) => text ?? '-',
@@ -61,7 +62,7 @@ export const tableColumn = ({ handleButtonClick, page, pageSize, tableIconsVisib
 
         tblPrepareColumns({
             ...localSort,
-            title: 'GRN Date',
+            title: translateContent('vehicleReceipt.tableColumn.vehicleReceiptMaster.column3'),
             dataIndex: 'grnDate',
             width: '12%',
             render: (text) => (text ? convertDateMonthYear(text) : '-'),
@@ -69,20 +70,20 @@ export const tableColumn = ({ handleButtonClick, page, pageSize, tableIconsVisib
 
         tblPrepareColumns({
             ...localSort,
-            title: 'Supplier Name',
+            title: translateContent('vehicleReceipt.tableColumn.vehicleReceiptMaster.column4'),
             dataIndex: 'supplierName',
             width: '20%',
         }),
 
         tblPrepareColumns({
             ...localSort,
-            title: 'Supplier Invoice Number',
+            title: translateContent('vehicleReceipt.tableColumn.vehicleReceiptMaster.column5'),
             dataIndex: 'supplierInvoiceNumber',
             width: '16%',
         }),
 
         tblPrepareColumns({
-            title: 'Supplier Invoice Date',
+            title: translateContent('vehicleReceipt.tableColumn.vehicleReceiptMaster.column6'),
             dataIndex: 'supplierInvoiceDate',
             width: '14%',
             render: (text) => (text ? convertDateMonthYear(text) : 'NA'),

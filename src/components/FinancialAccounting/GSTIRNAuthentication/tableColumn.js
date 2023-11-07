@@ -12,6 +12,7 @@ import { FiEdit, FiEye } from 'react-icons/fi';
 import { PlusOutlined } from '@ant-design/icons';
 
 import styles from 'components/common/Common.module.css';
+import { translateContent } from 'utils/translateContent';
 
 export const tblActionColumn = ({ styles, handleButtonClick, width = '10%', fixed = '', AddIcon = false, EditIcon = false, EyeIcon = false }) => {
     return {
@@ -45,15 +46,13 @@ export const tableColumn = ({ handleButtonClick, page, pageSize, tableIconsVisib
     const tableColumn = [
         tblPrepareColumns({
             ...localSort,
-            title: 'GRN Type',
+            title: translateContent('gstIRNAuthentication.label.grnType'),
             dataIndex: 'grnType',
             width: '12%',
         }),
 
-        
-
         tblPrepareColumns({
-            title: 'Supplier Invoice Date',
+            title: translateContent('gstIRNAuthentication.label.supplierInvoiceDate'),
             dataIndex: 'supplierInvoiceDate',
             width: '14%',
             render: (text) => (text ? convertDateMonthYear(text) : 'NA'),

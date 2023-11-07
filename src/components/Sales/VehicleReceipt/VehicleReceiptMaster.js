@@ -23,6 +23,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { vehicleReceiptDataActions } from 'store/actions/data/vehicleReceipt/vehicleReceipt';
 import { vehicleDetailDataActions } from 'store/actions/data/vehicleReceipt/vehicleDetails';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -35,7 +36,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Vehicle Receipt';
+    const moduleTitle = translateContent('vehicleReceipt.heading.mainTitle');
     let returnValue = {
         userId,
         typeData: typeData[PARAM_MASTER.GRN_STATS.id],
@@ -461,7 +462,7 @@ export const VehicleReceiptMasterBase = (props) => {
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
         // icon: <FilterIcon size={20} />,
-        titleOverride: 'Advance Filters',
+        titleOverride: translateContent('vehicleReceipt.labelMaster.advanceFilters'),
 
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,

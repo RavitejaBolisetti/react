@@ -12,6 +12,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { SearchBox } from 'components/utils/SearchBox';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export default function AppliedAdvanceFilter(props) {
     const { showAddButton = true, advanceFilter = false, title, handleButtonClick, filterString, extraParams, removeFilter, handleResetFilter, setAdvanceSearchVisible, setFilterString, vpoFilter = false } = props;
@@ -22,7 +23,7 @@ export default function AppliedAdvanceFilter(props) {
         searchForm,
         filterString,
         setFilterString,
-        placeholder: 'Search By Vehicle Purchase Order',
+        placeholder: translateContent('vehiclePurchaseOrder.placeholder.searchVPO'),
         singleFieldKey: 'purchaseOrderNumber',
     };
     return (
@@ -48,7 +49,7 @@ export default function AppliedAdvanceFilter(props) {
                                                     setAdvanceSearchVisible(true);
                                                 }}
                                             >
-                                                Advanced Filters
+                                                {translateContent('global.advanceFilter.title')}
                                             </Button>
                                         </Col>
                                     )}
@@ -59,7 +60,7 @@ export default function AppliedAdvanceFilter(props) {
                     {showAddButton && (
                         <Col className={styles.buttonsGroupRight} xs={24} sm={24} md={6} lg={6} xl={6}>
                             <Button icon={<PlusOutlined />} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                Add
+                                {translateContent('global.buttons.add')}
                             </Button>
                         </Col>
                     )}
@@ -70,7 +71,7 @@ export default function AppliedAdvanceFilter(props) {
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={22} xl={22} className={styles.advanceFilterContainer}>
-                                    <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
+                                    <div className={styles.advanceFilterTitle}>translateContent('global.advanceFilter.appliedAdvanceFilter') : </div>
                                     {extraParams?.map((filter) => {
                                         return (
                                             filter?.value &&
@@ -89,7 +90,7 @@ export default function AppliedAdvanceFilter(props) {
                                 </Col>
                                 <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
                                     <Button className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
-                                        Clear
+                                        {translateContent('global.buttons.clear')}
                                     </Button>
                                 </Col>
                             </Row>

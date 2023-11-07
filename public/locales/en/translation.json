@@ -29,6 +29,7 @@
         "label": {
             "active": "Active",
             "inActive": "InActive",
+            "noActive": "noActive",
             "status": "Status",
             "action": "Action",
             "fromDate": "From Date",
@@ -39,12 +40,19 @@
             "title": "Advance Filters",
             "appliedAdvanceFilter": "Applied Advance Filters :"
         },
-        "toolTip": {},
+        "toolTip": {
+            "modelName": "Model Name:",
+            "color": "Color:",
+            "seating": "Seating Capaity:",
+            "fuel": "Fuel:",
+            "variant": "Variant:"
+        },
         "generalMessage": {
             "noRecordsFound": "No records found",
             "noRecordsFoundAddNew": "Please add New {NAME} using below button",
             "comingSoon": "Coming Soon",
-            "noDataFound": "No data found"
+            "noDataFound": "No data found",
+            "downloadStart": "Your download will start soon"
         },
         "changeHistory": {
             "title": "Change History"
@@ -86,10 +94,12 @@
             "advancedFilter": "Advanced Filters",
             "viewHistory": "View History",
             "uploadFile": "Upload File",
+            "cancelVehiclePurchaseOrder": "Cancel Vehicle Purchase Order",
             "register": "Register",
             "addCreditNote": "Add Credit Note",
             "addDebitNote": "Add Dedit Note",
             "printReceipt": "Print Receipt",
+            "applyFilter": "Apply Filter",
             "printForm21": "Print Form 21",
             "printInvoice": "Print Invoice",
             "cancelInvoice": "Cancel Invoice"
@@ -1242,6 +1252,7 @@
             "title": "Booking Management",
             "bookingManagementChangeHistory": "Booking Change History",
             "otfSoMappingChangeHistory": "Booking - SO Mapping & Un-mapping History",
+            "bookingAllotment": "Booking Allotment",
 
             "profileCard.bookingNumber": "Booking No.",
             "profileCard.bookingDate": "Booking Date",
@@ -1264,7 +1275,9 @@
             "providePartNumber": "Please provide part number",
             "partAlreadyAdded": "Part is already added",
             "requiredQuantityLessThan50": "Required quantity should be less than 50",
-            "noAccessoriesDataFound": "No accessories data found"
+            "noAccessoriesDataFound": "No accessories data found",
+            "mandatoryVINSelect": "Please select VIN",
+            "valueDeprecated": "This value has been deprecated. Please select other value"
         },
         "label": {
             "unallotBooking": "Un-Allot Booking",
@@ -1336,11 +1349,25 @@
             "actionedBy": "Actioned By",
             "action": "Action",
             "soNumber": "SO Number",
-            "soDate": "SO Date"
+            "soDate": "SO Date",
+            "uploadCancellationLetter": "Upload Cancellation Letter",
+            "noDealerFound": "No Dealer Found",
+            "cancellationReasonType": "Cancellation Reason Type",
+            "oemName": "OEM Name",
+            "findDealerName": "Find Dealer Name",
+            "dealerName": "Dealer Name",
+            "reasonForCancellation": "Reason For Cancellation",
+            "cancellationRemark": "Cancellation Remarks",
+            "mnmInvoice": "M&M Invoice",
+            "pdiDone": "PDI Done",
+            "allotVehicle": "Allot Vehicle"
         },
         "placeholder": {
             "searchBooking": "Search Booking",
-            "searchResult": "Search Result"
+            "searchResult": "Search Result",
+            "model": "Model",
+            "searchDealerName": "Search Dealer Name",
+            "searchByVIN": "Search by VIN No./Chassis No."
         },
         "button": {
             "selectPart": "Select Part"
@@ -1433,6 +1460,15 @@
         },
         "validation": {
             "searchParameter": "search parametar"
+        },
+        "profileCard": {
+            "vin": "VIN:",
+            "regNo": "Reg No:",
+            "customerId": "Customer ID:",
+            "mobileNo": "Mobile No.:",
+            "model": " Model:",
+            "color": " Color:",
+            "mfgWarrenty": " MFG Warranty: "
         },
         "vehicledetails": {
             "label": {
@@ -1818,9 +1854,7 @@
         "heading": {
             "moduleTitle": "Vin Block Master",
             "pageTitle": "Vin Block Master",
-            "title": "Vin Block Master",
-            "advancedFilter": "Advanced Filter",
-            "appliedAdvanceFilters": "Applied Advance Filters"
+            "title": "Vin Block Master"
         },
         "label": {
             "vin": "Vin",
@@ -3027,6 +3061,48 @@
                 "successMessage": "Account Head validated successfully",
                 "errorMessage": "Account Head is not correct"
             }
+        },
+        "ApportionDetails": {
+            "heading": {
+                "moduleTitle": "Voucher and Party Details",
+                "voucherModuleTitle": "Apportion",
+                "title": "Apportion Details"
+            },
+            "label": {
+                "documentType": "Document Type",
+                "documentNumber": "Document Number",
+                "documentDate": "Document Date",
+                "documentAmount": "Document Amount",
+                "settledAmount": "Settled Amount",
+                "balancedAmount": "Balanced Amount",
+                "writeOffAmount": "Write-Off Amount",
+                "apportionAmount": "Apportion Amount"
+            },
+            "placeholder": {
+                "documentType": "Document Type",
+                "documentNumber": "Document Number",
+                "documentDate": "Document Date",
+                "documentAmount": "Document Amount",
+                "settledAmount": "Settled Amount",
+                "balancedAmount": "Balanced Amount",
+                "writeOffAmount": "Write-Off Amount",
+                "apportionAmount": "Apportion Amount"
+            },
+            "validation": {
+                "documentType": "Document Type",
+                "documentNumber": "Document Number",
+                "documentDate": "Document Date",
+                "documentAmount": "Document Amount",
+                "settledAmount": "Settled Amount",
+                "balancedAmount": "Balanced Amount",
+                "writeOffAmount": "Write-Off Amount",
+                "apportionAmount": "Apportion Amount"
+            },
+            "message": {
+                "successMessage": "Account Head validated successfully",
+                "errorMessage": "Write-off and apportion amount cannot exceed balance amount",
+                "documentInvalid": "Document Number is invalid"
+            }
         }
     },
     "vehicleAllotmentPriorityMaster": {
@@ -3207,20 +3283,24 @@
         "label": {
             "text": "text",
             "password": "password",
-            "Login&Continue": "Login & Continue"
+            "Login&Continue": "Login & Continue",
+            "grnType": "GRN Type",
+            "supplierInvoiceDate": "Supplier Invoice Date"
         },
         "placeholder": {
             "userName": "User Name",
             "clientId": "Client Id",
             "parent": "parent",
             "secretId": "Secret Id",
-            "password": "password"
+            "password": "password",
+            "dealerName": "Dealer Name"
         },
         "validation": {
             "userName": "User Name",
             "clientId": "Client Id",
             "secretId": "Secret Id",
-            "password": "password"
+            "password": "password",
+            "gstin": "gstinNumber"
         },
         "text": {
             "Login": "Login for Authentication",
@@ -3237,13 +3317,48 @@
                 "mapUnmap": "IRN Mapped/Unmapped"
             }
         },
+        "leftSideBar": {
+            "label": {
+                "dealerName": "Dealer Name:",
+                "gstin:": "GSTIN:"
+            }
+        },
         "irnTransactionListMaster": {
             "heading": {
-                "moduleTitle": "GST IRN Details"
+                "moduleTitle": "GST IRN Details",
+                "viewTitle": "Application Details"
             },
             "label": {
-                "branchName": "Branch Name",
-                "mapUnmap": "IRN Mapped/Unmapped"
+                "applicationId": "Application ID",
+                "applicationName": "Application Name/Reports",
+                "applicationType": "Application Type",
+                "accessibleLoc": "Accessible Location",
+                "irnIntegeration": "IRN Integration",
+                "model": "Model:",
+                "vin": "VIN:",
+                "vehicleStatus": "Vehicle Status:",
+                "modelDescription": "Model Description",
+                "keyNumber": "Key Number",
+                "mfg": "MFG Date",
+                "recievedOn": "Recieved On",
+                "vehicleCost": "Vehicle Cost",
+                "demoVehicle": "Demo Vehicle",
+                "physicalStatus": "Physical Status",
+                "shortage": "Shortage",
+                "vehicleRecieptCheckListNumber": "Vehicle Receipt CheckList No."
+            },
+            "validation": {
+                "demoVehicle": "Demo Vehicle",
+                "vehicleStatus": "Vehicle Status:",
+                "physicalStatus": "Physical Status"
+            },
+            "placeholder": {
+                "modelDescription": "Model Description",
+                "vin": "VIN:",
+                "keyNumber": "Key Number",
+                "vehicleCost": "Vehicle Cost",
+                "vehicleStatus": "Vehicle Status:",
+                "vehicleRecieptCheckListNumber": "Vehicle Receipt CheckList No."
             }
         }
     },
@@ -3459,6 +3574,89 @@
         },
         "errorMsg": {
             "message": "Validate booking number to continue"
+        }
+    },
+    "vehiclePurchaseOrder": {
+        "heading": {
+            "moduleTitle": "Vehicle Purchase Order",
+            "pageTitle": "Vehicle Purchase Order",
+            "title": "Vin Block Master"
+        },
+        "label": {
+            "orderType": "Order Type",
+            "purchaseOrderNumber": "Purchase Order Number",
+            "purchaseOrderDate": "Purchase Order Number",
+            "status": "Status",
+            "fromDate": "From Date",
+            "toDate": "To Date",
+            "modal": "Model",
+            "quantity": "Quantity"
+        },
+        "placeholder": {
+            "searchVPO": "Search Vehicle Purchase Order",
+            "purchaseOrderNumber": "Purchase Order Number",
+            "purchaseOrderDate": "Purchase Order Number",
+            "OrderType": "Order Type",
+            "status": "Status",
+            "fromDate": "From Date",
+            "toDate": "To Date"
+        },
+        "validation": {
+            "purchaseOrderNumber": "Purchase Order Number",
+            "purchaseOrderDate": "Purchase Order Number",
+            "OrderType": "Order Type"
+        },
+        "VehiclePurchaseOrderDetail": {
+            "heading": {
+                "moduleTitle": "Vehicle Purchase Order",
+                "productDetails": "Product Details",
+                "cancelReason": "Cancel Reason"
+            },
+            "label": {
+                "modal": "Model",
+                "quantity": "Quantity",
+                "orderType": "Order Type",
+                "dealerCode": "Dealer Code",
+                "dealerLocation": "Dealer Location",
+                "purchaseOrderNumber": "Purchase Order Number",
+                "purchaseOrderDate": "Purchase Order Date",
+                "purchaseOrderStatus": "Purchase Order Status",
+                "modelDescription": "Model Description",
+                "purchaseOrderCancelDate": "Purchase Order Cancel Date",
+                "soNo": "So No",
+                "soDate": "So Date",
+                "soStatus": "So Status"
+            },
+            "placeholder": {
+                "dealerCode": "Enter Dealer Code",
+                "OrderType": "Order Type",
+                "modelDescription": "Model"
+            },
+            "validation": {
+                "OrderType": "Order Type",
+                "dealerCode": "Dealer Code",
+                "dealerLocation": "Dealer Location",
+                "modelDescription": "Model",
+                "purchaseOrderNumber": "Purchase Order Number",
+                "purchaseOrderDate": "Purchase Order Number"
+            }
+        },
+        "vehiclePurchaseOrderCancellation": {
+            "heading": {
+                "moduleTitle": "Cancel Purchase Order",
+                "titleOverride": "Vehicle Purchase Order Cancellation"
+            },
+            "label": {
+                "cancellationReason": "Cancellation Reason",
+                "quantity": "Quantity"
+            },
+            "placeholder": {
+                "dealerCode": "Enter Dealer Code",
+                "cancellationReason": "Cancellation Reason"
+            },
+            "validation": {
+                "cancellationReason": "Cancellation Reason"
+            }
         }
     }
 }
