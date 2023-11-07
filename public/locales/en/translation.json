@@ -44,7 +44,8 @@
             "noRecordsFound": "No records found",
             "noRecordsFoundAddNew": "Please add New {NAME} using below button",
             "comingSoon": "Coming Soon",
-            "noDataFound": "No data found"
+            "noDataFound": "No data found",
+            "downloadStart": "Your download will start soon"
         },
         "changeHistory": {
             "title": "Change History"
@@ -89,7 +90,8 @@
             "register": "Register",
             "addCreditNote": "Add Credit Note",
             "addDebitNote": "Add Dedit Note",
-            "printReceipt": "Print Receipt"
+            "printReceipt": "Print Receipt",
+            "applyFilter": "Apply Filter"
         },
         "placeholder": {
             "input": "Enter ",
@@ -1220,6 +1222,7 @@
             "title": "Booking Management",
             "bookingManagementChangeHistory": "Booking Change History",
             "otfSoMappingChangeHistory": "Booking - SO Mapping & Un-mapping History",
+            "bookingAllotment": "Booking Allotment",
 
             "profileCard.bookingNumber": "Booking No.",
             "profileCard.bookingDate": "Booking Date",
@@ -1242,7 +1245,9 @@
             "providePartNumber": "Please provide part number",
             "partAlreadyAdded": "Part is already added",
             "requiredQuantityLessThan50": "Required quantity should be less than 50",
-            "noAccessoriesDataFound": "No accessories data found"
+            "noAccessoriesDataFound": "No accessories data found",
+            "mandatoryVINSelect": "Please select VIN",
+            "valueDeprecated": "This value has been deprecated. Please select other value"
         },
         "label": {
             "unallotBooking": "Un-Allot Booking",
@@ -1314,11 +1319,25 @@
             "actionedBy": "Actioned By",
             "action": "Action",
             "soNumber": "SO Number",
-            "soDate": "SO Date"
+            "soDate": "SO Date",
+            "uploadCancellationLetter": "Upload Cancellation Letter",
+            "noDealerFound": "No Dealer Found",
+            "cancellationReasonType": "Cancellation Reason Type",
+            "oemName": "OEM Name",
+            "findDealerName": "Find Dealer Name",
+            "dealerName": "Dealer Name",
+            "reasonForCancellation": "Reason For Cancellation",
+            "cancellationRemark": "Cancellation Remarks",
+            "mnmInvoice": "M&M Invoice",
+            "pdiDone": "PDI Done",
+            "allotVehicle": "Allot Vehicle"
         },
         "placeholder": {
             "searchBooking": "Search Booking",
-            "searchResult": "Search Result"
+            "searchResult": "Search Result",
+            "model": "Model",
+            "searchDealerName": "Search Dealer Name",
+            "searchByVIN": "Search by VIN No./Chassis No."
         },
         "button": {
             "selectPart": "Select Part"
@@ -3408,36 +3427,35 @@
             "pageTitle": "Booking SO Mapping And Unmapping"
         },
         "label": {
-            "soNumber":"SO Number",
-            "poNumber":"PO Number",
-            "soDate":"Date",
-            "modelDescription":"Model Description",
-            "chassisNumber":"Chassis Number",
-            "bookingNumber":"Booking Number",
-            "customerName":"Customer Name",
-            "cancellationDate":"Cancellation Date",
-            "remarks":"Remarks",
-            "soStatus":"SO Status",
-            "searchOTF":"Search OTF",
-            "bookingDate":"Booking Date",
-            "cpd":"CPD",
+            "soNumber": "SO Number",
+            "poNumber": "PO Number",
+            "soDate": "Date",
+            "modelDescription": "Model Description",
+            "chassisNumber": "Chassis Number",
+            "bookingNumber": "Booking Number",
+            "customerName": "Customer Name",
+            "cancellationDate": "Cancellation Date",
+            "remarks": "Remarks",
+            "soStatus": "SO Status",
+            "searchOTF": "Search OTF",
+            "bookingDate": "Booking Date",
+            "cpd": "CPD",
 
-            "dealerParent":"Dealer Parent",
-            "dealerLocation":"Dealer Location",
-            "resonCategoryCode":"Reason Category",
-            "reasonDescriptionCode":"Reason Description",
-            
-            "customerId":"Customer ID",
-            "mobileNumber":"Mobile No.",
-            "modelGroup":"Model Group",
-            "modelVariant":"Model Variant"
-            
+            "dealerParent": "Dealer Parent",
+            "dealerLocation": "Dealer Location",
+            "resonCategoryCode": "Reason Category",
+            "reasonDescriptionCode": "Reason Description",
+
+            "customerId": "Customer ID",
+            "mobileNumber": "Mobile No.",
+            "modelGroup": "Model Group",
+            "modelVariant": "Model Variant"
         },
         "placeholder": {
             "search": "Search Booking Number"
         },
-        "errorMsg":{
-            "message":"Validate booking number to continue"
+        "errorMsg": {
+            "message": "Validate booking number to continue"
         }
     }
 }

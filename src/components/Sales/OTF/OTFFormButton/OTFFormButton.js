@@ -7,10 +7,11 @@ import React from 'react';
 import { Button, Row, Col, Popover } from 'antd';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
-export const OTFFormButton = ({ record, handleChangeHistory, handleOtfSoMappingHistory, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save', handleButtonClick, isLoadingOnSave, isLastSection, workFlowDetails,  }) => {
+export const OTFFormButton = ({ record, handleChangeHistory, handleOtfSoMappingHistory, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save', handleButtonClick, isLoadingOnSave, isLastSection, workFlowDetails }) => {
     const content = <div>{translateContent('global.generalMessage.comingSoon')}</div>;
     return (
         <div className={styles.formFooter}>
@@ -57,7 +58,7 @@ export const OTFFormButton = ({ record, handleChangeHistory, handleOtfSoMappingH
                     {buttonData?.invoiceBtn && (
                         <Popover content={content} trigger="hover">
                             <Button onClick={() => {}} type="primary">
-                            {translateContent('global.buttons.invoice')}
+                                {translateContent('global.buttons.invoice')}
                             </Button>
                         </Popover>
                     )}
@@ -65,7 +66,7 @@ export const OTFFormButton = ({ record, handleChangeHistory, handleOtfSoMappingH
                     {buttonData?.deliveryNoteBtn && (
                         <Popover content={content} trigger="hover">
                             <Button onClick={() => {}} type="primary">
-                            {translateContent('global.buttons.deliveryNote')}
+                                {translateContent('global.buttons.deliveryNote')}
                             </Button>
                         </Popover>
                     )}
@@ -78,7 +79,7 @@ export const OTFFormButton = ({ record, handleChangeHistory, handleOtfSoMappingH
 
                     {buttonData?.cancelOTFBtn && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF, record })} type="primary">
-                           {translateContent('global.buttons.cancelBooking')}
+                            {translateContent('global.buttons.cancelBooking')}
                         </Button>
                     )}
 
