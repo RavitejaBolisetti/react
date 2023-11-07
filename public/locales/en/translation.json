@@ -2355,7 +2355,9 @@
                 "grnNumber": "GRN Number:",
                 "grnType": "GRN Type:",
                 "grnDate": "GRN Date:",
-                "grnState": "GRN Status:"
+                "grnState": "GRN Status:",
+                "seeLess":"See less",
+                "seeMore":"See more"
             },
             "bookingDetails":"Booking Details"
         },
