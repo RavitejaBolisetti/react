@@ -6,17 +6,18 @@
 import { tblPrepareColumns, tblActionColumn } from 'utils//tableColumn';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const tableColumn = (handleButtonClick) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Model',
+            title: translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.label.model'),
             dataIndex: 'model',
             width: '14%',
         }),
 
         tblPrepareColumns({
-            title: 'Quantity ',
+            title: translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.label.quantity'),
             dataIndex: 'quantity',
             width: '14%',
         }),

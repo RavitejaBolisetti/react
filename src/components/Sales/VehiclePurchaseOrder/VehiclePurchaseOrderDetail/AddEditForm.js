@@ -15,6 +15,7 @@ import { disablePastDate } from 'utils/disableDate';
 import { customSelectBox } from 'utils/customSelectBox';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { PURCHASE_ORDER_TYPE_STATUS } from 'constants/PurchaseOrderTypeStatus';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 const { Option } = Select;
@@ -69,7 +70,7 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col> */}
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label="Order Type" initialValue={formData?.orderTypeCode || PURCHASE_ORDER_TYPE_STATUS.AGAINSTSTOCK.key} name="orderTypeCode" rules={[validateRequiredSelectField('Order Type')]}>
+                                    <Form.Item label={translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.label.orderType')} initialValue={formData?.orderTypeCode || PURCHASE_ORDER_TYPE_STATUS.AGAINSTSTOCK.key} name="orderTypeCode" rules={[validateRequiredSelectField(translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.validation.orderType'))]}>
                                         <Select placeholder="Select" {...selectProps} {...disabledProps}>
                                             {typeData['PO_TYPE']?.map((item) => (
                                                 <Option value={item?.key}>{item?.value}</Option>
@@ -82,14 +83,14 @@ const AddEditFormMain = (props) => {
                                 {dealerFlag && (
                                     <>
                                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                                            <Form.Item name="dealerParentCode" label="Dealer Code" initialValue={formData?.dealerParentCode} rules={[validateRequiredSelectField('Dealer Code')]} validateTrigger={['onChange', 'onSearch']}>
-                                                <Search maxLength={50} allowClear onSearch={getDealerlocation} onChange={handleOnClear} placeholder="Enter Dealer Code" />
+                                            <Form.Item name="dealerParentCode" label={translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.label.dealerCode')} initialValue={formData?.dealerParentCode} rules={[validateRequiredSelectField(translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.validation.dealerCode'))]} validateTrigger={['onChange', 'onSearch']}>
+                                                <Search maxLength={50} allowClear onSearch={getDealerlocation} onChange={handleOnClear} placeholder={translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.placeholder.dealerCode')} />
                                             </Form.Item>
                                         </Col>
 
                                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                                            <Form.Item initialValue={formData?.dealerLocation} name="dealerLocation" label="Dealer Location" rules={[validateRequiredSelectField('Dealer Location')]}>
-                                                {customSelectBox({ data: dealerLocation, fieldNames: { key: 'id', value: 'dealerLocationName' }, placeholder: preparePlaceholderSelect('Location') })}
+                                            <Form.Item initialValue={formData?.dealerLocation} name="dealerLocation" label={translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.label.dealerLocation')} rules={[validateRequiredSelectField(translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.validation.dealerLocation'))]}>
+                                                {customSelectBox({ data: dealerLocation, fieldNames: { key: 'id', value: 'dealerLocationName' }, placeholder: preparePlaceholderSelect(translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.placeholder.dealerCode')) })}
                                             </Form.Item>
                                         </Col>
                                     </>
@@ -97,18 +98,18 @@ const AddEditFormMain = (props) => {
                                 {formActionType?.editMode && (
                                     <>
                                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                                            <Form.Item name="purchaseOrderNumber" label="Purchase Order Number" initialValue={formData?.purchaseOrderNumber}>
+                                            <Form.Item name="purchaseOrderNumber" label={translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.label.purchaseOrderNumber')} initialValue={formData?.purchaseOrderNumber}>
                                                 <Input maxLength={50} {...disabledProps} />
                                             </Form.Item>
                                         </Col>
 
                                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                                            <Form.Item initialValue={convertCalenderDate(formData?.purchaseOrderDate ? formData?.purchaseOrderDate : new Date(), 'YYYY/MM/DD')} label="Purchase Order Date" name="purchaseOrderDate">
+                                            <Form.Item initialValue={convertCalenderDate(formData?.purchaseOrderDate ? formData?.purchaseOrderDate : new Date(), 'YYYY/MM/DD')} label={translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.label.purchaseOrderDate')} name="purchaseOrderDate">
                                                 <DatePicker disabledDate={disablePastDate} {...disabledProps} format="YYYY-MM-DD" />
                                             </Form.Item>
                                         </Col>
                                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                                            <Form.Item name="purchaseOrderStatus" label="Purchase Order Status" initialValue={formData?.purchaseOrderStatus}>
+                                            <Form.Item name="purchaseOrderStatus" label={translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.label.purchaseOrderStatus')} initialValue={formData?.purchaseOrderStatus}>
                                                 <Input maxLength={50} {...disabledProps} />
                                             </Form.Item>
                                         </Col>
@@ -118,15 +119,15 @@ const AddEditFormMain = (props) => {
 
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <h3> Product Details </h3>
+                                    <h3> {translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.heading.productDetails')} </h3>
                                 </Col>
                                 <Col xs={24} sm={24} md={14} lg={14} xl={14} xxl={14}>
-                                    <Form.Item name="modelCode" label="Model Description" initialValue={formData?.modelCode} rules={[validateRequiredSelectField('Model')]}>
-                                        {customSelectBox({ data: productHierarchyList, fieldNames: { key: 'prodctCode', value: 'prodctShrtName' }, placeholder: preparePlaceholderSelect('Model Code') })}
+                                    <Form.Item name="modelCode" label={translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.label.modelDescription')} initialValue={formData?.modelCode} rules={[validateRequiredSelectField(translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.validation.modelDescription'))]}>
+                                        {customSelectBox({ data: productHierarchyList, fieldNames: { key: 'prodctCode', value: 'prodctShrtName' }, placeholder: preparePlaceholderSelect(translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.placeholder.modelDescription')) })}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={10} lg={10} xl={10} xxl={10}>
-                                    <Form.Item name="quantity" label="Quantity" initialValue={'1'} rules={[validateOnlyPositiveNumber('Quantity')]}>
+                                    <Form.Item name="quantity" label={translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.label.quantity')} initialValue={'1'} rules={[validateOnlyPositiveNumber('Quantity')]}>
                                         <InputNumber />
                                     </Form.Item>
                                 </Col>

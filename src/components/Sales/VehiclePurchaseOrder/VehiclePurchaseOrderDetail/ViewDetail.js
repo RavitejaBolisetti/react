@@ -8,6 +8,7 @@ import { Descriptions, Card } from 'antd';
 
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { DATA_TYPE } from 'constants/dataType';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -24,29 +25,29 @@ const ViewDetailMain = (props) => {
         <>
             <Card className={styles.ExchangeCard1}>
                 <Descriptions {...viewProps}>
-                    <Descriptions.Item label="Order Type">{checkAndSetDefaultValue(formData?.orderType, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Purchase Order Number">{checkAndSetDefaultValue(formData?.purchaseOrderNumber, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Purchase Order Date"> {checkAndSetDefaultValue(formData?.purchaseOrderDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                    <Descriptions.Item label="Purchase Order Status">{checkAndSetDefaultValue(formData?.purchaseOrderStatus, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Dealer Code">{checkAndSetDefaultValue(formData?.dealerParentCode, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Dealer Location"> {checkAndSetDefaultValue(formData?.dealerLocation, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Purchase Cancel Date"> {checkAndSetDefaultValue(formData?.purchaseOrderCancelDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                    <Descriptions.Item label="SO Number">{checkAndSetDefaultValue(formData?.soNumber, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="SO Date">{checkAndSetDefaultValue(formData?.soDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                    <Descriptions.Item label="SO Status">{checkAndSetDefaultValue(formData?.soStatus, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.label.orderType')}>{checkAndSetDefaultValue(formData?.orderType, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.label.purchaseOrderNumber')}>{checkAndSetDefaultValue(formData?.purchaseOrderNumber, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.label.purchaseOrderDate')}> {checkAndSetDefaultValue(formData?.purchaseOrderDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.label.purchaseOrderStatus')}>{checkAndSetDefaultValue(formData?.purchaseOrderStatus, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.label.dealerCode')}>{checkAndSetDefaultValue(formData?.dealerParentCode, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.label.dealerLocation')}> {checkAndSetDefaultValue(formData?.dealerLocation, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.label.purchaseOrderCancelDate')}> {checkAndSetDefaultValue(formData?.purchaseOrderCancelDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.label.soNo')}>{checkAndSetDefaultValue(formData?.soNumber, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.label.soDate')}>{checkAndSetDefaultValue(formData?.soDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.label.soStatus')}>{checkAndSetDefaultValue(formData?.soStatus, isLoading)}</Descriptions.Item>
                 </Descriptions>
             </Card>
 
             <h4 className={styles.marB5}> Product Details</h4>
             <Card className={styles.ExchangeCard1}>
                 <Descriptions {...viewProps}>
-                    <Descriptions.Item label="Model">{checkAndSetDefaultValue(formData?.modelCode, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Quantity">{checkAndSetDefaultValue(formData?.quantity, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.label.modal')}>{checkAndSetDefaultValue(formData?.modelCode, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.label.quantity')}>{checkAndSetDefaultValue(formData?.quantity, isLoading)}</Descriptions.Item>
                 </Descriptions>
             </Card>
             {formData?.cancelRemarks != null && (
                 <>
-                    <h4 className={styles.marB5}> Cancel Reason</h4>
+                    <h4 className={styles.marB5}> {translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.heading.cancelReason')}</h4>
                     <Card className={styles.ExchangeCard1}>
                         <Descriptions {...viewProps}>
                             <Descriptions.Item label="">{checkAndSetDefaultValue(formData?.cancelRemarks, isLoading)}</Descriptions.Item>

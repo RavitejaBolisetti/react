@@ -14,6 +14,7 @@ import { dateFormat, formatDate, formatDateToCalenderDate } from 'utils/formatDa
 import { disableFutureDate } from 'utils/disableDate';
 import { customSelectBox } from 'utils/customSelectBox';
 import { PURCHASE_ORDER_TYPE_STATUS } from 'constants/PurchaseOrderTypeStatus';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -51,45 +52,45 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={filterString?.orderType || PURCHASE_ORDER_TYPE_STATUS.AGAINSTSTOCK.key} label="Order Type" name="orderType" rules={[validateRequiredSelectField('Order Type')]}>
+                    <Form.Item initialValue={filterString?.orderType || PURCHASE_ORDER_TYPE_STATUS.AGAINSTSTOCK.key} label={translateContent('vehiclePurchaseOrder.label.orderType')} name="orderType" rules={[validateRequiredSelectField(translateContent('vehiclePurchaseOrder.validation.orderType'))]}>
                         <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'value', value: 'key' }} options={typeData['PO_TYPE']} className={styles.headerSelectField}></Select>
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={filterString?.status} name="status" label="Order Status">
+                    <Form.Item initialValue={filterString?.status} name="status" label={translateContent('vehiclePurchaseOrder.label.status')}>
                         {customSelectBox({ data: typeData['PO_STATS'] })}
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="From Date" name="fromDate" className={styles?.datePicker}>
+                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label={translateContent('vehiclePurchaseOrder.label.fromDate')} name="fromDate" className={styles?.datePicker}>
                         <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.toDate)} label="To Date" name="toDate" className={styles?.datePicker}>
+                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.toDate)} label={translateContent('vehiclePurchaseOrder.label.toDate')} name="toDate" className={styles?.datePicker}>
                         <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Form.Item name="purchaseOrderNumber" label="Purchase Order Number" initialValue={filterString?.purchaseOrderNumber}>
-                        <Input maxLength={50} placeholder={preparePlaceholderText('Purchase Order Number')} />
+                    <Form.Item name="purchaseOrderNumber" label={translateContent('vehiclePurchaseOrder.label.purchaseOrderNumber')} initialValue={filterString?.purchaseOrderNumber}>
+                        <Input maxLength={50} placeholder={preparePlaceholderText(translateContent('vehiclePurchaseOrder.placeholder.purchaseOrderNumber'))} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
                     <Button onClick={handleCancelFilter} danger>
-                        Reset
+                        {translateContent('global.buttons.reset')}
                     </Button>
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
                     <Button htmlType="submit" type="primary">
-                        Search
+                        {translateContent('global.buttons.search')}
                     </Button>
                 </Col>
             </Row>
