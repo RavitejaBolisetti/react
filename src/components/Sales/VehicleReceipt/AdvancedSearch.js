@@ -15,7 +15,7 @@ import { dateFormat, formatDate, formatDateToCalenderDate } from 'utils/formatDa
 import { disableFutureDate } from 'utils/disableDate';
 
 import { ModalButtons } from 'components/common/Button';
-
+import { translateContent } from 'utils/translateContent';
 import styles from 'assets/sass/app.module.scss';
 
 export const AdvancedSearchFrom = (props) => {
@@ -61,12 +61,12 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="GRN From Date" name="fromDate" rules={[validateRequiredSelectField('From Date')]} className={styles?.datePicker}>
+                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label={translateContent('vehicleReceipt.label.advancedSearch.grnFromDate')} name="fromDate" rules={[validateRequiredSelectField('From Date')]} className={styles?.datePicker}>
                         <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.toDate)} label="GRN To Date" name="toDate" rules={[validateRequiredSelectField('To Date')]} className={styles?.datePicker}>
+                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.toDate)} label={translateContent('vehicleReceipt.label.advancedSearch.grnToDate')} name="toDate" rules={[validateRequiredSelectField('To Date')]} className={styles?.datePicker}>
                         <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
                     </Form.Item>
                 </Col>
@@ -74,7 +74,7 @@ export const AdvancedSearchFrom = (props) => {
 
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Form.Item initialValue={filterString?.grnType} label="GRN Type" name="grnType">
+                    <Form.Item initialValue={filterString?.grnType} label={translateContent('vehicleReceipt.label.advancedSearch.grnType')} name="grnType">
                         {customSelectBox({ data: grnTypeData, placeholder: preparePlaceholderSelect('GRN Type') })}
                     </Form.Item>
                 </Col>
