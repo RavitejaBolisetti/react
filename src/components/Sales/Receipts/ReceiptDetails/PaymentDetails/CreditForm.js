@@ -8,6 +8,7 @@ import { Input, Row, Col, Form } from 'antd';
 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validationFieldLetterAndNumber, validateNumberWithTwoDecimalPlaces, validateRequiredInputField } from 'utils/validation';
+import { translateContent } from 'utils/translateContent';
 
 const CreditFormBase = (props) => {
     const { formData } = props;
@@ -16,30 +17,30 @@ const CreditFormBase = (props) => {
         <>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.creditCardTransNumber} label="Credit Card Transaction No." name="creditCardTransNumber" rules={[validationFieldLetterAndNumber('credit card transaction no')]}>
-                        <Input placeholder={preparePlaceholderText('Credit Card Transaction No')} />
+                    <Form.Item initialValue={formData?.creditCardTransNumber} label={translateContent('receipts.label.receiptDetails.creditCardTransactionsNumber')} name="creditCardTransNumber" rules={[validationFieldLetterAndNumber(translateContent('receipts.validation.creditCardTransactionsNumber'))]}>
+                        <Input placeholder={preparePlaceholderText(translateContent('receipts.placeholder.creditCardTransactionsNumber'))} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.receivedAmount} label="Receive Amount" name="receivedAmount" rules={[validateRequiredInputField('received amount'), validateNumberWithTwoDecimalPlaces('received amount')]}>
-                        <Input placeholder={preparePlaceholderText('received amount')} />
+                    <Form.Item initialValue={formData?.receivedAmount} label={translateContent('receipts.label.receiptDetails.receivedAmount')} name="receivedAmount" rules={[validateRequiredInputField(translateContent('receipts.validation.receivedAmount')), validateNumberWithTwoDecimalPlaces(translateContent('receipts.validation.receivedAmount'))]}>
+                        <Input placeholder={preparePlaceholderText(translateContent('receipts.placeholder.receivedAmount'))} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.ccServiceChargePercentage} label="Service Charge Percentage" name="ccServiceChargePercentage" rules={[validateNumberWithTwoDecimalPlaces('service charge percentage')]}>
-                        <Input placeholder={preparePlaceholderText('Service Charge Percentage')} />
+                    <Form.Item initialValue={formData?.ccServiceChargePercentage} label={translateContent('receipts.label.receiptDetails.serviceChargePercentage')} name="ccServiceChargePercentage" rules={[validateNumberWithTwoDecimalPlaces(translateContent('receipts.validation.serviceChargePercentage'))]}>
+                        <Input placeholder={preparePlaceholderText(translateContent('receipts.label.receiptDetails.serviceChargePercentage'))} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.ccServiceChargeAmount} label="Service Charge Amount" name="ccServiceChargeAmount" rules={[validateNumberWithTwoDecimalPlaces('service charge amount')]}>
-                        <Input placeholder={preparePlaceholderText('Service Charge Amount')} />
+                    <Form.Item initialValue={formData?.ccServiceChargeAmount} label={translateContent('receipts.label.receiptDetails.serviceChargeAmount')} name="ccServiceChargeAmount" rules={[validateNumberWithTwoDecimalPlaces(translateContent('receipts.validation.serviceChargeAmount'))]}>
+                        <Input placeholder={preparePlaceholderText(translateContent('receipts.label.receiptDetails.serviceChargeAmount'))} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.taxChargeAmount} label="Tax On Service Charge" name="taxChargeAmount" rules={[validateNumberWithTwoDecimalPlaces('tax on service charge')]}>
-                        <Input placeholder={preparePlaceholderText('Tax On Service Charge')} />
+                    <Form.Item initialValue={formData?.taxChargeAmount} label={translateContent('receipts.label.receiptDetails.taxOnServiceCharge')} name="taxChargeAmount" rules={[validateNumberWithTwoDecimalPlaces(translateContent('receipts.validation.taxOnServiceCharge'))]}>
+                        <Input placeholder={preparePlaceholderText(translateContent('receipts.placeholder.taxOnServiceCharge'))} />
                     </Form.Item>
                 </Col>
             </Row>

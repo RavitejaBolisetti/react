@@ -22,6 +22,7 @@ import styles from 'assets/sass/app.module.scss';
 import PaymentAddEdit from './PaymentAddEdit';
 import ReceiptInfoAddEdit from './ReceiptInfoAddEdit';
 import { ReceiptType } from 'components/Sales/Receipts/utils/ReceiptType';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -31,7 +32,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Party Details';
+    const moduleTitle = translateContent('receipts.heading.sections.section1');
 
     let returnValue = {
         userId,
@@ -120,7 +121,7 @@ const ReceiptDetailMasterBase = (props) => {
 
     const handlePaymentSearch = () => {
         const onSuccessAction = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         };
         const onErrorAction = (message) => {
             showGlobalNotification({ message });

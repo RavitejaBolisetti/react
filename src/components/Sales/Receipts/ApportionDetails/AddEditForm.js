@@ -14,6 +14,7 @@ import { tableColumnApportion } from './tableColumnApportion';
 import { ModalApportionDetail } from './ModalApportionDetail';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Text } = Typography;
 
@@ -100,7 +101,7 @@ const AddEditFormMain = (props) => {
 
     const apportionDetailProps = {
         isVisible: isModalApportionVisible,
-        titleOverride: isEditing ? 'Edit Apportion Details' : 'Add Apportion Details',
+        titleOverride: isEditing ? translateContent('receipts.label.apportionDetails.editApportion') : translateContent('receipts.label.apportionDetails.addApportion'),
         onCloseAction: onApportionCloseAction,
         handleCancel,
         handleAddApportion,
@@ -130,10 +131,10 @@ const AddEditFormMain = (props) => {
                 header={ */}
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Text strong>Apportion Details</Text>
+                    <Text strong>{translateContent('receipts.label.apportionDetails.apportionDetailsText')}</Text>
                     {parseFloat(totalApportionAmount) < parseFloat(totalReceivedAmount) && (
                         <Button onClick={handleApportionAdd} icon={<PlusOutlined />} type="primary" disabled={isReadOnly} className={styles.marB20}>
-                            Add
+                            {translateContent('global.buttons.add')}
                         </Button>
                     )}
                 </Col>
@@ -147,7 +148,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             <DataTable tableColumn={tableColumnApportion({ handleButtonClick, formActionType })} scroll={{ x: 1000 }} tableData={apportionList} pagination={false} />
-                            {parseFloat(totalApportionAmount) === parseFloat(totalReceivedAmount) && <p className={styles.marB20}>The entire paid amount has been apportioned. Cannot be apportioned further.</p>}
+                            {parseFloat(totalApportionAmount) === parseFloat(totalReceivedAmount) && <p className={styles.marB20}>{translateContent('receipts.label.apportionDetails.totalReceivedAmountText')}</p>}
                             {/* <ListDataTable handleAdd={handleButtonClick} {...tableApportionProps} showAddButton={false} /> */}
                         </Col>
                     </Row>

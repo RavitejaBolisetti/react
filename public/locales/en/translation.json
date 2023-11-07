@@ -21,9 +21,9 @@
             "title": "Error"
         },
         "drawerTitle": {
-            "add": "Add",
-            "edit": "Edit",
-            "view": "View",
+            "add": "Add ",
+            "edit": "Edit ",
+            "view": "View ",
             "addNew": "Add New "
         },
         "label": {
@@ -2420,6 +2420,7 @@
         "heading": {
             "mainTitle": "Receipt",
             "drawerTitleMain": "Receipts",
+            "cancellationTitle": "Receipt Cancellation",
             "sections": {
                 "section1": "Party Details",
                 "section2": "Receipt Details",
@@ -2432,8 +2433,8 @@
             },
             "profileCard": {
                 "receiptNumber": "Receipt No.:",
-                "receiptDate": "Receipt Date",
-                "status": "status"
+                "receiptDate": "Receipt Date: ",
+                "status": "Status: "
             }
         },
         "label": {
@@ -2445,11 +2446,12 @@
                 "city": "City",
                 "state": "State",
                 "phone": "Phone",
-                "mitraType": "Model Group"
+                "mitraType": "Mitra Type"
             },
             "receiptDetails": {
                 "actualReceiptDate": "Actual Receipt Date",
                 "receiptType": "Receipt Type",
+                "receiptDate":"Receipt Date",
                 "paymentMode": "Payment Mode",
                 "creditCardTransactionsNumber": "Credit Card Transaction No.",
                 "receiveAmount": "Receive Amount",
@@ -2462,12 +2464,33 @@
                 "bankLocation": "Bank Location",
                 "paymentBankPartyId": "Payment Bank Party ID",
                 "paymentBankName": "Payment Bank Name",
-                "paymentBankLocation": "Payment Bank Location"
+                "paymentBankLocation": "Payment Bank Location",
+                "transactionDate": "Transaction Date",
+                "transactionNumber": "Transaction No.",
+                "totalApportionedAmount": "Total Apportioned Amount",
+                "totalReceivedAmount": "Total Received Amount",
+                "totalWriteOffAmount": "Total Write Off Amount"
+
+
             },
             "apportionDetails": {
                 "documentType": "Document Type",
-                "documentNumber": "Document Number"
-            }
+                "documentNumber": "Document Number",
+                "documentDate": "Document Date",
+                "documentAmount": "Document Amount",
+                "receivedAmount": "Received Amount",
+                "apportionAmount": "Apportioned Amount",
+                "writeOffAmount": "Write Off Amount",
+                "balanceAmount": "Balance Amount",
+                "editApportion": "Edit Apportion Details",
+                "addApportion": "Add Apportion Details",
+                "apportionDetailsText": "Apportion Details",
+                "totalApportionAmountText": "The entire paid amount has been apportioned. Cannot be apportioned further."
+            },
+            "receiptFromDate": "Receipt From Date",
+            "receiptToDate": "Receipt To Date",
+            "cancellationRemark": "Cancellation Remark",
+            "totalAmount": "Total Amount"
         },
         "tableColumn": {
             "vehicleReceiptMaster": {
@@ -2477,7 +2500,72 @@
                 "column4": "Supplier Name",
                 "column5": "Supplier Invoice Number",
                 "column6": "Supplier Invoice Date"
-            }
+            },
+            "receiptNo": "Receipt No.",
+            "receiptDate": "Receipt Date",
+            "partySegement": "Party Segment",
+            "customerName": "Customer/Supplier Name",
+            "docType": "Doc. Type",
+            "docNo": "Doc. No.",
+            "docDate": "Doc. Date",
+            "docAmount": "Doc. Amount"
+        },
+        "placeholder": {
+            "searchReceipt": "Search Receipt No.",
+            "documentType": "document type",
+            "documentNumber": "document number",
+            "documentAmount": "document amount",
+            "receivedAmount": "received amount",
+            "apportionAmount": "apportioned amount",
+            "writeOffAmount": "write off amount",
+            "balanceAmount": "balance amount",
+            "partySegment": "party segment",
+            "partyId": "party id",
+            "partyName": "party name",
+            "address": "address",
+            "city": "city",
+            "state": "state",
+            "phone": "phone",
+            "mitraType": "mitra type",
+            "remarks": "Remarks",
+            "transactionDate": "transaction date",
+            "chequeDate": "cheque/dd date",
+            "chequeNo": "Cheque/DD No.",
+            "bankName": "bank name",
+            "bankLocation": "bank location",
+            "paymentBankPartyId": "payment bank party id",
+            "paymentBankName": "payment bank name",
+            "paymentBankLocation": "payment bank location",
+            "serviceChargeAmount":"Service Charge Amount",
+            "taxOnServiceCharge": "tax on service charge",
+            "creditCardTransactionsNumber": "credit card transaction no",
+            "transactionNumber": "transaction no",
+            "totalApportionedAmount":"total apportioned amount",
+            "totalReceivedAmount": "total received amount",
+            "totalWriteOffAmount": "total write off amount",
+            "actualReceiptDate": "actual receipt date",
+            "receiptType": "receipt type"
+        },
+        "validation": {
+            "checkDateEffectiveTo": "Date cant be less than Effective from date",
+            "checkDuplicate": "Document Number already exist.",
+            "apportionAmount": "Apportion Amount",
+            "totalApportionAmount": "Total Apportion Amount",
+            "cancelRemarks": "Cancel Remarks",
+            "receivedAmount": "received amount",
+            "chequeNo": "cheque no",
+            "bankName": "bank name",
+            "bankLocation": "bank location",
+            "paymentBankPartyId": "payment bank party id",
+            "serviceChargePercentage": "service charge percentage",
+            "serviceChargeAmount":"service charge amount",
+            "taxOnServiceCharge": "tax on service charge",
+            "creditCardTransactionsNumber": "credit card transaction no",
+            "transactionNumber": "transaction no"
+
+        },
+        "buttons": {
+            "cancelReceipt": "Cancel Receipt"
         }
     },
     "configurableParameter": {

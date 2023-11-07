@@ -15,6 +15,7 @@ import { dateFormat, formatDate, formatDateToCalenderDate } from 'utils/formatDa
 import { disableFutureDate } from 'utils/disableDate';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const AdvancedSearchFrom = (props) => {
     const { setAdvanceSearchVisible, receiptType, partySegmentType } = props;
@@ -49,21 +50,21 @@ export const AdvancedSearchFrom = (props) => {
         if (bool) {
             return Promise.resolve();
         }
-        return Promise.reject(new Error('Date cant be less than Effective from date'));
+        return Promise.reject(new Error(translateContent('receipts.validation.checkDateEffectiveTo')));
     };
 
     return (
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="Receipt From Date" name="fromDate" className={styles?.datePicker}>
+                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label={translateContent('receipts.label.receiptFromDate')} name="fromDate" className={styles?.datePicker}>
                         <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} onChange={() => advanceFilterForm.setFieldsValue({ toDate: undefined })} className={styles.fullWidth} disabledDate={disableFutureDate} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         initialValue={formatDateToCalenderDate(filterString?.toDate)}
-                        label="Receipt To Date"
+                        label={translateContent('receipts.label.receiptToDate')}
                         name="toDate"
                         className={styles?.datePicker}
                         rules={[
@@ -81,13 +82,13 @@ export const AdvancedSearchFrom = (props) => {
 
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={filterString?.receiptType} label="Receipt Type" name="receiptType">
-                        {customSelectBox({ data: receiptType, placeholder: preparePlaceholderSelect('Receipt Type') })}
+                    <Form.Item initialValue={filterString?.receiptType} label={translateContent('receipts.label.receiptDetails.receiptType')} name="receiptType">
+                        {customSelectBox({ data: receiptType, placeholder: preparePlaceholderSelect(translateContent('receipts.label.receiptDetails.receiptType')) })}
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={filterString?.partySegment} label="Party Segment" name="partySegment">
-                        {customSelectBox({ data: partySegmentType, placeholder: preparePlaceholderSelect('Party Segment') })}
+                    <Form.Item initialValue={filterString?.partySegment} label={translateContent('receipts.label.partyDetails.partySegment')} name="partySegment">
+                        {customSelectBox({ data: partySegmentType, placeholder: preparePlaceholderSelect(translateContent('receipts.label.partyDetails.partySegment')) })}
                     </Form.Item>
                 </Col>
             </Row>
@@ -95,13 +96,13 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
                     <Button onClick={handleResetFilter} danger>
-                        Reset
+                        {translateContent('global.buttons.reset')}
                     </Button>
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
                     <Button htmlType="submit" type="primary">
-                        Apply
+                        {translateContent('global.buttons.apply')}
                     </Button>
                 </Col>
             </Row>

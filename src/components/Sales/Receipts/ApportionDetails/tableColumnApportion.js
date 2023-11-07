@@ -7,56 +7,57 @@ import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { convertDateMonthYear } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const tableColumnApportion = (props) => {
     const { formActionType, handleButtonClick } = props;
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Doc. Type',
+            title:  translateContent('receipts.tableColumn.docType'),
             dataIndex: 'documentType',
             width: '14%',
             fixed: 'left',
         }),
 
         tblPrepareColumns({
-            title: 'Doc. No.',
+            title: translateContent('receipts.tableColumn.docNo'),
             dataIndex: 'documentNumber',
             width: '14%',
         }),
 
         tblPrepareColumns({
-            title: 'Doc. Date',
+            title: translateContent('receipts.tableColumn.docDate'),
             dataIndex: 'docDate',
             width: '14%',
             render: (text) => convertDateMonthYear(text),
         }),
 
         tblPrepareColumns({
-            title: 'Doc. Amount',
+            title: translateContent('receipts.tableColumn.docAmount'),
             dataIndex: 'documentAmount',
             width: '10%',
         }),
 
         tblPrepareColumns({
-            title: 'Received Amount',
+            title: translateContent('receipts.label.apportionDetails.receivedAmount'),
             dataIndex: 'receivedAmount',
             width: '10%',
         }),
 
         tblPrepareColumns({
-            title: 'Apportioned Amount',
+            title: translateContent('receipts.label.apportionDetails.apportionAmount'),
             dataIndex: 'apportionedAmount',
             width: '10%',
         }),
 
         tblPrepareColumns({
-            title: 'Write Off Amount',
+            title: translateContent('receipts.label.apportionDetails.writeOffAmount'),
             dataIndex: 'writeOffAmount',
             width: '10%',
         }),
 
         tblPrepareColumns({
-            title: 'Balance Amount',
+            title: translateContent('receipts.label.apportionDetails.balanceAmount'),
             dataIndex: 'balanceAmount',
             fixed: 'right',
             width: '10%',

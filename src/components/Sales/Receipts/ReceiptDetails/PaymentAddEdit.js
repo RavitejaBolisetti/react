@@ -12,6 +12,7 @@ import ViewList from './ViewList';
 import PaymentFormContainer from './PaymentDetails/PaymentFormContainer';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -33,17 +34,17 @@ const PaymentAddEdit = (props) => {
                         <Row>
                             <Col xs={14} sm={14} md={14} lg={14} xl={14}>
                                 <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                    Payment Details
+                                    {translateContent('receipts.heading.collapse.paymentDetails')}
                                 </Text>
                                 {!formActionType?.viewMode && !formActionType?.editMode && (
                                     <Button disabled={isListEditing || isAdding} onClick={addContactHandeler} icon={<PlusOutlined />} type="primary">
-                                        Add
+                                        {translateContent('global.buttons.add')}
                                     </Button>
                                 )}
                             </Col>
                             <Col xs={10} sm={10} md={10} lg={10} xl={10}>
                                 <div className={styles.floatRight}>
-                                    <Text type="secondary">Total Amount</Text>
+                                    <Text type="secondary">{translateContent('receipts.label.totalAmount')}</Text>
                                     <HiOutlineCurrencyRupee style={{ color: '#ff3e5b', fontSize: '20px', marginBottom: '-4px' }} />
                                     <h style={{ color: '#8e8585' }}> : </h>
                                     <Text type="secondary">{totalReceivedAmount}</Text>

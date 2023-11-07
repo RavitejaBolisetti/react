@@ -20,6 +20,7 @@ import { invoiceDetailsDataAction } from 'store/actions/data/financialAccounting
 import { showGlobalNotification } from 'store/actions/notification';
 import { tableColumnApportion } from './tableColumnApportion';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -31,7 +32,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Apportion Details';
+    const moduleTitle = translateContent('receipts.heading.section.section3');
 
     let returnValue = {
         userId,
@@ -123,7 +124,7 @@ const ApportionDetailMasterBase = (props) => {
             });
             setDocumentAmount(apportionValues?.invoiceAmount);
             setReceivedAmount(apportionValues?.receivedAmount);
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         };
 
         values && fetchInvoiceList({ setIsLoading: listInvoiceShowLoading, onErrorAction, onSuccessAction, userId, extraParams });

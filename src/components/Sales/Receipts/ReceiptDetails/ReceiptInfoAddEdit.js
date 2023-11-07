@@ -11,6 +11,7 @@ import { validateRequiredSelectField, validateRequiredInputField } from 'utils/v
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { ReceiptTypeForm } from './ReceiptInformation/ReceiptTypeForm';
 import { ReceiptType } from 'components/Sales/Receipts/utils/ReceiptType';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 const { Option } = Select;
@@ -32,17 +33,17 @@ const PaymentAddEdit = (props) => {
     return (
         <>
             <Collapse onChange={() => handleCollapse(1)} expandIcon={expandIcon} expandIconPosition="end" collapsible="icon" activeKey={openAccordian}>
-                <Panel header="Receipt Information" key="1">
+                <Panel header={translateContent('receipts.heading.collapse.receiptInformation')} key="1">
                     <Divider />
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item initialValue={formattedCalendarDate(receiptData?.receiptDate)} label="Actual Receipt Date" name="receiptDate" rules={[validateRequiredInputField('Actual Receipt Date')]}>
-                                <DatePicker format={dateFormat} placeholder={preparePlaceholderText('actual receipt date')} disabled={formActionType?.editMode} />
+                            <Form.Item initialValue={formattedCalendarDate(receiptData?.receiptDate)} label={translateContent('receipts.label.receiptDetails.actualReceiptDate')} name="receiptDate" rules={[validateRequiredInputField(translateContent('receipts.label.receiptDetails.actualReceiptDate'))]}>
+                                <DatePicker format={dateFormat} placeholder={preparePlaceholderText(translateContent('receipts.placeholder.actualReceiptDate'))} disabled={formActionType?.editMode} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item initialValue={receiptData?.receiptType} label="Receipt Type" name="receiptType" rules={[validateRequiredSelectField('Receipt Type')]}>
-                                <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} onChange={handleChange} showSearch disabled={formActionType?.editMode}>
+                            <Form.Item initialValue={receiptData?.receiptType} label={translateContent('receipts.label.receiptDetails.receiptType')} name="receiptType" rules={[validateRequiredSelectField(translateContent('receipts.label.receiptDetails.receiptType'))]}>
+                                <Select maxLength={50} placeholder={preparePlaceholderSelect(translateContent('receipts.placeholder.receiptType'))} onChange={handleChange} showSearch disabled={formActionType?.editMode}>
                                     {receiptType?.map((item) => (
                                         <Option key={'dv' + item.key} value={item.key}>
                                             {item.value}

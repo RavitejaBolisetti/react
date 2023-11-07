@@ -20,6 +20,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { BASE_URL_PARTY_MASTER } from 'constants/routingApi';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -31,7 +32,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Party Details';
+    const moduleTitle = translateContent('receipts.heading.sections.section1');
 
     let returnValue = {
         userId,

@@ -28,6 +28,7 @@ import { cancelReceiptDataActions } from 'store/actions/data/receipt/cancelRecei
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { partyDetailDataActions } from 'store/actions/data/receipt/partyDetails';
 import { ReportModal } from 'components/common/ReportModal/ReportModal';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -40,7 +41,7 @@ const mapStateToProps = (state) => {
             },
         },
     } = state;
-    const moduleTitle = 'Receipts';
+    const moduleTitle = translateContent('receipts.heading.drawerTitleMain');
     let returnValue = {
         userId,
         typeData,
@@ -144,7 +145,7 @@ export const ReceiptMasterBase = (props) => {
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
@@ -385,7 +386,7 @@ export const ReceiptMasterBase = (props) => {
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage + 'Receipt No.:' + res?.data?.receiptsDetails?.receiptNumber });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage + translateContent('receipts.heading.profileCard.receiptNumber') + res?.data?.receiptsDetails?.receiptNumber });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             setButtonData({ ...buttonData, formBtnActive: false });
             setIsFormVisible(false);
@@ -491,7 +492,7 @@ export const ReceiptMasterBase = (props) => {
 
         const onSuccess = (res) => {
             setShowDataLoading(true);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             setButtonData({ ...buttonData, formBtnActive: false });
             setIsFormVisible(false);
@@ -514,7 +515,7 @@ export const ReceiptMasterBase = (props) => {
         cancelReceipt(requestData);
     };
 
-    const title = 'Receipt';
+    const title = translateContent('receipts.heading.mainTitle');
 
     const advanceFilterResultProps = {
         extraParams,
@@ -545,7 +546,7 @@ export const ReceiptMasterBase = (props) => {
         isVisible: isAdvanceSearchVisible,
         receiptType,
         partySegmentType,
-        titleOverride: 'Advance Filters',
+        titleOverride: translateContent('global.advanceFilter.title'),
 
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
@@ -559,11 +560,11 @@ export const ReceiptMasterBase = (props) => {
 
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
-            return 'View ';
+            return translateContent('global.drawerTitle.view');
         } else if (formActionType?.editMode) {
-            return 'Edit ';
+            return translateContent('global.drawerTitle.edit');
         } else {
-            return 'Add New ';
+            return translateContent('global.drawerTitle.addNew');
         }
     }, [formActionType]);
 
@@ -615,7 +616,7 @@ export const ReceiptMasterBase = (props) => {
         documentType,
         onCancelReceipt,
         handlePrintDownload,
-        saveButtonName: isLastSection ? 'Submit' : 'Save & Next',
+        saveButtonName: isLastSection ? translateContent('global.buttons.submit'): translateContent('global.buttons.saveAndNext'),
         setLastSection,
         partySegment,
         setPartySegment,
@@ -625,7 +626,7 @@ export const ReceiptMasterBase = (props) => {
 
     const cancelReceiptProps = {
         isVisible: cancelReceiptVisible,
-        titleOverride: 'Receipt Cancellation',
+        titleOverride: translateContent('receipts.heading.cancellationTitle'),
         handleCloseReceipt,
         handleCancelReceipt,
         cancelReceiptForm,

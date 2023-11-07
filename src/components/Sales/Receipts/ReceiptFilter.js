@@ -12,6 +12,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { QueryButtons } from 'components/Sales/VehicleRecieptChecklist/QueryButtons';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Search } = Input;
 
@@ -26,7 +27,7 @@ export default function ReceiptFilter(props) {
                         <Col xs={24} sm={18} md={18} lg={18} xl={18} className={styles.verticallyCentered}>
                             <QueryButtons currentItem={receiptStatus} items={receiptStatusList} onClick={handleReceiptTypeChange} />
                             <div className={styles.fullWidth}>
-                                <Search placeholder="Search Receipt No." onChange={handleChange} onSearch={handleSearch} allowClear className={styles.headerSearchField} />
+                                <Search placeholder={translateContent('receipts.placeholder.searchReceipt')} onChange={handleChange} onSearch={handleSearch} allowClear className={styles.headerSearchField} />
                             </div>
                         </Col>
                         <Col xs={24} sm={6} md={6} lg={6} xl={6} className={styles.verticallyCentered}>
@@ -38,7 +39,7 @@ export default function ReceiptFilter(props) {
                                     setAdvanceSearchVisible(true);
                                 }}
                             >
-                                Advanced Filters
+                                {translateContent('global.advanceFilter.title')}
                             </Button>
                         </Col>
                     </Row>
@@ -54,7 +55,7 @@ export default function ReceiptFilter(props) {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={22} xl={22} className={styles.advanceFilterContainer}>
-                                <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
+                                <div className={styles.advanceFilterTitle}>{translateContent('global.advanceFilter.appliedAdvanceFilter')}</div>
                                 {extraParams?.map((filter) => {
                                     return (
                                         filter?.value &&
@@ -73,7 +74,7 @@ export default function ReceiptFilter(props) {
                             </Col>
                             <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
                                 <Button className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
-                                    Clear
+                                    {translateContent('global.buttons.clear')}
                                 </Button>
                             </Col>
                         </Row>

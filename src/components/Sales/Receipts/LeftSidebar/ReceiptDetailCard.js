@@ -12,18 +12,19 @@ import { getCodeValue } from 'utils/getCodeValue';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 
 const expandIcon = ({ isActive }) =>
     isActive ? (
         <>
-            <span>See less</span>
+            <span>{translateContent('global.buttons.seeLess')}</span>
             <SlArrowUp size={13} />
         </>
     ) : (
         <>
-            <span>See more</span>
+            <span>{translateContent('global.buttons.seeMore')}</span>
             <SlArrowDown size={13} />
         </>
     );
@@ -36,7 +37,7 @@ const VehicleReceiptDetailCard = (props) => {
                 header={
                     <>
                         <div className={`${styles.detailCardText} ${styles.marB5}`} style={{ fontSize: '14px' }}>
-                            Receipt No.:
+                            {translateContent('receipts.heading.profileCard.receiptNumber')}
                             <span className={styles.verticallyCentered}>
                                 {receiptDetailData?.receiptsDetails?.receiptNumber}
                                 {/* <a className={`${styles.verticallyCentered} ${styles.marL5}`}>
@@ -50,11 +51,11 @@ const VehicleReceiptDetailCard = (props) => {
             >
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Receipt Date: <span>{checkAndSetDefaultValue(receiptDetailData?.receiptsDetails?.receiptDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
+                {translateContent('receipts.heading.profileCard.receiptDate')} <span>{checkAndSetDefaultValue(receiptDetailData?.receiptsDetails?.receiptDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Status: <span>{checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.INDNT_STATS.id], receiptDetailData?.receiptsDetails?.receiptStatus, isLoading))}</span>
+                {translateContent('receipts.heading.profileCard.status')} <span>{checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.INDNT_STATS.id], receiptDetailData?.receiptsDetails?.receiptStatus, isLoading))}</span>
                 </div>
             </Panel>
         </Collapse>
