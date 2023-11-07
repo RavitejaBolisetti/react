@@ -47,7 +47,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = translateContent('termConditionDealer.heading.moduletitle');
+    const moduleTitle = ' ' + translateContent('termConditionDealer.heading.moduletitle');
 
     let returnValue = {
         collapsed,
@@ -374,6 +374,7 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
         onCloseAction: changeHistoryClose,
         isChangeHistoryContainer: false,
         tableData: searchData,
+        titleOverride: translateContent('global.changeHistory.title'),
     };
 
     return (

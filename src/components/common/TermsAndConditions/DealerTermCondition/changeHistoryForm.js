@@ -95,4 +95,4 @@ const ChangeHistoryMain = (props) => {
     );
 };
 
-export const ChangeHistory = withDrawer(ChangeHistoryMain, { title: translateContent('global.changeHistory.title'), width: '90%' });
+export const ChangeHistory = withDrawer(ChangeHistoryMain, { width: '90%' });

@@ -2765,8 +2765,8 @@
             "productHierarchy": "Product Hierarchy",
             "documentType": "Document Type",
             "language": "Language",
-            "effectivefrom": "Effective From",
-            "effectiveto": "Effective To",
+            "effectiveFrom": "Effective From",
+            "effectiveTo": "Effective To",
             "version": "Version",
             "mfgT&c": "MFG T&C"
         },

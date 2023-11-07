@@ -23,7 +23,7 @@ export const tableColumn = (handleButtonClick, handleManufacturerButtonClick, pa
 
         tblPrepareColumns({
             title: translateContent('termConditionDealer.label.documentType'),
-            dataIndex: 'documentTypeCode',
+            dataIndex: 'documentTypeName',
             width: '15%',
         }),
 
@@ -45,12 +45,7 @@ export const tableColumn = (handleButtonClick, handleManufacturerButtonClick, pa
             width: '14%',
             render: (text) => convertDateMonthYear(text),
         }),
-        // tblPrepareColumns({
-        //     title: 'Description',
-        //     dataIndex: 'termConditionDescription',
-        //     width: '15%',
-        //     render: (dataIndex) => dataIndex.substring(0, 25) + (dataIndex.length > 25 ? '...' : ''),
-        // }),
+
         tblPrepareColumns({
             title: translateContent('termConditionDealer.label.version'),
             dataIndex: 'version',

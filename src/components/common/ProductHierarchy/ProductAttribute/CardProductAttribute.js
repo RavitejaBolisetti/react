@@ -32,7 +32,7 @@ const CardProductAttribute = (props) => {
         let newFormData = editForm?.getFieldsValue();
         let status = editForm?.getFieldError('attributeName')?.length > 0 ? true : false;
         if (status) {
-            return showGlobalNotification({ notificationType: 'error', title: translateContent('productHierarchy.notificationDuplicate.title'), message: translateContent('productHierarchy.notificationDuplicate.message'), placement: 'bottomRight' });
+            return showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationSuccess.error'), message: translateContent('productHierarchy.notificationDuplicate.message'), placement: 'bottomRight' });
         }
 
         const upd_obj = skuAttributes?.map((obj) => {
