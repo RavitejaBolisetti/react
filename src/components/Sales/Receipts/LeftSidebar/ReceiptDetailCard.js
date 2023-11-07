@@ -10,6 +10,7 @@ import { DATA_TYPE } from 'constants/dataType';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { CopytoClipboard } from 'utils/CopytoClipboard';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -39,6 +40,9 @@ const VehicleReceiptDetailCard = (props) => {
                             Receipt No.:
                             <span className={styles.verticallyCentered}>
                                 {receiptDetailData?.receiptsDetails?.receiptNumber}
+                                <span>
+                                    <CopytoClipboard text={receiptDetailData?.receiptsDetails?.receiptNumber} />
+                                </span>
                                 {/* <a className={`${styles.verticallyCentered} ${styles.marL5}`}>
                                     <FiCopy className={styles.activeForm} />
                                 </a> */}
