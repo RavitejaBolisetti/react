@@ -28,13 +28,12 @@ const AddEditFormMain = (props) => {
     const { otfCancellationForm, formData, selectedOrder, fieldNames, onFinishOTFCancellation } = props;
     const { handleButtonClick, buttonData, setButtonData, onCloseAction, handleFormValueChange, typeData, setUploadedFile, showGlobalNotification, viewDocument, setEmptyList } = props;
     const { searchDealerValue, setSearchDealerValue, dealerDataList, productHierarchyData } = props;
-    const { uploadedFileName, setUploadedFileName, uploadedFile, parentAppCode, setParentAppCode, resetDealerList } = props;
+    const { uploadedFileName, setUploadedFileName, uploadedFile, parentAppCode, setParentAppCode, resetDealerList,singleDisabled, setSingleDisabled } = props;
 
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
     const [reasonTypeChange, setReasonTypeChange] = useState('');
     const [dealerList, setDealerList] = useState([]);
     const [fileList, setFileList] = useState([]);
-    const [singleDisabled, setSingleDisabled] = useState(false);
 
     const onDrop = () => {
         return;

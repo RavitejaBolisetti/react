@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Col, Input, Form, Row, Select, Button } from 'antd';
 
 import { withModal } from 'components/withModal';
@@ -19,8 +19,8 @@ export const AdvanceForm = (props) => {
     const { handleCancel, handleFormValueChange, optionalServices, setOptionalServices, aggregateForm } = props;
     const { setAdvanceSearchVisible } = props;
     const { isVisible, setisEditing, isEditing } = props;
-    const { itemOptions, setitemOptions, makeOptions, MakefieldNames, ItemFieldNames } = props;
-
+    const { itemOptions, setitemOptions, makeOptions, MakefieldNames, ItemFieldNames, page, setPage } = props;
+    const [filteredMakeoptions, setfilteredMakeoptions] = useState([...makeOptions]);
     useEffect(() => {
         if (AdvanceformData && isVisible) {
             aggregateForm.setFieldsValue({
@@ -29,9 +29,10 @@ export const AdvanceForm = (props) => {
                 serialNo: AdvanceformData?.serialNo ?? '',
                 id: AdvanceformData?.id ?? '',
             });
+            !AdvanceformData?.item && setfilteredMakeoptions([]);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [AdvanceformData]);
+    }, [AdvanceformData, isVisible]);
     useEffect(() => {
         const arr = [];
         if (itemOptions && itemOptions?.length) {
@@ -60,23 +61,31 @@ export const AdvanceForm = (props) => {
                 const values = aggregateForm.getFieldsValue();
                 if (!isEditing) {
                     const data = { ...values, id: '' };
-                    setOptionalServices([data, ...optionalServices]); //Adding data to table
-
+                    setOptionalServices([data, ...optionalServices]?.map((item, indexVal) => ({ ...item, uniqueId: indexVal }))); //Adding data to table
                     aggregateForm.resetFields();
-                    handleFormValueChange();
                     setAdvanceSearchVisible(false);
+                    setPage((prev) => ({ ...prev, current: 1 }));
                 } else {
                     const data = { ...values };
                     const newarr = [...optionalServices];
                     newarr[AdvanceformData?.index] = data;
                     setOptionalServices(newarr);
                     setAdvanceSearchVisible(false);
-                    handleFormValueChange();
                     setisEditing(false);
+                    setPage((prev) => ({ ...prev, current: prev?.current }));
                 }
                 setAdvanceformData();
+                handleFormValueChange();
             })
             .catch((err) => {});
+    };
+    const handleItemChange = (selectedKey) => {
+        if (!selectedKey) {
+            setfilteredMakeoptions([]);
+        } else {
+            setfilteredMakeoptions([...makeOptions]);
+        }
+        aggregateForm.resetFields(['make']);
     };
 
     return (

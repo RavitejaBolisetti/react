@@ -21,6 +21,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { BASE_URL_CREDIT_DEBIT_NOTE_SEARCH as customURL } from 'constants/routingApi';
 import { BASE_URL_CREDIT_DEBIT_NOTE_DETAILS as customVoucherUrl } from 'constants/routingApi';
 import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
+import { VOUCHER_TYPE } from 'constants/VoucherType';
 import { creditDebitNoteSearchDataAction } from 'store/actions/data/financialAccounting/creditDebitNoteSearch';
 
 import { CREDIT_DEBIT_SECTION } from 'constants/CreditDebitSection';
@@ -83,6 +84,7 @@ export const CreditDebitNoteMasterBase = (props) => {
     const [listFilterForm] = Form.useForm();
 
     const [selectedRecord, setSelectedRecord] = useState();
+    const [vouchertype, setVoucherType] = useState();
     const [selectedRecordId, setSelectedRecordId] = useState();
 
     const [section, setSection] = useState();
@@ -306,6 +308,7 @@ export const CreditDebitNoteMasterBase = (props) => {
     };
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true, transactionType = 'credit' }) => {
+        setVoucherType(record?.voucherType);
         form.resetFields();
         form.setFieldsValue(undefined);
         switch (buttonAction) {
@@ -527,7 +530,7 @@ export const CreditDebitNoteMasterBase = (props) => {
         setApportionTableData,
     };
 
-    const reportDetail = EMBEDDED_REPORTS?.CREDIT_DEBIT_DOCUMENT;
+    const reportDetail = vouchertype === VOUCHER_TYPE?.CREDIT_TYPE?.key ? EMBEDDED_REPORTS?.CREDIT_DOCUMENT : EMBEDDED_REPORTS?.DEBIT_DOCUMENT;
     const reportProps = {
         isVisible: isReportVisible,
         titleOverride: reportDetail?.title,

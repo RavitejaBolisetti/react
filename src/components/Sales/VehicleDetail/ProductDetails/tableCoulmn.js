@@ -9,19 +9,19 @@ import { translateContent } from 'utils/translateContent';
 import styles from 'assets/sass/app.module.scss';
 
 export const tableColumn = (props) => {
-    const { handleButtonClick, formActionType, bindCodeValue } = props;
+    const { handleButtonClick, formActionType, bindCodeValue, ITEM_TYPE } = props;
     const tableColumn = [
         tblPrepareColumns({
             title: translateContent('vehicleDetail.productDetails.label.item'),
             dataIndex: 'item',
             width: '20%',
-            render: (text, record, index) => bindCodeValue(text, 'item'),
+            render: (text, record, index) => bindCodeValue(text, ITEM_TYPE?.ITEM),
         }),
         tblPrepareColumns({
             title: translateContent('vehicleDetail.productDetails.label.make'),
             dataIndex: 'make',
             width: '20%',
-            render: (text, record, index) => bindCodeValue(text, 'make'),
+            render: (text, record, index) => bindCodeValue(text, ITEM_TYPE?.MAKE),
         }),
 
         tblPrepareColumns({

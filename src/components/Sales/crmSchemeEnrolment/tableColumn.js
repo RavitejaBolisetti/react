@@ -29,21 +29,25 @@ export const tableColumn = (handleButtonClick) => {
             dataIndex: 'bookletNumber',
             width: '13%',
         }),
+
         tblPrepareColumns({
             title: translateContent('crmSchemeEnrolment.label.customerName'),
             dataIndex: 'customerName',
             width: '13%',
         }),
+
         tblPrepareColumns({
             title: translateContent('crmSchemeEnrolment.label.mobileNo'),
             dataIndex: 'mobileNumber',
             width: '13%',
         }),
+
         tblPrepareColumns({
             title: translateContent('crmSchemeEnrolment.label.vin'),
             dataIndex: 'vin',
             width: '13%',
         }),
+        
         tblPrepareColumns({
             title: translateContent('crmSchemeEnrolment.label.registration'),
             dataIndex: 'registrationNumber',

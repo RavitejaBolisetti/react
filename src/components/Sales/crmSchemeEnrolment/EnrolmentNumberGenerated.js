@@ -12,6 +12,7 @@ import { translateContent } from 'utils/translateContent';
 const { Title, Text } = Typography;
 
 export const EnrolmentNumberGenerated = (props) => {
+    const { generatedData } = props;
     const title = translateContent('crmSchemeEnrolment.heading.enrollmentTitle');
 
     return (
@@ -32,12 +33,12 @@ export const EnrolmentNumberGenerated = (props) => {
                             <Col className={styles.fullyCentered} style={{ flexDirection: 'column' }}>
                                 <Space align="center" justify="center">
                                     <Space style={{ backgroundColor: '#F2F2F2', padding: '10px 16px', color: '#858585', borderRadius: '4px' }}>
-                                        Invoice No.:<span style={{ color: '#0B0B0C' }}>{'EN21A0068'}</span>
+                                        Enrolment No.:<span style={{ color: '#0B0B0C' }}>{generatedData?.enrolmentNumber}</span>
                                     </Space>
-                                    <CopytoClipboard type={'primary'} buttonText={'Copy'} text={'ASE VERSHA'} />
+                                    <CopytoClipboard type={'primary'} buttonText={'Copy'} text={generatedData?.enrolmentNumber} />
                                 </Space>
                                 <Divider style={{ margin: '18px 0' }} />
-                                <Text style={{ color: '#858585', fontWeight: '500' }}>translateContent('crmSchemeEnrolment.confirmationMessage.download') </Text>
+                                <Text style={{ color: '#858585', fontWeight: '500' }}>{translateContent('crmSchemeEnrolment.confirmationMessage.download')}</Text>
                                 <Button
                                     danger
                                     style={{ margin: '18px 0' }}

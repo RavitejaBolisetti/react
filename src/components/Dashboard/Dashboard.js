@@ -4,98 +4,24 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { Fragment, useState } from 'react';
-import { connect } from 'react-redux';
-import { Row, Col, Card, Button, Space, Divider, Tag, Typography } from 'antd';
+import { Row, Col, Button, Space, Divider, Tag, Typography } from 'antd';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 import * as IMAGES from 'assets';
+import DashboardActionItems from './DashboardActionItems';
+import { dateTimeDuration } from 'utils/formatDateTime';
+import { translateContent } from 'utils/translateContent';
 
 import styles from './Dashboard.module.scss';
-import DashboardActionItems from './DashboardActionItems';
-// import WidgetDrawer from './WidgetDrawer';
-import NewsDrawer from './NewsDrawer';
-import { StatusBar } from './StatusBar';
-import { PieChart } from './PieChart';
-import { dateTimeDuration } from 'utils/formatDateTime';
-// import { withSpinner } from 'components/withSpinner';
-import LatestNews from './LatestNews';
-import BirthDayCalender from './BirthDayCalender';
-import { translateContent } from 'utils/translateContent';
-// import { FiPlus } from 'react-icons/fi';
 
 const { Text, Title } = Typography;
-
-const billingData = [
-    { type: 'Scorpio', sales: 60 },
-    { type: 'XUV700', sales: 120 },
-    { type: 'Thar', sales: 80 },
-    { type: 'XUV300', sales: 50 },
-    { type: 'Marazzo', sales: 10 },
-    { type: 'Bolero Neo', sales: 75 },
-    { type: 'Bolero', sales: 120 },
-    { type: 'Scarpio Classic', sales: 50 },
-];
-
-const retailData = [
-    { type: 'Scorpio', sales: 30 },
-    { type: 'XUV700', sales: 90 },
-    { type: 'Thar', sales: 70 },
-    { type: 'XUV300', sales: 30 },
-    { type: 'Marazzo', sales: 5 },
-    { type: 'Bolero Neo', sales: 75 },
-    { type: 'Bolero', sales: 75 },
-    { type: 'Scarpio Classic', sales: 113 },
-];
-
-const mapStateToProps = (state) => {
-    const {
-        common: {
-            LeftSideBar: { collapsed = false },
-            Header: { isLoading, data: loginUserData = [] },
-        },
-    } = state;
-
-    return {
-        collapsed,
-        firstName: loginUserData?.firstName || '',
-        isLoading,
-    };
-};
 
 const keyHightliteData = [
     { shortDescription: 'GST Update', longDescription: "GSTR 1 due date is 10th Oct'23", createdDate: '2023-10-14 12:45:00' },
     { shortDescription: 'GST Update', longDescription: "GSTR 2 due date is 20th Oct'23", createdDate: '2023-10-16 17:45:00' },
 ];
 
-const detailNews = {
-    content:
-        'Mahindra & Mahindra, the popular Indian car manufacturing brand, has recorded its highest ever sales in the month of July 2023. Mahindra & Mahindra is popularly known for their rugged luxury SUV’s such as XUV 700, Scorpio-N, Scorpio Classic, Thar and compact SUV’s such as XUV 300 and XUV 400 EV.Mahindra & Mahindra, the popular Indian car manufacturing brand, has recorded its highest ever sales in the month of July 2023. Mahindra & Mahindra is popularly known for their rugged luxury SUV’s such as XUV 700, Scorpio-N, Scorpio Classic, Thar and compact SUV’s such as XUV. Mahindra & Mahindra, the popular Indian car manufacturing brand, has recorded its highest ever sales in the month of July 2023. Mahindra & Mahindra is popularly known for their rugged luxury SUV’s such as XUV 700, Scorpio-N, Scorpio Classic, Thar and compact SUV’s such as XUV 300 and XUV 400 EV.',
-};
-const newsData = [
-    { shortDescription: 'Mahindra & Mahindra sells 36,205 SUVs in July 2023', longDescription: 'Mahindra & Mahindra, the popular Indian car manufacturing brand.', date: '5 min ago', content: detailNews?.content },
-    { shortDescription: 'Mahindra Sales in July hits highest mark as per TOI Survey', longDescription: 'Mahindra & Mahindra is popularly known for their rugged luxury.', date: '50 min ago', content: detailNews?.content },
-    { shortDescription: 'Mahindra Scorpio Sales Rise By Over 2-Folds', longDescription: 'Mahindra & Mahindra, the popular Indian car manufacturing brand', date: '9 min ago', content: detailNews?.content },
-    { shortDescription: 'Mahindra & Mahindra sells 36,205 SUVs in July 2023', longDescription: 'Mahindra & Mahindra, the popular Indian car manufacturing brand.', date: '5 min ago', content: detailNews?.content },
-    { shortDescription: 'Mahindra Sales in July hits highest mark as per TOI Survey', longDescription: 'Mahindra & Mahindra is popularly known for their rugged luxury.', date: '50 min ago', content: detailNews?.content },
-    { shortDescription: 'Mahindra Scorpio Sales Rise By Over 2-Folds', longDescription: 'Mahindra & Mahindra, the popular Indian car manufacturing brand', date: '9 min ago', content: detailNews?.content },
-];
-const birthDayData = {
-    birthDaytoday: [
-        { name: 'Shally Gupta', date: '17, Feb 2023 Sunday', image: '' },
-        { name: 'Vimal Kumar Bhati', date: '21, July 2023 Friday', image: '' },
-        { name: 'Vivek Verma', date: '07, December 2023 Friday', image: '' },
-    ],
-    upcomingBirthDay: [
-        { name: 'Vishal Gaurav', date: '19, November 2023 Sunday', image: '' },
-        { name: 'Shally Gupta', date: '17, December 2023 Sunday', image: '' },
-        { name: 'Vimal Kumar Bhati', date: '21, July 2023 Friday', image: '' },
-    ],
-};
-
-const DashboardBase = ({ props }) => {
-    // const [isVisible, serIsVisible] = useState(false);
-    const [isNewsVisible, setIsNewsVisible] = useState(false);
+const DashboardBase = (props) => {
     const [highlightsTextIndex, setHighlightsTextIndex] = useState(0);
-    const [record, setRecord] = useState('');
 
     const handleButtonClick = (direction) => {
         if (direction === 'next') {
@@ -111,37 +37,6 @@ const DashboardBase = ({ props }) => {
                 setHighlightsTextIndex((prev) => Number(prev) - 1);
             }
         }
-    };
-    const onCloseAction = () => {
-        // serIsVisible(false);
-        setIsNewsVisible(false);
-    };
-
-    // const onAddWidget = () => {
-    //     serIsVisible(true);
-    // };
-
-    const handleNewsClick = (data) => {
-        setIsNewsVisible(true);
-        setRecord(data);
-    };
-
-    // const WidgetDrawerProps = {
-    //     isVisible,
-    //     onCloseAction,
-    //     titleOverride: translateContent('dashboard.heading.subTitleAddWidget'),
-    // };
-
-    const newsDrawerProps = {
-        isVisible: isNewsVisible,
-        onCloseAction,
-        titleOverride: translateContent('dashboard.heading.latestNews'),
-        handleNewsClick,
-        newsData,
-        record,
-    };
-    const birthDayProps = {
-        birthDayData,
     };
 
     return (
@@ -199,44 +94,8 @@ const DashboardBase = ({ props }) => {
                     </div>
                 </Col>
             </Row>
-            <Row gutter={20} className={`${styles.marB20} ${styles.dashboardKPI}`}>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className={styles.verticallyCentered}>
-                    <Title level={3}>{translateContent('dashboard.heading.dashboardKpi')}</Title>
-                </Col>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className={styles.buttonsGroupRight}>
-                    {/* <Button type="primary" icon={<FiPlus />} className={styles.verticallyCentered} onClick={onAddWidget}>
-                        {translateContent('dashboard.heading.dashboardKpi')}
-                    </Button> */}
-                </Col>
-            </Row>
-            <div className={`${styles.marB20} ${styles.dashboardPieChart}`}>
-                <Row gutter={20}>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Card title={translateContent('dashboard.label.billing')}>
-                            <StatusBar data={billingData} />
-                        </Card>
-                    </Col>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Card title={translateContent('dashboard.label.retail')}>
-                            <StatusBar data={retailData} />
-                        </Card>
-                    </Col>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Card title={translateContent('dashboard.label.stockInDays')}>
-                            <PieChart />
-                        </Card>
-                    </Col>
-                </Row>
-            </div>
-            <Row gutter={40} className={styles.marB20}>
-                <LatestNews {...newsDrawerProps} />
-                <BirthDayCalender {...birthDayProps} />
-            </Row>
-
-            {/* <WidgetDrawer {...WidgetDrawerProps} /> */}
-            <NewsDrawer {...newsDrawerProps} />
         </div>
     );
 };
 
-export const Dashboard = connect(mapStateToProps, null)(DashboardBase);
+export const Dashboard = DashboardBase;

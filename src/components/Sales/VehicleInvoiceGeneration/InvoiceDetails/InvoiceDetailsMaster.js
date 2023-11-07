@@ -16,7 +16,7 @@ import { formattedCalendarDate } from 'utils/formatDateTime';
 import { translateContent } from 'utils/translateContent';
 
 const InvoiceDetailsMasterBase = (props) => {
-    const { typeData, vehicleInvoiceMasterData, selectedOrderId } = props;
+    const { typeData, vehicleInvoiceMasterData, selectedOrderId, handleFormValueChange } = props;
     const { userId, buttonData, setButtonData, section, isDataLoaded, isLoading, invoiceDetailForm } = props;
     const { formActionType, selectedOtfNumber, setSelectedOtfNumber } = props;
 
@@ -31,13 +31,14 @@ const InvoiceDetailsMasterBase = (props) => {
                 bookingCustomer: { ...vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.bookingCustomer, birthDate: formattedCalendarDate(vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.bookingCustomer?.birthDate) },
                 billingCustomer: { ...vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.billingCustomer, birthDate: formattedCalendarDate(vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.billingCustomer?.birthDate) },
             });
+            setButtonData({ ...buttonData, formBtnActive: formActionType.addMode });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto, selectedOrderId]);
 
     useEffect(() => {
         if (selectedOtfNumber) {
-            setButtonData({ ...buttonData, formBtnActive: true });
+            setButtonData({ ...buttonData, formBtnActive: formActionType.addMode });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedOtfNumber]);
@@ -98,7 +99,7 @@ const InvoiceDetailsMasterBase = (props) => {
         formData: vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto,
     };
     return (
-        <Form layout="vertical" autoComplete="off" form={invoiceDetailForm} onFinish={onFinish}>
+        <Form layout="vertical" autoComplete="off" form={invoiceDetailForm} onValuesChange={handleFormValueChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>
@@ -108,7 +109,7 @@ const InvoiceDetailsMasterBase = (props) => {
                     </Row>
                     {formActionType?.viewMode ? <ViewDetail {...viewProps} formData={vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest} /> : <AddEditForm {...formProps} formData={vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest} />}
 
-                    <Form layout="vertical" autoComplete="off" form={CustomerForm}>
+                    <Form layout="vertical" autoComplete="off" form={CustomerForm} onValuesChange={handleFormValueChange}>
                         <CustomerDetailsMaster {...CustomerDetailsMasterProps} />
                     </Form>
                 </Col>

@@ -21,6 +21,8 @@ import { formattedCalendarDate } from 'utils/formatDateTime';
 import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
+import { ListDataTable } from 'utils/ListDataTable';
+import { LANGUAGE_EN } from 'language/en';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -29,8 +31,9 @@ const AddEditFormMain = (props) => {
     const { isReadOnly, setIsReadOnly, typeData } = props;
     const { itemOptions, setitemOptions, makeOptions, setmakeOptions } = props;
     const { formData, formActionType, handleCollapse, showGlobalNotification, selectedRecordId, form, openAccordian, setOpenAccordian, optionalServices, setOptionalServices, handleFormValueChange, tooltTipText, isVariantLoading, isModelFamilyLoading, isModelLoading } = props;
-    const { MakefieldNames, ItemFieldNames, bindCodeValue } = props;
+    const { MakefieldNames, ItemFieldNames, bindCodeValue, ITEM_TYPE } = props;
     const { collapseProps, disabledProps, bindStatus } = props;
+    const { page, setPage } = props;
 
     const [aggregateForm] = Form.useForm();
     const [connectedForm] = Form.useForm();
@@ -99,34 +102,49 @@ const AddEditFormMain = (props) => {
         setmakeOptions,
         optionalServices,
         setOptionalServices,
+        page,
+        setPage,
     };
 
-    const handleEdit = ({ record, index }) => {
-        setAdvanceformData({ ...record, index: index });
+    const handleEdit = ({ record }) => {
+        setAdvanceformData({ ...record, index: record?.uniqueId });
         aggregateForm.resetFields();
         setOpenAccordian('Aggregates');
         setisEditing(true);
         setIsReadOnly(true);
     };
 
-    const handleDelete = ({ record, index }) => {
-        setOptionalServices(optionalServices.filter((element, i) => i !== index));
+    const handleDelete = ({ index }) => {
+        setOptionalServices(optionalServices.filter((i) => i?.uniqueId !== index)?.map((item, index) => ({ ...item, uniqueId: index })));
     };
 
-    const handleButtonClick = ({ buttonAction, record, index }) => {
+    const handleButtonClick = ({ buttonAction, record }) => {
         switch (buttonAction) {
             case 'edit': {
-                handleEdit({ record, index });
+                handleEdit({ record, index: record?.uniqueId });
                 break;
             }
             case 'delete': {
-                handleDelete({ record, index });
+                handleDelete({ record, index: record?.uniqueId });
                 break;
             }
             default: {
-                return;
+                return false;
             }
         }
+    };
+
+    const ListDatatableProps = {
+        dynamicPagination: true,
+        totalRecords: optionalServices?.length,
+        page,
+        setPage,
+        tableColumn: tableColumn({ handleButtonClick, formActionType, bindCodeValue, ITEM_TYPE }),
+        tableData: optionalServices,
+        showAddButton: false,
+        handleAdd: () => {},
+        noMessge: LANGUAGE_EN.GENERAL.LIST_NO_DATA_FOUND.TITLE,
+        filterString: page,
     };
 
     return (
@@ -138,12 +156,12 @@ const AddEditFormMain = (props) => {
                             <Divider />
                             <Row gutter={20}>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label={translateContent('vehicleDetail.productDetails.label.productDivision')} name="productDivision">
+                                    <Form.Item label={translateContent('vehicleDetail.productDetails.label.productDivision')} name="productDivision"  initialValue={formData?.productAttributeDetail?.productDivision}>
                                         <Input maxLength={15} placeholder={preparePlaceholderText(translateContent('vehicleDetail.productDetails.label.productDivision'))} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label={translateContent('vehicleDetail.productDetails.label.modelFamily')} name="modelFamily">
+                                    <Form.Item label={translateContent('vehicleDetail.productDetails.label.modelFamily')} name="modelFamily" initialValue={formData?.productAttributeDetail?.modelFamily}>
                                         <Input loading={isModelFamilyLoading} maxLength={15} placeholder={preparePlaceholderText(translateContent('vehicleDetail.productDetails.label.modelFamily'))} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
@@ -155,7 +173,7 @@ const AddEditFormMain = (props) => {
                             </Row>
                             <Row gutter={20}>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label={translateContent('vehicleDetail.productDetails.label.modelVariant')} name="modelVariant">
+                                    <Form.Item label={translateContent('vehicleDetail.productDetails.label.modelVariant')} name="modelVariant" initialValue={formData?.productAttributeDetail?.modelVariant}>
                                         <Input loading={isVariantLoading} maxLength={15} placeholder={preparePlaceholderText(translateContent('vehicleDetail.productDetails.label.modelVariant'))} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
@@ -261,7 +279,8 @@ const AddEditFormMain = (props) => {
                             key="Aggregates"
                         >
                             <Divider />
-                            <DataTable tableColumn={tableColumn({ handleButtonClick, formActionType, bindCodeValue })} tableData={optionalServices} pagination={false} />
+                            <ListDataTable {...ListDatatableProps} />
+                            {/* <DataTable tableColumn={tableColumn({ handleButtonClick, formActionType, bindCodeValue, ITEM_TYPE })} tableData={optionalServices} pagination={false} /> */}
                         </Panel>
                     </Collapse>
                 </Col>

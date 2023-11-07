@@ -20,36 +20,17 @@ export const GstAuthFormButton = ({ record, onCloseAction, buttonData, setButton
                             {translateContent('global.buttons.close')}
                         </Button>
                     )}
-
-                    {/* {buttonData?.cancelBtn && ( */}
                     <Button danger onClick={onCloseAction}>
                         {translateContent('global.buttons.cancel')}
                     </Button>
-                    {/* )} */}
                 </Col>
 
                 <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.buttonsGroupRight}>
-                    {/* {buttonData?.editBtn && (
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
-                            Edit
-                        </Button>
-                    )} */}
-
-                    {/* {buttonData?.nextBtn && !isLastSection && ( */}
                     {nextBtn && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
                             {translateContent('global.buttons.next')}
                         </Button>
                     )}
-
-                    {buttonData?.saveBtn && (
-                        <Button loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
-                            {saveButtonName}
-                            {/* disabled={!buttonData?.formBtnActive}  */}
-                        </Button>
-                    )}
-
-                    {}
                 </Col>
             </Row>
         </div>

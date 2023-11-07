@@ -34,6 +34,7 @@ export const VehicleInvoiceFormButton = ({ record, onCloseAction, onCancelInvoic
                             {translateContent('global.buttons.printForm21')}
                         </Button>
                     )}
+                    
                     {buttonData?.printInvoiceBtn && (
                         <Button onClick={() => onPrintInvoice(record)} danger>
                             {translateContent('global.buttons.printInvoice')}
@@ -47,16 +48,16 @@ export const VehicleInvoiceFormButton = ({ record, onCloseAction, onCancelInvoic
                     )}
 
                     {buttonData?.nextBtn && !isLastSection && (
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record, isNextBtnClick: true })} type="primary">
                             {translateContent('global.buttons.next')}
                         </Button>
                     )}
+
                     {buttonData?.saveBtn && (
                         <Button loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
                             {saveButtonName}
                         </Button>
                     )}
-                    {}
                 </Col>
             </Row>
         </div>

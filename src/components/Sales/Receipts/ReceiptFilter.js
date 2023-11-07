@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Button, Row, Col, Input } from 'antd';
+import { Button, Row, Col, Input, Form } from 'antd';
 import { FilterIcon } from 'Icons';
 import { PlusOutlined } from '@ant-design/icons';
 import { RxCross2 } from 'react-icons/rx';
@@ -17,7 +17,7 @@ import { translateContent } from 'utils/translateContent';
 const { Search } = Input;
 
 export default function ReceiptFilter(props) {
-    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, receiptStatusList, handleReceiptTypeChange, filterString, setAdvanceSearchVisible, handleButtonClick, handleSearch, receiptStatus, handleChange } = props;
+    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, receiptStatusList, handleReceiptTypeChange, filterString, setAdvanceSearchVisible, handleButtonClick, handleSearch, receiptStatus, handleChange, searchForm } = props;
 
     return (
         <div className={styles.contentHeaderBackground}>
@@ -26,8 +26,12 @@ export default function ReceiptFilter(props) {
                     <Row gutter={20}>
                         <Col xs={24} sm={18} md={18} lg={18} xl={18} className={styles.verticallyCentered}>
                             <QueryButtons currentItem={receiptStatus} items={receiptStatusList} onClick={handleReceiptTypeChange} />
-                            <div className={styles.fullWidth}>
-                                <Search placeholder={translateContent('receipts.placeholder.searchReceipt')} onChange={handleChange} onSearch={handleSearch} allowClear className={styles.headerSearchField} />
+                            <div className={styles.masterListSearchForm}>
+                                <Form autoComplete="off" layout="vertical" form={searchForm}>
+                                    <Form.Item label="" name={translateContent('global.label.search')}>
+                                        <Search placeholder={translateContent('receipts.placeholder.searchReceipt')} onChange={handleChange} onSearch={handleSearch} allowClear className={styles.headerSearchField} />
+                                    </Form.Item>
+                                </Form>
                             </div>
                         </Col>
                         <Col xs={24} sm={6} md={6} lg={6} xl={6} className={styles.verticallyCentered}>

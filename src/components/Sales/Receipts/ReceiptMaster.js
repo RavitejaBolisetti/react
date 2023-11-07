@@ -42,6 +42,8 @@ const mapStateToProps = (state) => {
         },
     } = state;
     const moduleTitle = translateContent('receipts.heading.drawerTitleMain');
+    const page = { pageSize: 10, current: 1 };
+
     let returnValue = {
         userId,
         typeData,
@@ -59,6 +61,7 @@ const mapStateToProps = (state) => {
         isSearchDataLoaded,
         isDetailedDataLoaded,
         filterString,
+        page,
     };
     return returnValue;
 };
@@ -85,7 +88,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const ReceiptMasterBase = (props) => {
     const { fetchList, saveData, listShowLoading, userId, fetchReceiptDetails, resetPartyDetailData, data, receiptDetailData, resetData, cancelReceipt } = props;
-    const { typeData, receiptType, partySegmentType, paymentModeType, documentType, moduleTitle, totalRecords, showGlobalNotification } = props;
+    const { typeData, receiptType, partySegmentType, paymentModeType, documentType, moduleTitle, totalRecords, showGlobalNotification, page } = props;
     const { filterString, setFilterString, receiptStatusList } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [receiptStatus, setReceiptStatus] = useState(QUERY_BUTTONS_CONSTANTS.OPENED.key);
@@ -122,7 +125,6 @@ export const ReceiptMasterBase = (props) => {
     const [additionalReportParams, setAdditionalReportParams] = useState();
     const [isReportVisible, setReportVisible] = useState();
 
-    const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
 
     const defaultBtnVisiblity = {
@@ -156,26 +158,19 @@ export const ReceiptMasterBase = (props) => {
         setShowDataLoading(false);
     };
 
-    useEffect(() => {
-        if (filterString) {
-            setPage({ ...page, current: 1 });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString]);
-
     const extraParams = useMemo(() => {
         return [
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: page?.current,
+                value: filterString?.current ?? page?.current,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: page?.pageSize,
+                value: filterString?.pageSize ?? page?.pageSize,
                 canRemove: true,
                 filter: false,
             },
@@ -236,14 +231,14 @@ export const ReceiptMasterBase = (props) => {
             {
                 key: 'sortBy',
                 title: 'Sort By',
-                value: page?.sortBy,
+                value: filterString?.sortBy,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'sortIn',
                 title: 'Sort Type',
-                value: page?.sortType,
+                value: filterString?.sortType,
                 canRemove: true,
                 filter: false,
             },
@@ -265,7 +260,7 @@ export const ReceiptMasterBase = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, receiptStatus, filterString, page]);
+    }, [userId, receiptStatus, filterString]);
 
     useEffect(() => {
         if (userId && selectedOrderId) {
@@ -313,6 +308,7 @@ export const ReceiptMasterBase = (props) => {
 
     const handleSearch = (value) => {
         setFilterString({ ...filterString, searchParam: value, advanceFilter: true });
+        searchForm?.resetFields();
         setSearchValue(value);
     };
 
@@ -446,12 +442,13 @@ export const ReceiptMasterBase = (props) => {
     const tableProps = {
         dynamicPagination,
         totalRecords,
-        page,
-        setPage,
+        page: filterString,
+        setPage: setFilterString,
         tableColumn: tableColumn(handleButtonClick),
         tableData: data,
         showAddButton: false,
         typeData,
+        filterString,
     };
 
     const onAdvanceSearchCloseAction = () => {
@@ -556,6 +553,7 @@ export const ReceiptMasterBase = (props) => {
         setAdvanceSearchVisible,
         receiptStatusList,
         typeData,
+        searchForm,
     };
 
     const drawerTitle = useMemo(() => {
@@ -616,7 +614,7 @@ export const ReceiptMasterBase = (props) => {
         documentType,
         onCancelReceipt,
         handlePrintDownload,
-        saveButtonName: isLastSection ? translateContent('global.buttons.submit'): translateContent('global.buttons.saveAndNext'),
+        saveButtonName: isLastSection ? translateContent('global.buttons.submit') : translateContent('global.buttons.saveAndNext'),
         setLastSection,
         partySegment,
         setPartySegment,

@@ -17,6 +17,7 @@ import VehicleInvoiceFilter from './VehicleInvoiceFilter';
 import { validateInvoiceMenu } from './LeftSidebar/MenuNav';
 import { ReportModal } from 'components/common/ReportModal/ReportModal';
 import { VehicleInvoiceMainConatiner } from './VehicleInvoiceMainConatiner';
+import { UnSaveDataConfirmation } from 'utils/UnSaveDataConfirmation';
 
 import { ListDataTable } from 'utils/ListDataTable';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
@@ -151,6 +152,9 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [confirmRequest, setConfirmRequest] = useState();
     const [previousSection, setPreviousSection] = useState(1);
     const [profileCardData, setProfileCardData] = useState();
+    const [isUnsavedDataPopup, setIsUnsavedDataPopup] = useState(false);
+    const [nextCurentSection, setNextCurrentSection] = useState('');
+    const [isFormValueChange, setIsFormValueChange] = useState(false);
 
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
@@ -437,6 +441,7 @@ export const VehicleInvoiceMasterBase = (props) => {
                             onErrorAction,
                             onSuccessAction: (response) => {
                                 setRequestPayload((prev) => ({ ...prev, vehicleDetails: response?.data }));
+                                setButtonData((prev) => ({ ...prev, formBtnActive: formActionType.addMode }));
                             },
                         });
                     }
@@ -456,7 +461,7 @@ export const VehicleInvoiceMasterBase = (props) => {
                     return;
                 } else {
                     !selectedRecordId && setSelectedOtfId(res?.data?.invoiceDetails?.otfDetailsRequest.otfId);
-                    setButtonData((prev) => ({ ...prev, formBtnActive: true }));
+                    setButtonData((prev) => ({ ...prev, formBtnActive: false }));
                     setSelectedOtfNumber(otfNumber);
                 }
             };
@@ -534,7 +539,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         setSearchValue(value);
     };
 
-    const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true, callApi = true }) => {
+    const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true, callApi = true, isNextBtnClick = false }) => {
         form.resetFields();
         form.setFieldsValue(undefined);
         cancelInvoiceForm.resetFields();
@@ -573,8 +578,14 @@ export const VehicleInvoiceMasterBase = (props) => {
                 break;
             case NEXT_ACTION:
                 const nextSection = filterActiveSection?.find((i) => i.id > currentSection);
-                section && setCurrentSection(nextSection?.id);
-                setLastSection(!nextSection?.id);
+                setIsFormValueChange(false);
+                if (buttonData?.formBtnActive && isNextBtnClick) {
+                    setIsUnsavedDataPopup(true);
+                    setNextCurrentSection(nextSection?.id);
+                } else {
+                    section && setCurrentSection(nextSection?.id);
+                    setLastSection(!nextSection?.id);
+                }
                 break;
 
             default:
@@ -643,6 +654,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     };
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
+        setIsFormValueChange(true);
     };
 
     const resetInvoiceData = () => {
@@ -668,6 +680,7 @@ export const VehicleInvoiceMasterBase = (props) => {
 
     const onCloseAction = () => {
         resetInvoiceData();
+        setIsUnsavedDataPopup(false);
     };
 
     const tableProps = {
@@ -768,6 +781,39 @@ export const VehicleInvoiceMasterBase = (props) => {
         saveData(requestData);
     };
 
+    const onCloseDrawer = () => {
+        if (buttonData?.formBtnActive) {
+            setIsUnsavedDataPopup(true);
+        } else {
+            onCloseAction();
+        }
+    };
+
+    const handleOkUnsavedModal = () => {
+        setIsFormValueChange(false);
+
+        if (nextCurentSection) {
+            setIsUnsavedDataPopup(false);
+            setCurrentSection(nextCurentSection);
+            section && setLastSection(!nextCurentSection);
+            setButtonData({ ...buttonData, formBtnActive: false });
+            setNextCurrentSection('');
+        } else {
+            onCloseAction();
+        }
+    };
+
+    const handleCancelUnsaveDataModal = () => {
+        setIsUnsavedDataPopup(false);
+        setNextCurrentSection('');
+    };
+
+    const unsavedDataModalProps = {
+        isVisible: isUnsavedDataPopup,
+        onCloseAction: handleCancelUnsaveDataModal,
+        onSubmitAction: handleOkUnsavedModal,
+    };
+
     const title = 'Invoice Generation';
 
     const advanceFilterResultProps = {
@@ -830,7 +876,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         formActionType,
         setFormActionType,
         isVisible: isFormVisible,
-        onCloseAction,
+        onCloseAction: onCloseDrawer,
         titleOverride: drawerTitle,
         tableData: data,
         ADD_ACTION,
@@ -887,6 +933,10 @@ export const VehicleInvoiceMasterBase = (props) => {
         isInVoiceMasterDetailDataLoaded,
         salesConsultantLovData,
         resetDetailData,
+        setIsUnsavedDataPopup,
+        setNextCurrentSection,
+        isFormValueChange,
+        setIsFormValueChange,
     };
 
     const cancelInvoiceProps = {
@@ -920,6 +970,7 @@ export const VehicleInvoiceMasterBase = (props) => {
             <VehicleInvoiceMainConatiner {...containerProps} />
             <CancelInvoice {...cancelInvoiceProps} />
             <ReportModal {...reportProps} reportDetail={reportDetail} />
+            <UnSaveDataConfirmation {...unsavedDataModalProps} />
         </>
     );
 };

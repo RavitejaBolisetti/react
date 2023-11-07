@@ -25,11 +25,17 @@ export const validateInvoiceMenu = ({ item, otfData }) => {
 
 const MenuNav = (props) => {
     const { currentSection, setCurrentSection, formActionType, otfData, previousSection = 1 } = props;
+    const { isFormValueChange, setIsUnsavedDataPopup, setNextCurrentSection } = props;
 
     const receiptSectionList = Object.values(VEHICLE_INVOICE_SECTION);
 
     const onHandle = (key) => {
-        setCurrentSection(key);
+        if (isFormValueChange) {
+            setIsUnsavedDataPopup(true);
+            setNextCurrentSection(key);
+        } else {
+            setCurrentSection(key);
+        }
     };
     const className = (id) => {
         return formActionType?.addMode && id > previousSection ? styles.cursorNotAllowed : styles.cursorPointer;

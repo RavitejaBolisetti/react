@@ -241,8 +241,10 @@ export const VinBlockMasterBase = (props) => {
     };
 
     const handleSearch = (value) => {
-        setFilterString({ ...filterString, vin: value, advanceFilter: true, current: 1 });
-        searchForm.resetFields();
+        if (value !== '') {
+            setFilterString({ ...filterString, vin: value, advanceFilter: true, current: 1 });
+            searchForm.resetFields();
+        }
     };
 
     const removeFilter = (key) => {

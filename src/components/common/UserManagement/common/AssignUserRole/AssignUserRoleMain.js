@@ -119,6 +119,7 @@ const AssignUserRole = (props) => {
     const onSuccessAction = (res) => {
         if (res?.data?.role?.applications?.mobileApplications?.length || res?.data?.role?.applications?.webApplications?.length) {
             selectedRoleId && setDisableMdlSaveBtn(false);
+            setButtonData((prev) => ({ ...prev, formBtnActive: true }));
         }
     };
 

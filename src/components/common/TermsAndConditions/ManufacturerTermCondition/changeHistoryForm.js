@@ -64,6 +64,7 @@ const ChangeHistoryMain = (props) => {
             title: translateContent('termConditionManufacturer.changeHistory.termsconditiondescription'),
             dataIndex: 'termsconditiondescription',
             width: '15%',
+            render: (text) => text?.replace(/<\/?[^>]+(>|$)/g, ''),
             sorter: false,
         })
 

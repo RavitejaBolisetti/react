@@ -13,10 +13,10 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { tableColumn } from './tableColumn';
 import AdvanceFilter from './AdvanceFilter';
 import { AdvancedSearch } from './AdvancedSearch';
-
+import { BASE_URL_VEHICLE_INVOICE_IRN_GENERATION as customURLUpload } from 'constants/routingApi';
 import { gstIRNTransactionActions } from 'store/actions/data/financialAccounting/gstIRNTransactionPending/gstIRNTransaction';
-import { VIEW_ACTION, UPLOAD_ACTION } from 'utils/btnVisiblity';
-import { BASE_URL_GSTIRN_TRANSACTION_GSTIN as customURL, BASE_URL_GSTIRN_TRANSACTION_VIEW_DOC as customURLView } from 'constants/routingApi';
+import { UPLOAD_ACTION } from 'utils/btnVisiblity';
+import { BASE_URL_GSTIRN_TRANSACTION_GSTIN as customURL } from 'constants/routingApi';
 import { translateContent } from 'utils/translateContent';
 
 import { FilterIcon } from 'Icons';
@@ -52,10 +52,8 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: gstIRNTransactionActions.fetchList,
             listShowLoading: gstIRNTransactionActions.listShowLoading,
             setFilterString: gstIRNTransactionActions.setFilter,
-
+            saveData: gstIRNTransactionActions.saveData,
             fetchGSTINList: gstIRNTransactionActions.fetchGSTINList,
-            viewDocument: gstIRNTransactionActions.viewDocument,
-            uploadDocument: gstIRNTransactionActions.uploadDocument,
 
             showGlobalNotification,
         },
@@ -64,9 +62,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const GstIRNTransactionMain = (props) => {
-    const { userId, typeData, showGlobalNotification } = props;
+    const { userId, typeData, showGlobalNotification, saveData } = props;
     const { fetchList, listShowLoading, data, filterString, setFilterString, isDataLoading } = props;
-    const { fetchGSTINList, viewDocument, uploadDocument } = props;
+    const { fetchGSTINList } = props;
     const [searchForm] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [advanceFilterForm] = Form.useForm();
@@ -74,6 +72,7 @@ export const GstIRNTransactionMain = (props) => {
     const [isGSTINListLoading, setIsGSTINListLoading] = useState(false);
     const [gSTINList, setGSTINList] = useState([]);
     const [refreshData, setRefreshData] = useState(false);
+    // const [selectedStatusType, setSelectedStatusType] = useState(GST_IRN_TRANSACTION_STATUS.PENDING.key);
 
     const dynamicPagination = true;
 
@@ -181,20 +180,33 @@ export const GstIRNTransactionMain = (props) => {
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
         switch (buttonAction) {
-            case VIEW_ACTION:
-                viewDocument({ customURL: customURLView + '?docId=' + record?.id, setIsLoading: setIsGSTINListLoading, userId, onSuccessAction, onErrorAction });
-                break;
             case UPLOAD_ACTION:
-                const onSuccessActionUpload = (res) => {
-                    showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.title'), message: res?.responseMessage });
-                    setRefreshData(true);
-                };
-                uploadDocument({ customURL: customURLView + '?docId=' + record?.id, setIsLoading: setIsGSTINListLoading, userId, onSuccessAction: onSuccessActionUpload, onErrorAction });
+                handleIRNGeneration(record);
                 break;
-
             default:
                 break;
         }
+    };
+
+    const handleIRNGeneration = (record) => {
+        const data = { id: record?.id, invoiceNumber: record?.invoiceDocumentNumber };
+        const onSuccess = (res) => {
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+        };
+        const onError = (message) => {
+            showGlobalNotification({ message });
+        };
+        const requestData = {
+            customURL: customURLUpload,
+            data: data,
+            method: 'post',
+            setIsLoading: listShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+        saveData(requestData);
     };
 
     const onAdvanceSearchCloseAction = () => {
@@ -262,6 +274,8 @@ export const GstIRNTransactionMain = (props) => {
         setAdvanceSearchVisible,
         typeData,
         searchForm,
+        // selectedStatusType,
+        // setSelectedStatusType,
     };
 
     const advanceFilterProps = {

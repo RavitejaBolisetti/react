@@ -62,15 +62,19 @@ const CustomerAndVehicleViewMain = (props) => {
                     <Card>
                         <Descriptions {...viewProps}>
                             <Descriptions.Item label={translateContent('crmSchemeEnrolment.label.vehicleNo')}>{checkAndSetDefaultValue(vehicleDataDetails?.vehicleNumber, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label={translateContent('crmSchemeEnrolment.label.model')}>
+                            {/* <Descriptions.Item label="Model">
                                 {checkAndSetDefaultValue(vehicleDataDetails?.model, isLoading)}
                                 <Tooltip title={modelInfo} placement="bottom" color="#6495ED" key="#6495ED">
                                     <ExclamationCircleOutlined style={{ color: '#6495ED', margin: '0 0 0 8px' }} />
                                 </Tooltip>
-                            </Descriptions.Item>
+                            </Descriptions.Item> */}
                             <Descriptions.Item label={translateContent('crmSchemeEnrolment.label.modelCode')}>{checkAndSetDefaultValue(vehicleDataDetails?.modelCode, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item span={3} label={translateContent('crmSchemeEnrolment.label.modelDescription')}>
+                            <Descriptions.Item />
+                            <Descriptions.Item span={3} label={translateContent('crmSchemeEnrolment.label.model')}>
                                 {checkAndSetDefaultValue(vehicleDataDetails?.modelDescription, isLoading)}
+                                <Tooltip title={modelInfo} placement="bottom" color="#6495ED" key="#6495ED">
+                                    <ExclamationCircleOutlined style={{ color: '#6495ED', margin: '0 0 0 8px' }} />
+                                </Tooltip>
                             </Descriptions.Item>
                             <Descriptions.Item label={translateContent('crmSchemeEnrolment.label.saleDate')}>{checkAndSetDefaultValue(vehicleDataDetails?.soldDate || vehicleDataDetails?.saleDate, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label={translateContent('crmSchemeEnrolment.label.soldBy')}>{checkAndSetDefaultValue(vehicleDataDetails?.soldBy, isLoading)}</Descriptions.Item>

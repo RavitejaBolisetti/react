@@ -30,6 +30,7 @@ export const AdvancedSearchFrom = (props) => {
         setFilterString({
             ...filterString,
             ...values,
+            current: 1,
             fromDate: formatDate(values?.fromDate),
             toDate: formatDate(values?.toDate),
             schemeType: values?.schemeType,

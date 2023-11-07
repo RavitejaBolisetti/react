@@ -29,7 +29,7 @@ const IssueIndentMasterMain = (props) => {
         canCancel: true,
         canReturn: false,
         canReceive: false,
-        canPrint: true,
+        canPrint: false,
         canAdd: true,
     };
 

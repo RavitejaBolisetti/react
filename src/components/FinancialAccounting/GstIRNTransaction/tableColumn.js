@@ -39,7 +39,7 @@ export const tableColumn = (handleButtonClick) => {
             width: '16%',
         }),
 
-        tblActionColumn({ handleButtonClick, styles, width: '15%', canEdit: false, canUpload: true }),
+        tblActionColumn({ handleButtonClick, styles, width: '15%', canEdit: false, canView: false, canUpload: true }),
     ];
 
     return tableColumn;

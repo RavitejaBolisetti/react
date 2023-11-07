@@ -90,7 +90,7 @@ const IrnTransactionListMasterBase = (props) => {
 
     useEffect(() => {
         if (userId) {
-            fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, sid: 'APPMST' });
+            fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, screenId: 'APPMST' });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]); //menuType
@@ -99,8 +99,8 @@ const IrnTransactionListMasterBase = (props) => {
         if (userId) {
             const extraParams = [
                 {
-                    key: 'sid',
-                    title: 'sid',
+                    key: 'screenId',
+                    title: 'screenId',
                     value: 'APPMST',
                     name: 'SID',
                 },

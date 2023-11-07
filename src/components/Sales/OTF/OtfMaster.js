@@ -152,6 +152,7 @@ export const OtfMasterBase = (props) => {
     const [otfAllotmentForm] = Form.useForm();
     const [isUnsavedDataPopup, setIsUnsavedDataPopup] = useState(false);
     const [nextCurentSection, setNextCurrentSection] = useState('');
+    const [singleDisabled, setSingleDisabled] = useState(false);
 
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -774,6 +775,7 @@ export const OtfMasterBase = (props) => {
     };
 
     const onCancelCloseAction = () => {
+        setSingleDisabled(false);
         setIsCancelVisible(false);
         setIsTransferVisible(false);
         setIsAllotVisible(false);
@@ -794,6 +796,8 @@ export const OtfMasterBase = (props) => {
         setUploadedFile,
         uploadedFile,
         handleButtonClick: () => {},
+        singleDisabled,
+        setSingleDisabled,
     };
 
     const transferOTFProps = {

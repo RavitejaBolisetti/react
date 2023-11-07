@@ -14,7 +14,7 @@ import { tableColumnActions } from './tableColumnActions';
 import { DEFAULT_PAGE_SIZE } from 'constants/constants';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { DisableItemComponent } from 'utils/disableItemComponent';
-import { GST_IRN_STATUS } from 'constants/GSTIRNStatus';
+import { GST_IRN_TRANSACTION_STATUS } from 'components/FinancialAccounting/GstIRNTransaction/GstIRNStatus';
 import { PlusOutlined } from '@ant-design/icons';
 
 import styles from './tableColumn.module.scss';
@@ -150,9 +150,9 @@ export const tblActionColumn = ({
                     </Button>
                 )}
 
-                {canUpload && record?.irnStatus !== GST_IRN_STATUS.SUCCESS.title && (
+                {canUpload && record?.irnStatus !== GST_IRN_TRANSACTION_STATUS.SUCCESS.title && (
                     <Button data-testid="upload" type="link" aria-label="fa-upload" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.UPLOAD, record, index })}>
-                        {addToolTip('Upload')(<FiUpload />)}
+                        {record?.irnStatus === GST_IRN_TRANSACTION_STATUS.PENDING.title ? addToolTip('Generate IRN')(<FiUpload />) : addToolTip('Re-Generate IRN')(<FiUpload />)}
                     </Button>
                 )}
 

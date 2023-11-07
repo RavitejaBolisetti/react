@@ -1,7 +1,7 @@
 import React from 'react';
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
-import { screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { OtfListMaster } from 'components/Sales/OtfSoMappingUnmapping/OtfListMaster';
 import customRender from '@utils/test-utils';
 
@@ -36,6 +36,8 @@ const data = {
         },
     },
     OTFSoMapping: {
+        // OtfNumberSearch: { isLoaded: true, data: { paginationData: [{ chasisNumber: null, customerId: null, customerName: null, mobileNumber: null, modelDescription: 'MAHINDRA', modelGroup: null, modelVariant: null, otfDate: null, otfNumber: null, poNumber: 'PO23A000104', soDate: null, soNumber: 'S06200240', soStatus: null, soStatusCode: 'PD' }] } },
+
         DealerParent: { isFilteredListLoaded: true, filteredListData: [{ key: 106, value: 'Kai' }] },
         DealerParentLocation: { isLoaded: true, isLoading: false, data: [{ locationCode: 106, dealerLocationName: 'Agra' }] },
         OtfSoMapping: { isLoaded: true, data: [{ name: 'Kai' }] },
@@ -195,4 +197,35 @@ describe('Booking List Master Component', () => {
             </Provider>
         );
     });
+
+    it('test1', async () => {
+        const mockStore = createMockStore({
+            auth: auth,
+            data: data,
+            common: {
+                Header: { data: { userRoles: [{ roleCode: 'R0L003' }], userType: 'Kai' } },
+            },
+        });
+
+        const fetchList = jest.fn();
+
+        customRender(
+            <Provider store={mockStore}>
+                <OtfListMaster {...props} fetchList={fetchList} />
+            </Provider>
+        );
+
+        const code = screen.getByRole('combobox', { name: '' });
+        fireEvent.change(code, { target: { value: 'SO Mapping' } });
+        const som = screen.getAllByText('SO Mapping');
+        fireEvent.click(som[1]);
+
+        // const mapBtn = screen.getByRole('button', { name: /map/i });
+        // fireEvent.click(mapBtn);
+
+        // fetchList.mock.calls[0][0].onSuccessAction();
+        // fetchList.mock.calls[0][0].onErrorAction();
+    });
+
+  
 });

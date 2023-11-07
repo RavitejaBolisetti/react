@@ -41,6 +41,7 @@ const mapStateToProps = (state) => {
     } = state;
 
     const moduleTitle = translateContent('vehicleDetail.productDetails.heading.moduleTitle');
+    const ITEM_TYPE = { ITEM: 'item', MAKE: 'make' };
 
     let returnValue = {
         userId,
@@ -61,6 +62,7 @@ const mapStateToProps = (state) => {
         isModelFamilyDataLoaded,
         isModelFamilyLoading,
         modelFamilyData,
+        ITEM_TYPE,
     };
     return returnValue;
 };
@@ -97,7 +99,7 @@ const ProductDetailMasterMain = (props) => {
     const { fetchList, resetData, saveData, listShowLoading, showGlobalNotification, typeData } = props;
     const { form, selectedRecordId, section, formActionType, handleFormValueChange, NEXT_ACTION } = props;
     const { fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading } = props;
-    const { isModelDataLoaded, isModelLoading, modelData, isVariantDataLoaded, isVariantLoading, variantData, isModelFamilyDataLoaded, isModelFamilyLoading, modelFamilyData, fetchModelFamilyLovList, listFamilyShowLoading } = props;
+    const { isModelDataLoaded, isModelLoading, modelData, isVariantDataLoaded, isVariantLoading, variantData, isModelFamilyDataLoaded, isModelFamilyLoading, modelFamilyData, fetchModelFamilyLovList, listFamilyShowLoading, ITEM_TYPE } = props;
 
     const [formData, setformData] = useState({});
     const [optionalServices, setOptionalServices] = useState([]);
@@ -106,10 +108,44 @@ const ProductDetailMasterMain = (props) => {
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [itemOptions, setitemOptions] = useState();
     const [makeOptions, setmakeOptions] = useState();
+    const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const MakefieldNames = { label: 'value', value: 'key' };
     const ItemFieldNames = { label: 'value', value: 'key' };
     const collapseProps = { collapsible: 'icon' };
     const disabledProps = { disabled: true };
+
+    const toolTipTextSetter = (data, key) => {
+        if ((typeof data === 'object' && data?.hasOwnProperty(key)) || Array?.isArray(data)) {
+            const noData = 'NA';
+            return (
+                <div>
+                    <p>
+                        Color - <span>{data?.[key]?.color ?? noData}</span>
+                    </p>
+                    <p>
+                        Trim Level - <span>{data?.[key]?.trimLevel ?? noData}</span>
+                    </p>
+                    <p>
+                        Engine Type - <span>{data?.[key]?.engineType ?? noData}</span>
+                    </p>
+                    <p>
+                        Drive Train - <span>{data?.[key]?.driveTrain ?? noData}</span>
+                    </p>
+                    <p>
+                        Transmission - <span>{data?.[key]?.transmission ?? noData}</span>
+                    </p>
+                    <p>
+                        Wheel Size - <span>{data?.[key]?.wheelSize ?? noData}</span>
+                    </p>
+                    <p>
+                        Interior Uphoistery - <span>{data?.[key]?.interiorUpholstery ?? noData}</span>
+                    </p>
+                </div>
+            );
+        }
+
+        return false;
+    };
 
     const onSuccessAction = () => {
         return;
@@ -131,18 +167,18 @@ const ProductDetailMasterMain = (props) => {
     };
     const bindCodeValue = (value, item) => {
         switch (item) {
-            case 'item': {
-                const codeVal = itemOptions?.find((element, index) => {
+            case ITEM_TYPE?.ITEM: {
+                const codeVal = itemOptions?.find((element) => {
                     if (element?.value === value || element?.key === value) {
                         return element;
                     }
                     return false;
                 });
                 if (codeVal) return codeVal?.value;
-                return 'NA';
+                return '-';
             }
-            case 'make': {
-                const codeVal = makeOptions?.find((element, index) => {
+            case ITEM_TYPE?.MAKE: {
+                const codeVal = makeOptions?.find((element) => {
                     if (element?.value === value || element?.key === value) {
                         return element;
                     }
@@ -150,10 +186,10 @@ const ProductDetailMasterMain = (props) => {
                 });
 
                 if (codeVal) return codeVal?.value;
-                return 'NA';
+                return '-';
             }
             default: {
-                return;
+                return '-';
             }
         }
     };
@@ -186,32 +222,8 @@ const ProductDetailMasterMain = (props) => {
             fetchVariantLovList({ setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams({ key: 'variantCode', title: 'variantCode', value: ProductDetailsData?.productAttributeDetail?.modelVariant, name: 'variantCode' }) });
             fetchModelFamilyLovList({ setIsLoading: listFamilyShowLoading, userId, extraParams: makeExtraParams({ key: 'familyCode', title: 'familyCode', value: ProductDetailsData?.productAttributeDetail?.modelFamily, name: 'familyCode' }) });
 
-            ProductDetailsData?.aggregates && setOptionalServices(ProductDetailsData?.aggregates);
-            settooltTipText(
-                <div>
-                    <p>
-                        Color - <span>{ProductDetailsData?.productAttributeDetail?.color ?? 'Na'}</span>
-                    </p>
-                    <p>
-                        Trim Level - <span>{ProductDetailsData?.productAttributeDetail?.trimLevel ?? 'Na'}</span>
-                    </p>
-                    <p>
-                        Engine Type - <span>{ProductDetailsData?.productAttributeDetail?.engineType ?? 'Na'}</span>
-                    </p>
-                    <p>
-                        Drive Train - <span>{ProductDetailsData?.productAttributeDetail?.driveTrain ?? 'Na'}</span>
-                    </p>
-                    <p>
-                        Transmission - <span>{ProductDetailsData?.productAttributeDetail?.transmission ?? 'Na'}</span>
-                    </p>
-                    <p>
-                        Wheel Size - <span>{ProductDetailsData?.productAttributeDetail?.wheelSize ?? 'Na'}</span>
-                    </p>
-                    <p>
-                        Interior Uphoistery - <span>{ProductDetailsData?.productAttributeDetail?.interiorUpholstery ?? 'Na'}</span>
-                    </p>
-                </div>
-            );
+            ProductDetailsData?.aggregates && Array?.isArray(ProductDetailsData?.aggregates) && setOptionalServices(ProductDetailsData?.aggregates?.map((item, index) => ({ ...item, uniqueId: index })));
+            settooltTipText(toolTipTextSetter(ProductDetailsData, 'productAttributeDetail'));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, ProductDetailsData]);
@@ -240,7 +252,7 @@ const ProductDetailMasterMain = (props) => {
             setIsReadOnly(false);
         }
         if (openAccordian?.includes('Aggregates') && isReadOnly) {
-            return;
+            return false;
         }
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
@@ -271,7 +283,6 @@ const ProductDetailMasterMain = (props) => {
 
         saveData(requestData);
     };
-
     const formProps = {
         ...props,
         formData,
@@ -301,6 +312,9 @@ const ProductDetailMasterMain = (props) => {
         isVariantLoading,
         isModelFamilyLoading,
         isModelLoading,
+        ITEM_TYPE,
+        page,
+        setPage,
     };
 
     const viewProps = {
@@ -322,6 +336,9 @@ const ProductDetailMasterMain = (props) => {
         modelData,
         variantData,
         modelFamilyData,
+        ITEM_TYPE,
+        page,
+        setPage,
     };
 
     return (

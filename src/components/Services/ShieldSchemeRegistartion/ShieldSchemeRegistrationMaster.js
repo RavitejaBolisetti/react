@@ -27,7 +27,7 @@ import { CancelScheme } from './CancelScheme';
 import { QUERY_BUTTONS_CONSTANTS, QUERY_BUTTONS_MNM_USER } from './utils/ShieldRegistrationContant';
 import { AMC_CONSTANTS } from './utils/AMCConstants';
 import { AMC_REQUEST_TITLE_CONSTANTS } from './utils/AMCRequestTitleConstant';
-import { AMC_REPORT_DOCUMENT_TYPE } from './utils/amcReportDocumentType';
+import { SHIELD_REPORT_DOCUMENT_TYPE } from './utils/shieldReportDocumentType';
 import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
 import { ReportModal } from 'components/common/ReportModal/ReportModal';
 import { PARAM_MASTER } from 'constants/paramMaster';
@@ -126,6 +126,7 @@ const mapDispatchToProps = (dispatch) => ({
             resetDetail: shieldSchemeSearchDataAction.resetDetail,
             resetSchemeDetail: schemeDescriptionDataAction.resetDetail,
             listShowLoading: shieldSchemeSearchDataAction.listShowLoading,
+            listSchemeLoading: schemeDescriptionDataAction.listShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -133,7 +134,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ShieldSchemeRegistrationMasterMain = (props) => {
-    const { userId, loginUserData, invoiceStatusList, typeData, data, showGlobalNotification, totalRecords, moduleTitle, fetchList, fetchDetail, fetchSchemeDescription, fetchEmployeeList, saveData, listShowLoading, listEmployeeShowLoading, setFilterString, filterString, detailShieldData, resetDetail, resetSchemeDetail, isEmployeeDataLoaded, isEmployeeDataLoading, employeeData, schemeDetail, fetchDealerParentsLovList, dealerParentsLovList, fetchDealerLocations, dealerLocations } = props;
+    const { userId, loginUserData, invoiceStatusList, typeData, data, showGlobalNotification, totalRecords, moduleTitle, fetchList, fetchDetail, fetchSchemeDescription, fetchEmployeeList, saveData, listShowLoading, listSchemeLoading, listEmployeeShowLoading, setFilterString, filterString, detailShieldData, resetDetail, resetSchemeDetail, isEmployeeDataLoaded, isEmployeeDataLoading, isSchemeLoading, employeeData, schemeDetail, fetchDealerParentsLovList, dealerParentsLovList, fetchDealerLocations, dealerLocations } = props;
 
     const [selectedOrder, setSelectedOrder] = useState();
     const [selectedOrderId, setSelectedOrderId] = useState();
@@ -166,7 +167,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     const [additionalReportParams, setAdditionalReportParams] = useState();
     const [isReportVisible, setReportVisible] = useState();
     const [reportButtonType, setReportButtonType] = useState();
-    const [amcDocumentType, setAmcDocumentType] = useState();
+    const [shieldDocumentType, setShieldDocumentType] = useState();
     const [requestPayload, setRequestPayload] = useState({ registrationDetails: {}, vehicleAndCustomerDetails: {} });
 
     const defaultBtnVisiblity = {
@@ -376,14 +377,14 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
                     name: 'vin',
                 },
             ];
-            fetchSchemeDescription({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+            fetchSchemeDescription({ setIsLoading: listSchemeLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, vinNumber]);
 
     const handleInvoiceTypeChange = (buttonName) => {
         setAmcStatus(buttonName?.key);
-        setFilterString({ ...filterString, amcStatus: buttonName?.key, current: 1, pageSize: 10 });
+        setFilterString({ current: 1, pageSize: 10 });
         searchForm.resetFields();
     };
 
@@ -466,6 +467,19 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
 
     const handleOtfSearch = (value) => {
         setBookingNumber(value);
+        resetSchemeDetail();
+        shieldDetailForm.setFieldsValue({
+            schemeDetails: {
+                schemeDescription: undefined,
+                schemeCode: '',
+                schemeAmount: '',
+                schemeDiscount: '',
+                schemeTaxAmount: '',
+                schemeStartDate: '',
+                schemeEndDate: '',
+                id: '',
+            },
+        });
         if (value) {
             const onSuccessAction = (res) => {
                 setVinNumber(res?.data?.vehicleAndCustomerDetails?.vehicleDetails?.vin);
@@ -485,6 +499,19 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
 
     const handleVinSearch = (value) => {
         setVinNumber(value);
+        resetSchemeDetail();
+        shieldDetailForm.setFieldsValue({
+            schemeDetails: {
+                schemeDescription: undefined,
+                schemeCode: '',
+                schemeAmount: '',
+                schemeDiscount: '',
+                schemeTaxAmount: '',
+                schemeStartDate: '',
+                schemeEndDate: '',
+                id: '',
+            },
+        });
         if (value) {
             const extraParams = [
                 {
@@ -522,6 +549,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             setButtonData({ ...buttonData, formBtnActive: false });
             setSelectedOrder({ ...selectedOrder, res });
+            // setSelectedOrderId(res?.id);
             setCurrentSection(SHIELD_REGISTRATION_SECTION?.THANK_YOU_PAGE?.id);
         };
 
@@ -645,12 +673,12 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     const handleWholeSchemeCancellation = () => {
         setCancelSchemeVisible(true);
         setAmcWholeCancellation(true);
-        setStatus(QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key);
+        setStatus(QUERY_BUTTONS_MNM_USER?.PENDING_FOR_CANCELLATION?.key);
     };
     const handleCancelRequest = () => {
         setCancelSchemeVisible(true);
         setAmcWholeCancellation(false);
-        setStatus(QUERY_BUTTONS_MNM_USER?.PENDING_FOR_CANCELLATION?.key);
+        setStatus(QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key);
     };
     const handleMNMApproval = () => {
         setCancelSchemeVisible(true);
@@ -737,7 +765,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     };
 
     const handlePrintDownload = (record) => {
-        let typeRecordKey = record?.typeRecord === AMC_REPORT_DOCUMENT_TYPE?.INVOICE_AMC?.value ? AMC_REPORT_DOCUMENT_TYPE?.INVOICE_AMC?.key : record?.typeRecord === AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_AMC?.value ? AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_AMC?.key : record?.typeRecord === AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_AMC?.value ? AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_AMC?.key : null;
+        let typeRecordKey = record?.typeRecord === SHIELD_REPORT_DOCUMENT_TYPE?.INVOICE_SHIELD?.value ? SHIELD_REPORT_DOCUMENT_TYPE?.INVOICE_SHIELD?.key : record?.typeRecord === SHIELD_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_SHIELD?.value ? SHIELD_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_SHIELD?.key : record?.typeRecord === SHIELD_REPORT_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_SHIELD?.value ? SHIELD_REPORT_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_SHIELD?.key : null;
         setReportButtonType(record?.typeRecord);
         setReportVisible(true);
         setAdditionalReportParams([
@@ -860,6 +888,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         isVisible: isFormVisible,
         onCloseAction,
         titleOverride: drawerTitle.concat(moduleTitle),
+        isSchemeLoading,
         ADD_ACTION,
         EDIT_ACTION,
         VIEW_ACTION,
@@ -920,17 +949,17 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     };
 
     useEffect(() => {
-        if (reportButtonType === AMC_REPORT_DOCUMENT_TYPE?.INVOICE_AMC?.value) {
-            setAmcDocumentType(EMBEDDED_REPORTS?.AMC_REGISTRATION_INVOICE_DOCUMENT);
-        } else if (reportButtonType === AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_AMC?.value) {
-            setAmcDocumentType(EMBEDDED_REPORTS?.AMC_REGISTRATION_INVOICE_DOCUMENT);
-        } else if (reportButtonType === AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_AMC?.value) {
-            setAmcDocumentType(EMBEDDED_REPORTS?.AMC_REGISTRATION_INVOICE_DOCUMENT);
+        if (reportButtonType === SHIELD_REPORT_DOCUMENT_TYPE?.INVOICE_SHIELD?.value) {
+            setShieldDocumentType(EMBEDDED_REPORTS?.SHIELD_REGISTRATION_INVOICE_DOCUMENT);
+        } else if (reportButtonType === SHIELD_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_SHIELD?.value) {
+            setShieldDocumentType(EMBEDDED_REPORTS?.SHIELD_REGISTRATION_INVOICE_DOCUMENT);
+        } else if (reportButtonType === SHIELD_REPORT_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_SHIELD?.value) {
+            setShieldDocumentType(EMBEDDED_REPORTS?.SHIELD_REGISTRATION_INVOICE_DOCUMENT);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [reportButtonType]);
 
-    const reportDetail = amcDocumentType;
+    const reportDetail = shieldDocumentType;
     const reportProps = {
         isVisible: isReportVisible,
         titleOverride: reportDetail?.title,
