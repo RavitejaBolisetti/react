@@ -8,30 +8,31 @@ import { VechilePurchaseOrderStatusTag } from './utils/VechilePurchaseOrderStatu
 import { converDateDayjs, dateFormatView } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Purchase Order Number',
+            title: translateContent('vehiclePurchaseOrder.label.purchaseOrderNumber'),
             dataIndex: 'purchaseOrderNumber',
             width: '14%',
         }),
 
         tblPrepareColumns({
-            title: 'Purchase Order Date ',
+            title: translateContent('vehiclePurchaseOrder.label.purchaseOrderDate'),
             dataIndex: 'purchaseOrderDate',
             width: '14%',
             render: (text) => converDateDayjs(text, dateFormatView, '-'),
         }),
 
         tblPrepareColumns({
-            title: 'Order Type',
+            title: translateContent('vehiclePurchaseOrder.label.orderType'),
             dataIndex: 'orderType',
             width: '14%',
         }),
 
         tblPrepareColumns({
-            title: 'Status',
+            title: translateContent('vehiclePurchaseOrder.label.status'),
             dataIndex: 'purchaseOrderStatus',
             width: '14%',
             render: (_, record) => VechilePurchaseOrderStatusTag(record?.purchaseOrderStatusCode),

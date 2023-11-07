@@ -10,6 +10,7 @@ import { withDrawer } from 'components/withDrawer';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredSelectField } from 'utils/validation';
 import { VehiclePurchaseOrderFormButton } from '../VehiclePurchaseOrderFormButton';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -32,8 +33,8 @@ const AddEditFormMain = (props) => {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Form.Item name="cancelRemarksCode" label="Cancellation Reason " rules={[validateRequiredSelectField('Cancellation Reason')]}>
-                                    <Select placeholder={preparePlaceholderSelect('Cancellation Reason')} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['PO_CNCL_RSN']}></Select>
+                                <Form.Item name="cancelRemarksCode" label={translateContent('vehiclePurchaseOrder.vehiclePurchaseOrderCancellation.label.cancellationReason')} rules={[validateRequiredSelectField(translateContent('vehiclePurchaseOrder.vehiclePurchaseOrderCancellation.validation.cancellationReason'))]}>
+                                    <Select placeholder={preparePlaceholderSelect(translateContent('vehiclePurchaseOrder.vehiclePurchaseOrderCancellation.placeholder.cancellationReason'))} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['PO_CNCL_RSN']}></Select>
                                 </Form.Item>
                             </Col>
                         </Row>

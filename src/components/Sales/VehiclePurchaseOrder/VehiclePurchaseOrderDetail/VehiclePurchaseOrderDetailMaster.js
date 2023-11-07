@@ -18,6 +18,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { saveVPODataActions } from 'store/actions/data/vehicle/vehiclePurchaseOrderAction';
 import { dealerLocationDataActions } from 'store/actions/data/vehicle/dealerLocationAction';
 import { vehiclePurchaseOrderDataActions } from 'store/actions/data/vehicle/vehiclePurchaseOrderDetails';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -40,7 +41,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Vehicle Purchase Order';
+    const moduleTitle = translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.heading.moduleTitle');
 
     let returnValue = {
         userId,
@@ -158,7 +159,7 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
         const recordId = viewVehiclePODetails?.id || '';
 
         const onSuccess = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
 
             fetchListView({ setIsLoading: listShowLoading, userId, extraParams: extraParamsAfterSave, onErrorAction });
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });

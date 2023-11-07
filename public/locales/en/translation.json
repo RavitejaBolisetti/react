@@ -81,7 +81,8 @@
             "deliveryNote": " Delivery Note",
             "advancedFilter": "Advanced Filters",
             "viewHistory": "View History",
-            "uploadFile": "Upload File"
+            "uploadFile": "Upload File",
+            "cancelVehiclePurchaseOrder": "Cancel Vehicle Purchase Order"
         },
         "placeholder": {
             "input": "Enter ",
@@ -1455,9 +1456,7 @@
         "heading": {
             "moduleTitle": "Vin Block Master",
             "pageTitle": "Vin Block Master",
-            "title": "Vin Block Master",
-            "advancedFilter": "Advanced Filter",
-            "appliedAdvanceFilters": "Applied Advance Filters"
+            "title": "Vin Block Master"
         },
         "label": {
             "vin": "Vin",
@@ -2550,45 +2549,43 @@
         "ApportionDetails": {
             "heading": {
                 "moduleTitle": "Voucher and Party Details",
-                "voucherModuleTitle":"Apportion",
-                "title":"Apportion Details"
-                 
+                "voucherModuleTitle": "Apportion",
+                "title": "Apportion Details"
             },
             "label": {
-                "documentType":"Document Type",
-                "documentNumber":"Document Number",
-                "documentDate":"Document Date",
-                "documentAmount":"Document Amount",
-                "settledAmount":"Settled Amount",
-                "balancedAmount":"Balanced Amount",
-                "writeOffAmount":"Write-Off Amount",
-                "apportionAmount":"Apportion Amount"
-                
+                "documentType": "Document Type",
+                "documentNumber": "Document Number",
+                "documentDate": "Document Date",
+                "documentAmount": "Document Amount",
+                "settledAmount": "Settled Amount",
+                "balancedAmount": "Balanced Amount",
+                "writeOffAmount": "Write-Off Amount",
+                "apportionAmount": "Apportion Amount"
             },
             "placeholder": {
-                "documentType":"Document Type",
-                "documentNumber":"Document Number",
-                "documentDate":"Document Date",
-                "documentAmount":"Document Amount",
-                "settledAmount":"Settled Amount",
-                "balancedAmount":"Balanced Amount",
-                "writeOffAmount":"Write-Off Amount",
-                "apportionAmount":"Apportion Amount"
+                "documentType": "Document Type",
+                "documentNumber": "Document Number",
+                "documentDate": "Document Date",
+                "documentAmount": "Document Amount",
+                "settledAmount": "Settled Amount",
+                "balancedAmount": "Balanced Amount",
+                "writeOffAmount": "Write-Off Amount",
+                "apportionAmount": "Apportion Amount"
             },
             "validation": {
-                "documentType":"Document Type",
-                "documentNumber":"Document Number",
-                "documentDate":"Document Date",
-                "documentAmount":"Document Amount",
-                "settledAmount":"Settled Amount",
-                "balancedAmount":"Balanced Amount",
-                "writeOffAmount":"Write-Off Amount",
-                "apportionAmount":"Apportion Amount"
+                "documentType": "Document Type",
+                "documentNumber": "Document Number",
+                "documentDate": "Document Date",
+                "documentAmount": "Document Amount",
+                "settledAmount": "Settled Amount",
+                "balancedAmount": "Balanced Amount",
+                "writeOffAmount": "Write-Off Amount",
+                "apportionAmount": "Apportion Amount"
             },
             "message": {
                 "successMessage": "Account Head validated successfully",
                 "errorMessage": "Write-off and apportion amount cannot exceed balance amount",
-                "documentInvalid":"Document Number is invalid"
+                "documentInvalid": "Document Number is invalid"
             }
         }
     },
@@ -2791,6 +2788,89 @@
             "dowmloadMsg": "Your download will start soon",
             "messageText": "Click or drop your file here to upload",
             "validationText": "File type should be .pem and max file size to be 5Mb"
+        }
+    },
+    "vehiclePurchaseOrder": {
+        "heading": {
+            "moduleTitle": "Vehicle Purchase Order",
+            "pageTitle": "Vehicle Purchase Order",
+            "title": "Vin Block Master"
+        },
+        "label": {
+            "orderType": "Order Type",
+            "purchaseOrderNumber": "Purchase Order Number",
+            "purchaseOrderDate": "Purchase Order Number",
+            "status": "Status",
+            "fromDate": "From Date",
+            "toDate": "To Date",
+            "modal": "Model",
+            "quantity": "Quantity"
+        },
+        "placeholder": {
+            "searchVPO": "Search Vehicle Purchase Order",
+            "purchaseOrderNumber": "Purchase Order Number",
+            "purchaseOrderDate": "Purchase Order Number",
+            "OrderType": "Order Type",
+            "status": "Status",
+            "fromDate": "From Date",
+            "toDate": "To Date"
+        },
+        "validation": {
+            "purchaseOrderNumber": "Purchase Order Number",
+            "purchaseOrderDate": "Purchase Order Number",
+            "OrderType": "Order Type"
+        },
+        "VehiclePurchaseOrderDetail": {
+            "heading": {
+                "moduleTitle": "Vehicle Purchase Order",
+                "productDetails":"Product Details",
+                "cancelReason":"Cancel Reason"
+            },
+            "label": {
+                "modal": "Model",
+                "quantity": "Quantity",
+                "orderType": "Order Type",
+                "dealerCode": "Dealer Code",
+                "dealerLocation": "Dealer Location",
+                "purchaseOrderNumber": "Purchase Order Number",
+                "purchaseOrderDate": "Purchase Order Date",
+                "purchaseOrderStatus": "Purchase Order Status",
+                "modelDescription":"Model Description",
+                "purchaseOrderCancelDate":"Purchase Order Cancel Date",
+                "soNo":"So No",
+                "soDate":"So Date",
+                "soStatus":"So Status"
+            },
+            "placeholder": {
+                "dealerCode": "Enter Dealer Code",
+                "OrderType": "Order Type",
+                "modelDescription": "Model"
+            },
+            "validation": {
+                "OrderType": "Order Type",
+                "dealerCode": "Dealer Code",
+                "dealerLocation": "Dealer Location",
+                "modelDescription":"Model",
+                "purchaseOrderNumber": "Purchase Order Number",
+                "purchaseOrderDate": "Purchase Order Number"
+            }
+        },        
+         "vehiclePurchaseOrderCancellation": {
+            "heading": {
+                "moduleTitle": "Cancel Purchase Order",
+                "titleOverride":"Vehicle Purchase Order Cancellation"               
+            },
+            "label": {
+                "cancellationReason": "Cancellation Reason",
+                "quantity": "Quantity"                 
+            },
+            "placeholder": {
+                "dealerCode": "Enter Dealer Code",
+                "cancellationReason": "Cancellation Reason"
+            },
+            "validation": {
+                "cancellationReason": "Cancellation Reason"
+            }
         }
     }
 }
