@@ -8,6 +8,7 @@ import { Row, Col, Button } from 'antd';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const HierarchyFormButton = ({ buttonData, handleButtonClick }) => {
     return (
@@ -22,7 +23,7 @@ export const HierarchyFormButton = ({ buttonData, handleButtonClick }) => {
                                     handleButtonClick(FROM_ACTION_TYPE.EDIT);
                                 }}
                             >
-                                Edit
+                                {translateContent('global.buttons.edit')}
                             </Button>
                         )}
                     </Col>
@@ -30,19 +31,19 @@ export const HierarchyFormButton = ({ buttonData, handleButtonClick }) => {
                     <Col xs={24} sm={18} md={18} lg={18} xl={18} className={styles.buttonsGroupRight}>
                         {buttonData?.childBtn && (
                             <Button type="primary" onClick={() => handleButtonClick(FROM_ACTION_TYPE.CHILD)}>
-                                Add Child
+                                {translateContent('global.buttons.addChild')}
                             </Button>
                         )}
 
                         {buttonData?.siblingBtn && (
                             <Button type="primary" onClick={() => handleButtonClick(FROM_ACTION_TYPE.SIBLING)}>
-                                Add Sibling
+                                {translateContent('global.buttons.addSibling')}
                             </Button>
                         )}
 
                         {buttonData?.save && (
                             <Button type="primary" onClick={() => handleButtonClick(FROM_ACTION_TYPE.SIBLING)}>
-                                Save
+                                {translateContent('global.buttons.save')}
                             </Button>
                         )}
                     </Col>

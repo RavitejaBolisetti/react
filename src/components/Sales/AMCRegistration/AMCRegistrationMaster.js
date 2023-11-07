@@ -40,7 +40,7 @@ import { applicationMasterDataActions } from 'store/actions/data/applicationMast
 import { AMC_CONSTANTS } from './utils/AMCConstants';
 import { AMC_REQUEST_TITLE_CONSTANTS } from './utils/AMCRequestTitleConstant';
 import { ReportModal } from 'components/common/ReportModal/ReportModal';
-import { LANGUAGE_EN } from 'language/en';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -65,7 +65,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'AMC Registration Details';
+    const moduleTitle = translateContent('amcRegistration.heading.moduleTitle');
     let returnValue = {
         userId,
         typeData,
@@ -386,7 +386,7 @@ export const AMCRegistrationMasterBase = (props) => {
         const onSuccessAction = (res) => {
             if (!res?.data?.length) {
                 schemeForm.resetFields(['schemeDescription']);
-                showGlobalNotification({ message: 'No Schemes present for this VIN' });
+                showGlobalNotification({ message: translateContent('amcRegistration.validation.noSchemeVIN') });
             }
         };
         const onErrorAction = (message) => {
@@ -400,7 +400,7 @@ export const AMCRegistrationMasterBase = (props) => {
     const handleBookingNumberSearch = (otfNumber = '') => {
         const onSuccessAction = (res) => {
             if (!res?.data?.otfDetails[0]?.vin) {
-                showGlobalNotification({ title: 'Error', notificationType: 'error', message: LANGUAGE_EN?.GENERAL?.NO_VIN_FOUND?.MESSAGE });
+                showGlobalNotification({ title: translateContent('global.notificationError.title'), notificationType: 'error', message: translateContent('amcRegistration.validation.noVINFound') });
                 setButtonData({ ...buttonData, formBtnActive: false });
             } else {
                 setButtonData({ ...buttonData, formBtnActive: true });
@@ -528,7 +528,7 @@ export const AMCRegistrationMasterBase = (props) => {
         };
         const onSuccess = (res) => {
             setShowSpinnerLoading(false);
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.title'), message: res?.responseMessage });
 
             if (type === AMC_CONSTANTS?.CANCEL_REQUEST?.key) {
                 setRejectModalVisible(false);
@@ -620,7 +620,7 @@ export const AMCRegistrationMasterBase = (props) => {
         }
     };
 
-    const title = 'AMC Registration';
+    const title = translateContent('amcRegistration.heading.title');
 
     const advanceFilterResultProps = {
         extraParams,
@@ -652,8 +652,7 @@ export const AMCRegistrationMasterBase = (props) => {
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
 
-        titleOverride: 'Advance Filters',
-
+        titleOverride: translateContent('global.advanceFilter.title'),
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
         filterString,
@@ -671,11 +670,11 @@ export const AMCRegistrationMasterBase = (props) => {
 
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
-            return 'View ';
+            return translateContent('global.drawerTitle.viewtitle');
         } else if (formActionType?.editMode) {
-            return 'Edit ';
+            return translateContent('global.drawerTitle.edit');
         } else {
-            return 'Add New ';
+            return translateContent('global.drawerTitle.addNew');
         }
     }, [formActionType]);
 

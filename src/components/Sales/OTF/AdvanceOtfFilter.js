@@ -11,6 +11,7 @@ import { SearchBox } from 'components/utils/SearchBox';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export default function AdvanceOTFFilter(props) {
     const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, otfFilter = false, title, filterString, setFilterString, typeData, setAdvanceSearchVisible, searchForm } = props;
@@ -46,7 +47,7 @@ export default function AdvanceOTFFilter(props) {
                                                 setAdvanceSearchVisible(true);
                                             }}
                                         >
-                                            Advanced Filters
+                                            {translateContent('global.advanceFilter.title')}
                                         </Button>
                                     </Col>
                                 )}
@@ -60,7 +61,7 @@ export default function AdvanceOTFFilter(props) {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={22} xl={22} className={styles.advanceFilterContainer}>
-                                <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
+                                <div className={styles.advanceFilterTitle}> {translateContent('global.advanceFilter.appliedAdvanceFilter')} : </div>
                                 {extraParams?.map((filter) => {
                                     return (
                                         filter?.value &&

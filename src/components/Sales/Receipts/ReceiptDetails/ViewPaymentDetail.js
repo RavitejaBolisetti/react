@@ -11,6 +11,7 @@ import { DATA_TYPE } from 'constants/dataType';
 import { PAYMENT_MODE } from 'components/Sales/Receipts/utils/receiptDetailsPaymentMode';
 
 import PaymentFormContainer from './PaymentDetails/PaymentFormContainer';
+import { translateContent } from 'utils/translateContent';
 
 const ViewPaymentDetailBase = (props) => {
     const { formData, styles } = props;
@@ -36,40 +37,40 @@ const ViewPaymentDetailBase = (props) => {
             {!isListEditing ? (
                 <>
                     <Descriptions {...viewProps}>
-                        <Descriptions.Item label="Payment Mode">{checkAndSetDefaultValue(getCodeValue(paymentModeType, formData?.paymentMode))}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('receipts.label.receiptDetails.paymentMode')}>{checkAndSetDefaultValue(getCodeValue(paymentModeType, formData?.paymentMode))}</Descriptions.Item>
                         <br />
                         <br />
-                        {formData?.paymentMode === PAYMENT_MODE?.CASH?.KEY || PAYMENT_MODE?.CREDIT_CARD?.KEY || PAYMENT_MODE?.CHEQUE_DD?.KEY || PAYMENT_MODE?.NEFT?.KEY || PAYMENT_MODE?.WALLET?.KEY ? <Descriptions.Item label="Receive Amount">{checkAndSetDefaultValue(formData?.receivedAmount, isLoading)}</Descriptions.Item> : null}
-                        {formData?.paymentMode === PAYMENT_MODE?.CASH?.KEY ? <Descriptions.Item label="Transaction Date">{checkAndSetDefaultValue(formData?.transactionDate, isLoading, DATA_TYPE?.DAYJS?.key)}</Descriptions.Item> : null}
+                        {formData?.paymentMode === PAYMENT_MODE?.CASH?.KEY || PAYMENT_MODE?.CREDIT_CARD?.KEY || PAYMENT_MODE?.CHEQUE_DD?.KEY || PAYMENT_MODE?.NEFT?.KEY || PAYMENT_MODE?.WALLET?.KEY ? <Descriptions.Item label={translateContent('receipts.label.receiptDetails.receiveAmount')}>{checkAndSetDefaultValue(formData?.receivedAmount, isLoading)}</Descriptions.Item> : null}
+                        {formData?.paymentMode === PAYMENT_MODE?.CASH?.KEY ? <Descriptions.Item label={translateContent('receipts.label.receiptDetails.transactionDate')}>{checkAndSetDefaultValue(formData?.transactionDate, isLoading, DATA_TYPE?.DAYJS?.key)}</Descriptions.Item> : null}
 
                         {formData?.paymentMode === PAYMENT_MODE?.CREDIT_CARD?.KEY && (
                             <>
-                                <Descriptions.Item label="Credit Card Transaction No.">{checkAndSetDefaultValue(formData?.creditCardTransNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Service Charge Percentage">{checkAndSetDefaultValue(formData?.ccServiceChargePercentage, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Service Charge Amount">{checkAndSetDefaultValue(formData?.ccServiceChargeAmount, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Tax On Service Charge">{checkAndSetDefaultValue(formData?.taxChargeAmount, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('receipts.label.receiptDetails.creditCardTransactionNumber')}>{checkAndSetDefaultValue(formData?.creditCardTransNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('receipts.label.receiptDetails.serviceChargePercentage')}>{checkAndSetDefaultValue(formData?.ccServiceChargePercentage, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('receipts.label.receiptDetails.serviceChargeAmount')}>{checkAndSetDefaultValue(formData?.ccServiceChargeAmount, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('receipts.label.receiptDetails.taxOnServiceCharge')}>{checkAndSetDefaultValue(formData?.taxChargeAmount, isLoading)}</Descriptions.Item>
                             </>
                         )}
 
                         {formData?.paymentMode === PAYMENT_MODE?.CHEQUE_DD?.KEY && (
                             <>
-                                <Descriptions.Item label="Cheque/DD No.">{checkAndSetDefaultValue(formData?.ddCheckNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Cheque/DD Date">{checkAndSetDefaultValue(formData?.ddCheckDate, isLoading, DATA_TYPE?.DAYJS?.key)}</Descriptions.Item>
-                                <Descriptions.Item label="Bank Name">{checkAndSetDefaultValue(formData?.bankName, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Bank Location">{checkAndSetDefaultValue(formData?.bankLocationName, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Payment Bank Party ID">{checkAndSetDefaultValue(formData?.paymentBankPartyId, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Payment Bank Name">{checkAndSetDefaultValue(formData?.paymentBankName, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Payment Bank Location">{checkAndSetDefaultValue(formData?.paymentBankLocation, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('receipts.label.receiptDetails.chequeDDNumber')}>{checkAndSetDefaultValue(formData?.ddCheckNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('receipts.label.receiptDetails.chequeDDDate')}>{checkAndSetDefaultValue(formData?.ddCheckDate, isLoading, DATA_TYPE?.DAYJS?.key)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('receipts.label.receiptDetails.bankName')}>{checkAndSetDefaultValue(formData?.bankName, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('receipts.label.receiptDetails.bankLocation')}>{checkAndSetDefaultValue(formData?.bankLocationName, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('receipts.label.receiptDetails.paymentBankPartyId')}>{checkAndSetDefaultValue(formData?.paymentBankPartyId, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('receipts.label.receiptDetails.paymentBankName')}>{checkAndSetDefaultValue(formData?.paymentBankName, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('receipts.label.receiptDetails.paymentBankLocation')}>{checkAndSetDefaultValue(formData?.paymentBankLocation, isLoading)}</Descriptions.Item>
                             </>
                         )}
 
                         {formData?.paymentMode === PAYMENT_MODE?.NEFT?.KEY || formData?.paymentMode === PAYMENT_MODE?.WALLET?.KEY ? (
                             <>
-                                <Descriptions.Item label="Transaction No.">{checkAndSetDefaultValue(formData?.transactionNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Transaction Date">{checkAndSetDefaultValue(formData?.transactionDate, isLoading, DATA_TYPE?.DAYJS?.key)}</Descriptions.Item>
-                                <Descriptions.Item label="Payment Bank Party ID">{checkAndSetDefaultValue(formData?.paymentBankPartyId, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Payment Bank Name">{checkAndSetDefaultValue(formData?.paymentBankName, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Payment Bank Location">{checkAndSetDefaultValue(formData?.paymentBankLocation, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('receipts.label.receiptDetails.transactionNumber')}>{checkAndSetDefaultValue(formData?.transactionNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('receipts.label.receiptDetails.transactionDate')}>{checkAndSetDefaultValue(formData?.transactionDate, isLoading, DATA_TYPE?.DAYJS?.key)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('receipts.label.receiptDetails.paymentBankPartyId')}>{checkAndSetDefaultValue(formData?.paymentBankPartyId, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('receipts.label.receiptDetails.paymentBankName')}>{checkAndSetDefaultValue(formData?.paymentBankName, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('receipts.label.receiptDetails.paymentBankLocation')}>{checkAndSetDefaultValue(formData?.paymentBankLocation, isLoading)}</Descriptions.Item>
                             </>
                         ) : null}
                     </Descriptions>

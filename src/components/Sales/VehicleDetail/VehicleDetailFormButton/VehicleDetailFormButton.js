@@ -7,6 +7,7 @@ import React from 'react';
 import { Button, Row, Col } from 'antd';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -17,13 +18,13 @@ export const VehicleDetailFormButton = ({ record, onCloseAction, buttonData, set
                 <Col xs={24} sm={8} md={6} lg={4} xl={4} className={styles.buttonsGroupLeft}>
                     {buttonData?.closeBtn && (
                         <Button danger onClick={onCloseAction}>
-                            Close
+                            {translateContent('global.buttons.close')}
                         </Button>
                     )}
 
                     {buttonData?.cancelBtn && (
                         <Button danger onClick={onCloseAction}>
-                            Cancel
+                            {translateContent('global.buttons.cancel')}
                         </Button>
                     )}
                 </Col>
@@ -31,49 +32,49 @@ export const VehicleDetailFormButton = ({ record, onCloseAction, buttonData, set
                 <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.buttonsGroupRight}>
                     {buttonData?.editBtn && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
-                            Edit
+                            {translateContent('global.buttons.edit')}
                         </Button>
                     )}
 
                     {buttonData?.transferBtn && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.TRANSFER, record })} type="primary">
-                            Transfer
+                            {translateContent('global.buttons.transfer')}
                         </Button>
                     )}
 
                     {buttonData?.allotBtn && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.ALLOT, record })} disabled={!buttonData?.formBtnActive} type="primary">
-                            Allot
+                            {translateContent('global.buttons.allot')}
                         </Button>
                     )}
 
                     {buttonData?.unAllot && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.UNALLOT, record })} type="primary">
-                            Un-Allot
+                            {translateContent('global.buttons.unAllot')}
                         </Button>
                     )}
 
                     {buttonData?.invoiceBtn && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.INVOICE, record })} type="primary">
-                            Invoice
+                            {translateContent('global.buttons.invoice')}
                         </Button>
                     )}
 
                     {buttonData?.deliveryNoteBtn && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.DELIVERY_NOTE, record })} type="primary">
-                            Delivery Note
+                            {translateContent('global.buttons.deliveryNote')}
                         </Button>
                     )}
 
                     {buttonData?.cancelOtfBtn && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF, record })} type="primary">
-                            Cancel Booking
+                            {translateContent('global.buttons.cancelBooking')}
                         </Button>
                     )}
 
                     {buttonData?.nextBtn && !isLastSection && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
-                            Next
+                            {translateContent('global.buttons.next')}
                         </Button>
                     )}
 

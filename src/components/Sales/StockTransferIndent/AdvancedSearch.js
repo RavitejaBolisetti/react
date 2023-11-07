@@ -15,6 +15,7 @@ import { STOCK_TRANSFER } from 'constants/StockTransfer';
 import { dateFormat, formatDate, formatDateToCalenderDate } from 'utils/formatDateTime';
 import { validateRequiredSelectField, campareDate } from 'utils/validation';
 import { customSelectBox } from 'utils/customSelectBox';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -57,8 +58,8 @@ export const AdvancedSearchFrom = (props) => {
     const modalProps = {
         reset: true,
         submit: true,
-        resetName: 'Reset',
-        submitName: 'Apply',
+        resetName: translateContent('stockTransferIndent.button.reset'),
+        submitName: translateContent('stockTransferIndent.button.apply'),
         handleResetFilter,
     };
 
@@ -73,24 +74,24 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={filterString?.indent} label="Indent" name="indent">
+                    <Form.Item initialValue={filterString?.indent} label={translateContent('stockTransferIndent.label.indent')} name="indent">
                         {customSelectBox({ data: indentSaerchList, fieldNames: { key: 'key', value: 'value' }, placeholder: preparePlaceholderSelect(placeHold.place) })}
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={filterString?.dealerLocation} {...labelData} name="dealerLocation">
-                        {customSelectBox({ data: indentLocationList, fieldNames: { key: 'locationCode', value: 'dealerLocationName' }, placeholder: preparePlaceholderSelect('Dealer Location') })}
+                        {customSelectBox({ data: indentLocationList, fieldNames: { key: 'locationCode', value: 'dealerLocationName' }, placeholder: preparePlaceholderSelect(translateContent('stockTransferIndent.label.dealerLocation')) })}
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="Indent From Date" name="fromDate" rules={[validateRequiredSelectField('Indent From Date')]} className={styles?.datePicker}>
+                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label={translateContent('stockTransferIndent.label.indentfromdate')} name="fromDate" rules={[validateRequiredSelectField(translateContent('stockTransferIndent.validation.indentFromDate'))]} className={styles?.datePicker}>
                         <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} onChange={() => advanceFilterForm.setFieldsValue({ toDate: undefined })} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.toDate)} label="Indent To Date" name="toDate" rules={[validateRequiredSelectField('Indent To Date'), { validator: (_, value) => campareDate(value, advanceFilterForm.getFieldValue('fromDate')) }]} className={styles?.datePicker}>
+                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.toDate)} label={translateContent('stockTransferIndent.label.indentTodate')} name="toDate" rules={[validateRequiredSelectField(translateContent('stockTransferIndent.validation.indentToDate')), { validator: (_, value) => campareDate(value, advanceFilterForm.getFieldValue('fromDate')) }]} className={styles?.datePicker}>
                         <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} disabledDate={disableFutureDate} className={styles.fullWidth} />
                     </Form.Item>
                 </Col>

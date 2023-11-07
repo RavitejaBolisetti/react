@@ -9,6 +9,7 @@ import { FiTrash } from 'react-icons/fi';
 
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { ViewDetail } from './ViewDetail';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -62,7 +63,7 @@ const ViewVehicleList = (props) => {
                                 header={
                                     <Row justify="space-between">
                                         <Col xs={14} sm={14} md={14} lg={14} xl={14} className={styles.verticallyCentered}>
-                                            <Text strong> {`Vehicle Registration Number ${data?.vehicleRegistrationNumber}`}</Text>
+                                            <Text strong> {`${translateContent('amcRegistration.label.vehicleRegistrationNumber')} ${data?.vehicleRegistrationNumber}`}</Text>
                                             {!formActionType?.viewMode && (
                                                 <Button onClick={(e) => deleteVehicle(e, data, i)} type="link" icon={<FiTrash />} disabled={isEditing || isAdding} className={styles.verticallyCentered}>
                                                     Remove

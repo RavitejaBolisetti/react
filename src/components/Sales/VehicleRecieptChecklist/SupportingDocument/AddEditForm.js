@@ -9,6 +9,7 @@ import { Row, Col, Form, Input } from 'antd';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField } from 'utils/validation';
 import { UploadUtil } from 'utils/Upload';
+import { translateContent } from 'utils/translateContent';
 
 const AddEditForm = (uploadProps) => {
     const messageText = <>Click or drop your file here to Upload the Documents.</>;
@@ -18,13 +19,13 @@ const AddEditForm = (uploadProps) => {
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Form.Item label="File Name" name="fileName" rules={mandatoryFields ? [validateRequiredInputField('file name')] : ''}>
-                        <Input placeholder={preparePlaceholderText('file name')} allowClear />
+                    <Form.Item label={translateContent('vehicleReceiptChecklist.label.supportingDocument.fileName')} name="fileName" rules={mandatoryFields ? [validateRequiredInputField(translateContent('vehicleReceiptChecklist.label.supportingDocument.fileName'))] : ''}>
+                        <Input placeholder={preparePlaceholderText(translateContent('vehicleReceiptChecklist.label.supportingDocument.fileName'))} allowClear />
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Form.Item label="Document Description" name="documentDescription" rules={mandatoryFields ? [validateRequiredInputField('document description')] : ''}>
-                        <Input placeholder={preparePlaceholderText('document description')} allowClear />
+                    <Form.Item label={translateContent('vehicleReceiptChecklist.label.supportingDocument.documentDescription')} name="documentDescription" rules={mandatoryFields ? [validateRequiredInputField(translateContent('vehicleReceiptChecklist.label.supportingDocument.documentDescription'))] : ''}>
+                        <Input placeholder={preparePlaceholderText(translateContent('vehicleReceiptChecklist.label.supportingDocument.documentDescription'))} allowClear />
                     </Form.Item>
                 </Col>
             </Row>

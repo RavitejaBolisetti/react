@@ -21,6 +21,7 @@ import TreeSelectField from '../TreeSelectField';
 import { ViewProductDetail } from './ViewProductDetail';
 import { LANGUAGE_EN } from 'language/en';
 import { DisableParent } from './ProductHierarchyUtils';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 const { Search } = Input;
@@ -38,8 +39,8 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Product Detail';
-    const viewTitle = 'Hierarchy Details';
+    const moduleTitle = translateContent('productHierarchy.heading.moduleTitle');
+    const viewTitle = translateContent('productHierarchy.heading.hierarchyDetails');
     let returnValue = {
         typeData,
         isLoading,
@@ -237,7 +238,7 @@ export const ProductHierarchyMain = ({ typeData, isLoading, moduleTitle, viewTit
             !value && resetData();
         },
         defaultValue: organizationId,
-        placeholder: preparePlaceholderSelect('Organization Hierarchy'),
+        placeholder: preparePlaceholderSelect(translateContent('productHierarchy.placeholder.organizationHierarchy')),
     };
 
     const onFinish = (values) => {
@@ -335,7 +336,7 @@ export const ProductHierarchyMain = ({ typeData, isLoading, moduleTitle, viewTit
     const noDataMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
     const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_CHILD_WARNING;
 
-    const title = 'Hierarchy';
+    const title = translateContent('productHierarchy.heading.title');
 
     return (
         <>
@@ -350,7 +351,7 @@ export const ProductHierarchyMain = ({ typeData, isLoading, moduleTitle, viewTit
                                     </Col>
                                     {organizationId && (
                                         <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                            <Search placeholder="Search" allowClear onChange={onChange} />
+                                            <Search placeholder={translateContent('global.placeholder.search')} allowClear onChange={onChange} />
                                         </Col>
                                     )}
                                 </Row>
@@ -381,16 +382,16 @@ export const ProductHierarchyMain = ({ typeData, isLoading, moduleTitle, viewTit
                                             {noDataTitle} <br /> {noDataMessage}
                                         </span>
                                     ) : !organizationId ? (
-                                        <span className={styles.descriptionText}>Please select hierarchy type to view records.</span>
+                                        <span className={styles.descriptionText}>{translateContent('productHierarchy.label.noDataTitle')}</span>
                                     ) : (
-                                        <span className={styles.descriptionText}> No records found.</span>
+                                        <span className={styles.descriptionText}>{translateContent('productHierarchy.label.noDataMessage')}</span>
                                     )
                                 }
                             >
                                 {/* {organizationId && (
                                     <div>
                                         <Button icon={<PlusOutlined />} type="primary" onClick={handleAdd}>
-                                            Add
+                                            {translateContent('global.buttons.add')}
                                         </Button>
                                     </div>
                                 )} */}
@@ -417,12 +418,7 @@ export const ProductHierarchyMain = ({ typeData, isLoading, moduleTitle, viewTit
                                     imageStyle={{
                                         height: 60,
                                     }}
-                                    description={
-                                        <span>
-                                            Please select product from left <br />
-                                            side hierarchy to view “Hierarchy Details”
-                                        </span>
-                                    }
+                                    description={<span>{translateContent('productHierarchy.label.description')}</span>}
                                 ></Empty>
                             </div>
                         )}

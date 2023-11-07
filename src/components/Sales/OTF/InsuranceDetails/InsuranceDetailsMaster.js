@@ -13,6 +13,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { insuranceDetailDataActions } from 'store/actions/data/otf/insuranceDetail';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -23,14 +24,12 @@ const mapStateToProps = (state) => {
             PartyMaster: { isFilteredListLoaded: isInsuranceCompanyDataLoaded = false, detailData: insuranceCompanies },
         },
     } = state;
-    const moduleTitle = 'Insurance Details';
 
     let returnValue = {
         userId,
         isDataLoaded,
         insuranceData,
         isLoading,
-        moduleTitle,
         isInsuranceCompanyDataLoaded,
         insuranceCompanies,
     };
@@ -123,7 +122,7 @@ const InsuranceDetailsMasterBase = (props) => {
             const onSuccess = (res) => {
                 setButtonData({ ...buttonData, formBtnActive: false });
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
                 fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
             };
 

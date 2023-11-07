@@ -37,6 +37,7 @@ import LeftPanel from '../LeftPanel';
 import styles from 'assets/sass/app.module.scss';
 
 import { LANGUAGE_EN } from 'language/en';
+import { translateContent } from 'utils/translateContent';
 
 const { Search } = Input;
 
@@ -62,8 +63,8 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Manufacturer Detail';
-    const viewTitle = 'Hierarchy Details';
+    const moduleTitle = translateContent('adminHierarchy.heading.adminMainTitle');
+    const viewTitle = translateContent('adminHierarchy.heading.viewTitle');
 
     let returnValue = {
         collapsed,
@@ -364,7 +365,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
             formData && setFormData(data);
 
             if (res?.data) {
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
                 fetchDetailList({ setIsLoading: DetailLoading, extraParams: makeExtraparms([{ key: 'manufacturerAdminId', title: 'manufacturerAdminId', value: selectedId, name: 'manufacturerAdminId' }]), userId, onErrorAction });
                 fetchList({ setIsLoading: listShowLoading, userId, extraParams: makeExtraparms([{ key: 'manufacturerOrgId', title: 'manufacturerOrgId', value: organizationId, name: 'manufacturerOrgId' }]), errorAction: onErrorAction });
                 setOrganizationId(organizationId);
@@ -423,7 +424,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         onCloseAction: () => setIsFormVisible(false),
         handleResetBtn,
         buttonData,
-        titleOverride: (formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
+        titleOverride: (formData?.id ? translateContent('global.drawerTitle.edit') : translateContent('global.drawerTitle.add')).concat(moduleTitle),
 
         isFormBtnActive,
         setFormBtnActive,
@@ -463,7 +464,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const leftCol = manufacturerAdminHierarchyData?.length > 0 && organizationId ? 14 : 24;
     const rightCol = manufacturerAdminHierarchyData?.length > 0 && organizationId ? 10 : 24;
 
-    const noDataTitle = !organizationId ? 'Please Select Organization from dropdown' : LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
+    const noDataTitle = !organizationId ? translateContent('adminHierarchy.label.selectOrganization') : LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
     const noDataMessage = organizationId && LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
     const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_CHILD_WARNING;
 
@@ -473,7 +474,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
-    const drawerTitle = 'Upload Authority Details';
+    const drawerTitle = translateContent('adminHierarchy.heading.drawerTitle');
 
     const uploadProps = {
         ...props,
@@ -547,9 +548,9 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
             setSelectedTreeKey(null);
         },
         defaultValue: 'organizationId',
-        placeholder: preparePlaceholderSelect('Organization Hierarchy'),
+        placeholder: preparePlaceholderSelect(translateContent('adminHierarchy.placeholder.organizationHierarchy')),
     };
-    const title = 'Hierarchy';
+    const title = translateContent('adminHierarchy.heading.title');
 
     const handleOnClickUpload = () => {
         setIsUploadDrawer(true);
@@ -559,7 +560,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const drawerProps = {
         isVisible: isChangeHistoryVisible,
         onCloseAction: myCloseAction,
-        titleOverride: 'Change History',
+        titleOverride: translateContent('global.changeHistory.title'),
         organizationId,
     };
     const onfinishHeader = () => {
@@ -579,7 +580,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                                     </Col>
                                     {organizationId && manufacturerAdminHierarchyData?.length > 0 && (
                                         <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                            <Search placeholder="Search" allowClear onChange={onChange} />
+                                            <Search placeholder={translateContent('global.placeholder.search')} allowClear onChange={onChange} />
                                         </Col>
                                     )}
                                 </Row>
@@ -589,7 +590,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                     {organizationId && manufacturerAdminHierarchyData?.length > 0 && (
                         <Col className={styles.buttonsGroupRight} xs={24} sm={24} md={6} lg={6} xl={6}>
                             <Button type="primary" onClick={handleOnClickUpload}>
-                                Upload
+                                {translateContent('global.buttons.upload')}
                             </Button>
 
                             <Button
@@ -600,7 +601,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                                     setIsChangeHistoryVisible(true);
                                 }}
                             >
-                                Change History
+                                {translateContent('global.changeHistory.title')}
                             </Button>
                         </Col>
                     )}
@@ -623,7 +624,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                             >
                                 {organizationId && (
                                     <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
-                                        Add
+                                        {translateContent('global.buttons.add')}
                                     </Button>
                                 )}
                             </Empty>
@@ -652,8 +653,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                                     }}
                                     description={
                                         <span>
-                                            Please select product from left <br />
-                                            side hierarchy to view “Hierarchy Details”
+                                            {translateContent('adminHierarchy.label.description')}
                                         </span>
                                     }
                                 ></Empty>

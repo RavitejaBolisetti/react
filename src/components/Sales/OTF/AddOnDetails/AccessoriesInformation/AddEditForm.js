@@ -11,6 +11,7 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import styles from 'assets/sass/app.module.scss';
 import { PartNameListModal } from './PartNameListModal';
+import { translateContent } from 'utils/translateContent';
 
 const { TextArea } = Input;
 const { Search } = Input;
@@ -37,7 +38,7 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
                 }
 
                 if (!values?.partNumber) {
-                    showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please provide part number' });
+                    showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationSuccess.error'), message: translateContent('bookingManagement.validation.providePartNumber') });
                     return;
                 }
 
@@ -65,7 +66,7 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
 
     const customerListProps = {
         isVisible: partNameSearchVisible,
-        titleOverride: 'Search Result',
+        titleOverride: translateContent('bookingManagement.placeholder.searchResult'),
         onCloseAction: () => {
             setPartNameSearchVisible(false);
         },
@@ -83,16 +84,16 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="" name="partName">
-                            <Search placeholder={preparePlaceholderText('Part Name', true, 'Search')} maxLength={55} allowClear type="text" onSearch={handleOnSearch} />
+                            <Search placeholder={preparePlaceholderText(translateContent('bookingManagement.label.partName'), true, translateContent('bookingManagement.label.search'))} maxLength={55} allowClear type="text" onSearch={handleOnSearch} />
                         </Form.Item>
                     </Col>
                 </Row>
                 <Divider />
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Part Name" name="partDescription">
+                        <Form.Item label={translateContent('bookingManagement.label.partName')} name="partDescription">
                             <TextArea
-                                placeholder={preparePlaceholderText('Part Description')}
+                                placeholder={preparePlaceholderText(translateContent('bookingManagement.label.partName'))}
                                 {...disableProp}
                                 autoSize={{
                                     minRows: 1,
@@ -103,36 +104,36 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Part Number" name="partNumber">
-                            <Input {...disableProp} placeholder={preparePlaceholderText('part number')} />
+                        <Form.Item label={translateContent('bookingManagement.label.partNumber')} name="partNumber">
+                            <Input {...disableProp} placeholder={preparePlaceholderText(translateContent('bookingManagement.label.partNumber'))} />
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Part Type" name="type">
-                            <Input {...disableProp} placeholder={preparePlaceholderText('part type')} />
+                        <Form.Item label={translateContent('bookingManagement.label.partNumber')} name="type">
+                            <Input {...disableProp} placeholder={preparePlaceholderText(translateContent('bookingManagement.label.partNumber'))} />
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Selling Price" name="sellingPrice">
-                            <Input {...disableProp} placeholder={preparePlaceholderText('selling price')} />
+                        <Form.Item label={translateContent('bookingManagement.label.partNumber')} name="sellingPrice">
+                            <Input {...disableProp} placeholder={preparePlaceholderText(translateContent('bookingManagement.label.partNumber'))} />
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="MRP" name="mrp">
-                            <Input {...disableProp} placeholder={preparePlaceholderText('mrp')} />
+                        <Form.Item label={translateContent('bookingManagement.label.partNumber')} name="mrp">
+                            <Input {...disableProp} placeholder={preparePlaceholderText(translateContent('bookingManagement.label.partNumber'))} />
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item
-                            label="Required Quantity"
+                            label={translateContent('bookingManagement.label.partNumber')}
                             name="requiredQuantity"
                             rules={[
-                                validateRequiredInputField('required quantity'),
-                                validationNumber('required quantity'),
+                                validateRequiredInputField(translateContent('bookingManagement.label.partNumber')),
+                                validationNumber(translateContent('bookingManagement.label.partNumber')),
                                 {
                                     validator: (_, value) => {
                                         if (value > 50 || value < 0) {
-                                            return Promise.reject(new Error('Required quantity should be less than 50'));
+                                            return Promise.reject(new Error(translateContent('bookingManagement.validation.requiredQuantityLessThan50')));
                                         } else {
                                             return Promise.resolve();
                                         }
@@ -140,7 +141,7 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
                                 },
                             ]}
                         >
-                            <Input type="number" max={50} placeholder={preparePlaceholderText('required quantity')} />
+                            <Input type="number" max={50} placeholder={preparePlaceholderText(translateContent('bookingManagement.label.partNumber'))} />
                         </Form.Item>
                     </Col>
                     <Form.Item hidden name="id">
@@ -165,19 +166,19 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
                     {addButtonDisabled?.partDetailsResponses ? (
                         <>
                             <Button disabled={isBtnDisabled} onClick={handleAccesoriesForm} type="primary">
-                                Add
+                                {translateContent('global.buttons.add')}
                             </Button>
                             <Button danger onClick={onCancel}>
-                                Cancel
+                                {translateContent('global.buttons.cancel')}
                             </Button>
                         </>
                     ) : (
                         <>
                             <Button type="primary" onClick={() => onUpdate(index, seteditCardForm, editCardForm)}>
-                                Save
+                                {translateContent('global.buttons.save')}
                             </Button>
                             <Button danger onClick={onCancel}>
-                                Cancel
+                                {translateContent('global.buttons.cancel')}
                             </Button>
                         </>
                     )}

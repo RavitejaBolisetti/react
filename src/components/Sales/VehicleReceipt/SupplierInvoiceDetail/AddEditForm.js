@@ -5,7 +5,7 @@
  */
 import React, { useEffect } from 'react';
 import { Row, Col, Input, Form, DatePicker, Card, Select } from 'antd';
-
+import { translateContent } from 'utils/translateContent';
 import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
@@ -37,7 +37,7 @@ const AddEditFormMain = (props) => {
         <Card>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.supplierType} label="Supplier Type" name="supplierType">
+                    <Form.Item initialValue={formData?.supplierType} label={translateContent('vehicleReceipt.label.supplierInvoiceDetails.supplierType')} name="supplierType">
                         <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps} disabled={true}>
                             {supplierTypeData?.map((item) => (
                                 <Option key={'dv' + item.key} value={item.key}>
@@ -49,59 +49,59 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.supplierName} label="Supplier Name" name="supplierName">
+                    <Form.Item initialValue={formData?.supplierName} label={translateContent('vehicleReceipt.label.supplierInvoiceDetails.supplierName')} name="supplierName">
                         <Input maxLength={10} placeholder={preparePlaceholderText('Supplier Name')} disabled={true} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.supplierInvoiceNumber} name="supplierInvoiceNumber" label="Supplier Invoice No.">
+                    <Form.Item initialValue={formData?.supplierInvoiceNumber} name="supplierInvoiceNumber" label={translateContent('vehicleReceipt.label.supplierInvoiceDetails.supplierInvoiceNumber')}>
                         <Input maxLength={10} placeholder={preparePlaceholderText('Supplier Invoice')} disabled={true} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formattedCalendarDate(formData?.supplierInvoiceDate)} label="Supplier Invoice Date" name="supplierInvoiceDate">
+                    <Form.Item initialValue={formattedCalendarDate(formData?.supplierInvoiceDate)} label={translateContent('vehicleReceipt.label.supplierInvoiceDetails.supplierInvoiceDate')} name="supplierInvoiceDate">
                         <DatePicker format={dateFormat} disabled={true} style={{ display: 'auto', width: '100%' }} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.roadPermitNumber} label="Road Permit Number" name="roadPermitNumber">
+                    <Form.Item initialValue={formData?.roadPermitNumber} label={translateContent('vehicleReceipt.label.supplierInvoiceDetails.roadPermitNumber')} name="roadPermitNumber">
                         <Input maxLength={10} placeholder={preparePlaceholderText('Road Permit No.')} disabled={true} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formattedCalendarDate(formData?.actualDispatchDate)} name="actualDispatchDate" label="Actual Dispatch Date">
+                    <Form.Item initialValue={formattedCalendarDate(formData?.actualDispatchDate)} name="actualDispatchDate" label={translateContent('vehicleReceipt.label.supplierInvoiceDetails.actualDispatchDate')}>
                         <DatePicker format={dateFormat} disabled={true} style={{ display: 'auto', width: '100%' }} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.totalInvoiceAmount} label="Total Invoice Amount" name="totalInvoiceAmount">
+                    <Form.Item initialValue={formData?.totalInvoiceAmount} label={translateContent('vehicleReceipt.label.supplierInvoiceDetails.totalInvoiceAmount')} name="totalInvoiceAmount">
                         <Input disabled={true} maxLength={50} placeholder={preparePlaceholderText('Special Request')} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.lorryReceiptNumber} label="Lorry Receipt No." name="lorryReceiptNumber">
+                    <Form.Item initialValue={formData?.lorryReceiptNumber} label={translateContent('vehicleReceipt.label.supplierInvoiceDetails.lorryReceiptNumber')} name="lorryReceiptNumber">
                         <Input disabled={true} maxLength={50} placeholder={preparePlaceholderText('Lorry Receipt No.')} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.transpoter} label="Transporter" name="transpoter">
+                    <Form.Item initialValue={formData?.transpoter} label={translateContent('vehicleReceipt.label.supplierInvoiceDetails.transporter')} name="transpoter">
                         <Input disabled={true} maxLength={50} placeholder={preparePlaceholderText('Transporter')} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.supplierGstNumber} label="Supplier GST Number" name="supplierGstNumber">
+                    <Form.Item initialValue={formData?.supplierGstNumber} label={translateContent('vehicleReceipt.label.supplierInvoiceDetails.supplierGstNumber')} name="supplierGstNumber">
                         <Input disabled={true} maxLength={50} placeholder={preparePlaceholderText('Supplier GST Number')} />
                     </Form.Item>
                 </Col>
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formattedCalendarDate(formData?.geoFencingDate)} name="geoFencingDate" label="GEO Fencing Date & Time">
+                    <Form.Item initialValue={formattedCalendarDate(formData?.geoFencingDate)} name="geoFencingDate" label={translateContent('vehicleReceipt.label.supplierInvoiceDetails.geoFencingDateAndTime')}>
                         <DatePicker format={dateFormat} disabled={true} style={{ display: 'auto', width: '100%' }} />
                     </Form.Item>
                 </Col>

@@ -18,6 +18,7 @@ import { BASE_URL_OTF_CHANGE_HISTORY as customURL } from 'constants/routingApi';
 import { Row, Button, Col } from 'antd';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -66,7 +67,7 @@ const ChangeHistoryMain = ({ fetchOTFChangeHistory, onCloseAction, listShowChang
 
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Modified Date & Time',
+            title: translateContent('bookingManagement.label.modifiedDateTime'),
             dataIndex: 'modifiedDate',
             render: (text) => [
                 <div>
@@ -77,23 +78,23 @@ const ChangeHistoryMain = ({ fetchOTFChangeHistory, onCloseAction, listShowChang
             ],
         }),
         tblPrepareColumns({
-            title: 'Modified By',
+            title: translateContent('bookingManagement.label.modifiedBy'),
             dataIndex: 'modifiedBy',
         }),
         tblPrepareColumns({
-            title: 'Change Source',
+            title:translateContent('bookingManagement.label.changeSource'),
             dataIndex: 'source',
         }),
         tblPrepareColumns({
-            title: 'Field Name',
+            title: translateContent('bookingManagement.label.fieldName'),
             dataIndex: 'fieldName',
         }),
         tblPrepareColumns({
-            title: 'Old Value',
+            title: translateContent('bookingManagement.label.oldValue'),
             dataIndex: 'oldValue',
         }),
         tblPrepareColumns({
-            title: 'New Value',
+            title: translateContent('bookingManagement.label.newValue'),
             dataIndex: 'newValue',
         }),
     ];
@@ -108,7 +109,7 @@ const ChangeHistoryMain = ({ fetchOTFChangeHistory, onCloseAction, listShowChang
         <>
             <Row gutter={20} className={styles.drawerBody}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <h4 className={styles.marT0}>Booking Number: {selectedBookingId}</h4>
+                    <h4 className={styles.marT0}>{translateContent('commonModules.label.bookingDetails.bookingNumber')}: {selectedBookingId}</h4>
                     <DataTable {...tableProps} />
                 </Col>
             </Row>
@@ -116,7 +117,7 @@ const ChangeHistoryMain = ({ fetchOTFChangeHistory, onCloseAction, listShowChang
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Button danger onClick={onCloseAction}>
-                            Close
+                            {translateContent('global.buttons.close')}
                         </Button>
                     </Col>
                 </Row>

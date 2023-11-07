@@ -16,6 +16,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { salesConsultantActions } from 'store/actions/data/otf/salesConsultant';
 import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
 import { BASE_URL_APPLICATION_DEALER_LOCATION as customURL } from 'constants/routingApi';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -33,7 +34,7 @@ const mapStateToProps = (state) => {
             },
         },
     } = state;
-    const moduleTitle = 'Transfer Booking';
+    const moduleTitle = translateContent('global.buttons.transferBooking');
 
     let returnValue = {
         userId,

@@ -23,6 +23,7 @@ import LeftPanel from 'components/common/LeftPanel';
 import { LANGUAGE_EN } from 'language/en';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { HIERARCHY_ATTRIBUTES } from 'constants/modules/hierarchyAttributes';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -44,8 +45,8 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Tax & Charges Detail';
-    const viewTitle = 'Tax & Charges Details';
+    const moduleTitle = translateContent('taxCharges.heading.moduleTitle');
+    const viewTitle = translateContent('taxCharges.heading.viewTitle');
 
     let returnValue = {
         collapsed,
@@ -220,7 +221,7 @@ export const TaxChargesMain = ({ typeData, moduleTitle, fetchDocumentDescription
                 setAttributeType(res?.data?.attributeTypeCode);
                 setCalculationType(res?.data?.calculationType);
 
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
 
                 fetchList({ setIsLoading: listShowLoading, userId });
 
@@ -341,7 +342,7 @@ export const TaxChargesMain = ({ typeData, moduleTitle, fetchDocumentDescription
 
     const leftCol = taxChargeData?.length > 0 ? 14 : 24;
     const rightCol = taxChargeData?.length > 0 ? 10 : 24;
-    const title = 'Tax & Charges';
+    const title = translateContent('taxCharges.heading.title');
     return (
         <>
             <div className={styles.contentHeaderBackground}>
@@ -351,7 +352,7 @@ export const TaxChargesMain = ({ typeData, moduleTitle, fetchDocumentDescription
                             <Form.Item label={title} name="code" validateTrigger={['onSearch']}>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                        <Search placeholder="Search" allowClear onChange={onChange} />
+                                        <Search placeholder={translateContent('global.placeholder.search')} allowClear onChange={onChange} />
                                     </Col>
                                 </Row>
                             </Form.Item>
@@ -375,7 +376,7 @@ export const TaxChargesMain = ({ typeData, moduleTitle, fetchDocumentDescription
                                 }
                             >
                                 <Button icon={<PlusOutlined />} type="primary" danger onClick={handleAdd}>
-                                    Add
+                                    {translateContent('global.buttons.add')}
                                 </Button>
                             </Empty>
                         </div>
@@ -399,12 +400,7 @@ export const TaxChargesMain = ({ typeData, moduleTitle, fetchDocumentDescription
                                 imageStyle={{
                                     height: 60,
                                 }}
-                                description={
-                                    <span>
-                                        Please select Tax and Charges from left <br />
-                                        side hierarchy to view “Details”
-                                    </span>
-                                }
+                                description={<span>{translateContent('taxCharges.description.noData')}</span>}
                             ></Empty>
                         </div>
                     )}

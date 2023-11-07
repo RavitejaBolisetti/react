@@ -13,6 +13,7 @@ import { disableFutureDate } from 'utils/disableDate';
 
 import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 import { customSelectBox } from 'utils/customSelectBox';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -71,7 +72,7 @@ export const AdvanceForm = (props) => {
             .then(() => {
                 const values = apportionForm.getFieldsValue();
                 if (parseInt(values?.balancedAmount) < parseInt(values?.writeOffAmount) + parseInt(values?.apportionAmount)) {
-                    showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Write-off and apportion amount cannot exceed balance amount' });
+                    showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationSuccess.error'), message: translateContent('creditDebitNote.ApportionDetails.message.errorMessage') });
                 } else if (!isEditing) {
                     const data = { ...values, id: '' };
                     setApportionTableData([data, ...apportionTableData]);
@@ -106,7 +107,7 @@ export const AdvanceForm = (props) => {
         };
         const onSuccessAction = (res) => {
             if (typeof res?.data[0] === 'undefined') {
-                showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Document Number is invalid' });
+                showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationSuccess.error'), message: translateContent('creditDebitNote.ApportionDetails.message.documentInvalid') });
                 return;
             }
             const apportionValues = res?.data[0];
@@ -126,50 +127,50 @@ export const AdvanceForm = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item label="Document Type" name="documentType" rules={[validateRequiredSelectField('Document Type')]}>
-                                {customSelectBox({ data: documentTypeOptions, placeholder: preparePlaceholderSelect('Document type'), fieldNames: { key: 'documentCode', value: 'documentDescription' } })}
+                            <Form.Item label={translateContent('creditDebitNote.ApportionDetails.label.documentType')} name="documentType" rules={[validateRequiredSelectField(translateContent('creditDebitNote.ApportionDetails.validation.documentType'))]}>
+                                {customSelectBox({ data: documentTypeOptions, placeholder: preparePlaceholderSelect(translateContent('creditDebitNote.ApportionDetails.placeholder.documentType')), fieldNames: { key: 'documentCode', value: 'documentDescription' } })}
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item name="documentNumber" label="Document Number" rules={[validateRequiredInputField('Document Number')]}>
-                                <Search allowClear placeholder={preparePlaceholderText('Document Number')} onSearch={handleDocumentNumberSearch} />
+                            <Form.Item name="documentNumber" label={translateContent('creditDebitNote.ApportionDetails.label.documentNumber')} rules={[validateRequiredInputField(translateContent('creditDebitNote.ApportionDetails.validation.documentNumber'))]}>
+                                <Search allowClear placeholder={preparePlaceholderText(translateContent('creditDebitNote.ApportionDetails.placeholder.documentNumber'))} onSearch={handleDocumentNumberSearch} />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item label="Document Date" name="documentDate" rules={[validateRequiredInputField('Document Date')]}>
+                            <Form.Item label={translateContent('creditDebitNote.ApportionDetails.label.documentDate')} name="documentDate" rules={[validateRequiredInputField(translateContent('creditDebitNote.ApportionDetails.validation.documentDate'))]}>
                                 <DatePicker format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} disabled={true} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item label="Document Amount" name="documentAmount" rules={[validateRequiredInputField('Document Amount')]}>
-                                <Input maxLength={30} placeholder={preparePlaceholderText('Document Amount')} disabled={true} />
+                            <Form.Item label={translateContent('creditDebitNote.ApportionDetails.label.documentAmount')} name="documentAmount" rules={[validateRequiredInputField(translateContent('creditDebitNote.ApportionDetails.validation.documentAmount'))]}>
+                                <Input maxLength={30} placeholder={preparePlaceholderText(translateContent('creditDebitNote.ApportionDetails.placeholder.documentAmount'))} disabled={true} />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item label="Settled Amount" name="settledAmount" rules={[validateRequiredInputField('Settled Amount')]}>
-                                <Input maxLength={30} placeholder={preparePlaceholderText('Settled Amount')} disabled={true} />
+                            <Form.Item label={translateContent('creditDebitNote.ApportionDetails.label.settledAmount')} name="settledAmount" rules={[validateRequiredInputField(translateContent('creditDebitNote.ApportionDetails.validation.settledAmount'))]}>
+                                <Input maxLength={30} placeholder={preparePlaceholderText(translateContent('creditDebitNote.ApportionDetails.placeholder.settledAmount'))} disabled={true} />
                             </Form.Item>
                         </Col>
 
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item label="Balanced Amount" name="balancedAmount" rules={[validateRequiredInputField('Balanced Amount')]}>
-                                <Input maxLength={30} placeholder={preparePlaceholderText('Balanced Amount')} disabled={true} />
+                            <Form.Item label={translateContent('creditDebitNote.ApportionDetails.label.balancedAmount')} name="balancedAmount" rules={[validateRequiredInputField(translateContent('creditDebitNote.ApportionDetails.validation.balancedAmount'))]}>
+                                <Input maxLength={30} placeholder={preparePlaceholderText(translateContent('creditDebitNote.ApportionDetails.placeholder.balancedAmount'))} disabled={true} />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item label="Write-Off Amount" name="writeOffAmount" rules={[validateRequiredInputField('Write-Off Amount'), validateNumberWithTwoDecimalPlaces('write-off amount')]}>
-                                <Input maxLength={30} placeholder={preparePlaceholderText('Write-Off Amount')} />
+                            <Form.Item label={translateContent('creditDebitNote.ApportionDetails.label.writeOffAmount')} name="writeOffAmount" rules={[validateRequiredInputField(translateContent('creditDebitNote.ApportionDetails.validation.writeOffAmount')), validateNumberWithTwoDecimalPlaces(translateContent('creditDebitNote.ApportionDetails.validation.writeOffAmount'))]}>
+                                <Input maxLength={30} placeholder={preparePlaceholderText(translateContent('creditDebitNote.ApportionDetails.placeholder.writeOffAmount'))} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item label="Apportion Amount" name="apportionAmount" rules={[validateRequiredInputField('Apportion Amount'), validateNumberWithTwoDecimalPlaces('apportion amount')]}>
-                                <Input maxLength={30} placeholder={preparePlaceholderText('Apportion Amount')} />
+                            <Form.Item label={translateContent('creditDebitNote.ApportionDetails.label.apportionAmount')} name="apportionAmount" rules={[validateRequiredInputField('Apportion Amount'), validateNumberWithTwoDecimalPlaces(translateContent('creditDebitNote.ApportionDetails.validation.apportionAmount'))]}>
+                                <Input maxLength={30} placeholder={preparePlaceholderText(translateContent('creditDebitNote.ApportionDetails.placeholder.apportionAmount'))} />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -177,13 +178,13 @@ export const AdvanceForm = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
                             <Button onClick={handleCancel} danger>
-                                Cancel
+                                {translateContent('global.buttons.cancel')}
                             </Button>
                         </Col>
 
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
                             <Button onClick={onFinish} type="primary">
-                                Save
+                                {translateContent('global.buttons.save')}
                             </Button>
                         </Col>
                     </Row>

@@ -29,6 +29,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { DisableParent, FindProductName } from 'components/common/ProductHierarchy/ProductHierarchyUtils';
 
 import { ConfirmationModal } from 'utils/ConfirmationModal';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -276,13 +277,13 @@ export const VehicleAllotmentMasterBase = (props) => {
             case UNALLOT:
                 setConfirmRequest({
                     isVisible: true,
-                    titleOverride: 'Un-Allot Booking',
+                    titleOverride: translateContent('orderDeliveryVehicleAllotment.heading.titleOverride'),
                     closable: true,
                     icon: false,
                     onCloseAction: onCloseConfirmationModalAction,
                     onSubmitAction: () => handleVehicleAllotment(record, buttonAction),
                     submitText: 'Yes',
-                    text: 'Are you sure want to Un-allot this Booking? ',
+                    text: translateContent('orderDeliveryVehicleAllotment.label.unallotBooking'),
                     content: selectedOTFDetails ? selectedOTFDetails?.bookingNumber || selectedOTFDetails?.otfNumber : '',
                 });
 
@@ -339,7 +340,7 @@ export const VehicleAllotmentMasterBase = (props) => {
 
     const handleVehicleAllotment = (req, buttonAction) => {
         if (!selectedOTFDetails) {
-            showGlobalNotification({ message: 'Please select Booking' });
+            showGlobalNotification({ message: translateContent('orderDeliveryVehicleAllotment.validation.selectBooking') });
             return false;
         }
 
@@ -359,7 +360,7 @@ export const VehicleAllotmentMasterBase = (props) => {
             form.resetFields();
             setShowDataLoading(true);
 
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title:  translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             fetchVehicleAllotmentSearchedList({ customURL: customURL + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
             setButtonData({ ...buttonData, formBtnActive: false });
             setIsFormVisible(false);
@@ -394,7 +395,7 @@ export const VehicleAllotmentMasterBase = (props) => {
             form.resetFields();
             setShowDataLoading(true);
 
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title:  translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             fetchVehicleAllotmentSearchedList({ customURL: customURL + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
 
             setButtonData({ ...buttonData, formBtnActive: false });
@@ -458,7 +459,7 @@ export const VehicleAllotmentMasterBase = (props) => {
         setAdvanceSearchVisible(false);
     };
 
-    const title = 'Search Booking';
+    const title = translateContent('orderDeliveryVehicleAllotment.heading.title');
 
     const advanceFilterResultProps = {
         extraParams,
@@ -488,7 +489,7 @@ export const VehicleAllotmentMasterBase = (props) => {
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
         // icon: <FilterIcon size={20} />,
-        titleOverride: 'Advance Filters',
+        titleOverride: translateContent('global.advanceFilter.title'),
         onCloseAction: onAdvanceSearchCloseAction,
         filterString,
         setFilterString,
@@ -503,11 +504,11 @@ export const VehicleAllotmentMasterBase = (props) => {
 
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
-            return 'View ';
+            return translateContent('global.drawerTitle.view');
         } else if (formActionType?.editMode) {
-            return 'Edit ';
+            return translateContent('global.drawerTitle.edit');;
         } else {
-            return 'Add New ';
+            return translateContent('global.drawerTitle.addNew');
         }
     }, [formActionType]);
     const containerProps = {
@@ -522,7 +523,7 @@ export const VehicleAllotmentMasterBase = (props) => {
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat('Allotment Details'),
+        titleOverride: drawerTitle.concat(translateContent('orderDeliveryVehicleAllotment.heading.allotmentDetails')),
         tableData: data,
         totalOTFRecords,
         buttonData,

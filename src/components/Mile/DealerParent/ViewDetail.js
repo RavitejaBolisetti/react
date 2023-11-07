@@ -7,6 +7,7 @@ import React from 'react';
 import { Descriptions } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
+import { translateContent } from 'utils/translateContent';
 
 const ViewDetailBase = ({ formData, styles, parameterType, typeData }) => {
     const viewOneColProps = {
@@ -19,13 +20,13 @@ const ViewDetailBase = ({ formData, styles, parameterType, typeData }) => {
         <>
             <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
-                    <Descriptions.Item label="Group Code">{formData?.code}</Descriptions.Item>
-                    <Descriptions.Item label="Group Name">{formData?.name}</Descriptions.Item>
-                    <Descriptions.Item label="Title">{checkAndSetDefaultValue(getCodeValue(typeData, formData?.title))}</Descriptions.Item>
-                    <Descriptions.Item label="Owner Name">{formData?.ownerName}</Descriptions.Item>
-                    <Descriptions.Item label="Contact Number">{formData?.mobileNumber}</Descriptions.Item>
-                    <Descriptions.Item label="Email ID">{formData?.emailId}</Descriptions.Item>
-                    <Descriptions.Item label="Status">{formData?.status ? 'Active' : 'Inactive'}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('dealerParent.label.groupCode')}>{formData?.code}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('dealerParent.label.groupName')}>{formData?.name}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('dealerParent.label.title')}>{checkAndSetDefaultValue(getCodeValue(typeData, formData?.title))}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('dealerParent.label.ownerName')}>{formData?.ownerName}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('dealerParent.label.contactNumber')}>{formData?.mobileNumber}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('dealerParent.label.emailId')}>{formData?.emailId}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('dealerParent.label.status')}>{formData?.status ? 'Active' : 'Inactive'}</Descriptions.Item>
                 </Descriptions>
             </div>
         </>

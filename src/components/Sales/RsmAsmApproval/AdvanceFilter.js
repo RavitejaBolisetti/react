@@ -10,6 +10,7 @@ import { RxCross2 } from 'react-icons/rx';
 import { QueryButtons } from 'components/Sales/VehicleRecieptChecklist/QueryButtons';
 
 import { DELIVERY_NOTE_INVOICE_STATUS } from './utils/DeliveryNoteInvoiceStatus';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 const { Search } = Input;
@@ -25,7 +26,7 @@ export default function AdvanceFilter(props) {
                         <Form form={searchForm} className={styles.masterListSearchForm}>
                             <Form.Item name="Search">
                                 <div className={styles.verticallyCentered}>
-                                    <Search placeholder="Search by Dealer Name" allowClear onSearch={handleSearchChange} className={styles.headerSearchField} />
+                                    <Search placeholder={translateContent('rsmAsmApproval.label.searchByDealer')} allowClear onSearch={handleSearchChange} className={styles.headerSearchField} />
                                 </div>
                             </Form.Item>
                         </Form>
@@ -40,7 +41,7 @@ export default function AdvanceFilter(props) {
                                     setAdvanceSearchVisible(true);
                                 }}
                             >
-                                Advanced Filters
+                                {translateContent('global.advanceFilter.title')}
                             </Button>
                         </div>
                     )}
@@ -51,7 +52,7 @@ export default function AdvanceFilter(props) {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={22} xl={22} className={styles.advanceFilterContainer}>
-                                <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
+                                <div className={styles.advanceFilterTitle}> {translateContent('global.advanceFilter.appliedAdvanceFilter')} </div>
                                 {extraParams?.map((filter) => {
                                     return (
                                         filter?.value &&
@@ -70,7 +71,7 @@ export default function AdvanceFilter(props) {
                             </Col>
                             <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
                                 <Button className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
-                                    Clear
+                                    {translateContent('global.buttons.clear')}
                                 </Button>
                             </Col>
                         </Row>

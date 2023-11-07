@@ -5,12 +5,11 @@
  */
 import React, { useEffect } from 'react';
 import { Col, Row, Card, Divider, Empty, Checkbox, Typography } from 'antd';
-import { LANGUAGE_EN } from 'language/en';
 
 import styles from 'assets/sass/app.module.scss';
 
 import { CardSkeleton } from 'components/common/Skeleton';
-const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
+import { translateContent } from 'utils/translateContent';
 
 const { Text } = Typography;
 
@@ -78,10 +77,10 @@ const AddEditForm = (props) => {
                                                         <Checkbox.Group onChange={(checkedValues) => onChanges(el, checkedValues, i)} value={[el?.status && 'status', el?.defaultBranchIndicator && 'defaultBranchIndicator']} defaultValue={[el?.status && 'status', el?.defaultBranchIndicator && 'defaultBranchIndicator']}>
                                                             <Row gutter={20} justify="space-between">
                                                                 <Checkbox value={'status'} className={styles.marR20} defaultChecked={el?.status} checked={el?.status}>
-                                                                    Accessible
+                                                                    {translateContent('userManagement.label.accessible')}
                                                                 </Checkbox>
                                                                 <Checkbox value={'defaultBranchIndicator'} defaultChecked={el?.defaultBranchIndicator} checked={el?.defaultBranchIndicator} disabled={!el?.status}>
-                                                                    Default
+                                                                    {translateContent('userManagement.label.default')}
                                                                 </Checkbox>
                                                             </Row>
                                                         </Checkbox.Group>
@@ -99,7 +98,7 @@ const AddEditForm = (props) => {
                                     }}
                                     description={
                                         <span>
-                                            {noDataTitle} <br />
+                                            {translateContent('global.generalMessage.noRecordsFoundAddNew')} <br />
                                         </span>
                                     }
                                 ></Empty>

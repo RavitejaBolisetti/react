@@ -23,6 +23,7 @@ import { disablePastDate } from 'utils/disableDate';
 import { customSelectBox } from 'utils/customSelectBox';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { prepareDatePickerText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -101,7 +102,7 @@ const AddEditFormMain = (props) => {
         if (bool) {
             return Promise.resolve();
         }
-        return Promise.reject(new Error('Date cant be less than Effective from date'));
+        return Promise.reject(new Error(translateContent('vehicleAllotmentPriorityMaster.message.dateMessage')));
     };
 
     return (
@@ -114,30 +115,30 @@ const AddEditFormMain = (props) => {
                         <>
                             <Row gutter={16}>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label="Old Model(Exchange)" initialValue={formData?.oldModelGroup} name="oldModelGroup" rules={[validateRequiredInputField('Old Model')]}>
+                                    <Form.Item label={translateContent('vehicleAllotmentPriorityMaster.label.oldModelExchange')} initialValue={formData?.oldModelGroup} name="oldModelGroup" rules={[validateRequiredInputField(translateContent('vehicleAllotmentPriorityMaster.label.oldModel'))]}>
                                         {customSelectBox({ data: productHierarchyList, fieldNames: { key: 'prodctCode', value: 'prodctShrtName' }, disabled: formActionType?.editMode ? true : false, placeholder: preparePlaceholderSelect('old model') })}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label="New Model(Booking)" initialValue={formData?.newModelGroup} name="newModelGroup" rules={[validateRequiredInputField('New Model')]}>
+                                    <Form.Item label={translateContent('vehicleAllotmentPriorityMaster.label.newModelBooking')} initialValue={formData?.newModelGroup} name="newModelGroup" rules={[validateRequiredInputField(translateContent('vehicleAllotmentPriorityMaster.label.newModel'))]}>
                                         {customSelectBox({ data: productHierarchyList, fieldNames: { key: 'prodctCode', value: 'prodctShrtName' }, disabled: formActionType?.editMode ? true : false, placeholder: preparePlaceholderSelect('new model') })}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label="Effective From Date" initialValue={formatDateToCalenderDate(formData?.effectiveFromDate)} name="effectiveFromDate" rules={[validateRequiredInputField('Effective From Date')]}>
+                                    <Form.Item label={translateContent('vehicleAllotmentPriorityMaster.label.effectiveFromDate')} initialValue={formatDateToCalenderDate(formData?.effectiveFromDate)} name="effectiveFromDate" rules={[validateRequiredInputField(translateContent('vehicleAllotmentPriorityMaster.label.effectiveFromDate'))]}>
                                         <DatePicker disabled={formActionType?.editMode ? true : false} disabledDate={disablePastDate} format={dateFormat} placeholder={prepareDatePickerText(dateFormat)} onChange={() => form.setFieldsValue({ effectiveToDate: undefined })} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                                    {/* <Form.Item label="Effective To Date" initialValue={formatDateToCalenderDate(formData?.effectiveToDate)} name="effectiveToDate" rules={[validateRequiredInputField('Effective To Date')]}>
+                                    {/* <Form.Item label={translateContent('vehicleAllotmentPriorityMaster.label.effectiveToDate')} initialValue={formatDateToCalenderDate(formData?.effectiveToDate)} name="effectiveToDate" rules={[validateRequiredInputField(translateContent('vehicleAllotmentPriorityMaster.label.effectiveToDate'))]}>
                                         <DatePicker disabled={formActionType?.editMode ? true : false} disabledDate={disablePastDate} format={dateFormat} placeholder={prepareDatePickerText(dateFormat)} />
                                     </Form.Item> */}
                                     <Form.Item
                                         initialValue={formatDateToCalenderDate(formData?.effectiveToDate)}
-                                        label="Effective To Date"
+                                        label={translateContent('vehicleAllotmentPriorityMaster.label.effectiveFromDate')}
                                         name="effectiveToDate"
                                         rules={[
-                                            validateRequiredSelectField('Effective To Date'),
+                                            validateRequiredSelectField(translateContent('vehicleAllotmentPriorityMaster.label.effectiveToDate')),
                                             {
                                                 validator: (_, value) => {
                                                     return form.getFieldValue('effectiveFromDate') ? CheckDateEffectiveTo(value, form?.getFieldValue('effectiveFromDate')) : null;

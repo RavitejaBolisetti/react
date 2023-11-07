@@ -5,30 +5,31 @@
  */
 import { tblPrepareColumns } from 'utils/tableColumn';
 import { convertDateMonthYear } from 'utils/formatDateTime';
+import { translateContent } from 'utils/translateContent';
 
 export const tableColumnSearchOTF = (sorter) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Booking No.',
+            title: translateContent('orderDeliveryVehicleAllotment.tableColumn.bookingNo'),
             dataIndex: 'otfNumber',
             width: '20%',
             render: (_, record) => record?.bookingNumber || record?.otfNumber,
             sorter,
         }),
         tblPrepareColumns({
-            title: 'Booking Date',
+            title: translateContent('orderDeliveryVehicleAllotment.tableColumn.bookingDate'),
             dataIndex: 'otfDate',
             render: (text) => (text ? convertDateMonthYear(text) : ''),
             width: '20%',
             sorter,
         }),
         tblPrepareColumns({
-            title: 'Customer Name',
+            title: translateContent('orderDeliveryVehicleAllotment.tableColumn.customerName'),
             dataIndex: 'customerName',
             sorter,
         }),
         tblPrepareColumns({
-            title: 'CPD',
+            title: translateContent('orderDeliveryVehicleAllotment.tableColumn.cpd'),
             dataIndex: 'cpd',
             render: (text) => (text ? convertDateMonthYear(text) : ''),
             width: '20%',

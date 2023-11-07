@@ -13,6 +13,7 @@ import ShieldForm from './Shield/ShieldForm';
 import AMCForm from './AMC/AMCForm';
 import RSAForm from './RSA/RSAForm';
 import { NoDataFound } from 'utils/noDataFound';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -29,7 +30,7 @@ const ViewDetailMain = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('ci')} expandIconPosition="end" collapsible="icon">
-                        <Panel header="Accessories Information" key={'ci'}>
+                        <Panel header={translateContent('bookingManagement.label.accessoriesInformation')} key={'ci'}>
                             <Divider />
                             <div className={styles.innerCollapse}>
                                 {formData?.partDetailsResponses?.length &&
@@ -46,7 +47,7 @@ const ViewDetailMain = (props) => {
                                                                     <Text className={styles.headText}> {`${element?.partNumber ? element?.partNumber : 'NA'} `}</Text>
                                                                 </Space>
                                                                 <Row>
-                                                                    <Text className={styles.subSection}> {`Required Quantity: ${element?.requiredQuantity ? element?.requiredQuantity : 'NA'} `}</Text>
+                                                                    <Text className={styles.subSection}> {`${translateContent('bookingManagement.label.requiredQuantity')}: ${element?.requiredQuantity ? element?.requiredQuantity : 'NA'} `}</Text>
                                                                 </Row>
                                                             </Col>
                                                         </Row>
@@ -59,24 +60,24 @@ const ViewDetailMain = (props) => {
                                             </Collapse>
                                         );
                                     })}
-                                {!formData?.partDetailsResponses?.length && <NoDataFound informtion={'No accessories data found'} />}
+                                {!formData?.partDetailsResponses?.length && <NoDataFound informtion={translateContent('bookingManagement.validation.noAccessoriesDataFound')} />}
                             </div>
                         </Panel>
                     </Collapse>
                     <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('shield')} expandIconPosition="end" collapsible="icon">
-                        <Panel header="Shield" key="shield">
+                        <Panel header={translateContent('bookingManagement.label.shield')} key="shield">
                             <Divider />
                             <ShieldForm formActionType={formActionType} formData={formData} shieldForm={shieldForm} />
                         </Panel>
                     </Collapse>
                     <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('Amc')} expandIconPosition="end" collapsible="icon">
-                        <Panel header="AMC" key={'Amc'}>
+                        <Panel header={translateContent('bookingManagement.label.amc')} key={'Amc'}>
                             <Divider />
                             <AMCForm formActionType={formActionType} formData={formData} amcForm={amcForm} />
                         </Panel>
                     </Collapse>
                     <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('Rsa')} expandIconPosition="end" collapsible="icon">
-                        <Panel header="RSA" key={'Rsa'}>
+                        <Panel header={translateContent('bookingManagement.label.rsa')} key={'Rsa'}>
                             <Divider />
                             <RSAForm formActionType={formActionType} formData={formData} rsaForm={rsaForm} />
                         </Panel>

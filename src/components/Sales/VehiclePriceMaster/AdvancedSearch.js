@@ -24,6 +24,7 @@ import { withModal } from 'components/withModal';
 import { ModalButtons } from 'components/common/Button';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Option } = Select;
 
@@ -45,7 +46,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Vehicle Price Master';
+    const moduleTitle = translateContent('vehiclePriceMaster.heading.mainTitle')
     const finalCountryData = countryData?.map((item, index) => {
         return { ...item, default: index <= 0 || false };
     });

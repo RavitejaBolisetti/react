@@ -21,6 +21,7 @@ import AddEditForm from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -213,7 +214,8 @@ const SupportingDocumentBase = (props) => {
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <h2>{section?.title}</h2>
+                    <h2>{translateContent('vehicleReceiptChecklist.heading.section' + section?.id)}</h2>
+
                     <Card>
                         {formActionType?.viewMode ? (
                             <ViewDetail {...viewProps} />

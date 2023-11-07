@@ -11,6 +11,7 @@ import { getCodeValue } from 'utils/getCodeValue';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
@@ -18,12 +19,12 @@ const { Text, Title } = Typography;
 const expandIcon = ({ isActive }) =>
     isActive ? (
         <>
-            <span>See less</span>
+            <span>{translateContent('global.buttons.seeLess')}</span>
             <SlArrowUp size={13} />
         </>
     ) : (
         <>
-            <span>See more</span>
+            <span>{translateContent('global.buttons.seeMore')}</span>
             <SlArrowDown size={13} />
         </>
     );
@@ -46,7 +47,7 @@ const OTFDetailCard = (props) => {
                         </Space>
                         <Divider />
                         <div className={styles.detailCardText}>
-                            Booking No.: <span>{selectedOrder?.bookingNumber || selectedOrder?.otfNumber}</span>
+                            {translateContent('bookingManagement.heading.profileCard.bookingNumber')}: <span>{selectedOrder?.bookingNumber || selectedOrder?.otfNumber}</span>
                         </div>
                     </>
                 }
@@ -54,23 +55,23 @@ const OTFDetailCard = (props) => {
             >
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Customer Type: <span>{selectedOrder && getCodeValue(typeData?.[PARAM_MASTER?.CUST_TYPE?.id], selectedOrder?.customerType)}</span>
+                    {translateContent('bookingManagement.heading.profileCard.customerType')} : <span>{selectedOrder && getCodeValue(typeData?.[PARAM_MASTER?.CUST_TYPE?.id], selectedOrder?.customerType)}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Mobile No.: <span>{selectedOrder?.mobileNumber ? selectedOrder?.mobileNumber : 'NA'}</span>
+                    {translateContent('bookingManagement.heading.profileCard.mobileNumber')}: <span>{selectedOrder?.mobileNumber ? selectedOrder?.mobileNumber : 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Booking Date: <span>{convertDateTime(selectedOrder?.otfDate, dateFormatView) || 'NA'}</span>
+                    {translateContent('bookingManagement.heading.profileCard.bookingDate')}: <span>{convertDateTime(selectedOrder?.otfDate, dateFormatView) || 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Model: <span>{selectedOrder?.model || 'NA'}</span>
+                    {translateContent('bookingManagement.heading.profileCard.model')}: <span>{selectedOrder?.model || 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    CPD: <span>{convertDateTime(selectedOrder?.cpd, dateFormatView) || 'NA'}</span>
+                    {translateContent('bookingManagement.heading.profileCard.cpd')} : <span>{convertDateTime(selectedOrder?.cpd, dateFormatView) || 'NA'}</span>
                 </div>
             </Panel>
         </Collapse>

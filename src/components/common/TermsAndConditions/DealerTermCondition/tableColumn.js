@@ -7,7 +7,7 @@ import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { Button, Space } from 'antd';
 import { FiEye } from 'react-icons/fi';
 import styles from 'assets/sass/app.module.scss';
-
+import { translateContent } from 'utils/translateContent';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { convertDateMonthYear } from 'utils/formatDateTime';
 
@@ -16,48 +16,43 @@ export const tableColumn = (handleButtonClick, handleManufacturerButtonClick, pa
 
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Product Hierarchy',
+            title: translateContent('termConditionDealer.label.productHierarchy'),
             dataIndex: 'productName',
             width: '15%',
         }),
 
         tblPrepareColumns({
-            title: 'Document Type',
-            dataIndex: 'documentTypeCode',
+            title: translateContent('termConditionDealer.label.documentType'),
+            dataIndex: 'documentTypeName',
             width: '15%',
         }),
 
         tblPrepareColumns({
-            title: 'Language',
+            title: translateContent('termConditionDealer.label.language'),
             dataIndex: 'language',
             width: '10%',
         }),
 
         tblPrepareColumns({
-            title: 'Effective From',
+            title: translateContent('termConditionDealer.label.effectiveFrom'),
             dataIndex: 'effectiveFrom',
             width: '14%',
             render: (text) => convertDateMonthYear(text),
         }),
         tblPrepareColumns({
-            title: 'Effective To',
+            title: translateContent('termConditionDealer.label.effectiveTo'),
             dataIndex: 'effectiveTo',
             width: '14%',
             render: (text) => convertDateMonthYear(text),
         }),
-        // tblPrepareColumns({
-        //     title: 'Description',
-        //     dataIndex: 'termConditionDescription',
-        //     width: '15%',
-        //     render: (dataIndex) => dataIndex.substring(0, 25) + (dataIndex.length > 25 ? '...' : ''),
-        // }),
+
         tblPrepareColumns({
-            title: 'Version',
+            title: translateContent('termConditionDealer.label.version'),
             dataIndex: 'version',
             width: '5%',
         }),
         tblPrepareColumns({
-            title: 'MFG T&C',
+            title: translateContent('termConditionDealer.label.mfgT&c'),
             width: '2%',
             sorter: false,
             render: (text, record, index) => {

@@ -10,6 +10,7 @@ import { Collapse, Divider } from 'antd';
 import { DataTable } from 'utils/dataTable';
 import { tableColumn } from './tableColumn';
 import { expandIcon } from 'utils/accordianExpandIcon';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 
@@ -24,7 +25,7 @@ const ViewDetailMain = (props) => {
     return (
         <div className={styles.viewDrawerContainer}>
             <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse(1)} expandIconPosition="end" {...collapseProps}>
-                <Panel header="Voucher Details" key="1">
+                <Panel header={translateContent('creditDebitNote.voucherDetails.label.voucherDetails')} key="1">
                     <Divider />
                     <DataTable tableColumn={tableColumn({ formActionType })} tableData={tableData} pagination={false} />
                 </Panel>

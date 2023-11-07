@@ -22,6 +22,8 @@ import { VEHICLE_DETAIL_SECTION } from 'constants/VehicleDetailSection';
 import { validateRequiredInputField } from 'utils/validation';
 import { LANGUAGE_EN } from 'language/en';
 
+import { translateContent } from 'utils/translateContent';
+
 import { PARAM_MASTER } from 'constants/paramMaster';
 
 const mapStateToProps = (state) => {
@@ -35,7 +37,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Vehicle Details';
+    const moduleTitle = translateContent('vehicleDetail.heading.mainTitle');
 
     let returnValue = {
         userId,
@@ -115,7 +117,7 @@ export const VehicleDetailMasterBase = (props) => {
     const dynamicPagination = true;
 
     const [formData, setFormData] = useState([]);
-    const [otfSearchRules, setOtfSearchRules] = useState({ rules: [validateRequiredInputField('search parametar')] });
+    const [otfSearchRules, setOtfSearchRules] = useState({ rules: [validateRequiredInputField(translateContent('vehicleDetail.validation.searchParameter'))] });
 
     const onSuccessAction = (res) => {
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
@@ -296,7 +298,7 @@ export const VehicleDetailMasterBase = (props) => {
             form.resetFields();
             setShowDataLoading(true);
 
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.title'), message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
 
             setButtonData({ ...buttonData, formBtnActive: false });
@@ -421,7 +423,7 @@ export const VehicleDetailMasterBase = (props) => {
         isLastSection,
         typeData,
         vehicleDetailData,
-        saveButtonName: isLastSection ? 'Submit' : 'Save & Next',
+        saveButtonName: isLastSection ? translateContent('global.buttons.submit'): translateContent('global.buttons.saveAndNext')
     };
 
     return (

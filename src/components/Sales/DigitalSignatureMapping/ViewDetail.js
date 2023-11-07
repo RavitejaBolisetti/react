@@ -10,6 +10,7 @@ import { DataTable } from 'utils/dataTable';
 import { tableColumnAddEdit } from './tableColumnAddEdit';
 import styles from 'assets/sass/app.module.scss';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 
@@ -27,12 +28,12 @@ const ViewDetailMain = (props) => {
         <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
             <>
                 <Descriptions {...viewOneColProps}>
-                    <Descriptions.Item label="Dealer Name">{checkAndSetDefaultValue(formData?.dealerName, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Employee Name">{checkAndSetDefaultValue(formData?.employeeName, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('digitalSignature.label.dealerName')}>{checkAndSetDefaultValue(formData?.dealerName, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('digitalSignature.label.employeeName')}>{checkAndSetDefaultValue(formData?.employeeName, isLoading)}</Descriptions.Item>
                 </Descriptions>
                 <div className={styles.innerCollapse}>
                     <Collapse defaultActiveKey={['1']} expandIcon={expandIcon} expandIconPosition="end">
-                        <Panel key="1" header="Branches Accessible">
+                        <Panel key="1" header={translateContent('digitalSignature.heading.branchesAccessible')}>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                     <DataTable tableColumn={tableColumnAddEdit({ handleButtonClick, typeData, formActionType })} tableData={tableData} pagination={false} />

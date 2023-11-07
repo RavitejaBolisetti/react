@@ -13,6 +13,8 @@ import { withDrawer } from 'components/withDrawer';
 import { ViewCriticalityGroup } from './ViewCriticalityGroup';
 import AllowedTimingList from './AllowedTimings/AllowedTimingList';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
+
 
 const AddEditFormMain = (props) => {
     const { formActionType, setIsFormVisible, forceUpdate, showGlobalNotification, onFinish, form, formData, setFormData, defaultBtnVisiblity, timeData, setTimeData } = props;
@@ -99,25 +101,25 @@ const AddEditFormMain = (props) => {
                         <>
                             <Row gutter={20}>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <Form.Item name="criticalityGroupCode" label="Criticality Group Id" initialValue={formData?.criticalityGroupCode} rules={[validateRequiredInputField('id'), validationFieldLetterAndNumber('id')]}>
-                                        <Input maxLength={6} placeholder={preparePlaceholderText('id')} disabled={formActionType?.editMode ? true : false} />
+                                    <Form.Item name="criticalityGroupCode" label={translateContent('criticalityGroup.label.criticalityGroupId')} initialValue={formData?.criticalityGroupCode} rules={[validateRequiredInputField(translateContent('criticalityGroup.validation.id')), validationFieldLetterAndNumber(translateContent('criticalityGroup.validation.id'))]}>
+                                        <Input maxLength={6} placeholder={preparePlaceholderText(translateContent('criticalityGroup.validation.id'))} disabled={formActionType?.editMode ? true : false} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <Form.Item name="criticalityGroupName" label="Criticality Group Name" initialValue={formData?.criticalityGroupName} rules={[validateRequiredInputField('name'), validateAlphanumericWithSpace('name')]}>
-                                        <Input placeholder={preparePlaceholderText('name')} maxLength={50} />
+                                    <Form.Item name="criticalityGroupName" label={translateContent('criticalityGroup.label.criticalityGroupName')} initialValue={formData?.criticalityGroupName} rules={[validateRequiredInputField(translateContent('criticalityGroup.validation.name')), validateAlphanumericWithSpace(translateContent('criticalityGroup.validation.name'))]}>
+                                        <Input placeholder={preparePlaceholderText(translateContent('criticalityGroup.validation.name'))} maxLength={50} />
                                     </Form.Item>
                                 </Col>
                             </Row>
                             <Row gutter={20}>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <Form.Item data-testid="default-toggle" initialValue={formActionType?.editMode ? formData?.criticalityDefaultGroup : false} valuePropName="checked" label="Default Group" name="criticalityDefaultGroup" rules={[validateRequiredInputField('Default Group')]}>
+                                    <Form.Item data-testid="default-toggle" initialValue={formActionType?.editMode ? formData?.criticalityDefaultGroup : false} valuePropName="checked" label={translateContent('criticalityGroup.label.defaultGroup')} name="criticalityDefaultGroup" rules={[validateRequiredInputField(translateContent('criticalityGroup.label.defaultGroup'))]}>
                                         <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
                                     </Form.Item>
                                 </Col>
 
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <Form.Item data-testid="toggle" initialValue={formActionType?.editMode ? formData?.activeIndicator : false} valuePropName="checked" label="Status" name="activeIndicator" rules={[validateRequiredInputField('Status')]}>
+                                    <Form.Item data-testid="toggle" initialValue={formActionType?.editMode ? formData?.activeIndicator : false} valuePropName="checked" label={translateContent('criticalityGroup.label.status')} name="activeIndicator" rules={[validateRequiredInputField(translateContent('criticalityGroup.label.status'))]}>
                                         <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
                                     </Form.Item>
                                 </Col>

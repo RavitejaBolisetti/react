@@ -8,6 +8,7 @@ import { Input, Form, Button, TimePicker, Space } from 'antd';
 import { validateRequiredInputField } from 'utils/validation';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const AddEditForm = (props) => {
     const { allowedTimingSave, isAddTimeVisible, form, onFinish, handleFormValueChange, handleFormFieldChange } = props;
@@ -19,13 +20,13 @@ const AddEditForm = (props) => {
                     <div className={styles.allowedTiming}>
                         <Space size="large">
                             <Form.Item name={'timeSlotFrom'} rules={[validateRequiredInputField('start time')]}>
-                                <TimePicker placeholder={'Start time*'} use12Hours format="h:mm A" />
+                                <TimePicker placeholder={translateContent('criticalityGroup.validation.startTime')} use12Hours format="h:mm A" />
                             </Form.Item>
                             <Form.Item name={'timeSlotTo'} rules={[validateRequiredInputField('end time')]}>
-                                <TimePicker placeholder={'End time*'} use12Hours format="h:mm A" />
+                                <TimePicker placeholder={translateContent('criticalityGroup.validation.endTime')} use12Hours format="h:mm A" />
                             </Form.Item>
                             <Button disabled={allowedTimingSave} type="link" htmlType="submit" className={styles.marB20}>
-                                Save
+                                {translateContent('global.buttons.save')}
                             </Button>
                         </Space>
                         <Form.Item hidden name={'id'}>

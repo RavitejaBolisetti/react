@@ -8,40 +8,41 @@ import { Tag } from 'antd';
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Employee Code',
+            title: translateContent('userManagement.label.employeeCode'),
             dataIndex: 'employeeCode',
             width: '14%',
         }),
         tblPrepareColumns({
-            title: 'Dealer Name',
+            title: translateContent('userManagement.label.dealerName'),
             dataIndex: 'dealerName',
             width: '14%',
         }),
         tblPrepareColumns({
-            title: 'User Name',
+            title: translateContent('userManagement.label.userName'),
             dataIndex: 'userName',
             width: '14%',
         }),
         tblPrepareColumns({
-            title: 'User Roles',
+            title: translateContent('userManagement.label.userRoles'),
             dataIndex: 'userRoleCount',
             width: '14%',
         }),
         tblPrepareColumns({
-            title: 'Branch',
+            title: translateContent('userManagement.label.branch'),
             dataIndex: 'branchMapping',
             width: '12%',
-            render: (text) => (text ? <Tag color="success">Mapped</Tag> : <Tag color="warning">Unmapped</Tag>),
+            render: (text) => (text ? <Tag color="success">{translateContent('userManagement.label.mapped')}</Tag> : <Tag color="warning">{translateContent('userManagement.label.unmapped')}z</Tag>),
         }),
         tblPrepareColumns({
-            title: 'Products',
+            title: translateContent('userManagement.label.products'),
             dataIndex: 'productMapping',
             width: '16%',
-            render: (text) => (text ? <Tag color="success">Mapped</Tag> : <Tag color="warning">Unmapped</Tag>),
+            render: (text) => (text ? <Tag color="success">{translateContent('userManagement.label.mapped')}</Tag> : <Tag color="warning">{translateContent('userManagement.label.unmapped')}</Tag>),
         }),
         tblActionColumn({ styles, handleButtonClick, width: '12%' }),
     ];

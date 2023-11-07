@@ -26,6 +26,7 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 import { getCodeValue } from 'utils/getCodeValue';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Text } = Typography;
 const { Panel } = Collapse;
@@ -163,7 +164,7 @@ const CustomerNameChangeMasterBase = (props) => {
             a.href = `data:image/png;base64,${res?.data?.base64}`;
             a.download = res?.data?.fileName;
             a.click();
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: 'Your download will start soon' });
         }
     };
 
@@ -183,7 +184,7 @@ const CustomerNameChangeMasterBase = (props) => {
     const deleteFile = (uploadData) => {
         const data = { customerId: uploadData?.customerId, status: false, docId: uploadData?.docId, documentTypeId: uploadData?.documentType, id: uploadData?.id, documentName: uploadData?.documentName };
         const onSuccess = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'File deleted Successfully' });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: 'File deleted Successfully' });
             fetchList({ setIsLoading: listSupportingDocumentShowLoading, userId });
         };
 
@@ -293,7 +294,7 @@ const CustomerNameChangeMasterBase = (props) => {
                     </div>
                     {canEdit && (
                         <Button className={`${styles.marL20} ${styles.verticallyCentered}`} disabled={changeNameAllowed} type="link" icon={<FiEdit />} onClick={onEdit(currentKey)}>
-                            Edit
+                            {translateContent('global.buttons.edit')}
                         </Button>
                     )}
                 </Typography>
@@ -308,13 +309,13 @@ const CustomerNameChangeMasterBase = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.verticallyCentered}>
                         <Text style={{ fontSize: '16px' }} strong>
-                            Customer Name
+                            {translateContent('customerMaster.drawerSubHeading.cusTitle')}
                         </Text>
                     </Col>
                     {!addMode && (
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
                             <Button type="link" onClick={onViewHistoryChange} icon={<BiTimeFive />} className={styles.verticallyCentered}>
-                                View History
+                                {translateContent('global.buttons.viewHistory')}
                             </Button>
                         </Col>
                     )}

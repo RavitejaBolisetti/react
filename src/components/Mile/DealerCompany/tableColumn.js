@@ -6,22 +6,23 @@
 import { tblPrepareColumns, tblStatusColumn, tblActionColumn } from 'utils/tableColumn';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Parent Group Name',
+            title: translateContent('dealerCompany.tableColHeading.parentGroupName'),
             dataIndex: 'dealerParentName',
             width: '20%',
         }),
         tblPrepareColumns({
-            title: 'Company Code',
+            title: translateContent('dealerCompany.tableColHeading.companyCode'),
             dataIndex: 'companyCode',
             width: '15%',
         }),
         tblPrepareColumns({
-            title: 'Company Name',
+            title: translateContent('dealerCompany.tableColHeading.stateName'),
             dataIndex: 'companyName',
             width: '20%',
         }),

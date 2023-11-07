@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col, Input, Form } from 'antd';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateNumberWithTwoDecimalPlaces } from 'utils/validation';
+import { translateContent } from 'utils/translateContent';
 
 const FMSForm = ({ formData, fmsForm, setFormDataSetter, formDataSetter, formActionType, handleFormValueChange }) => {
     const [isReadOnly, setisReadOnly] = useState(false);
@@ -31,13 +32,13 @@ const FMSForm = ({ formData, fmsForm, setFormDataSetter, formDataSetter, formAct
         <Form form={fmsForm} onValuesChange={onValuesChange} onFieldsChange={handleFormValueChange} autoComplete="off" id="shieldForm" layout="vertical">
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item label="FMS" name="fms">
-                        <Input disabled={isReadOnly} placeholder={preparePlaceholderText('fms')} />
+                    <Form.Item label={translateContent('bookingManagement.label.fms')} name="fms">
+                        <Input disabled={isReadOnly} placeholder={preparePlaceholderText(translateContent('bookingManagement.label.fms'))} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item label="FMS Rate" name="fmsRate" rules={[validateNumberWithTwoDecimalPlaces('FMS Rate')]}>
-                        <Input disabled={isReadOnly} placeholder={preparePlaceholderText('fms rate')} />
+                    <Form.Item label={translateContent('bookingManagement.label.fmsRate')} name="fmsRate" rules={[validateNumberWithTwoDecimalPlaces(translateContent('bookingManagement.label.fmsRate'))]}>
+                        <Input disabled={isReadOnly} placeholder={preparePlaceholderText(translateContent('bookingManagement.label.fmsRate'))} />
                     </Form.Item>
                 </Col>
             </Row>

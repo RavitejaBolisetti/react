@@ -16,6 +16,7 @@ import AdvanceVinBlockMasterFilter from './AdvanceVinBlockMasterFilter';
 
 import { vinBlockMasterAction } from 'store/actions/data/vehicle/vinBlockMasterAction';
 import { vinBlockAction } from 'store/actions/data/vehicle/vinBlockAction';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -29,7 +30,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Vin Block Master';
+    const moduleTitle = translateContent('vinBlockMaster.heading.moduleTitle');
 
     let returnValue = {
         userId,
@@ -76,6 +77,7 @@ export const VinBlockMasterBase = (props) => {
 
     const [formData, setFormData] = useState([]);
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const page = { current: 1, pageSize: 10 };
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
@@ -92,13 +94,14 @@ export const VinBlockMasterBase = (props) => {
     const dynamicPagination = true;
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
     };
 
     const onErrorAction = (res) => {
+        setShowDataLoading(false);
         showGlobalNotification({ message: res });
     };
 
@@ -132,14 +135,14 @@ export const VinBlockMasterBase = (props) => {
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: filterString?.pageSize ?? 10,
+                value: filterString?.pageSize || page?.pageSize,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: filterString?.current,
+                value: filterString?.current || page?.current,
                 canRemove: true,
                 filter: false,
             },
@@ -162,7 +165,7 @@ export const VinBlockMasterBase = (props) => {
     }, [filterString]);
 
     useEffect(() => {
-        if (userId && extraParams?.find((i) => i.key === 'pageNumber')?.value > 0) {
+        if (userId && extraParams) {
             setShowDataLoading(true);
             fetchVinBlockList({ setIsLoading: listVinShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
         }
@@ -208,7 +211,8 @@ export const VinBlockMasterBase = (props) => {
         dynamicPagination,
         filterString,
         totalRecords,
-        setPage: setPage,
+        setPage: setFilterString,
+        page: filterString,
         isLoading: showDataLoading,
         tableColumn: tableColumn(handleButtonClick),
         tableData: vinData,
@@ -225,11 +229,11 @@ export const VinBlockMasterBase = (props) => {
 
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
-            return 'View ';
+            return translateContent('global.drawerTitle.view');
         } else if (formActionType?.editMode) {
-            return 'Edit ';
+            return translateContent('global.drawerTitle.edit');
         } else {
-            return 'Add New ';
+            return translateContent('global.drawerTitle.addNew');
         }
     }, [formActionType]);
     const handleOnClick = () => {
@@ -237,8 +241,10 @@ export const VinBlockMasterBase = (props) => {
     };
 
     const handleSearch = (value) => {
-        setFilterString({ ...filterString, vin: value, advanceFilter: true, current: 1 });
-        searchForm.resetFields();
+        if (value !== '') {
+            setFilterString({ ...filterString, vin: value, advanceFilter: true, current: 1 });
+            searchForm.resetFields();
+        }
     };
 
     const removeFilter = (key) => {
@@ -251,7 +257,7 @@ export const VinBlockMasterBase = (props) => {
         }
     };
 
-    const title = 'Vin Block Master';
+    const title = translateContent('vinBlockMaster.heading.title');
 
     const advanceFilterResultProps = {
         extraParams,

@@ -17,7 +17,6 @@ const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
     const { formData, saleTypes, isLoading } = props;
-    console.log('🚀 ~ file: ViewDetail.js:20 ~ ViewDetailMain ~ formData:', formData);
 
     const [activeKey, setactiveKey] = useState([]);
 

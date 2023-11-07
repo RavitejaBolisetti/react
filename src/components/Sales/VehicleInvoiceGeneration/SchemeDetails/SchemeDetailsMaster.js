@@ -8,6 +8,7 @@ import { Form, Row, Col } from 'antd';
 
 import { AddEditForm, ViewDetail } from 'components/Sales/Common/SchemeDetails';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const SchemeDetailsMaster = (props) => {
     const { buttonData, formData, onCloseAction, formActionType } = props;
@@ -48,7 +49,7 @@ export const SchemeDetailsMaster = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <h2>{section?.title}</h2>
+                            <h2>{translateContent(`vehicleInvoiceGeneration.heading.section.` + section?.id)}</h2>
                         </Col>
                     </Row>
                     {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} viewOnly={true} />}

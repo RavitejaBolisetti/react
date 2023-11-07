@@ -10,6 +10,7 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 import { validateRequiredSelectField } from 'utils/validation';
+import { translateContent } from 'utils/translateContent';
 const { Search } = Input;
 const { Option } = Select;
 
@@ -46,8 +47,8 @@ const AddEditFormMain = (props) => {
         <Card>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={formData?.partySegment} label="Party Segment" name="partySegment" rules={[validateRequiredSelectField('Party Segment')]}>
-                        <Select {...selectProps} placeholder={preparePlaceholderSelect('Party Segment')} onChange={handleCustomer} disabled={!formActionType?.addMode}>
+                    <Form.Item initialValue={formData?.partySegment} label={translateContent('receipts.label.partyDetails.partySegment')} name="partySegment" rules={[validateRequiredSelectField(translateContent('receipts.label.partyDetails.partySegment'))]}>
+                        <Select {...selectProps} placeholder={preparePlaceholderSelect(translateContent('receipts.placeholder.partySegment'))} onChange={handleCustomer} disabled={!formActionType?.addMode}>
                             {partySegmentType?.map((item) => (
                                 <Option key={'dv' + item.key} value={item.key}>
                                     {item.value}
@@ -57,8 +58,8 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={formData?.partyId} label="Party ID" name="partyId" rules={[validateRequiredSelectField('Party ID')]}>
-                        {formActionType?.addMode ? <Search allowClear onChange={handleChange} onSearch={handleSearch} placeholder={preparePlaceholderText('party id')} disabled={!formActionType?.addMode} /> : <Input placeholder={preparePlaceholderText('party id')} disabled={true} />}
+                    <Form.Item initialValue={formData?.partyId} label={translateContent('receipts.label.partyDetails.partyId')} name="partyId" rules={[validateRequiredSelectField(translateContent('receipts.label.partyDetails.partyId'))]}>
+                        {formActionType?.addMode ? <Search allowClear onChange={handleChange} onSearch={handleSearch} placeholder={preparePlaceholderText(translateContent('receipts.placeholder.partyId'))} disabled={!formActionType?.addMode} /> : <Input placeholder={preparePlaceholderText(translateContent('receipts.placeholder.partyId'))} disabled={true} />}
                     </Form.Item>
                 </Col>
             </Row>
@@ -67,35 +68,35 @@ const AddEditFormMain = (props) => {
                     <Divider />
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formData?.partyName} label="Party Name" name="partyName">
-                                {isLoading ? checkAndSetDefaultValue('-', isLoading) : <Input placeholder={preparePlaceholderText('party name')} disabled={true} />}
+                            <Form.Item initialValue={formData?.partyName} label={translateContent('receipts.label.partyDetails.partyName')} name="partyName">
+                                {isLoading ? checkAndSetDefaultValue('-', isLoading) : <Input placeholder={preparePlaceholderText(translateContent('receipts.placeholder.partyName'))} disabled={true} />}
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formData?.address} label="Address" name="address">
-                                {isLoading ? checkAndSetDefaultValue('-', isLoading) : <Input placeholder={preparePlaceholderText('address')} disabled={true} />}
+                            <Form.Item initialValue={formData?.address} label={translateContent('receipts.label.partyDetails.address')}name="address">
+                                {isLoading ? checkAndSetDefaultValue('-', isLoading) : <Input placeholder={preparePlaceholderText(translateContent('receipts.placeholder.address'))} disabled={true} />}
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formData?.city} label="City" name="city">
-                                {isLoading ? checkAndSetDefaultValue('-', isLoading) : <Input placeholder={preparePlaceholderText('city')} disabled={true} />}
+                            <Form.Item initialValue={formData?.city} label={translateContent('receipts.label.partyDetails.city')} name="city">
+                                {isLoading ? checkAndSetDefaultValue('-', isLoading) : <Input placeholder={preparePlaceholderText(translateContent('receipts.placeholder.city'))} disabled={true} />}
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formData?.state} label="State" name="state">
-                                {isLoading ? checkAndSetDefaultValue('-', isLoading) : <Input placeholder={preparePlaceholderText('state')} disabled={true} />}
+                            <Form.Item initialValue={formData?.state} label={translateContent('receipts.label.partyDetails.state')} name="state">
+                                {isLoading ? checkAndSetDefaultValue('-', isLoading) : <Input placeholder={preparePlaceholderText(translateContent('receipts.placeholder.state'))} disabled={true} />}
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formData?.mobileNumber} label="Phone" name="mobileNumber">
-                                {isLoading ? checkAndSetDefaultValue('-', isLoading) : <Input placeholder={preparePlaceholderText('phone')} disabled={true} />}
+                            <Form.Item initialValue={formData?.mobileNumber} label={translateContent('receipts.label.partyDetails.phone')} name="mobileNumber">
+                                {isLoading ? checkAndSetDefaultValue('-', isLoading) : <Input placeholder={preparePlaceholderText(translateContent('receipts.placeholder.phone'))} disabled={true} />}
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formData?.mitraType} label="Mitra Type" name="mitraType">
-                                {isLoading ? checkAndSetDefaultValue('-', isLoading) : <Input placeholder={preparePlaceholderText('mitra type')} disabled={true} />}
+                            <Form.Item initialValue={formData?.mitraType} label={translateContent('receipts.label.partyDetails.mitraType')} name="mitraType">
+                                {isLoading ? checkAndSetDefaultValue('-', isLoading) : <Input placeholder={preparePlaceholderText(translateContent('receipts.placeholder.mitraType'))} disabled={true} />}
                             </Form.Item>
                         </Col>
                     </Row>

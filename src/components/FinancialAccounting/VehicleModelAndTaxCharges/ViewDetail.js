@@ -5,9 +5,10 @@
  */
 import React from 'react';
 import { Descriptions } from 'antd';
+import { translateContent } from 'utils/translateContent';
 
 const ViewDetailMain = (props) => {
-    const { formData ,styles} = props;
+    const { formData, styles } = props;
 
     const viewOneColProps = {
         bordered: false,
@@ -20,9 +21,9 @@ const ViewDetailMain = (props) => {
         <>
             <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
-                    <Descriptions.Item label="Model Group Code">{formData?.modelGroup}</Descriptions.Item>
-                    <Descriptions.Item label="Tax Category Description">{formData?.taxCategoryDescription}</Descriptions.Item>
-                    <Descriptions.Item label="Account Category Description">{formData?.accountCategoryDescription}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('vehicleModelAndTaxCharges.label.modelGroupCode')}>{formData?.modelGroup}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('vehicleModelAndTaxCharges.label.taxCategoryDescription')}>{formData?.taxCategoryDescription}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('vehicleModelAndTaxCharges.label.accountCategoryDescription')}>{formData?.accountCategoryDescription}</Descriptions.Item>
                 </Descriptions>
             </div>
         </>

@@ -16,6 +16,7 @@ import { disableFutureDate } from 'utils/disableDate';
 
 import { AMC_CONSTANTS } from './utils/AMCConstants';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const AdvancedSearchFrom = (props) => {
     const { setAdvanceSearchVisible, userType, dealerParentsLovList, dealerLocations, handleDealerParentChange } = props;
@@ -48,7 +49,7 @@ export const AdvancedSearchFrom = (props) => {
         if (bool) {
             return Promise.resolve();
         }
-        return Promise.reject(new Error('Date cant be less than Effective from date'));
+        return Promise.reject(new Error(translateContent('global.validation.dateLessThan')));
     };
 
     return (
@@ -56,27 +57,27 @@ export const AdvancedSearchFrom = (props) => {
             {userType === AMC_CONSTANTS?.MNM?.key && (
                 <Row gutter={16}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item initialValue={filterString?.dealerParent} label="Dealer Parent" name="dealerParent">
-                            {customSelectBox({ data: dealerParentsLovList, placeholder: preparePlaceholderSelect('Dealer Parent'), onChange: handleDealerParentChange })}
+                        <Form.Item initialValue={filterString?.dealerParent} label={translateContent('amcRegistration.label.dealerParent')} name="dealerParent">
+                            {customSelectBox({ data: dealerParentsLovList, placeholder: preparePlaceholderSelect(translateContent('amcRegistration.label.dealerParent')), onChange: handleDealerParentChange })}
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item initialValue={filterString?.dealerLocation} label="Dealer Location" name="dealerLocation">
-                            {customSelectBox({ data: dealerLocations, placeholder: preparePlaceholderSelect('Dealer Location'), fieldNames: { key: 'locationCode', value: 'dealerLocationName' } })}
+                        <Form.Item initialValue={filterString?.dealerLocation} label={translateContent('amcRegistration.label.dealerLocation')} name="dealerLocation">
+                            {customSelectBox({ data: dealerLocations, placeholder: preparePlaceholderSelect(translateContent('amcRegistration.label.dealerLocation')), fieldNames: { key: 'locationCode', value: 'dealerLocationName' } })}
                         </Form.Item>
                     </Col>
                 </Row>
             )}
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="AMC Registration From Date" name="fromDate" className={styles?.datePicker} rules={[validateRequiredInputField('invoice from date')]}>
+                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label={translateContent('amcRegistration.label.amcFromDate')} name="fromDate" className={styles?.datePicker} rules={[validateRequiredInputField('invoice from date')]}>
                         <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} onChange={() => advanceFilterForm.setFieldsValue({ toDate: undefined })} className={styles.fullWidth} disabledDate={disableFutureDate} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         initialValue={formatDateToCalenderDate(filterString?.toDate)}
-                        label="AMC Registration To Date"
+                        label={translateContent('amcRegistration.label.amcToDate')}
                         name="toDate"
                         className={styles?.datePicker}
                         rules={[

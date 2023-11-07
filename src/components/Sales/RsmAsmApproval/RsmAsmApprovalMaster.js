@@ -27,6 +27,8 @@ import { ViewDetail } from './ViewDetail';
 import styles from 'assets/sass/app.module.scss';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
 
+import { translateContent } from 'utils/translateContent';
+
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -278,7 +280,7 @@ export const RsmAsmApprovalMasterBase = (props) => {
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.title'), message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
 
             setButtonData({ ...buttonData, formBtnActive: false });
@@ -315,7 +317,7 @@ export const RsmAsmApprovalMasterBase = (props) => {
             setConfirmRequest({
                 isVisible: true,
                 titleOverride: actionItem?.buttonAction === REQUEST_CONSTANT?.Reject?.value ? REQUEST_CONSTANT?.Reject?.key?.concat(requestModuleTitle) : REQUEST_CONSTANT?.Approve?.key?.concat(requestModuleTitle),
-                text: actionItem?.buttonAction === REQUEST_CONSTANT?.Approve?.value ? 'Are you sure you want to approve request?' : '',
+                text: actionItem?.buttonAction === REQUEST_CONSTANT?.Approve?.value ? translateContent('rsmAsmApproval.label.approveReq') : '',
                 closable: true,
                 icon: false,
                 onCloseAction: rejectModalCloseAction,
@@ -377,7 +379,7 @@ export const RsmAsmApprovalMasterBase = (props) => {
         isVisible: isAdvanceSearchVisible,
 
         icon: <FilterIcon size={20} />,
-        titleOverride: 'Advance Filters',
+        titleOverride: translateContent('global.advanceFilter.title'),
 
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
@@ -394,7 +396,7 @@ export const RsmAsmApprovalMasterBase = (props) => {
         styles,
         isDetailLoaded,
         onCloseAction,
-        titleOverride: 'RSM Approval Summary',
+        titleOverride: translateContent('rsmAsmApproval.heading.title'),
         handleButtonClick,
         buttonData,
         setButtonData,

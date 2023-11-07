@@ -6,9 +6,10 @@
 import React from 'react';
 import { Descriptions, Typography } from 'antd';
 import { ACCESSIBLE_LOCATION_INDICATOR } from 'constants/modules/applicationMaster';
+import { translateContent } from 'utils/translateContent';
 const { Text } = Typography;
 
-const ViewDetailMain = ({ applicationDetailsData, viewTitle = 'Application Details', styles }) => {
+const ViewDetailMain = ({ applicationDetailsData, viewTitle = translateContent('gstIRNAuthentication.irnTransactionListMaster.heading.moduleTitle'), styles }) => {
     const { applicationAction, documentType, accessibleLocation, ...rest } = applicationDetailsData[0];
 
     const viewOneColProps = {
@@ -23,12 +24,11 @@ const ViewDetailMain = ({ applicationDetailsData, viewTitle = 'Application Detai
         <>
             <div className={styles.viewContainerInner}>
                 <Descriptions {...viewOneColProps}>
-                    <Descriptions.Item label="Application ID">{rest?.applicationId}</Descriptions.Item>
-                    <Descriptions.Item label="Application Name/Reports">{rest?.applicationName || 'NA'}</Descriptions.Item>
-                    <Descriptions.Item label="Application Type">{rest.applicationType || 'NA'}</Descriptions.Item>
-                    <Descriptions.Item label="Accessible Location">{ACCESSIBLE_LOCATION_INDICATOR[rest?.accessableIndicator] || 'NA'}</Descriptions.Item>
-                    <Descriptions.Item label="IRN Integration">{rest?.irnIntegrationRequired ? <Text type="success"> Yes </Text> : <Text>No</Text>}</Descriptions.Item>
-
+                    <Descriptions.Item label={translateContent('gstIRNAuthentication.irnTransactionListMaster.label.applicationId')}>{rest?.applicationId}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('gstIRNAuthentication.irnTransactionListMaster.label.applicationName')}>{rest?.applicationName || 'NA'}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('gstIRNAuthentication.irnTransactionListMaster.label.applicationType')}>{rest.applicationType || 'NA'}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('gstIRNAuthentication.irnTransactionListMaster.label.accessibleLoc')}>{ACCESSIBLE_LOCATION_INDICATOR[rest?.accessableIndicator] || 'NA'}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('gstIRNAuthentication.irnTransactionListMaster.label.irnIntegeration')}>{rest?.irnIntegrationRequired ? <Text type="success"> Yes </Text> : <Text>No</Text>}</Descriptions.Item>
                 </Descriptions>
             </div>
         </>

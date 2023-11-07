@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import { Col, Row, Collapse, Descriptions, Divider } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -51,11 +52,11 @@ const ViewDetailMain = (props) => {
                         <Panel header="Voucher Details" key="1">
                             <Divider />
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Total Settled Amount">{checkAndSetDefaultValue(voucherDetailsDto?.totalSettledAmount, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Total Write-Off Amount">{checkAndSetDefaultValue(voucherDetailsDto?.totalWriteOffAmount, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Total Apportioned Amount">{checkAndSetDefaultValue(voucherDetailsDto?.totalApportionedAmount, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Total Amount">{checkAndSetDefaultValue(voucherDetailsDto?.totalAmount, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Total Balanced Amount">{checkAndSetDefaultValue(voucherDetailsDto?.totalBalancedAmount, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('creditDebitNote.voucherAndPartyDetails.label.partySegment')}>{checkAndSetDefaultValue(voucherDetailsDto?.totalSettledAmount, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('creditDebitNote.voucherAndPartyDetails.label.totalWrite-OffAmount')}>{checkAndSetDefaultValue(voucherDetailsDto?.totalWriteOffAmount, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('creditDebitNote.voucherAndPartyDetails.label.totalApportionedAmount')}>{checkAndSetDefaultValue(voucherDetailsDto?.totalApportionedAmount, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('creditDebitNote.voucherAndPartyDetails.label.totalAmount')}>{checkAndSetDefaultValue(voucherDetailsDto?.totalAmount, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('creditDebitNote.voucherAndPartyDetails.label.totalBalancedAmount')}>{checkAndSetDefaultValue(voucherDetailsDto?.totalBalancedAmount, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         </Panel>
                     </Collapse>
@@ -63,13 +64,13 @@ const ViewDetailMain = (props) => {
                         <Panel header="Party Details" key="2">
                             <Divider />
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Party ID">{getCodeValue(typeData[PARAM_MASTER?.PARTY_CATEG?.id], partyDetailsDto?.partySegment)}</Descriptions.Item>
-                                <Descriptions.Item label="Party ID">{checkAndSetDefaultValue(partyDetailsDto?.partyId, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Party Name">{checkAndSetDefaultValue(partyDetailsDto?.partyName, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Address">{checkAndSetDefaultValue(partyDetailsDto?.address, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="City">{checkAndSetDefaultValue(partyDetailsDto?.city, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="State">{checkAndSetDefaultValue(partyDetailsDto?.state, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Phone No.">{checkAndSetDefaultValue(partyDetailsDto?.mobileNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('creditDebitNote.voucherAndPartyDetails.label.partySegment')}>{getCodeValue(typeData[PARAM_MASTER?.PARTY_CATEG?.id], partyDetailsDto?.partySegment)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('creditDebitNote.voucherAndPartyDetails.label.partyId')}>{checkAndSetDefaultValue(partyDetailsDto?.partyId, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('creditDebitNote.voucherAndPartyDetails.label.partyName')}>{checkAndSetDefaultValue(partyDetailsDto?.partyName, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('creditDebitNote.voucherAndPartyDetails.label.address')}>{checkAndSetDefaultValue(partyDetailsDto?.address, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('creditDebitNote.voucherAndPartyDetails.label.city')}>{checkAndSetDefaultValue(partyDetailsDto?.city, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('creditDebitNote.voucherAndPartyDetails.label.state')}>{checkAndSetDefaultValue(partyDetailsDto?.state, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('creditDebitNote.voucherAndPartyDetails.label.phoneNo')}>{checkAndSetDefaultValue(partyDetailsDto?.mobileNumber, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         </Panel>
                     </Collapse>

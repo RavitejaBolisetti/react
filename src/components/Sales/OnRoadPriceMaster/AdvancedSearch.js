@@ -15,6 +15,7 @@ import { onRoadPriceMasterAction } from 'store/actions/data/vehicle/onRoadPriceM
 import { withModal } from 'components/withModal';
 import { ModalButtons } from 'components/common/Button';
 import { ONROAD_PRICE_EX_SHOWROOM_STATUS } from 'constants/OnRoadPriceExShowroomStatus';
+import { translateContent } from 'utils/translateContent';
 
 const { Option } = Select;
 
@@ -31,7 +32,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'OnRoad Price Master';
+    const moduleTitle = translateContent('onRoadPriceMaster.heading.moduleTitle');
     let returnValue = {
         userId,
         accessToken,
@@ -103,8 +104,8 @@ export const AdvancedSearchFrom = (props) => {
     const modalProps = {
         reset: true,
         submit: true,
-        resetName: 'Reset',
-        submitName: 'Search',
+        resetName: translateContent('global.buttons.reset'),
+        submitName: translateContent('global.buttons.search'),
         handleResetFilter,
         htmltype: true,
     };
@@ -112,7 +113,7 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Pricing Type" initialValue={filterString?.priceType} name="priceType" rules={[validateRequiredSelectField('Pricing Type')]}>
+                    <Form.Item label={translateContent('onRoadPriceMaster.label.pricingType')} initialValue={filterString?.priceType} name="priceType" rules={[validateRequiredSelectField(translateContent('onRoadPriceMaster.label.pricingType'))]}>
                         <Select placeholder="Select" {...selectProps}>
                             {typeData['PRC_TYP']?.map((item) => (
                                 <Option value={item?.key}>{item?.value}</Option>
@@ -122,7 +123,7 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Change in EX showroom org" initialValue={filterString?.changeInExShowroomOrg || ONROAD_PRICE_EX_SHOWROOM_STATUS.EXSHROOM.key} name="changeInExShowroomOrg">
+                    <Form.Item label={translateContent('onRoadPriceMaster.label.changeEXShowroomORG')} initialValue={filterString?.changeInExShowroomOrg || ONROAD_PRICE_EX_SHOWROOM_STATUS.EXSHROOM.key} name="changeInExShowroomOrg">
                         <Select placeholder="Select" {...selectProps}>
                             {typeData['CHNG_EX_ORG']?.map((item) => (
                                 <Option value={item?.key}>{item?.value}</Option>
@@ -131,7 +132,7 @@ export const AdvancedSearchFrom = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Pricing City" initialValue={filterString?.pricingCity} name="pricingCity">
+                    <Form.Item label={translateContent('onRoadPriceMaster.label.pricingType')} initialValue={filterString?.pricingCity} name="pricingCity">
                         <Select placeholder="Select" {...selectProps}>
                             {cityData?.map((item) => (
                                 <Option value={item?.code}>{item?.name}</Option>
@@ -140,7 +141,7 @@ export const AdvancedSearchFrom = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Status" initialValue={filterString?.status} name="status">
+                    <Form.Item label={translateContent('onRoadPriceMaster.label.status')} initialValue={filterString?.status} name="status">
                         <Select placeholder="Select" {...selectProps}>
                             {typeData['ON_ROAD_STATUS']?.map((item) => (
                                 <Option value={item?.key}>{item?.value}</Option>

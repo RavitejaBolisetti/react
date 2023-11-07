@@ -7,6 +7,8 @@ import React from 'react';
 import { Descriptions, Collapse, Divider } from 'antd';
 import CardProductAttribute from './TaxAndChargesCalculation/CardTaxAndChargeCal';
 import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
+import { translateContent } from 'utils/translateContent';
+
 const { Panel } = Collapse;
 
 const expandIcon = ({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />);
@@ -22,13 +24,13 @@ const ViewDetailBase = ({ styles, taxCharges, taxCategory, setDisabledEdit, stat
         <>
             <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
-                    <Descriptions.Item label="Code">{taxCategory?.taxCategoryCode}</Descriptions.Item>
-                    <Descriptions.Item label="Description">{taxCategory?.taxCategoryDescription}</Descriptions.Item>
-                    <Descriptions.Item label="Status">{taxCategory?.status === true ? 'Active' : taxCategory?.status === false ? 'Inactive' : null}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('taxChargeCatagory.label.code')}>{taxCategory?.taxCategoryCode}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('taxChargeCatagory.label.description')}>{taxCategory?.taxCategoryDescription}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('taxChargeCatagory.label.status')}>{taxCategory?.status === true ? 'Active' : taxCategory?.status === false ? 'Inactive' : null}</Descriptions.Item>
                     <div>
                         {taxCategory?.taxCategoryDetail?.length > 0 && (
                             <Collapse expandIcon={expandIcon} collapsible="icon" className={styles.fullWidth}>
-                                <Panel header="Tax & Charges Calculation" key="2">
+                                <Panel header={translateContent('taxChargeCatagory.heading.panelHeader')} key="2">
                                     <Divider />
                                     {taxCategory?.taxCategoryDetail?.map((item) => (
                                         <CardProductAttribute key={'tax' + item?.taxChargeTypeCode} chargeCode={item?.chargeCode} chargeDescription={item?.chargeDescription} chargeType={item?.chargeType} id={item?.id} setDisabledEdit={setDisabledEdit} taxCharges={taxCharges} stateCode={item?.stateCode} saleType={item?.saleType} stateData={stateData} saleData={saleData} />

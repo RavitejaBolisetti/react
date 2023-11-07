@@ -11,6 +11,7 @@ import { duplicateValidator, validateRequiredSelectField } from 'utils/validatio
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 import styles from './../ApplicationMaster.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const ApplicationActionsForm = ({ finalFormdata, form, onFinish, isEditing, isBtnDisabled, actions, disableStatus, onFieldsChange }) => {
     const onFinishFailed = (err) => {
@@ -26,13 +27,13 @@ const ApplicationActionsForm = ({ finalFormdata, form, onFinish, isEditing, isBt
                     <Form form={form} onFieldsChange={onFieldsChange} autoComplete="off" id="applicationActionsForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                         <Row gutter={20}>
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item label="Action" name="applicationName" rules={[validateRequiredSelectField('application action'), { validator: (rule, value) => duplicateValidator(value?.label, 'actionName', finalFormdata?.applicationAction) }]}>
-                                    <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} labelInValue placeholder={preparePlaceholderSelect('application action')} fieldNames={fieldNames} options={actions?.filter((el) => el?.actionName)} disabled={isBtnDisabled || disableStatus} allowClear />
+                                <Form.Item label={translateContent('applicationMaster.label.action')} name="applicationName" rules={[validateRequiredSelectField(translateContent('applicationMaster.validation.applicationAction')), { validator: (rule, value) => duplicateValidator(value?.label, 'actionName', finalFormdata?.applicationAction) }]}>
+                                    <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} labelInValue placeholder={preparePlaceholderSelect(translateContent('applicationMaster.placeholder.applicationAction'))} fieldNames={fieldNames} options={actions?.filter((el) => el?.actionName)} disabled={isBtnDisabled || disableStatus} allowClear />
                                 </Form.Item>
                             </Col>
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item onClick={(e) => e.stopPropagation()} initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="status" label="Status" valuePropName="checked">
-                                    <Switch disabled={isBtnDisabled} checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" />
+                                <Form.Item onClick={(e) => e.stopPropagation()} initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="status" label={translateContent('global.label.status')} valuePropName="checked">
+                                    <Switch disabled={isBtnDisabled} checkedChildren={translateContent('global.label.active')} unCheckedChildren={translateContent('global.label.inActive')} valuePropName="checked" />
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -40,7 +41,7 @@ const ApplicationActionsForm = ({ finalFormdata, form, onFinish, isEditing, isBt
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.marB20}>
                                     <Button form="applicationActionsForm" disabled={isBtnDisabled} icon={<PlusOutlined />} htmlType="submit" type="primary">
-                                        Add
+                                        {translateContent('global.buttons.add')}
                                     </Button>
                                 </Col>
                             </Row>

@@ -13,6 +13,7 @@ import { DataTable } from 'utils/dataTable';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { VoucherAddEditForm } from './VoucherAddEditForm';
 import { tableColumn } from './tableColumn';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -30,7 +31,7 @@ const AddEditFormMain = (props) => {
     const [voucherTableFormData, setVoucherTableFormData] = useState();
     const [isAccountHeadValidated, setIsAccountHeadValidated] = useState(true);
 
-    const voucherModuleTitle = `Voucher`;
+    const voucherModuleTitle = translateContent('creditDebitNote.voucherDetails.heading.voucherModuleTitle');
 
     const addContactHandeler = () => {
         voucherForm.resetFields();
@@ -120,9 +121,9 @@ const AddEditFormMain = (props) => {
                             header={
                                 <Row>
                                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                        <Text strong>Voucher Details</Text>
+                                        <Text strong>translateContent('creditDebitNote.voucherDetails.heading.title')</Text>
                                         <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary">
-                                            Add
+                                            {translateContent('global.buttons.add')}
                                         </Button>
                                     </Col>
                                 </Row>

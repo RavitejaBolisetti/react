@@ -12,7 +12,7 @@ import { VehicleReceiptFormButton } from '../VehicleReceiptFormButton';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
+import { translateContent } from 'utils/translateContent';
 import { supplierInvoiceDataActions } from 'store/actions/data/vehicleReceipt/supplierInvoice';
 import { showGlobalNotification } from 'store/actions/notification';
 import { PARAM_MASTER } from 'constants/paramMaster';
@@ -30,7 +30,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Booking Details';
+    const moduleTitle = translateContent('vehicleReceipt.heading.bookingDetails');
 
     let returnValue = {
         userId,

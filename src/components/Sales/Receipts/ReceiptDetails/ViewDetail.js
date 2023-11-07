@@ -10,6 +10,7 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { DATA_TYPE } from 'constants/dataType';
 import { getCodeValue } from 'utils/getCodeValue';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 
@@ -27,18 +28,18 @@ const ViewDetailMain = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse(1)} expandIconPosition="end" className={styles.collapseContainer} collapsible="icon">
-                        <Panel header="Receipt Information" key="1">
+                        <Panel header={translateContent('receipts.heading.collapse.receiptInformation')} key="1">
                             <Divider />
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Actual Receipt Date ">{checkAndSetDefaultValue(receiptData?.receiptDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                                <Descriptions.Item label="Receipt Type">{checkAndSetDefaultValue(getCodeValue(receiptType, receiptData?.receiptType), isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('receipts.label.receiptDetails.receiptDate')}>{checkAndSetDefaultValue(receiptData?.receiptDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('receipts.label.receiptDetails.receiptType')}>{checkAndSetDefaultValue(getCodeValue(receiptType, receiptData?.receiptType), isLoading)}</Descriptions.Item>
                             </Descriptions>
                             <Divider />
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Total Apportioned Amount">{checkAndSetDefaultValue(receiptData?.totalApportionAmount, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Total Received Amount">{checkAndSetDefaultValue(receiptData?.totalReceivedAmount, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Total Write Off Amount">{checkAndSetDefaultValue(receiptData?.totalWriteOffAmount, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Remarks">{checkAndSetDefaultValue(receiptData?.remarks)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('receipts.label.receiptDetails.totalApportionAmount')}>{checkAndSetDefaultValue(receiptData?.totalApportionAmount, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('receipts.label.receiptDetails.totalReceivedAmount')}>{checkAndSetDefaultValue(receiptData?.totalReceivedAmount, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('receipts.label.receiptDetails.totalWriteOffAmount')}>{checkAndSetDefaultValue(receiptData?.totalWriteOffAmount, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('receipts.placeholder.remarks')}>{checkAndSetDefaultValue(receiptData?.remarks)}</Descriptions.Item>
                             </Descriptions>
                         </Panel>
                     </Collapse>

@@ -16,6 +16,7 @@ import { USER_TYPE_USER } from 'constants/modules/UserManagement/userType';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Text } = Typography;
 
@@ -280,7 +281,7 @@ const AssignUserRole = (props) => {
         isLoading: isDlrAppLoding || isMnmAppLoding,
         isVisible: isModalVisible,
         onCloseAction: handleCancelModal,
-        titleOverride: 'Role Access',
+        titleOverride: translateContent('userManagement.label.roleAccess'),
         roleCode: record?.roleCode,
         record,
         formActionType,
@@ -327,13 +328,13 @@ const AssignUserRole = (props) => {
                             <Row>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                     <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                        Roles
+                                        {translateContent('userManagement.label.roles')}
                                     </Text>
 
                                     {!formActionType?.viewMode && (
                                         <>
                                             <Button icon={<PlusOutlined />} onClick={(event, key) => handleShowRoleAppModal(event, key)} className={styles.marR20} type="primary">
-                                                Add
+                                                {translateContent('global.buttons.add')}
                                             </Button>
                                         </>
                                     )}
@@ -349,7 +350,7 @@ const AssignUserRole = (props) => {
                                                 imageStyle={{
                                                     height: 60,
                                                 }}
-                                                description={<span> No record found.</span>}
+                                                description={<span>{translateContent('global.generalMessage.noRecordsFound')}</span>}
                                             ></Empty>
                                         )}
                                     >

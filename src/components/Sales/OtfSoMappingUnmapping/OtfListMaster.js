@@ -21,6 +21,7 @@ import { MasterContainer } from './MasterContainer';
 import { setAllkeysToNull } from './Constants';
 import { OTF_SO_MAPPING_UNMAPPING_CONSTANTS, HEADER_CONSTANTS, FORM_TYPE_CONSTANSTS } from './Constants';
 import { converDateDayjs } from 'utils/formatDateTime';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -39,7 +40,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Booking SO Mapping And Unmapping';
+    const moduleTitle = translateContent('bookingSoMapping.heading.pageTitle');
 
     let returnValue = {
         collapsed,
@@ -116,7 +117,7 @@ export const OtfListMasterBase = (props) => {
     const [SoForm] = Form.useForm();
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
     };
 
     const onErrorAction = (message) => {
@@ -371,7 +372,7 @@ export const OtfListMasterBase = (props) => {
             soStatusCode: values[FORM_TYPE_CONSTANSTS?.FORM_2?.id]?.soStatusCode,
         };
         if (handleNullcheck(form_1_Values, form_2_Values, status?.key === OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.RESERVE_QUOTA?.key)) {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Validate booking number to continue' });
+            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationSuccess.title'), message: translateContent('bookingSoMappUnmapp.errorMsg.message') });
             return;
         }
         const finalData = { mapStatusCode: selectedKey, dealerLocationCode, parentGroupCode, resonCategoryCode, reasonDescriptionCode, soDetails: [form_1_Values, form_2_Values] };
@@ -379,7 +380,7 @@ export const OtfListMasterBase = (props) => {
             SoForm.resetFields();
             resetDealerLocationData();
             setfilterString();
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         };
 
         const onError = (message) => {
@@ -441,7 +442,7 @@ export const OtfListMasterBase = (props) => {
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form form={form} autoComplete="off" colon={false} className={styles.masterListSearchForm}>
                             <Form.Item name="code">
-                                <Select loading={isConfigurableLoading} options={DropDownData} fieldNames={{ label: 'value', value: 'key' }} onChange={handleSelect} placeholder="Select" allowClear showSearch optionFilterProp="value" />
+                                <Select loading={isConfigurableLoading} options={DropDownData} fieldNames={{ label: 'value', value: 'key' }} onChange={handleSelect} placeholder={translateContent('global.placeholder.select')} allowClear showSearch optionFilterProp="value" />
                             </Form.Item>
                         </Form>
                     </Col>

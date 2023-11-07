@@ -3,10 +3,13 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import { DashboardPage } from 'pages/dashboard';
 import * as routing from 'constants/routing';
+import { menuDataActions } from 'store/actions/data/menu';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 import {
     ProductHierarchyPage,
@@ -85,12 +88,57 @@ import { EmbeddedDocumentPage } from 'pages/report/EmbeddedDocument/EmbeddedDocu
 
 import { CMSPage } from 'pages/cms';
 import { DealerCompanyPage } from 'pages/common/Dealer';
+import { UnAuthozisedAccess } from 'components/UnAuthozisedAccess';
 
-export const AuthenticatedUserPage = () => {
-    return (
+const mapStateToProps = (state) => {
+    const {
+        auth: { userId, isLoggedIn },
+        data: {
+            Menu: { isLoaded: isDataLoaded = false, isLoading, data: menuData = [], flatternData },
+        },
+    } = state;
+
+    return {
+        userId,
+        isLoggedIn,
+        isDataLoaded,
+        isLoading,
+        menuData,
+        flatternData,
+    };
+};
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    ...bindActionCreators(
+        {
+            fetchMenuList: menuDataActions.fetchList,
+            listShowMenuLoading: menuDataActions.listShowLoading,
+        },
+        dispatch
+    ),
+});
+
+const AuthenticatedUserPageMain = (props) => {
+    const { isDataLoaded, listShowMenuLoading, fetchMenuList, flatternData, userId } = props;
+
+    const location = useLocation();
+    const pagePath = location.pathname;
+
+    const menuId = flatternData?.find((i) => i.link === pagePath)?.menuId;
+
+    useEffect(() => {
+        if (!isDataLoaded) {
+            fetchMenuList({ setIsLoading: listShowMenuLoading, userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isDataLoaded, userId]);
+
+    const routeExclusion = [routing?.ROUTING_HOME, routing?.ROUTING_DASHBOARD];
+    const authorized = (menuId && isDataLoaded) || routeExclusion?.includes(pagePath);
+    
+    return authorized ? (
         <Routes>
             <Route path={routing.ROUTING_HOME} element={<SplashPage />} exact />
-            {/* <Route path={routing.ROUTING_DASHBOARD_OLD} element={<DashboardOldPage />} /> */}
             <Route path={routing.ROUTING_DASHBOARD} element={<DashboardPage />} />
 
             <Route path={routing.ROUTING_COMMON_MANUFACTURER_ORGANIZATION_HIERARCHY} element={<ManufacturerOrgHierarchyPage />} />
@@ -195,5 +243,11 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_RSA_REGISTRATION} element={<RSARegistrationPage />} exact />
             <Route path={routing.PAGE_NOT_FOUND} element={<PageNotFound />} exact />
         </Routes>
+    ) : (
+        <Routes>
+            <Route path={routing.PAGE_NOT_FOUND} element={<UnAuthozisedAccess />} exact />
+        </Routes>
     );
 };
+
+export const AuthenticatedUserPage = connect(mapStateToProps, mapDispatchToProps)(AuthenticatedUserPageMain);

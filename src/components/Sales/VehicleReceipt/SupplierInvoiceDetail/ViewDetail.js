@@ -8,6 +8,7 @@ import { Card, Descriptions } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { DATA_TYPE } from 'constants/dataType';
 import { getCodeValue } from 'utils/getCodeValue';
+import { translateContent } from 'utils/translateContent';
 
 const ViewDetailMain = (props) => {
     const { formData, supplierTypeData, isLoading } = props;
@@ -22,17 +23,17 @@ const ViewDetailMain = (props) => {
     return (
         <Card>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Supplier Type">{checkAndSetDefaultValue(getCodeValue(supplierTypeData, formData?.supplierType), isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Supplier Name">{checkAndSetDefaultValue(formData?.supplierName, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Supplier Invoice No.">{checkAndSetDefaultValue(formData?.supplierInvoiceNumber, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Supplier Invoice Date">{checkAndSetDefaultValue(formData?.supplierInvoiceDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                <Descriptions.Item label="Road Permit Number">{checkAndSetDefaultValue(formData?.roadPermitNumber, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Actual Dispatch Date">{checkAndSetDefaultValue(formData?.actualDispatchDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                <Descriptions.Item label="Total Invoice Amount">{checkAndSetDefaultValue(formData?.totalInvoiceAmount, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Lorry Receipt No.">{checkAndSetDefaultValue(formData?.lorryReceiptNumber, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Transporter">{checkAndSetDefaultValue(formData?.transpoter, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Supplier GST Number">{checkAndSetDefaultValue(formData?.supplierGstNumber, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Geo Fencing Date & Time">{checkAndSetDefaultValue(formData?.geoFencingDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('vehicleReceipt.label.supplierInvoiceDetails.supplierType')}>{checkAndSetDefaultValue(getCodeValue(supplierTypeData, formData?.supplierType), isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('vehicleReceipt.label.supplierInvoiceDetails.supplierName')}>{checkAndSetDefaultValue(formData?.supplierName, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('vehicleReceipt.label.supplierInvoiceDetails.supplierInvoiceNumber')}>{checkAndSetDefaultValue(formData?.supplierInvoiceNumber, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('vehicleReceipt.label.supplierInvoiceDetails.supplierInvoiceDate')}>{checkAndSetDefaultValue(formData?.supplierInvoiceDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('vehicleReceipt.label.supplierInvoiceDetails.roadPermitNumber')}>{checkAndSetDefaultValue(formData?.roadPermitNumber, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('vehicleReceipt.label.supplierInvoiceDetails.actualDispatchDate')}>{checkAndSetDefaultValue(formData?.actualDispatchDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('vehicleReceipt.label.supplierInvoiceDetails.totalInvoiceAmount')}>{checkAndSetDefaultValue(formData?.totalInvoiceAmount, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('vehicleReceipt.label.supplierInvoiceDetails.lorryReceiptNumber')}>{checkAndSetDefaultValue(formData?.lorryReceiptNumber, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('vehicleReceipt.label.supplierInvoiceDetails.transporter')}>{checkAndSetDefaultValue(formData?.transpoter, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('vehicleReceipt.label.supplierInvoiceDetails.supplierGstNumber')}>{checkAndSetDefaultValue(formData?.supplierGstNumber, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('vehicleReceipt.label.supplierInvoiceDetails.geoFencingDateAndTime')}>{checkAndSetDefaultValue(formData?.geoFencingDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
             </Descriptions>
         </Card>
     );

@@ -9,6 +9,7 @@ import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/prepareP
 import { validateRequiredInputField, validateNumberWithTwoDecimalPlaces, validateRequiredSelectField } from 'utils/validation';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const OptionServicesFormMain = (props) => {
     const { vehicleServiceData, handleCancel, handleFormValueChange, optionalServices, setOptionalServices, selectedOrderId, formData, optionForm, editingOptionalData, setEditingOptionalData } = props;
@@ -50,8 +51,8 @@ const OptionServicesFormMain = (props) => {
                     <Form autoComplete="off" layout="vertical" form={optionForm} onFinish={onFinish} data-testid="logRole">
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8} xxl={8}>
-                                <Form.Item name="taxId" label="Service Name" rules={[validateRequiredSelectField('Service Name')]}>
-                                    <Select onChange={(value, selectedObj) => optionForm.setFieldsValue({ serviceName: selectedObj?.chargeDescription })} options={uniqueServiceOptions} fieldNames={{ label: 'chargeDescription', value: 'id' }} placeholder={preparePlaceholderSelect('Service Name')} allowClear />
+                                <Form.Item name="taxId" label={translateContent('vehicleInvoiceGeneration.label.vehicleDetails.optionalServices.serviceName')} rules={[validateRequiredSelectField(translateContent('vehicleInvoiceGeneration.label.vehicleDetails.optionalServices.serviceName'))]}>
+                                    <Select onChange={(value, selectedObj) => optionForm.setFieldsValue({ serviceName: selectedObj?.chargeDescription })} options={uniqueServiceOptions} fieldNames={{ label: 'chargeDescription', value: 'id' }} placeholder={preparePlaceholderSelect(translateContent('vehicleInvoiceGeneration.label.vehicleDetails.optionalServices.serviceName'))} allowClear />
                                 </Form.Item>
                                 <Form.Item hidden name="otfNumber" initialValue={selectedOrderId} />
                                 <Form.Item hidden name="otfId" initialValue={formData?.otfId ?? ''} />
@@ -60,16 +61,16 @@ const OptionServicesFormMain = (props) => {
                                 <Form.Item hidden name="id" />
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="Amount" name="amount" rules={[validateRequiredInputField('Amount'), validateNumberWithTwoDecimalPlaces('Amount')]}>
-                                    <Input maxLength={7} placeholder={preparePlaceholderText('Amount')} />
+                                <Form.Item label={translateContent('vehicleInvoiceGeneration.label.vehicleDetails.optionalServices.amount')} name="amount" rules={[validateRequiredInputField(translateContent('vehicleInvoiceGeneration.label.vehicleDetails.optionalServices.amount')), validateNumberWithTwoDecimalPlaces(translateContent('vehicleInvoiceGeneration.label.vehicleDetails.optionalServices.amount'))]}>
+                                    <Input maxLength={7} placeholder={preparePlaceholderText(translateContent('vehicleInvoiceGeneration.label.vehicleDetails.optionalServices.amount'))} />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.marT30}>
                                 <Button className={styles.marR20} onClick={onFinish} type="primary">
-                                    Save
+                                    {translateContent('global.buttons.save')}
                                 </Button>
                                 <Button onClick={handleCancel} danger>
-                                    Cancel
+                                    {translateContent('global.buttons.cancel')}
                                 </Button>
                             </Col>
                         </Row>

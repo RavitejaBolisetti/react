@@ -12,7 +12,7 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 import { ViewDetail } from './ViewDetail';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
-
+import { translateContent } from 'utils/translateContent';
 import styles from 'assets/sass/app.module.scss';
 
 const { Option } = Select;
@@ -59,8 +59,8 @@ const AddEditFormMain = (props) => {
                         <>
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.countryCode || defaultCountry} label="Country" name="countryCode" placeholder={preparePlaceholderSelect('Country')} rules={[validateRequiredInputField('Country')]}>
-                                        <Select showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear onChange={handleCountryChange}>
+                                    <Form.Item initialValue={formData?.countryCode || defaultCountry} label={translateContent('state.label.country')} name="countryCode" placeholder={preparePlaceholderSelect(translateContent('state.placeholder.country'))} rules={[validateRequiredInputField(translateContent('state.validation.country'))]}>
+                                        <Select showSearch loading={!isDataCountryLoaded} placeholder={translateContent('global.placeholder.select')} allowClear onChange={handleCountryChange}>
                                             {countryData?.map((item) => (
                                                 <Option key={item?.countryCode} value={item?.countryCode}>
                                                     {item?.countryName}
@@ -69,29 +69,25 @@ const AddEditFormMain = (props) => {
                                         </Select>
                                     </Form.Item>
                                 </Col>
-
                                 {!addMode && (
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item initialValue={formData?.code} label="State Code" name="code" rules={[validateRequiredInputField('State Code')]}>
-                                            <Input placeholder={preparePlaceholderText('State Code')} maxLength={6} disabled={editMode ? true : false} />
+                                        <Form.Item initialValue={formData?.code} label={translateContent('state.label.stateCode')} name="code" rules={[validateRequiredInputField(translateContent('state.validation.stateCode'))]}>
+                                            <Input placeholder={preparePlaceholderText(translateContent('state.placeholder.stateCode'))} maxLength={6} disabled={editMode ? true : false} />
                                         </Form.Item>
                                     </Col>
                                 )}
-
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label="State Name" initialValue={formData?.name} rules={[validateRequiredInputField('State Name')]} name="name">
-                                        <Input placeholder={preparePlaceholderText('State Name')} maxLength={50} />
+                                    <Form.Item label={translateContent('state.label.stateName')} initialValue={formData?.name} rules={[validateRequiredInputField(translateContent('state.validation.stateName'))]} name="name">
+                                        <Input placeholder={preparePlaceholderText(translateContent('state.placeholder.stateName'))} maxLength={50} />
                                     </Form.Item>
                                 </Col>
-
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.gstStateCode} label="GST State Code" name="gstStateCode" rules={[validateRequiredInputField('gst state code'), validationNumber('gst state code')]}>
-                                        <Input placeholder={preparePlaceholderText('gst State Code')} maxLength={2} />
+                                    <Form.Item initialValue={formData?.gstStateCode} label={translateContent('state.label.gstStateCode')} name="gstStateCode" rules={[validateRequiredInputField(translateContent('state.validation.gstStateCode')), validationNumber(translateContent('state.validation.gstStateCode'))]}>
+                                        <Input placeholder={preparePlaceholderText(translateContent('state.placeholder.gstStateCode'))} maxLength={2} />
                                     </Form.Item>
                                 </Col>
-
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
+                                    <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label={translateContent('global.label.status')}>
                                         <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
                                     </Form.Item>
                                 </Col>

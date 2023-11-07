@@ -5,6 +5,7 @@
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { Tag } from 'antd';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -12,25 +13,25 @@ export const tableColumn = (handleButtonClick) => {
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Criticality Group ID',
+            title: translateContent('criticalityGroup.label.criticalityGroupId'),
             dataIndex: 'criticalityGroupCode',
             width: '15%',
         }),
         tblPrepareColumns({
-            title: 'Criticality Group Name',
+            title: translateContent('criticalityGroup.label.criticalityGroupName'),
             dataIndex: 'criticalityGroupName',
             width: '25%',
         }),
         tblPrepareColumns({
-            title: 'Default Group',
+            title: translateContent('criticalityGroup.label.defaultGroup'),
             dataIndex: 'criticalityDefaultGroup',
-            render: (text) => <>{text === true ? <Tag color="success">Active</Tag> : <Tag color="error">Inactive</Tag>}</>,
+            render: (text) => <>{text === true ? <Tag color="success">{translateContent('global.label.active')}</Tag> : <Tag color="error">{translateContent('global.label.inActive')}</Tag>}</>,
             width: '15%',
         }),
         tblPrepareColumns({
-            title: 'Status',
+            title: translateContent('criticalityGroup.label.status'),
             dataIndex: 'activeIndicator',
-            render: (text) => <>{text === true ? <Tag color="success">Active</Tag> : <Tag color="error">Inactive</Tag>}</>,
+            render: (text) => <>{text === true ? <Tag color="success">{translateContent('global.label.active')}</Tag> : <Tag color="error">{translateContent('global.label.inActive')}</Tag>}</>,
             width: '15%',
         }),
 

@@ -8,6 +8,7 @@ import { Col, Row, Collapse, Descriptions, Divider } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 
@@ -45,37 +46,37 @@ const ViewDetailMain = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" collapsible="icon">
-                        <Panel header="Owner Customer" key="1">
+                        <Panel header={translateContent('vehicleDetail.vehicledetails.label.mnfcWarrEndDate')} key="1">
                             <Divider />
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Customer ID">{checkAndSetDefaultValue(ownerCustomer?.customerId, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(ownerCustomer?.mobileNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Salutation">{checkAndSetDefaultValue(ownerCustomer?.saluation, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(ownerCustomer?.customerName, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Address">{checkAndSetDefaultValue(ownerCustomer?.address, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="City/District">{checkAndSetDefaultValue(ownerCustomer?.city, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="State">{checkAndSetDefaultValue(ownerCustomer?.state, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Pin Code">{checkAndSetDefaultValue(ownerCustomer?.pincode, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Email">{checkAndSetDefaultValue(ownerCustomer?.email, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="GSTIN">{checkAndSetDefaultValue(ownerCustomer?.gstin, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDetail.customerDetails.label.customerId')}>{checkAndSetDefaultValue(ownerCustomer?.customerId, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDetail.customerDetails.label.mobileNumber')}>{checkAndSetDefaultValue(ownerCustomer?.mobileNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDetail.customerDetails.label.salutation')}>{checkAndSetDefaultValue(ownerCustomer?.saluation, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDetail.customerDetails.label.customerName')}>{checkAndSetDefaultValue(ownerCustomer?.customerName, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDetail.customerDetails.label.address')}>{checkAndSetDefaultValue(ownerCustomer?.address, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDetail.customerDetails.label.cityPincode')}>{checkAndSetDefaultValue(ownerCustomer?.city, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDetail.customerDetails.label.state')}>{checkAndSetDefaultValue(ownerCustomer?.state, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDetail.customerDetails.label.pincode')}>{checkAndSetDefaultValue(ownerCustomer?.pincode, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDetail.customerDetails.label.email')}>{checkAndSetDefaultValue(ownerCustomer?.email, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDetail.customerDetails.label.gstin')}>{checkAndSetDefaultValue(ownerCustomer?.gstin, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         </Panel>
                     </Collapse>
                     <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end" collapsible="icon">
-                        <Panel header="Billing Customer Details" key="2">
+                        <Panel header={translateContent('vehicleDetail.customerDetails.heading.billingDetails')} key="2">
                             <Divider />
                             {/* <Checkbox>Same as Booking Customer</Checkbox> */}
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Customer ID">{checkAndSetDefaultValue(billingCustomer?.customerId, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(billingCustomer?.mobileNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Salutation">{checkAndSetDefaultValue(billingCustomer?.saluation, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(billingCustomer?.customerName, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Address">{checkAndSetDefaultValue(billingCustomer?.address, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="City/District">{checkAndSetDefaultValue(billingCustomer?.city, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="State">{checkAndSetDefaultValue(billingCustomer?.state, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Pin Code">{checkAndSetDefaultValue(billingCustomer?.pincode, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Email">{checkAndSetDefaultValue(billingCustomer?.email, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="GSTIN">{checkAndSetDefaultValue(billingCustomer?.gstin, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDetail.customerDetails.label.customerId')}>{checkAndSetDefaultValue(billingCustomer?.customerId, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDetail.customerDetails.label.mobileNumber')}>{checkAndSetDefaultValue(billingCustomer?.mobileNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDetail.customerDetails.label.salutation')}>{checkAndSetDefaultValue(billingCustomer?.saluation, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDetail.customerDetails.label.customerName')}>{checkAndSetDefaultValue(billingCustomer?.customerName, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDetail.customerDetails.label.address')}>{checkAndSetDefaultValue(billingCustomer?.address, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDetail.customerDetails.label.cityDistrict')}>{checkAndSetDefaultValue(billingCustomer?.city, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDetail.customerDetails.label.state')}>{checkAndSetDefaultValue(billingCustomer?.state, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDetail.customerDetails.label.pincode')}>{checkAndSetDefaultValue(billingCustomer?.pincode, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDetail.customerDetails.label.email')}>{checkAndSetDefaultValue(billingCustomer?.email, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDetail.customerDetails.label.gstin')}>{checkAndSetDefaultValue(billingCustomer?.gstin, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         </Panel>
                     </Collapse>

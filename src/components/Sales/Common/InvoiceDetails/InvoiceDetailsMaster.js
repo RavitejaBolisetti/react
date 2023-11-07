@@ -21,6 +21,7 @@ import { tableColumnInvoice, tableColumnDelivery } from './tableColumn';
 import { OTF_STATUS } from 'constants/OTFStatus';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 const mapStateToProps = (state) => {
@@ -33,14 +34,11 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Invoice Information';
-
     let returnValue = {
         userId,
         isDataLoaded,
         invoiceData,
         isLoading,
-        moduleTitle,
     };
     return returnValue;
 };
@@ -124,7 +122,7 @@ export const InvoiceDetailsMasterBase = (props) => {
                     </Row>
                     {displaySection?.invoiceInformation && (
                         <Collapse onChange={() => onChange(1)} expandIconPosition="end" expandIcon={expandIcon} activeKey={activeKey} collapsible="icon">
-                            <Panel header="Invoice Information" key={1}>
+                            <Panel header={translateContent('bookingManagement.label.invoiceInformation')} key={1}>
                                 <Divider />
                                 <DataTable srlTitle={'#'} pagination={false} tableColumn={tableColumnInvoice(typeData)} tableData={invoiceData?.invoiceDetails} />
                             </Panel>
@@ -133,7 +131,7 @@ export const InvoiceDetailsMasterBase = (props) => {
 
                     {displaySection?.deliveryInformation && (
                         <Collapse onChange={() => onChange(2)} expandIconPosition="end" expandIcon={expandIcon} activeKey={activeKey} collapsible="icon">
-                            <Panel header="Delivery Information" key={2}>
+                            <Panel header={translateContent('bookingManagement.label.deliveryInformation')} key={2}>
                                 <Divider />
                                 <DataTable srlTitle={'#'} pagination={false} tableColumn={tableColumnDelivery()} tableData={invoiceData?.deliveryDetails} />
                             </Panel>

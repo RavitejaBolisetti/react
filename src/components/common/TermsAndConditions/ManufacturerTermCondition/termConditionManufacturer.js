@@ -22,10 +22,10 @@ import { btnVisiblity } from 'utils/btnVisiblity';
 import { CustomEditor } from 'components/common/CustomEditor';
 
 import { formatDate } from 'utils/formatDateTime';
-
 import { tableColumn } from './tableColumn';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import moment from 'moment';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -44,7 +44,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Term & Condition';
+    const moduleTitle = translateContent('termConditionManufacturer.heading.moduletitle');
 
     let returnValue = {
         collapsed,
@@ -120,7 +120,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
     const onSuccessAction = (res) => {
-        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        refershData && showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         setRefershData(false);
         setShowDataLoading(false);
     };
@@ -199,7 +199,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
             setSelectedRecord({});
             setShowDataLoading(false);
             setIsFormVisible(false);
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         };
         setTimeout(() => {
             fetchTermCondition({ setIsLoading: listShowLoading, userId });
@@ -207,7 +207,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
 
         const onError = (message) => {
             listShowLoading(false);
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottomRight' });
+            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationSuccess.error'), message, placement: 'bottomRight' });
         };
 
         const requestData = {
@@ -223,7 +223,9 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {}).catch(err => console.error(err));
+        form.validateFields()
+            .then((values) => {})
+            .catch((err) => console.error(err));
     };
 
     const handleReferesh = (e) => {
@@ -257,11 +259,11 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
 
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
-            return 'View ';
+            return translateContent('global.drawerTitle.view');
         } else if (formActionType?.editMode) {
-            return 'Edit ';
+            return translateContent('global.drawerTitle.edit');
         } else {
-            return 'Add ';
+            return translateContent('global.drawerTitle.add');
         }
     }, [formActionType]);
 
@@ -315,7 +317,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         CustomEditor,
     };
 
-    const title = 'Term & Condition';
+    const title = translateContent('termConditionManufacturer.heading.moduletitle');
 
     const showChangeHistoryList = () => {
         setButtonData({ cancelBtn: true });
@@ -349,6 +351,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         onCloseAction: changeHistoryClose,
         isChangeHistoryContainer: false,
         tableData: searchData,
+        showAddButton: false,
     };
 
     return (

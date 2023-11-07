@@ -8,11 +8,12 @@ import { convertDateMonthYear } from 'utils/formatDateTime';
 import { CopytoClipboard } from 'utils/CopytoClipboard';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const tableColumn = (handleButtonClick) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Receipt No.',
+            title: translateContent('receipts.tableColumn.receiptNo'),
             dataIndex: 'receiptNumber',
             width: '20%',
             render: (text) => {
@@ -28,20 +29,20 @@ export const tableColumn = (handleButtonClick) => {
         }),
 
         tblPrepareColumns({
-            title: 'Receipt Date',
+            title: translateContent('receipts.tableColumn.receiptDate'),
             dataIndex: 'receiptDate',
             width: '14%',
             render: (text) => convertDateMonthYear(text),
         }),
 
         tblPrepareColumns({
-            title: 'Party Segment',
+            title: translateContent('receipts.tableColumn.partySegement'),
             dataIndex: 'partySegment',
             width: '14%',
         }),
 
         tblPrepareColumns({
-            title: 'Customer/Supplier Name',
+            title: translateContent('receipts.tableColumn.customerName'),
             dataIndex: 'customerName',
             width: '26%',
         }),

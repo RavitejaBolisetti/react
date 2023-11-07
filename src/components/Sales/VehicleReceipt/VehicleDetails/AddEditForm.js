@@ -8,7 +8,7 @@ import { Row, Col, Input, Form, Select, DatePicker, Collapse, Divider, Space, Ty
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { addToolTip } from 'utils/customMenuLink';
-
+import { translateContent } from 'utils/translateContent';
 import { getCodeValue } from 'utils/getCodeValue';
 import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
 import { validateRequiredSelectField } from 'utils/validation';
@@ -138,16 +138,22 @@ const AddEditFormMain = (props) => {
                                         <Row>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                                 <Space size="small">
-                                                    <Text className={styles.headText}> Model: {item?.modelDescription} </Text>
+                                                    <Text className={styles.headText}>
+                                                        {' '}
+                                                        {translateContent('vehicleReceipt.label.vehicleDetails.model')}: {item?.modelDescription}{' '}
+                                                    </Text>
                                                     <Text className={styles.headText}> {`|`}</Text>
-                                                    <Text className={styles.headText}> VIN: {item?.vin}</Text>
+                                                    <Text className={styles.headText}>
+                                                        {' '}
+                                                        {translateContent('vehicleReceipt.label.vehicleDetails.VIN')}: {item?.vin}
+                                                    </Text>
                                                 </Space>
                                             </Col>
                                         </Row>
                                         <Row>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                                 <Text type="secondary" className={styles.subSection}>
-                                                    Vehicle Status: {getCodeValue(vehicleStatusType, item?.vehicleStatus)}
+                                                    {translateContent('vehicleReceipt.label.vehicleDetails.vehicleStatus')}: {getCodeValue(vehicleStatusType, item?.vehicleStatus)}
                                                 </Text>
                                             </Col>
                                         </Row>
@@ -166,19 +172,19 @@ const AddEditFormMain = (props) => {
                                                 {addToolTip(
                                                     <div>
                                                         <p>
-                                                            Model Name: <span>{item?.name ?? 'Na'}</span>
+                                                            {translateContent('vehicleReceipt.label.vehicleDetails.modelName')}: <span>{item?.name ?? 'Na'}</span>
                                                         </p>
                                                         <p>
-                                                            Color: <span>{item?.color ?? 'Na'}</span>
+                                                            {translateContent('vehicleReceipt.label.vehicleDetails.color')} : <span>{item?.color ?? 'Na'}</span>
                                                         </p>
                                                         <p>
-                                                            Seating Capacity: <span>{item?.seatingCapacity ?? 'Na'}</span>
+                                                            {translateContent('vehicleReceipt.label.vehicleDetails.seatingCapacity')}: <span>{item?.seatingCapacity ?? 'Na'}</span>
                                                         </p>
                                                         <p>
-                                                            Fuel: <span>{item?.fuel ?? 'Na'}</span>
+                                                            {translateContent('vehicleReceipt.label.vehicleDetails.fuel')}: <span>{item?.fuel ?? 'Na'}</span>
                                                         </p>
                                                         <p>
-                                                            Variants: <span>{item?.variant ?? 'Na'}</span>
+                                                            {translateContent('vehicleReceipt.label.vehicleDetails.variants')}: <span>{item?.variant ?? 'Na'}</span>
                                                         </p>
                                                     </div>,
                                                     'bottom',
@@ -189,36 +195,36 @@ const AddEditFormMain = (props) => {
                                         )}
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={item?.vin} label="VIN" name={[index, 'vin']}>
+                                        <Form.Item initialValue={item?.vin} label={translateContent('vehicleReceipt.label.vehicleDetails.VIN')} name={[index, 'vin']}>
                                             <Input maxLength={10} placeholder={preparePlaceholderText('VIN')} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={item?.keyNumber} label="Key Number" name={[index, 'keyNumber']}>
+                                        <Form.Item initialValue={item?.keyNumber} label={translateContent('vehicleReceipt.label.vehicleDetails.keyNumber')} name={[index, 'keyNumber']}>
                                             <Input maxLength={10} placeholder={preparePlaceholderText('Key Number')} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={formattedCalendarDate(item?.mfgdate)} label="MFG Date" name={[index, 'mfgDate']}>
+                                        <Form.Item initialValue={formattedCalendarDate(item?.mfgdate)} label={translateContent('vehicleReceipt.label.vehicleDetails.mfgDate')} name={[index, 'mfgDate']}>
                                             <DatePicker format={dateFormat} disabled={true} style={{ display: 'auto', width: '100%' }} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={formattedCalendarDate(item?.receivedOn)} label="Received On" name={[index, 'receivedOn']}>
+                                        <Form.Item initialValue={formattedCalendarDate(item?.receivedOn)} label={translateContent('vehicleReceipt.label.vehicleDetails.receivedOn')} name={[index, 'receivedOn']}>
                                             <DatePicker format={dateFormat} disabled={true} style={{ display: 'auto', width: '100%' }} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={item?.vehicleCost} label="Vehicle Cost" name={[index, 'vehicleCost']}>
+                                        <Form.Item initialValue={item?.vehicleCost} label={translateContent('vehicleReceipt.label.vehicleDetails.vehicleCost')} name={[index, 'vehicleCost']}>
                                             <Input maxLength={10} placeholder={preparePlaceholderText('Vehicle Cost')} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={item?.demoVehicle ?? YES_NO_FLAG?.NO?.key} label="Demo Vehicle" name={[index, 'demoVehicle']} rules={[validateRequiredSelectField('Demo Vehicle')]}>
+                                        <Form.Item initialValue={item?.demoVehicle ?? YES_NO_FLAG?.NO?.key} label={translateContent('vehicleReceipt.label.vehicleDetails.demoVehicle')} name={[index, 'demoVehicle']} rules={[validateRequiredSelectField('Demo Vehicle')]}>
                                             <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps}>
                                                 {shortageType?.map((item) => (
                                                     <Option key={'dv' + item.key} value={item.key}>
@@ -229,7 +235,7 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={item?.vehicleStatus ?? VEHICLE_RECEIPT_STATUS.RECEIVED.key} label="Vehicle Status" name={[index, 'vehicleStatus']} rules={[validateRequiredSelectField('Vehicle Status')]}>
+                                        <Form.Item initialValue={item?.vehicleStatus ?? VEHICLE_RECEIPT_STATUS.RECEIVED.key} label={translateContent('vehicleReceipt.label.vehicleDetails.vehicleStatus')} name={[index, 'vehicleStatus']} rules={[validateRequiredSelectField('Vehicle Status')]}>
                                             <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps}>
                                                 {statusType?.map((item) => (
                                                     <Option disabled={item?.disabled} key={'vs' + item.key} value={item.key}>
@@ -241,7 +247,7 @@ const AddEditFormMain = (props) => {
                                     </Col>
                                     {selectedRecord?.grnType !== GRN_TYPE_CONSTANT?.CO_DEALER?.desc && (
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                            <Form.Item initialValue={item?.physicalStatus ?? PHYSICAL_STATUS?.NO_DAMAGE?.key} label="Physical Status" name={[index, 'physicalStatus']} rules={[validateRequiredSelectField('Physical Status')]}>
+                                            <Form.Item initialValue={item?.physicalStatus ?? PHYSICAL_STATUS?.NO_DAMAGE?.key} label={translateContent('vehicleReceipt.label.vehicleDetails.physicalStatus')} name={[index, 'physicalStatus']} rules={[validateRequiredSelectField('Physical Status')]}>
                                                 <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps}>
                                                     {physicalStatusType?.map((item) => (
                                                         <Option key={'ps' + item.key} value={item.key}>
@@ -254,7 +260,7 @@ const AddEditFormMain = (props) => {
                                     )}
                                     {selectedRecord?.grnType !== GRN_TYPE_CONSTANT?.CO_DEALER?.desc && (
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                            <Form.Item initialValue={item?.shortage ?? YES_NO_FLAG?.NO?.key} label="Shortage" name={[index, 'shortage']}>
+                                            <Form.Item initialValue={item?.shortage ?? YES_NO_FLAG?.NO?.key} label={translateContent('vehicleReceipt.label.vehicleDetails.shortage')} name={[index, 'shortage']}>
                                                 <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps}>
                                                     {shortageType?.map((item) => (
                                                         <Option key={'st' + item.key} value={item.key}>
@@ -267,7 +273,7 @@ const AddEditFormMain = (props) => {
                                     )}
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={item?.vehicleRecieptCheckListNumber} label="Vehicle Receipt Checklist No." name={[index, 'vehicleRecieptCheckListNumber']}>
+                                        <Form.Item initialValue={item?.vehicleRecieptCheckListNumber} label={translateContent('vehicleReceipt.label.vehicleDetails.vehicleReceiptChecklistNumber')} name={[index, 'vehicleRecieptCheckListNumber']}>
                                             <Input maxLength={10} placeholder={preparePlaceholderText('Vehicle Receipt Checklist No.')} disabled={true} />
                                         </Form.Item>
                                     </Col>
@@ -281,10 +287,10 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                         <Button className={styles.marR20} onClick={() => handleSave(index)} type="primary">
-                                            Save
+                                            {translateContent('global.buttons.save')}
                                         </Button>
                                         <Button className={styles.marB20} onClick={handleCancelFormEdit} danger>
-                                            Cancel
+                                            {translateContent('global.buttons.cancel')}
                                         </Button>
                                     </Col>
                                 </Row>

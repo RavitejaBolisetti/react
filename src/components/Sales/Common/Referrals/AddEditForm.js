@@ -11,6 +11,7 @@ import { validateMobileNoField } from 'utils/validation';
 import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
 
 import { CustomerListMaster } from 'components/utils/CustomerListModal';
+import { translateContent } from 'utils/translateContent';
 
 const AddEditFormMain = (props) => {
     const { form, formData, typeData, fnSetData, viewOnly = false } = props;
@@ -33,53 +34,53 @@ const AddEditFormMain = (props) => {
             {!viewOnly && <CustomerListMaster fnSetData={fnSetData} defaultOption={'customerName'} />}
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="registrationNumber" label="Vehicle Registration Number" initialValue={formData?.registrationNumber}>
-                        <Input {...disabledProps} maxLength={30} placeholder={preparePlaceholderText('Vehicle Registration Number')} />
+                    <Form.Item name="registrationNumber" label={translateContent('commonModules.label.referrals.vehicleRegistrationNumber')} initialValue={formData?.registrationNumber}>
+                        <Input {...disabledProps} maxLength={30} placeholder={preparePlaceholderText(translateContent('commonModules.label.referrals.vehicleRegistrationNumber'))} />
                     </Form.Item>
                 </Col>
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="chassisNumber" label="Chassis Number" initialValue={formData?.chassisNumber}>
-                        <Input {...disabledProps} maxLength={50} placeholder={preparePlaceholderText('Chassis Number')} />
+                    <Form.Item name="chassisNumber" label={translateContent('commonModules.label.referrals.chassisNumber')} initialValue={formData?.chassisNumber}>
+                        <Input {...disabledProps} maxLength={50} placeholder={preparePlaceholderText(translateContent('commonModules.label.referrals.chassisNumber'))} />
                     </Form.Item>
                 </Col>
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="customerId" label="Customer Code" initialValue={formData?.customerId}>
-                        <Input {...disabledProps} maxLength={6} placeholder={preparePlaceholderText('Customer Code')} />
+                    <Form.Item name="customerId" label={translateContent('commonModules.label.referrals.customerCode')} initialValue={formData?.customerId}>
+                        <Input {...disabledProps} maxLength={6} placeholder={preparePlaceholderText(translateContent('commonModules.label.referrals.customerCode'))} />
                     </Form.Item>
                 </Col>
             </Row>
 
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="customerType" initialValue={formData?.customerType} label="Customer Type" data-testid="customerType">
-                        <Select {...disabledProps} placeholder={preparePlaceholderSelect('customer Type')} fieldNames={{ label: 'value', value: 'key' }} options={typeData?.CUST_TYPE} allowClear></Select>
+                    <Form.Item name="customerType" initialValue={formData?.customerType} label={translateContent('commonModules.label.referrals.customerType')} data-testid="customerType">
+                        <Select {...disabledProps} placeholder={preparePlaceholderSelect(translateContent('commonModules.label.referrals.customerType'))} fieldNames={{ label: 'value', value: 'key' }} options={typeData?.CUST_TYPE} allowClear></Select>
                     </Form.Item>
                 </Col>
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="customerName" label="Customer Name" initialValue={formData?.customerName}>
-                        <Input {...disabledProps} placeholder={preparePlaceholderText('Customer Name')} maxLength={50} />
+                    <Form.Item name="customerName" label={translateContent('commonModules.label.referrals.customerName')} initialValue={formData?.customerName}>
+                        <Input {...disabledProps} placeholder={preparePlaceholderText(translateContent('commonModules.label.referrals.customerName'))} maxLength={50} />
                     </Form.Item>
                 </Col>
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="mobileNumber" label="Mobile Number" initialValue={formData?.mobileNumber} rules={[validateMobileNoField('Mobile Number'), { min: 10, message: 'Phone number must be minimum 10 digits Long.' }]}>
-                        <Input {...disabledProps} maxLength={6} placeholder={preparePlaceholderText('Vehicle Registration Number')} />
+                    <Form.Item name="mobileNumber" label={translateContent('commonModules.label.referrals.mobileNumber')} initialValue={formData?.mobileNumber} rules={[validateMobileNoField(translateContent('commonModules.label.referrals.mobileNumber')), { min: 10, message: translateContent('vehicleInvoiceGeneration.validation.referrals.mobileNumber') }]}>
+                        <Input {...disabledProps} maxLength={6} placeholder={preparePlaceholderText(translateContent('commonModules.label.referrals.mobileNumber'))} />
                     </Form.Item>
                 </Col>
             </Row>
 
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="emailId" label="Email Id" initialValue={formData?.emailId}>
-                        <Input {...disabledProps} maxLength={6} placeholder={preparePlaceholderText('Email Id')} />
+                    <Form.Item name="emailId" label={translateContent('commonModules.label.referrals.emailId')} initialValue={formData?.emailId}>
+                        <Input {...disabledProps} maxLength={6} placeholder={preparePlaceholderText(translateContent('commonModules.label.referrals.emailId'))} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="dob" label="Date of Birth">
-                        <DatePicker {...disabledProps} format={dateFormat} placeholder={preparePlaceholderText('Date of Birth')} />
+                    <Form.Item name="dob" label={translateContent('commonModules.label.referrals.dateOfBirth')}>
+                        <DatePicker {...disabledProps} format={dateFormat} placeholder={preparePlaceholderText(translateContent('commonModules.label.referrals.dateOfBirth'))} />
                     </Form.Item>
                 </Col>
             </Row>

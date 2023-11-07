@@ -15,6 +15,7 @@ import { customSelectBox } from 'utils/customSelectBox';
 import { DrawerFormButton } from 'components/common/Button';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const AddEditFormMain = (props) => {
     const {
@@ -91,20 +92,20 @@ const AddEditFormMain = (props) => {
                         <>
                             <Row gutter={20}>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <Form.Item initialValue={formData?.modelGroupCode} name="modelGroupCode" label="Model Group (Product Hierarchy)" rules={[validateRequiredSelectField('Model Group')]}>
-                                        {customSelectBox({ data: ModelOptions, placeholder: preparePlaceholderSelect('Model Group'), fieldNames: { key: 'modelGroupCode', value: 'modelGroupDescription' }, disabled: editMode })}
+                                    <Form.Item initialValue={formData?.modelGroupCode} name="modelGroupCode" label={translateContent('vehicleModelAndTaxCharges.label.modelGroup')} rules={[validateRequiredSelectField(translateContent('vehicleModelAndTaxCharges.validation.modelGroup'))]}>
+                                        {customSelectBox({ data: ModelOptions, placeholder: translateContent('vehicleModelAndTaxCharges.placeholder.modelGroup'), fieldNames: { key: 'modelGroupCode', value: 'modelGroupDescription' }, disabled: editMode })}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <Form.Item {...taxChargesValidation} name="taxCategoryId" label="Tax/Charge Category" rules={[validateRequiredSelectField('Tax/Charge Category'), { validator: (rule, value) => isCodePresent({ searchkey: 'id', value, options: TaxChargesOptions, attibuteName: 'Tax/Charge Category' }) }]}>
-                                        {customSelectBox({ data: TaxChargesOptions, placeholder: preparePlaceholderSelect('Tax/Charge Category'), fieldNames: { key: 'id', value: 'value' }, disabled: editMode })}
+                                    <Form.Item {...taxChargesValidation} name="taxCategoryId" label={translateContent('vehicleModelAndTaxCharges.label.taxChargeCategory')} rules={[validateRequiredSelectField(translateContent('vehicleModelAndTaxCharges.validation.taxChargeCategory')), { validator: (rule, value) => isCodePresent({ searchkey: 'id', value, options: TaxChargesOptions, attibuteName: 'Tax/Charge Category' }) }]}>
+                                        {customSelectBox({ data: TaxChargesOptions, placeholder: translateContent('vehicleModelAndTaxCharges.placeholder.taxChargeCategory'), fieldNames: { key: 'id', value: 'value' }, disabled: editMode })}
                                     </Form.Item>
                                 </Col>
                             </Row>
                             <Row gutter={20}>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <Form.Item {...accountCategoryValidation} label="Account category" name="accountCategoryCode" rules={[validateRequiredSelectField('Account category'), { validator: (rule, value) => isCodePresent({ searchkey: 'key', value, options: AccountDataOptions, attibuteName: 'Account Category' }) }]}>
-                                        {customSelectBox({ data: AccountDataOptions, placeholder: preparePlaceholderSelect('Account Category') })}
+                                    <Form.Item {...accountCategoryValidation} label={translateContent('vehicleModelAndTaxCharges.label.accountCategory')} name="accountCategoryCode" rules={[validateRequiredSelectField(translateContent('vehicleModelAndTaxCharges.validation.accountCategory')), { validator: (rule, value) => isCodePresent({ searchkey: 'key', value, options: AccountDataOptions, attibuteName: 'Account Category' }) }]}>
+                                        {customSelectBox({ data: AccountDataOptions, placeholder: translateContent('vehicleModelAndTaxCharges.placeholder.accountCategory') })}
                                     </Form.Item>
                                 </Col>
                             </Row>

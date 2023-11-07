@@ -29,6 +29,7 @@ import { LANGUAGE_EN } from 'language/en';
 
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { TRANSACTION_TYPE } from './transactionType';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -40,7 +41,7 @@ const mapStateToProps = (state) => {
             },
         },
     } = state;
-    const moduleTitle = ' Note';
+    const moduleTitle = translateContent('creditDebitNote.heading.moduleTitle');
     let returnValue = {
         userId,
         typeData,
@@ -366,7 +367,7 @@ export const CreditDebitNoteMasterBase = (props) => {
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, customURL, onSuccessAction, extraParams });
             setButtonData({ ...buttonData, formBtnActive: false });
             setIsFormVisible(false);
@@ -433,7 +434,7 @@ export const CreditDebitNoteMasterBase = (props) => {
         }
     };
 
-    const title = 'Search Credit/Debit';
+    const title = translateContent('creditDebitNote.placeholder.searchTitle');
 
     const advanceFilterResultProps = {
         extraParams,
@@ -456,11 +457,11 @@ export const CreditDebitNoteMasterBase = (props) => {
 
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
-            return 'View ';
+            return translateContent('global.drawerTitle.view');
         } else if (formActionType?.editMode) {
-            return 'Edit ';
+            return translateContent('global.drawerTitle.edit');
         } else {
-            return 'Add New ';
+            return translateContent('global.drawerTitle.addNew');
         }
     }, [formActionType]);
 
@@ -473,7 +474,7 @@ export const CreditDebitNoteMasterBase = (props) => {
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
-        titleOverride: 'Advance Filters',
+        titleOverride: translateContent('global.advanceFilter.title'),
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
         filterString,
@@ -517,7 +518,7 @@ export const CreditDebitNoteMasterBase = (props) => {
         handleFormValueChange,
         isLastSection,
         typeData,
-        saveButtonName: isLastSection ? 'Submit' : 'Save & Next',
+        saveButtonName: isLastSection ? translateContent('global.buttons.submit') : translateContent('global.buttons.saveAndNew'),
 
         requestPayload,
         setRequestPayload,

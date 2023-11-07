@@ -4,6 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -11,20 +12,20 @@ export const tableColumn = (props) => {
     const { handleButtonClick, formActionType, bindCodeValue, ITEM_TYPE } = props;
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Item',
+            title: translateContent('vehicleDetail.productDetails.label.item'),
             dataIndex: 'item',
             width: '20%',
             render: (text, record, index) => bindCodeValue(text, ITEM_TYPE?.ITEM),
         }),
         tblPrepareColumns({
-            title: 'Make ',
+            title: translateContent('vehicleDetail.productDetails.label.make'),
             dataIndex: 'make',
             width: '20%',
             render: (text, record, index) => bindCodeValue(text, ITEM_TYPE?.MAKE),
         }),
 
         tblPrepareColumns({
-            title: 'Serial No. ',
+            title: translateContent('vehicleDetail.productDetails.label.serialNo'),
             dataIndex: 'serialNo',
             width: '20%',
         }),

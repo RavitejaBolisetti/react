@@ -11,14 +11,14 @@ import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { SALE_TYPE } from '../utils/saleTypeConstant';
 
-import { validateRequiredSelectField, validateOnlyPositiveNumber } from 'utils/validation';
+import { validateRequiredSelectField, validateOnlyPositiveNumber, validateLettersWithWhitespaces } from 'utils/validation';
 
 const { Panel } = Collapse;
 const { Search } = Input;
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { formData, saleTypes, vinNumber, bookingNumber, schemeDetail, options, shieldDetailForm, handleOtfSearch, handleVinSearch, handleEmployeeSearch, handleOtfChange, saleType, handleSaleTypeChange, formActionType, isEmployeeDataLoading, handleOnSelect, handleOnClear, screenType } = props;
+    const { formData, saleTypes, vinNumber, bookingNumber, schemeDetail, options, shieldDetailForm, handleOtfSearch, handleVinSearch, handleEmployeeSearch, handleOtfChange, saleType, handleSaleTypeChange, formActionType, isSchemeLoading, isEmployeeDataLoading, handleOnSelect, handleOnClear, screenType } = props;
     const { activeKey, setActiveKey } = props;
     // const [activeKey, setActiveKey] = useState([]);
     const [selectedScheme, setSelectedScheme] = useState([]);
@@ -29,7 +29,7 @@ const AddEditFormMain = (props) => {
     }, [vinNumber, bookingNumber]);
 
     const onChange = (values) => {
-        setActiveKey(values);
+        setActiveKey((prev) => (prev === values ? '' : values));
     };
 
     const selectProps = {
@@ -86,7 +86,7 @@ const AddEditFormMain = (props) => {
                                 <>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                         <Form.Item initialValue={formData?.otf} label="Booking No." name={['registrationInformation', 'otf']}>
-                                            <Search allowClear onChange={handleOtfChange} onSearch={handleOtfSearch} placeholder={preparePlaceholderText('OTF')} disabled={!formActionType?.addMode} />
+                                            <Search allowClear onChange={handleOtfChange} onSearch={handleOtfSearch} loading={isSchemeLoading} placeholder={preparePlaceholderText('OTF')} disabled={!formActionType?.addMode} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
@@ -99,7 +99,7 @@ const AddEditFormMain = (props) => {
                             {saleType === SALE_TYPE?.PAID?.key && (
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item initialValue={formData?.vin} label="VIN" name={['registrationInformation', 'vin']}>
-                                        <Search allowClear onSearch={handleVinSearch} placeholder={preparePlaceholderText('VIN')} disabled={!formActionType?.addMode} />
+                                        <Search allowClear onSearch={handleVinSearch} loading={isSchemeLoading} placeholder={preparePlaceholderText('VIN')} disabled={!formActionType?.addMode} />
                                     </Form.Item>
                                 </Col>
                             )}
@@ -111,7 +111,7 @@ const AddEditFormMain = (props) => {
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item initialValue={formData?.employeeName} label="Employee Name" name={['registrationInformation', 'employeeName']}>
+                                <Form.Item initialValue={formData?.employeeName} label="Employee Name" name={['registrationInformation', 'employeeName']} rules={[validateLettersWithWhitespaces('Employee Name')]}>
                                     <AutoComplete maxLength={50} options={options} onSelect={handleOnSelect} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
                                         <Search onSearch={handleEmployeeSearch} onChange={handleOnClear} placeholder={preparePlaceholderText('Employee Name')} loading={isEmployeeDataLoading} type="text" allowClear />
                                     </AutoComplete>
@@ -155,7 +155,7 @@ const AddEditFormMain = (props) => {
                         </Row>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item initialValue={formData?.schemeDiscount} label="Scheme Discount" name={['schemeDetails', 'schemeDiscount']}>
+                                <Form.Item initialValue={formData?.schemeDiscount} label="Scheme Discount" name={['schemeDetails', 'schemeDiscount']} rules={[validateOnlyPositiveNumber('Scheme Discount')]}>
                                     <Input placeholder={preparePlaceholderText('Scheme Discount')} />
                                 </Form.Item>
                             </Col>

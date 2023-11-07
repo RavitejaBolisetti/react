@@ -12,9 +12,9 @@ import { BiUser } from 'react-icons/bi';
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai'; // AiOutlineWarning
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export function GSTLoginForm(props) {
-    
     const [showPassword, setShowPassword] = useState(false);
     const [showClientId, setShowClientId] = useState(false);
     const [showSecretId, setShowSecretId] = useState(false);
@@ -66,44 +66,44 @@ export function GSTLoginForm(props) {
                         <div className={styles.centerInner}>
                             <div className={styles.loginForm}></div>
                             <div className={styles.loginHeading}>
-                                <h1>Login for Authentication</h1>
+                                <h1>{translateContent('gstIRNAuthentication.text.login')}</h1>
                                 <Divider />
                             </div>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.inputLabelPlaceholder}>
-                                    <Form.Item name="userName" data-testid="userName" rules={[validateRequiredInputField('user name')]} className={styles.inputBox}>
-                                        {<Input data-testid="userNameInput" prefix={<BiUser size={16} />} type="text" maxLength={25} onChange={handleFormChange('userName')} placeholder="UserName" />}
+                                    <Form.Item name="userName" data-testid="userName" rules={[validateRequiredInputField(translateContent('gstIRNAuthentication.validation.userName'))]} className={styles.inputBox}>
+                                        {<Input data-testid="userNameInput" prefix={<BiUser size={16} />} type="text" maxLength={25} onChange={handleFormChange('userName')} placeholder={translateContent('gstIRNAuthentication.placeholder.userName')} />}
                                     </Form.Item>
                                 </Col>
                             </Row>
 
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.inputLabelPlaceholder}>
-                                    <Form.Item name="clientId" data-testid="clientId" rules={[validateRequiredInputField('client id')]} className={styles.inputBox}>
-                                        <Input data-testid="clientIdInput" type={showClientId ? 'text' : 'password'} prefix={<BiUser size={16} />} suffix={clientIdSuffix} onChange={handleFormChange('clientId')} placeholder="Client Id" />
+                                    <Form.Item name="clientId" data-testid="clientId" rules={[validateRequiredInputField(translateContent('gstIRNAuthentication.validation.clientId'))]} className={styles.inputBox}>
+                                        <Input data-testid="clientIdInput" type={showClientId ? translateContent('gstIRNAuthentication.label.text') : translateContent('gstIRNAuthentication.label.password')} prefix={<BiUser size={16} />} suffix={clientIdSuffix} onChange={handleFormChange('clientId')} placeholder={translateContent('gstIRNAuthentication.placeholder.clientId')} />
                                     </Form.Item>
                                 </Col>
                             </Row>
 
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.inputLabelPlaceholder}>
-                                    <Form.Item name="secretId" data-testid="secretId" rules={[validateRequiredInputField('secret id')]} className={styles.inputBox}>
-                                        <Input data-testid="secretIdInput" type={showSecretId ? 'text' : 'password'} prefix={<BiUser size={16} />} suffix={secretIdSuffix} onChange={handleFormChange('secretId')} placeholder="Secret Id" />
+                                    <Form.Item name="secretId" data-testid="secretId" rules={[validateRequiredInputField(translateContent('gstIRNAuthentication.validation.secretId'))]} className={styles.inputBox}>
+                                        <Input data-testid="secretIdInput" type={showSecretId ? translateContent('gstIRNAuthentication.label.text') : translateContent('gstIRNAuthentication.label.password')} prefix={<BiUser size={16} />} suffix={secretIdSuffix} onChange={handleFormChange('secretId')} placeholder={translateContent('gstIRNAuthentication.placeholder.secretId')} />
                                     </Form.Item>
                                 </Col>
                             </Row>
- 
+
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.inputLabelPlaceholder}>
-                                    <Form.Item name="password" data-testid="password" rules={[validateRequiredInputField('password')]} className={styles.inputBox}>
-                                        <Input data-testid="passwordInput" type={showPassword ? 'text' : 'password'} prefix={<FiLock size={16} />} suffix={passowrdSuffix} onChange={handleFormChange('password')} placeholder="Password" />
+                                    <Form.Item name="password" data-testid="password" rules={[validateRequiredInputField(translateContent('gstIRNAuthentication.validation.password'))]} className={styles.inputBox}>
+                                        <Input data-testid="passwordInput" type={showPassword ? translateContent('gstIRNAuthentication.label.text') : translateContent('gstIRNAuthentication.label.password')} prefix={<FiLock size={16} />} suffix={passowrdSuffix} onChange={handleFormChange('password')} placeholder={translateContent('gstIRNAuthentication.placeholder.password')} />
                                     </Form.Item>
                                 </Col>
                             </Row>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.textCenter}>
                                     <Button data-testid="Login" type="primary" htmlType="submit">
-                                        Login & Continue
+                                        {translateContent('gstIRNAuthentication.label.Login&Continue')}
                                     </Button>
                                 </Col>
                             </Row>

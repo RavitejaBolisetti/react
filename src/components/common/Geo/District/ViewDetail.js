@@ -5,6 +5,7 @@
  */
 import React from 'react';
 import { Descriptions } from 'antd';
+import { translateContent } from 'utils/translateContent';
 
 const ViewDetailMain = ({ formData, styles, parameterType }) => {
     const viewOneColProps = {
@@ -17,10 +18,10 @@ const ViewDetailMain = ({ formData, styles, parameterType }) => {
         <>
             <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
-                    <Descriptions.Item label="State Name">{formData?.stateName}</Descriptions.Item>
-                    <Descriptions.Item label="District Code">{formData?.code}</Descriptions.Item>
-                    <Descriptions.Item label="District Name">{formData?.name}</Descriptions.Item>
-                    <Descriptions.Item label="Status">{formData?.status ? 'Active' : 'Inactive'}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('district.title.stateName')}>{formData?.stateName}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('district.title.districtCode')}>{formData?.code}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('district.title.districtName')}>{formData?.name}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('global.label.status')}>{formData?.status ? `${translateContent('global.label.active')}` : `${translateContent('global.label.inActive')}`}</Descriptions.Item>
                 </Descriptions>
             </div>
         </>

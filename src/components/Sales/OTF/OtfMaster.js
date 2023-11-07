@@ -40,6 +40,7 @@ import styles from 'assets/sass/app.module.scss';
 import { OtfSoMappingUnmappingChangeHistory } from './OtfSoMappingUnmappingChangeHistory';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
 import { UnSaveDataConfirmation } from 'utils/UnSaveDataConfirmation';
+import { translateContent } from 'utils/translateContent';
 
 const { confirm } = Modal;
 
@@ -54,10 +55,9 @@ const mapStateToProps = (state) => {
             },
         },
     } = state;
-    const moduleTitle = 'Booking Management';
-    const ChangeHistoryTitle = 'Booking Change History ';
-    const otfSoMappingChangeHistoryTitle = 'Booking - SO Mapping & Un-mapping History';
-
+    const moduleTitle = translateContent('bookingManagement.heading.title');
+    const ChangeHistoryTitle = translateContent('bookingManagement.heading.bookingManagementChangeHistory');
+    const otfSoMappingChangeHistoryTitle = translateContent('bookingManagement.heading.otfSoMappingChangeHistory');
     let returnValue = {
         userId,
         typeData,
@@ -321,7 +321,7 @@ export const OtfMasterBase = (props) => {
 
     const handleVehicleAllotment = (record, updatedStatus, vinNumber) => {
         if (!record) {
-            showGlobalNotification({ message: 'Please select Booking' });
+            showGlobalNotification({ message: translateContent('bookingManagement.validation.mandatorySelectBooking') });
             return false;
         }
 
@@ -332,7 +332,7 @@ export const OtfMasterBase = (props) => {
             form.resetFields();
             setShowDataLoading(true);
             setRefreshData(!refreshData);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             setButtonData({ ...buttonData, formBtnActive: false });
             setIsFormVisible(false);
 
@@ -419,13 +419,13 @@ export const OtfMasterBase = (props) => {
                     const onSuccessAction = (resp) => {
                         setConfirmRequest({
                             isVisible: true,
-                            titleOverride: 'Un-Allot Booking',
+                            titleOverride: translateContent('bookingManagement.label.unallotBooking'),
                             closable: true,
                             icon: false,
                             onCloseAction: onCloseConfirmationModalAction,
                             onSubmitAction: () => handleVehicleAllotment(record, VEHICLE_TYPE?.UNALLOTED.key, resp?.data?.vinNumber),
-                            submitText: 'Yes',
-                            text: 'Are you sure want to Un-allot this Booking? ',
+                            submitText: translateContent('global.yesNo.yes'),
+                            text: translateContent('bookingManagement.label.unallotBookingConfirmation'),
                             content: resp?.data ? resp?.data?.vinNumber : '',
                         });
                     };
@@ -485,7 +485,7 @@ export const OtfMasterBase = (props) => {
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             fetchOTFDetail({ setIsLoading: listShowLoading, userId, onSuccessAction });
             setButtonData({ ...buttonData, formBtnActive: false });
             setIsFormVisible(false);
@@ -549,7 +549,7 @@ export const OtfMasterBase = (props) => {
         tableColumn: tableColumn(handleButtonClick),
         tableData: data,
         showAddButton: false,
-        noDataMessage: LANGUAGE_EN.GENERAL.LIST_NO_DATA_FOUND.TITLE,
+        noDataMessage: translateContent('global.generalMessage.noRecordsFound'),
     };
 
     const onAdvanceSearchCloseAction = () => {
@@ -572,7 +572,7 @@ export const OtfMasterBase = (props) => {
         }
     };
 
-    const title = 'Search Booking';
+    const title = translateContent('bookingManagement.placeholder.searchBooking');
 
     const fnOTFTransfer = ({ modalTitle, modalMessage, finalData, callBackMethod, customURL }) => {
         const onSuccess = (res) => {
@@ -582,7 +582,7 @@ export const OtfMasterBase = (props) => {
             otfTransferForm.resetFields();
             otfCancellationForm.resetFields();
             setShowDataLoading(true);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             fetchOTFSearchedList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
             setButtonData({ ...buttonData, formBtnActive: false });
             setIsFormVisible(false);
@@ -602,9 +602,9 @@ export const OtfMasterBase = (props) => {
             title: modalTitle,
             icon: '',
             content: modalMessage,
-            okText: 'Yes',
+            okText: translateContent('global.yesNo.yes'),
             okType: 'danger',
-            cancelText: 'No',
+            cancelText: translateContent('global.yesNo.no'),
             wrapClassName: styles.confirmModal,
             centered: true,
             closable: true,
@@ -617,8 +617,8 @@ export const OtfMasterBase = (props) => {
 
     const onFinishOTFTansfer = (values) => {
         fnOTFTransfer({
-            modalTitle: 'Booking Transfer',
-            modalMessage: `Do you want to transfer this ${otfData?.bookingNumber || otfData?.otfNumber}`,
+            modalTitle: translateContent('bookingManagement.label.bookingTransfer'),
+            modalMessage: `${translateContent('bookingManagement.validation.transferPopup')} ${otfData?.bookingNumber || otfData?.otfNumber}`,
             finalData: { ...values, id: otfData?.id, otfNumber: otfData?.otfNumber },
             callBackMethod: transferOTF,
             customURL: otfTransferURL,
@@ -627,8 +627,8 @@ export const OtfMasterBase = (props) => {
 
     const onFinishOTFCancellation = (values) => {
         fnOTFTransfer({
-            modalTitle: 'Booking Cancel',
-            modalMessage: `Do you want to cancel this ${otfData?.bookingNumber || otfData?.otfNumber}`,
+            modalTitle: translateContent('bookingManagement.label.bookingCancel'),
+            modalMessage: `${translateContent('bookingManagement.validation.cancelPopup')} ${otfData?.bookingNumber || otfData?.otfNumber}`,
             finalData: { dealerCode: '', oemCode: '', productCode: '', ...values, id: null, otfId: selectedRecordId, otfNumber: otfData?.otfNumber, uploadCancellationLetterDocId: uploadedFile },
             callBackMethod: transferOTF,
             customURL: otfCancelURL,
@@ -638,8 +638,8 @@ export const OtfMasterBase = (props) => {
     const handleWorkflowOTFCancellation = (record, actionStatus) => {
         const { otfNumber } = record;
         fnOTFTransfer({
-            modalTitle: `${actionStatus === CANCELLN_APPROVE ? 'Approval' : 'Rejection'}`,
-            modalMessage: `Are you sure, you want to ${actionStatus === CANCELLN_APPROVE ? 'approve' : 'reject'} the cancellation of ${otfData?.bookingNumber || otfData?.otfNumber}`,
+            modalTitle: `${actionStatus === CANCELLN_APPROVE ? translateContent('bookingManagement.label.approval') : translateContent('bookingManagement.label.rejection')}`,
+            modalMessage: `${translateContent('bookingManagement.validation.bookingCancellation')} ${actionStatus === CANCELLN_APPROVE ? translateContent('bookingManagement.label.approve') : translateContent('bookingManagement.label.reject')} ${translateContent('bookingManagement.validation.bookingCancellation2')} ${otfData?.bookingNumber || otfData?.otfNumber}`,
             finalData: { id: null, otfId: selectedRecordId, otfNumber, actionCode: actionStatus, remarks: actionStatus },
             callBackMethod: cancelOTFWorkflow,
             customURL: customURLCancelWF,
@@ -671,7 +671,7 @@ export const OtfMasterBase = (props) => {
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
         // icon: <FilterIcon size={20} />,
-        titleOverride: 'Advance Filters',
+        titleOverride: translateContent('global.advanceFilter.title'),
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
         filterString,
@@ -685,11 +685,11 @@ export const OtfMasterBase = (props) => {
 
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
-            return 'View Booking';
+            return translateContent('bookingManagement.label.viewBooking');
         } else if (formActionType?.editMode) {
-            return 'Edit Booking';
+            return translateContent('bookingManagement.label.editBooking');
         } else {
-            return 'Add New Booking';
+            return translateContent('bookingManagement.label.addNewBooking');
         }
     }, [formActionType]);
     const ChangeHistoryProps = {
@@ -765,7 +765,7 @@ export const OtfMasterBase = (props) => {
         isLastSection,
         typeData,
         otfData,
-        saveButtonName: 'Save',
+        saveButtonName: translateContent('global.buttons.save'),
         handleChangeHistory,
         handleOtfSoMappingHistory,
         refreshData,

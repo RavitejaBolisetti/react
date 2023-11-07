@@ -18,6 +18,7 @@ import { checkAndSetDefaultValue, getStatus } from 'utils/checkAndSetDefaultValu
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { debounce } from 'utils/debounce';
 import { UploadUtil } from 'utils/Upload';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -38,7 +39,7 @@ const AddEditFormMain = (props) => {
         return;
     };
     const onDownload = () => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
+        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: translateContent('global.generalMessage.downloadStart') });
 
         // handlePreview(file?.response);
         let a = document.createElement('a');
@@ -49,7 +50,7 @@ const AddEditFormMain = (props) => {
     };
 
     const uploadProps = {
-        messageText: 'Upload Cancellation Letter',
+        messageText: translateContent('bookingManagement.label.uploadCancellationLetter'),
         fileList,
         setFileList,
         setEmptyList,
@@ -102,7 +103,7 @@ const AddEditFormMain = (props) => {
                 setDealerList([
                     {
                         value: '',
-                        label: 'No Dealer Found',
+                        label:translateContent('bookingManagement.label.noDealerFound'),
                         disabled: true, // disable this option
                     },
                 ]);
@@ -166,7 +167,7 @@ const AddEditFormMain = (props) => {
         selectedTreeSelectKey: parentAppCode,
         handleSelectTreeClick,
         defaultValue: null,
-        placeholder: preparePlaceholderSelect('Model'),
+        placeholder: preparePlaceholderSelect(translateContent('bookingManagement.placeholder.model')),
         name: 'productCode',
         labelName: 'Product',
     };
@@ -179,14 +180,14 @@ const AddEditFormMain = (props) => {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Card className={styles.marB20}>
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Booking No.">{checkAndSetDefaultValue(selectedOrder?.bookingNumber || selectedOrder?.otfNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Booking Date">{checkAndSetDefaultValue(convertDateTime(selectedOrder?.otfDate, dateFormatView), isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(selectedOrder?.customerName, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Mobile No.">{checkAndSetDefaultValue(selectedOrder?.mobileNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('bookingManagement.heading.profileCard.bookingNumber')}>{checkAndSetDefaultValue(selectedOrder?.bookingNumber || selectedOrder?.otfNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('bookingManagement.heading.profileCard.bookingDate')}>{checkAndSetDefaultValue(convertDateTime(selectedOrder?.otfDate, dateFormatView), isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('commonModules.label.bookingCustomerAndBillingCustomer.customerName')}>{checkAndSetDefaultValue(selectedOrder?.customerName, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('bookingManagement.heading.profileCard.mobileNumber')}>{checkAndSetDefaultValue(selectedOrder?.mobileNumber, isLoading)}</Descriptions.Item>
                             </Descriptions>
                             <Descriptions {...singleItemViewProps}>
-                                <Descriptions.Item label="Model Description">{checkAndSetDefaultValue(selectedOrder?.model, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Order Status">{getStatus(selectedOrder?.orderStatus)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.modelDescription')}>{checkAndSetDefaultValue(selectedOrder?.model, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('bookingManagement.label.orderStatus')}>{getStatus(selectedOrder?.orderStatus)}</Descriptions.Item>
                             </Descriptions>
                         </Card>
                         <Row gutter={20}>
@@ -194,16 +195,16 @@ const AddEditFormMain = (props) => {
                                 <Input type="hidden" />
                             </Form.Item>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Form.Item name="cancellationReasonType" label="Cancellation Reason Type" rules={[validateRequiredSelectField('Reason Type')]}>
-                                    <Select {...selectProps} placeholder={preparePlaceholderSelect('Cancellation Reason Type')} onChange={handleCancellationReasonTypeChange} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['OTF_CANCL_REASON_TYPE']}></Select>
+                                <Form.Item name="cancellationReasonType" label={translateContent('bookingManagement.label.cancellationReasonType')} rules={[validateRequiredSelectField(translateContent('bookingManagement.label.cancellationReasonType'))]}>
+                                    <Select {...selectProps} placeholder={preparePlaceholderSelect(translateContent('bookingManagement.label.cancellationReasonType'))} onChange={handleCancellationReasonTypeChange} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['OTF_CANCL_REASON_TYPE']}></Select>
                                 </Form.Item>
                             </Col>
                         </Row>
                         {reasonTypeChange === PARAM_MASTER.LTC.id && (
                             <Row>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                    <Form.Item name="oemCode" label="OEM Name" rules={[validateRequiredSelectField('OEM Name')]}>
-                                        <Select {...selectProps} fieldNames={{ label: 'value', value: 'key' }} options={typeData['COMPTR_MFG']} placeholder={preparePlaceholderSelect('OEM Name')} />
+                                    <Form.Item name="oemCode" label={translateContent('bookingManagement.label.oemName')} rules={[validateRequiredSelectField(translateContent('bookingManagement.label.oemName'))]}>
+                                        <Select {...selectProps} fieldNames={{ label: 'value', value: 'key' }} options={typeData['COMPTR_MFG']} placeholder={preparePlaceholderSelect(translateContent('bookingManagement.label.oemName'))} />
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -223,9 +224,9 @@ const AddEditFormMain = (props) => {
                         {reasonTypeChange === PARAM_MASTER.LOMMD.id && (
                             <Row>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                    <Form.Item name="dealerName" label="Find Dealer Name" rules={[validateRequiredSelectField('Dealer Name')]}>
-                                        <AutoComplete label="Find Dealer Name" options={dealerList} backfill={false} onSelect={handleSelect} onSearch={onSearchDealer} allowSearch>
-                                            <Search allowClear placeholder={preparePlaceholderAutoComplete(' / Search Dealer Name')} />
+                                    <Form.Item name="dealerName" label={translateContent('bookingManagement.label.findDealerName')} rules={[validateRequiredSelectField(translateContent('bookingManagement.label.dealerName'))]}>
+                                        <AutoComplete label={translateContent('bookingManagement.label.findDealerName')} options={dealerList} backfill={false} onSelect={handleSelect} onSearch={onSearchDealer} allowSearch>
+                                            <Search allowClear placeholder={preparePlaceholderAutoComplete(translateContent('bookingManagement.placeholder.searchDealerName'))} />
                                         </AutoComplete>
                                     </Form.Item>
                                 </Col>
@@ -234,15 +235,15 @@ const AddEditFormMain = (props) => {
 
                         <Row>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Form.Item name="reasonForCancellation" label="Reason For Cancellation" rules={[validateRequiredSelectField('Reason For Cancellation')]}>
-                                    <Select {...selectProps} fieldNames={{ label: 'value', value: 'key' }} options={typeData[reasonTypeChange]} placeholder={preparePlaceholderSelect('Reason For Cancellation')} />
+                                <Form.Item name="reasonForCancellation" label={translateContent('bookingManagement.label.reasonForCancellation')} rules={[validateRequiredSelectField(translateContent('bookingManagement.label.reasonForCancellation'))]}>
+                                    <Select {...selectProps} fieldNames={{ label: 'value', value: 'key' }} options={typeData[reasonTypeChange]} placeholder={preparePlaceholderSelect(translateContent('bookingManagement.label.reasonForCancellation'))} />
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
-                                <Form.Item name="cancellationRemark" label="Cancellation Remarks" rules={[validateRequiredInputField('Cancellation Remarks')]}>
-                                    <TextArea maxLength={300} placeholder={preparePlaceholderText('Cancellation Remarks')} showCount />
+                                <Form.Item name="cancellationRemark" label={translateContent('bookingManagement.label.cancellationRemark')} rules={[validateRequiredInputField(translateContent('bookingManagement.label.cancellationRemark'))]}>
+                                    <TextArea maxLength={300} placeholder={preparePlaceholderText(translateContent('bookingManagement.label.cancellationRemark'))} showCount />
                                 </Form.Item>
                             </Col>
                         </Row>

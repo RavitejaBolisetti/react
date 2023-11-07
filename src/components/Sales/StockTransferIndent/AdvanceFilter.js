@@ -10,6 +10,7 @@ import { FiPlus } from 'react-icons/fi';
 import { RxCross2 } from 'react-icons/rx';
 import { SearchBox } from 'components/utils/SearchBox';
 import { STOCK_TRANSFER } from 'constants/StockTransfer';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -26,7 +27,7 @@ export default function AdvanceOTFFilter(props) {
         filterString,
         setFilterString,
         singleField: true,
-        placeholder: 'Search indent no.',
+        placeholder: translateContent('stockTransferIndent.label.selectIndentNo'),
     };
 
     return (
@@ -60,7 +61,7 @@ export default function AdvanceOTFFilter(props) {
                                                     setAdvanceSearchVisible(true);
                                                 }}
                                             >
-                                                Advanced Filters
+                                                {translateContent('global.advanceFilter.title')}
                                             </Button>
                                         </Col>
                                     )}
@@ -73,7 +74,7 @@ export default function AdvanceOTFFilter(props) {
                 {toggleButton === STOCK_TRANSFER?.RAISED.key && (
                     <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.buttonsGroupRight}>
                         <Button type="primary" icon={<FiPlus />} className={styles.verticallyCentered} onClick={handleOnAddIndentClick}>
-                            Add Indent
+                            {translateContent('global.buttons.addIndent')}
                         </Button>
                     </Col>
                 )}
@@ -83,7 +84,7 @@ export default function AdvanceOTFFilter(props) {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={22} xl={22} className={styles.advanceFilterContainer}>
-                                <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
+                                <div className={styles.advanceFilterTitle}>{translateContent('global.advanceFilter.appliedAdvanceFilter')}: </div>
                                 {extraParams?.map((filter) => {
                                     return (
                                         filter?.value &&
@@ -102,7 +103,7 @@ export default function AdvanceOTFFilter(props) {
                             </Col>
                             <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
                                 <Button className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
-                                    Clear
+                                    {translateContent('global.buttons.clear')}
                                 </Button>
                             </Col>
                         </Row>

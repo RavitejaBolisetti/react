@@ -11,6 +11,7 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { DATA_TYPE } from 'constants/dataType';
 import { RsmAsmApprovalButtons } from './RsmAsmApprovalButtons';
 import { getCodeValue } from 'utils/getCodeValue';
+import { translateContent } from 'utils/translateContent';
 
 const ViewDetailMain = (props) => {
     const { detailData, workFlowDetails, typeData, isLoading, onCloseAction, buttonData, setButtonData, handleButtonClick, handleRequest } = props;
@@ -38,13 +39,13 @@ const ViewDetailMain = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                         <Descriptions {...viewOneColProps}>
-                            <Descriptions.Item label="Request Type">{checkAndSetDefaultValue(getCodeValue(typeData?.DEL_INV_CAN_TYP, detailData?.requestType), isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Request Status">{checkAndSetDefaultValue(getCodeValue(typeData?.CDLR_INV_APP_STATUS, detailData?.requestStatus), isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Request Number">{checkAndSetDefaultValue(detailData?.requestNumber, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Request Date">{checkAndSetDefaultValue(detailData?.requestDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                            <Descriptions.Item label="Delivery Note/Invoice ID">{checkAndSetDefaultValue(detailData?.deliveryOrInvoiceId, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Delivery Note/Invoice Date">{checkAndSetDefaultValue(detailData?.deliveryOrInvoiceDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                            <Descriptions.Item label="Dealer Name">{checkAndSetDefaultValue(detailData?.dealerName, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('rsmAsmApproval.label.requestType')}>{checkAndSetDefaultValue(getCodeValue(typeData?.DEL_INV_CAN_TYP, detailData?.requestType), isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('rsmAsmApproval.label.requestStatus')}>{checkAndSetDefaultValue(getCodeValue(typeData?.CDLR_INV_APP_STATUS, detailData?.requestStatus), isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('rsmAsmApproval.label.requestNumber')}>{checkAndSetDefaultValue(detailData?.requestNumber, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('rsmAsmApproval.label.requestDate')}>{checkAndSetDefaultValue(detailData?.requestDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('rsmAsmApproval.label.deliveryOrInvoiceId')}>{checkAndSetDefaultValue(detailData?.deliveryOrInvoiceId, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('rsmAsmApproval.label.deliveryOrInvoiceDate')}>{checkAndSetDefaultValue(detailData?.deliveryOrInvoiceDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('rsmAsmApproval.label.dealerName')}>{checkAndSetDefaultValue(detailData?.dealerName, isLoading)}</Descriptions.Item>
                         </Descriptions>
                     </div>
                 </Col>

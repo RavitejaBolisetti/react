@@ -7,10 +7,11 @@ import { convertDateTime, dateFormatView, timeFormatView } from 'utils/formatDat
 import { tblPrepareColumns, tblStatusColumn } from 'utils/tableColumn';
 
 import styles from 'components/common/ChangeHistory/ChangeHistory.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const tableColumnAdmin = [
     tblPrepareColumns({
-        title: 'Changed/Modified Date',
+        title: translateContent('adminHierarchy.label.changedDate'),
         dataIndex: 'changedDate',
         width: '15%',
         render: (text) => (
@@ -22,27 +23,27 @@ export const tableColumnAdmin = [
         ),
     }),
     tblPrepareColumns({
-        title: 'Changed By',
+        title: translateContent('adminHierarchy.label.changedBy'),
         width: '10%',
         dataIndex: 'changedBy',
     }),
     tblPrepareColumns({
-        title: 'Attribute Code',
+        title: translateContent('adminHierarchy.label.attributeCode'),
         dataIndex: 'attributeCode',
         width: '14%',
     }),
     tblPrepareColumns({
-        title: 'Short Description',
+        title: translateContent('adminHierarchy.label.shortDescription'),
         dataIndex: 'shortDescription',
         width: '14%',
     }),
     tblPrepareColumns({
-        title: 'Long Description',
+        title: translateContent('adminHierarchy.label.longDescription'),
         dataIndex: 'longDescription',
         width: '16%',
     }),
     tblPrepareColumns({
-        title: 'Hierarchy Code',
+        title: translateContent('adminHierarchy.label.hierarchyCode'),
         dataIndex: 'code',
         width: '14%',
     }),
@@ -51,7 +52,7 @@ export const tableColumnAdmin = [
 
 export const tableColumnAuthority = [
     tblPrepareColumns({
-        title: 'Changed/Modified Date',
+        title: translateContent('adminHierarchy.label.changedDate'),
         dataIndex: 'createdDate',
         width: '15%',
 
@@ -64,38 +65,38 @@ export const tableColumnAuthority = [
         ),
     }),
     tblPrepareColumns({
-        title: 'Created By',
+        title: translateContent('adminHierarchy.label.createdBy'),
         dataIndex: 'createdBy',
         width: '10%',
     }),
     tblPrepareColumns({
-        title: 'Authority Type Code',
+        title: translateContent('adminHierarchy.label.authorityTypeCode'),
         dataIndex: 'authorityTypeCode',
         width: '14%',
     }),
     tblPrepareColumns({
-        title: 'Employee Name',
+        title: translateContent('adminHierarchy.label.employeeName'),
         dataIndex: 'employeeName',
         width: '10%',
     }),
     tblPrepareColumns({
-        title: 'Employee Token No.',
+        title: translateContent('adminHierarchy.label.employeeTokenNo'),
         dataIndex: 'authorityEmployeeTokenNo',
         width: '15%',
     }),
     tblPrepareColumns({
-        title: 'Authority Id',
+        title: translateContent('adminHierarchy.label.authorityId'),
         dataIndex: 'manufacturerAdminAuthorityId',
         width: '10%',
     }),
     tblPrepareColumns({
-        title: 'Effective From',
+        title: translateContent('adminHierarchy.label.effectiveFrom'),
         dataIndex: 'effectiveFrom',
         width: '14%',
         render: (text) => convertDateTime(text),
     }),
     tblPrepareColumns({
-        title: 'Effective To',
+        title: translateContent('adminHierarchy.label.effectiveTo'),
         dataIndex: 'effectiveTo',
         width: '14%',
         render: (text) => convertDateTime(text),

@@ -22,6 +22,7 @@ import { VEHICLE_TYPE } from 'constants/VehicleType';
 import { ALLOT } from 'utils/btnVisiblity';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -34,7 +35,7 @@ const mapStateToProps = (state) => {
             },
         },
     } = state;
-    const moduleTitle = 'Booking Allotment';
+    const moduleTitle = translateContent('bookingManagement.heading.bookingAllotment');
 
     let returnValue = {
         userId,
@@ -190,7 +191,7 @@ const OTFAllotmentMasterBase = (props) => {
 
     const handleVehicleAllotment = (req, buttonAction) => {
         if (!selectedVINDetails) {
-            showGlobalNotification({ message: 'Please select VIN' });
+            showGlobalNotification({ message: translateContent('bookingManagement.validation.mandatoryVINSelect') });
             return false;
         }
 
@@ -207,7 +208,7 @@ const OTFAllotmentMasterBase = (props) => {
         let data = { otfId, otfNumber, bookingNumber, allotmentStatus: updatedStatus, vehicleIdentificationNumber };
 
         const onSuccess = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             setShowOTFDataLoading(true);
             setRefreshData(!refreshData);
             setIsAllotVisible(false);

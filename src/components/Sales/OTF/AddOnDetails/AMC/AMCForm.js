@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col, Input, Form } from 'antd';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateNumberWithTwoDecimalPlaces } from 'utils/validation';
+import { translateContent } from 'utils/translateContent';
 
 const AMCForm = ({ formData, amcForm, setFormDataSetter, formDataSetter, formActionType, handleFormValueChange }) => {
     const [isReadOnly, setisReadOnly] = useState(false);
@@ -33,13 +34,13 @@ const AMCForm = ({ formData, amcForm, setFormDataSetter, formDataSetter, formAct
         <Form form={amcForm} onValuesChange={onValuesChange} onFieldsChange={handleFormValueChange} autoComplete="off" id="rsaForm" layout="vertical">
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item label="AMC" name="amc">
-                        <Input disabled={isReadOnly} placeholder={preparePlaceholderText('amc')} />
+                    <Form.Item label={translateContent('bookingManagement.label.amc')} name="amc">
+                        <Input disabled={isReadOnly} placeholder={preparePlaceholderText(translateContent('bookingManagement.label.amc'))} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item label="AMC Rate" name="amcRate" rules={[validateNumberWithTwoDecimalPlaces('AMC Rate')]}>
-                        <Input disabled={isReadOnly} placeholder={preparePlaceholderText('amc rate')} />
+                    <Form.Item label={translateContent('bookingManagement.label.amcRate')} name="amcRate" rules={[validateNumberWithTwoDecimalPlaces(translateContent('bookingManagement.label.amcRate'))]}>
+                        <Input disabled={isReadOnly} placeholder={preparePlaceholderText(translateContent('bookingManagement.label.amcRate'))} />
                     </Form.Item>
                 </Col>
             </Row>
