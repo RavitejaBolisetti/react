@@ -19,6 +19,7 @@ import { VehicleDetailFormButton } from '../VehicleDetailFormButton';
 import { tableColumn } from './tableColumn';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -72,7 +73,7 @@ export const EntitlementsAndSchemesMasterBase = (props) => {
     };
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        showGlobalNotification({ notificationType: 'success', title:  translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
     };
 
     useEffect(() => {

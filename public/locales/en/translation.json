@@ -1558,11 +1558,11 @@
         },
         "entitlementsSchemes": {
             "label": {
-                "entitlement/SchemeType": "Entitlement/Scheme Type",
-                "entitlement/SchemeDescription": "Entitlement/Scheme Description",
-                "entitlement/SchemeDocNo": "Entitlement/Scheme Doc No",
-                "entitlement/SchemeDocDate": "Entitlement/Scheme Doc Date",
-                "entitlement/SchemeBookletNo": "Entitlement/Scheme Booklet No",
+                "entitlementSchemeType": "Entitlement/Scheme Type",
+                "entitlementSchemeDescription": "Entitlement/Scheme Description",
+                "entitlementSchemeDocNo": "Entitlement/Scheme Doc No",
+                "entitlementSchemeDocDate": "Entitlement/Scheme Doc Date",
+                "entitlementSchemeBookletNo": "Entitlement/Scheme Booklet No",
                 "validityStartDate": "Validity Start Date",
                 "validityEndDate": "Validity End Date",
                 "validityStartKM": "Validity Start KM",
@@ -1585,7 +1585,9 @@
                 "documentName": "Document Name ",
                 "clickOrDrop": "Click or drop your file here to upload",
                 "FileSize": "File type should be png, jpg or pdf and max file size to be 8Mb",
-                "uploadFile": "Upload File"
+                "uploadFile": "Upload File",
+                "startDownload": "Your download will start soon",
+                "atleastOneFile": "Please upload at least one file to continue"
             },
             "placeholder": {
                 "select": "Select",
@@ -2353,25 +2355,33 @@
                 "grnNumber": "GRN Number:",
                 "grnType": "GRN Type:",
                 "grnDate": "GRN Date:",
-                "grnState": "GRN Status:"
-            }
+                "grnState": "GRN Status:",
+                "seeLess":"See less",
+                "seeMore":"See more"
+            },
+            "bookingDetails":"Booking Details"
         },
         "label": {
             "supplierInvoiceDetails": {
-                "supplierType": "Effective From",
-                "supplierName": "Effective To",
-                "supplierInvoiceNumber": "Plant",
-                "supplierInvoiceDate": "State",
-                "roadPermitNumber": "City",
-                "actualDispatchDate": "City Code",
-                "totalInvoiceAmount": "Model Code",
-                "lorryReceiptNumber": "Model Group",
-                "modelDescription": "Model Description",
-                "transporter": "Distribution Channel",
-                "supplierGstNumber": "Price Type",
-                "geoFencingDateAndTime": "GST"
+                "supplierType": "Supplier Type",
+                "supplierName": "Supplier Name",
+                "supplierInvoiceNumber": "Supplier Invoice No.",
+                "supplierInvoiceDate": "Supplier Invoice Date",
+                "roadPermitNumber": "Road Permit Number",
+                "actualDispatchDate": "Actual Dispatch Date",
+                "totalInvoiceAmount": "Total Invoice Amount",
+                "lorryReceiptNumber": "Lorry Receipt No.",
+                "transporter": "Transporter",
+                "supplierGstNumber": "Supplier GST Number",
+                "geoFencingDateAndTime": "Geo Fencing Date & Time"
             },
             "vehicleDetails": {
+                "model": "Model",
+                "modelName": "Model Name",
+                "color": "Color",
+                "seatingCapacity:": "Seating Capacity",
+                "fuel": "Fuel",
+                "variants": "Variants",
                 "modelDescription": "Model Description",
                 "VIN": "VIN",
                 "keyNumber": "Key Number",
@@ -2383,9 +2393,16 @@
                 "physicalStatus": "Physical Status",
                 "shortage": "Shortage",
                 "vehicleReceiptChecklistNumber": "Vehicle Receipt Checklist No."
+            },
+            "advancedSearch": {
+                "grnFromDate": "GRN From Date",
+                "grnToDate": "GRN To Date",
+                "grnType": "GRN Type"
             }
         },
-        "placeholder": {},
+        "placeholder": {
+            "SearchGRNNo": "Search GRN No."
+        },
         "validation": {},
         "button": {},
         "tableColumn": {
