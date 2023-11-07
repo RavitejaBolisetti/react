@@ -77,6 +77,7 @@ export const VinBlockMasterBase = (props) => {
 
     const [formData, setFormData] = useState([]);
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const page = { current: 1, pageSize: 10 };
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
@@ -100,6 +101,7 @@ export const VinBlockMasterBase = (props) => {
     };
 
     const onErrorAction = (res) => {
+        setShowDataLoading(false);
         showGlobalNotification({ message: res });
     };
 
@@ -133,14 +135,14 @@ export const VinBlockMasterBase = (props) => {
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: filterString?.pageSize ?? 10,
+                value: filterString?.pageSize || page?.pageSize,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: filterString?.current,
+                value: filterString?.current || page?.current,
                 canRemove: true,
                 filter: false,
             },
@@ -163,7 +165,7 @@ export const VinBlockMasterBase = (props) => {
     }, [filterString]);
 
     useEffect(() => {
-        if (userId && extraParams?.find((i) => i.key === 'pageNumber')?.value > 0) {
+        if (userId && extraParams) {
             setShowDataLoading(true);
             fetchVinBlockList({ setIsLoading: listVinShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
         }
@@ -209,7 +211,8 @@ export const VinBlockMasterBase = (props) => {
         dynamicPagination,
         filterString,
         totalRecords,
-        setPage: setPage,
+        setPage: setFilterString,
+        page: filterString,
         isLoading: showDataLoading,
         tableColumn: tableColumn(handleButtonClick),
         tableData: vinData,
