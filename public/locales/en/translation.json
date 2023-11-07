@@ -44,7 +44,8 @@
             "noRecordsFound": "No records found",
             "noRecordsFoundAddNew": "Please add New {NAME} using below button",
             "comingSoon": "Coming Soon",
-            "noDataFound": "No data found"
+            "noDataFound": "No data found",
+            "downloadStart": "Your download will start soon"
         },
         "changeHistory": {
             "title": "Change History"
@@ -91,6 +92,7 @@
             "addCreditNote": "Add Credit Note",
             "addDebitNote": "Add Dedit Note",
             "printReceipt": "Print Receipt",
+            "applyFilter": "Apply Filter",
             "printForm21": "Print Form 21",
             "printInvoice": "Print Invoice",
             "cancelInvoice": "Cancel Invoice"
@@ -1224,6 +1226,7 @@
             "title": "Booking Management",
             "bookingManagementChangeHistory": "Booking Change History",
             "otfSoMappingChangeHistory": "Booking - SO Mapping & Un-mapping History",
+            "bookingAllotment": "Booking Allotment",
 
             "profileCard.bookingNumber": "Booking No.",
             "profileCard.bookingDate": "Booking Date",
@@ -1246,7 +1249,9 @@
             "providePartNumber": "Please provide part number",
             "partAlreadyAdded": "Part is already added",
             "requiredQuantityLessThan50": "Required quantity should be less than 50",
-            "noAccessoriesDataFound": "No accessories data found"
+            "noAccessoriesDataFound": "No accessories data found",
+            "mandatoryVINSelect": "Please select VIN",
+            "valueDeprecated": "This value has been deprecated. Please select other value"
         },
         "label": {
             "unallotBooking": "Un-Allot Booking",
@@ -1318,11 +1323,25 @@
             "actionedBy": "Actioned By",
             "action": "Action",
             "soNumber": "SO Number",
-            "soDate": "SO Date"
+            "soDate": "SO Date",
+            "uploadCancellationLetter": "Upload Cancellation Letter",
+            "noDealerFound": "No Dealer Found",
+            "cancellationReasonType": "Cancellation Reason Type",
+            "oemName": "OEM Name",
+            "findDealerName": "Find Dealer Name",
+            "dealerName": "Dealer Name",
+            "reasonForCancellation": "Reason For Cancellation",
+            "cancellationRemark": "Cancellation Remarks",
+            "mnmInvoice": "M&M Invoice",
+            "pdiDone": "PDI Done",
+            "allotVehicle": "Allot Vehicle"
         },
         "placeholder": {
             "searchBooking": "Search Booking",
-            "searchResult": "Search Result"
+            "searchResult": "Search Result",
+            "model": "Model",
+            "searchDealerName": "Search Dealer Name",
+            "searchByVIN": "Search by VIN No./Chassis No."
         },
         "button": {
             "selectPart": "Select Part"
