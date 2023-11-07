@@ -23,7 +23,7 @@ export const tableColumn = (handleButtonClick, handleManufacturerButtonClick, pa
 
         tblPrepareColumns({
             title: 'Document Type',
-            dataIndex: 'documentTypeCode',
+            dataIndex: 'documentTypeName',
             width: '15%',
         }),
 
