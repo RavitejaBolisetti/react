@@ -51,7 +51,7 @@ const ViewDetailMain = (props) => {
                             <Descriptions {...viewProps}>
                                 <Descriptions.Item label={translateContent('vehicleDetail.customerDetails.label.customerId')}>{checkAndSetDefaultValue(ownerCustomer?.customerId, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('vehicleDetail.customerDetails.label.mobileNumber')}>{checkAndSetDefaultValue(ownerCustomer?.mobileNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label={translateContent('vehicleDetail.customerDetails.label.saluation')}>{checkAndSetDefaultValue(ownerCustomer?.saluation, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDetail.customerDetails.label.salutation')}>{checkAndSetDefaultValue(ownerCustomer?.saluation, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('vehicleDetail.customerDetails.label.customerName')}>{checkAndSetDefaultValue(ownerCustomer?.customerName, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('vehicleDetail.customerDetails.label.address')}>{checkAndSetDefaultValue(ownerCustomer?.address, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('vehicleDetail.customerDetails.label.cityPincode')}>{checkAndSetDefaultValue(ownerCustomer?.city, isLoading)}</Descriptions.Item>
@@ -69,7 +69,7 @@ const ViewDetailMain = (props) => {
                             <Descriptions {...viewProps}>
                                 <Descriptions.Item label={translateContent('vehicleDetail.customerDetails.label.customerId')}>{checkAndSetDefaultValue(billingCustomer?.customerId, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('vehicleDetail.customerDetails.label.mobileNumber')}>{checkAndSetDefaultValue(billingCustomer?.mobileNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label={translateContent('vehicleDetail.customerDetails.label.saluation')}>{checkAndSetDefaultValue(billingCustomer?.saluation, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDetail.customerDetails.label.salutation')}>{checkAndSetDefaultValue(billingCustomer?.saluation, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('vehicleDetail.customerDetails.label.customerName')}>{checkAndSetDefaultValue(billingCustomer?.customerName, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('vehicleDetail.customerDetails.label.address')}>{checkAndSetDefaultValue(billingCustomer?.address, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('vehicleDetail.customerDetails.label.cityDistrict')}>{checkAndSetDefaultValue(billingCustomer?.city, isLoading)}</Descriptions.Item>
