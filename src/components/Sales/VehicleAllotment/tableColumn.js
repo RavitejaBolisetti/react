@@ -10,11 +10,12 @@ import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { VEHICLE_TYPE } from 'constants/VehicleType';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const tableColumn = (handleButtonClick, allotmentStatus, fixedWith) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'VIN',
+            title: translateContent('orderDeliveryVehicleAllotment.tableColumn.vin'),
             dataIndex: 'vehicleIdentificationNumber',
             width: fixedWith ? '202px' : '20%',
         }),
@@ -23,7 +24,7 @@ export const tableColumn = (handleButtonClick, allotmentStatus, fixedWith) => {
     if (allotmentStatus === VEHICLE_TYPE.ALLOTED.key) {
         tableColumn.push(
             tblPrepareColumns({
-                title: 'Booking Number',
+                title:  translateContent('orderDeliveryVehicleAllotment.tableColumn.otfNumber'),
                 dataIndex: 'otfNumber',
                 width: fixedWith ? '202px' : '20%',
                 render: (_, record) => record?.bookingNumber || record?.otfNumber,
@@ -32,25 +33,25 @@ export const tableColumn = (handleButtonClick, allotmentStatus, fixedWith) => {
     }
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Model Description',
+            title: translateContent('orderDeliveryVehicleAllotment.tableColumn.modelDescription'),
             dataIndex: 'modelCode',
             width: fixedWith ? '202px' : '20%',
         }),
 
         tblPrepareColumns({
-            title: 'Age in Days',
+            title: translateContent('orderDeliveryVehicleAllotment.tableColumn.ageInDays'),
             dataIndex: 'ageInDays',
             width: fixedWith ? '140px' : '15%',
         }),
 
         tblPrepareColumns({
-            title: 'PDI',
+            title: translateContent('orderDeliveryVehicleAllotment.tableColumn.pdi'),
             dataIndex: 'pdiIndicator',
             width: fixedWith ? '140px' : '12%',
         }),
 
         tblPrepareColumns({
-            title: 'Supplier Invoice',
+            title: translateContent('orderDeliveryVehicleAllotment.tableColumn.supplierInvoice'),
             dataIndex: 'invoiceId',
             width: fixedWith ? '180px' : '18%',
             render: (text, record) => [
@@ -62,7 +63,7 @@ export const tableColumn = (handleButtonClick, allotmentStatus, fixedWith) => {
         }),
 
         tblPrepareColumns({
-            title: 'Vehicle Status',
+            title: translateContent('orderDeliveryVehicleAllotment.tableColumn.vehicleStatus'),
             dataIndex: 'vehicleStatus',
             width: fixedWith ? '160px' : '15%',
             render: (_, record) => vehicleAllotmentStatusTag(record.vehicleStatus),

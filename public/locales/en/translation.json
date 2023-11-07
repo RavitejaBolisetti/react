@@ -2356,10 +2356,10 @@
                 "grnType": "GRN Type:",
                 "grnDate": "GRN Date:",
                 "grnState": "GRN Status:",
-                "seeLess":"See less",
-                "seeMore":"See more"
+                "seeLess": "See less",
+                "seeMore": "See more"
             },
-            "bookingDetails":"Booking Details"
+            "bookingDetails": "Booking Details"
         },
         "label": {
             "supplierInvoiceDetails": {
@@ -3400,41 +3400,41 @@
     "orderDeliveryVehicleAllotment": {
         "heading": {
             "mainTitle": "Vehicle Allotment",
-            "drawerTitleMain": "Allotment Details"
+            "drawerTitleMain": "Allotment Details",
+            "titleOverride": "Un-Allot Booking",
+            "title": "Search Booking",
+            "allotmentDetails": "Allotment Details",
+            "vehicleSummary":"Vehicle Summary",
+            "allotBooking":"Allot Booking"
         },
         "label": {
             "vin": "VIN",
             "ageInDays": "Age In Days",
-            "pdi": "PDI",
+            "pdi":"PDI",
+            "pdiDone": "PDI Done",
             "vehicleStatus": "Vehicle Status",
             "supplierInvoiceDate": "Supplier Invoice Date",
             "supplierInvoiceNumber": "Supplier Invoice No.",
-            "modelDescription": "Model Description"
+            "modelDescription": "Model Description",
+            "unallotBooking": "Are you sure want to Un-allot this Booking? ",
+            "searchByVin":"Search by VIN"
+            
+        },
+        "validation": {
+            "selectBooking": "Please select Booking"
         },
         "tableColumn": {
-            "vehicleAllotmentMaster": {
-                "unAlloted": {
-                    "column1": "VIN",
-                    "column2": "Booking Number",
-                    "column3": "Model Description",
-                    "column4": "Age in Days",
-                    "column5": "PDI"
-                },
-                "alloted": {
-                    "column1": "VIN",
-                    "column2": "Model Description",
-                    "column3": "Age in Days",
-                    "column4": "PDI",
-                    "column5": "Supplier Invoice",
-                    "column6": "Vehicle Status"
-                }
-            },
-            "allotBooking": {
-                "bookingNumber": "Booking No.",
-                "bookingDate": "Booking Date",
-                "customerName": "Customer Name",
-                "cpd": "CPD"
-            }
+            "vin": "VIN",
+            "otfNumber":"Booking Number",
+            "modelDescription": "Model Description",
+            "ageInDays": "Age in Days",
+            "pdi": "PDI",
+            "supplierInvoice": "Supplier Invoice",
+            "vehicleStatus": "Vehicle Status",
+            "bookingNo": "Booking No.",
+            "bookingDate": "Booking Date",
+            "customerName": "Customer Name",
+            "cpd": "CPD"
         }
     },
     "employeeDepartment": {
