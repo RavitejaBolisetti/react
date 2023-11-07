@@ -18,7 +18,6 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { receiptDataActions } from 'store/actions/data/receipt/receipt';
 import { receiptDetailDataActions } from 'store/actions/data/receipt/receiptDetails';
-import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -27,27 +26,11 @@ import { showGlobalNotification } from 'store/actions/notification';
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
-        // data: {
-        //     ConfigurableParameterEditing: { filteredListData: typeData = [] },
-        //     Receipt: {
-        //         ReceiptSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString },
-        //         ReceiptDetails: { isLoaded: isDetailedDataLoaded = false, isLoading, data: receiptDetailData = [] },
-        //     },
-        // },
     } = state;
     const moduleTitle = 'Map New Digital Signature';
     let returnValue = {
         userId,
-        // typeData,
-        // data: data?.paginationData,
-        // totalRecords: data?.totalRecords || [],
-        // receiptDetailData,
-        // isLoading,
-         moduleTitle,
-        // isSearchLoading,
-        // isSearchDataLoaded,
-        // isDetailedDataLoaded,
-        // filterString,
+        moduleTitle,
     };
     return returnValue;
 };
@@ -73,10 +56,6 @@ export const DigitalSignatureMasterBase = (props) => {
     const { fetchList, listShowLoading, userId, fetchReceiptDetails, data, resetData } = props;
     const { typeData, moduleTitle, totalRecords, showGlobalNotification } = props;
     const { filterString, setFilterString } = props;
-
-    //const [searchValue, setSearchValue] = useState();
-
-    //const [selectedOrder, setSelectedOrder] = useState();
     const [selectedOrderId, setSelectedOrderId] = useState();
 
     const [form] = Form.useForm();
@@ -109,94 +88,8 @@ export const DigitalSignatureMasterBase = (props) => {
 
     const [formData, setFormData] = useState([]);
 
-    const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-        searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
-        searchForm.resetFields();
-        setShowDataLoading(false);
-    };
-
-    const onErrorAction = (message) => {
-        showGlobalNotification({ message });
-        setShowDataLoading(false);
-    };
-
-    useEffect(() => {
-        if (filterString) {
-            setPage({ ...page, current: 1 });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString]);
-
-    const extraParams = useMemo(() => {
-        return [
-            {
-                key: 'pageNumber',
-                title: 'Value',
-                value: page?.current,
-                canRemove: true,
-                filter: false,
-            },
-            {
-                key: 'pageSize',
-                title: 'Value',
-                value: page?.pageSize,
-                canRemove: true,
-                filter: false,
-            },
-            {
-                key: 'searchType',
-                title: 'Value',
-                value: 'receiptNumber',
-                canRemove: false,
-                filter: false,
-            },
-            {
-                key: 'searchParam',
-                title: 'searchParam',
-               // value: searchValue,
-                //name: searchValue,
-                canRemove: false,
-                filter: false,
-            },
-            {
-                key: 'fromDate',
-                title: 'Start Date',
-                value: filterString?.fromDate,
-                name: filterString?.fromDate ? convertDateTime(filterString?.fromDate, dateFormatView) : '',
-                canRemove: true,
-                filter: true,
-            },
-            {
-                key: 'toDate',
-                title: 'End Date',
-                value: filterString?.toDate,
-                name: filterString?.toDate ? convertDateTime(filterString?.toDate, dateFormatView) : '',
-                canRemove: true,
-                filter: true,
-            },
-            {
-                key: 'sortBy',
-                title: 'Sort By',
-                value: page?.sortBy,
-                canRemove: true,
-                filter: false,
-            },
-            {
-                key: 'sortIn',
-                title: 'Sort Type',
-                value: page?.sortType,
-                canRemove: true,
-                filter: false,
-            },
-        ];
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ filterString, page]);
-
     useEffect(() => {
         if (userId) {
-            // setShowDataLoading(true);
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, filterString, page]);
@@ -211,7 +104,6 @@ export const DigitalSignatureMasterBase = (props) => {
                     name: 'id',
                 },
             ];
-            fetchReceiptDetails({ setIsLoading: listShowLoading, userId, extraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);
@@ -227,50 +119,6 @@ export const DigitalSignatureMasterBase = (props) => {
         setIsFormVisible(true);
     };
 
-    // const onFinish = (values) => {
-    //     const data = { ...values };
-
-    //     const onSuccess = (res) => {
-    //         form.resetFields();
-    //         setShowDataLoading(true);
-    //         showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage + 'Receipt No.:' + res?.data?.receiptsDetails?.receiptNumber });
-    //         fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
-    //         setButtonData({ ...buttonData, formBtnActive: false });
-    //         setIsFormVisible(false);
-    //     };
-
-    //     const onError = (message) => {
-    //         showGlobalNotification({ message });
-    //     };
-
-    //     const requestData = {
-    //         data: data,
-    //         method: 'post',
-    //         setIsLoading: listShowLoading,
-    //         userId,
-    //         onError,
-    //         errorData: true,
-    //         onSuccess,
-    //     };
-
-    //     saveData(requestData);
-    // };
-
-    const onCloseAction = () => {
-        resetData();
-        fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-        form.resetFields();
-        form.setFieldsValue();
-        setSelectedOrderId();
-
-        advanceFilterForm.resetFields();
-        advanceFilterForm.setFieldsValue();
-
-        //setSelectedOrder();
-        setIsFormVisible(false);
-        setButtonData({ ...defaultBtnVisiblity });
-    };
-
     const tableProps = {
         dynamicPagination,
         totalRecords,
@@ -281,9 +129,6 @@ export const DigitalSignatureMasterBase = (props) => {
         showAddButton: false,
         typeData,
     };
-
-    //const title = 'Dealer Sig-Dealer Code Mapping';
-
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
             return 'View ';
@@ -297,7 +142,6 @@ export const DigitalSignatureMasterBase = (props) => {
     const searchBoxProps = {
         searchForm,
         filterString,
-        // optionType: typeData[PARAM_MASTER?.CUST_VEH_SEARCH?.id],
         setFilterString,
         selectWide: true,
     };
@@ -305,9 +149,7 @@ export const DigitalSignatureMasterBase = (props) => {
     const formProps = {
         isVisible: isFormVisible,
         titleOverride: drawerTitle.concat(moduleTitle),
-        handleButtonClick,
         formActionType,
-        onCloseAction,
         ADD_ACTION,
         EDIT_ACTION,
         VIEW_ACTION,

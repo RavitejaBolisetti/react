@@ -12,7 +12,7 @@ import { FINANCE_ARRANGED_BY } from 'constants/financeArrangedBy';
 import { YES_NO_FLAG } from 'constants/yesNoFlag';
 
 const ViewDetailMain = (props) => {
-    const { styles, formData, isLoading, typeData } = props;
+    const { formData, isLoading, typeData } = props;
 
     const viewProps = {
         bordered: false,
@@ -29,7 +29,7 @@ const ViewDetailMain = (props) => {
                 {formData?.financeArrangedBy && !checkFinanceType(formData?.financeArrangedBy, FINANCE_ARRANGED_BY?.CASH?.key) && (
                     <>
                         {/* <Descriptions.Item label="Print Hypothecation Details?">{checkAndSetDefaultValue(formData?.printHypothecationDetails, isLoading, DATA_TYPE?.BOOL?.key)}</Descriptions.Item> */}
-                        <Descriptions.Item label="Financier">{checkAndSetDefaultValue(formData?.financier, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Financier Name">{checkAndSetDefaultValue(formData?.financier, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Branch">{checkAndSetDefaultValue(formData?.branch, isLoading)}</Descriptions.Item>
                         {formData?.financeArrangedBy && checkFinanceType(formData?.financeArrangedBy, FINANCE_ARRANGED_BY?.DEALER?.key) && (
                             <>

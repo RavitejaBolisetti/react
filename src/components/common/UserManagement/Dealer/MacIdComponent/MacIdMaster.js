@@ -90,7 +90,6 @@ const MacIdMasterMain = (props) => {
 
     useEffect(() => {
         if (userId) {
-            // setButtonData((prev) => ({ ...prev, nextBtn: false, nextBtnWthPopMag: false, saveBtn: true, editBtn: formActionType?.viewMode }));
             fetchMacIdList({ setIsLoading: listMacIdShowLoading, userId, extraParams, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -173,7 +172,6 @@ const MacIdMasterMain = (props) => {
 
         const requestData = {
             data: macIdData,
-            // method: formActionType?.editMode ? 'put' : 'post',
             method: 'post',
             isLoading: listMacIdShowLoading,
             setIsLoading: listMacIdShowLoading,
@@ -189,10 +187,6 @@ const MacIdMasterMain = (props) => {
         setIsAdding(false);
         setEditingData({});
         macIdform.resetFields();
-    };
-
-    const onFinishFailed = (err) => {
-        console.error(err);
     };
     const formSkeleton = (
         <Row>
@@ -210,7 +204,7 @@ const MacIdMasterMain = (props) => {
 
     return (
         <>
-            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
                 <Row gutter={20} className={styles.drawerBodyRight}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <h2>{section?.title} </h2>

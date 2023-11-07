@@ -95,6 +95,7 @@ export const ListPartyMasterBase = (props) => {
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
     const [recordData, setRecordData] = useState();
+    const [onSaveShowLoading, setOnSaveShowLoading] = useState(false);
 
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
@@ -159,10 +160,11 @@ export const ListPartyMasterBase = (props) => {
     const onFinish = (values) => {
         let data = { ...values };
 
+        setOnSaveShowLoading(true);
         const onSuccess = (res) => {
+            setOnSaveShowLoading(false);
             form.resetFields();
             setShowDataLoading(true);
-
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
 
@@ -178,6 +180,7 @@ export const ListPartyMasterBase = (props) => {
 
         const onError = (message) => {
             showGlobalNotification({ message });
+            setOnSaveShowLoading(false);
         };
 
         const requestData = {
@@ -190,10 +193,6 @@ export const ListPartyMasterBase = (props) => {
         };
 
         saveData(requestData);
-    };
-
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
     };
 
     const onCloseAction = () => {
@@ -234,8 +233,6 @@ export const ListPartyMasterBase = (props) => {
         formActionType,
         setFormActionType,
         onFinish,
-        onFinishFailed,
-
         isVisible: isFormVisible,
         onCloseAction,
         titleOverride: drawerTitle.concat(moduleTitle),
@@ -262,6 +259,8 @@ export const ListPartyMasterBase = (props) => {
 
         setButtonData,
         handleButtonClick,
+        showGlobalNotification,
+        onSaveShowLoading,
     };
 
     const tableProps = {

@@ -7,22 +7,39 @@ import { fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import {AddVehicleDetailsModal} from '@components/Sales/StockTransferIndent/AddVehicleDetailsModal';
 import customRender from '@utils/test-utils';
+import { Form } from 'antd';
+import createMockStore from '__mocks__/store';
+import { Provider } from 'react-redux';
+
+const FormWrapper = (props) => {
+    const [addVehicleDetailsForm] = Form.useForm();
+
+    const myMock = {
+        ...addVehicleDetailsForm,
+        setFieldsValue:jest.fn(),
+    }
+    return <AddVehicleDetailsModal addVehicleDetailsForm={myMock} {...props} />
+}
 
 describe("AddVehicleDetailsModal",()=>{
-    it("textbox",()=>{
-        const ProductHierarchyData = [{rodctShrtName:'test', prodctCode:'123'}];
+    it("Model Description",()=>{
+        const fieldNames = { label: 'prodctShrtName', value: 'prodctCode' };
+        const mockStore = createMockStore({
+            auth:{userId:123},
+            data: {
+                OTF: {
+                    VehicleDetailsLov: { filteredListData: [{prodctCode:'Wipro', prodctShrtName:'t01'}] },
+                },
+            }
+        })
 
-        customRender(<AddVehicleDetailsModal isVisible={true} handleChangeModel={jest.fn()} ProductHierarchyData={ProductHierarchyData} />);
+        customRender(
+            <Provider store={mockStore}>
+                <FormWrapper isVisible={true} fieldNames={fieldNames} />
+            </Provider>
+        )
 
-        const requestedQuantity = screen.getByRole('textbox', {name:'Requested Quantity'});
-        fireEvent.change(requestedQuantity, {target:{value:'test'}})
+        const prodctCode = screen.getByRole('combobox', {name:'Model Description'});
+        fireEvent.change(prodctCode, { target: { value: 'Wipro' } });
     })
-
-    it("Cancel",()=>{
-        customRender(<AddVehicleDetailsModal isVisible={true} onCloseAction={jest.fn()} />);
-
-        const cancelBtn = screen.getByRole('button', {name:'Cancel'});
-        fireEvent.click(cancelBtn);
-    })
-    
 })

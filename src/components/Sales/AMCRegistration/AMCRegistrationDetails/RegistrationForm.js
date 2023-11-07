@@ -9,13 +9,14 @@ import { validateRequiredSelectField, validateRequiredInputField } from 'utils/v
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { customSelectBox } from 'utils/customSelectBox';
 import { PARAM_MASTER } from 'constants/paramMaster';
-
+import { AMC_CONSTANTS } from '../utils/AMCConstants';
+import styles from 'assets/sass/app.module.scss';
 
 const { Search } = Input;
 const { TextArea } = Input;
 
 const RegistrationForm = (props) => {
-    const { options, handleOnSelect, handleOnClear, registrationForm, formData, typeData, handleFormValueChange, handleBookingNumberSearch, isEmployeeDataLoading, handleEmployeeNameSearch, isVehicleInvoiceDataLoading, } = props;
+    const { options, handleOnSelect, handleOnClear, registrationForm, formData, typeData, handleFormValueChange, handleBookingNumberSearch, isEmployeeDataLoading, handleEmployeeNameSearch, isVehicleInvoiceDataLoading, handleBookingNumberChange, handleSaleTypeChange, selectedSaleType } = props;
 
     return (
         <>
@@ -23,22 +24,18 @@ const RegistrationForm = (props) => {
                 <Row gutter={16}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item initialValue={formData?.saleType} label="Sale Type" name="saleType" rules={[validateRequiredSelectField('Sale Type')]}>
-                            {customSelectBox({ data: typeData?.[PARAM_MASTER.DLVR_SALE_TYP.id], placeholder: preparePlaceholderSelect('Sale Type') })}
+                            {customSelectBox({ data: typeData?.[PARAM_MASTER.DLVR_SALE_TYP.id], placeholder: preparePlaceholderSelect('Sale Type'), onChange: handleSaleTypeChange })}
                         </Form.Item>
                     </Col>
-                    {registrationForm.getFieldValue('saleType') === 'DMFOC' && (
+                    {selectedSaleType === AMC_CONSTANTS?.MNM_FOC?.key && (
                         <>
                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                 <Form.Item label="Booking Number" name="bookingNumber" rules={[validateRequiredInputField('Booking Number')]}>
-                                    <Search maxLength={50} placeholder={preparePlaceholderText('Booking Number')} loading={isVehicleInvoiceDataLoading} onSearch={(value) => handleBookingNumberSearch(value)} allowClear />
+                                    <Search maxLength={50} placeholder={preparePlaceholderText('Booking Number')} loading={isVehicleInvoiceDataLoading} onSearch={(value) => handleBookingNumberSearch(value)} onChange={handleBookingNumberChange} allowClear />
                                 </Form.Item>
                             </Col>
                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                <Form.Item
-                                    label="VIN"
-                                    name="vin"
-                                    // rules={[validateRequiredInputField('vin')]}
-                                >
+                                <Form.Item label="VIN" name="vin">
                                     <Input disabled maxLength={50} placeholder={preparePlaceholderText('vin')} />
                                 </Form.Item>
                             </Col>
@@ -52,15 +49,11 @@ const RegistrationForm = (props) => {
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item
-                            label="Manager Name"
-                            name="managerName"
-                            // rules={[validateRequiredInputField('Manager Name')]}
-                        >
+                        <Form.Item label="Manager Name" name="managerName">
                             <Input disabled maxLength={50} placeholder={preparePlaceholderText('Manager Name')} />
                         </Form.Item>
                     </Col>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
                         <Form.Item initialValue={formData?.remarks} label="Remarks" name="remarks" rules={[validateRequiredSelectField('Remarks')]}>
                             <TextArea maxLength={300} placeholder={preparePlaceholderText('Remarks')} showCount />
                         </Form.Item>

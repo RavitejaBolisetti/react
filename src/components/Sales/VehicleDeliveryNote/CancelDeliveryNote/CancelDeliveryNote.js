@@ -17,10 +17,10 @@ import styles from 'assets/sass/app.module.scss';
 const { TextArea } = Input;
 
 export const RejectRequestForm = (props) => {
-    const { formData, cancelDeliveryNoteForm, onFinish, onFinishFailed, cancelModalCloseAction, retailMonth, typeData, yesRetailMonth, setYesRetailMonth, soldByDealer } = props;
+    const { formData, cancelDeliveryNoteForm, onFinish, cancelModalCloseAction, retailMonth, typeData, yesRetailMonth, setYesRetailMonth } = props;
 
     return (
-        <Form autoComplete="off" layout="vertical" form={cancelDeliveryNoteForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" layout="vertical" form={cancelDeliveryNoteForm} onFinish={onFinish}>
             {retailMonth ? (
                 <Row gutter={16}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>

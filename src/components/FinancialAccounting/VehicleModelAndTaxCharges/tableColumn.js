@@ -7,7 +7,7 @@ import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 
 import styles from 'assets/sass/app.module.scss';
 
-export const tableColumn = (handleButtonClick, page, pageSize) => {
+export const tableColumn = (handleButtonClick) => {
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({

@@ -30,7 +30,7 @@ const AddEditFormMain = (props) => {
 
     const voucherModuleTitle = `Apportion`;
 
-    const addContactHandeler = (e) => {
+    const addContactHandeler = () => {
         apportionForm.resetFields();
         setOpenAccordian('apportion');
         setIsReadOnly(true);

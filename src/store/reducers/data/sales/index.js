@@ -7,6 +7,7 @@ import { combineReducers } from 'redux';
 
 import { RSMApproval } from './rsmApproval';
 import { RSMApprovalSearch } from './rsmApprovalSearch';
+import { RSARegistration } from './rsaRegistration';
 import { DeliveryNoteInvoice } from './deliveryNoteInvoiceCancellation';
 import { VehicleTracking } from './vehicleTracking';
 import { VehicleInvoiceGeneration } from './vehicleInvoiceGeneration';
@@ -17,4 +18,5 @@ export const Sales = combineReducers({
     DeliveryNoteInvoice,
     VehicleTracking,
     VehicleInvoiceGeneration,
+    RSARegistration,
 });

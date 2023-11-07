@@ -110,10 +110,6 @@ export const OtfReportsMasterBase = (props) => {
         });
     };
 
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
-    };
-
     const handleOtfReportChange = (values) => {
         const finalReport = reportOption?.map((option, index) => {
             return { ...option, status: values?.includes(option?.id) };
@@ -129,7 +125,7 @@ export const OtfReportsMasterBase = (props) => {
     return (
         <>
             <div className={styles.contentHeaderBackground}>
-                <Form layout="vertical" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                <Form layout="vertical" form={form} onFinish={onFinish}>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={3} lg={3} xl={3}>
                             <Form.Item label="Model Group" name="modelGroup">

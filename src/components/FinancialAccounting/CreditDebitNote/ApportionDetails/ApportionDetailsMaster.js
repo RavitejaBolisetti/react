@@ -13,7 +13,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
-
+    
 import styles from 'assets/sass/app.module.scss';
 
 import { CreditDebitNoteFormButton } from '../CreditDebitFormButton';
@@ -66,7 +66,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ApportionDetailsMasterMain = (props) => {
-    const { isLoading, userId, onFinishFailed, formActionType, handleFormValueChange, creditDebitNoteOnFinish } = props;
+    const { isLoading, userId, formActionType, handleFormValueChange, creditDebitNoteOnFinish } = props;
     const { fetchInvoiceList, listInvoiceShowLoading, apportionTableData, setApportionTableData } = props;
     const { fetchDocumentTypeList, listDocumentTypeShowLoading, isDocumentTypesLoaded, documentTypeData, isDocumentTypeLoading, creditDebitData, showGlobalNotification } = props;
 
@@ -140,7 +140,7 @@ export const ApportionDetailsMasterMain = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onFieldsChange={handleFormValueChange} onFinish={() => creditDebitNoteOnFinish()} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onFieldsChange={handleFormValueChange} onFinish={() => creditDebitNoteOnFinish()}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}

@@ -35,9 +35,7 @@ const ViewDetailMain = (props) => {
                         <Panel key="1" header="Branches Accessible">
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    {/* <Form.Item initialValue={formData?.areaOffice} label="Area Office" name="areaOffice"> */}
                                     <DataTable tableColumn={tableColumnAddEdit({ handleButtonClick, typeData, formActionType })} tableData={tableData} pagination={false} />
-                                    {/* </Form.Item> */}
                                 </Col>
                             </Row>
                         </Panel>

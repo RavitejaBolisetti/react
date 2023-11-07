@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Col, Row, Card, Divider, Empty, Checkbox, Typography } from 'antd';
 import { LANGUAGE_EN } from 'language/en';
 
@@ -16,11 +16,16 @@ const { Text } = Typography;
 
 const AddEditForm = (props) => {
     const { section, dealerBranches, setDealerBranches, setButtonData, formActionType, isUsrDlrBrLocationLoding, isDlrBrLocationLoding } = props;
+    useEffect(() => {
+        if (!dealerBranches?.filter((el) => el?.id || el?.status)?.length) {
+            setButtonData((prev) => ({ ...prev, nextBtn: true, saveBtn: !formActionType.viewMode, formBtnActive: false }));
+        } else setButtonData((prev) => ({ ...prev, nextBtn: false, saveBtn: !formActionType.viewMode, formBtnActive: true }));
 
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [dealerBranches]);
     const onChanges = (values, checkedValues, index) => {
         if (formActionType?.viewMode) return;
 
-        setButtonData((prev) => ({ ...prev, nextBtn: false, saveBtn: true, formBtnActive: true }));
         const isCheckedDefault = checkedValues?.includes('defaultBranchIndicator');
         const isaccessible = checkedValues?.includes('status');
 

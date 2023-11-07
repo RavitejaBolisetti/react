@@ -22,8 +22,8 @@ import { LANGUAGE_EN } from 'language/en';
 import { NoDataFound } from 'utils/noDataFound';
 
 import { AMC_CONSTANTS } from '../utils/AMCConstants';
-import styles from 'assets/sass/app.module.scss';
 import { formattedCalendarDate } from 'utils/formatDateTime';
+import styles from 'assets/sass/app.module.scss';
 
 const { Text } = Typography;
 
@@ -33,7 +33,7 @@ const mapStateToProps = (state) => {
 
         data: {
             Vehicle: {
-                VehicleDetail: { isLoading, vehicleData },
+                VehicleDetail: { isLoaded = false, isLoading, vehicleData = [] },
             },
         },
     } = state;
@@ -42,6 +42,7 @@ const mapStateToProps = (state) => {
         userId,
         isLoading,
         vehicleData,
+        isLoaded,
     };
     return returnValue;
 };
@@ -61,8 +62,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const VehicleDetailsMasterBase = (props) => {
     const { form, section, userId, showGlobalNotification, typeData } = props;
-    const { isLoading, setLastSection, AMConFinish, setRequestPayload, fetchVehicleData, listVehicleShowLoading, requestPayload, buttonData, setButtonData, formActionType, FormActionButton } = props;
-
+    const { isLoaded, isLoading, setLastSection, AMConFinish, setRequestPayload, fetchVehicleData, listVehicleShowLoading, requestPayload, buttonData, setButtonData, formActionType, FormActionButton } = props;
     const [contactform] = Form.useForm();
     const [contactData, setContactData] = useState([]);
     const [showAddEditForm, setShowAddEditForm] = useState(false);
@@ -81,13 +81,14 @@ const VehicleDetailsMasterBase = (props) => {
     }, [requestPayload]);
 
     useEffect(() => {
-        if (formActionType?.addMode && requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.DMFOC?.key) {
+        if ((formActionType?.addMode || !isLoaded) && requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.MNM_FOC?.key) {
             handleVinSearch();
             setIsReadOnly(true);
             setShowAddEditForm(true);
+            setButtonData({ ...buttonData, formBtnActive: true });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [requestPayload]);
+    }, [section]);
 
     useEffect(() => {
         if (formActionType?.addMode) {
@@ -99,7 +100,7 @@ const VehicleDetailsMasterBase = (props) => {
     const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
     const addDataTitle = (
         <p className={styles.textCenter}>
-            Please add new contact using <br /> <strong>“Add”</strong> button at top
+            Please add new vehicle using <br /> <strong>“Add”</strong> button at top
         </p>
     );
 
@@ -112,25 +113,36 @@ const VehicleDetailsMasterBase = (props) => {
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
+        contactform.resetFields(['vehicleRegistrationNumber', 'orignallyWarrantyStartDate', 'modelGroup', 'modelFamily', 'modelDescription']);
     };
+    const checkDuplicate = (vehicleRegistrationNumber) => contactData.find((value) => value?.vehicleRegistrationNumber === vehicleRegistrationNumber);
 
     const onSaveFormData = () => {
         contactform
             .validateFields()
             .then((value) => {
-                setContactData((prev) => {
-                    if (prev) {
-                        return [...prev, value];
-                    } else {
-                        return [{ value }];
-                    }
-                });
+                if (checkDuplicate(value?.vehicleRegistrationNumber)) {
+                    showGlobalNotification({ title: 'Error', notificationType: 'error', message: 'Vehicle is duplicate' });
+                    return false;
+                } else if (!value?.vehicleRegistrationNumber) {
+                    showGlobalNotification({ title: 'Error', notificationType: 'error', message: 'Please add vehicle registration number to continue' });
+                    return false;
+                } else {
+                    setContactData((prev) => {
+                        if (prev) {
+                            return [...prev, value];
+                        } else {
+                            return [{ value }];
+                        }
+                    });
 
-                setShowAddEditForm(false);
-                setIsEditing(false);
-                setEditingData({});
-                setIsAdding(false);
-                contactform.resetFields();
+                    setShowAddEditForm(false);
+                    setIsEditing(false);
+                    setEditingData({});
+                    setIsAdding(false);
+                    handleFormValueChange();
+                    contactform.resetFields();
+                }
             })
             .catch((err) => console.error(err));
     };
@@ -146,9 +158,22 @@ const VehicleDetailsMasterBase = (props) => {
         setShowAddEditForm(true);
     };
 
+    const handleVINChange = (e) => {
+        if (!e?.target?.value) {
+            contactform.resetFields(['vehicleRegistrationNumber', 'orignallyWarrantyStartDate', 'modelGroup', 'modelFamily', 'modelDescription']);
+        }
+        setButtonData({ ...buttonData, formBtnActive: false });
+    };
+
     const handleVinSearch = (value) => {
+        if (!value && !formActionType?.addMode) {
+            return false;
+        }
         const onVehicleSearchSuccessAction = (data) => {
-            contactform.setFieldsValue({ ...data?.data?.vehicleSearch[0], modelDescription: data?.data?.vehicleSearch[0].chassisNumber, vehicleRegistrationNumber: data?.data?.vehicleSearch[0].registrationNumber, orignallyWarrantyStartDate: formattedCalendarDate(data?.data?.vehicleSearch[0].chassisNumber) });
+            contactform.setFieldsValue({ ...data?.data?.vehicleSearch[0], modelDescription: data?.data?.vehicleSearch[0].modelDescription, vehicleRegistrationNumber: data?.data?.vehicleSearch[0].registrationNumber, orignallyWarrantyStartDate: formattedCalendarDate(data?.data?.vehicleSearch[0].orignallyWarrantyStartDate) });
+            if (formActionType?.addMode) {
+                setRequestPayload({ ...requestPayload, amcVehicleDetails: [{ vin: requestPayload?.amcRegistration?.vin }] });
+            }
         };
         const vehicleExtraParams = [
             {
@@ -193,22 +218,19 @@ const VehicleDetailsMasterBase = (props) => {
         setEditingData,
         typeData,
         setButtonData,
+        buttonData,
         handleFormValueChange,
-
         isAdding,
         setIsAdding,
-        buttonData,
         handleVinSearch,
         disabledProps,
+        handleVINChange,
     };
 
     const onFinish = () => {
         AMConFinish(requestPayload);
     };
 
-    const onFinishFailed = (err) => {
-        console.error(err);
-    };
     const formSkeleton = (
         <Row>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -219,7 +241,7 @@ const VehicleDetailsMasterBase = (props) => {
 
     return (
         <>
-            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
                 <Row gutter={20} className={styles.drawerBodyRight}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <h2>{section?.title} </h2>
@@ -230,15 +252,15 @@ const VehicleDetailsMasterBase = (props) => {
                                 <>
                                     <Row type="flex" align="middle">
                                         <Text strong> {'Vehicle Details'}</Text>
-                                        {!formActionType?.viewMode && !(formActionType?.addMode && requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.DMFOC?.key) && (
+                                        {!formActionType?.viewMode && !(formActionType?.addMode && requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.MNM_FOC?.key) && (
                                             <Button onClick={addBtnContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isEditing || isAdding}>
                                                 Add
                                             </Button>
                                         )}
                                     </Row>
-                                    <Divider className={styles.marT20} />
+                                    {!(formActionType?.addMode && requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.MNM_FOC?.key) && <Divider className={styles.marT20} />}
                                     {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
-                                    {!contactData?.length && !isAdding && !(formActionType?.addMode && requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.DMFOC?.key) ? <NoDataFound informtion={formActionType?.viewMode ? noDataTitle : addDataTitle} /> : <ViewVehicleList {...formProps} />}
+                                    {!contactData?.length && !isAdding && !(formActionType?.addMode && requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.MNM_FOC?.key) ? <NoDataFound informtion={formActionType?.viewMode ? noDataTitle : addDataTitle} /> : <ViewVehicleList {...formProps} />}
                                 </>
                             )}
                         </Card>

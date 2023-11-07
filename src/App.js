@@ -7,6 +7,7 @@ import React, { useEffect, createContext, useCallback } from 'react';
 import { ConfigProvider, notification } from 'antd';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { connect } from 'react-redux';
+
 import { AiOutlineCheckCircle, AiOutlineInfoCircle, AiOutlineCloseCircle } from 'react-icons/ai';
 import { FcCancel } from 'react-icons/fc';
 
@@ -14,7 +15,6 @@ import { MainPage } from './components/MainPage';
 
 import { readFromStorageAndValidateAuth } from 'store/actions/auth';
 import { hideGlobalNotification } from 'store/actions/notification';
-import { CheckNetworkStatus } from 'utils/CheckNetworkStatus';
 
 import styles from './App.module.scss';
 
@@ -99,7 +99,7 @@ const AppBase = ({ readFromStorageAndValidateAuth, hideGlobalNotification, notif
             >
                 <NotificationContext.Provider value={informationModalBox}>
                     {contextInformationNotification}
-                    <CheckNetworkStatus />
+                    {/* <div className={styles.noInternetConnectivity}>You're Offline. Please check your internet connection and try again</div> */}
                     <MainPage />
                 </NotificationContext.Provider>
             </ConfigProvider>

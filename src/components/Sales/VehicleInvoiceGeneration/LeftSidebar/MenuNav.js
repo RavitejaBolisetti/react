@@ -17,7 +17,7 @@ export const validateInvoiceMenu = ({ item, otfData }) => {
         case VEHICLE_INVOICE_SECTION.REFERRALS.id:
             return otfData?.referral === 'Y';
         case VEHICLE_INVOICE_SECTION.LOYALTY_SCHEME.id:
-            return otfData?.exchange !== 1 && otfData?.loyaltyScheme === 10;
+            return otfData?.exchange !== 1 && otfData?.loyaltyScheme === 1;
         default:
             return true;
     }
@@ -25,31 +25,38 @@ export const validateInvoiceMenu = ({ item, otfData }) => {
 
 const MenuNav = (props) => {
     const { currentSection, setCurrentSection, formActionType, otfData, previousSection = 1 } = props;
+    const { isFormValueChange, setIsUnsavedDataPopup, setNextCurrentSection } = props;
 
     const receiptSectionList = Object.values(VEHICLE_INVOICE_SECTION);
 
     const onHandle = (key) => {
-        setCurrentSection(key);
+        if (isFormValueChange) {
+            setIsUnsavedDataPopup(true);
+            setNextCurrentSection(key);
+        } else {
+            setCurrentSection(key);
+        }
     };
     const className = (id) => {
         return formActionType?.addMode && id > previousSection ? styles.cursorNotAllowed : styles.cursorPointer;
     };
 
     const items = receiptSectionList
-        ?.filter((i) => i?.displayOnList)
-        ?.map((item) => {
-            const { menuNavIcon, activeClassName } = getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType });
-            return (
-                validateInvoiceMenu({ item, otfData }) && {
-                    dot: menuNavIcon,
-                    children: (
-                        <div className={className(item?.id)} onClick={() => (!formActionType?.addMode || (formActionType?.addMode && item?.id <= previousSection) ? onHandle(item?.id) : '')}>
-                            {item.title}
-                        </div>
-                    ),
-                    className: activeClassName,
-                }
-            );
+        ?.flatMap((item) => {
+            if (item?.displayOnList) {
+                const { menuNavIcon, activeClassName } = getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType });
+                return (
+                    validateInvoiceMenu({ item, otfData }) && {
+                        dot: menuNavIcon,
+                        children: (
+                            <div className={className(item?.id)} onClick={() => (!formActionType?.addMode || (formActionType?.addMode && item?.id <= previousSection) ? onHandle(item?.id) : '')}>
+                                {item.title}
+                            </div>
+                        ),
+                        className: activeClassName,
+                    }
+                );
+            }
         })
         ?.filter((i) => i);
 

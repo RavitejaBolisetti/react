@@ -36,6 +36,7 @@ import IMG_ICON from 'assets/img/icon.png';
 import { HeadPhoneIcon, MenuArrow } from 'Icons';
 
 import styles from './Header.module.scss';
+import moment from 'moment';
 
 const { confirm } = Modal;
 const mapStateToProps = (state) => {
@@ -116,6 +117,8 @@ const HeaderMain = (props) => {
     const dealerLocation = dealerLocations?.find((i) => i?.isDefault)?.locationName;
     const fullName = firstName?.concat(lastName ? ' ' + lastName : '');
     const userAvatar = firstName?.slice(0, 1) + (lastName ? lastName?.slice(0, 1) : '');
+
+    const finacialYear = moment().month() > 3 ? moment().add(1, 'years').year() : moment().year();
 
     useEffect(() => {
         setUserAccess(loginUserData?.userRoles?.find((user) => user?.isDefault === true)?.roleName);
@@ -221,12 +224,6 @@ const HeaderMain = (props) => {
         });
     };
 
-    const fyMenuOption = [
-        customMenuLink({
-            title: '2023',
-        }),
-    ];
-
     const userSettingMenu = [
         customMenuLink({
             key: 1,
@@ -236,22 +233,9 @@ const HeaderMain = (props) => {
                 key: role?.roleId,
                 label: role?.roleName,
                 onClick: () => handleUpdateUserAcess({ roleId: role?.roleId }),
-                // className: styles.dropdownIcon,
                 disabled: role?.isDefault,
             })),
         }),
-        // customMenuLink({
-        //     key: '1',
-        //     title: 'My Profile',
-        //     link: routing.ROUTING_USER_PROFILE,
-        //     icon: <FiUser size={18} />,
-        // }),
-        // customMenuLink({
-        //     key: '2',
-        //     title: 'Account Settings',
-        //     link: routing.ROUTING_USER_SETTING,
-        //     icon: <FiSettings size={18} />,
-        // }),
     ];
 
     userType === USER_TYPE?.DEALER?.key &&
@@ -280,7 +264,7 @@ const HeaderMain = (props) => {
         setCollapsed(!collapsed);
     };
 
-    const isDashboard = false; //pagePath === routing.ROUTING_DASHBOARD;
+    const isDashboard = false;
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -315,7 +299,6 @@ const HeaderMain = (props) => {
                                     <div className={styles.userText}>
                                         <div className={styles.dealerName}>{dealerName}</div>
                                         <div className={styles.dealerInfo}>
-                                            <span className={styles.dealerLocation}>{dealerLocation}</span>
                                             {userType === USER_TYPE?.DEALER?.key && (
                                                 <Dropdown
                                                     trigger={['click']}
@@ -331,16 +314,19 @@ const HeaderMain = (props) => {
                                                         })),
                                                     }}
                                                 >
-                                                    <DownOutlined />
+                                                    <Space onClick={(e) => e.preventDefault()}>
+                                                        <span className={styles.dealerLocation}>{dealerLocation}</span>
+                                                        <DownOutlined />
+                                                    </Space>
                                                 </Dropdown>
                                             )}{' '}
                                             {userType === USER_TYPE?.DEALER?.key && (
                                                 <>
                                                     <span className={styles.seprator}>|</span>
-                                                    <span className={styles.dealerLocation}>FY2023</span>
-                                                    <Dropdown className={styles.dropdownIcon} menu={{ items: fyMenuOption }} /*trigger={['click']}*/>
+                                                    <span className={styles.dealerLocation}>{'FY' + finacialYear}</span>
+                                                    {/* <Dropdown className={styles.dropdownIcon} menu={{ items: fyMenuOption }} />
                                                         <DownOutlined />
-                                                    </Dropdown>
+                                                    </Dropdown> */}
                                                 </>
                                             )}
                                         </div>

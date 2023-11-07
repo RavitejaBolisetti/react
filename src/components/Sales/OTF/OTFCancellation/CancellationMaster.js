@@ -66,7 +66,7 @@ const mapDispatchToProps = (dispatch) => ({
 const CancellationMasterBase = (props) => {
     const { otfData, selectedOrder } = props;
     const { userId, listShowLoading, uploadDocumentFile } = props;
-    const { moduleTitle, setUploadedFile, uploadedFile } = props;
+    const { moduleTitle, setUploadedFile, uploadedFile, handleButtonClick } = props;
     const { productCode, fetchProductHierarchyList, isProductDataLoaded, productHierarchyDataList, onFinishOTFCancellation, fetchDealerList, dealerDataList, resetDealerList } = props;
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, cancelOTFBtn: true };
@@ -75,7 +75,7 @@ const CancellationMasterBase = (props) => {
     const [searchDealerValue, setSearchDealerValue] = useState('');
 
     const [uploadedFileName, setUploadedFileName] = useState('');
-    const [parentAppCode, setparentAppCode] = useState();
+    const [parentAppCode, setParentAppCode] = useState();
     const [productHierarchyData, setProductHierarchyData] = useState([]);
 
     const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
@@ -145,8 +145,9 @@ const CancellationMasterBase = (props) => {
         setUploadedFileName,
         uploadedFile,
         parentAppCode,
-        setparentAppCode,
+        setParentAppCode,
         resetDealerList,
+        handleButtonClick,
     };
 
     return <AddEditForm {...formProps} />;

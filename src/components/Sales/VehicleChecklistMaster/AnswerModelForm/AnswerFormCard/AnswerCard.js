@@ -14,13 +14,13 @@ const { Text } = Typography;
 
 const AnswerCard = (props) => {
     const { finalFormdata, answerForm, forceUpdate, answerData, setAnswerData, setOpenAccordian, changeValue, setChangeValue, editForm, formEdit, setFormEdit, uniqueCardEdit, setuniqueCardEdit, internalId, formActionType, answerSwitch, setAnswerSwitch, setFormBtnActive } = props;
-
+    let id = props?.id ? props?.id : props?.internalId;
+    let IdType = props?.id ? 'id' : 'internalId';
     const answerEdit = (props) => {
-        setuniqueCardEdit(props?.internalId);
+        setuniqueCardEdit(id); 
         setFormEdit(true);
         setFormBtnActive(true);
         setAnswerSwitch(props?.answerStatus);
-        console.log(`props`, props);
         editForm.setFieldsValue({
             answerCode: props?.answerCode,
             answerTitle: props?.answerTitle,
@@ -33,7 +33,7 @@ const AnswerCard = (props) => {
     const answerSave = () => {
         let newFormData = editForm?.getFieldsValue();
         const upd_obj = answerData?.map((obj) => {
-            if (obj?.internalId === newFormData?.internalId) {
+            if (obj[IdType] === id) {
                 obj.answerCode = newFormData?.answerCode;
                 obj.answerTitle = newFormData?.answerTitle;
                 obj.answerStatus = newFormData?.answerStatus;
@@ -57,7 +57,7 @@ const AnswerCard = (props) => {
         });
 
         setFormEdit(false);
-        answerForm.resetFields();
+        answerForm?.resetFields();
         forceUpdate();
     };
 
@@ -101,11 +101,12 @@ const AnswerCard = (props) => {
                                         onClick={() => {
                                             answerEdit(props);
                                         }}
+                                        data-testid="edit"
                                     />
-                                    <Button onClick={() => answerDelete(props)} type="link" icon={<FiTrash />} disabled={props?.id ? true : false} />
+                                    <Button onClick={() => answerDelete(props)} type="link" icon={<FiTrash />} disabled={props?.internalId ? false : true} data-testid="delete" />
                                 </>
                             )}
-                            {formEdit && props?.internalId === uniqueCardEdit && (
+                            {formEdit && props[IdType] === uniqueCardEdit && (
                                 <>
                                     <Button type="link" onClick={answerSave}>
                                         Save
@@ -120,7 +121,7 @@ const AnswerCard = (props) => {
                 </Col>
             </Row>
 
-            {formEdit && props?.internalId === uniqueCardEdit && (
+            {formEdit && props[IdType] === uniqueCardEdit && (
                 <>
                     <Divider />
                     <AnswerForm {...FormProductAttributeProp} />

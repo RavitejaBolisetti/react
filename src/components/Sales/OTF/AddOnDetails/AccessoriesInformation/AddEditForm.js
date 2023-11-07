@@ -52,15 +52,11 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
             .catch((err) => {});
     };
 
-    const onFinishFailed = (err) => {
-        console.error(err);
-    };
-
     const handleOnSearch = (value) => {
         onSearchPart(value);
     };
 
-    const handleSelectedData = (e) => {
+    const handleSelectedData = () => {
         fnSetData({ ...selectedRowData });
         accessoryForm.resetFields(['partName']);
         setSelectedRowData();
@@ -83,7 +79,7 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
 
     return (
         <>
-            <Form autoComplete="off" form={accessoryForm} onFieldsChange={onFieldsChange} layout="vertical" onFinishFailed={onFinishFailed}>
+            <Form autoComplete="off" form={accessoryForm} onFieldsChange={onFieldsChange} layout="vertical">
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="" name="partName">
@@ -154,6 +150,12 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
                         <Input />
                     </Form.Item>
                     <Form.Item hidden name="partLocationId">
+                        <Input />
+                    </Form.Item>
+                    <Form.Item hidden name="gndpPrice">
+                        <Input />
+                    </Form.Item>
+                    <Form.Item hidden name="landedCost">
                         <Input />
                     </Form.Item>
                 </Row>

@@ -69,7 +69,7 @@ const SearchBox = (props) => {
             .validateFields()
             .then((values) => {
                 valueReset && setValidationRules([validateRequiredInputField('input')]);
-                setFilterString({ ...values, pageSize: filterString?.pageSize, current: 1, advanceFilter: true });
+                setFilterString({ ...filterString, ...values, searchParam: values?.searchParam?.trim(), [singleFieldKey]: values?.[singleFieldKey]?.trim(), pageSize: filterString?.pageSize, current: 1, advanceFilter: true });
                 valueReset && searchForm.resetFields();
             })
             .catch((err) => {

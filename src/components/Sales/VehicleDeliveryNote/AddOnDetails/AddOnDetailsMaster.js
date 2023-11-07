@@ -11,7 +11,7 @@ import { bindActionCreators } from 'redux';
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 import { VehicleDeliveryNoteFormButton } from '../VehicleDeliveryNoteFormButton';
-
+import { RELATIONSHIP_MANAGER_CONSTANTS } from 'components/Sales/VehicleDeliveryNote/constants/relationShipMangerCodeConstants';
 import { relationshipManagerDataActions } from 'store/actions/data/vehicleDeliveryNote/relationshipManager';
 import { schemeDescriptionAmcDataActions, schemeDescriptionRsaDataActions, schemeDescriptionShieldDataActions } from 'store/actions/data/vehicleDeliveryNote';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -77,7 +77,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const AddOnDetailsMasterMain = (props) => {
-    const { typeData, requestPayload, setRequestPayload, showGlobalNotification, AddonPartsData, AddonDetailsData, userId, onFinishFailed } = props;
+    const { typeData, requestPayload, setRequestPayload, showGlobalNotification, AddonPartsData, AddonDetailsData, userId } = props;
     const { form, section, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick, setButtonData, buttonData, listRelationshipMangerShowLoading, fetchRelationshipManger, relationshipManagerData, deliveryNoteMasterData } = props;
     const { selectedOrder } = props;
 
@@ -91,7 +91,6 @@ export const AddOnDetailsMasterMain = (props) => {
     const [addOnItemInfo, setAddOnItemInfo] = useState([]);
     const [openAccordian, setOpenAccordian] = useState();
     const [accessoryForm] = Form.useForm();
-    const [muiltipleFormData, setMultipleFormData] = useState({ ...AddonDetailsData });
     const [shieldForm] = Form.useForm();
     const [rsaForm] = Form.useForm();
     const [amcForm] = Form.useForm();
@@ -120,7 +119,6 @@ export const AddOnDetailsMasterMain = (props) => {
         if (selectedOrder?.invoicehdrId && userId) {
             fetchSheild({ setIsLoading: listSheildLoaing, userId, extraParams, onErrorAction });
             fetchRsa({ setIsLoading: listRsaLoading, userId, extraParams, onErrorAction });
-            // fetchAmc({ setIsLoading: listAmcLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedOrder?.invoicehdrId, userId]);
@@ -136,7 +134,7 @@ export const AddOnDetailsMasterMain = (props) => {
     }, [isAmcLoaded, isRsaLoaded, isShieldLoaded, deliveryNoteMasterData, schemeAmcData]);
 
     useEffect(() => {
-        if (AddonDetailsData) {
+        if (AddonDetailsData && section?.id) {
             form.setFieldsValue({ ...AddonDetailsData });
             setFormData({ ...AddonDetailsData });
             if (AddonDetailsData?.sheildRequest) {
@@ -154,7 +152,7 @@ export const AddOnDetailsMasterMain = (props) => {
     }, [AddonDetailsData, section]);
 
     useEffect(() => {
-        if (userId) handleEmployeeSearch();
+        if (userId && section?.id) handleEmployeeSearch();
         setButtonData({ ...buttonData, formBtnActive: true });
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -171,23 +169,38 @@ export const AddOnDetailsMasterMain = (props) => {
             showGlobalNotification({ message });
         };
 
-        fetchRelationshipManger({ setIsLoading: listRelationshipMangerShowLoading, userId, onErrorAction });
+        fetchRelationshipManger({
+            setIsLoading: listRelationshipMangerShowLoading,
+            userId,
+            onErrorAction,
+            extraParams: [
+                {
+                    key: 'employeeType',
+                    title: 'employeeType',
+                    value: RELATIONSHIP_MANAGER_CONSTANTS?.RELATIONSHIP_MANAGER_SALES_CONSULTANT?.key,
+                    name: 'Sales consultant employees',
+                },
+            ],
+        });
     };
     const getCodeValue = (data, key) => {
         return data?.find((i) => i?.schemeDescription === key)?.id;
     };
     const onSingleFormFinish = (key, formName) => {
-        formName.validateFields().then(() => {
-            const formDataset = formName?.getFieldsValue();
-            if (formDataset?.schemeCode) {
-                setRequestPayload({ ...requestPayload, deliveryNoteAddOnDetails: { ...requestPayload?.deliveryNoteAddOnDetails, [key]: formDataset } });
-            } else {
-                setRequestPayload({ ...requestPayload, deliveryNoteAddOnDetails: { ...requestPayload?.deliveryNoteAddOnDetails, [key]: { ...formDataset, schemeCode: getCodeValue(schemeDescriptionDatamain[openAccordian], formDataset?.schemeDescription) } } });
-            }
-            setRegisterDisabled((prev) => ({ ...prev, [openAccordian]: true }));
-            const message = !formData?.[key] ? 'registered' : 'saved';
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: `Scheme has been ${message} successfully` });
-        });
+        formName
+            .validateFields()
+            .then(() => {
+                const formDataset = formName?.getFieldsValue();
+                if (formDataset?.schemeCode) {
+                    setRequestPayload({ ...requestPayload, deliveryNoteAddOnDetails: { ...requestPayload?.deliveryNoteAddOnDetails, [key]: formDataset } });
+                } else {
+                    setRequestPayload({ ...requestPayload, deliveryNoteAddOnDetails: { ...requestPayload?.deliveryNoteAddOnDetails, [key]: { ...formDataset, schemeCode: getCodeValue(schemeDescriptionDatamain[openAccordian], formDataset?.schemeDescription) } } });
+                }
+                setRegisterDisabled((prev) => ({ ...prev, [openAccordian]: true }));
+                const message = !formData?.[key] ? 'registered' : 'saved';
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: `Scheme has been ${message} successfully` });
+            })
+            .catch((err) => console.error(err));
     };
     const handleAmcDescriptionData = (amcSchemeCode) => {
         const params = [
@@ -242,12 +255,12 @@ export const AddOnDetailsMasterMain = (props) => {
         schemeDescriptionDatamain,
         setRegisterDisabled,
         registerDisabled,
-        muiltipleFormData,
+        muiltipleFormData: AddonDetailsData,
         handleAmcDescriptionData,
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

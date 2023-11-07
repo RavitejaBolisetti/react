@@ -13,8 +13,6 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'assets/sass/app.module.scss';
 
-import { FiCopy } from 'react-icons/fi';
-
 const { Panel } = Collapse;
 
 const expandIcon = ({ isActive }) =>

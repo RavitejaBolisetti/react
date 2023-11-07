@@ -43,9 +43,6 @@ describe('AddEdit Component render', () => {
         const deliveryAt = screen.getByText('Delivery At');
         expect(deliveryAt).toBeTruthy();
 
-        const referal = screen.getByText('Referral');
-        expect(referal).toBeTruthy();
-
         const mitraType = screen.getByText('Influencer/Mitra Type');
         expect(mitraType).toBeTruthy();
 

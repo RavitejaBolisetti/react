@@ -9,7 +9,7 @@ import { FiEye, FiTrash } from 'react-icons/fi';
 
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
-import TreeSelectField from 'components/common/TreeSelectField';
+import { ProductModelHierarchy } from 'components/utils/ProductModelHierarchy';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
 import { preparePlaceholderText, preparePlaceholderSelect, preparePlaceholderAutoComplete } from 'utils/preparePlaceholder';
@@ -27,16 +27,17 @@ const AddEditFormMain = (props) => {
     const { otfCancellationForm, formData, selectedOrder, fieldNames, onFinishOTFCancellation } = props;
     const { handleButtonClick, buttonData, setButtonData, onCloseAction, handleFormValueChange, typeData, setUploadedFile, showGlobalNotification, viewDocument, setEmptyList } = props;
     const { searchDealerValue, setSearchDealerValue, dealerDataList, productHierarchyData } = props;
-    const { uploadedFileName, setUploadedFileName, uploadedFile, parentAppCode, setparentAppCode, resetDealerList } = props;
+    const { uploadedFileName, setUploadedFileName, uploadedFile, parentAppCode, setParentAppCode, resetDealerList,singleDisabled, setSingleDisabled } = props;
 
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
     const [reasonTypeChange, setReasonTypeChange] = useState('');
     const [dealerList, setDealerList] = useState([]);
     const [fileList, setFileList] = useState([]);
-    const [singleDisabled, setSingleDisabled] = useState(false);
 
-    const onDrop = (e) => {};
-    const onDownload = (file) => {
+    const onDrop = () => {
+        return;
+    };
+    const onDownload = () => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
 
         // handlePreview(file?.response);
@@ -90,7 +91,8 @@ const AddEditFormMain = (props) => {
     }, 300);
 
     const handleSelect = (value) => {
-        let dealerDetails = Object.values(dealerDataList)?.find((dealer) => dealer?.dealerName === value);
+        let dealerCd = value.split('-');
+        let dealerDetails = Object.values(dealerDataList)?.find((dealer) => dealer?.dealerCode === dealerCd[dealerCd?.length - 1]);
         otfCancellationForm.setFieldsValue({ dealerCode: dealerDetails?.dealerCode });
     };
 
@@ -118,8 +120,8 @@ const AddEditFormMain = (props) => {
         else {
             let finalLocations = Object.values(dealerDataList)?.map((item) => {
                 return {
-                    label: item?.dealerName,
-                    value: item?.dealerName,
+                    label: `${item?.dealerName}-${item?.dealerCode}`,
+                    value: `${item?.dealerName}-${item?.dealerCode}`,
                 };
             });
             return finalLocations;
@@ -127,7 +129,7 @@ const AddEditFormMain = (props) => {
     };
 
     const handleSelectTreeClick = (value) => {
-        setparentAppCode(value);
+        setParentAppCode(value);
         otfCancellationForm.setFieldValue('productCode', value);
     };
 
@@ -135,7 +137,6 @@ const AddEditFormMain = (props) => {
         optionFilterProp: 'children',
         showSearch: false,
         allowClear: true,
-        // className: styles.headerSelectField,
     };
 
     const buttonProps = {
@@ -154,7 +155,7 @@ const AddEditFormMain = (props) => {
     };
 
     const singleItemViewProps = {
-       ...viewProps,
+        ...viewProps,
         column: { xs: 1, sm: 1, lg: 1, xl: 1, xxl: 1 },
     };
 
@@ -166,6 +167,8 @@ const AddEditFormMain = (props) => {
         handleSelectTreeClick,
         defaultValue: null,
         placeholder: preparePlaceholderSelect('Model'),
+        name: 'productCode',
+        labelName: 'Product',
     };
 
     const isLoading = false;
@@ -209,9 +212,10 @@ const AddEditFormMain = (props) => {
                         {reasonTypeChange === PARAM_MASTER.PROCAN.id && (
                             <Row>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                    <Form.Item name="productCode" label="Product" rules={[validateRequiredSelectField('product')]}>
+                                    {/* <Form.Item name="productCode" label="Product" rules={[validateRequiredSelectField('product')]}>
                                         <TreeSelectField {...treeSelectFieldProps} />
-                                    </Form.Item>
+                                    </Form.Item> */}
+                                    <ProductModelHierarchy {...treeSelectFieldProps} />
                                 </Col>
                             </Row>
                         )}

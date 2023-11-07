@@ -7,12 +7,12 @@
 export const COA_ACCOUNT_TYPE = {
     GROUP_ACCOUNT: {
         id: 1,
-        key: 'GRP',
+        key: 'G',
         title: 'Group Account',
     },
     LEDGER_ACCOUNT: {
         id: 2,
-        key: 'LDGR',
+        key: 'L',
         title: 'Ledger Account',
     },
 };

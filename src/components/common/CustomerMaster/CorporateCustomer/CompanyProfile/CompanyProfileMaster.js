@@ -104,12 +104,12 @@ const CompanyProfileBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomer]);
 
-    useEffect(()=> {
-        return ()=> {
+    useEffect(() => {
+        return () => {
             resetData();
-        }
+        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[])
+    }, []);
 
     useEffect(() => {
         if (userId && customerProfileData?.customerFormDocId) {
@@ -182,9 +182,6 @@ const CompanyProfileBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        return;
-    };
 
     const onCloseAction = () => {
         form.resetFields();
@@ -280,7 +277,7 @@ const CompanyProfileBase = (props) => {
 
     return (
         <>
-            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} >
                 <Row gutter={20} className={styles.drawerBodyRight}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.box}>
                         <h2>{section?.title}</h2>

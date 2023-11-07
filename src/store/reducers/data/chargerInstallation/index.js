@@ -5,7 +5,8 @@
  */
 import { combineReducers } from 'redux';
 import { ChargerInstallationList } from './chargerInstallation';
-
+import { ChargerInstallationGuestDetails } from './chargerInstallationGuestDetails';
 export const ChargerInstallation = combineReducers({
     ChargerInstallationList,
+    ChargerInstallationGuestDetails,
 });

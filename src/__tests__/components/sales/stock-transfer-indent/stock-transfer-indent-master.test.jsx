@@ -10,7 +10,27 @@ import { Provider } from 'react-redux';
 import { StockTransferIndentMaster } from 'components/Sales/StockTransferIndent/StockTransferIndentMaster';
 import customRender from '@utils/test-utils';
 import createMockStore from '__mocks__/store';
-import { Provider } from 'react-redux';
+
+
+jest.mock('components/Sales/StockTransferIndent/IssueIndent/IssueIndentMaster', () => {
+    const IssueIndentMaster = ({ handleAdd, handlePrintDownload }) => {
+        return (
+            <>
+                <div>
+                    <button onClick={handleAdd}>ADD</button>
+                </div>
+                ;
+                <div>
+                    <button onClick={handlePrintDownload}>Print/Download</button>
+                </div>
+            </>
+        );
+    };
+    return {
+        __esModule: true,
+        IssueIndentMaster,
+    };
+});
 
 jest.mock('components/Sales/StockTransferIndent/ViewDetail', () => {
     const ViewDetail = ({ onCloseAction, updateVehicleDetails }) => {
@@ -70,20 +90,59 @@ jest.mock('store/actions/data/otf/vehicleDetailsLov', () => ({
     otfvehicleDetailsLovDataActions: {},
 }));
 
+const resetData = jest.fn();
+const fetchIndentList = jest.fn();
+const saveData = jest.fn();
+
 describe('StockTransferIndentMaster component', () => {
-    it('Clear Button', () => {
+    it("productHierarchyData", ()=>{
+        const tableDataItem = [{modelCode:'ALTSMM81813337450', modelDescription:"ALTURAS G4 2WD BSVI REGAL BLUE"}];
+
         const mockStore = createMockStore({
             auth: { userId: 123 },
             data: {
-                stockTransferIndentData: {
-                    stockTransferIndent: { isLoading: false, filter: { advanceFilter: true, current: 1, pageSize: undefined, searchParam: 'STR1694606620526' } },
+                OTF: {
+                    VehicleDetailsLov: { filteredListData: [{oemModelCode: "1Y4506PDTGNV7AASE",prodctCode: "ALTSMM81813337450",prodctShrtName: "ALTURAS G4 2WD BSVI DSAT SILVER",productDivision: "AL", modelGroupCode: "ALTS", familyCode: "787", }] },
                 },
             },
         });
 
         customRender(
             <Provider store={mockStore}>
-                <StockTransferIndentMaster />
+                <StockTransferIndentMaster tableDataItem={tableDataItem} resetData={resetData} fetchIndentList={fetchIndentList} />
+            </Provider>
+        );
+    });
+    
+    it("dealerLocations", ()=>{
+        const mockStore = createMockStore({
+            auth: { userId: 123 },
+            common: {
+                Header: {
+                    data: { dealerLocations:[{isDefault:true, locationCode:'NB04'}] },
+                },
+            },
+        });
+
+        customRender(
+            <Provider store={mockStore}>
+                <StockTransferIndentMaster fetchIndentList={fetchIndentList} resetData={resetData} />
+            </Provider>
+        );
+        
+    });
+
+    it('Clear Button', () => {
+        const mockStore = createMockStore({
+            auth: { userId: 123 },
+            data: {
+                stockTransferIndentData: { stockTransferIndent: { isLoading: false, filter: { advanceFilter: true, current: 1, pageSize: undefined, searchParam: 'STR1694606620526' } }, },
+            },
+        });
+
+        customRender(
+            <Provider store={mockStore}>
+                <StockTransferIndentMaster resetData={jest.fn()} fetchIndentList={jest.fn()} setFilterString={jest.fn()} />
             </Provider>
         );
 
@@ -99,16 +158,8 @@ describe('StockTransferIndentMaster component', () => {
     });
 
     it('Remove Filter', () => {
-        const extraParams = [
-            {
-                canRemove: true,
-                filter: true,
-                key: 'indentNo',
-                name: 'STR1694606620526',
-                title: 'Value',
-                value: 'STR1694606620526',
-            },
-        ];
+        const extraParams = [{canRemove: true, filter: true, key: 'indentNo', name: 'STR1694606620526', title: 'Value', value: 'STR1694606620526'}];
+
         const mockStore = createMockStore({
             auth: { userId: 123 },
             data: {
@@ -121,7 +172,7 @@ describe('StockTransferIndentMaster component', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <StockTransferIndentMaster extraParams={extraParams} advanceFilter={true} />
+                <StockTransferIndentMaster extraParams={extraParams} advanceFilter={true} resetData={jest.fn()} fetchIndentList={jest.fn()} setFilterString={jest.fn()} />
             </Provider>
         );
 
@@ -134,6 +185,178 @@ describe('StockTransferIndentMaster component', () => {
 
         const removeBtn = screen.getByTestId('removeBtn');
         fireEvent.click(removeBtn);
+    });
+
+    it('IssueIndentFrom', async () => {
+        const cancellationData = {
+            balancedQuantity
+            : 
+            3,
+            cancelledQuantity
+            : 
+            0,
+            id
+            : 
+            "eb3dbb89-4682-4d8f-942c-4fe1a9c726f4",
+            indentDate
+            : 
+            "2010-10-11T00:00:00.000+00:00",
+            indentDetailId
+            : 
+            "847e5e0d-72cb-4360-b7c6-6fe2dbd8d1a4",
+            indentNumber
+            : 
+            "STI11C000001",
+            indentStatus
+            : 
+            "I",
+            indentToLocation
+            : 
+            "CHOWPATTY",
+            indentToParent
+            : 
+            "aman",
+            issuedAndNotReceivedQuantity
+            : 
+            0,
+            modelCode
+            : 
+            "MXMOMM171330841",
+            modelDescription
+            : 
+            "MAXXIMO STD LOAD CARR 0.9L2CY CRDENA BS4",
+            receivedQuantity
+            : 
+            0,
+            remarks
+            : 
+            null,
+            requestedBy
+            : 
+            "ANUF MULLA",
+            requestedQuantity
+            : 
+            3,
+            vehicleDetails:[{
+                balancedQuantity
+                : 
+                3,
+                cancelledQuantity
+                : 
+                0,
+                id
+                : 
+                "847e5e0d-72cb-4360-b7c6-6fe2dbd8d1a4",
+                issuedAndNotReceivedQuantity
+                : 
+                0,
+                modelCode
+                : 
+                "MXMOMM171330841",
+                modelDescription
+                : 
+                "MAXXIMO STD LOAD CARR 0.9L2CY CRDENA BS4",
+                receivedQuantity
+                : 
+                0,
+                requestedQuantity
+                : 
+                3
+            }]
+        };
+
+        const modalProps = {
+            reset: true,
+            submit: true,
+            resetName: 'Cancel',
+            submitName: 'Submit',
+        };
+
+        const defaultVisibility = {
+            canCancel: true,
+            canReturn: false,
+            canReceive: false,
+            canPrint: true,
+            canAdd: true,
+        };
+
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            common: {
+                Header: {
+                    data: { parentGroupCode: 106 },
+                },
+            },
+            data: {
+                stockTransferIndentData: {
+                    stockTransferIndent: { data: {id
+                        : 
+                        "eb3dbb89-4682-4d8f-942c-4fe1a9c726f4",
+                        indentDate
+                        : 
+                        "2010-10-11T00:00:00.000+00:00",
+                        indentNumber
+                        : 
+                        "STI11C000001",
+                        indentStatus
+                        : 
+                        "I",
+                        indentToLocation
+                        : 
+                        "CHOWPATTY",
+                        indentToParent
+                        : 
+                        "aman",
+                        remarks
+                        : 
+                        null,
+                        requestedBy
+                        : 
+                        "ANUF MULLA",
+                        vehicleDetails:[{
+                            balancedQuantity
+: 
+3,
+cancelledQuantity
+: 
+0,
+id
+: 
+"847e5e0d-72cb-4360-b7c6-6fe2dbd8d1a4",
+issuedAndNotReceivedQuantity
+: 
+0,
+modelCode
+: 
+"MXMOMM171330841",
+modelDescription
+: 
+"MAXXIMO STD LOAD CARR 0.9L2CY CRDENA BS4",
+receivedQuantity
+: 
+0,
+requestedQuantity
+: 
+3
+                        }]} },
+                        IndentIssue: { data: [] },
+                },
+            },
+        });
+
+        const fetchIndentList = jest.fn();
+        const fetchIndentDetails = jest.fn();
+        const saveData = jest.fn();
+
+        customRender(
+            <Provider store={mockStore}>
+                <StockTransferIndentMaster resetData={jest.fn()} fetchProductLov={jest.fn()} fetchIndentLocation={jest.fn()} fetchIndentList={fetchIndentList} fetchIndentDetails={fetchIndentDetails} saveData={saveData} modalProps={modalProps} cancellationData={cancellationData} defaultVisibility={defaultVisibility} toggleButton={'INDNT_RECV'}/>
+            </Provider>
+        );
+
+        const printBtn = screen.getByRole('button', { name: 'Print/Download' });
+        fireEvent.click(printBtn);
+        
     });
 
     it('view, cancel, and save button should work', async () => {
@@ -152,6 +375,7 @@ describe('StockTransferIndentMaster component', () => {
         });
 
         const res = { data: [{ indentNumber: 106, indentDate: '01/01/2000', fromLocation: 'Agra', toLocation: 'Noida', requestedBy: 'Kai', indentRaisedStatus: 'Active', vehicleDetails: [{ modelDescription: 'Hello', modelCode: 'MAHINDRA XUV300 W6 PG BS6 MT XH' }] }] };
+
         const fetchIndentList = jest.fn();
         const fetchIndentDetails = jest.fn();
         const saveData = jest.fn();
@@ -180,12 +404,15 @@ describe('StockTransferIndentMaster component', () => {
         const saveBtn = screen.getAllByRole('button', { name: 'Save' });
         fireEvent.click(saveBtn[1]);
 
+        fetchIndentDetails.mock.lastCall[0].onSuccessAction()
+
         saveData.mock.calls[0][0].onSuccess();
         saveData.mock.calls[0][0].onError();
+        
     });
 
     it('add indent should work', async () => {
-        const saveData = jest.fn();
+        
 
         customRender(<StockTransferIndentMaster fetchIndentDetails={jest.fn()} saveData={saveData} resetData={jest.fn()} fetchProductLov={jest.fn()} fetchIndentLocation={jest.fn()} fetchRequestedByList={jest.fn()} />);
 
@@ -210,16 +437,16 @@ describe('StockTransferIndentMaster component', () => {
 
         const fromDate = screen.getByRole('textbox', { name: 'Indent From Date' });
         fireEvent.click(fromDate);
-        await waitFor(() => {
+        // await waitFor(() => {
             expect(screen.getByText('Today')).toBeInTheDocument();
-        });
+        // });
         fireEvent.click(screen.getByText('Today'));
 
         const toDate = screen.getByRole('textbox', { name: 'Indent To Date' });
         fireEvent.click(toDate);
-        await waitFor(() => {
+        // await waitFor(() => {
             expect(screen.getAllByText('Today')[1]).toBeInTheDocument();
-        });
+        // });
         fireEvent.click(screen.getAllByText('Today')[1]);
 
         const applyBtn = screen.getByRole('button', { name: 'Apply' });

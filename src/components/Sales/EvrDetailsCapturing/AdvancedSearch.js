@@ -44,10 +44,6 @@ export const AdvancedSearchFrom = (props) => {
         setAdvanceSearchVisible(false);
     };
 
-    const onFinishFailed = () => {
-        return;
-    };
-
     const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
 
@@ -69,7 +65,7 @@ export const AdvancedSearchFrom = (props) => {
     };
 
     return (
-        <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={0} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item initialValue={filterString?.model} label="Product Hierarchy" name="model" rules={[validateRequiredSelectField('Product Hierarchy')]}>
@@ -98,7 +94,7 @@ export const AdvancedSearchFrom = (props) => {
                         ]}
                         className={styles?.datePicker}
                     >
-                        <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} disabledDate={disableFutureDate} className={styles.fullWidth} />
+                        <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} />
                     </Form.Item>
                 </Col>
             </Row>

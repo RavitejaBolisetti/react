@@ -9,7 +9,7 @@ import ModelForm from './ModelForm';
 import { Card } from 'antd';
 
 export const ModelFormCardMaster = (props) => {
-    const { isVisible, modelEditForm, modelForm, modelEdit, setModelEdit, modelData, setModelData, modelGroupData, setFormBtnActive } = props;
+    const { isVisible, modelEditForm, modelForm, modelEdit, setModelEdit, modelData, setModelData, modelGroupData, setFormBtnActive, disabledModelGroupData } = props;
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [disableSaveButton, setDisableSaveButton] = useState(false);
     const [changeValue, setChangeValue] = useState(null);
@@ -18,13 +18,17 @@ export const ModelFormCardMaster = (props) => {
     const [modelSwitch, setModelSwitch] = useState(true);
 
     const onFinishModelForm = (val) => {
-        modelForm.validateFields().then(() => {
-            let data = modelForm.getFieldsValue();
-            let updateData = { ...data, internalId: Math.floor(Math.random() * 100000000 + 1), id: '' };
-            modelData?.length > 0 ? setModelData((item) => [updateData, ...item]) : setModelData([updateData]);
-            modelForm.resetFields();
-            forceUpdate();
-        });
+        modelForm
+            .validateFields()
+            .then(() => {
+                let data = modelForm.getFieldsValue();
+                let updateData = { ...data, internalId: Math.floor(Math.random() * 100000000 + 1), id: '' };
+                modelData?.length > 0 ? setModelData((item) => [updateData, ...item]) : setModelData([updateData]);
+                setFormBtnActive(true);
+                modelForm.resetFields();
+                forceUpdate();
+            })
+            .catch((err) => console.error(err));
     };
 
     const cardAttributeProps = {
@@ -47,6 +51,7 @@ export const ModelFormCardMaster = (props) => {
         setModelSwitch,
         modelGroupData,
         setFormBtnActive,
+        disabledModelGroupData,
     };
 
     const formProductAttributeProps = {

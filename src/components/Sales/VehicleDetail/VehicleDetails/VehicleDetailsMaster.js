@@ -91,7 +91,7 @@ const VehicleDetailsMasterBase = (props) => {
             key: 'vin',
             title: 'vin',
             value: selectedRecordId,
-            name: 'VIN Number',
+            name: 'VIN',
         },
     ];
     useEffect(() => {
@@ -105,7 +105,7 @@ const VehicleDetailsMasterBase = (props) => {
         const recordId = vehicleDetails.vehicleDetails?.id || '';
         const vin = vehicleDetails.vehicleDetails?.vin || '';
         const registrationNumber = vehicleDetails.vehicleDetails?.registrationNumber || '';
-        if(values.oemPrivilegeCustomer === null || values.oemPrivilegeCustomer === false){
+        if (values.oemPrivilegeCustomer === null || values.oemPrivilegeCustomer === false) {
             values.oemPrivilegeCustomer = false;
         } else {
             values.oemPrivilegeCustomer = true;
@@ -134,13 +134,10 @@ const VehicleDetailsMasterBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = () => {};
-
     const formProps = {
         ...props,
         form,
         onFinish,
-        onFinishFailed,
         fetchList,
         typeData,
         userId,
@@ -170,7 +167,7 @@ const VehicleDetailsMasterBase = (props) => {
     };
 
     return (
-        <Form layout="vertical" data-testid="test-id" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" data-testid="test-id" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

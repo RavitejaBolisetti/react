@@ -3,15 +3,15 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import dayjs from 'dayjs';
 
-import { Col, Input, Form, Row, Card, DatePicker, Space, AutoComplete, Select } from 'antd';
+import { Col, Input, Form, Row, Card, DatePicker, Space, Select } from 'antd';
 
 import { disableFutureDate, disableFieldsOnFutureDate } from 'utils/disableDate';
 import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
 import { validateRequiredSelectField } from 'utils/validation';
-import { preparePlaceholderSelect, preparePlaceholderText, preparePlaceholderAutoComplete } from 'utils/preparePlaceholder';
+import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import styles from 'assets/sass/app.module.scss';
 import { customSelectBox } from 'utils/customSelectBox';
@@ -20,6 +20,20 @@ const { TextArea } = Input;
 const AddEditFormMain = (props) => {
     const { formData, relationshipManagerData, typeData, form, soldByDealer, handleRelationShipManagerChange, setButtonData } = props;
     const { vinData, getChallanDetails } = props;
+
+    useEffect(() => {
+        if (formData && Object?.keys(formData)?.length > 0) {
+            if (formData?.invoiceDate && formData?.customerPromiseDate && soldByDealer) {
+                if (!disableFieldsOnFutureDate(dayjs(formData?.customerPromiseDate))) {
+                    setButtonData((prev) => ({ ...prev, formBtnActive: true }));
+                } else {
+                    setButtonData((prev) => ({ ...prev, formBtnActive: false }));
+                }
+                form.setFieldsValue({ ...formData, invoiceDate: formattedCalendarDate(formData?.invoiceDate), customerPromiseDate: formattedCalendarDate(formData?.customerPromiseDate) });
+            } else if (!soldByDealer) form.setFieldsValue({ ...formData });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData]);
 
     const handleSelectVinNo = (value, ValueObj) => {
         if (value && ValueObj?.engineNumber) {
@@ -32,7 +46,6 @@ const AddEditFormMain = (props) => {
             setButtonData((prev) => ({ ...prev, formBtnActive: false }));
         }
     };
-
     return (
         <>
             <div className={styles.drawerCustomerMaster}>
@@ -62,8 +75,8 @@ const AddEditFormMain = (props) => {
                                     )}
                                     {!soldByDealer && (
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item initialValue={formData?.chassisNumber} label="Chassis No." name="chassisNumber">
-                                                <Select showSearch options={(vinData?.length && vinData) || []} fieldNames={{ label: 'chassisNumber', value: 'chassisNumber' }} placeholder={preparePlaceholderSelect('chassisNumber')} onSelect={(value, valueObj) => handleSelectVinNo(value, valueObj)} optionFilterProp="chassisNumber" />
+                                            <Form.Item initialValue={formData?.chassisNumber} label="VIN" name="chassisNumber">
+                                                <Select showSearch options={(vinData?.length && vinData) || []} fieldNames={{ label: 'chassisNumber', value: 'chassisNumber' }} placeholder={preparePlaceholderSelect('VIN')} onSelect={(value, valueObj) => handleSelectVinNo(value, valueObj)} optionFilterProp="chassisNumber" />
                                             </Form.Item>
                                         </Col>
                                     )}

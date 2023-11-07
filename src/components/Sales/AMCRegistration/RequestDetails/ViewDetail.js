@@ -4,14 +4,23 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Button, Card, Row, Col, Divider, Typography } from 'antd';
+import { Button, Card, Row, Col, Divider, Typography, Tag, Descriptions } from 'antd';
 import styles from 'assets/sass/app.module.scss';
 import { convertDateMonthYear } from 'utils/formatDateTime';
 import { AMC_CONSTANTS } from '../utils/AMCConstants';
+import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { DATA_TYPE } from 'constants/dataType';
 const { Text } = Typography;
 
 const ViewDetail = (props) => {
-    const { formData, userType, selectedAMC, handleCancelRequest, handleMNMApproval, handleMNMRejection } = props;
+    const { formData, userType, selectedAMC, handleCancelRequest, handleMNMApproval, handleMNMRejection, isPendingForCancellation } = props;
+
+    const viewProps = {
+        bordered: false,
+        colon: false,
+        layout: 'vertical',
+        column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
+    };
 
     return (
         <>
@@ -26,6 +35,7 @@ const ViewDetail = (props) => {
                                     <Text strong>{data?.customerName}</Text>
                                     <Divider type="vertical" />
                                     <Text strong>{selectedAMC?.amcRegistrationNumber}</Text>
+                                    <Tag style={{ float: 'right' }}>{selectedAMC?.status}</Tag>
                                 </Col>
                             </Row>
                             <Row type="flex" align="middle">
@@ -34,28 +44,64 @@ const ViewDetail = (props) => {
                                 </Col>
                             </Row>
 
-                            <Divider className={styles.marT20} />
+                            {selectedAMC?.status === AMC_CONSTANTS?.PENDING_FOR_APPROVAL?.title && <Divider className={styles.marT20} />}
                             {userType === AMC_CONSTANTS?.MNM?.key ? (
-                                <Row gutter={20} className={styles.marB20}>
-                                    <Col xs={4} sm={4} md={4} lg={4}>
-                                        <Button type="primary" onClick={handleMNMApproval}>
-                                            Approve
-                                        </Button>
-                                    </Col>
-                                    <Col xs={4} sm={4} md={4} lg={4}>
-                                        <Button type="danger" onClick={handleMNMRejection}>
-                                            Reject
-                                        </Button>
-                                    </Col>
-                                </Row>
+                                selectedAMC?.status === AMC_CONSTANTS?.PENDING_FOR_APPROVAL?.title || AMC_CONSTANTS?.PENDING_FOR_CANCELLATION?.title ? (
+                                    <>
+                                        {selectedAMC?.status === AMC_CONSTANTS?.PENDING_FOR_CANCELLATION?.title && (
+                                            <>
+                                                <Divider className={styles.marB20} />
+                                                <Descriptions {...viewProps} column={{ xs: 1, sm: 1, lg: 1, xl: 1, xxl: 1 }}>
+                                                    <Descriptions.Item label="Reason for Cancellation Request">{checkAndSetDefaultValue(formData?.amcRequestDetails?.amcCancelRemarks)}</Descriptions.Item>
+                                                    <Descriptions.Item label="Remark for Cancellation">{checkAndSetDefaultValue(formData?.amcRequestDetails?.otherReason)}</Descriptions.Item>
+                                                </Descriptions>
+                                            </>
+                                        )}
+
+                                        <Row gutter={20} className={styles.marB20}>
+                                            <Col xs={8} sm={8} md={8} lg={8}>
+                                                <Button type="primary" onClick={handleMNMApproval}>
+                                                    Approve
+                                                </Button>
+
+                                                <span className={styles.marL5}>
+                                                    <Button danger onClick={handleMNMRejection}>
+                                                        Reject
+                                                    </Button>
+                                                </span>
+                                            </Col>
+                                        </Row>
+                                    </>
+                                ) : (
+                                    <>
+                                        {isPendingForCancellation && (
+                                            <>
+                                                <Descriptions {...viewProps}>
+                                                    <Descriptions.Item label="Reason for Cancellation Request">{checkAndSetDefaultValue(formData?.amcRequestDetails?.amcCancelRemarks)}</Descriptions.Item>
+                                                    <Descriptions.Item label="Remark for Cancellation">{checkAndSetDefaultValue(formData?.amcRequestDetails?.otherReason)}</Descriptions.Item>
+                                                </Descriptions>
+                                            </>
+                                        )}
+                                        <Divider />
+                                        <Descriptions {...viewProps}>
+                                            <Descriptions.Item label="Approved/Rejected By">{checkAndSetDefaultValue(formData?.amcRequestDetails?.approvedByOrRejectedBy)}</Descriptions.Item>
+                                            <Descriptions.Item label="User ID">{checkAndSetDefaultValue(formData?.amcRequestDetails?.userId)}</Descriptions.Item>
+
+                                            <Descriptions.Item label="Approved Date">{checkAndSetDefaultValue(formData?.amcRequestDetails?.approvedDate, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                                            {selectedAMC?.status !== AMC_CONSTANTS?.REJD?.value && <Descriptions.Item label="Reason for Rejection">{checkAndSetDefaultValue(formData?.amcRequestDetails?.reasonForRejection)}</Descriptions.Item>}
+                                        </Descriptions>
+                                    </>
+                                )
                             ) : (
-                                <Row gutter={20} className={styles.marB20}>
-                                    <Col xs={4} sm={4} md={4} lg={4}>
-                                        <Button type="primary" onClick={handleCancelRequest}>
-                                            Cancel
-                                        </Button>
-                                    </Col>
-                                </Row>
+                                selectedAMC?.status === AMC_CONSTANTS?.PENDING_FOR_APPROVAL?.title && (
+                                    <Row gutter={20} className={styles.marB20}>
+                                        <Col xs={4} sm={4} md={4} lg={4}>
+                                            <Button type="primary" onClick={handleCancelRequest}>
+                                                Cancel
+                                            </Button>
+                                        </Col>
+                                    </Row>
+                                )
                             )}
                         </Card>
                     );

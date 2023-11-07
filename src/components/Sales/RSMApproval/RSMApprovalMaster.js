@@ -21,7 +21,6 @@ import { RSM_APPROVAL_STATUS } from './utils/RSMApprovalStatus';
 import { dateFormatView, convertDate } from 'utils/formatDateTime';
 
 import { LANGUAGE_EN } from 'language/en';
-import { FilterIcon } from 'Icons';
 import { rsmApprovalSearchDataAction } from 'store/actions/data/sales/rsmApprovalSearch';
 import { rsmApprovalDataAction } from 'store/actions/data/sales/rsmApproval';
 
@@ -239,7 +238,7 @@ export const RSMApprovalMasterBase = (props) => {
         requestType ? setRequestType(REQUEST_CONSTANT?.Reject?.value) : setRequestType(REQUEST_CONSTANT?.Approve?.value);
     };
 
-    const handleResetFilter = (e) => {
+    const handleResetFilter = () => {
         if (filterString) {
             setShowDataLoading(true);
         }
@@ -296,11 +295,6 @@ export const RSMApprovalMasterBase = (props) => {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please accept Terms and Condition' });
         }
     };
-
-    const onFinishFailed = (errorInfo) => {
-        return;
-    };
-
     const rejectModalCloseAction = () => {
         setRejectModalVisible(false);
         setIsFormVisible(true);
@@ -347,7 +341,6 @@ export const RSMApprovalMasterBase = (props) => {
         setFilterString,
         from: listFilterForm,
         onFinish,
-        onFinishFailed,
         title: '',
         handleButtonQuery,
         data,
@@ -362,7 +355,6 @@ export const RSMApprovalMasterBase = (props) => {
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
-        // icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
 
         onCloseAction: onAdvanceSearchCloseAction,

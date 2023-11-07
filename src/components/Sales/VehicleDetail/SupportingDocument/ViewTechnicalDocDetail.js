@@ -4,12 +4,11 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-// import { Card } from 'antd';
 import { NoDataFound } from 'utils/noDataFound';
 
 import styles from 'assets/sass/app.module.scss';
 
-export const ViewTechnicalDocDetail = (props) => {
+export const ViewTechnicalDocDetail = () => {
     return (
         <div className={styles.viewDrawerContainer}>
             {/* {supportingData?.length > 0 ? ( */}

@@ -40,13 +40,9 @@ export const AdvancedSearchFrom = (props) => {
         setAdvanceSearchVisible(false);
     };
 
-    const handleResetFilter = (e) => {
+    const handleResetFilter = () => {
         advanceFilterForm.resetFields();
         setFilterString({ searchParam: filterString?.searchParam });
-    };
-
-    const onFinishFailed = () => {
-        return;
     };
 
     const modalProps = {
@@ -66,7 +62,7 @@ export const AdvancedSearchFrom = (props) => {
     };
 
     return (
-        <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="From Date" name="fromDate" rules={[validateRequiredSelectField('From Date')]} className={styles?.datePicker}>

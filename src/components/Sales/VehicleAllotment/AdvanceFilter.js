@@ -15,7 +15,7 @@ import { VEHICLE_TYPE } from 'constants/VehicleType';
 import { SearchBox } from 'components/utils/SearchBox';
 
 export default function AdvanceFilter(props) {
-    const { resetAdvanceFilter, setResetAdvanceFilter, setFilterString, setAdvanceSearchVisible, handleResetFilter, toggleButton, settoggleButton, advanceFilter, removeFilter, filterString, extraParams } = props;
+    const { setResetAdvanceFilter, setFilterString, setAdvanceSearchVisible, handleResetFilter, toggleButton, settoggleButton, advanceFilter, removeFilter, filterString, extraParams } = props;
 
     const [searchForm] = Form.useForm();
 
@@ -29,7 +29,7 @@ export default function AdvanceFilter(props) {
         searchForm,
         filterString,
         setFilterString,
-        placeholder: 'Search by VIN No./Chassis No.',
+        placeholder: 'Search by VIN',
         singleFieldKey: 'searchParam',
         setResetAdvanceFilter,
     };
@@ -90,7 +90,7 @@ export default function AdvanceFilter(props) {
                                                     {filter?.name}
                                                     {filter?.canRemove && (
                                                         <span>
-                                                            <RxCross2 data-testid="removeFilter" onClick={() => removeFilter(filter?.key)}/>
+                                                            <RxCross2 data-testid="removeFilter" onClick={() => removeFilter(filter?.key)} />
                                                         </span>
                                                     )}
                                                 </div>

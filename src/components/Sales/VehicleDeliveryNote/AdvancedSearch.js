@@ -14,6 +14,7 @@ import dayjs from 'dayjs';
 import { dateFormat, formatDate, formatDateToCalenderDate } from 'utils/formatDateTime';
 import { disableFutureDate } from 'utils/disableDate';
 import styles from 'assets/sass/app.module.scss';
+import { validateRequiredSelectField } from 'utils/validation';
 
 export const AdvancedSearchFrom = (props) => {
     const { setAdvanceSearchVisible, deliveryStatus } = props;
@@ -43,10 +44,6 @@ export const AdvancedSearchFrom = (props) => {
         setAdvanceSearchVisible(false);
     };
 
-    const onFinishFailed = () => {
-        return;
-    };
-
     const CheckDateEffectiveTo = (value, effectiveFrom) => {
         const bool = dayjs(value).format('YYYY-MM-DD') >= dayjs(effectiveFrom).format('YYYY-MM-DD');
         if (bool) {
@@ -56,10 +53,10 @@ export const AdvancedSearchFrom = (props) => {
     };
 
     return (
-        <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.invoiceFromDate)} label="Invoice From Date" name="invoiceFromDate" className={styles?.datePicker}>
+                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.invoiceFromDate)} label="Invoice From Date" name="invoiceFromDate" className={styles?.datePicker} rules={[validateRequiredSelectField('invoice from date')]}>
                         <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} onChange={() => advanceFilterForm.setFieldsValue({ invoiceToDate: undefined })} className={styles.fullWidth} disabledDate={disableFutureDate} />
                     </Form.Item>
                 </Col>
@@ -70,6 +67,7 @@ export const AdvancedSearchFrom = (props) => {
                         name="invoiceToDate"
                         classNameo={styles?.datePicker}
                         rules={[
+                            validateRequiredSelectField('invoice to date'),
                             {
                                 validator: (_, value) => {
                                     return advanceFilterForm.getFieldValue('invoiceFromDate') ? CheckDateEffectiveTo(value, advanceFilterForm?.getFieldValue('invoiceFromDate')) : Promise.resolve();

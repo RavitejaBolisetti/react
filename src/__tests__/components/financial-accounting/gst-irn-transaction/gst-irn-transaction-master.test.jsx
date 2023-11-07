@@ -37,7 +37,7 @@ describe("GstIRNTransaction component",()=>{
         customRender(
             <Provider store={mockStore}>
                 <GstIRNTransaction fetchList={fetchList} fetchGSTINList={fetchGSTINList} viewDocument={jest.fn()} 
-                uploadDocument={jest.fn()}/>
+                uploadDocument={jest.fn()} setFilterString={jest.fn()} />
             </Provider>
         )
 
@@ -53,17 +53,17 @@ describe("GstIRNTransaction component",()=>{
         fireEvent.click(uploadBtn);
 
         fetchList.mock.calls[0][0].onErrorAction();
-    })
+    });
 
     it("onAdvanceSearchCloseAction", ()=>{
-        customRender(<GstIRNTransaction />);
+        customRender(<GstIRNTransaction setFilterString={jest.fn()} />);
 
         const advancedBtn = screen.getByRole('button', {name:'Advanced Filters'});
         fireEvent.click(advancedBtn);
 
         const closeImg = screen.getByRole('img', {name:'close'});
         fireEvent.click(closeImg)
-    })
+    });
 
     it("resetBtn", ()=>{
         customRender(<GstIRNTransaction setFilterString={jest.fn()}/>);
@@ -73,7 +73,7 @@ describe("GstIRNTransaction component",()=>{
 
         const resetBtn = screen.getByRole('button', {name:'Reset'});
         fireEvent.click(resetBtn)
-    })
+    });
 
     it("applyBtn", ()=>{
         customRender(<GstIRNTransaction setFilterString={jest.fn()}/>);
@@ -83,7 +83,7 @@ describe("GstIRNTransaction component",()=>{
 
         const applyBtn = screen.getByRole('button', {name:'Apply'});
         fireEvent.click(applyBtn)
-    })
+    });
 
     it("clearBtn",()=>{
         const extraParams = [{ name: "INV22C000617" }];
@@ -122,7 +122,7 @@ describe("GstIRNTransaction component",()=>{
 
         const clearBtn = screen.getByRole('button', {name:'Clear'});
         fireEvent.click(clearBtn);
-    })
+    });
 
 })
 

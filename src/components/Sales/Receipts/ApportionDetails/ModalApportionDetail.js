@@ -55,12 +55,8 @@ export const ApportionDetailForm = (props) => {
         }
     };
 
-    const onFinishFailed = () => {
-        return;
-    };
-
     return (
-        <Form autoComplete="off" layout="vertical" form={apportionForm} onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" layout="vertical" form={apportionForm}>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                     <Form.Item label="Document Type" name="documentType" rules={[validateRequiredSelectField('Document Type')]}>

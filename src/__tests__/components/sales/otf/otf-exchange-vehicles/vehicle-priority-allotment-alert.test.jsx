@@ -7,7 +7,7 @@
 import { fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
-import VehiclePriorityAllotmentAlert from 'components/Sales/OTF/ExchangeVehicles/VehiclePriorityAllotmentAlert';
+import VehiclePriorityAllotmentAlert from '@components/Sales/Common/ExchangeVehicles/VehiclePriorityAllotmentAlert';
 
 afterEach(() => {
     jest.restoreAllMocks();
@@ -16,11 +16,11 @@ afterEach(() => {
 describe('VehiclePriorityAllotmentAlert component', () => {
     it('open=true', () => {
         customRender(<VehiclePriorityAllotmentAlert title={'Vehicle Priority Alert'} isVisible={true} modalOpen={true} setModalOpen={jest.fn()} cancelText={'Close'} />);
-        const closeBtn=screen.getAllByRole('button', { name: 'Close' });
+        const closeBtn = screen.getAllByRole('button', { name: 'Close' });
         fireEvent.click(closeBtn[0]);
         fireEvent.click(closeBtn[1]);
 
-        const closeModal=screen.getByRole('img', { name: 'close' });
+        const closeModal = screen.getByRole('img', { name: 'close' });
         fireEvent.click(closeModal);
     });
 

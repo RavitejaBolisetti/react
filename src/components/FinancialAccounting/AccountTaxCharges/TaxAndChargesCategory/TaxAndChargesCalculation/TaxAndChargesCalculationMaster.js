@@ -15,17 +15,20 @@ export const TaxAndChargesCalculationMaster = (props) => {
     const [uniqueCardEdit, setuniqueCardEdit] = useState(null);
     const [mainFomEdit, setMainFormEdit] = useState(false);
 
-    const addTaxChargeCal = (val) => {
-        taxChargeCalForm.validateFields().then(() => {
-            let data = taxChargeCalForm.getFieldsValue();
+    const addTaxChargeCal = () => {
+        taxChargeCalForm
+            .validateFields()
+            .then(() => {
+                let data = taxChargeCalForm.getFieldsValue();
 
-            let updateData = { ...data, internalId: Math.floor(Math.random() * 100000000 + 1), id: '' };
-            setTaxChargeCalList((item) => [updateData, ...item]);
-            taxChargeCalForm.resetFields();
-            forceUpdate();
-            setButtonData({ ...buttonData, formBtnActive: true });
-            handleCodeFunction();
-        });
+                let updateData = { ...data, internalId: Math.floor(Math.random() * 100000000 + 1), id: '' };
+                setTaxChargeCalList((item) => [updateData, ...item]);
+                taxChargeCalForm.resetFields();
+                forceUpdate();
+                setButtonData({ ...buttonData, formBtnActive: true });
+                handleCodeFunction();
+            })
+            .catch((err) => console.error(err));
     };
 
     const handleDescriptionChange = (taxCode) => {

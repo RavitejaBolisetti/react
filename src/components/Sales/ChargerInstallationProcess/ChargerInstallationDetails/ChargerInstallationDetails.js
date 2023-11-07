@@ -31,26 +31,23 @@ const ChargerInstallatioDetailsMasterBase = (props) => {
                 setRequestPayload((prev) => ({ ...prev, chargerInstDetails: { requestDetails: [{ id: chargerInstallationMasterData?.chargerInstDetails?.requestDetails[0].id || '', stageRequestDate: convertDateTimedayjs(new Date()), requestStage: values?.requestStage, visitTimeSlotOne: convertDateTimedayjs(values?.visitTimeSlotOne), visitTimeSlotTwo: convertDateTimedayjs(values?.visitTimeSlotTwo, 'YYYY-MM-DD HH:mm:ss', true), visitTimeSlotThree: convertDateTimedayjs(values?.visitTimeSlotThree, 'YYYY-MM-DD HH:mm:ss', true) }] } }));
                 handleFormValueChange();
             })
-            .catch((err) => {
+            .catch(() => {
                 showGlobalNotification({ message: 'Please add Request' });
             });
     };
 
-    const handleChange = (e) => {
+    const handleChange = () => {
         setButtonData({ ...buttonData, formBtnActive: false });
     };
 
     const onFinish = () => {
-        if (addRequestData?.length <= 0) {
+        if (!addRequestData) {
             showGlobalNotification({ message: 'Please Add Request' });
         } else {
             handleButtonClick({ buttonAction: NEXT_ACTION });
             setButtonData({ ...buttonData, formBtnActive: false });
         }
     };
-
-    const onFinishFailed = () => {};
-
     const formProps = {
         ...props,
         formName: 'otfDetailsRequest',
@@ -87,7 +84,7 @@ const ChargerInstallatioDetailsMasterBase = (props) => {
         wrapForm: false,
     };
     return (
-        <Form layout="vertical" autoComplete="off" form={chargerInstallationForm} onValuesChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={chargerInstallationForm} onValuesChange={handleFormValueChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>
@@ -95,7 +92,7 @@ const ChargerInstallatioDetailsMasterBase = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            {!formActionType?.addMode && <StatusBar status={chargerInstallationMasterData?.chargerInstDetails?.requestDetails[0].requestStage} />}
+                            {!formActionType?.addMode && <StatusBar status={chargerInstallationMasterData?.chargerInstDetails?.requestDetails[0].stageType} />}
                         </Col>
                     </Row>
                     {formActionType?.viewMode ? (

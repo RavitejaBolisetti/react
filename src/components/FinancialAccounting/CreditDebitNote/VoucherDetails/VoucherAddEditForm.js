@@ -111,14 +111,12 @@ export const AdvanceForm = (props) => {
             })
             .catch((err) => {});
     };
-    const onFinishFailed = () => {
-        return;
-    };
+
     const handleAccountChange = () => {
         setIsAccountHeadValidated(true);
     };
     return (
-        <Form autoComplete="off" layout="vertical" form={voucherForm} onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" layout="vertical" form={voucherForm}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row gutter={20}>

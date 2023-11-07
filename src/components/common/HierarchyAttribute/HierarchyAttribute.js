@@ -236,10 +236,6 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
         hierarchyAttributeSaveData({ data: [{ ...values, id: values?.id || '', hierarchyAttribueType: selectedHierarchy }], setIsLoading: hierarchyAttributeListShowLoading, userId, onError, onSuccess });
     };
 
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
-    };
-
     const handleChange = (attributeType) => {
         setShowDataLoading(true);
         hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: attributeType, onSuccessAction, onErrorAction });
@@ -281,7 +277,6 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
         onCloseAction,
         titleOverride: (isViewModeVisible ? 'View ' : editRow?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
         selectedHierarchy,
-        onFinishFailed,
         onFinish,
         setEditRow,
         editRow,
@@ -306,7 +301,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
             <div className={styles.contentHeaderBackground}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={16} lg={16} xl={16}>
-                        <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                        <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish}>
                             <Form.Item label={`${titleHierarchy}`} name="code">
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={10} lg={10} xl={10}>

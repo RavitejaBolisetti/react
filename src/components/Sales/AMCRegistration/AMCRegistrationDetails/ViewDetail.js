@@ -9,11 +9,12 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 import styles from 'assets/sass/app.module.scss';
 import { expandIcon } from 'utils/accordianExpandIcon';
+import { AMC_CONSTANTS } from '../utils/AMCConstants';
 
 const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading } = props;
+    const { formData, isLoading, selectedSaleType } = props;
     const [activeKey, setactiveKey] = useState([]);
     const viewProps = {
         bordered: false,
@@ -21,7 +22,6 @@ const ViewDetailMain = (props) => {
         layout: 'vertical',
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
-
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
@@ -44,11 +44,17 @@ const ViewDetailMain = (props) => {
         <div className={styles.viewDrawerContainer}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" className={styles.drawerGap}>
+                    <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" className={styles.drawerGap}>
                         <Panel header="Registration Information" key="1">
                             <Divider />
                             <Descriptions {...viewProps}>
                                 <Descriptions.Item label="Sale Type">{checkAndSetDefaultValue(formData?.amcRegistration?.saleType, isLoading)}</Descriptions.Item>
+                                {selectedSaleType === AMC_CONSTANTS?.MNM_FOC?.key && (
+                                    <>
+                                        <Descriptions.Item label="Booking Number">{checkAndSetDefaultValue(formData?.amcRegistration?.bookingNumber, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label="VIN">{checkAndSetDefaultValue(formData?.amcRegistration?.vin, isLoading)}</Descriptions.Item>
+                                    </>
+                                )}
                                 <Descriptions.Item label="Employee Name">{checkAndSetDefaultValue(formData?.amcRegistration?.employeeName, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Manager Name">{checkAndSetDefaultValue(formData?.amcRegistration?.managerName, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Remarks">{checkAndSetDefaultValue(formData?.amcRegistration?.remarks, isLoading)}</Descriptions.Item>
@@ -68,7 +74,7 @@ const ViewDetailMain = (props) => {
             </Row>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end" className={styles.drawerGap}>
+                    <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end" className={styles.drawerGap}>
                         <Panel header="Scheme Details" key="2">
                             <Divider />
                             <Descriptions {...viewProps}>

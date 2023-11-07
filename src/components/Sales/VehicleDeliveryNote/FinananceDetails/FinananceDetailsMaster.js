@@ -9,7 +9,6 @@ import { Row, Col, Form } from 'antd';
 import { bindActionCreators } from 'redux';
 
 import { ViewDetail, AddEditForm } from 'components/Sales/Common/FinananceDetails';
-import { otfFinanceDetailDataActions } from 'store/actions/data/otf/financeDetail';
 import { financeLovDataActions } from 'store/actions/data/otf/financeLov';
 import { showGlobalNotification } from 'store/actions/notification';
 
@@ -53,7 +52,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const FinananceDetailsMasterBase = (props) => {
-    const { userId, financeData, isFinanceLovDataLoaded, setFormActionType, isFinanceLovLoading, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, section, isLoading } = props;
+    const { userId, financeData, setFormActionType, isFinanceLovLoading, FinanceLovData, isFinanceLovDataLoaded, fetchFinanceLovList, listFinanceLovShowLoading, section, isLoading } = props;
     const { typeData, form, selectedOrderId, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION } = props;
     const { formKey, onFinishCustom = undefined, FormActionButton, StatusBar, pageType } = props;
     const { buttonData, setButtonData } = props;
@@ -99,8 +98,6 @@ export const FinananceDetailsMasterBase = (props) => {
         }
     };
 
-    const onFinishFailed = () => {};
-
     const onCloseAction = () => {
         form.resetFields();
         setIsFormVisible(false);
@@ -115,7 +112,6 @@ export const FinananceDetailsMasterBase = (props) => {
         formActionType,
         setFormActionType,
         onFinish,
-        onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
         isFinanceLovDataLoaded,
@@ -144,7 +140,7 @@ export const FinananceDetailsMasterBase = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

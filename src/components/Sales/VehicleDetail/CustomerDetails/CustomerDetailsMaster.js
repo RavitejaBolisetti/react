@@ -84,7 +84,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const CustomerDetailsMain = (props) => {
-    const { resetData, saveData, isLoading, userId, isDataLoaded, fetchList, listShowLoading, fetchCustomerDetailData, showGlobalNotification, data, onFinishFailed } = props;
+    const { resetData, saveData, isLoading, userId, isDataLoaded, fetchList, listShowLoading, fetchCustomerDetailData, showGlobalNotification, data } = props;
     const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, formActionType, NEXT_ACTION, handleButtonClick, section } = props;
     const { setButtonData, buttonData, typeData, selectedRecordId, filterString, isReferralDataLoaded, referralData, fetchOtfReferralList, setFilterString, listOtfReferralShowLoading, fetchCustomerList, listCustomerShowLoading, isCustomerCommonDetailsLoaded, isCustomerCommonDetailsLoading, customerCommonDetails } = props;
     const [form] = Form.useForm();
@@ -105,7 +105,7 @@ export const CustomerDetailsMain = (props) => {
             key: 'vin',
             title: 'vin',
             value: selectedRecordId,
-            name: 'VIN Number',
+            name: 'VIN',
         },
     ];
     useEffect(() => {
@@ -126,12 +126,6 @@ export const CustomerDetailsMain = (props) => {
     useEffect(() => {
         if (userId && filterString?.searchType && filterString?.searchParam) {
             const searchParams = [
-                // {
-                //     key: 'customerType',
-                //     title: 'Customer Type',
-                //     value: 'ALL',
-                //     canRemove: true,
-                // },
                 {
                     key: 'searchType',
                     title: 'Type',
@@ -152,10 +146,7 @@ export const CustomerDetailsMain = (props) => {
                 setIsLoading: listShowLoading,
                 extraParams: searchParams,
                 onSuccessAction: (res) => {
-                    // res?.data?.referralData && setFormData(res?.data?.referralData?.[0]);
                     res?.data?.ownerCustomer && setFormData(res?.data?.ownerCustomer?.[0]);
-
-                    // res?.data?.referralData?.referralDetails.length === 1 ? setFormData(res?.data?.referralData?.referralDetails[0]);
                 },
                 onErrorAction,
                 userId,
@@ -242,7 +233,7 @@ export const CustomerDetailsMain = (props) => {
                     key: 'vin',
                     title: 'vin',
                     value: selectedRecordId,
-                    name: 'VIN Number',
+                    name: 'VIN',
                 },
             ];
             fetchList({ setIsLoading: listShowLoading, userId, extraParams });
@@ -272,7 +263,6 @@ export const CustomerDetailsMain = (props) => {
 
         const requestData = {
             data: finaldata,
-            // method: data?.ownerCustomer || data?.billingCustomer ? 'put' : 'post',
             method: 'put',
             setIsLoading: listShowLoading,
             userId,
@@ -313,7 +303,6 @@ export const CustomerDetailsMain = (props) => {
         formData,
         formActionType,
         onFinish,
-        onFinishFailed,
         optionType: typeData[PARAM_MASTER.VH_DTLS_SER.id],
         onSearch,
         listPinCodeShowLoading,
@@ -361,7 +350,7 @@ export const CustomerDetailsMain = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed} searchForm>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} searchForm>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

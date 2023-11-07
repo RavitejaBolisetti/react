@@ -90,7 +90,6 @@ export const CriticalityGroupMain = (props) => {
     const onSuccessAction = (res) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setRefershData(false);
-        //setShowDataLoading(false);
     };
 
     useEffect(() => {
@@ -170,11 +169,6 @@ export const CriticalityGroupMain = (props) => {
 
         saveData(requestData);
     };
-
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
-    };
-
     const handleReferesh = () => {
         setRefershData(!refershData);
     };
@@ -230,7 +224,6 @@ export const CriticalityGroupMain = (props) => {
         isVisible: isFormVisible,
         showGlobalNotification,
         onFinish,
-        onFinishFailed,
         onCloseAction,
         titleOverride: drawerTitle.concat(moduleTitle),
         formData,

@@ -235,7 +235,7 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
         setRefershData(!refershData);
     };
 
-    const hanndleEditData = (record) => {
+    const hanndleEditData = () => {
         setShowSaveAndAddNewBtn(false);
         setIsViewModeVisible(false);
         setFormActionType('update');
@@ -292,9 +292,6 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
-    };
     const tableProps = {
         tableColumn: tableColumn,
         tableData: searchData,
@@ -330,7 +327,6 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
         },
         titleOverride: drawerTitle.concat(moduleTitle),
         onFinish,
-        onFinishFailed,
         isFormBtnActive,
         setFormBtnActive,
         configData,

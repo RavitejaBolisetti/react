@@ -85,8 +85,8 @@ export const AddOnDetailsMasterMain = (props) => {
     const [amcForm] = Form.useForm();
     const [fmsForm] = Form.useForm();
 
-    const onSuccessAction = (res) => {
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+    const onSuccessAction = () => {
+        return;
     };
 
     const onErrorAction = (message) => {
@@ -187,6 +187,8 @@ export const AddOnDetailsMasterMain = (props) => {
             partDescription: data?.partDescription,
             hsnCode: data?.hsnCode,
             partLocationId: data?.partLocationId,
+            gndpPrice: data?.gndpPrice,
+            landedCost: data?.landedCost,
             quantity: data?.quantity,
             sellingPrice: data?.sellingPrice,
             type: data?.type,
@@ -200,8 +202,8 @@ export const AddOnDetailsMasterMain = (props) => {
         let detailsRequest = [];
 
         formDataSetter?.partDetailsResponses?.map((element, index) => {
-            const { id, otfId, partNumber, partLocationId, hsnCode, requiredQuantity, type, partDescription, sellingPrice, mrp } = element;
-            detailsRequest.push({ id, otfId, partNumber, partLocationId, hsnCode, requiredQuantity, type, partDescription, sellingPrice, mrp });
+            const { id, otfId, partNumber, partLocationId, hsnCode, gndpPrice, landedCost, requiredQuantity, type, partDescription, sellingPrice, mrp } = element;
+            detailsRequest.push({ id, otfId, partNumber, partLocationId, hsnCode, gndpPrice, landedCost, requiredQuantity, type, partDescription, sellingPrice, mrp });
             return undefined;
         });
 

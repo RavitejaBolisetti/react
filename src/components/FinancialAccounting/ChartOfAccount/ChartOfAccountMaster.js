@@ -95,7 +95,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, chartOfAccountExportCOAData, fetchChartOfExportCoaAccount, listShowLoadingChartOfExportCoaAccount, typeData, moduleTitle, viewTitle, userId, saveData, showGlobalNotification, fetchDealerCompanyLov, listShowLoadingDealerCompanyLov, dealerCompanyLovData, fetchChartOfAccountHierarchy, isDealerCompanyDataLoaded, listShowLoadingChartOfAccountHierachy, chartOfAccountHierarchy, isChartOfAccountLoaded, chartOfAccountData, listShowLoadingChartOfAccount, fetchChartOfAccount }) => {
+export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, fetchChartOfExportCoaAccount, listShowLoadingChartOfExportCoaAccount, typeData, moduleTitle, viewTitle, userId, saveData, showGlobalNotification, fetchDealerCompanyLov, listShowLoadingDealerCompanyLov, dealerCompanyLovData, fetchChartOfAccountHierarchy, isDealerCompanyDataLoaded, listShowLoadingChartOfAccountHierachy, chartOfAccountHierarchy, chartOfAccountData, listShowLoadingChartOfAccount, fetchChartOfAccount }) => {
     const [form] = Form.useForm();
     const [exportCoaForm] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
@@ -121,7 +121,7 @@ export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, chartOfA
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [modalOpen, setModalOpen] = useState(false);
     const companyFieldNames = { value: 'companyName', key: 'id' };
-    const fieldNames = { title: 'accountDescription', key: 'accountCode', children: 'subGroup' };
+    const fieldNames = { title: 'accountDescription', key: 'id', children: 'subGroup' };
 
     useEffect(() => {
         if (userId && !isDealerCompanyDataLoaded) {
@@ -150,7 +150,7 @@ export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, chartOfA
 
     const extraParams = [
         {
-            key: 'accountCode',
+            key: 'id',
             value: selectedTreeKey,
         },
     ];
@@ -179,7 +179,6 @@ export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, chartOfA
             setDisable(true);
             setSelectedTreeSelectKey(chartOfAccountData?.accountDescription);
             setAccountTyp(null);
-            isChildAdd(true);
             form.setFieldValue('parentAccountCode', chartOfAccountData?.accountCode);
         } else if (formActionType === FROM_ACTION_TYPE?.SIBLING) {
             form.resetFields();
@@ -187,11 +186,6 @@ export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, chartOfA
             setDisable(true);
             setSelectedTreeSelectKey(chartOfAccountData?.parentAccountDescription);
             setAccountTyp(null);
-            if (chartOfAccountData?.parentAccountCode === '') {
-                isChildAdd(false);
-            } else {
-                isChildAdd(true);
-            }
             form.setFieldValue('parentAccountCode', chartOfAccountData?.parentAccountCode);
         } else if (formActionType === FROM_ACTION_TYPE?.EDIT) {
             form.resetFields();
@@ -227,13 +221,22 @@ export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, chartOfA
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [chartOfAccountHierarchy]);
 
+    useEffect(() => {
+        if (accountTyp === COA_ACCOUNT_TYPE?.GROUP_ACCOUNT?.key) {
+            isChildAdd(true);
+        } else if (accountTyp === COA_ACCOUNT_TYPE?.LEDGER_ACCOUNT?.key) {
+            isChildAdd(false);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [accountTyp]);
+
     const onChange = (e) => {
         setSearchValue(e.target.value);
     };
 
     const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
 
-    const handleTreeViewClick = (keys, tree) => {
+    const handleTreeViewClick = (keys) => {
         form.resetFields();
         setViewData(null);
         setSelectedTreeKey(keys);
@@ -245,6 +248,7 @@ export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, chartOfA
         setDisableCheckBox(false);
         setIsFormVisible(true);
         setFormBtnActive(false);
+        setAccountTyp(null);
     };
 
     const onCoaModelOpen = () => {
@@ -264,7 +268,7 @@ export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, chartOfA
                 fetchChartOfAccountHierarchy({ setIsLoading: listShowLoadingChartOfAccountHierachy, extraParams: [{ key: 'companyCode', value: companyCode }], userId });
                 setFormBtnActive(false);
                 setIsFormVisible(false);
-                setSelectedTreeKey([res?.data?.accountCode]);
+                setSelectedTreeKey([res?.data?.id]);
             }
         };
 
@@ -284,46 +288,39 @@ export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, chartOfA
     };
 
     const onCoaFinish = () => {
-        exportCoaForm
-            .validateFields()
-            .then(() => {
-                let data = exportCoaForm.getFieldsValue();
+        exportCoaForm.validateFields().then(() => {
+            let data = exportCoaForm.getFieldsValue();
+            const extraParams = [
+                {
+                    key: 'companyCode',
+                    value: companyCode,
+                },
+                {
+                    key: 'fromDate',
+                    value: formatDate(data?.fromDate),
+                },
+                {
+                    key: 'toDate',
+                    value: formatDate(data?.toDate),
+                },
+            ];
+
+            const onSuccessAction = (res) => {
                 const extraParams = [
                     {
-                        key: 'companyCode',
-                        value: companyCode,
-                    },
-                    {
-                        key: 'fromDate',
-                        value: formatDate(data?.fromDate),
-                    },
-                    {
-                        key: 'toDate',
-                        value: formatDate(data?.toDate),
+                        key: 'docId',
+                        title: 'docId',
+                        value: res?.data?.docId,
+                        name: 'docId',
                     },
                 ];
+                downloadFile({ setIsLoading: downloadShowLoading, userId, extraParams });
+            };
 
-                const onSuccessAction = (res) => {
-                    const extraParams = [
-                        {
-                            key: 'docId',
-                            title: 'docId',
-                            value: res?.data?.docId,
-                            name: 'docId',
-                        },
-                    ];
-                    downloadFile({ setIsLoading: downloadShowLoading, userId, extraParams });
-                    //resetData();
-                };
+            fetchChartOfExportCoaAccount({ setIsLoading: listShowLoadingChartOfExportCoaAccount, userId, extraParams, onSuccessAction });
 
-                fetchChartOfExportCoaAccount({ setIsLoading: listShowLoadingChartOfExportCoaAccount, userId, extraParams, onSuccessAction });
-
-                setModalOpen(false);
-            })
-    };
-
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
+            setModalOpen(false);
+        });
     };
 
     const handleButtonClick = (type) => {
@@ -355,7 +352,6 @@ export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, chartOfA
         setSelectedTreeKey,
         formActionType,
         isVisible: isFormVisible,
-        onFinishFailed,
         onCloseAction,
         titleOverride: (formActionType === FROM_ACTION_TYPE?.EDIT ? 'Edit ' : 'Add ').concat(moduleTitle),
         onFinish,
@@ -386,7 +382,6 @@ export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, chartOfA
         setModalOpen,
         exportCoaForm,
         onCoaFinish,
-        onFinishFailed,
     };
 
     const noDataTitle = 'Please choose Financial Company to view data';

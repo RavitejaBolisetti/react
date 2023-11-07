@@ -52,6 +52,9 @@ const PaymentFormContainer = (props) => {
             case PAYMENT_MODE?.CREDIT_CARD?.KEY: {
                 return <CreditForm />;
             }
+            case PAYMENT_MODE?.WALLET?.KEY: {
+                return <NeftForm {...props} />;
+            }
             default:
                 return '';
         }

@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { React } from 'react';
-import { Row, Col, Form, Input, Checkbox, Space, Card } from 'antd';
+import { Row, Col, Form, Input, Space, Card } from 'antd';
 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validationNumber, valueBetween0to100, validateNumberWithTwoDecimalPlaces } from 'utils/validation';

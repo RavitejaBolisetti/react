@@ -52,5 +52,6 @@ describe('Receipts apportion details Master components', () => {
         fireEvent.change(docNo, { target: { value: '11' } });
 
         const serchBtn = screen.getByRole('button', { name: 'search' });
+        fireEvent.click(serchBtn);
     });
 });

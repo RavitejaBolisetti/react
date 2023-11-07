@@ -19,11 +19,11 @@ export const OTFStatusBar = (props) => {
 
     let displayItem = '';
     if (status === OTF_STATUS.CANCELLED.key) {
-        displayItem = otfStatusList.filter((i) => i.displayOnView && (i?.id === OTF_STATUS.BOOKED.id || i?.id === OTF_STATUS.CANCELLED.id));
+        displayItem = otfStatusList.filter((i) => i.displayonview && (i?.id === OTF_STATUS.BOOKED.id || i?.id === OTF_STATUS.CANCELLED.id));
     } else if (status === OTF_STATUS.TRANSFERRED.key) {
         displayItem = otfStatusList.filter((i) => i?.id === OTF_STATUS.BOOKED.id || i?.id === OTF_STATUS.TRANSFERRED.id);
     } else {
-        displayItem = otfStatusList.filter((i) => i.displayOnView && i?.id !== OTF_STATUS.CANCELLED.id);
+        displayItem = otfStatusList.filter((i) => i.displayonview && i?.id !== OTF_STATUS.CANCELLED.id);
     }
 
     return (

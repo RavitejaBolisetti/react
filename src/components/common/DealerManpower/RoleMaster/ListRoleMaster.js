@@ -256,10 +256,6 @@ export const ListRoleMasterBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
-    };
-
     const onCloseAction = () => {
         form.resetFields();
         setIsFormVisible(false);
@@ -282,7 +278,6 @@ export const ListRoleMasterBase = (props) => {
         formActionType,
         setFormActionType,
         onFinish,
-        onFinishFailed,
 
         isVisible: isFormVisible,
         onCloseAction,
@@ -313,9 +308,6 @@ export const ListRoleMasterBase = (props) => {
         setAdvanceSearchVisible(false);
         advanceFilterForm.resetFields();
         extraParams[0]?.value && setFilteredDepartmentData(departmentData?.filter((i) => i?.parentKey === extraParams[0]?.value));
-
-        // setFilteredDepartmentData([]);
-        // advanceFilterForm.setFieldsValue({ departmentCode: undefined });
     };
 
     const handleResetFilter = () => {
@@ -329,7 +321,6 @@ export const ListRoleMasterBase = (props) => {
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
 
-        //icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
         resetData,
         onCloseAction: onAdvanceSearchCloseAction,
@@ -377,7 +368,6 @@ export const ListRoleMasterBase = (props) => {
         filterString,
         from: listFilterForm,
         onFinish,
-        onFinishFailed,
         extraParams,
         removeFilter,
         handleResetFilter,

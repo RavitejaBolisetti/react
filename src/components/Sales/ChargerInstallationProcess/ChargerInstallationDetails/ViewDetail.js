@@ -3,25 +3,21 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Col, Row, Descriptions, Space, Card } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { ServiceActivity } from './ServiceActivity';
 import { FilterIcon } from 'Icons';
+import { getCodeValue } from 'utils/getCodeValue';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'assets/sass/app.module.scss';
 import { DataTable } from 'utils/dataTable';
 import { addRequestColumnsView } from './tableColumn';
 
 const ViewDetailMain = (props) => {
-    const { typeData, isLoading, chargerInstallationMasterData } = props;
-    const [viewData, setViewData] = useState([]);
-    const [modal, setModal] = useState(false);
+    const { typeData, isLoading, chargerInstallationMasterData, onHandleModal, modal, setModal } = props;
 
-    useEffect(() => {
-        setViewData([chargerInstallationMasterData]);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [chargerInstallationMasterData]);
     const viewProps = {
         bordered: false,
         colon: false,
@@ -36,16 +32,13 @@ const ViewDetailMain = (props) => {
         ...props,
         isVisible: modal,
         icon: <FilterIcon size={20} />,
-        titleOverride: 'Add Request',
+        titleOverride: 'Service Activity:' + getCodeValue(typeData?.[PARAM_MASTER.CHRGR_INST_HDR_STAT.id], chargerInstallationMasterData?.chargerInstDetails?.requestStatus),
         onCloseAction: onAdvanceSearchCloseAction,
         onAdvanceSearchCloseAction,
         setModal,
         typeData,
     };
 
-    const onHandleModal = () => {
-        setModal(true);
-    };
     return (
         <>
             <div className={styles.viewDrawerContainer}>
@@ -54,18 +47,19 @@ const ViewDetailMain = (props) => {
                         <Space style={{ display: 'flex' }} size="middle" direction="vertical">
                             <Card style={{ backgroundColor: '#F2F2F2' }}>
                                 <Descriptions {...viewProps}>
-                                    <Descriptions.Item label="Request Id">{checkAndSetDefaultValue(viewData[0]?.chargerInstDetails?.requestId, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Request Date">{checkAndSetDefaultValue(viewData[0]?.chargerInstDetails?.requestDate, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Request Status">{checkAndSetDefaultValue(viewData[0]?.chargerInstDetails?.requestStatus, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Model Group">{checkAndSetDefaultValue(viewData[0]?.chargerInstDetails?.modelGroup, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Model Variant">{checkAndSetDefaultValue(viewData[0]?.chargerInstDetails?.modelVarient, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Seating Capacity">{checkAndSetDefaultValue(viewData[0]?.chargerInstDetails?.seatingCapacity, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Color">{checkAndSetDefaultValue(viewData[0]?.chargerInstDetails?.color, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(viewData[0]?.chargerInstDetails?.modelCode, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Request Id">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.requestId, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Request Date">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.requestDate, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Request Status">{checkAndSetDefaultValue(getCodeValue(typeData?.[PARAM_MASTER.CHRGR_INST_HDR_STAT.id], chargerInstallationMasterData?.chargerInstDetails?.requestStatus), isLoading)}</Descriptions.Item>
+
+                                    <Descriptions.Item label="Model Group">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelGroup, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Model Variant">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelVarient, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Seating Capacity">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.seatingCapacity, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Color">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.color, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelCode, isLoading)}</Descriptions.Item>
                                 </Descriptions>
                             </Card>
                             <Card style={{ backgroundColor: '#F2F2F2' }}>
-                                <DataTable tableColumn={addRequestColumnsView(typeData, onHandleModal)} tableData={viewData} pagination={false} scroll={{ x: '1000' }} />
+                                <DataTable tableColumn={addRequestColumnsView(typeData, onHandleModal)} tableData={chargerInstallationMasterData?.chargerInstDetails?.requestDetails} pagination={false} scroll={{ x: '1000' }} />
                             </Card>
                         </Space>
                     </Col>

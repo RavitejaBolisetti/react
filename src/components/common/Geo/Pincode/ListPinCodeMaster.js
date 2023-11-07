@@ -284,32 +284,6 @@ const ListPinCodeMasterBase = (props) => {
         }
     };
 
-    // const handleDownloadReport = () => {
-    //     const AuthStr = 'Bearer '.concat(token);
-    //     const headers = { Authorization: AuthStr, userId, accessToken: token, deviceType: 'W', deviceId: '' };
-
-    //     let sExtraParamsString = '?';
-    //     extraParams?.forEach((item, index) => {
-    //         sExtraParamsString += item?.value && item?.key ? item?.value && item?.key + '=' + item?.value + '&' : '';
-    //     });
-
-    //     sExtraParamsString = sExtraParamsString.substring(0, sExtraParamsString.length - 1);
-
-    //     fetch(BASE_URL_GEO_GRAPHY_PINCODE_REPORT + sExtraParamsString, {
-    //         method: 'GET',
-    //         headers: headers,
-    //     }).then((response) => {
-    //         response.blob().then((blob) => {
-    //             let url = window.URL.createObjectURL(blob);
-    //             let a = document.createElement('a');
-    //             a.href = url;
-    //             a.download = 'pincode-' + convertDate(undefined, 'YYYY-MM-DD_HH:mm:ss') + '.csv';
-    //             a.click();
-    //             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: 'Your download should start automatically in a few seconds' });
-    //         });
-    //     });
-    // };
-
     useEffect(() => {
         if (refershData) {
             loadPinCodeDataList();
@@ -458,10 +432,6 @@ const ListPinCodeMasterBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
-    };
-
     const onCloseAction = () => {
         form.resetFields();
         setIsFormVisible(false);
@@ -484,34 +454,26 @@ const ListPinCodeMasterBase = (props) => {
         formActionType,
         setFormActionType,
         onFinish,
-        onFinishFailed,
-
         isVisible: isFormVisible,
         onCloseAction,
         titleOverride: drawerTitle.concat(moduleTitle),
         tableData: data,
-
         isDataCountryLoaded,
         isCountryLoading,
         countryData,
         defaultCountry,
-
         districtData,
         stateData,
         cityData,
         tehsilData,
         data,
-
         typeData,
-
         ADD_ACTION,
         EDIT_ACTION,
         VIEW_ACTION,
         buttonData,
-
         setButtonData,
         handleButtonClick,
-
         tehsilCodeValue,
         cityCodeValue,
     };
@@ -646,7 +608,6 @@ const ListPinCodeMasterBase = (props) => {
         filterString,
         from: listFilterForm,
         onFinish,
-        onFinishFailed,
         extraParams,
         removeFilter,
         handleResetFilter,
@@ -660,8 +621,6 @@ const ListPinCodeMasterBase = (props) => {
         setFilterString,
         title,
         validator: searchValidatorPincode,
-        // downloadReport: true,
-        // handleDownloadReport,
         tableData: data,
         showAddButton,
     };

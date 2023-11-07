@@ -16,8 +16,6 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
 import { DATA_TYPE } from 'constants/dataType';
 
-import styles from 'assets/sass/app.module.scss';
-
 const mapStateToProps = (state) => {
     const {
         auth: { userId },

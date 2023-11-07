@@ -4,14 +4,13 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Form, Col, Row, Button, Switch } from 'antd';
+import { Form, Col, Row, Button, Switch, Select } from 'antd';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredSelectField } from 'utils/validation';
 import { PlusOutlined } from '@ant-design/icons';
-import { customSelectBox } from 'utils/customSelectBox';
 
 const ModelForm = (props) => {
-    const { modelForm, onFinishModelForm, modelEdit, modelEditForm, modelSwitch, setModelSwitch, mainFomEdit, modelGroupData } = props;
+    const { modelForm, onFinishModelForm, modelEdit, modelEditForm, modelSwitch, setModelSwitch, mainFomEdit, modelGroupData, disabledModelGroupData } = props;
 
     return (
         <>
@@ -19,7 +18,7 @@ const ModelForm = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Form.Item label="Model Group Code" name="modelGroupCode" rules={[validateRequiredSelectField('Model Group Code')]}>
-                            {customSelectBox({ disabled: mainFomEdit, data: modelGroupData, fieldNames: { key: 'modelGroupCode', value: 'modelGroupDescription' }, placeholder: preparePlaceholderSelect('model group code') })}
+                            <Select options={disabledModelGroupData} fieldNames={{ value: 'modelGroupCode', label: 'modelGroupDescription' }} disabled={mainFomEdit} placeholder={preparePlaceholderSelect('model group code')} showSearch filterOption={(input, option) => option?.modelGroupCode?.toLowerCase()?.includes(input?.toLowerCase()) || option?.modelGroupDescription?.toLowerCase()?.includes(input?.toLowerCase())} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} style={{ marginBottom: '12px' }}>

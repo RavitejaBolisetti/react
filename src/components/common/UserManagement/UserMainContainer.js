@@ -54,9 +54,7 @@ const UserMainContainerMaster = (props) => {
                     case MANUFACTURER_USER_SECTION?.ASSIGN_USER_ROLES.id: {
                         return <AssignUserRole {...myProps} />;
                     }
-                    // case MANUFACTURER_USER_SECTION?.ADMINISTRATION_HIERARCHY_MAPPING.id: {
-                    //     return <AdministrativeHierarchy {...myProps} />;
-                    // }
+
                     default: {
                         return;
                     }

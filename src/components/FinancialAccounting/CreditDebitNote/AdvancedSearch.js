@@ -39,19 +39,24 @@ export const AdvancedSearchFrom = (props) => {
             fromDate: values?.fromDate.format('YYYY-MM-DD'),
             toDate: values?.toDate.format('YYYY-MM-DD'),
             advanceFilter: true,
+            current: 1,
         });
         setAdvanceSearchVisible(false);
     };
 
-    const handleResetFilter = (e) => {
-        advanceFilterForm.resetFields();
+    const handleResetFilter = () => {
+        const { pageSize } = filterString;
         if (!filterString?.searchParam && !filterString?.searchType) {
-            setFilterString();
+            setFilterString({
+                current: 1,
+                pageSize,
+            });
         }
-    };
-
-    const onFinishFailed = () => {
-        return;
+        setFilterString({
+            current: 1,
+            pageSize,
+        });
+        advanceFilterForm.resetFields();
     };
 
     const modalProps = {
@@ -71,7 +76,7 @@ export const AdvancedSearchFrom = (props) => {
     };
 
     return (
-        <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={filterString?.voucherType} label="Voucher Type" name="voucherType">

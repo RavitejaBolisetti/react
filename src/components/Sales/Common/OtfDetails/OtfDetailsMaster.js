@@ -135,7 +135,6 @@ const OtfDetailsMasterBase = (props) => {
 
         const onSuccess = (res) => {
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-            // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             fetchOTFDetail({ customURL, fetchOTFDetail, setIsLoading: listShowLoading, userId, extraParams });
         };
 
@@ -156,13 +155,10 @@ const OtfDetailsMasterBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = () => {};
-
     const formProps = {
         ...props,
         form,
         onFinish,
-        onFinishFailed,
         fetchList: fetchOTFDetail,
         typeData,
 
@@ -201,7 +197,7 @@ const OtfDetailsMasterBase = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFieldsChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFieldsChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

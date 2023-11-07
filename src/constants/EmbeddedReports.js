@@ -3,6 +3,9 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
+
+export const REPORT_TYPE = 'Report';
+export const DOCUMENT_TYPE = 'Document';
 export const EMBEDDED_REPORTS = {
     OTF: {
         id: 1,
@@ -117,60 +120,75 @@ export const EMBEDDED_REPORTS = {
         type: 'Document',
         slug: '',
     },
-    CREDIT_DEBIT_DOCUMENT: {
+    DEBIT_DOCUMENT: {
         id: 16,
         key: 'Debit_Note',
         title: 'Credit Debit Document',
         type: 'Document',
         slug: '',
     },
-    DELIVERY_NOTE_DOCUMENT: {
+    CREDIT_DOCUMENT: {
         id: 17,
+        key: 'credit_note_document',
+        title: 'Credit Debit Document',
+        type: 'Document',
+        slug: '',
+    },
+    DELIVERY_NOTE_DOCUMENT: {
+        id: 18,
         key: 'Delivery_Note_Document',
         title: 'Delivery Note Document',
         type: 'Document',
         slug: '',
     },
+
     FORM_21_DOCUMENT: {
-        id: 18,
+        id: 19,
         key: 'Form21',
         title: 'Form 21 Document',
         type: 'Document',
         slug: '',
     },
     STOCK_TRANSFER_RECIEVE_NOTE_DOCUMENT: {
-        id: 19,
+        id: 20,
         key: 'Stock_Transfer_Receipt_Note',
         title: 'Stock Transfer Recieve Note Document',
         type: 'Document',
         slug: '',
     },
     CO_DEALER_INVOICE_REPORT: {
-        id: 20,
+        id: 21,
         key: 'Co_Dealer_Invoice_Report',
         title: 'Co Dealer Invoice Report ',
         type: 'Report',
         slug: 'co-dealer-invoice-report',
     },
     ON_ROAD_PRICE_DETAIL_SUMMARY_REPORT: {
-        id: 21,
+        id: 22,
         key: 'On_Road_Price_Detail_Summary_Report',
         title: 'On Road Price Detail Summary Report ',
         type: 'Report',
         slug: 'on-road-price-detail-summary-Report',
     },
     RSA_REPORT: {
-        id: 22,
+        id: 23,
         key: 'RSA_Report',
         title: 'RSA Report ',
         type: 'Report',
         slug: 'rsa-report',
     },
     AMC_REGISTRATION_INVOICE_DOCUMENT: {
-        id: 23,
+        id: 24,
         key: 'AMC_Registration_Invoice_document',
         title: 'AMC Registration Invoice Document ',
         type: 'Document',
         slug: '-report',
+    },
+    CHALLAN_DOCUMENT: {
+        id: 25,
+        key: 'Challan_Document',
+        title: 'Challan Document',
+        type: 'Document',
+        slug: '',
     },
 };

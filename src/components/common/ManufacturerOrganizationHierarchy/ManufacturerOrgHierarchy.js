@@ -214,11 +214,6 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
 
         saveData(requestData);
     };
-
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
-    };
-
     const handleResetBtn = () => {
         form.resetFields();
     };
@@ -255,7 +250,6 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
         flatternData,
         formActionType,
         isVisible: isFormVisible,
-        onFinishFailed,
         onCloseAction: () => setIsFormVisible(false),
         titleOverride: (formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
         onFinish,
@@ -296,7 +290,7 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
             <div className={styles.contentHeaderBackground}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={16} lg={16} xl={16}>
-                        <Form onKeyPress={onKeyPressHandler} autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                        <Form onKeyPress={onKeyPressHandler} autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish}>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                     <Form.Item label={`${title}`} name="code" validateTrigger={['onSearch']}>

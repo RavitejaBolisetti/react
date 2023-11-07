@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Row, Col, Space, Collapse, Descriptions, Divider } from 'antd';
+import { Row, Col, Collapse, Descriptions, Divider } from 'antd';
 
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
@@ -31,7 +31,7 @@ const ViewDetailMain = (props) => {
                             <Divider />
                             <Descriptions {...viewProps}>
                                 <Descriptions.Item label="Actual Receipt Date ">{checkAndSetDefaultValue(receiptData?.receiptDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                                <Descriptions.Item label="Receipt Type">{checkAndSetDefaultValue(getCodeValue(receiptType, receiptData?.receiptType, isLoading))}</Descriptions.Item>
+                                <Descriptions.Item label="Receipt Type">{checkAndSetDefaultValue(getCodeValue(receiptType, receiptData?.receiptType), isLoading)}</Descriptions.Item>
                             </Descriptions>
                             <Divider />
                             <Descriptions {...viewProps}>

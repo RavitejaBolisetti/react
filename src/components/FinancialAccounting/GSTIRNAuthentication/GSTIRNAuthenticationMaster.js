@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Card, Col, Form, Row } from 'antd';
@@ -17,7 +17,7 @@ import { UploadUtil } from 'utils/Upload';
 import { ViewSupportingDocDetail } from './ViewSupportingDocDetail';
 import { GSTLoginForm } from './GSTLoginForm';
 import { dealerGstAction } from 'store/actions/data/financialAccounting/dealerGstAction';
-import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
+// import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 import { gstIrnLoginAction } from 'store/actions/data/financialAccounting/gstIrnLoginAction';
 import { selectGstToDocAction } from 'store/actions/data/financialAccounting/selectGstToDocAction';
@@ -32,9 +32,6 @@ const mapStateToProps = (state) => {
             FinancialAccounting: {
                 DealerGstDetails: { data: dealerGstData = [] },
             },
-            CustomerMaster: {
-                ViewDocument: { isLoaded: isViewDataLoaded = false, data: viewDocument },
-            },
         },
     } = state;
 
@@ -45,9 +42,6 @@ const mapStateToProps = (state) => {
         token,
         moduleTitle,
         dealerGstData,
-        viewDocument,
-        isViewDataLoaded,
-        
     };
     return returnValue;
 };
@@ -58,11 +52,6 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchList: dealerGstAction.fetchList,
             listShowLoadingGst: dealerGstAction.listShowLoading,
-
-            fetchViewDocument: documentViewDataActions.fetchList,
-            viewListShowLoading: documentViewDataActions.listShowLoading,
-            resetViewData: documentViewDataActions.reset,
-
             downloadFile: supportingDocumentDataActions.downloadFile,
             listShowLoading: supportingDocumentDataActions.listShowLoading,
 
@@ -81,11 +70,10 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const GSTIRNAuthenticationMasterBase = (props) => {
     const { userId, data, showGlobalNotification } = props;
-    const { typeData, moduleTitle } = props;
+    const { typeData } = props;
     const { filterString, setFilterString, listShowLoadingGst, fetchList, dealerGstData } = props;
     const { listShowLoadingGstLogin, fetchListGstLogin, listShowLoading, saveData } = props;
-    const { fetchGstDoc,downloadFile   } = props;
-    
+    const { fetchGstDoc, downloadFile } = props;
 
     const [listFilterForm] = Form.useForm();
     const [selectedRecord, setSelectedRecord] = useState();
@@ -100,8 +88,6 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
-
-    // const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [uploadedFile, setUploadedFile] = useState();
     const [emptyList, setEmptyList] = useState(true);
@@ -111,8 +97,6 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
     const [currentGst, setCurrentGst] = useState();
     const [draggerDisable, setDraggerDisable] = useState(true);
     const [docData, setDocData] = useState();
-
-    
 
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -129,55 +113,51 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
     const [formData, setFormData] = useState([]);
-    const onSuccessAction = (res) => {
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+    const onSuccessAction = () => {
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
-        // setShowDataLoading(false);
     };
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
-        // setShowDataLoading(false);
     };
 
     const handleGstinNumber = (value) => {
-        setCurrentGst(value);        
-        // To call a service for file name and docId       
-            fetchGstDoc({
+        setCurrentGst(value);
+        // To call a service for file name and docId
+        fetchGstDoc({
             setIsLoading: () => {},
-                userId,
-                extraParams: [
-                    {
-                        key: 'gstin',
-                        value: value,
-                    },
-                ],
-                customURL,
-                onSuccessAction: (res) => {
-                    if(res.data.documentId){
-                        setDocData(res.data);
-                        setSingleDisabled(true);
-                        setDraggerDisable(true);
-                     showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-
-                    } 
+            userId,
+            extraParams: [
+                {
+                    key: 'gstin',
+                    value: value,
                 },
-                onErrorAction: (res) => { 
-                    setDocData();
-                    setSingleDisabled(false);
-                    setDraggerDisable(false);
-                    showGlobalNotification({ notificationType: 'error', title: 'Error', message: res });
-
+            ],
+            customURL,
+            onSuccessAction: (res) => {
+                if (res.data.documentId) {
+                    setFileList([]);
+                    setDocData(res.data);
+                    setSingleDisabled(true);
+                    setDraggerDisable(true);
+                    showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
                 }
-            });
-        
+            },
+            onErrorAction: (res) => {
+                setDocData();
+                setSingleDisabled(false);
+                setDraggerDisable(false);
+                showGlobalNotification({ notificationType: 'error', title: 'Error', message: res });
+            },
+        });
     };
 
     useEffect(() => {
         if (userId) {
             fetchList({ setIsLoading: listShowLoadingGst, userId, onSuccessAction, onErrorAction });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
     useEffect(() => {
@@ -197,26 +177,13 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         }
         form.resetFields();
         form.setFieldsValue(undefined);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
 
-    const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
+    const handleButtonClick = ({ buttonAction }) => {
         form.resetFields();
         form.setFieldsValue(undefined);
         switch (buttonAction) {
-            case ADD_ACTION:
-                defaultSection && setCurrentSection(defaultSection);
-                record && setSelectedId(record?.supplierInvoiceNumber);
-                break;
-            case EDIT_ACTION:
-                setSelectedRecord(record);
-                record && setSelectedId(record?.supplierInvoiceNumber);
-                openDefaultSection && setCurrentSection(defaultSection);
-                break;
-            case VIEW_ACTION:
-                setSelectedRecord(record);
-                record && setSelectedId(record?.supplierInvoiceNumber);
-                defaultSection && setCurrentSection(defaultSection);
-                break;
             case NEXT_ACTION:
                 const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
                 section && setCurrentSection(nextSection?.id);
@@ -238,21 +205,11 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         setIsFormVisible(true);
     };
 
-    const onFinishSearch = (values) => {};
-
-    const handleResetFilter = (e) => {
-        // setShowDataLoading(false);
-        setFilterString();
-        advanceFilterForm.resetFields();
-    };
-
     const onFinish = (values) => {
-
         const data = { ...values, docId: uploadedFile ? uploadedFile : docData.documentId };
 
         const onSuccess = (res) => {
             form.resetFields();
-            // setShowDataLoading(true);
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchListGstLogin({ setIsLoading: listShowLoadingGstLogin, userId, onSuccessAction, onErrorAction });
 
@@ -275,66 +232,35 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        // form.validateFields().then((values) => {});
-        return;
-    };
-
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
 
     const onCloseAction = () => {
-        setDocData();  
+        setDocData();
         form.resetFields();
         form.setFieldsValue();
         advanceFilterForm.resetFields();
         advanceFilterForm.setFieldsValue();
-        // setAdvanceSearchVisible(false);
-
         setSelectedRecord();
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
     };
 
-    const removeFilter = (key) => {
-        if (key === 'searchParam') {
-            const { searchType, searchParam, ...rest } = filterString;
-            setFilterString({ ...rest });
-        } else {
-            const { [key]: names, ...rest } = filterString;
-            setFilterString({ ...rest });
-        }
-    };
-
     const advanceFilterResultProps = {
-        removeFilter,
         advanceFilter: true,
         filterString,
         setFilterString,
         from: listFilterForm,
         onFinish,
-        onFinishFailed,
-        handleResetFilter,
         advanceFilterForm,
         data,
         typeData,
         searchForm,
-        onFinishSearch,
         userId,
         dealerGstData,
         handleGstinNumber,
     };
-
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View ';
-        } else if (formActionType?.editMode) {
-            return 'Edit ';
-        } else {
-            return 'Add New ';
-        }
-    }, [formActionType]);
 
     const containerProps = {
         record: selectedRecord,
@@ -342,10 +268,8 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         formActionType,
         setFormActionType,
         onFinish,
-        onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(moduleTitle),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,
@@ -382,12 +306,9 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
 
     const loginProps = {
         onFinish,
-        onFinishFailed,
     };
 
-    const onDrop = (e) => {};     
-
-    const onDownload = (file) => {
+    const onDownload = () => {
         const onSuccessAction = (res) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage || 'Your download will start soon' });
         };
@@ -402,14 +323,11 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         downloadFile({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction });
     };
 
-
-    const onRemove = (value) => {        
+    const onRemove = () => {
         setDocData();
         setSingleDisabled(false);
         setDraggerDisable(false);
-  
-
-};
+    };
     const uploadProps = {
         messageText: 'Click or drop your file here to upload',
         validationText: 'File type should be .pem and max file size to be 5Mb',
@@ -429,7 +347,6 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
             showProgress: true,
         },
         progress: { strokeWidth: 3, showInfo: true },
-        onDrop,
         uploadedFile,
         setUploadedFile,
         uploadedFileName,
@@ -441,21 +358,18 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         undefinedType: true,
         draggerDisable,
         setDraggerDisable,
-        downloadFile
-
+        downloadFile,
     };
-   
 
-    const fileProps ={
+    const fileProps = {
         docData,
         setDocData,
-        onDrop,
         onDownload,
         onRemove,
-    }
+    };
     return (
         <>
-            <Form form={form} name="login_from" layout="vertical" autocomplete="off" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Form form={form} name="login_from" layout="vertical" autocomplete="off" onFinish={onFinish}>
                 <GSTIRNFilter {...advanceFilterResultProps} />
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
@@ -463,12 +377,9 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
                             <div className={styles.marB20}>
                                 <UploadUtil {...uploadProps} handleFormValueChange={handleFormValueChange} />
 
-                                <ViewSupportingDocDetail {...fileProps}/>
+                                <ViewSupportingDocDetail {...fileProps} />
                             </div>
-                             
                         </Card>
-
-                        
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Card>

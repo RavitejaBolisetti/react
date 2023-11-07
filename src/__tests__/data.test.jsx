@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import { dashboardNavTabs, upCommingTraining, news, crmContent, serviceContent, partsContent, salesContent} from '../Data';
 import customRender from '@utils/test-utils';
 
 afterEach(() => {

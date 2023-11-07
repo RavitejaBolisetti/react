@@ -9,7 +9,6 @@ import LeftPanel from 'components/common/LeftPanel';
 
 import { UserManagementFormButton } from '../../UserManagementFormButton/UserManagementFormButton';
 
-//import styles from 'components/common/TreeView.module.css';
 import styles from 'components/common/TreeView.module.scss';
 import style from 'assets/sass/app.module.scss';
 
@@ -42,40 +41,14 @@ const AdministrativeHierarchy = (props) => {
     const handleSearchValue = (event) => {
         setSearchValue(event.target.value);
     };
+    const onCheck = (checkedKeysValue, { halfCheckedKeys }) => {
+        setdefaultCheckedKeysMangement({ ...defaultCheckedKeysMangement, ...checkedKeysValue });
 
-    // const onCheck = (checkVal) => {
-    //     if (formActionType?.viewMode) return;
-    //     setCheckedKeys(checkVal);
-    // };
-    const onCheck =
-        // (currentKey) =>
-        (checkedKeysValue, { halfCheckedKeys }) => {
-            setdefaultCheckedKeysMangement({ ...defaultCheckedKeysMangement, ...checkedKeysValue });
-            // handleFormValueChange();
-            const selectedKeys = [...checkedKeysValue, ...halfCheckedKeys] || [];
-            // const deviceTypePrev = checkedKeys?.[deviceType] ? checkedKeys[deviceType] : {};
-            // setCheckedKeys(selectedKeys.length !== 0 ? { ...checkedKeys, [deviceType]: { ...deviceTypePrev, [currentKey]: [currentKey, ...selectedKeys] } } : []);
-            setCheckedKeys(checkedKeysValue);
+        const selectedKeys = [...checkedKeysValue, ...halfCheckedKeys] || [];
+        setCheckedKeys(checkedKeysValue);
 
-            // const mapSelectedKeyData = (data) =>
-            //     data?.map((item) =>
-            //         item.value === currentKey
-            //             ? {
-            //                   ...item,
-            //                   checked: true,
-            //                   children: item?.children && fnMapData({ data: item?.children, fieldNames, selectedKeys }),
-            //               }
-            //             : { ...item }
-            //     );
-
-            setAdminData(fnMapData({ data: adminDataTree, fieldNames, selectedKeys }));
-
-            // if (deviceType === APPLICATION_WEB) {
-            //     setWebApplications(mapSelectedKeyData(webApplications));
-            // } else if (deviceType === APPLICATION_MOBILE) {
-            //     setMobileApplications(mapSelectedKeyData(mobileApplications));
-            // }
-        };
+        setAdminData(fnMapData({ data: adminDataTree, fieldNames, selectedKeys }));
+    };
 
     const myProps = {
         fieldNames,

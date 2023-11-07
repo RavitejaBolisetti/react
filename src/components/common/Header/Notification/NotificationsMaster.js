@@ -61,7 +61,6 @@ const NotificationsMasterMain = (props) => {
         setData([]);
         setNotificationType(key === NOTIFICATION_TYPE?.ALL?.key ? undefined : key);
         setRefreshData(true);
-        // setRefreshCount((prev) => !prev);
     };
 
     const handleMarkAllAsRead = () => {
@@ -70,8 +69,8 @@ const NotificationsMasterMain = (props) => {
             setPage(defaultPagination);
             setRefreshData(true);
         };
-        const onError = (message) => {
-            // console.error(message);
+        const onError = () => {
+            return;
         };
 
         const requestData = {

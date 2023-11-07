@@ -30,8 +30,8 @@ const mapStateToProps = (state) => {
                 ProductDetails: { isLoaded: isDataLoaded = false, isLoading, data: ProductDetailsData = [] },
             },
             OTF: {
-                LoyaltyModelGroup: { isLoaded: isModelDataLoaded = false, isLoading: isModelLoading, data: modelData = [] },
-                LoyaltyVarient: { isLoaded: isVariantDataLoaded = false, isLoading: isVariantLoading, data: variantData = [] },
+                LoyaltyModelGroup: { isFilteredListLoaded: isModelDataLoaded = false, isLoading: isModelLoading, filteredListData: modelData = [] },
+                LoyaltyVarient: { isFilteredListLoaded: isVariantDataLoaded = false, isLoading: isVariantLoading, filteredListData: variantData = [] },
                 ModelFamily: { isLoaded: isModelFamilyDataLoaded = false, isLoading: isModelFamilyLoading, data: modelFamilyData = [] },
             },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
@@ -39,6 +39,7 @@ const mapStateToProps = (state) => {
     } = state;
 
     const moduleTitle = 'Product Details';
+    const ITEM_TYPE = { ITEM: 'item', MAKE: 'make' };
 
     let returnValue = {
         userId,
@@ -59,6 +60,7 @@ const mapStateToProps = (state) => {
         isModelFamilyDataLoaded,
         isModelFamilyLoading,
         modelFamilyData,
+        ITEM_TYPE,
     };
     return returnValue;
 };
@@ -72,11 +74,11 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: productDetailsDataActions.listShowLoading,
             resetData: productDetailsDataActions.reset,
 
-            fetchModelLovList: otfLoyaltyModelGroupDataActions.fetchList,
+            fetchModelLovList: otfLoyaltyModelGroupDataActions.fetchFilteredList,
             listModelShowLoading: otfLoyaltyModelGroupDataActions.listShowLoading,
             resetModel: otfLoyaltyModelGroupDataActions.reset,
 
-            fetchVariantLovList: otfLoyaltyVarientDetailDataActions.fetchList,
+            fetchVariantLovList: otfLoyaltyVarientDetailDataActions.fetchFilteredList,
             listVariantShowLoading: otfLoyaltyVarientDetailDataActions.listShowLoading,
             resetVariant: otfLoyaltyVarientDetailDataActions.reset,
 
@@ -95,7 +97,7 @@ const ProductDetailMasterMain = (props) => {
     const { fetchList, resetData, saveData, listShowLoading, showGlobalNotification, typeData } = props;
     const { form, selectedRecordId, section, formActionType, handleFormValueChange, NEXT_ACTION } = props;
     const { fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading } = props;
-    const { isModelDataLoaded, isModelLoading, modelData, isVariantDataLoaded, isVariantLoading, variantData, isModelFamilyDataLoaded, isModelFamilyLoading, modelFamilyData, fetchModelFamilyLovList, listFamilyShowLoading, resetFamily } = props;
+    const { isModelDataLoaded, isModelLoading, modelData, isVariantDataLoaded, isVariantLoading, variantData, isModelFamilyDataLoaded, isModelFamilyLoading, modelFamilyData, fetchModelFamilyLovList, listFamilyShowLoading, ITEM_TYPE } = props;
 
     const [formData, setformData] = useState({});
     const [optionalServices, setOptionalServices] = useState([]);
@@ -104,13 +106,47 @@ const ProductDetailMasterMain = (props) => {
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [itemOptions, setitemOptions] = useState();
     const [makeOptions, setmakeOptions] = useState();
+    const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const MakefieldNames = { label: 'value', value: 'key' };
     const ItemFieldNames = { label: 'value', value: 'key' };
     const collapseProps = { collapsible: 'icon' };
     const disabledProps = { disabled: true };
 
-    const onSuccessAction = (res) => {
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+    const toolTipTextSetter = (data, key) => {
+        if ((typeof data === 'object' && data?.hasOwnProperty(key)) || Array?.isArray(data)) {
+            const noData = 'NA';
+            return (
+                <div>
+                    <p>
+                        Color - <span>{data?.[key]?.color ?? noData}</span>
+                    </p>
+                    <p>
+                        Trim Level - <span>{data?.[key]?.trimLevel ?? noData}</span>
+                    </p>
+                    <p>
+                        Engine Type - <span>{data?.[key]?.engineType ?? noData}</span>
+                    </p>
+                    <p>
+                        Drive Train - <span>{data?.[key]?.driveTrain ?? noData}</span>
+                    </p>
+                    <p>
+                        Transmission - <span>{data?.[key]?.transmission ?? noData}</span>
+                    </p>
+                    <p>
+                        Wheel Size - <span>{data?.[key]?.wheelSize ?? noData}</span>
+                    </p>
+                    <p>
+                        Interior Uphoistery - <span>{data?.[key]?.interiorUpholstery ?? noData}</span>
+                    </p>
+                </div>
+            );
+        }
+
+        return false;
+    };
+
+    const onSuccessAction = () => {
+        return;
     };
 
     const onErrorAction = (message) => {
@@ -129,18 +165,18 @@ const ProductDetailMasterMain = (props) => {
     };
     const bindCodeValue = (value, item) => {
         switch (item) {
-            case 'item': {
-                const codeVal = itemOptions?.find((element, index) => {
+            case ITEM_TYPE?.ITEM: {
+                const codeVal = itemOptions?.find((element) => {
                     if (element?.value === value || element?.key === value) {
                         return element;
                     }
                     return false;
                 });
                 if (codeVal) return codeVal?.value;
-                return 'NA';
+                return '-';
             }
-            case 'make': {
-                const codeVal = makeOptions?.find((element, index) => {
+            case ITEM_TYPE?.MAKE: {
+                const codeVal = makeOptions?.find((element) => {
                     if (element?.value === value || element?.key === value) {
                         return element;
                     }
@@ -148,10 +184,10 @@ const ProductDetailMasterMain = (props) => {
                 });
 
                 if (codeVal) return codeVal?.value;
-                return 'NA';
+                return '-';
             }
             default: {
-                return;
+                return '-';
             }
         }
     };
@@ -169,7 +205,7 @@ const ProductDetailMasterMain = (props) => {
 
     useEffect(() => {
         if (userId && selectedRecordId) {
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams: makeExtraParams({ key: 'vin', title: 'vin', value: selectedRecordId, name: 'vin Number' }), onErrorAction, onSuccessAction });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams: makeExtraParams({ key: 'vin', title: 'vin', value: selectedRecordId, name: 'VIN' }), onErrorAction, onSuccessAction });
         }
         return () => {
             resetData();
@@ -184,44 +220,20 @@ const ProductDetailMasterMain = (props) => {
             fetchVariantLovList({ setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams({ key: 'variantCode', title: 'variantCode', value: ProductDetailsData?.productAttributeDetail?.modelVariant, name: 'variantCode' }) });
             fetchModelFamilyLovList({ setIsLoading: listFamilyShowLoading, userId, extraParams: makeExtraParams({ key: 'familyCode', title: 'familyCode', value: ProductDetailsData?.productAttributeDetail?.modelFamily, name: 'familyCode' }) });
 
-            ProductDetailsData?.aggregates && setOptionalServices(ProductDetailsData?.aggregates);
-            settooltTipText(
-                <div>
-                    <p>
-                        Color - <span>{ProductDetailsData?.productAttributeDetail?.color ?? 'Na'}</span>
-                    </p>
-                    <p>
-                        Trim Level - <span>{ProductDetailsData?.productAttributeDetail?.trimLevel ?? 'Na'}</span>
-                    </p>
-                    <p>
-                        Engine Type - <span>{ProductDetailsData?.productAttributeDetail?.engineType ?? 'Na'}</span>
-                    </p>
-                    <p>
-                        Drive Train - <span>{ProductDetailsData?.productAttributeDetail?.driveTrain ?? 'Na'}</span>
-                    </p>
-                    <p>
-                        Transmission - <span>{ProductDetailsData?.productAttributeDetail?.transmission ?? 'Na'}</span>
-                    </p>
-                    <p>
-                        Wheel Size - <span>{ProductDetailsData?.productAttributeDetail?.wheelSize ?? 'Na'}</span>
-                    </p>
-                    <p>
-                        Interior Uphoistery - <span>{ProductDetailsData?.productAttributeDetail?.interiorUpholstery ?? 'Na'}</span>
-                    </p>
-                </div>
-            );
+            ProductDetailsData?.aggregates && Array?.isArray(ProductDetailsData?.aggregates) && setOptionalServices(ProductDetailsData?.aggregates?.map((item, index) => ({ ...item, uniqueId: index })));
+            settooltTipText(toolTipTextSetter(ProductDetailsData, 'productAttributeDetail'));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, ProductDetailsData]);
 
     useEffect(() => {
         if (isModelDataLoaded && isVariantDataLoaded && isModelFamilyDataLoaded) {
-            modelData.length > 0 && form.setFieldsValue({ modelGroup: modelData[0]?.modelGroupDescription });
+            modelData?.length > 0 && form.setFieldsValue({ modelGroup: modelData[0]?.modelGroupDescription });
             modelFamilyData.length > 0 && form.setFieldsValue({ modelFamily: modelFamilyData[0]?.familyDescription });
             variantData.length > 0 && form.setFieldsValue({ modelVariant: variantData[0]?.variantDescription });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [isModelDataLoaded, isVariantDataLoaded, isModelFamilyDataLoaded]);
 
     useEffect(() => {
         if (typeData) {
@@ -238,12 +250,12 @@ const ProductDetailMasterMain = (props) => {
             setIsReadOnly(false);
         }
         if (openAccordian?.includes('Aggregates') && isReadOnly) {
-            return;
+            return false;
         }
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
-    const onFinish = (values) => {
+    const onFinish = () => {
         const data = { ...formData, vehicleIdentificationNumber: selectedRecordId, aggregates: optionalServices };
         const onSuccess = (res) => {
             setOptionalServices([]);
@@ -269,12 +281,6 @@ const ProductDetailMasterMain = (props) => {
 
         saveData(requestData);
     };
-    const onFinishFailed = () => {
-        form.validateFields()
-            .then(() => {})
-            .catch(() => {});
-    };
-
     const formProps = {
         ...props,
         formData,
@@ -304,6 +310,9 @@ const ProductDetailMasterMain = (props) => {
         isVariantLoading,
         isModelFamilyLoading,
         isModelLoading,
+        ITEM_TYPE,
+        page,
+        setPage,
     };
 
     const viewProps = {
@@ -325,10 +334,13 @@ const ProductDetailMasterMain = (props) => {
         modelData,
         variantData,
         modelFamilyData,
+        ITEM_TYPE,
+        page,
+        setPage,
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

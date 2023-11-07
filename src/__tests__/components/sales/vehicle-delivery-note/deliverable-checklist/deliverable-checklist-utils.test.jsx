@@ -1,11 +1,11 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import { Form } from 'antd'; // Mock Form component if needed
-import { BindFormItems, FORMTYPE_CONSTANTS, MakeCheckResult } from '@components/Sales/VehicleDeliveryNote/DeliverableChecklist/CheckListUtils'; // Replace 'YourComponent' with your actual component path
+import { BindFormItems, FORMTYPE_CONSTANTS, MakeCheckResult } from '@components/VehicleDeliveryNote/DeliverableChecklist/CheckListUtils'; // Replace 'YourComponent' with your actual component path
 
 describe('BindFormItems', () => {
     it('should render Input field for answerType "Input"', () => {
-        const AdvanceformData = { answerType: FORMTYPE_CONSTANTS.INPUT.id };
+        const AdvanceformData = { answerType: FORMTYPE_CONSTANTS.INPUT.key };
         const aggregateForm = render(
             <Form>
                 <BindFormItems AdvanceformData={AdvanceformData} />
@@ -17,7 +17,7 @@ describe('BindFormItems', () => {
     });
 
     it('should render Number fields for answerType "Number"', () => {
-        const AdvanceformData = { answerType: FORMTYPE_CONSTANTS.NUMBER.id };
+        const AdvanceformData = { answerType: FORMTYPE_CONSTANTS.NUMBER.key };
         const aggregateForm = render(
             <Form>
                 <BindFormItems AdvanceformData={AdvanceformData} />
@@ -31,7 +31,7 @@ describe('BindFormItems', () => {
     });
 
     it('should render Date fields for answerType "Date"', () => {
-        const AdvanceformData = { answerType: FORMTYPE_CONSTANTS.DATE.id };
+        const AdvanceformData = { answerType: FORMTYPE_CONSTANTS.DATE.key };
         const aggregateForm = render(
             <Form>
                 <BindFormItems AdvanceformData={AdvanceformData} />
@@ -45,7 +45,7 @@ describe('BindFormItems', () => {
     });
 
     it('should render Select field for answerType "Boolean"', () => {
-        const AdvanceformData = { answerType: FORMTYPE_CONSTANTS.BOOLEAN.id };
+        const AdvanceformData = { answerType: FORMTYPE_CONSTANTS.BOOLEAN.key };
         const aggregateForm = render(
             <Form>
                 <BindFormItems AdvanceformData={AdvanceformData} />
@@ -57,7 +57,7 @@ describe('BindFormItems', () => {
     });
 
     it('should render Select field for answerType "Fixed"', () => {
-        const AdvanceformData = { answerType: FORMTYPE_CONSTANTS.FIXED.id };
+        const AdvanceformData = { answerType: FORMTYPE_CONSTANTS.FIXED.key };
         const data = {
             checklistAnswerResponses: [
                 { answerCode: '1', answerDescription: 'Option 1' },
@@ -78,7 +78,7 @@ describe('BindFormItems', () => {
 describe('MakeCheckResult', () => {
     it('should return date range for type "Date"', () => {
         const props = {
-            type: FORMTYPE_CONSTANTS.DATE.id,
+            type: FORMTYPE_CONSTANTS.DATE.key,
             data: {
                 answerFromDate: '2023-Sep-12',
                 answerToDate: '2023-Sep-15',
@@ -91,7 +91,7 @@ describe('MakeCheckResult', () => {
 
     it('should return "NA" for type "Date" when no dates are provided', () => {
         const props = {
-            type: FORMTYPE_CONSTANTS.DATE.id,
+            type: FORMTYPE_CONSTANTS.DATE.key,
             data: {},
         };
 
@@ -101,7 +101,7 @@ describe('MakeCheckResult', () => {
 
     it('should return "Yes" for type "Boolean" when data.answerBoolean is true', () => {
         const props = {
-            type: FORMTYPE_CONSTANTS.BOOLEAN.id,
+            type: FORMTYPE_CONSTANTS.BOOLEAN.key,
             data: {
                 answerBoolean: true,
             },
@@ -113,7 +113,7 @@ describe('MakeCheckResult', () => {
 
     it('should return "No" for type "Boolean" when data.answerBoolean is false', () => {
         const props = {
-            type: FORMTYPE_CONSTANTS.BOOLEAN.id,
+            type: FORMTYPE_CONSTANTS.BOOLEAN.key,
             data: {
                 answerBoolean: false,
             },
@@ -125,7 +125,7 @@ describe('MakeCheckResult', () => {
 
     it('should return "NA" for type "Boolean" when data.answerBoolean is undefined', () => {
         const props = {
-            type: FORMTYPE_CONSTANTS.BOOLEAN.id,
+            type: FORMTYPE_CONSTANTS.BOOLEAN.key,
             data: {
                 answerBoolean: undefined,
             },
@@ -136,7 +136,7 @@ describe('MakeCheckResult', () => {
     });
     it('should return number range for type "Number"', () => {
         const props = {
-            type: FORMTYPE_CONSTANTS.NUMBER.id,
+            type: FORMTYPE_CONSTANTS.NUMBER.key,
             data: {
                 answerFromNumber: 10,
                 answerToNumber: 20,
@@ -149,7 +149,7 @@ describe('MakeCheckResult', () => {
 
     it('should return "NA" for type "Number" when no numbers are provided', () => {
         const props = {
-            type: FORMTYPE_CONSTANTS.NUMBER.id,
+            type: FORMTYPE_CONSTANTS.NUMBER.key,
             data: {},
         };
 
@@ -159,7 +159,7 @@ describe('MakeCheckResult', () => {
 
     it('should return the answer description for type "Fixed"', () => {
         const props = {
-            type: FORMTYPE_CONSTANTS.FIXED.id,
+            type: FORMTYPE_CONSTANTS.FIXED.key,
             data: {
                 answerText: 'A',
                 checklistAnswerResponses: [
@@ -175,7 +175,7 @@ describe('MakeCheckResult', () => {
 
     it('should return the answer text for type "Input"', () => {
         const props = {
-            type: FORMTYPE_CONSTANTS.INPUT.id,
+            type: FORMTYPE_CONSTANTS.INPUT.key,
             data: {
                 answerText: 'Sample Answer',
             },

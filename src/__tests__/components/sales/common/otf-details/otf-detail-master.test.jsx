@@ -105,7 +105,7 @@ describe('AddEdit Component render', () => {
         const deliveryAt = screen.getByRole('columnheader', { name: 'Delivery At' });
         expect(deliveryAt).toBeTruthy();
 
-        const referal = screen.getByRole('columnheader', { name: 'Referral' });
+        const referal = screen.getByRole('columnheader', { name: 'Referral Scheme' });
         expect(referal).toBeTruthy();
 
         const mitraType = screen.getByRole('columnheader', { name: 'Influencer/Mitra Type' });

@@ -14,7 +14,7 @@ import styles from 'assets/sass/app.module.scss';
 export const tableColumn = (handleButtonClick, allotmentStatus, fixedWith) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'VIN/Chasis no.',
+            title: 'VIN',
             dataIndex: 'vehicleIdentificationNumber',
             width: fixedWith ? '202px' : '20%',
         }),
@@ -44,13 +44,13 @@ export const tableColumn = (handleButtonClick, allotmentStatus, fixedWith) => {
         }),
 
         tblPrepareColumns({
-            title: 'PDI Done',
+            title: 'PDI',
             dataIndex: 'pdiIndicator',
             width: fixedWith ? '140px' : '12%',
         }),
 
         tblPrepareColumns({
-            title: 'M&M Invoice',
+            title: 'Supplier Invoice',
             dataIndex: 'invoiceId',
             width: fixedWith ? '180px' : '18%',
             render: (text, record) => [

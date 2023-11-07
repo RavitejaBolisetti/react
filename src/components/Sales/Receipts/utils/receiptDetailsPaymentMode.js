@@ -17,7 +17,11 @@ export const PAYMENT_MODE = {
         TITLE: 'Cheque / DD',
     },
     NEFT: {
-        KEY: 'N',
-        TITLE: 'NEFT',
+        KEY: 'O',
+        TITLE: 'RTGS',
+    },
+    WALLET: {
+        KEY: 'W',
+        TITLE: 'Wallet/Paytm',
     },
 };

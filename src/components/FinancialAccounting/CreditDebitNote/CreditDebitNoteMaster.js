@@ -21,6 +21,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { BASE_URL_CREDIT_DEBIT_NOTE_SEARCH as customURL } from 'constants/routingApi';
 import { BASE_URL_CREDIT_DEBIT_NOTE_DETAILS as customVoucherUrl } from 'constants/routingApi';
 import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
+import { VOUCHER_TYPE } from 'constants/VoucherType';
 import { creditDebitNoteSearchDataAction } from 'store/actions/data/financialAccounting/creditDebitNoteSearch';
 
 import { CREDIT_DEBIT_SECTION } from 'constants/CreditDebitSection';
@@ -82,6 +83,7 @@ export const CreditDebitNoteMasterBase = (props) => {
     const [listFilterForm] = Form.useForm();
 
     const [selectedRecord, setSelectedRecord] = useState();
+    const [vouchertype, setVoucherType] = useState();
     const [selectedRecordId, setSelectedRecordId] = useState();
 
     const [section, setSection] = useState();
@@ -122,7 +124,6 @@ export const CreditDebitNoteMasterBase = (props) => {
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
-    const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
 
     const [transactionType, setTransactionType] = useState(TRANSACTION_TYPE?.Credit?.value);
@@ -136,6 +137,11 @@ export const CreditDebitNoteMasterBase = (props) => {
     }, [formActionType]);
 
     useEffect(() => {
+        setFilterString({ ...filterString, pageSize: 10, current: 1 });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
         if (creditDebitData && isDetailLoaded && formActionType?.addMode) {
             setVoucherTableData([]);
             setApportionTableData([]);
@@ -146,8 +152,7 @@ export const CreditDebitNoteMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [creditDebitData, isDetailLoaded, formActionType?.addMode]);
 
-    const onSuccessAction = (res) => {
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+    const onSuccessAction = () => {
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
@@ -158,19 +163,13 @@ export const CreditDebitNoteMasterBase = (props) => {
         setShowDataLoading(false);
     };
 
-    useEffect(() => {
-        if (filterString) {
-            setPage({ ...page, current: 1 });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString]);
     const extraParams = useMemo(() => {
         return [
             {
                 key: 'searchType',
                 title: 'Type',
                 value: filterString?.searchType,
-                name: 'Voucher Number',
+                name: filterString?.searchType ? 'Voucher Number' : filterString?.searchType,
                 canRemove: false,
                 filter: true,
             },
@@ -219,30 +218,30 @@ export const CreditDebitNoteMasterBase = (props) => {
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: page?.pageSize,
+                value: filterString?.pageSize ?? 10,
                 canRemove: true,
             },
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: page?.current,
+                value: filterString?.current,
                 canRemove: true,
             },
             {
                 key: 'sortBy',
                 title: 'Sort By',
-                value: page?.sortBy,
+                value: filterString?.sortBy,
                 canRemove: true,
             },
             {
                 key: 'sortIn',
                 title: 'Sort Type',
-                value: page?.sortType,
+                value: filterString?.sortType,
                 canRemove: true,
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, page]);
+    }, [filterString]);
 
     useEffect(() => {
         if (userId && extraParams) {
@@ -298,15 +297,17 @@ export const CreditDebitNoteMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
 
-    const handleResetFilter = (e) => {
+    const handleResetFilter = () => {
+        const { pageSize } = filterString;
         if (filterString) {
             setShowDataLoading(true);
-            setFilterString();
         }
+        setFilterString({ pageSize, current: 1 });
         advanceFilterForm.resetFields();
     };
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true, transactionType = 'credit' }) => {
+        setVoucherType(record?.voucherType);
         form.resetFields();
         form.setFieldsValue(undefined);
         switch (buttonAction) {
@@ -347,9 +348,6 @@ export const CreditDebitNoteMasterBase = (props) => {
         }
         setIsFormVisible(true);
     };
-
-    const onFinishSearch = (values) => {};
-
     const handlePrintDownload = (record) => {
         setReportVisible(true);
 
@@ -390,10 +388,6 @@ export const CreditDebitNoteMasterBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        return;
-    };
-
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
@@ -408,11 +402,15 @@ export const CreditDebitNoteMasterBase = (props) => {
         setApportionTableData([]);
     };
 
+    const setPage = (page) => {
+        setFilterString({ ...filterString, ...page });
+    };
+
     const tableProps = {
         dynamicPagination,
+        filterString,
         totalRecords,
-        page,
-        setPage,
+        setPage: setPage,
         tableColumn: tableColumn({ handleButtonClick, typeData }),
         tableData: data,
         showAddButton: false,
@@ -421,11 +419,13 @@ export const CreditDebitNoteMasterBase = (props) => {
     };
 
     const removeFilter = (key) => {
+        const { pageSize } = filterString;
         if (key === 'searchParam') {
             const { searchType, searchParam, ...rest } = filterString;
+            console.log('🚀 ~ file: CreditDebitNoteMaster.js:423 ~ removeFilter ~ rest:', rest);
             setFilterString({ ...rest });
         } else if (key === 'fromDate' || key === 'toDate') {
-            setFilterString();
+            setFilterString({ current: 1, pageSize });
             advanceFilterForm.resetFields();
         } else {
             const { [key]: names, ...rest } = filterString;
@@ -444,13 +444,11 @@ export const CreditDebitNoteMasterBase = (props) => {
         setFilterString,
         from: listFilterForm,
         onFinish,
-        onFinishFailed,
         title,
         data,
         typeData,
 
         searchForm,
-        onFinishSearch,
         handleResetFilter,
         handleButtonClick,
         setAdvanceSearchVisible,
@@ -475,7 +473,6 @@ export const CreditDebitNoteMasterBase = (props) => {
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
-        // icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
@@ -495,7 +492,6 @@ export const CreditDebitNoteMasterBase = (props) => {
         formActionType,
         setFormActionType,
         creditDebitNoteOnFinish: onFinish,
-        onFinishFailed,
         setIsFormVisible,
         isVisible: isFormVisible,
         onCloseAction,
@@ -533,7 +529,7 @@ export const CreditDebitNoteMasterBase = (props) => {
         setApportionTableData,
     };
 
-    const reportDetail = EMBEDDED_REPORTS?.CREDIT_DEBIT_DOCUMENT;
+    const reportDetail = vouchertype === VOUCHER_TYPE?.CREDIT_TYPE?.key ? EMBEDDED_REPORTS?.CREDIT_DOCUMENT : EMBEDDED_REPORTS?.DEBIT_DOCUMENT;
     const reportProps = {
         isVisible: isReportVisible,
         titleOverride: reportDetail?.title,

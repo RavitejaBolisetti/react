@@ -18,7 +18,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 const { Search } = Input;
 export default function AppliedAdvanceFilter(props) {
-    const { tableData = [], showAddButton = true, advanceFilter = false, title, filterString, from, onFinish, onFinishFailed, extraParams, removeFilter, handleResetFilter, handleClearInSearch, onSearchHandle, setAdvanceSearchVisible, handleReferesh, handleButtonClick, validator = searchValidator, downloadReport = false, handleDownloadReport = false, showChangeHistoryButton = false, showChangeHistoryList, handleCustomShowAdd = () => false } = props;
+    const { tableData = [], showAddButton = true, advanceFilter = false, title, filterString, from, onFinish, onFinishFailed, extraParams, removeFilter, handleResetFilter, handleClearInSearch, onSearchHandle, setAdvanceSearchVisible, handleReferesh, handleButtonClick, validator = searchValidator, downloadReport = false, handleDownloadReport = false, showChangeHistoryButton = false, showChangeHistoryList } = props;
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();
     };
@@ -100,7 +100,7 @@ export default function AppliedAdvanceFilter(props) {
                                         ?.map((filter) => {
                                             return (
                                                 filter?.value && (
-                                                    <div className={styles.advanceFilterItem} key={filter?.key}>
+                                                    <div className={styles.advanceFilterItem} key={'rms' + filter?.key}>
                                                         {filter?.name}
                                                         {filter?.canRemove && (
                                                             <span>

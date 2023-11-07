@@ -18,7 +18,7 @@ const { TextArea } = Input;
 const AddEditFormMain = (props) => {
     const { typeData, configData, parameterType, setParameterType, hanndleEditData, setSaveAndAddNewBtnClicked } = props;
     const { footerEdit, form, isReadOnly, showSaveBtn, formData, onCloseAction, isViewModeVisible } = props;
-    const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed, isLoadingOnSave } = props;
+    const { isFormBtnActive, setFormBtnActive, onFinish, isLoadingOnSave } = props;
 
     useEffect(() => {
         setParameterType(formData?.configurableParameterType);
@@ -53,7 +53,7 @@ const AddEditFormMain = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBody}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     {!isViewModeVisible ? (

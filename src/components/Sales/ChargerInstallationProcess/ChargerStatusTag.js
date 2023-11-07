@@ -5,7 +5,13 @@
  */
 import { Tag } from 'antd';
 import { CHARGER_STATUS } from 'constants/ChargerStatus';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
+export const ChargerSearchStatusTag = (status, typeData) => {
+    let tag = '';
+    typeData?.[PARAM_MASTER.CHRGR_INST_HDR_STAT.id]?.map((item) => item.key === status && (tag = <Tag color="success">{item.value}</Tag>));
+    return tag;
+};
 export const ChargerStatusTag = (status) => {
     let tag = '';
     switch (status) {
@@ -15,8 +21,8 @@ export const ChargerStatusTag = (status) => {
         case CHARGER_STATUS.IN_PROGRESS.key:
             tag = <Tag color="warning">{CHARGER_STATUS.IN_PROGRESS.desc}</Tag>;
             break;
-        case CHARGER_STATUS.FAILED.key:
-            tag = <Tag color="warning">{CHARGER_STATUS.FAILED.desc}</Tag>;
+        case CHARGER_STATUS.REJECTED.key:
+            tag = <Tag color="warning">{CHARGER_STATUS.REJECTED.desc}</Tag>;
             break;
         default:
     }

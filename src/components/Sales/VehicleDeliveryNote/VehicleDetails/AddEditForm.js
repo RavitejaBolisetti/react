@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Row, Col, Collapse, Divider } from 'antd';
 import { expandIcon } from 'utils/accordianExpandIcon';
 
@@ -13,39 +13,31 @@ import { NoDataFound } from 'utils/noDataFound';
 
 const { Panel } = Collapse;
 
+const formTypeName = 'vehicle';
+
 const AddEditFormMain = (props) => {
-    const { activeKey, setActiveKey, formData, form } = props;
+    const { formData, form } = props;
 
-    const vehicleDetailsProps = { ...props, form, formType: 'vehicle', formData };
+    const vehicleDetailsProps = { ...props, form, formType: formTypeName, formData };
 
-    const onChange = (values) => {
-        const isPresent = activeKey.includes(values);
-
-        if (isPresent) {
-            const newActivekeys = [];
-
-            activeKey.forEach((item) => {
-                if (item !== values) {
-                    newActivekeys.push(item);
-                }
-            });
-            setActiveKey(newActivekeys);
-        } else {
-            setActiveKey([...activeKey, values]);
+    useEffect(() => {
+        if (formData && Object?.keys(formData)?.length && Object?.values(formData)?.length) {
+            form.setFieldsValue({ ...formData });
         }
-    };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData]);
 
     return (
         <Row gutter={20}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
-                    <Panel header="Vehicle Information" key="1">
+                <Collapse collapsible="icon" expandIcon={expandIcon} defaultActiveKey={['VI1']} expandIconPosition="end">
+                    <Panel header="Vehicle Information" key="VI1">
                         <Divider />
                         <VehicleInfoForm {...vehicleDetailsProps} />
                     </Panel>
                 </Collapse>
-                <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
-                    <Panel header="Battery Details" key="2">
+                <Collapse collapsible="icon" expandIcon={expandIcon} defaultActiveKey={['BD1']} expandIconPosition="end">
+                    <Panel header="Battery Details" key="BD1">
                         <Divider />
                         <Row gutter={20}>
                             {formData?.batteryDetail?.length ? (
@@ -66,4 +58,3 @@ const AddEditFormMain = (props) => {
 };
 
 export const AddEditForm = AddEditFormMain;
-

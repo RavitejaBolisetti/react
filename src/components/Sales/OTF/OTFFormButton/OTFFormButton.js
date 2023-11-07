@@ -10,7 +10,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import styles from 'assets/sass/app.module.scss';
 
-export const OTFFormButton = ({ record, handleChangeHistory, handleOtfSoMappingHistory, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save', handleButtonClick, isLoadingOnSave, isLastSection, workFlowDetails }) => {
+export const OTFFormButton = ({ record, handleChangeHistory, handleOtfSoMappingHistory, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save', handleButtonClick, isLoadingOnSave, isLastSection, workFlowDetails,  }) => {
     const content = <div>Coming Soon</div>;
     return (
         <div className={styles.formFooter}>
@@ -104,7 +104,7 @@ export const OTFFormButton = ({ record, handleChangeHistory, handleOtfSoMappingH
                     )}
 
                     {buttonData?.nextBtn && !isLastSection && (
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record, isNextBtnClick: true })} type="primary">
                             Next
                         </Button>
                     )}

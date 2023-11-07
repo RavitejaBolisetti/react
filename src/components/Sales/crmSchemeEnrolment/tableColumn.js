@@ -8,7 +8,7 @@ import { convertDateMonthYear } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
 
-export const tableColumn = (handleButtonClick, page, pageSize) => {
+export const tableColumn = (handleButtonClick) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'Enrolment No',
@@ -18,7 +18,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
 
         tblPrepareColumns({
             title: 'Enrolment Date',
-            dataIndex: 'enrolledDate',
+            dataIndex: 'enrolmentDate',
             width: '13%',
             render: (text) => (text ? convertDateMonthYear(text) : 'NA'),
         }),

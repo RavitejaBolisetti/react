@@ -39,7 +39,7 @@ const mapStateToProps = (state) => {
                 VehicleChecklistMasterListAttributeLov: { isLoaded: isVehicleChecklistMasterAtrributeLovLoaded = false, data: VehicleChecklistAttributeLov = [] },
             },
             OTF: {
-                LoyaltyModelGroup: { isLoading: isModelLoading, data: modelGroupData = [] },
+                LoyaltyModelGroup: { isLoading: isModelLoading, filteredListData: modelGroupData = [] },
             },
         },
     } = state;
@@ -77,7 +77,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchVehicleChecklistAttributeLov: vehicleChecklistMasterAttributeLovDataActions.fetchList,
             listShowLoadingVehicleChecklistAttributeLov: vehicleChecklistMasterAttributeLovDataActions.listShowLoading,
 
-            fetchModelLovList: otfLoyaltyModelGroupDataActions.fetchList,
+            fetchModelLovList: otfLoyaltyModelGroupDataActions.fetchFilteredList,
             listModelShowLoading: otfLoyaltyModelGroupDataActions.listShowLoading,
 
             showGlobalNotification,
@@ -86,7 +86,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId, isDataAttributeLoaded, showGlobalNotification, fetchVehicleChecklist, listShowLoadingVehicleChecklist, VehicleChecklistMasterList, VehicleChecklistAttributeLov, fetchVehicleChecklistAttributeLov, listShowLoadingVehicleChecklistAttributeLov, fetchModelLovList, listModelShowLoading, modelGroupData, saveData, isConfigLoaded }) => {
+export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId, isDataAttributeLoaded, showGlobalNotification, fetchVehicleChecklist, listShowLoadingVehicleChecklist, VehicleChecklistMasterList, VehicleChecklistAttributeLov, fetchVehicleChecklistAttributeLov, listShowLoadingVehicleChecklistAttributeLov, fetchModelLovList, listModelShowLoading, modelGroupData, saveData }) => {
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
     const [answerForm] = Form.useForm();
@@ -105,7 +105,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
     const [formActionType, setFormActionType] = useState('');
 
     const [formData, setFormData] = useState([]);
-
+    const [disabledModelGroupData, setDisabledModelGroupData] = useState([]);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [searchValue, setSearchValue] = useState('');
     const [attributeType, setAttributeType] = useState();
@@ -114,7 +114,6 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
     const [answerType, setAnswerType] = useState(null);
     const [answerData, setAnswerData] = useState([]);
     const [modelData, setModelData] = useState([]);
-    const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
 
     const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -160,6 +159,21 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
         setSelectedTreeKey([]);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [buttonType]);
+
+    useEffect(() => {
+        if (modelGroupData?.length > 0) {
+            setDisabledModelGroupData([]);
+            for (let i = 0; i < modelGroupData?.length; i++) {
+                let data = modelData?.find((f) => f?.modelGroupCode === modelGroupData?.[i]?.modelGroupCode);
+                if (data) {
+                    setDisabledModelGroupData((prev) => [...prev, { ...modelGroupData?.find((e) => e?.modelGroupCode === data?.modelGroupCode), disabled: true }]);
+                } else {
+                    setDisabledModelGroupData((prev) => [...prev, modelGroupData[i]]);
+                }
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [modelGroupData, modelData, formActionType]);
 
     useEffect(() => {
         let obj = {
@@ -304,9 +318,11 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
         } else if (values?.attributeLevel === VEHICLE_CHECKLIST_TYPE?.CHECKLIST?.key) {
             if (modelData?.length <= 0) {
                 showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please add atleast one model' });
+                return;
             }
             if (answerType === ANSWER_TYPES?.Fixed?.key && answerData?.length <= 0) {
                 showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please add atleast one answer' });
+                return;
             }
             data = {
                 attributeLevel: values?.attributeLevel,
@@ -346,9 +362,8 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
                     const answerTypeName = typeData?.CHKL_ANS_TYPE?.find((e) => e?.key === res?.data?.checklistDto?.children?.[0]?.answerType)?.value;
                     const attachmentRequiredName = typeData?.ATT_TYPE?.find((e) => e?.key === res?.data?.checklistDto?.children?.[0]?.attachmentRequired)?.value;
                     setFormData({ ...res?.data?.checklistDto?.children?.[0], parentName: attributeParentName, attributeName, answerTypeName, attachmentRequiredName });
-                    setModelData(res?.data?.checklistDto?.children?.[0]?.model?.length > 0 ? [...res?.data?.checklistDto?.children?.[0]?.model] : []);
-                    setAnswerData(res?.data?.checklistDto?.children?.[0]?.answer?.length > 0 ? [...res?.data?.checklistDto?.children?.[0]?.model] : []);
                     setSelectedTreeKey([res?.data?.checklistDto?.children?.[0]?.id]);
+                    setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: false, siblingBtn: true });
                 }
                 setFormActionType(FROM_ACTION_TYPE.VIEW);
                 setFormBtnActive(false);
@@ -372,17 +387,18 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
-    };
-
     const handleResetBtn = () => {
         form.resetFields();
     };
     const handleAdd = () => {
         setFormBtnActive(false);
         setIsFormVisible(true);
-        setIsAddBtnClicked(() => !isAddBtnClicked);
+        setFormActionType(FROM_ACTION_TYPE.ADD);
+        form.setFieldsValue({
+            attributeLevel: VEHICLE_CHECKLIST_TYPE?.GROUP?.key,
+            parentCode: 'DMS',
+        });
+        setSelectedTreeSelectKey('DMS');
     };
 
     const handleButtonClick = (type) => {
@@ -427,7 +443,6 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
         flatternData,
         formActionType,
         isVisible: isFormVisible,
-        onFinishFailed,
         onCloseAction: () => {
             setIsFormVisible(false);
             setAttributeType(formData?.attributeLevel);
@@ -467,6 +482,8 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
         modelEdit,
         setModelEdit,
         listShowLoadingVehicleChecklist,
+        showGlobalNotification,
+        disabledModelGroupData,
     };
 
     const viewProps = {

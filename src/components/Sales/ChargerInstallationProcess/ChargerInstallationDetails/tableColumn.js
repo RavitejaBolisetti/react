@@ -3,11 +3,14 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
+import { Link } from 'react-router-dom';
+import { tblPrepareColumns } from 'utils/tableColumn';
 import { convertDateMonthYear, converDateDayjs } from 'utils/formatDateTime';
 import { ChargerStatusTag } from '../ChargerStatusTag';
 import { FiEye } from 'react-icons/fi';
 import { getCodeValue } from 'utils/getCodeValue';
+import * as IMAGES from 'assets';
+
 export const addRequestColumns = (typeData) => {
     const tableColumn = [
         tblPrepareColumns({
@@ -44,15 +47,16 @@ export const addRequestColumnsView = (typeData, onHandleModal) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'Stage Request Date',
-            dataIndex: 'date',
+            dataIndex: 'stageRequestDate',
+            key: 'stageRequestDate',
             width: '40%',
-            render: (_, record) => (record?.chargerInstDetails?.requestDetails[0].stageRequestDate ? convertDateMonthYear(record?.chargerInstDetails?.requestDetails[0].stageRequestDate) : ''),
+            render: (_, record) => (record?.stageRequestDate ? convertDateMonthYear(record?.stageRequestDate) : ''),
         }),
         tblPrepareColumns({
             title: 'Request Change',
             dataIndex: 'stage',
             width: '40%',
-            render: (_, record) => getCodeValue(typeData?.CHRGR_INST_STG_TYPE, record?.chargerInstDetails?.requestDetails[0].requestStage),
+            render: (_, record) => getCodeValue(typeData?.CHRGR_INST_STG_TYPE, record?.stageType),
         }),
 
         tblPrepareColumns({
@@ -60,68 +64,69 @@ export const addRequestColumnsView = (typeData, onHandleModal) => {
             dataIndex: 'visitTimeSlotOne',
             key: 'visitTimeSlotOne',
             width: '40%',
-            render: (_, record) => (record?.chargerInstDetails?.requestDetails[0].visitTimeSlotOne ? convertDateMonthYear(record?.chargerInstDetails?.requestDetails[0].visitTimeSlotOne) : ''),
+            render: (_, record) => (record?.visitTimeSlotOne ? convertDateMonthYear(record?.visitTimeSlotOne) : ''),
         }),
         tblPrepareColumns({
             title: 'Visit TimeSlot 2',
             dataIndex: 'visitTimeSlotTwo',
             key: 'visitTimeSlotTwo',
             width: '40%',
-            render: (_, record) => (record?.chargerInstDetails?.requestDetails[0].visitTimeSlotTwo ? convertDateMonthYear(record?.chargerInstDetails?.requestDetails[0].visitTimeSlotTwo) : ''),
+            render: (_, record) => (record?.visitTimeSlotTwo ? convertDateMonthYear(record?.visitTimeSlotTwo) : ''),
         }),
         tblPrepareColumns({
             title: 'Visit TimeSlot 3',
             dataIndex: 'visitTimeSlotThree',
             key: 'visitTimeSlotThree',
             width: '40%',
-            render: (_, record) => (record?.chargerInstDetails?.requestDetails[0].visitTimeSlotThree ? convertDateMonthYear(record?.chargerInstDetails?.requestDetails[0].visitTimeSlotThree) : ''),
+            render: (_, record) => (record?.visitTimeSlotThree ? convertDateMonthYear(record?.visitTimeSlotThree) : ''),
         }),
         tblPrepareColumns({
             title: 'Status',
-            dataIndex: 'Status',
-            key: 'Status',
+            dataIndex: 'response',
+            key: 'response',
             width: '40%',
-            render: (_, record) => ChargerStatusTag(record?.chargerInstDetails?.requestStatus),
+            render: (_, record) => ChargerStatusTag(record?.response),
         }),
         tblPrepareColumns({
             title: 'Service Id',
             dataIndex: 'serviceId',
             key: 'serviceId',
             width: '40%',
-            render: (_, record) => record?.chargerInstDetails?.requestDetails[0].serviceId,
         }),
         tblPrepareColumns({
             title: 'Schedule Date',
             dataIndex: 'date',
             key: 'date',
             width: '40%',
-            render: (_, record) => (record?.chargerInstDetails?.requestDetails[0].scheduleDate ? convertDateMonthYear(record?.chargerInstDetails?.requestDetails[0].scheduleDate) : ''),
+            render: (_, record) => (record?.scheduleDate ? convertDateMonthYear(record?.scheduleDate) : ''),
         }),
         tblPrepareColumns({
             title: 'Response Status',
-            dataIndex: 'status',
-            key: 'status',
+            dataIndex: 'response',
+            key: 'response',
             width: '40%',
-            render: (_, record) => record?.chargerInstDetails?.requestDetails[0].status,
         }),
         tblPrepareColumns({
             title: 'Response Remark',
             dataIndex: 'remark',
             key: 'remark',
             width: '40%',
-            render: (_, record) => record?.chargerInstDetails?.requestDetails[0].remark,
         }),
         tblPrepareColumns({
             title: 'Activity',
             width: '40%',
-            render: (_, record) => <FiEye onClick={onHandleModal} style={{ color: '#ff3e5b' }} />,
+            render: (_, record) => <FiEye onClick={() => onHandleModal(record)} style={{ color: '#ff3e5b' }} />,
         }),
         tblPrepareColumns({
             title: 'Document',
             dataIndex: 'document',
             key: 'document',
             width: '40%',
-            // render: (_, record) => record?.chargerInstDetails?.requestDetails[0].serviceId,
+            render: (_, record) => (
+                <a href={record?.supportingDocumentUrl} target="_blank">
+                    <img src={IMAGES.FILE} alt="logo-images" href={record?.supportingDocumentUrl} />,
+                </a>
+            ),
         }),
     ];
 
@@ -132,15 +137,15 @@ export const serviceActivityColumns = () => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'Service Activities',
-            dataIndex: 'activity',
-            key: 'activity',
+            dataIndex: 'key',
+            key: 'key',
             width: '50%',
         }),
 
         tblPrepareColumns({
             title: 'Response',
-            dataIndex: 'response',
-            key: 'response',
+            dataIndex: 'value',
+            key: 'value',
             width: '50%',
         }),
     ];

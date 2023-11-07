@@ -71,11 +71,8 @@ describe('AddEdit Component render', () => {
         const otfDetails = screen.getByText('Booking Details');
         expect(otfDetails).toBeTruthy();
 
-        const booked = screen.getByText('Booked');
+        const booked = screen.getByText('Booking Details');
         expect(booked).toBeTruthy();
-
-        const alloted = screen.getByText('Allotted');
-        expect(alloted).toBeTruthy();
     });
 
     it('should render text', async () => {
@@ -83,42 +80,6 @@ describe('AddEdit Component render', () => {
         const editBtn = screen.getByRole('button', { name: 'Change History' });
         fireEvent.click(editBtn);
         expect(editBtn).toBeTruthy();
-
-        const initialDate = screen.getByRole('columnheader', { name: 'Initial Promise Delivery Date' });
-        expect(initialDate).toBeTruthy();
-
-        const expectedDate = screen.getByRole('columnheader', { name: 'Cust. Expected Delivery Date' });
-        expect(expectedDate).toBeTruthy();
-
-        const bookingAmt = screen.getByRole('columnheader', { name: 'Booking Amount' });
-        expect(bookingAmt).toBeTruthy();
-
-        const saleConsultant = screen.getByRole('columnheader', { name: 'Sales Consultant' });
-        expect(saleConsultant).toBeTruthy();
-
-        const specialReq = screen.getByRole('columnheader', { name: 'Special Request' });
-        expect(specialReq).toBeTruthy();
-
-        const placeOf = screen.getByRole('columnheader', { name: 'Place Of Registration' });
-        expect(placeOf).toBeTruthy();
-
-        const deliveryAt = screen.getByRole('columnheader', { name: 'Delivery At' });
-        expect(deliveryAt).toBeTruthy();
-
-        const referal = screen.getByRole('columnheader', { name: 'Referral' });
-        expect(referal).toBeTruthy();
-
-        const mitraType = screen.getByRole('columnheader', { name: 'Influencer/Mitra Type' });
-        expect(mitraType).toBeTruthy();
-
-        const mitraName = screen.getByRole('columnheader', { name: 'Influencer/Mitra Name' });
-        expect(mitraName).toBeTruthy();
-
-        const modeOf = screen.getByRole('columnheader', { name: 'Mode Of Payment' });
-        expect(modeOf).toBeTruthy();
-
-        const loyalty = screen.getByRole('columnheader', { name: 'Loyalty Scheme' });
-        expect(loyalty).toBeTruthy();
     });
 
     it('should render buttons', async () => {

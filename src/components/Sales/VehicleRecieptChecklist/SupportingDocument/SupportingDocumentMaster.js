@@ -5,7 +5,6 @@
  */
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-// import { LANGUAGE_EN } from 'language/en';
 
 import { bindActionCreators } from 'redux';
 import { Row, Col, Form, Card } from 'antd';
@@ -99,6 +98,7 @@ const SupportingDocumentBase = (props) => {
             });
             setviewSupportingData([...showSupportingdata]);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [supportingData]);
 
     useEffect(() => {

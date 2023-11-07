@@ -11,15 +11,12 @@ import { withModal } from 'components/withModal';
 import { validateRequiredSelectField } from 'utils/validation';
 import { dateFormat, formatDateToCalenderDate } from 'utils/formatDateTime';
 import { disableFutureDate } from 'utils/disableDate';
-import { customSelectBox } from 'utils/customSelectBox';
-import { PARAM_MASTER } from 'constants/paramMaster';
-import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { ModalButtons } from 'components/common/Button';
 
 import styles from 'assets/sass/app.module.scss';
 
 export const AdvancedSearchFrom = (props) => {
-    const { setAdvanceSearchVisible, typeData, handleResetFilter } = props;
+    const { setAdvanceSearchVisible, handleResetFilter } = props;
     const {
         filterString,
         setFilterString,
@@ -43,10 +40,6 @@ export const AdvancedSearchFrom = (props) => {
         setAdvanceSearchVisible(false);
     };
 
-    const onFinishFailed = () => {
-        return;
-    };
-
     const modalProps = {
         reset: true,
         submit: true,
@@ -64,7 +57,7 @@ export const AdvancedSearchFrom = (props) => {
     };
 
     return (
-        <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="Request From Date" name="fromDate" rules={[validateRequiredSelectField('From Date')]} className={styles?.datePicker}>

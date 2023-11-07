@@ -9,7 +9,7 @@ phases:
             - npm i --force
     build:
         commands:
-            - npm run build .env.development
+            - npm run build
     post_build:
         commands:
             - echo Build completed on `date`

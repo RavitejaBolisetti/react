@@ -139,13 +139,6 @@ const AddEditFormMain = (props) => {
                         <AMCForm {...commonProps} />
                     </Panel>
                 </Collapse>
-
-                {/* <Collapse onChange={() => handleCollapse('FMS')} expandIcon={expandIcon} activeKey={openAccordian} expandIconPosition="end">
-                    <Panel header={headerPropsFn(OTF_ADDON_SECTION?.FMS?.headerText, OTF_ADDON_SECTION?.FMS?.dataKey, OTF_ADDON_SECTION?.FMS?.openKey, OTF_ADDON_SECTION?.FMS?.types)} key="FMS">
-                        <Divider />
-                        <FMSForm {...commonProps} />
-                    </Panel>
-                </Collapse> */}
             </Col>
         </Row>
     );

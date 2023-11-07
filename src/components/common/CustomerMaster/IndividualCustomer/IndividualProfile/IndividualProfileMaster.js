@@ -226,8 +226,6 @@ const IndividualProfileBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {};
-
     const handleOnClick = () => {
         const extraParams = [
             {
@@ -255,7 +253,6 @@ const IndividualProfileBase = (props) => {
         formActionType,
         setFormActionType,
         onFinish,
-        onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
         buttonData,
@@ -311,7 +308,7 @@ const IndividualProfileBase = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <h2>{section?.title} </h2>

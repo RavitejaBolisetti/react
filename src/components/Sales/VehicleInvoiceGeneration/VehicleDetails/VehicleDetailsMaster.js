@@ -99,8 +99,8 @@ const VehicleDetailsMasterMain = (props) => {
     const [isReadOnly, setIsReadOnly] = useState();
     const [productHierarchyData, setProductHierarchyData] = useState([]);
 
-    const onSuccessAction = (res) => {
-        //showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+    const onSuccessAction = () => {
+        return;
     };
 
     const onErrorAction = (message) => {
@@ -274,12 +274,6 @@ const VehicleDetailsMasterMain = (props) => {
             saveData(requestData);
         }
     };
-    const onFinishFailed = () => {
-        form.validateFields()
-            .then(() => {})
-            .catch(() => {});
-    };
-
     const formProps = {
         ...props,
         formData,
@@ -299,7 +293,6 @@ const VehicleDetailsMasterMain = (props) => {
         onErrorAction,
         form,
         onFinish,
-        onFinishFailed,
         openAccordian,
         setOpenAccordian,
         isReadOnly,
@@ -341,7 +334,7 @@ const VehicleDetailsMasterMain = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed} data-testid="logRole">
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} data-testid="logRole">
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

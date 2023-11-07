@@ -9,19 +9,19 @@ import { withDrawer } from 'components/withDrawer';
 import { validateRequiredInputField, validateOnlyPositiveNumber, valueBetween0to100 } from 'utils/validation';
 
 import { OnRoadPriceFormButton } from './OnRoadPriceFormButton';
-import { dateFormat } from 'utils/formatDateTime';
+import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import styles from 'assets/sass/app.module.scss';
 const AddEditFormMain = (props) => {
-    const { buttonData, setButtonData, onFinishFailed, vehiclePrice, saveData } = props;
+    const { buttonData, setButtonData, vehiclePrice, saveData, isLoading } = props;
     const { form, isReadOnly = true, userId, listShowLoading, handleButtonClick, setIsFormVisible, showGlobalNotification } = props;
     const disabledProps = { disabled: isReadOnly };
 
     useEffect(() => {
         if (vehiclePrice) {
-            form.setFieldsValue({ ...vehiclePrice });
+            form.setFieldsValue({ ...vehiclePrice, currentExShowroomDate: formattedCalendarDate(vehiclePrice?.currentExShowroomDate) });
         }
-    }, [vehiclePrice]);
+    }, [vehiclePrice, isLoading, form]);
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -53,7 +53,7 @@ const AddEditFormMain = (props) => {
         saveData(requestData);
     };
     return (
-        <Form form={form} layout="vertical" autocomplete="off" colon="false" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form form={form} layout="vertical" autocomplete="off" colon="false" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBody}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <Row gutter={20}>
@@ -119,7 +119,6 @@ const AddEditFormMain = (props) => {
                                 <Input maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
-
 
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
                             <Form.Item name="basicOnRoadPrice" label="Basic on Road Price" initialValue={vehiclePrice?.basicOnRoadPrice}>

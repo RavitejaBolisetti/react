@@ -14,7 +14,7 @@ import { SearchBox } from 'components/utils/SearchBox';
 import styles from 'assets/sass/app.module.scss';
 
 export default function AppliedAdvanceFilter(props) {
-    const { showAddButton = true, advanceFilter = false, title, handleButtonClick, filterString, extraParams, removeFilter, handleResetFilter, setAdvanceSearchVisible, setFilterString, vpoFilter = false, typeData } = props;
+    const { showAddButton = true, advanceFilter = false, title, handleButtonClick, filterString, extraParams, removeFilter, handleResetFilter, setAdvanceSearchVisible, setFilterString, vpoFilter = false } = props;
     const [searchForm] = Form.useForm();
 
     const searchBoxProps = {

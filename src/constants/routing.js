@@ -5,6 +5,8 @@
  */
 export const ROUTING_HOME = '/';
 
+export const PAGE_NOT_FOUND = '*';
+
 export const ROUTING_SSO_LOGIN = '/adidaccess';
 
 export const ROUTING_LOGIN = '/login';
@@ -12,7 +14,7 @@ export const ROUTING_FORGOT_PASSWORD = '/forgot-password';
 export const ROUTING_UPDATE_PASSWORD = '/update-password';
 
 export const ROUTING_DASHBOARD = '/dashboard';
-export const ROUTING_DASHBOARD_NEW = '/dashboard-new';
+export const ROUTING_DASHBOARD_OLD = '/dashboard-old';
 
 export const ROUTING_COMMON = '/common/';
 export const ROUTING_MILE = '/mile/';
@@ -91,7 +93,7 @@ export const ROUTING_ADMIN = '/admin/';
 export const ROUTING_ADMIN_USER_MANAGEMENT = ROUTING_ADMIN.concat('user-management/');
 export const ROUTING_USER_MANAGEMENT_DEALER = ROUTING_ADMIN_USER_MANAGEMENT.concat('dealer');
 export const ROUTING_USER_MANAGEMENT_MANUFACTURER = ROUTING_ADMIN_USER_MANAGEMENT.concat('manufacturer');
-export const ROUTING_OTF = ROUTING_SALES.concat('booking-form');
+export const ROUTING_OTF = ROUTING_SALES.concat('booking-management');
 export const ROUTING_VECHILE_PURCHASE_ORDER = ROUTING_SALES.concat('vehicle-purchase-order');
 export const ROUTING_RSM_APPROVAL = ROUTING_SALES.concat('rsm-approval');
 export const ROUTING_DELIVERY_NOTE_INVOICE_CANELLATION = ROUTING_SALES.concat('delivery-note-invoice-cancellation');
@@ -132,5 +134,9 @@ export const ROUTING_AMC_REGISTRATION = ROUTING_SALES.concat('amc-registration')
 export const ROUTING_RSM_ASM_APPROVAL = ROUTING_SALES.concat('rsm-asm-approval');
 export const ROUTING_EVR_DETAILS_CAPTURING = ROUTING_SALES.concat('evr-details-capturing');
 
+export const ROUTING_SERVICES = '/services/';
+export const ROUTING_SHIELD_SCHEME_REGISTER = ROUTING_SERVICES.concat('shield-scheme-registration');
+
 export const ROUTING_VIN_BLOCK_MASTER = ROUTING_SALES.concat('vin-block-master');
 export const ROUTING_GST_IRN_TRANSACTION = ROUTING_FINANCIAL_ACCOUNTING.concat('gst-irn-transaction');
+export const ROUTING_RSA_REGISTRATION = ROUTING_SALES.concat('rsa-registration');

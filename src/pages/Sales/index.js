@@ -35,6 +35,7 @@ import VinBlockMasterPage from './VinBlockMaster';
 import VehicleChecklistMasterPage from './VehicleChecklistMaster';
 import AMCRegistrationMasterPage from './AMCRegistration';
 import RsmAsmApprovalPage from './RsmAsmApproval';
+import RSARegistrationPage from './RSARegistration';
 
 export {
     OTFMasterPage,
@@ -64,5 +65,6 @@ export {
     VehicleChecklistMasterPage,
     RsmAsmApprovalPage,
     ChargerInstallationPage,
-    AMCRegistrationMasterPage
+    AMCRegistrationMasterPage,
+    RSARegistrationPage,
 };

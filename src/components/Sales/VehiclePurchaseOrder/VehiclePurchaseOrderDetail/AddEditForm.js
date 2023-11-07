@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Input, Form, DatePicker, InputNumber } from 'antd';
+import { Row, Col, Input, Form, DatePicker, InputNumber, Select } from 'antd';
 
 import { withDrawer } from 'components/withDrawer';
 import { validateRequiredSelectField, validateOnlyPositiveNumber } from 'utils/validation';
@@ -14,12 +14,13 @@ import { ViewDetail } from './ViewDetail';
 import { disablePastDate } from 'utils/disableDate';
 import { customSelectBox } from 'utils/customSelectBox';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { PURCHASE_ORDER_TYPE_STATUS } from 'constants/PurchaseOrderTypeStatus';
 
 import styles from 'assets/sass/app.module.scss';
-
+const { Option } = Select;
 const { Search } = Input;
 const AddEditFormMain = (props) => {
-    const { buttonData, setButtonData, formActionType, onFinish, onFinishFailed, productHierarchyList, getDealerlocation, setDealerLocation, dealerLocation } = props;
+    const { buttonData, setButtonData, formActionType, onFinish, productHierarchyList, getDealerlocation, setDealerLocation, dealerLocation } = props;
     const { form, formData, typeData, isReadOnly = true } = props;
     const disabledProps = { disabled: isReadOnly };
     const [dealerFlag, setDealerFlag] = useState();
@@ -33,7 +34,6 @@ const AddEditFormMain = (props) => {
     };
 
     const handleChangeOrderType = (value) => {
-        
         if (value === 'CDLR') {
             setDealerFlag(value);
         } else {
@@ -48,21 +48,33 @@ const AddEditFormMain = (props) => {
 
     const handleOnClear = (e) => {
         if (!e.target.value) {
-            // form.resetFields();
             setDealerLocation(undefined);
         }
     };
-
+    const selectProps = {
+        optionFilterProp: 'children',
+        showSearch: true,
+        allowClear: true,
+    };
     return (
-        <Form form={form} layout="vertical" autocomplete="off" colon="false" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form form={form} layout="vertical" autocomplete="off" colon="false" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBody}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     {!formActionType?.viewMode ? (
                         <>
                             <Row gutter={20}>
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                                {/* <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                                     <Form.Item name="orderTypeCode" label="Order Type" initialValue={formData?.orderTypeCode} rules={[validateRequiredSelectField('Order Type')]}>
                                         {customSelectBox({ data: typeData['PO_TYPE'], fieldNames: { key: 'key', value: 'value' }, onChange: handleChangeOrderType })}
+                                    </Form.Item>
+                                </Col> */}
+                                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                                    <Form.Item label="Order Type" initialValue={formData?.orderTypeCode || PURCHASE_ORDER_TYPE_STATUS.AGAINSTSTOCK.key} name="orderTypeCode" rules={[validateRequiredSelectField('Order Type')]}>
+                                        <Select placeholder="Select" {...selectProps} {...disabledProps}>
+                                            {typeData['PO_TYPE']?.map((item) => (
+                                                <Option value={item?.key}>{item?.value}</Option>
+                                            ))}
+                                        </Select>
                                     </Form.Item>
                                 </Col>
                             </Row>

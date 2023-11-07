@@ -17,7 +17,6 @@ import { stockTransferIndent } from 'store/actions/data/sales/stockTransfer/Stoc
 import { StockIndentIssueDataAction } from 'store/actions/data/sales/stockTransfer';
 import { DealerBranchLocationDataActions } from 'store/actions/data/userManagement/dealerBranchLocation';
 import { otfvehicleDetailsLovDataActions } from 'store/actions/data/otf/vehicleDetailsLov';
-import { vehicleDetailDataActions } from 'store/actions/data/vehicle/vehicleDetail';
 import { vehicleAllotment } from 'store/actions/data/vehicleAllotment/VehicleAllotment';
 
 import { reportDataActions } from 'store/actions/data/report/reports';
@@ -43,7 +42,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         common: {
             Header: {
-                data: { dealerLocations: dealerLocations = [], parentGroupCode },
+                data: { dealerLocations = [], parentGroupCode },
             },
         },
         data: {
@@ -58,9 +57,6 @@ const mapStateToProps = (state) => {
             OTF: {
                 VehicleDetailsLov: { filteredListData: productHierarchyData },
             },
-            // Vehicle: {
-            //     VehicleDetail: { data: vehicleVinData, isLoading: vehicleVinDataLoading = false },
-            // },
             Report: {
                 Reports: { data: reportData },
             },
@@ -71,6 +67,7 @@ const mapStateToProps = (state) => {
     } = state;
 
     let returnValue = {
+        DEFAULT_PAGINATION: { pageSize: 10, current: 1 },
         userId,
         dealerLocations,
         typeData,
@@ -110,12 +107,9 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: stockTransferIndent.listShowLoading,
             fetchIndentList: stockTransferIndent.fetchList,
             fetchIndentDetails: stockTransferIndent.fetchDetail,
-            setFilterString: stockTransferIndent.setFilter,
+            // setFilterString: stockTransferIndent.setFilter,
             resetData: stockTransferIndent.reset,
             saveData: stockTransferIndent.saveData,
-
-            // fetchVinDetails: vehicleDetailDataActions.fetchList,
-            // resetVinDetails: vehicleDetailDataActions.reset,
             fetchVinDetails: vehicleAllotment.fetchList,
             resetVinDetails: vehicleAllotment.reset,
 
@@ -135,7 +129,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const StockTransferIndentMasterBase = (props) => {
-    const { data, filterString, setFilterString, resetData, isFetchDataLoading, fetchReportDetail, dealerLocations } = props;
+    const { data, DEFAULT_PAGINATION, resetData, isFetchDataLoading, dealerLocations } = props;
     const { userId, typeData, parentGroupCode, showGlobalNotification } = props;
     const { indentLocationList, requestedByDealerList, productHierarchyData, isLoadingDealerLoc } = props;
     const { fetchIndentList, fetchIndentLocation, fetchIndentDetails, fetchRequestedByList, listShowLoading, saveData, ProductLovLoading, fetchProductLov, fetchVinDetails, vehicleVinData, saveIssueDetail, resetVinDetails, fetchIssueList, resetIssueList, listIssueLoading } = props;
@@ -155,7 +149,7 @@ export const StockTransferIndentMasterBase = (props) => {
     const [tableDataItem, setTableDataItem] = useState([]);
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [showVinLoading, setshowVinLoading] = useState(false);
-    const [page, setPage] = useState({ pageSize: 10, current: 1 });
+    const [filterString, setFilterString] = useState(DEFAULT_PAGINATION);
     const [additionalReportParams, setAdditionalReportParams] = useState();
     const [isReportVisible, setReportVisible] = useState();
     const [selectedRecord, setSelectedRecord] = useState();
@@ -186,7 +180,6 @@ export const StockTransferIndentMasterBase = (props) => {
     const onSuccessAction = (res) => {
         setshowVinLoading(false);
         setShowDataLoading(false);
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
     const onErrorAction = (message) => {
@@ -196,9 +189,9 @@ export const StockTransferIndentMasterBase = (props) => {
     };
 
     useEffect(() => {
-        setPage({ ...page, current: 1 });
+        setFilterString(DEFAULT_PAGINATION);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, toggleButton]);
+    }, [toggleButton]);
 
     useEffect(() => {
         return () => {
@@ -240,13 +233,12 @@ export const StockTransferIndentMasterBase = (props) => {
     }, [userId, refershIndentData, selectedRecord]);
 
     const extraParams = useMemo(() => {
-        const defaultPage = defaultPageProps(page);
+        const defaultPage = defaultPageProps(filterString);
         return [
             {
                 key: 'searchType',
                 title: 'Type',
-                value: 'status', //filterString?.searchType,
-                //name: typeData?.[PARAM_MASTER.INDNT_TYP.id]?.find((i) => i?.key === toggleButton)?.value,
+                value: 'status',
                 canRemove: false,
                 filter: false,
             },
@@ -293,7 +285,7 @@ export const StockTransferIndentMasterBase = (props) => {
             ...defaultPage,
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [page, filterString]);
+    }, [filterString]);
 
     useEffect(() => {
         if (userId) {
@@ -302,12 +294,7 @@ export const StockTransferIndentMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, extraParams, defaultDealerLocationCode]);
-
-    const onFinishFailed = (errorInfo) => {
-        return;
-    };
-
-    const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
+    const handleButtonClick = ({ record = null, buttonAction }) => {
         switch (buttonAction) {
             case ADD_ACTION:
                 break;
@@ -521,8 +508,7 @@ export const StockTransferIndentMasterBase = (props) => {
         dynamicPagination,
         filterString,
         totalRecords: data?.totalRecords,
-        page,
-        setPage,
+        setPage: setFilterString,
         isLoading: showDataLoading,
         tableColumn: tableColumn(handleButtonClick, toggleButton),
         tableData: data?.paginationData,
@@ -538,7 +524,6 @@ export const StockTransferIndentMasterBase = (props) => {
         setFilterString,
         toggleButton,
         setToggleButton,
-        onFinishFailed,
         handleResetFilter,
         setAdvanceSearchVisible,
         searchForm,

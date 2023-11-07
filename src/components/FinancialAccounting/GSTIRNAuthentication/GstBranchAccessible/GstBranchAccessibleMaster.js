@@ -50,8 +50,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const GstBranchAccessibleMasterBase = (props) => {
     const { userId, showGlobalNotification, section, fetchList, listShowLoading } = props;
-    const { form, handleFormValueChange, handleButtonClick, dealerBranchData } = props;
-    // const {NEXT_ACTION, nextBtn} = props;
+    const { form, handleFormValueChange, dealerBranchData } = props;
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
@@ -60,6 +59,7 @@ const GstBranchAccessibleMasterBase = (props) => {
         if (userId) {
             fetchList({ setIsLoading: listShowLoading, userId, onErrorAction });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
     const dealerBranchArray = [];
     dealerBranchData.forEach((item) => {
@@ -70,7 +70,7 @@ const GstBranchAccessibleMasterBase = (props) => {
     });
 
     const tableProps = {
-        tableColumn: tableColumn(handleButtonClick),
+        tableColumn: tableColumn(),
         tableData: dealerBranchArray, // dealerBranchData,
         showAddButton: false,
     };
@@ -83,7 +83,6 @@ const GstBranchAccessibleMasterBase = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                     </Row>
-                    {/* isLoading={showDataLoading} */}
                     <ListDataTable {...tableProps} showAddButton={false} />
                 </Col>
             </Row>

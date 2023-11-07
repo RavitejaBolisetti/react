@@ -16,44 +16,53 @@ import styles from 'assets/sass/app.module.scss';
 const CustomerDetailsMasterBase = (props) => {
     const { typeData, selectedOrderId } = props;
     const { userId, buttonData, setButtonData, section, isDataLoaded, isLoading } = props;
-    const { otfData, form, fetchCustomerList, formActionType, selectedOtfNumber, setSelectedOtfNumber, handleFormValueChange } = props;
+    const { otfData, form, fetchCustomerList, formActionType, selectedOtfNumber, setSelectedOtfNumber, showGlobalNotification } = props;
     const { FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch } = props;
-    
     const [isReadOnly, setIsReadOnly] = useState(false);
-    const [activeKey, setActiveKey] = useState([3]);
     const disabledProps = { disabled: isReadOnly };
-    console.log('requestPayload in customer',requestPayload);
     useEffect(() => {
-        if (formActionType?.addMode && requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.DMFOC?.key) {
-            form.setFieldsValue({ customerCode: otfData?.otfDetails[0]?.customerId });
-            handleCustomerSearch();
-            setIsReadOnly(true);
+        if (formActionType?.addMode) {
+            if (requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.MNM_FOC?.key) {
+                form.setFieldsValue({ customerCode: otfData?.otfDetails[0]?.customerId });
+                setIsReadOnly(true);
+                setButtonData({ ...buttonData, formBtnActive: true });
+                handleCustomerSearch(otfData?.otfDetails[0]?.customerId);
+            } else {
+                handleCustomerSearch(form.getFieldValue('customerCode') || requestPayload?.amcCustomerDetails?.customerCode);
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formActionType]);
+    }, [formActionType, section]);
 
-    const handleCustomerSearch = () => {
-        const extraParams = [
-            {
-                key: 'customerId',
-                title: 'customerId',
-                value: form.getFieldValue('customerCode'),
-                name: 'Customer ID',
-            },
-        ];
-        fetchCustomerList({
-            customURL,
-            setIsLoading: () => {},
-            extraParams,
-            userId,
-            onSuccessAction: (response) => {
-                form.setFieldsValue({ ...response?.data, customerAddress: response?.data?.address, customerCity: response?.data?.city, customerPhoneNumber: response?.data?.mobileNumber });
-            },
-            onErrorAction: () => {},
-        });
+    const handleCustomerSearch = (value) => {
+        if (!value) {
+            return false;
+        } else {
+            const extraParams = [
+                {
+                    key: 'customerId',
+                    title: 'customerId',
+                    value: form.getFieldValue('customerCode'),
+                    name: 'Customer ID',
+                },
+            ];
+            fetchCustomerList({
+                customURL,
+                setIsLoading: () => {},
+                extraParams,
+                userId,
+                onSuccessAction: (response) => {
+                    form.setFieldsValue({ ...response?.data, customerAddress: response?.data?.address, customerCity: response?.data?.city, customerPhoneNumber: response?.data?.mobileNumber });
+                    setButtonData({ ...buttonData, formBtnActive: true });
+                },
+                onErrorAction: (message) => {
+                    showGlobalNotification({ message });
+                },
+            });
+        }
     };
 
-    const handleChange = (e) => {
+    const handleChange = () => {
         setButtonData({ ...buttonData, formBtnActive: false });
     };
 
@@ -63,7 +72,12 @@ const CustomerDetailsMasterBase = (props) => {
         setButtonData({ ...buttonData, formBtnActive: false });
     };
 
-    const onFinishFailed = () => {};
+    const handleCustomerChange = (e) => {
+        if (!e?.target?.value) {
+            form.resetFields();
+        }
+        setButtonData({ ...buttonData, formBtnActive: false });
+    };
 
     const formProps = {
         ...props,
@@ -74,8 +88,6 @@ const CustomerDetailsMasterBase = (props) => {
         userId,
         isDataLoaded,
         isLoading,
-        setActiveKey,
-        activeKey,
         selectedOtfNumber,
         setSelectedOtfNumber,
         wrapForm: false,
@@ -84,6 +96,7 @@ const CustomerDetailsMasterBase = (props) => {
         styles,
         handleCustomerSearch,
         disabledProps,
+        handleCustomerChange,
     };
 
     const viewProps = {
@@ -97,7 +110,7 @@ const CustomerDetailsMasterBase = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

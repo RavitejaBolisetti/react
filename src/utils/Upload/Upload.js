@@ -15,7 +15,6 @@ import { HiCheck } from 'react-icons/hi';
 import { UploadBoxIcon } from 'Icons';
 
 import styles from './UploadUtil.module.scss';
-//import styles from './UploadUtil.module.css';
 
 const { Dragger } = Upload;
 const { Text, Title } = Typography;
@@ -111,7 +110,7 @@ const UploadBase = (props) => {
         setUploadedFileInformation = undefined,
         tempFileName = undefined,
         undefinedType = false,
-        draggerDisable
+        draggerDisable,
     } = props;
 
     const [showStatus, setShowStatus] = useState('');
@@ -119,6 +118,7 @@ const UploadBase = (props) => {
     const [isReplacing, setIsReplacing] = useState(false);
     const [base64Img, setBase64Img] = useState('');
     const [uploadTime, setUploadTime] = useState(false);
+    
 
     const removeIcon = uploadTime ? <AiOutlineCloseCircle className={styles.iconSize} /> : <AiOutlineClose className={styles.iconSize} />;
 
@@ -130,10 +130,6 @@ const UploadBase = (props) => {
         e.stopPropagation();
         setIsReplacing(false);
     };
-    // const formValues = form.getFieldsValue();
-    // useEffect(() => {
-    //     setUploadTime(false);
-    // }, [formValues]);
 
     useEffect(() => {
         if (isReplaceEnabled && viewDocument?.base64) {
@@ -162,8 +158,6 @@ const UploadBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [uploadedFile]);
 
-    const onDrop = (e) => {};
-
     const onDownload = (file) => {
         const onSuccessAction = (res) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage || 'Your download will start soon' });
@@ -178,27 +172,35 @@ const UploadBase = (props) => {
         ];
         downloadFile({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction });
     };
-
+    const isDoubleExtension = (fileName) => {
+        const parts = fileName?.split('.');
+        return parts?.length > 2;
+    };
     const uploadProps = {
         beforeUpload: (file) => {
             if (supportingDocs) {
                 setMandatoryFields(true);
             }
             const fileSize = file.size / 1024 / 1024;
-
-            const isValid = supportedFileTypes.find((element) => element === file.type) || (file.type === '' && undefinedType);
-            if (supportedFileTypes?.length === 0) {
-                return true;
-            } else if (fileSize > maxSize) {
-                showGlobalNotification({ notificationType: 'error', title: 'Error', message: `Please upload file under ${maxSize} Mb`, placement: 'bottomRight' });
-                setUploadTime(false);
-                return Upload.LIST_IGNORE;
+            if (isDoubleExtension(file.name) === true) {
+                alert('Double extensions are not allowed');
+                return false;
             } else {
-                if (!isValid) {
-                    showGlobalNotification({ notificationType: 'error', title: 'Error', message: `${file.name} is not in accepted format`, placement: 'bottomRight' });
+                const isValid = supportedFileTypes.find((element) => element === file.type) || (file.type === '' && undefinedType);
+
+                if (supportedFileTypes?.length === 0) {
+                    return true;
+                } else if (fileSize > maxSize) {
+                    showGlobalNotification({ notificationType: 'error', title: 'Error', message: `Please upload file under ${maxSize} Mb`, placement: 'bottomRight' });
                     setUploadTime(false);
+                    return Upload.LIST_IGNORE;
+                } else {
+                    if (!isValid) {
+                        showGlobalNotification({ notificationType: 'error', title: 'Error', message: `${file.name} is not in accepted format`, placement: 'bottomRight' });
+                        setUploadTime(false);
+                    }
+                    return isValid || Upload.LIST_IGNORE;
                 }
-                return isValid || Upload.LIST_IGNORE;
             }
         },
         multiple,
@@ -215,9 +217,9 @@ const UploadBase = (props) => {
         },
         onRemove,
         progress: { strokeWidth: 3, showInfo: true, format: (percent) => percent && `${parseFloat(percent.toFixed(2))}%` },
-        onDrop,
         onChange: (info) => {
             let fileList = [...info.fileList];
+            if (isDoubleExtension(info?.file?.name)) return false;
             if (supportingDocs) {
                 form.validateFields()
                     .then(() => {
@@ -336,8 +338,7 @@ const UploadBase = (props) => {
                     </>
                 ) : (
                     <>
-                     
-                        <Dragger key={key} className={(fileList?.length === 0 ? '' : uploadTime ? styles.uploadDraggerStrip : styles.uploadDraggerBox)} fileList={fileList} customRequest={handleUpload} {...uploadProps} disabled = { draggerDisable ? draggerDisable : false}>
+                        <Dragger key={key} className={fileList?.length === 0 ? '' : uploadTime ? styles.uploadDraggerStrip : styles.uploadDraggerBox} fileList={fileList} customRequest={handleUpload} {...uploadProps} disabled={draggerDisable ? draggerDisable : false}>
                             <Space direction="vertical">
                                 <UploadBoxIcon />
                                 <div>

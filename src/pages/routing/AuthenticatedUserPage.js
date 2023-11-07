@@ -5,7 +5,7 @@
  */
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { DashboardNewPage, DashboardPage } from 'pages/dashboard';
+import { DashboardPage } from 'pages/dashboard';
 import * as routing from 'constants/routing';
 
 import {
@@ -71,15 +71,17 @@ import {
     RsmAsmApprovalPage,
     ChargerInstallationPage,
     AMCRegistrationMasterPage,
+    RSARegistrationPage,
 } from 'pages/Sales';
+
+import { ShieldSchemeRegistrationPage } from 'pages/Services';
+
+import { PageNotFound } from 'components/PageNotFound';
 
 import { SplashPage } from 'pages/splash';
 import { ProfilePage, SettingPage, FaqPage, TrainingPage } from 'pages/user';
-import { BiReportPage } from 'pages/report/BiReport/BiReportPage';
-import { PaginatedReportPage } from 'pages/report/PaginatedReport/PaginatedReportPage';
 import { EmbeddedReportPage } from 'pages/report/EmbeddedReport/EmbeddedReportPage';
 import { EmbeddedDocumentPage } from 'pages/report/EmbeddedDocument/EmbeddedDocumentPage';
-import { URLFilterReportPage } from 'pages/report/URLFilterReport/URLFilterReportPage';
 
 import { CMSPage } from 'pages/cms';
 import { DealerCompanyPage } from 'pages/common/Dealer';
@@ -88,8 +90,8 @@ export const AuthenticatedUserPage = () => {
     return (
         <Routes>
             <Route path={routing.ROUTING_HOME} element={<SplashPage />} exact />
+            {/* <Route path={routing.ROUTING_DASHBOARD_OLD} element={<DashboardOldPage />} /> */}
             <Route path={routing.ROUTING_DASHBOARD} element={<DashboardPage />} />
-            <Route path={routing.ROUTING_DASHBOARD_NEW} element={<DashboardNewPage />} />
 
             <Route path={routing.ROUTING_COMMON_MANUFACTURER_ORGANIZATION_HIERARCHY} element={<ManufacturerOrgHierarchyPage />} />
             <Route path={routing.ROUTING_COMMON_PRODUCT_HIERARCHY} element={<ProductHierarchyPage />} />
@@ -130,11 +132,8 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_USER_SETTING} element={<SettingPage />} exact />
             <Route path={routing.ROUTING_USER_FAQ} element={<FaqPage />} exact />
 
-            <Route path={routing.ROUTING_REPORT_BI_REPORT} element={<BiReportPage />} exact />
-            <Route path={routing.ROUTING_REPORT_PAGINATED_REPORT} element={<PaginatedReportPage />} exact />
             <Route path={routing.ROUTING_REPORT_EMBEDDED_REPORT} element={<EmbeddedReportPage />} exact />
             <Route path={routing.ROUTING_REPORT_EMBEDDED_DOCUMENT} element={<EmbeddedDocumentPage />} exact />
-            <Route path={routing.ROUTING_REPORT_URL_FILTER_REPORT} element={<URLFilterReportPage />} exact />
 
             <Route path={routing.ROUTING_USER_SETTING} element={<SettingPage />} exact />
             <Route path={routing.ROUTING_USER_FAQ} element={<FaqPage />} exact />
@@ -183,6 +182,9 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_HO_PRICE_MAPPING} element={<HoPriceMappingMasterPage />} exact />
             <Route path={routing.ROUTING_EVR_DETAILS_CAPTURING} element={<EvrDetailsCapturingMasterPage />} exact />
             <Route path={routing.STOCK_TRANSFER_INDENT} element={<StockTransferIndentMasterPage />} exact />
+
+            <Route path={routing.ROUTING_SHIELD_SCHEME_REGISTER} element={<ShieldSchemeRegistrationPage />} exact />
+            <Route path={routing.ROUTING_RSM_ASM_APPROVAL} element={<RsmAsmApprovalPage />} exact />
             <Route path={routing.ROUTING_AMC_REGISTRATION} element={<AMCRegistrationMasterPage />} exact />
 
             <Route path={routing.ROUTING_RSM_ASM_APPROVAL} element={<RsmAsmApprovalPage />} exact />
@@ -190,6 +192,8 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_VIN_BLOCK_MASTER} element={<VinBlockMasterPage />} exact />
             <Route path={routing.ROUTING_VEHICLE_CHECKLIST_MASTER} element={<VehicleChecklistMasterPage />} exact />
             <Route path={routing.ROUTING_RSM_ASM_APPROVAL} element={<RsmAsmApprovalPage />} exact />
+            <Route path={routing.ROUTING_RSA_REGISTRATION} element={<RSARegistrationPage />} exact />
+            <Route path={routing.PAGE_NOT_FOUND} element={<PageNotFound />} exact />
         </Routes>
     );
 };

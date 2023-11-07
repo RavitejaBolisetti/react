@@ -41,10 +41,6 @@ export const AdvancedSearchFrom = (props) => {
         setFilteredCityData([]);
     };
 
-    const onFinishFailed = () => {
-        return;
-    };
-
     const selectProps = {
         optionFilterProp: 'children',
         showSearch: true,
@@ -52,7 +48,7 @@ export const AdvancedSearchFrom = (props) => {
     };
 
     return (
-        <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item label="State" initialValue={filterString?.stateCode} name="stateCode" rules={[validateRequiredSelectField('state')]}>

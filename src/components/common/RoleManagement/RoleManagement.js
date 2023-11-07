@@ -62,7 +62,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const RoleManagementMain = (props) => {
-    const { fetchList, userId, isDataLoaded, listShowLoading,isDataLoading, showGlobalNotification, roleManagementData, fetchMenuList } = props;
+    const { fetchList, userId, isDataLoaded, listShowLoading, isDataLoading, showGlobalNotification, roleManagementData, fetchMenuList } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
 
@@ -144,15 +144,15 @@ export const RoleManagementMain = (props) => {
 
     const onSearchHandle = (value) => {
         if (value?.trim()?.length >= 3) {
-            setFilterString({ ...filterString, advanceFilter: false, keyword: value });
+            setFilterString({ ...filterString, keyword: value });
         }
     };
 
-    const handleResetFilter = (e) => {
-        setFilterString();
-        listFilterForm.resetFields();
-        setShowDataLoading(false);
-    };
+    // const handleResetFilter = () => {
+    //     setFilterString();
+    //     listFilterForm.resetFields();
+    //     setShowDataLoading(false);
+    // };
 
     const handleClearInSearch = (e) => {
         if (e.target.value.length > 2) {
@@ -162,10 +162,6 @@ export const RoleManagementMain = (props) => {
             listFilterForm.resetFields();
             setShowDataLoading(false);
         }
-    };
-
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
     };
 
     const onCloseAction = () => {
@@ -204,7 +200,6 @@ export const RoleManagementMain = (props) => {
 
         formActionType,
         setFormActionType,
-        onFinishFailed,
         buttonData,
 
         setButtonData,
@@ -225,12 +220,11 @@ export const RoleManagementMain = (props) => {
     };
 
     const advanceFilterResultProps = {
-        advanceFilter: false,
-        filterString,
+        //advanceFilter: false,
+        //filterString,
         from: listFilterForm,
-        onFinishFailed,
         onSearchHandle,
-        handleResetFilter,
+        //handleResetFilter,
         handleClearInSearch,
         handleReferesh,
         handleButtonClick,

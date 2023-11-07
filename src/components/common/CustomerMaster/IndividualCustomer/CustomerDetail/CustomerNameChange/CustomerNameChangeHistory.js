@@ -16,6 +16,7 @@ import { tblPrepareColumns } from 'utils/tableColumn';
 import { convertDateTime, dateFormatView, timeFormatView } from 'utils/formatDateTime';
 import { DataTable } from 'utils/dataTable';
 import { BASE_URL_CUSTOMER_MASTER_NAME_CHANGE_HISTORY as customURL } from 'constants/routingApi';
+import { STATUS_CHANGE_HISTORY } from '../statusConstant';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -51,7 +52,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const ChangeHistoryMain = ({ fetchCustomerChangeHistory, onCloseAction, listShowChangeHistoryLoading, customerType, downloadFileFromButton, totalRecords, isChangeHistoryLoading, userId, isChangeHistoryLoaded, changeHistoryData, selectedCustomerId }) => {
+const ChangeHistoryMain = ({ fetchCustomerChangeHistory, onCloseAction, listShowChangeHistoryLoading, customerType, downloadFileFromButton, totalRecords, isChangeHistoryLoading, userId, changeHistoryData, selectedCustomerId }) => {
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
 
@@ -144,6 +145,7 @@ const ChangeHistoryMain = ({ fetchCustomerChangeHistory, onCloseAction, listShow
         tblPrepareColumns({
             title: 'Documents',
             dataIndex: 'supportingDocuments',
+            sorter: false,
             render: () => <img src={IMAGES.FILE} alt="logo-images" onClick={downloadFileFromButton} />,
         }),
 
@@ -151,7 +153,7 @@ const ChangeHistoryMain = ({ fetchCustomerChangeHistory, onCloseAction, listShow
             title: 'Status',
             dataIndex: 'status',
             sorter: (a, b) => (a && b ? String(a['status']).localeCompare(String(b['status']), undefined, { sensitivity: 'base' }) : a),
-            render: (_, record) => (record?.status === 'Approved' ? <Tag color="success">Approved</Tag> : record?.status === 'Rejected' ? <Tag color="error">Rejected</Tag> : <Tag color="warning">Pending</Tag>),
+            render: (_, record) => (record?.status === STATUS_CHANGE_HISTORY.APPROVED.key ? <Tag color="success">Approved</Tag> : record?.status === STATUS_CHANGE_HISTORY.REJECTED.key ? <Tag color="error">Rejected</Tag> : <Tag color="warning">Pending</Tag>),
         }),
     ];
 

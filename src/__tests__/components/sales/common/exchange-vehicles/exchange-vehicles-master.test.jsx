@@ -1,3 +1,4 @@
+/* eslint-disable testing-library/no-wait-for-side-effects */
 /* eslint-disable testing-library/prefer-screen-queries */
 /* eslint-disable testing-library/no-debugging-utils */
 /*
@@ -8,42 +9,45 @@
 
 /* eslint-disable jest/no-mocks-import */
 import React from 'react';
-import { screen, fireEvent, waitFor, render } from '@testing-library/react';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { ExchangeVehiclesMaster } from 'components/Sales/Common/ExchangeVehicles/ExchangeVehiclesMaster';
 import { Provider } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
-import thunk from 'redux-thunk';
-import { rootReducer } from 'store/reducers';
+import createMockStore from '__mocks__/store';
 import { Form, Button } from 'antd';
-
-export const createMockStore = (initialState) => {
-    const mockStore = configureStore({
-        reducer: rootReducer,
-        preloadedState: initialState,
-        middleware: [thunk],
-    });
-
-    return mockStore;
-};
 
 const StatusBar = () => <div>No Status Bar</div>;
 
-const FormActionButton = () => (
+const FormActionButton = ({ onFinish }) => (
     <div>
-        <Button htmlType="submit" type="primary">
+        <Button htmlType="submit" type="primary" onClick={onFinish}>
             Save
         </Button>
     </div>
 );
 
+jest.mock('components/Sales/Common/ExchangeVehicles/AddEditForm', () => {
+    const AddEditForm = ({ handleFilterChange, fnSetData }) => { 
+        return (
+            <div>
+                <button onClick={() => { handleFilterChange('make', 'Kai'); handleFilterChange('make'); fnSetData(); }}>Make</button>
+                <button onClick={() => { handleFilterChange('modelGroup', 'Kai'); handleFilterChange('modelGroup'); fnSetData({data: { make: 'Kai' }}); }}>Modal Group</button>
+                <button onClick={() => { handleFilterChange('Kai', 'Kai'); handleFilterChange('Kai'); fnSetData({data: { name: 'Kai' }}); }}>Default</button>
+            </div>
+        );
+    };
+    return {
+        __esModule: true,
+        AddEditForm,
+    };
+});
+
+
 const FormWrapper = (props) => {
     const [form] = Form.useForm();
-    const extractDataFromXML = jest.fn(() => ({ exchange: true }));
     const myMock = {
         ...form,
-        getFieldValue: extractDataFromXML.mockReturnValue({ exchange: true }),
     };
 
     return <ExchangeVehiclesMaster form={myMock} {...props} />;
@@ -53,54 +57,10 @@ jest.mock('store/actions/data/otf/exchangeVehicle', () => ({
     schemeDataActions: {},
 }));
 
-jest.mock('store/actions/data/productHierarchy', () => ({
-    productHierarchyDataActions: {},
-}));
+const exchangeData = { exchange: 1 };
 
 describe('Exchange vehicles master component render', () => {
-    const exchangeData = [
-        {
-            customerExpectedPrice: '850000',
-            customerId: null,
-            customerName: 'MEGHANA BHAVIN SHAH',
-            exchange: 1,
-            hypothicatedTo: 'AKASA FINELEASE',
-            hypothicatedToCode: '182',
-            id: '19a19b45-bd5a-4d52-8a0d-b4ec29b4d21d',
-            kilometer: '80',
-            make: 'Mahindra',
-            modelGroup: 'Thar',
-            monthOfRegistration: 'JUNE',
-            monthOfRegistrationCode: '6',
-            oldChessisNumber: 'P6C15747',
-            oldRegistrationNumber: 'MH01EK6300',
-            otfNumber: 'OTF24D000520',
-            procurementPrice: '900000',
-            relationship: 'Others',
-            relationshipCode: 'RELOT',
-            schemeAmount: '8000.0',
-            schemeCode: null,
-            schemeName: 'DISCOUNT ON  INSURANCE ',
-            usage: 'Family',
-            usageCode: 'F',
-            variant: 'Thar4x4',
-            yearOfRegistration: '2018',
-            yearOfRegistrationCode: '2018',
-        },
-    ];
-    it('Should render exchange vehicle master components', () => {
-        const formData = { exchange: 1, id: 1 };
-        const formActionType = { editMode: true, viewMode: false };
-        const filteredModelData = [
-            { key: 'HN3', parentKey: 'HN', value: 'Accord' },
-            { key: 'HN2', parentKey: 'HN1', value: 'Accord1' },
-        ];
-
-        const props = {
-            formActionType: formActionType,
-            formDatar: formData,
-        };
-
+    it('save button should work', async () => {
         const mockStore = createMockStore({
             auth: { userId: 123 },
             data: {
@@ -110,68 +70,45 @@ describe('Exchange vehicles master component render', () => {
             },
         });
 
+        const exchangeDataPass={ make: 'MM', modelGroup: 'MG' };
+        const saveData=jest.fn();
+
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper filteredModelData={filteredModelData} fetchProductLovCode={jest.fn()} fetchCustomerList={jest.fn()} setFormData={jest.fn()} resetData={jest.fn()} fieldNames={{ label: 'value', value: 'key' }} handleFilterChange={jest.fn()} {...props} StatusBar={StatusBar} FormActionButton={FormActionButton} />
+                <FormWrapper StatusBar={StatusBar} FormActionButton={FormActionButton} resetData={jest.fn()} salesModuleType={"otf"} setButtonData={jest.fn()} exchangeDataPass={exchangeDataPass} selectedRecordId={106} fetchList={jest.fn()} saveData={saveData} handleButtonClick={jest.fn()} selectedOrder={{modelCode: 106}} formActionType={{viewMode: true}} />
             </Provider>
         );
 
-        const switchBtn = screen.getByRole('switch', { name: 'Exchange' });
-        fireEvent.click(switchBtn);
-        expect(switchBtn).toBeInTheDocument();
+        const saveBtn=screen.getByRole('button', { name: 'Save' });
+        fireEvent.click(saveBtn);
 
-        const combobox = screen.getByRole('combobox', { name: '' });
-        fireEvent.change(combobox, { target: { value: 'testing' } });
+        await waitFor(() => { expect(saveData).toHaveBeenCalled() });
 
-        const make = screen.getByTestId('make');
-        fireEvent.click(make);
-
-        const make1 = screen.getByRole('combobox', { name: 'Make' });
-        fireEvent.change(make1, { target: { value: 'testing' } });
-
-        const search = screen.getByRole('button', { name: 'search' });
-        fireEvent.click(search);
-        
-        const save = screen.getByRole('button', { name: 'Save' });
-        fireEvent.click(save);
+        saveData.mock.calls[0][0].onSuccess();
     });
 
-    it('Should render exchange vehicle master search components', () => {
-        const formData = { exchange: 1, id: 1 };
-        const formActionType = { editMode: true, viewMode: false };
-        const filteredModelData = [
-            { key: 'HN3', parentKey: 'HN', value: 'Accord' },
-            { key: 'HN2', parentKey: 'HN1', value: 'Accord1' },
-        ];
-
-        const props = {
-            formActionType: formActionType,
-            formDatar: formData,
-        };
-
+    it('filter change should work', async () => {
         const mockStore = createMockStore({
             auth: { userId: 123 },
             data: {
                 OTF: {
                     ExchangeVehicle: { isLoaded: true, data: exchangeData },
                 },
+                ConfigurableParameterEditing: { filteredListData: { VEHCL_MFG: [{ key: 'Kai', value: 'Kai' }] } },
             },
         });
 
+        const exchangeDataPass={ make: 'Kai', modelGroup: 'MG', exchange: 1 }
+
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper filteredModelData={filteredModelData} fetchProductLovCode={jest.fn()} fetchCustomerList={jest.fn()} setFormData={jest.fn()} resetData={jest.fn()} fieldNames={{ label: 'value', value: 'key' }} handleFilterChange={jest.fn()} {...props} StatusBar={StatusBar} FormActionButton={FormActionButton} />
+                <FormWrapper StatusBar={StatusBar} FormActionButton={FormActionButton} resetData={jest.fn()} salesModuleType={"otf"} setButtonData={jest.fn()} exchangeDataPass={exchangeDataPass} handleFormValueChange={jest.fn()} />
             </Provider>
         );
-
-        const switchBtn = screen.getByRole('switch', { name: 'Exchange' });
-        fireEvent.click(switchBtn);
-        expect(switchBtn).toBeInTheDocument();
         
-        const combobox = screen.getByRole('combobox', { name: '' });
-        fireEvent.change(combobox, { target: { value: 'testing' } });
-       
-        const search = screen.getByRole('button', { name: 'search' });
-        fireEvent.click(search);
+        fireEvent.click(screen.getByRole('button', { name: 'Make' }));
+        fireEvent.click(screen.getByRole('button', { name: 'Modal Group' }));
+        fireEvent.click(screen.getByRole('button', { name: 'Default' }));
+
     });
 });

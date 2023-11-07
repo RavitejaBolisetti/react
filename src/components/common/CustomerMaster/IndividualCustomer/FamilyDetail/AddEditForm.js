@@ -23,7 +23,7 @@ const { Text } = Typography;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { onFinish, onFinishFailed, form, onChange, showForm, setShowForm, setCustomerType, relationData, VIEW_ACTION } = props;
+    const { onFinish, form, onChange, showForm, setShowForm, setCustomerType, relationData, VIEW_ACTION } = props;
     const { onCloseAction, isViewModeVisible, setIsViewModeVisible, familyDetailList, customerType, onSave, editedMode, setEditedMode, onSearch, isSearchLoading } = props;
     const [activeKey, setactiveKey] = useState([]);
     const [disabled, setDisabled] = useState(false);
@@ -119,7 +119,6 @@ const AddEditFormMain = (props) => {
 
     const formProps = {
         onFinish,
-        onFinishFailed,
         form,
         onChange,
         onSave,

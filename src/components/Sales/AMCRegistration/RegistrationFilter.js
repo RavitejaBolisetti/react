@@ -12,19 +12,25 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { QueryButtons } from 'components/Sales/VehicleRecieptChecklist/QueryButtons';
 import { SearchBox } from 'components/utils/SearchBox';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { AMC_CONSTANTS } from './utils/AMCConstants';
 
 import styles from 'assets/sass/app.module.scss';
 
 export default function RegistrationFilter(props) {
-    const { extraParams, removeFilter, typeData, invoiceStatusList, searchForm, filterString, setFilterString, handleResetFilter, advanceFilter = false, handleInvoiceTypeChange, setAdvanceSearchVisible, handleButtonClick, amcStatus, showAddButton } = props;
-
+    const { extraParams, removeFilter, typeData, invoiceStatusList, searchForm, filterString, setFilterString, handleResetFilter, advanceFilter = false, handleInvoiceTypeChange, setAdvanceSearchVisible, handleButtonClick, amcStatus, showAddButton, userType } = props;
+    const searchParameters = () => {
+        if (userType === AMC_CONSTANTS?.DEALER?.key) {
+            return typeData?.[PARAM_MASTER.AMC_SEARCH_TYPE.id]?.filter((value) => {
+                return value?.key !== AMC_CONSTANTS?.CUSTOMER_MOBILE_NO?.key;
+            });
+        } else return typeData?.[PARAM_MASTER.AMC_SEARCH_TYPE.id];
+    };
     const serachBoxProps = {
         searchForm,
         filterString,
-        optionType: typeData?.[PARAM_MASTER.AMC_SEARCH_TYPE.id],
+        optionType: searchParameters(),
         setFilterString,
         allowClear: false,
-        // defaultOption: 'customerName',
     };
 
     return (

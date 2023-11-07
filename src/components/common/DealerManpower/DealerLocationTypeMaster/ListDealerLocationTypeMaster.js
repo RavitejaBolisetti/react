@@ -191,11 +191,6 @@ export const ListDealerLocationTypeMasterBase = (props) => {
 
         saveData(requestData);
     };
-
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
-    };
-
     const onCloseAction = () => {
         form.resetFields();
         setIsFormVisible(false);
@@ -218,7 +213,6 @@ export const ListDealerLocationTypeMasterBase = (props) => {
         formActionType,
         setFormActionType,
         onFinish,
-        onFinishFailed,
         isApplicableToDataLoaded,
         isApplicableToDataLoading,
         applicableToData,
@@ -249,7 +243,6 @@ export const ListDealerLocationTypeMasterBase = (props) => {
         filterString,
         from: listFilterForm,
         onFinish,
-        onFinishFailed,
         onSearchHandle,
         handleResetFilter,
         handleClearInSearch,
