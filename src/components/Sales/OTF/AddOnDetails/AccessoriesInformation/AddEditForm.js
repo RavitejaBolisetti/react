@@ -11,6 +11,7 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import styles from 'assets/sass/app.module.scss';
 import { PartNameListModal } from './PartNameListModal';
+import { translateContent } from 'utils/translateContent';
 
 const { TextArea } = Input;
 const { Search } = Input;

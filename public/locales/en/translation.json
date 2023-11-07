@@ -2997,6 +2997,50 @@
                 "successMessage": "Account Head validated successfully",
                 "errorMessage": "Account Head is not correct"
             }
+        },
+        "ApportionDetails": {
+            "heading": {
+                "moduleTitle": "Voucher and Party Details",
+                "voucherModuleTitle":"Apportion",
+                "title":"Apportion Details"
+                 
+            },
+            "label": {
+                "documentType":"Document Type",
+                "documentNumber":"Document Number",
+                "documentDate":"Document Date",
+                "documentAmount":"Document Amount",
+                "settledAmount":"Settled Amount",
+                "balancedAmount":"Balanced Amount",
+                "writeOffAmount":"Write-Off Amount",
+                "apportionAmount":"Apportion Amount"
+                
+            },
+            "placeholder": {
+                "documentType":"Document Type",
+                "documentNumber":"Document Number",
+                "documentDate":"Document Date",
+                "documentAmount":"Document Amount",
+                "settledAmount":"Settled Amount",
+                "balancedAmount":"Balanced Amount",
+                "writeOffAmount":"Write-Off Amount",
+                "apportionAmount":"Apportion Amount"
+            },
+            "validation": {
+                "documentType":"Document Type",
+                "documentNumber":"Document Number",
+                "documentDate":"Document Date",
+                "documentAmount":"Document Amount",
+                "settledAmount":"Settled Amount",
+                "balancedAmount":"Balanced Amount",
+                "writeOffAmount":"Write-Off Amount",
+                "apportionAmount":"Apportion Amount"
+            },
+            "message": {
+                "successMessage": "Account Head validated successfully",
+                "errorMessage": "Write-off and apportion amount cannot exceed balance amount",
+                "documentInvalid":"Document Number is invalid"
+            }
         }
     },
     "vehicleAllotmentPriorityMaster": {
