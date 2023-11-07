@@ -2051,6 +2051,9 @@
             "vehicleDetails.consumerSchemeWithTax": "Consumer Scheme with TAX",
             "vehicleDetails.printDiscount": "Print Discount?",
 
+            "vehicleDetails.optionalServices.serviceName": "Service Name",
+            "vehicleDetails.optionalServices.amount": "Amount",
+
             "schemeAndOfferDetails.schemeType": "Scheme Type",
             "schemeAndOfferDetails.schemeCategory": "Scheme Category",
             "schemeAndOfferDetails.Amount": "Amount",
@@ -2118,7 +2121,12 @@
 
             "optionalServices.columnOne": "serviceName",
             "optionalServices.columnTwo": "Rate",
-            "optionalServices.columnThree": "Amount"
+            "optionalServices.columnThree": "Amount",
+
+            "vehicleDetails.Description": "Description",
+            "vehicleDetails.Rate": "Rate",
+            "vehicleDetails.Amount": "Amount",
+            "vehicleDetails.Service Nam": "Service Name"
         }
     },
     "vehicleReceiptChecklist": {

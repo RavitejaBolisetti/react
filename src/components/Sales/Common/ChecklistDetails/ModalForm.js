@@ -54,8 +54,8 @@ export const ChecklistModalForms = (props) => {
 
     const BindResultForm = useMemo(() => {
         if (typeof AdvanceformData === 'object' && Object?.keys(AdvanceformData) && Object?.values(AdvanceformData) && isVisible) {
-            const CancelBtnName = 'Reset';
-            return { formItem: BindFormAndResult({ data: AdvanceformData, aggregateForm, checklistType })?.formItem, CancelBtnName, resetAction: handleResetChecklist, saveBtnName: 'Save' };
+            const CancelBtnName = translateContent('global.buttons.reset');
+            return { formItem: BindFormAndResult({ data: AdvanceformData, aggregateForm, checklistType })?.formItem, CancelBtnName, resetAction: handleResetChecklist, saveBtnName: translateContent('global.buttons.save') };
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isVisible, AdvanceformData]);

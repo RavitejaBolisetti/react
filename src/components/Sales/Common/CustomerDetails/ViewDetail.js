@@ -12,6 +12,7 @@ import { DATA_TYPE } from 'constants/dataType';
 
 import styles from 'assets/sass/app.module.scss';
 import { getCodeValue } from 'utils/getCodeValue';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 const ViewDetailMain = (props) => {
@@ -43,20 +44,20 @@ const ViewDetailMain = (props) => {
 
     const customerDetail = (customerData) => (
         <Descriptions {...viewProps}>
-            <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(customerData?.mobileNumber, isLoading)}</Descriptions.Item>
-            <Descriptions.Item label="Customer ID">{checkAndSetDefaultValue(customerData?.customerId, isLoading)}</Descriptions.Item>
-            <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(customerData?.customerName, isLoading)}</Descriptions.Item>
-            <Descriptions.Item label="Email ID">{checkAndSetDefaultValue(customerData?.email, isLoading)}</Descriptions.Item>
-            <Descriptions.Item label="Gender">{checkAndSetDefaultValue(getCodeValue(typeData?.GENDER, customerData?.gender), isLoading)}</Descriptions.Item>
-            {showAgeGroup && <Descriptions.Item label="Age Group">{checkAndSetDefaultValue(getCodeValue(typeData?.AGE_RANGE, customerData?.ageGroup), isLoading)}</Descriptions.Item>}
-            <Descriptions.Item label="Address">{checkAndSetDefaultValue(customerData?.address, isLoading)}</Descriptions.Item>
-            <Descriptions.Item label="City/District">{checkAndSetDefaultValue(customerData?.district, isLoading)}</Descriptions.Item>
-            <Descriptions.Item label="State">{checkAndSetDefaultValue(customerData?.state, isLoading)}</Descriptions.Item>
-            <Descriptions.Item label="Pin Code">{checkAndSetDefaultValue(customerData?.pincode, isLoading)}</Descriptions.Item>
-            <Descriptions.Item label="Alternate Number">{checkAndSetDefaultValue(customerData?.alternateNumber, isLoading)}</Descriptions.Item>
-            <Descriptions.Item label="PAN">{checkAndSetDefaultValue(customerData?.panNo, isLoading)}</Descriptions.Item>
-            <Descriptions.Item label="GSTIN">{checkAndSetDefaultValue(customerData?.gstin, isLoading)}</Descriptions.Item>
-            <Descriptions.Item label="Birth Date">{checkAndSetDefaultValue(customerData?.birthDate, isLoading, DATA_TYPE?.DATE?.key)} </Descriptions.Item>
+            <Descriptions.Item label={translateContent('commonModules.label.bookingCustomerAndBillingCustomer.mobileNumber')}>{checkAndSetDefaultValue(customerData?.mobileNumber, isLoading)}</Descriptions.Item>
+            <Descriptions.Item label={translateContent('commonModules.label.bookingCustomerAndBillingCustomer.customerId')}>{checkAndSetDefaultValue(customerData?.customerId, isLoading)}</Descriptions.Item>
+            <Descriptions.Item label={translateContent('commonModules.label.bookingCustomerAndBillingCustomer.customerName')}>{checkAndSetDefaultValue(customerData?.customerName, isLoading)}</Descriptions.Item>
+            <Descriptions.Item label={translateContent('commonModules.label.bookingCustomerAndBillingCustomer.emailId')}>{checkAndSetDefaultValue(customerData?.email, isLoading)}</Descriptions.Item>
+            <Descriptions.Item label={translateContent('commonModules.label.bookingCustomerAndBillingCustomer.gender')}>{checkAndSetDefaultValue(getCodeValue(typeData?.GENDER, customerData?.gender), isLoading)}</Descriptions.Item>
+            {showAgeGroup && <Descriptions.Item label={translateContent('commonModules.label.bookingCustomerAndBillingCustomer.ageGroup')}>{checkAndSetDefaultValue(getCodeValue(typeData?.AGE_RANGE, customerData?.ageGroup), isLoading)}</Descriptions.Item>}
+            <Descriptions.Item label={translateContent('commonModules.label.bookingCustomerAndBillingCustomer.address')}>{checkAndSetDefaultValue(customerData?.address, isLoading)}</Descriptions.Item>
+            <Descriptions.Item label={translateContent('commonModules.label.bookingCustomerAndBillingCustomer.cityDistrict')}>{checkAndSetDefaultValue(customerData?.district, isLoading)}</Descriptions.Item>
+            <Descriptions.Item label={translateContent('commonModules.label.bookingCustomerAndBillingCustomer.state')}>{checkAndSetDefaultValue(customerData?.state, isLoading)}</Descriptions.Item>
+            <Descriptions.Item label={translateContent('commonModules.label.bookingCustomerAndBillingCustomer.pinCode')}>{checkAndSetDefaultValue(customerData?.pincode, isLoading)}</Descriptions.Item>
+            <Descriptions.Item label={translateContent('commonModules.label.bookingCustomerAndBillingCustomer.alternateNumber')}>{checkAndSetDefaultValue(customerData?.alternateNumber, isLoading)}</Descriptions.Item>
+            <Descriptions.Item label={translateContent('commonModules.label.bookingCustomerAndBillingCustomer.pan')}>{checkAndSetDefaultValue(customerData?.panNo, isLoading)}</Descriptions.Item>
+            <Descriptions.Item label={translateContent('commonModules.label.bookingCustomerAndBillingCustomer.gstin')}>{checkAndSetDefaultValue(customerData?.gstin, isLoading)}</Descriptions.Item>
+            <Descriptions.Item label={translateContent('commonModules.label.bookingCustomerAndBillingCustomer.birthDate')}>{checkAndSetDefaultValue(customerData?.birthDate, isLoading, DATA_TYPE?.DATE?.key)} </Descriptions.Item>
             {/* <Descriptions.Item label="Customer Type">{checkAndSetDefaultValue(customerData?.customerType, isLoading)}</Descriptions.Item> */}
             {/* <Descriptions.Item label="Salutation">{checkAndSetDefaultValue(customerData?.saluation, isLoading)}</Descriptions.Item> */}
             {/* <Descriptions.Item label="Aadhar">{checkAndSetDefaultValue(formData.billingCustomer?.aadharNumber, isLoading)}</Descriptions.Item> */}
@@ -70,13 +71,13 @@ const ViewDetailMain = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Collapse expandIcon={expandIcon} collapsible="icon" activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
-                        <Panel header="Booking Customer" key="1">
+                        <Panel header={translateContent('vehicleInvoiceGeneration.heading.collapse.bookingCustomer')} key="1">
                             <Divider />
                             {customerDetail(formData?.bookingCustomer)}
                         </Panel>
                     </Collapse>
                     <Collapse expandIcon={expandIcon} collapsible="icon" activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
-                        <Panel header="Billing Customer" key="2">
+                        <Panel header={translateContent('vehicleInvoiceGeneration.heading.collapse.billingCustomer')} key="2">
                             <Divider />
                             {/* <Checkbox>Same as Booking Customer</Checkbox> */}
                             {customerDetail(formData?.billingCustomer)}
