@@ -22,7 +22,7 @@ const AllowedTimingList = (props) => {
     const validatedDuplicateTime = (timeSlotFrom, timeSlotTo) => {
         const isBefore = moment(timeSlotFrom, 'HH:mm').isBefore(moment(timeSlotTo, 'HH:mm'));
         if (!isBefore) {
-            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: LANGUAGE_EN.GENERAL.START_TIME_GREATER_THAN_END_TIME.MESSAGE, placement: 'bottomRight' });
+            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationSuccess.error'), message: LANGUAGE_EN.GENERAL.START_TIME_GREATER_THAN_END_TIME.MESSAGE, placement: 'bottomRight' });
             return true;
         }
         let timeSegments = [...timeData, { timeSlotFrom, timeSlotTo }];
@@ -36,7 +36,7 @@ const AllowedTimingList = (props) => {
             const currentEndTime = timeSegments[i]['timeSlotTo'];
             const nextStartTime = timeSegments[i + 1]['timeSlotFrom'];
             if (currentEndTime > nextStartTime) {
-                showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: LANGUAGE_EN.GENERAL.TIME_OVERLAPPING.MESSAGE, placement: 'bottomRight' });
+                showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationSuccess.error'), message: LANGUAGE_EN.GENERAL.TIME_OVERLAPPING.MESSAGE, placement: 'bottomRight' });
                 return true;
             }
         }
