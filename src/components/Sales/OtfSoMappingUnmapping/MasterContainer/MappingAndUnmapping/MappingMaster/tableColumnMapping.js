@@ -6,29 +6,30 @@
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { converDateDayjs } from 'utils/formatDateTime';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const tableColumnMapping = ({ handleButtonClick, actionButtonVisibility, customButtonProperties }) => {
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
-            title: 'SO Number',
+            title: translateContent('bookingSoMappUnmapp.label.soNumber'),
             dataIndex: 'soNumber',
             width: '10%',
         }),
         tblPrepareColumns({
-            title: 'PO Number',
+            title: translateContent('bookingSoMappUnmapp.label.poNumber'),
             dataIndex: 'poNumber',
             width: '20%',
         }),
         tblPrepareColumns({
-            title: 'Date',
+            title: translateContent('bookingSoMappUnmapp.label.soDate'),
             dataIndex: 'soDate',
             width: '14%',
             render: (text) => converDateDayjs(text),
         }),
 
         tblPrepareColumns({
-            title: 'Model Description',
+            title: translateContent('bookingSoMappUnmapp.label.modelDescription'),
             dataIndex: 'modelDescription',
             width: '10%',
         }),
