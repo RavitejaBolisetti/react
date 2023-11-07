@@ -29,6 +29,7 @@
         "label": {
             "active": "Active",
             "inActive": "InActive",
+            "noActive": "noActive",
             "status": "Status",
             "action": "Action",
             "fromDate": "From Date",
@@ -39,7 +40,13 @@
             "title": "Advance Filters",
             "appliedAdvanceFilter": "Applied Advance Filters :"
         },
-        "toolTip": {},
+        "toolTip": {
+            "modelName": "Model Name:",
+            "color": "Color:",
+            "seating": "Seating Capaity:",
+            "fuel": "Fuel:",
+            "variant": "Variant:"
+        },
         "generalMessage": {
             "noRecordsFound": "No records found",
             "noRecordsFoundAddNew": "Please add New {NAME} using below button",
@@ -2258,18 +2265,18 @@
             "pricingCity": "Pricing City",
             "endDate": "End Date",
             "downloadHere": "Download Here",
-            "advanceFilters":"Advance Filters",
-            "uploadVehicle":"Upload Vehicle Price Master Form",
-            "uploadButtonName":"Upload Price Master",
-            "messageText":"Click or drop your file here to upload",
-            "validationText":"File type should be .xlxs and max file size to be 8Mb",
-            "vehiclePriceMasterForm":"Vehicle Price Master Form",
-            "vehiclePriceTemplate":"Please download 'Vehicle Price Template' using below button",
-            "downloadTemplate":"Download Template",
-            "type":"Type",
-            "value":"Value",
-            "sortBy":"Sort By",
-            "sortType":"Sort Type"
+            "advanceFilters": "Advance Filters",
+            "uploadVehicle": "Upload Vehicle Price Master Form",
+            "uploadButtonName": "Upload Price Master",
+            "messageText": "Click or drop your file here to upload",
+            "validationText": "File type should be .xlxs and max file size to be 8Mb",
+            "vehiclePriceMasterForm": "Vehicle Price Master Form",
+            "vehiclePriceTemplate": "Please download 'Vehicle Price Template' using below button",
+            "downloadTemplate": "Download Template",
+            "type": "Type",
+            "value": "Value",
+            "sortBy": "Sort By",
+            "sortType": "Sort Type"
         },
         "placeholder": {},
         "validation": {},
@@ -3177,20 +3184,24 @@
         "label": {
             "text": "text",
             "password": "password",
-            "Login&Continue": "Login & Continue"
+            "Login&Continue": "Login & Continue",
+            "grnType": "GRN Type",
+            "supplierInvoiceDate": "Supplier Invoice Date"
         },
         "placeholder": {
             "userName": "User Name",
             "clientId": "Client Id",
             "parent": "parent",
             "secretId": "Secret Id",
-            "password": "password"
+            "password": "password",
+            "dealerName": "Dealer Name"
         },
         "validation": {
             "userName": "User Name",
             "clientId": "Client Id",
             "secretId": "Secret Id",
-            "password": "password"
+            "password": "password",
+            "gstin": "gstinNumber"
         },
         "text": {
             "Login": "Login for Authentication",
@@ -3207,13 +3218,48 @@
                 "mapUnmap": "IRN Mapped/Unmapped"
             }
         },
+        "leftSideBar": {
+            "label": {
+                "dealerName": "Dealer Name:",
+                "gstin:": "GSTIN:"
+            }
+        },
         "irnTransactionListMaster": {
             "heading": {
-                "moduleTitle": "GST IRN Details"
+                "moduleTitle": "GST IRN Details",
+                "viewTitle": "Application Details"
             },
             "label": {
-                "branchName": "Branch Name",
-                "mapUnmap": "IRN Mapped/Unmapped"
+                "applicationId": "Application ID",
+                "applicationName": "Application Name/Reports",
+                "applicationType": "Application Type",
+                "accessibleLoc": "Accessible Location",
+                "irnIntegeration": "IRN Integration",
+                "model": "Model:",
+                "vin": "VIN:",
+                "vehicleStatus": "Vehicle Status:",
+                "modelDescription": "Model Description",
+                "keyNumber": "Key Number",
+                "mfg": "MFG Date",
+                "recievedOn": "Recieved On",
+                "vehicleCost": "Vehicle Cost",
+                "demoVehicle": "Demo Vehicle",
+                "physicalStatus": "Physical Status",
+                "shortage": "Shortage",
+                "vehicleRecieptCheckListNumber": "Vehicle Receipt CheckList No."
+            },
+            "validation": {
+                "demoVehicle": "Demo Vehicle",
+                "vehicleStatus": "Vehicle Status:",
+                "physicalStatus": "Physical Status"
+            },
+            "placeholder": {
+                "modelDescription": "Model Description",
+                "vin": "VIN:",
+                "keyNumber": "Key Number",
+                "vehicleCost": "Vehicle Cost",
+                "vehicleStatus": "Vehicle Status:",
+                "vehicleRecieptCheckListNumber": "Vehicle Receipt CheckList No."
             }
         }
     },
@@ -3400,36 +3446,35 @@
             "pageTitle": "Booking SO Mapping And Unmapping"
         },
         "label": {
-            "soNumber":"SO Number",
-            "poNumber":"PO Number",
-            "soDate":"Date",
-            "modelDescription":"Model Description",
-            "chassisNumber":"Chassis Number",
-            "bookingNumber":"Booking Number",
-            "customerName":"Customer Name",
-            "cancellationDate":"Cancellation Date",
-            "remarks":"Remarks",
-            "soStatus":"SO Status",
-            "searchOTF":"Search OTF",
-            "bookingDate":"Booking Date",
-            "cpd":"CPD",
+            "soNumber": "SO Number",
+            "poNumber": "PO Number",
+            "soDate": "Date",
+            "modelDescription": "Model Description",
+            "chassisNumber": "Chassis Number",
+            "bookingNumber": "Booking Number",
+            "customerName": "Customer Name",
+            "cancellationDate": "Cancellation Date",
+            "remarks": "Remarks",
+            "soStatus": "SO Status",
+            "searchOTF": "Search OTF",
+            "bookingDate": "Booking Date",
+            "cpd": "CPD",
 
-            "dealerParent":"Dealer Parent",
-            "dealerLocation":"Dealer Location",
-            "resonCategoryCode":"Reason Category",
-            "reasonDescriptionCode":"Reason Description",
-            
-            "customerId":"Customer ID",
-            "mobileNumber":"Mobile No.",
-            "modelGroup":"Model Group",
-            "modelVariant":"Model Variant"
-            
+            "dealerParent": "Dealer Parent",
+            "dealerLocation": "Dealer Location",
+            "resonCategoryCode": "Reason Category",
+            "reasonDescriptionCode": "Reason Description",
+
+            "customerId": "Customer ID",
+            "mobileNumber": "Mobile No.",
+            "modelGroup": "Model Group",
+            "modelVariant": "Model Variant"
         },
         "placeholder": {
             "search": "Search Booking Number"
         },
-        "errorMsg":{
-            "message":"Validate booking number to continue"
+        "errorMsg": {
+            "message": "Validate booking number to continue"
         }
     }
 }

@@ -14,6 +14,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { dealerBranchAccessAction } from 'store/actions/data/financialAccounting/dealerBranchAccessAction';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -25,7 +26,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'GST Details';
+    const moduleTitle = translateContent('gstIRNAuthentication.gstBranchAccessibleMaster.heading.moduleTitle');
 
     let returnValue = {
         userId,
@@ -64,7 +65,7 @@ const GstBranchAccessibleMasterBase = (props) => {
     const dealerBranchArray = [];
     dealerBranchData.forEach((item) => {
         if (item) {
-            item.mapUnmap = 'Yes';
+            item.mapUnmap = translateContent('global.yesNo.yes');
             dealerBranchArray.push(item);
         }
     });

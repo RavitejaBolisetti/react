@@ -15,6 +15,7 @@ import { validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 import styles from 'components/common/Common.module.css';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -85,11 +86,21 @@ const AddEditFormMain = (props) => {
                                 header={
                                     <Space direction="vertical">
                                         <Space>
-                                            <Text className={styles.headText}> Model: {item?.modelDescription} </Text>
+                                            <Text className={styles.headText}>
+                                                {translateContent('gstIRNAuthentication.irnTransactionListMaster.label.model')}
+                                                {item?.modelDescription}{' '}
+                                            </Text>
                                             <Text className={styles.headText}> {`|`}</Text>
-                                            <Text className={styles.headText}> VIN: {item?.vin}</Text>
+                                            <Text className={styles.headText}>
+                                                {' '}
+                                                {translateContent('gstIRNAuthentication.irnTransactionListMaster.label.vin')} {item?.vin}
+                                            </Text>
                                         </Space>
-                                        <Text className={styles.subSection}> Vehicle Status: {getCodeValue(vehicleStatusType, item?.vehicleStatus)}</Text>
+                                        <Text className={styles.subSection}>
+                                            {' '}
+                                            {translateContent('gstIRNAuthentication.irnTransactionListMaster.label.vehicleStatus')}
+                                            {getCodeValue(vehicleStatusType, item?.vehicleStatus)}
+                                        </Text>
                                     </Space>
                                 }
                                 key={index}
@@ -100,27 +111,27 @@ const AddEditFormMain = (props) => {
                                 <Divider />
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.infoWrapper}>
-                                        <Form.Item initialValue={item?.modelDescription} label="Model Description" name={[index, 'modelDescription']}>
-                                            <Input maxLength={10} placeholder={preparePlaceholderText('Model Description')} disabled={true} />
+                                        <Form.Item initialValue={item?.modelDescription} label={translateContent('gstIRNAuthentication.irnTransactionListMaster.label.modelDescription')} name={[index, 'modelDescription']}>
+                                            <Input maxLength={10} placeholder={preparePlaceholderText(translateContent('gstIRNAuthentication.irnTransactionListMaster.placeholder.modelDescription'))} disabled={true} />
                                         </Form.Item>
                                         {item?.modelDescription && (
                                             <div className={styles.modelTooltip}>
                                                 {addToolTip(
                                                     <div>
                                                         <p>
-                                                            Model Name: <span>{item?.name ?? 'Na'}</span>
+                                                            {translateContent('global.tooltip.modelName')} <span>{item?.name ?? 'Na'}</span>
                                                         </p>
                                                         <p>
-                                                            Color: <span>{item?.color ?? 'Na'}</span>
+                                                            {translateContent('global.tooltip.color')} <span>{item?.color ?? 'Na'}</span>
                                                         </p>
                                                         <p>
-                                                            Seating Capacity: <span>{item?.seatingCapacity ?? 'Na'}</span>
+                                                            {translateContent('global.tooltip.seating')} <span>{item?.seatingCapacity ?? 'Na'}</span>
                                                         </p>
                                                         <p>
-                                                            Fuel: <span>{item?.fuel ?? 'Na'}</span>
+                                                            {translateContent('global.tooltip.fuel')} <span>{item?.fuel ?? 'Na'}</span>
                                                         </p>
                                                         <p>
-                                                            Variants: <span>{item?.variant ?? 'Na'}</span>
+                                                            {translateContent('global.tooltip.variant')} <span>{item?.variant ?? 'Na'}</span>
                                                         </p>
                                                     </div>,
                                                     'bottom',
@@ -131,37 +142,37 @@ const AddEditFormMain = (props) => {
                                         )}
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={item?.vin} label="VIN" name={[index, 'vin']}>
-                                            <Input maxLength={10} placeholder={preparePlaceholderText('VIN')} disabled={true} />
+                                        <Form.Item initialValue={item?.vin} label={translateContent('gstIRNAuthentication.irnTransactionListMaster.label.vin')} name={[index, 'vin']}>
+                                            <Input maxLength={10} placeholder={preparePlaceholderText(translateContent('gstIRNAuthentication.irnTransactionListMaster.placeholder.vin'))} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={item?.keyNumber} label="Key Number" name={[index, 'keyNumber']}>
-                                            <Input maxLength={10} placeholder={preparePlaceholderText('Key Number')} disabled={true} />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                                <Row gutter={20}>
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={formattedCalendarDate(item?.mfgdate)} label="MFG Date" name={[index, 'mfgDate']}>
-                                            <DatePicker format={dateFormat} disabled={true} style={{ display: 'auto', width: '100%' }} />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={formattedCalendarDate(item?.receivedOn)} label="Received On" name={[index, 'receivedOn']}>
-                                            <DatePicker format={dateFormat} disabled={true} style={{ display: 'auto', width: '100%' }} />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={item?.vehicleCost} label="Vehicle Cost" name={[index, 'vehicleCost']}>
-                                            <Input maxLength={10} placeholder={preparePlaceholderText('Vehicle Cost')} disabled={true} />
+                                        <Form.Item initialValue={item?.keyNumber} label={translateContent('gstIRNAuthentication.irnTransactionListMaster.label.keyNumber')} name={[index, 'keyNumber']}>
+                                            <Input maxLength={10} placeholder={preparePlaceholderText(translateContent('gstIRNAuthentication.irnTransactionListMaster.placeholder.keyNumber'))} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={item?.demoVehicle} label="Demo Vehicle" name={[index, 'demoVehicle']} rules={[validateRequiredSelectField('Demo Vehicle')]}>
-                                            <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps}>
+                                        <Form.Item initialValue={formattedCalendarDate(item?.mfgdate)} label={translateContent('gstIRNAuthentication.irnTransactionListMaster.label.mfg')} name={[index, 'mfgDate']}>
+                                            <DatePicker format={dateFormat} disabled={true} style={{ display: 'auto', width: '100%' }} />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                        <Form.Item initialValue={formattedCalendarDate(item?.receivedOn)} label={translateContent('gstIRNAuthentication.irnTransactionListMaster.label.recievedOn')} name={[index, 'receivedOn']}>
+                                            <DatePicker format={dateFormat} disabled={true} style={{ display: 'auto', width: '100%' }} />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                        <Form.Item initialValue={item?.vehicleCost} label={translateContent('gstIRNAuthentication.irnTransactionListMaster.label.vehicleCost')} name={[index, 'vehicleCost']}>
+                                            <Input maxLength={10} placeholder={preparePlaceholderText(translateContent('gstIRNAuthentication.irnTransactionListMaster.placeholder.vehicleCost'))} disabled={true} />
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+                                <Row gutter={20}>
+                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                        <Form.Item initialValue={item?.demoVehicle} label={translateContent('gstIRNAuthentication.irnTransactionListMaster.label.demoVehicle')} name={[index, 'demoVehicle']} rules={[validateRequiredSelectField(translateContent('gstIRNAuthentication.irnTransactionListMaster.validation.demoVehicle'))]}>
+                                            <Select maxLength={50} placeholder={preparePlaceholderSelect(translateContent('global.placeholder.select'))} {...selectProps}>
                                                 {shortageType?.map((item) => (
                                                     <Option key={'dv' + item.key} value={item.key}>
                                                         {item.value}
@@ -171,8 +182,8 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={item?.vehicleStatus} label="Vehicle Status" name={[index, 'vehicleStatus']} rules={[validateRequiredSelectField('Vehicle Status')]}>
-                                            <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps}>
+                                        <Form.Item initialValue={item?.vehicleStatus} label={translateContent('gstIRNAuthentication.irnTransactionListMaster.label.vehicleStatus')} name={[index, 'vehicleStatus']} rules={[validateRequiredSelectField(translateContent('gstIRNAuthentication.irnTransactionListMaster.validation.vehicleStatus'))]}>
+                                            <Select maxLength={50} placeholder={preparePlaceholderSelect(translateContent('global.placeholder.select'))} {...selectProps}>
                                                 {vehicleStatusType?.map((item) => (
                                                     <Option key={'vs' + item.key} value={item.key}>
                                                         {item.value}
@@ -182,8 +193,8 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={item?.physicalStatus} label="Physical Status" name={[index, 'physicalStatus']} rules={[validateRequiredSelectField('Physical Status')]}>
-                                            <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps}>
+                                        <Form.Item initialValue={item?.physicalStatus} label={translateContent('gstIRNAuthentication.irnTransactionListMaster.label.physicalStatus')} name={[index, 'physicalStatus']} rules={[validateRequiredSelectField(translateContent('gstIRNAuthentication.irnTransactionListMaster.validation.physicalStatus'))]}>
+                                            <Select maxLength={50} placeholder={preparePlaceholderSelect(translateContent('global.placeholder.select'))} {...selectProps}>
                                                 {physicalStatusType?.map((item) => (
                                                     <Option key={'ps' + item.key} value={item.key}>
                                                         {item.value}
@@ -195,8 +206,8 @@ const AddEditFormMain = (props) => {
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={item?.shortage} label="Shortage" name={[index, 'shortage']}>
-                                            <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps}>
+                                        <Form.Item initialValue={item?.shortage} label={translateContent('gstIRNAuthentication.irnTransactionListMaster.label.shortage')} name={[index, 'shortage']}>
+                                            <Select maxLength={50} placeholder={preparePlaceholderSelect(translateContent('global.placeholder.select'))} {...selectProps}>
                                                 {shortageType?.map((item) => (
                                                     <Option key={'st' + item.key} value={item.key}>
                                                         {item.value}
@@ -207,8 +218,8 @@ const AddEditFormMain = (props) => {
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={item?.vehicleRecieptCheckListNumber} label="Vehicle Receipt Checklist No." name={[index, 'vehicleRecieptCheckListNumber']}>
-                                            <Input maxLength={10} placeholder={preparePlaceholderText('Vehicle Receipt Checklist No.')} disabled={true} />
+                                        <Form.Item initialValue={item?.vehicleRecieptCheckListNumber} label={translateContent('gstIRNAuthentication.irnTransactionListMaster.label.vehicleRecieptCheckListNumber')} name={[index, 'vehicleRecieptCheckListNumber']}>
+                                            <Input maxLength={10} placeholder={preparePlaceholderText(translateContent('gstIRNAuthentication.irnTransactionListMaster.placeholder.vehicleRecieptCheckListNumber'))} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                     <Form.Item hidden initialValue={item?.id} name={[index, 'id']}>
@@ -218,10 +229,10 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                         <Button className={styles.marR20} onClick={() => handleSave(index)} type="primary">
-                                            Save
+                                            {translateContent('global.buttons.save')}
                                         </Button>
                                         <Button className={styles.marB20} onClick={handleCancelFormEdit} danger>
-                                            Cancel
+                                            {translateContent('global.buttons.cancel')}
                                         </Button>
                                     </Col>
                                 </Row>
