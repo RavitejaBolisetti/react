@@ -34,7 +34,8 @@
             "action": "Action",
             "fromDate": "From Date",
             "toDate": "To Date",
-            "serialNo": "Srl."
+            "serialNo": "Srl.",
+            "search": "Search"
         },
         "advanceFilter": {
             "title": "Advance Filters",
@@ -2451,7 +2452,7 @@
             "receiptDetails": {
                 "actualReceiptDate": "Actual Receipt Date",
                 "receiptType": "Receipt Type",
-                "receiptDate":"Receipt Date",
+                "receiptDate": "Receipt Date",
                 "paymentMode": "Payment Mode",
                 "creditCardTransactionsNumber": "Credit Card Transaction No.",
                 "receiveAmount": "Receive Amount",
@@ -2470,8 +2471,6 @@
                 "totalApportionedAmount": "Total Apportioned Amount",
                 "totalReceivedAmount": "Total Received Amount",
                 "totalWriteOffAmount": "Total Write Off Amount"
-
-
             },
             "apportionDetails": {
                 "documentType": "Document Type",
@@ -2536,11 +2535,11 @@
             "paymentBankPartyId": "payment bank party id",
             "paymentBankName": "payment bank name",
             "paymentBankLocation": "payment bank location",
-            "serviceChargeAmount":"Service Charge Amount",
+            "serviceChargeAmount": "Service Charge Amount",
             "taxOnServiceCharge": "tax on service charge",
             "creditCardTransactionsNumber": "credit card transaction no",
             "transactionNumber": "transaction no",
-            "totalApportionedAmount":"total apportioned amount",
+            "totalApportionedAmount": "total apportioned amount",
             "totalReceivedAmount": "total received amount",
             "totalWriteOffAmount": "total write off amount",
             "actualReceiptDate": "actual receipt date",
@@ -2558,11 +2557,10 @@
             "bankLocation": "bank location",
             "paymentBankPartyId": "payment bank party id",
             "serviceChargePercentage": "service charge percentage",
-            "serviceChargeAmount":"service charge amount",
+            "serviceChargeAmount": "service charge amount",
             "taxOnServiceCharge": "tax on service charge",
             "creditCardTransactionsNumber": "credit card transaction no",
             "transactionNumber": "transaction no"
-
         },
         "buttons": {
             "cancelReceipt": "Cancel Receipt"
@@ -3492,28 +3490,27 @@
             "titleOverride": "Un-Allot Booking",
             "title": "Search Booking",
             "allotmentDetails": "Allotment Details",
-            "vehicleSummary":"Vehicle Summary",
-            "allotBooking":"Allot Booking"
+            "vehicleSummary": "Vehicle Summary",
+            "allotBooking": "Allot Booking"
         },
         "label": {
             "vin": "VIN",
             "ageInDays": "Age In Days",
-            "pdi":"PDI",
+            "pdi": "PDI",
             "pdiDone": "PDI Done",
             "vehicleStatus": "Vehicle Status",
             "supplierInvoiceDate": "Supplier Invoice Date",
             "supplierInvoiceNumber": "Supplier Invoice No.",
             "modelDescription": "Model Description",
             "unallotBooking": "Are you sure want to Un-allot this Booking? ",
-            "searchByVin":"Search by VIN"
-            
+            "searchByVin": "Search by VIN"
         },
         "validation": {
             "selectBooking": "Please select Booking"
         },
         "tableColumn": {
             "vin": "VIN",
-            "otfNumber":"Booking Number",
+            "otfNumber": "Booking Number",
             "modelDescription": "Model Description",
             "ageInDays": "Age in Days",
             "pdi": "PDI",
