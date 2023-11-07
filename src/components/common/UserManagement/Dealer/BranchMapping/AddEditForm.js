@@ -18,8 +18,8 @@ const AddEditForm = (props) => {
     const { section, dealerBranches, setDealerBranches, setButtonData, formActionType, isUsrDlrBrLocationLoding, isDlrBrLocationLoding } = props;
     useEffect(() => {
         if (!dealerBranches?.filter((el) => el?.id || el?.status)?.length) {
-            setButtonData((prev) => ({ ...prev, nextBtn: true, saveBtn: true, formBtnActive: false }));
-        } else setButtonData((prev) => ({ ...prev, nextBtn: false, saveBtn: true, formBtnActive: true }));
+            setButtonData((prev) => ({ ...prev, nextBtn: true, saveBtn: !formActionType.viewMode, formBtnActive: false }));
+        } else setButtonData((prev) => ({ ...prev, nextBtn: false, saveBtn: !formActionType.viewMode, formBtnActive: true }));
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dealerBranches]);
