@@ -14,6 +14,7 @@ import styles from 'assets/sass/app.module.scss';
 import { customSelectBox } from 'utils/customSelectBox';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { AMC_CONSTANTS } from '../utils/AMCConstants';
+import { translateContent } from 'utils/translateContent';
 
 const { TextArea } = Input;
 
@@ -36,16 +37,16 @@ export const RejectRequestForm = (props) => {
                         {userType === AMC_CONSTANTS?.DEALER?.key ? (
                             <Row gutter={16}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
-                                    <Form.Item label="Reason for Cancellation" name="amcCancelRemarks" rules={[validateRequiredInputField('remarks')]} initialValue={formData?.amcCancelRemarks}>
-                                        {customSelectBox({ data: typeData?.[PARAM_MASTER.AMC_CANCEL_REASON.id], testId: 'select-test', placeholder: preparePlaceholderSelect('reason for cancellation'), onChange: handleRemarksChange })}
+                                    <Form.Item label={translateContent('amcRegistration.label.reasonForCancellation')} name="amcCancelRemarks" rules={[validateRequiredInputField(translateContent('amcRegistration.label.reasonForCancellation'))]} initialValue={formData?.amcCancelRemarks}>
+                                        {customSelectBox({ data: typeData?.[PARAM_MASTER.AMC_CANCEL_REASON.id], testId: 'select-test', placeholder: preparePlaceholderSelect(translateContent('amcRegistration.label.reasonForCancellation')), onChange: handleRemarksChange })}
                                     </Form.Item>
                                 </Col>
                             </Row>
                         ) : (
                             <Row gutter={16}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
-                                    <Form.Item label="Reason for Rejection" name="reasonForRejection" rules={[validateRequiredInputField('reasonForRejection')]} initialValue={formData?.reasonForRejection}>
-                                        {customSelectBox({ data: typeData?.[PARAM_MASTER.AMC_CANCEL_REASON.id], placeholder: preparePlaceholderSelect('reason for rejection') })}
+                                    <Form.Item label={translateContent('amcRegistration.label.reasonForRejection')} name="reasonForRejection" rules={[validateRequiredInputField(translateContent('amcRegistration.label.reasonForCancellation'))]} initialValue={formData?.reasonForRejection}>
+                                        {customSelectBox({ data: typeData?.[PARAM_MASTER.AMC_CANCEL_REASON.id], placeholder: preparePlaceholderSelect(translateContent('amcRegistration.label.reasonForCancellation')) })}
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -53,8 +54,8 @@ export const RejectRequestForm = (props) => {
                         {isOtherReason && (
                             <Row gutter={16}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
-                                    <Form.Item label="Other Reason" name="otherReason" rules={[validateRequiredInputField('otherReason')]} initialValue={formData?.otherReason}>
-                                        <TextArea showCount maxLength={300} placeholder={preparePlaceholderText('other Reason')} />
+                                    <Form.Item label={translateContent('amcRegistration.label.otherReason')} name="otherReason" rules={[validateRequiredInputField(translateContent('amcRegistration.label.otherReason'))]} initialValue={formData?.otherReason}>
+                                        <TextArea showCount maxLength={300} placeholder={preparePlaceholderText(translateContent('amcRegistration.label.otherReason'))} />
                                     </Form.Item>
                                 </Col>
                             </Row>

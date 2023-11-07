@@ -7,23 +7,24 @@ import React from 'react';
 import { Button, Row, Col } from 'antd';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
-export const CreditDebitNoteFormButton = ({ record, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection,handlePrintDownload }) => {
+export const CreditDebitNoteFormButton = ({ record, onCloseAction, buttonData, setButtonData, saveButtonName = translateContent('global.buttons.saveAndNext'), handleButtonClick, isLoadingOnSave, isLastSection, handlePrintDownload }) => {
     return (
         <div className={styles.formFooter}>
             <Row gutter={20}>
                 <Col xs={24} sm={8} md={6} lg={4} xl={4} className={styles.footerBtnLeft}>
                     {buttonData?.closeBtn && (
                         <Button danger onClick={onCloseAction}>
-                            Close
+                            {translateContent('global.buttons.close')}
                         </Button>
                     )}
 
                     {buttonData?.cancelBtn && (
                         <Button danger onClick={onCloseAction}>
-                            Cancel
+                            {translateContent('global.buttons.cancel')}
                         </Button>
                     )}
                 </Col>
@@ -31,25 +32,25 @@ export const CreditDebitNoteFormButton = ({ record, onCloseAction, buttonData, s
                 <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.footerBtnRight}>
                     {buttonData?.printBtn && (
                         <Button onClick={() => handlePrintDownload(record)} type="primary">
-                            Print Receipt
+                            {translateContent('global.buttons.printReceipt')}
                         </Button>
                     )}
 
                     {buttonData?.editBtn && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
-                            Edit
+                            {translateContent('global.buttons.edit')}
                         </Button>
                     )}
 
                     {buttonData?.cancelVoucher && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_VOUCHER, record })} type="primary">
-                            Cancel
+                            {translateContent('global.buttons.cancel')}
                         </Button>
                     )}
 
                     {buttonData?.nextBtn && !isLastSection && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
-                            Next
+                            {translateContent('global.buttons.next')}
                         </Button>
                     )}
 

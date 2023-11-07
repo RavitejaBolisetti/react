@@ -15,6 +15,7 @@ import { addToolTip } from 'utils/customMenuLink';
 
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { DELIVERY_NOTE_STATUS } from '../constants/deliveryNoteStatus';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
@@ -22,12 +23,12 @@ const { Text, Title } = Typography;
 const expandIcon = ({ isActive }) =>
     isActive ? (
         <>
-            <span>See less</span>
+            <span>{translateContent('global.buttons.seeLess')}</span>
             <SlArrowUp size={13} />
         </>
     ) : (
         <>
-            <span>See more</span>
+            <span>{translateContent('global.buttons.seeMore')}</span>
             <SlArrowDown size={13} />
         </>
     );
@@ -39,13 +40,13 @@ const VehicleDeliveryNoteCard = (props) => {
     const deliveryTitles = useMemo(() => {
         switch (props?.soldByDealer) {
             case true: {
-                return { invoiceType: 'Delivery Note', deliveryDate: 'Delivery Note Date', fullName, userAvatar };
+                return { invoiceType: translateContent('vehicleDeliveryNote.heading.mainTitle'), deliveryDate: translateContent('vehicleDeliveryNote.label.deliveryNoteDate'), fullName, userAvatar };
             }
             case false: {
-                return { invoiceType: 'Challan', deliveryDate: 'Challan Date', fullName, userAvatar };
+                return { invoiceType: translateContent('vehicleDeliveryNote.buttons.challan'), deliveryDate: translateContent('vehicleDeliveryNote.label.challanDate'), fullName, userAvatar };
             }
             default: {
-                return { invoiceType: 'Delivery Note', deliveryDate: 'Delivery Note Date', fullName, userAvatar };
+                return { invoiceType: translateContent('vehicleDeliveryNote.heading.mainTitle'), deliveryDate: translateContent('vehicleDeliveryNote.label.deliveryNoteDate'), fullName, userAvatar };
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -69,7 +70,7 @@ const VehicleDeliveryNoteCard = (props) => {
                         <Divider />
                         {selectedOrder?.mobileNumber && (
                             <div className={styles.detailCardText}>
-                                Mobile No.: <span> {checkAndSetDefaultValue(selectedOrder?.mobileNumber)}</span>
+                                {translateContent('vehicleDeliveryNote.label.mobileNo')} <span> {checkAndSetDefaultValue(selectedOrder?.mobileNumber)}</span>
                             </div>
                         )}
                     </>
@@ -82,7 +83,7 @@ const VehicleDeliveryNoteCard = (props) => {
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Status:
+                    {translateContent('vehicleDeliveryNote.label.status')}
                     <div className={styles.tooltipAlign}>
                         {checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.DLVR_NT_STS.id], selectedOrder?.deliveryNoteStatus, isLoading))}
                         {formActionType?.viewMode && selectedOrder?.deliveryNoteStatus === DELIVERY_NOTE_STATUS?.CANCELLED?.key && <span className={styles.marL5}>{toolTipContent && selectedOrder?.deliveryNoteStatus && <div className={styles.toolTip}>{addToolTip(toolTipContent, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}</div>}</span>}
@@ -91,16 +92,16 @@ const VehicleDeliveryNoteCard = (props) => {
 
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Invoice Number: <span> {checkAndSetDefaultValue(selectedOrder?.invoiceId)}</span>
+                    {translateContent('vehicleDeliveryNote.label.invoiceNo')} <span> {checkAndSetDefaultValue(selectedOrder?.invoiceId)}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Invoice Date: <span> {checkAndSetDefaultValue(selectedOrder?.invoiceDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
+                    {translateContent('vehicleDeliveryNote.label.invoiceDate')} <span> {checkAndSetDefaultValue(selectedOrder?.invoiceDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
                 </div>
                 <Divider />
                 {(selectedOrder?.bookingNumber || selectedOrder?.otfNumber) && (
                     <div className={styles.detailCardText}>
-                        Booking Number: <span> {checkAndSetDefaultValue(selectedOrder?.bookingNumber || selectedOrder?.otfNumber)}</span>
+                        {translateContent('vehicleDeliveryNote.label.bookingNumber')} <span> {checkAndSetDefaultValue(selectedOrder?.bookingNumber || selectedOrder?.otfNumber)}</span>
                     </div>
                 )}
             </Panel>

@@ -10,6 +10,7 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { dateFormat } from 'utils/formatDateTime';
 import { disableFutureDate } from 'utils/disableDate';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -18,40 +19,40 @@ export const InvoiceDetailsForm = () => {
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                    <Form.Item label="Invoice ID" name="invoiceId" rules={[validateRequiredSelectField('Invoice ID')]}>
-                        <Input maxLength={30} placeholder={preparePlaceholderText('Invoice ID')} disabled={true} />
+                    <Form.Item label={translateContent('deliveryNoteInvoiceCancellation.label.invoiceDetailsForm.invoiceId')} name="invoiceId" rules={[validateRequiredSelectField(translateContent('deliveryNoteInvoiceCancellation.label.invoiceDetailsForm.invoiceId'))]}>
+                        <Input maxLength={30} placeholder={preparePlaceholderText(translateContent('deliveryNoteInvoiceCancellation.label.invoiceDetailsForm.invoiceId'))} disabled={true} />
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                    <Form.Item label="Invoice Date" name="invoiceDate" rules={[validateRequiredInputField('Invoice Date')]}>
+                    <Form.Item label={translateContent('deliveryNoteInvoiceCancellation.label.invoiceDetailsForm.invoiceDate')} name="invoiceDate" rules={[validateRequiredInputField(translateContent('deliveryNoteInvoiceCancellation.label.invoiceDetailsForm.invoiceDate'))]}>
                         <DatePicker format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} disabled={true} />
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                    <Form.Item name="deliveryNoteId" label="Delivery Note ID" rules={[validateRequiredInputField('Delivery Note ID')]}>
-                        <Input maxLength={30} placeholder={preparePlaceholderText('Delivery Note ID')} disabled={true} />
+                    <Form.Item name="deliveryNoteId" label={translateContent('deliveryNoteInvoiceCancellation.label.invoiceDetailsForm.deliveryNoteId')} rules={[validateRequiredInputField(translateContent('deliveryNoteInvoiceCancellation.label.invoiceDetailsForm.deliveryNoteId'))]}>
+                        <Input maxLength={30} placeholder={preparePlaceholderText(translateContent('deliveryNoteInvoiceCancellation.label.invoiceDetailsForm.deliveryNoteId'))} disabled={true} />
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                    <Form.Item label="Delivery Note Date" name="deliveryNoteDate" rules={[validateRequiredInputField('Delivery Note Date')]}>
+                    <Form.Item label={translateContent('deliveryNoteInvoiceCancellation.label.invoiceDetailsForm.deliveryNoteDate')} name="deliveryNoteDate" rules={[validateRequiredInputField(translateContent('deliveryNoteInvoiceCancellation.label.invoiceDetailsForm.deliveryNoteDate'))]}>
                         <DatePicker format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} disabled={true} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                    <Form.Item name="deliveryNoteStatus" label="Delivery Note Status" rules={[validateRequiredInputField('Delivery Note Status')]}>
-                        <Input maxLength={30} placeholder={preparePlaceholderText('Delivery Note Status')} disabled={true} />
+                    <Form.Item name="deliveryNoteStatus" label={translateContent('deliveryNoteInvoiceCancellation.label.invoiceDetailsForm.deliveryNoteStatus')} rules={[validateRequiredInputField(translateContent('deliveryNoteInvoiceCancellation.label.invoiceDetailsForm.deliveryNoteStatus'))]}>
+                        <Input maxLength={30} placeholder={preparePlaceholderText(translateContent('deliveryNoteInvoiceCancellation.label.invoiceDetailsForm.deliveryNoteStatus'))} disabled={true} />
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                    <Form.Item name="customerId" label="Customer ID" rules={[validateRequiredInputField('Customer ID')]}>
-                        <Input maxLength={30} placeholder={preparePlaceholderText('Customer ID')} disabled={true} />
+                    <Form.Item name="customerId" label={translateContent('deliveryNoteInvoiceCancellation.label.invoiceDetailsForm.customerId')} rules={[validateRequiredInputField(translateContent('deliveryNoteInvoiceCancellation.label.invoiceDetailsForm.customerId'))]}>
+                        <Input maxLength={30} placeholder={preparePlaceholderText(translateContent('deliveryNoteInvoiceCancellation.label.invoiceDetailsForm.customerId'))} disabled={true} />
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                    <Form.Item name="customerName" label="Customer Name" rules={[validateRequiredInputField('Customer Name')]}>
-                        <Input maxLength={30} placeholder={preparePlaceholderText('Customer Name')} disabled={true} />
+                    <Form.Item name="customerName" label={translateContent('deliveryNoteInvoiceCancellation.label.invoiceDetailsForm.customerName')} rules={[validateRequiredInputField(translateContent('deliveryNoteInvoiceCancellation.label.invoiceDetailsForm.customerName'))]}>
+                        <Input maxLength={30} placeholder={preparePlaceholderText(translateContent('deliveryNoteInvoiceCancellation.label.invoiceDetailsForm.customerName'))} disabled={true} />
                     </Form.Item>
                 </Col>
             </Row>

@@ -9,6 +9,7 @@ import { Row, Col, Card, Collapse, Descriptions, Divider } from 'antd';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { DATA_TYPE } from 'constants/dataType';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 const ViewDetailMain = (props) => {
@@ -27,23 +28,23 @@ const ViewDetailMain = (props) => {
                     {schemeData && schemeData?.schemes?.length > 0 ? (
                         schemeData?.schemes?.map((schemeForm, index) => (
                             <Collapse expandIcon={expandIcon} activeKey={activeKey} expandIconPosition="end" collapsible="icon">
-                                <Panel header={`Scheme ${index + 1}`} key={schemeForm?.id}>
+                                <Panel header={`${translateContent('bookingManagement.label.scheme')} ${index + 1}`} key={schemeForm?.id}>
                                     <Divider />
                                     <Descriptions {...viewProps}>
-                                        <Descriptions.Item label="Scheme Type">{checkAndSetDefaultValue(schemeForm?.schemeType, isLoading)}</Descriptions.Item>
-                                        <Descriptions.Item label="Scheme Category">{checkAndSetDefaultValue(schemeForm?.schemeCategory, isLoading)}</Descriptions.Item>
-                                        <Descriptions.Item label="Amount">{checkAndSetDefaultValue(schemeForm?.amount, isLoading)}</Descriptions.Item>
-                                        <Descriptions.Item label="Valid From">{checkAndSetDefaultValue(schemeForm?.validFrom, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                                        <Descriptions.Item label="Valid To">{checkAndSetDefaultValue(schemeForm?.validTo, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                                        <Descriptions.Item label={translateContent('commonModules.label.schemeAndOfferDetails.schemeType')}>{checkAndSetDefaultValue(schemeForm?.schemeType, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label={translateContent('commonModules.label.schemeAndOfferDetails.schemeCategory')}>{checkAndSetDefaultValue(schemeForm?.schemeCategory, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label={translateContent('commonModules.label.schemeAndOfferDetails.Amount')}>{checkAndSetDefaultValue(schemeForm?.amount, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label={translateContent('commonModules.label.schemeAndOfferDetails.validFrom')}>{checkAndSetDefaultValue(schemeForm?.validFrom, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                                        <Descriptions.Item label={translateContent('commonModules.label.schemeAndOfferDetails.validTo')}>{checkAndSetDefaultValue(schemeForm?.validTo, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                                         <Descriptions.Item label="" />
-                                        <Descriptions.Item label="Description">{checkAndSetDefaultValue(schemeForm?.description, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label={translateContent('commonModules.label.schemeAndOfferDetails.description')}>{checkAndSetDefaultValue(schemeForm?.description, isLoading)}</Descriptions.Item>
                                     </Descriptions>
                                 </Panel>
                             </Collapse>
                         ))
                     ) : (
                         <Card>
-                            <div className={styles.marB20}>No Scheme and Offer Details Available</div>
+                            <div className={styles.marB20}>{translateContent('commonModules.label.schemeAndOfferDetails.noScheme')}</div>
                         </Card>
                     )}
                 </Col>

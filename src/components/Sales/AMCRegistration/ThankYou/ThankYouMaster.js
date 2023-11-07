@@ -10,6 +10,7 @@ import { HiCheck } from 'react-icons/hi';
 import { CopytoClipboard } from 'utils/CopytoClipboard';
 import { AMC_CONSTANTS } from '../utils/AMCConstants';
 import { AMC_REPORT_DOCUMENT_TYPE } from '../utils/amcReportDocumentType';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -52,7 +53,7 @@ export const ThankYouMaster = (props) => {
                             <Space className={styles.marB20}>
                                 <div className={styles.deliveryNoteSuccessText}>
                                     <Text>
-                                        {'AMC Registration'} No.: <span>{selectedOrder?.message}</span>
+                                      {translateContent('amcRegistration.label.amcRegistrationNumber')}  : <span>{selectedOrder?.message}</span>
                                     </Text>
                                 </div>
                                 <CopytoClipboard type={'primary'} buttonText={'Copy'} text={selectedOrder?.message} />
@@ -60,16 +61,16 @@ export const ThankYouMaster = (props) => {
 
                             <Divider />
                             <Space size="middle" direction="vertical">
-                                <Text>Do you want to Print or download invoice and registration certificate</Text>
+                                <Text>{translateContent('amcRegistration.validation.doWantToDownload')}   </Text>
                                 <Row justify="space-between">
                                     <Button onClick={() => handlePrintDownload({ ...record, typeRecord: AMC_REPORT_DOCUMENT_TYPE?.INVOICE_AMC?.value })} danger>
-                                        {`Invoice`}
+                                        {translateContent('amcRegistration.label.invoice')}
                                     </Button>
                                     <Button onClick={() => handlePrintDownload({ ...record, typeRecord: AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_AMC?.value })} danger style={{ margin: '0 12px' }}>
-                                        {`Registration Certificate`}
+                                        {translateContent('amcRegistration.label.registrationCertificate')}
                                     </Button>
                                     <Button onClick={() => handlePrintDownload({ ...record, typeRecord: AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_AMC?.value })} danger>
-                                        {`Registration Incentive Claim`}
+                                        {translateContent('amcRegistration.label.registrationIncentiveClaim')}
                                     </Button>
                                 </Row>
                             </Space>

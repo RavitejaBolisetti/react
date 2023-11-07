@@ -26,6 +26,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import AdvanceVehiclePriceMasterFilter from './AdvanceVehiclePriceMasterFilter';
 import { vehiclePriceMasterDataAction } from 'store/actions/data/vehiclePriceMaster';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -51,7 +52,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Vehicle Price Master';
+    const moduleTitle = translateContent('vehiclePriceMaster.heading.mainTitle');
     const finalCountryData = countryData?.map((item, index) => {
         return { ...item, default: index <= 0 || false };
     });
@@ -183,7 +184,7 @@ export const VehiclePriceMasterBase = (props) => {
         return [
             {
                 key: 'searchType',
-                title: 'Type',
+                title: translateContent('vehiclePriceMaster.label.type'),
                 value: filterString?.searchType,
                 name: typeData[paramMasterId]?.find((i) => i?.key === filterString?.searchType)?.value,
                 canRemove: false,
@@ -191,7 +192,7 @@ export const VehiclePriceMasterBase = (props) => {
             },
             {
                 key: 'searchParam',
-                title: 'Value',
+                title: translateContent('vehiclePriceMaster.label.value'),
                 value: filterString?.searchParam,
                 name: filterString?.searchParam,
                 canRemove: true,
@@ -199,7 +200,7 @@ export const VehiclePriceMasterBase = (props) => {
             },
             {
                 key: 'modelCode',
-                title: 'Model',
+                title: translateContent('vehiclePriceMaster.label.model'),
                 value: filterString?.modelCode,
                 name: productHierarchyList?.find((i) => i?.prodctCode === filterString?.modelCode)?.prodctShrtName,
                 canRemove: true,
@@ -207,7 +208,7 @@ export const VehiclePriceMasterBase = (props) => {
             },
             {
                 key: 'stateCode',
-                title: 'State',
+                title: translateContent('vehiclePriceMaster.label.state'),
                 value: filterString?.stateCode,
                 name: filteredStateData?.find((i) => i?.key === filterString?.stateCode)?.value,
                 canRemove: true,
@@ -215,7 +216,7 @@ export const VehiclePriceMasterBase = (props) => {
             },
             {
                 key: 'districtCode',
-                title: 'District',
+                title: translateContent('vehiclePriceMaster.label.district'),
                 value: filterString?.districtCode,
                 name: filteredDistrictData?.find((i) => i?.key === filterString?.districtCode)?.value,
                 canRemove: false,
@@ -223,7 +224,7 @@ export const VehiclePriceMasterBase = (props) => {
             },
             {
                 key: 'cityCode',
-                title: 'City',
+                title: translateContent('vehiclePriceMaster.label.city'),
                 value: filterString?.cityCode,
                 name: filteredCityData?.find((i) => i?.key === filterString?.cityCode)?.value,
                 canRemove: true,
@@ -232,7 +233,7 @@ export const VehiclePriceMasterBase = (props) => {
 
             {
                 key: 'priceAsOnDate',
-                title: 'End Date',
+                title: translateContent('vehiclePriceMaster.label.endDate'),
                 value: filterString?.priceAsOnDate,
                 name: filterString?.priceAsOnDate ? convertDateTime(filterString?.priceAsOnDate, dateFormatView) : '',
                 canRemove: true,
@@ -240,28 +241,28 @@ export const VehiclePriceMasterBase = (props) => {
             },
             {
                 key: 'pageSize',
-                title: 'Value',
+                title: translateContent('vehiclePriceMaster.label.value'),
                 value: page?.pageSize,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'pageNumber',
-                title: 'Value',
+                title: translateContent('vehiclePriceMaster.label.value'),
                 value: page?.current,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'sortBy',
-                title: 'Sort By',
+                title: translateContent('vehiclePriceMaster.label.sortBy'),
                 value: page?.sortBy,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'sortIn',
-                title: 'Sort Type',
+                title: translateContent('vehiclePriceMaster.label.sortType'),
                 value: page?.sortType,
                 canRemove: true,
                 filter: false,
@@ -405,7 +406,7 @@ export const VehiclePriceMasterBase = (props) => {
                     <>
                         {message}
                         <Button type="link" onClick={() => downloadReport(data?.docId)}>
-                            Download Here
+                            {translateContent('vehiclePriceMaster.label.downloadHere')}
                         </Button>
                     </>
                 );
@@ -461,7 +462,7 @@ export const VehiclePriceMasterBase = (props) => {
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
         onCloseAction: onAdvanceSearchCloseAction,
-        titleOverride: 'Advance Filters',
+        titleOverride: translateContent('vehiclePriceMaster.label.advanceFilters'),
         isDataCountryLoaded,
         isCountryLoading,
         countryData,
@@ -513,7 +514,7 @@ export const VehiclePriceMasterBase = (props) => {
             }
         }
     };
-    const title = 'Vehicle Price Master';
+    const title = translateContent('vehiclePriceMaster.heading.mainTitle');
 
     const advanceFilterResultProps = {
         extraParams,
@@ -536,7 +537,7 @@ export const VehiclePriceMasterBase = (props) => {
 
     const uploadProps = {
         isVisible: isUploadFormVisible,
-        titleOverride: 'Upload Vehicle Price Master Form',
+        titleOverride: translateContent('vehiclePriceMaster.heading.uploadVehicle'),
         onCloseAction: () => {
             setIsUploadFormVisible(false);
             form.resetFields();
@@ -574,9 +575,9 @@ export const VehiclePriceMasterBase = (props) => {
         setEmptyList,
         fetchViewDocument,
         resetViewData,
-        uploadButtonName: 'Upload Price Master',
-        messageText: 'Click or drop your file here to upload',
-        validationText: 'File type should be .xlxs and max file size to be 8Mb',
+        uploadButtonName: translateContent('vehiclePriceMaster.heading.uploadButtonName'),
+        messageText: translateContent('vehiclePriceMaster.heading.messageText'),
+        validationText: translateContent('vehiclePriceMaster.heading.validationText'),
         supportedFileTypes: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
         maxSize: 8,
         single: true,

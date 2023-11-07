@@ -19,6 +19,7 @@ import dayjs from 'dayjs';
 import { AddEditForm, ViewDetail } from 'components/Sales/Common/CustomerDetails';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -37,8 +38,6 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Customer Details';
-
     let returnValue = {
         collapsed,
         userId,
@@ -52,8 +51,6 @@ const mapStateToProps = (state) => {
         isTypeDataLoaded,
         isTypeDataLoading,
         typeData: typeData,
-
-        moduleTitle,
     };
     return returnValue;
 };
@@ -105,7 +102,7 @@ export const CustomerDetailsMain = (props) => {
     }, []);
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
     };
 
     const onErrorAction = (message) => {
@@ -129,11 +126,11 @@ export const CustomerDetailsMain = (props) => {
     const onFinish = (values) => {
         let data;
         if (!values?.bookingCustomer?.customerId && !formData?.bookingCustomer?.customerId) {
-            showGlobalNotification({ message: 'Please provide booking customer' });
+            showGlobalNotification({ message: translateContent('commonModules.validation.mandatoryBookingCustomer') });
             setActiveKey([...activeKey, !values?.bookingCustomer?.customerId ? 1 : '']);
             return false;
         } else if (!values?.billingCustomer?.customerId && activeKey.includes(2)) {
-            showGlobalNotification({ message: 'Please provide billing customer' });
+            showGlobalNotification({ message: translateContent('commonModules.validation.mandatoryBillingCustomer') });
             setActiveKey([...activeKey, !values?.billingCustomer?.customerId ? 2 : '']);
             return false;
         } else {
@@ -152,7 +149,7 @@ export const CustomerDetailsMain = (props) => {
                 setButtonData({ ...buttonData, formBtnActive: false });
             } else {
                 const onSuccess = (res) => {
-                    showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                    showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
                     fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, onError, extraParams });
                     handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
                 };

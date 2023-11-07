@@ -16,6 +16,7 @@ import styles from 'assets/sass/app.module.scss';
 
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { OTF_ADDON_SECTION } from 'constants/OTFAddonSection';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -104,7 +105,7 @@ const AddEditFormMain = (props) => {
                 <Text strong> {headerText}</Text>
                 {!formActionType?.viewMode && toShowAddButton() && (
                     <Button className={styles.marL10} disabled={addButtonDisabled[dataKey] || isEditing} onClick={(event) => handleCollapseAdd(openKey, dataKey, event)} icon={<PlusOutlined />} type="primary">
-                        Add
+                        {translateContent('global.buttons.add')}
                     </Button>
                 )}
             </>

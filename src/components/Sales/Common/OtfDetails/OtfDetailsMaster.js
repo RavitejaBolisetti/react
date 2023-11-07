@@ -18,6 +18,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { salesConsultantActions } from 'store/actions/data/otf/salesConsultant';
 import { BASE_URL_OTF_DETAILS as customURL } from 'constants/routingApi';
 import { formatDate } from 'utils/formatDateTime';
+import { translateContent } from 'utils/translateContent';
 
 import { OTFStatusBar } from '../utils/OTFStatusBar';
 
@@ -34,7 +35,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Booking Details';
+    const moduleTitle = translateContent('bookingManagement.label.bookingDetails');
 
     let returnValue = {
         userId,

@@ -15,6 +15,7 @@ import { partyMasterDataActions } from 'store/actions/data/partyMaster';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
 import { DATA_TYPE } from 'constants/dataType';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -27,14 +28,11 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Insurance Details';
-
     let returnValue = {
         userId,
         isDataLoaded,
         insuranceData,
         isLoading,
-        moduleTitle,
         isInsuranceCompanyDataLoaded,
         insuranceCompanies,
     };
@@ -83,11 +81,11 @@ const ViewDetailMain = (props) => {
     return (
         <Card>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Insurance Company">{checkAndSetDefaultValue(getCodeValue(insuranceCompanies, formData?.insuranceCompany), isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Insurance Cover Note">{checkAndSetDefaultValue(formData?.insuranceCoverNote, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Insurance Amount">{checkAndSetDefaultValue(formData?.insuranceAmount, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Insurance Cover Note Date">{checkAndSetDefaultValue(formData?.insuranceDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                <Descriptions.Item label="Registration Number">{checkAndSetDefaultValue(formData?.registrationNumber, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('commonModules.label.insuranceDetails.insuranceCompany')}>{checkAndSetDefaultValue(getCodeValue(insuranceCompanies, formData?.insuranceCompany), isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('commonModules.label.insuranceDetails.insuranceCoverNote')}>{checkAndSetDefaultValue(formData?.insuranceCoverNote, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('commonModules.label.insuranceDetails.insuranceAmount')}>{checkAndSetDefaultValue(formData?.insuranceAmount, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('commonModules.label.insuranceDetails.insuranceCoverNoteDate')}>{checkAndSetDefaultValue(formData?.insuranceDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('commonModules.label.insuranceDetails.registrationNumber')}>{checkAndSetDefaultValue(formData?.registrationNumber, isLoading)}</Descriptions.Item>
             </Descriptions>
         </Card>
     );

@@ -18,6 +18,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { DATA_TYPE } from 'constants/dataType';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -83,25 +84,25 @@ const ViewDetailMain = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <div className={styles.viewContainer}>
                         <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Effective From">{checkAndSetDefaultValue(vehiclePrice?.effectiveFrom, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                            <Descriptions.Item label="Effective To">{checkAndSetDefaultValue(vehiclePrice?.effectiveTo, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                            <Descriptions.Item label="Plant">{checkAndSetDefaultValue(vehiclePrice?.plant, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="State">{checkAndSetDefaultValue(vehiclePrice?.state, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="City">{checkAndSetDefaultValue(vehiclePrice?.city, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="City Code">{checkAndSetDefaultValue(vehiclePrice?.cityCode, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(vehiclePrice?.modelCode, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Model Group">{checkAndSetDefaultValue(vehiclePrice?.modelGroup, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Model Description">{checkAndSetDefaultValue(vehiclePrice?.modelDescription, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Distribution Channel">{checkAndSetDefaultValue(vehiclePrice?.distributionChannel, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Price Type">{checkAndSetDefaultValue(vehiclePrice?.priceType, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="GST">{checkAndSetDefaultValue(vehiclePrice?.gst, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Cess">{checkAndSetDefaultValue(vehiclePrice?.cess, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="GST Amount">{checkAndSetDefaultValue(vehiclePrice?.gstAmount, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="MM Invoice Amount">{checkAndSetDefaultValue(vehiclePrice?.mmInvoiceAmount, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Dealer Margin">{checkAndSetDefaultValue(vehiclePrice?.dealerMargin, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="GST Amount on Dealer Margin">{checkAndSetDefaultValue(vehiclePrice?.gstAmountOndealerMargin, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Net Dealer Price">{checkAndSetDefaultValue(vehiclePrice?.netDealerPrice, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Selling Price">{checkAndSetDefaultValue(vehiclePrice?.sellingPrice, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vehiclePriceMaster.label.effectiveFrom')}>{checkAndSetDefaultValue(vehiclePrice?.effectiveFrom, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vehiclePriceMaster.label.effectiveTo')}>{checkAndSetDefaultValue(vehiclePrice?.effectiveTo, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vehiclePriceMaster.label.plant')}>{checkAndSetDefaultValue(vehiclePrice?.plant, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vehiclePriceMaster.label.state')}>{checkAndSetDefaultValue(vehiclePrice?.state, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vehiclePriceMaster.label.city')}>{checkAndSetDefaultValue(vehiclePrice?.city, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vehiclePriceMaster.label.cityCode')}>{checkAndSetDefaultValue(vehiclePrice?.cityCode, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vehiclePriceMaster.label.modelCode')}>{checkAndSetDefaultValue(vehiclePrice?.modelCode, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vehiclePriceMaster.label.modelGroup')}>{checkAndSetDefaultValue(vehiclePrice?.modelGroup, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vehiclePriceMaster.label.modelDescription')}>{checkAndSetDefaultValue(vehiclePrice?.modelDescription, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vehiclePriceMaster.label.distributionChannel')}>{checkAndSetDefaultValue(vehiclePrice?.distributionChannel, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vehiclePriceMaster.label.priceType')}>{checkAndSetDefaultValue(vehiclePrice?.priceType, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vehiclePriceMaster.label.gst')}>{checkAndSetDefaultValue(vehiclePrice?.gst, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vehiclePriceMaster.label.cess')}>{checkAndSetDefaultValue(vehiclePrice?.cess, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vehiclePriceMaster.label.gstAmount')}>{checkAndSetDefaultValue(vehiclePrice?.gstAmount, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vehiclePriceMaster.label.mnmInvoiceAmount')}>{checkAndSetDefaultValue(vehiclePrice?.mmInvoiceAmount, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vehiclePriceMaster.label.dealerMargin')}>{checkAndSetDefaultValue(vehiclePrice?.dealerMargin, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vehiclePriceMaster.label.gstAmountDealerMargin')}>{checkAndSetDefaultValue(vehiclePrice?.gstAmountOndealerMargin, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vehiclePriceMaster.label.netDealer')}>{checkAndSetDefaultValue(vehiclePrice?.netDealerPrice, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('vehiclePriceMaster.label.sellingPrice')}>{checkAndSetDefaultValue(vehiclePrice?.sellingPrice, isLoading)}</Descriptions.Item>
                         </Descriptions>
                     </div>
                 </Col>

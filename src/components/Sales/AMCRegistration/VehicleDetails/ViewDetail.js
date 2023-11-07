@@ -8,6 +8,7 @@ import { Descriptions, Divider } from 'antd';
 
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { DATA_TYPE } from 'constants/dataType';
+import { translateContent } from 'utils/translateContent';
 
 const ViewDetailBase = (props) => {
     const { formData, styles } = props;
@@ -23,16 +24,16 @@ const ViewDetailBase = (props) => {
         <div className={styles.viewDrawerContainer}>
             <>
                 <Descriptions {...viewProps}>
-                    <Descriptions.Item label="VIN">{checkAndSetDefaultValue(formData?.vin, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('amcRegistration.label.vin')}>{checkAndSetDefaultValue(formData?.vin, isLoading)}</Descriptions.Item>
                 </Descriptions>
                 <Divider />
                 <Descriptions {...viewProps}>
-                    <Descriptions.Item label="Vehicle Registration No.">{checkAndSetDefaultValue(formData?.vehicleRegistrationNumber, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Original Warranty Start Date">{checkAndSetDefaultValue(formData?.orignallyWarrantyStartDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('amcRegistration.label.vehicleRegistrationNumber')}>{checkAndSetDefaultValue(formData?.vehicleRegistrationNumber, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('amcRegistration.label.orignallyWarrantyStartDate')}>{checkAndSetDefaultValue(formData?.orignallyWarrantyStartDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
 
-                    <Descriptions.Item label="Model Group">{checkAndSetDefaultValue(formData?.modelGroup, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Model Family">{checkAndSetDefaultValue(formData?.modelFamily, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Model Description">{checkAndSetDefaultValue(formData?.modelDescription, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('amcRegistration.label.modelGroup')}>{checkAndSetDefaultValue(formData?.modelGroup, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('amcRegistration.label.modelFamily')}>{checkAndSetDefaultValue(formData?.modelFamily, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('amcRegistration.label.modelDescription')}>{checkAndSetDefaultValue(formData?.modelDescription, isLoading)}</Descriptions.Item>
                 </Descriptions>
             </>
         </div>

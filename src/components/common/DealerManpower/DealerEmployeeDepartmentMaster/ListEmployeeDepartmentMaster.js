@@ -23,6 +23,7 @@ import { filterFunction } from 'utils/filterFunction';
 import { btnVisiblity } from 'utils/btnVisiblity';
 
 import { AddEditForm } from './AddEditForm';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -35,14 +36,11 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Employee Department';
-
     let returnValue = {
         userId,
         isDataLoaded,
         data,
         isLoading,
-        moduleTitle,
         isDivisionDataLoaded,
         isDivisionLoading,
         divisionData,
@@ -154,14 +152,14 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
     const extraParams = [
         {
             key: 'divisionCode',
-            title: 'Division',
+            title: translateContent('employeeDepartment.label.division'),
             value: filterString?.divisionCode,
             name: divisionData?.find((i) => i?.key === filterString?.divisionCode)?.value,
             canRemove: true,
         },
         {
             key: 'keyword',
-            title: 'Keyword',
+            title: translateContent('employeeDepartment.label.Keyword'),
             value: filterString?.keyword,
             name: filterString?.keyword,
             canRemove: true,
@@ -177,16 +175,16 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
 
             setAdvanceSearchVisible(false);
 
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
 
             setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage, placement: 'bottomRight' });
             } else {
                 setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             }
         };
 
@@ -236,11 +234,11 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
 
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
-            return 'View ';
+            return translateContent('global.drawerTitle.view');
         } else if (formActionType?.editMode) {
-            return 'Edit ';
+            return translateContent('global.drawerTitle.edit');
         } else {
-            return 'Add ';
+            return translateContent('global.drawerTitle.add');
         }
     }, [formActionType]);
 
@@ -252,7 +250,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat('Department'),
+        titleOverride: drawerTitle.concat(translateContent('employeeDepartment.label.division')),
         tableData: searchData,
 
         isDivisionLoading,
@@ -275,7 +273,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
         onCloseAction: onAdvanceSearchCloseAction,
-        titleOverride: 'Advance Filters',
+        titleOverride: translateContent('global.advanceFilter.title'),
         divisionData,
         filterString,
         setFilterString,
@@ -326,7 +324,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         handleReferesh,
         handleButtonClick,
         advanceFilterProps,
-        title,
+        title: translateContent('employeeDepartment.heading.mainTitle'),
         searchValidator,
         tableData: searchData,
     };

@@ -8,6 +8,7 @@ import { Collapse, Divider } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import { convertDate, dateFormatView } from 'utils/formatDateTime';
 import dayjs from 'dayjs';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -34,11 +35,11 @@ const VoucherCard = (props) => {
                 header={
                     <>
                         <div className={styles.detailCardText} style={{ fontSize: '14px' }}>
-                            Voucher No: <span>{selectedRecord?.voucherNumber || '-'}</span>
+                            {translateContent('creditDebitNote.leftSideBar.label.voucherNumber')}: <span>{selectedRecord?.voucherNumber || '-'}</span>
                         </div>
                         <Divider />
                         <div className={`${styles.detailCardText} ${styles.marB5}`} style={{ fontSize: '14px' }}>
-                            Voucher Date: <span>{selectedRecord?.voucherDate ? convertDate(selectedRecord?.voucherDate, dateFormatView) : dayjs().format(dateFormatView)}</span>
+                            {translateContent('creditDebitNote.leftSideBar.label.voucherDate')}: <span>{selectedRecord?.voucherDate ? convertDate(selectedRecord?.voucherDate, dateFormatView) : dayjs().format(dateFormatView)}</span>
                         </div>
                     </>
                 }
@@ -46,7 +47,7 @@ const VoucherCard = (props) => {
             >
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Voucher Type: <span>{selectedRecord?.voucherType || '-'}</span>
+                    {translateContent('creditDebitNote.leftSideBar.label.voucherType')}: <span>{selectedRecord?.voucherType || '-'}</span>
                 </div>
             </Panel>
         </Collapse>

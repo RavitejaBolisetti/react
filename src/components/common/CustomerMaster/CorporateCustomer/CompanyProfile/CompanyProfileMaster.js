@@ -11,6 +11,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
+import { translateContent } from 'utils/translateContent';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
@@ -129,7 +130,7 @@ const CompanyProfileBase = (props) => {
     const onFinish = (values) => {
         const recordId = customerProfileData?.id || '';
         if (uploadedFile && !values?.customerConsent) {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please accept consent.', placement: 'bottomRight' });
+            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: 'Please accept consent.', placement: 'bottomRight' });
             return;
         }
         const customerId = selectedCustomerId;
@@ -150,7 +151,7 @@ const CompanyProfileBase = (props) => {
             listShowLoading(false);
             form.resetFields();
 
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             setButtonData({ ...buttonData, formBtnActive: false });
             if (res.data) {
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
@@ -195,7 +196,7 @@ const CompanyProfileBase = (props) => {
     }, []);
 
     const downloadFileFromList = () => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
+        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: 'Your download will start soon' });
         const extraParams = [
             {
                 key: 'docId',

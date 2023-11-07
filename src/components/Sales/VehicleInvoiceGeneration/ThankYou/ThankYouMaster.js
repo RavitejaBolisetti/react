@@ -4,7 +4,6 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { Row, Col, Space, Avatar, Typography, Card, Button, Divider, Popover } from 'antd';
-import { LANGUAGE_EN } from 'language/en';
 import { HiCheck } from 'react-icons/hi';
 import styles from 'assets/sass/app.module.scss';
 import { REGISTRATION } from 'constants/modules/vehicleInvoiceGeneration';
@@ -16,7 +15,6 @@ const { Title, Text } = Typography;
 
 export const ThankYouMaster = (props) => {
     const { FormActionButton, otfData, onPrintInvoice, defaultBtnVisiblity, setButtonData } = props;
-    const title = LANGUAGE_EN.GENERAL.THANK_YOU_PAGE_INVOICE.TITLE;
 
     const myProps = {
         ...props,

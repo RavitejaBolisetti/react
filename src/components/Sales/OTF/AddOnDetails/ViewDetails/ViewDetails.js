@@ -5,6 +5,7 @@
  */
 import React from 'react';
 import { Descriptions } from 'antd';
+import { translateContent } from 'utils/translateContent';
 
 const ViewDetailMain = (props) => {
     const { name, data } = props;
@@ -19,7 +20,7 @@ const ViewDetailMain = (props) => {
         <>
             <Descriptions {...viewProps}>
                 <Descriptions.Item label={name}>{data?.name}</Descriptions.Item>
-                <Descriptions.Item label={name + ' Rate'}>{data?.price}</Descriptions.Item>
+                <Descriptions.Item label={name + translateContent('bookingManagement.label.rate')}>{data?.price}</Descriptions.Item>
             </Descriptions>
         </>
     );

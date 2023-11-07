@@ -14,18 +14,19 @@ import { dateFormatView } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
 import { CardSkeleton } from 'components/common/Skeleton';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 
 const expandIcon = ({ isActive }) =>
     isActive ? (
         <>
-            <span>See less</span>
+            <span>{translateContent('global.buttons.seeLess')}</span>
             <SlArrowUp size={13} />
         </>
     ) : (
         <>
-            <span>See more</span>
+            <span>{translateContent('global.buttons.seeMore')}</span>
             <SlArrowDown size={13} />
         </>
     );
@@ -41,7 +42,7 @@ const VehicleDetailCard = (props) => {
             <Panel
                 header={
                     <div className={`${styles.detailCardText} ${styles.marB5}`} style={{ fontSize: '14px' }}>
-                        CheckList Number:
+                        {translateContent('vehicleReceiptChecklist.heading.profileCard.checklistNumber')}
                         <span className={styles.activeForm}>
                             {ProfileData?.checklistNumber || 'New'}
                             <CopytoClipboard text={ProfileData?.checklistNumber} />
@@ -52,31 +53,38 @@ const VehicleDetailCard = (props) => {
             >
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Checklist Date: <span>{ProfileData?.checklistDate ? dayjs(ProfileData?.checklistDate)?.format(dateFormatView) : 'NA'}</span>
+                    {translateContent('vehicleReceiptChecklist.heading.profileCard.checklistDate')}
+                    <span>{ProfileData?.checklistDate ? dayjs(ProfileData?.checklistDate)?.format(dateFormatView) : 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Checklist Status: <span>{findStatus(ProfileData?.checklistStatus)}</span>
+                    {translateContent('vehicleReceiptChecklist.heading.profileCard.checklistStatus')}
+                    <span>{findStatus(ProfileData?.checklistStatus)}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    GRN Number: <span>{ProfileData?.grnNumber || 'NA'}</span>
+                    {translateContent('vehicleReceiptChecklist.heading.profileCard.grnNumber')}
+                    <span>{ProfileData?.grnNumber || 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    GRN Date: <span>{ProfileData?.grnDate ? dayjs(ProfileData?.grnDate)?.format(dateFormatView) : 'NA'}</span>
+                    {translateContent('vehicleReceiptChecklist.heading.profileCard.grnDate')}
+                    <span>{ProfileData?.grnDate ? dayjs(ProfileData?.grnDate)?.format(dateFormatView) : 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    GRN Status: <span>{ProfileData?.grnStatusDescription || 'NA'}</span>
+                    {translateContent('vehicleReceiptChecklist.heading.profileCard.grnStatus')}
+                    <span>{ProfileData?.grnStatusDescription || 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    VIN: <span>{ProfileData?.vinNumber || 'NA'}</span>
+                    {translateContent('vehicleReceiptChecklist.heading.profileCard.vin')}
+                    <span>{ProfileData?.vinNumber || 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    MODEL:
+                    {translateContent('vehicleReceiptChecklist.heading.profileCard.model')}
+
                     <span>
                         {record?.modelName ? record?.modelName : 'NA'}
                         {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}

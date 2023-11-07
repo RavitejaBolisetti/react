@@ -12,6 +12,7 @@ import { dateFormat, formatDate } from 'utils/formatDateTime';
 import { ModalButtons } from 'components/common/Button';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const AdvancedSearchFrom = (props) => {
     const { setAdvanceSearchVisible, vehicleModelData, isModelDataLoading } = props;
@@ -48,17 +49,17 @@ export const AdvancedSearchFrom = (props) => {
     const modalProps = {
         reset: true,
         submit: true,
-        resetName: 'Reset',
-        submitName: 'Apply',
+        resetName: translateContent('global.buttons.reset'),
+        submitName: translateContent('global.buttons.apply'),
         handleResetFilter,
     };
     return (
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Receipt From Date" name="fromDate" className={styles?.datePicker} rules={[{ required: rules?.fromdate, message: 'Please select from date' }]}>
+                    <Form.Item label={translateContent('vehicleReceiptChecklist.label.advanceFilter.fromDate')} name="fromDate" className={styles?.datePicker} rules={[{ required: rules?.fromdate, message: translateContent('vehicleReceiptChecklist.advanceFilter.message1') }]}>
                         <DatePicker
-                            placeholder={preparePlaceholderSelect('From Date')}
+                            placeholder={preparePlaceholderSelect(translateContent('vehicleReceiptChecklist.label.advanceFilter.fromDate'))}
                             format={dateFormat}
                             className={styles.fullWidth}
                             disabledDate={(current) => current > new Date()}
@@ -71,9 +72,9 @@ export const AdvancedSearchFrom = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Receipt To Date" name="toDate" className={styles?.datePicker} rules={[{ required: rules?.todate, message: 'Please select to date' }]}>
+                    <Form.Item label={translateContent('vehicleReceiptChecklist.label.advanceFilter.toDate')} name="toDate" className={styles?.datePicker} rules={[{ required: rules?.todate, message: translateContent('vehicleReceiptChecklist.advanceFilter.message2') }]}>
                         <DatePicker
-                            placeholder={preparePlaceholderSelect('To Date')}
+                            placeholder={preparePlaceholderSelect(translateContent('vehicleReceiptChecklist.label.advanceFilter.toDate'))}
                             format={dateFormat}
                             className={styles.fullWidth}
                             disabledDate={(current) => current < advanceFilterForm?.getFieldValue('fromDate') || current > new Date()}
