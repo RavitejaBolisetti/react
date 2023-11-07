@@ -91,7 +91,10 @@
             "addCreditNote": "Add Credit Note",
             "addDebitNote": "Add Dedit Note",
             "printReceipt": "Print Receipt",
-            "applyFilter": "Apply Filter"
+            "applyFilter": "Apply Filter",
+            "printForm21": "Print Form 21",
+            "printInvoice": "Print Invoice",
+            "cancelInvoice": "Cancel Invoice"
         },
         "placeholder": {
             "input": "Enter ",
