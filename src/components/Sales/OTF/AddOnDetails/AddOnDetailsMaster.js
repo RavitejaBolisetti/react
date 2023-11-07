@@ -30,13 +30,10 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Add on Details';
-
     let returnValue = {
         userId,
         isDataLoaded,
         isLoading,
-        moduleTitle,
         AddonDetailsData,
         AddonPartsData,
         isAddonPartsDataLoaded,

@@ -55,7 +55,7 @@ const AddEditFormMain = (props) => {
                             <Card style={{ backgroundColor: '#F2F2F2' }}>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item name="financeArrangedBy" label={translateContent('commonModules.label.financeDetails.financeArrangedBy')} rules={[validateRequiredSelectField('finance arranged by')]}>
+                                        <Form.Item name="financeArrangedBy" label={translateContent('commonModules.label.financeDetails.financeArrangedBy')} rules={[validateRequiredSelectField(translateContent('commonModules.label.financeDetails.financeArrangedBy'))]}>
                                             {customSelectBox({ data: typeData['FNC_ARNGD'], onChange: handleFinanceArrangedBy })}
                                         </Form.Item>
                                     </Col>
@@ -71,7 +71,7 @@ const AddEditFormMain = (props) => {
                                     <>
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label={translateContent('commonModules.label.financeDetails.financeArrangedBy')} name="financier" placeholder={preparePlaceholderSelect('Select')}>
+                                                <Form.Item label={translateContent('commonModules.label.financeDetails.financeArrangedBy')} name="financier" placeholder={preparePlaceholderSelect(translateContent('commonModules.label.financeDetails.financeArrangedBy'))}>
                                                     {customSelectBox({ data: FinanceLovData, onChange: handleDOChange })}
                                                 </Form.Item>
                                             </Col>
@@ -119,7 +119,7 @@ const AddEditFormMain = (props) => {
                                                 {doReceived === YES_NO_FLAG?.YES?.key && (
                                                     <>
                                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                            <Form.Item label={translateContent('commonModules.label.financeDetails.DoNumber')} name="doNumber" rules={[validateRequiredInputField('Number')]}>
+                                                            <Form.Item label={translateContent('commonModules.label.financeDetails.DoNumber')} name="doNumber" rules={[validateRequiredInputField(translateContent('commonModules.label.financeDetails.DoNumber'))]}>
                                                                 <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.financeDetails.DoNumber'))}></Input>
                                                             </Form.Item>
                                                         </Col>

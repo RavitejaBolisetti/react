@@ -71,13 +71,13 @@ const ViewDetailMain = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Collapse expandIcon={expandIcon} collapsible="icon" activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
-                        <Panel header={translateContent('vehicleInvoiceGeneration.heading.collapse.bookingCustomer')} key="1">
+                        <Panel header={translateContent('commonModules.heading.collapse.bookingCustomer')} key="1">
                             <Divider />
                             {customerDetail(formData?.bookingCustomer)}
                         </Panel>
                     </Collapse>
                     <Collapse expandIcon={expandIcon} collapsible="icon" activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
-                        <Panel header={translateContent('vehicleInvoiceGeneration.heading.collapse.billingCustomer')} key="2">
+                        <Panel header={translateContent('commonModules.heading.collapse.billingCustomer')} key="2">
                             <Divider />
                             {/* <Checkbox>Same as Booking Customer</Checkbox> */}
                             {customerDetail(formData?.billingCustomer)}

@@ -105,6 +105,10 @@
         }
     },
     "commonModules": {
+        "heading": {
+            "collapse.bookingCustomer": "Booking Customer",
+            "collapse.billingCustomer": "Billing Customer"
+        },
         "label": {
             "bookingDetails.bookingNumber": "Booking Number",
             "bookingDetails.bookingDate": "Booking Date",
@@ -128,6 +132,7 @@
             "bookingCustomerAndBillingCustomer.pan": "PAN",
             "bookingCustomerAndBillingCustomer.gstin": "GSTIN",
             "bookingCustomerAndBillingCustomer.birthDate": "Birth Date",
+            "bookingCustomerAndBillingCustomer.sameAsBookingCustomer": "Same as Booking Customer",
 
             "vehicleDetails.modelDescription": "Model Description",
             "vehicleDetails.modelCode": "Model Code",
@@ -231,6 +236,10 @@
                 "sectionThree": "Scheme",
                 "sectionFour": "Vehicle Price"
             }
+        },
+        "validation": {
+            "mandatoryBookingCustomer": "Please provide booking customer",
+            "mandatoryBillingCustomer": "Please provide billing customer"
         }
     },
     "login": {
@@ -1229,7 +1238,11 @@
             "bookingUpdatedSuccess": "Booking form updated successfully",
             "bookingUpdated": "Booking number: {ORDER_ID}",
             "replacementText": "{ORDER_ID}",
-            "verifyCustomerID": "Verify Customer id to continue"
+            "verifyCustomerID": "Verify Customer id to continue",
+            "providePartNumber": "Please provide part number",
+            "partAlreadyAdded": "Part is already added",
+            "requiredQuantityLessThan50": "Required quantity should be less than 50",
+            "noAccessoriesDataFound": "No accessories data found"
         },
         "label": {
             "unallotBooking": "Un-Allot Booking",
@@ -1268,10 +1281,39 @@
             "deliveryNoteDate": "Delivery Note Date",
             "deliveryNoteStatus": "Delivery Note Status",
             "invoiceInformation": "Invoice Information",
-            "deliveryInformation": "Delivery Information"
+            "deliveryInformation": "Delivery Information",
+            "addAccessories": "Add accessories",
+            "partName": "Part Name",
+            "partNumber": "Part Number",
+            "partType": "Part Type",
+            "sellingPrice": "Selling Price",
+            "mrp": "MRP",
+            "requiredQuantity": "Required Quantity",
+            "search": "Search",
+            "amc": "AMC",
+            "amcRate": "AMC Rate",
+            "fms": "FMS",
+            "fmsRate": "FMS Rate",
+            "rsa": "RSA",
+            "rsaRate": "RSA Rate",
+            "shield": "Shield",
+            "shieldRate": "Shield Rate",
+            "type": "Type",
+            "rate": " Rate",
+            "accessoriesInformation": "Accessories Information",
+            "modifiedDateTime": "Modified Date & Time",
+            "modifiedBy": "Modified By",
+            "changeSource": "Change Source",
+            "fieldName": "Field Name",
+            "oldValue": "Old Value",
+            "newValue": "New Source"
         },
         "placeholder": {
-            "searchBooking": "Search Booking"
+            "searchBooking": "Search Booking",
+            "searchResult": "Search Result"
+        },
+        "button": {
+            "selectPart": "Select Part"
         }
     },
 
@@ -2196,6 +2238,7 @@
             "effectiveTo": "Effective To",
             "plant": "Plant",
             "state": "State",
+            "district": "District",
             "city": "City",
             "cityCode": "City Code",
             "modelCode": "Model Code",
@@ -2210,7 +2253,23 @@
             "dealerMargin": "Dealer Margin",
             "gstAmountDealerMargin": "GST Amount on Dealer Margin",
             "netDealer": "Net Dealer Price",
-            "sellingPrice": "Selling Price"
+            "sellingPrice": "Selling Price",
+            "model": "Model",
+            "pricingCity": "Pricing City",
+            "endDate": "End Date",
+            "downloadHere": "Download Here",
+            "advanceFilters":"Advance Filters",
+            "uploadVehicle":"Upload Vehicle Price Master Form",
+            "uploadButtonName":"Upload Price Master",
+            "messageText":"Click or drop your file here to upload",
+            "validationText":"File type should be .xlxs and max file size to be 8Mb",
+            "vehiclePriceMasterForm":"Vehicle Price Master Form",
+            "vehiclePriceTemplate":"Please download 'Vehicle Price Template' using below button",
+            "downloadTemplate":"Download Template",
+            "type":"Type",
+            "value":"Value",
+            "sortBy":"Sort By",
+            "sortType":"Sort Type"
         },
         "placeholder": {},
         "validation": {},
