@@ -2940,5 +2940,43 @@
             "text": "Are you sure you want to cancel request?",
             "submitText": "Yes, Cancel"
         }
+    },
+
+    "bookingSoMappUnmapp": {
+        "heading": {
+            "pageTitle": "Booking SO Mapping And Unmapping"
+        },
+        "label": {
+            "soNumber":"SO Number",
+            "poNumber":"PO Number",
+            "soDate":"Date",
+            "modelDescription":"Model Description",
+            "chassisNumber":"Chassis Number",
+            "bookingNumber":"Booking Number",
+            "customerName":"Customer Name",
+            "cancellationDate":"Cancellation Date",
+            "remarks":"Remarks",
+            "soStatus":"SO Status",
+            "searchOTF":"Search OTF",
+            "bookingDate":"Booking Date",
+            "cpd":"CPD",
+
+            "dealerParent":"Dealer Parent",
+            "dealerLocation":"Dealer Location",
+            "resonCategoryCode":"Reason Category",
+            "reasonDescriptionCode":"Reason Description",
+            
+            "customerId":"Customer ID",
+            "mobileNumber":"Mobile No.",
+            "modelGroup":"Model Group",
+            "modelVariant":"Model Variant"
+            
+        },
+        "placeholder": {
+            "search": "Search Booking Number"
+        },
+        "errorMsg":{
+            "message":"Validate booking number to continue"
+        }
     }
 }
