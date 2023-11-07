@@ -13,6 +13,7 @@ import { DataTable } from 'utils/dataTable';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { ApportionAddEditForm } from './ApportionAddEditForm';
 import { tableColumn } from './tableColumn';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -28,7 +29,7 @@ const AddEditFormMain = (props) => {
     const [isEditing, setisEditing] = useState(false);
     const [apportionTableFormData, setApportionTableFormData] = useState();
 
-    const voucherModuleTitle = `Apportion`;
+    const voucherModuleTitle = translateContent('creditDebitNote.ApportionDetails.heading.voucherModuleTitle');
 
     const addContactHandeler = () => {
         apportionForm.resetFields();
@@ -113,9 +114,9 @@ const AddEditFormMain = (props) => {
                             header={
                                 <Row>
                                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                        <Text strong>Apportion Details</Text>
+                                        <Text strong> { translateContent('creditDebitNote.ApportionDetails.heading.title')}</Text>
                                         <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary">
-                                            Add
+                                            {translateContent('global.buttons.add')}
                                         </Button>
                                     </Col>
                                 </Row>

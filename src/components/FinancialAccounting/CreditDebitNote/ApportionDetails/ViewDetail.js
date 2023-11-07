@@ -9,6 +9,7 @@ import { Collapse, Divider } from 'antd';
 import { DataTable } from 'utils/dataTable';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { tableColumn } from './tableColumn';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 
@@ -23,7 +24,7 @@ const ViewDetailMain = (props) => {
     return (
         <div className={styles.viewDrawerContainer}>
             <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse(1)} expandIconPosition="end" {...collapseProps}>
-                <Panel header="Apportion Details" key="1">
+                <Panel header={translateContent('creditDebitNote.ApportionDetails.heading.title')} key="1">
                     <Divider />
                     <DataTable scroll={{ x: 1000 }} tableColumn={tableColumn({ formActionType, bindCodeValue })} tableData={tableData} pagination={false} />
                 </Panel>

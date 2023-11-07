@@ -18,6 +18,7 @@ import { AddEditForm } from './AddEditForm';
 import { LANGUAGE_EN } from 'language/en';
 
 import { ListDataTable } from 'utils/ListDataTable';
+import { translateContent } from 'utils/translateContent';
 
 import { Form } from 'antd';
 
@@ -111,7 +112,7 @@ const MappingMasterMain = (props) => {
             setFormData();
             setIsFormVisible(false);
             form.resetFields();
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             resetData();
         };
 

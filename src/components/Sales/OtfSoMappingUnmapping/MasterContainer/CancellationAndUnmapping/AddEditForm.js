@@ -12,6 +12,7 @@ import { DrawerFormButton } from 'components/common/Button';
 import { converDateDayjs } from 'utils/formatDateTime';
 import { validateRequiredInputField } from 'utils/validation';
 import { BUTTON_NAME } from 'components/Sales/OtfSoMappingUnmapping/Constants';
+import { translateContent } from 'utils/translateContent';
 
 const { TextArea } = Input;
 
@@ -32,44 +33,44 @@ const AddEditFormMain = (props) => {
                 <Form form={form} id="myForm" autoComplete="off" layout="vertical" colon={false} onValuesChange={handleFormValueChange} onFinish={onFinish}>
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="soNumber" label="SO Number">
-                                <Input {...disableProps} placeholder={preparePlaceholderText('soNumber')} />
+                            <Form.Item name="soNumber" label={translateContent('bookingSoMappUnmapp.label.soNumber')}>
+                                <Input {...disableProps} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.soNumber'))} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="poNumber" label="PO Number">
-                                <Input {...disableProps} placeholder={preparePlaceholderText('poNumber')} />
+                            <Form.Item name="poNumber" label={translateContent('bookingSoMappUnmapp.label.poNumber')}>
+                                <Input {...disableProps} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.poNumber'))} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="soDate" label="Date">
-                                <Input {...disableProps} placeholder={preparePlaceholderText('date')} />
+                            <Form.Item name="soDate" label={translateContent('bookingSoMappUnmapp.label.soDate')}>
+                                <Input {...disableProps} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.soDate'))} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="modelDescription" label="Model Description">
-                                <Input {...disableProps} placeholder={preparePlaceholderText('model Description')} />
+                            <Form.Item name="modelDescription" label={translateContent('bookingSoMappUnmapp.label.modelDescription')}>
+                                <Input {...disableProps} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.modelDescription'))} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="chasisNumber" label="Chassis Number">
-                                <Input {...disableProps} placeholder={preparePlaceholderText('chassisNumber')} />
+                            <Form.Item name="chasisNumber" label={translateContent('bookingSoMappUnmapp.label.chasisNumber')}>
+                                <Input {...disableProps} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.chasisNumber'))} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="otfNumber" label="Booking Number">
-                                <Input {...disableProps} placeholder={preparePlaceholderText('otfNumber')} />
+                            <Form.Item name="otfNumber" label={translateContent('bookingSoMappUnmapp.label.otfNumber')}>
+                                <Input {...disableProps} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.otfNumber'))} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="customerName" label="Customer Name">
-                                <Input {...disableProps} placeholder={preparePlaceholderText('modelDescription')} />
+                            <Form.Item name="customerName" label={translateContent('bookingSoMappUnmapp.label.customerName')}>
+                                <Input {...disableProps} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.customerName'))} />
                             </Form.Item>
                         </Col>
                         {showFields && (
                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                <Form.Item name="CancellationDate" label="Cancellation Date">
-                                    <Input {...disableProps} placeholder={preparePlaceholderText('cancellationDate')} />
+                                <Form.Item name="CancellationDate" label={translateContent('bookingSoMappUnmapp.label.CancellationDate')}>
+                                    <Input {...disableProps} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.CancellationDate'))} />
                                 </Form.Item>
                             </Col>
                         )}
@@ -78,8 +79,8 @@ const AddEditFormMain = (props) => {
                     {showFields && (
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Form.Item label="Remarks" rules={[validateRequiredInputField('remarks')]} name="cancellationRemarks">
-                                    <TextArea maxLength={300} placeholder={preparePlaceholderText('remarks')} showCount />
+                                <Form.Item label={translateContent('bookingSoMappUnmapp.label.remarks')} rules={[validateRequiredInputField(translateContent('bookingSoMappUnmapp.label.remarks'))]} name="cancellationRemarks">
+                                    <TextArea maxLength={300} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.remarks'))} showCount />
                                 </Form.Item>
                             </Col>
                         </Row>

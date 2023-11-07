@@ -11,6 +11,7 @@ import AccessoriesAddonMain from './AccessoriesInformation/AccessoriesAddonMain'
 import ShieldForm from './Shield/ShieldForm';
 import AMCForm from './AMC/AMCForm';
 import RSAForm from './RSA/RSAForm';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 

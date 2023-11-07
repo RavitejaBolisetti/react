@@ -12,6 +12,7 @@ import { converDateDayjs } from 'utils/formatDateTime';
 import { Row, Col, Form, Input, Divider, Card } from 'antd';
 import { ListDataTable } from 'utils/ListDataTable';
 import { DrawerFormButton } from 'components/common/Button';
+import { translateContent } from 'utils/translateContent';
 
 const { Search } = Input;
 
@@ -31,23 +32,23 @@ const AddEditFormMain = (props) => {
                 <Form form={form} autoComplete="off" layout="vertical" colon={false}>
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="soNumber" label="SO Number">
-                                <Input {...disableProps} placeholder={preparePlaceholderText('soNumber')} />
+                            <Form.Item name="soNumber" label={translateContent('bookingSoMappUnmapp.label.soNumber')}>
+                                <Input {...disableProps} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.soNumber'))} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="poNumber" label="PO Number">
-                                <Input {...disableProps} placeholder={preparePlaceholderText('poNumber')} />
+                            <Form.Item name="poNumber" label={translateContent('bookingSoMappUnmapp.label.poNumber')}>
+                                <Input {...disableProps} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.poNumber'))} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="soDate" label="Date">
-                                <Input {...disableProps} placeholder={preparePlaceholderText('date')} />
+                            <Form.Item name="soDate" label={translateContent('bookingSoMappUnmapp.label.soDate')}>
+                                <Input {...disableProps} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.soDate'))} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="modelDescription" label="Model Description">
-                                <Input {...disableProps} placeholder={preparePlaceholderText('modelDescription')} />
+                            <Form.Item name="modelDescription" label={translateContent('bookingSoMappUnmapp.label.modelDescription')}>
+                                <Input {...disableProps} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.modelDescription'))} />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -59,8 +60,8 @@ const AddEditFormMain = (props) => {
                             <Row gutter={20}>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     {/* <Search placeholder="Search Booking Number" onSearch={handleOtfSearch} className={`${styles.searchField} ${SoStyles.marginBottom}`} /> */}
-                                    <Form.Item label="Search OTF">
-                                        <Search placeholder="Search Booking Number" onSearch={handleOtfSearch} type="text" allowClear />
+                                    <Form.Item label={translateContent('bookingSoMappUnmapp.placeholder.searchOTF')}>
+                                        <Search placeholder={translateContent('bookingSoMappUnmapp.placeholder.search')} onSearch={handleOtfSearch} type="text" allowClear />
                                     </Form.Item>
                                 </Col>
                             </Row>

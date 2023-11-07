@@ -2101,6 +2101,9 @@
             "vehicleDetails.consumerSchemeWithTax": "Consumer Scheme with TAX",
             "vehicleDetails.printDiscount": "Print Discount?",
 
+            "vehicleDetails.optionalServices.serviceName": "Service Name",
+            "vehicleDetails.optionalServices.amount": "Amount",
+
             "schemeAndOfferDetails.schemeType": "Scheme Type",
             "schemeAndOfferDetails.schemeCategory": "Scheme Category",
             "schemeAndOfferDetails.Amount": "Amount",
@@ -2168,7 +2171,12 @@
 
             "optionalServices.columnOne": "serviceName",
             "optionalServices.columnTwo": "Rate",
-            "optionalServices.columnThree": "Amount"
+            "optionalServices.columnThree": "Amount",
+
+            "vehicleDetails.Description": "Description",
+            "vehicleDetails.Rate": "Rate",
+            "vehicleDetails.Amount": "Amount",
+            "vehicleDetails.Service Nam": "Service Name"
         }
     },
     "vehicleReceiptChecklist": {
@@ -3169,6 +3177,54 @@
             "accessibleDealerLocation": "Accessible Dealer Location"
         }
     },
+    "gstIRNAuthentication": {
+        "heading": {
+            "pageTitle": "GST IRN Authentication",
+            "moduleTitle": "GST IRN Authentication"
+        },
+        "label": {
+            "text": "text",
+            "password": "password",
+            "Login&Continue": "Login & Continue"
+        },
+        "placeholder": {
+            "userName": "User Name",
+            "clientId": "Client Id",
+            "parent": "parent",
+            "secretId": "Secret Id",
+            "password": "password"
+        },
+        "validation": {
+            "userName": "User Name",
+            "clientId": "Client Id",
+            "secretId": "Secret Id",
+            "password": "password"
+        },
+        "text": {
+            "Login": "Login for Authentication",
+            "dowmloadMsg": "Your download will start soon",
+            "messageText": "Click or drop your file here to upload",
+            "validationText": "File type should be .pem and max file size to be 5Mb"
+        },
+        "gstBranchAccessibleMaster": {
+            "heading": {
+                "moduleTitle": " GST Details"
+            },
+            "label": {
+                "branchName": "Branch Name",
+                "mapUnmap": "IRN Mapped/Unmapped"
+            }
+        },
+        "irnTransactionListMaster": {
+            "heading": {
+                "moduleTitle": "GST IRN Details"
+            },
+            "label": {
+                "branchName": "Branch Name",
+                "mapUnmap": "IRN Mapped/Unmapped"
+            }
+        }
+    },
     "digitalSignature": {
         "heading": {
             "moduleTitle": "Map New Digital Signature",
@@ -3344,6 +3400,44 @@
             "title": "Cancel Delivery/Invoice Cancellation Request",
             "text": "Are you sure you want to cancel request?",
             "submitText": "Yes, Cancel"
+        }
+    },
+
+    "bookingSoMappUnmapp": {
+        "heading": {
+            "pageTitle": "Booking SO Mapping And Unmapping"
+        },
+        "label": {
+            "soNumber":"SO Number",
+            "poNumber":"PO Number",
+            "soDate":"Date",
+            "modelDescription":"Model Description",
+            "chassisNumber":"Chassis Number",
+            "bookingNumber":"Booking Number",
+            "customerName":"Customer Name",
+            "cancellationDate":"Cancellation Date",
+            "remarks":"Remarks",
+            "soStatus":"SO Status",
+            "searchOTF":"Search OTF",
+            "bookingDate":"Booking Date",
+            "cpd":"CPD",
+
+            "dealerParent":"Dealer Parent",
+            "dealerLocation":"Dealer Location",
+            "resonCategoryCode":"Reason Category",
+            "reasonDescriptionCode":"Reason Description",
+            
+            "customerId":"Customer ID",
+            "mobileNumber":"Mobile No.",
+            "modelGroup":"Model Group",
+            "modelVariant":"Model Variant"
+            
+        },
+        "placeholder": {
+            "search": "Search Booking Number"
+        },
+        "errorMsg":{
+            "message":"Validate booking number to continue"
         }
     }
 }

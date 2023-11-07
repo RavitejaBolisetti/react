@@ -24,6 +24,7 @@ import { selectGstToDocAction } from 'store/actions/data/financialAccounting/sel
 import { BASE_URL_GST_DOCID_NAME as customURL } from 'constants/routingApi';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -35,7 +36,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'GST IRN Authentication';
+    const moduleTitle = translateContent('gstIRNAuthentication.heading.moduleTitle');
     let returnValue = {
         userId,
         accessToken,
@@ -141,14 +142,14 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
                     setDocData(res.data);
                     setSingleDisabled(true);
                     setDraggerDisable(true);
-                    showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                    showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
                 }
             },
             onErrorAction: (res) => {
                 setDocData();
                 setSingleDisabled(false);
                 setDraggerDisable(false);
-                showGlobalNotification({ notificationType: 'error', title: 'Error', message: res });
+                showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationSuccess.error'), message: res });
             },
         });
     };
@@ -210,7 +211,7 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
 
         const onSuccess = (res) => {
             form.resetFields();
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             fetchListGstLogin({ setIsLoading: listShowLoadingGstLogin, userId, onSuccessAction, onErrorAction });
 
             setButtonData({ ...buttonData, formBtnActive: false });
@@ -296,7 +297,7 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         handleFormValueChange,
         isLastSection,
         typeData,
-        saveButtonName: isLastSection ? 'Submit' : 'Next',
+        saveButtonName: isLastSection ? translateContent('global.buttons.submit') : translateContent('global.buttons.next'),
         addMode: formActionType?.addMode,
         editMode: formActionType?.editMode,
         userId,
@@ -310,7 +311,7 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
 
     const onDownload = () => {
         const onSuccessAction = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage || 'Your download will start soon' });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage || translateContent('global.gstIRNAuthentication.dowmloadMsg') });
         };
         const extraParams = [
             {
@@ -329,8 +330,8 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         setDraggerDisable(false);
     };
     const uploadProps = {
-        messageText: 'Click or drop your file here to upload',
-        validationText: 'File type should be .pem and max file size to be 5Mb',
+        messageText: translateContent('gstIRNAuthentication.text.dowmloadMsg'),
+        validationText: translateContent('gstIRNAuthentication.text.validationText'),
         fileList,
         setFileList,
         emptyList,

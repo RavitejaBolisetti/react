@@ -8,24 +8,25 @@ import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import styles from 'assets/sass/app.module.scss';
 
 import { convertDate, dateFormatView } from 'utils/formatDateTime';
+import { translateContent } from 'utils/translateContent';
 
 export const tableColumn = (props) => {
     const { handleButtonClick, formActionType } = props;
 
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Document Type',
+            title: translateContent('creditDebitNote.ApportionDetails.label.documentType'),
             dataIndex: 'documentType',
             width: '15%',
         }),
 
         tblPrepareColumns({
-            title: 'Document Number',
+            title: translateContent('creditDebitNote.ApportionDetails.label.documentNumber'),
             dataIndex: 'documentNumber',
             width: '10%',
         }),
         tblPrepareColumns({
-            title: 'Document Date',
+            title: translateContent('creditDebitNote.ApportionDetails.label.documentDate'),
             dataIndex: 'documentDate',
             render: (value) => {
                 return convertDate(value?.documentDate, dateFormatView);
@@ -33,27 +34,27 @@ export const tableColumn = (props) => {
             width: '10%',
         }),
         tblPrepareColumns({
-            title: 'Document Amount',
+            title: translateContent('creditDebitNote.ApportionDetails.label.documentAmount'),
             dataIndex: 'documentAmount',
             width: '10%',
         }),
         tblPrepareColumns({
-            title: 'Settled Amount',
+            title: translateContent('creditDebitNote.ApportionDetails.label.settledAmount'),
             dataIndex: 'settledAmount',
             width: '10%',
         }),
         tblPrepareColumns({
-            title: 'Balanced Amount',
+            title: translateContent('creditDebitNote.ApportionDetails.label.balancedAmount'),
             dataIndex: 'balancedAmount',
             width: '10%',
         }),
         tblPrepareColumns({
-            title: 'Write-Off Amount',
+            title: translateContent('creditDebitNote.ApportionDetails.label.writeOffAmount'),
             dataIndex: 'writeOffAmount',
             width: '10%',
         }),
         tblPrepareColumns({
-            title: 'Apportion Amount',
+            title: translateContent('creditDebitNote.ApportionDetails.label.apportionAmount'),
             dataIndex: 'apportionAmount',
             width: '10%',
         }),
