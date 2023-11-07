@@ -5,6 +5,23 @@
  */
 import { server } from './mockServiceWorker';
 import { randomFillSync } from 'crypto';
+import translationContent from '../public/locales/en/translation.json';
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
+
+// Initialize i18n
+i18n.use(initReactI18next).init({
+    resources: {
+        en: {
+            translation: translationContent,
+        },
+    },
+    lng: 'en',
+    fallbackLng: 'en',
+    interpolation: {
+        escapeValue: false,
+    },
+});
 
 Object.defineProperty(globalThis, 'crypto', {
     value: { getRandomValues: randomFillSync },

@@ -15,6 +15,7 @@ import { supportingDocumentDataActions } from 'store/actions/data/supportingDocu
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { BASE_URL_OTF_CANCELLATION_DEALER_SEARCH as customURL } from 'constants/routingApi';
 import { DisableParent } from 'components/common/ProductHierarchy/ProductHierarchyUtils';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -28,7 +29,7 @@ const mapStateToProps = (state) => {
             },
         },
     } = state;
-    const moduleTitle = 'Cancel Booking';
+    const moduleTitle = translateContent('global.buttons.cancelBooking');
     let returnValue = {
         userId,
         accessToken,
