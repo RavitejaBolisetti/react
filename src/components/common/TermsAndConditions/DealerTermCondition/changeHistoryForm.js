@@ -65,6 +65,7 @@ const ChangeHistoryMain = (props) => {
             title: 'Description',
             dataIndex: 'termsconditiondescription',
             width: '15%',
+            render: (text) => text?.replace(/<\/?[^>]+(>|$)/g, ''),
             sorter: false,
         })
     );

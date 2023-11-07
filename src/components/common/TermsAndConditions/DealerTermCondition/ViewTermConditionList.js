@@ -25,7 +25,7 @@ const ViewTermConditionListMain = ({ formData, isLoading, styles }) => {
                     <Descriptions.Item label="Effective From">{checkAndSetDefaultValue(formData?.effectiveFrom || formData?.effectivefrom, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                     <Descriptions.Item label="Effective To">{checkAndSetDefaultValue(formData?.effectiveTo || formData?.effectiveto, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                     <Descriptions.Item label="Version">{checkAndSetDefaultValue(formData?.version, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Terms & Conditions">{checkAndSetDefaultValue(formData?.termConditionDescription || formData?.termsconditiondescription, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Terms & Conditions">{checkAndSetDefaultValue(formData?.termConditionDescription?.replace(/<\/?[^>]+(>|$)/g, '') || formData?.termsconditiondescription?.replace(/<\/?[^>]+(>|$)/g, ''), isLoading)}</Descriptions.Item>
                 </Descriptions>
             </div>
         </>
