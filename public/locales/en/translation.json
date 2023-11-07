@@ -1006,6 +1006,25 @@
         "button": {},
         "link": {
             "mnmLogin": "M&M User Login"
+        },
+        "section": {
+            "corporate": {
+                "customerDetails": "Customer Details",
+                "companyProfile": "Company Profile",
+                "address": "Address",
+                "contacts": "Contacts",
+                "accountRelated": "Account Related",
+                "supportingDocument": "Supporting Document"
+            },
+            "individual": {
+                "customerDetails": "Customer Details",
+                "individualProfile": "Individual Profile",
+                "address": "Address",
+                "contacts": "Contacts",
+                "familyDetails": "Family Details",
+                "accountRelated": "Account Related",
+                "supportingDocument": "Supporting Document"
+            }
         }
     },
     "criticalityGroup": {
