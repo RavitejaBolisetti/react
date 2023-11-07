@@ -9,17 +9,18 @@ import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 const expandIcon = ({ isActive }) =>
     isActive ? (
         <>
-            <span>See less</span>
+            <span>{translateContent('global.buttons.seeLess')}</span>
             <SlArrowUp size={13} />
         </>
     ) : (
         <>
-            <span>See more</span>
+            <span>{translateContent('global.buttons.seeMore')}</span>
             <SlArrowDown size={13} />
         </>
     );
@@ -33,7 +34,8 @@ const GstAuthenticationDetailCard = (props) => {
                 header={
                     <>
                         <div className={`${styles.detailCardText} ${styles.marB5}`} style={{ fontSize: '14px' }}>
-                            Dealer Name:<span> {checkAndSetDefaultValue(props?.userId, isLoading)} </span>
+                            {translateContent('gstIRNAuthentication.leftSideBar.label.dealerName')}
+                            <span> {checkAndSetDefaultValue(props?.userId, isLoading)} </span>
                             {/* <span>
                                 {checkAndSetDefaultValue(selectedRecord?.grnNumber, isLoading)}
                                 <a className={`${styles.floatRight} ${styles.marL5}`}>
@@ -47,7 +49,7 @@ const GstAuthenticationDetailCard = (props) => {
             >
                 <Divider />
                 <div className={styles.detailCardText}>
-                    GSTIN: <span>{checkAndSetDefaultValue(props?.currentGst, isLoading)}</span>
+                    {translateContent('gstIRNAuthentication.leftSideBar.label.gstin')} <span>{checkAndSetDefaultValue(props?.currentGst, isLoading)}</span>
                     {/* GSTIN: <span>{selectedRecord && checkAndSetDefaultValue(selectedRecord?.grnType, isLoading)}</span> */}
                 </div>
                 {/* <Divider />

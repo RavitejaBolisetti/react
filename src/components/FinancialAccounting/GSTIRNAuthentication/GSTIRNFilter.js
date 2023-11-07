@@ -8,11 +8,12 @@ import { Row, Col, Input, Form, Select } from 'antd';
 import { validateRequiredInputField } from 'utils/validation';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 const { Option } = Select;
- 
+
 export default function GSTIRNFilter(props) {
     const { dealerGstData } = props;
-    const { userId, isReadOnly = true, handleGstinNumber, } = props;
+    const { userId, isReadOnly = true, handleGstinNumber } = props;
     const disabledProps = { disabled: isReadOnly };
 
     return (
@@ -21,20 +22,20 @@ export default function GSTIRNFilter(props) {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row gutter={20}>
                         <Col xs={24} sm={4} md={4} lg={4} xl={4} className={styles.verticallyCentered}>
-                            GST IRN Authentication
+                            {translateContent('gstIRNAuthentication.heading.moduleTitle')}
                         </Col>
                         <Col xs={24} sm={4} md={4} lg={4} xl={4} className={styles.verticallyCentered}>
                             <Form.Item className={styles.marB0}>
-                                <Input maxLength={6} placeholder="Dealer Name" value={userId} {...disabledProps} />
+                                <Input maxLength={6} placeholder={translateContent('gstIRNAuthentication.placeholder.dealerName')} value={userId} {...disabledProps} />
                             </Form.Item>
                         </Col>
-                        <Col xs={24} sm={5} md={5} lg={5} xl={5} className={styles.selectError} >
-                            <Form.Item name="gstinNumber" className={styles.marB0} rules={[validateRequiredInputField('gstinNumber')]}>
-                                <Select onChange={handleGstinNumber}  placeholder="SELECT GSTIN" allowClear>
-                                            {dealerGstData?.map((item) => (
-                                                <Option value={item.value}>{item.value}</Option>
-                                            ))}
-                                        </Select>
+                        <Col xs={24} sm={5} md={5} lg={5} xl={5} className={styles.selectError}>
+                            <Form.Item name="gstinNumber" className={styles.marB0} rules={[validateRequiredInputField(translateContent('gstIRNAuthentication.placeholder.gstin'))]}>
+                                <Select onChange={handleGstinNumber} placeholder={translateContent('global.placeholder.select')} allowClear>
+                                    {dealerGstData?.map((item) => (
+                                        <Option value={item.value}>{item.value}</Option>
+                                    ))}
+                                </Select>
                             </Form.Item>
                         </Col>
                     </Row>

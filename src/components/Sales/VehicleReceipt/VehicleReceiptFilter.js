@@ -27,7 +27,7 @@ export default function VehicleReceiptFilter(props) {
                                 <Col xs={24} sm={16} md={16} lg={16} xl={16} className={styles.verticallyCentered}>
                                     <QueryButtons currentItem={currentItem} items={vehicleReceiptStatusList} onClick={handleReceiptTypeChange} />
                                     <div className={styles.fullWidth}>
-                                        <Search placeholder="Search GRN No." onChange={handleChange} onSearch={handleSearch} allowClear className={styles.headerSearchField} />
+                                        <Search placeholder={translateContent('vehicleReceipt.placeholder.SearchGRNNo')} onChange={handleChange} onSearch={handleSearch} allowClear className={styles.headerSearchField} />
                                     </div>
                                 </Col>
                                 <Col xs={24} sm={8} md={8} lg={8} xl={8} className={styles.verticallyCentered}>

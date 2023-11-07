@@ -19,6 +19,7 @@ import ViewDetailMain from './ViewDetail';
 import { gstIrnTransactionAction } from 'store/actions/data/financialAccounting/gstIrnTransactionAction';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -32,7 +33,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'GST IRN Details';
+    const moduleTitle = translateContent('gstIRNAuthentication.irnTransactionListMaster.headng.moduleTitle');
 
     let returnValue = {
         userId,

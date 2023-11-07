@@ -29,6 +29,7 @@
         "label": {
             "active": "Active",
             "inActive": "InActive",
+            "noActive": "noActive",
             "status": "Status",
             "action": "Action",
             "fromDate": "From Date",
@@ -39,7 +40,13 @@
             "title": "Advance Filters",
             "appliedAdvanceFilter": "Applied Advance Filters :"
         },
-        "toolTip": {},
+        "toolTip": {
+            "modelName": "Model Name:",
+            "color": "Color:",
+            "seating": "Seating Capaity:",
+            "fuel": "Fuel:",
+            "variant": "Variant:"
+        },
         "generalMessage": {
             "noRecordsFound": "No records found",
             "noRecordsFoundAddNew": "Please add New {NAME} using below button",
@@ -1009,6 +1016,25 @@
         "button": {},
         "link": {
             "mnmLogin": "M&M User Login"
+        },
+        "section": {
+            "corporate": {
+                "customerDetails": "Customer Details",
+                "companyProfile": "Company Profile",
+                "address": "Address",
+                "contacts": "Contacts",
+                "accountRelated": "Account Related",
+                "supportingDocument": "Supporting Document"
+            },
+            "individual": {
+                "customerDetails": "Customer Details",
+                "individualProfile": "Individual Profile",
+                "address": "Address",
+                "contacts": "Contacts",
+                "familyDetails": "Family Details",
+                "accountRelated": "Account Related",
+                "supportingDocument": "Supporting Document"
+            }
         }
     },
     "criticalityGroup": {
@@ -2330,24 +2356,30 @@
                 "grnType": "GRN Type:",
                 "grnDate": "GRN Date:",
                 "grnState": "GRN Status:"
-            }
+            },
+            "bookingDetails":"Booking Details"
         },
         "label": {
             "supplierInvoiceDetails": {
-                "supplierType": "Effective From",
-                "supplierName": "Effective To",
-                "supplierInvoiceNumber": "Plant",
-                "supplierInvoiceDate": "State",
-                "roadPermitNumber": "City",
-                "actualDispatchDate": "City Code",
-                "totalInvoiceAmount": "Model Code",
-                "lorryReceiptNumber": "Model Group",
-                "modelDescription": "Model Description",
-                "transporter": "Distribution Channel",
-                "supplierGstNumber": "Price Type",
-                "geoFencingDateAndTime": "GST"
+                "supplierType": "Supplier Type",
+                "supplierName": "Supplier Name",
+                "supplierInvoiceNumber": "Supplier Invoice No.",
+                "supplierInvoiceDate": "Supplier Invoice Date",
+                "roadPermitNumber": "Road Permit Number",
+                "actualDispatchDate": "Actual Dispatch Date",
+                "totalInvoiceAmount": "Total Invoice Amount",
+                "lorryReceiptNumber": "Lorry Receipt No.",
+                "transporter": "Transporter",
+                "supplierGstNumber": "Supplier GST Number",
+                "geoFencingDateAndTime": "Geo Fencing Date & Time"
             },
             "vehicleDetails": {
+                "model": "Model",
+                "modelName": "Model Name",
+                "color": "Color",
+                "seatingCapacity:": "Seating Capacity",
+                "fuel": "Fuel",
+                "variants": "Variants",
                 "modelDescription": "Model Description",
                 "VIN": "VIN",
                 "keyNumber": "Key Number",
@@ -2359,9 +2391,16 @@
                 "physicalStatus": "Physical Status",
                 "shortage": "Shortage",
                 "vehicleReceiptChecklistNumber": "Vehicle Receipt Checklist No."
+            },
+            "advancedSearch": {
+                "grnFromDate": "GRN From Date",
+                "grnToDate": "GRN To Date",
+                "grnType": "GRN Type"
             }
         },
-        "placeholder": {},
+        "placeholder": {
+            "SearchGRNNo": "Search GRN No."
+        },
         "validation": {},
         "button": {},
         "tableColumn": {
@@ -3259,20 +3298,24 @@
         "label": {
             "text": "text",
             "password": "password",
-            "Login&Continue": "Login & Continue"
+            "Login&Continue": "Login & Continue",
+            "grnType": "GRN Type",
+            "supplierInvoiceDate": "Supplier Invoice Date"
         },
         "placeholder": {
             "userName": "User Name",
             "clientId": "Client Id",
             "parent": "parent",
             "secretId": "Secret Id",
-            "password": "password"
+            "password": "password",
+            "dealerName": "Dealer Name"
         },
         "validation": {
             "userName": "User Name",
             "clientId": "Client Id",
             "secretId": "Secret Id",
-            "password": "password"
+            "password": "password",
+            "gstin": "gstinNumber"
         },
         "text": {
             "Login": "Login for Authentication",
@@ -3289,13 +3332,48 @@
                 "mapUnmap": "IRN Mapped/Unmapped"
             }
         },
+        "leftSideBar": {
+            "label": {
+                "dealerName": "Dealer Name:",
+                "gstin:": "GSTIN:"
+            }
+        },
         "irnTransactionListMaster": {
             "heading": {
-                "moduleTitle": "GST IRN Details"
+                "moduleTitle": "GST IRN Details",
+                "viewTitle": "Application Details"
             },
             "label": {
-                "branchName": "Branch Name",
-                "mapUnmap": "IRN Mapped/Unmapped"
+                "applicationId": "Application ID",
+                "applicationName": "Application Name/Reports",
+                "applicationType": "Application Type",
+                "accessibleLoc": "Accessible Location",
+                "irnIntegeration": "IRN Integration",
+                "model": "Model:",
+                "vin": "VIN:",
+                "vehicleStatus": "Vehicle Status:",
+                "modelDescription": "Model Description",
+                "keyNumber": "Key Number",
+                "mfg": "MFG Date",
+                "recievedOn": "Recieved On",
+                "vehicleCost": "Vehicle Cost",
+                "demoVehicle": "Demo Vehicle",
+                "physicalStatus": "Physical Status",
+                "shortage": "Shortage",
+                "vehicleRecieptCheckListNumber": "Vehicle Receipt CheckList No."
+            },
+            "validation": {
+                "demoVehicle": "Demo Vehicle",
+                "vehicleStatus": "Vehicle Status:",
+                "physicalStatus": "Physical Status"
+            },
+            "placeholder": {
+                "modelDescription": "Model Description",
+                "vin": "VIN:",
+                "keyNumber": "Key Number",
+                "vehicleCost": "Vehicle Cost",
+                "vehicleStatus": "Vehicle Status:",
+                "vehicleRecieptCheckListNumber": "Vehicle Receipt CheckList No."
             }
         }
     },

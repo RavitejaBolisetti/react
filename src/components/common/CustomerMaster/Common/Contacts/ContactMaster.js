@@ -282,7 +282,7 @@ const ContactMain = (props) => {
             <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
                 <Row gutter={20} className={styles.drawerBodyRight}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <h2>{section?.title} </h2>
+                        <h2>{translateContent(section?.translateKey)} </h2>
                         <Card className="">
                             {isCustomerIndDataLoading || isCustomerDataLoading ? (
                                 formSkeleton
