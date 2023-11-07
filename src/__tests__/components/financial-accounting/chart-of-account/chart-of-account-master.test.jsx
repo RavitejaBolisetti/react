@@ -141,12 +141,6 @@ describe("ChartOfAccountMaster component render", ()=>{
         const desc = screen.getByRole('textbox', {name:'Description'});
         fireEvent.change(desc, {target:{value:"NKAJ"}});
 
-        const credit = screen.getByRole('textbox', {name:'Opening Balance Credit'});
-        fireEvent.change(credit, {target:{value:"12"}});
-
-        const debit = screen.getByRole('textbox', {name:'Opening Balance Debit'});
-        fireEvent.change(debit, {target:{value:"90"}});
-
         const status = screen.getByRole('switch', {name:'Status'});
         fireEvent.click(status);
 

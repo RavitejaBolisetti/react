@@ -173,8 +173,8 @@ const VehicleDetailsMasterMain = (props) => {
                 },
             ];
             fetchProductList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
-        } else {
-            setButtonData({ ...buttonData, formBtnActive: true });
+        }else {
+            setButtonData({ ...buttonData, formBtnActive: !formActionType.viewMode });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrder]);

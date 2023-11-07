@@ -18,7 +18,7 @@ export const tableColumn = (handleButtonClick) => {
 
         tblPrepareColumns({
             title: 'Enrolment Date',
-            dataIndex: 'enrolledDate',
+            dataIndex: 'enrolmentDate',
             width: '13%',
             render: (text) => (text ? convertDateMonthYear(text) : 'NA'),
         }),

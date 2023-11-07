@@ -118,6 +118,7 @@ const UploadBase = (props) => {
     const [isReplacing, setIsReplacing] = useState(false);
     const [base64Img, setBase64Img] = useState('');
     const [uploadTime, setUploadTime] = useState(false);
+    
 
     const removeIcon = uploadTime ? <AiOutlineCloseCircle className={styles.iconSize} /> : <AiOutlineClose className={styles.iconSize} />;
 
@@ -172,8 +173,8 @@ const UploadBase = (props) => {
         downloadFile({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction });
     };
     const isDoubleExtension = (fileName) => {
-        const parts = fileName.split('.');
-        return parts.length > 2;
+        const parts = fileName?.split('.');
+        return parts?.length > 2;
     };
     const uploadProps = {
         beforeUpload: (file) => {
@@ -218,6 +219,7 @@ const UploadBase = (props) => {
         progress: { strokeWidth: 3, showInfo: true, format: (percent) => percent && `${parseFloat(percent.toFixed(2))}%` },
         onChange: (info) => {
             let fileList = [...info.fileList];
+            if (isDoubleExtension(info?.file?.name)) return false;
             if (supportingDocs) {
                 form.validateFields()
                     .then(() => {

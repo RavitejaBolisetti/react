@@ -59,15 +59,19 @@ const CustomerAndVehicleViewMain = (props) => {
                     <Card>
                         <Descriptions {...viewProps}>
                             <Descriptions.Item label="Vehicle No.">{checkAndSetDefaultValue(vehicleDataDetails?.vehicleNumber, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Model">
+                            {/* <Descriptions.Item label="Model">
                                 {checkAndSetDefaultValue(vehicleDataDetails?.model, isLoading)}
                                 <Tooltip title={modelInfo} placement="bottom" color="#6495ED" key="#6495ED">
                                     <ExclamationCircleOutlined style={{ color: '#6495ED', margin: '0 0 0 8px' }} />
                                 </Tooltip>
-                            </Descriptions.Item>
+                            </Descriptions.Item> */}
                             <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(vehicleDataDetails?.modelCode, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item />
                             <Descriptions.Item span={3} label="Model Description">
                                 {checkAndSetDefaultValue(vehicleDataDetails?.modelDescription, isLoading)}
+                                <Tooltip title={modelInfo} placement="bottom" color="#6495ED" key="#6495ED">
+                                    <ExclamationCircleOutlined style={{ color: '#6495ED', margin: '0 0 0 8px' }} />
+                                </Tooltip>
                             </Descriptions.Item>
                             <Descriptions.Item label="Sale Date">{checkAndSetDefaultValue(vehicleDataDetails?.soldDate || vehicleDataDetails?.saleDate, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Sold By">{checkAndSetDefaultValue(vehicleDataDetails?.soldBy, isLoading)}</Descriptions.Item>

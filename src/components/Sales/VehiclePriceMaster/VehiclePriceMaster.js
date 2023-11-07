@@ -152,6 +152,8 @@ export const VehiclePriceMasterBase = (props) => {
     const [filteredCityData, setFilteredCityData] = useState([]);
     const [filteredDistrictData, setFilteredDistrictData] = useState([]);
     const [cityCodeValue, setCityCodeValue] = useState();
+    const [singleDisabled, setSingleDisabled] = useState(false);
+
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: true, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -198,7 +200,7 @@ export const VehiclePriceMasterBase = (props) => {
                 filter: true,
             },
             {
-                key: 'modelCode',
+                key: 'oemModelCode',
                 title: 'Model',
                 value: filterString?.modelCode,
                 name: productHierarchyList?.find((i) => i?.prodctCode === filterString?.modelCode)?.prodctShrtName,
@@ -538,6 +540,7 @@ export const VehiclePriceMasterBase = (props) => {
         isVisible: isUploadFormVisible,
         titleOverride: 'Upload Vehicle Price Master Form',
         onCloseAction: () => {
+            setSingleDisabled(false);
             setIsUploadFormVisible(false);
             form.resetFields();
             setFileList([]);
@@ -580,6 +583,8 @@ export const VehiclePriceMasterBase = (props) => {
         supportedFileTypes: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
         maxSize: 8,
         single: true,
+        singleDisabled,
+        setSingleDisabled,
     };
 
     const buttonProps = {

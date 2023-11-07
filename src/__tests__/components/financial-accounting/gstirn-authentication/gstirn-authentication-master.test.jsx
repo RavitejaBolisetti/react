@@ -45,6 +45,9 @@ describe("GSTIRNAuthenticationMaster components", ()=>{
                 <GSTIRNAuthenticationMaster isVisible={true} values={values} fetchList={fetchList}/>
             </Provider>
         );
+
+        const loginBtn = screen.getByRole('button', {name:'Login & Continue'});
+        fireEvent.click(loginBtn)
     })
 
     it("fileProps", ()=>{
@@ -57,7 +60,7 @@ describe("GSTIRNAuthenticationMaster components", ()=>{
         customRender(
             <Provider store={mockStore}>
                 <GSTIRNAuthenticationMaster fetchGstDoc={fetchGstDoc} isVisible={true} fetchList={fetchList}
-                 docData={docData}/>
+                 docData={docData} showDownloadIcon={true} showRemoveIcon={true} />
             </Provider>
         );
 

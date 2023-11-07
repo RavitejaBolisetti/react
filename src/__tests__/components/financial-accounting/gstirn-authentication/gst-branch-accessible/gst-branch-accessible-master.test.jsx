@@ -20,6 +20,11 @@ describe("GstBranchAccessibleMaster component", ()=>{
     it("onErrorAction", ()=>{
         const mockStore = createMockStore({
             auth: { userId:'123' },
+            data: {
+                FinancialAccounting: {
+                    DealerBranchDetails: { data: [{mapUnmap:"Yes"}] },
+                },
+            }
         });
 
         customRender(

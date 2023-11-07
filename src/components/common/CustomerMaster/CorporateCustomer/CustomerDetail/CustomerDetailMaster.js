@@ -92,7 +92,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
 
     useEffect(() => {
         if (customerDetailsData) {
-            form.setFieldsValue({ ...customerDetailsData });
+            form?.setFieldsValue({ ...customerDetailsData });
             setFormData(customerDetailsData);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -137,13 +137,13 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         const data = { ...values, customerId: selectedCustomer?.customerId, id: recordId };
 
         const onSuccess = (res) => {
-            form.resetFields();
+            form?.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId });
             setButtonData({ ...buttonData, formBtnActive: false });
             setRefreshCustomerList(true);
 
-            if (res.data) {
+            if (res?.data) {
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
                 setSelectedCustomer({ ...res.data, customerName: res?.data?.companyName });
                 setSelectedCustomerId(res?.data?.customerId);

@@ -91,6 +91,7 @@ export const CrmScreenEnrolmentBase = (props) => {
 
     const [customerData, setCustomerData] = useState([]);
     const [vehicleDataDetails, setVehicleDataDetails] = useState([]);
+    const [generatedData, setGeneratedData] = useState();
 
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
@@ -159,7 +160,7 @@ export const CrmScreenEnrolmentBase = (props) => {
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: page?.current,
+                value: filterString?.current || page?.current,
             },
             {
                 key: 'pageSize',
@@ -311,6 +312,10 @@ export const CrmScreenEnrolmentBase = (props) => {
 
         setIsEnrolmentGenerated(false);
 
+        if (buttonAction === ADD_ACTION) {
+            setGeneratedData();
+        }
+
         if (buttonAction === VIEW_ACTION) {
             const extraParams = [
                 {
@@ -318,7 +323,7 @@ export const CrmScreenEnrolmentBase = (props) => {
                     value: record?.id,
                 },
             ];
-            fetchDetail({ setIsLoading: listDetailShowLoading, userId, extraParams, customURL });
+            fetchDetail({ setIsLoading: listDetailShowLoading, userId, extraParams, customURL, onErrorAction });
         }
     };
 
@@ -328,6 +333,7 @@ export const CrmScreenEnrolmentBase = (props) => {
         if (formActionType?.addMode) {
             const data = { ...values };
             const onSuccess = (res) => {
+                setGeneratedData(res?.data);
                 form.resetFields();
                 setShowDataLoading(true);
                 showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
@@ -386,7 +392,8 @@ export const CrmScreenEnrolmentBase = (props) => {
         dynamicPagination,
         totalRecords,
         page,
-        setPage,
+        setPage: setFilterString,
+        filterString,
         tableColumn: tableColumn(handleButtonClick),
         tableData: data,
         showAddButton: false,
@@ -490,6 +497,7 @@ export const CrmScreenEnrolmentBase = (props) => {
         isSalesConsultantDataLoading,
         salesConsultantLovData,
         isSearchLoading,
+        generatedData,
     };
 
     return (
