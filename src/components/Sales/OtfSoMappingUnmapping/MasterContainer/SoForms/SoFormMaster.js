@@ -11,6 +11,7 @@ import { AddEditForm } from './AddEditForm';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { validateRequiredSelectField } from 'utils/validation';
 import { FORM_TYPE_CONSTANSTS, OTF_SO_MAPPING_UNMAPPING_CONSTANTS, CARD_TITLE_CONSTANT } from 'components/Sales/OtfSoMappingUnmapping/Constants';
+import { translateContent } from 'utils/translateContent';
 
 const { Text } = Typography;
 
@@ -53,13 +54,13 @@ const SoFormMasterMain = (props) => {
                                 <Card className={`${styles.fullWidth} ${styles.whiteBG}`}>
                                     <Row gutter={20}>
                                         <Col span={11}>
-                                            <Form.Item label="Dealer Parent" name="parentGroupCode" rules={[validateRequiredSelectField('dealer parent')]}>
-                                                <Select options={DealerParentData} placeholder="Select" fieldNames={{ label: 'value', value: 'key' }} allowClear showSearch optionFilterProp="value" onChange={handleDealerParent} />
+                                            <Form.Item label={translateContent('bookingSoMappUnmapp.label.dealerParent')} name="parentGroupCode" rules={[validateRequiredSelectField(translateContent('bookingSoMappUnmapp.label.dealerParent'))]}>
+                                                <Select options={DealerParentData} placeholder={translateContent('global.placeholder.select')} fieldNames={{ label: 'value', value: 'key' }} allowClear showSearch optionFilterProp="value" onChange={handleDealerParent} />
                                             </Form.Item>
                                         </Col>
                                         <Col span={11} offset={2}>
-                                            <Form.Item label="Dealer Location" name="locationCode" rules={[validateRequiredSelectField('dealer location')]}>
-                                                <Select loading={isLocationLoading} options={LocationData} fieldNames={{ label: 'dealerLocationName', value: 'locationCode' }} placeholder="Select" allowClear showSearch optionFilterProp="dealerLocationName" />
+                                            <Form.Item label={translateContent('bookingSoMappUnmapp.label.dealerLocation')} name="locationCode" rules={[validateRequiredSelectField(translateContent('bookingSoMappUnmapp.label.dealerLocation'))]}>
+                                                <Select loading={isLocationLoading} options={LocationData} fieldNames={{ label: 'dealerLocationName', value: 'locationCode' }} placeholder={translateContent('global.placeholder.select')} allowClear showSearch optionFilterProp="dealerLocationName" />
                                             </Form.Item>
                                         </Col>
                                     </Row>
@@ -83,13 +84,13 @@ const SoFormMasterMain = (props) => {
                                     </Row>
                                     <Row gutter={20} className={SoStyles.descriptionSection}>
                                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                            <Form.Item label="Reason Category" name="resonCategoryCode" rules={[validateRequiredSelectField('reason category')]}>
-                                                <Select options={typeData[PARAM_MASTER?.SO_RC?.id]} fieldNames={{ label: 'value', value: 'key' }} placeholder="Select" allowClear showSearch optionFilterProp="value" />
+                                            <Form.Item label={translateContent('bookingSoMappUnmapp.label.resonCategoryCode')} name="resonCategoryCode" rules={[validateRequiredSelectField(translateContent('bookingSoMappUnmapp.label.resonCategoryCode'))]}>
+                                                <Select options={typeData[PARAM_MASTER?.SO_RC?.id]} fieldNames={{ label: 'value', value: 'key' }} placeholder={translateContent('global.placeholder.select')} allowClear showSearch optionFilterProp="value" />
                                             </Form.Item>
                                         </Col>
                                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                            <Form.Item label="Reason Description" name="reasonDescriptionCode" rules={[validateRequiredSelectField('reason description')]}>
-                                                <Select options={typeData[PARAM_MASTER?.SO_RD?.id]} fieldNames={{ label: 'value', value: 'key' }} placeholder="Select" allowClear showSearch optionFilterProp="value" />
+                                            <Form.Item label={translateContent('bookingSoMappUnmapp.label.reasonDescriptionCode')} name="reasonDescriptionCode" rules={[validateRequiredSelectField(translateContent('bookingSoMappUnmapp.label.reasonDescriptionCode'))]}>
+                                                <Select options={typeData[PARAM_MASTER?.SO_RD?.id]} fieldNames={{ label: 'value', value: 'key' }} placeholder={translateContent('global.placeholder.select')} allowClear showSearch optionFilterProp="value" />
                                             </Form.Item>
                                         </Col>
                                     </Row>
@@ -98,7 +99,7 @@ const SoFormMasterMain = (props) => {
                                             <Button onClick={handleCancel}>Cancel</Button>
                                             <Button onClick={handleClear}>Clear</Button>
                                             <Button htmlType="submit" type="primary">
-                                                Submit
+                                                {translateContent('global.buttons.submit')}
                                             </Button>
                                         </Col>
                                     </Row>

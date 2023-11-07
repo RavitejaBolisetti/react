@@ -10,6 +10,7 @@ import { OTF_SO_MAPPING_UNMAPPING_CONSTANTS } from 'components/Sales/OtfSoMappin
 
 import styles from 'assets/sass/app.module.scss';
 import { ListSkeleton } from 'components/common/Skeleton';
+import { translateContent } from 'utils/translateContent';
 const { Search } = Input;
 
 const AddEditFormMain = ({ formType, disabledProps, handleSearchChange, isLoading, filterString, handleResetData, status }) => {
@@ -19,65 +20,65 @@ const AddEditFormMain = ({ formType, disabledProps, handleSearchChange, isLoadin
     return (
         <>
             {hideFields && (
-                <Form.Item label="SO No." name={[formType, 'soNumber']} rules={[validateRequiredInputField('SO number'), validateAlphanumericWithSpaceHyphenPeriod('SO number')]}>
-                    <Search placeholder="Search by SO Number" allowClear onSearch={(value) => handleSearchChange(value, formType)} onChange={() => handleResetData(formType, ['soNumber'])} className={styles.headerSearchField} />
+                <Form.Item label={translateContent('bookingSoMappUnmapp.label.soNumber')} name={[formType, 'soNumber']} rules={[validateRequiredInputField(translateContent('bookingSoMappUnmapp.label.soNumber')), validateAlphanumericWithSpaceHyphenPeriod(translateContent('bookingSoMappUnmapp.label.soNumber'))]}>
+                    <Search placeholder={translateContent('bookingSoMappUnmapp.label.soNumber')} allowClear onSearch={(value) => handleSearchChange(value, formType)} onChange={() => handleResetData(formType, ['soNumber'])} className={styles.headerSearchField} />
                 </Form.Item>
             )}
             {hideFields && (
-                <Form.Item label="SO Date" name={[formType, 'soDate']}>
+                <Form.Item label={translateContent('bookingSoMappUnmapp.label.soDate')} name={[formType, 'soDate']}>
                     <Input {...disabledProps} />
                 </Form.Item>
             )}
             {!hideFields && (
-                <Form.Item label="Booking No." name={[formType, 'otfNumber']} rules={[validateRequiredInputField('Booking number'), validateAlphanumericWithSpaceHyphenPeriod('Booking number')]}>
-                    <Search placeholder="Search by Booking Number" allowClear onSearch={(value) => handleSearchChange(value, formType)} onChange={() => handleResetData(formType)} className={styles.headerSearchField} />
+                <Form.Item label={translateContent('bookingSoMappUnmapp.label.bookingNumber')} name={[formType, 'otfNumber']} rules={[validateRequiredInputField(translateContent('bookingSoMappUnmapp.label.bookingNumber')), validateAlphanumericWithSpaceHyphenPeriod(translateContent('bookingSoMappUnmapp.label.bookingNumber'))]}>
+                    <Search placeholder={translateContent('bookingSoMappUnmapp.label.bookingNumber')} allowClear onSearch={(value) => handleSearchChange(value, formType)} onChange={() => handleResetData(formType)} className={styles.headerSearchField} />
                 </Form.Item>
             )}
             {!hideFields && (
-                <Form.Item label="Booking Date" name={[formType, 'otfDate']}>
+                <Form.Item label={translateContent('bookingSoMappUnmapp.label.bookingDate')} name={[formType, 'otfDate']}>
                     <Input {...disabledProps} />
                 </Form.Item>
             )}
             {!hideFields && (
-                <Form.Item label="SO Number" name={[formType, 'soNumber']}>
+                <Form.Item label={translateContent('bookingSoMappUnmapp.label.soNumber')} name={[formType, 'soNumber']}>
                     <Input {...disabledProps} />
                 </Form.Item>
             )}
             {!hideFields && (
-                <Form.Item label="SO Date" name={[formType, 'soDate']}>
+                <Form.Item label={translateContent('bookingSoMappUnmapp.label.soDate')} name={[formType, 'soDate']}>
                     <Input {...disabledProps} />
                 </Form.Item>
             )}
 
-            <Form.Item label="SO Status" name={[formType, 'soStatus']}>
+            <Form.Item label={translateContent('bookingSoMappUnmapp.label.soStatus')} name={[formType, 'soStatus']}>
                 <Input {...disabledProps} />
             </Form.Item>
             <Form.Item hidden initialValue={formType} name={[formType, 'formType']} />
             <Form.Item hidden initialValue={formType} name={[formType, 'soStatusCode']} />
             {!hideFields && (
                 <>
-                    <Form.Item label="Customer ID" name={[formType, 'customerId']}>
+                    <Form.Item label={translateContent('bookingSoMappUnmapp.label.customerId')} name={[formType, 'customerId']}>
                         <Input {...disabledProps} />
                     </Form.Item>
-                    <Form.Item label="Customer Name" name={[formType, 'customerName']}>
+                    <Form.Item label={translateContent('bookingSoMappUnmapp.label.customerName')} name={[formType, 'customerName']}>
                         <Input {...disabledProps} />
                     </Form.Item>
-                    <Form.Item label="Mobile No." name={[formType, 'mobileNumber']}>
+                    <Form.Item label={translateContent('bookingSoMappUnmapp.label.mobileNumber')} name={[formType, 'mobileNumber']}>
                         <Input {...disabledProps} />
                     </Form.Item>
                 </>
             )}
 
-            <Form.Item label="Chassis" name={[formType, 'chasisNumber']}>
+            <Form.Item label={translateContent('bookingSoMappUnmapp.label.chassisNumber')} name={[formType, 'chasisNumber']}>
                 <Input {...disabledProps} />
             </Form.Item>
-            <Form.Item label="Model Group" name={[formType, 'modelGroup']}>
+            <Form.Item label={translateContent('bookingSoMappUnmapp.label.modelGroup')} name={[formType, 'modelGroup']}>
                 <Input {...disabledProps} />
             </Form.Item>
-            <Form.Item label="Model Variant" name={[formType, 'modelVariant']}>
+            <Form.Item label={translateContent('bookingSoMappUnmapp.label.modelVariant')} name={[formType, 'modelVariant']}>
                 <Input {...disabledProps} />
             </Form.Item>
-            <Form.Item label="Model Description" name={[formType, 'modelDescription']}>
+            <Form.Item label={translateContent('bookingSoMappUnmapp.label.modelDescription')} name={[formType, 'modelDescription']}>
                 <Input {...disabledProps} />
             </Form.Item>
         </>

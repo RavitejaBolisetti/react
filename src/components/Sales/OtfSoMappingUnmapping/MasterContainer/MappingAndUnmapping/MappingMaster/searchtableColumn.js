@@ -6,35 +6,36 @@
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { converDateDayjs } from 'utils/formatDateTime';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const SearchtableColumnMapping = ({ handleButtonClick, actionButtonVisibility, customButtonProperties }) => {
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Booking Number',
+            title: translateContent('bookingSoMappUnmapp.label.bookingNumber'),
             dataIndex: 'otfNumber',
             width: '10%',
         }),
         tblPrepareColumns({
-            title: 'Booking Date',
+            title: translateContent('bookingSoMappUnmapp.label.bookingDate'),
             dataIndex: 'otfDate',
             width: '20%',
             render: (text) => converDateDayjs(text),
         }),
         tblPrepareColumns({
-            title: 'Customer Name',
+            title: translateContent('bookingSoMappUnmapp.label.customerName'),
             dataIndex: 'customerName',
             width: '14%',
         }),
 
         tblPrepareColumns({
-            title: 'CPD',
+            title: translateContent('bookingSoMappUnmapp.label.cpd'),
             dataIndex: 'cpd',
             width: '10%',
             render: (text) => converDateDayjs(text),
         }),
         tblPrepareColumns({
-            title: 'Chassis Number',
+            title: translateContent('bookingSoMappUnmapp.label.chassisNumber'),
             dataIndex: 'chassisNumber',
             width: '10%',
         }),
