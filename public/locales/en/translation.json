@@ -1532,11 +1532,11 @@
         },
         "entitlementsSchemes": {
             "label": {
-                "entitlement/SchemeType": "Entitlement/Scheme Type",
-                "entitlement/SchemeDescription": "Entitlement/Scheme Description",
-                "entitlement/SchemeDocNo": "Entitlement/Scheme Doc No",
-                "entitlement/SchemeDocDate": "Entitlement/Scheme Doc Date",
-                "entitlement/SchemeBookletNo": "Entitlement/Scheme Booklet No",
+                "entitlementSchemeType": "Entitlement/Scheme Type",
+                "entitlementSchemeDescription": "Entitlement/Scheme Description",
+                "entitlementSchemeDocNo": "Entitlement/Scheme Doc No",
+                "entitlementSchemeDocDate": "Entitlement/Scheme Doc Date",
+                "entitlementSchemeBookletNo": "Entitlement/Scheme Booklet No",
                 "validityStartDate": "Validity Start Date",
                 "validityEndDate": "Validity End Date",
                 "validityStartKM": "Validity Start KM",
@@ -1559,7 +1559,9 @@
                 "documentName": "Document Name ",
                 "clickOrDrop": "Click or drop your file here to upload",
                 "FileSize": "File type should be png, jpg or pdf and max file size to be 8Mb",
-                "uploadFile": "Upload File"
+                "uploadFile": "Upload File",
+                "startDownload": "Your download will start soon",
+                "atleastOneFile": "Please upload at least one file to continue"
             },
             "placeholder": {
                 "select": "Select",

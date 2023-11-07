@@ -13,28 +13,28 @@ import { translateContent } from 'utils/translateContent';
 export const tableColumn = () => {
     const tableColumn = [
         tblPrepareColumns({
-            title: translateContent('vehicleDetail.entitlementsSchemes.label.entitlement/SchemeType'),
+            title: translateContent('vehicleDetail.entitlementsSchemes.label.entitlementSchemeType'),
             dataIndex: 'schemeType',
             width: '150px',
             sorter: true,
         }),
 
         tblPrepareColumns({
-            title: translateContent('vehicleDetail.entitlementsSchemes.label.entitlement/SchemeDescription'),
+            title: translateContent('vehicleDetail.entitlementsSchemes.label.entitlementSchemeDescription'),
             dataIndex: 'description',
             width: '200px',
             sorter: true,
         }),
 
         tblPrepareColumns({
-            title: translateContent('vehicleDetail.entitlementsSchemes.label.entitlement/SchemeDocNo'),
+            title: translateContent('vehicleDetail.entitlementsSchemes.label.entitlementSchemeDocNo'),
             dataIndex: 'documentNumber',
             width: '150px',
             sorter: true,
         }),
 
         tblPrepareColumns({
-            title: translateContent('vehicleDetail.entitlementsSchemes.label.entitlement/SchemeDocDate'),
+            title: translateContent('vehicleDetail.entitlementsSchemes.label.entitlementSchemeDocDate'),
             dataIndex: 'documentDate',
             width: '200px',
             sorter: true,
@@ -42,7 +42,7 @@ export const tableColumn = () => {
         }),
 
         tblPrepareColumns({
-            title: translateContent('vehicleDetail.entitlementsSchemes.label.entitlement/SchemeBookletNo'),
+            title: translateContent('vehicleDetail.entitlementsSchemes.label.entitlementSchemeBookletNo'),
             dataIndex: 'bookletNumber',
             width: '200px',
             sorter: true,
