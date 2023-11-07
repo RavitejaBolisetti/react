@@ -8,6 +8,7 @@ import { Card, Descriptions } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
 import { prepareCaption } from 'utils/prepareCaption';
+import { translateContent } from 'utils/translateContent';
 
 const ViewDetailMain = (props) => {
     const { formData, isLoading, modelData, variantData, typeData, schemeLovData, financeLovData, isMahindraMake } = props;
@@ -48,29 +49,29 @@ const ViewDetailMain = (props) => {
             </Descriptions>
             {formData?.exchange === 1 && (
                 <>
-                    <Descriptions {...viewProps} title={prepareCaption('Vehicle Details')}>
-                        <Descriptions.Item label="Old Reg. Number">{checkAndSetDefaultValue(formData?.oldRegistrationNumber, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Make">{checkAndSetDefaultValue(getCodeValue(typeData?.VEHCL_MFG, formData?.make), isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Model Group">{nameAttributes?.modelGroupName}</Descriptions.Item>
-                        <Descriptions.Item label="Variant">{nameAttributes?.variantName}</Descriptions.Item>
-                        <Descriptions.Item label="KMS">{checkAndSetDefaultValue(formData?.kilometer, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Usage">{checkAndSetDefaultValue(getCodeValue(typeData?.VEHCL_USAG, formData?.usageCode), isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Year of Registration">{checkAndSetDefaultValue(formData?.yearOfRegistrationCode, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Month of Registration">{checkAndSetDefaultValue(getCodeValue(typeData?.MONTH, formData?.monthOfRegistrationCode), isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Old Chassis Number">{checkAndSetDefaultValue(formData?.oldChessisNumber, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Hypothecated To">{checkAndSetDefaultValue(getCodeValue(financeLovData, formData?.hypothicatedToCode), isLoading)}</Descriptions.Item>
+                    <Descriptions {...viewProps} title={prepareCaption(translateContent('commonModules.exchangeVehicle.captions.sectionOne'))}>
+                        <Descriptions.Item label={translateContent('commonModules.label.exchangeDetails.registrationNumber')}>{checkAndSetDefaultValue(formData?.oldRegistrationNumber, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('commonModules.label.exchangeDetails.make')}>{checkAndSetDefaultValue(getCodeValue(typeData?.VEHCL_MFG, formData?.make), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('commonModules.label.exchangeDetails.modelGroup')}>{nameAttributes?.modelGroupName}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('commonModules.label.exchangeDetails.variant')}>{nameAttributes?.variantName}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('commonModules.label.exchangeDetails.kms')}>{checkAndSetDefaultValue(formData?.kilometer, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('commonModules.label.exchangeDetails.usage')}>{checkAndSetDefaultValue(getCodeValue(typeData?.VEHCL_USAG, formData?.usageCode), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('commonModules.label.exchangeDetails.yearOfRegistration')}>{checkAndSetDefaultValue(formData?.yearOfRegistrationCode, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('commonModules.label.exchangeDetails.monthOfRegistration')}>{checkAndSetDefaultValue(getCodeValue(typeData?.MONTH, formData?.monthOfRegistrationCode), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('commonModules.label.exchangeDetails.vin')}>{checkAndSetDefaultValue(formData?.oldChessisNumber, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('commonModules.label.exchangeDetails.hypotheticatedTo')}>{checkAndSetDefaultValue(getCodeValue(financeLovData, formData?.hypothicatedToCode), isLoading)}</Descriptions.Item>
                     </Descriptions>
-                    <Descriptions {...viewProps} title={prepareCaption('Customer Details')}>
-                        <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(formData?.customerName, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Relationship">{checkAndSetDefaultValue(getCodeValue(typeData?.REL_TYPE, formData?.relationshipCode), isLoading)}</Descriptions.Item>
+                    <Descriptions {...viewProps} title={prepareCaption(translateContent('commonModules.exchangeVehicle.captions.sectionTwo'))}>
+                        <Descriptions.Item label={translateContent('commonModules.label.exchangeDetails.customerName')}>{checkAndSetDefaultValue(formData?.customerName, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('commonModules.label.exchangeDetails.relationShip')}>{checkAndSetDefaultValue(getCodeValue(typeData?.REL_TYPE, formData?.relationshipCode), isLoading)}</Descriptions.Item>
                     </Descriptions>
-                    <Descriptions {...viewProps} title={prepareCaption('Scheme')}>
-                        <Descriptions.Item label="Scheme Name">{checkAndSetDefaultValue(getCodeValue(schemeLovData, formData?.schemeCode), isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Scheme Amount">{checkAndSetDefaultValue(formData?.schemeAmount, isLoading)}</Descriptions.Item>
+                    <Descriptions {...viewProps} title={prepareCaption(translateContent('commonModules.exchangeVehicle.captions.sectionThree'))}>
+                        <Descriptions.Item label={translateContent('commonModules.label.exchangeDetails.schemeName')}>{checkAndSetDefaultValue(getCodeValue(schemeLovData, formData?.schemeCode), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('commonModules.label.exchangeDetails.schemeAmount')}>{checkAndSetDefaultValue(formData?.schemeAmount, isLoading)}</Descriptions.Item>
                     </Descriptions>
-                    <Descriptions {...viewProps} title={prepareCaption('Price')}>
-                        <Descriptions.Item label="Customer Expected Price">{checkAndSetDefaultValue(formData?.customerExpectedPrice, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Procurement Price">{checkAndSetDefaultValue(formData?.procurementPrice, isLoading)}</Descriptions.Item>
+                    <Descriptions {...viewProps} title={prepareCaption(translateContent('commonModules.exchangeVehicle.captions.sectionFour'))}>
+                        <Descriptions.Item label={translateContent('commonModules.label.exchangeDetails.customerExpectedPrice')}>{checkAndSetDefaultValue(formData?.customerExpectedPrice, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('commonModules.label.exchangeDetails.procurementPrice')}>{checkAndSetDefaultValue(formData?.procurementPrice, isLoading)}</Descriptions.Item>
                     </Descriptions>
                 </>
             )}

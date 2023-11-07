@@ -6,6 +6,7 @@
 import React from 'react';
 import { Row, Col, Form, Button } from 'antd';
 import { withModal } from 'components/withModal';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -23,13 +24,13 @@ export const OTFConfirmationModalFrom = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
                     <Button onClick={handleCloseModal} danger>
-                        No
+                        {translateContent('global.yesNo.no')}
                     </Button>
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
                     <Button htmlType="submit" type="primary">
-                        Yes
+                        {translateContent('global.yesNo.yes')}
                     </Button>
                 </Col>
             </Row>

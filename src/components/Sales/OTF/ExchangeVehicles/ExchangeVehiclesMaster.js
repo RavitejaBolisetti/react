@@ -25,6 +25,7 @@ import { BASE_URL_PRODUCT_MODEL_GROUP, BASE_URL_PRODUCT_VARIENT, BASE_URL_CUSTOM
 
 import styles from 'assets/sass/app.module.scss';
 import { SALES_MODULE_TYPE } from 'constants/salesModuleType';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -48,14 +49,11 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Exchange Vehichle';
-
     let returnValue = {
         userId,
         isDataLoaded,
         exchangeData,
         isLoading,
-        moduleTitle,
 
         financeLovData,
         isFinanceLovLoading,
@@ -370,7 +368,7 @@ const ExchangeVehiclesBase = (props) => {
     const onFinish = (values) => {
         const { customerName } = values;
         if (values?.exchange && !customerName) {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Verify Customer id to continue' });
+            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationSuccess.error'), message: translateContent('bookingManagement.validation.verifyCustomerID') });
             return;
         }
         const data = { ...values, exchange: values?.exchange ? 1 : 0, id: exchangeData?.id || '', otfId: selectedRecordId, otfNumber: selectedOrderId };

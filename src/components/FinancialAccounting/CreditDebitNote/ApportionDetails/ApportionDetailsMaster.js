@@ -20,6 +20,7 @@ import { CreditDebitNoteFormButton } from '../CreditDebitFormButton';
 
 import { invoiceDetailsDataAction } from 'store/actions/data/financialAccounting/invoiceDetails';
 import { documentDescriptionDataActions } from 'store/actions/data/financialAccounting/documentDescription';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -34,7 +35,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Voucher and Party Details';
+    const moduleTitle = translateContent('creditDebitNote.ApportionDetails.heading.moduleTitle');
 
     let returnValue = {
         collapsed,

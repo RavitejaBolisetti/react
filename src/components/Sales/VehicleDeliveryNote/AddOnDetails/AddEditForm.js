@@ -8,6 +8,7 @@ import { Row, Col, Collapse, Form, Divider } from 'antd';
 
 import { expandIcon } from 'utils/accordianExpandIcon';
 import CommonForm from './CommonForm';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 
@@ -45,7 +46,7 @@ const AddEditFormMain = (props) => {
         <Row gutter={20}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                 <Collapse onChange={() => handleCollapse('Shield')} expandIcon={expandIcon} activeKey={openAccordian} expandIconPosition="end" collapsible="icon">
-                    <Panel header="Shield Information" key="Shield">
+                    <Panel header={translateContent('vehicleDeliveryNote.addOnDetails.heading.shieldInfo')} key="Shield">
                         <Divider />
                         <Form layout="vertical" autoComplete="off" form={shieldForm}>
                             <CommonForm {...commonFormProps} {...shieldInfoProps} formKey={'sheildRequest'} disableKey={'Shield'} />
@@ -54,7 +55,7 @@ const AddEditFormMain = (props) => {
                 </Collapse>
 
                 <Collapse onChange={() => handleCollapse('RSA')} expandIcon={expandIcon} activeKey={openAccordian} expandIconPosition="end" collapsible="icon">
-                    <Panel header="RSA" key="RSA">
+                    <Panel header={translateContent('vehicleDeliveryNote.addOnDetails.heading.rsa')} key="RSA">
                         <Divider />
                         <Form layout="vertical" autoComplete="off" form={rsaForm}>
                             <CommonForm {...commonFormProps} {...rsaProps} formKey={'rsaRequest'} disableKey={'RSA'} />
@@ -63,7 +64,7 @@ const AddEditFormMain = (props) => {
                 </Collapse>
 
                 <Collapse onChange={() => handleCollapse('AMC')} expandIcon={expandIcon} activeKey={openAccordian} expandIconPosition="end" collapsible="icon">
-                    <Panel header="AMC" key="AMC">
+                    <Panel header={translateContent('vehicleDeliveryNote.addOnDetails.heading.amc')} key="AMC">
                         <Divider />
                         <Form layout="vertical" autoComplete="off" form={amcForm}>
                             <CommonForm {...commonFormProps} {...amcProps} formKey={'amcRequest'} disableKey={'AMC'} />

@@ -12,6 +12,7 @@ import { HiCheck } from 'react-icons/hi';
 import styles from 'assets/sass/app.module.scss';
 import { CopytoClipboard } from 'utils/CopytoClipboard';
 import { useMemo } from 'react';
+import { translateContent } from 'utils/translateContent';
 
 const { Title, Text } = Typography;
 
@@ -23,13 +24,13 @@ export const ThankYouMaster = (props) => {
     const ThankYoutitles = useMemo(() => {
         switch (props?.soldByDealer) {
             case true: {
-                return { invoiceType: 'Delivery Note', Number: selectedOrder?.responseMessage?.split('. ')?.[1] };
+                return { invoiceType: translateContent('vehicleDeliveryNote.heading.mainTitle'), Number: selectedOrder?.responseMessage?.split('. ')?.[1] };
             }
             case false: {
-                return { invoiceType: 'Challan', Number: messageList[messageList?.length - 1] };
+                return { invoiceType: translateContent('vehicleDeliveryNote.buttons.challan'), Number: messageList[messageList?.length - 1] };
             }
             default: {
-                return { invoiceType: 'Delivery Note', Number: selectedOrder?.responseMessage?.split('. ')?.[1] };
+                return { invoiceType: translateContent('vehicleDeliveryNote.heading.mainTitle'), Number: selectedOrder?.responseMessage?.split('. ')?.[1] };
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -76,7 +77,7 @@ export const ThankYouMaster = (props) => {
 
                             <Divider />
                             <Space size="middle" direction="vertical">
-                                <Text>Do you want to Print or download this Delivery Note</Text>
+                                <Text>{translateContent('vehicleDeliveryNote.thankYouPage.downloadDeliveryNote')}</Text>
                                 <Button onClick={() => handlePrintDownload(record)} danger>
                                     {`Download/Print ${ThankYoutitles?.invoiceType}`}
                                 </Button>

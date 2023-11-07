@@ -9,6 +9,7 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { AMC_CONSTANTS } from '../utils/AMCConstants';
 import styles from 'assets/sass/app.module.scss';
 import { dateFormat } from 'utils/formatDateTime';
+import { translateContent } from 'utils/translateContent';
 
 const { Search } = Input;
 
@@ -28,8 +29,8 @@ const AddEditForm = (props) => {
                 {!(formActionType?.addMode && requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.MNM_FOC?.key) && (
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="VIN" name="vin">
-                                <Search placeholder={preparePlaceholderText('VIN')} onChange={handleVINChange} onSearch={handleVinSearch} allowClear />
+                            <Form.Item label={translateContent('amcRegistration.label.vin')} name="vin">
+                                <Search placeholder={preparePlaceholderText(translateContent('amcRegistration.label.vin'))} onChange={handleVINChange} onSearch={handleVinSearch} allowClear />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -37,30 +38,30 @@ const AddEditForm = (props) => {
                 <Divider />
                 <Row gutter={20}>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label="Vehicle Registration Number" name="vehicleRegistrationNumber">
-                            <Input disabled maxLength={10} placeholder={preparePlaceholderText('Vehicle Registration Number')} />
+                        <Form.Item label={translateContent('amcRegistration.label.vehicleRegistrationNumber')} name="vehicleRegistrationNumber">
+                            <Input disabled maxLength={10} placeholder={preparePlaceholderText(translateContent('amcRegistration.label.vehicleRegistrationNumber'))} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label="Org. Warranty Start Date" name="orignallyWarrantyStartDate">
-                            <DatePicker format={dateFormat} disabled placeholder={preparePlaceholderText('Org. Warranty Start Date')} />
+                        <Form.Item label={translateContent('amcRegistration.label.orignallyWarrantyStartDate')} name="orignallyWarrantyStartDate">
+                            <DatePicker format={dateFormat} disabled placeholder={preparePlaceholderText(translateContent('amcRegistration.label.orignallyWarrantyStartDate'))} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label="Model Group" name="modelGroup">
-                            <Input disabled placeholder={preparePlaceholderText('Model Group')} />
+                        <Form.Item label={translateContent('amcRegistration.label.modelGroup')} name="modelGroup">
+                            <Input disabled placeholder={preparePlaceholderText(translateContent('amcRegistration.label.modelGroup'))} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label="Model Family" name="modelFamily">
-                            <Input disabled placeholder={preparePlaceholderText('Model Family')} />
+                        <Form.Item label={translateContent('amcRegistration.label.modelFamily')} name="modelFamily">
+                            <Input disabled placeholder={preparePlaceholderText(translateContent('amcRegistration.label.modelFamily'))} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label="Model Description" name="modelDescription">
-                            <Input disabled placeholder={preparePlaceholderText('Model Description')} />
+                        <Form.Item label={translateContent('amcRegistration.label.modelDescription')} name="modelDescription">
+                            <Input disabled placeholder={preparePlaceholderText(translateContent('amcRegistration.label.modelDescription'))} />
                         </Form.Item>
                     </Col>
                 </Row>

@@ -31,6 +31,7 @@ import { vehicleReceiptChecklistdataActions } from 'store/actions/data/VehicleRe
 import { vehicleReceiptChecklistProfiledataActions } from 'store/actions/data/VehicleReceiptCheckList/VehicleReceiptChecklistProfile';
 import { VehicleCheclistDetailsdataActions } from 'store/actions/data/VehicleReceiptCheckList/VehicleReceiptChecklistMaster';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -48,7 +49,7 @@ const mapStateToProps = (state) => {
             ProductHierarchy: { isFilteredListLoaded: isProductHierarchyDataLoaded = false, isLoading: isProductHierarchyLoading, filteredListData: VehicleLovCodeData = [] },
         },
     } = state;
-    const moduleTitle = 'Vehicle Receipt Checklist';
+    const moduleTitle = translateContent('vehicleReceiptChecklist.heading.mainTitle');
 
     let returnValue = {
         userId,
@@ -619,11 +620,11 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
 
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
-            return 'View ';
+            return translateContent('global.drawerTitle.view');
         } else if (formActionType?.editMode) {
-            return 'Edit ';
+            return translateContent('global.drawerTitle.edit');
         } else {
-            return 'Add New ';
+            return translateContent('global.drawerTitle.addNew');
         }
     }, [formActionType]);
 

@@ -8,6 +8,7 @@ import { Row, Col, Input, Form } from 'antd';
 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateNumberWithTwoDecimalPlaces } from 'utils/validation';
+import { translateContent } from 'utils/translateContent';
 
 const ShieldForm = ({ formData, shieldForm, setFormDataSetter, formDataSetter, formActionType, handleFormValueChange }) => {
     const [isReadOnly, setisReadOnly] = useState(false);
@@ -32,13 +33,13 @@ const ShieldForm = ({ formData, shieldForm, setFormDataSetter, formDataSetter, f
         <Form form={shieldForm} onValuesChange={onValuesChange} onFieldsChange={handleFormValueChange} autoComplete="off" layout="vertical">
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item label="Shield" name="shieldType">
-                        <Input disabled={isReadOnly} placeholder={preparePlaceholderText('Shield Type')} />
+                    <Form.Item label={translateContent('bookingManagement.label.shield')} name="shieldType">
+                        <Input disabled={isReadOnly} placeholder={preparePlaceholderText(translateContent('bookingManagement.label.shield'))} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item label="Shield Rate" name="shieldRate" rules={[validateNumberWithTwoDecimalPlaces('Shield Rate')]}>
-                        <Input disabled={isReadOnly} placeholder={preparePlaceholderText('Shield Rate')} />
+                    <Form.Item label={translateContent('bookingManagement.label.shieldRate')} name="shieldRate" rules={[validateNumberWithTwoDecimalPlaces(translateContent('bookingManagement.label.shieldRate'))]}>
+                        <Input disabled={isReadOnly} placeholder={preparePlaceholderText(translateContent('bookingManagement.label.shieldRate'))} />
                     </Form.Item>
                 </Col>
             </Row>

@@ -18,6 +18,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { convertDateToCalender } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -30,14 +31,11 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Finance Detail';
-
     let returnValue = {
         userId,
         isLoaded,
         financeData,
         isLoading,
-        moduleTitle,
 
         isFinanceLovDataLoaded,
         isFinanceLovLoading,
@@ -118,7 +116,7 @@ export const FinananceDetailsMasterBase = (props) => {
     }, [userId, isFinanceLovDataLoaded]);
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
     };
 
     const onErrorAction = (message) => {
@@ -136,7 +134,7 @@ export const FinananceDetailsMasterBase = (props) => {
         } else {
             const onSuccess = (res) => {
                 form.resetFields();
-                showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
                 fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction, userId });
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
             };

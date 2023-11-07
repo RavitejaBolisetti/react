@@ -91,7 +91,7 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label={translateContent('commonModules.label.insuranceDetails.insuranceCompany')} name="insuranceCompany" initialValue={formData?.insuranceCompany}>
-                                    <Select placeholder={preparePlaceholderSelect('Insurance Company')}>
+                                    <Select placeholder={preparePlaceholderSelect(translateContent('commonModules.label.insuranceDetails.insuranceCompany'))}>
                                         {insuranceCompanies?.map((item) => (
                                             <Option value={item?.key} key={item?.key}>
                                                 {item?.value}
@@ -102,25 +102,25 @@ const AddEditFormMain = (props) => {
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label={translateContent('commonModules.label.insuranceDetails.insuranceCoverNote')} name="insuranceCoverNote" initialValue={formData?.insuranceCoverNote}>
-                                    <Input placeholder={preparePlaceholderText('Insurance Cover Note')} maxLength={55} />
+                                    <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.insuranceDetails.insuranceCoverNote'))} maxLength={55} />
                                 </Form.Item>
                             </Col>
 
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label={translateContent('commonModules.label.insuranceDetails.insuranceAmount')} name="insuranceAmount" initialValue={formData?.insuranceAmount} rules={[validateNumberWithTwoDecimalPlaces('insurance amount')]}>
-                                    <Input placeholder={preparePlaceholderText('Insurance Amount')} maxLength={20} />
+                                <Form.Item label={translateContent('commonModules.label.insuranceDetails.insuranceAmount')} name="insuranceAmount" initialValue={formData?.insuranceAmount} rules={[validateNumberWithTwoDecimalPlaces(translateContent('commonModules.label.insuranceDetails.insuranceAmount'))]}>
+                                    <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.insuranceDetails.insuranceAmount'))} maxLength={20} />
                                 </Form.Item>
                             </Col>
 
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label={translateContent('commonModules.label.insuranceDetails.insuranceCoverNoteDate')} name="insuranceDate" initialValue={formattedCalendarDate(formData?.insuranceDate)}>
-                                    <DatePicker disabledDate={disableFutureDate} format={dateFormat} placeholder={preparePlaceholderSelect('Date')} />
+                                    <DatePicker disabledDate={disableFutureDate} format={dateFormat} placeholder={preparePlaceholderSelect(translateContent('commonModules.label.insuranceDetails.insuranceCoverNoteDate'))} />
                                 </Form.Item>
                             </Col>
 
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label={translateContent('commonModules.label.insuranceDetails.registrationNumber')} name="registrationNumber" initialValue={formData?.registrationNumber}>
-                                    <Input placeholder={preparePlaceholderText('Registration Number')} maxLength={20} />
+                                    <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.insuranceDetails.registrationNumber'))} maxLength={20} />
                                 </Form.Item>
                             </Col>
                         </Row>

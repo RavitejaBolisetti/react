@@ -9,6 +9,7 @@ import { Divider, Form } from 'antd';
 import CardMapping from './CardMapping';
 import AddEditForm from './AddEditForm';
 import { NoDataFound } from 'utils/noDataFound';
+import { translateContent } from 'utils/translateContent';
 
 const AccessoriesAddonMain = ({ setIsBtnDisabled, partNameSearchVisible, setPartNameSearchVisible, fnSetData, isEditing, setisEditing, selectedOrderId, handleFormValueChange, showGlobalNotification, setsearchData, searchData, setaddButtonDisabled, onSearchPart, AddonPartsData, addButtonDisabled, accessoryForm, isBtnDisabled, setAddOnItemInfo, addOnItemInfo, formData }) => {
     const [EditingForm] = Form.useForm();
@@ -16,7 +17,7 @@ const AccessoriesAddonMain = ({ setIsBtnDisabled, partNameSearchVisible, setPart
     const isPresent = (partNumber, i = -1) => {
         const isPartAlreadyExist = addOnItemInfo?.find((element, index) => element?.partNumber === partNumber && index !== i);
         if (isPartAlreadyExist) {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Part is already added' });
+            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationSuccess.error'), message: translateContent('bookingManagement.validation.partAlreadyAdded') });
             return true;
         }
         return false;
@@ -31,7 +32,7 @@ const AccessoriesAddonMain = ({ setIsBtnDisabled, partNameSearchVisible, setPart
                 }
 
                 if (!values?.partNumber) {
-                    showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please provide part number' });
+                    showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationSuccess.error'), message: translateContent('bookingManagement.validation.providePartNumber') });
                     return;
                 }
 
@@ -91,7 +92,7 @@ const AccessoriesAddonMain = ({ setIsBtnDisabled, partNameSearchVisible, setPart
         <>
             <Divider />
             {addButtonDisabled?.partDetailsResponses && <AddEditForm {...AddEditFormProps} />}
-            {!addOnItemInfo?.length && !addButtonDisabled?.partDetailsResponses && <NoDataFound informtion={'Add accessories'} />}
+            {!addOnItemInfo?.length && !addButtonDisabled?.partDetailsResponses && <NoDataFound informtion={translateContent('bookingManagement.label.addAccessories')} />}
             {addOnItemInfo?.map((element, index) => {
                 return <CardMapping AddEditFormProps={AddEditFormProps} element={element} isEditing={isEditing} setisEditing={setisEditing} handleDelete={handleDelete} index={index} />;
             })}

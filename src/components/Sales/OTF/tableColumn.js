@@ -6,39 +6,40 @@
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { OTFStatusTag } from './utils/OTFStatusTag';
 import { convertDateMonthYear } from 'utils/formatDateTime';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Booking No.',
+            title: translateContent('commonModules.label.bookingDetails.bookingNumber'),
             dataIndex: 'otfNumber',
             width: '18%',
             render: (_, record) => record?.bookingNumber || record?.otfNumber,
         }),
 
         tblPrepareColumns({
-            title: 'Booking Date',
+            title: translateContent('commonModules.label.bookingDetails.bookingDate'),
             dataIndex: 'otfDate',
             width: '12%',
             render: (_, record) => (record?.otfDate ? convertDateMonthYear(record?.otfDate) : ''),
         }),
 
         tblPrepareColumns({
-            title: 'Customer Name',
+            title: translateContent('commonModules.label.bookingCustomerAndBillingCustomer.customerName'),
             dataIndex: 'customerName',
             width: '20%',
         }),
 
         tblPrepareColumns({
-            title: 'Model Description',
+            title: translateContent('commonModules.label.vehicleDetails.modelDescription'),
             dataIndex: 'model',
             width: '25%',
         }),
 
         tblPrepareColumns({
-            title: 'Booking Status',
+            title: translateContent('bookingManagement.label.bookingStatus'),
             dataIndex: 'orderStatus',
             width: '14%',
             render: (_, record) => OTFStatusTag(record.orderStatus),

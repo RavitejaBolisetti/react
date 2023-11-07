@@ -7,8 +7,9 @@ import React from 'react';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 import { OtfMaster } from 'components/Sales';
+import { translateContent } from 'utils/translateContent';
 const OtfMasterBase = (props) => {
-    const pageTitle = 'Booking Management';
+    const pageTitle = translateContent('bookingManagement.heading.title');
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

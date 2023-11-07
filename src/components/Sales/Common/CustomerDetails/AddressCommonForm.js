@@ -41,7 +41,7 @@ export const AddressCommonForm = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item name={[formType, 'sameAsBookingCustomer']} valuePropName="checked" label="" initialValue={formData?.sameAsBookingCustomer}>
-                            <Checkbox onClick={handleOnChange}>Same as Booking Customer</Checkbox>
+                            <Checkbox onClick={handleOnChange}>{translateContent('commonModules.label.bookingCustomerAndBillingCustomer.sameAsBookingCustomer')}</Checkbox>
                         </Form.Item>
                     </Col>
                 </Row>
@@ -49,18 +49,18 @@ export const AddressCommonForm = (props) => {
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name={[formType, 'mobileNumber']} label={translateContent('commonModules.label.bookingCustomerAndBillingCustomer.mobileNumber')} initialValue={formData?.mobileNumber}>
-                        <Input placeholder={preparePlaceholderText('Mobile Number')} maxLength={10} disabled={true} />
+                        <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.bookingCustomerAndBillingCustomer.mobileNumber'))} maxLength={10} disabled={true} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name={[formType, 'customerId']} label={translateContent('commonModules.label.bookingCustomerAndBillingCustomer.customerId')} initialValue={formData?.customerId}>
-                        <Input maxLength={6} placeholder={preparePlaceholderText('id')} disabled={true} />
+                        <Input maxLength={6} placeholder={preparePlaceholderText(translateContent('commonModules.label.bookingCustomerAndBillingCustomer.customerId'))} disabled={true} />
                     </Form.Item>
                 </Col>
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name={[formType, 'customerName']} label={translateContent('commonModules.label.bookingCustomerAndBillingCustomer.customerName')} initialValue={formData?.customerName}>
-                        <Input placeholder={preparePlaceholderText('Customer Name')} maxLength={50} disabled={true} />
+                        <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.bookingCustomerAndBillingCustomer.customerName'))} maxLength={50} disabled={true} />
                     </Form.Item>
                 </Col>
 
@@ -73,7 +73,7 @@ export const AddressCommonForm = (props) => {
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name={[formType, 'email']} label={translateContent('commonModules.label.bookingCustomerAndBillingCustomer.emailId')} initialValue={formData?.email} rules={[validateEmailField('Email ID')]}>
-                        <Input placeholder={preparePlaceholderText('Email ID')} maxLength={50} disabled={true} />
+                        <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.bookingCustomerAndBillingCustomer.emailId'))} maxLength={50} disabled={true} />
                     </Form.Item>
                 </Col>
 
@@ -93,18 +93,18 @@ export const AddressCommonForm = (props) => {
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name={[formType, 'address']} label={translateContent('commonModules.label.bookingCustomerAndBillingCustomer.address')} initialValue={formData?.address}>
-                        <Input placeholder={preparePlaceholderText('Address')} maxLength={50} disabled={true} />
+                        <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.bookingCustomerAndBillingCustomer.address'))} maxLength={50} disabled={true} />
                     </Form.Item>
                 </Col>
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name={[formType, 'district']} label={translateContent('commonModules.label.bookingCustomerAndBillingCustomer.cityDistrict')} initialValue={formData?.district}>
-                        <Input maxLength={50} placeholder={preparePlaceholderText('District')} disabled={true} />
+                        <Input maxLength={50} placeholder={preparePlaceholderText(translateContent('commonModules.label.bookingCustomerAndBillingCustomer.cityDistrict'))} disabled={true} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name={[formType, 'state']} label={translateContent('commonModules.label.bookingCustomerAndBillingCustomer.state')} initialValue={formData?.state}>
-                        <Input placeholder={preparePlaceholderText('State')} maxLength={50} disabled={true} />
+                        <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.bookingCustomerAndBillingCustomer.state'))} maxLength={50} disabled={true} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -112,26 +112,26 @@ export const AddressCommonForm = (props) => {
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name={[formType, 'pincode']} label={translateContent('commonModules.label.bookingCustomerAndBillingCustomer.pinCode')} initialValue={formData?.pincode}>
-                        <Input placeholder={preparePlaceholderText('PIN Code')} maxLength={8} disabled={true} />
+                        <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.bookingCustomerAndBillingCustomer.pinCode'))} maxLength={8} disabled={true} />
                     </Form.Item>
                 </Col>
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name={[formType, 'alternateNumber']} label={translateContent('commonModules.label.bookingCustomerAndBillingCustomer.alternateNumber')} initialValue={formData?.alternateNumber} rules={[validateMobileNoField('alternate Number'), { validator: (rule, value) => alternateNumberCheck(value) }]}>
-                        <Input maxLength={10} placeholder={preparePlaceholderText('alternate Number')} {...disabledProps} />
+                        <Input maxLength={10} placeholder={preparePlaceholderText(translateContent('commonModules.label.bookingCustomerAndBillingCustomer.alternateNumber'))} {...disabledProps} />
                     </Form.Item>
                 </Col>
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name={[formType, 'panNo']} label={translateContent('commonModules.label.bookingCustomerAndBillingCustomer.pan')} initialValue={formData?.panNo} rules={[validatePanField('PAN')]}>
-                        <Input placeholder={preparePlaceholderText('PAN')} onInput={convertToUpperCase} maxLength={10} {...disabledProps} />
+                        <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.bookingCustomerAndBillingCustomer.pan'))} onInput={convertToUpperCase} maxLength={10} {...disabledProps} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name={[formType, 'gstin']} label={translateContent('commonModules.label.bookingCustomerAndBillingCustomer.gstin')} initialValue={formData?.gstin} rules={[validateGSTIN('GSTIN')]}>
-                        <Input placeholder={preparePlaceholderText('GSTIN')} onInput={convertToUpperCase} maxLength={15} {...disabledProps} />
+                        <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.bookingCustomerAndBillingCustomer.gstin'))} onInput={convertToUpperCase} maxLength={15} {...disabledProps} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>

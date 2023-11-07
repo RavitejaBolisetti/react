@@ -23,6 +23,7 @@ import { NoDataFound } from 'utils/noDataFound';
 
 import { AMC_CONSTANTS } from '../utils/AMCConstants';
 import { formattedCalendarDate } from 'utils/formatDateTime';
+import { translateContent } from 'utils/translateContent';
 import styles from 'assets/sass/app.module.scss';
 
 const { Text } = Typography;
@@ -100,7 +101,7 @@ const VehicleDetailsMasterBase = (props) => {
     const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
     const addDataTitle = (
         <p className={styles.textCenter}>
-            Please add new vehicle using <br /> <strong>“Add”</strong> button at top
+            {translateContent('amcRegistration.label.addNewVehicleMsg')} <br /> <strong>“{translateContent('global.drawerTitle.add')}”</strong> {translateContent('amcRegistration.label.buttonAtTop')}
         </p>
     );
 
@@ -122,10 +123,10 @@ const VehicleDetailsMasterBase = (props) => {
             .validateFields()
             .then((value) => {
                 if (checkDuplicate(value?.vehicleRegistrationNumber)) {
-                    showGlobalNotification({ title: 'Error', notificationType: 'error', message: 'Vehicle is duplicate' });
+                    showGlobalNotification({ title: translateContent('global.notificationSuccess.error'), notificationType: 'error', message: translateContent('amcRegistration.validation.duplicateVehicle') });
                     return false;
                 } else if (!value?.vehicleRegistrationNumber) {
-                    showGlobalNotification({ title: 'Error', notificationType: 'error', message: 'Please add vehicle registration number to continue' });
+                    showGlobalNotification({ title: translateContent('global.notificationSuccess.error'), notificationType: 'error', message: translateContent('amcRegistration.validation.vehicleRegistrationNoMandatory') });
                     return false;
                 } else {
                     setContactData((prev) => {
@@ -251,10 +252,10 @@ const VehicleDetailsMasterBase = (props) => {
                             ) : (
                                 <>
                                     <Row type="flex" align="middle">
-                                        <Text strong> {'Vehicle Details'}</Text>
+                                        <Text strong> {translateContent('amcRegistration.label.vehicleDetails')}</Text>
                                         {!formActionType?.viewMode && !(formActionType?.addMode && requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.MNM_FOC?.key) && (
                                             <Button onClick={addBtnContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isEditing || isAdding}>
-                                                Add
+                                                {translateContent('global.drawerTitle.add')}
                                             </Button>
                                         )}
                                     </Row>

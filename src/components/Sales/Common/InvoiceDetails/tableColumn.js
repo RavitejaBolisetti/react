@@ -6,24 +6,25 @@
 import { tblPrepareColumns } from 'utils/tableColumn';
 import { convertDateMonthYear } from 'utils/formatDateTime';
 import { getCodeValue } from 'utils/getCodeValue';
+import { translateContent } from 'utils/translateContent';
 
 export const tableColumnInvoice = (typeData) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Invoice Number',
+            title: translateContent('bookingManagement.label.invoiceNumber'),
             dataIndex: 'invoiceNumber',
             sorter: false,
         }),
 
         tblPrepareColumns({
-            title: 'Invoice Date',
+            title: translateContent('bookingManagement.label.invoiceDate'),
             dataIndex: 'invoiceDate',
             sorter: false,
             render: (_, record) => (record?.invoiceDate ? convertDateMonthYear(record?.invoiceDate) : ''),
         }),
 
         tblPrepareColumns({
-            title: 'Invoice Status',
+            title: translateContent('bookingManagement.label.invoiceStatus'),
             dataIndex: 'invoiceStatus',
             sorter: false,
             render: (_, record) => getCodeValue(typeData?.INVC_STATS, record?.invoiceStatus),
@@ -36,19 +37,19 @@ export const tableColumnInvoice = (typeData) => {
 export const tableColumnDelivery = () => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Delivery Note Number',
+            title: translateContent('bookingManagement.label.deliveryNoteNumber'),
             dataIndex: 'deliveryNoteNumber',
             sorter: false,
         }),
 
         tblPrepareColumns({
-            title: 'Delivery Note Date',
+            title: translateContent('bookingManagement.label.deliveryNoteDate'),
             dataIndex: 'deliveryNoteDate',
             sorter: false,
             render: (_, record) => (record?.deliveryNoteDate ? convertDateMonthYear(record?.deliveryNoteDate) : ''),
         }),
         tblPrepareColumns({
-            title: 'Delivery Note Status',
+            title: translateContent('bookingManagement.label.deliveryNoteStatus'),
             dataIndex: 'deliveryNoteStatus',
             sorter: false,
         }),
