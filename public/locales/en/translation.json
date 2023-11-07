@@ -1442,6 +1442,15 @@
         "validation": {
             "searchParameter": "search parametar"
         },
+        "profileCard": {
+            "vin": "VIN:",
+            "regNo": "Reg No:",
+            "customerId": "Customer ID:",
+            "mobileNo": "Mobile No.:",
+            "model": " Model:",
+            "color": " Color:",
+            "mfgWarrenty": " MFG Warranty: "
+        },
         "vehicledetails": {
             "label": {
                 "mnfcWarrEndDate": "Manufacturer Warranty End Date",
