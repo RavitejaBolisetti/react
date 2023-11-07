@@ -33,6 +33,7 @@ const mapStateToProps = (state) => {
                 OtfSearchList: { isDetailLoaded: isDataLoaded, detailData: otfData = [] },
                 salesConsultantLov: { isLoaded: isSalesConsultantDataLoaded, data: salesConsultantLov = [] },
             },
+            ConfigurableParameterEditing: { filteredListData: typeData = [] },
         },
     } = state;
 
@@ -46,6 +47,7 @@ const mapStateToProps = (state) => {
         moduleTitle,
         isSalesConsultantDataLoaded,
         salesConsultantLov,
+        typeData,
     };
     return returnValue;
 };

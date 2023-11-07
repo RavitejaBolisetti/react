@@ -465,4 +465,8 @@ export const PARAM_MASTER = {
         id: 'DLVR_CHLN_SER',
         title: 'Delivery Challan Search',
     },
+    MITRA_TYPE: {
+        id: 'MITRA_TYPE',
+        title: 'Mitra type in booking details',
+    },
 };
