@@ -8,6 +8,8 @@ import { Descriptions } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { DATA_TYPE } from 'constants/dataType';
 import { translateContent } from 'utils/translateContent';
+import parser from 'html-react-parser';
+
 const ViewTermConditionListMain = ({ formData, isLoading, styles }) => {
     const viewOneColProps = {
         bordered: false,
@@ -25,7 +27,7 @@ const ViewTermConditionListMain = ({ formData, isLoading, styles }) => {
                     <Descriptions.Item label={translateContent('termConditionDealer.label.effectivefrom')}>{checkAndSetDefaultValue(formData?.effectiveFrom || formData?.effectivefrom, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('termConditionDealer.label.effectiveto')}>{checkAndSetDefaultValue(formData?.effectiveTo || formData?.effectiveto, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('termConditionDealer.label.version')}>{checkAndSetDefaultValue(formData?.version, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('termConditionDealer.label.terms&Condition')}>{checkAndSetDefaultValue(formData?.termConditionDescription || formData?.termsconditiondescription, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('termConditionDealer.label.terms&Condition')}>{checkAndSetDefaultValue(parser(formData?.termConditionDescription || formData?.termsconditiondescription, isLoading))}</Descriptions.Item>
                 </Descriptions>
             </div>
         </>

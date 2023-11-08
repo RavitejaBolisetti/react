@@ -9,9 +9,11 @@ import { tblPrepareColumns } from 'utils/tableColumn';
 import { withDrawer } from 'components/withDrawer';
 import { ListDataTable } from 'utils/ListDataTable';
 import { translateContent } from 'utils/translateContent';
+import parser from 'html-react-parser';
+import { convertDateMonthYear } from 'utils/formatDateTime';
+
 import styles from 'assets/sass/app.module.scss';
 
-import { convertDateMonthYear } from 'utils/formatDateTime';
 const ChangeHistoryMain = (props) => {
     const { ChangeHistoryTermsConditionsData, onCloseAction } = props;
 
@@ -64,7 +66,7 @@ const ChangeHistoryMain = (props) => {
             title: translateContent('termConditionManufacturer.changeHistory.termsconditiondescription'),
             dataIndex: 'termsconditiondescription',
             width: '15%',
-            render: (text) => text?.replace(/<\/?[^>]+(>|$)/g, ''),
+            render: (text) => parser(text),
             sorter: false,
         })
 
