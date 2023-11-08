@@ -193,10 +193,9 @@ export const EMBEDDED_REPORTS = {
     },
     SHIELD_REGISTRATION_INVOICE_DOCUMENT: {
         id: 25,
-        key: 'Shield_Registration_Invoice_document',
+        key: 'Shield_Document',
         title: 'Shield Registration Invoice Document ',
         type: 'Document',
-        slug: '-report',
     },
     DELIVERY_CHALLAN_REPORT: {
         id: 26,

@@ -75,12 +75,12 @@ export const ThankYouMaster = (props) => {
                                     <Button onClick={() => handlePrintDownload({ ...record, typeRecord: SHIELD_REPORT_DOCUMENT_TYPE?.INVOICE_SHIELD?.value })} danger>
                                         Invoice
                                     </Button>
-                                    <Button onClick={() => handlePrintDownload({ ...record, typeRecord: SHIELD_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_SHIELD?.value })} danger style={{ margin: '0 12px' }}>
+                                    {/* <Button onClick={() => handlePrintDownload({ ...record, typeRecord: SHIELD_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_SHIELD?.value })} danger style={{ margin: '0 12px' }}>
                                         Registration Certificate
                                     </Button>
                                     <Button onClick={() => handlePrintDownload({ ...record, typeRecord: SHIELD_REPORT_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_SHIELD?.value })} danger>
                                         Registration Incentive Claim
-                                    </Button>
+                                    </Button> */}
                                 </Row>
                             </Space>
                         </div>

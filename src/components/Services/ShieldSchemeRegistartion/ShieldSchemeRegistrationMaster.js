@@ -933,11 +933,12 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     useEffect(() => {
         if (reportButtonType === SHIELD_REPORT_DOCUMENT_TYPE?.INVOICE_SHIELD?.value) {
             setShieldDocumentType(EMBEDDED_REPORTS?.SHIELD_REGISTRATION_INVOICE_DOCUMENT);
-        } else if (reportButtonType === SHIELD_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_SHIELD?.value) {
-            setShieldDocumentType(EMBEDDED_REPORTS?.SHIELD_REGISTRATION_INVOICE_DOCUMENT);
-        } else if (reportButtonType === SHIELD_REPORT_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_SHIELD?.value) {
-            setShieldDocumentType(EMBEDDED_REPORTS?.SHIELD_REGISTRATION_INVOICE_DOCUMENT);
         }
+        // else if (reportButtonType === SHIELD_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_SHIELD?.value) {
+        //     setShieldDocumentType(EMBEDDED_REPORTS?.SHIELD_REGISTRATION_INVOICE_DOCUMENT);
+        // } else if (reportButtonType === SHIELD_REPORT_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_SHIELD?.value) {
+        //     setShieldDocumentType(EMBEDDED_REPORTS?.SHIELD_REGISTRATION_INVOICE_DOCUMENT);
+        // }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [reportButtonType]);
 
