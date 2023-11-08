@@ -119,7 +119,6 @@ const UploadBase = (props) => {
     const [isReplacing, setIsReplacing] = useState(false);
     const [base64Img, setBase64Img] = useState('');
     const [uploadTime, setUploadTime] = useState(false);
-    
 
     const removeIcon = uploadTime ? <AiOutlineCloseCircle className={styles.iconSize} /> : <AiOutlineClose className={styles.iconSize} />;
 
@@ -184,7 +183,7 @@ const UploadBase = (props) => {
             }
             const fileSize = file.size / 1024 / 1024;
             if (isDoubleExtension(file.name) === true) {
-                alert('Double extensions are not allowed');
+                showGlobalNotification({ notificationType: 'error', title: 'Error', message: `Double extensions are not allowed`, placement: 'bottomRight' });
                 return false;
             } else {
                 const isValid = supportedFileTypes.find((element) => element === file.type) || (file.type === '' && undefinedType);
