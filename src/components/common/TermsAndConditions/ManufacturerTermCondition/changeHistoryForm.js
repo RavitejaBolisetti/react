@@ -9,10 +9,11 @@ import { tblPrepareColumns } from 'utils/tableColumn';
 import { withDrawer } from 'components/withDrawer';
 import { ListDataTable } from 'utils/ListDataTable';
 import { translateContent } from 'utils/translateContent';
+import parser from 'html-react-parser';
+import { convertDateMonthYear } from 'utils/formatDateTime';
+
 import styles from 'assets/sass/app.module.scss';
 
-import { convertDateMonthYear } from 'utils/formatDateTime';
-import htmlRemover from 'utils/htmlRemover';
 const ChangeHistoryMain = (props) => {
     const { ChangeHistoryTermsConditionsData, onCloseAction } = props;
 
@@ -47,6 +48,7 @@ const ChangeHistoryMain = (props) => {
             render: (text) => convertDateMonthYear(text),
             sorter: false,
         }),
+        
         tblPrepareColumns({
             title: translateContent('termConditionManufacturer.changeHistory.effectiveto'),
             dataIndex: 'effectiveto',
@@ -54,6 +56,7 @@ const ChangeHistoryMain = (props) => {
             render: (text) => convertDateMonthYear(text),
             sorter: false,
         }),
+
         tblPrepareColumns({
             title: translateContent('termConditionManufacturer.changeHistory.version'),
             dataIndex: 'version',
@@ -65,11 +68,8 @@ const ChangeHistoryMain = (props) => {
             title: translateContent('termConditionManufacturer.changeHistory.termsconditiondescription'),
             dataIndex: 'termsconditiondescription',
             width: '15%',
-            render: (text) => text?.replace(/<\/?[^>]+(>|$)/g, ''),
-            sorter: false,
-            render: (value) => {
-                return htmlRemover(value);
-            },
+            render: (text) => parser(text),
+            sorter: false,          
         })
 
         // tblActionColumn({ handleButtonClick, styles, fixed: 'right', width: '10%' })

@@ -12,10 +12,10 @@ import { getCodeValue } from 'utils/getCodeValue';
 import { DATA_TYPE } from 'constants/dataType';
 import { prepareCaption } from 'utils/prepareCaption';
 import { translateContent } from 'utils/translateContent';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 const ViewDetailMain = (props) => {
     const { formData, isLoading, typeData, salesConsultantLov } = props;
-
     const viewProps = {
         bordered: false,
         colon: false,
@@ -46,7 +46,7 @@ const ViewDetailMain = (props) => {
 
             <Descriptions {...viewProps} title={prepareCaption(translateContent('bookingManagement.label.salesDetails'))}>
                 <Descriptions.Item label={translateContent('bookingManagement.label.saleConsultant')}>{checkAndSetDefaultValue(getCodeValue(salesConsultantLov, formData?.saleConsultant), isLoading)}</Descriptions.Item>
-                <Descriptions.Item label={translateContent('bookingManagement.label.mitraType')}>{checkAndSetDefaultValue(formData?.mitraType, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('bookingManagement.label.mitraType')}>{checkAndSetDefaultValue(getCodeValue(typeData?.[PARAM_MASTER?.MITRA_TYPE?.id], formData?.mitraType), isLoading)}</Descriptions.Item>
                 <Descriptions.Item label={translateContent('bookingManagement.label.mitraName')}>{checkAndSetDefaultValue(formData?.mitraName, isLoading)}</Descriptions.Item>
             </Descriptions>
 
