@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Col, Row, Form } from 'antd';
@@ -17,6 +17,7 @@ import { qualificationDataActions } from 'store/actions/data/qualificationMaster
 import { AddEditForm } from './AddEditForm';
 import { tableColumn } from './tableColumn';
 import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -197,16 +198,6 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
         setButtonData({ ...defaultBtnVisiblity });
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return translateContent('global.drawerTitle.view');
-        } else if (formActionType?.editMode) {
-            return translateContent('global.drawerTitle.edit');
-        } else {
-            return translateContent('global.drawerTitle.add');
-        }
-    }, [formActionType]);
-
     const formProps = {
         form,
         formData,
@@ -215,7 +206,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
         onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(translateContent('qualificationMaster.heading.drawerTitle')),
+        titleOverride: drawerTitle(formActionType).concat(translateContent('qualificationMaster.heading.drawerTitle')),
         tableData: searchData,
         ADD_ACTION,
         EDIT_ACTION,

@@ -30,6 +30,7 @@ import { DisableParent, FindProductName } from 'components/common/ProductHierarc
 
 import { ConfirmationModal } from 'utils/ConfirmationModal';
 import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -502,15 +503,6 @@ export const VehicleAllotmentMasterBase = (props) => {
         setResetAdvanceFilter,
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return translateContent('global.drawerTitle.view');
-        } else if (formActionType?.editMode) {
-            return translateContent('global.drawerTitle.edit');;
-        } else {
-            return translateContent('global.drawerTitle.addNew');
-        }
-    }, [formActionType]);
     const containerProps = {
         userId,
         toggleButton,
@@ -523,7 +515,7 @@ export const VehicleAllotmentMasterBase = (props) => {
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(translateContent('orderDeliveryVehicleAllotment.heading.allotmentDetails')),
+        titleOverride: drawerTitle(formActionType).concat(translateContent('orderDeliveryVehicleAllotment.heading.allotmentDetails')),
         tableData: data,
         totalOTFRecords,
         buttonData,

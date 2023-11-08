@@ -35,6 +35,7 @@ import styles from 'assets/sass/app.module.scss';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
 import { LANGUAGE_EN } from 'language/en';
 import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -378,16 +379,6 @@ const CustomerMasterMain = (props) => {
         setShouldResetForm(true);
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return translateContent('global.drawerTitle.view');
-        } else if (formActionType?.editMode) {
-            return translateContent('global.drawerTitle.edit');
-        } else {
-            return translateContent('global.drawerTitle.addNew');
-        }
-    }, [formActionType]);
-
     const handleCustomerTypeChange = (id) => {
         setCustomerType(id);
         setFilterString({ current: 1, customerType: id, pageSize: 10 });
@@ -491,7 +482,7 @@ const CustomerMasterMain = (props) => {
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction: onCloseDrawer,
-        titleOverride: drawerTitle.concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
         tableData: data,
         customerType,
         ADD_ACTION,

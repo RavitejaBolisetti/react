@@ -4,15 +4,16 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Button, Card, Row, Col, Divider, Typography, Tag, Descriptions } from 'antd';
-import styles from 'assets/sass/app.module.scss';
+import { Button, Card, Row, Col, Divider, Typography, Descriptions } from 'antd';
 import { convertDateMonthYear } from 'utils/formatDateTime';
 import { AMC_CONSTANTS } from '../utils/AMCConstants';
 import { QUERY_BUTTONS_CONSTANTS, QUERY_BUTTONS_MNM_USER } from '../utils/ShieldRegistrationContant';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { SchemeStatusTag } from '../utils/schemeStatusTag';
-import { getCodeValue } from 'utils/getCodeValue';
 import { DATA_TYPE } from 'constants/dataType';
+
+import styles from 'assets/sass/app.module.scss';
+
 const { Text } = Typography;
 
 const ViewDetail = (props) => {

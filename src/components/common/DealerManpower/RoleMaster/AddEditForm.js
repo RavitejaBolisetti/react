@@ -6,12 +6,12 @@
 import React, { useState } from 'react';
 import { Col, Input, Form, Row, Switch, Select } from 'antd';
 import { validateRequiredInputField } from 'utils/validation';
-import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { ViewDetail } from './ViewDetail';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
-import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
+
+import styles from 'assets/sass/app.module.scss';
 
 const { Option } = Select;
 

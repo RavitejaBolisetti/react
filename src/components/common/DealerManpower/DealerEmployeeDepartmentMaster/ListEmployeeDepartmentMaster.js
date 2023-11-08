@@ -24,6 +24,7 @@ import { btnVisiblity } from 'utils/btnVisiblity';
 
 import { AddEditForm } from './AddEditForm';
 import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -232,16 +233,6 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         }
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return translateContent('global.drawerTitle.view');
-        } else if (formActionType?.editMode) {
-            return translateContent('global.drawerTitle.edit');
-        } else {
-            return translateContent('global.drawerTitle.add');
-        }
-    }, [formActionType]);
-
     const formProps = {
         form,
         formData,
@@ -250,7 +241,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(translateContent('employeeDepartment.label.division')),
+        titleOverride: drawerTitle(formActionType).concat(translateContent('employeeDepartment.label.division')),
         tableData: searchData,
 
         isDivisionLoading,

@@ -26,6 +26,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { translateContent } from 'utils/translateContent';
 
 import { FilterIcon } from 'Icons';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -430,16 +431,6 @@ export const CrmScreenEnrolmentBase = (props) => {
     const title = translateContent('crmSchemeEnrolment.heading.title');
     const drawerShortTitle = translateContent('crmSchemeEnrolment.heading.drawerTitle');
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return translateContent('global.drawerTitle.view') + drawerShortTitle;
-        } else if (formActionType?.editMode) {
-            return translateContent('global.drawerTitle.edit') + drawerShortTitle;
-        } else {
-            return translateContent('global.drawerTitle.add') + drawerShortTitle;
-        }
-    }, [formActionType]);
-
     const normalSearchProps = {
         extraParams,
         removeFilter,
@@ -461,10 +452,8 @@ export const CrmScreenEnrolmentBase = (props) => {
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
-
         icon: <FilterIcon size={20} />,
         titleOverride: translateContent('global.advanceFilter.title'),
-
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
         filterString,
@@ -477,7 +466,7 @@ export const CrmScreenEnrolmentBase = (props) => {
 
     const formProps = {
         isVisible: isFormVisible,
-        titleOverride: drawerTitle,
+        titleOverride: drawerTitle(formActionType).concat(drawerShortTitle),
         handleButtonClick,
         formActionType,
         onCloseAction,

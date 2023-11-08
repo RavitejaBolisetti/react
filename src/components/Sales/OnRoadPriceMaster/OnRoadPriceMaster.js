@@ -22,6 +22,7 @@ import { onRoadPriceMasterAction } from 'store/actions/data/vehicle/onRoadPriceM
 import { AddEditForm } from './AddEditForm';
 import { viewOnRoadPriceDetailAction } from 'store/actions/data/vehicle/viewOnRoadPriceDetailAction';
 import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -395,15 +396,6 @@ export const OnRoadPriceMasterBase = (props) => {
         typeData,
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return translateContent('global.drawerTitle.view');
-        } else if (formActionType?.editMode) {
-            return translateContent('global.drawerTitle.edit');
-        } else {
-            return translateContent('global.drawerTitle.addNew');
-        }
-    }, [formActionType]);
     const handleOnClick = () => {
         setButtonData({ ...defaultBtnVisiblity, saveAndNewBtn: false, cancelBtn: false, saveBtn: true });
         setIsUploadFormVisible(true);
@@ -491,7 +483,7 @@ export const OnRoadPriceMasterBase = (props) => {
         handleButtonClick,
     };
     const viewProps = {
-        titleOverride: drawerTitle.concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
         isVisible: isFormVisible,
         onCloseAction,
         formData,

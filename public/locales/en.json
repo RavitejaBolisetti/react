@@ -1,5 +1,22 @@
 {
     "global": {
+        "drawerTitle": {
+            "add": "Add ",
+            "edit": "Edit ",
+            "view": "View ",
+            "addNew": "Add New "
+        },
+        "label": {
+            "active": "Active",
+            "inActive": "InActive",
+            "noActive": "noActive",
+            "status": "Status",
+            "action": "Action",
+            "fromDate": "From Date",
+            "toDate": "To Date",
+            "serialNo": "Srl.",
+            "search": "Search"
+        },
         "validation": {
             "input": "Please enter ",
             "id": "id",
@@ -20,23 +37,7 @@
         "notificationError": {
             "title": "Error"
         },
-        "drawerTitle": {
-            "add": "Add ",
-            "edit": "Edit ",
-            "view": "View ",
-            "addNew": "Add New "
-        },
-        "label": {
-            "active": "Active",
-            "inActive": "InActive",
-            "noActive": "noActive",
-            "status": "Status",
-            "action": "Action",
-            "fromDate": "From Date",
-            "toDate": "To Date",
-            "serialNo": "Srl.",
-            "search": "Search"
-        },
+
         "advanceFilter": {
             "title": "Advance Filters",
             "appliedAdvanceFilter": "Applied Advance Filters :"

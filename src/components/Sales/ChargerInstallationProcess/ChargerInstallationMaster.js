@@ -31,6 +31,7 @@ import { FilterIcon } from 'Icons';
 import { getCodeValue } from 'utils/getCodeValue';
 
 import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -525,16 +526,6 @@ export const ChargerInstallationMasterBase = (props) => {
         typeData,
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return translateContent('global.drawerTitle.view');
-        } else if (formActionType?.editMode) {
-            return translateContent('global.drawerTitle.edit');
-        } else {
-            return translateContent('global.drawerTitle.addNew');
-        }
-    }, [formActionType]);
-
     const containerProps = {
         record: selectedOrder,
         form,
@@ -544,7 +535,7 @@ export const ChargerInstallationMasterBase = (props) => {
         onChargerInstallationFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,

@@ -35,6 +35,7 @@ import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
 import { OTF_STATUS } from 'constants/OTFStatus';
 import { otfvehicleDetailsDataActions } from 'store/actions/data/otf/vehicleDetails';
 import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -856,16 +857,6 @@ export const VehicleInvoiceMasterBase = (props) => {
         typeData,
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return translateContent('global.drawerTitle.view') + translateContent('vehicleInvoiceGeneration.heading.drawerTitleMaster');
-        } else if (formActionType?.editMode) {
-            return translateContent('global.drawerTitle.edit') + translateContent('vehicleInvoiceGeneration.heading.drawerTitleMaster');
-        } else {
-            return translateContent('global.drawerTitle.addNew') + translateContent('vehicleInvoiceGeneration.heading.drawerTitleMaster');
-        }
-    }, [formActionType]);
-
     const containerProps = {
         ...props,
         selectedOtfId,
@@ -877,7 +868,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         setFormActionType,
         isVisible: isFormVisible,
         onCloseAction: onCloseDrawer,
-        titleOverride: drawerTitle,
+        titleOverride: drawerTitle(formActionType).concat(translateContent('vehicleInvoiceGeneration.heading.drawerTitleMaster')),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,

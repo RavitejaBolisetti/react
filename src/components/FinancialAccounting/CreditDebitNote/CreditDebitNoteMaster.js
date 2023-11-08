@@ -30,6 +30,7 @@ import { LANGUAGE_EN } from 'language/en';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { TRANSACTION_TYPE } from './transactionType';
 import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -455,16 +456,6 @@ export const CreditDebitNoteMasterBase = (props) => {
         setAdvanceSearchVisible,
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return translateContent('global.drawerTitle.view');
-        } else if (formActionType?.editMode) {
-            return translateContent('global.drawerTitle.edit');
-        } else {
-            return translateContent('global.drawerTitle.addNew');
-        }
-    }, [formActionType]);
-
     const onAdvanceSearchCloseAction = () => {
         form.resetFields();
         advanceFilterForm.resetFields();
@@ -496,7 +487,7 @@ export const CreditDebitNoteMasterBase = (props) => {
         setIsFormVisible,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(transactionType).concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(transactionType).concat(moduleTitle),
         ADD_ACTION,
         EDIT_ACTION,
         VIEW_ACTION,

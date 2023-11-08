@@ -26,6 +26,7 @@ import { BASE_URL_EVR_DETAILS_CAPTURING_DETAIL as customURL } from 'constants/ro
 import { showGlobalNotification } from 'store/actions/notification';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -438,16 +439,6 @@ export const EvrDetailsCapturingMasterBase = (props) => {
 
     const title = translateContent('evrDetailsCapturing.heading.title');
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return translateContent('global.drawerTitle.view').concat(translateContent('evrDetailsCapturing.heading.moduleTitle'));
-        } else if (formActionType?.editMode) {
-            return translateContent('global.drawerTitle.edit').concat(translateContent('evrDetailsCapturing.heading.moduleTitle'));
-        } else {
-            return translateContent('global.drawerTitle.addNew');
-        }
-    }, [formActionType]);
-
     const advanceFilterResultProps = {
         extraParams,
         removeFilter,
@@ -492,7 +483,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
 
     const formProps = {
         isVisible: isFormVisible,
-        titleOverride: drawerTitle,
+        titleOverride: drawerTitle(formActionType).concat(translateContent('evrDetailsCapturing.heading.moduleTitle')),
         handleButtonClick,
         formActionType,
         onCloseAction,

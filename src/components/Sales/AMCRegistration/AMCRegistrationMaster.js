@@ -41,6 +41,7 @@ import { AMC_CONSTANTS } from './utils/AMCConstants';
 import { AMC_REQUEST_TITLE_CONSTANTS } from './utils/AMCRequestTitleConstant';
 import { ReportModal } from 'components/common/ReportModal/ReportModal';
 import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -668,16 +669,6 @@ export const AMCRegistrationMasterBase = (props) => {
         handleDealerParentChange,
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return translateContent('global.drawerTitle.viewtitle');
-        } else if (formActionType?.editMode) {
-            return translateContent('global.drawerTitle.edit');
-        } else {
-            return translateContent('global.drawerTitle.addNew');
-        }
-    }, [formActionType]);
-
     const modalTitle = useMemo(() => {
         switch (true) {
             case userType === AMC_CONSTANTS?.DEALER?.key: {
@@ -761,7 +752,7 @@ export const AMCRegistrationMasterBase = (props) => {
         AMConFinish: onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,

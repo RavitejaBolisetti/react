@@ -29,6 +29,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { partyDetailDataActions } from 'store/actions/data/receipt/partyDetails';
 import { ReportModal } from 'components/common/ReportModal/ReportModal';
 import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -556,16 +557,6 @@ export const ReceiptMasterBase = (props) => {
         searchForm,
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return translateContent('global.drawerTitle.view');
-        } else if (formActionType?.editMode) {
-            return translateContent('global.drawerTitle.edit');
-        } else {
-            return translateContent('global.drawerTitle.addNew');
-        }
-    }, [formActionType]);
-
     const containerProps = {
         record: selectedOrder,
         form,
@@ -575,7 +566,7 @@ export const ReceiptMasterBase = (props) => {
         receiptOnFinish: onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,

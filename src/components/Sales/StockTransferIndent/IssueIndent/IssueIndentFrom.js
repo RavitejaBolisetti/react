@@ -7,7 +7,6 @@ import React from 'react';
 import { Row, Col, Input, Form } from 'antd';
 import { withModal } from 'components/withModal';
 import { ModalButtons } from 'components/common/Button';
-import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { isIssuePriceValid, validateRequiredInputField, validationFieldLetterAndNumber, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 import { translateContent } from 'utils/translateContent';
 

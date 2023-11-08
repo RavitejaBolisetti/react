@@ -22,6 +22,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { filterFunction } from 'utils/filterFunction';
 import { AddEditForm } from './AddEditForm';
 import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -224,16 +225,6 @@ export const ListLessorCompanyMasterBase = (props) => {
 
     const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return translateContent('global.drawerTitle.view');
-        } else if (formActionType?.editMode) {
-            return translateContent('global.drawerTitle.edit');
-        } else {
-            return translateContent('global.drawerTitle.add');
-        }
-    }, [formActionType]);
-
     const formProps = {
         form,
         formData,
@@ -243,7 +234,7 @@ export const ListLessorCompanyMasterBase = (props) => {
 
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
         tableData: searchData,
 
         ADD_ACTION,

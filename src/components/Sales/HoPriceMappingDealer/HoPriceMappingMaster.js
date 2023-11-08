@@ -29,6 +29,7 @@ import { hoPriceMappingDetailDataActions } from 'store/actions/data/hoPriceMappi
 import { translateContent } from 'utils/translateContent';
 
 import { showGlobalNotification } from 'store/actions/notification';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -493,14 +494,6 @@ export const HoPriceMappingMasterBase = (props) => {
     const title = translateContent('hoPriceMapping.heading.title');
     const drawerTitleHeading = translateContent('hoPriceMapping.heading.drawerTitleHeading');
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return translateContent('global.drawerTitle.view') + drawerTitleHeading;
-        } else if (formActionType?.editMode) {
-            return translateContent('global.drawerTitle.edit') + drawerTitleHeading;
-        }
-    }, [formActionType]);
-
     const advanceFilterResultProps = {
         extraParams,
         removeFilter,
@@ -543,7 +536,7 @@ export const HoPriceMappingMasterBase = (props) => {
 
     const formProps = {
         isVisible: isFormVisible,
-        titleOverride: drawerTitle,
+        titleOverride: drawerTitle(formActionType).concat(drawerTitleHeading),
         handleButtonClick,
         formActionType,
         onCloseAction,

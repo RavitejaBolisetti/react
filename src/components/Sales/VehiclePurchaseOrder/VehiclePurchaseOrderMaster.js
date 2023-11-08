@@ -23,6 +23,7 @@ import { PoCancellationMaster } from './VehiclePurchaseOrderCancellation/PoCance
 import { VehiclePurchaseOrderDetailMaster } from './VehiclePurchaseOrderDetail';
 import { saveVPODataActions } from 'store/actions/data/vehicle/vehiclePurchaseOrderAction';
 import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -440,15 +441,6 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         typeData,
         handleCancelFilter,
     };
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return translateContent('global.drawerTitle.add');
-        } else if (formActionType?.editMode) {
-            return translateContent('global.drawerTitle.edit');
-        } else {
-            return translateContent('global.drawerTitle.addNew');
-        }
-    }, [formActionType]);
 
     const containerProps = {
         record: selectedRecord,
@@ -459,7 +451,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         setIsFormVisible,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,

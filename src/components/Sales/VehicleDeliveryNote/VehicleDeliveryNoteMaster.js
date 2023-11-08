@@ -38,6 +38,7 @@ import { FORMTYPE_CONSTANTS } from 'constants/formTypeConstant';
 import { vehicleDeliveryNoteCustomerDetailDataActions } from 'store/actions/data/vehicleDeliveryNote/customerDetails';
 import { DELIVERY_NOTE_STATUS } from './constants/deliveryNoteStatus';
 import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -771,16 +772,6 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         deliveryStatus,
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View ';
-        } else if (formActionType?.editMode) {
-            return 'Edit ';
-        } else {
-            return 'Add New ';
-        }
-    }, [formActionType]);
-
     const cancelModalCloseAction = () => {
         setCancelDeliveryNoteVisible(false);
         cancelDeliveryNoteForm.resetFields();
@@ -813,7 +804,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         deliveryNoteOnFinish: onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(soldByDealer ? moduleTitle : translateContent('vehicleDeliveryNote.cancelTitle.challan')),
+        titleOverride: drawerTitle(formActionType).concat(soldByDealer ? moduleTitle : translateContent('vehicleDeliveryNote.cancelTitle.challan')),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,
@@ -853,9 +844,9 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         paymentModeType,
         documentType,
         onCancelDeliveryNote,
-        saveButtonName: isLastSection ? translateContent('global.buttons.submit') :translateContent('global.buttons.continue'),
+        saveButtonName: isLastSection ? translateContent('global.buttons.submit') : translateContent('global.buttons.continue'),
         CancelDeliveryButtonName: soldByDealer ? translateContent('vehicleDeliveryNote.buttons.cancelDeliveryNote') : translateContent('vehicleDeliveryNote.buttons.cancelChallan'),
-        PrintButtonName: soldByDealer ? translateContent('vehicleDeliveryNote.buttons.printDeliveryNote') :  translateContent('vehicleDeliveryNote.buttons.printChallan') ,
+        PrintButtonName: soldByDealer ? translateContent('vehicleDeliveryNote.buttons.printDeliveryNote') : translateContent('vehicleDeliveryNote.buttons.printChallan'),
         setLastSection,
         customerIdValue,
         setCustomerIdValue,

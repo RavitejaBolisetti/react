@@ -18,6 +18,7 @@ import { AddEditForm } from './AddEditForm';
 import { ListDataTable } from 'utils/ListDataTable';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -205,16 +206,6 @@ export const DealerParentBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View ';
-        } else if (formActionType?.editMode) {
-            return 'Edit ';
-        } else {
-            return 'Add ';
-        }
-    }, [formActionType]);
-
     const formProps = {
         form,
         formData,
@@ -225,7 +216,7 @@ export const DealerParentBase = (props) => {
         dealerParentData: data,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(translateContent('dealerParent.heading.drawerTitle')),
+        titleOverride: drawerTitle(formActionType).concat(translateContent('dealerParent.heading.drawerTitle')),
         buttonData,
         setButtonData,
         handleButtonClick,

@@ -19,6 +19,7 @@ import { ProductModelGroupsDataActions } from 'store/actions/data/VehicleModelTa
 import { AccountCategoryLovdataActions } from 'store/actions/data/VehicleModelTaxChargesCategory/accountCategorylov';
 import { TaxChargesLovdataActions } from 'store/actions/data/VehicleModelTaxChargesCategory/taxChargeslov';
 import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -303,15 +304,6 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return translateContent('global.drawerTitle.view');
-        } else if (formActionType?.editMode) {
-            return translateContent('global.drawerTitle.edit');
-        } else {
-            return translateContent('global.drawerTitle.add');
-        }
-    }, [formActionType]);
 
     const formProps = {
         form,
@@ -319,7 +311,7 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
         showGlobalNotification,
         onFinish,
         onCloseAction,
-        titleOverride: drawerTitle.concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
         formData,
         setIsFormVisible,
         formActionType,

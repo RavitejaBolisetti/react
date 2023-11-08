@@ -41,6 +41,7 @@ import styles from 'assets/sass/app.module.scss';
 import { DealerProductActions } from 'store/actions/data/userManagement/dealerProduct';
 import { translateContent } from 'utils/translateContent';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const { Option } = Select;
 
@@ -449,15 +450,6 @@ const UserManagementMain = (props) => {
         setCanUserCreate(false);
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return translateContent('global.drawerTitle.view');
-        } else if (formActionType?.editMode) {
-            return translateContent('global.drawerTitle.edit');
-        } else {
-            return translateContent('global.drawerTitle.addNew');
-        }
-    }, [formActionType]);
     const formProps = {
         ...props,
         filterString,
@@ -469,7 +461,7 @@ const UserManagementMain = (props) => {
         formActionType,
         isReadOnly,
         setFormData,
-        titleOverride: drawerTitle.concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
         productHierarchyData,
         onCloseAction,
         finalFormdata,

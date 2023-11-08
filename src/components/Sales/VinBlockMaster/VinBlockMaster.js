@@ -17,6 +17,7 @@ import AdvanceVinBlockMasterFilter from './AdvanceVinBlockMasterFilter';
 import { vinBlockMasterAction } from 'store/actions/data/vehicle/vinBlockMasterAction';
 import { vinBlockAction } from 'store/actions/data/vehicle/vinBlockAction';
 import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -227,15 +228,6 @@ export const VinBlockMasterBase = (props) => {
         searchForm.resetFields();
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return translateContent('global.drawerTitle.view');
-        } else if (formActionType?.editMode) {
-            return translateContent('global.drawerTitle.edit');
-        } else {
-            return translateContent('global.drawerTitle.addNew');
-        }
-    }, [formActionType]);
     const handleOnClick = () => {
         setButtonData({ ...defaultBtnVisiblity, saveAndNewBtn: false, cancelBtn: false, saveBtn: true });
     };
@@ -284,7 +276,7 @@ export const VinBlockMasterBase = (props) => {
         handleButtonClick,
     };
     const viewProps = {
-        titleOverride: drawerTitle.concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
         isVisible: isFormVisible,
         onCloseAction,
         formData,

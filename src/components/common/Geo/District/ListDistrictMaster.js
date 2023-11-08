@@ -24,6 +24,7 @@ import { geoStateDataActions } from 'store/actions/data/geo/states';
 import { geoDistrictDataActions } from 'store/actions/data/geo/districts';
 import { geoCountryDataActions } from 'store/actions/data/geo/countries';
 import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -271,15 +272,6 @@ export const ListDistrictBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View ';
-        } else if (formActionType?.editMode) {
-            return 'Edit ';
-        } else {
-            return 'Add ';
-        }
-    }, [formActionType]);
 
     const formProps = {
         form,
@@ -289,7 +281,7 @@ export const ListDistrictBase = (props) => {
         onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat('District'),
+        titleOverride: drawerTitle(formActionType).concat('District'),
         tableData: searchData,
         isDataCountryLoaded,
         isCountryLoading,

@@ -32,6 +32,7 @@ import { vehicleReceiptChecklistProfiledataActions } from 'store/actions/data/Ve
 import { VehicleCheclistDetailsdataActions } from 'store/actions/data/VehicleReceiptCheckList/VehicleReceiptChecklistMaster';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -618,16 +619,6 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         handleSearchChange,
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return translateContent('global.drawerTitle.view');
-        } else if (formActionType?.editMode) {
-            return translateContent('global.drawerTitle.edit');
-        } else {
-            return translateContent('global.drawerTitle.addNew');
-        }
-    }, [formActionType]);
-
     const containerProps = {
         isProfileDataLoaded,
         ProfileData,
@@ -640,7 +631,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         setIsFormVisible,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,

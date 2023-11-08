@@ -6,7 +6,7 @@
 import React from 'react';
 import { Row, Col, Form, Select, Input } from 'antd';
 
-import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField } from 'utils/validation';
 import { UploadUtil } from 'utils/Upload';
 import { translateContent } from 'utils/translateContent';

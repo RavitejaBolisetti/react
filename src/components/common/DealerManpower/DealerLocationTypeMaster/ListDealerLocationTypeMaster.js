@@ -23,6 +23,7 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { AddEditForm } from './AddEditForm';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -198,16 +199,6 @@ export const ListDealerLocationTypeMasterBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return translateContent('global.drawerTitle.view');
-        } else if (formActionType?.editMode) {
-            return translateContent('global.drawerTitle.edit');
-        } else {
-            return translateContent('global.drawerTitle.add');
-        }
-    }, [formActionType]);
-
     const formProps = {
         form,
         formData,
@@ -220,7 +211,7 @@ export const ListDealerLocationTypeMasterBase = (props) => {
 
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(translateContent('locationTypeMaster.heading.drawerTitle')),
+        titleOverride: drawerTitle(formActionType).concat(translateContent('locationTypeMaster.heading.drawerTitle')),
         tableData: searchData,
 
         ADD_ACTION,

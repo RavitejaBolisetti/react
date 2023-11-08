@@ -35,6 +35,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import RegistrationFilter from './RegistrationFilter';
 import { AdvancedSearch } from './AdvancedSearch';
 import { VehicleReceiptFormButton } from './VehicleReceiptFormButton';
+import { drawerTitle } from 'utils/drawerTitle';
 
 // const loginUserData = {
 //     header: null,
@@ -612,30 +613,11 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         filterString,
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View ';
-        } else if (formActionType?.editMode) {
-            return 'Edit ';
-        } else {
-            return 'Add New ';
-        }
-    }, [formActionType]);
-
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
     const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
-
-    // const showCancelSchemeConfirm = () => {
-    //     setCancelSchemeVisible(true);
-    // };
-
-    // const handleCloseScheme = () => {
-    //     setCancelSchemeVisible(false);
-    //     cancelSchemeForm.resetFields();
-    // };
 
     const onAdvanceSearchCloseAction = () => {
         form.resetFields();
@@ -887,7 +869,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         // onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
         isSchemeLoading,
         ADD_ACTION,
         EDIT_ACTION,

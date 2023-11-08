@@ -22,6 +22,7 @@ import { translateContent } from 'utils/translateContent';
 import styles from 'assets/sass/app.module.scss';
 
 import { showGlobalNotification } from 'store/actions/notification';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -142,15 +143,6 @@ export const DigitalSignatureMasterBase = (props) => {
         showAddButton: false,
         typeData,
     };
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return translateContent('global.drawerTitle.view');
-        } else if (formActionType?.editMode) {
-            return translateContent('global.drawerTitle.edit');
-        } else {
-            return translateContent('global.drawerTitle.addNew');
-        }
-    }, [formActionType]);
 
     const searchBoxProps = {
         searchForm,
@@ -161,7 +153,7 @@ export const DigitalSignatureMasterBase = (props) => {
 
     const formProps = {
         isVisible: isFormVisible,
-        titleOverride: drawerTitle.concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
         formActionType,
         ADD_ACTION,
         EDIT_ACTION,

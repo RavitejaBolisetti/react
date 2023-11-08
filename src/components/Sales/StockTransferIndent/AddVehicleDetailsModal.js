@@ -6,7 +6,7 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Form, Input, Button, Select } from 'antd';
 import { withModal } from 'components/withModal';
-import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField, validationNumber } from 'utils/validation';
 import { translateContent } from 'utils/translateContent';
 

@@ -25,6 +25,7 @@ import { LANGUAGE_EN } from 'language/en';
 import { translateContent } from 'utils/translateContent';
 
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -379,16 +380,6 @@ export const VehicleDetailMasterBase = (props) => {
         handleResetFilter,
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View ';
-        } else if (formActionType?.editMode) {
-            return 'Edit ';
-        } else {
-            return 'Add New ';
-        }
-    }, [formActionType]);
-
     const containerProps = {
         record: selectedRecord,
         form,
@@ -398,7 +389,7 @@ export const VehicleDetailMasterBase = (props) => {
         setIsFormVisible,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,
@@ -423,7 +414,7 @@ export const VehicleDetailMasterBase = (props) => {
         isLastSection,
         typeData,
         vehicleDetailData,
-        saveButtonName: isLastSection ? translateContent('global.buttons.submit'): translateContent('global.buttons.saveAndNext')
+        saveButtonName: isLastSection ? translateContent('global.buttons.submit') : translateContent('global.buttons.saveAndNext'),
     };
 
     return (

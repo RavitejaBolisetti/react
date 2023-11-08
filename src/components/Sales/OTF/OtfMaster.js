@@ -692,6 +692,7 @@ export const OtfMasterBase = (props) => {
             return translateContent('bookingManagement.label.addNewBooking');
         }
     }, [formActionType]);
+    
     const ChangeHistoryProps = {
         isVisible: ChangeHistoryVisible,
         onCloseAction: () => {
