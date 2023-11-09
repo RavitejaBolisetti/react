@@ -672,4 +672,10 @@ export const MenuConstant = {
         icon: undefined,
         parentMenuId: 'Sales',
     },
+    [getMenyKey('SA-EV-01')]: {
+        key: 'SA-EV-01',
+        link: routing.ROUTING_CHARGER_INSTALLATION_PROCESS,
+        icon: undefined,
+        parentMenuId: 'SACT-06.06',
+    },
 };

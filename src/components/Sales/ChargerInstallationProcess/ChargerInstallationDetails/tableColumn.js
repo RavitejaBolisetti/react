@@ -18,7 +18,7 @@ export const addRequestColumns = (typeData) => {
             dataIndex: 'stage',
             key: 'stage',
             width: '25%',
-            render: (_, record) => getCodeValue(typeData?.CHRGR_INST_STG_TYPE, record?.requestStage),
+            render: (_, record) => getCodeValue(typeData?.CHRGR_INST_STG_TYPE, record?.requestStage || record?.stageType),
         }),
 
         tblPrepareColumns({
