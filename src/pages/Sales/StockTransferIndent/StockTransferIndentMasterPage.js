@@ -7,8 +7,10 @@ import React from 'react';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 import { StockTransferIndentMaster } from 'components/Sales';
+import { translateContent } from 'utils/translateContent';
+
 const StockTransferIndentMasterBase = (props) => {
-    const pageTitle = 'Vehicle Inventory Management';
+    const pageTitle = translateContent('stockTransferIndent.heading.pageTitle');
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

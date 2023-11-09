@@ -13,6 +13,7 @@ import { customSelectBox } from 'utils/customSelectBox';
 import { ProductModelHierarchy } from 'components/utils/ProductModelHierarchy';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const AdvancedSearchFrom = (props) => {
     const { setAdvanceSearchVisible, typeData, productHierarchyData, resetAdvanceFilter } = props;
@@ -39,6 +40,7 @@ export const AdvancedSearchFrom = (props) => {
             vehicleStatus: values?.vehicleStatus,
             pdDone: values?.pdDone,
             advanceFilter: true,
+            current: 1,
         });
         setAdvanceSearchVisible(false);
     };
@@ -79,13 +81,13 @@ export const AdvancedSearchFrom = (props) => {
 
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={filterString?.vehicleStatus} label="Vehicle Status" name="vehicleStatus">
-                        {customSelectBox({ data: typeData[PARAM_MASTER.VEHCL_STATS.id], placeholder: preparePlaceholderSelect('vehicle status') })}
+                    <Form.Item initialValue={filterString?.vehicleStatus} label={translateContent('orderDeliveryVehicleAllotment.label.vehicleStatus')} name="vehicleStatus">
+                        {customSelectBox({ data: typeData[PARAM_MASTER.VEHCL_STATS.id], placeholder: preparePlaceholderSelect(translateContent('orderDeliveryVehicleAllotment.label.vehicleStatus')) })}
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={filterString?.pdDone} label="PDI Done" name="pdDone">
-                        {customSelectBox({ data: typeData[PARAM_MASTER.PD_DONE.id], placeholder: preparePlaceholderSelect('pdi done') })}
+                    <Form.Item initialValue={filterString?.pdDone} label={translateContent('orderDeliveryVehicleAllotment.label.pdiDone')} name="pdDone">
+                        {customSelectBox({ data: typeData[PARAM_MASTER.PD_DONE.id], placeholder: preparePlaceholderSelect(translateContent('orderDeliveryVehicleAllotment.label.pdiDone')) })}
                     </Form.Item>
                 </Col>
             </Row>
@@ -93,13 +95,13 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
                     <Button onClick={handleResetFilter} danger>
-                        Reset
+                    {translateContent('global.buttons.reset')}
                     </Button>
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
                     <Button htmlType="submit" type="primary">
-                        Apply Filter
+                    {translateContent('global.buttons.apply')}
                     </Button>
                 </Col>
             </Row>

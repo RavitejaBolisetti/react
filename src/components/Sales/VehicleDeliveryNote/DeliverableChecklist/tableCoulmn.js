@@ -6,17 +6,18 @@
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import styles from 'assets/sass/app.module.scss';
 import { BindFormAndResult } from 'components/Sales/Common/ChecklistDetails/CheckListUtils';
+import { translateContent } from 'utils/translateContent';
 
 export const tableColumn = (props) => {
     const { handleButtonClick, formActionType, aggregateForm, checklistType } = props;
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Details',
+            title: translateContent('vehicleDeliveryNote.deliverableChecklist.label.details'),
             dataIndex: 'checklistDescription',
             width: '20%',
         }),
         tblPrepareColumns({
-            title: 'Check Result ',
+            title: translateContent('vehicleDeliveryNote.deliverableChecklist.label.checkResult'),
             dataIndex: 'checkResult',
             width: '20%',
             render: (text, record, index) => BindFormAndResult({ data: record, aggregateForm, checklistType })?.checkResult,

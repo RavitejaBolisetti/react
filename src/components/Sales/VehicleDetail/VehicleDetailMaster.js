@@ -22,7 +22,10 @@ import { VEHICLE_DETAIL_SECTION } from 'constants/VehicleDetailSection';
 import { validateRequiredInputField } from 'utils/validation';
 import { LANGUAGE_EN } from 'language/en';
 
+import { translateContent } from 'utils/translateContent';
+
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -35,7 +38,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Vehicle Details';
+    const moduleTitle = translateContent('vehicleDetail.heading.mainTitle');
 
     let returnValue = {
         userId,
@@ -115,7 +118,7 @@ export const VehicleDetailMasterBase = (props) => {
     const dynamicPagination = true;
 
     const [formData, setFormData] = useState([]);
-    const [otfSearchRules, setOtfSearchRules] = useState({ rules: [validateRequiredInputField('search parametar')] });
+    const [otfSearchRules, setOtfSearchRules] = useState({ rules: [validateRequiredInputField(translateContent('vehicleDetail.validation.searchParameter'))] });
 
     const onSuccessAction = (res) => {
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
@@ -296,7 +299,7 @@ export const VehicleDetailMasterBase = (props) => {
             form.resetFields();
             setShowDataLoading(true);
 
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.title'), message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
 
             setButtonData({ ...buttonData, formBtnActive: false });
@@ -377,16 +380,6 @@ export const VehicleDetailMasterBase = (props) => {
         handleResetFilter,
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View ';
-        } else if (formActionType?.editMode) {
-            return 'Edit ';
-        } else {
-            return 'Add New ';
-        }
-    }, [formActionType]);
-
     const containerProps = {
         record: selectedRecord,
         form,
@@ -396,7 +389,7 @@ export const VehicleDetailMasterBase = (props) => {
         setIsFormVisible,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,
@@ -421,7 +414,7 @@ export const VehicleDetailMasterBase = (props) => {
         isLastSection,
         typeData,
         vehicleDetailData,
-        saveButtonName: isLastSection ? 'Submit' : 'Save & Next',
+        saveButtonName: isLastSection ? translateContent('global.buttons.submit') : translateContent('global.buttons.saveAndNext'),
     };
 
     return (

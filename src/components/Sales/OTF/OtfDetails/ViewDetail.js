@@ -11,6 +11,8 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
 import { DATA_TYPE } from 'constants/dataType';
 import { prepareCaption } from 'utils/prepareCaption';
+import { translateContent } from 'utils/translateContent';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 const ViewDetailMain = (props) => {
     const { formData, isLoading, typeData, salesConsultantLov } = props;
@@ -22,36 +24,35 @@ const ViewDetailMain = (props) => {
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
         title: (
             <>
-                <div className={styles.caption}>Sales Details</div>
+                <div className={styles.caption}>{translateContent('bookingManagement.label.salesDetails')}</div>
                 <Divider />
             </>
         ),
     };
-
     return (
         <Card>
-            <Descriptions {...viewProps} title={prepareCaption('Order Details')}>
-                <Descriptions.Item label="Booking Amount">{checkAndSetDefaultValue(formData?.bookingAmount, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Place Of Registration">{checkAndSetDefaultValue(formData?.placeOfRegistration, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Special Request">{checkAndSetDefaultValue(formData?.specialRequest, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Mode Of Payment">{checkAndSetDefaultValue(formData?.modeOfPAyment, isLoading)}</Descriptions.Item>
+            <Descriptions {...viewProps} title={prepareCaption(translateContent('bookingManagement.label.orderDetails'))}>
+                <Descriptions.Item label={translateContent('bookingManagement.label.bookingAmount')}>{checkAndSetDefaultValue(formData?.bookingAmount, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('bookingManagement.label.placeOfRegistration')}>{checkAndSetDefaultValue(formData?.placeOfRegistration, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('bookingManagement.label.specialRequest')}>{checkAndSetDefaultValue(formData?.specialRequest, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('bookingManagement.label.modeOfPAyment')}>{checkAndSetDefaultValue(formData?.modeOfPAyment, isLoading)}</Descriptions.Item>
             </Descriptions>
 
-            <Descriptions {...viewProps} title={prepareCaption('Delivery Details')}>
-                <Descriptions.Item label="Initial Promise Delivery Date">{checkAndSetDefaultValue(formData?.initialPromiseDeliveryDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                <Descriptions.Item label="Cust. Expected Delivery Date">{checkAndSetDefaultValue(formData?.custExpectedDeliveryDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                <Descriptions.Item label="Delivery At">{checkAndSetDefaultValue(getCodeValue(typeData?.DELIVERYAT_IND, formData?.deliveryAt), isLoading)}</Descriptions.Item>
+            <Descriptions {...viewProps} title={prepareCaption(translateContent('bookingManagement.label.deliveryDetails'))}>
+                <Descriptions.Item label={translateContent('bookingManagement.label.initialPromiseDeliveryDate')}>{checkAndSetDefaultValue(formData?.initialPromiseDeliveryDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('bookingManagement.label.customerExpectedDeliveryDate')}>{checkAndSetDefaultValue(formData?.custExpectedDeliveryDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('bookingManagement.label.deliveryAt')}>{checkAndSetDefaultValue(getCodeValue(typeData?.DELIVERYAT_IND, formData?.deliveryAt), isLoading)}</Descriptions.Item>
             </Descriptions>
 
-            <Descriptions {...viewProps} title={prepareCaption('Sales Details')}>
-                <Descriptions.Item label="Sales Consultant">{checkAndSetDefaultValue(getCodeValue(salesConsultantLov, formData?.saleConsultant), isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Influencer/Mitra Type">{checkAndSetDefaultValue(formData?.mitraType, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Influencer/Mitra Name">{checkAndSetDefaultValue(formData?.mitraName, isLoading)}</Descriptions.Item>
+            <Descriptions {...viewProps} title={prepareCaption(translateContent('bookingManagement.label.salesDetails'))}>
+                <Descriptions.Item label={translateContent('bookingManagement.label.saleConsultant')}>{checkAndSetDefaultValue(getCodeValue(salesConsultantLov, formData?.saleConsultant), isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('bookingManagement.label.mitraType')}>{checkAndSetDefaultValue(getCodeValue(typeData?.[PARAM_MASTER?.MITRA_TYPE?.id], formData?.mitraType), isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('bookingManagement.label.mitraName')}>{checkAndSetDefaultValue(formData?.mitraName, isLoading)}</Descriptions.Item>
             </Descriptions>
 
-            <Descriptions {...viewProps} title={prepareCaption('Other Details')}>
-                <Descriptions.Item label="Referral Scheme">{checkAndSetDefaultValue(formData?.referral === 'Y' ? <span className={styles.activeText}>Yes</span> : 'No', isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Loyalty Scheme">{checkAndSetDefaultValue(formData?.loyaltyScheme ? <span className={styles.activeText}>Yes</span> : 'No', isLoading)}</Descriptions.Item>
+            <Descriptions {...viewProps} title={prepareCaption(translateContent('bookingManagement.label.otherDetails'))}>
+                <Descriptions.Item label={translateContent('bookingManagement.label.referralScheme')}>{checkAndSetDefaultValue(formData?.referral === 'Y' ? <span className={styles.activeText}>{translateContent('global.yesNo.yes')}</span> : translateContent('global.yesNo.no'), isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('bookingManagement.label.loyaltyScheme')}>{checkAndSetDefaultValue(formData?.loyaltyScheme ? <span className={styles.activeText}>{translateContent('global.yesNo.yes')}</span> : translateContent('global.yesNo.no'), isLoading)}</Descriptions.Item>
             </Descriptions>
         </Card>
     );

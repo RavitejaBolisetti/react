@@ -16,6 +16,7 @@ import { taxChargeCategoryDataActions } from 'store/actions/data/financialAccoun
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { showGlobalNotification } from 'store/actions/notification';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -156,24 +157,24 @@ const AddEditFormMain = (props) => {
                         <>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <Form.Item label="Code" initialValue={formData?.taxCategoryCode} name="taxCategoryCode" rules={[validateRequiredInputField('Code')]}>
-                                        <Input placeholder={preparePlaceholderText('Code')} maxLength={6} disabled={editMode ? true : false} />
+                                    <Form.Item label={translateContent('taxChargeCatagory.label.code')} initialValue={formData?.taxCategoryCode} name="taxCategoryCode" rules={[validateRequiredInputField(translateContent('taxChargeCatagory.label.code'))]}>
+                                        <Input placeholder={preparePlaceholderText(translateContent('taxChargeCatagory.label.code'))} maxLength={6} disabled={editMode ? true : false} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <Form.Item label="Description" initialValue={formData?.taxCategoryDescription} rules={[validateRequiredInputField('Description')]} name="taxCategoryDescription">
-                                        <Input placeholder={preparePlaceholderText('Description')} maxLength={50} />
+                                    <Form.Item label={translateContent('taxChargeCatagory.label.description')} initialValue={formData?.taxCategoryDescription} rules={[validateRequiredInputField(translateContent('taxChargeCatagory.label.description'))]} name="taxCategoryDescription">
+                                        <Input placeholder={preparePlaceholderText(translateContent('taxChargeCatagory.label.description'))} maxLength={50} />
                                     </Form.Item>
                                 </Col>
 
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <Form.Item initialValue={editMode ? taxCategory?.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
+                                    <Form.Item initialValue={editMode ? taxCategory?.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label={translateContent('taxChargeCatagory.label.status')}>
                                         <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
                                     </Form.Item>
                                 </Col>
                             </Row>
                             <Collapse className={openAccordian === 1 ? styles.accordianHeader : ''} onChange={() => handleCollapse(1)} expandIcon={accordianExpandIcon} collapsible="icon">
-                                <Panel header="Tax & Charges Calculation" key="1">
+                                <Panel header={translateContent('taxChargeCatagory.heading.panelHeader')} key="1">
                                     <Divider />
                                     <ViewEditContext.Provider value={viewMode}>
                                         <TaxAndChargesCalculationMaster {...masterTaxChargeCalProp} />

@@ -27,6 +27,8 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -42,7 +44,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Tehsil';
+    const moduleTitle = translateContent('tehsil.heading.pageTitle');
     const finalCountryData = countryData?.map((item, index) => {
         return { ...item, default: index <= 0 || false };
     });
@@ -125,7 +127,7 @@ export const ListTehsilBase = (props) => {
     const VIEW_ONLY_ACTION = FROM_ACTION_TYPE?.VIEW_ONLY;
 
     const onSuccessAction = (res) => {
-        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        refershData && showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         setRefershData(false);
         setShowDataLoading(false);
     };
@@ -285,10 +287,10 @@ export const ListTehsilBase = (props) => {
             setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage, placement: 'bottomRight' });
             } else {
                 setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             }
         };
 
@@ -318,16 +320,6 @@ export const ListTehsilBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View ';
-        } else if (formActionType?.editMode) {
-            return 'Edit ';
-        } else {
-            return 'Add ';
-        }
-    }, [formActionType]);
-
     const formProps = {
         form,
         formData,
@@ -338,7 +330,7 @@ export const ListTehsilBase = (props) => {
 
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
         tableData: searchData,
 
         isDataCountryLoaded,
@@ -390,7 +382,7 @@ export const ListTehsilBase = (props) => {
         isVisible: isAdvanceSearchVisible,
         onCloseAction: onAdvanceSearchCloseAction,
         // icon: <FilterIcon size={20} />,
-        titleOverride: 'Advance Filters',
+        titleOverride: translateContent('global.advanceFilter.title'),
         isDataCountryLoaded,
         isCountryLoading,
         countryData,
@@ -448,7 +440,7 @@ export const ListTehsilBase = (props) => {
         }
     };
 
-    const title = 'Tehsil Name';
+    const title = translateContent('tehsil.heading.title');
     const advanceFilterResultProps = {
         advanceFilter: true,
         filterString,

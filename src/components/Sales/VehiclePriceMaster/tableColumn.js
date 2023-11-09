@@ -6,23 +6,24 @@
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const tableColumn = (handleButtonClick) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Model',
+            title: translateContent('vehiclePriceMaster.label.model'),
             dataIndex: 'model',
             width: '15%',
         }),
 
         tblPrepareColumns({
-            title: 'State',
+            title: translateContent('vehiclePriceMaster.label.state'),
             dataIndex: 'state',
             width: '15%',
         }),
 
         tblPrepareColumns({
-            title: 'Pricing City',
+            title: translateContent('vehiclePriceMaster.label.pricingCity'),
             dataIndex: 'pricingCity',
             width: '15%',
         }),

@@ -14,6 +14,7 @@ import { tblPrepareColumns, tblStatusColumn } from 'utils/tableColumn';
 import { DataTable } from 'utils/dataTable';
 import { withDrawer } from 'components/withDrawer';
 import styles from '../ChangeHistory/ChangeHistory.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -55,7 +56,7 @@ const ManufacturerOrgHierarchyChangeHistoryMain = ({ onCloseAction, fetchChangeH
 
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Changed Date ',
+            title: translateContent('manufacturerOrganisation.label.changedDate'),
             dataIndex: 'changedDate',
             render: (text) => [
                 <div>
@@ -66,27 +67,27 @@ const ManufacturerOrgHierarchyChangeHistoryMain = ({ onCloseAction, fetchChangeH
             ],
         }),
         tblPrepareColumns({
-            title: 'Changed By',
+            title: translateContent('manufacturerOrganisation.label.changedBy'),
             dataIndex: 'changedBy',
         }),
         tblPrepareColumns({
-            title: 'Attribute',
+            title: translateContent('manufacturerOrganisation.label.attribute'),
             dataIndex: 'attributeCode',
         }),
         tblPrepareColumns({
-            title: 'Code',
+            title: translateContent('manufacturerOrganisation.label.code'),
             dataIndex: 'hierarchyCode',
         }),
         tblPrepareColumns({
-            title: 'Parent',
+            title: translateContent('manufacturerOrganisation.label.parent'),
             dataIndex: 'parentName',
         }),
         tblPrepareColumns({
-            title: 'Short Description',
+            title: translateContent('manufacturerOrganisation.label.shortDescription'),
             dataIndex: 'shortDescript',
         }),
         tblPrepareColumns({
-            title: 'Long Description',
+            title: translateContent('manufacturerOrganisation.label.longDescription'),
             dataIndex: 'longDescript',
         }),
         tblStatusColumn({ styles, width: '15%' }),
@@ -108,7 +109,7 @@ const ManufacturerOrgHierarchyChangeHistoryMain = ({ onCloseAction, fetchChangeH
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Button danger onClick={onCloseAction}>
-                            Close
+                            {translateContent('global.buttons.close')}
                         </Button>
                     </Col>
                 </Row>
@@ -117,4 +118,4 @@ const ManufacturerOrgHierarchyChangeHistoryMain = ({ onCloseAction, fetchChangeH
     );
 };
 
-export const ManufacturerOrgHierarchyChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ManufacturerOrgHierarchyChangeHistoryMain, { title: 'Change History', width: '90%' }));
+export const ManufacturerOrgHierarchyChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ManufacturerOrgHierarchyChangeHistoryMain, { title: translateContent('global.changeHistory.title'), width: '90%' }));

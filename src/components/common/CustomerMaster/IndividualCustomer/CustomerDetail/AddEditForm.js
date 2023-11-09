@@ -13,6 +13,7 @@ import { CustomerNameChangeMaster } from './CustomerNameChange';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { customSelectBox } from 'utils/customSelectBox';
 import { MobileOtpVerificationMaster } from 'components/utils/MobileOtpVerificationModal';
+import { translateContent } from 'utils/translateContent';
 
 const AddEditFormMain = (props) => {
     const { whatsAppConfiguration, setWhatsAppConfiguration, handleFormFieldChange } = props;
@@ -89,8 +90,8 @@ const AddEditFormMain = (props) => {
                     <MobileOtpVerificationMaster {...mobileOtpProps}/>
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        <Form.Item initialValue={customerType} label="Customer Type" name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>
-                            <Select disabled={true} placeholder={preparePlaceholderSelect('customer type')} fieldNames={{ label: 'value', value: 'key' }} options={typeData?.[PARAM_MASTER?.CUST_TYPE?.id]} allowClear></Select>
+                        <Form.Item initialValue={customerType} label={translateContent('customerMaster.label.customerType')} name="customerType" data-testid="customerType" rules={[validateRequiredSelectField(translateContent('customerMaster.validation.customerType'))]}>
+                            <Select disabled={true} placeholder={preparePlaceholderSelect(translateContent('customerMaster.placeholder.customerType'))} fieldNames={{ label: 'value', value: 'key' }} options={typeData?.[PARAM_MASTER?.CUST_TYPE?.id]} allowClear></Select>
                         </Form.Item>
                     </Col>
                 </Row>
@@ -103,12 +104,12 @@ const AddEditFormMain = (props) => {
                 <Divider />
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        <Form.Item label="Email ID" initialValue={formData?.emailId} name="emailId" data-testid="emailId" rules={[validateEmailField('email id'), validateRequiredInputField('email id')]}>
-                            <Input placeholder={preparePlaceholderText('email id')} />
+                        <Form.Item label={translateContent('customerMaster.label.emailID')} initialValue={formData?.emailId} name="emailId" data-testid="emailId" rules={[validateEmailField(translateContent('customerMaster.validation.emailId')), validateRequiredInputField(translateContent('customerMaster.validation.emailId'))]}>
+                            <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.emailId'))} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        <Form.Item label="Contact over WhatsApp?" initialValue={formData?.whatsappCommunicationIndicator} name="whatsappCommunicationIndicator" data-testid="contactedOverWhatsapp">
+                        <Form.Item label={translateContent('customerMaster.label.contactNo')} initialValue={formData?.whatsappCommunicationIndicator} name="whatsappCommunicationIndicator" data-testid="contactedOverWhatsapp">
                             <Switch
                                 onChange={(prev) => {
                                     if (!prev) {
@@ -121,7 +122,7 @@ const AddEditFormMain = (props) => {
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        <Form.Item label="Want to use mobile no as WhatsApp no?" initialValue={formData?.mobileNumberAsWhatsappNumber} name="mobileNumberAsWhatsappNumber" data-testid="useMobileNumber">
+                        <Form.Item label={translateContent('customerMaster.label.WhatsAppNoText')} initialValue={formData?.mobileNumberAsWhatsappNumber} name="mobileNumberAsWhatsappNumber" data-testid="useMobileNumber">
                             <Switch
                                 disabled={sameMobileNoAsWhatsAppActive}
                                 onChange={() => {
@@ -134,44 +135,44 @@ const AddEditFormMain = (props) => {
                 </Row>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        <Form.Item label="Whatsapp Number" initialValue={formData?.whatsAppNumber} name="whatsAppNumber" data-testid="whatsAppNumber" rules={[validateMobileNoField('whatsapp number'), { validator: validateSameNumber }]}>
-                            <Input placeholder={preparePlaceholderText('WhatsApp Number')} disabled={contactOverWhatsAppActive} maxLength={10} />
+                        <Form.Item label={translateContent('customerMaster.label.whatsappNumber')} initialValue={formData?.whatsAppNumber} name="whatsAppNumber" data-testid="whatsAppNumber" rules={[validateMobileNoField(translateContent('customerMaster.validation.whatsappNo')), { validator: validateSameNumber }]}>
+                            <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.whatsAppNumber'))} disabled={contactOverWhatsAppActive} maxLength={10} />
                         </Form.Item>
                     </Col>
                 </Row>
 
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        <Form.Item label="Corporate Type" initialValue={formData?.corporateType} name="corporateType" data-testid="corporateType">
-                            {customSelectBox({ data: typeData['CORP_TYPE'], placeholder: preparePlaceholderSelect('corporate type'), onChange: handleCorporateChange })}
+                        <Form.Item label={translateContent('customerMaster.label.corporateType')} initialValue={formData?.corporateType} name="corporateType" data-testid="corporateType">
+                            {customSelectBox({ data: typeData['CORP_TYPE'], placeholder: preparePlaceholderSelect(translateContent('customerMaster.placeholder.corporateType')), onChange: handleCorporateChange })}
                         </Form.Item>
                     </Col>
 
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         {corporateType === 'NON-LIS' ? (
-                            <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
-                                <Input placeholder={preparePlaceholderText('corporate name')} />
+                            <Form.Item label={translateContent('customerMaster.label.corporateName')} initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
+                                <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.corporateName'))} />
                             </Form.Item>
                         ) : (
-                            <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
+                            <Form.Item label={translateContent('customerMaster.label.corporateName')} initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
                                 {/* <Select placeholder={preparePlaceholderSelect('corporate name')} onChange={onHandleSelect} fieldNames={{ label: 'value', value: 'key' }} options={corporateLovData} allowClear></Select> */}
 
-                                {customSelectBox({ data: corporateLovData, placeholder: preparePlaceholderSelect('corporate name'), onChange: onHandleSelect })}
+                                {customSelectBox({ data: corporateLovData, placeholder: preparePlaceholderSelect(translateContent('customerMaster.placeholder.corporateName')), onChange: onHandleSelect })}
                             </Form.Item>
                         )}
                     </Col>
 
                     {(corporateType === 'LIS' || corporateType === '') && (
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item initialValue={formData?.corporateCode} label="Corporate Code" name="corporateCode" data-testid="corporate code">
-                                <Input placeholder={preparePlaceholderText('parent company name')} disabled />
+                            <Form.Item initialValue={formData?.corporateCode} label={translateContent('customerMaster.label.corporateCode')} name="corporateCode" data-testid="corporate code">
+                                <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.parentCompanyName'))} disabled />
                             </Form.Item>
                         </Col>
                     )}
 
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        <Form.Item label="Corporate Category" initialValue={formData?.corporateCategory} name="corporateCategory" data-testid="corporateCategory">
-                            <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder={preparePlaceholderSelect('corporate category')} disabled={editMode} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['CORP_CATE']}></Select>
+                        <Form.Item label={translateContent('customerMaster.label.corporateCategory')} initialValue={formData?.corporateCategory} name="corporateCategory" data-testid="corporateCategory">
+                            <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder={preparePlaceholderSelect(translateContent('customerMaster.placeholder.corporateCategory'))} disabled={editMode} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['CORP_CATE']}></Select>
                         </Form.Item>
                     </Col>
                     {/* <Col xs={24} sm={24} md={8} lg={8} xl={8}>

@@ -7,8 +7,10 @@ import React from 'react';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 import { CrmScreenEnrolmentMaster } from 'components/Sales';
+import { translateContent } from 'utils/translateContent';
+
 const CrmScreenEnrolmentBase = (props) => {
-    const pageTitle = 'CRM Scheme Enrolment Screens';
+    const pageTitle = translateContent('crmSchemeEnrolment.heading.title');
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

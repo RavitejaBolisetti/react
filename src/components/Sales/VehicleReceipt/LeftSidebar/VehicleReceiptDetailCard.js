@@ -10,7 +10,7 @@ import { getCodeValue } from 'utils/getCodeValue';
 import { DATA_TYPE } from 'constants/dataType';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import styles from 'assets/sass/app.module.scss';
-
+import { translateContent } from 'utils/translateContent';
 import { CopytoClipboard } from 'utils/CopytoClipboard';
 
 const { Panel } = Collapse;
@@ -18,12 +18,12 @@ const { Panel } = Collapse;
 const expandIcon = ({ isActive }) =>
     isActive ? (
         <>
-            <span>See less</span>
+            <span>{translateContent('vehicleReceipt.profileCard.seeLess')}</span>
             <SlArrowUp size={13} />
         </>
     ) : (
         <>
-            <span>See more</span>
+            <span>{translateContent('vehicleReceipt.profileCard.seeMore')}</span>
             <SlArrowDown size={13} />
         </>
     );
@@ -36,7 +36,7 @@ const VehicleReceiptDetailCard = (props) => {
                 header={
                     <>
                         <div className={`${styles.detailCardText} ${styles.marB5}`} style={{ fontSize: '14px' }}>
-                            GRN Number:
+                            {translateContent('vehicleReceipt.profileCard.grnNumber')}
                             <span className={styles.activeForm}>
                                 {selectedRecord?.grnNumber || 'New'}
                                 <CopytoClipboard text={selectedRecord?.grnNumber} />
@@ -48,15 +48,15 @@ const VehicleReceiptDetailCard = (props) => {
             >
                 <Divider />
                 <div className={styles.detailCardText}>
-                    GRN Type: <span>{selectedRecord && checkAndSetDefaultValue(selectedRecord?.grnType, isLoading)}</span>
+                    {translateContent('vehicleReceipt.profileCard.grnType')} : <span>{selectedRecord && checkAndSetDefaultValue(selectedRecord?.grnType, isLoading)}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    GRN Date: <span>{checkAndSetDefaultValue(selectedRecord?.grnDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
+                    {translateContent('vehicleReceipt.profileCard.grnDate')}: <span>{checkAndSetDefaultValue(selectedRecord?.grnDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    GRN Status: <span>{getCodeValue(typeData, selectedRecord?.status) || 'NA'}</span>
+                    {translateContent('vehicleReceipt.profileCard.grnState')}: <span>{getCodeValue(typeData, selectedRecord?.status) || 'NA'}</span>
                 </div>
             </Panel>
         </Collapse>

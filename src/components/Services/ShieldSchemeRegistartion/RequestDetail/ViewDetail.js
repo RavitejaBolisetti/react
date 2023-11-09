@@ -4,14 +4,16 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Button, Card, Row, Col, Divider, Typography, Tag, Descriptions } from 'antd';
-import styles from 'assets/sass/app.module.scss';
+import { Button, Card, Row, Col, Divider, Typography, Descriptions } from 'antd';
 import { convertDateMonthYear } from 'utils/formatDateTime';
 import { AMC_CONSTANTS } from '../utils/AMCConstants';
 import { QUERY_BUTTONS_CONSTANTS, QUERY_BUTTONS_MNM_USER } from '../utils/ShieldRegistrationContant';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-import { getCodeValue } from 'utils/getCodeValue';
+import { SchemeStatusTag } from '../utils/schemeStatusTag';
 import { DATA_TYPE } from 'constants/dataType';
+
+import styles from 'assets/sass/app.module.scss';
+
 const { Text } = Typography;
 
 const ViewDetail = (props) => {
@@ -47,10 +49,11 @@ const ViewDetail = (props) => {
                         <Text strong>{checkAndSetDefaultValue(formData?.customerName)}</Text>
                         <Divider type="vertical" />
                         <Text strong>{selectedOrder?.shieldRegistrationNumber}</Text>
-                        <Tag style={{ float: 'right' }}>{getCodeValue(typeData?.AMC_REG_APRVL_STAT, selectedOrder?.status)}</Tag>
+                        <div style={{ float: 'right' }}>{SchemeStatusTag(selectedOrder?.status)}</div>
+                        {/* <Tag style={{ float: 'right' }}>{getCodeValue(typeData?.AMC_REG_APRVL_STAT, selectedOrder?.status)}</Tag> */}
                     </Col>
                 </Row>
-                <Row type="flex" align="middle">
+                <Row type="flex" align="middle" className={styles?.marB20}>
                     <Col xs={24} sm={24} md={24} lg={24}>
                         <div className={styles.tableTextColor85}>Requested On: {convertDateMonthYear(formData?.shieldRegistrationDate)}</div>
                     </Col>

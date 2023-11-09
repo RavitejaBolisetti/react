@@ -18,6 +18,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { salesConsultantActions } from 'store/actions/data/otf/salesConsultant';
 import { BASE_URL_OTF_DETAILS as customURL } from 'constants/routingApi';
 import { formatDate } from 'utils/formatDateTime';
+import { translateContent } from 'utils/translateContent';
 
 import { OTFStatusBar } from '../utils/OTFStatusBar';
 
@@ -31,10 +32,11 @@ const mapStateToProps = (state) => {
                 OtfSearchList: { isDetailLoaded: isDataLoaded, detailData: otfData = [] },
                 salesConsultantLov: { isLoaded: isSalesConsultantDataLoaded, data: salesConsultantLov = [] },
             },
+            ConfigurableParameterEditing: { filteredListData: typeData = [] },
         },
     } = state;
 
-    const moduleTitle = 'Booking Details';
+    const moduleTitle = translateContent('bookingManagement.label.bookingDetails');
 
     let returnValue = {
         userId,
@@ -44,6 +46,7 @@ const mapStateToProps = (state) => {
         moduleTitle,
         isSalesConsultantDataLoaded,
         salesConsultantLov,
+        typeData,
     };
     return returnValue;
 };
@@ -195,7 +198,7 @@ const OtfDetailsMasterBase = (props) => {
             setloyaltyValue(false);
         }
     };
-
+    
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFieldsChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>

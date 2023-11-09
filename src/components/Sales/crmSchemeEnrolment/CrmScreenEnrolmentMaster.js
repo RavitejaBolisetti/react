@@ -23,8 +23,10 @@ import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { crmSchemeEnrollmentDataActions } from 'store/actions/data/crmSchemeEnrollment';
 
 import { showGlobalNotification } from 'store/actions/notification';
+import { translateContent } from 'utils/translateContent';
 
 import { FilterIcon } from 'Icons';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -38,7 +40,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Dealer List';
+    const moduleTitle = translateContent('crmSchemeEnrolment.heading.moduleTitle');
     let returnValue = {
         userId,
         typeData,
@@ -116,7 +118,7 @@ export const CrmScreenEnrolmentBase = (props) => {
     const [formData, setFormData] = useState([]);
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
@@ -336,7 +338,7 @@ export const CrmScreenEnrolmentBase = (props) => {
                 setGeneratedData(res?.data);
                 form.resetFields();
                 setShowDataLoading(true);
-                showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
                 fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
                 setButtonData({ ...buttonData, formBtnActive: false });
                 //setIsFormVisible(false);
@@ -426,18 +428,8 @@ export const CrmScreenEnrolmentBase = (props) => {
         }
     };
 
-    const title = 'CRM Scheme Enrolment Screens';
-    const drawerShortTitle = ' Scheme Enrolment Details';
-
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View' + drawerShortTitle;
-        } else if (formActionType?.editMode) {
-            return 'Edit' + drawerShortTitle;
-        } else {
-            return 'Add' + drawerShortTitle;
-        }
-    }, [formActionType]);
+    const title = translateContent('crmSchemeEnrolment.heading.title');
+    const drawerShortTitle = translateContent('crmSchemeEnrolment.heading.drawerTitle');
 
     const normalSearchProps = {
         extraParams,
@@ -460,10 +452,8 @@ export const CrmScreenEnrolmentBase = (props) => {
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
-
         icon: <FilterIcon size={20} />,
-        titleOverride: 'Advance Filters',
-
+        titleOverride: translateContent('global.advanceFilter.title'),
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
         filterString,
@@ -476,7 +466,7 @@ export const CrmScreenEnrolmentBase = (props) => {
 
     const formProps = {
         isVisible: isFormVisible,
-        titleOverride: drawerTitle,
+        titleOverride: drawerTitle(formActionType).concat(drawerShortTitle),
         handleButtonClick,
         formActionType,
         onCloseAction,

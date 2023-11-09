@@ -10,7 +10,7 @@ import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { addToolTip } from 'utils/customMenuLink';
 import { InputSkeleton } from 'components/common/Skeleton';
 import styles from 'assets/sass/app.module.scss';
-
+import { translateContent } from 'utils/translateContent';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
 import { DATA_TYPE } from 'constants/dataType';
@@ -58,16 +58,22 @@ const ViewDetailMain = (props) => {
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                             <Space size="small">
-                                                <Text className={styles.headText}> Model: {checkAndSetDefaultValue(item?.modelDescription, isLoading)} </Text>
+                                                <Text className={styles.headText}>
+                                                    {' '}
+                                                    {translateContent('vehicleReceipt.label.vehicleDetails.model')} : {checkAndSetDefaultValue(item?.modelDescription, isLoading)}{' '}
+                                                </Text>
                                                 <Text className={styles.headText}> {`|`}</Text>
-                                                <Text className={styles.headText}> VIN: {checkAndSetDefaultValue(item?.vin, isLoading)}</Text>
+                                                <Text className={styles.headText}>
+                                                    {' '}
+                                                    {translateContent('vehicleReceipt.label.vehicleDetails.VIN')} : {checkAndSetDefaultValue(item?.vin, isLoading)}
+                                                </Text>
                                             </Space>
                                         </Col>
                                     </Row>
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                             <Text type="secondary" className={styles.subSection}>
-                                                Vehicle Status: {checkAndSetDefaultValue(getCodeValue(vehicleStatusType, item?.vehicleStatus), isLoading)}
+                                                {translateContent('vehicleReceipt.label.vehicleDetails.vehicleStatus')}: {checkAndSetDefaultValue(getCodeValue(vehicleStatusType, item?.vehicleStatus), isLoading)}
                                             </Text>
                                         </Col>
                                     </Row>
@@ -77,7 +83,7 @@ const ViewDetailMain = (props) => {
                         >
                             <Divider />
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Model Description">
+                                <Descriptions.Item label={translateContent('vehicleReceipt.label.vehicleDetails.modelDescription')}>
                                     {isLoading ? (
                                         <InputSkeleton width={'100px'} height={20} theme={'card'} />
                                     ) : (
@@ -90,19 +96,19 @@ const ViewDetailMain = (props) => {
                                                 : addToolTip(
                                                       <div>
                                                           <p>
-                                                              Model Name: <span>{item?.name ?? 'Na'}</span>
+                                                              {translateContent('vehicleReceipt.label.vehicleDetails.modelName')} : <span>{item?.name ?? 'Na'}</span>
                                                           </p>
                                                           <p>
-                                                              Color: <span>{item?.color ?? 'Na'}</span>
+                                                              {translateContent('vehicleReceipt.label.vehicleDetails.color')} : <span>{item?.color ?? 'Na'}</span>
                                                           </p>
                                                           <p>
-                                                              Seating Capacity: <span>{item?.seatingCapacity ?? 'Na'}</span>
+                                                              {translateContent('vehicleReceipt.label.vehicleDetails.seatingCapacity')} : <span>{item?.seatingCapacity ?? 'Na'}</span>
                                                           </p>
                                                           <p>
-                                                              Fuel: <span>{item?.fuel ?? 'Na'}</span>
+                                                              {translateContent('vehicleReceipt.label.vehicleDetails.fuel')} : <span>{item?.fuel ?? 'Na'}</span>
                                                           </p>
                                                           <p>
-                                                              Variants: <span>{item?.variant ?? 'Na'}</span>
+                                                              {translateContent('vehicleReceipt.label.vehicleDetails.variants')} : <span>{item?.variant ?? 'Na'}</span>
                                                           </p>
                                                       </div>,
                                                       'bottom',
@@ -112,16 +118,16 @@ const ViewDetailMain = (props) => {
                                         </div>
                                     )}
                                 </Descriptions.Item>
-                                <Descriptions.Item label="VIN">{checkAndSetDefaultValue(item?.vin, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Key Number">{checkAndSetDefaultValue(item?.keyNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="MFG Date">{checkAndSetDefaultValue(item?.mfgdate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                                <Descriptions.Item label="Received On">{checkAndSetDefaultValue(item?.receivedOn, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                                <Descriptions.Item label="Vehicle Cost">{checkAndSetDefaultValue(item?.vehicleCost, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Demo Vehicle">{checkAndSetDefaultValue(getCodeValue(shortageType, item?.demoVehicle), isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Vehicle Status">{checkAndSetDefaultValue(getCodeValue(vehicleStatusType, item?.vehicleStatus), isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Physical Status">{checkAndSetDefaultValue(getCodeValue(physicalStatusType, item?.physicalStatus), isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Shortage">{checkAndSetDefaultValue(getCodeValue(shortageType, item?.shortage), isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Vehicle Receipt Checklist No.">
+                                <Descriptions.Item label={translateContent('vehicleReceipt.label.vehicleDetails.VIN')}>{checkAndSetDefaultValue(item?.vin, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleReceipt.label.vehicleDetails.keyNumber')}>{checkAndSetDefaultValue(item?.keyNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleReceipt.label.vehicleDetails.mfgDate')}>{checkAndSetDefaultValue(item?.mfgdate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleReceipt.label.vehicleDetails.receivedOn')}>{checkAndSetDefaultValue(item?.receivedOn, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleReceipt.label.vehicleDetails.vehicleCost')}>{checkAndSetDefaultValue(item?.vehicleCost, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleReceipt.label.vehicleDetails.demoVehicle')}>{checkAndSetDefaultValue(getCodeValue(shortageType, item?.demoVehicle), isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleReceipt.label.vehicleDetails.vehicleStatus')}>{checkAndSetDefaultValue(getCodeValue(vehicleStatusType, item?.vehicleStatus), isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleReceipt.label.vehicleDetails.physicalStatus')}>{checkAndSetDefaultValue(getCodeValue(physicalStatusType, item?.physicalStatus), isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleReceipt.label.vehicleDetails.shortage')}>{checkAndSetDefaultValue(getCodeValue(shortageType, item?.shortage), isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleReceipt.label.vehicleDetails.vehicleReceiptChecklistNumber')}>
                                     {/* <a style={{ color: 'ff3e5b' }} href={item?.vehicleReceiptChecklistNumber} target="_blank" rel="noreferrer"> */}
                                     {checkAndSetDefaultValue(item?.vehicleReceiptChecklistNumber, isLoading)}
                                     {/* </a> */}

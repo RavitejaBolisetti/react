@@ -11,6 +11,7 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField } from 'utils/validation';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { TextArea } = Input;
 
@@ -19,21 +20,21 @@ export const CancelReceiptForm = ({ handleCloseReceipt, handleCancelReceipt, can
         <Form autoComplete="off" form={cancelReceiptForm} onFinish={handleCancelReceipt} layout="vertical">
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
-                    <Form.Item label="Cancellation Remark" name="cancelRemarks" rules={[validateRequiredInputField('Cancel Remarks')]}>
-                        <TextArea showCount maxLength={300} placeholder={preparePlaceholderText('Remarks')} />
+                    <Form.Item label={translateContent('receipts.label.cancellationRemark')} name="cancelRemarks" rules={[validateRequiredInputField(translateContent('receipts.validation.cancelRemarks'))]}>
+                        <TextArea showCount maxLength={300} placeholder={preparePlaceholderText(translateContent('receipts.placeholder.remarks'))} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
                     <Button onClick={handleCloseReceipt} danger>
-                        Cancel
+                        {translateContent('global.buttons.cancel')}
                     </Button>
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
                     <Button htmlType="submit" type="primary">
-                        Submit
+                    {translateContent('global.buttons.submit')}
                     </Button>
                 </Col>
             </Row>

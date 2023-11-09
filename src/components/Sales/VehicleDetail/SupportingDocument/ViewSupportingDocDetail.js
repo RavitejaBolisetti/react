@@ -9,9 +9,14 @@ import { Card } from 'antd';
 import { NoDataFound } from 'utils/noDataFound';
 import { FiDownload } from 'react-icons/fi';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const ViewSupportingDocDetail = (props) => {
-    const { downloadFileFromButton, documentData, formActionType: { viewMode } } = props;
+    const {
+        downloadFileFromButton,
+        documentData,
+        formActionType: { viewMode },
+    } = props;
 
     return (
         <div className={styles.viewDrawerContainer}>
@@ -31,11 +36,11 @@ export const ViewSupportingDocDetail = (props) => {
                                 }
                             ></Card>
                         );
-                    })} 
+                    })}
                 </div>
             ) : (
                 // viewMode &&
-                viewMode && <NoDataFound informtion={'No supporting documents found'} />
+                viewMode && <NoDataFound informtion={translateContent('vehicleDetail.documents.label.noSupportingDocumentsFound')} />
             )}
         </div>
     );

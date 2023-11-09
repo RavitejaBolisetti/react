@@ -14,6 +14,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -76,7 +77,7 @@ export const AccountRelatedMasterBase = (props) => {
     };
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
     };
 
     useEffect(() => {
@@ -135,7 +136,7 @@ export const AccountRelatedMasterBase = (props) => {
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <h2>{section?.title} </h2>
+                    <h2>{translateContent(section?.translateKey)}</h2>
                     {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
                 </Col>
             </Row>

@@ -15,19 +15,20 @@ import { AddEditForm } from './AddEditForm';
 import { SearchBox } from 'components/utils/SearchBox';
 
 import { ListDataTable } from 'utils/ListDataTable';
-import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { receiptDataActions } from 'store/actions/data/receipt/receipt';
 import { receiptDetailDataActions } from 'store/actions/data/receipt/receiptDetails';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
 import { showGlobalNotification } from 'store/actions/notification';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
     } = state;
-    const moduleTitle = 'Map New Digital Signature';
+    const moduleTitle = translateContent('digitalSignature.heading.moduleTitle');
     let returnValue = {
         userId,
         moduleTitle,
@@ -53,8 +54,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const DigitalSignatureMasterBase = (props) => {
-    const { fetchList, listShowLoading, userId, fetchReceiptDetails, data, resetData } = props;
-    const { typeData, moduleTitle, totalRecords, showGlobalNotification } = props;
+    const { userId, fetchList, listShowLoading, data } = props;
+    const { typeData, moduleTitle, totalRecords } = props;
     const { filterString, setFilterString } = props;
     const [selectedOrderId, setSelectedOrderId] = useState();
 
@@ -62,7 +63,7 @@ export const DigitalSignatureMasterBase = (props) => {
     const [searchForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
 
-    const [showDataLoading, setShowDataLoading] = useState(true);
+    const [showDataLoading, setShowDataLoading] = useState(false);
     const [isFormVisible, setIsFormVisible] = useState(false);
 
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
@@ -88,6 +89,18 @@ export const DigitalSignatureMasterBase = (props) => {
 
     const [formData, setFormData] = useState([]);
 
+    const onSuccessAction = (res) => {
+        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
+        searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
+        searchForm.resetFields();
+        setShowDataLoading(false);
+    };
+
+    const onErrorAction = (message) => {
+        showGlobalNotification({ message });
+        setShowDataLoading(false);
+    };
+
     useEffect(() => {
         if (userId) {
         }
@@ -104,8 +117,9 @@ export const DigitalSignatureMasterBase = (props) => {
                     name: 'id',
                 },
             ];
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
@@ -129,15 +143,6 @@ export const DigitalSignatureMasterBase = (props) => {
         showAddButton: false,
         typeData,
     };
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View ';
-        } else if (formActionType?.editMode) {
-            return 'Edit ';
-        } else {
-            return 'Add New ';
-        }
-    }, [formActionType]);
 
     const searchBoxProps = {
         searchForm,
@@ -148,7 +153,7 @@ export const DigitalSignatureMasterBase = (props) => {
 
     const formProps = {
         isVisible: isFormVisible,
-        titleOverride: drawerTitle.concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
         formActionType,
         ADD_ACTION,
         EDIT_ACTION,

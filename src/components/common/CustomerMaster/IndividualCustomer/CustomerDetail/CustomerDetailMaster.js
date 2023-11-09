@@ -18,6 +18,7 @@ import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
 import { CustomerNameChangeHistory } from './CustomerNameChange';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 import { customerMobileDetailsDataActions } from 'store/actions/data/customerMaster/searchMobileNumber';
@@ -180,7 +181,7 @@ const CustomerDetailMasterBase = (props) => {
 
 
     const downloadFileFromButton = (uploadData) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
+        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: 'Your download will start soon' });
         const extraParams = [
             {
                 key: 'docId',
@@ -196,7 +197,7 @@ const CustomerDetailMasterBase = (props) => {
     const deleteFile = (uploadData) => {
         const data = { customerId: uploadData?.customerId, status: false, docId: uploadData?.docId, documentTypeId: uploadData?.documentType, id: uploadData?.id, documentName: uploadData?.documentName };
         const onSuccess = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'File deleted Successfully' });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: 'File deleted Successfully' });
             fetchList({ setIsLoading: listSupportingDocumentShowLoading, userId });
         };
 
@@ -216,7 +217,7 @@ const CustomerDetailMasterBase = (props) => {
     };
 
     const downloadFileFromList = () => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
+        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: 'Your download will start soon' });
         const extraParams = [
             {
                 key: 'docId',
@@ -266,7 +267,7 @@ const CustomerDetailMasterBase = (props) => {
 
         const onSuccess = (res) => {
             form.resetFields();
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId });
             setButtonData({ ...buttonData, formBtnActive: false });
             setRefreshCustomerList(true);
@@ -437,7 +438,7 @@ const CustomerDetailMasterBase = (props) => {
             <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>
                 <Row gutter={20} className={styles.drawerBodyRight}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <h2>{section?.title}</h2>
+                        <h2>{translateContent(section?.translateKey)} </h2>
                         {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
                     </Col>
                 </Row>

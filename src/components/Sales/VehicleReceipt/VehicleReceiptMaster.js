@@ -23,6 +23,8 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { vehicleReceiptDataActions } from 'store/actions/data/vehicleReceipt/vehicleReceipt';
 import { vehicleDetailDataActions } from 'store/actions/data/vehicleReceipt/vehicleDetails';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -35,7 +37,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Vehicle Receipt';
+    const moduleTitle = translateContent('vehicleReceipt.heading.mainTitle');
     let returnValue = {
         userId,
         typeData: typeData[PARAM_MASTER.GRN_STATS.id],
@@ -461,7 +463,7 @@ export const VehicleReceiptMasterBase = (props) => {
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
         // icon: <FilterIcon size={20} />,
-        titleOverride: 'Advance Filters',
+        titleOverride: translateContent('vehicleReceipt.labelMaster.advanceFilters'),
 
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
@@ -474,16 +476,6 @@ export const VehicleReceiptMasterBase = (props) => {
         onFinishSearch,
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View ';
-        } else if (formActionType?.editMode) {
-            return 'Edit ';
-        } else {
-            return 'Add New ';
-        }
-    }, [formActionType]);
-
     const containerProps = {
         record: selectedRecord,
         form,
@@ -493,7 +485,7 @@ export const VehicleReceiptMasterBase = (props) => {
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,

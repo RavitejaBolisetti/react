@@ -12,6 +12,7 @@ import ProductAttributeMaster from './ProductAttribute/ProductAttributeMaster';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { accordianExpandIcon } from 'utils/accordianExpandIcon';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -36,7 +37,7 @@ const AddEditFormMain = (props) => {
     const productSKUKey = '63ec10a2-520d-44a4-85f6-f55a1d6911f3';
 
     let attributeHierarchyFieldValidation = {
-        rules: [validateRequiredSelectField('attribute level')],
+        rules: [validateRequiredSelectField(translateContent('productHierarchy.validation.attributeLevel'))],
     };
 
     if (attributeData && formData?.attributeKey) {
@@ -105,7 +106,7 @@ const AddEditFormMain = (props) => {
         selectedTreeSelectKey,
         handleSelectTreeClick,
         defaultValue: treeCodeId,
-        placeholder: preparePlaceholderSelect('Parent'),
+        placeholder: preparePlaceholderSelect(translateContent('productHierarchy.validation.parent')),
     };
 
     const attributeFormProps = {
@@ -139,8 +140,8 @@ const AddEditFormMain = (props) => {
                 <Form form={form} id="myForm" autoComplete="off" layout="vertical" onFinish={onFinish} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange}>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level" rules={[validateRequiredSelectField('attribute level')]}>
-                                <Select {...selectProps} onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('attribute level')} disabled={formData?.id || isReadOnly}>
+                            <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label={translateContent('productHierarchy.label.attributeLevel')} rules={[validateRequiredSelectField(translateContent('productHierarchy.validation.attributeLevel'))]}>
+                                <Select {...selectProps} onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect(translateContent('productHierarchy.validation.attributeLevel'))} disabled={formData?.id || isReadOnly}>
                                     {attributeData?.map((item) => (
                                         <Option key={item?.id} value={item?.id}>
                                             {item?.hierarchyAttribueName}
@@ -151,7 +152,7 @@ const AddEditFormMain = (props) => {
                         </Col>
 
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item initialValue={treeCodeId} label="Parent" name="parntProdctId">
+                            <Form.Item initialValue={treeCodeId} label={translateContent('productHierarchy.label.parent')} name="parntProdctId">
                                 <TreeSelectField {...treeSelectFieldProps} />
                             </Form.Item>
                         </Col>
@@ -159,26 +160,26 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item label="Code" name="prodctCode" initialValue={formData?.prodctCode} rules={[validateRequiredInputField('code')]}>
-                                <Input placeholder={preparePlaceholderText('code')} maxLength={6} disabled={formData?.id || isReadOnly} />
+                            <Form.Item label={translateContent('productHierarchy.label.code')} name="prodctCode" initialValue={formData?.prodctCode} rules={[validateRequiredInputField(translateContent('productHierarchy.validation.code'))]}>
+                                <Input placeholder={preparePlaceholderText(translateContent('productHierarchy.validation.code'))} maxLength={6} disabled={formData?.id || isReadOnly} />
                             </Form.Item>
                         </Col>
 
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item name="prodctShrtName" label="Short Description" initialValue={formData?.prodctShrtName} rules={[validateRequiredInputField('short description')]}>
-                                <Input placeholder={preparePlaceholderText('short description')} maxLength={50} disabled={formData?.id || isReadOnly} />
+                            <Form.Item name="prodctShrtName" label={translateContent('productHierarchy.label.shortDescription')} initialValue={formData?.prodctShrtName} rules={[validateRequiredInputField(translateContent('productHierarchy.validation.shortDescription'))]}>
+                                <Input placeholder={preparePlaceholderText(translateContent('productHierarchy.validation.shortDescription'))} maxLength={50} disabled={formData?.id || isReadOnly} />
                             </Form.Item>
                         </Col>
                     </Row>
 
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.textareaError}>
-                            <Form.Item name="prodctLongName" label="Long Description" initialValue={formData?.prodctLongName} rules={[validateRequiredInputField('long description')]}>
-                                <TextArea placeholder={preparePlaceholderText('long description')} maxLength={300} showCount disabled={formData?.id || isReadOnly} />
+                            <Form.Item name="prodctLongName" label={translateContent('productHierarchy.label.longDescription')} initialValue={formData?.prodctLongName} rules={[validateRequiredInputField(translateContent('productHierarchy.validation.longDescription'))]}>
+                                <TextArea placeholder={preparePlaceholderText(translateContent('productHierarchy.validation.longDescription'))} maxLength={300} showCount disabled={formData?.id || isReadOnly} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item initialValue={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active ? true : false} label="Status" name="active">
+                            <Form.Item initialValue={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active ? true : false} label={translateContent('productHierarchy.label.status')} name="active">
                                 <Switch value={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active ? true : false} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active === true || null || undefined ? true : false} {...disabledProps} />
                             </Form.Item>
                         </Col>
@@ -196,20 +197,20 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20} className={styles.formFooterNew}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupLeft}>
                             <Button danger onClick={onCloseAction}>
-                                Cancel
+                                {translateContent('global.buttons.cancel')}
                             </Button>
                         </Col>
 
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
                             <Button htmlType="submit" form="myForm" disabled={!isFormBtnActive} type="primary">
-                                Save
+                                {translateContent('global.buttons.save')}
                             </Button>
                         </Col>
                     </Row>
                 </Form>
                 {showProductAttribute && (
                     <Collapse className={openAccordian === 1 ? styles.accordianHeader : ''} onChange={() => handleCollapse(1)} expandIcon={accordianExpandIcon} collapsible="icon">
-                        <Panel header="Product Atrribute Details" key="1">
+                        <Panel header={translateContent('productHierarchy.heading.panelHeader')} key="1">
                             <Divider />
                             <ProductAttributeMaster {...attributeFormProps} />
                         </Panel>

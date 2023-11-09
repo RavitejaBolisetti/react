@@ -12,6 +12,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 // import { GST_IRN_TRANSACTION_STATUS } from './GstIRNStatus';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export default function AdvanceFilter(props) {
     const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, title, filterString, setFilterString, typeData, setAdvanceSearchVisible, searchForm } = props;
@@ -55,7 +56,7 @@ export default function AdvanceFilter(props) {
                                                 setAdvanceSearchVisible(true);
                                             }}
                                         >
-                                            Advanced Filters
+                                            {translateContent('global.buttons.advancedFilter')}
                                         </Button>
                                     </Col>
                                 )}
@@ -88,7 +89,7 @@ export default function AdvanceFilter(props) {
                             </Col>
                             <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
                                 <Button className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
-                                    Clear
+                                    {translateContent('global.buttons.clear')}
                                 </Button>
                             </Col>
                         </Row>

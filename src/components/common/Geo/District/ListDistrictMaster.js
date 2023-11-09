@@ -23,6 +23,8 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { geoStateDataActions } from 'store/actions/data/geo/states';
 import { geoDistrictDataActions } from 'store/actions/data/geo/districts';
 import { geoCountryDataActions } from 'store/actions/data/geo/countries';
+import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -110,7 +112,7 @@ export const ListDistrictBase = (props) => {
     const VIEW_ONLY_ACTION = FROM_ACTION_TYPE?.VIEW_ONLY;
 
     const onSuccessAction = (res) => {
-        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        refershData && showGlobalNotification({ notificationType: 'success', title: `${translateContent('global.notificationSuccess.success')}`, message: res?.responseMessage });
         setRefershData(false);
         setShowDataLoading(false);
     };
@@ -171,21 +173,21 @@ export const ListDistrictBase = (props) => {
     const extraParams = [
         {
             key: 'countryCode',
-            title: 'Country',
+            title: `${translateContent('district.title.country')}`,
             value: filterString?.countryCode,
             name: countryData?.find((i) => i?.countryCode === filterString?.countryCode)?.countryName,
             canRemove: true,
         },
         {
             key: 'stateCode',
-            title: 'State',
+            title: `${translateContent('district.title.state')}`,
             value: filterString?.stateCode,
             name: filteredStateData?.find((i) => i?.key === filterString?.stateCode)?.value,
             canRemove: true,
         },
         {
             key: 'keyword',
-            title: 'District',
+            title: `${translateContent('district.title.district')}`,
             value: filterString?.keyword,
             name: filterString?.keyword,
             canRemove: true,
@@ -235,17 +237,17 @@ export const ListDistrictBase = (props) => {
             form.resetFields();
             setShowDataLoading(true);
 
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: `${translateContent('global.notificationSuccess.success')}`, message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
             fetchStateLovList({ setIsLoading: listStateShowLoading, userId });
 
             setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+                showGlobalNotification({ notificationType: 'success', title: `${translateContent('global.notificationSuccess.success')}`, message: res?.responseMessage, placement: 'bottomRight' });
             } else {
                 setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: `${translateContent('global.notificationSuccess.success')}`, message: res?.responseMessage });
             }
         };
 
@@ -270,15 +272,6 @@ export const ListDistrictBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View ';
-        } else if (formActionType?.editMode) {
-            return 'Edit ';
-        } else {
-            return 'Add ';
-        }
-    }, [formActionType]);
 
     const formProps = {
         form,
@@ -288,7 +281,7 @@ export const ListDistrictBase = (props) => {
         onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat('District'),
+        titleOverride: drawerTitle(formActionType).concat('District'),
         tableData: searchData,
         isDataCountryLoaded,
         isCountryLoading,
@@ -343,7 +336,7 @@ export const ListDistrictBase = (props) => {
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
         onCloseAction: onAdvanceSearchCloseAction,
-        titleOverride: 'Advance Filters',
+        titleOverride: `${translateContent('district.title.titleOverride')}`,
         isDataCountryLoaded,
         isCountryLoading,
         countryData,
@@ -381,7 +374,7 @@ export const ListDistrictBase = (props) => {
         }
     };
 
-    const title = 'District Name';
+    const title = `${translateContent('district.title.districtName')}`;
 
     const advanceFilterResultProps = {
         advanceFilter: true,

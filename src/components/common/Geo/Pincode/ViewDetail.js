@@ -5,6 +5,7 @@
  */
 import React from 'react';
 import { Descriptions } from 'antd';
+import { translateContent } from 'utils/translateContent';
 
 export const ViewDetail = ({ formData, styles }) => {
     const viewOneColProps = {
@@ -17,17 +18,17 @@ export const ViewDetail = ({ formData, styles }) => {
         <>
             <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
-                    <Descriptions.Item label="PIN Code">{formData?.pinCode}</Descriptions.Item>
-                    <Descriptions.Item label="PIN Category">{formData?.pinCategoryName || 'NA'}</Descriptions.Item>
-                    <Descriptions.Item label="Locality">{formData?.localityName || 'NA'}</Descriptions.Item>
-                    <Descriptions.Item label="Tehsil">{formData?.tehsilName || 'NA'}</Descriptions.Item>
-                    <Descriptions.Item label="City">{formData?.cityName || 'NA'}</Descriptions.Item>
-                    <Descriptions.Item label="District">{formData?.districtName || 'NA'}</Descriptions.Item>
-                    <Descriptions.Item label="State">{formData?.stateName || 'NA'}</Descriptions.Item>
-                    <Descriptions.Item label="Country">{formData?.countryName || 'NA'}</Descriptions.Item>
-                    <Descriptions.Item label="Within 50 Km of GPO">{formData?.withIn50KmFromGpo ? 'Yes' : 'No'}</Descriptions.Item>
-                    <Descriptions.Item label="Status">{formData?.status ? 'Active' : 'Inactive'}</Descriptions.Item>
-                    <Descriptions.Item label="Approval Status">{formData?.approvalStatus ? 'Approved' : 'Not Approved'}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('pincode.label.pinCode')}>{formData?.pinCode}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('pincode.label.pinCategory')}>{formData?.pinCategoryName || 'NA'}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('pincode.label.locality')}>{formData?.localityName || 'NA'}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('pincode.label.tehsil')}>{formData?.tehsilName || 'NA'}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('pincode.label.city')}>{formData?.cityName || 'NA'}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('pincode.label.district')}>{formData?.districtName || 'NA'}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('pincode.label.state')}>{formData?.stateName || 'NA'}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('pincode.label.country')}>{formData?.countryName || 'NA'}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('pincode.label.withIn50KmFromGpo')}>{formData?.withIn50KmFromGpo ? 'Yes' : 'No'}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('global.label.status')}>{formData?.status ? translateContent('global.label.active') : translateContent('global.label.inActive')}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('pincode.label.approvalStatus')}>{formData?.approvalStatus ? 'Approved' : 'Not Approved'}</Descriptions.Item>
                 </Descriptions>
             </div>
         </>

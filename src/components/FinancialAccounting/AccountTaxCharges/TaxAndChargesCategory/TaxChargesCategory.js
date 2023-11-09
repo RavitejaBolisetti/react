@@ -23,6 +23,8 @@ import { btnVisiblity } from 'utils/btnVisiblity';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { AddEditForm } from './AddEditForm';
+import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -40,7 +42,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Tax & Charges Category';
+    const moduleTitle = translateContent('taxChargeCatagory.heading.moduleTitle');
 
     let returnValue = {
         userId,
@@ -119,7 +121,7 @@ export const TaxChargesCategoryMain = (props) => {
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
     const onSuccessAction = (res) => {
-        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        refershData && showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         setRefershData(false);
         setShowDataLoading(false);
     };
@@ -295,10 +297,10 @@ export const TaxChargesCategoryMain = (props) => {
             setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage, placement: 'bottomRight' });
             } else {
                 setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             }
         };
 
@@ -328,16 +330,6 @@ export const TaxChargesCategoryMain = (props) => {
         setDropdownItems(() => []);
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View ';
-        } else if (formActionType?.editMode) {
-            return 'Edit ';
-        } else {
-            return 'Add ';
-        }
-    }, [formActionType]);
-
     const formProps = {
         form,
         formData,
@@ -347,7 +339,7 @@ export const TaxChargesCategoryMain = (props) => {
 
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat('Tax & Charges Category'),
+        titleOverride: drawerTitle(formActionType).concat(translateContent('taxChargeCatagory.heading.moduleTitle')),
 
         ADD_ACTION,
         EDIT_ACTION,
@@ -383,7 +375,7 @@ export const TaxChargesCategoryMain = (props) => {
         tableData: taxChargeCategoryData,
     };
 
-    const title = 'Tax & Charges Category Code';
+    const title = translateContent('taxChargeCatagory.heading.title');
 
     const advanceFilterResultProps = {
         advanceFilter: false,

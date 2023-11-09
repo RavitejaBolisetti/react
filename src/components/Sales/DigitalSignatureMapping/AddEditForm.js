@@ -12,6 +12,7 @@ import { DataTable } from 'utils/dataTable';
 import { tableColumnAddEdit } from './tableColumnAddEdit';
 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import { translateContent } from 'utils/translateContent';
 
 import { ViewDetail } from './ViewDetail';
 
@@ -69,19 +70,19 @@ const AddEditFormMain = (props) => {
                             <>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item initialValue={formData?.dealerName} label="Dealer Name" name="dealerName">
-                                            <Input placeholder={preparePlaceholderText('Dealer Name')} disabled={true} />
+                                        <Form.Item initialValue={formData?.dealerName} label={translateContent('digitalSignature.label.dealerName')} name="dealerName">
+                                            <Input placeholder={preparePlaceholderText(translateContent('digitalSignature.label.dealerName'))} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item initialValue={formData?.employeeName} label="Employee Name" name="employeeName">
-                                            <Input placeholder={preparePlaceholderText('Employee Name')} disabled={true} />
+                                        <Form.Item initialValue={formData?.employeeName} label={translateContent('digitalSignature.label.employeeName')} name="employeeName">
+                                            <Input placeholder={preparePlaceholderText(translateContent('digitalSignature.label.employeeName'))} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <div className={styles.innerCollapse}>
                                     <Collapse defaultActiveKey={['1']} expandIcon={expandIcon} expandIconPosition="end">
-                                        <Panel key="1" header="Branches Accessible">
+                                        <Panel key="1" header={translateContent('digitalSignature.heading.branchesAccessible')}>
                                             <Row gutter={20}>
                                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                     {/* <Form.Item initialValue={formData?.areaOffice} label="Area Office" name="areaOffice"> */}
@@ -92,7 +93,7 @@ const AddEditFormMain = (props) => {
                                             <Row gutter={20}>
                                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                                     <Button className={styles.marR20} onClick={() => handleSave()} type="primary">
-                                                        Save
+                                                        {translateContent('global.buttons.save')}
                                                     </Button>
                                                 </Col>
                                             </Row>

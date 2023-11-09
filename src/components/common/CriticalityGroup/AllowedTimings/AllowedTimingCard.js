@@ -12,6 +12,8 @@ import { RxCross2 } from 'react-icons/rx';
 import { BsTrash3 } from 'react-icons/bs';
 
 import { LANGUAGE_EN } from 'language/en';
+import { translateContent } from 'utils/translateContent';
+
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -20,7 +22,7 @@ const AllowedTimingCard = (props) => {
     const { deletedTime, setDeletedTime, buttonData, setButtonData, formActionType, setIsAddTimeVisible, setTimeData, timeSlotFrom, timeSlotTo, showGlobalNotification } = props;
 
     const handleDeleteAction = (val) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: LANGUAGE_EN.GENERAL.ALLOWED_TIMING_DELETED.MESSAGE, placement: 'bottomRight' });
+        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: LANGUAGE_EN.GENERAL.ALLOWED_TIMING_DELETED.MESSAGE, placement: 'bottomRight' });
         setTimeData((prev) => {
             const newList = prev;
             const index = prev?.findIndex((el) => el?.timeSlotFrom === val);
@@ -29,7 +31,7 @@ const AllowedTimingCard = (props) => {
         });
     };
     const handleDeleteActionServer = (val) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: LANGUAGE_EN.GENERAL.ALLOWED_TIMING_DELETED.MESSAGE, placement: 'bottomRight' });
+        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: LANGUAGE_EN.GENERAL.ALLOWED_TIMING_DELETED.MESSAGE, placement: 'bottomRight' });
         setButtonData({ ...buttonData, formBtnActive: true });
 
         setTimeData((prev) => {
@@ -49,11 +51,11 @@ const AllowedTimingCard = (props) => {
                 <Row>
                     <Col xs={24} sm={24} md={11} lg={11} xl={11} xxl={11}>
                         <p className={styles.timeSlot}>{moment(timeSlotFrom, 'HH:mm').format('hh:mm A')}</p>
-                        <p className={styles.timeLabel}>Start Time</p>
+                        <p className={styles.timeLabel}>{translateContent('criticalityGroup.label.startTime')}</p>
                     </Col>
                     <Col xs={24} sm={24} md={11} lg={11} xl={11} xxl={11}>
                         <p className={styles.timeSlot}>{moment(timeSlotTo, 'HH:mm').format('hh:mm A')}</p>
-                        <p className={styles.timeLabel}>End Time</p>
+                        <p className={styles.timeLabel}>{translateContent('criticalityGroup.label.endTime')}</p>
                     </Col>
                     <Col xs={24} sm={24} md={2} lg={2} xl={2} className={styles.timeSlotClearBtn}>
                         {!formActionType?.viewMode && (!id ? <Button onClick={() => handleDeleteAction(timeSlotFrom)} type="link" icon={<RxCross2 size={20} />} /> : <Button onClick={() => handleDeleteActionServer(id)} type="link" icon={<BsTrash3 size={20} />} />)}

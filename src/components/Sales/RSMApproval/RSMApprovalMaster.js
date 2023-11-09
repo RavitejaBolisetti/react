@@ -20,9 +20,9 @@ import { RejectRequest } from './RejectRequest';
 import { RSM_APPROVAL_STATUS } from './utils/RSMApprovalStatus';
 import { dateFormatView, convertDate } from 'utils/formatDateTime';
 
-import { LANGUAGE_EN } from 'language/en';
 import { rsmApprovalSearchDataAction } from 'store/actions/data/sales/rsmApprovalSearch';
 import { rsmApprovalDataAction } from 'store/actions/data/sales/rsmApproval';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -36,7 +36,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'RSM Approval';
+    const moduleTitle = translateContent('rsmApproval.heading.moduleTitle');
 
     let returnValue = {
         userId,
@@ -270,7 +270,7 @@ export const RSMApprovalMasterBase = (props) => {
                 form.resetFields();
                 rejectForm.resetFields();
                 setShowDataLoading(true);
-                showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.title'), message: res?.responseMessage });
                 fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
                 setRejectModalVisible(false);
                 setButtonData({ ...buttonData, formBtnActive: false });
@@ -292,7 +292,7 @@ export const RSMApprovalMasterBase = (props) => {
 
             saveData(requestData);
         } else {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please accept Terms and Condition' });
+            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: translateContent('rsmApproval.validation.acceptTerms') });
         }
     };
     const rejectModalCloseAction = () => {
@@ -318,7 +318,7 @@ export const RSMApprovalMasterBase = (props) => {
         tableData: data,
         showAddButton: false,
         handleAdd: handleButtonClick,
-        noMessge: LANGUAGE_EN.GENERAL.LIST_NO_DATA_FOUND.TITLE,
+        noMessge: translateContent('global.generalMessage.noRecordsFound'),
         rsmStatusType,
     };
 
@@ -355,7 +355,7 @@ export const RSMApprovalMasterBase = (props) => {
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
-        titleOverride: 'Advance Filters',
+        titleOverride: translateContent('global.advanceFilter.title'),
 
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
@@ -370,7 +370,7 @@ export const RSMApprovalMasterBase = (props) => {
         isVisible: isFormVisible,
         styles,
         onCloseAction,
-        titleOverride: 'View RSM Approval Details',
+        titleOverride: translateContent('rsmApproval.heading.viewDrawerTitle'),
         handleButtonClick,
         buttonData,
         setButtonData,
@@ -379,7 +379,7 @@ export const RSMApprovalMasterBase = (props) => {
         handleRequest,
     };
 
-    const requestModuleTitle = ' Co-Dealer Invoice';
+    const requestModuleTitle = translateContent('rsmApproval.heading.requestModuleTitle');
 
     const rejectRequestProps = {
         isVisible: isRejectModalVisible,

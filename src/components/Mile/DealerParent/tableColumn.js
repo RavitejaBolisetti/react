@@ -8,22 +8,23 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const tableColumn = ({ handleButtonClick, page, pageSize, typeData }) => {
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Group Code',
+            title: translateContent('dealerParent.tableColHeading.groupCode'),
             dataIndex: 'code',
             width: '12%',
         }),
         tblPrepareColumns({
-            title: 'Group Name',
+            title: translateContent('dealerParent.tableColHeading.groupName'),
             dataIndex: 'name',
             width: '16%',
         }),
         tblPrepareColumns({
-            title: 'Title',
+            title: translateContent('dealerParent.tableColHeading.title'),
             dataIndex: 'title',
             width: '8%',
             render: (__, value) => {
@@ -31,17 +32,17 @@ export const tableColumn = ({ handleButtonClick, page, pageSize, typeData }) => 
             },
         }),
         tblPrepareColumns({
-            title: 'Owner Name',
+            title: translateContent('dealerParent.tableColHeading.ownerName'),
             dataIndex: 'ownerName',
             width: '14%',
         }),
         tblPrepareColumns({
-            title: 'Contact Number',
+            title: translateContent('dealerParent.tableColHeading.contactNumber'),
             dataIndex: 'mobileNumber',
             width: '13%',
         }),
         tblPrepareColumns({
-            title: 'Email ID',
+            title: translateContent('dealerParent.tableColHeading.emailId'),
             dataIndex: 'emailId',
             width: '16%',
         }),

@@ -21,6 +21,7 @@ import { VEHICLE_COMPANY_MAKE } from 'constants/OTFStatus';
 import styles from 'assets/sass/app.module.scss';
 import { BASE_URL_PRODUCT_MODEL_GROUP, BASE_URL_PRODUCT_VARIENT } from 'constants/routingApi';
 import { SALES_MODULE_TYPE } from 'constants/salesModuleType';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -39,12 +40,9 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Loyalty And Scheme';
-
     let returnValue = {
         userId,
         isLoyaltySchemeDataLoaded,
-        moduleTitle,
         isLoading,
         loyaltySchemeData,
 
@@ -119,7 +117,7 @@ const LoyaltySchemeMasterMain = (props) => {
             handleFilterChange('make', VEHICLE_COMPANY_MAKE);
             handleFilterChange('modelGroupCode', data?.modelGroup ?? '');
         } else if (data === null) {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'No data found' });
+            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationSuccess.error'), message: translateContent('global.generalMessage.noDataFound') });
             form.resetFields(['customerCode', 'customerName', 'make', 'vehicleModelGroup', 'variantCode', 'registrationNumber', 'oldChassisNumber', 'customerDOB']);
         }
     };
@@ -160,7 +158,7 @@ const LoyaltySchemeMasterMain = (props) => {
     const onFinish = (values) => {
         const { customerName } = values;
         if (!customerName) {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Verify Customer id to continue' });
+            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationSuccess.error'), message: translateContent('bookingManagement.validation.verifyCustomerID') });
             return;
         }
         const data = { ...values, id: loyaltySchemeData?.id || '', otfId: selectedRecordId };

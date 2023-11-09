@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Row, Col, Form } from 'antd';
@@ -22,10 +22,11 @@ import { btnVisiblity } from 'utils/btnVisiblity';
 import { CustomEditor } from 'components/common/CustomEditor';
 
 import { formatDate } from 'utils/formatDateTime';
-
 import { tableColumn } from './tableColumn';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import moment from 'moment';
+import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -44,7 +45,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Term & Condition';
+    const moduleTitle = translateContent('termConditionManufacturer.heading.moduletitle');
 
     let returnValue = {
         collapsed,
@@ -120,7 +121,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
     const onSuccessAction = (res) => {
-        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        refershData && showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         setRefershData(false);
         setShowDataLoading(false);
     };
@@ -199,7 +200,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
             setSelectedRecord({});
             setShowDataLoading(false);
             setIsFormVisible(false);
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         };
         setTimeout(() => {
             fetchTermCondition({ setIsLoading: listShowLoading, userId });
@@ -207,7 +208,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
 
         const onError = (message) => {
             listShowLoading(false);
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottomRight' });
+            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationSuccess.error'), message, placement: 'bottomRight' });
         };
 
         const requestData = {
@@ -223,7 +224,9 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {}).catch(err => console.error(err));
+        form.validateFields()
+            .then((values) => {})
+            .catch((err) => console.error(err));
     };
 
     const handleReferesh = (e) => {
@@ -255,16 +258,6 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         setButtonData({ ...defaultBtnVisiblity });
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View ';
-        } else if (formActionType?.editMode) {
-            return 'Edit ';
-        } else {
-            return 'Add ';
-        }
-    }, [formActionType]);
-
     const formProps = {
         isVisible: isFormVisible,
         isViewModeVisible,
@@ -274,7 +267,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         saveandnewclick,
         setIsFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
         selectedRecord,
         formBtnDisable,
         setFormBtnDisable,
@@ -315,7 +308,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         CustomEditor,
     };
 
-    const title = 'Term & Condition';
+    const title = translateContent('termConditionManufacturer.heading.moduletitle');
 
     const showChangeHistoryList = () => {
         setButtonData({ cancelBtn: true });
@@ -349,6 +342,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         onCloseAction: changeHistoryClose,
         isChangeHistoryContainer: false,
         tableData: searchData,
+        showAddButton: false,
     };
 
     return (

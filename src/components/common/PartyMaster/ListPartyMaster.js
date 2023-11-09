@@ -23,6 +23,8 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import { filterFunction } from 'utils/filterFunction';
 import { AddEditForm } from './AddEditForm';
+import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -36,7 +38,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Party Master';
+    // const moduleTitle = 'Party Master';
 
     let returnValue = {
         userId,
@@ -51,7 +53,7 @@ const mapStateToProps = (state) => {
         detailData,
         isLoading,
         pincodeData: pincodeData?.pinCodeDetails,
-        moduleTitle,
+        moduleTitle: translateContent('partyMaster.heading.moduleTitle'),
     };
     return returnValue;
 };
@@ -104,7 +106,7 @@ export const ListPartyMasterBase = (props) => {
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
     const onSuccessAction = (res) => {
-        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        refershData && showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         setRefershData(false);
         setShowDataLoading(false);
     };
@@ -165,16 +167,16 @@ export const ListPartyMasterBase = (props) => {
             setOnSaveShowLoading(false);
             form.resetFields();
             setShowDataLoading(true);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
 
             setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage, placement: 'bottomRight' });
             } else {
                 setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             }
         };
 
@@ -217,16 +219,6 @@ export const ListPartyMasterBase = (props) => {
         }
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View ';
-        } else if (formActionType?.editMode) {
-            return 'Edit ';
-        } else {
-            return 'Add ';
-        }
-    }, [formActionType]);
-
     const formProps = {
         form,
         formData,
@@ -235,7 +227,7 @@ export const ListPartyMasterBase = (props) => {
         onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
         tableData: searchData,
         typeData,
         fetchDetail,
@@ -268,8 +260,6 @@ export const ListPartyMasterBase = (props) => {
         tableData: searchData,
     };
 
-    const title = 'Party Name';
-
     const advanceFilterResultProps = {
         advanceFilter: false,
         filterString,
@@ -279,7 +269,7 @@ export const ListPartyMasterBase = (props) => {
         handleClearInSearch,
         handleReferesh,
         handleButtonClick,
-        title,
+        title: translateContent('partyMaster.label.partyName'),
         tableData: searchData,
     };
 

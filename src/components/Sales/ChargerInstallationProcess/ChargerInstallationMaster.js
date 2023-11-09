@@ -30,6 +30,9 @@ import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { FilterIcon } from 'Icons';
 import { getCodeValue } from 'utils/getCodeValue';
 
+import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
+
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -42,7 +45,7 @@ const mapStateToProps = (state) => {
             CRMCustomerVehicle: { isLoaded: isCRMCustomerDataLoaded = false, isCRMCustomerLoading, data: crmCustomerVehicleData = [] },
         },
     } = state;
-    const moduleTitle = 'Charger Installation';
+    const moduleTitle = translateContent('chargerInstallationProcess.heading.mainTitle');
     let returnValue = {
         userId,
         typeData,
@@ -142,7 +145,7 @@ export const ChargerInstallationMasterBase = (props) => {
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
@@ -311,7 +314,7 @@ export const ChargerInstallationMasterBase = (props) => {
                 setChargerDetails(true);
                 setButtonData((prev) => ({ ...prev, formBtnActive: true }));
             } else {
-                showGlobalNotification({ message: "Non-EV Booking shouldn't be accepted" });
+                showGlobalNotification({ message: translateContent('chargerInstallationProcess.notification.globalNotification')});
             }
         };
         fetchCustomerVehicleList({ setIsLoading: listCustomerVehicleShowLoading, userId, extraParams, onSuccessAction: onSuccesscustomerAction, onErrorAction });
@@ -408,7 +411,7 @@ export const ChargerInstallationMasterBase = (props) => {
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             setButtonData({ ...buttonData, formBtnActive: false });
             setIsFormVisible(false);
@@ -481,7 +484,7 @@ export const ChargerInstallationMasterBase = (props) => {
         }
     };
 
-    const title = 'Charger Installation';
+    const title = translateContent('chargerInstallationProcess.heading.title');
 
     const advanceFilterResultProps = {
         extraParams,
@@ -511,7 +514,7 @@ export const ChargerInstallationMasterBase = (props) => {
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
         icon: <FilterIcon size={20} />,
-        titleOverride: 'Advance Filters',
+        titleOverride: translateContent('chargerInstallationProcess.heading.titleOverride'),
 
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
@@ -523,16 +526,6 @@ export const ChargerInstallationMasterBase = (props) => {
         typeData,
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View ';
-        } else if (formActionType?.editMode) {
-            return 'Edit ';
-        } else {
-            return 'Add New ';
-        }
-    }, [formActionType]);
-
     const containerProps = {
         record: selectedOrder,
         form,
@@ -542,7 +535,7 @@ export const ChargerInstallationMasterBase = (props) => {
         onChargerInstallationFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,
@@ -574,7 +567,7 @@ export const ChargerInstallationMasterBase = (props) => {
         handleFormValueChange,
         isLastSection,
         typeData,
-        saveButtonName: isLastSection ? 'Submit' : 'Next',
+        saveButtonName: isLastSection ? translateContent('global.buttons.submit') : translateContent('global.buttons.next'),
         setLastSection,
         handleBookingNumberSearch,
         vehicleInvoiceMasterData,

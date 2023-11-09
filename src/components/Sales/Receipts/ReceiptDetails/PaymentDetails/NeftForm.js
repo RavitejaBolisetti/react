@@ -9,6 +9,7 @@ import { Input, DatePicker, Row, Col, Form } from 'antd';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { dateFormat } from 'utils/formatDateTime';
 import { validationFieldLetterAndNumber, validateRequiredInputField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
+import { translateContent } from 'utils/translateContent';
 
 const { Search } = Input;
 const NeftFormBase = (props) => {
@@ -18,35 +19,35 @@ const NeftFormBase = (props) => {
         <>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.receivedAmount} label="Receive Amount" name="receivedAmount" rules={[validateRequiredInputField('received amount'), validateNumberWithTwoDecimalPlaces('received amount')]}>
-                        <Input placeholder={preparePlaceholderText('received amount')} />
+                    <Form.Item initialValue={formData?.receivedAmount} label={translateContent('receipts.label.receiptDetails.receivedAmount')} name="receivedAmount" rules={[validateRequiredInputField(translateContent('receipts.validation.receivedAmount')), validateNumberWithTwoDecimalPlaces(translateContent('receipts.validation.receivedAmount'))]}>
+                        <Input placeholder={preparePlaceholderText(translateContent('receipts.placeholder.receivedAmount'))} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.transactionNumber} label="Transaction No." name="transactionNumber" rules={[validationFieldLetterAndNumber('transaction no')]}>
-                        <Input placeholder={preparePlaceholderText('transaction no')} />
+                    <Form.Item initialValue={formData?.transactionNumber} label={translateContent('receipts.label.receiptDetails.transactionNumber')} name="transactionNumber" rules={[validationFieldLetterAndNumber(translateContent('receipts.validation.transactionNumber'))]}>
+                        <Input placeholder={preparePlaceholderText(translateContent('receipts.placeholder.transactionNumber'))} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.transactionDate} label="Transaction Date" name="transactionDate">
-                        <DatePicker format={dateFormat} placeholder={preparePlaceholderText('transaction date')} style={{ display: 'auto', width: '100%' }} />
+                    <Form.Item initialValue={formData?.transactionDate} label={translateContent('receipts.label.receiptDetails.transactionDate')} name="transactionDate">
+                        <DatePicker format={dateFormat} placeholder={preparePlaceholderText(translateContent('receipts.placeholder.transactionDate'))} style={{ display: 'auto', width: '100%' }} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.paymentBankPartyId} label="Payment Bank Party ID" name="paymentBankPartyId" rules={[validationFieldLetterAndNumber('transaction no')]}>
-                        <Search allowClear onChange={handleChange} onSearch={handlePaymentSearch} placeholder={preparePlaceholderText('Payment Bank Party ID')} />
+                    <Form.Item initialValue={formData?.paymentBankPartyId} label={translateContent('receipts.label.receiptDetails.paymentBankPartyId')} name="paymentBankPartyId" rules={[validationFieldLetterAndNumber(translateContent('receipts.validation.paymentBankPartyId'))]}>
+                        <Search allowClear onChange={handleChange} onSearch={handlePaymentSearch} placeholder={preparePlaceholderText(translateContent('receipts.placeholder.paymentBankPartyId'))} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.paymentBankName} label="Payment Bank Name" name="paymentBankName">
-                        <Input placeholder={preparePlaceholderText('payment bank name')} disabled={true} />
+                    <Form.Item initialValue={formData?.paymentBankName} label={translateContent('receipts.label.receiptDetails.paymentBankName')} name="paymentBankName">
+                        <Input placeholder={preparePlaceholderText(translateContent('receipts.placeholder.paymentBankName'))} disabled={true} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.paymentBankLocation} label="Payment Bank Location" name="paymentBankLocation">
-                        <Input placeholder={preparePlaceholderText('payment bank location')} disabled={true} />
+                    <Form.Item initialValue={formData?.paymentBankLocation} label={translateContent('receipts.label.receiptDetails.paymentBankLocation')} name="paymentBankLocation">
+                        <Input placeholder={preparePlaceholderText(translateContent('receipts.placeholder.paymentBankLocation'))} disabled={true} />
                     </Form.Item>
                 </Col>
             </Row>

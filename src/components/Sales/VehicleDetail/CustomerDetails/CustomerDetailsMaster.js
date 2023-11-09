@@ -15,6 +15,7 @@ import { VehicleDetailFormButton } from '../VehicleDetailFormButton';
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 import { BASE_URL_VEHICLE_CUSTOMER_COMMON_DETAIL as customURL } from 'constants/routingApi';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -42,7 +43,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Customer Details';
+    const moduleTitle = translateContent('customerDetails.heading.moduleTitle');
 
     let returnValue = {
         collapsed,
@@ -170,7 +171,7 @@ export const CustomerDetailsMain = (props) => {
     }, []);
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.title'), message: res?.responseMessage });
     };
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -252,7 +253,7 @@ export const CustomerDetailsMain = (props) => {
             id: recordId,
         };
         const onSuccess = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.title'), message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
         };
@@ -330,6 +331,8 @@ export const CustomerDetailsMain = (props) => {
         isCustomerCommonDetailsLoaded,
         isCustomerCommonDetailsLoading,
         handleCollapse,
+        buttonData,
+        setButtonData,
     };
 
     const viewProps = {

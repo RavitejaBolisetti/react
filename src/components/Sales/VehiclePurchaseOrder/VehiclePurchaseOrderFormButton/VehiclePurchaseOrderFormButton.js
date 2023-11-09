@@ -7,6 +7,7 @@ import React from 'react';
 import { Button, Row, Col } from 'antd';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { VEHICLE_PURCHASE_ORDER_STATUS } from 'constants/VehiclePurchaseOrderStatus';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -17,12 +18,12 @@ export const VehiclePurchaseOrderFormButton = ({ record, onCloseAction, buttonDa
                 <Col xs={24} sm={8} md={6} lg={4} xl={4} className={styles.buttonsGroupLeft}>
                     {buttonData?.closeBtn && (
                         <Button danger onClick={onCloseAction}>
-                            Close
+                            {translateContent('global.buttons.close')}
                         </Button>
                     )}
                     {buttonData?.cancelBtn && (
                         <Button danger onClick={onCloseAction}>
-                            Cancel
+                            {translateContent('global.buttons.cancel')}
                         </Button>
                     )}
                 </Col>
@@ -31,7 +32,7 @@ export const VehiclePurchaseOrderFormButton = ({ record, onCloseAction, buttonDa
                     {(record?.purchaseOrderStatusCode === VEHICLE_PURCHASE_ORDER_STATUS?.PO_SUBMITTED?.key || record?.purchaseOrderStatusCode === VEHICLE_PURCHASE_ORDER_STATUS?.SO_GENERATED?.key) && (
                         <>
                             <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF, record, openDefaultSection: false })} type="primary">
-                                Cancel Vehicle Purchase Order
+                                {translateContent('global.buttons.cancelVehiclePurchaseOrder')}
                             </Button>
                             {/* <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
                         Edit
@@ -41,31 +42,31 @@ export const VehiclePurchaseOrderFormButton = ({ record, onCloseAction, buttonDa
 
                     {buttonData?.cancelVPOBtn && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_VEHICLE_PURCHASE_ORDER, record })} type="primary">
-                            Cancel PO
+                            {translateContent('global.buttons.cancelVehiclePurchaseOrder')}
                         </Button>
                     )}
 
                     {buttonData?.cancelOtfBtn && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF, record })} type="primary">
-                            Cancel Booking
+                            {translateContent('global.buttons.cancelBooking')}
                         </Button>
                     )}
 
                     {buttonData?.cancelVPOBtn && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_VEHICLE_PURCHASE_ORDER, record })} type="primary">
-                            Cancel VPO
+                            {translateContent('global.buttons.cancelVehiclePurchaseOrder')}
                         </Button>
                     )}
 
                     {buttonData?.cancelOtfBtn && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF, record })} type="primary">
-                            Cancel Booking
+                            {translateContent('global.buttons.cancelBooking')}
                         </Button>
                     )}
 
                     {buttonData?.nextBtn && !isLastSection && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
-                            Next
+                            {translateContent('global.buttons.next')}
                         </Button>
                     )}
 

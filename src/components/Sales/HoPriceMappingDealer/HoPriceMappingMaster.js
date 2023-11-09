@@ -26,8 +26,10 @@ import { geoCityDataActions } from 'store/actions/data/geo/cities';
 import { tncProductHierarchyDataActions } from 'store/actions/data/termsConditions/tncProductHierarchy';
 import { hoPriceMappingDataActions } from 'store/actions/data/hoPriceMapping/hoPriceMapping';
 import { hoPriceMappingDetailDataActions } from 'store/actions/data/hoPriceMapping/hoPriceMappingDetails';
+import { translateContent } from 'utils/translateContent';
 
 import { showGlobalNotification } from 'store/actions/notification';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -50,7 +52,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Dealer List';
+    const moduleTitle = translateContent('hoPriceMapping.heading.maintitle');
     let returnValue = {
         userId,
         typeData,
@@ -489,16 +491,8 @@ export const HoPriceMappingMasterBase = (props) => {
         }
     };
 
-    const title = 'HO Price Upload Mapping for Dealer';
-    const drawerTitleHeading = ' HO Price Upload Mapping';
-
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View' + drawerTitleHeading;
-        } else if (formActionType?.editMode) {
-            return 'Edit' + drawerTitleHeading;
-        }
-    }, [formActionType]);
+    const title = translateContent('hoPriceMapping.heading.title');
+    const drawerTitleHeading = translateContent('hoPriceMapping.heading.drawerTitleHeading');
 
     const advanceFilterResultProps = {
         extraParams,
@@ -522,7 +516,7 @@ export const HoPriceMappingMasterBase = (props) => {
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
-        titleOverride: 'Advance Filters',
+        titleOverride: translateContent('global.advanceFilter.title'),
         filteredStateData,
         filteredCityData,
         productHierarchyList,
@@ -542,7 +536,7 @@ export const HoPriceMappingMasterBase = (props) => {
 
     const formProps = {
         isVisible: isFormVisible,
-        titleOverride: drawerTitle,
+        titleOverride: drawerTitle(formActionType).concat(drawerTitleHeading),
         handleButtonClick,
         formActionType,
         onCloseAction,

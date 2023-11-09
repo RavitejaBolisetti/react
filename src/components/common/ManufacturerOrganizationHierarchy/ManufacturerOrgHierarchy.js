@@ -26,6 +26,7 @@ import LeftPanel from '../LeftPanel';
 
 import styles from 'assets/sass/app.module.scss';
 import { HIERARCHY_DEFAULT_PARENT } from 'constants/constants';
+import { translateContent } from 'utils/translateContent';
 
 const { Search } = Input;
 const mapStateToProps = (state) => {
@@ -40,8 +41,8 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Manufacturer Organisation Detail';
-    const viewTitle = 'Hierarchy Details';
+    const moduleTitle = translateContent('manufacturerOrganisation.heading.mainTitle');
+    const viewTitle = translateContent('manufacturerOrganisation.heading.viewTitle');
 
     let returnValue = {
         collapsed,
@@ -184,7 +185,7 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
 
             if (res?.data) {
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
 
                 fetchList({ setIsLoading: listShowLoading, userId });
                 fetchChangeHistoryList({ setIsLoading: listShowLoading, userId });
@@ -251,7 +252,7 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
         formActionType,
         isVisible: isFormVisible,
         onCloseAction: () => setIsFormVisible(false),
-        titleOverride: (formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
+        titleOverride: (formData?.id ? translateContent('global.drawerTitle.edit') : translateContent('global.drawerTitle.add')).concat(moduleTitle),
         onFinish,
         selectedTreeKey,
         selectedTreeData,
@@ -284,7 +285,7 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
 
     const leftCol = manufacturerOrgHierarchyData?.length > 0 ? 14 : 24;
     const rightCol = manufacturerOrgHierarchyData?.length > 0 ? 10 : 24;
-    const title = 'Hierarchy';
+    const title = translateContent('manufacturerOrganisation.heading.title');
     return (
         <>
             <div className={styles.contentHeaderBackground}>
@@ -294,7 +295,7 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                     <Form.Item label={`${title}`} name="code" validateTrigger={['onSearch']}>
-                                        <Search placeholder="Search" allowClear onChange={onChange} className={`${styles.headerSearchField} ${styles.headerSearchInput}`} />
+                                        <Search placeholder={translateContent('global.placeholder.search')} allowClear onChange={onChange} className={`${styles.headerSearchField} ${styles.headerSearchInput}`} />
                                     </Form.Item>{' '}
                                 </Col>
                             </Row>
@@ -303,7 +304,7 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
                     {manufacturerOrgHierarchyData?.length > 0 && (
                         <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.buttonsGroupRight}>
                             <Button icon={<FaHistory />} type="primary" className={styles.verticallyCentered} onClick={changeHistoryModelOpen}>
-                                Change History
+                                {translateContent('global.changeHistory.title')}
                             </Button>
                         </Col>
                     )}
@@ -325,7 +326,7 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
                                 }
                             >
                                 <Button icon={<PlusOutlined />} type="primary" onClick={handleAdd}>
-                                    Add
+                                    {translateContent('global.buttons.add')}
                                 </Button>
                             </Empty>
                         </div>
@@ -351,8 +352,7 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
                                 }}
                                 description={
                                     <span>
-                                        Please select product from left <br />
-                                        side hierarchy to view “Hierarchy Details”
+                                        {translateContent('manufacturerOrganisation.label.description')}
                                     </span>
                                 }
                             ></Empty>

@@ -16,6 +16,7 @@ import { checkAndSetDefaultValue, getStatus } from 'utils/checkAndSetDefaultValu
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Option } = Select;
 
@@ -54,19 +55,19 @@ const AddEditFormMain = (props) => {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Card className={styles.ExchangeCard}>
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Booking No.">{checkAndSetDefaultValue(selectedOrder?.bookingNumber || selectedOrder?.otfNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Booking Date">{checkAndSetDefaultValue(convertDateTime(selectedOrder?.otfDate, dateFormatView), isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(selectedOrder?.customerName, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Mobile No.">{checkAndSetDefaultValue(selectedOrder?.mobileNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('bookingManagement.profileCard.bookingNumber')}>{checkAndSetDefaultValue(selectedOrder?.bookingNumber || selectedOrder?.otfNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('bookingManagement.profileCard.bookingDate')}>{checkAndSetDefaultValue(convertDateTime(selectedOrder?.otfDate, dateFormatView), isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('commonModules.label.bookingCustomerAndBillingCustomer.customerName')}>{checkAndSetDefaultValue(selectedOrder?.customerName, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('bookingManagement.profileCard.mobileNumber')}>{checkAndSetDefaultValue(selectedOrder?.mobileNumber, isLoading)}</Descriptions.Item>
                             </Descriptions>
                             <Descriptions {...viewTwoProps}>
-                                <Descriptions.Item label="Model">{checkAndSetDefaultValue(selectedOrder?.model, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Order Status">{getStatus(selectedOrder?.orderStatus)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('bookingManagement.profileCard.model')}>{checkAndSetDefaultValue(selectedOrder?.model, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('bookingManagement.label.orderStatus')}>{getStatus(selectedOrder?.orderStatus)}</Descriptions.Item>
                             </Descriptions>
                         </Card>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item name="otfTransferLocation" label="Transfer To Location" initialValue={formData?.otfTransferLocation} rules={[validateRequiredSelectField('Transfer To Location')]}>
+                                <Form.Item name="otfTransferLocation" label={translateContent('bookingManagement.label.transferToLocation')} initialValue={formData?.otfTransferLocation} rules={[validateRequiredSelectField(translateContent('bookingManagement.label.transferToLocation'))]}>
                                     {customSelectBox({
                                         data: dealerLocations?.filter((location) => location?.locationCode !== defaultDealerLocationCode),
                                         fieldNames: { key: 'locationCode', value: 'dealerLocationName' },
@@ -77,8 +78,8 @@ const AddEditFormMain = (props) => {
                             </Col>
 
                             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item name="salesConsultant" label="Sales Consultant" initialValue={formData?.salesConsultant} rules={[validateRequiredSelectField('Sales Consultant')]}>
-                                    <Select placeholder="Select" loading={isSalesConsultantLoading} showSearch allowClear>
+                                <Form.Item name="salesConsultant" label={translateContent('bookingManagement.label.saleConsultant')} initialValue={formData?.salesConsultant} rules={[validateRequiredSelectField(translateContent('bookingManagement.label.saleConsultant'))]}>
+                                    <Select placeholder={translateContent('bookingManagement.label.saleConsultant')} loading={isSalesConsultantLoading} showSearch allowClear>
                                         {salesConsultantLov?.map((item) => (
                                             <Option value={item.key}>{item.value}</Option>
                                         ))}
@@ -88,8 +89,8 @@ const AddEditFormMain = (props) => {
                         </Row>
                         <Row>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Form.Item name="transferReason" label="Reason For Transfer" initialValue={formData?.transferReason} rules={[validateRequiredSelectField('Reason For Transfer')]}>
-                                    {customSelectBox({ data: typeData, placeholder: preparePlaceholderSelect('Reason For Cancellation') })}
+                                <Form.Item name="transferReason" label={translateContent('bookingManagement.label.transferReason')} initialValue={formData?.transferReason} rules={[validateRequiredSelectField(translateContent('bookingManagement.label.transferReason'))]}>
+                                    {customSelectBox({ data: typeData, placeholder: preparePlaceholderSelect(translateContent('bookingManagement.label.transferReason')) })}
                                 </Form.Item>
                             </Col>
                         </Row>

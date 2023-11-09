@@ -15,6 +15,7 @@ import { CashForm } from './CashForm';
 import { ChequeForm } from './ChequeForm';
 import { CreditForm } from './CreditForm';
 import { NeftForm } from './NeftForm';
+import { translateContent } from 'utils/translateContent';
 
 const { Option } = Select;
 
@@ -71,9 +72,9 @@ const PaymentFormContainer = (props) => {
             <Form form={paymentForm} autoComplete="off" onFinish={handleSavepaymenttForm} onFieldsChange={handleFormValueChange} layout="vertical">
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Payment Mode" name="paymentMode" rules={[validateRequiredSelectField('Payment Mode')]}>
+                        <Form.Item label={translateContent('receipts.label.receiptDetails.paymentMode')} name="paymentMode" rules={[validateRequiredSelectField(translateContent('receipts.label.receiptDetails.paymentMode'))]}>
                             {/* {customSelectBox({ data: paymentModeType, placeholder: preparePlaceholderSelect('Payment Mode'), onChange: { handlePayment } })} */}
-                            <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} onChange={handlePayment} {...selectProps}>
+                            <Select maxLength={50} placeholder={preparePlaceholderSelect(translateContent('receipts.label.receiptDetails.paymentMode'))} onChange={handlePayment} {...selectProps}>
                                 {paymentModeType?.map((item) => (
                                     <Option key={'dv' + item.key} value={item.key}>
                                         {item.value}
@@ -91,10 +92,10 @@ const PaymentFormContainer = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                 <Button className={styles.marR20} onClick={handleSavepaymenttForm} type="primary">
-                                    Save
+                                    {translateContent('global.buttons.save')}
                                 </Button>
                                 <Button className={styles.marB20} onClick={handleCancelFormEdit} danger>
-                                    Cancel
+                                    {translateContent('global.buttons.cancel')}
                                 </Button>
                             </Col>
                         </Row>

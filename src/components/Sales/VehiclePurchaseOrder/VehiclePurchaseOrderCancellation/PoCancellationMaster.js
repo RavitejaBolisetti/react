@@ -14,6 +14,7 @@ import { ConfirmationModal } from './ConfirmationModal';
 import { cancellationDataActions } from 'store/actions/data/otf/otfCancellation';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -28,7 +29,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Cancel PO';
+    const moduleTitle = translateContent('vehiclePurchaseOrder.vehiclePurchaseOrderCancellation.heading.moduleTitle');
 
     let returnValue = {
         userId,
@@ -79,7 +80,7 @@ const PoCancellationMasterBase = (props) => {
 
     const formProps = {
         ...props,
-        titleOverride: 'Vehicle Purchase Order Cancellation',
+        titleOverride: translateContent('vehiclePurchaseOrder.vehiclePurchaseOrderCancellation.heading.titleOverride'),
         otfData,
         selectedOrder,
         buttonData,

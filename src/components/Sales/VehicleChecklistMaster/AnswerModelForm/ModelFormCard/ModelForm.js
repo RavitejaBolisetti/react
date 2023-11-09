@@ -7,24 +7,25 @@ import React from 'react';
 import { Form, Col, Row, Button, Switch, Select } from 'antd';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredSelectField } from 'utils/validation';
+import { translateContent } from 'utils/translateContent';
 import { PlusOutlined } from '@ant-design/icons';
 
 const ModelForm = (props) => {
-    const { modelForm, onFinishModelForm, modelEdit, modelEditForm, modelSwitch, setModelSwitch, mainFomEdit, modelGroupData, disabledModelGroupData } = props;
+    const { modelForm, onFinishModelForm, modelEdit, modelEditForm, modelSwitch, setModelSwitch, mainFomEdit, disabledModelGroupData } = props;
 
     return (
         <>
             <Form form={modelEdit ? modelEditForm : modelForm} id="myForm" autoComplete="off" layout="vertical">
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Form.Item label="Model Group Code" name="modelGroupCode" rules={[validateRequiredSelectField('Model Group Code')]}>
-                            <Select options={disabledModelGroupData} fieldNames={{ value: 'modelGroupCode', label: 'modelGroupDescription' }} disabled={mainFomEdit} placeholder={preparePlaceholderSelect('model group code')} showSearch filterOption={(input, option) => option?.modelGroupCode?.toLowerCase()?.includes(input?.toLowerCase()) || option?.modelGroupDescription?.toLowerCase()?.includes(input?.toLowerCase())} />
+                        <Form.Item label={translateContent('vehicleCheckListMaster.label.modelGroupCode')} name="modelGroupCode" rules={[validateRequiredSelectField(translateContent('vehicleCheckListMaster.label.modelGroupCode'))]}>
+                            <Select options={disabledModelGroupData} fieldNames={{ value: 'modelGroupCode', label: 'modelGroupDescription' }} disabled={mainFomEdit} placeholder={preparePlaceholderSelect(translateContent('vehicleCheckListMaster.label.modelGroupCode'))} showSearch filterOption={(input, option) => option?.modelGroupCode?.toLowerCase()?.includes(input?.toLowerCase()) || option?.modelGroupDescription?.toLowerCase()?.includes(input?.toLowerCase())} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} style={{ marginBottom: '12px' }}>
                         <Row justify="space-between" align="middle">
-                            <Form.Item label="Model Group Status" name="status" initialValue={modelSwitch}>
-                                <Switch value={modelSwitch} onChange={() => setModelSwitch(!modelSwitch)} defaultChecked={modelSwitch} disabled={mainFomEdit} checkedChildren="Active" unCheckedChildren="Inactive" />
+                            <Form.Item label={translateContent('vehicleCheckListMaster.label.modelGroupStatus')} name="status" initialValue={modelSwitch}>
+                                <Switch value={modelSwitch} onChange={() => setModelSwitch(!modelSwitch)} defaultChecked={modelSwitch} disabled={mainFomEdit} checkedChildren={translateContent('vehicleCheckListMaster.label.active')} unCheckedChildren={translateContent('vehicleCheckListMaster.label.inactive')} />
                             </Form.Item>
                             {!props?.internalId && (
                                 <Button
@@ -35,7 +36,7 @@ const ModelForm = (props) => {
                                         onFinishModelForm();
                                     }}
                                 >
-                                    Add
+                                    {translateContent('global.buttons.add')}
                                 </Button>
                             )}
                         </Row>

@@ -18,6 +18,7 @@ import { VehicleDeliveryNoteFormButton } from '../VehicleDeliveryNoteFormButton'
 import { MODULE_TYPE_CONSTANTS } from 'constants/modules/vehicleChecklistConstants';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -29,7 +30,7 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
         },
     } = state;
-    const moduleTitle = 'Deliverable checklist details';
+    const moduleTitle = translateContent('vehicleDeliveryNote.deliverableChecklist.heading.mainTitle');
     const paginationDataKey = 'checklistDetailList';
     const uniqueMatchKey = 'id';
 
@@ -167,7 +168,7 @@ const DeliverableChecklistMain = (props) => {
         setPage,
         pageIntialState,
         checklistType: MODULE_TYPE_CONSTANTS?.DELIVERY_NOTE?.key,
-        checklistDescriptionLabel: 'Details',
+        checklistDescriptionLabel: translateContent('commonModules.checklistMaster.label.checklistDetails'),
         matchKey: uniqueMatchKey,
         styles,
         isChecklistDataLoading,

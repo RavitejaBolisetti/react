@@ -8,6 +8,7 @@ import { Button, Row, Col, Form } from 'antd';
 import { FilterIcon } from 'Icons';
 import { RxCross2 } from 'react-icons/rx';
 import { SearchBox } from 'components/utils/SearchBox';
+import { translateContent } from 'utils/translateContent';
 import styles from 'assets/sass/app.module.scss';
 
 export default function AdvanceOnRoadPriceMasterFilter(props) {
@@ -31,9 +32,9 @@ export default function AdvanceOnRoadPriceMasterFilter(props) {
         searchForm,
         filterString,
         setFilterString,
-        placeholder: 'Search By Model',
+        placeholder: translateContent('onRoadPriceMaster.placeholder.searchByModel'),
         singleFieldKey: 'model',
-        maxLength:50
+        maxLength: 50,
     };
 
     useEffect(() => {
@@ -63,7 +64,7 @@ export default function AdvanceOnRoadPriceMasterFilter(props) {
                                                 setAdvanceSearchVisible(true);
                                             }}
                                         >
-                                            Advanced Filters
+                                            {translateContent('global.advanceFilter.title')}
                                         </Button>
                                     </Col>
                                 )}
@@ -74,7 +75,7 @@ export default function AdvanceOnRoadPriceMasterFilter(props) {
 
                 <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.buttonsGroupRight}>
                     <Button type="primary" onClick={handleOnClick}>
-                        Upload
+                        {translateContent('global.buttons.upload')}
                     </Button>
                 </Col>
             </Row>
@@ -102,7 +103,7 @@ export default function AdvanceOnRoadPriceMasterFilter(props) {
                             </Col>
                             <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
                                 <Button className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
-                                    Clear
+                                    {translateContent('global.buttons.clear')}
                                 </Button>
                             </Col>
                         </Row>

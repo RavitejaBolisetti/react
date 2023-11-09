@@ -6,10 +6,11 @@
 import React, { useState } from 'react';
 import { Col, Input, Form, Row, Switch, Select } from 'antd';
 import { validateRequiredInputField } from 'utils/validation';
-import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { ViewDetail } from './ViewDetail';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
+import { translateContent } from 'utils/translateContent';
+
 import styles from 'assets/sass/app.module.scss';
 
 const { Option } = Select;
@@ -61,8 +62,8 @@ const AddEditFormMain = (props) => {
                         <>
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.divisionCode} label="Division Name" name="divisionCode" placeholder={preparePlaceholderSelect('division name')} rules={[validateRequiredInputField('Division Name')]}>
-                                        <Select showSearch loading={!isDivisionDataLoaded} placeholder="Select" allowClear onChange={handleDivisionChange}>
+                                    <Form.Item initialValue={formData?.divisionCode} label={translateContent('roleMaster.label.divisionName')} name="divisionCode" placeholder={translateContent('roleMaster.placeholder.divisionName')} rules={[validateRequiredInputField(translateContent('roleMaster.validation.divisionName'))]}>
+                                        <Select showSearch loading={!isDivisionDataLoaded} placeholder={translateContent('roleMaster.placeholder.select')} allowClear onChange={handleDivisionChange}>
                                             {divisionData?.map((item) => (
                                                 <Option key={item?.key} value={item?.key}>
                                                     {item?.value}
@@ -72,8 +73,8 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.departmentCode} label="Department Name" name="departmentCode" placeholder={preparePlaceholderSelect('department name')} rules={[validateRequiredInputField('department name')]}>
-                                        <Select showSearch loading={!isDepartmentDataLoaded} placeholder="Select" allowClear>
+                                    <Form.Item initialValue={formData?.departmentCode} label={translateContent('roleMaster.label.departmentName')} name="departmentCode" placeholder={translateContent('roleMaster.placeholder.departmentName')} rules={[validateRequiredInputField(translateContent('roleMaster.validation.departmentName'))]}>
+                                        <Select showSearch loading={!isDepartmentDataLoaded} placeholder={translateContent('roleMaster.placeholder.select')} allowClear>
                                             {filteredDepartmentData?.map((item) => (
                                                 <Option key={item?.key} value={item?.key}>
                                                     {item?.value}
@@ -83,20 +84,20 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label="Role Name" initialValue={formData?.roleDescription} rules={[validateRequiredInputField('role Name')]} name="roleDescription">
-                                        <Input placeholder={preparePlaceholderText('role Name')} maxLength={50} />
+                                    <Form.Item label={translateContent('roleMaster.label.roleName')} initialValue={formData?.roleDescription} rules={[validateRequiredInputField(translateContent('roleMaster.validation.roleName'))]} name="roleDescription">
+                                        <Input placeholder={translateContent('roleMaster.placeholder.roleName')} maxLength={50} />
                                     </Form.Item>
                                 </Col>
                                 {!addMode && (
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item initialValue={formData?.roleCode} label="Role Code" name="roleCode" rules={[validateRequiredInputField('role code')]}>
-                                            <Input placeholder={preparePlaceholderText('role code')} maxLength={6} disabled={editMode ? true : false} />
+                                        <Form.Item initialValue={formData?.roleCode} label={translateContent('roleMaster.label.roleCode')} name="roleCode" rules={[validateRequiredInputField(translateContent('roleMaster.validation.roleCode'))]}>
+                                            <Input placeholder={translateContent('roleMaster.placeholder.roleCode')} maxLength={6} disabled={editMode ? true : false} />
                                         </Form.Item>
                                     </Col>
                                 )}
 
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
+                                    <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label={translateContent('roleMaster.label.status')}>
                                         <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
                                     </Form.Item>
                                 </Col>

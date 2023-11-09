@@ -22,8 +22,10 @@ import { DataTable } from 'utils/dataTable';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { tableColumnSearchOTF } from './tableColumnSearchOTF';
 import { VEHICLE_TYPE } from 'constants/VehicleType';
+import { withSpinner } from 'components/withSpinner';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -126,6 +128,9 @@ const ViewDetailMain = (props) => {
         setShowDataLoading(false);
     };
 
+    const tableDataItem = (formData?.vehicleOTFDetails && [formData?.vehicleOTFDetails]) || tableData;
+    const sorterPagination = totalOTFRecords > tableDataItem?.length;
+
     useEffect(() => {
         if (userId && (formData?.modelCd || formData?.modelCode) && toggleButton === VEHICLE_TYPE.UNALLOTED.key && !isOTFSearchLoading && !isVehicleDataLoading) {
             setShowDataLoading(true);
@@ -146,6 +151,12 @@ const ViewDetailMain = (props) => {
         setSelectedOrderOTFDetails();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
+
+    useEffect(() => {
+        if (tableDataItem?.length > 0) {
+            setButtonData({ ...buttonData, formBtnActive: true });
+        } else setButtonData({ ...buttonData, formBtnActive: false });
+    }, [tableDataItem]);
 
     const handleChange = (e) => {
         if (e?.target?.value === '' && e?.nativeEvent?.type === 'click') {
@@ -189,9 +200,6 @@ const ViewDetailMain = (props) => {
         },
     };
 
-    const tableDataItem = (formData?.vehicleOTFDetails && [formData?.vehicleOTFDetails]) || tableData;
-    const sorterPagination = totalOTFRecords > tableDataItem?.length;
-
     const tableProps = {
         srl: false,
         rowKey: 'otfNumber',
@@ -211,20 +219,20 @@ const ViewDetailMain = (props) => {
         <>
             <Row gutter={20} className={styles.drawerBody}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <h4 className={styles.marT0}>Vehicle Summary</h4>
+                    <h4 className={styles.marT0}>{translateContent('orderDeliveryVehicleAllotment.heading.vehicleSummary')}</h4>
                     <Card>
                         <Descriptions {...viewProps}>
-                            <Descriptions.Item label="VIN">{checkAndSetDefaultValue(formData?.vehicleIdentificationNumber, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Age In Days">{checkAndSetDefaultValue(formData?.ageInDays, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="PDI">{checkAndSetDefaultValue(formData?.pdiDone, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Vehicle Status">{checkAndSetDefaultValue(getCodeValue(typeData?.VEHCL_STATS, formData?.vehicleStatus), isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Supplier Invoice Date">{checkAndSetDefaultValue(formData?.mnmInvoiceDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                            <Descriptions.Item label="Supplier Invoice No.">{checkAndSetDefaultValue(formData?.mnmInvoiceNo, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Model Description">{checkAndSetDefaultValue(formData?.modelDescription, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('orderDeliveryVehicleAllotment.label.vin')}>{checkAndSetDefaultValue(formData?.vehicleIdentificationNumber, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('orderDeliveryVehicleAllotment.label.ageInDays')}>{checkAndSetDefaultValue(formData?.ageInDays, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('orderDeliveryVehicleAllotment.label.pdi')}>{checkAndSetDefaultValue(formData?.pdiDone, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('orderDeliveryVehicleAllotment.label.vehicleStatus')}>{checkAndSetDefaultValue(getCodeValue(typeData?.VEHCL_STATS, formData?.vehicleStatus), isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('orderDeliveryVehicleAllotment.label.supplierInvoiceDate')}>{checkAndSetDefaultValue(formData?.mnmInvoiceDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('orderDeliveryVehicleAllotment.label.supplierInvoiceNumber')}>{checkAndSetDefaultValue(formData?.mnmInvoiceNo, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('orderDeliveryVehicleAllotment.label.modelDescription')}>{checkAndSetDefaultValue(formData?.modelDescription, isLoading)}</Descriptions.Item>
                         </Descriptions>
                     </Card>
                     <Divider className={styles.marT20} />
-                    <h4>Allot Booking</h4>
+                    <h4>{translateContent('orderDeliveryVehicleAllotment.heading.allotBooking')}</h4>
                     <Card>
                         {formData?.allotmentStatus !== VEHICLE_TYPE.ALLOTED.key && (
                             <>
@@ -244,4 +252,4 @@ const ViewDetailMain = (props) => {
     );
 };
 
-export const ViewDetail = withDrawer(connect(mapStateToProps, mapDispatchToProps)(ViewDetailMain), { width: '90%', footer: null });
+export const ViewDetail = withDrawer(connect(mapStateToProps, mapDispatchToProps)(withSpinner(ViewDetailMain)), { width: '90%', footer: null });

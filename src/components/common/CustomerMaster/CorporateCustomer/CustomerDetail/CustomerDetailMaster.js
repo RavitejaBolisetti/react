@@ -16,6 +16,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -152,7 +153,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
     ];
 
     const onSuccessAction = (res) => {
-        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        refershData && showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         setRefershData(false);
     };
 
@@ -169,8 +170,8 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         const reqdata = { ...values, customerId: selectedCustomer?.customerId, id: recordId };
 
         const onSuccess = (res) => {
-            form?.resetFields();
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            form.resetFields();
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId });
             setButtonData({ ...buttonData, formBtnActive: false });
             setRefreshCustomerList(true);

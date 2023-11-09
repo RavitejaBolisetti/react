@@ -11,6 +11,7 @@ import { DataTable } from 'utils/dataTable';
 
 import { tableColumnApportion } from './tableColumnApportion';
 import { QUERY_BUTTONS_CONSTANTS } from '../QueryButtons';
+import { translateContent } from 'utils/translateContent';
 
 const { Text } = Typography;
 
@@ -21,14 +22,14 @@ const ViewDetailMain = (props) => {
         <Card>
             <Row gutter={20} className={styles.marB20}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Text strong>Apportion Details</Text>
+                    <Text strong>{translateContent('receipts.label.apportionDetails.apportionDetailsText')}</Text>
                 </Col>
             </Row>
             <Divider />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <DataTable tableColumn={tableColumnApportion({ formActionType, bindCodeValue })} scroll={{ x: 1000 }} tableData={tableData} pagination={false} />
-                    {receiptStatus === QUERY_BUTTONS_CONSTANTS.APPORTION.key && <p className={styles.marB20}>The entire paid amount has been apportioned. Cannot be apportioned further.</p>}
+                    {receiptStatus === QUERY_BUTTONS_CONSTANTS.APPORTION.key && <p className={styles.marB20}>{translateContent('receipts.label.apportionDetails.totalApportionAmountText')}</p>}
                 </Col>
             </Row>
         </Card>

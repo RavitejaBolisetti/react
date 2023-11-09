@@ -9,6 +9,7 @@ import { Button, Row, Col } from 'antd';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const CustomerFormButton = ({ record, onCloseAction, buttonData, handleChangeHistory, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
     return (
@@ -17,13 +18,13 @@ export const CustomerFormButton = ({ record, onCloseAction, buttonData, handleCh
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupLeft}>
                     {buttonData?.closeBtn && (
                         <Button danger onClick={onCloseAction}>
-                            Close
+                            {translateContent('global.buttons.close')}
                         </Button>
                     )}
 
                     {buttonData?.cancelBtn && (
                         <Button danger onClick={onCloseAction}>
-                            Cancel
+                            {translateContent('global.buttons.cancel')}
                         </Button>
                     )}
                 </Col>
@@ -31,18 +32,18 @@ export const CustomerFormButton = ({ record, onCloseAction, buttonData, handleCh
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
                     {buttonData?.changeHistory && (
                         <Button onClick={handleChangeHistory} type="primary">
-                            View History
+                            {translateContent('global.buttons.viewHistory')}
                         </Button>
                     )}
                     {buttonData?.editBtn && (
                         <Button data-testid="editBtn" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
-                            Edit
+                            {translateContent('global.buttons.edit')}
                         </Button>
                     )}
 
                     {buttonData?.nextBtn && !isLastSection && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record, isNextBtnClick: true })} type="primary">
-                            Next
+                            {translateContent('global.buttons.next')}
                         </Button>
                     )}
 

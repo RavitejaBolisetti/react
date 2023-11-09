@@ -25,6 +25,8 @@ import { BASE_URL_EVR_DETAILS_CAPTURING_DETAIL as customURL } from 'constants/ro
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -39,7 +41,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Vehicle Details';
+    const moduleTitle = translateContent('evrDetailsCapturing.heading.moduleTitle');
     let returnValue = {
         userId,
         typeData,
@@ -119,7 +121,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
     const [formData, setFormData] = useState([]);
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.title'), message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
@@ -370,7 +372,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.title'), message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             setButtonData({ ...buttonData, formBtnActive: false });
             setIsFormVisible(false);
@@ -435,17 +437,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         }
     };
 
-    const title = 'EVR Details Capturing';
-
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View Vehicle Details';
-        } else if (formActionType?.editMode) {
-            return 'Edit Vehicle Details ';
-        } else {
-            return 'Add New ';
-        }
-    }, [formActionType]);
+    const title = translateContent('evrDetailsCapturing.heading.title');
 
     const advanceFilterResultProps = {
         extraParams,
@@ -472,7 +464,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
-        titleOverride: 'Advance Filters',
+        titleOverride: translateContent('global.advanceFilter.title'),
         filteredStateData,
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
@@ -491,7 +483,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
 
     const formProps = {
         isVisible: isFormVisible,
-        titleOverride: drawerTitle,
+        titleOverride: drawerTitle(formActionType).concat(translateContent('evrDetailsCapturing.heading.moduleTitle')),
         handleButtonClick,
         formActionType,
         onCloseAction,

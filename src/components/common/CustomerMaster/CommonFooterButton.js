@@ -15,7 +15,7 @@ const CommonFooterButton = (props) => {
         <Row gutter={20}>
             <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                 <Button danger onClick={onCloseAction}>
-                    Cancel
+                    {translateContent('global.buttons.cancel')}
                 </Button>
             </Col>
             <Col xs={24} sm={24} md={12} lg={12} xl={12}>

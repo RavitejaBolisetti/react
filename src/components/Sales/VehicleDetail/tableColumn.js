@@ -6,23 +6,24 @@
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'VIN',
+            title: translateContent('vehicleDetail.label.vin'),
             dataIndex: 'vehicleIdentificationNumber',
             width: '18%',
         }),
 
         tblPrepareColumns({
-            title: 'Registration No.',
+            title: translateContent('vehicleDetail.label.registrationNumber'),
             dataIndex: 'registrationNumber',
             width: '18%',
         }),
 
         tblPrepareColumns({
-            title: 'Customer Name',
+            title: translateContent('vehicleDetail.label.customerName'),
             dataIndex: 'customerName',
             width: '25%',
         }),
@@ -34,7 +35,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         // }),
 
         tblPrepareColumns({
-            title: 'Model Description',
+            title: translateContent('vehicleDetail.label.model'),
             dataIndex: 'model',
         }),
 

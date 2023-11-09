@@ -24,6 +24,7 @@ import { LANGUAGE_EN } from 'language/en';
 import { NoDataFound } from 'utils/noDataFound';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Text } = Typography;
 
@@ -135,7 +136,7 @@ const ContactMain = (props) => {
     }, [customerData, customerIndData]);
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
     };
 
     const onErrorAction = (message) => {
@@ -238,7 +239,7 @@ const ContactMain = (props) => {
 
         const onSuccess = (res) => {
             contactform.resetFields();
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             setButtonData({ ...buttonData, formBtnActive: false });
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
             if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
@@ -287,17 +288,17 @@ const ContactMain = (props) => {
             <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
                 <Row gutter={20} className={styles.drawerBodyRight}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <h2>{section?.title} </h2>
+                        <h2>{translateContent(section?.translateKey)} </h2>
                         <Card className="">
                             {isCustomerIndDataLoading || isCustomerDataLoading ? (
                                 formSkeleton
                             ) : (
                                 <>
                                     <Row type="flex" align="middle">
-                                        <Text strong> {customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id ? 'Individual Contact' : 'Company Contact'}</Text>
+                                        <Text strong> {customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id ? translateContent('customerMaster.drawerSubHeading.contactTitle') : 'Company Contact'}</Text>
                                         {!formActionType?.viewMode && (
                                             <Button onClick={addBtnContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isEditing || isAdding}>
-                                                Add
+                                                {translateContent('global.buttons.add')}
                                             </Button>
                                         )}
                                     </Row>

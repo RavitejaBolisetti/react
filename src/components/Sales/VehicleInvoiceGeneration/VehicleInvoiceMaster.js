@@ -34,6 +34,8 @@ import { VEHICLE_INVOICE_SECTION } from 'constants/VehicleInvoiceSection';
 import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
 import { OTF_STATUS } from 'constants/OTFStatus';
 import { otfvehicleDetailsDataActions } from 'store/actions/data/otf/vehicleDetails';
+import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -49,7 +51,9 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Invoice Generation';
+    const moduleTitle = translateContent('vehicleInvoiceGeneration.heading.mainTitle');
+    const ALLOTED_INVOICE_MESSAGE = translateContent('vehicleInvoiceGeneration.heading.notification.allotedOtfMessage');
+    const ALREADY_INVOICED_OTF_MESSAGE = translateContent('vehicleInvoiceGeneration.heading.notification.otfAlreadyInvoiced');
     let returnValue = {
         userId,
         typeData,
@@ -68,6 +72,8 @@ const mapStateToProps = (state) => {
         isSalesConsultantDataLoaded,
         salesConsultantLovData,
         isLoading: isVehicleInvoiceDataLoading,
+        ALREADY_INVOICED_OTF_MESSAGE,
+        ALLOTED_INVOICE_MESSAGE,
     };
     return returnValue;
 };
@@ -107,6 +113,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const { filterString, setFilterString, invoiceStatusList, vehicleInvoiceMasterData, resetDetailData, resetOtfData } = props;
     const { isInVoiceMasterDetailDataLoaded, fetchData, listOTFShowLoading, isDataLoaded } = props;
     const { isSalesConsultantDataLoaded, fetchSalesConsultant, salesConsultantLovData, listConsultantShowLoading } = props;
+    const { ALREADY_INVOICED_OTF_MESSAGE, ALLOTED_INVOICE_MESSAGE } = props;
 
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [invoiceStatus, setInvoiceStatus] = useState(QUERY_BUTTONS_CONSTANTS.INVOICED.key);
@@ -447,11 +454,11 @@ export const VehicleInvoiceMasterBase = (props) => {
                     setSelectedOtfNumber();
                     resetDetailData();
                     setButtonData((prev) => ({ ...prev, formBtnActive: false }));
-                    showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'OTF number is already invoiced' });
+                    showGlobalNotification({ notificationType: 'error', title: 'Error', message: ALREADY_INVOICED_OTF_MESSAGE });
                     return;
                 } else if (!selectedRecordId && res?.data?.invoiceDetails?.otfDetailsRequest?.orderStatus !== OTF_STATUS?.ALLOTED?.key) {
                     handleBookingChange();
-                    showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Only alloted OTF can be invoice' });
+                    showGlobalNotification({ notificationType: 'error', title: 'Error', message: ALLOTED_INVOICE_MESSAGE });
                     return;
                 } else {
                     !selectedRecordId && setSelectedOtfId(res?.data?.invoiceDetails?.otfDetailsRequest.otfId);
@@ -850,16 +857,6 @@ export const VehicleInvoiceMasterBase = (props) => {
         typeData,
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View Invoice';
-        } else if (formActionType?.editMode) {
-            return 'Edit Invoice';
-        } else {
-            return 'Add New Invoice';
-        }
-    }, [formActionType]);
-
     const containerProps = {
         ...props,
         selectedOtfId,
@@ -871,7 +868,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         setFormActionType,
         isVisible: isFormVisible,
         onCloseAction: onCloseDrawer,
-        titleOverride: drawerTitle,
+        titleOverride: drawerTitle(formActionType).concat(translateContent('vehicleInvoiceGeneration.heading.drawerTitleMaster')),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,
@@ -909,7 +906,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         paymentModeType,
         documentType,
         onCancelInvoice,
-        saveButtonName: isLastSection ? 'Submit' : 'Continue',
+        saveButtonName: isLastSection ? translateContent('global.buttons.submit') : translateContent('global.buttons.continue'),
         setLastSection,
         handleIRNGeneration,
         handleBookingNumberSearch,
@@ -935,7 +932,7 @@ export const VehicleInvoiceMasterBase = (props) => {
 
     const cancelInvoiceProps = {
         isVisible: cancelInvoiceVisible,
-        titleOverride: 'Cancel Request',
+        titleOverride: translateContent('vehicleInvoiceGeneration.heading.cancelRequestTitle'),
         handleCloseReceipt,
         handleCancelReceipt,
         cancelInvoiceForm,

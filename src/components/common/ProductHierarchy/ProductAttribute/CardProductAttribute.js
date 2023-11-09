@@ -9,6 +9,7 @@ import { FiEdit, FiTrash } from 'react-icons/fi';
 
 import FormProductAttribute from './FormProductAttribute';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Text } = Typography;
 const CardProductAttribute = (props) => {
@@ -31,7 +32,7 @@ const CardProductAttribute = (props) => {
         let newFormData = editForm?.getFieldsValue();
         let status = editForm?.getFieldError('attributeName')?.length > 0 ? true : false;
         if (status) {
-            return showGlobalNotification({ notificationType: 'error', title: 'Duplicate', message: 'Can not Save having same Attribute Name', placement: 'bottomRight' });
+            return showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationSuccess.error'), message: translateContent('productHierarchy.notificationDuplicate.message'), placement: 'bottomRight' });
         }
 
         const upd_obj = skuAttributes?.map((obj) => {
@@ -124,10 +125,10 @@ const CardProductAttribute = (props) => {
                         ) : (
                             <>
                                 <Button type="link" data-testid="save" onClick={onAttributeSave}>
-                                    Save
+                                    {translateContent('global.buttons.save')}
                                 </Button>
                                 <Button type="link" data-testid="cancel" onClick={onAttributeCancel}>
-                                    Cancel
+                                    {translateContent('global.buttons.cancel')}
                                 </Button>
                             </>
                         )}

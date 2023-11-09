@@ -11,6 +11,7 @@ import { TfiReload } from 'react-icons/tfi';
 import { PlusOutlined } from '@ant-design/icons';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { customSelectBox } from 'utils/customSelectBox';
+import { translateContent } from 'utils/translateContent';
 
 const ContentHeader = (props) => {
     const { isProductHierarchyDataLoading, Form, onFinish, handleAdd, titleHierarchy, VehicleModelTaxChargesCategoryData, ModelOptions, handleReferesh, handleChange } = props;
@@ -22,7 +23,7 @@ const ContentHeader = (props) => {
                         <Form.Item label={`${titleHierarchy}`} name="code">
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                    {customSelectBox({ data: ModelOptions, placeholder: preparePlaceholderSelect('Model Group'), fieldNames: { key: 'modelGroupCode', value: 'modelGroupDescription' }, onChange: handleChange, loading: isProductHierarchyDataLoading })}
+                                    {customSelectBox({ data: ModelOptions, placeholder: translateContent('vehicleModelAndTaxCharges.placeholder.modelGroup'), fieldNames: { key: 'modelGroupCode', value: 'modelGroupDescription' }, onChange: handleChange, loading: isProductHierarchyDataLoading })}
                                 </Col>
                             </Row>
                         </Form.Item>
@@ -32,7 +33,7 @@ const ContentHeader = (props) => {
                     <Col className={styles.buttonsGroupRight} xs={24} sm={24} md={8} lg={8} xl={8} xxl={8}>
                         <Button icon={<TfiReload />} onClick={handleReferesh} danger />
                         <Button icon={<PlusOutlined />} type="primary" onClick={handleAdd}>
-                            Add
+                            {translateContent('global.buttons.add')}
                         </Button>
                     </Col>
                 )}

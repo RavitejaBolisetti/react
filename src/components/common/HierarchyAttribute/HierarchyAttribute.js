@@ -25,6 +25,7 @@ import { btnVisiblity } from 'utils/btnVisiblity';
 
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import { translateContent } from 'utils/translateContent';
 
 const { Option } = Select;
 const { Search } = Input;
@@ -40,7 +41,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Hierarchy Attribute Master';
+    const moduleTitle = translateContent('hierarchyAttribute.heading.mainTitle');
 
     let returnValue = {
         collapsed,
@@ -100,7 +101,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
 
     const onSuccessAction = (res) => {
         setShowDataLoading(false);
-        RefershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        RefershData && showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
     };
 
     const onErrorAction = (message) => {
@@ -108,7 +109,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
         showGlobalNotification({ message });
         setShowDataLoading(false);
     };
-    const title = 'Hierarchy Attribute';
+    const title = translateContent('hierarchyAttribute.heading.title');
     useEffect(() => {
         if (userId) {
             if (!isDataLoaded) {
@@ -216,10 +217,10 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
                 setButtonData({ saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage, placement: 'bottomRight' });
             } else {
                 setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             }
 
             forceUpdate();
@@ -249,15 +250,13 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
         noDataMessage:
             selectedHierarchy && !detailData?.hierarchyAttribute?.length ? (
                 <span className={styles.descriptionText}>
-                    No records found. Please add new parameter <br />
-                    using below button
+                    {translateContent('hierarchyAttribute.label.noRecordText')}
                 </span>
             ) : !selectedHierarchy ? (
-                <span className={styles.descriptionText}>Please select hierarchy type to view records.</span>
+                <span className={styles.descriptionText}>{translateContent('hierarchyAttribute.label.descriptionText')}</span>
             ) : (
                 <span className={styles.descriptionText}>
-                    No records found. Please add new parameter <br />
-                    using below button
+                   {translateContent('hierarchyAttribute.label.noRecordText')}
                 </span>
             ),
         showAddButton: selectedHierarchy ? true : false,
@@ -275,7 +274,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
         codeIsReadOnly,
         tableData: detailData?.hierarchyAttribute,
         onCloseAction,
-        titleOverride: (isViewModeVisible ? 'View ' : editRow?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
+        titleOverride: (isViewModeVisible ? translateContent('global.drawerTitle.view') : editRow?.id ? translateContent('global.drawerTitle.edit') : translateContent('global.drawerTitle.add')).concat(moduleTitle),
         selectedHierarchy,
         onFinish,
         setEditRow,
@@ -294,7 +293,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
         form,
     };
 
-    const titleHierarchy = 'Hierarchy Attribute Type';
+    const titleHierarchy = translateContent('hierarchyAttribute.heading.titleHierarchy');
 
     return (
         <>
@@ -305,7 +304,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
                             <Form.Item label={`${titleHierarchy}`} name="code">
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                        <Select showSearch onChange={handleChange} loading={!isDataAttributeLoaded} placeholder="Select" allowClear>
+                                        <Select showSearch onChange={handleChange} loading={!isDataAttributeLoaded} placeholder={translateContent('global.placeholder.select')} allowClear>
                                             {attributeData?.map((item) => (
                                                 <Option value={item}>{item}</Option>
                                             ))}
@@ -313,7 +312,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
                                     </Col>
                                     {detailData?.hierarchyAttribute?.length > 0 && (
                                         <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                            <Search placeholder="Search" className={styles.headerSearchField} allowClear onChange={onChangeHandle} onSearch={onSearchHandle} />
+                                            <Search placeholder={translateContent('global.placeholder.search')} className={styles.headerSearchField} allowClear onChange={onChangeHandle} onSearch={onSearchHandle} />
                                         </Col>
                                     )}
                                 </Row>
@@ -324,7 +323,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
                         <Col className={styles.buttonsGroupRight} xs={24} sm={24} md={8} lg={8} xl={8} xxl={8}>
                             <Button icon={<TfiReload />} onClick={handleReferesh} danger data-testid="refreshBtn" />
                             <Button icon={<PlusOutlined />} type="primary" onClick={handleAdd}>
-                                Add
+                                {translateContent('global.buttons.add')}
                             </Button>
                         </Col>
                     )}

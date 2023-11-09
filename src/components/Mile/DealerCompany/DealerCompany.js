@@ -18,6 +18,8 @@ import { AddEditForm } from './AddEditForm';
 import { ListDataTable } from 'utils/ListDataTable';
 import { dealerParentDataActions } from 'store/actions/data/dealer/dealerParent';
 import { geoPinCodeDataActions } from 'store/actions/data/geo/pincodes';
+import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -33,7 +35,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Dealer Parent Company';
+    const moduleTitle = translateContent('dealerCompany.heading.moduleTitle');
     let returnValue = {
         userId,
         isDataLoaded,
@@ -224,16 +226,6 @@ export const DealerCompanyBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View ';
-        } else if (formActionType?.editMode) {
-            return 'Edit ';
-        } else {
-            return 'Add ';
-        }
-    }, [formActionType]);
-
     const formProps = {
         form,
         formData,
@@ -243,7 +235,7 @@ export const DealerCompanyBase = (props) => {
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat('Dealer Parent Company'),
+        titleOverride: drawerTitle(formActionType).concat(translateContent('dealerCompany.heading.drawerTitle')),
         tableData: searchData,
         buttonData,
         setButtonData,
@@ -264,7 +256,7 @@ export const DealerCompanyBase = (props) => {
         tableData: searchData,
     };
 
-    const title = 'Company Name';
+    const title = translateContent('dealerCompany.heading.title');
 
     const advanceFilterResultProps = {
         advanceFilter: false,

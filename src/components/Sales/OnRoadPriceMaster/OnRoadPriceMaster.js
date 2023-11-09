@@ -21,6 +21,8 @@ import AdvanceOnRoadPriceMasterFilter from './AdvanceOnRoadPriceMasterFilter';
 import { onRoadPriceMasterAction } from 'store/actions/data/vehicle/onRoadPriceMasterAction';
 import { AddEditForm } from './AddEditForm';
 import { viewOnRoadPriceDetailAction } from 'store/actions/data/vehicle/viewOnRoadPriceDetailAction';
+import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -41,7 +43,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'On Road Price Master';
+    const moduleTitle = translateContent('onRoadPriceMaster.heading.moduleTitle');
     let returnValue = {
         userId,
         accessToken,
@@ -109,7 +111,7 @@ export const OnRoadPriceMasterBase = (props) => {
     const [formData, setFormData] = useState([]);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isUploadFormVisible, setIsUploadFormVisible] = useState(false);
-    const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);   
+    const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
     const [vehiclePrice, setVehiclePrice] = useState();
@@ -121,7 +123,7 @@ export const OnRoadPriceMasterBase = (props) => {
     const dynamicPagination = true;
 
     const onSuccessAction = (res) => {
-        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        refershData && showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setRefershData(false);
@@ -244,7 +246,7 @@ export const OnRoadPriceMasterBase = (props) => {
                     onErrorAction,
                     onSuccessAction: (res) => {
                         setVehiclePrice(res.data);
-                        showLoading(false);                       
+                        showLoading(false);
                     },
                 });
                 break;
@@ -261,7 +263,7 @@ export const OnRoadPriceMasterBase = (props) => {
                     onErrorAction,
                     onSuccessAction: (res) => {
                         setVehiclePrice(res.data);
-                        showLoading(false);                        
+                        showLoading(false);
                     },
                 });
                 break;
@@ -286,11 +288,11 @@ export const OnRoadPriceMasterBase = (props) => {
             setUploadedFile();
             setUploadedFileName();
             resetData();
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage, placement: 'bottomRight' });
         };
 
         const onErrorAction = (res) => {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: res, placement: 'bottomRight' });
+            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: res, placement: 'bottomRight' });
         };
 
         const extraParams = [
@@ -314,7 +316,7 @@ export const OnRoadPriceMasterBase = (props) => {
             setFileList([]);
             form.resetFields();
             fetchOnRoadPriceList({ setIsLoading: listVehiclePriceShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         };
 
         const onError = (res, data) => {
@@ -330,7 +332,7 @@ export const OnRoadPriceMasterBase = (props) => {
                 );
             }
 
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: message });
+            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: message });
         };
 
         const requestData = {
@@ -394,15 +396,6 @@ export const OnRoadPriceMasterBase = (props) => {
         typeData,
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View ';
-        } else if (formActionType?.editMode) {
-            return 'Edit ';
-        } else {
-            return 'Add New ';
-        }
-    }, [formActionType]);
     const handleOnClick = () => {
         setButtonData({ ...defaultBtnVisiblity, saveAndNewBtn: false, cancelBtn: false, saveBtn: true });
         setIsUploadFormVisible(true);
@@ -417,7 +410,7 @@ export const OnRoadPriceMasterBase = (props) => {
             setFilterString({ ...rest });
         }
     };
-    const title = 'On Road Price Master';
+    const title = translateContent('onRoadPriceMaster.heading.moduleTitle');
 
     const advanceFilterResultProps = {
         extraParams,
@@ -439,7 +432,7 @@ export const OnRoadPriceMasterBase = (props) => {
 
     const uploadProps = {
         isVisible: isUploadFormVisible,
-        titleOverride: 'Upload OnRoad Price Master Form',
+        titleOverride: translateContent('onRoadPriceMaster.heading.uploadTitle'),
         onCloseAction: () => {
             setIsUploadFormVisible(false);
             form.resetFields();
@@ -475,9 +468,9 @@ export const OnRoadPriceMasterBase = (props) => {
         setEmptyList,
         fetchViewDocument,
         resetViewData,
-        uploadButtonName: 'Upload OnRoad Price Master',
-        messageText: 'Click or drop your file here to upload',
-        validationText: 'File type should be .xlxs and max file size to be 8Mb',
+        uploadButtonName: translateContent('onRoadPriceMaster.button.uploadButton'),
+        messageText: translateContent('onRoadPriceMaster.message.uploadMessage'),
+        validationText: translateContent('onRoadPriceMaster.message.uploadValidation'),
         supportedFileTypes: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
         maxSize: 8,
     };
@@ -490,7 +483,7 @@ export const OnRoadPriceMasterBase = (props) => {
         handleButtonClick,
     };
     const viewProps = {
-        titleOverride: drawerTitle.concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
         isVisible: isFormVisible,
         onCloseAction,
         formData,

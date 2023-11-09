@@ -18,6 +18,7 @@ import { VehicleDetailFormButton } from '../VehicleDetailFormButton';
 import AddEditForm from './AddEditForm';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 import { getNameFromKey } from 'utils/checkAndSetDefaultValue';
 
@@ -125,7 +126,7 @@ const SupportingDocumentBase = (props) => {
 
     const downloadFileFromButton = (uploadData) => {
         const onSuccessAction = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         };
         const extraParams = [
             {
@@ -139,7 +140,7 @@ const SupportingDocumentBase = (props) => {
     };
 
     const downloadFileFromList = (info) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
+        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: translateContent('vehicleDetail.documents.label.startDownload') });
         const extraParams = [
             {
                 key: 'docId',
@@ -164,7 +165,7 @@ const SupportingDocumentBase = (props) => {
                 setEmptyList(false);
                 setUploadedFile();
                 form.resetFields();
-                showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
 
                 fetchList({ setIsLoading: listShowLoading, userId, extraParams });
                 setIsFormVisible(false);
@@ -187,7 +188,7 @@ const SupportingDocumentBase = (props) => {
             setPayload([]);
         } else {
             if (mandatoryFields) {
-                showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please upload at least one file to continue' });
+                showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: translateContent('vehicleDetail.documents.label.atleastOneFile') });
             } else {
                 setFileList([]);
                 setEmptyList(false);
@@ -282,9 +283,9 @@ const SupportingDocumentBase = (props) => {
         fileList,
         setFileList,
 
-        uploadButtonName: 'Upload File',
-        messageText: 'Click or drop your file here to upload',
-        validationText: 'File type should be png, jpg or pdf and max file size to be 8Mb',
+        uploadButtonName: translateContent('vehicleDetail.documents.label.uploadFile'),
+        messageText: translateContent('vehicleDetail.documents.label.clickOrDrop'),
+        validationText: translateContent('vehicleDetail.documents.label.FileSize'),
         supportedFileTypes: ['image/png', 'image/jpeg', 'application/pdf'],
         maxSize: 8,
         supportingDocs: true,
@@ -302,7 +303,7 @@ const SupportingDocumentBase = (props) => {
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <h2>{section?.title}</h2>
-                    <AddEditForm uploadProps={uploadProps} {...formProps} /> 
+                    <AddEditForm uploadProps={uploadProps} {...formProps} />
                 </Col>
             </Row>
             <Row>

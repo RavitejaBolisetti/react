@@ -23,6 +23,9 @@ import { AddEditForm } from './AddEditForm';
 
 import { ListDataTable } from 'utils/ListDataTable';
 
+import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
+
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -33,7 +36,9 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Dealer Division Master';
+    const moduleTitle =  translateContent('divisionMaster.heading.mainTitle');
+
+   
 
     let returnValue = {
         userId,
@@ -83,7 +88,7 @@ export const ListDealerDivisionMasterBase = (props) => {
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
     const onSuccessAction = (res) => {
-        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        refershData && showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         setRefershData(false);
         setShowDataLoading(false);
     };
@@ -162,16 +167,16 @@ export const ListDealerDivisionMasterBase = (props) => {
             form.resetFields();
             setShowDataLoading(true);
 
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
 
             setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage, placement: 'bottomRight' });
             } else {
                 setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             }
         };
 
@@ -197,16 +202,6 @@ export const ListDealerDivisionMasterBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View ';
-        } else if (formActionType?.editMode) {
-            return 'Edit ';
-        } else {
-            return 'Add ';
-        }
-    }, [formActionType]);
-
     const formProps = {
         form,
         formData,
@@ -215,7 +210,7 @@ export const ListDealerDivisionMasterBase = (props) => {
         onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat('Division'),
+        titleOverride: drawerTitle(formActionType).concat(translateContent('divisionMaster.heading.drawerTitle')),
         tableData: searchData,
         ADD_ACTION,
         EDIT_ACTION,
@@ -231,7 +226,7 @@ export const ListDealerDivisionMasterBase = (props) => {
         tableData: searchData,
     };
 
-    const title = 'Division Name';
+    const title = translateContent('divisionMaster.heading.title');
 
     const advanceFilterResultProps = {
         advanceFilter: false,

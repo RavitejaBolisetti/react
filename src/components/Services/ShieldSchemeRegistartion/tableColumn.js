@@ -31,19 +31,19 @@ export const tableColumn = (props) => {
         tblPrepareColumns({
             title: 'Dealer Location',
             dataIndex: 'dealerLocation',
-            width: '14%',
+            width: '26%',
         }),
 
         tblPrepareColumns({
             title: 'VIN',
             dataIndex: 'vin',
-            width: '14%',
+            width: '20%',
         }),
 
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'status',
-            width: '26%',
+            width: '20%',
             render: (status) => {
                 return <Tag color="warning">{checkAndSetDefaultValue(getCodeValue(typeData?.AMC_REG_APRVL_STAT, status))}</Tag>;
             },

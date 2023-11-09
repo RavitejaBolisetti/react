@@ -24,6 +24,8 @@ import { btnVisiblity } from 'utils/btnVisiblity';
 import { AddEditForm } from './AddEditForm';
 import { AdvancedSearch } from './AdvancedSearch';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
+import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -108,7 +110,7 @@ export const ListRoleMasterBase = (props) => {
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
     const onSuccessAction = (res) => {
-        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        refershData && showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         setRefershData(false);
         setShowDataLoading(false);
     };
@@ -227,16 +229,16 @@ export const ListRoleMasterBase = (props) => {
             form.resetFields();
             setShowDataLoading(true);
 
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
 
             setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage, placement: 'bottomRight' });
             } else {
                 setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             }
         };
 
@@ -262,16 +264,6 @@ export const ListRoleMasterBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View ';
-        } else if (formActionType?.editMode) {
-            return 'Edit ';
-        } else {
-            return 'Add ';
-        }
-    }, [formActionType]);
-
     const formProps = {
         form,
         formData,
@@ -281,7 +273,7 @@ export const ListRoleMasterBase = (props) => {
 
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat('Role'),
+        titleOverride: drawerTitle(formActionType).concat('Role'),
         tableData: searchData,
 
         isDivisionDataLoaded,
@@ -321,7 +313,7 @@ export const ListRoleMasterBase = (props) => {
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
 
-        titleOverride: 'Advance Filters',
+        titleOverride: translateContent('roleMaster.heading.titleOverride'),
         resetData,
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
@@ -362,7 +354,7 @@ export const ListRoleMasterBase = (props) => {
         }
     };
 
-    const title = 'Role Name';
+    const title = translateContent('roleMaster.heading.title');
     const advanceFilterResultProps = {
         advanceFilter: true,
         filterString,

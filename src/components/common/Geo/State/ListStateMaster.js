@@ -24,6 +24,8 @@ import { btnVisiblity } from 'utils/btnVisiblity';
 import { AdvancedSearch } from './AdvancedSearch';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { AddEditForm } from './AddEditForm';
+import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -35,8 +37,7 @@ const mapStateToProps = (state) => {
             },
         },
     } = state;
-
-    const moduleTitle = 'State';
+    const moduleTitle = translateContent('state.heading.moduleTitle');
 
     const finalCountryData = countryData?.map((item, index) => {
         return { ...item, default: index <= 0 || false };
@@ -120,7 +121,7 @@ export const ListStateMasterBase = (props) => {
     ];
 
     const onSuccessAction = (res) => {
-        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        refershData && showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         setRefershData(false);
         setShowDataLoading(false);
     };
@@ -209,16 +210,16 @@ export const ListStateMasterBase = (props) => {
             form.resetFields();
             setShowDataLoading(true);
 
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
 
             setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage, placement: 'bottomRight' });
             } else {
                 setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             }
         };
 
@@ -273,15 +274,6 @@ export const ListStateMasterBase = (props) => {
         handleResetFilter,
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View ';
-        } else if (formActionType?.editMode) {
-            return 'Edit ';
-        } else {
-            return 'Add ';
-        }
-    }, [formActionType]);
 
     const formProps = {
         form,
@@ -291,7 +283,7 @@ export const ListStateMasterBase = (props) => {
         onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
         tableData: searchData,
         isDataCountryLoaded,
         isCountryLoading,
@@ -326,7 +318,7 @@ export const ListStateMasterBase = (props) => {
         }
     };
 
-    const title = 'State Name';
+    const title = translateContent('state.heading.title');
     const advanceFilterResultProps = {
         advanceFilter: true,
         filterString,

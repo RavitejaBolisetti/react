@@ -191,4 +191,25 @@ export const EMBEDDED_REPORTS = {
         type: 'Document',
         slug: '',
     },
+    SHIELD_REGISTRATION_INVOICE_DOCUMENT: {
+        id: 26,
+        key: 'Shield_Registration_Invoice_document',
+        title: 'Shield Registration Invoice Document ',
+        type: 'Document',
+        slug: '-report',
+    },
+    DELIVERY_CHALLAN_REPORT: {
+        id: 27,
+        key: 'Delivery_Challan_Report',
+        title: 'Delivery Challan Report ',
+        type: 'Report',
+        slug: 'delivery-challan-report',
+    },
+    OTF_SO_NOT_MAPPED_REPORT: {
+        id: 28,
+        key: 'OTF_SO_Not_Mapped_Report',
+        title: 'OTF SO Not Mapped Report ',
+        type: 'Report',
+        slug: 'otf_so_not_mapped_report',
+    },
 };

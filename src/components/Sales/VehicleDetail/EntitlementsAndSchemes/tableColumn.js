@@ -8,32 +8,33 @@ import { tblPrepareColumns, tblStatusColumn } from 'utils/tableColumn';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const tableColumn = () => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Entitlement/Scheme Type',
+            title: translateContent('vehicleDetail.entitlementsSchemes.label.entitlementSchemeType'),
             dataIndex: 'schemeType',
             width: '150px',
             sorter: true,
         }),
 
         tblPrepareColumns({
-            title: 'Entitlement/Scheme Description ',
+            title: translateContent('vehicleDetail.entitlementsSchemes.label.entitlementSchemeDescription'),
             dataIndex: 'description',
             width: '200px',
             sorter: true,
         }),
 
         tblPrepareColumns({
-            title: 'Entitlement/Scheme Doc No',
+            title: translateContent('vehicleDetail.entitlementsSchemes.label.entitlementSchemeDocNo'),
             dataIndex: 'documentNumber',
             width: '150px',
             sorter: true,
         }),
 
         tblPrepareColumns({
-            title: 'Entitlement/Scheme Doc Date',
+            title: translateContent('vehicleDetail.entitlementsSchemes.label.entitlementSchemeDocDate'),
             dataIndex: 'documentDate',
             width: '200px',
             sorter: true,
@@ -41,14 +42,14 @@ export const tableColumn = () => {
         }),
 
         tblPrepareColumns({
-            title: 'Entitlement/Scheme Booklet No',
+            title: translateContent('vehicleDetail.entitlementsSchemes.label.entitlementSchemeBookletNo'),
             dataIndex: 'bookletNumber',
             width: '200px',
             sorter: true,
         }),
 
         tblPrepareColumns({
-            title: 'Validity Start Date',
+            title: translateContent('vehicleDetail.entitlementsSchemes.label.validityStartDate'),
             dataIndex: 'validityStartDate',
             width: '200px',
             sorter: true,
@@ -56,7 +57,7 @@ export const tableColumn = () => {
         }),
 
         tblPrepareColumns({
-            title: 'Validity End Date',
+            title: translateContent('vehicleDetail.entitlementsSchemes.label.validityEndDate'),
             dataIndex: 'validityEndDate',
             width: '200px',
             sorter: true,
@@ -64,14 +65,14 @@ export const tableColumn = () => {
         }),
 
         tblPrepareColumns({
-            title: 'Validity Start KM',
+            title: translateContent('vehicleDetail.entitlementsSchemes.label.validityStartKM'),
             dataIndex: 'validityStartKm',
             width: '200px',
             sorter: true,
         }),
 
         tblPrepareColumns({
-            title: 'Validity End KM',
+            title: translateContent('vehicleDetail.entitlementsSchemes.label.validityEndKM'),
             dataIndex: 'validityEndKm',
             width: '200px',
             sorter: true,

@@ -5,35 +5,36 @@
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Customer ID',
+            title: translateContent('customerMaster.tableColHeading.cusID'),
             dataIndex: 'customerId',
             width: '14%',
             sorter: false,
         }),
         tblPrepareColumns({
-            title: 'Customer Name',
+            title: translateContent('customerMaster.tableColHeading.cusName'),
             dataIndex: 'customerName',
             width: '14%',
         }),
         tblPrepareColumns({
-            title: 'Customer Type',
+            title: translateContent('customerMaster.tableColHeading.cusType'),
             dataIndex: 'customerTypeName',
             width: '14%',
         }),
 
         tblPrepareColumns({
-            title: 'Mobile No.',
+            title: translateContent('customerMaster.tableColHeading.mobileNo'),
             dataIndex: 'mobileNumber',
             width: '12%',
         }),
 
         tblPrepareColumns({
-            title: 'Email Address',
+            title: translateContent('customerMaster.tableColHeading.emailAddress'),
             dataIndex: 'emailId',
             width: '14%',
         }),

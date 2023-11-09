@@ -17,6 +17,8 @@ import { filterFunction } from 'utils/filterFunction';
 import { AddEditForm } from './AddEditForm';
 import { ListDataTable } from 'utils/ListDataTable';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -29,7 +31,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Group Name';
+    const moduleTitle = translateContent('dealerParent.heading.moduleTitle');
 
     let returnValue = {
         userId,
@@ -204,16 +206,6 @@ export const DealerParentBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View ';
-        } else if (formActionType?.editMode) {
-            return 'Edit ';
-        } else {
-            return 'Add ';
-        }
-    }, [formActionType]);
-
     const formProps = {
         form,
         formData,
@@ -224,8 +216,7 @@ export const DealerParentBase = (props) => {
         dealerParentData: data,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat('Dealer Parent Group'),
-        tableData: searchData,
+        titleOverride: drawerTitle(formActionType).concat(translateContent('dealerParent.heading.drawerTitle')),
         buttonData,
         setButtonData,
         handleButtonClick,
@@ -241,7 +232,7 @@ export const DealerParentBase = (props) => {
         showAddButton,
     };
 
-    const title = 'Group Name';
+    const title = translateContent('dealerParent.heading.title');
 
     const advanceFilterResultProps = {
         advanceFilter: false,

@@ -12,13 +12,13 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import { MacIdDataActions } from 'store/actions/data/userManagement/macid';
 import { CardSkeleton } from 'components/common/Skeleton';
-import { LANGUAGE_EN } from 'language/en';
 
 import AddEditForm from './AddEditForm';
 import ViewMacIdList from './ViewMacIdList';
 import styles from 'assets/sass/app.module.scss';
 
 import { UserManagementFormButton } from 'components/common/UserManagement/UserManagementFormButton/UserManagementFormButton';
+import { translateContent } from 'utils/translateContent';
 
 const { Text } = Typography;
 
@@ -58,8 +58,6 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
-
 const MacIdMasterMain = (props) => {
     const { form, section, userId, searchType, fetchMacIdList, listMacIdShowLoading, showGlobalNotification, typeData, macIdDataList, isMacIdLoaded } = props;
     const { saveData, formData, isMacIdLoading } = props;
@@ -96,7 +94,7 @@ const MacIdMasterMain = (props) => {
     }, [userId]);
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
     };
 
     const onSaveFormData = () => {
@@ -161,7 +159,7 @@ const MacIdMasterMain = (props) => {
     const onFinish = () => {
         const onSuccess = (res) => {
             macIdform.resetFields();
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             setIsFormVisible(false);
             setButtonData({ ...buttonData, formBtnActive: false });
         };
@@ -198,7 +196,7 @@ const MacIdMasterMain = (props) => {
 
     const buttonProps = {
         ...props,
-        saveButtonName: 'Save & Close',
+        saveButtonName: translateContent('global.buttons.saveCloseBtn'),
         buttonData,
     };
 
@@ -217,7 +215,7 @@ const MacIdMasterMain = (props) => {
                                         <Text strong> Device ID</Text>
                                         {!formActionType?.viewMode && (
                                             <Button onClick={addBtnMacIdHandler} icon={<PlusOutlined />} type="primary" disabled={isEditing || isAdding}>
-                                                Add
+                                                {translateContent('global.buttons.add')}
                                             </Button>
                                         )}
                                     </Row>
@@ -233,7 +231,7 @@ const MacIdMasterMain = (props) => {
                                                     }}
                                                     description={
                                                         <span>
-                                                            {noDataTitle} <br />
+                                                            {translateContent('global.generalMessage.noRecordsFoundAddNew')} <br />
                                                         </span>
                                                     }
                                                 ></Empty>

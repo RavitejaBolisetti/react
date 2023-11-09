@@ -7,29 +7,30 @@ import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const tableColumn = ({ handleButtonClick, page, pageSize, actionButtonVisibility }) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Receipt Number',
+            title: translateContent('vehicleReceiptChecklist.tableColumn.checklistMaster.column1'),
             dataIndex: 'grnNumber',
             width: '14%',
         }),
         tblPrepareColumns({
-            title: 'Receipt Date',
+            title: translateContent('vehicleReceiptChecklist.tableColumn.checklistMaster.column2'),
             dataIndex: 'grnDate',
             width: '14%',
             render: (text) => (text ? convertDateTime(text, dateFormatView) : 'NA'),
         }),
 
         tblPrepareColumns({
-            title: 'Model Name',
+            title: translateContent('vehicleReceiptChecklist.tableColumn.checklistMaster.column3'),
             dataIndex: 'modelName',
             width: '14%',
         }),
 
         tblPrepareColumns({
-            title: 'Chassis No.',
+            title: translateContent('vehicleReceiptChecklist.tableColumn.checklistMaster.column4'),
             dataIndex: 'chassisNumber',
             width: '14%',
         }),

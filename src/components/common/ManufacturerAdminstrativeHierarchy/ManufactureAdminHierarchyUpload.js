@@ -11,16 +11,17 @@ import { DrawerFormButton } from 'components/common/Button';
 import { UploadUtil } from 'utils/Upload';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const UploadMain = (props) => {
     const { downloadFile, form, formData, onCloseAction } = props;
     const { buttonData, setButtonData, handleButtonClick } = props;
     const { userId, setUploadedFile, listShowLoading, showGlobalNotification, setEmptyList } = props;
-    const { organizationId } = props;
+    const { organizationId, setIsUploadDrawer } = props;
     const { setFileList, setUploadedFileName, downloadShowLoading, resetData, authorityShowLoading, saveAuthorityData, uploadedFile, fetchDocumentFileDocId } = props;
 
     const onErrorAction = (res) => {
-        showGlobalNotification({ notificationType: 'error', title: 'Error', message: res, placement: 'bottomRight' });
+        showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: res, placement: 'bottomRight' });
     };
 
     const downloadReport = (documentId) => {
@@ -29,7 +30,7 @@ const UploadMain = (props) => {
             setUploadedFile();
             setUploadedFileName();
             resetData();
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage, placement: 'bottomRight' });
         };
 
         const extraParams = [
@@ -51,7 +52,8 @@ const UploadMain = (props) => {
             setEmptyList(false);
             setUploadedFile();
             form.resetFields();
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
+            setIsUploadDrawer(false);
         };
 
         const onError = (res, data) => {
@@ -61,13 +63,13 @@ const UploadMain = (props) => {
                     <>
                         {message}
                         <Button type="link" onClick={() => downloadReport(data?.docId)}>
-                            Download Here
+                            {translateContent('adminHierarchy.label.downloadHere')}
                         </Button>
                     </>
                 );
             }
 
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: message });
+            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: message });
         };
 
         const requestData = {
@@ -135,17 +137,17 @@ const UploadMain = (props) => {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <div className={styles.contentHeaderBackground}>
                             <Space direction="vertical">
-                                <Space className={styles.accordianIconWithText}>Authority Form</Space>
-                                <Space>Please download "Authority Form Template" using below button</Space>
+                                <Space className={styles.accordianIconWithText}>{translateContent('adminHierarchy.label.authorityForm')}</Space>
+                                <Space>{translateContent('adminHierarchy.label.downloadAuthorityForm')}</Space>
                                 <Space>
                                     <Button type="primary" onClick={getDocIdFromOrgId}>
-                                        Download Template
+                                        {translateContent('global.buttons.downloadTemplate')}
                                     </Button>
                                 </Space>
                             </Space>
                         </div>
 
-                        <UploadUtil {...props} uploadButtonName={'Upload Authority Form'} messageText={'Click or drop your file here to upload'} validationText={'File type should be .xlsx and max file size to be 8Mb'} handleFormValueChange={handleFormValueChange} />
+                        <UploadUtil {...props} uploadButtonName={translateContent('adminHierarchy.label.uploadButtonName')} messageText={translateContent('adminHierarchy.label.messageText')} validationText={translateContent('adminHierarchy.validation.validationText')} handleFormValueChange={handleFormValueChange} />
                     </Col>
                 </Row>
 
@@ -155,4 +157,4 @@ const UploadMain = (props) => {
     );
 };
 
-export const ManufactureAdminHierarchyUpload = withDrawer(UploadMain, { title: 'Upload', width: '520px' });
+export const ManufactureAdminHierarchyUpload = withDrawer(UploadMain, { title: translateContent('global.buttons.upload'), width: '520px' });

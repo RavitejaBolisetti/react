@@ -31,6 +31,8 @@ import { vehicleReceiptChecklistdataActions } from 'store/actions/data/VehicleRe
 import { vehicleReceiptChecklistProfiledataActions } from 'store/actions/data/VehicleReceiptCheckList/VehicleReceiptChecklistProfile';
 import { VehicleCheclistDetailsdataActions } from 'store/actions/data/VehicleReceiptCheckList/VehicleReceiptChecklistMaster';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
+import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -48,7 +50,7 @@ const mapStateToProps = (state) => {
             ProductHierarchy: { isFilteredListLoaded: isProductHierarchyDataLoaded = false, isLoading: isProductHierarchyLoading, filteredListData: VehicleLovCodeData = [] },
         },
     } = state;
-    const moduleTitle = 'Vehicle Receipt Checklist';
+    const moduleTitle = translateContent('vehicleReceiptChecklist.heading.mainTitle');
 
     let returnValue = {
         userId,
@@ -617,16 +619,6 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         handleSearchChange,
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View ';
-        } else if (formActionType?.editMode) {
-            return 'Edit ';
-        } else {
-            return 'Add New ';
-        }
-    }, [formActionType]);
-
     const containerProps = {
         isProfileDataLoaded,
         ProfileData,
@@ -639,7 +631,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         setIsFormVisible,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,

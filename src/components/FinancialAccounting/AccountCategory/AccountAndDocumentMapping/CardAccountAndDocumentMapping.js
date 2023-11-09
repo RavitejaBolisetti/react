@@ -9,6 +9,7 @@ import { FiEdit, FiTrash } from 'react-icons/fi';
 import styles from 'assets/sass/app.module.scss';
 
 import FormAccountAndDocumentMapping from './FormAccountAndDocumentMapping';
+import { translateContent } from 'utils/translateContent';
 
 const { Text } = Typography;
 
@@ -147,10 +148,10 @@ const CardAccountAndDocumentMapping = (props) => {
                         {formEdit && props?.internalId === uniqueCardEdit && (
                             <div className={styles.cardItemBtn}>
                                 <Button type="link" onClick={onAccountDocumentMapsCancel}>
-                                    Cancel
+                                    {translateContent('global.button.cancel')}
                                 </Button>
                                 <Button type="link" onClick={onAccountDocumentMapsSave}>
-                                    Save
+                                    {translateContent('global.button.save')}
                                 </Button>
                             </div>
                         )}

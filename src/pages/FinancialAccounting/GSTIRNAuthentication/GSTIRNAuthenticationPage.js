@@ -7,9 +7,10 @@ import React from 'react';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 import { GSTIRNAuthenticationMaster } from 'components/FinancialAccounting';
+import { translateContent } from 'utils/translateContent';
 
 const GSTIRNAuthenticationPageBase = (props) => {
-    const pageTitle = 'GST IRN Authentication';
+    const pageTitle = translateContent('gstIRNAuthentication.heading.pageTitle');
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

@@ -13,6 +13,7 @@ import { convertDateTime, dateFormatView, timeFormatView } from 'utils/formatDat
 import { tblPrepareColumns, tblStatusColumn } from 'utils/tableColumn';
 import { withDrawer } from 'components/withDrawer';
 import { DataTable } from 'utils/dataTable';
+import { translateContent } from 'utils/translateContent';
 
 import styles from '../ChangeHistory/ChangeHistory.module.scss';
 
@@ -57,7 +58,7 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
 
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Changed/Modified Date ',
+            title: translateContent('productHierarchy.label.changedDate'),
             dataIndex: 'changedDate',
             render: (text) => [
                 <div>
@@ -68,27 +69,27 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
             ],
         }),
         tblPrepareColumns({
-            title: 'Changed By',
+            title: translateContent('productHierarchy.label.changedBy'),
             dataIndex: 'changedBy',
         }),
         tblPrepareColumns({
-            title: 'Attribute',
+            title: translateContent('productHierarchy.label.attribute'),
             dataIndex: 'attributeKey',
         }),
         tblPrepareColumns({
-            title: 'Code',
+            title: translateContent('productHierarchy.label.moduleTitle'),
             dataIndex: 'prodctCode',
         }),
         tblPrepareColumns({
-            title: 'Parent',
+            title: translateContent('productHierarchy.heading.parent'),
             dataIndex: 'parentAttributeName',
         }),
         tblPrepareColumns({
-            title: 'Short Description',
+            title: translateContent('productHierarchy.label.shortDescription'),
             dataIndex: 'prodctShrtDescription',
         }),
         tblPrepareColumns({
-            title: 'Long Description',
+            title: translateContent('productHierarchy.label.longDescription'),
             dataIndex: 'prodctLongDiscription',
         }),
 
@@ -112,7 +113,7 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Button danger onClick={onCloseAction}>
-                            Close
+                            {translateContent('global.buttons.close')}
                         </Button>
                     </Col>
                 </Row>
@@ -121,4 +122,4 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
     );
 };
 
-export const ChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ChangeHistoryMain, { title: 'Change History', width: '90%' }));
+export const ChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ChangeHistoryMain, { title: translateContent('global.changeHistory.title'), width: '90%' }));

@@ -28,6 +28,8 @@ import { cancelReceiptDataActions } from 'store/actions/data/receipt/cancelRecei
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { partyDetailDataActions } from 'store/actions/data/receipt/partyDetails';
 import { ReportModal } from 'components/common/ReportModal/ReportModal';
+import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -40,7 +42,9 @@ const mapStateToProps = (state) => {
             },
         },
     } = state;
-    const moduleTitle = 'Receipts';
+    const moduleTitle = translateContent('receipts.heading.drawerTitleMain');
+    const page = { pageSize: 10, current: 1 };
+
     let returnValue = {
         userId,
         typeData,
@@ -58,6 +62,7 @@ const mapStateToProps = (state) => {
         isSearchDataLoaded,
         isDetailedDataLoaded,
         filterString,
+        page,
     };
     return returnValue;
 };
@@ -84,7 +89,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const ReceiptMasterBase = (props) => {
     const { fetchList, saveData, listShowLoading, userId, fetchReceiptDetails, resetPartyDetailData, data, receiptDetailData, resetData, cancelReceipt } = props;
-    const { typeData, receiptType, partySegmentType, paymentModeType, documentType, moduleTitle, totalRecords, showGlobalNotification } = props;
+    const { typeData, receiptType, partySegmentType, paymentModeType, documentType, moduleTitle, totalRecords, showGlobalNotification, page } = props;
     const { filterString, setFilterString, receiptStatusList } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [receiptStatus, setReceiptStatus] = useState(QUERY_BUTTONS_CONSTANTS.OPENED.key);
@@ -121,7 +126,6 @@ export const ReceiptMasterBase = (props) => {
     const [additionalReportParams, setAdditionalReportParams] = useState();
     const [isReportVisible, setReportVisible] = useState();
 
-    const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
 
     const defaultBtnVisiblity = {
@@ -144,7 +148,7 @@ export const ReceiptMasterBase = (props) => {
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
@@ -155,26 +159,19 @@ export const ReceiptMasterBase = (props) => {
         setShowDataLoading(false);
     };
 
-    useEffect(() => {
-        if (filterString) {
-            setPage({ ...page, current: 1 });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString]);
-
     const extraParams = useMemo(() => {
         return [
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: page?.current,
+                value: filterString?.current ?? page?.current,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: page?.pageSize,
+                value: filterString?.pageSize ?? page?.pageSize,
                 canRemove: true,
                 filter: false,
             },
@@ -235,14 +232,14 @@ export const ReceiptMasterBase = (props) => {
             {
                 key: 'sortBy',
                 title: 'Sort By',
-                value: page?.sortBy,
+                value: filterString?.sortBy,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'sortIn',
                 title: 'Sort Type',
-                value: page?.sortType,
+                value: filterString?.sortType,
                 canRemove: true,
                 filter: false,
             },
@@ -264,7 +261,7 @@ export const ReceiptMasterBase = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, receiptStatus, filterString, page]);
+    }, [userId, receiptStatus, filterString]);
 
     useEffect(() => {
         if (userId && selectedOrderId) {
@@ -312,6 +309,7 @@ export const ReceiptMasterBase = (props) => {
 
     const handleSearch = (value) => {
         setFilterString({ ...filterString, searchParam: value, advanceFilter: true });
+        searchForm?.resetFields();
         setSearchValue(value);
     };
 
@@ -385,7 +383,7 @@ export const ReceiptMasterBase = (props) => {
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage + 'Receipt No.:' + res?.data?.receiptsDetails?.receiptNumber });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage + translateContent('receipts.heading.profileCard.receiptNumber') + res?.data?.receiptsDetails?.receiptNumber });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             setButtonData({ ...buttonData, formBtnActive: false });
             setIsFormVisible(false);
@@ -445,12 +443,13 @@ export const ReceiptMasterBase = (props) => {
     const tableProps = {
         dynamicPagination,
         totalRecords,
-        page,
-        setPage,
+        page: filterString,
+        setPage: setFilterString,
         tableColumn: tableColumn(handleButtonClick),
         tableData: data,
         showAddButton: false,
         typeData,
+        filterString,
     };
 
     const onAdvanceSearchCloseAction = () => {
@@ -491,7 +490,7 @@ export const ReceiptMasterBase = (props) => {
 
         const onSuccess = (res) => {
             setShowDataLoading(true);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             setButtonData({ ...buttonData, formBtnActive: false });
             setIsFormVisible(false);
@@ -514,7 +513,7 @@ export const ReceiptMasterBase = (props) => {
         cancelReceipt(requestData);
     };
 
-    const title = 'Receipt';
+    const title = translateContent('receipts.heading.mainTitle');
 
     const advanceFilterResultProps = {
         extraParams,
@@ -545,7 +544,7 @@ export const ReceiptMasterBase = (props) => {
         isVisible: isAdvanceSearchVisible,
         receiptType,
         partySegmentType,
-        titleOverride: 'Advance Filters',
+        titleOverride: translateContent('global.advanceFilter.title'),
 
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
@@ -555,17 +554,8 @@ export const ReceiptMasterBase = (props) => {
         setAdvanceSearchVisible,
         receiptStatusList,
         typeData,
+        searchForm,
     };
-
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View ';
-        } else if (formActionType?.editMode) {
-            return 'Edit ';
-        } else {
-            return 'Add New ';
-        }
-    }, [formActionType]);
 
     const containerProps = {
         record: selectedOrder,
@@ -576,7 +566,7 @@ export const ReceiptMasterBase = (props) => {
         receiptOnFinish: onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,
@@ -615,7 +605,7 @@ export const ReceiptMasterBase = (props) => {
         documentType,
         onCancelReceipt,
         handlePrintDownload,
-        saveButtonName: isLastSection ? 'Submit' : 'Save & Next',
+        saveButtonName: isLastSection ? translateContent('global.buttons.submit') : translateContent('global.buttons.saveAndNext'),
         setLastSection,
         partySegment,
         setPartySegment,
@@ -625,7 +615,7 @@ export const ReceiptMasterBase = (props) => {
 
     const cancelReceiptProps = {
         isVisible: cancelReceiptVisible,
-        titleOverride: 'Receipt Cancellation',
+        titleOverride: translateContent('receipts.heading.cancellationTitle'),
         handleCloseReceipt,
         handleCancelReceipt,
         cancelReceiptForm,

@@ -10,6 +10,7 @@ import { DATA_TYPE } from 'constants/dataType';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -17,12 +18,12 @@ const { Text } = Typography;
 const expandIcon = ({ isActive }) =>
     isActive ? (
         <>
-            <span>See less</span>
+            <span>{translateContent('amcRegistration.label.seeLess')}</span>
             <SlArrowUp size={13} />
         </>
     ) : (
         <>
-            <span>See more</span>
+            <span>{translateContent('amcRegistration.label.seeMore')}</span>
             <SlArrowDown size={13} />
         </>
     );
@@ -37,7 +38,7 @@ const AMCRegistrationCard = (props) => {
                         <Space>
                             <div>
                                 <Text>
-                                    AMC Reg. No.: <span>{checkAndSetDefaultValue(selectedAMC?.amcRegistrationNumber)}</span>
+                                {translateContent('amcRegistration.label.amcRegistrationNumber')}: <span>{checkAndSetDefaultValue(selectedAMC?.amcRegistrationNumber)}</span>
                                 </Text>
                             </div>
                         </Space>
@@ -47,11 +48,11 @@ const AMCRegistrationCard = (props) => {
             >
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Registration Date: <span>{checkAndSetDefaultValue(requestPayload?.amcRegistration?.amcRegistrationDate || selectedAMC?.amcRegistrationDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
+                {translateContent('amcRegistration.label.amcRegistrationDate')}: <span>{checkAndSetDefaultValue(requestPayload?.amcRegistration?.amcRegistrationDate || selectedAMC?.amcRegistrationDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Status: <span>{checkAndSetDefaultValue(selectedAMC?.status)}</span>
+                {translateContent('amcRegistration.label.status')}: <span>{checkAndSetDefaultValue(selectedAMC?.status)}</span>
                 </div>
             </Panel>
         </Collapse>

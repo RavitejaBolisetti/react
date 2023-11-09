@@ -9,6 +9,7 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const AddEditForm = (props) => {
     const { isReadOnly = false, onSaveFormData, contactform, setShowAddEditForm, setIsEditing, typeData, customerType, formActionType, handleFormValueChange, setIsAdding, contactData, editingData } = props;
@@ -28,26 +29,44 @@ const AddEditForm = (props) => {
                 {/* <Divider /> */}
                 <Row gutter={20}>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label="Purpose of Contact" name="purposeOfContact" rules={[validateRequiredSelectField('purpose of contact'), { validator: (rule, value) => duplicateValidator(value, 'purposeOfContact', contactData, editingData?.purposeOfContact) }]}>
-                            <Select {...disabledProps} placeholder={preparePlaceholderSelect('purpose of contact')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={typeData['PURPOSE']} allowClear></Select>
+                        <Form.Item label={translateContent('customerMaster.label.purpose')} name="purposeOfContact" rules={[validateRequiredSelectField(translateContent('customerMaster.validation.purpose')), { validator: (rule, value) => duplicateValidator(value, 'purposeOfContact', contactData, editingData?.purposeOfContact) }]}>
+                            <Select {...disabledProps} placeholder={preparePlaceholderSelect(translateContent('customerMaster.placeholder.purpose'))} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={typeData['PURPOSE']} allowClear></Select>
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label="Mobile Number" name="mobileNumber" rules={[validateRequiredInputField('mobile number'), validateMobileNoField('mobile number')]}>
-                            <Input maxLength={10} placeholder={preparePlaceholderText('mobile number')} allowClear size="small" />
+                        <Form.Item label={translateContent('customerMaster.label.mobileNo')} name="mobileNumber" rules={[validateRequiredInputField(translateContent('customerMaster.validation.mobileNumber')), validateMobileNoField(translateContent('customerMaster.validation.mobileNumber'))]}>
+                            <Input
+                                maxLength={10}
+                                placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.mobile'))}
+                                allowClear
+                                // enterButton="Send OTP"
+                                size="small"
+                                // suffix={
+                                //     <>
+                                //         {false ? (
+                                //             <Button loading={mobileLoader} onClick={showModal} type="link">
+                                //                 Validate
+                                //             </Button>
+                                //         ) : (
+                                //             <CheckOutlined style={{ color: '#70c922', fontSize: '16px', fotWeight: 'bold' }} />
+                                //         )}
+                                //         <ValidateMobileNumberModal {...modalProps} />
+                                //     </>
+                                // }
+                            />
                         </Form.Item>
                     </Col>
 
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item initialValue={''} label="Alternate Mobile Number" name="alternateMobileNumber" rules={[validateMobileNoField('alternate mobile number')]}>
-                            <Input maxLength={10} placeholder={preparePlaceholderText('alternate mobile number')} {...disabledProps} />
+                        <Form.Item initialValue={''} label={translateContent('customerMaster.label.alternateNo')} name="alternateMobileNumber" rules={[validateMobileNoField(translateContent('customerMaster.validation.alternateNo'))]}>
+                            <Input maxLength={10} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.alternate'))} {...disabledProps} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                         {customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id ? (
                             <>
-                                <Form.Item label="Relationship" name="relationCode">
-                                    <Select {...disabledProps} placeholder={preparePlaceholderSelect('relation')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={[...typeData['REL_TYPE']]} allowClear></Select>
+                                <Form.Item label={translateContent('customerMaster.label.relationship')} name="relationCode">
+                                    <Select {...disabledProps} placeholder={preparePlaceholderSelect(translateContent('customerMaster.placeholder.relation'))} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={[...typeData['REL_TYPE']]} allowClear></Select>
                                     {/* <Select {...disabledProps} placeholder={preparePlaceholderSelect('releation')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={typeData['FAMLY_RELTN']} allowClear></Select> */}
                                 </Form.Item>
                                 <Form.Item initialValue={''} hidden name="designation">
@@ -56,8 +75,8 @@ const AddEditForm = (props) => {
                             </>
                         ) : (
                             <>
-                                <Form.Item initialValue={''} label="Designation" name="designation">
-                                    <Input placeholder={preparePlaceholderText('Designation')} {...disabledProps} />
+                                <Form.Item initialValue={''} label={translateContent('customerMaster.label.designation')} name="designation">
+                                    <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.designation'))} {...disabledProps} />
                                 </Form.Item>
                                 <Form.Item initialValue={''} hidden name="relationCode">
                                     <Input />
@@ -66,38 +85,38 @@ const AddEditForm = (props) => {
                         )}
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label="Gender" name="gender">
-                            <Select {...disabledProps} placeholder={preparePlaceholderSelect('gender')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={typeData['GENDER_CD']} allowClear></Select>
+                        <Form.Item label={translateContent('customerMaster.label.gender')} name="gender">
+                            <Select {...disabledProps} placeholder={preparePlaceholderSelect(translateContent('customerMaster.placeholder.gender'))} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={typeData['GENDER_CD']} allowClear></Select>
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label="Title" name="title" rules={[validateRequiredSelectField('title')]}>
-                            <Select {...disabledProps} placeholder={preparePlaceholderSelect('title')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={typeData['TITLE']} allowClear></Select>
+                        <Form.Item label={translateContent('customerMaster.label.title')} name="title" rules={[validateRequiredSelectField(translateContent('customerMaster.validation.title'))]}>
+                            <Select {...disabledProps} placeholder={preparePlaceholderSelect(translateContent('customerMaster.placeholder.title'))} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={typeData['TITLE']} allowClear></Select>
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label="First Name" name="firstName" rules={[validateRequiredInputField('First Name'), validateLettersWithWhitespaces('First Name')]}>
-                            <Input placeholder={preparePlaceholderText('first name')} {...disabledProps} />
+                        <Form.Item label={translateContent('customerMaster.label.firstName')} name="firstName" rules={[validateRequiredInputField(translateContent('customerMaster.validation.firstName')), validateLettersWithWhitespaces(translateContent('customerMaster.validation.firstName'))]}>
+                            <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.firstName'))} {...disabledProps} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item initialValue={''} label="Middle Name" name="middleName" rules={[validateLettersWithWhitespaces('middle name')]}>
-                            <Input placeholder={preparePlaceholderText('middle name')} {...disabledProps} />
+                        <Form.Item initialValue={''} label={translateContent('customerMaster.label.middleName')} name="middleName" rules={[validateLettersWithWhitespaces(translateContent('customerMaster.validation.middleName'))]}>
+                            <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.middleName'))} {...disabledProps} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label="Last/Surname" name="lastName" rules={[validateRequiredInputField('lastName'), validateLettersWithWhitespaces('last name')]}>
-                            <Input placeholder={preparePlaceholderText('last name')} {...disabledProps} />
+                        <Form.Item label={translateContent('customerMaster.label.lastSurname')} name="lastName" rules={[validateRequiredInputField(translateContent('customerMaster.validation.lastName')), validateLettersWithWhitespaces(translateContent('customerMaster.validation.lastName'))]}>
+                            <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.lastName'))} {...disabledProps} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label="E-mail" initialValue={''} name="contactEmailId" rules={[validateEmailField('E-mail')]}>
-                            <Input placeholder={preparePlaceholderText('email id')} {...disabledProps} />
+                        <Form.Item label={translateContent('customerMaster.label.eMail')} initialValue={''} name="contactEmailId" rules={[validateEmailField(translateContent('customerMaster.validation.eMail'))]}>
+                            <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.emailId'))} {...disabledProps} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item initialValue={''} label="Alternate Email ID" name="alternateEmailId" rules={[validateEmailField('E-mail')]}>
-                            <Input placeholder={preparePlaceholderText('alternate email id')} {...disabledProps} />
+                        <Form.Item initialValue={''} label={translateContent('customerMaster.label.alternateEmail')} name="alternateEmailId" rules={[validateEmailField(translateContent('customerMaster.validation.eMail'))]}>
+                            <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.alternateId'))} {...disabledProps} />
                         </Form.Item>
                     </Col>
 
@@ -132,7 +151,7 @@ const AddEditForm = (props) => {
 
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item initialValue={false} valuePropName="checked" name="defaultContactIndicator">
-                            <Checkbox>Mark As Default</Checkbox>
+                            <Checkbox>{translateContent('customerMaster.label.mark')}</Checkbox>
                         </Form.Item>
                     </Col>
                     <Form.Item hidden initialValue={''} name="id">
@@ -152,10 +171,10 @@ const AddEditForm = (props) => {
                     <Row gutter={20} className={styles.marB20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.buttonsGroupLeft}>
                             <Button onClick={onSaveFormData} type="primary">
-                                Save
+                                {translateContent('global.buttons.save')}
                             </Button>
                             <Button onClick={handleCancelFormEdit} danger>
-                                Cancel
+                                {translateContent('global.buttons.cancel')}
                             </Button>
                         </Col>
                     </Row>

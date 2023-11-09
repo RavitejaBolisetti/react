@@ -18,6 +18,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { salesConsultantActions } from 'store/actions/data/otf/salesConsultant';
 import { BASE_URL_OTF_DETAILS as customURL } from 'constants/routingApi';
 import { formatDate } from 'utils/formatDateTime';
+import { translateContent } from 'utils/translateContent';
 
 import { OTFStatusBar } from '../utils/OTFStatusBar';
 import { OTF_STATUS } from 'constants/OTFStatus';
@@ -32,10 +33,11 @@ const mapStateToProps = (state) => {
                 OtfSearchList: { isDetailLoaded: isDataLoaded, detailData: otfData = [] },
                 salesConsultantLov: { isLoaded: isSalesConsultantDataLoaded, data: salesConsultantLov = [] },
             },
+            ConfigurableParameterEditing: { filteredListData: typeData = [] },
         },
     } = state;
 
-    const moduleTitle = 'Booking Details';
+    const moduleTitle = translateContent('bookingManagement.label.bookingDetails');
 
     let returnValue = {
         userId,
@@ -45,6 +47,7 @@ const mapStateToProps = (state) => {
         moduleTitle,
         isSalesConsultantDataLoaded,
         salesConsultantLov,
+        typeData,
     };
     return returnValue;
 };
@@ -160,7 +163,7 @@ const OtfDetailsMasterBase = (props) => {
 
     const handleDeliveryChange = (__, value) => {
         if (value?.type === 'D') {
-            showGlobalNotification({ message: 'This value has been deprecated. Please select other value' });
+            showGlobalNotification({ message: translateContent('bookingManagement.validation.valueDeprecated') });
         }
     };
 

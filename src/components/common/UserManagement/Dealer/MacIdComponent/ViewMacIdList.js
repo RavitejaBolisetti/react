@@ -11,6 +11,7 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 import { formatTime } from 'utils/formatDateTime';
 
 import { ViewMacIdDetail } from './ViewMacIdDetail';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -65,7 +66,7 @@ const ViewMacIdList = (props) => {
                                             <Text strong>{data?.macId ? data?.macId : ''}</Text>
                                             {!formActionType?.viewMode && (
                                                 <Button onClick={(e) => editMacIdHandler(e, data, i)} type="link" icon={<FiEdit />} disabled={isEditing || isAdding} className={styles.verticallyCentered}>
-                                                    Edit
+                                                    {translateContent('global.buttons.edit')}
                                                 </Button>
                                             )}
                                         </Col>

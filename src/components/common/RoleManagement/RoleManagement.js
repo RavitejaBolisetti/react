@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Col, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
@@ -21,6 +21,8 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { filterFunction } from 'utils/filterFunction';
 import { btnVisiblity } from 'utils/btnVisiblity';
 import { USER_TYPE_USER } from 'constants/modules/UserManagement/userType';
+import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -33,17 +35,15 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Role Management';
     let returnValue = {
         userId,
-        moduleTitle,
+        moduleTitle: translateContent('roleManagement.heading.pageTitle'),
         menuTreeData: rolemenuData,
         isDataLoading,
         isMenuLoading,
         isDataLoaded,
         isMenuLoaded,
         roleManagementData: roleManagementData,
-        // roleManagementData: roleManagementData?.map((role) => ({ ...role, roleType: Object.values(USER_TYPE)?.find((i) => i.key === role?.roleType)?.title })),
         rolemenuData,
     };
     return returnValue;
@@ -148,12 +148,6 @@ export const RoleManagementMain = (props) => {
         }
     };
 
-    // const handleResetFilter = () => {
-    //     setFilterString();
-    //     listFilterForm.resetFields();
-    //     setShowDataLoading(false);
-    // };
-
     const handleClearInSearch = (e) => {
         if (e.target.value.length > 2) {
             listFilterForm.validateFields(['code']);
@@ -170,16 +164,6 @@ export const RoleManagementMain = (props) => {
         setFormData([]);
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View ';
-        } else if (formActionType?.editMode) {
-            return 'Edit ';
-        } else {
-            return 'Add ';
-        }
-    }, [formActionType]);
-
     const formProps = {
         unFilteredMenuData,
         setUnFilteredMenuData,
@@ -192,7 +176,7 @@ export const RoleManagementMain = (props) => {
         form,
         setDeviceType,
         isVisible: isFormVisible,
-        titleOverride: drawerTitle.concat('Role'),
+        titleOverride: drawerTitle(formActionType).concat(translateContent('roleManagement.heading.role')),
         onCloseAction,
 
         formData,
@@ -220,11 +204,8 @@ export const RoleManagementMain = (props) => {
     };
 
     const advanceFilterResultProps = {
-        //advanceFilter: false,
-        //filterString,
         from: listFilterForm,
         onSearchHandle,
-        //handleResetFilter,
         handleClearInSearch,
         handleReferesh,
         handleButtonClick,

@@ -18,6 +18,7 @@ import { customSelectBox } from 'utils/customSelectBox';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+import { translateContent } from 'utils/translateContent';
 
 const { TextArea } = Input;
 
@@ -30,7 +31,7 @@ const AddEditFormMain = (props) => {
     const [form] = Form.useForm();
 
     let attributeHierarchyFieldValidation = {
-        rules: [validateRequiredSelectField('attribute level')],
+        rules: [validateRequiredSelectField(translateContent('taxCharges.validation.attributeLevel'))],
     };
     if (attributeData && formData?.attributeTypeCode) {
         if (attributeData.find((attribute) => attribute.id === formData?.attributeTypeCode)) {
@@ -39,7 +40,7 @@ const AddEditFormMain = (props) => {
             const Attribute = unFilteredAttributeData?.find((attribute) => attribute.id === formData?.attributeTypeCode);
             if (Attribute) {
                 attributeHierarchyFieldValidation.initialValue = Attribute?.hierarchyAttribueName;
-                attributeHierarchyFieldValidation.rules.push({ type: 'number', message: Attribute?.hierarchyAttribueName + ' is not active anymore. Please select a different attribute. ' });
+                attributeHierarchyFieldValidation.rules.push({ type: 'number', message: Attribute?.hierarchyAttribueName + translateContent('taxCharges.validation.message') });
             }
         }
     }
@@ -90,7 +91,7 @@ const AddEditFormMain = (props) => {
         selectedTreeSelectKey,
         handleSelectTreeClick,
         defaultValue: treeCodeId,
-        placeholder: preparePlaceholderSelect('Parent'),
+        placeholder: preparePlaceholderSelect(translateContent('taxCharges.validation.parent')),
     };
 
     const handleFormValueChange = () => {
@@ -117,27 +118,27 @@ const AddEditFormMain = (props) => {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item initialValue={attributeCode} name="attributeTypeCode" label="Attribute Type" rules={[validateRequiredSelectField('Attribute Type Code')]}>
-                                    {customSelectBox({ data: attributeData, fieldNames: { key: 'hierarchyAttribueCode', value: 'hierarchyAttribueName' }, onChange: handleAttributeChange, loading: !isDataAttributeLoaded, placeholder: preparePlaceholderSelect('Attribute Type Code'), disabled: true })}
+                                <Form.Item initialValue={attributeCode} name="attributeTypeCode" label={translateContent('taxCharges.label.attributeLevel')} rules={[validateRequiredSelectField(translateContent('taxCharges.validation.attributeTypeCode'))]}>
+                                    {customSelectBox({ data: attributeData, fieldNames: { key: 'hierarchyAttribueCode', value: 'hierarchyAttribueName' }, onChange: handleAttributeChange, loading: !isDataAttributeLoaded, placeholder: preparePlaceholderSelect(translateContent('taxCharges.validation.attributeTypeCode')), disabled: true })}
                                 </Form.Item>
                             </Col>
 
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item initialValue={treeCodeId} label="Parent" name="parentCode">
+                                <Form.Item initialValue={treeCodeId} label={translateContent('taxCharges.label.parent')} name="parentCode">
                                     <TreeSelectField {...treeSelectFieldProps} />
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item initialValue={formData?.taxChargesTypeCode} label="Tax/Charge Type Code" name="taxChargesTypeCode" rules={[validateRequiredInputField('Tax/Charge Type Code')]}>
-                                    <Input maxLength={6} placeholder={preparePlaceholderText('Tax/Charge Type Code')} disabled={formData?.attributeTypeCode || isReadOnly} />
+                                <Form.Item initialValue={formData?.taxChargesTypeCode} label={translateContent('taxCharges.label.taxTypeCode')} name="taxChargesTypeCode" rules={[validateRequiredInputField(translateContent('taxCharges.label.taxTypeCode'))]}>
+                                    <Input maxLength={6} placeholder={preparePlaceholderText(translateContent('taxCharges.label.taxTypeCode'))} disabled={formData?.attributeTypeCode || isReadOnly} />
                                 </Form.Item>
                             </Col>
 
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.textareaError}>
-                                <Form.Item initialValue={formData?.taxChargesTypeDescription} label="Tax/Charge Type Descrption" name="taxChargesTypeDescription" rules={[validateRequiredInputField('Tax/Charge Type Descrption')]}>
-                                    <TextArea maxLength={300} placeholder={preparePlaceholderText('Tax/Charge Type Descrption')} showCount />
+                                <Form.Item initialValue={formData?.taxChargesTypeDescription} label={translateContent('taxCharges.label.taxTypeDescription')} name="taxChargesTypeDescription" rules={[validateRequiredInputField(translateContent('taxCharges.label.taxTypeDescription'))]}>
+                                    <TextArea maxLength={300} placeholder={preparePlaceholderText(translateContent('taxCharges.label.taxTypeDescription'))} showCount />
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -146,22 +147,22 @@ const AddEditFormMain = (props) => {
                             <>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item initialValue={formData?.calculationType} label="Calculation Type" name="calculationType" rules={[validateRequiredInputField('Calculation_Type')]}>
-                                            {customSelectBox({ data: typeData?.CAL_TYPE, placeholder: preparePlaceholderSelect('Calculation Type'), onChange: calTypeFun })}
+                                        <Form.Item initialValue={formData?.calculationType} label={translateContent('taxCharges.label.calculationType')} name="calculationType" rules={[validateRequiredInputField(translateContent('taxCharges.label.calculationType'))]}>
+                                            {customSelectBox({ data: typeData?.CAL_TYPE, placeholder: preparePlaceholderSelect(translateContent('taxCharges.label.calculationType')), onChange: calTypeFun })}
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     {calculationType === TAX_CHARGES_CALCULATION_TYPE?.PERCENTAGE?.KEY ? (
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Form.Item initialValue={formData?.percentage} label="Percentage" name="percentage" rules={[validateRequiredInputField('Percentage'), valueOfPer('Percentage')]}>
-                                                <InputNumber placeholder={preparePlaceholderText('Percentage')} type="number" />
+                                            <Form.Item initialValue={formData?.percentage} label={translateContent('taxCharges.label.percentage')} name="percentage" rules={[validateRequiredInputField(translateContent('taxCharges.label.percentage')), valueOfPer(translateContent('taxCharges.label.percentage'))]}>
+                                                <InputNumber placeholder={preparePlaceholderText(translateContent('taxCharges.label.percentage'))} type="number" />
                                             </Form.Item>
                                         </Col>
                                     ) : calculationType === TAX_CHARGES_CALCULATION_TYPE?.AMOUNT?.KEY ? (
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Form.Item initialValue={formData?.rate} label="Rate" name="rate" rules={[validateRequiredInputField('Rate'), validateNumberWithTwoDecimalPlaces('rate with two decimal places')]}>
-                                                <InputNumber placeholder={preparePlaceholderText('Rate')} type="number" step="any" />
+                                            <Form.Item initialValue={formData?.rate} label={translateContent('taxCharges.label.rate')} name="rate" rules={[validateRequiredInputField(translateContent('taxCharges.label.rate')), validateNumberWithTwoDecimalPlaces(translateContent('taxCharges.validation.decimalPlaces'))]}>
+                                                <InputNumber placeholder={preparePlaceholderText(translateContent('taxCharges.label.rate'))} type="number" step="any" />
                                             </Form.Item>
                                         </Col>
                                     ) : null}
@@ -171,15 +172,15 @@ const AddEditFormMain = (props) => {
                             <>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item initialValue={formData?.documentTypeCode} name="documentTypeCode" label="Document Description" rules={[validateRequiredSelectField('Document Description')]}>
-                                            {customSelectBox({ data: documentDescription, fieldNames: { key: 'id', value: 'documentDescription' }, placeholder: preparePlaceholderSelect('Document Description') })}
+                                        <Form.Item initialValue={formData?.documentTypeCode} name="documentTypeCode" label={translateContent('taxCharges.label.documentDescription')} rules={[validateRequiredSelectField(translateContent('taxCharges.label.documentDescription'))]}>
+                                            {customSelectBox({ data: documentDescription, fieldNames: { key: 'id', value: 'documentDescription' }, placeholder: preparePlaceholderSelect(translateContent('taxCharges.label.documentDescription')) })}
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item initialValue={formData?.financialAccountHeadCode} name="financialAccountHeadCode" label="Financial Account Head" rules={[validateRequiredSelectField('Financial Account Head')]}>
-                                            {customSelectBox({ data: financialAccount, placeholder: preparePlaceholderSelect('Financial Account Head') })}
+                                        <Form.Item initialValue={formData?.financialAccountHeadCode} name="financialAccountHeadCode" label={translateContent('taxCharges.label.financialHead')} rules={[validateRequiredSelectField(translateContent('taxCharges.label.financialHead'))]}>
+                                            {customSelectBox({ data: financialAccount, placeholder: preparePlaceholderSelect(translateContent('taxCharges.label.financialHead')) })}
                                         </Form.Item>
                                     </Col>
                                 </Row>
@@ -188,7 +189,7 @@ const AddEditFormMain = (props) => {
 
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item initialValue={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status ? true : false} label="Status" name="status">
+                                <Form.Item initialValue={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status ? true : false} label={translateContent('taxCharges.label.status')} name="status">
                                     <Switch value={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status ? true : false} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status === true || null || undefined ? true : false} {...disabledProps} />
                                 </Form.Item>
                             </Col>
@@ -200,13 +201,13 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupLeft}>
                             <Button danger onClick={onCloseAction}>
-                                Cancel
+                                {translateContent('global.buttons.cancel')}
                             </Button>
                         </Col>
 
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
                             <Button data-testid="isFormBtnActive" htmlType="submit" danger disabled={!isFormBtnActive}>
-                                Save
+                                {translateContent('global.buttons.save')}
                             </Button>
                         </Col>
                     </Row>

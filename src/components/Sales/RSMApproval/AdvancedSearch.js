@@ -14,6 +14,7 @@ import { disableFutureDate } from 'utils/disableDate';
 import { ModalButtons } from 'components/common/Button';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const AdvancedSearchFrom = (props) => {
     const { setAdvanceSearchVisible } = props;
@@ -58,24 +59,24 @@ export const AdvancedSearchFrom = (props) => {
         if (bool) {
             return Promise.resolve();
         }
-        return Promise.reject(new Error('Date cant be less than Effective from date'));
+        return Promise.reject(new Error(translateContent('global.validation.dateLessThan')));
     };
 
     return (
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="From Date" name="fromDate" rules={[validateRequiredSelectField('From Date')]} className={styles?.datePicker}>
+                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label={translateContent('rsmApproval.label.fromDate')} name="fromDate" rules={[validateRequiredSelectField(translateContent('rsmApproval.label.toDate'))]} className={styles?.datePicker}>
                         <DatePicker format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} onChange={() => advanceFilterForm.setFieldsValue({ toDate: undefined })} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         initialValue={formatDateToCalenderDate(filterString?.toDate)}
-                        label="To Date"
+                        label={translateContent('rsmApproval.label.toDate')}
                         name="toDate"
                         rules={[
-                            validateRequiredSelectField('To Date'),
+                            validateRequiredSelectField(translateContent('rsmApproval.label.toDate')),
                             {
                                 validator: (_, value) => CheckDateEffectiveTo(value, advanceFilterForm?.getFieldValue('fromDate')),
                             },

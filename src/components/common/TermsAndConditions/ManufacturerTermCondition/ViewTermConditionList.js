@@ -7,6 +7,8 @@ import React from 'react';
 import { Descriptions } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { DATA_TYPE } from 'constants/dataType';
+import { translateContent } from 'utils/translateContent';
+import parser from 'html-react-parser';
 
 const ViewTermConditionListMain = ({ formData, isLoading, styles }) => {
     const viewOneColProps = {
@@ -19,13 +21,13 @@ const ViewTermConditionListMain = ({ formData, isLoading, styles }) => {
         <>
             <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
-                    <Descriptions.Item label="Product Hierarchy">{checkAndSetDefaultValue(formData?.productName, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Document Type">{checkAndSetDefaultValue(formData?.documentTypeCode, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Language">{checkAndSetDefaultValue(formData?.languageDesc, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Effective From">{checkAndSetDefaultValue(formData?.effectivefrom, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                    <Descriptions.Item label="Effective To">{checkAndSetDefaultValue(formData?.effectiveto, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                    <Descriptions.Item label="Version">{checkAndSetDefaultValue(formData?.version, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Terms & Conditions">{checkAndSetDefaultValue(formData?.termsconditiondescription, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('termConditionManufacturer.label.productHierarchy')}>{checkAndSetDefaultValue(formData?.productName, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('termConditionManufacturer.label.documentType')}>{checkAndSetDefaultValue(formData?.documentTypeCode, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('termConditionManufacturer.label.language')}>{checkAndSetDefaultValue(formData?.languageDesc, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('termConditionManufacturer.label.effectivefrom')}>{checkAndSetDefaultValue(formData?.effectivefrom, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('termConditionManufacturer.label.effectiveto')}>{checkAndSetDefaultValue(formData?.effectiveto, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('termConditionManufacturer.label.version')}>{checkAndSetDefaultValue(formData?.version, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('termConditionManufacturer.label.terms&Condition')}>{checkAndSetDefaultValue(parser(formData?.termsconditiondescription, isLoading))}</Descriptions.Item>
                 </Descriptions>
             </div>
         </>

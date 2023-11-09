@@ -5,6 +5,7 @@
  */
 import React from 'react';
 import { Button, Row, Col } from 'antd';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 export const VinBlockFormButton = ({ record, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save', isLoadingOnSave }) => {
@@ -14,12 +15,12 @@ export const VinBlockFormButton = ({ record, onCloseAction, buttonData, setButto
                 <Col xs={24} sm={8} md={6} lg={4} xl={4} className={styles.buttonsGroupLeft}>
                     {buttonData?.closeBtn && (
                         <Button danger onClick={onCloseAction}>
-                            Close
+                            {translateContent('global.buttons.close')}
                         </Button>
                     )}
                     {buttonData?.cancelBtn && (
                         <Button danger onClick={onCloseAction}>
-                            Cancel
+                            {translateContent('global.buttons.cancel')}
                         </Button>
                     )}
                 </Col>

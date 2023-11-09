@@ -34,6 +34,8 @@ import { CustomerMainConatiner } from './CustomerMainConatiner';
 import styles from 'assets/sass/app.module.scss';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
 import { LANGUAGE_EN } from 'language/en';
+import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -50,7 +52,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Customer';
+    const moduleTitle = translateContent('customerMaster.heading.title');
 
     let returnValue = {
         userId,
@@ -98,7 +100,6 @@ const CustomerMasterMain = (props) => {
     const { data, fetchList, userId, isLoading, listShowLoading, changeHistoryData, fetchCustomerChangeHistory, listShowChangeHistoryLoading, moduleTitle, typeData, resetData, totalRecords } = props;
     const { filterString, setFilterString, ChangeHistoryTitle } = props;
     const { resetViewData, downloadFile, listDownloadShowLoading } = props;
-
     const [customerType, setCustomerType] = useState(CUSTOMER_TYPE?.INDIVIDUAL.id);
     const [selectedCustomer, setSelectedCustomer] = useState();
     const [selectedCustomerId, setSelectedCustomerId] = useState();
@@ -120,7 +121,7 @@ const CustomerMasterMain = (props) => {
     const [showNameChangeHistory, setShowNameChangeHistory] = useState(false);
     const [previousSection, setPreviousSection] = useState(1);
     const [isUnsavedDataPopup, setIsUnsavedDataPopup] = useState(false);
-    const [nextCurentSection, setNextCurrentSection] = useState("");
+    const [nextCurentSection, setNextCurrentSection] = useState('');
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false, changeHistory: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -247,7 +248,7 @@ const CustomerMasterMain = (props) => {
     useEffect(() => {
         if (customerType) {
             // setFilterString({ current: 1 });
-            setFilterString({ ...filterString, customerType });
+            setFilterString({ ...filterString, customerType, current: 1 });
             const defaultSection = customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION.CUSTOMER_DETAILS.id : CUSTOMER_CORPORATE_SECTION.CUSTOMER_DETAILS.id;
             setSetionName(customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION : CUSTOMER_CORPORATE_SECTION);
             setDefaultSection(defaultSection);
@@ -341,18 +342,15 @@ const CustomerMasterMain = (props) => {
         }
     };
 
-    const setPage = (page) => {
-        setFilterString({ ...filterString, ...page });
-    };
-
     const tableProps = {
         dynamicPagination,
         totalRecords,
-        filterString,
+        page: filterString,
         isLoading: isLoading,
         tableData: data,
         tableColumn: tableColumn(handleButtonClick),
-        setPage,
+        setPage: setFilterString,
+        filterString,
     };
 
     // const onChange = (sorter, filters) => {
@@ -380,16 +378,6 @@ const CustomerMasterMain = (props) => {
         setSelectedCustomerId();
         setShouldResetForm(true);
     };
-
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View ';
-        } else if (formActionType?.editMode) {
-            return 'Edit ';
-        } else {
-            return 'Add New ';
-        }
-    }, [formActionType]);
 
     const handleCustomerTypeChange = (id) => {
         setCustomerType(id);
@@ -458,7 +446,7 @@ const CustomerMasterMain = (props) => {
         onCloseAction: () => {
             setChangeHistoryVisible(false);
         },
-        titleOverride: 'Customer Change History',
+        titleOverride: translateContent('customerMaster.drawerTitle.cusChange'),
         setIsFormVisible,
         buttonData,
         selectedCustomerId,
@@ -468,7 +456,7 @@ const CustomerMasterMain = (props) => {
 
     const nameChangeHistoryProps = {
         isVisible: showNameChangeHistory,
-        titleOverride: 'Name Change History',
+        titleOverride: translateContent('customerMaster.drawerTitle.nameChange'),
         onCloseAction: () => {
             setShowNameChangeHistory(false);
         },
@@ -483,7 +471,6 @@ const CustomerMasterMain = (props) => {
             setIsUnsavedDataPopup(true);
         } else {
             onCloseAction();
-
         }
     };
 
@@ -495,7 +482,7 @@ const CustomerMasterMain = (props) => {
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction: onCloseDrawer,
-        titleOverride: drawerTitle.concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
         tableData: data,
         customerType,
         ADD_ACTION,
@@ -519,7 +506,7 @@ const CustomerMasterMain = (props) => {
         shouldResetForm,
         handleFormValueChange,
         isLastSection,
-        saveButtonName: !selectedCustomerId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
+        saveButtonName: !selectedCustomerId ? 'Create Customer ID' : isLastSection ? translateContent('global.buttons.submit') : translateContent('global.buttons.saveAndNext'),
         setIsFormVisible,
         setRefreshCustomerList,
         profileCardLoading,
@@ -531,7 +518,7 @@ const CustomerMasterMain = (props) => {
         setPreviousSection,
         previousSection,
         setIsUnsavedDataPopup,
-        setNextCurrentSection
+        setNextCurrentSection,
     };
 
     const showAddButton = true;

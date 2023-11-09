@@ -8,9 +8,10 @@ import { Col, Input, Form, Row, Checkbox } from 'antd';
 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { CustomerListMaster } from 'components/utils/CustomerListModal';
+import { translateContent } from 'utils/translateContent';
 
 export const AddressCommonForm = (props) => {
-    const { formType, formData, handleOnChange, fnSetData, data, sameAsBookingCustomer } = props;
+    const { formType, formData, handleOnChange, fnSetData, data, sameAsBookingCustomer, buttonData, setButtonData } = props;
     const canUpdate = (formType === 'ownerCustomer' && !data?.ownerCustomer?.customerId) || formType === 'billingCustomer';
 
     return (
@@ -18,7 +19,7 @@ export const AddressCommonForm = (props) => {
             {canUpdate && (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <CustomerListMaster disabled={sameAsBookingCustomer} fnSetData={fnSetData} />
+                        <CustomerListMaster disabled={sameAsBookingCustomer} fnSetData={fnSetData} buttonData={buttonData} setButtonData={setButtonData} />
                     </Col>
                 </Row>
             )}
@@ -27,58 +28,58 @@ export const AddressCommonForm = (props) => {
                 {formType === 'billingCustomer' && (
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item name={[formType, 'sameAsOwner']} label="" initialValue={formData?.sameAsOwner} valuePropName="checked">
-                            <Checkbox onClick={handleOnChange}>Same As Owner</Checkbox>
+                            <Checkbox onClick={handleOnChange}>{translateContent('vehicleDetail.customerDetails.label.sameAsOwner')}</Checkbox>
                         </Form.Item>
                     </Col>
                 )}
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'customerId']} label="Customer ID" initialValue={formData?.customerId}>
+                    <Form.Item name={[formType, 'customerId']} label={translateContent('vehicleDetail.customerDetails.label.customerId')} initialValue={formData?.customerId}>
                         <Input disabled={true} maxLength={6} placeholder={preparePlaceholderText('customer Code')} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'saluation']} label="Title" initialValue={formData?.saluation}>
+                    <Form.Item name={[formType, 'saluation']} label={translateContent('vehicleDetail.customerDetails.label.title')} initialValue={formData?.saluation}>
                         <Input disabled={true} maxLength={6} placeholder={preparePlaceholderText('Title')} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'customerName']} label="Customer Name" initialValue={formData?.customerName}>
+                    <Form.Item name={[formType, 'customerName']} label={translateContent('vehicleDetail.customerDetails.label.customerName')} initialValue={formData?.customerName}>
                         <Input disabled={true} placeholder={preparePlaceholderText('Name')} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'address']} label="Address" initialValue={formData?.address}>
+                    <Form.Item name={[formType, 'address']} label={translateContent('vehicleDetail.customerDetails.label.address')} initialValue={formData?.address}>
                         <Input disabled={true} placeholder={preparePlaceholderText('Address')} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'city']} label="City" initialValue={formData?.city}>
+                    <Form.Item name={[formType, 'city']} label={translateContent('vehicleDetail.customerDetails.label.city')} initialValue={formData?.city}>
                         <Input disabled={true} placeholder={preparePlaceholderText('city')} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'state']} label="State" initialValue={formData?.state}>
+                    <Form.Item name={[formType, 'state']} label={translateContent('vehicleDetail.customerDetails.label.state')} initialValue={formData?.state}>
                         <Input disabled={true} placeholder={preparePlaceholderText('State')} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'mobileNumber']} label="Mobile Number" initialValue={formData?.mobileNumber}>
+                    <Form.Item name={[formType, 'mobileNumber']} label={translateContent('vehicleDetail.customerDetails.label.mobileNumber')} initialValue={formData?.mobileNumber}>
                         <Input disabled={true} placeholder={preparePlaceholderText('mobile number')} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'pincode']} label="PIN Code" initialValue={formData?.pincode}>
+                    <Form.Item name={[formType, 'pincode']} label={translateContent('vehicleDetail.customerDetails.label.pincode')} initialValue={formData?.pincode}>
                         <Input disabled={true} placeholder={preparePlaceholderText('pincode')} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'email']} label="Email" initialValue={formData?.email}>
+                    <Form.Item name={[formType, 'email']} label={translateContent('vehicleDetail.customerDetails.label.email')} initialValue={formData?.email}>
                         <Input disabled={true} placeholder={preparePlaceholderText('email')} />
                     </Form.Item>
                 </Col>
@@ -86,7 +87,7 @@ export const AddressCommonForm = (props) => {
 
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'gstin']} label="GSTIN" initialValue={formData?.gstin}>
+                    <Form.Item name={[formType, 'gstin']} label={translateContent('vehicleDetail.customerDetails.label.gstin')} initialValue={formData?.gstin}>
                         <Input disabled={true} placeholder={preparePlaceholderText('gstin')} />
                     </Form.Item>
                 </Col>

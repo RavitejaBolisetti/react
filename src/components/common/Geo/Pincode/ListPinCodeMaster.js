@@ -27,6 +27,8 @@ import { tehsilDataActions } from 'store/actions/data/geo/tehsils';
 import { geoCityDataActions } from 'store/actions/data/geo/cities';
 import { geoPinCodeDataActions } from 'store/actions/data/geo/pincodes';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -44,7 +46,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Pincode';
+    const moduleTitle = translateContent('pincode.heading.pageTitle');
 
     const finalCountryData = countryData?.map((item, index) => {
         return { ...item, default: index <= 0 || false };
@@ -151,7 +153,7 @@ const ListPinCodeMasterBase = (props) => {
     const VIEW_ONLY_ACTION = FROM_ACTION_TYPE?.VIEW_ONLY;
 
     const onSuccessAction = (res) => {
-        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        refershData && showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         setRefershData(false);
         setShowDataLoading(false);
     };
@@ -409,10 +411,10 @@ const ListPinCodeMasterBase = (props) => {
             setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage, placement: 'bottomRight' });
             } else {
                 setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             }
         };
 
@@ -438,16 +440,6 @@ const ListPinCodeMasterBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View ';
-        } else if (formActionType?.editMode) {
-            return 'Edit ';
-        } else {
-            return 'Add ';
-        }
-    }, [formActionType]);
-
     const formProps = {
         form,
         formData,
@@ -456,7 +448,7 @@ const ListPinCodeMasterBase = (props) => {
         onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
         tableData: data,
         isDataCountryLoaded,
         isCountryLoading,
@@ -526,7 +518,7 @@ const ListPinCodeMasterBase = (props) => {
         isVisible: isAdvanceSearchVisible,
         onCloseAction: onAdvanceSearchCloseAction,
         // icon: <FilterIcon size={20} />,
-        titleOverride: 'Advance Filters',
+        titleOverride: translateContent('global.advanceFilter.title'),
         isDataCountryLoaded,
         isCountryLoading,
         countryData,
@@ -602,7 +594,7 @@ const ListPinCodeMasterBase = (props) => {
         }
     };
 
-    const title = 'Pincode';
+    const title = translateContent('pincode.heading.pageTitle');
     const advanceFilterResultProps = {
         advanceFilter: true,
         filterString,

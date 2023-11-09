@@ -11,6 +11,7 @@ import AccessoriesAddonMain from './AccessoriesInformation/AccessoriesAddonMain'
 import ShieldForm from './Shield/ShieldForm';
 import AMCForm from './AMC/AMCForm';
 import RSAForm from './RSA/RSAForm';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -104,7 +105,7 @@ const AddEditFormMain = (props) => {
                 <Text strong> {headerText}</Text>
                 {!formActionType?.viewMode && toShowAddButton() && (
                     <Button className={styles.marL10} disabled={addButtonDisabled[dataKey] || isEditing} onClick={(event) => handleCollapseAdd(openKey, dataKey, event)} icon={<PlusOutlined />} type="primary">
-                        Add
+                        {translateContent('global.buttons.add')}
                     </Button>
                 )}
             </>

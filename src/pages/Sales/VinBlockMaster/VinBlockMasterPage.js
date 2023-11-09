@@ -12,9 +12,10 @@ import React from 'react';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 import { VinBlockMaster } from 'components/Sales/VinBlockMaster';
+import { translateContent } from 'utils/translateContent';
 
 const VinBlockMasterPageBase = (props) => {
-    const pageTitle = 'Vin Block Master';
+    const pageTitle = translateContent('vinBlockMaster.heading.pageTitle');
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

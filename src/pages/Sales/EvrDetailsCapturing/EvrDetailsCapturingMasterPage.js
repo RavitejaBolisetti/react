@@ -7,9 +7,10 @@ import React from 'react';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 import { EvrDetailsCapturingMaster } from 'components/Sales';
+import { translateContent } from 'utils/translateContent';
 
 const EvrDetailsCapturingMasterPageBase = (props) => {
-    const pageTitle = 'EVR Details Capturing';
+    const pageTitle = translateContent('evrDetailsCapturing.heading.title');
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

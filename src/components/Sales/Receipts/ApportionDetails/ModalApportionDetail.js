@@ -14,6 +14,7 @@ import { preparePlaceholderText, preparePlaceholderSelect, prepareDatePickerText
 import { dateFormat, formatDateToCalenderDate } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { Search } = Input;
 
@@ -49,7 +50,7 @@ export const ApportionDetailForm = (props) => {
                 return apportionTableFormData?.index !== index && item?.documentNumber === value;
             });
             if (!filterItem?.length) return Promise.resolve();
-            else return Promise.reject(new Error('Document Number already exist.'));
+            else return Promise.reject(new Error(translateContent('receipts.validation.checkDuplicate')));
         } else {
             return Promise.resolve();
         }
@@ -59,22 +60,22 @@ export const ApportionDetailForm = (props) => {
         <Form autoComplete="off" layout="vertical" form={apportionForm}>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Form.Item label="Document Type" name="documentType" rules={[validateRequiredSelectField('Document Type')]}>
-                        {customSelectBox({ data: documentDescriptionList, placeholder: preparePlaceholderSelect('Document Type'), fieldNames: { key: 'documentCode', value: 'documentDescription' } })}
+                    <Form.Item label={translateContent('receipts.label.apportionDetails.documentType')} name="documentType" rules={[validateRequiredSelectField(translateContent('receipts.label.apportionDetails.documentType'))]}>
+                        {customSelectBox({ data: documentDescriptionList, placeholder: preparePlaceholderSelect(translateContent('receipts.label.apportionDetails.documentType')), fieldNames: { key: 'documentCode', value: 'documentDescription' } })}
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                     <Form.Item
-                        label="Document Number"
+                        label={translateContent('receipts.label.apportionDetails.documentNumber')}
                         name="documentNumber"
                         rules={[
-                            validateRequiredInputField('Document Number'),
+                            validateRequiredInputField(translateContent('receipts.label.apportionDetails.documentNumber')),
                             {
                                 validator: checkDuplicateValidator,
                             },
                         ]}
                     >
-                        <Search allowClear onChange={handleDocumentNumberChange} onSearch={handleDocumentNumberSearch} placeholder={preparePlaceholderText('Document Number')} />
+                        <Search allowClear onChange={handleDocumentNumberChange} onSearch={handleDocumentNumberSearch} placeholder={preparePlaceholderText(translateContent('receipts.label.apportionDetails.documentNumber'))} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -84,39 +85,39 @@ export const ApportionDetailForm = (props) => {
                     <Divider />
                     <Row gutter={16}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="Document Date" name="documentDate">
+                            <Form.Item label={translateContent('receipts.label.apportionDetails.documentDate')} name="documentDate">
                                 <DatePicker format={dateFormat} placeholder={prepareDatePickerText(dateFormat)} style={{ display: 'auto', width: '100%' }} disabled />
                             </Form.Item>
                         </Col>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="Document Amount" name="documentAmount" rules={[validateNumberWithTwoDecimalPlaces('Document Amount')]}>
-                                <Input placeholder={preparePlaceholderText('document amount')} disabled={true} />
+                            <Form.Item label={translateContent('receipts.label.apportionDetails.documentAmount')} name="documentAmount" rules={[validateNumberWithTwoDecimalPlaces(translateContent('receipts.label.apportionDetails.documentAmount'))]}>
+                                <Input placeholder={preparePlaceholderText(translateContent('receipts.placeholder.documentAmount'))} disabled={true} />
                             </Form.Item>
                         </Col>
                     </Row>
 
                     <Row gutter={16}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="Received Amount" name="receivedAmount" rules={[validateNumberWithTwoDecimalPlaces('Received Amount')]}>
-                                <Input placeholder={preparePlaceholderText('received amount')} disabled={true} />
+                            <Form.Item label={translateContent('receipts.label.apportionDetails.receivedAmount')} name="receivedAmount" rules={[validateNumberWithTwoDecimalPlaces(translateContent('receipts.label.apportionDetails.receivedAmount'))]}>
+                                <Input placeholder={preparePlaceholderText(translateContent('receipts.placeholder.receivedAmount'))} disabled={true} />
                             </Form.Item>
                         </Col>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item
-                                label="Apportioned Amount"
+                                label={translateContent('receipts.label.apportionDetails.apportionAmount')}
                                 name="apportionedAmount"
                                 rules={[
-                                    validateRequiredInputField('Apportion Amount'),
-                                    validateNumberWithTwoDecimalPlaces('Apportioned Amount'),
+                                    validateRequiredInputField(translateContent('receipts.label.apportionDetails.apportionAmount')),
+                                    validateNumberWithTwoDecimalPlaces(translateContent('receipts.label.apportionDetails.apportionAmount')),
                                     {
-                                        validator: () => compareAmountValidator(parseFloat(documentAmount) - parseFloat(receivedAmount) - parseFloat(writeOffAmount), parseFloat(apportionedAmount), 'Apportion Amount'),
+                                        validator: () => compareAmountValidator(parseFloat(documentAmount) - parseFloat(receivedAmount) - parseFloat(writeOffAmount), parseFloat(apportionedAmount), translateContent('receipts.validation.apportionAmount')),
                                     },
                                     {
-                                        validator: () => compareAmountValidator(parseFloat(totalReceivedAmount), parseFloat(apportionedAmount) + parseFloat(totalApportionAmount), 'Total Apportion Amount'),
+                                        validator: () => compareAmountValidator(parseFloat(totalReceivedAmount), parseFloat(apportionedAmount) + parseFloat(totalApportionAmount), translateContent('receipts.validation.totalApportionAmount')),
                                     },
                                 ]}
                             >
-                                <Input onChange={(e) => setApportionedAmount(e.target.value)} placeholder={preparePlaceholderText('apportioned amount')} />
+                                <Input onChange={(e) => setApportionedAmount(e.target.value)} placeholder={preparePlaceholderText(translateContent('receipts.placeholder.apportionAmount'))} />
                             </Form.Item>
                             {/* { validator: () => compareAmountValidator(documentAmount, totalApportionAmount + parseFloat(apportionedAmount), 'Total Amount') */}
                         </Col>
@@ -124,13 +125,13 @@ export const ApportionDetailForm = (props) => {
 
                     <Row gutter={16}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="Write Off Amount" name="writeOffAmount" rules={[validateRequiredInputField('Write-Off Amount'), validateNumberWithTwoDecimalPlaces('Write Off Amount'), { validator: () => compareAmountValidator(parseFloat(documentAmount) - parseFloat(receivedAmount) - parseFloat(apportionedAmount), parseFloat(writeOffAmount), 'Write Off Amount') }]}>
-                                <Input onChange={(e) => setWriteOffAmount(e.target.value)} placeholder={preparePlaceholderText('write off amount')} />
+                            <Form.Item label={translateContent('receipts.label.apportionDetails.writeOffAmount')} name="writeOffAmount" rules={[validateRequiredInputField(translateContent('receipts.label.apportionDetails.writeOffAmount')), validateNumberWithTwoDecimalPlaces(translateContent('receipts.label.apportionDetails.writeOffAmount')), { validator: () => compareAmountValidator(parseFloat(documentAmount) - parseFloat(receivedAmount) - parseFloat(apportionedAmount), parseFloat(writeOffAmount), translateContent('receipts.label.apportionDetails.writeOffAmount')) }]}>
+                                <Input onChange={(e) => setWriteOffAmount(e.target.value)} placeholder={preparePlaceholderText(translateContent('receipts.placeholder.writeOffAmount'))} />
                             </Form.Item>
                         </Col>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="Balance Amount" name="balanceAmount" rules={[validateNumberWithTwoDecimalPlaces('Balance Amount')]}>
-                                <Input placeholder={preparePlaceholderText('balance amount')} disabled={true} />
+                            <Form.Item label={translateContent('receipts.label.apportionDetails.balanceAmount')} name="balanceAmount" rules={[validateNumberWithTwoDecimalPlaces(translateContent('receipts.label.apportionDetails.balanceAmount'))]}>
+                                <Input placeholder={preparePlaceholderText(translateContent('receipts.placeholder.balanceAmount'))} disabled={true} />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -138,13 +139,13 @@ export const ApportionDetailForm = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
                             <Button onClick={handleCancel} danger>
-                                Cancel
+                                {translateContent('global.buttons.cancel')}
                             </Button>
                         </Col>
 
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
                             <Button type="primary" onClick={handleAddApportion}>
-                                Add
+                                {translateContent('global.buttons.add')}
                             </Button>
                         </Col>
                     </Row>

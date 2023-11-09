@@ -24,6 +24,9 @@ import { AdvancedSearch } from './AdvancedSearch';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { ListDataTable } from 'utils/ListDataTable';
 
+import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
+
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -39,7 +42,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Designation Master';
+    const moduleTitle = translateContent('designationMaster.heading.mainTitle');
 
     let returnValue = {
         userId,
@@ -120,7 +123,7 @@ export const DesignationMasterBase = (props) => {
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
     const onSuccessAction = (res) => {
-        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        refershData && showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         setRefershData(false);
         setShowDataLoading(false);
     };
@@ -252,16 +255,16 @@ export const DesignationMasterBase = (props) => {
             form.resetFields();
             setShowDataLoading(true);
 
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             LoadDependentData();
             setButtonData({ ...buttonData, formBtnActive: false });
             setFormData();
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage, placement: 'bottomRight' });
             } else {
                 setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             }
         };
 
@@ -287,16 +290,6 @@ export const DesignationMasterBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View ';
-        } else if (formActionType?.editMode) {
-            return 'Edit ';
-        } else {
-            return 'Add ';
-        }
-    }, [formActionType]);
-
     const formProps = {
         form,
         formData,
@@ -305,7 +298,7 @@ export const DesignationMasterBase = (props) => {
         onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat('Designation'),
+        titleOverride: drawerTitle(formActionType).concat(translateContent('designationMaster.heading.drawerTitle')),
         tableData: searchData,
         divisionData,
         departmentData,
@@ -347,7 +340,7 @@ export const DesignationMasterBase = (props) => {
         onCloseAction: onAdvanceSearchCloseAction,
         setAdvanceSearchVisible,
         //icon: <FilterIcon size={20} />,
-        titleOverride: 'Advance Filters',
+        titleOverride: translateContent('designationMaster.heading.titleOverride'),
         isDivisionDataLoaded,
         isDivisionLoading,
         isDepartmentDataLoaded,
@@ -387,7 +380,8 @@ export const DesignationMasterBase = (props) => {
         }
     };
 
-    const title = 'Designation Name ';
+    const title = translateContent('designationMaster.heading.title');
+
     const advanceFilterResultProps = {
         advanceFilter: true,
         filterString,

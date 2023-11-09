@@ -535,8 +535,8 @@ export const MenuConstant = {
         key: 'SACR-03.01',
         link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
         icon: undefined,
-        parentMenuId: 'SACT-03',
-        slug: 'on-road-price-detail-summary-Report',
+        parentMenuId: 'SACR-02.03',
+        slug: 'on-road-price-detail-summary-report',
     },
 
     [getMenyKey('RPT-DLRNOTE')]: {
