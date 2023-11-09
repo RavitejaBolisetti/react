@@ -912,7 +912,7 @@
             "mobile": " Mobile No.:"
         },
         "placeholder": {
-            "mobileMumber": "mobile number",
+            "mobileNumber": "mobile number",
             "customerType": "customer type",
             "emailId": "email id",
             "whatsAppNumber": "WhatsApp Number",
