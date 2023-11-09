@@ -19,6 +19,7 @@ import { RxCrossCircled } from 'react-icons/rx';
 import { withModal } from 'components/withModal';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 const MobileOtpVerificationModalMain = (props) => {
     const {  inValidOTP, counter, handleVerifyOTP, otpMessage, disableVerifyOTP, handleSendOTP, otpInput, onSentOTP, handleOTPInput } = props;
     const [form] = Form.useForm();
@@ -31,7 +32,7 @@ const MobileOtpVerificationModalMain = (props) => {
                 <Form form={form} id="sendOTP" autoComplete="off" onFinish={onSentOTP}>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <div className={styles.otpTitle}>Enter OTP</div>
+                            <div className={styles.otpTitle}>{translateContent('customerMaster.otpModal.buttons.enterOtp')}</div>
                         </Col>
                     </Row>
                     <Row gutter={20}>
@@ -50,24 +51,24 @@ const MobileOtpVerificationModalMain = (props) => {
                                             {inValidOTP ? (
                                                 <span>
                                                     <RxCrossCircled />
-                                                    {'Incorrect OTP'}
+                                                    {translateContent('customerMaster.otpModal.label.incorrectOtp')}
                                                 </span>
                                             ) : (
-                                                <span>{"Didn't receive an OTP?"}</span>
+                                                <span>{translateContent('customerMaster.otpModal.label.didntReceiveOtp')}</span>
                                             )}
                                         </div>
                                     )}
                                 </Col>
                                 <Col xs={10} sm={10} md={8} lg={8} xl={8}>
                                     <div onClick={() => handleSendOTP()} className={counter ? styles.resendDisabled : styles.resendEnabled} type="radio">
-                                        <TbRefresh /> Resend OTP
+                                        <TbRefresh /> {translateContent('customerMaster.otpModal.buttons.resendOtp')}
                                     </div>
                                 </Col>
                             </Row>
                         </Col>
                     </Row>
                     <Button onClick={handleVerifyOTP} disabled={disableVerifyOTP} loading={false} className={styles.button} type="primary">
-                        Verify OTP
+                       {translateContent('customerMaster.otpModal.buttons.verifyOtp')}
                     </Button>
 
                     <Row gutter={20}>

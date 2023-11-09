@@ -16,6 +16,7 @@ import { forgotPasswordActions } from 'store/actions/data/forgotPassword';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateMobileNoField, validateRequiredInputField } from 'utils/validation';
 import { MobileOtpVerificationModal } from './MobileOtpVerificationModal';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -123,7 +124,7 @@ const MobileOtpVerificationBase = (props) => {
 
         const onSuccess = (res) => {
             setCounter(RESEND_OTP_TIME);
-            showGlobalNotification({ notificationType: 'warning', title: 'OTP Sent', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'warning', title: translateContent('customerMaster.otpModal.notification.otpSent'), message: res?.responseMessage });
             setOTPMessage(res?.data?.message);
         };
         const requestData = {
@@ -138,12 +139,12 @@ const MobileOtpVerificationBase = (props) => {
         if (userId) {
             const data = { userId: selectedCustomer?.customerId, mobileNumber: form.getFieldValue('mobileNumber'), otp: otpInput };
             const onSuccess = (res) => {
-                showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
                 setIsModalOpen(false);
                 setNumbValidatedSuccess(true);
             };
             const onError = (message) => {
-                showGlobalNotification({ title: 'ERROR', message: Array.isArray(message[0]) || message });
+                showGlobalNotification({ title: translateContent('global.notificationError.title'), message: Array.isArray(message[0]) || message });
                 if (otpInput?.length === 6) {
                     setCounter(0);
                 }
@@ -168,7 +169,7 @@ const MobileOtpVerificationBase = (props) => {
         if (selectedCustomer?.customerId) {
             const data = { userId: selectedCustomer?.customerId, mobileNumber: form.getFieldValue('mobileNumber'), sentOnMobile: true, sentOnEmail: false, functionality: 'CUST' };
             const onSuccess = (res) => {
-                showGlobalNotification({ notificationType: 'warning', title: 'OTP Sent', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'warning', title: translateContent('customerMaster.otpModal.notification.otpSent'), message: res?.responseMessage });
                 setOTPMessage(res?.data?.message);
             };
             const onError = (message) => {
@@ -193,7 +194,7 @@ const MobileOtpVerificationBase = (props) => {
     const modalProps = {
         isVisible: isModalOpen,
         onCloseAction: handleCancel,
-        titleOverride: 'Mobile Number Verification',
+        titleOverride: translateContent('customerMaster.otpModal.heading.modalTitle'),
         inValidOTP,
         counter,
         handleVerifyOTP,
@@ -208,9 +209,9 @@ const MobileOtpVerificationBase = (props) => {
     return (
         <>
             {editMode ? (
-                <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number'), validateRequiredInputField('mobile number')]}>
+                <Form.Item label={translateContent('customerMaster.label.mobileNumber')} initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField(translateContent('customerMaster.validation.mobileNumber')), validateRequiredInputField(translateContent('customerMaster.validation.mobileNumber'))]}>
                     <Input
-                        placeholder={preparePlaceholderText('mobile number')}
+                        placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.mobileNumber'))}
                         maxLength={10}
                         size="small"
                         onChange={handleOnchangeMobNoInput}
@@ -219,7 +220,7 @@ const MobileOtpVerificationBase = (props) => {
                             <>
                                 {!numbValidatedSuccess ? (
                                     <Button onClick={handleNumberValidation} type="link" style={{ transform: 'scale(-1,1)' }}>
-                                        Verify
+                                        {translateContent('customerMaster.button.verify')}
                                     </Button>
                                 ) : (
                                     <CheckOutlined style={{ color: '#70c922', fontSize: '16px', fotWeight: 'bold', transform: 'scale(-1,1)' }} />
@@ -229,8 +230,8 @@ const MobileOtpVerificationBase = (props) => {
                     />
                 </Form.Item>
             ) : (
-                <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number'), validateRequiredInputField('mobile number')]}>
-                    <Input placeholder={preparePlaceholderText('mobile number')} maxLength={10} size="small" />
+                <Form.Item label={translateContent('customerMaster.label.mobileNumber')} initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField(translateContent('customerMaster.validation.mobileNumber')), validateRequiredInputField(translateContent('customerMaster.validation.mobileNumber'))]}>
+                    <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.mobileNumber'))} maxLength={10} size="small" />
                 </Form.Item>
             )}
             <MobileOtpVerificationModal {...modalProps} />
