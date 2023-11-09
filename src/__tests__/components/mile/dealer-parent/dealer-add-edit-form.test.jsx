@@ -35,6 +35,7 @@ describe('AddEditForm Component Render', ()=>{
         formActionType:{addMode: false, editMode: true, viewMode: false},
         isVisible:true,
         formData:[{name:"test"}],
+        typeData: [{key: 1, value: "testing"}]
     }
 
     it('should render input box', ()=>{
@@ -55,7 +56,7 @@ describe('AddEditForm Component Render', ()=>{
         const emailIDTextBox = screen.getByRole('textbox', {name:'Email ID'});
         fireEvent.change(emailIDTextBox, {target:{value:'test1'}});
 
-        const activeSwitch = screen.getByRole('switch', {name:'Active'});
+        const activeSwitch = screen.getByTestId('status');
         fireEvent.click(activeSwitch);
     })
 

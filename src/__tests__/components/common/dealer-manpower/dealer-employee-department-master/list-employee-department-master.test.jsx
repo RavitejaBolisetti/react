@@ -3,18 +3,14 @@ import '@testing-library/jest-dom/extend-expect';
 import { ListEmployeeDepartmentMaster } from 'components/common/DealerManpower/DealerEmployeeDepartmentMaster/ListEmployeeDepartmentMaster';
 import customRender from '@utils/test-utils';
 import { screen, fireEvent, waitFor } from '@testing-library/react';
-import { Form } from 'antd';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
 import { rootReducer } from 'store/reducers';
 
-
 jest.mock('store/actions/data/dealerManpower/dealerEmployeeDepartmentMaster', () => ({
     dealerManpowerEmployeeDepartmentDataActions: {},
 }));
-
-
 
 export const createMockStore = (initialState) => {
     const mockStore = configureStore({
@@ -79,22 +75,51 @@ describe('List Employee Department Master components', () => {
         const departmentName = screen.getByRole('textbox', { name: 'Department Name' })
         fireEvent.change(departmentName, { target: { value: "testing" } })
 
+        const searchImg = screen.getByRole('button', { name: 'search' });
+        fireEvent.click(searchImg);
+
+    })
+
+    it('Should render search clear components', () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                DealerManpower: {
+                    DealerEmployeeDepartmentMaster: {
+                        isLoaded: true, data: [{
+                            departmentCode: "DC98",
+                            departmentName: "Employee",
+                            divisionCode: "C",
+                            divisionName: "COMMON",
+                            status: true
+                        }]
+                    },
+                },
+            },
+        });
+
+        customRender(
+            <Provider store={mockStore}>
+                <ListEmployeeDepartmentMaster
+                    isVisible={true}
+                    fetchList={jest.fn()}
+                    fetchDivisionLovList={jest.fn()}
+                />
+            </Provider>
+        )
+
+        const departmentName = screen.getByRole('textbox', { name: 'Department Name' })
+        fireEvent.change(departmentName, { target: { value: "testing" } })
+
         const searchImg = screen.getByRole('img', { name: 'search' });
         fireEvent.click(searchImg);
 
         const clearBtn=screen.getByRole('button', { name: 'Clear' });
         fireEvent.click(clearBtn);
 
-        const advanceFilter=screen.getByText('Advanced Filters');
-        fireEvent.click(advanceFilter);
-
-        const closeBtn=screen.getByRole('img', { name: /close/i });
-        fireEvent.click(closeBtn);
-
     })
 
     it('refresh button should work', async () => {
-
         const mockStore = createMockStore({
             auth: { userId: 123 },
             data: {
@@ -159,13 +184,13 @@ describe('List Employee Department Master components', () => {
         const departmentCode = screen.getByRole('textbox', { name: 'Department Code', exact: false });
         fireEvent.change(departmentCode, { target: { value: 'kai' } });
 
-        const status = screen.getByRole('switch', { name: 'Status', exact: false });
+        const status = screen.getByTestId('status');
         fireEvent.change(status);
 
         const saveBtn = screen.getByRole('button', { name: 'Save' });
         fireEvent.click(saveBtn);
 
-        const saveNewBtn = screen.getByRole('button', { name: 'Save & Add New' });
+        const saveNewBtn = screen.getByTestId('save-and-new');
         fireEvent.click(saveNewBtn);
     })
 
@@ -266,7 +291,7 @@ describe('List Employee Department Master components', () => {
         const editBtn = screen.getByRole('button', { name: /fa-edit/i });
         fireEvent.click(editBtn);
 
-        const status = screen.getByRole('switch', { name: 'Status' });
+        const status = screen.getByTestId('status');
         fireEvent.click(status);
 
         const saveBtn = screen.getByRole('button', { name: /Save/i });

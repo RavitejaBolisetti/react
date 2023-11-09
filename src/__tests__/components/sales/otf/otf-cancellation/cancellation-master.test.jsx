@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen, fireEvent, waitFor } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { CancellationMaster } from '@components/Sales/OTF/OTFCancellation/CancellationMaster';
 import customRender from '@utils/test-utils';
