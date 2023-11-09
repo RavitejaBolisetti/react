@@ -11,7 +11,7 @@ import { CUSTOMER_TYPE } from 'constants/CustomerType';
 import styles from 'assets/sass/app.module.scss';
 
 const AddEditForm = (props) => {
-    const { isReadOnly = false, onSaveFormData, contactform, form, setShowAddEditForm, setIsEditing, typeData, customerType, formActionType, handleFormValueChange, setIsAdding, contactData, editingData } = props;
+    const { isReadOnly = false, onSaveFormData, contactform, setShowAddEditForm, setIsEditing, typeData, customerType, formActionType, handleFormValueChange, setIsAdding, contactData, editingData } = props;
     const disabledProps = { disabled: isReadOnly || formActionType?.viewMode };
 
     const handleCancelFormEdit = () => {

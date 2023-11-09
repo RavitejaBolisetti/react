@@ -1,10 +1,10 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Form, Input, Button } from 'antd';
+import { Form, Input, Button } from 'antd';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -51,12 +51,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const MobileOtpVerificationBase = (props) => {
-    const { fetchContactMobileNoDetails, listContactMobileNoShowLoading, userId, mobNoVerificationData, sendOTP, validateOTP, showGlobalNotification, formData, formActionType: { editMode } = undefined, selectedCustomer, form } = props;
-
+    const { fetchContactMobileNoDetails, listContactMobileNoShowLoading, userId, mobNoVerificationData, sendOTP, validateOTP, showGlobalNotification, formData, formActionType: { editMode } = undefined, selectedCustomer, form, defaultExtraParam, numbValidatedSuccess, setNumbValidatedSuccess } = props;
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [inValidOTP, setInValidOTP] = useState(false);
-    const [numbValidatedSuccess, setNumbValidatedSuccess] = useState(false);
     const [otpInput, setOTPInput] = useState('');
     const [otpVerified, setOtpVerified] = useState(false);
     const [disableVerifyOTP, setDisableVerifyOTP] = useState(true);
@@ -64,7 +62,6 @@ const MobileOtpVerificationBase = (props) => {
     const [counter, setCounter] = useState(RESEND_OTP_TIME);
     const [otpMessage, setOTPMessage] = useState();
     const [mobileNumber, setMobileNumber] = useState(false);
-
 
     useEffect(() => {
         if (!mobNoVerificationData?.customerMasterDetails?.length && mobileNumber?.length) {
@@ -93,7 +90,7 @@ const MobileOtpVerificationBase = (props) => {
                 },
             ];
             setOtpVerified(true);
-            fetchContactMobileNoDetails({ setIsLoading: listContactMobileNoShowLoading, extraParams:  [...mobNoParam], userId });
+            fetchContactMobileNoDetails({ setIsLoading: listContactMobileNoShowLoading, extraParams: [...defaultExtraParam, ...mobNoParam], userId });
         }
     };
     const handleOnchangeMobNoInput = (event) => {
@@ -208,36 +205,35 @@ const MobileOtpVerificationBase = (props) => {
         handleOTPInput,
     };
 
-
     return (
         <>
             {editMode ? (
-                            <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number'), validateRequiredInputField('mobile number')]}>
-                                <Input
-                                    placeholder={preparePlaceholderText('mobile number')}
-                                    maxLength={10}
-                                    size="small"
-                                    onChange={handleOnchangeMobNoInput}
-                                    disabled={otpVerified}
-                                    suffix={
-                                        <>
-                                            {!numbValidatedSuccess ? (
-                                                <Button onClick={handleNumberValidation} type="link" style={{ transform: 'scale(-1,1)' }}>
-                                                    Verify
-                                                </Button>
-                                            ) : (
-                                                <CheckOutlined style={{ color: '#70c922', fontSize: '16px', fotWeight: 'bold', transform: 'scale(-1,1)' }} />
-                                            )}
-                                        </>
-                                    }
-                                />
-                            </Form.Item>
-                        ) : (
-                            <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number'), validateRequiredInputField('mobile number')]}>
-                                <Input placeholder={preparePlaceholderText('mobile number')} maxLength={10} size="small" />
-                            </Form.Item>
-                        )}
-                        <MobileOtpVerificationModal {...modalProps}/>
+                <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number'), validateRequiredInputField('mobile number')]}>
+                    <Input
+                        placeholder={preparePlaceholderText('mobile number')}
+                        maxLength={10}
+                        size="small"
+                        onChange={handleOnchangeMobNoInput}
+                        disabled={otpVerified}
+                        suffix={
+                            <>
+                                {!numbValidatedSuccess ? (
+                                    <Button onClick={handleNumberValidation} type="link" style={{ transform: 'scale(-1,1)' }}>
+                                        Verify
+                                    </Button>
+                                ) : (
+                                    <CheckOutlined style={{ color: '#70c922', fontSize: '16px', fotWeight: 'bold', transform: 'scale(-1,1)' }} />
+                                )}
+                            </>
+                        }
+                    />
+                </Form.Item>
+            ) : (
+                <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number'), validateRequiredInputField('mobile number')]}>
+                    <Input placeholder={preparePlaceholderText('mobile number')} maxLength={10} size="small" />
+                </Form.Item>
+            )}
+            <MobileOtpVerificationModal {...modalProps} />
         </>
     );
 };

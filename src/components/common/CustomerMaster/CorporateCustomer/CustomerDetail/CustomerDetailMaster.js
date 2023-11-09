@@ -11,15 +11,13 @@ import { connect } from 'react-redux';
 import { customerParentCompanyDataActions } from 'store/actions/data/customerMaster/customerParentCompany';
 import { customerDetailsDataActions } from 'store/actions/data/customerMaster/customerDetails';
 import { corporateDataActions } from 'store/actions/data/customerMaster/corporate';
-import { hideGlobalNotification, showGlobalNotification } from 'store/actions/notification';
+import { showGlobalNotification } from 'store/actions/notification';
 
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
 
 import styles from 'assets/sass/app.module.scss';
-import { customerMobileDetailsDataActions } from 'store/actions/data/customerMaster/searchMobileNumber';
-import { forgotPasswordActions } from 'store/actions/data/forgotPassword';
 
 const mapStateToProps = (state) => {
     const {
@@ -29,7 +27,6 @@ const mapStateToProps = (state) => {
                 CustomerDetails: { isLoaded: isDataLoaded = false, isLoading, data: customerDetailsData = [] },
                 Corporate: { isFilteredListLoaded: isCorporateLovDataLoaded = false, isLoading: isCorporateLovLoading, filteredListData: corporateLovData },
                 CustomerParentCompany: { isLoaded: isCustomerParentCompanyDataLoaded = false, isCustomerParentCompanyLoading, data: customerParentCompanyData = [] },
-                customerMobileDetail: { data: mobNoVerificationData },
             },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
         },
@@ -53,7 +50,6 @@ const mapStateToProps = (state) => {
         isCustomerParentCompanyDataLoaded,
         isCustomerParentCompanyLoading,
         customerParentCompanyData,
-        mobNoVerificationData,
     };
 
     return returnValue;
@@ -69,14 +65,6 @@ const mapDispatchToProps = (dispatch) => ({
             fetchCustomerParentCompanyList: customerParentCompanyDataActions.fetchList,
             listCustomerParentCompanyShowLoading: customerParentCompanyDataActions.listShowLoading,
 
-            fetchContactMobileNoDetails: customerMobileDetailsDataActions.fetchList,
-            listContactMobileNoShowLoading: customerMobileDetailsDataActions.listShowLoading,
-            resetContactMobileNoData: customerMobileDetailsDataActions.reset,
-
-            verifyUser: forgotPasswordActions.verifyUser,
-            sendOTP: forgotPasswordActions.sendOTP,
-            validateOTP: forgotPasswordActions.validateOTP,
-
             fetchList: customerDetailsDataActions.fetchList,
             listShowLoading: customerDetailsDataActions.listShowLoading,
             saveData: customerDetailsDataActions.saveData,
@@ -88,7 +76,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CompanyCustomerDetailsMasterBase = (props) => {
-    const { userId, isLoading, showGlobalNotification, customerDetailsData, section, fetchList, listShowLoading, typeData, saveData, fetchCorporateLovList, listCorporateLovShowLoading, isCorporateLovDataLoaded, fetchCustomerParentCompanyList, listCustomerParentCompanyShowLoading, customerParentCompanyData, corporateLovData, sendOTP, validateOTP, mobNoVerificationData, listContactMobileNoShowLoading, fetchContactMobileNoDetails, customerType } = props;
+    const { userId, isLoading, showGlobalNotification, customerDetailsData, section, fetchList, listShowLoading, typeData, saveData, fetchCorporateLovList, listCorporateLovShowLoading, isCorporateLovDataLoaded, fetchCustomerParentCompanyList, listCustomerParentCompanyShowLoading, customerParentCompanyData, corporateLovData, customerType } = props;
     const { setRefreshCustomerList, selectedCustomer, setSelectedCustomer, selectedCustomerId, setSelectedCustomerId, resetData } = props;
     const { form, handleFormValueChange, buttonData, setButtonData, formActionType, handleButtonClick, NEXT_ACTION } = props;
 
@@ -97,18 +85,8 @@ const CompanyCustomerDetailsMasterBase = (props) => {
 
     const [formData, setFormData] = useState();
     const [refershData, setRefershData] = useState(false);
-
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [inValidOTP, setInValidOTP] = useState(false);
     const [numbValidatedSuccess, setNumbValidatedSuccess] = useState(false);
-    const [otpInput, setOTPInput] = useState('');
-    const [otpVerified, setOtpVerified] = useState(false);
-    const [disableVerifyOTP, setDisableVerifyOTP] = useState(true);
-    const RESEND_OTP_TIME = 60;
-    const [counter, setCounter] = useState(RESEND_OTP_TIME);
-    const [otpMessage, setOTPMessage] = useState();
-    const [mobileNumber, setMobileNumber] = useState(false);
-
+   
     useEffect(() => {
         if (customerDetailsData) {
             form?.setFieldsValue({ ...customerDetailsData });
@@ -146,22 +124,6 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomerId]);
 
-    useEffect(() => {
-        if (!mobNoVerificationData?.customerMasterDetails?.length && mobileNumber?.length) {
-            sendOTPVerificationCode();
-            setIsModalOpen(true);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [mobNoVerificationData]);
-
-    useEffect(() => {
-        const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
-        return () => {
-            clearInterval(timer);
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [counter]);
-
     const defaultExtraParam = [
         {
             key: 'customerType',
@@ -188,119 +150,6 @@ const CompanyCustomerDetailsMasterBase = (props) => {
             canRemove: true,
         },
     ];
-
-    const handleNumberValidation = () => {
-        if (mobileNumber) {
-            const mobNoParam = [
-                {
-                    key: 'searchParam',
-                    title: 'searchParam',
-                    value: mobileNumber,
-                    canRemove: true,
-                },
-            ];
-            setOtpVerified(true);
-            fetchContactMobileNoDetails({ setIsLoading: listContactMobileNoShowLoading, extraParams: [...defaultExtraParam, ...mobNoParam], userId });
-        }
-    };
-
-    const handleOnchangeMobNoInput = (event) => {
-        const Mno = event.target.value;
-        const regex = new RegExp('^([5-9]){1}([0-9]){9}$');
-        if (Mno?.length === 10 && regex.test(Mno)) {
-            setMobileNumber(Mno);
-        }
-    };
-
-    const handleOTPInput = (value) => {
-        setOTPInput(value);
-        setInValidOTP(false);
-        if (value?.length === 6) {
-            setDisableVerifyOTP(false);
-        } else {
-            setDisableVerifyOTP(true);
-        }
-    };
-
-    const onSentOTP = (values) => {
-        if (values) {
-            hideGlobalNotification();
-            handleSendOTP(values);
-        }
-    };
-
-    const sendOTPVerificationCode = () => {
-        const data = { userId: selectedCustomer?.customerId, mobileNumber: form.getFieldValue('mobileNumber'), sentOnMobile: true, sentOnEmail: false, functionality: 'CUST' };
-
-        const onSuccess = (res) => {
-            setCounter(RESEND_OTP_TIME);
-            showGlobalNotification({ notificationType: 'warning', title: 'OTP Sent', message: res?.responseMessage });
-            setOTPMessage(res?.data?.message);
-        };
-        const requestData = {
-            data: data,
-            setIsLoading: () => {},
-            onSuccess,
-        };
-        sendOTP(requestData);
-    };
-
-    const handleVerifyOTP = () => {
-        if (userId) {
-            const data = { userId: selectedCustomer?.customerId, mobileNumber: form.getFieldValue('mobileNumber'), otp: otpInput };
-            const onSuccess = (res) => {
-                showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-                setIsModalOpen(false);
-                setNumbValidatedSuccess(true);
-            };
-            const onError = (message) => {
-                showGlobalNotification({ title: 'ERROR', message: Array.isArray(message[0]) || message });
-                if (otpInput?.length === 6) {
-                    setCounter(0);
-                }
-                setInValidOTP(true);
-                setDisableVerifyOTP(true);
-                // setSubmitButtonActive(true);
-            };
-            const requestData = {
-                data: data,
-                setIsLoading: () => {},
-                onSuccess,
-                onError,
-            };
-            validateOTP(requestData);
-        }
-    };
-
-    const handleSendOTP = () => {
-        setCounter(RESEND_OTP_TIME);
-        setInValidOTP(false);
-        setOTPInput('');
-        if (selectedCustomer?.customerId) {
-            const data = { userId: selectedCustomer?.customerId, mobileNumber: form.getFieldValue('mobileNumber'), sentOnMobile: true, sentOnEmail: false, functionality: 'CUST' };
-            const onSuccess = (res) => {
-                showGlobalNotification({ notificationType: 'warning', title: 'OTP Sent', message: res?.responseMessage });
-                setOTPMessage(res?.data?.message);
-            };
-            const onError = (message) => {
-                showGlobalNotification({ message });
-            };
-            const requestData = {
-                data: data,
-                userId,
-                setIsLoading: () => {},
-                onError,
-                onSuccess,
-            };
-            sendOTP(requestData);
-        }
-    };
-
-    const handleCancel = () => {
-        setIsModalOpen(false);
-        setOtpVerified(false);
-        setOTPInput('');
-    };
 
     const onSuccessAction = (res) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -383,25 +232,10 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         styles,
         customerParentCompanyData,
         validateParentCode,
-        inValidOTP,
         numbValidatedSuccess,
-        otpInput,
-        disableVerifyOTP,
-        counter,
-        otpMessage,
-        mobileNumber,
-        mobNoVerificationData,
-        sendOTP,
-        validateOTP,
-        handleSendOTP,
-        onSentOTP,
-        handleOnchangeMobNoInput,
-        handleOTPInput,
-        otpVerified,
-        handleNumberValidation,
-        handleVerifyOTP,
-        isModalOpen,
-        handleCancel,
+        setNumbValidatedSuccess,
+        customerType,
+        defaultExtraParam,
     };
 
     const viewProps = {

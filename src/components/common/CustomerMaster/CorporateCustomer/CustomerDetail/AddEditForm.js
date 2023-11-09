@@ -4,18 +4,17 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { useEffect, useState } from 'react';
-import { Col, Input, Form, Row, Select, Space, Divider, Card, Button } from 'antd';
+import { Col, Input, Form, Row, Select, Space, Divider, Card } from 'antd';
 
-import { validateMobileNoField, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { CheckOutlined } from '@ant-design/icons';
 
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { customSelectBox } from 'utils/customSelectBox';
-import { OtpVerification } from '../../Common/Contacts/OtpVerfication';
+import { MobileOtpVerificationMaster } from 'components/utils/MobileOtpVerificationModal';
 
 const AddEditFormMain = (props) => {
-    const { typeData, formData, form, corporateLovData, formActionType: { editMode } = undefined, customerType, customerParentCompanyData, validateParentCode, inValidOTP, numbValidatedSuccess, otpInput, disableVerifyOTP, counter, otpMessage, userId, sendOTP, validateOTP, handleSendOTP, onSentOTP, handleOnchangeMobNoInput, isModalOpen, handleCancel, handleVerifyOTP, sendOTPVerificationCode, handleOTPInput, otpVerified, handleNumberValidation } = props;
+    const { typeData, formData, form, corporateLovData, formActionType: { editMode } = undefined, customerParentCompanyData, validateParentCode, numbValidatedSuccess, setNumbValidatedSuccess, selectedCustomer, formActionType, userId, customerType, defaultExtraParam } = props;
     const [corporateType, setCorporateType] = useState('');
 
     useEffect(() => {
@@ -44,24 +43,16 @@ const AddEditFormMain = (props) => {
         });
     };
 
-    const modalProps = {
-        isVisible: isModalOpen,
-        titleOverride: 'Mobile Number Verification',
-        closable: true,
-        onCloseAction: handleCancel,
-        handleVerifyOTP,
-        sendOTPVerificationCode,
-        otpInput,
-        sendOTP,
-        validateOTP,
+    const mobileOtpProps = {
         userId,
-        counter,
-        otpMessage,
-        inValidOTP,
-        disableVerifyOTP,
-        handleSendOTP,
-        onSentOTP,
-        handleOTPInput,
+        formData,
+        selectedCustomer,
+        formActionType,
+        customerType,
+        form,
+        numbValidatedSuccess,
+        setNumbValidatedSuccess,
+        defaultExtraParam,
     };
 
     return (
@@ -69,32 +60,7 @@ const AddEditFormMain = (props) => {
             <Card style={{ backgroundColor: '#F2F2F2' }}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        {editMode ? (
-                            <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number'), validateRequiredInputField('mobile number')]}>
-                                <Input
-                                    placeholder={preparePlaceholderText('mobile number')}
-                                    maxLength={10}
-                                    size="small"
-                                    onChange={handleOnchangeMobNoInput}
-                                    disabled={otpVerified}
-                                    suffix={
-                                        <>
-                                            {!numbValidatedSuccess ? (
-                                                <Button onClick={handleNumberValidation} type="link" style={{ transform: 'scale(-1,1)' }}>
-                                                    Verify
-                                                </Button>
-                                            ) : (
-                                                <CheckOutlined style={{ color: '#70c922', fontSize: '16px', fotWeight: 'bold', transform: 'scale(-1,1)' }} />
-                                            )}
-                                        </>
-                                    }
-                                />
-                            </Form.Item>
-                        ) : (
-                            <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number'), validateRequiredInputField('mobile number')]}>
-                                <Input placeholder={preparePlaceholderText('mobile number')} maxLength={10} size="small" />
-                            </Form.Item>
-                        )}
+                        <MobileOtpVerificationMaster {...mobileOtpProps}/>
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={customerType} label="Customer Type" name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>
@@ -168,7 +134,7 @@ const AddEditFormMain = (props) => {
                     </Col> */}
                 </Row>
             </Card>
-            <OtpVerification {...modalProps} />
+            {/* <OtpVerification {...modalProps} /> */}
         </Space>
     );
 };

@@ -24,8 +24,6 @@ import { LANGUAGE_EN } from 'language/en';
 import { NoDataFound } from 'utils/noDataFound';
 
 import styles from 'assets/sass/app.module.scss';
-import { customerMobileDetailsDataActions } from 'store/actions/data/customerMaster/searchMobileNumber';
-import { forgotPasswordActions } from 'store/actions/data/forgotPassword';
 
 const { Text } = Typography;
 
