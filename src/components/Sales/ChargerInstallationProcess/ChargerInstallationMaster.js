@@ -253,6 +253,9 @@ export const ChargerInstallationMasterBase = (props) => {
         if (chargerInstallationMasterData?.chargerInstDetails?.requestDetails[0].stageStatus === QUERY_BUTTONS_CONSTANTS?.COMMISSION?.key) {
             setButtonData((prev) => ({ ...prev, addRequestBtn: false }));
         }
+        if (chargerInstallationMasterData?.chargerInstDetails?.requestDetails[0]?.response === CHARGER_STATUS.SUCCESS?.key) {
+            setButtonData((prev) => ({ ...prev, addRequestBtn: true }));
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [chargerInstallationMasterData]);
     useEffect(() => {
@@ -314,7 +317,7 @@ export const ChargerInstallationMasterBase = (props) => {
                 setChargerDetails(true);
                 setButtonData((prev) => ({ ...prev, formBtnActive: true }));
             } else {
-                showGlobalNotification({ message: translateContent('chargerInstallationProcess.notification.globalNotification')});
+                showGlobalNotification({ message: translateContent('chargerInstallationProcess.notification.globalNotification') });
             }
         };
         fetchCustomerVehicleList({ setIsLoading: listCustomerVehicleShowLoading, userId, extraParams, onSuccessAction: onSuccesscustomerAction, onErrorAction });
@@ -391,11 +394,11 @@ export const ChargerInstallationMasterBase = (props) => {
             } else {
                 const Visibility = btnVisiblity({ defaultBtnVisiblity, buttonAction });
                 setButtonData(Visibility);
-                if (buttonAction === VIEW_ACTION) {
-                    if (chargerInstallationMasterData?.chargerInstDetails?.requestDetails[0]?.response === CHARGER_STATUS.SUCCESS?.key) {
-                        setButtonData((prev) => ({ ...prev, addRequestBtn: true }));
-                    }
-                }
+                // if (buttonAction === VIEW_ACTION) {
+                //     if (chargerInstallationMasterData?.chargerInstDetails?.requestDetails[0]?.response === CHARGER_STATUS.SUCCESS?.key) {
+                //         setButtonData((prev) => ({ ...prev, addRequestBtn: true }));
+                //     }
+                // }
             }
         }
         setIsFormVisible(true);

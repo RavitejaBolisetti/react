@@ -89,7 +89,7 @@ describe('Dealer company components', () => {
         const pan = screen.getByRole('textbox', { name: 'PAN' });
         fireEvent.change(pan, { target: { value: 'test' } });
 
-        const status = screen.getByRole('switch', { name: 'Status' });
+        const status = screen.getByTestId('status');
         fireEvent.click(status);
 
         fetchPincodeDetail.mock.calls[0][0].onSuccessAction();
@@ -102,10 +102,10 @@ describe('Dealer company components', () => {
         const formData = { companyCode: 'test', parentCode: 'test', status: true };
         customRender(<FormWrapper checked={true} isVisible={true} formData={formData} buttonData={buttonData} handleButtonClick={jest.fn()} onCloseAction={jest.fn()} setButtonData={jest.fn()} handleFormValueChange={jest.fn()} formActionType={formActionType} />);
 
-        const status = screen.getByRole('switch', { name: 'Status' });
+        const status = screen.getByTestId('status');
         fireEvent.click(status);
 
-        const saveAnd = screen.getByRole('button', { name: 'Save & Add New' });
+        const saveAnd = screen.getByTestId('save-and-new');
         fireEvent.click(saveAnd);
     });
 

@@ -161,7 +161,7 @@ const ExchangeVehiclesBase = (props) => {
 
     useEffect(() => {
         if (isOTFModule && exchangeData) {
-            setFormData(exchangeData);
+            setFormData(exchangeData?.exchange ? exchangeData : null);
             setIsMahindraMake(exchangeData?.make === MAHINDRA_MAKE);
             setExchangeDataParams({ make: exchangeData?.make, modelGroup: exchangeData?.modelGroup });
             setButtonData({ ...buttonData, formBtnActive: false });

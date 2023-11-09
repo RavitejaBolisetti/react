@@ -1,6 +1,7 @@
+/* eslint-disable jest/no-mocks-import */
 import '@testing-library/jest-dom/extend-expect';
 import { DealerParent } from 'components/Mile/DealerParent/DealerParent';
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, screen, waitFor } from "@testing-library/react";
 import customRender from '@utils/test-utils';
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
@@ -10,7 +11,7 @@ jest.mock('store/actions/data/dealer/dealerParent', () => ({
 }));
 
 jest.mock('components/Mile/DealerParent/AddEditForm', () => {
-    const AddEditForm = ({ onFinish }) => <div><button onClick={onFinish}>Save</button></div>;
+    const AddEditForm = ({ onFinish, onCloseAction }) => <div><button onClick={onFinish}>Save</button><button onClick={onCloseAction}>Cancel</button></div>;
     return {
         __esModule: true,
         AddEditForm,
@@ -61,6 +62,29 @@ describe('DealerParent Component Render', () => {
         fetchList.mock.calls[0][0].onSuccessAction();
     });
 
+
+    it('save button should work onFinishFailed', async ()=>{
+        const mockStore = createMockStore({
+            auth: { userId:'123' },
+            data: {
+                DealerHierarchy: {
+                    DealerParent: { isLoaded: false, data: [] },
+                },
+            },
+        });
+
+        const saveData=jest.fn();
+        
+        customRender(
+            <Provider store={mockStore}>
+                <DealerParent saveData={saveData} fetchList={jest.fn()} />
+            </Provider>
+        );   
+
+        const saveBtn=screen.getByRole('button', { name: 'Save' });
+        fireEvent.click(saveBtn);
+    });
+
     it('view and save button should work', async ()=>{
         const mockStore = createMockStore({
             auth: { userId:'123' },
@@ -95,6 +119,28 @@ describe('DealerParent Component Render', () => {
 
         saveData.mock.calls[0][0].onError();
         saveData.mock.calls[0][0].onSuccess();
+    });
+
+    it('close button should work', async ()=>{
+        const mockStore = createMockStore({
+            auth: { userId:'123' },
+            data: {
+                DealerHierarchy: {
+                    DealerParent: { isLoaded: true, isLoading: false, data: [{code: 106, name: 'Kai', title: 'Example Title', ownerName: 'Example Owner'}] },
+                },
+            },
+        });
+
+        const saveData=jest.fn();
+        
+        customRender(
+            <Provider store={mockStore}>
+                <DealerParent saveData={saveData} fetchList={jest.fn()} />
+            </Provider>
+        );
+
+        const cancelBtn=screen.getByRole('button', { name: 'Cancel' });
+        fireEvent.click(cancelBtn);
     });
 
     it('refresh button should work', async ()=>{
