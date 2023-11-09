@@ -231,12 +231,10 @@ const MobileOtpVerificationBase = (props) => {
                                         <FaEdit />
                                     </Button>
                                 )}
-                                {!numbValidatedSuccess && mobileNumber?.length === 10 ? (
+                                {!numbValidatedSuccess && mobileNumber?.length === 10 && (
                                     <Button onClick={handleNumberValidation} type="link" style={{ transform: 'scale(-1,1)' }}>
                                         {translateContent('customerMaster.button.verify')}
                                     </Button>
-                                ) : (
-                                    ''
                                 )}
                                 {numbValidatedSuccess && <CheckOutlined style={{ color: '#70c922', fontSize: '16px', fotWeight: 'bold', transform: 'scale(-1,1)' }} />}
                             </>
