@@ -36,6 +36,7 @@ export const AdvancedSearchFrom = (props) => {
         setFilterString({
             ...filterString,
             ...values,
+            current: 1,
             dueFromDate: formatDate(values?.dueFromDate),
             dueToDate: formatDate(values?.dueToDate),
             model: values?.model,
