@@ -202,6 +202,17 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
 
     const [cancelSchemeForm] = Form.useForm();
 
+    const REQUEST_CONSTANT = {
+        Reject: {
+            key: 'Reject',
+            value: 'WFACTREJ',
+        },
+        Approve: {
+            key: 'Approve',
+            value: 'WFACTAPR',
+        },
+    };
+
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
@@ -546,7 +557,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
             setBookingNumber();
             setVinNumber();
             setShowDataLoading(true);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            // showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             setButtonData({ ...buttonData, formBtnActive: false });
             setSelectedOrder({ ...selectedOrder, res });
@@ -675,6 +686,10 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         setStatus(QUERY_BUTTONS_CONSTANTS?.REJECTED?.key);
     };
 
+    const handleRequest = (value) => {
+        value?.buttonAction === REQUEST_CONSTANT?.Reject?.value ? handleMNMRejection() : handleMNMApproval();
+    };
+
     const handleCancelRequests = () => {
         if (isMNMApproval) {
             handleCancelScheme();
@@ -753,7 +768,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         setAdditionalReportParams([
             {
                 key: typeRecordKey,
-                value: record?.message,
+                value: record?.res?.data?.id,
             },
         ]);
     };
@@ -906,6 +921,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         handleCancelScheme,
         handleMNMApproval,
         handleMNMRejection,
+        handleRequest,
         // showCancelSchemeConfirm,
         saleType,
         detailShieldData,

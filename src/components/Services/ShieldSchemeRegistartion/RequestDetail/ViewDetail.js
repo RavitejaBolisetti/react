@@ -17,7 +17,7 @@ import styles from 'assets/sass/app.module.scss';
 const { Text } = Typography;
 
 const ViewDetail = (props) => {
-    const { formData, typeData, userType, selectedOrder, handleCancelRequest, handleMNMApproval, handleMNMRejection, isPendingForCancellation } = props;
+    const { formData, userType, selectedOrder, handleCancelRequest, handleMNMApproval, handleMNMRejection, isPendingForCancellation, handleRequest } = props;
 
     const viewProps = {
         bordered: false,
@@ -77,6 +77,13 @@ const ViewDetail = (props) => {
                             )}
 
                             <Row gutter={20} className={styles.marB20}>
+                                {/* {selectedOrder?.workFlowDetails?.allowedActions?.map((element, i) => {
+                                    return (
+                                        <Button onClick={() => handleRequest({ buttonAction: element?.actionCode })} type="primary" key={i}>
+                                            {element?.actionName}
+                                        </Button>
+                                    );
+                                })} */}
                                 <span>
                                     <Button type="primary" onClick={handleMNMApproval}>
                                         Approve

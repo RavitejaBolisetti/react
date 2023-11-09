@@ -70,7 +70,7 @@ export const ThankYouMaster = (props) => {
 
                             <Divider />
                             <Space size="middle" direction="vertical">
-                                <Text>Do you want to Print or download invoice and registration certificate</Text>
+                                <Text>Do you want to Print or download invoice</Text>
                                 <Row justify="space-between">
                                     <Button onClick={() => handlePrintDownload({ ...record, typeRecord: SHIELD_REPORT_DOCUMENT_TYPE?.INVOICE_SHIELD?.value })} danger>
                                         Invoice
