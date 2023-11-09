@@ -17,6 +17,7 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateMobileNoField, validateRequiredInputField } from 'utils/validation';
 import { MobileOtpVerificationModal } from './MobileOtpVerificationModal';
 import { translateContent } from 'utils/translateContent';
+import { FaEdit } from 'react-icons/fa';
 
 const mapStateToProps = (state) => {
     const {
@@ -63,6 +64,7 @@ const MobileOtpVerificationBase = (props) => {
     const [counter, setCounter] = useState(RESEND_OTP_TIME);
     const [otpMessage, setOTPMessage] = useState();
     const [mobileNumber, setMobileNumber] = useState(false);
+    const [editMobile, setEditMobile] = useState(false);
 
     useEffect(() => {
         if (!mobNoVerificationData?.customerMasterDetails?.length && mobileNumber?.length) {
@@ -79,6 +81,10 @@ const MobileOtpVerificationBase = (props) => {
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [counter]);
+
+    const handleOnEdit = () => {
+        setEditMobile(true);
+    }
 
     const handleNumberValidation = () => {
         if (mobileNumber) {
@@ -98,6 +104,8 @@ const MobileOtpVerificationBase = (props) => {
         const Mno = event.target.value;
         const regex = new RegExp('^([5-9]){1}([0-9]){9}$');
         if (Mno?.length === 10 && regex.test(Mno)) {
+            setMobileNumber(Mno);
+        }else if(Mno?.length <= 10){
             setMobileNumber(Mno);
         }
     };
@@ -215,16 +223,22 @@ const MobileOtpVerificationBase = (props) => {
                         maxLength={10}
                         size="small"
                         onChange={handleOnchangeMobNoInput}
-                        disabled={otpVerified}
+                        disabled={!editMobile || otpVerified}
                         suffix={
                             <>
-                                {!numbValidatedSuccess ? (
+                                {!editMobile && (
+                                    <Button type="link" onClick={handleOnEdit} style={{ transform: 'scale(-1,1)' }}>
+                                        <FaEdit />
+                                    </Button>
+                                )}
+                                {!numbValidatedSuccess && mobileNumber?.length === 10 ? (
                                     <Button onClick={handleNumberValidation} type="link" style={{ transform: 'scale(-1,1)' }}>
                                         {translateContent('customerMaster.button.verify')}
                                     </Button>
                                 ) : (
-                                    <CheckOutlined style={{ color: '#70c922', fontSize: '16px', fotWeight: 'bold', transform: 'scale(-1,1)' }} />
+                                    ''
                                 )}
+                                {numbValidatedSuccess && <CheckOutlined style={{ color: '#70c922', fontSize: '16px', fotWeight: 'bold', transform: 'scale(-1,1)' }} />}
                             </>
                         }
                     />
