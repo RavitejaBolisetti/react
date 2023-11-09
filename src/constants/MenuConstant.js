@@ -617,6 +617,13 @@ export const MenuConstant = {
         parentMenuId: 'OTD',
     },
 
+    [getMenyKey('SA-EV-01')]: {
+        key: 'SA-EV-01',
+        link: routing.ROUTING_CHARGER_INSTALLATION_PROCESS,
+        icon: undefined,
+        parentMenuId: 'SACT-06.06',
+    },
+
     [getMenyKey('FINA-01.06')]: {
         key: 'FINA-01.06',
         link: routing.ROUTING_VEHICLE_MODEL_TAX_CHARGES_CATEGORY,
