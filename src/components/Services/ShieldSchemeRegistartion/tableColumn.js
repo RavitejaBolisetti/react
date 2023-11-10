@@ -10,12 +10,13 @@ import { getCodeValue } from 'utils/getCodeValue';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const tableColumn = (props) => {
     const { handleButtonClick, typeData } = props;
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Shield Registration No. & Date',
+            title: translateContent('shieldSchemeRegistration.label.columnOne'),
             dataIndex: 'shieldRegistrationNumber',
             width: '20%',
             render: (__, value) => {
@@ -29,19 +30,19 @@ export const tableColumn = (props) => {
         }),
 
         tblPrepareColumns({
-            title: 'Dealer Location',
+            title:  translateContent('shieldSchemeRegistration.label.columnTwo'),
             dataIndex: 'dealerLocation',
             width: '26%',
         }),
 
         tblPrepareColumns({
-            title: 'VIN',
+            title:  translateContent('shieldSchemeRegistration.label.columnThree'),
             dataIndex: 'vin',
             width: '20%',
         }),
 
         tblPrepareColumns({
-            title: 'Status',
+            title:  translateContent('shieldSchemeRegistration.label.columnFour'),
             dataIndex: 'status',
             width: '20%',
             render: (status) => {
