@@ -8,6 +8,10 @@ import MenuNav from './MenuNav';
 import VoucherCard from './VoucherCard';
 
 const LeftSidebar = (props) => {
+    const { previousSection, setPreviousSection, currentSection } = props;
+
+    if (currentSection > previousSection) setPreviousSection(currentSection);
+
     return (
         <>
             <VoucherCard {...props} />

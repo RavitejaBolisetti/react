@@ -3190,7 +3190,8 @@
                 "settledAmount": "Settled Amount",
                 "balancedAmount": "Balanced Amount",
                 "writeOffAmount": "Write-Off Amount",
-                "apportionAmount": "Apportion Amount"
+                "apportionAmount": "Apportion Amount",
+                "remarks": "Remarks"
             },
             "validation": {
                 "documentType": "Document Type",

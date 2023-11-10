@@ -98,6 +98,7 @@ export const AdvanceForm = (props) => {
                     voucherForm.resetFields();
                     handleFormValueChange();
                     setAdvanceSearchVisible(false);
+                    setIsAccountHeadValidated(true);
                 } else {
                     const data = { ...values };
                     const newarr = [...voucherTableData];
@@ -107,6 +108,7 @@ export const AdvanceForm = (props) => {
                     setAdvanceSearchVisible(false);
                     handleFormValueChange();
                     setisEditing(false);
+                    setIsAccountHeadValidated(true);
                 }
                 setVoucherTableFormData();
             })
@@ -116,8 +118,17 @@ export const AdvanceForm = (props) => {
     const handleAccountChange = () => {
         setIsAccountHeadValidated(true);
     };
+
+    const handleFormValuesChange = (value) => {
+        if (!isEditing) return false;
+        if (Object.keys(value).includes('accountCode')) {
+            setIsAccountHeadValidated(true);
+        } else {
+            setIsAccountHeadValidated(false);
+        }
+    };
     return (
-        <Form autoComplete="off" layout="vertical" form={voucherForm}>
+        <Form autoComplete="off" layout="vertical" form={voucherForm} onValuesChange={handleFormValuesChange}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row gutter={20}>

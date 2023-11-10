@@ -70,7 +70,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const VoucherAndPartyDetailsMasterMain = (props) => {
     const { formActionType, NEXT_ACTION, handleButtonClick } = props;
-    const { handleFormValueChange, creditDebitData, isDetailLoaded } = props;
+    const { handleFormValueChange, isDetailLoaded, section } = props;
     const { showGlobalNotification, userId, setButtonData, buttonData, fetchList, listShowLoading, listPartyShowLoading, fetchDetail, requestPayload, setRequestPayload, typeData } = props;
 
     const [form] = Form.useForm();
@@ -86,15 +86,12 @@ export const VoucherAndPartyDetailsMasterMain = (props) => {
     };
 
     useEffect(() => {
-        if (formActionType?.addMode && isDetailLoaded) {
-            form.resetFields(['partyDetails']);
-            setFormData();
-        } else if (isDetailLoaded && creditDebitData) {
-            setFormData(creditDebitData);
+        if (isDetailLoaded && requestPayload) {
+            setFormData(requestPayload);
             handleFormValueChange();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formActionType?.addMode, isDetailLoaded, creditDebitData, formActionType?.editMode]);
+    }, [formActionType?.addMode, isDetailLoaded, requestPayload, formActionType?.editMode, section]);
 
     useEffect(() => {
         if (formActionType?.addMode) {
@@ -105,7 +102,10 @@ export const VoucherAndPartyDetailsMasterMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formActionType?.addMode]);
 
-    const handlePartyIdChange = () => {
+    const handlePartyIdChange = (e) => {
+        if (!e.target.value) {
+            return false;
+        }
         form.setFieldsValue({
             partyDetails: {
                 ...form.getFieldsValue()?.partyDetails,
@@ -137,6 +137,9 @@ export const VoucherAndPartyDetailsMasterMain = (props) => {
     const constomerContant = 'CUS';
 
     const handleSearchParamSearch = (value) => {
+        if (!value) {
+            return false;
+        }
         if (!form.getFieldsValue()?.partyDetails?.partySegment) {
             showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationSuccess.error'), message: translateContent('creditDebitNote.voucherAndPartyDetails.validation.selectPartySegment') });
             return;
@@ -184,9 +187,9 @@ export const VoucherAndPartyDetailsMasterMain = (props) => {
     const onFinish = (values) => {
         handleButtonClick({ buttonAction: NEXT_ACTION });
         if (values?.hasOwnProperty('voucherDetails') || values?.hasOwnProperty('partyDetails')) {
-            setRequestPayload({ ...requestPayload, partyDetailsDto: values?.partyDetails, voucherDetailsDto: voucherDetailsInitial });
+            setRequestPayload({ ...requestPayload, partyDetailsDto: values?.partyDetails, voucherDetailsDto: requestPayload?.voucherDetailsDto });
         } else {
-            setRequestPayload({ ...requestPayload, partyDetailsDto: creditDebitData?.partyDetailsDto, voucherDetailsDto: creditDebitData?.voucherDetailsDto });
+            setRequestPayload({ ...requestPayload, partyDetailsDto: requestPayload?.partyDetailsDto, voucherDetailsDto: requestPayload?.voucherDetailsDto });
         }
     };
 
@@ -199,7 +202,7 @@ export const VoucherAndPartyDetailsMasterMain = (props) => {
         fetchDetail,
         handleCollapse,
         formData,
-        creditDebitData,
+        requestPayload,
         handlePartySegmentChange,
         handleSearchParamSearch,
         handlePartyIdChange,

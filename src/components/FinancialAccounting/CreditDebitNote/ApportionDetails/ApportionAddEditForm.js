@@ -17,6 +17,7 @@ import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
+// const { TextArea } = Input;
 const { Search } = Input;
 
 export const AdvanceForm = (props) => {
@@ -37,6 +38,7 @@ export const AdvanceForm = (props) => {
                 balancedAmount: apportionTableFormData?.balancedAmount ?? '',
                 writeOffAmount: apportionTableFormData?.writeOffAmount ?? '',
                 apportionAmount: apportionTableFormData?.apportionAmount ?? '',
+                // remarks: apportionTableFormData?.remarks ?? '',
                 id: apportionTableFormData?.id ?? '',
             });
         }
@@ -174,7 +176,13 @@ export const AdvanceForm = (props) => {
                             </Form.Item>
                         </Col>
                     </Row>
-
+                    {/* <Row gutter={20}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item label={translateContent('creditDebitNote.ApportionDetails.placeholder.remarks')} rules={[validateRequiredInputField(translateContent('creditDebitNote.ApportionDetails.placeholder.remarks'))]} name="remarks">
+                                <TextArea maxLength={300} placeholder={preparePlaceholderText(translateContent('creditDebitNote.ApportionDetails.placeholder.remarks'))} showCount />
+                            </Form.Item>
+                        </Col>
+                    </Row> */}
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
                             <Button onClick={handleCancel} danger>

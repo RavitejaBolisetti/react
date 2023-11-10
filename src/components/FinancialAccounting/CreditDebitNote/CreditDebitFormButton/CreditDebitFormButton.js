@@ -59,6 +59,12 @@ export const CreditDebitNoteFormButton = ({ record, onCloseAction, buttonData, s
                             {saveButtonName}
                         </Button>
                     )}
+
+                    {buttonData?.continueBtn && (
+                        <Button loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
+                            {isLastSection ? translateContent('global.buttons.submit') : translateContent('global.buttons.continue')}
+                        </Button>
+                    )}
                 </Col>
             </Row>
         </div>

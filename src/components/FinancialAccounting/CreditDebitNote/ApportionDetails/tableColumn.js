@@ -58,6 +58,11 @@ export const tableColumn = (props) => {
             dataIndex: 'apportionAmount',
             width: '10%',
         }),
+        // tblPrepareColumns({
+        //     title: translateContent('creditDebitNote.ApportionDetails.placeholder.remarks'),
+        //     dataIndex: 'remarks',
+        //     width: '10%',
+        // }),
     ];
 
     if (!formActionType?.viewMode) {

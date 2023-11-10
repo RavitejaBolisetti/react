@@ -5,22 +5,33 @@
  */
 import React from 'react';
 import { Timeline } from 'antd';
-import { BsRecordCircleFill } from 'react-icons/bs';
-import { FaCheckCircle } from 'react-icons/fa';
 import styles from 'assets/sass/app.module.scss';
 
 import { CREDIT_DEBIT_SECTION } from 'constants/CreditDebitSection';
+import { getSelectedMenuAttribute } from 'utils/getSelectedMenuAttribute';
 
 const MenuNav = (props) => {
-    const { currentSection } = props;
+    const { currentSection, setCurrentSection, formActionType, previousSection = 1 } = props;
     const creditDebitSectionList = Object.values(CREDIT_DEBIT_SECTION);
+
+    const onHandle = (key) => {
+        setCurrentSection(key);
+    };
+
+    const className = (id) => {
+        return formActionType?.addMode && id > previousSection ? styles.cursorNotAllowed : styles.cursorPointer;
+    };
 
     const items = creditDebitSectionList
         ?.filter((i) => i?.displayOnList)
         ?.map((item) => ({
-            dot: item?.id === currentSection ? <BsRecordCircleFill className={styles.activeForm} /> : <FaCheckCircle />,
-            children: <div>{item?.title}</div>,
-            className: item?.id === currentSection ? 'active' : 'noactive',
+            dot: getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType })?.menuNavIcon,
+            children: (
+                <div className={className(item?.id)} onClick={() => (!formActionType?.addMode || (formActionType?.addMode && item?.id <= previousSection) ? onHandle(item?.id) : '')}>
+                    {item.title}
+                </div>
+            ),
+            className: getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType })?.activeClassName,
         }));
 
     const finalItem = items?.filter((i) => i);
