@@ -59,7 +59,7 @@ const CurdSearchBox = (props) => {
                                             setAdvanceSearchVisible(true);
                                         }}
                                     >
-                                        Advanced Filters
+                                        Advance Filters
                                     </Button>
                                 </Col>
                             )}

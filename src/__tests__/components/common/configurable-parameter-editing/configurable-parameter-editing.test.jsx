@@ -90,7 +90,7 @@ describe('Render ConfigurableParameterEditing Component', () => {
         const srl = screen.getByRole('columnheader', { name: 'Srl.' });
         expect(srl).toBeTruthy();
 
-        const controlID = screen.getByRole('columnheader', { name: 'Control ID' });
+        const controlID = screen.getByRole('columnheader', { name: 'Control Id' });
         expect(controlID).toBeTruthy();
 
         const controlDescription = screen.getByRole('columnheader', { name: 'Control Description' });
@@ -207,9 +207,7 @@ describe('ConfigurableParameterEditing component button should work', () => {
         );
 
         const refreshBtn = screen.getByTestId('refresh');
-        act(() => {
-            fireEvent.click(refreshBtn);
-        });
+        fireEvent.click(refreshBtn);
 
         const addBtn = screen.getByRole('button', { name: /Add/i });
         fireEvent.click(addBtn);
@@ -241,11 +239,9 @@ describe('ConfigurableParameterEditing component button should work', () => {
         );
 
         const editBtn = screen.getByRole('button', { name: 'fa-edit' });
-        act(() => {
-            fireEvent.click(editBtn);
-        });
+        fireEvent.click(editBtn);
 
-        const control = screen.getByRole('combobox', { name: 'Control ID' });
+        const control = screen.getByRole('combobox', { name: 'Control Id' });
         fireEvent.change(control, { target: { value: 'Kai' } });
 
         const values = screen.getByRole('combobox', { name: 'Configurable Parameter Values' });

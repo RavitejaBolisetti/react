@@ -58,7 +58,7 @@ describe("GstIRNTransaction component",()=>{
     it("onAdvanceSearchCloseAction", ()=>{
         customRender(<GstIRNTransaction setFilterString={jest.fn()} />);
 
-        const advancedBtn = screen.getByRole('button', {name:'Advanced Filters'});
+        const advancedBtn = screen.getByRole('button', {name:'Advance Filters'});
         fireEvent.click(advancedBtn);
 
         const closeImg = screen.getByRole('img', {name:'close'});
@@ -68,7 +68,7 @@ describe("GstIRNTransaction component",()=>{
     it("resetBtn", ()=>{
         customRender(<GstIRNTransaction setFilterString={jest.fn()}/>);
 
-        const advancedBtn = screen.getByRole('button', {name:'Advanced Filters'});
+        const advancedBtn = screen.getByRole('button', {name:'Advance Filters'});
         fireEvent.click(advancedBtn);
 
         const resetBtn = screen.getByRole('button', {name:'Reset'});
@@ -78,7 +78,7 @@ describe("GstIRNTransaction component",()=>{
     it("applyBtn", ()=>{
         customRender(<GstIRNTransaction setFilterString={jest.fn()}/>);
 
-        const advancedBtn = screen.getByRole('button', {name:'Advanced Filters'});
+        const advancedBtn = screen.getByRole('button', {name:'Advance Filters'});
         fireEvent.click(advancedBtn);
 
         const applyBtn = screen.getByRole('button', {name:'Apply'});

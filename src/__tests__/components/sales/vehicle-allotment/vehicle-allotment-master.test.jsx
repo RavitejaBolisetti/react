@@ -114,7 +114,7 @@ describe('Vehicle Allotment Master Component', () => {
             </Provider>
         );
 
-        const filter = screen.getByRole('button', { name: 'Advanced Filters' });
+        const filter = screen.getByRole('button', { name: 'Advance Filters' });
         fireEvent.click(filter);
 
         const vehicleStatus = screen.getByRole('combobox', { name: 'Vehicle Status' });
@@ -130,7 +130,7 @@ describe('Vehicle Allotment Master Component', () => {
     it('should render Vehicle Allotment Master filter reset button component UI', () => {
         customRender(<VehicleAllotmentMaster setFilterString={jest.fn()} resetData={jest.fn()} />);
 
-        const filter = screen.getByRole('button', { name: 'Advanced Filters' });
+        const filter = screen.getByRole('button', { name: 'Advance Filters' });
         fireEvent.click(filter);
 
         const reset = screen.getByRole('button', { name: 'Reset' });
@@ -140,7 +140,7 @@ describe('Vehicle Allotment Master Component', () => {
     it('should render Vehicle Allotment Master filter close button component UI', () => {
         customRender(<VehicleAllotmentMaster setFilterString={jest.fn()} resetData={jest.fn()} />);
 
-        const filter = screen.getByRole('button', { name: 'Advanced Filters' });
+        const filter = screen.getByRole('button', { name: 'Advance Filters' });
         fireEvent.click(filter);
 
         const close = screen.getByRole('button', { name: 'Close' });

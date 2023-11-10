@@ -18,7 +18,7 @@ describe('advance vehicle purchase order filter render', () => {
 
     it('advance filters button should work', async () => {
         customRender(<AppliedAdvanceFilter setAdvanceSearchVisible={jest.fn()} advanceFilter={true} />);
-        const advancedFiltersBtn = screen.getByRole('button', { name: 'Advanced Filters' });
+        const advancedFiltersBtn = screen.getByRole('button', { name: 'Advance Filters' });
         fireEvent.click(advancedFiltersBtn);
     });
 

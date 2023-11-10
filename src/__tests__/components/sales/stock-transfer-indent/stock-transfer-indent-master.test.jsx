@@ -426,10 +426,10 @@ requestedQuantity
         fireEvent.click(saveBtn[0]);
     });
 
-    it('advanced filters should work', async () => {
+    it('Advance Filters should work', async () => {
         customRender(<StockTransferIndentMaster resetData={jest.fn()} fetchProductLov={jest.fn()} fetchIndentLocation={jest.fn()} />);
 
-        const advanceFilter = screen.getByRole('button', { name: 'Advanced Filters' });
+        const advanceFilter = screen.getByRole('button', { name: 'Advance Filters' });
         fireEvent.click(advanceFilter);
 
         const resetBtn = screen.getByRole('button', { name: 'Reset' });

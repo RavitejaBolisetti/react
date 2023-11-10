@@ -98,7 +98,7 @@ describe('On Road Price Master Component', () => {
             </Provider>
         );
 
-        const advanceFilters=screen.getByRole('button', { name: 'Advanced Filters' });
+        const advanceFilters=screen.getByRole('button', { name: 'Advance Filters' });
         fireEvent.click(advanceFilters);
 
         const searchBtn=screen.getByRole('button', { name: 'Search' });
@@ -117,7 +117,7 @@ describe('On Road Price Master Component', () => {
     it('advance filter with reset and close button should work', () => {
         customRender( <OnRoadPriceMaster setFilterString={jest.fn()} /> );
 
-        const advanceFilters=screen.getByRole('button', { name: 'Advanced Filters' });
+        const advanceFilters=screen.getByRole('button', { name: 'Advance Filters' });
         fireEvent.click(advanceFilters);
 
         const resetBtn=screen.getByRole('button', { name: 'Reset' });

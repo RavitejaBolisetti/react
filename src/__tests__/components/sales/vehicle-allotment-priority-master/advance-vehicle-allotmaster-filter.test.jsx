@@ -25,7 +25,7 @@ describe('Advance Vehicle Allotment Master Filter component', () => {
 
     it('advance filters button should work', async () => {
         customRender(<AdvanceVehicleAllotMasterFilter searchForm={setFieldsValue} setAdvanceSearchVisible={jest.fn()} advanceFilter={true} />);
-        const advancedFiltersBtn = screen.getByRole('button', { name: 'Advanced Filters' });
+        const advancedFiltersBtn = screen.getByRole('button', { name: 'Advance Filters' });
         fireEvent.click(advancedFiltersBtn);
     });
 

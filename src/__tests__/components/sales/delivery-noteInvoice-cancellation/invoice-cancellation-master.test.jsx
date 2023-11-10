@@ -75,9 +75,9 @@ describe('InvoiceCancellationMaster Component', () => {
         fireEvent.click(rejected);
     });
 
-    it('advanced filters, search, and close buttons should work', () => {
+    it('Advance Filters, search, and close buttons should work', () => {
         customRender(<InvoiceCancellationMaster setFilterString={jest.fn()} />);
-        const advanceFilters = screen.getByRole('button', { name: 'Advanced Filters' });
+        const advanceFilters = screen.getByRole('button', { name: 'Advance Filters' });
         fireEvent.click(advanceFilters);
         const searchBtn = screen.getByRole('button', { name: 'Search' });
         fireEvent.click(searchBtn);
@@ -101,9 +101,9 @@ describe('InvoiceCancellationMaster Component', () => {
         fireEvent.click(searchBtn);
     });
 
-    it('advanced filters should work', async () => {
+    it('Advance Filters should work', async () => {
         customRender(<InvoiceCancellationMaster setFilterString={jest.fn()} />);
-        const advanceFilters = screen.getByRole('button', { name: 'Advanced Filters' });
+        const advanceFilters = screen.getByRole('button', { name: 'Advance Filters' });
         fireEvent.click(advanceFilters);
 
         const fromDate = screen.getByRole('textbox', { name: 'From Date' });

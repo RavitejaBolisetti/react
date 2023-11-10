@@ -48,7 +48,7 @@ describe('AMC Registration Master Components', () => {
     it('Should render AMC registration master Registration Filter apply render', () => {
         customRender(<FormWrapper setFilterString={jest.fn()} />);
 
-        const advancedFiltersBtn = screen.getByRole('button', { name: 'Advanced Filters' });
+        const advancedFiltersBtn = screen.getByRole('button', { name: 'Advance Filters' });
         fireEvent.click(advancedFiltersBtn);
 
         const aMCRegistrationFromDate = screen.getByRole('textbox', { name: 'AMC Registration From Date' });
@@ -64,7 +64,7 @@ describe('AMC Registration Master Components', () => {
     it('Should render AMC registration master Registration Filter reset render', () => {
         customRender(<FormWrapper setFilterString={jest.fn()} />);
 
-        const advancedFiltersBtn = screen.getByRole('button', { name: 'Advanced Filters' });
+        const advancedFiltersBtn = screen.getByRole('button', { name: 'Advance Filters' });
         fireEvent.click(advancedFiltersBtn);
 
         const aMCRegistrationFromDate = screen.getByRole('textbox', { name: 'AMC Registration From Date' });
@@ -80,7 +80,7 @@ describe('AMC Registration Master Components', () => {
     it('Should render AMC registration master Registration Filter close render', () => {
         customRender(<FormWrapper setFilterString={jest.fn()} />);
 
-        const advancedFiltersBtn = screen.getByRole('button', { name: 'Advanced Filters' });
+        const advancedFiltersBtn = screen.getByRole('button', { name: 'Advance Filters' });
         fireEvent.click(advancedFiltersBtn);
 
         const closeBtn = screen.getByRole('button', { name: 'Close' });

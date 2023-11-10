@@ -72,7 +72,7 @@ describe('Receipts Component', () => {
     it('reset button should work', () => {
         customRender(<ReceiptMaster setFilterString={jest.fn()} resetData={jest.fn()} />);
 
-        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        const advanceFilter = screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advanceFilter);
         const resetBtn = screen.getByRole('button', { name: /Reset/i });
         fireEvent.click(resetBtn);
@@ -81,7 +81,7 @@ describe('Receipts Component', () => {
     it('test for closing the advance filter', () => {
         customRender(<ReceiptMaster setFilterString={jest.fn()} resetData={jest.fn()} />);
 
-        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        const advanceFilter = screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advanceFilter);
         const closeBtn = screen.getByRole('button', { name: /Close/i });
         fireEvent.click(closeBtn);
@@ -148,7 +148,7 @@ describe('Receipts Component', () => {
             </Provider>
         );
 
-        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        const advanceFilter = screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advanceFilter);
 
         const fromDate = screen.getByRole('textbox', { name: 'Receipt From Date' });

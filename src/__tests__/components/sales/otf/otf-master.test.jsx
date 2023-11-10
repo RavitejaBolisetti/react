@@ -49,9 +49,9 @@ describe('OtfMaster component render', () => {
         customRender(<OtfMaster setFilterString={jest.fn()} resetData={jest.fn()} />);
     });
 
-    it('advanced filters and close button should work', () => {
+    it('Advance Filters and close button should work', () => {
         customRender(<OtfMaster setFilterString={jest.fn()} resetData={jest.fn()} />);
-        const advancedFilters=screen.getByText('Advanced Filters');
+        const advancedFilters=screen.getByText('Advance Filters');
         fireEvent.click(advancedFilters);
 
         const closeBtn=screen.getByRole('img', { name: 'close' });

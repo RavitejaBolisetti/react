@@ -55,7 +55,7 @@ describe('Vehicle Invoice Generation Master components', () => {
     it('reset button should work', () => {
         customRender(<VehicleInvoiceMaster setFilterString={jest.fn()} />);
 
-        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        const advanceFilter = screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advanceFilter);
         const resetBtn = screen.getByRole('button', { name: /Reset/i });
         fireEvent.click(resetBtn);
@@ -64,7 +64,7 @@ describe('Vehicle Invoice Generation Master components', () => {
     it('apply button should work', async () => {
         customRender(<VehicleInvoiceMaster setFilterString={jest.fn()} />);
 
-        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        const advanceFilter = screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advanceFilter);
 
         const fromDate = screen.getByRole('textbox', { name: 'Invoice From Date' });
@@ -90,7 +90,7 @@ describe('Vehicle Invoice Generation Master components', () => {
     it('test for closing the advance filter', () => {
         customRender(<VehicleInvoiceMaster setFilterString={jest.fn()} />);
 
-        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        const advanceFilter = screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advanceFilter);
         const closeBtn = screen.getByRole('button', { name: /Close/i });
         fireEvent.click(closeBtn);

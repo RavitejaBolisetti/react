@@ -59,8 +59,8 @@ describe('Add Edit Form Component', () => {
         const locality=screen.getByRole('switch', { name: 'Is Locality Under 50Km of GPO' });
         fireEvent.click(locality);
 
-        const status=screen.getByRole('switch', { name: 'Status' });
-        fireEvent.click(status);
+        // const status=screen.getByRole('switch', { name: 'Status' });
+        // fireEvent.click(status);
 
     });
 

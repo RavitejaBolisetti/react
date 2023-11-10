@@ -50,7 +50,7 @@ describe('Card Document Type Component', () => {
 
         fireEvent.click(buttons[0]);
 
-        const saveButton = screen.getByRole('button', { name: 'Save', exact: false });
+        const saveButton = screen.getByRole('button', { name: 'Add', exact: false });
         fireEvent.click(saveButton);
     });
 });

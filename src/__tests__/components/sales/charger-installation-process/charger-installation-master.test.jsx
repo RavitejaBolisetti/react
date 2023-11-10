@@ -106,10 +106,10 @@ describe('Charger Installation Master Component', () => {
         
     });
 
-    it('advanced filters should work', async () => {
+    it('Advance Filters should work', async () => {
         customRender(<ChargerInstallationMaster setFilterString={jest.fn()} />);
 
-        const advancedFilters=screen.getByText('Advanced Filters');
+        const advancedFilters=screen.getByText('Advance Filters');
         fireEvent.click(advancedFilters);
 
         const resetBtn=screen.getByRole('button', { name: 'Reset' });
@@ -129,10 +129,10 @@ describe('Charger Installation Master Component', () => {
         fireEvent.click(applyBtn);
     });
 
-    it('advanced filters with close button should work', async () => {
+    it('Advance Filters with close button should work', async () => {
         customRender(<ChargerInstallationMaster setFilterString={jest.fn()} />);
 
-        const advancedFilters=screen.getByText('Advanced Filters');
+        const advancedFilters=screen.getByText('Advance Filters');
         fireEvent.click(advancedFilters);
 
         const closeBtn=screen.getByRole('img', { name: 'close' });

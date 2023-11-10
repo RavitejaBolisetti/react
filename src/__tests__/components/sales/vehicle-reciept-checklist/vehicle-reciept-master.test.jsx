@@ -64,7 +64,7 @@ describe('Vehicle Reciept Master container', () => {
         const searchBtn = screen.getByRole('button', { name: 'search' });
         fireEvent.click(searchBtn);
 
-        const filterBtn = screen.getByRole('button', { name: 'Advanced Filters' });
+        const filterBtn = screen.getByRole('button', { name: 'Advance Filters' });
         fireEvent.click(filterBtn);
 
         const leftBtn = screen.getByRole('button', { name: 'left' });
@@ -80,10 +80,10 @@ describe('Vehicle Reciept Master container', () => {
         fireEvent.click(closeBtn);
     });
 
-    it('should render advanced filters apply', () => {
+    it('should render Advance Filters apply', () => {
         customRender(<VehicleRecieptMaster isVisible={true} setFilterString={jest.fn()} disabledDate={false} />);
 
-        const filterBtn = screen.getByRole('button', { name: 'Advanced Filters' });
+        const filterBtn = screen.getByRole('button', { name: 'Advance Filters' });
         fireEvent.click(filterBtn);
 
         const receiptDate = screen.getByRole('textbox', { name: 'Receipt From Date' });
@@ -99,10 +99,10 @@ describe('Vehicle Reciept Master container', () => {
         fireEvent.click(closeImg);
     });
 
-    it('should render advanced filters reset', () => {
+    it('should render Advance Filters reset', () => {
         customRender(<VehicleRecieptMaster setFilterString={jest.fn()} isVisible={true} buttonkey={'P'} />);
 
-        const filterBtn = screen.getByRole('button', { name: 'Advanced Filters' });
+        const filterBtn = screen.getByRole('button', { name: 'Advance Filters' });
         fireEvent.click(filterBtn);
 
         const receiptDate = screen.getByRole('textbox', { name: 'Receipt From Date' });
@@ -115,7 +115,7 @@ describe('Vehicle Reciept Master container', () => {
         fireEvent.click(resetBtn);
     });
 
-    it('should render advanced filters search', () => {
+    it('should render Advance Filters search', () => {
         const mockStore = createMockStore({
             auth: { userId: 106 },
             data: {
@@ -142,7 +142,7 @@ describe('Vehicle Reciept Master container', () => {
 
     it('reset button should work', () => {
         customRender(<FormWrapper setFilterString={jest.fn()} fetchProductList={jest.fn()} />);
-        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        const advanceFilter = screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advanceFilter);
         const resetBtn = screen.getByRole('button', { name: /Reset/i });
         fireEvent.click(resetBtn);
@@ -150,7 +150,7 @@ describe('Vehicle Reciept Master container', () => {
 
     it('test for closing the advance filter', () => {
         customRender(<FormWrapper setFilterString={jest.fn()} fetchProductList={jest.fn()} />);
-        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        const advanceFilter = screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advanceFilter);
         const closeBtn = screen.getByRole('button', { name: /Close/i });
         fireEvent.click(closeBtn);
@@ -158,7 +158,7 @@ describe('Vehicle Reciept Master container', () => {
 
     it('Apply for onfinish failed', async () => {
         customRender(<FormWrapper isVisible={true} setFilterString={jest.fn()} fetchProductList={jest.fn()} />);
-        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        const advanceFilter = screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advanceFilter);
         const searchBtn = screen.getByRole('button', { name: /Apply/i });
         fireEvent.click(searchBtn);

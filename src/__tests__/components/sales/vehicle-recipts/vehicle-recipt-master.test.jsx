@@ -60,7 +60,7 @@ describe('Term Condition Manufacturer Master components', () => {
         const rightBtn = screen.getByRole('button', { name: 'right' });
         fireEvent.click(rightBtn);
 
-        const adFilter = screen.getByRole('button', { name: 'Advanced Filters' });
+        const adFilter = screen.getByRole('button', { name: 'Advance Filters' });
         fireEvent.click(adFilter);
     });
 
@@ -81,7 +81,7 @@ describe('Term Condition Manufacturer Master components', () => {
             </Provider>
         );
 
-        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        const advanceFilter = screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advanceFilter);
         const resetBtn = screen.getByRole('button', { name: /Reset/i });
         fireEvent.click(resetBtn);
@@ -90,7 +90,7 @@ describe('Term Condition Manufacturer Master components', () => {
     it('test for closing the advance filter', () => {
         customRender(<VehicleReceiptMaster setFilterString={jest.fn()} onCloseAction={jest.fn()} resetData={jest.fn()} />);
 
-        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        const advanceFilter = screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advanceFilter);
         const closeBtn = screen.getByRole('button', { name: /Close/i });
         fireEvent.click(closeBtn);
@@ -157,7 +157,7 @@ describe('Term Condition Manufacturer Master components', () => {
             </Provider>
         );
 
-        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        const advanceFilter = screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advanceFilter);
 
         const fromDate = screen.getByRole('textbox', { name: 'GRN From Date' });

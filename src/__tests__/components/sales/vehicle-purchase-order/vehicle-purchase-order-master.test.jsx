@@ -68,7 +68,7 @@ describe('Vehicle Purchase Order Master component render', () => {
         );
         const searchBtn = screen.getByRole('button', { name: 'search', exact: false });
         fireEvent.click(searchBtn);
-        const advancedFiltersBtn = screen.getByRole('button', { name: 'Advanced Filters', exact: false });
+        const advancedFiltersBtn = screen.getByRole('button', { name: 'Advance Filters', exact: false });
         fireEvent.click(advancedFiltersBtn);
         const plusBtn = screen.getByRole('button', { name: 'plus Add', exact: false });
         fireEvent.click(plusBtn);
@@ -152,7 +152,7 @@ describe('Vehicle Purchase Order Master component render', () => {
 
     it('reset button should work', () => {
         customRender(<VehiclePurchaseOrderMaster resetData={jest.fn()} setFilterString={jest.fn()} />);
-        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        const advanceFilter = screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advanceFilter);
         const resetBtn = screen.getByRole('button', { name: /Reset/i });
         fireEvent.click(resetBtn);
@@ -160,7 +160,7 @@ describe('Vehicle Purchase Order Master component render', () => {
 
     it('test for closing the advance filter', () => {
         customRender(<VehiclePurchaseOrderMaster setFilterString={jest.fn()} resetData={jest.fn()} />);
-        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        const advanceFilter = screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advanceFilter);
         const closeBtn = screen.getByRole('button', { name: /Close/i });
         fireEvent.click(closeBtn);
@@ -168,7 +168,7 @@ describe('Vehicle Purchase Order Master component render', () => {
 
     it('advance filter search button should work', async () => {
         customRender(<VehiclePurchaseOrderMaster setFilterString={jest.fn()} resetData={jest.fn()} />);
-        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        const advanceFilter = screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advanceFilter);
         const searchBtn = screen.getAllByRole('button', { name: /Search/i });
         fireEvent.click(searchBtn[0]);

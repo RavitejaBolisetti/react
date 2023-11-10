@@ -33,7 +33,6 @@ afterEach(() => {
     assignMock.mockClear();
 });
 
-
 const buttonData = {
     closeBtn: false,
     cancelBtn: true,
@@ -50,13 +49,16 @@ describe('List Employee Department Master components', () => {
             data: {
                 DealerManpower: {
                     DealerEmployeeDepartmentMaster: {
-                        isLoaded: true, data: [{
-                            departmentCode: "DC98",
-                            departmentName: "Employee",
-                            divisionCode: "C",
-                            divisionName: "COMMON",
-                            status: true
-                        }]
+                        isLoaded: true,
+                        data: [
+                            {
+                                departmentCode: 'DC98',
+                                departmentName: 'Employee',
+                                divisionCode: 'C',
+                                divisionName: 'COMMON',
+                                status: true,
+                            },
+                        ],
                     },
                 },
             },
@@ -64,16 +66,12 @@ describe('List Employee Department Master components', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <ListEmployeeDepartmentMaster
-                    isVisible={true}
-                    fetchList={jest.fn()}
-                    fetchDivisionLovList={jest.fn()}
-                />
+                <ListEmployeeDepartmentMaster isVisible={true} fetchList={jest.fn()} fetchDivisionLovList={jest.fn()} />
             </Provider>
-        )
+        );
 
-        const departmentName = screen.getByRole('textbox', { name: 'Department Name' })
-        fireEvent.change(departmentName, { target: { value: "testing" } })
+        const departmentName = screen.getByRole('textbox', { name: 'Department Name' });
+        fireEvent.change(departmentName, { target: { value: 'testing' } });
 
         const searchImg = screen.getByRole('button', { name: 'search' });
         fireEvent.click(searchImg);
@@ -114,7 +112,7 @@ describe('List Employee Department Master components', () => {
         const searchImg = screen.getByRole('img', { name: 'search' });
         fireEvent.click(searchImg);
 
-        const clearBtn=screen.getByRole('button', { name: 'Clear' });
+        const clearBtn = screen.getByRole('button', { name: 'Clear' });
         fireEvent.click(clearBtn);
 
     })
@@ -125,19 +123,22 @@ describe('List Employee Department Master components', () => {
             data: {
                 DealerManpower: {
                     DealerEmployeeDepartmentMaster: {
-                        isLoaded: true, data: [{
-                            departmentCode: "DC98",
-                            departmentName: "Employee",
-                            divisionCode: "C",
-                            divisionName: "COMMON",
-                            status: true
-                        }]
+                        isLoaded: true,
+                        data: [
+                            {
+                                departmentCode: 'DC98',
+                                departmentName: 'Employee',
+                                divisionCode: 'C',
+                                divisionName: 'COMMON',
+                                status: true,
+                            },
+                        ],
                     },
                 },
             },
         });
 
-        const fetchList=jest.fn();
+        const fetchList = jest.fn();
 
         customRender(
             <Provider store={mockStore}>
@@ -149,7 +150,7 @@ describe('List Employee Department Master components', () => {
         fireEvent.click(refreshbutton);
 
         fetchList.mock.calls[0][0].onSuccessAction();
-    })
+    });
 
     it('Should render Employee Department Master add edit form components', () => {
         const mockStore = createMockStore({
@@ -157,13 +158,16 @@ describe('List Employee Department Master components', () => {
             data: {
                 DealerManpower: {
                     DealerEmployeeDepartmentMaster: {
-                        isLoaded: true, data: [{
-                            departmentCode: "DC98",
-                            departmentName: "Employee",
-                            divisionCode: "C",
-                            divisionName: "COMMON",
-                            status: true
-                        }]
+                        isLoaded: true,
+                        data: [
+                            {
+                                departmentCode: 'DC98',
+                                departmentName: 'Employee',
+                                divisionCode: 'C',
+                                divisionName: 'COMMON',
+                                status: true,
+                            },
+                        ],
                     },
                 },
             },
@@ -173,7 +177,7 @@ describe('List Employee Department Master components', () => {
             <Provider store={mockStore}>
                 <ListEmployeeDepartmentMaster fetchList={jest.fn()} fetchDivisionLovList={jest.fn()} />
             </Provider>
-        )
+        );
 
         const plusAddBtn = screen.getByRole('button', { name: 'plus Add', exact: false });
         fireEvent.click(plusAddBtn);
@@ -192,7 +196,7 @@ describe('List Employee Department Master components', () => {
 
         const saveNewBtn = screen.getByTestId('save-and-new');
         fireEvent.click(saveNewBtn);
-    })
+    });
 
     it('Should render Employee Department Master add edit form close components', () => {
         const mockStore = createMockStore({
@@ -200,13 +204,16 @@ describe('List Employee Department Master components', () => {
             data: {
                 DealerManpower: {
                     DealerEmployeeDepartmentMaster: {
-                        isLoaded: true, data: [{
-                            departmentCode: "DC98",
-                            departmentName: "Employee",
-                            divisionCode: "C",
-                            divisionName: "COMMON",
-                            status: true
-                        }]
+                        isLoaded: true,
+                        data: [
+                            {
+                                departmentCode: 'DC98',
+                                departmentName: 'Employee',
+                                divisionCode: 'C',
+                                divisionName: 'COMMON',
+                                status: true,
+                            },
+                        ],
                     },
                 },
             },
@@ -218,16 +225,14 @@ describe('List Employee Department Master components', () => {
             <Provider store={mockStore}>
                 <ListEmployeeDepartmentMaster saveData={saveData} setIsFormVisible={jest.fn()} handleButtonClick={jest.fn()} fetchList={jest.fn()} resetData={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} />
             </Provider>
-        )
+        );
 
         const plusAddBtn = screen.getByRole('button', { name: 'plus Add', exact: false });
         fireEvent.click(plusAddBtn);
 
         const closeBtn = screen.getByRole('button', { name: 'Close', exact: false });
         fireEvent.click(closeBtn);
-
-
-    })
+    });
 
     it('Should render Employee Department Master add edit form cancel components', () => {
         const mockStore = createMockStore({
@@ -235,13 +240,16 @@ describe('List Employee Department Master components', () => {
             data: {
                 DealerManpower: {
                     DealerEmployeeDepartmentMaster: {
-                        isLoaded: true, data: [{
-                            departmentCode: "DC98",
-                            departmentName: "Employee",
-                            divisionCode: "C",
-                            divisionName: "COMMON",
-                            status: true
-                        }]
+                        isLoaded: true,
+                        data: [
+                            {
+                                departmentCode: 'DC98',
+                                departmentName: 'Employee',
+                                divisionCode: 'C',
+                                divisionName: 'COMMON',
+                                status: true,
+                            },
+                        ],
                     },
                 },
             },
@@ -253,15 +261,14 @@ describe('List Employee Department Master components', () => {
             <Provider store={mockStore}>
                 <ListEmployeeDepartmentMaster saveData={saveData} setIsFormVisible={jest.fn()} handleButtonClick={jest.fn()} fetchList={jest.fn()} resetData={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} />
             </Provider>
-        )
+        );
 
         const plusAddBtn = screen.getByRole('button', { name: 'plus Add', exact: false });
         fireEvent.click(plusAddBtn);
 
         const cancelBtn = screen.getByRole('button', { name: 'Cancel', exact: false });
         fireEvent.click(cancelBtn);
-    })
-
+    });
 
     it('test for onSuccess', async () => {
         const mockStore = createMockStore({
@@ -269,14 +276,17 @@ describe('List Employee Department Master components', () => {
             data: {
                 DealerManpower: {
                     DealerEmployeeDepartmentMaster: {
-                        isLoaded: true, data: [{
-                            departmentCode: "DC98",
-                            departmentName: "Employee",
-                            divisionCode: "C",
-                            divisionName: "COMMON",
-                            status: true
-                        }]
-                    }
+                        isLoaded: true,
+                        data: [
+                            {
+                                departmentCode: 'DC98',
+                                departmentName: 'Employee',
+                                divisionCode: 'C',
+                                divisionName: 'COMMON',
+                                status: true,
+                            },
+                        ],
+                    },
                 },
             },
         });
@@ -301,5 +311,4 @@ describe('List Employee Department Master components', () => {
         saveData.mock.calls[0][0].onSuccess();
         saveData.mock.calls[0][0].onError();
     });
-
 });

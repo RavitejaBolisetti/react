@@ -40,17 +40,17 @@ describe('Vehicle Price Master component render', () => {
         );
     });
 
-    it('advanced filters and close button should work', async () => {
+    it('Advance Filters and close button should work', async () => {
         customRender(<VehiclePriceMaster />);
-        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        const advanceFilter = screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advanceFilter);
         const closeBtn = screen.getByRole('button', { name: 'Close' });
         fireEvent.click(closeBtn);
     });
 
-    it('advanced filters and reset button should work', async () => {
+    it('Advance Filters and reset button should work', async () => {
         customRender(<VehiclePriceMaster />);
-        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        const advanceFilter = screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advanceFilter);
         const resetBtn = screen.getByRole('button', { name: 'Reset' });
         fireEvent.click(resetBtn);
@@ -137,7 +137,7 @@ describe('Vehicle Price Master component render', () => {
                 <VehiclePriceMaster />
             </Provider>
         );
-        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        const advanceFilter = screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advanceFilter);
         const stateBox = screen.getByRole('combobox', { name: 'State' });
         act(async () => {

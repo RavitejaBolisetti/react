@@ -30,7 +30,7 @@ describe('Rsm Asm Approval Master Component', () => {
 
     it('reset button should work', () => {
         customRender(<RsmAsmApprovalMaster setFilterString={jest.fn()} />);
-        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        const advanceFilter = screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advanceFilter);
         const resetBtn = screen.getByRole('button', { name: /Reset/i });
         fireEvent.click(resetBtn);
@@ -38,7 +38,7 @@ describe('Rsm Asm Approval Master Component', () => {
 
     it('test for closing the advance filter', () => {
         customRender(<RsmAsmApprovalMaster setFilterString={jest.fn()} onCloseAction={jest.fn()} />);
-        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        const advanceFilter = screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advanceFilter);
         const closeBtn = screen.getByRole('button', { name: /Close/i });
         fireEvent.click(closeBtn);
@@ -46,7 +46,7 @@ describe('Rsm Asm Approval Master Component', () => {
 
     it('test for search the advance filter', async () => {
         customRender(<RsmAsmApprovalMaster isVisible={true} setFilterString={jest.fn()} fetchProductList={jest.fn()} />);
-        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        const advanceFilter = screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advanceFilter);
         const searchBtn = screen.getAllByRole('button', { name: /Search/i });
         fireEvent.click(searchBtn[0]);

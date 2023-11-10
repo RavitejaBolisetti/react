@@ -21,17 +21,23 @@ let assignMock = jest.fn();
 delete window.location;
 window.location = { assign: assignMock };
 
-
 const FormWrapper = (props) => {
     const [form, listFilterForm] = Form.useForm();
     return <BayTypeMaster form={form} listFilterForm={listFilterForm} {...props} />;
-}
+};
 
 const mockStore = createMockStore({
     auth: { userId: 106 },
     data: {
         DealerManpower: {
-            BayTypeMaster: { isLoaded: false, isLoading: false, data: [{ key: 1, value: 'test' }, { key: 2, value: 'test' }] },
+            BayTypeMaster: {
+                isLoaded: false,
+                isLoading: false,
+                data: [
+                    { key: 1, value: 'test' },
+                    { key: 2, value: 'test' },
+                ],
+            },
         },
     },
 });
@@ -43,19 +49,22 @@ const buttonData = {
     saveAndNewBtn: true,
     editBtn: false,
     formBtnActive: false,
-    saveAndNewBtnClicked: true
+    saveAndNewBtnClicked: true,
 };
 const filterString = {
-    keyword: 'test'
-}
+    keyword: 'test',
+};
 
 describe('Bay type master components', () => {
     it('Should render Bay type master Applied Advance Filter components', () => {
-        const tableData = [{ key: 1, value: 'test' }, { key: 2, value: 'test' }]
+        const tableData = [
+            { key: 1, value: 'test' },
+            { key: 2, value: 'test' },
+        ];
 
         const props = {
             formActionType: { viewMode: false, editMode: false },
-        }
+        };
 
         customRender(
             <Provider store={mockStore}>
@@ -71,7 +80,7 @@ describe('Bay type master components', () => {
                     fetchList={jest.fn()}
                 />
             </Provider>
-        )
+        );
 
         const textBox = screen.getByPlaceholderText('Search');
         fireEvent.change(textBox, { target: { value: 'kai' } });
@@ -85,10 +94,9 @@ describe('Bay type master components', () => {
 
         const plusImg = screen.getByRole('img', { name: 'plus' });
         fireEvent.click(plusImg);
-    })
+    });
 
     it('refresh button should work', async () => {
-
         const mockStore = createMockStore({
             auth: { userId: 123 },
             data: {
@@ -96,7 +104,7 @@ describe('Bay type master components', () => {
                     BayTypeMaster: {
                         isLoaded: true,
                         data: [{ id: 1, name: 'test', code: 'Alice', status: true }],
-                    }
+                    },
                 },
             },
         });
@@ -121,7 +129,8 @@ describe('Bay type master components', () => {
             data: {
                 DealerManpower: {
                     BayTypeMaster: {
-                        isLoaded: true, data: [{ code: "234567", name: "sdfghjkwertyu", status: true }]
+                        isLoaded: true,
+                        data: [{ code: '234567', name: 'sdfghjkwertyu', status: true }],
                     },
                 },
             },
@@ -129,7 +138,7 @@ describe('Bay type master components', () => {
 
         const saveData = jest.fn();
 
-        const res = { data: [{ code: "234567", name: "sdfghjkwertyu", status: true }] };
+        const res = { data: [{ code: '234567', name: 'sdfghjkwertyu', status: true }] };
 
         customRender(
             <Provider store={mockStore}>
@@ -153,14 +162,14 @@ describe('Bay type master components', () => {
         saveData.mock.calls[0][0].onError();
     });
 
-
     it('Should render onError', async () => {
         const mockStore = createMockStore({
             auth: { userId: 106 },
             data: {
                 DealerManpower: {
                     BayTypeMaster: {
-                        isLoaded: true, data: [{ code: "234567", name: "sdfghjkwertyu", status: true }]
+                        isLoaded: true,
+                        data: [{ code: '234567', name: 'sdfghjkwertyu', status: true }],
                     },
                 },
             },
@@ -168,9 +177,9 @@ describe('Bay type master components', () => {
 
         const saveData = jest.fn();
 
-        const res = { data: [{ code: "234567", name: "sdfghjkwertyu", status: true }] };
+        const res = { data: [{ code: '234567', name: 'sdfghjkwertyu', status: true }] };
 
-        const formActionType = { viewMode: false }
+        const formActionType = { viewMode: false };
 
         customRender(
             <Provider store={mockStore}>
@@ -178,7 +187,7 @@ describe('Bay type master components', () => {
             </Provider>
         );
 
-        const addBtn = screen.getByRole('button', { name: "plus Add"});
+        const addBtn = screen.getByRole('button', { name: 'plus Add' });
         fireEvent.click(addBtn);
 
         const textBox = screen.getByPlaceholderText('Enter bay type code');
@@ -187,7 +196,7 @@ describe('Bay type master components', () => {
         const typeName = screen.getByRole('textbox', { name: 'Bay Type Name' });
         fireEvent.change(typeName, { target: { value: 'kai' } });
 
-        const status = screen.getByRole('switch', { name: 'Status', exact: false })
+        const status = screen.getByRole('switch', { name: 'Status', exact: false });
         fireEvent.click(status);
 
         const saveBtn = screen.getByTestId('save');
@@ -207,23 +216,24 @@ describe('Bay type master components', () => {
             data: {
                 DealerManpower: {
                     BayTypeMaster: {
-                        isLoaded: true, data: [{ code: "234567", name: "sdfghjkwertyu", status: true }]
+                        isLoaded: true,
+                        data: [{ code: '234567', name: 'sdfghjkwertyu', status: true }],
                     },
                 },
             },
         });
         const saveData = jest.fn();
-        const formActionType = { viewMode: false }
+        const formActionType = { viewMode: false };
         customRender(
             <Provider store={mockStore}>
                 <BayTypeMaster saveData={saveData} formActionType={formActionType} handleButtonClick={jest.fn()} fetchList={jest.fn()} resetData={jest.fn()} buttonData={buttonData} />
             </Provider>
         );
 
-        const plusAdd=screen.getByRole('button', { name: 'plus Add' });
+        const plusAdd = screen.getByRole('button', { name: 'plus Add' });
         fireEvent.click(plusAdd);
 
-        const closeBtn=screen.getByRole('button', { name: 'Close' });
+        const closeBtn = screen.getByRole('button', { name: 'Close' });
         fireEvent.click(closeBtn);
     });
 });

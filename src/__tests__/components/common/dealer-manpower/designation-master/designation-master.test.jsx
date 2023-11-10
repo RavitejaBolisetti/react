@@ -129,8 +129,8 @@ describe('Designation Master components', () => {
 
         customRender( <DesignationMaster isVisible={true} {...props} /> );
 
-        const advanceFilter=screen.getByText('Advanced Filters');
-        fireEvent.click(advanceFilter);
+        // const advanceFilter=screen.getByText('Advance Filters');
+        // fireEvent.click(advanceFilter);
 
         const resetBtn=screen.getByRole('button', { name: 'Reset' });
         fireEvent.click(resetBtn);

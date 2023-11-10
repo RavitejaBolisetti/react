@@ -117,20 +117,20 @@ describe('Render components',() => {
         fireEvent.click(saveBtn);
     });
 
-    it('Advanced Filters, closeImg', () => {
+    it('Advance Filters, closeImg', () => {
         customRender(<CreditDebitNoteMaster setFilterString={setFilterString} />);
 
-        const advancedBtn = screen.getByRole('button', {name:'Advanced Filters'});
+        const advancedBtn = screen.getByRole('button', {name:'Advance Filters'});
         fireEvent.click(advancedBtn);
 
         const closeImg = screen.getByRole('img', {name:'close'});
         fireEvent.click(closeImg);
     });
 
-    it('Advanced Filters, Search', () => {
+    it('Advance Filters, Search', () => {
         customRender(<CreditDebitNoteMaster setFilterString={setFilterString} />);
 
-        const advancedBtn = screen.getByRole('button', {name:'Advanced Filters'});
+        const advancedBtn = screen.getByRole('button', {name:'Advance Filters'});
         fireEvent.click(advancedBtn);
 
         const searchBtn = screen.getByRole('button', {name:'Search'});

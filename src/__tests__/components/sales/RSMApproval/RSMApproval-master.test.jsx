@@ -24,7 +24,7 @@ describe('RSMApprovalMaster Component', () => {
     it('reset button should work', () => {
         customRender(<RSMApprovalMaster setFilterString={jest.fn()} />);
 
-        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        const advanceFilter = screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advanceFilter);
         const resetBtn = screen.getByRole('button', { name: /Reset/i });
         fireEvent.click(resetBtn);
@@ -33,7 +33,7 @@ describe('RSMApprovalMaster Component', () => {
     it('test for closing the advance filter', () => {
         customRender(<RSMApprovalMaster setFilterString={jest.fn()} />);
 
-        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        const advanceFilter = screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advanceFilter);
         const closeBtn = screen.getByRole('button', { name: /Close/i });
         fireEvent.click(closeBtn);

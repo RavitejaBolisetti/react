@@ -65,27 +65,27 @@ describe('HoPriceMappingMaster Component', () => {
         );
     });
 
-    it('advanced filters and close button should work', async () => {
+    it('Advance Filters and close button should work', async () => {
         customRender(<HoPriceMappingMaster />);
-        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        const advanceFilter = screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advanceFilter);
         const closeBtn = screen.getByRole('button', { name: 'Close' });
         fireEvent.click(closeBtn);
     });
 
-    it('advanced filters and reset button should work', async () => {
+    it('Advance Filters and reset button should work', async () => {
         customRender(<HoPriceMappingMaster setFilterString={jest.fn()} />);
-        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        const advanceFilter = screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advanceFilter);
         const resetBtn = screen.getByRole('button', { name: 'Reset' });
         fireEvent.click(resetBtn);
     });
 
-    it('advanced filters and apply button should work', async () => {
+    it('Advance Filters and apply button should work', async () => {
         const value = '';
         const handleFilterChange = jest.fn('stateCode', value);
         customRender(<HoPriceMappingMaster handleFilterChange={handleFilterChange} />);
-        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        const advanceFilter = screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advanceFilter);
 
         const rsoPlantBtn = screen.getByRole('button', { name: 'RSO Plant (Non-eDCM)' });

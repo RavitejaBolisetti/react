@@ -49,7 +49,7 @@ describe('Evr details capturing master render', () => {
 
     it('reset button should work', () => {
         customRender(<FormWrapper setFilterString={jest.fn()} fetchProductList={jest.fn()} />);
-        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        const advanceFilter = screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advanceFilter);
         const resetBtn = screen.getByRole('button', { name: /Reset/i });
         fireEvent.click(resetBtn);
@@ -57,7 +57,7 @@ describe('Evr details capturing master render', () => {
 
     it('test for closing the advance filter', () => {
         customRender(<FormWrapper fetchProductList={jest.fn()} />);
-        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        const advanceFilter = screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advanceFilter);
         const closeBtn = screen.getByRole('button', { name: /Close/i });
         fireEvent.click(closeBtn);
@@ -65,7 +65,7 @@ describe('Evr details capturing master render', () => {
 
     it('test for onfinish failed', async () => {
         customRender(<FormWrapper isVisible={true} fetchProductList={jest.fn()} />);
-        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        const advanceFilter = screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advanceFilter);
         const searchBtn = screen.getByRole('button', { name: /Apply/i });
         fireEvent.click(searchBtn);

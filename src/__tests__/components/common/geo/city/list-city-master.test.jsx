@@ -136,10 +136,10 @@ describe('List City Master Component', () => {
         fireEvent.click(clearBtn);
     });
 
-    it('advanced filters and close button should work', async () => {
+    it('advance filters and close button should work', async () => {
         customRender(<ListCityMaster />);
         
-        const advancedFilters=screen.getByRole('button', { name: /Advanced Filters/i });
+        const advancedFilters=screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advancedFilters);
         const closeBtn=screen.getByRole('button', { name: /Close/i });
         fireEvent.click(closeBtn);
@@ -148,14 +148,14 @@ describe('List City Master Component', () => {
     it('advanced search should return error on empty form fields', async () => {
         customRender(<ListCityMaster />);
         
-        const advancedFilters=screen.getByRole('button', { name: /Advanced Filters/i });
+        const advancedFilters=screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advancedFilters);
         
         const searchBtn=screen.getAllByRole('button', { name: /Search/i });
         fireEvent.click(searchBtn[1]);
     });
 
-    it('advanced filters should work', async () => {
+    it('Advance Filters should work', async () => {
         const mockStore = createMockStore({
             auth: { userId: 106 },
             data: {
@@ -173,7 +173,7 @@ describe('List City Master Component', () => {
             </Provider>
         );
         
-        const advancedFilters=screen.getByRole('button', { name: /Advanced Filters/i });
+        const advancedFilters=screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advancedFilters);
 
         const countrySelect=screen.getByRole('combobox', { name: 'Country' });
@@ -185,7 +185,7 @@ describe('List City Master Component', () => {
         fireEvent.click(searchBtn[1]);
     });
 
-    it('advanced filters should work with city select', async () => {
+    it('advance filters should work with city select', async () => {
         const mockStore = createMockStore({
             auth: { userId: 106 },
             data: {
@@ -203,7 +203,7 @@ describe('List City Master Component', () => {
             </Provider>
         );
         
-        const advancedFilters=screen.getByRole('button', { name: /Advanced Filters/i });
+        const advancedFilters=screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advancedFilters);
 
         const stateSelect=screen.getByRole('combobox', { name: /State/i });

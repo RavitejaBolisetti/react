@@ -19,7 +19,7 @@ describe('rsm asm approval filter render', () => {
 
     it('advance filters button should work', async () => {
         customRender(<AdvanceFilter setAdvanceSearchVisible={jest.fn()} advanceFilter={true} />);
-        const advancedFiltersBtn = screen.getByRole('button', { name: 'Advanced Filters' });
+        const advancedFiltersBtn = screen.getByRole('button', { name: 'Advance Filters' });
         fireEvent.click(advancedFiltersBtn);
     });
 

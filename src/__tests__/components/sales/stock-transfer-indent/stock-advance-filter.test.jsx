@@ -35,10 +35,10 @@ describe("AdvanceOTFFilter",()=>{
             fireEvent.click(receivedBtn);
         });
 
-        it("Advanced Filters Button", ()=>{
+        it("Advance Filters Button", ()=>{
             customRender(<FormWrapper setAdvanceSearchVisible={jest.fn()} advanceFilter={true} />);
     
-            const advancedBtn = screen.getByRole('button', {name:'Advanced Filters'});
+            const advancedBtn = screen.getByRole('button', {name:'Advance Filters'});
             fireEvent.click(advancedBtn);
         });
 

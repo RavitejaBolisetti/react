@@ -71,7 +71,7 @@ describe('vehicle allotment priority master component', () => {
         fireEvent.click(searchBtn);
         const plusAdd = screen.getByRole('button', { name: 'plus Add' });
         fireEvent.click(plusAdd);
-        const advancedFilters = screen.getByRole('button', { name: 'Advanced Filters' });
+        const advancedFilters = screen.getByRole('button', { name: 'Advance Filters' });
         fireEvent.click(advancedFilters);
         const leftBtn = screen.getByRole('button', { name: 'left' });
         fireEvent.click(leftBtn);
@@ -91,7 +91,7 @@ describe('vehicle allotment priority master component', () => {
     it('reset button should work', () => {
         customRender(<FormWrapper typeData={typeData} resetDataList={jest.fn()} showAddButton={true} FROM_ACTION_TYPE={FROM_ACTION_TYPE} buttonData={buttonData} />);
 
-        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        const advanceFilter = screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advanceFilter);
         const resetBtn = screen.getByRole('button', { name: /Reset/i });
         fireEvent.click(resetBtn);
@@ -100,7 +100,7 @@ describe('vehicle allotment priority master component', () => {
     it('test for closing the advance filter', () => {
         customRender(<FormWrapper typeData={typeData} resetDataList={jest.fn()} showAddButton={true} FROM_ACTION_TYPE={FROM_ACTION_TYPE} buttonData={buttonData} />);
 
-        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        const advanceFilter = screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advanceFilter);
         const closeBtn = screen.getByRole('button', { name: /Close/i });
         fireEvent.click(closeBtn);
@@ -234,7 +234,7 @@ describe('vehicle allotment priority master component', () => {
         fireEvent.click(closeCircle);
     });
 
-    it('should render advanced filters search', () => {
+    it('should render Advance Filters search', () => {
         const mockStore = createMockStore({
             auth: { userId: 106 },
             data: {
