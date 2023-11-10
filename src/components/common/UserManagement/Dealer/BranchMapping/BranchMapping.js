@@ -10,7 +10,7 @@ import AddEditForm from './AddEditForm';
 import { NEXT_ACTION } from 'utils/btnVisiblity';
 
 const BranchMapping = (props) => {
-    const { currentSection, formData, userId, selectedDealerCode, dealerDataList, setButtonData, showGlobalNotification, handleButtonClick } = props;
+    const { currentSection, formData, userId, setButtonData, showGlobalNotification, handleButtonClick, loginUserData } = props;
     const { fetchUsrDlrBranchLocationsList, resetUsrDlrBranchLocationsList, userUsrDlrBrLoactionShowLoading, usrdlrBranchLocationDataList, isUsrDlrBrLocationLoding, isUsrdlrBrLocationsLoaded } = props;
     const { fetchDlrBranchLocationsList, saveUsrDlrBrLoactionRoleDataList, resetDlrBranchLocationsList, userDlrBrLoactionShowLoading, dlrBranchLocationDataList, isDlrBrLocationLoding } = props;
     const [form] = Form.useForm();
@@ -25,7 +25,6 @@ const BranchMapping = (props) => {
     }, []);
 
     useEffect(() => {
-        const parentGroupId = dealerDataList?.find((el) => el?.dealerCode === selectedDealerCode || el?.dealerCode === formData?.dealerCode)?.dealerParentGroupCode;
 
         if (dlrBranchLocationDataList?.length && isUsrdlrBrLocationsLoaded) {
             const defaultBranches = [];
@@ -34,7 +33,7 @@ const BranchMapping = (props) => {
                 if (matchMapdata) {
                     defaultBranches.push({ ...matchMapdata, locationName: branch?.dealerLocationName });
                 } else {
-                    let unMapdata = { id: '', locationCode: branch?.id, locationName: branch?.dealerLocationName, parentGroupId: branch?.parentGroupCode || parentGroupId, defaultBranchIndicator: false, status: false, userId: formData?.employeeCode };
+                    let unMapdata = { id: '', locationCode: branch?.id, locationName: branch?.dealerLocationName, parentGroupId: loginUserData?.parentGroupCode, defaultBranchIndicator: false, status: false, userId: formData?.employeeCode };
 
                     defaultBranches.push(unMapdata);
                 }

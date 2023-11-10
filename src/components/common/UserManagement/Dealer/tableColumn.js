@@ -17,11 +17,11 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             dataIndex: 'employeeCode',
             width: '14%',
         }),
-        tblPrepareColumns({
-            title: translateContent('userManagement.label.dealerName'),
-            dataIndex: 'dealerName',
-            width: '14%',
-        }),
+        // tblPrepareColumns({
+        //     title: translateContent('userManagement.label.dealerName'),
+        //     dataIndex: 'dealerName',
+        //     width: '14%',
+        // }),
         tblPrepareColumns({
             title: translateContent('userManagement.label.userName'),
             dataIndex: 'userName',
