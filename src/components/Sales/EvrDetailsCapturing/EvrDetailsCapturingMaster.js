@@ -303,7 +303,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
     };
 
     const handleSearch = (value) => {
-        setFilterString({ ...filterString, modelDescription: value, advanceFilter: true });
+        setFilterString({ ...filterString, modelDescription: value, advanceFilter: true, current: 1 });
         searchForm.resetFields();
     };
 
