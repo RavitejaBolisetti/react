@@ -23,6 +23,7 @@ export default function VehicleDeliveryNoteFilter(props) {
         filterString,
         optionType: optionData,
         setFilterString,
+        allowClear: false,
     };
 
     return (

@@ -319,10 +319,8 @@ const UserManagementMain = (props) => {
     };
 
     const createUserConfirmationModal = () => {
-        let message;
-
-        let resMessage = notFoundText?.MESSAGE;
-        message = (
+        const resMessage = notFoundText?.MESSAGE;
+        const message = (
             <>
                 <Space direction="vertical">
                     {resMessage}

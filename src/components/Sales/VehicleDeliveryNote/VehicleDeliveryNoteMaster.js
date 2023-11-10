@@ -384,6 +384,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
 
     const handleDeliveryNoteTypeChange = (buttonName) => {
         const buttonKey = buttonName?.key;
+        setShowDataLoading(true);
         setDeliveryStatus(buttonKey);
         setFilterString({ deliveryStatus: buttonKey, current: 1 });
         switch (buttonKey) {
@@ -650,7 +651,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         totalRecords,
         setPage: setFilterString,
         page: filterString,
-        tableColumn: tableColumnDeliveryNoteMaster({ handleButtonClick, actionButtonVisiblity, deliveryType }),
+        tableColumn: tableColumnDeliveryNoteMaster({ handleButtonClick, actionButtonVisiblity, deliveryType, deliveryStatus }),
         tableData: data,
         showAddButton: false,
         typeData,
