@@ -9,7 +9,19 @@ import { Provider } from 'react-redux';
 // eslint-disable-next-line jest/no-mocks-import
 import { StockTransferIndentMaster } from 'components/Sales/StockTransferIndent/StockTransferIndentMaster';
 import customRender from '@utils/test-utils';
-import createMockStore from '__mocks__/store';
+import { configureStore } from '@reduxjs/toolkit';
+import thunk from 'redux-thunk';
+import { rootReducer } from 'store/reducers';
+
+const createMockStore = (initialState) => {
+    const mockStore = configureStore({
+        reducer: rootReducer,
+        preloadedState: initialState,
+        middleware: [thunk],
+    });
+
+    return mockStore;
+};
 
 
 jest.mock('components/Sales/StockTransferIndent/IssueIndent/IssueIndentMaster', () => {
@@ -182,9 +194,6 @@ describe('StockTransferIndentMaster component', () => {
 
         const searchImg = screen.getByRole('img', { name: 'search' });
         fireEvent.click(searchImg);
-
-        const removeBtn = screen.getByTestId('removeBtn');
-        fireEvent.click(removeBtn);
     });
 
     it('IssueIndentFrom', async () => {

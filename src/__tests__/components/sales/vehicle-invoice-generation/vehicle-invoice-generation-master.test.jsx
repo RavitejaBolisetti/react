@@ -3,6 +3,7 @@ import { VehicleInvoiceMaster } from '@components/Sales/VehicleInvoiceGeneration
 import customRender from '@utils/test-utils';
 import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 
 afterEach(() => {
@@ -24,28 +25,6 @@ jest.mock('store/actions/data/otf/salesConsultant', () => ({
 jest.mock('store/actions/data/otf/vehicleDetails', () => ({
     otfvehicleDetailsDataActions: {},
 }));
-
-const mockData = {
-    auth: { userId: 106 },
-    data: {
-        ConfigurableParameterEditing: {
-            filteredListData: {
-                INVOICE_CANCEL_REASON: [{ key: 106, value: 'Reason-1' }],
-                INV_SER: [{ key: 'Name', value: 'Name' }],
-                YES_NO_FLG: [{ key: 'Yes', value: 'Yes' }],
-            },
-        },
-        VehicleInvoiceGeneration: {
-            VehicleInvoiceSearchList: {
-                isLoaded: true,
-                data: {
-                    paginationData: [{ bookingNumber: 'OTF23D002075', customerName: 'SHAHID', digitalSignature: 'N', id: '1a6cc630-db19-480e-a5eb-59aa5ed2fcf1', invoiceDate: '2023-10-25', invoiceNumber: 'INV24D010001', invoiceStatus: 'I', mobileNumber: '9820767616', modelDescription: 'XUV700 AX7 DSL AT 7 SEATER BLK', otfId: '61c55e70-600c-4253-9725-3890e5f641a5', otfNumber: 'OTF23D002075' }],
-                },
-                filter: { advanceFilter: true, searchType: 'Name', searchParam: 'Name', fromDate: '01/01/2000', toDate: '01/01/2023', digitalSignature: 'Yes' },
-            },
-        },
-    },
-};
 
 describe('Vehicle Invoice Generation Master components', () => {
     it('should render components', () => {

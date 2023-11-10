@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
-import { fireEvent, screen, act } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import { AddEditForm } from 'components/common/ConfigurableParameterEditing/AddEditForm';
 import { Form } from 'antd';
 

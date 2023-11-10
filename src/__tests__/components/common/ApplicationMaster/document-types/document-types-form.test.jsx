@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render, screen, act } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import DocumentTypesForm from 'components/common/ApplicationMaster/documentTypes/DocumentTypesForm';

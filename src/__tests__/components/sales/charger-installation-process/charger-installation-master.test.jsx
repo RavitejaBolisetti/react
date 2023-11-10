@@ -1,6 +1,7 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 import { ChargerInstallationMaster } from 'components/Sales/ChargerInstallationProcess/ChargerInstallationMaster';

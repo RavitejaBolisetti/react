@@ -6,10 +6,11 @@
 
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
-import { fireEvent, screen, act, waitFor } from '@testing-library/react';
+import { fireEvent, screen,  waitFor } from '@testing-library/react';
 import { ConfigurableParameterEditing } from '@components/common/ConfigurableParameterEditing/ConfigurableParameterEditing';
 import { Form } from 'antd';
 import { Provider } from 'react-redux';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 
 const FormWrapper = (props) => {
@@ -54,9 +55,7 @@ describe('Render ConfigurableParameterEditing Component', () => {
         customRender(<ConfigurableParameterEditing {...props} fetchList={jest.fn()} />);
 
         const searchImg = screen.getByRole('img', { name: 'search' });
-        act(() => {
             fireEvent.click(searchImg);
-        });
     });
 
     it('plus Add button click should work', () => {
@@ -74,14 +73,9 @@ describe('Render ConfigurableParameterEditing Component', () => {
         customRender(<FormWrapper {...props} fetchList={jest.fn()} />);
 
         const plusAddBtn = screen.getByRole('button', { name: 'plus Add' });
-        act(() => {
             fireEvent.click(plusAddBtn);
-        });
-
         const saveAddBtn = screen.getByRole('button', { name: 'Save & Add New' });
-        act(() => {
             fireEvent.click(saveAddBtn);
-        });
     });
 
     it('should render table', () => {
@@ -148,19 +142,14 @@ describe('ConfigurableParameterEditing component button should work', () => {
         );
 
         const viewBtn = screen.getByRole('button', { name: 'ai-view' });
-        act(() => {
             fireEvent.click(viewBtn);
-        });
 
         const editBtn = screen.getByRole('button', { name: 'Edit' });
-        act(() => {
+
             fireEvent.click(editBtn);
-        });
 
         const closeBtn = screen.getByRole('button', { name: 'Close' });
-        act(() => {
             fireEvent.click(closeBtn);
-        });
     });
 
     it('click should work on cancel and save button', () => {
@@ -171,19 +160,17 @@ describe('ConfigurableParameterEditing component button should work', () => {
         );
 
         const editBtn = screen.getByRole('button', { name: 'fa-edit' });
-        act(() => {
             fireEvent.click(editBtn);
-        });
 
         const saveBtn = screen.getByRole('button', { name: 'Save' });
-        act(() => {
+       
             fireEvent.click(saveBtn);
-        });
+   
 
         const cancelBtn = screen.getByRole('button', { name: 'Cancel' });
-        act(() => {
+       
             fireEvent.click(cancelBtn);
-        });
+   
     });
 
     it('test for refresh button and onFinishFailed', async () => {

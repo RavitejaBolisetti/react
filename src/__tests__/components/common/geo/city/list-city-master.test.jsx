@@ -1,6 +1,7 @@
 import React from 'react';
-import { screen, fireEvent, act, waitFor } from '@testing-library/react';
+import { screen, fireEvent,  waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import customRender from '@utils/test-utils';
 import { ListCityMaster } from 'components/common/Geo';
@@ -207,11 +208,9 @@ describe('List City Master Component', () => {
         fireEvent.click(advancedFilters);
 
         const stateSelect=screen.getByRole('combobox', { name: /State/i });
-        act(() => {
             fireEvent.change(stateSelect, { target: { value: 'TestState' } });
             const stateOptionSelect= screen.getAllByText(/TestState/i);
             fireEvent.click(stateOptionSelect[1]);
-        });
 
         const searchBtn=screen.getAllByRole('button', { name: /Search/i });
         fireEvent.click(searchBtn[1]);

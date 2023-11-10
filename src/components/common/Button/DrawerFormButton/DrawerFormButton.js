@@ -15,7 +15,7 @@ const DrawerButtons = ({ formData, onCloseAction, buttonData, setButtonData, sav
         <Row gutter={20} className={multipleForm ? styles.formFooterNew : ''}>
             <Col xs={24} sm={6} md={6} lg={6} xl={6} className={styles.buttonsGroupLeft}>
                 {buttonData?.closeBtn && (
-                    <Button danger onClick={onCloseAction}>
+                    <Button danger onClick={onCloseAction} data-testid="close_btn">
                         {translateContent('global.buttons.close')}
                     </Button>
                 )}

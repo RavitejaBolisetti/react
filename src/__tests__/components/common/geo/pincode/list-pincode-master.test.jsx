@@ -1,6 +1,7 @@
 import React from 'react';
-import { screen, fireEvent, waitFor, act } from '@testing-library/react';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import customRender from '@utils/test-utils';
 import { ListPinCodeMaster } from 'components/common/Geo';

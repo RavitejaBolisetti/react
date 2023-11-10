@@ -1,6 +1,7 @@
 import React from 'react';
-import { screen, fireEvent, act, waitFor } from '@testing-library/react';
+import { screen, fireEvent,  waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import customRender from '@utils/test-utils';
 import { ListDistrictMaster } from 'components/common/Geo';
@@ -197,11 +198,9 @@ describe('List District Master Component', () => {
         fireEvent.click(advancedFilters);
 
         const stateSelect=screen.getByRole('combobox', { name: /State Name/i });
-        act(() => {
             fireEvent.change(stateSelect, { target: { value: 'Kai' } });
             const stateOptionSelect= screen.getAllByText(/Kai/i);
             fireEvent.click(stateOptionSelect[0]);
-        });
         
         const searchBtn=screen.getAllByRole('button', { name: /Search/i });
         fireEvent.click(searchBtn[1]);

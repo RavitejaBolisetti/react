@@ -8,6 +8,7 @@ import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { EvrDetailsCapturingMaster } from '@components/Sales/EvrDetailsCapturing/EvrDetailsCapturingMaster';
 import customRender from '@utils/test-utils';
 import { Form } from 'antd';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 

@@ -3,6 +3,7 @@ import { ReceiptMaster } from 'components/Sales/Receipts/ReceiptMaster';
 import customRender from '@utils/test-utils';
 import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 
 afterEach(() => {
@@ -44,6 +45,7 @@ describe('Receipts Component', () => {
         fireEvent.click(searchBtn);
     });
 
+    // eslint-disable-next-line jest/no-identical-title
     it('should render Receipts master component UI', () => {
         customRender(<ReceiptMaster sectionName={'party'} setFilterString={jest.fn()} resetData={jest.fn()} />);
 

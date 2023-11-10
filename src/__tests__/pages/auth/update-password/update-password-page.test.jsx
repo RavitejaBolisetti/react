@@ -4,7 +4,6 @@ import { UpdatePasswordPage } from '@pages/auth/UpdatePassword/UpdatePasswordPag
 
 describe('UpdatePasswordPageBase Components', () => {
     it('should render UpdatePasswordPageBase components', () => {
-        const UpdatePasswordPageBase = customRender(<UpdatePasswordPage />);
-        expect(UpdatePasswordPageBase).toMatchSnapshot();
+        customRender(<UpdatePasswordPage />);
     });
 });

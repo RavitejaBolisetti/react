@@ -55,7 +55,7 @@ export const CreditDebitNoteFormButton = ({ record, onCloseAction, buttonData, s
                     )}
 
                     {buttonData?.saveBtn && (
-                        <Button loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
+                        <Button loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary" data-testid="save_next_btn">
                             {saveButtonName}
                         </Button>
                     )}

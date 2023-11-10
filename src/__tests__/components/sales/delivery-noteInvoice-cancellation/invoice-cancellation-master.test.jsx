@@ -1,10 +1,10 @@
 import React from 'react';
 import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import InvoiceCancellationMaster from 'components/Sales/DeliveryNoteInvoiceCancellation/InvoiceCancellationMaster';
 import customRender from '@utils/test-utils';
-import { deliveryNoteInvoiceCancellationDataAction } from 'store/actions/data/sales/deliveryNoteInvoiceCancellation';
 
 jest.mock('store/actions/data/sales/deliveryNoteInvoiceCancellation', () => ({
     deliveryNoteInvoiceCancellationDataAction: {},

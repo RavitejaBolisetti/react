@@ -37,14 +37,14 @@ describe('DrawerFormButton', () => {
             saveAndNewBtnClicked: false,
         };
 
-        const { getByText } = customRender(<DrawerFormButton buttonData={buttonData} setButtonData={jest.fn()} isLoadingOnSave={false} />);
+ customRender(<DrawerFormButton buttonData={buttonData} setButtonData={jest.fn()} isLoadingOnSave={false} />);
 
-        expect(getByText('Close')).toBeInTheDocument();
-        expect(getByText('Cancel')).toBeInTheDocument();
-        expect(getByText('Save')).toBeInTheDocument();
-        expect(getByText('Save and New')).toBeInTheDocument();
-        // expect(getByText('Edit')).toBeInTheDocument();
-        expect(getByText('Transfer Booking')).toBeInTheDocument();
+        expect(screen.getByText('Close')).toBeInTheDocument();
+        expect(screen.getByText('Cancel')).toBeInTheDocument();
+        expect(screen.getByText('Save')).toBeInTheDocument();
+        expect(screen.getByText('Save and New')).toBeInTheDocument();
+        // expect(screen.getByText('Edit')).toBeInTheDocument();
+        expect(screen.getByText('Transfer Booking')).toBeInTheDocument();
     });
 });
 

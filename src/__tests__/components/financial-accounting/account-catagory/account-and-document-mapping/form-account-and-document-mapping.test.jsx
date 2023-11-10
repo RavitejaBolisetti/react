@@ -43,7 +43,7 @@ describe('FormAccountAndDocumentMapping components', () => {
         const head = screen.getByRole('combobox', {name:'Financial Account Head'});
         fireEvent.change(head, {target:{value:'test'}})
 
-        const addBtn = screen.getByRole('button', {name:'Add'});
+        const addBtn = screen.getByTestId('add_button');
         fireEvent.click(addBtn);
     });
 
@@ -56,7 +56,7 @@ describe('FormAccountAndDocumentMapping components', () => {
         const head = screen.getByRole('combobox', {name:'Financial Account Head'});
         fireEvent.change(head, {target:{value:'test'}})
 
-        const addBtn = screen.getByRole('button', {name:'Add'});
+        const addBtn = screen.getByTestId('add_button');
         fireEvent.click(addBtn);
     });
 });

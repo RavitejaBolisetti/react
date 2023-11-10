@@ -4,8 +4,9 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import '@testing-library/jest-dom/extend-expect';
-import { screen, fireEvent, act } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 import customRender from '@utils/test-utils';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 import { VehiclePriceMaster } from 'components/Sales/VehiclePriceMaster';
@@ -140,12 +141,10 @@ describe('Vehicle Price Master component render', () => {
         const advanceFilter = screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advanceFilter);
         const stateBox = screen.getByRole('combobox', { name: 'State' });
-        act(async () => {
             fireEvent.change(stateBox, { target: { value: 'DEL' } });
             // fireEvent.click(stateBox);
             const delhiState = screen.getByText(/DELHI1/i);
             fireEvent.click(delhiState);
-        });
         const searchBtn = screen.getByRole('button', { name: 'Search' });
         fireEvent.click(searchBtn);
     });

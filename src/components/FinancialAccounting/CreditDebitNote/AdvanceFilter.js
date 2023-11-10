@@ -55,6 +55,7 @@ export default function AdvanceFilter(props) {
                         {advanceFilter && (
                             <Col xs={24} sm={10} md={10} lg={10} xl={10} className={styles.verticallyCentered}>
                                 <Button
+                                    data-testid="advanced_filters_btn"
                                     icon={<FilterIcon />}
                                     type="link"
                                     className={styles.verticallyCentered}
@@ -72,7 +73,7 @@ export default function AdvanceFilter(props) {
                     <Button type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD, transactionType: 'credit' })}>
                         {translateContent('global.buttons.addCreditNote')}
                     </Button>
-                    <Button type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD, transactionType: 'debit' })}>
+                    <Button type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD, transactionType: 'debit' })} data-testid="add_debit_btn">
                         {translateContent('global.buttons.addDebitNote')}
                     </Button>
                 </Col>
@@ -101,7 +102,7 @@ export default function AdvanceFilter(props) {
                                 })}
                             </Col>
                             <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
-                                <Button className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
+                                <Button className={styles.clearBtn} onClick={() => handleResetFilter()} danger data-testid="clear_btn">
                                     {translateContent('global.buttons.clear')}
                                 </Button>
                             </Col>

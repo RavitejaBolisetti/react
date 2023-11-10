@@ -8,6 +8,7 @@ import customRender from '@utils/test-utils';
 import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { VehicleAllotmentPriorityMaster } from '@components/Sales/VehicleAllotmentPriorityMaster/VehicleAllotmentPriorityMaster';
 import { Form } from 'antd';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 

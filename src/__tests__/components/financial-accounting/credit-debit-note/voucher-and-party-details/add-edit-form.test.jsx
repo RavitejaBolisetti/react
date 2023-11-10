@@ -17,7 +17,7 @@ describe("AddEditForm Component", ()=>{
         const plusImg = screen.getAllByRole('img', {name:'plus'});
         fireEvent.click(plusImg[1]);
 
-        const partyId = screen.getByRole('textbox', {name:'Party ID'});
+        const partyId = screen.getByTestId('party_id_input');
         fireEvent.change(partyId, {target:{name:'test'}});
 
         const searchBtn = screen.getByRole('img', {name:'search'});

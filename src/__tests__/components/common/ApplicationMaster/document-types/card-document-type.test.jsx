@@ -1,7 +1,6 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import { act } from 'react-dom/test-utils';
 import customRender from '@utils/test-utils';
 import CardDocumentType from 'components/common/ApplicationMaster/documentTypes/CardDocumentType';
 import { Form } from 'antd';

@@ -4,10 +4,11 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import '@testing-library/jest-dom/extend-expect';
-import { screen, fireEvent, waitFor, getByRole } from '@testing-library/react';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
 import customRender from '@utils/test-utils';
 import { CrmScreenEnrolmentMaster } from '@components/Sales/crmSchemeEnrolment/CrmScreenEnrolmentMaster';
 import { Form } from 'antd';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 
