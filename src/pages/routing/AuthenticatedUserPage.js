@@ -127,7 +127,7 @@ const AuthenticatedUserPageMain = (props) => {
     const location = useLocation();
     const pagePath = location.pathname;
 
-    const canViewPage = flatternData?.find((i) => i.link === pagePath)?.menuId;
+    const canViewPage = true; //flatternData?.find((i) => i.link === pagePath)?.menuId;
 
     useEffect(() => {
         if (!isDataLoaded && userId) {

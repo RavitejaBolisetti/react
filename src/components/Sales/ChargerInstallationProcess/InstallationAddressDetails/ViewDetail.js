@@ -27,7 +27,7 @@ const ViewDetailMain = (props) => {
     return (
         <div className={styles.viewDrawerContainer}>
             <Row gutter={20}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Space style={{ display: 'flex' }} size="middle" direction="vertical">
                         <Card style={{ backgroundColor: '#F2F2F2' }}>
                             <Typography>Customer Details</Typography>
@@ -46,7 +46,9 @@ const ViewDetailMain = (props) => {
                         </Card>
                     </Space>
                 </Col>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+            </Row>
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Card style={{ backgroundColor: '#F2F2F2' }}>
                         <Typography>Installation Address</Typography>
                         <Divider className={styles.marT20} />
