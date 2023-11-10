@@ -84,4 +84,4 @@ export const AddRequestModalForm = (props) => {
     );
 };
 
-export const AddRequestModal = withModal(AddRequestModalForm, {});
+export const AddRequestModal = withModal(AddRequestModalForm, { width: 600 });

@@ -5,7 +5,7 @@
  */
 import { Link } from 'react-router-dom';
 import { tblPrepareColumns } from 'utils/tableColumn';
-import { convertDateMonthYear, converDateDayjs } from 'utils/formatDateTime';
+import { convertDateMonthYear, converDateDayjs, convertDateTime, dateFormatView, timeFormatView } from 'utils/formatDateTime';
 import { ChargerStatusTag } from '../ChargerStatusTag';
 import { FiEye } from 'react-icons/fi';
 import { getCodeValue } from 'utils/getCodeValue';
@@ -49,11 +49,13 @@ export const addRequestColumnsView = (typeData, onHandleModal) => {
             title: 'Stage Request Date',
             dataIndex: 'stageRequestDate',
             key: 'stageRequestDate',
+            width: '200px',
             render: (_, record) => (record?.stageRequestDate ? convertDateMonthYear(record?.stageRequestDate) : ''),
         }),
         tblPrepareColumns({
             title: 'Request Change',
             dataIndex: 'stage',
+            width: '200px',
             render: (_, record) => getCodeValue(typeData?.CHRGR_INST_STG_TYPE, record?.stageType),
         }),
 
@@ -61,40 +63,65 @@ export const addRequestColumnsView = (typeData, onHandleModal) => {
             title: 'Visit TimeSlot 1',
             dataIndex: 'visitTimeSlotOne',
             key: 'visitTimeSlotOne',
-            render: (_, record) => (record?.visitTimeSlotOne ? convertDateMonthYear(record?.visitTimeSlotOne) : ''),
+            width: '180px',
+            render: (text) => [
+                <div>
+                    {convertDateTime(text, dateFormatView)}
+                    <br />
+                    {convertDateTime(text, timeFormatView)}
+                </div>,
+            ],
         }),
         tblPrepareColumns({
             title: 'Visit TimeSlot 2',
             dataIndex: 'visitTimeSlotTwo',
             key: 'visitTimeSlotTwo',
-            render: (_, record) => (record?.visitTimeSlotTwo ? convertDateMonthYear(record?.visitTimeSlotTwo) : ''),
+            width: '180px',
+            render: (text) => [
+                <div>
+                    {convertDateTime(text, dateFormatView)}
+                    <br />
+                    {convertDateTime(text, timeFormatView)}
+                </div>,
+            ],
         }),
         tblPrepareColumns({
             title: 'Visit TimeSlot 3',
             dataIndex: 'visitTimeSlotThree',
             key: 'visitTimeSlotThree',
-            render: (_, record) => (record?.visitTimeSlotThree ? convertDateMonthYear(record?.visitTimeSlotThree) : ''),
+            width: '180px',
+            render: (text) => [
+                <div>
+                    {convertDateTime(text, dateFormatView)}
+                    <br />
+                    {convertDateTime(text, timeFormatView)}
+                </div>,
+            ],
         }),
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'response',
             key: 'response',
+            width: '180px',
             render: (_, record) => ChargerStatusTag(record?.response),
         }),
         tblPrepareColumns({
             title: 'Service Id',
             dataIndex: 'serviceId',
             key: 'serviceId',
+            width: '200px',
         }),
         tblPrepareColumns({
             title: 'Schedule Date',
             dataIndex: 'date',
             key: 'date',
+            width: '180px',
             render: (_, record) => (record?.scheduleDate ? convertDateMonthYear(record?.scheduleDate) : ''),
         }),
         tblPrepareColumns({
             title: 'Response Status',
             dataIndex: 'response',
+            width: '180px',
             key: 'response',
         }),
         tblPrepareColumns({
@@ -104,15 +131,17 @@ export const addRequestColumnsView = (typeData, onHandleModal) => {
         }),
         tblPrepareColumns({
             title: 'Activity',
+            width: '150px',
             render: (_, record) => <FiEye onClick={() => onHandleModal(record)} style={{ color: '#ff3e5b' }} />,
         }),
         tblPrepareColumns({
             title: 'Document',
             dataIndex: 'document',
             key: 'document',
+            width: '150px',
             render: (_, record) => (
                 <a href={record?.supportingDocumentUrl} target="_blank" rel="noreferrer">
-                    <img src={IMAGES.FILE} alt="logo-images" href={record?.supportingDocumentUrl} />,
+                    <img src={IMAGES.FILE} alt="logo-images" href={record?.supportingDocumentUrl} />
                 </a>
             ),
         }),
