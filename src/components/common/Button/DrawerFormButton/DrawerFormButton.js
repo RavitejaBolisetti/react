@@ -53,7 +53,7 @@ const DrawerButtons = ({ formData, onCloseAction, buttonData, setButtonData, sav
 
                 {buttonData?.cancelOTFBtn && (
                     <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF })} type="primary" htmlType="submit">
-                        {translateContent('global.buttons.edit')}
+                        {translateContent('global.buttons.cancelBooking')}
                     </Button>
                 )}
 

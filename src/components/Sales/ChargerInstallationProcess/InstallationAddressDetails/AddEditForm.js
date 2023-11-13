@@ -60,7 +60,13 @@ const AddEditFormMain = (props) => {
             setDisabled(true);
             setChecked(true);
             if (formActionType?.editMode) {
-                form?.setFieldsValue({ address: chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.address, pinCode: chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.pinCode, city: chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.city, state: chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.state, customerMobileNumber: chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.customerMobileNumber });
+                form?.setFieldsValue({
+                    address: chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.address,
+                    pinCode: chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.pinCode,
+                    city: chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.city,
+                    state: chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.state,
+                    customerMobileNumber: chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.customerMobileNumber,
+                });
             } else {
                 form?.setFieldsValue({ address: crmCustomerVehicleData?.customerDetails?.customerAddress, pinCode: crmCustomerVehicleData?.customerDetails?.pinCode, city: crmCustomerVehicleData?.customerDetails?.customerCity, state: crmCustomerVehicleData?.customerDetails?.state, customerMobileNumber: crmCustomerVehicleData?.otfDetails?.mobileNumber });
             }
@@ -151,8 +157,8 @@ const AddEditFormMain = (props) => {
                         </Row>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Form.Item label={translateContent('installationAddressDetials.label.custName')} name="address" className={styles?.datePicker} rules={[validateRequiredInputField(translateContent('installationAddressDetials.validation.installationAddress'))]}>
-                                    <Input {...disabledProps} maxLength={50} placeholder={preparePlaceholderText('Installation Address')} />
+                                <Form.Item label={translateContent('installationAddressDetials.validation.installationAddress')} name="address" className={styles?.datePicker} rules={[validateRequiredInputField(translateContent('installationAddressDetials.validation.installationAddress'))]}>
+                                    <Input {...disabledProps} maxLength={50} placeholder={translateContent('installationAddressDetials.validation.installationAddress')} />
                                 </Form.Item>
                             </Col>
                         </Row>

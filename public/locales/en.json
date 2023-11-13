@@ -1254,14 +1254,15 @@
             "title": "Booking Management",
             "bookingManagementChangeHistory": "Booking Change History",
             "otfSoMappingChangeHistory": "Booking - SO Mapping & Un-mapping History",
-            "bookingAllotment": "Booking Allotment",
-
-            "profileCard.bookingNumber": "Booking No.",
-            "profileCard.bookingDate": "Booking Date",
-            "profileCard.customerType": "Customer Type",
-            "profileCard.mobileNumber": "Mobile No.",
-            "profileCard.model": "Model",
-            "profileCard.cpd": "CPD"
+            "bookingAllotment": "Booking Allotment"
+        },
+        "profileCard": {
+            "bookingNumber": "Booking No.",
+            "bookingDate": "Booking Date",
+            "customerType": "Customer Type",
+            "mobileNumber": "Mobile No.",
+            "model": "Model",
+            "cpd": "CPD"
         },
         "validation": {
             "mandatorySelectBooking": "Please select Booking",
@@ -1410,7 +1411,7 @@
             "address": "Address"
         },
         "validation": {
-            "installationAddress": "Installation Adress",
+            "installationAddress": "Installation Address",
             "pinCode": "Pin Code",
             "city": "City",
             "state": "State",
