@@ -4,16 +4,17 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Col, Row, Descriptions, Space, Card } from 'antd';
+import { Col, Row, Descriptions, Space, Card, Collapse, Typography } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { ServiceActivity } from './ServiceActivity';
-import { FilterIcon } from 'Icons';
 import { getCodeValue } from 'utils/getCodeValue';
 import { PARAM_MASTER } from 'constants/paramMaster';
-
+import { expandIcon } from 'utils/accordianExpandIcon';
 import styles from 'assets/sass/app.module.scss';
 import { DataTable } from 'utils/dataTable';
 import { addRequestColumnsView } from './tableColumn';
+
+const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
     const { typeData, isLoading, chargerInstallationMasterData, onHandleModal, modal, setModal } = props;
@@ -28,10 +29,11 @@ const ViewDetailMain = (props) => {
     const onAdvanceSearchCloseAction = () => {
         setModal(false);
     };
+
     const serviceActivityProps = {
         ...props,
         isVisible: modal,
-        icon: <FilterIcon size={20} />,
+        //icon: <FilterIcon size={20} />,
         titleOverride: 'Service Activity:' + getCodeValue(typeData?.[PARAM_MASTER.CHRGR_INST_HDR_STAT.id], chargerInstallationMasterData?.chargerInstDetails?.requestStatus),
         onCloseAction: onAdvanceSearchCloseAction,
         onAdvanceSearchCloseAction,
@@ -58,9 +60,24 @@ const ViewDetailMain = (props) => {
                                     <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelCode, isLoading)}</Descriptions.Item>
                                 </Descriptions>
                             </Card>
-                            <Card style={{ backgroundColor: '#F2F2F2' }}>
+                            {/* <Card style={{ backgroundColor: '#F2F2F2' }}>
                                 <DataTable tableColumn={addRequestColumnsView(typeData, onHandleModal)} tableData={chargerInstallationMasterData?.chargerInstDetails?.requestDetails} pagination={false} scroll={{ x: 2400 }} />
-                            </Card>
+                            </Card> */}
+
+                            <Collapse collapsible="icon" expandIcon={expandIcon} expandIconPosition="end">
+                                <Panel
+                                    header={
+                                        <Row type="flex" justify="space-between" align="middle" size="large">
+                                            <Row type="flex" justify="space-around" align="middle">
+                                                <Typography>Request Details</Typography>
+                                            </Row>
+                                        </Row>
+                                    }
+                                    key="1"
+                                >
+                                    <DataTable tableColumn={addRequestColumnsView(typeData, onHandleModal)} tableData={chargerInstallationMasterData?.chargerInstDetails?.requestDetails} pagination={false} scroll={{ x: 2400 }} />
+                                </Panel>
+                            </Collapse>
                         </Space>
                     </Col>
                 </Row>

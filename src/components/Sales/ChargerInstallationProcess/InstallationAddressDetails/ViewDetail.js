@@ -26,41 +26,43 @@ const ViewDetailMain = (props) => {
 
     return (
         <div className={styles.viewDrawerContainer}>
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Space style={{ display: 'flex' }} size="middle" direction="vertical">
+            <Row style={{ display: 'flex' }} size="middle">
+                <Row gutter={20} xs={24} sm={24} md={12} lg={12} xl={12}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Space style={{ display: 'flex' }} size="middle" direction="vertical">
+                            <Card style={{ backgroundColor: '#F2F2F2' }}>
+                                <Typography>Customer Details</Typography>
+                                <Divider className={styles.marT20} />
+                                <Descriptions {...customerProps}>
+                                    <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.customerName, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Address">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.address, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Pincode">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.pinCode, isLoading)}</Descriptions.Item>
+                                </Descriptions>
+                                <Descriptions {...addressProps}>
+                                    <Descriptions.Item label="City">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.city, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="State">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.state, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Customer Mobile No.">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.otfDetails?.customerMobileNumber, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Customer Email Id.">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.customerEmail, isLoading)}</Descriptions.Item>
+                                </Descriptions>
+                            </Card>
+                        </Space>
+                    </Col>
+                </Row>
+                <Row gutter={20} xs={24} sm={24} md={12} lg={12} xl={12}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Card style={{ backgroundColor: '#F2F2F2' }}>
-                            <Typography>Customer Details</Typography>
+                            <Typography>Installation Address</Typography>
                             <Divider className={styles.marT20} />
                             <Descriptions {...customerProps}>
-                                <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.customerName, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Address">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.address, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Pincode">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.pinCode, isLoading)}</Descriptions.Item>
-                            </Descriptions>
-                            <Descriptions {...addressProps}>
-                                <Descriptions.Item label="City">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.city, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="State">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.state, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Customer Mobile No.">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.otfDetails?.customerMobileNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Customer Email Id.">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.customerEmail, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Installation Address">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.address, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Pincode">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.pinCode, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="City">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.city, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="State">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.state, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Contact No.">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.customerMobileNumber, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         </Card>
-                    </Space>
-                </Col>
-            </Row>
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Card style={{ backgroundColor: '#F2F2F2' }}>
-                        <Typography>Installation Address</Typography>
-                        <Divider className={styles.marT20} />
-                        <Descriptions {...customerProps}>
-                            <Descriptions.Item label="Installation Address">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.address, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Pincode">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.pinCode, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="City">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.city, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="State">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.state, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Contact No.">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.customerMobileNumber, isLoading)}</Descriptions.Item>
-                        </Descriptions>
-                    </Card>
-                </Col>
+                    </Col>
+                </Row>
             </Row>
         </div>
     );
