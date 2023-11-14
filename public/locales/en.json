@@ -1403,7 +1403,7 @@
             "mainTitle": "Insurance Details"
         },
         "label": {
-            "custName": "Customer Name",
+            "installationAddress": "Installation Adress",
             "pincode": "Pincode",
             "city": "City",
             "state": "State",

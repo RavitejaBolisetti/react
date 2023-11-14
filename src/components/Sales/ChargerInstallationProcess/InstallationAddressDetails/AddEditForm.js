@@ -151,7 +151,7 @@ const AddEditFormMain = (props) => {
                         </Row>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Form.Item label={translateContent('installationAddressDetials.label.custName')} name="address" className={styles?.datePicker} rules={[validateRequiredInputField(translateContent('installationAddressDetials.validation.installationAddress'))]}>
+                                <Form.Item label={translateContent('installationAddressDetials.label.installationAddress')} name="address" className={styles?.datePicker} rules={[validateRequiredInputField(translateContent('installationAddressDetials.validation.installationAddress'))]}>
                                     <Input {...disabledProps} maxLength={50} placeholder={preparePlaceholderText('Installation Address')} />
                                 </Form.Item>
                             </Col>
