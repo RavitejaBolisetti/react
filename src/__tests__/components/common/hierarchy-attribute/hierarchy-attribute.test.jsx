@@ -78,7 +78,7 @@ describe('Hierarchy Attribute - Add edit form component', () => {
         const nameInput=screen.getByRole('textbox', { name: 'Name' });
         fireEvent.change(nameInput, { target: { value: 'Hello World' } });
 
-        const saveBtn=screen.getByRole('button', { name: 'Save & Add New' });
+        const saveBtn=screen.getByRole('button', { name: 'Save and New' });
         fireEvent.click(saveBtn);
 
         await waitFor(() => expect(hierarchyAttributeSaveData).toHaveBeenCalled());
