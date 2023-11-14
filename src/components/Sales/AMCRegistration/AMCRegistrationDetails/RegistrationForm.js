@@ -18,12 +18,17 @@ const { Search } = Input;
 const { TextArea } = Input;
 
 const RegistrationForm = (props) => {
-    const { options, handleOnSelect, handleOnClear, registrationForm, formData, typeData, handleFormValueChange, handleBookingNumberSearch, isEmployeeDataLoading, handleEmployeeNameSearch, isVehicleInvoiceDataLoading, handleBookingNumberChange, handleSaleTypeChange, selectedSaleType } = props;
+    const { employeeData, managerData, options, handleOnSelect, handleOnClear, registrationForm, formData, typeData, handleFormValueChange, handleBookingNumberSearch, isEmployeeDataLoading, handleEmployeeNameSearch, isVehicleInvoiceDataLoading, handleBookingNumberChange, handleSaleTypeChange, selectedSaleType } = props;
 
     return (
         <>
             <Form layout="vertical" autoComplete="off" form={registrationForm} onFieldsChange={handleFormValueChange}>
                 <Row gutter={16}>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item initialValue={formData?.priceType} label={translateContent('amcRegistration.label.priceType')} name="priceType" rules={[validateRequiredSelectField(translateContent('amcRegistration.label.priceType'))]}>
+                            {customSelectBox({ data: typeData['PRC_TYP'], placeholder: preparePlaceholderSelect(translateContent('amcRegistration.label.priceType')) })}
+                        </Form.Item>
+                    </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item initialValue={formData?.saleType} label={translateContent('amcRegistration.label.saleType')} name="saleType" rules={[validateRequiredSelectField(translateContent('amcRegistration.label.saleType'))]}>
                             {customSelectBox({ data: typeData?.[PARAM_MASTER.DLVR_SALE_TYP.id], placeholder: preparePlaceholderSelect(translateContent('amcRegistration.label.saleType')), onChange: handleSaleTypeChange })}
@@ -45,14 +50,15 @@ const RegistrationForm = (props) => {
                     )}
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label={translateContent('amcRegistration.label.employeeName')} name="employeeName" rules={[validateRequiredInputField(translateContent('amcRegistration.label.employeeName'))]}>
-                            <AutoComplete maxLength={50} options={options} onSelect={handleOnSelect} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
+                            {/* <AutoComplete maxLength={50} options={options} onSelect={handleOnSelect} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
                                 <Search onSearch={handleEmployeeNameSearch} onChange={handleOnClear} placeholder={translateContent('amcRegistration.placeholder.search')} loading={isEmployeeDataLoading} type="text" allowClear />
-                            </AutoComplete>
+                            </AutoComplete> */}
+                            {customSelectBox({ data: employeeData, placeholder: preparePlaceholderSelect(translateContent('amcRegistration.label.employeeName')) })}
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label={translateContent('amcRegistration.label.managerName')} name="managerName">
-                            <Input disabled maxLength={50} placeholder={preparePlaceholderText(translateContent('amcRegistration.label.managerName'))} />
+                            {customSelectBox({ data: managerData, placeholder: preparePlaceholderSelect(translateContent('amcRegistration.label.managerName')) })}
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>

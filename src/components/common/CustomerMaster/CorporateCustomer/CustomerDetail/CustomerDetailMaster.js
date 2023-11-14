@@ -77,7 +77,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CompanyCustomerDetailsMasterBase = (props) => {
-    const { userId, isLoading, showGlobalNotification, customerDetailsData, section, fetchList, listShowLoading, typeData, saveData, fetchCorporateLovList, listCorporateLovShowLoading, isCorporateLovDataLoaded, fetchCustomerParentCompanyList, listCustomerParentCompanyShowLoading, customerParentCompanyData, corporateLovData } = props;
+    const { userId, isLoading, showGlobalNotification, customerDetailsData, section, fetchList, listShowLoading, typeData, saveData, fetchCorporateLovList, listCorporateLovShowLoading, isCorporateLovDataLoaded, fetchCustomerParentCompanyList, listCustomerParentCompanyShowLoading, customerParentCompanyData, corporateLovData, customerType } = props;
     const { setRefreshCustomerList, selectedCustomer, setSelectedCustomer, selectedCustomerId, setSelectedCustomerId, resetData } = props;
     const { form, handleFormValueChange, buttonData, setButtonData, formActionType, handleButtonClick, NEXT_ACTION } = props;
 
@@ -86,11 +86,8 @@ const CompanyCustomerDetailsMasterBase = (props) => {
 
     const [formData, setFormData] = useState();
     const [refershData, setRefershData] = useState(false);
-
-    const onErrorAction = (message) => {
-        showGlobalNotification({ message });
-    };
-
+    const [numbValidatedSuccess, setNumbValidatedSuccess] = useState(false);
+   
     useEffect(() => {
         if (customerDetailsData) {
             form?.setFieldsValue({ ...customerDetailsData });
@@ -128,14 +125,49 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomerId]);
 
+    const defaultExtraParam = [
+        {
+            key: 'customerType',
+            title: 'Customer Type',
+            value: customerType,
+            canRemove: true,
+        },
+        {
+            key: 'pageSize',
+            title: 'Value',
+            value: 1,
+            canRemove: true,
+        },
+        {
+            key: 'pageNumber',
+            title: 'Value',
+            value: 1,
+            canRemove: true,
+        },
+        {
+            key: 'searchType',
+            title: 'searchType',
+            value: 'mobileNumber',
+            canRemove: true,
+        },
+    ];
+
     const onSuccessAction = (res) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         setRefershData(false);
     };
 
+    const onErrorAction = (message) => {
+        showGlobalNotification({ message });
+    };
+
     const onFinish = (values) => {
+        if (!numbValidatedSuccess && customerDetailsData?.mobileNumber !== values?.mobileNumber) {
+            showGlobalNotification({ message: 'Please verify mobile number to proceed.' });
+            return;
+        }
         const recordId = customerDetailsData?.id || '';
-        const data = { ...values, customerId: selectedCustomer?.customerId, id: recordId };
+        const reqdata = { ...values, customerId: selectedCustomer?.customerId, id: recordId };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -156,7 +188,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         };
 
         const requestData = {
-            data: data,
+            data: reqdata,
             method: formActionType?.editMode ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
@@ -189,6 +221,8 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         corporateLovData,
         buttonData,
         onFinish,
+        userId,
+        selectedCustomer,
         customerDetailsList,
         saveData,
         showForm,
@@ -199,6 +233,10 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         styles,
         customerParentCompanyData,
         validateParentCode,
+        numbValidatedSuccess,
+        setNumbValidatedSuccess,
+        customerType,
+        defaultExtraParam,
     };
 
     const viewProps = {

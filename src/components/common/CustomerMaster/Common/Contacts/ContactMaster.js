@@ -38,6 +38,7 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
         },
+       
     } = state;
 
     let returnValue = {
@@ -50,6 +51,7 @@ const mapStateToProps = (state) => {
         isCustomerIndDataLoaded,
         isCustomerIndDataLoading,
         customerIndData,
+        
     };
     return returnValue;
 };
@@ -68,6 +70,7 @@ const mapDispatchToProps = (dispatch) => ({
             saveIndividualData: customerDetailIndividualDataActions.saveData,
             resetIndividualData: customerDetailIndividualDataActions.reset,
 
+
             showGlobalNotification,
         },
         dispatch
@@ -84,9 +87,9 @@ const ContactMain = (props) => {
     const [showAddEditForm, setShowAddEditForm] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [editingData, setEditingData] = useState({});
-    const [continueWithOldMobNo, setContinueWithOldMobNo] = useState(false);
     const [isAdding, setIsAdding] = useState(false);
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
+
 
     const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
     const addDataTitle = (
@@ -179,7 +182,7 @@ const ContactMain = (props) => {
     const onCheckdefaultAddClick = (e, value) => {
         e.stopPropagation();
         setContactData((prev) => {
-            let updetedData = prev?.map((contact) => ({ ...contact, status: true, defaultContactIndicator: false, continueWith: continueWithOldMobNo }));
+            let updetedData = prev?.map((contact) => ({ ...contact, status: true, defaultContactIndicator: false, continueWith: false }));
             const index = updetedData?.findIndex((el) => el?.purposeOfContact === value?.purposeOfContact && el?.firstName === value?.firstName && el?.mobileNumber === value?.mobileNumber);
             updetedData.splice(index, 1, { ...value, defaultContactIndicator: e.target.checked });
             return [...updetedData];
@@ -199,6 +202,7 @@ const ContactMain = (props) => {
     };
 
     const formProps = {
+        userId,
         setShowAddEditForm,
         showAddEditForm,
         setContactData,
@@ -216,12 +220,14 @@ const ContactMain = (props) => {
         onCheckdefaultAddClick,
         setButtonData,
         handleFormValueChange,
-        setContinueWithOldMobNo,
 
         customerType,
         isAdding,
         setIsAdding,
         buttonData,
+
+        showGlobalNotification,
+        selectedCustomer,
     };
 
     const onFinish = () => {

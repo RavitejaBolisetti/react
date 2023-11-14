@@ -13,7 +13,6 @@ import { translateContent } from 'utils/translateContent';
 
 const AddEditForm = (props) => {
     const { isReadOnly = false, onSaveFormData, contactform, setShowAddEditForm, setIsEditing, typeData, customerType, formActionType, handleFormValueChange, setIsAdding, contactData, editingData } = props;
-
     const disabledProps = { disabled: isReadOnly || formActionType?.viewMode };
 
     const handleCancelFormEdit = () => {

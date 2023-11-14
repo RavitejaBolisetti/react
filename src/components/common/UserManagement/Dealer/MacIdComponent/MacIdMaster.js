@@ -212,7 +212,7 @@ const MacIdMasterMain = (props) => {
                             ) : (
                                 <>
                                     <Row type="flex" align="middle">
-                                        <Text strong> Device ID</Text>
+                                        <Text strong> {translateContent('userManagement.label.deviceId')}</Text>
                                         {!formActionType?.viewMode && (
                                             <Button onClick={addBtnMacIdHandler} icon={<PlusOutlined />} type="primary" disabled={isEditing || isAdding}>
                                                 {translateContent('global.buttons.add')}
@@ -231,7 +231,7 @@ const MacIdMasterMain = (props) => {
                                                     }}
                                                     description={
                                                         <span>
-                                                            {translateContent('global.generalMessage.noRecordsFoundAddNew')} <br />
+                                                            {translateContent('global.generalMessage.noRecordsFoundAddNew').replace('{NAME}', translateContent('device'))} <br />
                                                         </span>
                                                     }
                                                 ></Empty>

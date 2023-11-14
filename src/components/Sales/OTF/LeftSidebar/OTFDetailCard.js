@@ -47,7 +47,7 @@ const OTFDetailCard = (props) => {
                         </Space>
                         <Divider />
                         <div className={styles.detailCardText}>
-                        {translateContent('bookingManagement.heading.profileCard.bookingNumber')}: <span>{selectedOrder?.bookingNumber || selectedOrder?.otfNumber}</span>
+                            {translateContent('bookingManagement.profileCard.bookingNumber')}: <span>{selectedOrder?.bookingNumber || selectedOrder?.otfNumber}</span>
                         </div>
                     </>
                 }
@@ -55,23 +55,23 @@ const OTFDetailCard = (props) => {
             >
                 <Divider />
                 <div className={styles.detailCardText}>
-                {translateContent('bookingManagement.heading.profileCard.customerType')}: <span>{selectedOrder && getCodeValue(typeData?.[PARAM_MASTER?.CUST_TYPE?.id], selectedOrder?.customerType)}</span>
+                    {translateContent('bookingManagement.profileCard.customerType')}: <span>{selectedOrder && getCodeValue(typeData?.[PARAM_MASTER?.CUST_TYPE?.id], selectedOrder?.customerType)}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                {translateContent('bookingManagement.heading.profileCard.mobileNumber')}: <span>{selectedOrder?.mobileNumber ? selectedOrder?.mobileNumber : 'NA'}</span>
+                    {translateContent('bookingManagement.profileCard.mobileNumber')}: <span>{selectedOrder?.mobileNumber ? selectedOrder?.mobileNumber : 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                {translateContent('bookingManagement.heading.profileCard.bookingDate')}: <span>{convertDateTime(selectedOrder?.otfDate, dateFormatView) || 'NA'}</span>
+                    {translateContent('bookingManagement.profileCard.bookingDate')}: <span>{convertDateTime(selectedOrder?.otfDate, dateFormatView) || 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                {translateContent('bookingManagement.heading.profileCard.model')}: <span>{selectedOrder?.model || 'NA'}</span>
+                    {translateContent('bookingManagement.profileCard.model')}: <span>{selectedOrder?.model || 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                {translateContent('bookingManagement.heading.profileCard.cpd')}: <span>{convertDateTime(selectedOrder?.cpd, dateFormatView) || 'NA'}</span>
+                    {translateContent('bookingManagement.profileCard.cpd')}: <span>{convertDateTime(selectedOrder?.cpd, dateFormatView) || 'NA'}</span>
                 </div>
             </Panel>
         </Collapse>

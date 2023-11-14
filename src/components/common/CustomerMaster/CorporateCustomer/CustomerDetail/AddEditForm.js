@@ -11,13 +11,12 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { customSelectBox } from 'utils/customSelectBox';
+import { MobileOtpVerificationMaster } from 'components/utils/MobileOtpVerificationModal';
 import { translateContent } from 'utils/translateContent';
 
 const AddEditFormMain = (props) => {
-    const { typeData, formData, form, corporateLovData, formActionType: { editMode } = undefined, validateParentCode, customerType, customerParentCompanyData } = props;
+    const { typeData, formData, form, corporateLovData, formActionType: { editMode } = undefined, customerParentCompanyData, validateParentCode, numbValidatedSuccess, setNumbValidatedSuccess, selectedCustomer, formActionType, userId, customerType, defaultExtraParam } = props;
     const [corporateType, setCorporateType] = useState('');
-    // const [isModalOpen, setIsModalOpen] = useState(false);
-    // const [mobileLoader, setmobileLoader] = useState(false);
 
     useEffect(() => {
         setCorporateType(formData?.corporateType);
@@ -44,68 +43,31 @@ const AddEditFormMain = (props) => {
             corporateCategory: corporateLovData?.find((i) => i?.key === value)?.parentKey,
         });
     };
-    // const handleNumberValidation = (event) => {
-    //     const Mno = event.target.value;
-    //     const regex = new RegExp('^([5-9]){1}([0-9]){9}$');
-    //     if (Mno?.length === 10 && regex.test(Mno)) {
-    //         setmobileLoader(true);
-    //         setTimeout(() => {
-    //             setIsModalOpen(true);
-    //         }, 1000);
-    //     } else {
-    //         setmobileLoader(false);
-    //     }
-    // };
-    // const showModal = () => {
-    //     setIsModalOpen(true);
-    // };
 
-    // const handleCancel = () => {
-    //     setIsModalOpen(false);
-    //     setmobileLoader(false);
-    // };
+    const mobileOtpProps = {
+        userId,
+        formData,
+        selectedCustomer,
+        formActionType,
+        customerType,
+        form,
+        numbValidatedSuccess,
+        setNumbValidatedSuccess,
+        defaultExtraParam,
+    };
 
-    // const modalProps = {
-    //     isVisible: isModalOpen,
-    //     icon: <BiLockAlt />,
-    //     titleOverride: 'Mobile Number Validation',
-    //     closable: false,
-    //     onCloseAction: handleCancel,
-    // };
     return (
         <Space direction="vertical" size="small" style={{ display: 'flex' }}>
             <Card style={{ backgroundColor: '#F2F2F2' }}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        {/* {editMode ? (
-                            // <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number')]}>
-                            //     <Input
-                            //         placeholder={preparePlaceholderText('mobile number')}
-                            //         onChange={handleNumberValidation}
-                            //         maxLength={10}
-                            //         size="small"
-                            //         suffix={
-                            //             <>
-                            //                 {false ? (
-                            //                     <Button loading={mobileLoader} onClick={showModal} type="link">
-                            //                         Validate
-                            //                     </Button>
-                            //                 ) : (
-                            //                     <CheckOutlined style={{ color: '#70c922', fontSize: '16px', fotWeight: 'bold' }} />
-                            //                 )}
-                            //                 <ValidateMobileNumberModal {...modalProps} />
-                            //             </>
-                            //         }
-                            //     />
-                            // </Form.Item>
+                        {editMode ? (
+                            <MobileOtpVerificationMaster {...mobileOtpProps} />
                         ) : (
-                            <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number'), validateRequiredInputField('mobile number')]}>
-                                <Input placeholder={preparePlaceholderText('mobile number')} maxLength={10} size="small" />
+                            <Form.Item label={translateContent('customerMaster.label.mobileNumber')} initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField(translateContent('customerMaster.validation.mobileNumber')), validateRequiredInputField(translateContent('customerMaster.validation.mobileNumber'))]}>
+                                <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.mobileNumber'))} maxLength={10} size="small" />
                             </Form.Item>
-                        )} */}
-                        <Form.Item label={translateContent('customerMaster.label.mobileNumber')} initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField(translateContent('customerMaster.validation.mobileNumber')), validateRequiredInputField(translateContent('customerMaster.validation.mobileNumber'))]}>
-                            <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.mobileMumber'))} maxLength={10} size="small" disabled={editMode} />
-                        </Form.Item>
+                        )}
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={customerType} label={translateContent('customerMaster.label.customerType')} name="customerType" data-testid="customerType" rules={[validateRequiredSelectField(translateContent('customerMaster.validation.customerType'))]}>
@@ -122,9 +84,10 @@ const AddEditFormMain = (props) => {
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        <Form.Item initialValue={formData?.parentCompanyCode} label={translateContent('customerMaster.label.companyCode')} name="parentCompanyCode" data-testid="parentCode" rules={[validateRequiredInputField(translateContent('customerMaster.validation.parentCode'))]}>
+                        <Form.Item initialValue={formData?.parentCompanyCode} label={translateContent('customerMaster.label.companyCode')} name="parentCompanyCode" data-testid="parentCode" >
                             <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.compCode'))} onBlur={validateParentCode} disabled={editMode} />
                         </Form.Item>
+                        {/* rules={[validateRequiredInputField(translateContent('customerMaster.validation.parentCode'))]} */}
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={formData?.parentCompanyName || (customerParentCompanyData && customerParentCompanyData.length > 0) ? customerParentCompanyData[0]?.parentCompanyName : ''} label={translateContent('customerMaster.label.parentComp')} name="parentCompanyName" data-testid="parentName">
@@ -179,6 +142,7 @@ const AddEditFormMain = (props) => {
                     </Col> */}
                 </Row>
             </Card>
+            {/* <OtpVerification {...modalProps} /> */}
         </Space>
     );
 };

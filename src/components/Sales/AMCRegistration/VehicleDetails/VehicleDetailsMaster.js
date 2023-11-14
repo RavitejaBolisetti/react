@@ -253,7 +253,7 @@ const VehicleDetailsMasterBase = (props) => {
                                 <>
                                     <Row type="flex" align="middle">
                                         <Text strong> {translateContent('amcRegistration.label.vehicleDetails')}</Text>
-                                        {!formActionType?.viewMode && !(formActionType?.addMode && requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.MNM_FOC?.key) && (
+                                        {!formActionType?.viewMode && !(formActionType?.addMode && requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.MNM_FOC?.key) && !(requestPayload?.amcSchemeDetails?.amcType === AMC_CONSTANTS?.AMC_TYPE_COMPREHENSIVE?.key && contactData?.length) && (
                                             <Button onClick={addBtnContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isEditing || isAdding}>
                                                 {translateContent('global.drawerTitle.add')}
                                             </Button>

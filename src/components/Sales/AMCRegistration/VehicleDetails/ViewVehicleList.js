@@ -57,13 +57,13 @@ const ViewVehicleList = (props) => {
             {contactData?.length > 0 &&
                 contactData?.map((data, i) => {
                     return (
-                        <Collapse key={data?.purposeOfContact + data?.contactNameFirstName} onChange={() => handleCollapse(i)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} collapsible="icon">
+                        <Collapse key={i} onChange={() => handleCollapse(i)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} collapsible="icon">
                             <Panel
                                 key={i}
                                 header={
                                     <Row justify="space-between">
                                         <Col xs={14} sm={14} md={14} lg={14} xl={14} className={styles.verticallyCentered}>
-                                            <Text strong> {`${translateContent('amcRegistration.label.vehicleRegistrationNumber')} ${data?.vehicleRegistrationNumber}`}</Text>
+                                            <Text strong> {`${translateContent('amcRegistration.label.vehicleRegistrationNumber')} : ${data?.vehicleRegistrationNumber}`}</Text>
                                             {!formActionType?.viewMode && (
                                                 <Button onClick={(e) => deleteVehicle(e, data, i)} type="link" icon={<FiTrash />} disabled={isEditing || isAdding} className={styles.verticallyCentered}>
                                                     Remove

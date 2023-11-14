@@ -213,6 +213,13 @@ export const MenuConstant = {
         icon: undefined,
         parentMenuId: 'COMN-11',
     },
+
+    [getMenyKey('SRST-3.3')]: {
+        key: 'SRST-3.3',
+        link: routing.ROUTING_AMC_REGISTRATION,
+        icon: undefined,
+        parentMenuId: 'SRST-3',
+    },
     [getMenyKey('SACT-03.04')]: {
         key: 'SACT-03.04',
         link: routing.ROUTING_VEHICLE_PRICE_MASTER,

@@ -3,13 +3,13 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { Tag } from 'antd';
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { convertDate, dateFormatView } from 'utils/formatDateTime';
 import { AMC_CONSTANTS } from './utils/AMCConstants';
+import { translateContent } from 'utils/translateContent';
+import { AMCStatusTags } from './utils/AMCStatusTags';
 
 import styles from 'assets/sass/app.module.scss';
-import { translateContent } from 'utils/translateContent';
 
 export const tableColumn = ({ handleButtonClick, userType }) => {
     const tableColumn = [
@@ -43,7 +43,7 @@ export const tableColumn = ({ handleButtonClick, userType }) => {
                   dataIndex: 'status',
                   width: '14%',
                   render: (status) => {
-                      return <Tag color="warning">{status}</Tag>;
+                      return AMCStatusTags(status);
                   },
               })
             : tblPrepareColumns({
