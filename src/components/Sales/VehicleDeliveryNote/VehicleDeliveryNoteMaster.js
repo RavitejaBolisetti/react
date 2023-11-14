@@ -407,12 +407,12 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         }
     };
 
-    const handlePrintDownload = () => {
+    const handlePrintDownload = (props) => {
         setReportVisible(true);
         setAdditionalReportParams([
             {
-                key: 'delivery_note_id',
-                value: selectedOrder?.vehicleDeliveryNote,
+                key: 'sa_od_delivery_challan_hdr_id',
+                value: selectedOrder?.deliveryHdrId,
             },
         ]);
     };
