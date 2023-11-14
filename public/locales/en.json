@@ -1682,7 +1682,8 @@
             "mapped": "Mapped",
             "unmapped": "Unmapped",
             "role": "Role",
-            "accessProvided": "Access provided"
+            "accessProvided": "Access provided",
+            "device": "device"
         },
         "placeholder": {
             "search": "Search",
