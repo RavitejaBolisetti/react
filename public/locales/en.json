@@ -2333,6 +2333,7 @@
         "heading": {
             "mainTitle": "Vehicle Price Master",
             "drawerTitleMain": "Vehicle Price Master",
+            "uploadVehicle": "Upload Vehicle Price Master",
             "sections": {},
             "collapse": {},
             "profileCard": {}

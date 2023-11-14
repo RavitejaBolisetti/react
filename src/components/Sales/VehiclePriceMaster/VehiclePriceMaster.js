@@ -27,12 +27,15 @@ import AdvanceVehiclePriceMasterFilter from './AdvanceVehiclePriceMasterFilter';
 import { vehiclePriceMasterDataAction } from 'store/actions/data/vehiclePriceMaster';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { translateContent } from 'utils/translateContent';
+import { DisableParent, FindProductName } from 'components/common/ProductHierarchy/ProductHierarchyUtils';
+import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId, accessToken, token },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
+            ProductHierarchy: { data: productHierarchyData = [] },
             CustomerMaster: {
                 ViewDocument: { isLoaded: isViewDataLoaded = false, data: viewDocument },
             },
@@ -45,9 +48,6 @@ const mapStateToProps = (state) => {
                 District: { isFilteredListLoaded: isDistrictDataLoaded = false, isLoading: isDistrictLoading, filteredListData: districtData },
                 Tehsil: { isFilteredListLoaded: isTehsilDataLoaded = false, isLoading: isTehsilLoading, filteredListData: tehsilData },
                 City: { isFilteredListLoaded: isCityDataLoaded = false, isLoading: isCityLoading, filteredListData: cityData },
-            },
-            TermCondition: {
-                ProductHierarchyData: { isLoaded: isProductHierarchyDataLoaded = false, data: productHierarchyList, isProductHierarchyLoading },
             },
         },
     } = state;
@@ -88,9 +88,6 @@ const mapStateToProps = (state) => {
         typeData,
         isDistrictDataLoaded,
         districtData: finalDistrictData,
-        isProductHierarchyDataLoaded,
-        productHierarchyList,
-        isProductHierarchyLoading,
         isDistrictLoading,
         unFilteredStateData: stateData,
         filterString,
@@ -98,6 +95,7 @@ const mapStateToProps = (state) => {
         isVehiclePriceDataLoaded,
         vehiclePriceData: vehiclePriceData?.vehicleSearch,
         totalRecords: vehiclePriceData?.totalRecords,
+        productHierarchyDataList: productHierarchyData,
     };
     return returnValue;
 };
@@ -112,6 +110,8 @@ const mapDispatchToProps = (dispatch) => ({
 
             downloadFile: supportingDocumentDataActions.downloadFile,
             listShowLoading: supportingDocumentDataActions.listShowLoading,
+
+            fetchModelList: productHierarchyDataActions.fetchList,
 
             fetchVehiclePriceList: vehiclePriceMasterDataAction.fetchList,
             listVehiclePriceShowLoading: vehiclePriceMasterDataAction.listShowLoading,
@@ -129,7 +129,7 @@ export const VehiclePriceMasterBase = (props) => {
     const { filterString, setFilterString, saveData, userId, showGlobalNotification } = props;
     const { accessToken, token, viewDocument, isViewDataLoaded, viewListShowLoading, resetViewData, fetchViewDocument } = props;
     const { isDataCountryLoaded, isCountryLoading, countryData, findDistrictCode, defaultCountry, isDistrictDataLoaded, districtData, typeData, fetchVehiclePriceList, listVehiclePriceShowLoading } = props;
-    const { isStateDataLoaded, stateData, moduleTitle, vehiclePriceData, totalRecords, isCityDataLoaded, cityData, isProductHierarchyDataLoaded, productHierarchyList, isProductHierarchyLoading, isTehsilDataLoaded, tehsilData } = props;
+    const { isStateDataLoaded, stateData, moduleTitle, vehiclePriceData, totalRecords, isCityDataLoaded, cityData, isProductHierarchyDataLoaded, productHierarchyList, isProductHierarchyLoading, isTehsilDataLoaded, tehsilData, productHierarchyDataList, fetchModelList } = props;
     const { resetData, isSupportingDataLoaded, isSupportingDataLoading, supportingData, downloadFile, listShowLoading } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
@@ -154,6 +154,8 @@ export const VehiclePriceMasterBase = (props) => {
     const [filteredDistrictData, setFilteredDistrictData] = useState([]);
     const [cityCodeValue, setCityCodeValue] = useState();
     const [singleDisabled, setSingleDisabled] = useState(false);
+    const [productHierarchyData, setProductHierarchyData] = useState([]);
+    const [resetAdvanceFilter, setResetAdvanceFilter] = useState(false);
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: true, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -181,6 +183,24 @@ export const VehiclePriceMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
 
+    useEffect(() => {
+        setProductHierarchyData(productHierarchyDataList?.map((i) => DisableParent(i, 'subProdct')));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [productHierarchyDataList]);
+
+    useEffect(() => {
+        if (userId) {
+            const extraParams = [
+                {
+                    key: 'unit',
+                    value: 'Sales',
+                },
+            ];
+            fetchModelList({ setIsLoading: listShowLoading, userId, extraParams });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId]);
+
     const extraParams = useMemo(() => {
         return [
             {
@@ -200,13 +220,22 @@ export const VehiclePriceMasterBase = (props) => {
                 filter: true,
             },
             {
-                key: 'oemModelCode',
+                key: 'modelValue',
                 title: translateContent('vehiclePriceMaster.label.model'),
-                value: filterString?.modelCode,
-                name: productHierarchyList?.find((i) => i?.prodctCode === filterString?.modelCode)?.prodctShrtName,
+                value: filterString?.model,
+                //name: productHierarchyData?.find((i) => i?.prodctCode === filterString?.model)?.prodctShrtName,
+                name: FindProductName(productHierarchyData, filterString?.model),
                 canRemove: true,
                 filter: true,
             },
+            // {
+            //     key: 'oemModelCode',
+            //     title: translateContent('vehiclePriceMaster.label.model'),
+            //     value: filterString?.modelCode,
+            //     name: productHierarchyList?.find((i) => i?.prodctCode === filterString?.modelCode)?.prodctShrtName,
+            //     canRemove: true,
+            //     filter: true,
+            // },
             {
                 key: 'stateCode',
                 title: translateContent('vehiclePriceMaster.label.state'),
@@ -397,7 +426,7 @@ export const VehiclePriceMasterBase = (props) => {
             setFileList([]);
 
             form.resetFields();
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         };
 
         const onError = (res, data) => {
@@ -413,7 +442,7 @@ export const VehiclePriceMasterBase = (props) => {
                 );
             }
 
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: message });
+            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: message });
         };
 
         const requestData = {
@@ -431,6 +460,7 @@ export const VehiclePriceMasterBase = (props) => {
         form.resetFields();
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
+        setResetAdvanceFilter(true);
     };
 
     const tableProps = {
@@ -491,6 +521,9 @@ export const VehiclePriceMasterBase = (props) => {
         isTehsilDataLoaded,
         tehsilData,
         typeData,
+        productHierarchyData,
+        resetAdvanceFilter,
+        setResetAdvanceFilter,
     };
 
     const handleOnClick = () => {
@@ -534,6 +567,8 @@ export const VehiclePriceMasterBase = (props) => {
         typeData: typeData?.[PARAM_MASTER.VH_PRC_SRCH.id],
         searchForm,
         handleOnClick,
+        resetAdvanceFilter,
+        setResetAdvanceFilter,
     };
 
     const uploadProps = {
@@ -577,9 +612,9 @@ export const VehiclePriceMasterBase = (props) => {
         setEmptyList,
         fetchViewDocument,
         resetViewData,
-        uploadButtonName: translateContent('vehiclePriceMaster.heading.uploadButtonName'),
-        messageText: translateContent('vehiclePriceMaster.heading.messageText'),
-        validationText: translateContent('vehiclePriceMaster.heading.validationText'),
+        uploadButtonName: translateContent('vehiclePriceMaster.label.uploadButtonName'),
+        messageText: translateContent('vehiclePriceMaster.label.messageText'),
+        validationText: translateContent('vehiclePriceMaster.label.validationText'),
         supportedFileTypes: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
         maxSize: 8,
         single: true,
@@ -595,7 +630,7 @@ export const VehiclePriceMasterBase = (props) => {
         handleButtonClick,
     };
     const viewProps = {
-        titleOverride: 'View '.concat(moduleTitle),
+        titleOverride: translateContent('global.drawerTitle.view').concat(moduleTitle),
         isVisible: isFormVisible,
         onCloseAction,
         formData,
