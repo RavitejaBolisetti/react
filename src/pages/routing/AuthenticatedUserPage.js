@@ -126,8 +126,7 @@ const AuthenticatedUserPageMain = (props) => {
 
     const location = useLocation();
     const pagePath = location.pathname;
-
-    const canViewPage = flatternData?.find((i) => i.link === pagePath)?.menuId;
+    const canViewPage = flatternData?.find((menu) => (menu.link === pagePath || (menu.link && menu.slug) ? menu.link?.replace(':slug', menu.slug) === pagePath : false))?.menuId;
 
     useEffect(() => {
         if (!isDataLoaded && userId) {

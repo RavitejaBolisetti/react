@@ -7,7 +7,7 @@ describe('Advanced Booking Filter Component', () => {
 
     it('should render advance otf filter component', () => {
         customRender(<AdvanceOTFFilter advanceFilter={true} setAdvanceSearchVisible={jest.fn()} />);
-        const advancedFilters=screen.getByRole('button', { name: 'Advanced Filters' });
+        const advancedFilters=screen.getByRole('button', { name: 'Advance Filters' });
         fireEvent.click(advancedFilters);
     });
     

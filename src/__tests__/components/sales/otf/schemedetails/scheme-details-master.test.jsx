@@ -8,7 +8,7 @@ import customRender from '@utils/test-utils';
 import { screen, fireEvent } from '@testing-library/react';
 import { SchemeDetailsMaster } from 'components/Sales/OTF/SchemeDetails';
 
-import { Form, Button } from 'antd';
+import { Button } from 'antd';
 
 afterEach(() => {
     jest.restoreAllMocks();
@@ -57,11 +57,11 @@ const props = {
 };
 
 describe('Scheme Details master Components', () => {
-    it('it should render SchemeDetailsMaster components', () => {
+    it('should render Scheme Details Master components', () => {
         customRender(<SchemeDetailsMaster StatusBar={StatusBar} FormActionButton={FormActionButton} />);
     });
 
-    it('it should click when user click on next button', () => {
+    it('should click when user click on next button', () => {
         customRender(<SchemeDetailsMaster {...props} handleButtonClick={jest.fn()} StatusBar={StatusBar} FormActionButton={FormActionButton} />);
         const nextBtn = screen.getByRole('button', { Name: 'Next' });
         fireEvent.click(nextBtn);

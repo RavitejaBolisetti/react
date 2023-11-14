@@ -147,6 +147,7 @@ const IssueIndentMasterMain = (props) => {
     const onStatusChange = (values) => {
         setConfirmRequest({ isVisible: false });
         const data = {
+            id: values?.id,
             issueId: values?.issueNumber,
             indentDetailId: cancellationData?.indentDetailId,
             indentHdrId: cancellationData?.id,

@@ -93,7 +93,7 @@
             "unAllot": "Un-Allot",
             "invoice": "Invoice",
             "deliveryNote": " Delivery Note",
-            "advancedFilter": "Advanced Filters",
+            "advancedFilter": "Advance Filters",
             "viewHistory": "View History",
             "uploadFile": "Upload File",
             "cancelVehiclePurchaseOrder": "Cancel Vehicle Purchase Order",
@@ -691,7 +691,8 @@
             "discoutGreaterThanScheme": "Discount cannot exceed Scheme amount",
             "doWantToDownload": "Do you want to Print or download invoice and registration certificate",
             "duplicateVehicle": "Vehicle is duplicate",
-            "vehicleRegistrationNoMandatory": "Please add vehicle registration number to continue"
+            "vehicleRegistrationNoMandatory": "Please add vehicle registration number to continue",
+            "onlyOneVehicleAllowed": "ACM type is comprehensive, Only one vehicle is allowed"
         },
         "label": {
             "amcRegNoDate": "AMC Registration No. & Date",
@@ -709,6 +710,7 @@
             "employeeName": "Employee Name",
             "managerName": "Manager Name",
             "remarks": "Remarks",
+            "priceType": "Price Type",
             "amcType": "AMC Type",
             "schemeDescription": "Scheme Description",
             "schemeCode": "Scheme Code",
@@ -1273,14 +1275,15 @@
             "title": "Booking Management",
             "bookingManagementChangeHistory": "Booking Change History",
             "otfSoMappingChangeHistory": "Booking - SO Mapping & Un-mapping History",
-            "bookingAllotment": "Booking Allotment",
-
-            "profileCard.bookingNumber": "Booking No.",
-            "profileCard.bookingDate": "Booking Date",
-            "profileCard.customerType": "Customer Type",
-            "profileCard.mobileNumber": "Mobile No.",
-            "profileCard.model": "Model",
-            "profileCard.cpd": "CPD"
+            "bookingAllotment": "Booking Allotment"
+        },
+        "profileCard": {
+            "bookingNumber": "Booking No.",
+            "bookingDate": "Booking Date",
+            "customerType": "Customer Type",
+            "mobileNumber": "Mobile No.",
+            "model": "Model",
+            "cpd": "CPD"
         },
         "validation": {
             "mandatorySelectBooking": "Please select Booking",
@@ -1417,19 +1420,22 @@
 
     "installationAddressDetials": {
         "heading": {
-            "mainTitle": "Insurance Details"
+            "mainTitle": "Insurance Details",
+            "customerDetails": "Customer Details"
         },
         "label": {
-            "custName": "Customer Name",
+            "search": "Search",
+            "installationAddress": "Installation Adress",
             "pincode": "Pincode",
             "city": "City",
             "state": "State",
             "custMobNo": "Customer Mobile No.",
             "custEmailId": "Customer Email Id.",
-            "address": "Address"
+            "address": "Address",
+            "sameAsCustomerAddress": "Same as Customer Address"
         },
         "validation": {
-            "installationAddress": "Installation Adress",
+            "installationAddress": "Installation Address",
             "pinCode": "Pin Code",
             "city": "City",
             "state": "State",
@@ -1521,6 +1527,16 @@
             },
             "validation": {
                 "managedBy": "managed by"
+            },
+            "customerDetails": {
+                "label": {
+                    "customerId": "Customer ID",
+                    "customerName": "Customer Name",
+                    "registrationNumber": "Registration Number",
+                    "modelDescription": "Model Description",
+                    "chassisNumber": "Chassis No.",
+                    "mobileNumber": "Mobile Number"
+                }
             }
         },
         "productDetails": {
@@ -1666,7 +1682,8 @@
             "mapped": "Mapped",
             "unmapped": "Unmapped",
             "role": "Role",
-            "accessProvided": "Access provided"
+            "accessProvided": "Access provided",
+            "device": "device"
         },
         "placeholder": {
             "search": "Search",
@@ -2243,6 +2260,7 @@
             "invoiceMaster.columnThree": "Customer Name",
             "invoiceMaster.columnFour": "Model Description",
             "invoiceMaster.columnFive": "Invoice Date",
+            "invoiceMaster.columnSix": "Digital Signature",
 
             "taxDetails.columnOne": "Description",
             "taxDetails.columnTwo": "Rate",
@@ -2316,6 +2334,7 @@
         "heading": {
             "mainTitle": "Vehicle Price Master",
             "drawerTitleMain": "Vehicle Price Master",
+            "uploadVehicle": "Upload Vehicle Price Master",
             "sections": {},
             "collapse": {},
             "profileCard": {}
@@ -3017,6 +3036,12 @@
                 "keyNumber": "Key Number",
                 "modelCode": "Model Code",
                 "modelDescription": "Model Description"
+            },
+            "tableColumn": {
+                "description": "Description",
+                "rate": " Rate",
+                "amount": "Amount",
+                "serviceName": "Service Name"
             }
         },
         "addOnDetails": {
@@ -3209,7 +3234,8 @@
                 "settledAmount": "Settled Amount",
                 "balancedAmount": "Balanced Amount",
                 "writeOffAmount": "Write-Off Amount",
-                "apportionAmount": "Apportion Amount"
+                "apportionAmount": "Apportion Amount",
+                "remarks": "Remarks"
             },
             "validation": {
                 "documentType": "Document Type",
@@ -3779,6 +3805,65 @@
             "validation": {
                 "cancellationReason": "Cancellation Reason"
             }
+        }
+    },
+    "productChangeHistory": {
+        "label": {
+            "changedBy": "Changed By",
+            "changedDate": "Changed/Modified Date",
+            "code": "Code",
+            "attribute": "Attribute",
+            "parent": "Parent",
+            "shortDescription": "Short Description",
+            "longDescription": "Long Description"
+        }
+    },
+    "bayTypeMaster": {
+        "label": {
+            "bayTypeCode": "Bay Type Code",
+            "bayTypeName": "Bay Type Name"
+        }
+    },
+    "stateCrud": {
+        "label": {
+            "stateCode": "State Code 1",
+            "stateName": "State Name",
+            "stateGstCode": "State GST Code",
+            "country": "Country"
+        }
+    },
+    "chargerInstallationDetailsTableColumn": {
+        "label": {
+            "requestChange": "Request Change",
+            "visitTimeSlot1": "Visit TimeSlot 1",
+            "visitTimeSlot2": "Visit TimeSlot 2",
+            "visitTimeSlot3": "Visit TimeSlot 3",
+            "stageRequestDate": "Stage Request Date",
+            "status": "Status",
+            "serviceId": "Service Id",
+            "scheduleDate": "Schedule Date",
+            "responseStatus": "Response Status",
+            "responseRemark": "Response Remark",
+            "activity": "Activity",
+            "document": "Document",
+            "serviceActivites": "Service Activites",
+            "response": "Response"
+        }
+    },
+    "rsaTableColumn": {
+        "label": {
+            "rsaRegistration": "RSA Registration No. & Date",
+            "dealerLocation": "Dealer Location",
+            "vin": "VIN",
+            "status": "Status"
+        }
+    },
+    "shieldSchemeRegistration": {
+        "label": {
+            "columnOne": "Shield Registration No. & Date",
+            "columnTwo": "Dealer Location",
+            "columnThree": "VIN",
+            "columnFour": "Status"
         }
     }
 }

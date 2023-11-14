@@ -101,7 +101,7 @@ export const CreditDebitNoteMasterBase = (props) => {
     const [apportionTableData, setApportionTableData] = useState([]);
     const [additionalReportParams, setAdditionalReportParams] = useState();
     const [isReportVisible, setReportVisible] = useState();
-
+    const [previousSection, setPreviousSection] = useState(1);
     const [requestPayload, setRequestPayload] = useState({ voucherDetailsDto: {}, partyDetailsDto: {}, voucherAccountHeadDetailsDto: [], apportionDetailsDto: [] });
 
     const defaultBtnVisiblity = {
@@ -119,6 +119,7 @@ export const CreditDebitNoteMasterBase = (props) => {
         deliveryNote: false,
         cancelOtfBtn: false,
         printBtn: false,
+        continueBtn: false,
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -139,6 +140,15 @@ export const CreditDebitNoteMasterBase = (props) => {
     }, [formActionType]);
 
     useEffect(() => {
+        if (formActionType?.viewMode || formActionType?.editMode) {
+            setRequestPayload({ ...creditDebitData });
+            setVoucherTableData(creditDebitData?.voucherAccountHeadDetailsDto);
+            setApportionTableData(creditDebitData?.apportionDetailsDto);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [creditDebitData]);
+
+    useEffect(() => {
         setFilterString({ ...filterString, pageSize: 10, current: 1 });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -147,9 +157,6 @@ export const CreditDebitNoteMasterBase = (props) => {
         if (creditDebitData && isDetailLoaded && formActionType?.addMode) {
             setVoucherTableData([]);
             setApportionTableData([]);
-        } else if (creditDebitData && isDetailLoaded) {
-            setVoucherTableData(creditDebitData?.voucherAccountHeadDetailsDto);
-            setApportionTableData(creditDebitData?.apportionDetailsDto);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [creditDebitData, isDetailLoaded, formActionType?.addMode]);
@@ -315,19 +322,20 @@ export const CreditDebitNoteMasterBase = (props) => {
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
+                setPreviousSection(1);
                 transactionType === 'debit' ? setTransactionType(TRANSACTION_TYPE?.Debit?.value) : setTransactionType(TRANSACTION_TYPE?.Credit?.value);
-                setRequestPayload({ ...requestPayload, voucherType: transactionType === 'debit' ? TRANSACTION_TYPE?.Debit?.value.concat(' Note') : TRANSACTION_TYPE?.Credit?.value.concat(' Note') });
+                setRequestPayload({ ...requestPayload, voucherType: transactionType === 'credit' ? VOUCHER_TYPE?.CREDIT_TYPE?.key : VOUCHER_TYPE?.DEBIT_TYPE?.key });
                 setSelectedRecord({
                     voucherType: transactionType === 'debit' ? TRANSACTION_TYPE?.Debit?.value.concat(' Note') : TRANSACTION_TYPE?.Credit?.value.concat(' Note'),
                 });
                 break;
             case EDIT_ACTION:
-                setSelectedRecord(record);
+                setSelectedRecord({ ...record, voucherType: record?.voucherType === VOUCHER_TYPE?.DEBIT_TYPE?.key ? TRANSACTION_TYPE?.Debit?.value.concat(' Note') : TRANSACTION_TYPE?.Credit?.value.concat(' Note') });
                 setSelectedVoucher();
                 openDefaultSection && setCurrentSection(defaultSection);
                 break;
             case VIEW_ACTION:
-                setSelectedRecord(record);
+                setSelectedRecord({ ...record, voucherType: record?.voucherType === VOUCHER_TYPE?.DEBIT_TYPE?.key ? TRANSACTION_TYPE?.Debit?.value.concat(' Note') : TRANSACTION_TYPE?.Credit?.value.concat(' Note') });
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case NEXT_ACTION:
@@ -346,7 +354,12 @@ export const CreditDebitNoteMasterBase = (props) => {
                 editMode: buttonAction === EDIT_ACTION,
                 viewMode: buttonAction === VIEW_ACTION,
             });
-            setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction, orderStatus: record?.orderStatus }));
+
+            if (buttonAction === VIEW_ACTION || buttonAction === ADD_ACTION) {
+                setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction, orderStatus: record?.orderStatus }));
+            } else if (buttonAction === EDIT_ACTION) {
+                setButtonData({ ...defaultBtnVisiblity, orderStatus: record?.orderStatus, saveBtn: false, nextBtn: false, continueBtn: true, cancelBtn: true });
+            }
         }
         setIsFormVisible(true);
     };
@@ -372,6 +385,7 @@ export const CreditDebitNoteMasterBase = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId, customURL, onSuccessAction, extraParams });
             setButtonData({ ...buttonData, formBtnActive: false });
             setIsFormVisible(false);
+            setRequestPayload({ voucherDetailsDto: {}, partyDetailsDto: {}, voucherAccountHeadDetailsDto: [], apportionDetailsDto: [] });
         };
 
         const onError = (message) => {
@@ -402,6 +416,7 @@ export const CreditDebitNoteMasterBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
         setVoucherTableData([]);
         setApportionTableData([]);
+        setRequestPayload({ voucherDetailsDto: {}, partyDetailsDto: {}, voucherAccountHeadDetailsDto: [], apportionDetailsDto: [] });
     };
 
     const setPage = (page) => {
@@ -424,7 +439,6 @@ export const CreditDebitNoteMasterBase = (props) => {
         const { pageSize } = filterString;
         if (key === 'searchParam') {
             const { searchType, searchParam, ...rest } = filterString;
-            console.log('🚀 ~ file: CreditDebitNoteMaster.js:423 ~ removeFilter ~ rest:', rest);
             setFilterString({ ...rest });
         } else if (key === 'fromDate' || key === 'toDate') {
             setFilterString({ current: 1, pageSize });
@@ -477,7 +491,7 @@ export const CreditDebitNoteMasterBase = (props) => {
 
     const containerProps = {
         record: selectedRecord,
-        creditDebitData: formActionType?.addMode ? requestPayload : creditDebitData,
+        requestPayload,
         isDataLoaded,
         isDetailLoaded,
         form,
@@ -487,7 +501,7 @@ export const CreditDebitNoteMasterBase = (props) => {
         setIsFormVisible,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(transactionType).concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
         ADD_ACTION,
         EDIT_ACTION,
         VIEW_ACTION,
@@ -509,8 +523,9 @@ export const CreditDebitNoteMasterBase = (props) => {
         handleFormValueChange,
         isLastSection,
         typeData,
-        saveButtonName: isLastSection ? translateContent('global.buttons.submit') : translateContent('global.buttons.saveAndNew'),
-
+        saveButtonName: isLastSection ? translateContent('global.buttons.submit') : translateContent('global.buttons.saveAndNext'),
+        previousSection,
+        setPreviousSection,
         requestPayload,
         setRequestPayload,
         selectedVoucher,

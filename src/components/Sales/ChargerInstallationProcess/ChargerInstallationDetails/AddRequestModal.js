@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState } from 'react';
-import { Col, Form, Row, Button, DatePicker } from 'antd';
+import { Col, Form, Row, Button, DatePicker, Input } from 'antd';
 
 import { withModal } from 'components/withModal';
 import { customSelectBox } from 'utils/customSelectBox';
@@ -15,6 +15,7 @@ import { disableFutureDate } from 'utils/disableDate';
 
 import styles from 'assets/sass/app.module.scss';
 import { validateRequiredInputField } from 'utils/validation';
+import { CHARGER_STATUS } from 'constants/ChargerStatus';
 
 export const AddRequestModalForm = (props) => {
     const { onAdvanceSearchCloseAction, typeData, chargerStatus, formActionType } = props;
@@ -65,6 +66,9 @@ export const AddRequestModalForm = (props) => {
                         <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
                     </Form.Item>
                 </Col>
+                <Form.Item initialValue={CHARGER_STATUS?.IN_PROGRESS?.key} name="response">
+                    <Input type="hidden" />
+                </Form.Item>
             </Row>
 
             <Row gutter={20}>
@@ -84,4 +88,4 @@ export const AddRequestModalForm = (props) => {
     );
 };
 
-export const AddRequestModal = withModal(AddRequestModalForm, {});
+export const AddRequestModal = withModal(AddRequestModalForm, { width: 600 });

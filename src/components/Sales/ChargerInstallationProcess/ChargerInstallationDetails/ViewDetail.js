@@ -59,7 +59,7 @@ const ViewDetailMain = (props) => {
                                 </Descriptions>
                             </Card>
                             <Card style={{ backgroundColor: '#F2F2F2' }}>
-                                <DataTable tableColumn={addRequestColumnsView(typeData, onHandleModal)} tableData={chargerInstallationMasterData?.chargerInstDetails?.requestDetails} pagination={false} scroll={{ x: '1000' }} />
+                                <DataTable tableColumn={addRequestColumnsView(typeData, onHandleModal)} tableData={chargerInstallationMasterData?.chargerInstDetails?.requestDetails} pagination={false} scroll={{ x: 2400 }} />
                             </Card>
                         </Space>
                     </Col>

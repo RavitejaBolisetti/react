@@ -1,5 +1,6 @@
+/* eslint-disable jest/no-mocks-import */
 import React from 'react';
-import { screen, fireEvent, logRoles } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { VehicleDetailsMaster } from '@components/Sales/Common/VehicleDetails/VehicleDetailsMaster';
 import customRender from '@utils/test-utils';
@@ -20,22 +21,6 @@ const FormActionButton = () => (
         </Button>
     </div>
 );
-
-const buttonData = {
-    closeBtn: true,
-    cancelBtn: true,
-    editBtn: true,
-    allotBtn: true,
-    unAllotBtn: true,
-    invoiceBtn: true,
-    deliveryNoteBtn: true,
-    transferOTFBtn: true,
-    cancelOTFBtn: true,
-    changeHistory: true,
-    nextBtn: true,
-    saveBtn: true,
-    formBtnActive: true,
-};
 
 describe('OtfMaster component render', () => {
     it('test 1', async () => {
@@ -58,9 +43,11 @@ describe('OtfMaster component render', () => {
                 },
             },
         });
+
+        const formActionType = { viewMode: false };
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper typeData={'VEHCL_TYPE'} selectedOrderId={'hello'} onChange={jest.fn()} StatusBar={StatusBar} FormActionButton={FormActionButton} setButtonData={jest.fn()} handleFormValueChange={jest.fn()} />
+                <FormWrapper typeData={'VEHCL_TYPE'} formActionType={formActionType} selectedOrderId={'hello'} onChange={jest.fn()} StatusBar={StatusBar} FormActionButton={FormActionButton} setButtonData={jest.fn()} handleFormValueChange={jest.fn()} />
             </Provider>
         );
 

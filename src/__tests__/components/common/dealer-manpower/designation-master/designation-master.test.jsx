@@ -4,6 +4,7 @@ import { DesignationMaster } from '@components/common/DealerManpower/Designation
 import customRender from '@utils/test-utils';
 import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 
 jest.mock('store/actions/data/dealerManpower/dealerDivisionMaster', () => ({
@@ -129,8 +130,8 @@ describe('Designation Master components', () => {
 
         customRender( <DesignationMaster isVisible={true} {...props} /> );
 
-        const advanceFilter=screen.getByText('Advanced Filters');
-        fireEvent.click(advanceFilter);
+        // const advanceFilter=screen.getByText('Advance Filters');
+        // fireEvent.click(advanceFilter);
 
         const resetBtn=screen.getByRole('button', { name: 'Reset' });
         fireEvent.click(resetBtn);

@@ -55,8 +55,7 @@ describe('Dealer division master components', () => {
                     },
                 },
             },
-        });
-
+        })
 
         customRender(
             <Provider store={mockStore}>
@@ -82,7 +81,6 @@ describe('Dealer division master components', () => {
     })
 
     it('refresh button should work', async () => {
-
         const mockStore = createMockStore({
             auth: { userId: 123 },
             data: {
@@ -95,15 +93,18 @@ describe('Dealer division master components', () => {
             },
         });
 
+        const fetchList = jest.fn();
+
         customRender(
             <Provider store={mockStore}>
-                <ListDealerDivisionMaster fetchList={jest.fn()} />
+                <ListDealerDivisionMaster fetchList={fetchList} />
             </Provider>
         );
 
         const refreshbutton = screen.getByRole('button', { name: '', exact: false });
         fireEvent.click(refreshbutton);
 
+        fetchList.mock.calls[0][0].onSuccessAction();
     });
 
     it('Should render dealer division add edit form components', async () => {
@@ -148,10 +149,10 @@ describe('Dealer division master components', () => {
         const status = screen.getByRole('switch', { name: 'Status', exact: false })
         fireEvent.click(status);
 
-        const saveBtn = screen.getByRole('button', { name: 'Save' });
+        const saveBtn = screen.getByTestId('save');
         fireEvent.click(saveBtn);
 
-        const saveNewBtn = screen.getByRole('button', { name: 'Save & Add New' });
+        const saveNewBtn = screen.getByTestId('save-and-new');
         fireEvent.click(saveNewBtn);
     })
 

@@ -384,6 +384,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
 
     const handleDeliveryNoteTypeChange = (buttonName) => {
         const buttonKey = buttonName?.key;
+        setShowDataLoading(true);
         setDeliveryStatus(buttonKey);
         setFilterString({ deliveryStatus: buttonKey, current: 1 });
         switch (buttonKey) {
@@ -406,12 +407,12 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         }
     };
 
-    const handlePrintDownload = () => {
+    const handlePrintDownload = (props) => {
         setReportVisible(true);
         setAdditionalReportParams([
             {
-                key: 'delivery_note_id',
-                value: selectedOrder?.vehicleDeliveryNote,
+                key: 'sa_od_delivery_challan_hdr_id',
+                value: selectedOrder?.deliveryHdrId,
             },
         ]);
     };
@@ -650,7 +651,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         totalRecords,
         setPage: setFilterString,
         page: filterString,
-        tableColumn: tableColumnDeliveryNoteMaster({ handleButtonClick, actionButtonVisiblity, deliveryType }),
+        tableColumn: tableColumnDeliveryNoteMaster({ handleButtonClick, actionButtonVisiblity, deliveryType, deliveryStatus }),
         tableData: data,
         showAddButton: false,
         typeData,

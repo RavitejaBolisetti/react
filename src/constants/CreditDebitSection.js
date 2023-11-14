@@ -8,18 +8,15 @@ export const CREDIT_DEBIT_SECTION = {
         id: 1,
         title: 'Voucher And Party Details',
         displayOnList: true,
-        clickable: false,
     },
     VOUCHER_DETAILS: {
         id: 2,
         title: 'Voucher Details',
         displayOnList: true,
-        clickable: false,
     },
     APPORTION_DETAILS: {
         id: 3,
         title: 'Apportion Details',
         displayOnList: true,
-        clickable: false,
     },
 };

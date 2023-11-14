@@ -40,14 +40,15 @@ import { tableColumn as manufacturerTableColumn } from './Manufacturer/tableColu
 import styles from 'assets/sass/app.module.scss';
 import { DealerProductActions } from 'store/actions/data/userManagement/dealerProduct';
 import { translateContent } from 'utils/translateContent';
-import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { drawerTitle } from 'utils/drawerTitle';
 
-const { Option } = Select;
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
+        common: {
+            Header: { data: loginUserData = [] },
+        },
         data: {
             UserManagement: {
                 SearchUser: { isLoading: isDataLoading, data: userDataList = {}, detailData: userDetailData },
@@ -69,6 +70,7 @@ const mapStateToProps = (state) => {
     const moduleTitle = 'User Access';
 
     let returnValue = {
+        loginUserData,
         userId,
         typeData,
         userDataList,
@@ -164,9 +166,11 @@ const mapDispatchToProps = (dispatch) => ({
             fetchDealerProduct: DealerProductActions.fetchList,
             dealerProductShowLoading: DealerProductActions.listShowLoading,
             saveDealerProduct: DealerProductActions.saveData,
+            resetDealerProduct: DealerProductActions.reset,
 
             fetchProductHierarchyList: productHierarchyDataActions.fetchList,
             productShowLoding: productHierarchyDataActions.listShowLoading,
+            resetProductHierarchyList: productHierarchyDataActions.resetData,
 
             hideGlobalNotification,
             showGlobalNotification,
@@ -200,13 +204,13 @@ const UserManagementMain = (props) => {
     const [section, setSection] = useState();
     const [previousSection, setPreviousSection] = useState(1);
 
-    const [disableSearch, setDisabledSearch] = useState(true);
+    // const [disableSearch, setDisabledSearch] = useState(true);
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [drawer, setDrawer] = useState(false);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [formData, setFormData] = useState({});
     const [selectedRecord, setSelectedRecord] = useState(null);
-    const [selectedDealerCode, setselectedDealerCode] = useState('');
+    // const [selectedDealerCode, setselectedDealerCode] = useState('');
     const [defaultSection, setDefaultSection] = useState();
     const [canUserCreate, setCanUserCreate] = useState(false);
 
@@ -238,7 +242,7 @@ const UserManagementMain = (props) => {
             setSection(defaultSection);
             setFilterString();
 
-            setDisabledSearch(userType === USER_TYPE_USER.DEALER.id && !selectedDealerCode ? true : false);
+            // setDisabledSearch(userType === USER_TYPE_USER.DEALER.id && !selectedDealerCode ? true : false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userType, isFormVisible]);
@@ -298,12 +302,12 @@ const UserManagementMain = (props) => {
                 value: filterString?.searchParam,
                 name: 'employeeCode',
             },
-            {
-                key: 'dealerCode',
-                title: 'dealerCode',
-                value: selectedDealerCode,
-                name: 'dealerCode',
-            },
+            // {
+            //     key: 'dealerCode',
+            //     title: 'dealerCode',
+            //     value: selectedDealerCode,
+            //     name: 'dealerCode',
+            // },
             {
                 key: 'createUser',
                 title: 'createUser',
@@ -311,7 +315,7 @@ const UserManagementMain = (props) => {
                 name: 'createUser',
             },
         ];
-    }, [filterString, selectedDealerCode, userType, canUserCreate]);
+    }, [filterString, userType, canUserCreate]);
 
     const onConfirm = () => {
         setCanUserCreate(true);
@@ -319,10 +323,8 @@ const UserManagementMain = (props) => {
     };
 
     const createUserConfirmationModal = () => {
-        let message;
-
-        let resMessage = notFoundText?.MESSAGE;
-        message = (
+        const resMessage = notFoundText?.MESSAGE;
+        const message = (
             <>
                 <Space direction="vertical">
                     {resMessage}
@@ -367,14 +369,14 @@ const UserManagementMain = (props) => {
     useEffect(() => {
         if (userId && !isFormVisible) {
             const params = filterString?.searchParam ? extraParams : [...defaultExtraParam, ...extraParams];
-            if (userType === USER_TYPE_USER?.DEALER?.id && selectedDealerCode) {
+            if (userType === USER_TYPE_USER?.DEALER?.id) {
                 fetchUserDataList({ setIsLoading: listShowLoading, extraParams: params, userId, onErrorAction, onSuccessAction });
             } else if (userType === USER_TYPE_USER?.MANUFACTURER?.id) {
                 fetchUserDataList({ setIsLoading: listShowLoading, extraParams: params, userId, onErrorAction, onSuccessAction });
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, userType, page?.pageSize, page?.current, filterString?.searchParam, isFormVisible, selectedDealerCode, canUserCreate]);
+    }, [userId, userType, page?.pageSize, page?.current, filterString?.searchParam, isFormVisible, canUserCreate]);
 
     const handleButtonClick = ({ buttonAction, record = null, openDefaultSection = true }) => {
         switch (buttonAction) {
@@ -432,15 +434,15 @@ const UserManagementMain = (props) => {
         }
     };
 
-    const handleDealerChange = (selectedvalue) => {
-        if (selectedvalue) {
-            setDisabledSearch(false);
-        } else {
-            setDisabledSearch(true);
-        }
-        setFilterString({ searchParam: '', pageSize: filterString?.pageSize, current: 1 });
-        setselectedDealerCode(selectedvalue);
-    };
+    // const handleDealerChange = (selectedvalue) => {
+    //     if (selectedvalue) {
+    //         setDisabledSearch(false);
+    //     } else {
+    //         setDisabledSearch(true);
+    //     }
+    //     setFilterString({ searchParam: '', pageSize: filterString?.pageSize, current: 1 });
+    //     setselectedDealerCode(selectedvalue);
+    // };
 
     const onCloseAction = () => {
         setIsFormVisible(false);
@@ -472,7 +474,7 @@ const UserManagementMain = (props) => {
         currentSection,
         setCurrentSection,
         selectedRecord,
-        selectedDealerCode,
+        // selectedDealerCode,
         dealerDataList,
 
         section,
@@ -503,7 +505,7 @@ const UserManagementMain = (props) => {
     const handleUserTypeChange = (id) => {
         setCurrentSection(userType === USER_TYPE_USER.DEALER.id ? DEALER_USER_SECTION.ASSIGN_USER_ROLES : MANUFACTURER_USER_SECTION.ASSIGN_USER_ROLES);
         setUserType(id);
-        setselectedDealerCode('');
+        // setselectedDealerCode('');
         form.resetFields();
         searchForm.resetFields();
         setPage({ pageSize: 10, current: 1 });
@@ -516,7 +518,7 @@ const UserManagementMain = (props) => {
         setFilterString,
         singleField: true,
         placeholder: translateContent(userType === USER_TYPE_USER.DEALER.id ? 'userManagement.placeholder.searchEmployeeCode' : 'userManagement.placeholder.searchTokenNumber'),
-        disabled: disableSearch,
+        // disabled: disableSearch,
         optionType: selecttypeData,
         defaultValue: 'employeeCode',
         handleChange: onChangeSearchHandler,
@@ -529,7 +531,7 @@ const UserManagementMain = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
-                            <Col xs={24} sm={24} md={userType === USER_TYPE_USER?.DEALER?.id ? 18 : 14} lg={userType === USER_TYPE_USER?.DEALER?.id ? 18 : 14} xl={userType === USER_TYPE_USER?.DEALER?.id ? 18 : 14}>
+                            <Col xs={24} sm={24} md={14} lg={14} xl={14}>
                                 <Form autoComplete="off" colon={false} className={styles.masterListSearchForm}>
                                     <Form.Item>
                                         <Row gutter={20}>
@@ -543,7 +545,7 @@ const UserManagementMain = (props) => {
                                                         );
                                                     })}
                                                 </div>
-                                                {userType === USER_TYPE_USER?.DEALER?.id && (
+                                                {/* {userType === USER_TYPE_USER?.DEALER?.id && (
                                                     <Select className={styles.marR20} style={{ width: '60%' }} onChange={handleDealerChange} optionFilterProp="children" placeholder={preparePlaceholderSelect(translateContent('userManagement.placeholder.dealer'))} showSearch allowClear>
                                                         {dealerDataList?.map((item) => (
                                                             <Option key={item?.dealerCode} value={item?.dealerCode}>
@@ -551,7 +553,7 @@ const UserManagementMain = (props) => {
                                                             </Option>
                                                         ))}
                                                     </Select>
-                                                )}
+                                                )} */}
 
                                                 <div className={styles.fullWidth}>
                                                     <SearchBox {...searchBoxProps} />
@@ -577,7 +579,7 @@ const UserManagementMain = (props) => {
                                 imageStyle={{
                                     height: 60,
                                 }}
-                                description={<span>{translateContent(userType === USER_TYPE_USER?.DEALER?.id && !selectedDealerCode && !tableData?.length ? 'userManagement.generalMessage.dealerTableNoData' : 'global.generalMessage.noRecordsFound')}</span>}
+                                description={<span>{translateContent(userType === USER_TYPE_USER?.DEALER?.id && !tableData?.length ? 'userManagement.generalMessage.dealerTableNoData' : 'global.generalMessage.noRecordsFound')}</span>}
                             ></Empty>
                         )}
                     >

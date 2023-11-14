@@ -6,11 +6,46 @@
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { convertDateMonthYear } from 'utils/formatDateTime';
 import { DELIVERY_TYPE } from 'constants/modules/vehicleDetailsNotes.js/deliveryType';
+import { QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
 import { translateContent } from 'utils/translateContent';
-
+import { Tag } from 'antd';
 import styles from 'assets/sass/app.module.scss';
 
-export const tableColumnDeliveryNoteMaster = ({ handleButtonClick, actionButtonVisiblity, deliveryType }) => {
+export const tableColumnDeliveryNoteMaster = ({ handleButtonClick, actionButtonVisiblity, deliveryType, deliveryStatus }) => {
+    const handleDeliveryNoteColumn = (value, deliveryType, deliveryStatus, tagColor = 'warning') => {
+        switch (deliveryType) {
+            case DELIVERY_TYPE?.NOTE?.key: {
+                if (deliveryStatus === QUERY_BUTTONS_CONSTANTS?.PENDING?.key) {
+                    return { renderValue: <Tag color={tagColor}>NOT GENERATED</Tag>, sorting: false, DeliveryNoteColumn: translateContent('vehicleDeliveryNote.label.vehicleDeliveryNo') };
+                } else
+                    return {
+                        renderValue: (
+                            <>
+                                <div>{value?.vehicleDeliveryNote}</div>
+                                {value?.deliveryNoteDate ? <div className={styles.tableTextColor85}> {convertDateMonthYear(value?.deliveryNoteDate)}</div> : ''}
+                            </>
+                        ),
+                        sorting: true,
+                        DeliveryNoteColumn: translateContent('vehicleDeliveryNote.label.vehicleDeliveryNo'),
+                    };
+            }
+            case DELIVERY_TYPE?.CHALLAN?.key: {
+                return {
+                    renderValue: (
+                        <>
+                            <div>{value?.vehicleDeliveryNote}</div>
+                            {value?.deliveryNoteDate ? <div className={styles.tableTextColor85}> {convertDateMonthYear(value?.deliveryNoteDate)}</div> : ''}
+                        </>
+                    ),
+                    sorting: true,
+                    DeliveryNoteColumn: translateContent('vehicleDeliveryNote.label.challanNoDate'),
+                };
+            }
+            default: {
+                return false;
+            }
+        }
+    };
     const tableColumn = [
         tblPrepareColumns({
             title: translateContent('vehicleDeliveryNote.label.customerName'),
@@ -24,17 +59,11 @@ export const tableColumnDeliveryNoteMaster = ({ handleButtonClick, actionButtonV
         }),
 
         tblPrepareColumns({
-            title: deliveryType === DELIVERY_TYPE?.NOTE?.key ? translateContent('vehicleDeliveryNote.label.vehicleDeliveryNo') : translateContent('vehicleDeliveryNote.label.challanNoDate'),
+            title: handleDeliveryNoteColumn(undefined, deliveryType, deliveryStatus)?.DeliveryNoteColumn,
+            sorter: handleDeliveryNoteColumn(undefined, deliveryType, deliveryStatus)?.sorting,
             dataIndex: 'vehicleDeliveryNote',
             width: '20%',
-            render: (_, value) => {
-                return (
-                    <>
-                        <div>{value?.vehicleDeliveryNote}</div>
-                        {value?.deliveryNoteDate ? <div className={styles.tableTextColor85}> {convertDateMonthYear(value?.deliveryNoteDate)}</div> : ''}
-                    </>
-                );
-            },
+            render: (_, value) => handleDeliveryNoteColumn(value, deliveryType, deliveryStatus)?.renderValue,
         }),
         tblPrepareColumns({
             title: translateContent('vehicleDeliveryNote.label.invoiceNoDate'),

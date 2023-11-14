@@ -93,8 +93,8 @@ export const EvrDetailsCapturingMasterBase = (props) => {
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [chargingStatusType, setChargingStatusType] = useState(EVR_STATUS?.DUE_FOR_CHARGING.key);
-    const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
+    const page = { pageSize: 10, current: 1 };
 
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -121,7 +121,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
     const [formData, setFormData] = useState([]);
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.title'), message: res?.responseMessage });
+        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
@@ -132,19 +132,12 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         setShowDataLoading(false);
     };
 
-    useEffect(() => {
-        if (filterString) {
-            setPage({ ...page, current: 1 });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString]);
-
     const extraParams = useMemo(() => {
         return [
             {
                 key: 'searchParam',
                 title: 'searchParam',
-                value: chargingStatusType,
+                value: filterString?.chargingStatusType || chargingStatusType,
                 filter: false,
             },
             {
@@ -187,12 +180,12 @@ export const EvrDetailsCapturingMasterBase = (props) => {
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: page?.current,
+                value: filterString?.current || page?.current,
             },
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: page?.pageSize,
+                value: filterString?.pageSize || page?.pageSize,
             },
             {
                 key: 'sortBy',
@@ -237,7 +230,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, chargingStatusType, page, filterString]);
+    }, [userId, filterString]);
 
     useEffect(() => {
         if (isAdvanceSearchVisible && filterString) {
@@ -277,7 +270,8 @@ export const EvrDetailsCapturingMasterBase = (props) => {
     }, [productHierarchyData]);
 
     const handleChargingTypeChange = (buttonName) => {
-        switch (buttonName?.key) {
+        const buttonKey = buttonName?.key;
+        switch (buttonKey) {
             case EVR_STATUS?.DUE_FOR_CHARGING?.key: {
                 setActionButtonVisiblity({ canAdd: false, canView: false, canEdit: true });
                 break;
@@ -292,7 +286,8 @@ export const EvrDetailsCapturingMasterBase = (props) => {
                 setActionButtonVisiblity({ canAdd: false, canView: false, canEdit: true });
             }
         }
-        setChargingStatusType(buttonName?.key);
+        setChargingStatusType(buttonKey);
+        setFilterString({ chargingStatusType: buttonKey, current: 1 });
         searchForm.resetFields();
     };
 
@@ -308,7 +303,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
     };
 
     const handleSearch = (value) => {
-        setFilterString({ ...filterString, modelDescription: value, advanceFilter: true });
+        setFilterString({ ...filterString, modelDescription: value, advanceFilter: true, current: 1 });
         searchForm.resetFields();
     };
 
@@ -372,7 +367,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
-            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.title'), message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             setButtonData({ ...buttonData, formBtnActive: false });
             setIsFormVisible(false);
@@ -406,12 +401,13 @@ export const EvrDetailsCapturingMasterBase = (props) => {
     const tableProps = {
         dynamicPagination,
         totalRecords,
-        page,
-        setPage,
+        setPage: setFilterString,
+        page: filterString,
         tableColumn: tableColumn({ handleButtonClick, actionButtonVisiblity }),
         tableData: data,
         showAddButton: false,
         typeData,
+        filterString,
     };
 
     const onAdvanceSearchCloseAction = () => {

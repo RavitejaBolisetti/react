@@ -152,7 +152,7 @@ const AddEditFormMain = (props) => {
                             <Row gutter={24}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
                                     <Form.Item name="remarks" label={translateContent('stockTransferIndent.label.remark')}>
-                                        <TextArea maxLength={90} placeholder={preparePlaceholderText(translateContent('stockTransferIndent.label.remark'))} showCount />
+                                        <TextArea maxLength={90} placeholder={preparePlaceholderText(translateContent('stockTransferIndent.label.remark'))} showCount data-testid="remark"/>
                                     </Form.Item>
                                 </Col>
                             </Row>

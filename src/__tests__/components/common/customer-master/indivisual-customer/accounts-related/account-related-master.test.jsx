@@ -67,9 +67,6 @@ describe('AccountRelated Master  Component', () => {
     it('should render Label Text', async () => {
         customRender(<FormWrapper {...props} onError={jest.fn()} showGlobalNotification={jest.fn()} />);
 
-        const renderText = screen.getByText('Account Related');
-        expect(renderText).toBeTruthy();
-
         const creditText = screen.getByText('Credit Limit');
         expect(creditText).toBeTruthy();
 

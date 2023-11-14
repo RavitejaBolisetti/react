@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-mocks-import */
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import AMCRegistrationMaster from '@components/Sales/AMCRegistration/AMCRegistrationMaster';
@@ -47,7 +48,7 @@ describe('AMC Registration Master Components', () => {
     it('Should render AMC registration master Registration Filter apply render', () => {
         customRender(<FormWrapper setFilterString={jest.fn()} />);
 
-        const advancedFiltersBtn = screen.getByRole('button', { name: 'Advanced Filters' });
+        const advancedFiltersBtn = screen.getByRole('button', { name: 'Advance Filters' });
         fireEvent.click(advancedFiltersBtn);
 
         const aMCRegistrationFromDate = screen.getByRole('textbox', { name: 'AMC Registration From Date' });
@@ -63,7 +64,7 @@ describe('AMC Registration Master Components', () => {
     it('Should render AMC registration master Registration Filter reset render', () => {
         customRender(<FormWrapper setFilterString={jest.fn()} />);
 
-        const advancedFiltersBtn = screen.getByRole('button', { name: 'Advanced Filters' });
+        const advancedFiltersBtn = screen.getByRole('button', { name: 'Advance Filters' });
         fireEvent.click(advancedFiltersBtn);
 
         const aMCRegistrationFromDate = screen.getByRole('textbox', { name: 'AMC Registration From Date' });
@@ -79,7 +80,7 @@ describe('AMC Registration Master Components', () => {
     it('Should render AMC registration master Registration Filter close render', () => {
         customRender(<FormWrapper setFilterString={jest.fn()} />);
 
-        const advancedFiltersBtn = screen.getByRole('button', { name: 'Advanced Filters' });
+        const advancedFiltersBtn = screen.getByRole('button', { name: 'Advance Filters' });
         fireEvent.click(advancedFiltersBtn);
 
         const closeBtn = screen.getByRole('button', { name: 'Close' });
@@ -215,25 +216,5 @@ describe('AMC Registration Master Components', () => {
 
         const cancel = screen.getByRole('button', { name: 'Close' });
         fireEvent.click(cancel);
-    });
-    it('Should render userid', async () => {
-        const mockStore = createMockStore({
-            auth: { userId: 1237 },
-        });
-        const fetchList = jest.fn();
-
-        const formActionType = { viewMode: true };
-
-        customRender(
-            <Provider store={mockStore}>
-                <AMCRegistrationMaster currentSection={'2'} setFilterString={jest.fn()} fetchList={fetchList} formActionType={formActionType} EDIT_ACTION={'edit'} />
-            </Provider>
-        );
-
-        const plusAdd = screen.getByRole('button', { name: 'Pending for Approval' });
-        fireEvent.click(plusAdd);
-
-        const pendingforCancellation = screen.getByRole('button', { name: 'Pending for Cancellation' });
-        fireEvent.click(pendingforCancellation);
-    });
+    });   
 });

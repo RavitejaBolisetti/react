@@ -121,7 +121,7 @@ const AddEditFormMain = (props) => {
                             header={
                                 <Row>
                                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                        <Text strong>translateContent('creditDebitNote.voucherDetails.heading.title')</Text>
+                                        <Text strong>{translateContent('creditDebitNote.voucherDetails.heading.title')}</Text>
                                         <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary">
                                             {translateContent('global.buttons.add')}
                                         </Button>

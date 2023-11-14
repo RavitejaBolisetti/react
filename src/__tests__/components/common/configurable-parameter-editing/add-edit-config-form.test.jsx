@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
-import { fireEvent, screen, act } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import { AddEditForm } from 'components/common/ConfigurableParameterEditing/AddEditForm';
 import { Form } from 'antd';
 
@@ -42,14 +42,10 @@ describe('Render AddEditForm Component', () => {
         customRender(<FormWrapper {...props} setSaveAndAddNewBtnClicked={jest.fn(false)} onCloseAction={jest.fn()} footerEdit={false} />);
 
         const saveBtn = screen.getByRole('button', { name: 'Save' });
-        act(() => {
-            fireEvent.click(saveBtn);
-        });
+        fireEvent.click(saveBtn);
 
         const cancelBtn = screen.getByRole('button', { name: 'Cancel' });
-        act(() => {
-            fireEvent.click(cancelBtn);
-        });
+        fireEvent.click(cancelBtn);
     });
 
     it('should render input fields', () => {
@@ -60,7 +56,7 @@ describe('Render AddEditForm Component', () => {
         };
         customRender(<FormWrapper {...props} handleControlChange={jest.fn()} formData={formData} />);
 
-        const controlId = screen.getByRole('combobox', { name: 'Control ID', exact: false });
+        const controlId = screen.getByRole('combobox', { name: 'Control Id', exact: false });
         fireEvent.change(controlId, { target: { value: 1 } });
 
         const controlGrp = screen.getByRole('combobox', { name: 'Control Group', exact: false });
@@ -74,23 +70,17 @@ describe('Render AddEditForm Component', () => {
         customRender(<FormWrapper {...props} setSaveAndAddNewBtnClicked={jest.fn(true)} formData={[]} />);
 
         const saveAddNewBtn = screen.getByRole('button', { name: 'Save & Add New' });
-        act(() => {
-            fireEvent.click(saveAddNewBtn);
-        });
+        fireEvent.click(saveAddNewBtn);
     });
 
     it('Edit Button click should work', () => {
         customRender(<FormWrapper {...props} footerEdit={true} hanndleEditData={jest.fn()} />);
 
         const editBtn = screen.getByRole('button', { name: 'Edit' });
-        act(() => {
-            fireEvent.click(editBtn);
-        });
+        fireEvent.click(editBtn);
 
         const closeBtn = screen.getAllByRole('button', { name: 'Close' });
-        act(() => {
-            fireEvent.click(closeBtn[0]);
-        });
+        fireEvent.click(closeBtn[0]);
     });
 
     it('test for paramaeter types', () => {

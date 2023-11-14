@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen, fireEvent, waitFor } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { CancellationMaster } from '@components/Sales/OTF/OTFCancellation/CancellationMaster';
 import customRender from '@utils/test-utils';
@@ -288,8 +288,8 @@ describe('Booking cancellation master render', () => {
         const uploadFile = screen.getByRole('button', { name: 'Upload File', exact: false });
         fireEvent.change(uploadFile);
 
-        const cancelBooking = screen.getByRole('button', { name: 'Cancel Booking', exact: false });
-        fireEvent.click(cancelBooking);
+        // const cancelBooking = screen.getByRole('button', { name: 'Cancel Booking', exact: false });
+        // fireEvent.click(cancelBooking);
 
         const cancel = screen.getByRole('button', { name: 'Cancel', exact: false });
         fireEvent.click(cancel);

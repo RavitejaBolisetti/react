@@ -3,6 +3,7 @@ import RSMApprovalMaster from 'components/Sales/RSMApproval/RSMApprovalMaster';
 import customRender from '@utils/test-utils';
 import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 
 afterEach(() => {
@@ -24,7 +25,7 @@ describe('RSMApprovalMaster Component', () => {
     it('reset button should work', () => {
         customRender(<RSMApprovalMaster setFilterString={jest.fn()} />);
 
-        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        const advanceFilter = screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advanceFilter);
         const resetBtn = screen.getByRole('button', { name: /Reset/i });
         fireEvent.click(resetBtn);
@@ -33,7 +34,7 @@ describe('RSMApprovalMaster Component', () => {
     it('test for closing the advance filter', () => {
         customRender(<RSMApprovalMaster setFilterString={jest.fn()} />);
 
-        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        const advanceFilter = screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advanceFilter);
         const closeBtn = screen.getByRole('button', { name: /Close/i });
         fireEvent.click(closeBtn);
@@ -127,7 +128,7 @@ describe('RSMApprovalMaster Component', () => {
             data: {
                 Sales: {
                     RSMApprovalSearch: {
-                        data: { paginationData: [{ chassisNumber: 'null', fromDealerCode: 'NB04', fromDealerName: 'ANDHERI', id: '1c5415bc-fcfe-40d8-ad7b-46f5bf74ba41', modelDescription: 'XUV700 AX7 L DSL AT 7 SEATER WHT', requestedDate: '2023-10-10', status: null, toDealerCode: 'C230088323', toDealerName: 'SANJAY RAJARAM KHARAMBALE', vehicleAge: 287, id: '1c5415bc-fcfe-40d8-ad7b-46f5bf74ba41', remarks: 'rejection', request: 'R' }] },
+                        data: { paginationData: [{ chassisNumber: 'null', fromDealerCode: 'NB04', fromDealerName: 'ANDHERI', id: '1c5415bc-fcfe-40d8-ad7b-46f5bf74ba41', modelDescription: 'XUV700 AX7 L DSL AT 7 SEATER WHT', requestedDate: '2023-10-10', status: null, toDealerCode: 'C230088323', toDealerName: 'SANJAY RAJARAM KHARAMBALE', vehicleAge: 287, remarks: 'rejection', request: 'R' }] },
                     },
                 },
             },

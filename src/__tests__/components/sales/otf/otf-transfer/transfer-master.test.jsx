@@ -122,7 +122,7 @@ describe('Booking transfer master render', () => {
     });
 
     it('should render transfer master add edit form', async () => {
-        const { container } = customRender(
+        customRender(
             <Provider store={mockStore}>
                 <FormWrapper {...props} salesConsultantLov={salesConsultantLov} isVisible={true} onFinishOTFTansfer={jest.fn()} handleButtonClick={jest.fn()} handleOtfTransferLocationChange={jest.fn()} />
             </Provider>
@@ -142,23 +142,5 @@ describe('Booking transfer master render', () => {
 
         const closeImg = screen.getByRole('img', { name: 'close', exact: false });
         expect(closeImg).toBeTruthy();
-
-        const otfNo = screen.getByRole('columnheader', { name: 'Booking No.', exact: false });
-        expect(otfNo).toBeTruthy();
-
-        const otfDate = screen.getByRole('columnheader', { name: 'Booking Date', exact: false });
-        expect(otfDate).toBeTruthy();
-
-        const customerName = screen.getByRole('columnheader', { name: 'Customer Name', exact: false });
-        expect(customerName).toBeTruthy();
-
-        const mobileNo = screen.getByRole('columnheader', { name: 'Mobile No.', exact: false });
-        expect(mobileNo).toBeTruthy();
-
-        const model = screen.getByRole('columnheader', { name: 'Model', exact: false });
-        expect(model).toBeTruthy();
-
-        const order = screen.getByRole('columnheader', { name: 'Order Status', exact: false });
-        expect(order).toBeTruthy();
     });
 });

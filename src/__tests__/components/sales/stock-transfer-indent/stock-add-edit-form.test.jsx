@@ -49,7 +49,7 @@ describe("AddEditForm",()=>{
     it("Remarks Textbox", ()=>{
         customRender(<AddEditForm isVisible={true} tableDataItem={[]}/>);
 
-        const remarks = screen.getByRole('textbox', {name:'Remarks'});
+        const remarks = screen.getByTestId('remark');
         fireEvent.change(remarks, {target:{value:'test2'}});
     });
 

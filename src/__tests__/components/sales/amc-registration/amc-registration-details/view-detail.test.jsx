@@ -11,10 +11,8 @@ describe('AMC Registration Details Master view Components', () => {
 
         customRender(<ViewDetail setactiveKey={setactiveKey} onChange={jest.fn().mockResolvedValue('1')} newActivekeys={[{ id: 1, value: 'test' }]} />);
 
-        const plusRegistrationInformation = screen.getByRole('button', { name: 'plus Registration Information' });
-        fireEvent.click(plusRegistrationInformation);
-
-        const plusSchemeDetails = screen.getByRole('button', { name: 'plus Scheme Details' });
-        fireEvent.click(plusSchemeDetails);
+        const plusRegistrationInformation = screen.getAllByRole('img', { name: 'plus' });
+        fireEvent.click(plusRegistrationInformation[0]);
+        fireEvent.click(plusRegistrationInformation[1]);
     });
 });

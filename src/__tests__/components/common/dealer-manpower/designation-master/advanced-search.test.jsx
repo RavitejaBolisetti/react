@@ -54,7 +54,7 @@ describe('List Employee Department Master components', () => {
             <FormWrapper isVisible={true} filterString={filterString} filteredRoleData={data} divisionData={data} filteredDepartmentData={data} isDivisionDataLoaded={true} handleFilterChange={jest.fn()}  />
         )
 
-        const searchBtn = screen.getByRole('button', { name: 'Search' });
+        const searchBtn = screen.getByRole('button', { name: 'search' });
         fireEvent.click(searchBtn);
     })
 });

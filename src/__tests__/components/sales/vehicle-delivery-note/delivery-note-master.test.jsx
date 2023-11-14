@@ -3,6 +3,7 @@ import { VehicleDeliveryNoteMaster } from 'components/Sales/VehicleDeliveryNote/
 import customRender from '@utils/test-utils';
 import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 
 afterEach(() => {
@@ -172,7 +173,7 @@ describe('Vehicle Delivery Note Master components', () => {
     it('reset button should work', () => {
         customRender(<VehicleDeliveryNoteMaster setFilterString={jest.fn()} resetDeliveryNoteMasterData={jest.fn()} />);
 
-        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        const advanceFilter = screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advanceFilter);
         const resetBtn = screen.getByRole('button', { name: /Reset/i });
         fireEvent.click(resetBtn);
@@ -181,7 +182,7 @@ describe('Vehicle Delivery Note Master components', () => {
     it('test for closing the advance filter', () => {
         customRender(<VehicleDeliveryNoteMaster resetDeliveryNoteMasterData={jest.fn()} setFilterString={jest.fn()} />);
 
-        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        const advanceFilter = screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advanceFilter);
         const closeBtn = screen.getByRole('button', { name: /Close/i });
         fireEvent.click(closeBtn);
@@ -231,7 +232,7 @@ describe('Vehicle Delivery Note Master components', () => {
         fireEvent.click(removeFilter[0]);
     });
 
-    it('advanced filters should work', async () => {
+    it('Advance Filters should work', async () => {
         const mockStore = createMockStore({
             auth: { userId: 106 },
             data: {
@@ -246,7 +247,7 @@ describe('Vehicle Delivery Note Master components', () => {
             </Provider>
         );
 
-        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        const advanceFilter = screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advanceFilter);
 
         const fromDate = screen.getByRole('textbox', { name: 'Invoice From Date' });

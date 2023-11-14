@@ -6,7 +6,6 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
 import { rootReducer } from 'store/reducers';
-import { all } from 'axios';
 
 export const createMockStore = (initialState) => {
     const mockStore = configureStore({
@@ -47,11 +46,11 @@ jest.mock('store/actions/data/productHierarchy', () => ({
 
 describe('Vehicle Allotment Master Component', () => {
     it('should render Vehicle Allotment Master component UI', () => {
-        customRender(<VehicleAllotmentMaster setFilterString={jest.fn()} resetData={jest.fn()} />);
+        customRender(<VehicleAllotmentMaster setFilterString={jest.fn()} resetDetail={jest.fn()}  resetData={jest.fn()} />);
     });
 
     it('should render Vehicle Allotment Master tab bars component UI', () => {
-        customRender(<VehicleAllotmentMaster setFilterString={jest.fn()} resetData={jest.fn()} />);
+        customRender(<VehicleAllotmentMaster setFilterString={jest.fn()} resetDetail={jest.fn()}  resetData={jest.fn()} />);
 
         const unAllotted = screen.getByRole('button', { name: 'Un-Allotted' });
         fireEvent.click(unAllotted);
@@ -78,7 +77,7 @@ describe('Vehicle Allotment Master Component', () => {
         });
         customRender(
             <Provider store={mockStore}>
-                <VehicleAllotmentMaster setFilterString={jest.fn()} fetchModelList={jest.fn()} resetData={jest.fn()} fetchVehicleAllotmentSearchedList={jest.fn()} />
+                <VehicleAllotmentMaster setFilterString={jest.fn()} resetDetail={jest.fn()}  fetchModelList={jest.fn()} resetData={jest.fn()} fetchVehicleAllotmentSearchedList={jest.fn()} />
             </Provider>
         );
 
@@ -110,11 +109,11 @@ describe('Vehicle Allotment Master Component', () => {
         });
         customRender(
             <Provider store={mockStore}>
-                <VehicleAllotmentMaster setFilterString={jest.fn()} fetchModelList={jest.fn()} resetData={jest.fn()} fetchVehicleAllotmentSearchedList={jest.fn()} />
+                <VehicleAllotmentMaster setFilterString={jest.fn()} resetDetail={jest.fn()}  fetchModelList={jest.fn()} resetData={jest.fn()} fetchVehicleAllotmentSearchedList={jest.fn()} />
             </Provider>
         );
 
-        const filter = screen.getByRole('button', { name: 'Advanced Filters' });
+        const filter = screen.getByRole('button', { name: 'Advance Filters' });
         fireEvent.click(filter);
 
         const vehicleStatus = screen.getByRole('combobox', { name: 'Vehicle Status' });
@@ -128,9 +127,9 @@ describe('Vehicle Allotment Master Component', () => {
     });
 
     it('should render Vehicle Allotment Master filter reset button component UI', () => {
-        customRender(<VehicleAllotmentMaster setFilterString={jest.fn()} resetData={jest.fn()} />);
+        customRender(<VehicleAllotmentMaster setFilterString={jest.fn()} resetDetail={jest.fn()}  resetData={jest.fn()} />);
 
-        const filter = screen.getByRole('button', { name: 'Advanced Filters' });
+        const filter = screen.getByRole('button', { name: 'Advance Filters' });
         fireEvent.click(filter);
 
         const reset = screen.getByRole('button', { name: 'Reset' });
@@ -138,9 +137,9 @@ describe('Vehicle Allotment Master Component', () => {
     });
 
     it('should render Vehicle Allotment Master filter close button component UI', () => {
-        customRender(<VehicleAllotmentMaster setFilterString={jest.fn()} resetData={jest.fn()} />);
+        customRender(<VehicleAllotmentMaster setFilterString={jest.fn()} resetDetail={jest.fn()}  resetData={jest.fn()} />);
 
-        const filter = screen.getByRole('button', { name: 'Advanced Filters' });
+        const filter = screen.getByRole('button', { name: 'Advance Filters' });
         fireEvent.click(filter);
 
         const close = screen.getByRole('button', { name: 'Close' });
@@ -158,7 +157,7 @@ describe('Vehicle Allotment Master Component', () => {
         });
         customRender(
             <Provider store={mockStore}>
-                <VehicleAllotmentMaster setFilterString={jest.fn()} fetchModelList={jest.fn()} resetData={jest.fn()} fetchVehicleAllotmentSearchedList={jest.fn()} />
+                <VehicleAllotmentMaster setFilterString={jest.fn()} resetDetail={jest.fn()}  fetchModelList={jest.fn()} resetData={jest.fn()} fetchVehicleAllotmentSearchedList={jest.fn()} />
             </Provider>
         );
 
@@ -178,7 +177,7 @@ describe('Vehicle Allotment Master Component', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <VehicleAllotmentMaster setFilterString={jest.fn()} fetchModelList={jest.fn()} resetData={jest.fn()} fetchVehicleAllotmentSearchedList={jest.fn()} />
+                <VehicleAllotmentMaster setFilterString={jest.fn()} resetDetail={jest.fn()}  fetchModelList={jest.fn()} resetData={jest.fn()} fetchVehicleAllotmentSearchedList={jest.fn()} />
             </Provider>
         );
 
@@ -193,7 +192,7 @@ describe('Vehicle Allotment Master Component', () => {
         const formData = { allotmentStatus: '', vehicleOTFDetails: {} };
         const tableDataItem = [];
 
-        customRender(<VehicleAllotmentMaster resetData={jest.fn()} setFilterString={jest.fn()} showAddButton={true} isVisible={true} handleButtonClick={jest.fn()} tableData={tableDataItem} formData={formData} />);
+        customRender(<VehicleAllotmentMaster resetData={jest.fn()} resetDetail={jest.fn()}  setFilterString={jest.fn()} showAddButton={true} isVisible={true} handleButtonClick={jest.fn()} tableData={tableDataItem} formData={formData} />);
 
         const unAllotted = screen.getByRole('button', { name: 'Un-Allotted' });
         fireEvent.click(unAllotted);
@@ -244,7 +243,7 @@ describe('Vehicle Allotment Master Component', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <VehicleAllotmentMaster resetOTFSearchedList={jest.fn()} fetchModelList={fetchModelList} fetchOTFSearchedList={fetchOTFSearchedList} fetchVehicleAllotmentSearchedList={fetchVehicleAllotmentSearchedList} fetchVehicleAllotmentDetails={fetchVehicleAllotmentDetails} setFilterString={jest.fn()} resetData={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} />
+                <VehicleAllotmentMaster resetOTFSearchedList={jest.fn()} resetDetail={jest.fn()}  fetchModelList={fetchModelList} fetchOTFSearchedList={fetchOTFSearchedList} fetchVehicleAllotmentSearchedList={fetchVehicleAllotmentSearchedList} fetchVehicleAllotmentDetails={fetchVehicleAllotmentDetails} setFilterString={jest.fn()} resetData={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} />
             </Provider>
         );
 
@@ -312,7 +311,7 @@ describe('Vehicle Allotment Master Component', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <VehicleAllotmentMaster resetOTFSearchedList={jest.fn()} fetchModelList={fetchModelList} fetchOTFSearchedList={fetchOTFSearchedList} fetchVehicleAllotmentSearchedList={fetchVehicleAllotmentSearchedList} fetchVehicleAllotmentDetails={fetchVehicleAllotmentDetails} setFilterString={jest.fn()} resetData={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} />
+                <VehicleAllotmentMaster resetOTFSearchedList={jest.fn()} resetDetail={jest.fn()}  fetchModelList={fetchModelList} fetchOTFSearchedList={fetchOTFSearchedList} fetchVehicleAllotmentSearchedList={fetchVehicleAllotmentSearchedList} fetchVehicleAllotmentDetails={fetchVehicleAllotmentDetails} setFilterString={jest.fn()} resetData={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} />
             </Provider>
         );
 
@@ -380,7 +379,7 @@ describe('Vehicle Allotment Master Component', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <VehicleAllotmentMaster resetOTFSearchedList={jest.fn()} fetchModelList={fetchModelList} fetchOTFSearchedList={fetchOTFSearchedList} fetchVehicleAllotmentSearchedList={fetchVehicleAllotmentSearchedList} fetchVehicleAllotmentDetails={fetchVehicleAllotmentDetails} setFilterString={jest.fn()} resetData={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} />
+                <VehicleAllotmentMaster resetOTFSearchedList={jest.fn()} resetDetail={jest.fn()}  fetchModelList={fetchModelList} fetchOTFSearchedList={fetchOTFSearchedList} fetchVehicleAllotmentSearchedList={fetchVehicleAllotmentSearchedList} fetchVehicleAllotmentDetails={fetchVehicleAllotmentDetails} setFilterString={jest.fn()} resetData={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} />
             </Provider>
         );
 
@@ -396,7 +395,7 @@ describe('Vehicle Allotment Master Component', () => {
 
         fireEvent.click(viewBtn);
 
-        const yesBtn = screen.getByRole('button', { name: /cancel/i });
+        const yesBtn = screen.getByTestId('cancel');
         fireEvent.click(yesBtn);
     });
 
@@ -445,7 +444,7 @@ describe('Vehicle Allotment Master Component', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <VehicleAllotmentMaster resetOTFSearchedList={jest.fn()} fetchModelList={fetchModelList} fetchOTFSearchedList={fetchOTFSearchedList} fetchVehicleAllotmentSearchedList={fetchVehicleAllotmentSearchedList} fetchVehicleAllotmentDetails={fetchVehicleAllotmentDetails} setFilterString={jest.fn()} resetData={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} />
+                <VehicleAllotmentMaster resetOTFSearchedList={jest.fn()} resetDetail={jest.fn()} fetchModelList={fetchModelList} fetchOTFSearchedList={fetchOTFSearchedList} fetchVehicleAllotmentSearchedList={fetchVehicleAllotmentSearchedList} fetchVehicleAllotmentDetails={fetchVehicleAllotmentDetails} setFilterString={jest.fn()} resetData={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} />
             </Provider>
         );
 
@@ -466,7 +465,7 @@ describe('Vehicle Allotment Master Component', () => {
         const searchBox = screen.getAllByRole('img', { name: /search/i });
         fireEvent.click(searchBox[1]);
 
-        const yesBtn = screen.getByRole('button', { name: /cancel/i });
+        const yesBtn = screen.getByTestId('cancel');
         fireEvent.click(yesBtn);
     });
 });

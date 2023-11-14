@@ -1,6 +1,7 @@
 import React from 'react';
-import { screen, fireEvent, waitFor, act } from '@testing-library/react';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import customRender from '@utils/test-utils';
 import { ListPinCodeMaster } from 'components/common/Geo';
@@ -166,10 +167,10 @@ describe('List PinCode Master Component', () => {
         
     });
 
-    it('advanced filters and close button should work', async () => {
+    it('Advance Filters and close button should work', async () => {
         customRender(<ListPinCodeMaster resetData={jest.fn()} />);
         
-        const advancedFilters=screen.getByRole('button', { name: /Advanced Filters/i });
+        const advancedFilters=screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advancedFilters);
         const closeBtn=screen.getByRole('button', { name: /Close/i });
         fireEvent.click(closeBtn);
@@ -178,7 +179,7 @@ describe('List PinCode Master Component', () => {
     it('advanced search should return error on empty form fields', async () => {
         customRender(<ListPinCodeMaster resetData={jest.fn()} />);
         
-        const advancedFilters=screen.getByRole('button', { name: /Advanced Filters/i });
+        const advancedFilters=screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advancedFilters);
         
         const searchBtn=screen.getAllByRole('button', { name: /Search/i });
@@ -186,7 +187,7 @@ describe('List PinCode Master Component', () => {
     });
 
     jest.setTimeout(50000)
-    it('advanced filters should work with all fields', async () => {
+    it('Advance Filters should work with all fields', async () => {
         const mockStore = createMockStore({
             auth: { userId: 106 },
             data: {
@@ -209,7 +210,7 @@ describe('List PinCode Master Component', () => {
             </Provider>
         );
         
-        const advancedFilters=screen.getByRole('button', { name: /Advanced Filters/i });
+        const advancedFilters=screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advancedFilters);
 
         const countrySelect=screen.getByRole('combobox', { name: 'Country' });

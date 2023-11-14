@@ -53,7 +53,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const VoucherDetailsMasterMain = (props) => {
     const { formActionType, NEXT_ACTION, handleButtonClick } = props;
-    const { showGlobalNotification, requestPayload, setRequestPayload, handleFormValueChange, creditDebitData, fetchFinancialAccountList, listFinanceShowLoading, voucherTableData, setVoucherTableData } = props;
+    const { showGlobalNotification, setRequestPayload, handleFormValueChange, requestPayload, fetchFinancialAccountList, listFinanceShowLoading, voucherTableData, setVoucherTableData } = props;
 
     const [form] = Form.useForm();
     const [activeKey, setActiveKey] = useState([]);
@@ -67,7 +67,7 @@ export const VoucherDetailsMasterMain = (props) => {
 
     const formProps = {
         ...props,
-        tableData: creditDebitData?.voucherAccountHeadDetailsDto,
+        tableData: requestPayload?.voucherAccountHeadDetailsDto,
         fetchFinancialAccountList,
         listFinanceShowLoading,
         activeKey,
@@ -82,7 +82,7 @@ export const VoucherDetailsMasterMain = (props) => {
     };
 
     const viewProps = {
-        tableData: creditDebitData?.voucherAccountHeadDetailsDto,
+        tableData: requestPayload?.voucherAccountHeadDetailsDto,
         styles,
         activeKey,
         setActiveKey,

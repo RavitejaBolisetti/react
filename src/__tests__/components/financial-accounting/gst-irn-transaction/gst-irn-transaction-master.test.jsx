@@ -3,12 +3,25 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { fireEvent, screen, act, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { GstIRNTransaction } from 'components/FinancialAccounting/GstIRNTransaction/GstIRNTransactionMaster';
-import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
+
+import { configureStore } from '@reduxjs/toolkit';
+import thunk from 'redux-thunk';
+import { rootReducer } from 'store/reducers';
+
+const createMockStore = (initialState) => {
+    const mockStore = configureStore({
+        reducer: rootReducer,
+        preloadedState: initialState,
+        middleware: [thunk],
+    });
+
+    return mockStore;
+};
 
 jest.mock('store/actions/data/financialAccounting/gstIRNTransactionPending/gstIRNTransaction', ()=>({
     gstIRNTransactionActions:{}
@@ -16,6 +29,7 @@ jest.mock('store/actions/data/financialAccounting/gstIRNTransactionPending/gstIR
 
 const fetchList = jest.fn();
 const fetchGSTINList = jest.fn();
+const saveData = jest.fn();
 
 afterEach(() => {
     jest.restoreAllMocks();
@@ -37,7 +51,7 @@ describe("GstIRNTransaction component",()=>{
         customRender(
             <Provider store={mockStore}>
                 <GstIRNTransaction fetchList={fetchList} fetchGSTINList={fetchGSTINList} viewDocument={jest.fn()} 
-                uploadDocument={jest.fn()} setFilterString={jest.fn()} />
+                uploadDocument={jest.fn()} setFilterString={jest.fn()} saveData={saveData}/>
             </Provider>
         )
 
@@ -45,20 +59,19 @@ describe("GstIRNTransaction component",()=>{
         fetchList.mock.calls[0][0].onSuccessAction();
 
         await waitFor(() => { expect(screen.getByText(/test/i)).toBeInTheDocument() });
-        const viewBtn=screen.getByTestId('view');
-        fireEvent.click(viewBtn);
-
-        await waitFor(() => { expect(screen.getByText(/test/i)).toBeInTheDocument() });
         const uploadBtn=screen.getByTestId('upload');
         fireEvent.click(uploadBtn);
 
         fetchList.mock.calls[0][0].onErrorAction();
+
+        saveData.mock.lastCall[0].onError();
+        saveData.mock.lastCall[0].onSuccess();
     });
 
     it("onAdvanceSearchCloseAction", ()=>{
         customRender(<GstIRNTransaction setFilterString={jest.fn()} />);
 
-        const advancedBtn = screen.getByRole('button', {name:'Advanced Filters'});
+        const advancedBtn = screen.getByRole('button', {name:'Advance Filters'});
         fireEvent.click(advancedBtn);
 
         const closeImg = screen.getByRole('img', {name:'close'});
@@ -68,7 +81,7 @@ describe("GstIRNTransaction component",()=>{
     it("resetBtn", ()=>{
         customRender(<GstIRNTransaction setFilterString={jest.fn()}/>);
 
-        const advancedBtn = screen.getByRole('button', {name:'Advanced Filters'});
+        const advancedBtn = screen.getByRole('button', {name:'Advance Filters'});
         fireEvent.click(advancedBtn);
 
         const resetBtn = screen.getByRole('button', {name:'Reset'});
@@ -78,7 +91,7 @@ describe("GstIRNTransaction component",()=>{
     it("applyBtn", ()=>{
         customRender(<GstIRNTransaction setFilterString={jest.fn()}/>);
 
-        const advancedBtn = screen.getByRole('button', {name:'Advanced Filters'});
+        const advancedBtn = screen.getByRole('button', {name:'Advance Filters'});
         fireEvent.click(advancedBtn);
 
         const applyBtn = screen.getByRole('button', {name:'Apply'});
@@ -107,11 +120,11 @@ describe("GstIRNTransaction component",()=>{
         );
 
         const selectParameter = screen.getAllByRole('combobox', { name: '',});
-        act(async () => {
+        // act(async () => {
             fireEvent.change(selectParameter[1], { target: { value: 'Document Number' } });
             const parameter = screen.getByText('Document Number');
             fireEvent.click(parameter);
-        });
+        // });
 
         const searchTextBox = screen.getByRole('textbox', {name:''});
         fireEvent.change(searchTextBox, {target:{value:'INV22C000617'}});

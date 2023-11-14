@@ -15,7 +15,7 @@ describe('Advance Vehicle Allotment Master Filter component', () => {
         customRender(<AdvanceVehicleAllotMasterFilter searchForm={setFieldsValue} handleButtonClick={jest.fn()} />);
     });
 
-    it(' vehicle allotment button should work', () => {
+    it('vehicle allotment button should work', () => {
         customRender(<AdvanceVehicleAllotMasterFilter searchForm={setFieldsValue} handleButtonClick={jest.fn()} />);
         const plusAddBtn = screen.getByRole('button', { name: 'plus Add' });
         fireEvent.click(plusAddBtn);
@@ -25,7 +25,7 @@ describe('Advance Vehicle Allotment Master Filter component', () => {
 
     it('advance filters button should work', async () => {
         customRender(<AdvanceVehicleAllotMasterFilter searchForm={setFieldsValue} setAdvanceSearchVisible={jest.fn()} advanceFilter={true} />);
-        const advancedFiltersBtn = screen.getByRole('button', { name: 'Advanced Filters' });
+        const advancedFiltersBtn = screen.getByRole('button', { name: 'Advance Filters' });
         fireEvent.click(advancedFiltersBtn);
     });
 

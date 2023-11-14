@@ -1,6 +1,7 @@
 import React from 'react';
-import { screen, fireEvent, act, waitFor } from '@testing-library/react';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import customRender from '@utils/test-utils';
 import { ListTehsilMaster } from 'components/common/Geo';
@@ -181,7 +182,7 @@ describe('List City Master Component', () => {
             </Provider>
         );
 
-        const advancedFilters=screen.getByRole('button', { name: /Advanced Filters/i });
+        const advancedFilters=screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advancedFilters);
 
         const countrySelect=screen.getByRole('combobox', { name: 'Country' });
@@ -204,10 +205,10 @@ describe('List City Master Component', () => {
 
     });
 
-    it('advanced filters and close button should work', async () => {
+    it('Advance Filters and close button should work', async () => {
         customRender(<ListTehsilMaster />);
         
-        const advancedFilters=screen.getByRole('button', { name: /Advanced Filters/i });
+        const advancedFilters=screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advancedFilters);
         const closeBtn=screen.getByRole('button', { name: /Close/i });
         fireEvent.click(closeBtn);
@@ -216,7 +217,7 @@ describe('List City Master Component', () => {
     it('advanced search should return error on empty form fields', async () => {
         customRender(<ListTehsilMaster />);
         
-        const advancedFilters=screen.getByRole('button', { name: /Advanced Filters/i });
+        const advancedFilters=screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advancedFilters);
         
         const searchBtn=screen.getAllByRole('button', { name: /Search/i });

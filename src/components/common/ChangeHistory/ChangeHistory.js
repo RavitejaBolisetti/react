@@ -16,6 +16,7 @@ import styles from 'assets/sass/app.module.scss';
 
 import { DataTable } from 'utils/dataTable';
 import { withDrawer } from 'components/withDrawer';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -57,7 +58,7 @@ const ChangeHistoryMain = ({ onCloseAction, fetchChangeHistoryList, changeHistor
 
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Changed/Modified Date ',
+            title: translateContent('productChangeHistory.label.changedDate'),
             dataIndex: 'changedDate',
             render: (text) => [
                 <div>
@@ -68,27 +69,27 @@ const ChangeHistoryMain = ({ onCloseAction, fetchChangeHistoryList, changeHistor
             ],
         }),
         tblPrepareColumns({
-            title: 'Changed By',
+            title: translateContent('productChangeHistory.label.changedBy'),
             dataIndex: 'changedBy',
         }),
         tblPrepareColumns({
-            title: 'Attribute',
+            title: translateContent('productChangeHistory.label.attribute'),
             dataIndex: 'parentAttributeName',
         }),
         tblPrepareColumns({
-            title: 'Code',
+            title: translateContent('productChangeHistory.label.code'),
             dataIndex: 'prodctCode',
         }),
         tblPrepareColumns({
-            title: 'Parent',
+            title: translateContent('productChangeHistory.label.parent'),
             dataIndex: 'parntHeirarchyCode',
         }),
         tblPrepareColumns({
-            title: 'Short Description',
+            title: translateContent('productChangeHistory.label.shortDescription'),
             dataIndex: 'prodctShrtDescription',
         }),
         tblPrepareColumns({
-            title: 'Long Description',
+            title: translateContent('productChangeHistory.label.longDescription'),
             dataIndex: 'prodctLongDiscription',
         }),
         tblStatusColumn({ styles, width: '15%' }),
@@ -110,7 +111,7 @@ const ChangeHistoryMain = ({ onCloseAction, fetchChangeHistoryList, changeHistor
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Button danger onClick={onCloseAction}>
-                            Close
+                            {translateContent('global.buttons.close')}
                         </Button>
                     </Col>
                 </Row>
@@ -119,7 +120,7 @@ const ChangeHistoryMain = ({ onCloseAction, fetchChangeHistoryList, changeHistor
     );
 };
 
-export const ChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ChangeHistoryMain, { title: 'Change History', width: '90%' }));
+export const ChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ChangeHistoryMain, { title: translateContent('common.changeHistory.title'), width: '90%' }));
 
 
 

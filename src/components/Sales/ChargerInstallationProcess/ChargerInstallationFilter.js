@@ -49,7 +49,7 @@ export default function ChargerInstallationFilter(props) {
                                         setAdvanceSearchVisible(true);
                                     }}
                                 >
-                                     {translateContent('global.buttons.add')}
+                                    {translateContent('global.buttons.advancedFilter')}
                                 </Button>
                             </Col>
                         </Row>
@@ -58,7 +58,7 @@ export default function ChargerInstallationFilter(props) {
                 {QUERY_BUTTONS_CONSTANTS.SITE_SURVEY.key === chargerStatus && (
                     <Col xs={24} sm={4} md={4} lg={4} xl={4} className={styles.buttonsGroupRight}>
                         <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                            {translateContent('global.buttons.advancedFilter')}
+                            {translateContent('global.buttons.add')}
                         </Button>
                     </Col>
                 )}

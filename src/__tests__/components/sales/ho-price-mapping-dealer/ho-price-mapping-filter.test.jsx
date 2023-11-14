@@ -13,14 +13,14 @@ describe('Ho Price Mapping Filter Component', () => {
         customRender(<HoPriceMappingFilter isVisible={true} />);
     });
 
-    it('advanced filters, remove and clear button should work', () => {
+    it('Advance Filters, remove and clear button should work', () => {
         const filterString={
             advanceFilter: true
         };
         const extraParams=[{name: 'Kai', value: 'Kai', filter: true, canRemove: true}]
         customRender(<HoPriceMappingFilter isVisible={true} setFilterString={jest.fn()} advanceFilter={true} filterString={filterString} extraParams={extraParams} setAdvanceSearchVisible={jest.fn()} handleResetFilter={jest.fn()} removeFilter={jest.fn()}/>);
 
-        const advanceFilter=screen.getByRole('button', { name: /Advanced Filters/i });
+        const advanceFilter=screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advanceFilter);
         const removeBtn=screen.getByTestId('removeBtn');
         fireEvent.click(removeBtn);

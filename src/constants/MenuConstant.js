@@ -213,6 +213,13 @@ export const MenuConstant = {
         icon: undefined,
         parentMenuId: 'COMN-11',
     },
+
+    [getMenyKey('SRST-3.3')]: {
+        key: 'SRST-3.3',
+        link: routing.ROUTING_AMC_REGISTRATION,
+        icon: undefined,
+        parentMenuId: 'SRST-3',
+    },
     [getMenyKey('SACT-03.04')]: {
         key: 'SACT-03.04',
         link: routing.ROUTING_VEHICLE_PRICE_MASTER,
@@ -617,6 +624,13 @@ export const MenuConstant = {
         parentMenuId: 'OTD',
     },
 
+    [getMenyKey('SA-EV-01')]: {
+        key: 'SA-EV-01',
+        link: routing.ROUTING_CHARGER_INSTALLATION_PROCESS,
+        icon: undefined,
+        parentMenuId: 'SACT-06.06',
+    },
+
     [getMenyKey('FINA-01.06')]: {
         key: 'FINA-01.06',
         link: routing.ROUTING_VEHICLE_MODEL_TAX_CHARGES_CATEGORY,
@@ -664,5 +678,11 @@ export const MenuConstant = {
         link: routing.ROUTING_VIN_BLOCK_MASTER,
         icon: undefined,
         parentMenuId: 'Sales',
+    },
+    [getMenyKey('SA-EV-01')]: {
+        key: 'SA-EV-01',
+        link: routing.ROUTING_CHARGER_INSTALLATION_PROCESS,
+        icon: undefined,
+        parentMenuId: 'SACT-06.06',
     },
 };

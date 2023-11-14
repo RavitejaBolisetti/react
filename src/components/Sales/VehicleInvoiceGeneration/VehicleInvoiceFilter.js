@@ -48,7 +48,7 @@ export default function VehicleInvoiceFilter(props) {
                                         setAdvanceSearchVisible(true);
                                     }}
                                 >
-                                    Advanced Filters
+                                    Advance Filters
                                 </Button>
                             </Col>
                         </Row>

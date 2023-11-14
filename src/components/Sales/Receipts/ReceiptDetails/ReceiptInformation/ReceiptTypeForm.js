@@ -35,8 +35,8 @@ const ReceiptTypeFormBase = (props) => {
             </Row>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Form.Item initialValue={receiptData?.remarks} label={translateContent('receipts.placeholder.remark')} name="remarks">
-                        <TextArea showCount rows={2} maxLength={300} placeholder={preparePlaceholderText(translateContent('receipts.placeholder.remark'))} disabled={formActionType?.editMode} />
+                    <Form.Item initialValue={receiptData?.remarks} label={translateContent('receipts.placeholder.remarks')} name="remarks">
+                        <TextArea showCount rows={2} maxLength={300} placeholder={preparePlaceholderText(translateContent('receipts.placeholder.remarks'))} disabled={formActionType?.editMode} />
                     </Form.Item>
                 </Col>
             </Row>

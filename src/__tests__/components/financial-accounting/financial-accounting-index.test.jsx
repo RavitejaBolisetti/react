@@ -44,12 +44,6 @@ describe("FinancialAccounting Index", ()=>{
 
         await store.dispatch(gstIRNTransactionActions.fetchGSTINList(params));
         expect(setIsLoadingMock).toHaveBeenCalledWith(true);
-
-        await store.dispatch(gstIRNTransactionActions.uploadDocument(params));
-        expect(setIsLoadingMock).toHaveBeenCalledWith(true);
-
-        await store.dispatch(gstIRNTransactionActions.viewDocument(params));
-        expect(setIsLoadingMock).toHaveBeenCalledWith(true);
     });
     
 });

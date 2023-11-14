@@ -10,8 +10,8 @@ afterEach(() => {
     jest.restoreAllMocks();
 });
 
-jest.mock('store/actions/data/roleManagement/roleMenu', ()=> ({
-    RoleManagementMenuDataActions: {}
+jest.mock('store/actions/data/roleManagement/roleMenu', () => ({
+    RoleManagementMenuDataActions: {},
 }));
 
 const FormWrapper = (props) => {
@@ -19,16 +19,15 @@ const FormWrapper = (props) => {
     return <AddEditForm onUpdate={jest.fn()} form={form} {...props} />;
 };
 
-const roleManagementData=[{"id":"106","roleId":"ROL106","roleName":"Manager","roleDescription":"Description","status":true,"accessProvided":null}];
-const rolemenuData= [{"id":"106","value":"test106","label":"Kai","type":"Application","parentId":"Web","checked":false,"status":null,"children":[{"id":"106","value":"test106","label":"Update","type":"Action","parentId":"test106","checked":false,"status":null,"children":null}]}];
-const unFilteredMenuData= { W: [{"id":"106","value":"test106","label":"Kai","type":"Application","parentId":"Web","checked":false,"status":null,"children":[{"id":"106","value":"test106","label":"Update","type":"Action","parentId":"test106","checked":false,"status":null,"children":null}]}]};
+const roleManagementData = [{ id: '106', roleId: 'ROL106', roleName: 'Manager', roleDescription: 'Description', status: true, accessProvided: null }];
+const rolemenuData = [{ id: '106', value: 'test106', label: 'Kai', type: 'Application', parentId: 'Web', checked: false, status: null, children: [{ id: '106', value: 'test106', label: 'Update', type: 'Action', parentId: 'test106', checked: false, status: null, children: null }] }];
+const unFilteredMenuData = { W: [{ id: '106', value: 'test106', label: 'Kai', type: 'Application', parentId: 'Web', checked: false, status: null, children: [{ id: '106', value: 'test106', label: 'Update', type: 'Action', parentId: 'test106', checked: false, status: null, children: null }] }] };
 
 describe('AddEditForm Components', () => {
-
     it('should render AddEditForm components', () => {
-        const formActionType={
-            viewMode: true
-        }
+        const formActionType = {
+            viewMode: true,
+        };
         customRender(<AddEditForm isVisible={true} formActionType={formActionType} />);
     });
 
@@ -43,62 +42,63 @@ describe('AddEditForm Components', () => {
             },
         });
 
-        const fetchMenuList=jest.fn();
-        const saveData=jest.fn();
+        const fetchMenuList = jest.fn();
+        const saveData = jest.fn();
 
-        const response={
+        const response = {
             data: rolemenuData,
-        }
+        };
 
-        const formActionType={
+        const formActionType = {
             viewMode: false,
-        }
+        };
 
-        const buttonData={
+        const buttonData = {
             saveBtn: true,
-            formBtnActive: true
-        }
+            formBtnActive: true,
+        };
 
-        const formData={
-            id: 106
-        }
+        const formData = {
+            id: 106,
+        };
 
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper fetchMenuList={fetchMenuList} fetchList={jest.fn()} saveData={saveData} isVisible={true} formActionType={formActionType} formData={formData} setUnFilteredMenuData={jest.fn()} unFilteredMenuData={unFilteredMenuData} buttonData={buttonData} setButtonData={jest.fn()} setIsFormVisible={jest.fn()}  />
+                <FormWrapper fetchMenuList={fetchMenuList} fetchList={jest.fn()} saveData={saveData} isVisible={true} formActionType={formActionType} formData={formData} setUnFilteredMenuData={jest.fn()} unFilteredMenuData={unFilteredMenuData} buttonData={buttonData} setButtonData={jest.fn()} setIsFormVisible={jest.fn()} />
             </Provider>
         );
 
-        await waitFor(() => { expect(fetchMenuList).toHaveBeenCalled() });
+        await waitFor(() => {
+            expect(fetchMenuList).toHaveBeenCalled();
+        });
         fetchMenuList.mock.calls[0][0].onSuccessAction(response);
         fetchMenuList.mock.calls[0][0].onErrorAction();
 
-        await waitFor(() => { expect(screen.getByText('Kai')).toBeInTheDocument() })
+        await waitFor(() => {
+            expect(screen.getByText('Kai')).toBeInTheDocument();
+        });
 
-        const collapseBtn=screen.getByRole('img', { name: 'plus' });
+        const collapseBtn = screen.getByRole('img', { name: 'plus' });
         fireEvent.click(collapseBtn);
 
         fireEvent.click(screen.getByText('Update'));
 
-        const roleId=screen.getByRole('textbox', { name: 'Role Id' });
-        fireEvent.change(roleId, { target: { value: 106 } });
+        const roleId = screen.getByTestId('role');
 
-        const roleName=screen.getByRole('textbox', { name: 'Role Name' });
-        fireEvent.change(roleName, { target: { value: 'Kai' } });
+        const roleName = screen.getByTestId('roleName');
 
-        const roleDescription=screen.getByRole('textbox', { name: 'Role Description' });
-        fireEvent.change(roleDescription, { target: { value: 'Kai' } });
+        const roleDescription = screen.getByTestId('roleDescription');
 
-        const saveBtn=screen.getByRole('button', { name: 'Save' });
+        const saveBtn = screen.getByTestId('save');
         fireEvent.click(saveBtn);
 
-        await waitFor(() => { expect(saveData).toHaveBeenCalled() });
+        await waitFor(() => {
+            expect(saveData).toHaveBeenCalled();
+        });
         saveData.mock.calls[0][0].onSuccess();
         saveData.mock.calls[0][0].onError();
 
-        const closeBtn=screen.getByRole('button', { name: 'Close' });
+        const closeBtn = screen.getByTestId('close_btn');
         fireEvent.click(closeBtn);
-
     });
-
 });

@@ -39,7 +39,7 @@ describe('Render AccountAndDocumentMappingMaster component', () => {
 
         render(<FormWrapper isVisible={true} formEdit={false} setAccountDocumentMaps={setAccountDocumentMaps} setButtonData={jest.fn()} financialAccountData={financialAccountData} documentDescriptionData={documentDescriptionData} />);
 
-        const addBtn = screen.getByRole('button', {name:'Add'});
+        const addBtn = screen.getByTestId('add_button');
         fireEvent.click(addBtn);
     });
 

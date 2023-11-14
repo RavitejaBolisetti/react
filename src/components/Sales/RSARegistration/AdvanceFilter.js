@@ -66,7 +66,7 @@ export default function AdvanceFilter(props) {
                                                     setAdvanceSearchVisible(true);
                                                 }}
                                             >
-                                                Advanced Filters
+                                                Advance Filters
                                             </Button>
                                         </Col>
                                     )}

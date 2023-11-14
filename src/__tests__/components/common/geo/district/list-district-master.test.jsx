@@ -1,6 +1,7 @@
 import React from 'react';
-import { screen, fireEvent, act, waitFor } from '@testing-library/react';
+import { screen, fireEvent,  waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import customRender from '@utils/test-utils';
 import { ListDistrictMaster } from 'components/common/Geo';
@@ -128,7 +129,7 @@ describe('List District Master Component', () => {
         fireEvent.click(clearBtn);
     });
 
-    it('advanced filters should work with country', async () => {
+    it('Advance Filters should work with country', async () => {
         const mockStore = createMockStore({
             auth: { userId: 106 },
             data: {
@@ -145,7 +146,7 @@ describe('List District Master Component', () => {
             </Provider>
         );
         
-        const advancedFilters=screen.getByRole('button', { name: /Advanced Filters/i });
+        const advancedFilters=screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advancedFilters);
 
         const countrySelect=screen.getByRole('combobox', { name: 'Country' });
@@ -157,10 +158,10 @@ describe('List District Master Component', () => {
         fireEvent.click(searchBtn[1]);
     });
 
-    it('advanced filters and close button should work', async () => {
+    it('Advance Filters and close button should work', async () => {
         customRender(<ListDistrictMaster resetData={jest.fn()} />);
         
-        const advancedFilters=screen.getByRole('button', { name: /Advanced Filters/i });
+        const advancedFilters=screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advancedFilters);
         const closeBtn=screen.getByRole('button', { name: /Close/i });
         fireEvent.click(closeBtn);
@@ -169,14 +170,14 @@ describe('List District Master Component', () => {
     it('advanced search should return error on empty form fields', async () => {
         customRender(<ListDistrictMaster resetData={jest.fn()} />);
         
-        const advancedFilters=screen.getByRole('button', { name: /Advanced Filters/i });
+        const advancedFilters=screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advancedFilters);
         
         const searchBtn=screen.getAllByRole('button', { name: /Search/i });
         fireEvent.click(searchBtn[1]);
     });
 
-    it('advanced filters should work with state', async () => {
+    it('Advance Filters should work with state', async () => {
         const mockStore = createMockStore({
             auth: { userId: 106 },
             data: {
@@ -193,15 +194,13 @@ describe('List District Master Component', () => {
             </Provider>
         );
         
-        const advancedFilters=screen.getByRole('button', { name: /Advanced Filters/i });
+        const advancedFilters=screen.getByRole('button', { name: /Advance Filters/i });
         fireEvent.click(advancedFilters);
 
         const stateSelect=screen.getByRole('combobox', { name: /State Name/i });
-        act(() => {
             fireEvent.change(stateSelect, { target: { value: 'Kai' } });
             const stateOptionSelect= screen.getAllByText(/Kai/i);
             fireEvent.click(stateOptionSelect[0]);
-        });
         
         const searchBtn=screen.getAllByRole('button', { name: /Search/i });
         fireEvent.click(searchBtn[1]);

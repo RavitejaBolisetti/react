@@ -33,6 +33,7 @@ export const AdvancedSearchFrom = (props) => {
         showSearch: true,
         allowClear: true,
     };
+    
     const modalProps = {
         reset: true,
         submit: true,

@@ -1,6 +1,7 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 import { ChargerInstallationMaster } from 'components/Sales/ChargerInstallationProcess/ChargerInstallationMaster';
@@ -106,10 +107,10 @@ describe('Charger Installation Master Component', () => {
         
     });
 
-    it('advanced filters should work', async () => {
+    it('Advance Filters should work', async () => {
         customRender(<ChargerInstallationMaster setFilterString={jest.fn()} />);
 
-        const advancedFilters=screen.getByText('Advanced Filters');
+        const advancedFilters=screen.getByText('Advance Filters');
         fireEvent.click(advancedFilters);
 
         const resetBtn=screen.getByRole('button', { name: 'Reset' });
@@ -129,10 +130,10 @@ describe('Charger Installation Master Component', () => {
         fireEvent.click(applyBtn);
     });
 
-    it('advanced filters with close button should work', async () => {
+    it('Advance Filters with close button should work', async () => {
         customRender(<ChargerInstallationMaster setFilterString={jest.fn()} />);
 
-        const advancedFilters=screen.getByText('Advanced Filters');
+        const advancedFilters=screen.getByText('Advance Filters');
         fireEvent.click(advancedFilters);
 
         const closeBtn=screen.getByRole('img', { name: 'close' });

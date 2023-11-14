@@ -1,6 +1,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { OtfMaster } from 'components/Sales/OTF/OtfMaster';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 import { screen, fireEvent, waitFor } from '@testing-library/react';
@@ -49,9 +50,9 @@ describe('OtfMaster component render', () => {
         customRender(<OtfMaster setFilterString={jest.fn()} resetData={jest.fn()} />);
     });
 
-    it('advanced filters and close button should work', () => {
+    it('Advance Filters and close button should work', () => {
         customRender(<OtfMaster setFilterString={jest.fn()} resetData={jest.fn()} />);
-        const advancedFilters=screen.getByText('Advanced Filters');
+        const advancedFilters=screen.getByText('Advance Filters');
         fireEvent.click(advancedFilters);
 
         const closeBtn=screen.getByRole('img', { name: 'close' });

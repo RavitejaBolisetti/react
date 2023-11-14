@@ -31,12 +31,12 @@ export const AMC_CONSTANTS = {
     },
     PENDING_FOR_APPROVAL: {
         id: 6,
-        key: 'PENDING_FOR_APPROVAL',
+        key: 'PFA',
         title: 'Pending for approval',
     },
     PENDING_FOR_CANCELLATION: {
         id: 7,
-        key: 'PENDING_FOR_CANCELLATION',
+        key: 'PFC',
         title: 'Pending for cancellation',
     },
     APPROVED: {
@@ -68,5 +68,25 @@ export const AMC_CONSTANTS = {
         id: 13,
         key: 'vincustomerMobileNo',
         title: 'Customer Mobile number in filter',
+    },
+    AMC_TYPE_COMPREHENSIVE: {
+        id: 14,
+        key: 'COMP',
+        title: 'AMC type comprehensive',
+    },
+    EMPLOYEE: {
+        id: 15,
+        key: 'E',
+        title: 'API key for employee list',
+    },
+    MANAGER: {
+        id: 16,
+        key: 'M',
+        title: 'API key for manager list',
+    },
+    REGISTRATION_TYPE: {
+        id: 16,
+        key: 'AMC',
+        title: 'API key for registration type',
     },
 };

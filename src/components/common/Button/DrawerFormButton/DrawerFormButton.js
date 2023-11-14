@@ -15,13 +15,13 @@ const DrawerButtons = ({ formData, onCloseAction, buttonData, setButtonData, sav
         <Row gutter={20} className={multipleForm ? styles.formFooterNew : ''}>
             <Col xs={24} sm={6} md={6} lg={6} xl={6} className={styles.buttonsGroupLeft}>
                 {buttonData?.closeBtn && (
-                    <Button danger onClick={onCloseAction}>
+                    <Button danger onClick={onCloseAction} data-testid="close_btn">
                         {translateContent('global.buttons.close')}
                     </Button>
                 )}
 
                 {buttonData?.cancelBtn && (
-                    <Button danger onClick={onCloseAction}>
+                    <Button danger onClick={onCloseAction} data-testid="cancel_btn">
                         {translateContent('global.buttons.cancel')}
                     </Button>
                 )}
@@ -34,13 +34,13 @@ const DrawerButtons = ({ formData, onCloseAction, buttonData, setButtonData, sav
                     </Button>
                 )}
                 {buttonData?.saveBtn && (
-                    <Button loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
+                    <Button loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive} data-testid="save" onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
                         {saveButtonName}
                     </Button>
                 )}
 
                 {buttonData?.saveAndNewBtn && (
-                    <Button loading={isLoadingOnSave} htmlType="submit" disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: true })} type="primary">
+                    <Button loading={isLoadingOnSave} data-testid="save-and-new" htmlType="submit" disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: true })} type="primary">
                         {translateContent('global.buttons.saveAndNew')}
                     </Button>
                 )}
@@ -53,7 +53,7 @@ const DrawerButtons = ({ formData, onCloseAction, buttonData, setButtonData, sav
 
                 {buttonData?.cancelOTFBtn && (
                     <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF })} type="primary" htmlType="submit">
-                        {translateContent('global.buttons.edit')}
+                        {translateContent('global.buttons.cancelBooking')}
                     </Button>
                 )}
 

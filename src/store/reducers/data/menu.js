@@ -29,6 +29,7 @@ export const Menu = (state = initialState, action) => {
                         id: node[fieldNames?.key],
                         title: node[fieldNames?.title],
                         link: MenuConstant?.[node[fieldNames?.key]?.toLowerCase()]?.link,
+                        slug: MenuConstant?.[node[fieldNames?.key]?.toLowerCase()]?.slug,
                         childExist: node[fieldNames?.children]?.length > 0,
                     });
                     if (node[fieldNames?.children]) {

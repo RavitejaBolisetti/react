@@ -26,7 +26,7 @@ export const checkAndSetDefaultValue = (value, isLoading, type, makeToolTip = fa
         case DATA_TYPE?.DAYJS?.key:
             return value ? converDateDayjs(value) : '-';
         default:
-            return value || '-';
+            return value === 0 || value ? value : '-';
     }
 };
 

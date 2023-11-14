@@ -229,7 +229,7 @@ export const BASE_URL_FINANCIAL_ACC_ACCOUNT_CATEGORY = BASE_URL + 'finance/accou
 export const BASE_URL_FINANCIAL_ACC_APPLICATION_MENU = BASE_URL + 'home/menus';
 export const BASE_URL_FINANCIAL_ACC_CHART_OF_ACCOUNT_HIERARCHY = BASE_URL + 'finance/chartofaccounts/hierarchy';
 export const BASE_URL_FINANCIAL_ACC_CHART_OF_ACCOUNT = BASE_URL + 'finance/chartofaccounts';
-export const BASE_URL_FINANCIAL_ACC_CHART_OF_ACCOUNT_EXPORT_COA = BASE_URL + 'finance/chartofaccounts/hierarchy/exportcoa';
+export const BASE_URL_FINANCIAL_ACC_CHART_OF_ACCOUNT_EXPORT_COA = BASE_URL + 'reports/chartofaccounts/hierarchy/exportcoa';
 
 export const BASE_URL_DOCUMENT_TYPE_LEDGER_SEARCH = BASE_URL + 'applications/documenttypes/search';
 export const BASE_URL_DOCUMENT_TYPE_LEDGER = BASE_URL + 'finance/ledgermappings';
@@ -369,11 +369,10 @@ export const BASE_URL_VEHICLE_CHECKLIST_MASTER = BASE_URL + 'vehicle/checklist/c
 export const BASE_URL_AMC_REGISTRATION = BASE_URL + 'vehicle/amc';
 export const BASE_URL_AMC_REGISTRATION_SEARCH = BASE_URL_AMC_REGISTRATION + '/search';
 export const BASE_URL_AMC_REGISTRATION_DATA = BASE_URL_AMC_REGISTRATION + '/registration/details';
-export const BASE_URL_AMC_EMPLOYEE_SEARCH = BASE_URL + 'users/search/employees';
+export const BASE_URL_AMC_EMPLOYEE_SEARCH = BASE_URL + 'users/dealer/employees';
 export const BASE_URL_AMC_SCHEMES = BASE_URL_AMC_REGISTRATION + '/scheme';
 export const BASE_URL_GST_DOCID_NAME = BASE_URL + 'finance/gstirnauthentication';
 export const BASE_URL_RSM_ASM_APPROVAL_DETAILS = BASE_URL_RSM_ASM_APPROVAL_SEARCH + '/details';
-
 
 export const BASE_URL_SHIELD_REGISTRATION = BASE_URL + 'vehicle/shieldschemes/registration';
 export const BASE_URL_SHIELD_REGISTRATION_SEARCH = BASE_URL_SHIELD_REGISTRATION + '/search';
@@ -382,7 +381,6 @@ export const BASE_URL_RSA_REGISTRATION = BASE_URL + 'vehicle/rsa';
 export const BASE_URL_RSA_REGISTRATION_SEARCH = BASE_URL_RSA_REGISTRATION + '/search';
 export const BASE_URL_GET_REGISTRATION_DETAILS = BASE_URL_RSA_REGISTRATION + '/registration/details';
 
-export const BASE_URL_DASHBOARD_STOCKS_STATICS  = BASE_URL + 'invoice/ibdnstockscount'
-export const BASE_URL_DASHBOARD_BILLING_STATICS  = BASE_URL + 'geography/billingcount'
-export const BASE_URL_DASHBOARD_RETAIL_STATICS  = BASE_URL + 'geography/retailcount'
-
+export const BASE_URL_DASHBOARD_STOCKS_STATICS = BASE_URL + 'invoice/ibdnstockscount';
+export const BASE_URL_DASHBOARD_BILLING_STATICS = BASE_URL + 'geography/billingcount';
+export const BASE_URL_DASHBOARD_RETAIL_STATICS = BASE_URL + 'geography/retailcount';

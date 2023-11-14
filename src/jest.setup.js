@@ -5,7 +5,7 @@
  */
 import { server } from './mockServiceWorker';
 import { randomFillSync } from 'crypto';
-import translationContent from '../public/locales/en/translation.json';
+import translationContent from '../public/locales/en.json';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 

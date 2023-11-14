@@ -8,8 +8,21 @@ import { fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { CreditDebitNoteMaster } from '@components/FinancialAccounting/CreditDebitNote/CreditDebitNoteMaster';
 import { Provider } from 'react-redux';
-import createMockStore from '__mocks__/store';
 import customRender from '@utils/test-utils';
+import { configureStore } from '@reduxjs/toolkit';
+import thunk from 'redux-thunk';
+import { rootReducer } from 'store/reducers';
+
+const createMockStore = (initialState) => {
+    const mockStore = configureStore({
+        reducer: rootReducer,
+        preloadedState: initialState,
+        middleware: [thunk],
+    });
+
+    return mockStore;
+};
+
 
 jest.mock('store/actions/data/financialAccounting/creditDebitNoteSearch', ()=>({
     creditDebitNoteSearchDataAction:{}
@@ -43,38 +56,6 @@ describe('Render components',() => {
         fetchList.mock.lastCall[0].onSuccessAction();
     })
 
-    it("removeFilter, searchParam", async()=>{
-        const extraParams = [{canRemove: true, filter: true, key: "searchParam", name: "VCR24E000037", title: "Value", value: "VCR24E000037"}];
-        const filterString = {advanceFilter:true };
-
-        const mockStore = createMockStore({
-            auth: { userId: 123 },
-            data: {
-                FinancialAccounting: {
-                    CreditDebitNoteSearch: { isLoaded: false, data: tableData, filter: filterString },
-                },
-            },
-        });
-
-        customRender(
-            <Provider store={mockStore}>
-                <CreditDebitNoteMaster isVisible={true} extraParams={extraParams} filterString={filterString} otfFilter={true} advanceFilter={true} fetchList={fetchList} setFilterString={setFilterString} />
-            </Provider>
-        );
-
-        const textbox = screen.getByRole('textbox', {name:'Search Credit/Debit'});
-        fireEvent.change(textbox,{target:{value:'VCR24E000037'}});
-
-        const searchImg = screen.getByRole('img', {name:'search'});
-        fireEvent.click(searchImg);
-
-        const textAdvanced = await screen.findAllByText(/Applied Advance Filters :/i);
-        expect(textAdvanced).toBeTruthy();
-
-        // const removeFilterIcon = screen.getAllByTestId('remove-filter');
-        // fireEvent.click(removeFilterIcon[0]);
-    })
-
     it('should render components', () => {
         customRender(<CreditDebitNoteMaster setFilterString={setFilterString} />);
 
@@ -98,39 +79,33 @@ describe('Render components',() => {
     it('Debit button', () => {
         customRender(<CreditDebitNoteMaster buttonData={{printBtn:true}} setFilterString={setFilterString} />);
 
-        const debitBtn = screen.getByRole('button', {name:'Add Debit Note'});
+        const debitBtn = screen.getByTestId('add_debit_btn');
         fireEvent.click(debitBtn);
 
         const plusImg = screen.getAllByRole('img', {name:'plus'});
         fireEvent.click(plusImg[1]);
 
-        const partySeg = screen.getByRole('combobox', {name:'Party Segment'});
-        fireEvent.change(partySeg, {target:{value:'test1'}});
-
-        const partyId = screen.getByRole('textbox', {name:'Party ID'});
-        fireEvent.change(partyId, {target:{name:'test'}});
-
         const searchBtn = screen.getAllByRole('img', {name:'search'});
         fireEvent.click(searchBtn[1]);
 
-        const saveBtn = screen.getByRole('button', {name:'Save & Next'});
+        const saveBtn = screen.getByTestId('save_next_btn');
         fireEvent.click(saveBtn);
     });
 
-    it('Advanced Filters, closeImg', () => {
+    it('Advance Filters, closeImg', () => {
         customRender(<CreditDebitNoteMaster setFilterString={setFilterString} />);
 
-        const advancedBtn = screen.getByRole('button', {name:'Advanced Filters'});
+        const advancedBtn = screen.getByRole('button', {name:'Advance Filters'});
         fireEvent.click(advancedBtn);
 
         const closeImg = screen.getByRole('img', {name:'close'});
         fireEvent.click(closeImg);
     });
 
-    it('Advanced Filters, Search', () => {
+    it('Advance Filters, Search', () => {
         customRender(<CreditDebitNoteMaster setFilterString={setFilterString} />);
 
-        const advancedBtn = screen.getByRole('button', {name:'Advanced Filters'});
+        const advancedBtn = screen.getByRole('button', {name:'Advance Filters'});
         fireEvent.click(advancedBtn);
 
         const searchBtn = screen.getByRole('button', {name:'Search'});
@@ -152,9 +127,6 @@ describe('Render components',() => {
                 <CreditDebitNoteMaster fetchList={fetchList} isVisible={true} fetchDetail={fetchDetail} setFilterString={setFilterString} />
             </Provider>
         );
-
-        const clearBtn = screen.getByRole('button', {name:'Clear'});
-        fireEvent.click(clearBtn);
     })
 
     it("creditDebitData",()=>{

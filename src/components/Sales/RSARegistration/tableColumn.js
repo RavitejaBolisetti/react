@@ -8,11 +8,12 @@ import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
 import { RSARegistrationStatusTag } from './utils/RSARegistrationStatusTag';
+import { translateContent } from 'utils/translateContent';
 
 export const tableColumn = ({ handleButtonClick, typeData }) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'RSA Registration No. & Date',
+            title: translateContent('rsaTableColumn.label.rsaRegistration'),
             dataIndex: 'rsaRegistrationNumber',
             width: '22%',
             render: (text, record) => [
@@ -24,19 +25,19 @@ export const tableColumn = ({ handleButtonClick, typeData }) => {
         }),
 
         tblPrepareColumns({
-            title: 'Dealer Location',
+            title: translateContent('rsaTableColumn.label.dealerLocation'),
             dataIndex: 'dealerLocation',
             width: '22%',
         }),
 
         tblPrepareColumns({
-            title: 'VIN',
+            title: translateContent('rsaTableColumn.label.vin'),
             dataIndex: 'vin',
             width: '22%',
         }),
 
         tblPrepareColumns({
-            title: 'Status',
+            title: translateContent('rsaTableColumn.label.status'),
             dataIndex: 'status',
             width: '22%',
             render: (_, record) => RSARegistrationStatusTag(record.status),

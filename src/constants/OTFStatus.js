@@ -12,7 +12,7 @@ export const OTF_STATUS = {
         key: 'O',
         title: 'Booked',
         desc: 'Booked',
-        displayonview: true,
+        displayOnView: true,
         filter: true,
     },
     ALLOTED: {
@@ -20,7 +20,7 @@ export const OTF_STATUS = {
         key: 'A',
         title: 'Allotted',
         desc: 'Allotted',
-        displayonview: true,
+        displayOnView: true,
         filter: true,
     },
     CANCELLED: {
@@ -28,7 +28,7 @@ export const OTF_STATUS = {
         key: 'C',
         title: 'Cancelled',
         desc: 'Cancelled',
-        displayonview: true,
+        displayOnView: true,
         filter: true,
     },
     INVOICED: {
@@ -36,7 +36,7 @@ export const OTF_STATUS = {
         key: 'I',
         title: 'Invoiced',
         desc: 'Invoiced',
-        displayonview: true,
+        displayOnView: true,
         filter: true,
     },
     DELIVERED: {
@@ -44,7 +44,7 @@ export const OTF_STATUS = {
         key: 'D',
         title: 'Delivered',
         desc: 'Delivered',
-        displayonview: true,
+        displayOnView: true,
         filter: true,
     },
     TRANSFERRED: {
@@ -52,7 +52,7 @@ export const OTF_STATUS = {
         key: 'T',
         title: 'Transferred',
         desc: 'Transferred',
-        displayonview: false,
+        displayOnView: false,
         filter: true,
     },
     PENDING_FOR_CANCELLATION: {
@@ -60,7 +60,7 @@ export const OTF_STATUS = {
         key: 'PND',
         title: 'Pending for Cancellation',
         desc: 'Pending for Cancellation',
-        displayonview: true,
+        displayOnView: true,
         filter: true,
     },
     CANCELLATION_REQUESTED: {
@@ -68,27 +68,27 @@ export const OTF_STATUS = {
         key: 'Cancellation Requested',
         title: 'Cancellation Requested',
         desc: 'Cancellation Requested',
-        displayonview: false,
+        displayOnView: false,
     },
     REJECTED: {
         id: 9,
         key: 'Rejected',
         title: 'Rejected',
         desc: 'Rejected',
-        displayonview: false,
+        displayOnView: false,
     },
     DELIVERY_NOTE: {
         id: 9,
         key: 'N',
         title: 'Delivery Note',
         desc: 'Delivery Note',
-        displayonview: false,
+        displayOnView: false,
     },
     UNALLOTED: {
         id: 10,
         key: 'UN',
         title: 'Un-Alloted',
         desc: 'Un-Alloted',
-        displayonview: false,
+        displayOnView: false,
     },
 };
