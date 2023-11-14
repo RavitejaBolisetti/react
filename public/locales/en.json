@@ -35,7 +35,7 @@
             "warning": "Warning"
         },
         "notificationError": {
-            "title": "Error"
+            "title": "ERROR"
         },
 
         "advanceFilter": {
@@ -914,7 +914,7 @@
             "mobile": " Mobile No.:"
         },
         "placeholder": {
-            "mobileMumber": "mobile number",
+            "mobileNumber": "mobile number",
             "customerType": "customer type",
             "emailId": "email id",
             "whatsAppNumber": "WhatsApp Number",
@@ -1017,7 +1017,9 @@
             "compName": "company name",
             "parentCode": "parent company code"
         },
-        "button": {},
+        "button": {
+            "verify": "Verify"
+        },
         "link": {
             "mnmLogin": "M&M User Login"
         },
@@ -1038,6 +1040,23 @@
                 "familyDetails": "Family Details",
                 "accountRelated": "Account Related",
                 "supportingDocument": "Supporting Document"
+            }
+        },
+        "otpModal": {
+            "heading":{
+                "modalTitle": "Mobile Number Verification"
+            },
+            "notification":{
+                "otpSent": "OTP Sent"
+            },
+            "buttons":{
+                "verifyOtp": "Verify OTP",
+                "enterOtp": "Enter OTP",
+                "resendOtp": "Resend OTP"
+            },
+            "label":{
+                "incorrectOtp": "Incorrect OTP",
+                "didntReceiveOtp": "Didn't receive an OTP?"
             }
         }
     },

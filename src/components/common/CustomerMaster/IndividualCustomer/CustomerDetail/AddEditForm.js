@@ -12,13 +12,13 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 import { CustomerNameChangeMaster } from './CustomerNameChange';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { customSelectBox } from 'utils/customSelectBox';
+import { MobileOtpVerificationMaster } from 'components/utils/MobileOtpVerificationModal';
 import { translateContent } from 'utils/translateContent';
 
 const AddEditFormMain = (props) => {
     const { whatsAppConfiguration, setWhatsAppConfiguration, handleFormFieldChange } = props;
-    const { form, typeData, formData, corporateLovData, formActionType: { editMode } = undefined, data, customerType } = props;
+    const { form, typeData, formData, corporateLovData, formActionType: { editMode } = undefined, data, customerType, userId, formActionType, numbValidatedSuccess, selectedCustomer, setNumbValidatedSuccess, defaultExtraParam } = props;
     const { contactOverWhatsApp, contactOverWhatsAppActive, sameMobileNoAsWhatsApp, sameMobileNoAsWhatsAppActive } = whatsAppConfiguration;
-
     const [corporateType, setCorporateType] = useState('');
     useEffect(() => {
         setCorporateType(formData?.corporateType);
@@ -70,38 +70,30 @@ const AddEditFormMain = (props) => {
         }
     };
 
+    const mobileOtpProps = {
+        userId,
+        formData,
+        selectedCustomer,
+        formActionType,
+        customerType,
+        form,
+        numbValidatedSuccess,
+        setNumbValidatedSuccess,
+        defaultExtraParam,
+    };
+
     return (
         <>
             <Card>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        {/* {editMode ? (
-                                <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number')]}>
-                                    <Input
-                                        placeholder={preparePlaceholderText('mobile number')}
-                                        onChange={handleNumberValidation}
-                                        maxLength={10}
-                                        size="small"
-                                        suffix={
-                                            <>
-                                                {false ? (
-                                                    <Button loading={mobileLoader} onClick={showModal} type="link">
-                                                        Validate
-                                                    </Button>
-                                                ) : (
-                                                    <CheckOutlined style={{ color: '#70c922', fontSize: '16px', fotWeight: 'bold' }} />
-                                                )}
-                                                <ValidateMobileNumberModal {...modalProps} />
-                                            </>
-                                        }
-                                    />
-                                </Form.Item>
-                            ) : (
-                               
-                            )} */}
-                        <Form.Item label={translateContent('customerMaster.label.mobileNumber')} initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField(translateContent('customerMaster.validation.mobileNumber')), validateRequiredInputField(translateContent('customerMaster.validation.mobileNumber'))]}>
-                            <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.mobileMumber'))} maxLength={10} size="small" disabled={editMode} />
-                        </Form.Item>
+                        {editMode ? (
+                            <MobileOtpVerificationMaster {...mobileOtpProps} />
+                        ) : (
+                            <Form.Item label={translateContent('customerMaster.label.mobileNumber')} initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField(translateContent('customerMaster.validation.mobileNumber')), validateRequiredInputField(translateContent('customerMaster.validation.mobileNumber'))]}>
+                                <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.mobileNumber'))} maxLength={10} size="small" />
+                            </Form.Item>
+                        )}
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={customerType} label={translateContent('customerMaster.label.customerType')} name="customerType" data-testid="customerType" rules={[validateRequiredSelectField(translateContent('customerMaster.validation.customerType'))]}>
