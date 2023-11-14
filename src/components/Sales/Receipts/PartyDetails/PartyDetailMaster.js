@@ -100,9 +100,11 @@ const PartyDetailMasterBase = (props) => {
                 const extraParams = [
                     {
                         key: 'partyCode',
-                        title: 'partyCode',
                         value: partyId,
-                        name: 'partyCode',
+                    },
+                    {
+                        key: 'partyType',
+                        value: partyDetailForm.getFieldsValue()?.partySegment,
                     },
                 ];
                 fetchPartyDetail({ setIsLoading: listShowLoading, userId, extraParams, customURL: BASE_URL_PARTY_MASTER, onSuccessAction, onErrorAction });

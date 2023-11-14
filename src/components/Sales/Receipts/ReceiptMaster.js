@@ -300,6 +300,7 @@ export const ReceiptMasterBase = (props) => {
 
     const handleReceiptTypeChange = (buttonName) => {
         setReceiptStatus(buttonName?.key);
+        setFilterString({ current: 1 });
         searchForm.resetFields();
     };
 
@@ -308,7 +309,7 @@ export const ReceiptMasterBase = (props) => {
     };
 
     const handleSearch = (value) => {
-        setFilterString({ ...filterString, searchParam: value, advanceFilter: true });
+        setFilterString({ ...filterString, searchParam: value, current: 1, advanceFilter: true });
         searchForm?.resetFields();
         setSearchValue(value);
     };
