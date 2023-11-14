@@ -69,4 +69,24 @@ export const AMC_CONSTANTS = {
         key: 'vincustomerMobileNo',
         title: 'Customer Mobile number in filter',
     },
+    AMC_TYPE_COMPREHENSIVE: {
+        id: 14,
+        key: 'COMP',
+        title: 'AMC type comprehensive',
+    },
+    EMPLOYEE: {
+        id: 15,
+        key: 'E',
+        title: 'API key for employee list',
+    },
+    MANAGER: {
+        id: 16,
+        key: 'M',
+        title: 'API key for manager list',
+    },
+    REGISTRATION_TYPE : {
+        id: 16,
+        key: 'AMC',
+        title: 'API key for registration type',
+    },
 };

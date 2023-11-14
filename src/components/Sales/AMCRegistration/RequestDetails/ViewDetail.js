@@ -4,14 +4,14 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Button, Card, Row, Col, Divider, Typography, Tag, Descriptions } from 'antd';
+import { Button, Card, Row, Col, Divider, Typography, Descriptions } from 'antd';
 import styles from 'assets/sass/app.module.scss';
 import { convertDateMonthYear } from 'utils/formatDateTime';
 import { AMC_CONSTANTS } from '../utils/AMCConstants';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { translateContent } from 'utils/translateContent';
 import { DATA_TYPE } from 'constants/dataType';
-const { Text } = Typography;
+import { AMCStatusTags } from '../utils/AMCStatusTags';
 
 const ViewDetail = (props) => {
     const { formData, userType, selectedAMC, handleCancelRequest, handleMNMApproval, handleMNMRejection, isPendingForCancellation } = props;
@@ -29,27 +29,27 @@ const ViewDetail = (props) => {
                 formData?.map((data) => {
                     return (
                         <Card>
-                            <Row type="flex" align="middle">
-                                <Col xs={24} sm={24} md={24} lg={24}>
-                                    <Text strong>{translateContent('amcRegistration.label.registrationRequest')}</Text>
-                                    <Divider type="vertical" />
-                                    <Text strong>{data?.customerName}</Text>
-                                    <Divider type="vertical" />
-                                    <Text strong>{selectedAMC?.amcRegistrationNumber}</Text>
-                                    <Tag style={{ float: 'right' }}>{selectedAMC?.status}</Tag>
-                                </Col>
+                            <Row type="flex" justify="space-between" align="middle" size="large">
+                                <Row type="flex" justify="space-around" align="middle">
+                                    <Typography>
+                                        {translateContent('amcRegistration.label.registrationRequest')} | {data?.customerName} | {selectedAMC?.amcRegistrationNumber}
+                                    </Typography>
+                                </Row>
+                                {AMCStatusTags(selectedAMC?.status)}
                             </Row>
-                            <Row type="flex" align="middle">
+                            <Row type="flex" align="middle" className={selectedAMC?.status === AMC_CONSTANTS?.PENDING_FOR_CANCELLATION?.key ? '' : styles.marB20}>
                                 <Col xs={24} sm={24} md={24} lg={24}>
-                                    <div className={styles.tableTextColor85}>{translateContent('amcRegistration.label.requestedOn')}: {convertDateMonthYear(data?.amcRegistrationDate)}</div>
+                                    <div className={styles.tableTextColor85}>
+                                        {translateContent('amcRegistration.label.requestedOn')}: {convertDateMonthYear(data?.amcRegistrationDate)}
+                                    </div>
                                 </Col>
                             </Row>
 
-                            {selectedAMC?.status === AMC_CONSTANTS?.PENDING_FOR_APPROVAL?.title && <Divider className={styles.marT20} />}
+                            {selectedAMC?.status === AMC_CONSTANTS?.PENDING_FOR_CANCELLATION?.key && <Divider />}
                             {userType === AMC_CONSTANTS?.MNM?.key ? (
-                                selectedAMC?.status === AMC_CONSTANTS?.PENDING_FOR_APPROVAL?.title || AMC_CONSTANTS?.PENDING_FOR_CANCELLATION?.title ? (
+                                selectedAMC?.status === AMC_CONSTANTS?.PENDING_FOR_APPROVAL?.key || AMC_CONSTANTS?.PENDING_FOR_CANCELLATION?.key ? (
                                     <>
-                                        {selectedAMC?.status === AMC_CONSTANTS?.PENDING_FOR_CANCELLATION?.title && (
+                                        {selectedAMC?.status === AMC_CONSTANTS?.PENDING_FOR_CANCELLATION?.key && (
                                             <>
                                                 <Divider className={styles.marB20} />
                                                 <Descriptions {...viewProps} column={{ xs: 1, sm: 1, lg: 1, xl: 1, xxl: 1 }}>
@@ -89,12 +89,12 @@ const ViewDetail = (props) => {
                                             <Descriptions.Item label={translateContent('amcRegistration.label.userId')}>{checkAndSetDefaultValue(formData?.amcRequestDetails?.userId)}</Descriptions.Item>
 
                                             <Descriptions.Item label={translateContent('amcRegistration.label.approvedDate')}>{checkAndSetDefaultValue(formData?.amcRequestDetails?.approvedDate, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                                            {selectedAMC?.status !== AMC_CONSTANTS?.REJD?.value && <Descriptions.Item label={translateContent('amcRegistration.label.reasonForRejection')}>{checkAndSetDefaultValue(formData?.amcRequestDetails?.reasonForRejection)}</Descriptions.Item>}
+                                            {selectedAMC?.status !== AMC_CONSTANTS?.REJECTED?.key && <Descriptions.Item label={translateContent('amcRegistration.label.reasonForRejection')}>{checkAndSetDefaultValue(formData?.amcRequestDetails?.reasonForRejection)}</Descriptions.Item>}
                                         </Descriptions>
                                     </>
                                 )
                             ) : (
-                                selectedAMC?.status === AMC_CONSTANTS?.PENDING_FOR_APPROVAL?.title && (
+                                selectedAMC?.status === AMC_CONSTANTS?.PENDING_FOR_CANCELLATION?.key && (
                                     <Row gutter={20} className={styles.marB20}>
                                         <Col xs={4} sm={4} md={4} lg={4}>
                                             <Button type="primary" onClick={handleCancelRequest}>
