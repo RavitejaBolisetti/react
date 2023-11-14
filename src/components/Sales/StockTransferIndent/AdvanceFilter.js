@@ -102,7 +102,7 @@ export default function AdvanceOTFFilter(props) {
                                 })}
                             </Col>
                             <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
-                                <Button className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
+                                <Button className={styles.clearBtn} onClick={() => handleResetFilter()} danger data-testid="clear">
                                     {translateContent('global.buttons.clear')}
                                 </Button>
                             </Col>

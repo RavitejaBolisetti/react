@@ -17,13 +17,13 @@ export const VehicleDetailFormButton = ({ record, onCloseAction, buttonData, set
             <Row gutter={20}>
                 <Col xs={24} sm={8} md={6} lg={4} xl={4} className={styles.buttonsGroupLeft}>
                     {buttonData?.closeBtn && (
-                        <Button danger onClick={onCloseAction}>
+                        <Button danger onClick={onCloseAction} data-testid="close">
                             {translateContent('global.buttons.close')}
                         </Button>
                     )}
 
                     {buttonData?.cancelBtn && (
-                        <Button danger onClick={onCloseAction}>
+                        <Button danger onClick={onCloseAction} data-testid="cancel">
                             {translateContent('global.buttons.cancel')}
                         </Button>
                     )}
@@ -31,55 +31,55 @@ export const VehicleDetailFormButton = ({ record, onCloseAction, buttonData, set
 
                 <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.buttonsGroupRight}>
                     {buttonData?.editBtn && (
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary" data-testid="edit">
                             {translateContent('global.buttons.edit')}
                         </Button>
                     )}
 
                     {buttonData?.transferBtn && (
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.TRANSFER, record })} type="primary">
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.TRANSFER, record })} type="primary" data-testid="transfer">
                             {translateContent('global.buttons.transfer')}
                         </Button>
                     )}
 
                     {buttonData?.allotBtn && (
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.ALLOT, record })} disabled={!buttonData?.formBtnActive} type="primary">
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.ALLOT, record })} data-testid="allot" disabled={!buttonData?.formBtnActive} type="primary">
                             {translateContent('global.buttons.allot')}
                         </Button>
                     )}
 
                     {buttonData?.unAllot && (
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.UNALLOT, record })} type="primary">
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.UNALLOT, record })} data-testid="unAllot" type="primary">
                             {translateContent('global.buttons.unAllot')}
                         </Button>
                     )}
 
                     {buttonData?.invoiceBtn && (
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.INVOICE, record })} type="primary">
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.INVOICE, record })} type="primary" data-testid="invoice">
                             {translateContent('global.buttons.invoice')}
                         </Button>
                     )}
 
                     {buttonData?.deliveryNoteBtn && (
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.DELIVERY_NOTE, record })} type="primary">
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.DELIVERY_NOTE, record })} type="primary" data-testid="deliveryNote">
                             {translateContent('global.buttons.deliveryNote')}
                         </Button>
                     )}
 
                     {buttonData?.cancelOtfBtn && (
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF, record })} type="primary">
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF, record })} type="primary" data-testid="cancelBooking">
                             {translateContent('global.buttons.cancelBooking')}
                         </Button>
                     )}
 
                     {buttonData?.nextBtn && !isLastSection && (
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary" data-testid="next">
                             {translateContent('global.buttons.next')}
                         </Button>
                     )}
 
                     {buttonData?.saveBtn && (
-                        <Button loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
+                        <Button loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive} data-testid="save" onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
                             {saveButtonName}
                         </Button>
                     )}

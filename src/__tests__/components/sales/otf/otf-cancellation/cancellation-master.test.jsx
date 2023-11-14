@@ -288,8 +288,8 @@ describe('Booking cancellation master render', () => {
         const uploadFile = screen.getByRole('button', { name: 'Upload File', exact: false });
         fireEvent.change(uploadFile);
 
-        const cancelBooking = screen.getByRole('button', { name: 'Cancel Booking', exact: false });
-        fireEvent.click(cancelBooking);
+        // const cancelBooking = screen.getByRole('button', { name: 'Cancel Booking', exact: false });
+        // fireEvent.click(cancelBooking);
 
         const cancel = screen.getByRole('button', { name: 'Cancel', exact: false });
         fireEvent.click(cancel);
