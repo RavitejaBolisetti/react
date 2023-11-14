@@ -194,7 +194,7 @@ export const CreditDebitNoteMasterBase = (props) => {
                 key: 'voucherType',
                 title: 'Voucher Type',
                 value: filterString?.voucherType,
-                name: filterString?.voucherType,
+                name: filterString?.voucherType && getCodeValue(typeData[PARAM_MASTER?.VOUCHR_TYPE?.id], filterString?.voucherType),
                 canRemove: true,
                 filter: true,
             },
