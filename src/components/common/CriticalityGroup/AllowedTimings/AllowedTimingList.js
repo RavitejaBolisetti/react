@@ -95,6 +95,7 @@ const AllowedTimingList = (props) => {
                         {!formActionType?.viewMode && (
                             <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
                                 <Button
+                                    data-testid="addTime"
                                     type="link"
                                     onClick={() => {
                                         setIsAddTimeVisible(!isAddTimeVisible);

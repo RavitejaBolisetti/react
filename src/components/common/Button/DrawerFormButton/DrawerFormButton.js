@@ -21,7 +21,7 @@ const DrawerButtons = ({ formData, onCloseAction, buttonData, setButtonData, sav
                 )}
 
                 {buttonData?.cancelBtn && (
-                    <Button danger onClick={onCloseAction}>
+                    <Button danger onClick={onCloseAction} data-testid="cancel_btn">
                         {translateContent('global.buttons.cancel')}
                     </Button>
                 )}
