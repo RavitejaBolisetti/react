@@ -318,7 +318,11 @@ export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, fetchCha
                 downloadFile({ setIsLoading: downloadShowLoading, userId, extraParams });
             };
 
-            fetchChartOfExportCoaAccount({ setIsLoading: listShowLoadingChartOfExportCoaAccount, userId, extraParams, onSuccessAction });
+            const onErrorAction = (message) => {
+                showGlobalNotification({ message });
+            };
+
+            fetchChartOfExportCoaAccount({ setIsLoading: listShowLoadingChartOfExportCoaAccount, userId, extraParams, onSuccessAction, onErrorAction });
 
             setModalOpen(false);
         });

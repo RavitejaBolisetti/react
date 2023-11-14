@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-mocks-import */
 import React from 'react';
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
@@ -33,6 +34,7 @@ describe('OTFAllotmentMaster Component', () => {
         const fetchVehicleAllotmentSearchedList = jest.fn();
         const saveData = jest.fn();
         const selectedOrder = { otfId: 106, otfNumber: 106 };
+        const setShowOTFDataLoading = jest.fn()
 
         customRender(
             <Provider store={mockStore}>

@@ -5,6 +5,7 @@
  */
 import React from 'react';
 import { Descriptions } from 'antd';
+import { translateContent } from 'utils/translateContent';
 
 const AccessoriesInformationCard = ({formData}) => {
     const viewProps = {

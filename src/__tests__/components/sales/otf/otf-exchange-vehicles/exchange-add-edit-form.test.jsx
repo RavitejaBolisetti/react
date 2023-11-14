@@ -29,11 +29,14 @@ describe("AddEditForm component render", ()=>{
     const props = {
         formActionType:{ addMode: false, editMode: true, viewMode: false },
         formData:[{exchange: 1}],
-        fnSetData:jest.fn()
+        fnSetData:jest.fn(),        
     }
 
     it("switch Exchange", async()=>{
-        customRender( <FormWrapper {...props} /> );
+        const typeData = {
+            VEHCL_MFG: [{ id: 106 }],
+        };
+        customRender( <FormWrapper {...props} typeData={typeData} /> );
         
         const exchangeSwitch = screen.getByRole('switch', {name:'Exchange'});
         fireEvent.click(exchangeSwitch)
