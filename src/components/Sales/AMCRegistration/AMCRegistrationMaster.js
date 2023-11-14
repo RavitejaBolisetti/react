@@ -50,7 +50,7 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             AMCRegistration: {
                 AMCRegistrationSearch: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString, detailData: amcRegistrationDetailData = [] },
-                EmployeeData: { isLoaded: isEmployeeDataLoaded = false, isLoading: isEmployeeDataLoading, data: employeeData = [] },
+                EmployeeData: { isLoaded: isEmployeeDataLoaded = false, isLoading: isEmployeeDataLoading, data: employeeData = [], detailData: managerData = [] },
                 AMCScheme: { isLoaded: isSchemeDataLoaded = false, isLoading: isSchemeDataLoading, filteredListData: schemeData = [] },
             },
             OTF: {
@@ -82,6 +82,7 @@ const mapStateToProps = (state) => {
         isEmployeeDataLoaded,
         isEmployeeDataLoading,
         employeeData,
+        managerData,
 
         isOTFDataLoaded,
         isOTFSearchLoading,
@@ -110,6 +111,7 @@ const mapDispatchToProps = (dispatch) => ({
             listCustomerShowLoading: customerDetailsIndividualDataActions.listShowLoading,
 
             fetchEmployeeList: employeeSearchDataAction.fetchList,
+            fetchManagerList: employeeSearchDataAction.fetchDetail,
             listEmployeeShowLoading: employeeSearchDataAction.listShowLoading,
             resetEmployeeData: employeeSearchDataAction.reset,
 
@@ -139,7 +141,7 @@ export const AMCRegistrationMasterBase = (props) => {
     const { typeData, saveData, documentType, moduleTitle, totalRecords } = props;
     const { filterString, setFilterString } = props;
     const { fetchDetail, isDataLoaded, fetchCustomerList, listCustomerShowLoading } = props;
-    const { amcRegistrationDetailData, isEmployeeDataLoaded, isEmployeeDataLoading, employeeData, fetchEmployeeList, listEmployeeShowLoading, resetEmployeeData, loginUserData } = props;
+    const { amcRegistrationDetailData, isEmployeeDataLoaded, isEmployeeDataLoading, employeeData, fetchEmployeeList, fetchManagerList, managerData, listEmployeeShowLoading, resetEmployeeData, loginUserData } = props;
     const { fetchOTFSearchedList, listOTFShowLoading, otfData, fetchDealerLocations, locationDataLoding, dealerLocations } = props;
     const { fetchSchemeList, listSchemeShowLoading, isSchemeDataLoaded, isSchemeDataLoading, schemeData, isLoginDataLoading, fetchDealerParentsLovList, listDealerParentShowLoading, dealerParentsLovList } = props;
 
@@ -192,7 +194,7 @@ export const AMCRegistrationMasterBase = (props) => {
 
     const [isRejectModalVisible, setRejectModalVisible] = useState(false);
     const [isMNMApproval, setIsMNMApproval] = useState(false);
-    const [isPendingForCancellation, setIsPendingForCancellation] = useState(selectedAMC?.status === AMC_CONSTANTS?.PENDING_FOR_CANCELLATION?.title);
+    const [isPendingForCancellation, setIsPendingForCancellation] = useState(selectedAMC?.status === AMC_CONSTANTS?.PENDING_FOR_CANCELLATION?.key);
 
     useEffect(() => {
         if (loginUserData?.userType) {
@@ -475,7 +477,7 @@ export const AMCRegistrationMasterBase = (props) => {
                 fetchDetail({ setIsLoading: listShowLoading, userId, extraParams: detailExtraParams, customURL, onErrorAction });
                 record && setSelectedAMC(record);
                 defaultSection && setCurrentSection(defaultSection);
-                setIsPendingForCancellation(record?.status === AMC_CONSTANTS?.PENDING_FOR_CANCELLATION?.title);
+                setIsPendingForCancellation(record?.status === AMC_CONSTANTS?.PENDING_FOR_CANCELLATION?.key);
                 break;
             case NEXT_ACTION:
                 const nextSection = filterActiveSection?.find((i) => i?.displayOnList && i.id > currentSection);
@@ -500,7 +502,7 @@ export const AMCRegistrationMasterBase = (props) => {
                 setButtonData(Visibility);
                 if (buttonAction === VIEW_ACTION) {
                     if (userType === AMC_CONSTANTS?.DEALER?.key) {
-                        amcStatus === QUERY_BUTTONS_CONSTANTS.PENDING.key ? setButtonData({ ...Visibility, cancelAMCBtn: true }) : amcStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility }) : setButtonData({ ...Visibility });
+                        amcStatus === QUERY_BUTTONS_CONSTANTS.APPROVED.key ? setButtonData({ ...Visibility, cancelAMCBtn: true }) : amcStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility }) : setButtonData({ ...Visibility });
                     } else {
                         amcStatus === QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.key ? setButtonData({ ...Visibility }) : amcStatus === QUERY_BUTTONS_MNM_USER.PENDING_FOR_CANCELLATION.key ? setButtonData({ ...Visibility }) : setButtonData({ ...Visibility });
                     }
@@ -529,10 +531,11 @@ export const AMCRegistrationMasterBase = (props) => {
         };
         const onSuccess = (res) => {
             setShowSpinnerLoading(false);
-            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.title'), message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
 
             if (type === AMC_CONSTANTS?.CANCEL_REQUEST?.key) {
                 setRejectModalVisible(false);
+                setIsFormVisible(false);
             } else if (type === AMC_CONSTANTS?.AMC_CANCELLATION?.key || userType === AMC_CONSTANTS?.MNM?.key) {
                 setRejectModalVisible(false);
                 setIsFormVisible(false);
@@ -805,6 +808,8 @@ export const AMCRegistrationMasterBase = (props) => {
         employeeData,
         fetchEmployeeList,
         listEmployeeShowLoading,
+        fetchManagerList,
+        managerData,
 
         fetchSchemeList,
         listSchemeShowLoading,

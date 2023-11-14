@@ -6,18 +6,19 @@
 import { tblPrepareColumns, tblStatusColumn, tblActionColumn } from 'utils/tableColumn';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const tableColumn = (handleButtonClick) => {
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Bay Type Code',
+            title: translateContent('bayTypeMaster.label.bayTypeCode'),
             dataIndex: 'code',
             width: '20%',
         }),
 
         tblPrepareColumns({
-            title: 'Bay Type Name',
+            title: translateContent('bayTypeMaster.label.bayTypeName'),
             dataIndex: 'name',
             width: '30%',
         }),

@@ -6,16 +6,17 @@
 import React, { useState } from 'react';
 import { Col, Row, Collapse, Descriptions, Divider } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-
-import styles from 'assets/sass/app.module.scss';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { AMC_CONSTANTS } from '../utils/AMCConstants';
 import { translateContent } from 'utils/translateContent';
+import { getCodeValue } from 'utils/getCodeValue';
+
+import styles from 'assets/sass/app.module.scss';
 
 const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading, selectedSaleType } = props;
+    const { formData, isLoading, selectedSaleType, employeeData, managerData } = props;
     const [activeKey, setactiveKey] = useState([]);
     const viewProps = {
         bordered: false,
@@ -56,8 +57,8 @@ const ViewDetailMain = (props) => {
                                         <Descriptions.Item label={translateContent('amcRegistration.label.vin')}>{checkAndSetDefaultValue(formData?.amcRegistration?.vin, isLoading)}</Descriptions.Item>
                                     </>
                                 )}
-                                <Descriptions.Item label={translateContent('amcRegistration.label.employeeName')}>{checkAndSetDefaultValue(formData?.amcRegistration?.employeeName, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label={translateContent('amcRegistration.label.managerName')}>{checkAndSetDefaultValue(formData?.amcRegistration?.managerName, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('amcRegistration.label.employeeName')}>{checkAndSetDefaultValue(getCodeValue(employeeData, formData?.amcRegistration?.employeeName), isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('amcRegistration.label.managerName')}>{checkAndSetDefaultValue(getCodeValue(managerData, formData?.amcRegistration?.managerName), isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('amcRegistration.label.remarks')}>{checkAndSetDefaultValue(formData?.amcRegistration?.remarks, isLoading)}</Descriptions.Item>
                             </Descriptions>
                             <Divider />

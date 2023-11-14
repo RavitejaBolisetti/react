@@ -35,7 +35,7 @@ export const RejectRequestForm = (props) => {
                 {amcWholeCancellation && rejectRequest ? (
                     <>
                         {userType === AMC_CONSTANTS?.DEALER?.key ? (
-                            <Row gutter={16}>
+                            <Row gutter={16} className={styles.marT20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
                                     <Form.Item label={translateContent('amcRegistration.label.reasonForCancellation')} name="amcCancelRemarks" rules={[validateRequiredInputField(translateContent('amcRegistration.label.reasonForCancellation'))]} initialValue={formData?.amcCancelRemarks}>
                                         {customSelectBox({ data: typeData?.[PARAM_MASTER.AMC_CANCEL_REASON.id], testId: 'select-test', placeholder: preparePlaceholderSelect(translateContent('amcRegistration.label.reasonForCancellation')), onChange: handleRemarksChange })}
@@ -43,7 +43,7 @@ export const RejectRequestForm = (props) => {
                                 </Col>
                             </Row>
                         ) : (
-                            <Row gutter={16}>
+                            <Row gutter={16} className={styles.marT20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
                                     <Form.Item label={translateContent('amcRegistration.label.reasonForRejection')} name="reasonForRejection" rules={[validateRequiredInputField(translateContent('amcRegistration.label.reasonForCancellation'))]} initialValue={formData?.reasonForRejection}>
                                         {customSelectBox({ data: typeData?.[PARAM_MASTER.AMC_CANCEL_REASON.id], placeholder: preparePlaceholderSelect(translateContent('amcRegistration.label.reasonForCancellation')) })}
@@ -52,7 +52,7 @@ export const RejectRequestForm = (props) => {
                             </Row>
                         )}
                         {isOtherReason && (
-                            <Row gutter={16}>
+                            <Row gutter={16} className={styles.marT20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
                                     <Form.Item label={translateContent('amcRegistration.label.otherReason')} name="otherReason" rules={[validateRequiredInputField(translateContent('amcRegistration.label.otherReason'))]} initialValue={formData?.otherReason}>
                                         <TextArea showCount maxLength={300} placeholder={preparePlaceholderText(translateContent('amcRegistration.label.otherReason'))} />
@@ -63,7 +63,7 @@ export const RejectRequestForm = (props) => {
                     </>
                 ) : (
                     <>
-                        <Row gutter={16}>
+                        <Row gutter={16} className={styles.marT20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.modalCheckBox}>
                                 {amcCancellationText}
                             </Col>

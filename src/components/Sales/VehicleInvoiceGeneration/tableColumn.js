@@ -6,41 +6,42 @@
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { convertDateMonthYear } from 'utils/formatDateTime';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Invoice No.',
+            title: translateContent('vehicleInvoiceGeneration.tableColumn.invoiceMaster.columnOne'),
             dataIndex: 'invoiceNumber',
             width: '14%',
         }),
         tblPrepareColumns({
-            title: 'Booking Number',
+            title: translateContent('vehicleInvoiceGeneration.tableColumn.invoiceMaster.columnTwo'),
             dataIndex: 'otfNumber',
             width: '25%',
             render: (_, record) => record?.bookingNumber || record?.otfNumber,
         }),
         tblPrepareColumns({
-            title: 'Customer Name',
+            title: translateContent('vehicleInvoiceGeneration.tableColumn.invoiceMaster.columnThree'),
             dataIndex: 'customerName',
             width: '14%',
         }),
         tblPrepareColumns({
-            title: 'Model Description',
+            title: translateContent('vehicleInvoiceGeneration.tableColumn.invoiceMaster.columnFour'),
             dataIndex: 'modelDescription',
             width: '25%',
         }),
         tblPrepareColumns({
-            title: 'Invoice Date',
+            title: translateContent('vehicleInvoiceGeneration.tableColumn.invoiceMaster.columnFive'),
             dataIndex: 'invoiceDate',
             width: '14%',
             render: (text) => (text ? convertDateMonthYear(text) : ''),
         }),
         tblPrepareColumns({
-            title: 'Digital Signature',
+            title: translateContent('vehicleInvoiceGeneration.tableColumn.invoiceMaster.columnSix'),
             dataIndex: 'digitalSignature',
             width: '15%',
-            render: (text) => (text === 'Y' ? 'Yes' : 'No'),
+            render: (text) => (text === 'Y' ? translateContent('global.yesNo.yes') : translateContent('global.yesNo.no')),
         }),
 
         tblActionColumn({ handleButtonClick, styles, width: '8%', canEdit: false }),

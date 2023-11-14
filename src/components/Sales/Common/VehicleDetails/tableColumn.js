@@ -4,26 +4,27 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
+import { translateContent } from 'utils/translateContent';
 export const tableColumnHeading ={
   
 }
 export const taxDetailsColumn = () => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Description',
+            title: translateContent('vehicleDetails.tableColumn.description'),
             dataIndex: 'taxDescription',
             key: 'taxDescription',
             width: '35%',
         }),
 
         tblPrepareColumns({
-            title: 'Rate ',
+            title: translateContent('vehicleDetails.tableColumn.rate'),
             dataIndex: 'taxRate',
             key: 'taxRate',
             width: '25%',
         }),
         tblPrepareColumns({
-            title: 'Amount ',
+            title: translateContent('vehicleDetails.tableColumn.amount'),
             dataIndex: 'taxAmount',
             key: 'taxAmount',
             width: '15%',
@@ -36,14 +37,14 @@ export const taxDetailsColumn = () => {
 export const optionalServicesColumns = ({ formActionType, handleButtonClick, styles, record }) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Service Name',
+            title: translateContent('vehicleDetails.tableColumn.serviceName'),
             dataIndex: 'serviceName',
             key: 'serviceName',
             width: '25%',
         }),
 
         tblPrepareColumns({
-            title: 'Amount ',
+            title: translateContent('vehicleDetails.tableColumn.amount'),
             dataIndex: 'amount',
             key: 'amount',
             width: '25%',
