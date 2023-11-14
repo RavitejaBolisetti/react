@@ -357,19 +357,19 @@ const AddEditFormMain = (props) => {
                                 <div>
                                     <Row gutter={20}>
                                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                            <Form.Item initialValue={formData?.roleId} name="roleId" label={translateContent('roleManagement.label.roleId')} rules={[validateRequiredInputField(translateContent("global.validation.id"))]}>
+                                            <Form.Item initialValue={formData?.roleId} name="roleId" label={translateContent('roleManagement.label.roleId')} rules={[validateRequiredInputField(translateContent('global.validation.id'))]} data-testid="role">
                                                 <Input maxLength={6} disabled={editMode ? true : false} placeholder={preparePlaceholderText('id')} />
                                             </Form.Item>
                                         </Col>
                                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                            <Form.Item initialValue={formData?.roleName} name="roleName" label={translateContent('roleManagement.label.roleName')} rules={[validateRequiredInputField(translateContent("global.validation.name"))]}>
+                                            <Form.Item initialValue={formData?.roleName} name="roleName" label={translateContent('roleManagement.label.roleName')} rules={[validateRequiredInputField(translateContent('global.validation.name'))]} data-testid="roleName">
                                                 <Input maxLength={50} placeholder={preparePlaceholderText('name')} />
                                             </Form.Item>
                                         </Col>
                                     </Row>
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
-                                            <Form.Item initialValue={formData?.roleDescription} label={translateContent('roleManagement.label.roleDescription')} name="roleDescription" rules={[validateRequiredInputField(translateContent("global.validation.description"))]}>
+                                            <Form.Item initialValue={formData?.roleDescription} label={translateContent('roleManagement.label.roleDescription')} name="roleDescription" rules={[validateRequiredInputField(translateContent('global.validation.description'))]} data-testid="roleDescription">
                                                 <TextArea
                                                     placeholder={preparePlaceholderText(translateContent('global.validation.description'))}
                                                     autoSize={{
@@ -392,7 +392,8 @@ const AddEditFormMain = (props) => {
                                 </div>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.subTitleSec}>
-                                        {translateContent('roleManagement.heading.subPanel')}<span className={styles.mandatory}>*</span>
+                                        {translateContent('roleManagement.heading.subPanel')}
+                                        <span className={styles.mandatory}>*</span>
                                     </Col>
                                 </Row>
                                 {AccordianTreePanel({ menuTreeData: unFilteredMenuData })}
