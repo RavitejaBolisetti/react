@@ -6,7 +6,7 @@
 import { useEffect, useState } from 'react';
 import { Col, Input, Form, Row, Select, Space, Divider, Card } from 'antd';
 
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import { validateMobileNoField, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { PARAM_MASTER } from 'constants/paramMaster';
@@ -61,7 +61,13 @@ const AddEditFormMain = (props) => {
             <Card style={{ backgroundColor: '#F2F2F2' }}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        <MobileOtpVerificationMaster {...mobileOtpProps}/>
+                        {editMode ? (
+                            <MobileOtpVerificationMaster {...mobileOtpProps} />
+                        ) : (
+                            <Form.Item label={translateContent('customerMaster.label.mobileNumber')} initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField(translateContent('customerMaster.validation.mobileNumber')), validateRequiredInputField(translateContent('customerMaster.validation.mobileNumber'))]}>
+                                <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.mobileNumber'))} maxLength={10} size="small" />
+                            </Form.Item>
+                        )}
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={customerType} label={translateContent('customerMaster.label.customerType')} name="customerType" data-testid="customerType" rules={[validateRequiredSelectField(translateContent('customerMaster.validation.customerType'))]}>
@@ -78,9 +84,10 @@ const AddEditFormMain = (props) => {
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        <Form.Item initialValue={formData?.parentCompanyCode} label={translateContent('customerMaster.label.companyCode')} name="parentCompanyCode" data-testid="parentCode" rules={[validateRequiredInputField(translateContent('customerMaster.validation.parentCode'))]}>
+                        <Form.Item initialValue={formData?.parentCompanyCode} label={translateContent('customerMaster.label.companyCode')} name="parentCompanyCode" data-testid="parentCode" >
                             <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.compCode'))} onBlur={validateParentCode} disabled={editMode} />
                         </Form.Item>
+                        {/* rules={[validateRequiredInputField(translateContent('customerMaster.validation.parentCode'))]} */}
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={formData?.parentCompanyName || (customerParentCompanyData && customerParentCompanyData.length > 0) ? customerParentCompanyData[0]?.parentCompanyName : ''} label={translateContent('customerMaster.label.parentComp')} name="parentCompanyName" data-testid="parentName">

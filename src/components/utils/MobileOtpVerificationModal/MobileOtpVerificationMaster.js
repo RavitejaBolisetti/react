@@ -216,36 +216,31 @@ const MobileOtpVerificationBase = (props) => {
 
     return (
         <>
-            {editMode ? (
-                <Form.Item label={translateContent('customerMaster.label.mobileNumber')} initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField(translateContent('customerMaster.validation.mobileNumber')), validateRequiredInputField(translateContent('customerMaster.validation.mobileNumber'))]}>
-                    <Input
-                        placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.mobileNumber'))}
-                        maxLength={10}
-                        size="small"
-                        onChange={handleOnchangeMobNoInput}
-                        disabled={!editMobile || otpVerified}
-                        suffix={
-                            <>
-                                {!editMobile && (
-                                    <Button type="link" onClick={handleOnEdit} style={{ transform: 'scale(-1,1)' }}>
-                                        <FaEdit />
-                                    </Button>
-                                )}
-                                {!numbValidatedSuccess && mobileNumber?.length === 10 && (
-                                    <Button onClick={handleNumberValidation} type="link" style={{ transform: 'scale(-1,1)' }}>
-                                        {translateContent('customerMaster.button.verify')}
-                                    </Button>
-                                )}
-                                {numbValidatedSuccess && <CheckOutlined style={{ color: '#70c922', fontSize: '16px', fotWeight: 'bold', transform: 'scale(-1,1)' }} />}
-                            </>
-                        }
-                    />
-                </Form.Item>
-            ) : (
-                <Form.Item label={translateContent('customerMaster.label.mobileNumber')} initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField(translateContent('customerMaster.validation.mobileNumber')), validateRequiredInputField(translateContent('customerMaster.validation.mobileNumber'))]}>
-                    <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.mobileNumber'))} maxLength={10} size="small" />
-                </Form.Item>
-            )}
+            <Form.Item label={translateContent('customerMaster.label.mobileNumber')} initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField(translateContent('customerMaster.validation.mobileNumber')), validateRequiredInputField(translateContent('customerMaster.validation.mobileNumber'))]}>
+                <Input
+                    placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.mobileNumber'))}
+                    maxLength={10}
+                    size="small"
+                    onChange={handleOnchangeMobNoInput}
+                    disabled={!editMobile || otpVerified}
+                    suffix={
+                        <>
+                            {!editMobile && (
+                                <Button type="link" onClick={handleOnEdit} style={{ transform: 'scale(-1,1)' }}>
+                                    <FaEdit />
+                                </Button>
+                            )}
+                            {!numbValidatedSuccess && mobileNumber?.length === 10 && (
+                                <Button onClick={handleNumberValidation} type="link" style={{ transform: 'scale(-1,1)' }}>
+                                    {translateContent('customerMaster.button.verify')}
+                                </Button>
+                            )}
+                            {numbValidatedSuccess && <CheckOutlined style={{ color: '#70c922', fontSize: '16px', fotWeight: 'bold', transform: 'scale(-1,1)' }} />}
+                        </>
+                    }
+                />
+            </Form.Item>
+
             <MobileOtpVerificationModal {...modalProps} />
         </>
     );
