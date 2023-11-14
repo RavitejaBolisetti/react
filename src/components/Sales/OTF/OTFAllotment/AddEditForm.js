@@ -64,16 +64,16 @@ const AddEditFormMain = (props) => {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Card>
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label={translateContent('bookingManagement.heading.profileCard.bookingNumber')}>{checkAndSetDefaultValue(selectedOrder?.bookingNumber || selectedOrder?.otfNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label={translateContent('bookingManagement.heading.profileCard.bookingDate')}>{checkAndSetDefaultValue(convertDateTime(selectedOrder?.otfDate, dateFormatView), isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('bookingManagement.profileCard.bookingNumber')}>{checkAndSetDefaultValue(selectedOrder?.bookingNumber || selectedOrder?.otfNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('bookingManagement.profileCard.bookingDate')}>{checkAndSetDefaultValue(convertDateTime(selectedOrder?.otfDate, dateFormatView), isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('commonModules.label.bookingCustomerAndBillingCustomer.customerName')}>{checkAndSetDefaultValue(selectedOrder?.customerName, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label={translateContent('bookingManagement.heading.profileCard.mobileNumber')}>{checkAndSetDefaultValue(selectedOrder?.mobileNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('bookingManagement.profileCard.mobileNumber')}>{checkAndSetDefaultValue(selectedOrder?.mobileNumber, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.modelDescription')}>{checkAndSetDefaultValue(selectedOrder?.model, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('bookingManagement.label.orderStatus')}>{getStatus(selectedOrder?.orderStatus)}</Descriptions.Item>
                             </Descriptions>
                         </Card>
                         <Divider className={styles.marT20} />
-                        
+
                         <h4>{translateContent('bookingManagement.label.allotVehicle')}</h4>
                         <AdvanceFilter {...advanceFilterResultProps} />
                         <ListDataTable handleAdd={handleButtonClick} {...tableProps} showAddButton={false} />

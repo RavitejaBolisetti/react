@@ -5,6 +5,7 @@
  */
 import React from 'react';
 import { Row, Col, Button } from 'antd';
+import { translateContent } from 'utils/translateContent';
 
 const CommonFooterButton = (props) => {
     const { isHtmltype, onFinish, onCloseAction, styles } = props;

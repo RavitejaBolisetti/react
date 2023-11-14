@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -15,7 +15,6 @@ import { geoStateDataActions } from 'store/actions/data/geo/states';
 import { geoDistrictDataActions } from 'store/actions/data/geo/districts';
 import { geoCountryDataActions } from 'store/actions/data/geo/countries';
 import { geoCityDataActions } from 'store/actions/data/geo/cities';
-import { tncProductHierarchyDataActions } from 'store/actions/data/termsConditions/tncProductHierarchy';
 
 import { dateFormat, formatDate, formatDateToCalenderDate } from 'utils/formatDateTime';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
@@ -25,6 +24,7 @@ import { ModalButtons } from 'components/common/Button';
 
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
+import { ProductModelHierarchy } from 'components/utils/ProductModelHierarchy';
 
 const { Option } = Select;
 
@@ -40,13 +40,10 @@ const mapStateToProps = (state) => {
                 Tehsil: { isFilteredListLoaded: isTehsilDataLoaded = false, isLoading: isTehsilLoading, filteredListData: tehsilData },
                 City: { isFilteredListLoaded: isCityDataLoaded = false, isLoading: isCityLoading, filteredListData: cityData },
             },
-            TermCondition: {
-                ProductHierarchyData: { isLoaded: isProductHierarchyDataLoaded = false, data: productHierarchyList, isProductHierarchyLoading },
-            },
         },
     } = state;
 
-    const moduleTitle = translateContent('vehiclePriceMaster.heading.mainTitle')
+    const moduleTitle = translateContent('vehiclePriceMaster.heading.mainTitle');
     const finalCountryData = countryData?.map((item, index) => {
         return { ...item, default: index <= 0 || false };
     });
@@ -72,9 +69,6 @@ const mapStateToProps = (state) => {
         tehsilData,
         isDistrictDataLoaded,
         districtData,
-        isProductHierarchyDataLoaded,
-        productHierarchyList,
-        isProductHierarchyLoading,
         isDistrictLoading,
         filteredStateData: stateData,
         filterString,
@@ -98,28 +92,30 @@ const mapDispatchToProps = (dispatch) => ({
             countryShowLoading: geoCountryDataActions.listShowLoading,
             fetchCountryList: geoCountryDataActions.fetchList,
 
-            fetchProductLovList: tncProductHierarchyDataActions.fetchList,
-            listProductShowLoading: tncProductHierarchyDataActions.listShowLoading,
-
             showGlobalNotification,
         },
         dispatch
     ),
 });
 export const AdvancedSearchFrom = (props) => {
-    const { productHierarchyList, filteredStateData, filteredCityData, handleFilterChange } = props;
-    const { filterString, setFilterString, advanceFilterForm, handleResetFilter, setAdvanceSearchVisible } = props;
-    const { userId, isProductHierarchyDataLoaded, listProductShowLoading, fetchProductLovList, isDataCountryLoaded, fetchCountryList, countryShowLoading, isStateDataLoaded, listStateShowLoading, fetchStateLovList, isDistrictDataLoaded, isDistrictLoading, listDistrictShowLoading, fetchDistrictLovList, isCityDataLoaded, isCityLoading, listCityShowLoading, fetchCityLovList } = props;
+    const { filteredStateData, filteredCityData, handleFilterChange, resetAdvanceFilter } = props;
+    const {
+        filterString,
+        setFilterString,
+        advanceFilterForm,
+        setAdvanceSearchVisible,
+        advanceFilterForm: { resetFields },
+    } = props;
+    const { userId, isProductHierarchyDataLoaded, isDataCountryLoaded, fetchCountryList, countryShowLoading, isStateDataLoaded, listStateShowLoading, fetchStateLovList, isDistrictDataLoaded, isDistrictLoading, listDistrictShowLoading, fetchDistrictLovList, isCityDataLoaded, isCityLoading, listCityShowLoading, fetchCityLovList, productHierarchyData } = props;
+    const [parentAppCode, setParentAppCode] = useState();
 
     useEffect(() => {
-        advanceFilterForm.resetFields();
+        resetFields();
+        if (!filterString?.model) setParentAppCode();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString]);
+    }, [filterString, resetAdvanceFilter]);
 
     useEffect(() => {
-        if (!isProductHierarchyDataLoaded) {
-            fetchProductLovList({ setIsLoading: listProductShowLoading, userId });
-        }
         if (!isDataCountryLoaded) {
             fetchCountryList({ setIsLoading: countryShowLoading, userId });
         }
@@ -145,6 +141,29 @@ export const AdvancedSearchFrom = (props) => {
         setAdvanceSearchVisible(false);
     };
 
+    const handleResetFilter = (e) => {
+        advanceFilterForm.resetFields();
+    };
+    const handleSelectTreeClick = (value) => {
+        setParentAppCode(value);
+        advanceFilterForm.setFieldValue('model', value);
+    };
+
+    const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
+    const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
+    const treeSelectFieldProps = {
+        treeFieldNames,
+        treeData: productHierarchyData,
+        defaultParent: false,
+        selectedTreeSelectKey: parentAppCode,
+        handleSelectTreeClick,
+        defaultValue: null,
+        placeholder: preparePlaceholderSelect('Model'),
+        filterString,
+        name: 'model',
+        labelName: 'Model',
+    };
+
     const selectProps = {
         optionFilterProp: 'children',
         showSearch: true,
@@ -162,7 +181,9 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Model Description" name="modelCode" rules={[validateRequiredSelectField('model')]}>
+                    <ProductModelHierarchy {...treeSelectFieldProps} />
+                    {/* <Form.Item label="Model Description" name="modelCode" rules={[validateRequiredSelectField('model')]}>
+                    
                         <Select showSearch placeholder="Select" allowClear>
                             {productHierarchyList?.map((item) => (
                                 <Option key={'ph' + item.prodctCode} value={item.prodctCode}>
@@ -170,7 +191,7 @@ export const AdvancedSearchFrom = (props) => {
                                 </Option>
                             ))}
                         </Select>
-                    </Form.Item>
+                    </Form.Item> */}
                 </Col>
 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>

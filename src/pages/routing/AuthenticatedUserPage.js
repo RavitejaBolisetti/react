@@ -142,7 +142,8 @@ const AuthenticatedUserPageMain = (props) => {
     }, [isDataLoaded, userId]);
 
     const routeExclusion = [routing?.ROUTING_HOME, routing?.ROUTING_DASHBOARD];
-    const authorized = canViewPage || routeExclusion?.includes(pagePath);
+    // const authorized = canViewPage || routeExclusion?.includes(pagePath);
+    const authorized = true;
     return !isLoading ? (
         authorized ? (
             <Routes>

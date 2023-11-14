@@ -40,16 +40,14 @@ import { tableColumn as manufacturerTableColumn } from './Manufacturer/tableColu
 import styles from 'assets/sass/app.module.scss';
 import { DealerProductActions } from 'store/actions/data/userManagement/dealerProduct';
 import { translateContent } from 'utils/translateContent';
-import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { drawerTitle } from 'utils/drawerTitle';
 
-const { Option } = Select;
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         common: {
-            Header: { data: loginUserData = [], isLoading, isLoaded: isDataLoaded = false },
+            Header: { data: loginUserData = [] },
         },
         data: {
             UserManagement: {
@@ -168,9 +166,11 @@ const mapDispatchToProps = (dispatch) => ({
             fetchDealerProduct: DealerProductActions.fetchList,
             dealerProductShowLoading: DealerProductActions.listShowLoading,
             saveDealerProduct: DealerProductActions.saveData,
+            resetDealerProduct: DealerProductActions.reset,
 
             fetchProductHierarchyList: productHierarchyDataActions.fetchList,
             productShowLoding: productHierarchyDataActions.listShowLoading,
+            resetProductHierarchyList: productHierarchyDataActions.resetData,
 
             hideGlobalNotification,
             showGlobalNotification,
@@ -369,7 +369,7 @@ const UserManagementMain = (props) => {
     useEffect(() => {
         if (userId && !isFormVisible) {
             const params = filterString?.searchParam ? extraParams : [...defaultExtraParam, ...extraParams];
-            if (userType === USER_TYPE_USER?.DEALER?.id ) {
+            if (userType === USER_TYPE_USER?.DEALER?.id) {
                 fetchUserDataList({ setIsLoading: listShowLoading, extraParams: params, userId, onErrorAction, onSuccessAction });
             } else if (userType === USER_TYPE_USER?.MANUFACTURER?.id) {
                 fetchUserDataList({ setIsLoading: listShowLoading, extraParams: params, userId, onErrorAction, onSuccessAction });

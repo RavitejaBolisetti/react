@@ -5,12 +5,12 @@
  */
 import React from 'react';
 import customRender from '@utils/test-utils';
-import AddEditForm from '@components/common/CustomerMaster/CorporateCustomer/SupportingDocument/AddEditForm';
+import { AddEditForm } from '@components/common/CustomerMaster/CorporateCustomer/SupportingDocument/AddEditForm';
 import { fireEvent, screen } from '@testing-library/react';
 
 describe('add edit form component', () => {
     it('should render add edit form component', () => {
-        customRender(<AddEditForm />);
+        customRender(<AddEditForm isVisible={true} />);
         const uploadFile = screen.getByRole('button', { name: 'Upload File' });
         fireEvent.click(uploadFile);
         const closeCircle = screen.getByRole('button', { name: 'close-circle' });

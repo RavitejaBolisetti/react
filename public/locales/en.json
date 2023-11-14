@@ -35,7 +35,7 @@
             "warning": "Warning"
         },
         "notificationError": {
-            "title": "Error"
+            "title": "ERROR"
         },
 
         "advanceFilter": {
@@ -692,7 +692,7 @@
             "doWantToDownload": "Do you want to Print or download invoice and registration certificate",
             "duplicateVehicle": "Vehicle is duplicate",
             "vehicleRegistrationNoMandatory": "Please add vehicle registration number to continue",
-            "onlyOneVehicleAllowed" : "ACM type is comprehensive, Only one vehicle is allowed"
+            "onlyOneVehicleAllowed": "ACM type is comprehensive, Only one vehicle is allowed"
         },
         "label": {
             "amcRegNoDate": "AMC Registration No. & Date",
@@ -914,7 +914,7 @@
             "mobile": " Mobile No.:"
         },
         "placeholder": {
-            "mobileMumber": "mobile number",
+            "mobileNumber": "mobile number",
             "customerType": "customer type",
             "emailId": "email id",
             "whatsAppNumber": "WhatsApp Number",
@@ -1017,7 +1017,9 @@
             "compName": "company name",
             "parentCode": "parent company code"
         },
-        "button": {},
+        "button": {
+            "verify": "Verify"
+        },
         "link": {
             "mnmLogin": "M&M User Login"
         },
@@ -1038,6 +1040,23 @@
                 "familyDetails": "Family Details",
                 "accountRelated": "Account Related",
                 "supportingDocument": "Supporting Document"
+            }
+        },
+        "otpModal": {
+            "heading":{
+                "modalTitle": "Mobile Number Verification"
+            },
+            "notification":{
+                "otpSent": "OTP Sent"
+            },
+            "buttons":{
+                "verifyOtp": "Verify OTP",
+                "enterOtp": "Enter OTP",
+                "resendOtp": "Resend OTP"
+            },
+            "label":{
+                "incorrectOtp": "Incorrect OTP",
+                "didntReceiveOtp": "Didn't receive an OTP?"
             }
         }
     },
@@ -1256,14 +1275,15 @@
             "title": "Booking Management",
             "bookingManagementChangeHistory": "Booking Change History",
             "otfSoMappingChangeHistory": "Booking - SO Mapping & Un-mapping History",
-            "bookingAllotment": "Booking Allotment",
-
-            "profileCard.bookingNumber": "Booking No.",
-            "profileCard.bookingDate": "Booking Date",
-            "profileCard.customerType": "Customer Type",
-            "profileCard.mobileNumber": "Mobile No.",
-            "profileCard.model": "Model",
-            "profileCard.cpd": "CPD"
+            "bookingAllotment": "Booking Allotment"
+        },
+        "profileCard": {
+            "bookingNumber": "Booking No.",
+            "bookingDate": "Booking Date",
+            "customerType": "Customer Type",
+            "mobileNumber": "Mobile No.",
+            "model": "Model",
+            "cpd": "CPD"
         },
         "validation": {
             "mandatorySelectBooking": "Please select Booking",
@@ -1400,19 +1420,22 @@
 
     "installationAddressDetials": {
         "heading": {
-            "mainTitle": "Insurance Details"
+            "mainTitle": "Insurance Details",
+            "customerDetails": "Customer Details"
         },
         "label": {
+            "search": "Search",
             "installationAddress": "Installation Adress",
             "pincode": "Pincode",
             "city": "City",
             "state": "State",
             "custMobNo": "Customer Mobile No.",
             "custEmailId": "Customer Email Id.",
-            "address": "Address"
+            "address": "Address",
+            "sameAsCustomerAddress": "Same as Customer Address"
         },
         "validation": {
-            "installationAddress": "Installation Adress",
+            "installationAddress": "Installation Address",
             "pinCode": "Pin Code",
             "city": "City",
             "state": "State",
@@ -1505,15 +1528,14 @@
             "validation": {
                 "managedBy": "managed by"
             },
-            "customerDetails":{
-                "label":{
+            "customerDetails": {
+                "label": {
                     "customerId": "Customer ID",
-                    "customerName":"Customer Name",
+                    "customerName": "Customer Name",
                     "registrationNumber": "Registration Number",
-                    "modelDescription":"Model Description",
+                    "modelDescription": "Model Description",
                     "chassisNumber": "Chassis No.",
                     "mobileNumber": "Mobile Number"
-
                 }
             }
         },
@@ -1660,7 +1682,8 @@
             "mapped": "Mapped",
             "unmapped": "Unmapped",
             "role": "Role",
-            "accessProvided": "Access provided"
+            "accessProvided": "Access provided",
+            "device": "device"
         },
         "placeholder": {
             "search": "Search",
@@ -2311,6 +2334,7 @@
         "heading": {
             "mainTitle": "Vehicle Price Master",
             "drawerTitleMain": "Vehicle Price Master",
+            "uploadVehicle": "Upload Vehicle Price Master",
             "sections": {},
             "collapse": {},
             "profileCard": {}
@@ -3798,7 +3822,6 @@
         "label": {
             "bayTypeCode": "Bay Type Code",
             "bayTypeName": "Bay Type Name"
-            
         }
     },
     "stateCrud": {
@@ -3828,7 +3851,7 @@
         }
     },
     "rsaTableColumn": {
-        "label":{
+        "label": {
             "rsaRegistration": "RSA Registration No. & Date",
             "dealerLocation": "Dealer Location",
             "vin": "VIN",
@@ -3839,7 +3862,7 @@
         "label": {
             "columnOne": "Shield Registration No. & Date",
             "columnTwo": "Dealer Location",
-            "columnThree":"VIN",
+            "columnThree": "VIN",
             "columnFour": "Status"
         }
     }

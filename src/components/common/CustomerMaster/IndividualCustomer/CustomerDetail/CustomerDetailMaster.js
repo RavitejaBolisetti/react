@@ -12,7 +12,7 @@ import { customerDetailsIndividualDataActions } from 'store/actions/data/custome
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 import { corporateDataActions } from 'store/actions/data/customerMaster/corporate';
-import { showGlobalNotification } from 'store/actions/notification';
+import { showGlobalNotification, hideGlobalNotification } from 'store/actions/notification';
 
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
@@ -21,6 +21,7 @@ import { CustomerNameChangeHistory } from './CustomerNameChange';
 import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
+import { customerMobileDetailsDataActions } from 'store/actions/data/customerMaster/searchMobileNumber';
 
 const mapStateToProps = (state) => {
     const {
@@ -68,11 +69,16 @@ const mapDispatchToProps = (dispatch) => ({
             downloadFile: supportingDocumentDataActions.downloadFile,
             listSupportingDocumentShowLoading: supportingDocumentDataActions.listShowLoading,
 
+            fetchContactMobileNoDetails: customerMobileDetailsDataActions.fetchList,
+            listContactMobileNoShowLoading: customerMobileDetailsDataActions.listShowLoading,
+            resetContactMobileNoData: customerMobileDetailsDataActions.reset,
+
             fetchList: customerDetailsIndividualDataActions.fetchList,
             listShowLoading: customerDetailsIndividualDataActions.listShowLoading,
             saveData: customerDetailsIndividualDataActions.saveData,
             resetData: customerDetailsIndividualDataActions.reset,
 
+            hideGlobalNotification,
             showGlobalNotification,
         },
         dispatch
@@ -80,12 +86,12 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CustomerDetailMasterBase = (props) => {
-    const { setRefreshCustomerList, handleResetFilter, typeData, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData } = props;
+    const { setRefreshCustomerList, handleResetFilter, typeData, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData, fetchContactMobileNoDetails, listContactMobileNoShowLoading, resetContactMobileNoData } = props;
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, data, saveData, isLoading, resetData, form, handleFormValueChange } = props;
-    const { selectedCustomer, selectedCustomerId, setSelectedCustomerId } = props;
+    const { selectedCustomer, selectedCustomerId, setSelectedCustomerId, mobNoVerificationData } = props;
     const { buttonData, setButtonData, formActionType, setFormActionType, handleButtonClick, NEXT_ACTION } = props;
-    const { fetchViewDocument, viewListShowLoading, listSupportingDocumentShowLoading, isSupportingDocumentDataLoaded, supportingData, isViewDataLoaded, viewDocument } = props;
-
+    const { fetchViewDocument, viewListShowLoading, listSupportingDocumentShowLoading, isSupportingDocumentDataLoaded, supportingData, isViewDataLoaded, viewDocument, hideGlobalNotification, customerType } = props;
+    const { sendOTP, validateOTP } = props;
     const [refreshData, setRefreshData] = useState(false);
     const [showForm, setShowForm] = useState(false);
     const [status, setStatus] = useState(null);
@@ -103,10 +109,7 @@ const CustomerDetailMasterBase = (props) => {
     const [activeKey, setactiveKey] = useState([]);
     const [nameChangeRequested, setNameChangeRequested] = useState(false);
     const [whatsAppConfiguration, setWhatsAppConfiguration] = useState({ contactOverWhatsApp: null, contactOverWhatsAppActive: null, sameMobileNoAsWhatsApp: null, sameMobileNoAsWhatsAppActive: null });
-
-    const onErrorAction = (message) => {
-        showGlobalNotification({ message });
-    };
+    const [numbValidatedSuccess, setNumbValidatedSuccess] = useState(false);
 
     useEffect(() => {
         if (data) {
@@ -130,6 +133,10 @@ const CustomerDetailMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isCorporateLovDataLoaded]);
 
+    const onErrorAction = (message) => {
+        showGlobalNotification({ message });
+    };
+
     useEffect(() => {
         if (userId && selectedCustomerId) {
             const extraParams = [
@@ -144,6 +151,34 @@ const CustomerDetailMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomerId, refreshData]);
+
+    const defaultExtraParam = [
+        {
+            key: 'customerType',
+            title: 'Customer Type',
+            value: customerType,
+            canRemove: true,
+        },
+        {
+            key: 'pageSize',
+            title: 'Value',
+            value: 1,
+            canRemove: true,
+        },
+        {
+            key: 'pageNumber',
+            title: 'Value',
+            value: 1,
+            canRemove: true,
+        },
+        {
+            key: 'searchType',
+            title: 'searchType',
+            value: 'mobileNumber',
+            canRemove: true,
+        },
+    ];
+
 
     const downloadFileFromButton = (uploadData) => {
         showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: 'Your download will start soon' });
@@ -204,11 +239,14 @@ const CustomerDetailMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
+        if (!numbValidatedSuccess && data?.mobileNumber !== values?.mobileNumber) {
+            showGlobalNotification({ message: 'Please verify mobile number to proceed.' });
+            return;
+        }
         setFileList([]);
         setEmptyList(false);
         setUploadedFile();
-        let data = { ...values, customerId: selectedCustomer?.customerId };
-
+        let reqdata = { ...values, customerId: selectedCustomer?.customerId };
         if (formActionType?.editMode) {
             const customerCurrentName = {
                 titleCode: formData?.titleCode,
@@ -216,14 +254,14 @@ const CustomerDetailMasterBase = (props) => {
                 middleName: formData?.middleName,
                 lastName: formData?.lastName,
             };
-            data = { ...data, ...customerCurrentName, editMode: formActionType?.editMode };
+            reqdata = { ...reqdata, ...customerCurrentName, editMode: formActionType?.editMode };
 
             if (nameChangeRequested) {
-                data = { ...data, customerNameChangeRequest: customerNameList };
-                delete data.titleCodeNew;
-                delete data.firstNameNew;
-                delete data.middleNameNew;
-                delete data.lastNameNew;
+                reqdata = { ...reqdata, customerNameChangeRequest: customerNameList };
+                delete reqdata.titleCodeNew;
+                delete reqdata.firstNameNew;
+                delete reqdata.middleNameNew;
+                delete reqdata.lastNameNew;
             }
         }
 
@@ -234,6 +272,7 @@ const CustomerDetailMasterBase = (props) => {
             setButtonData({ ...buttonData, formBtnActive: false });
             setRefreshCustomerList(true);
             handleResetFilter();
+            setNumbValidatedSuccess(false);
 
             if (res.data) {
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
@@ -261,7 +300,7 @@ const CustomerDetailMasterBase = (props) => {
         };
 
         const requestData = {
-            data: data,
+            data: reqdata,
             method: selectedCustomerId ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
@@ -366,6 +405,17 @@ const CustomerDetailMasterBase = (props) => {
         setNameChangeRequested,
         refreshData,
         setRefreshData,
+        sendOTP,
+        validateOTP,
+        showGlobalNotification,
+        fetchContactMobileNoDetails,
+        listContactMobileNoShowLoading,
+        selectedCustomer,
+        resetContactMobileNoData,
+        mobNoVerificationData,
+        hideGlobalNotification,
+        numbValidatedSuccess,
+        defaultExtraParam,
     };
 
     const viewProps = {

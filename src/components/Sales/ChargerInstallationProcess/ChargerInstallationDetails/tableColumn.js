@@ -3,13 +3,11 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { Tag } from 'antd';
 import { tblPrepareColumns } from 'utils/tableColumn';
 import { convertDateMonthYear, converDateDayjs, convertDateTime, dateFormatView, timeFormatView } from 'utils/formatDateTime';
 import { ChargerStatusTag } from '../ChargerStatusTag';
 import { FiEye } from 'react-icons/fi';
 import { getCodeValue } from 'utils/getCodeValue';
-import { CHARGER_STATUS } from 'constants/ChargerStatus';
 
 import * as IMAGES from 'assets';
 import { translateContent } from 'utils/translateContent';
@@ -23,7 +21,6 @@ export const addRequestColumns = (typeData) => {
             width: '25%',
             render: (_, record) => getCodeValue(typeData?.CHRGR_INST_STG_TYPE, record?.requestStage || record?.stageType),
         }),
-
         tblPrepareColumns({
             title: translateContent('chargerInstallationDetailsTableColumn.label.visitTimeSlot1'),
             dataIndex: 'visitTimeSlotOne',
@@ -45,9 +42,8 @@ export const addRequestColumns = (typeData) => {
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'response',
-            key: 'response',
             width: '180px',
-            render: (_, record) => <Tag color="warning">{CHARGER_STATUS.IN_PROGRESS.desc}</Tag>,
+            render: (_, record) => ChargerStatusTag(record?.response),
         }),
     ];
 

@@ -31,13 +31,13 @@ const fnMapData = ({ data, fieldNames, checkedKeysValue, userId }) =>
 const ProductMapping = (props) => {
     const { productHierarchyData, userId, selectedRecord, formActionType, isProductHierarchyLoading, viewMode, section, setButtonData, fetchProductHierarchyList, productShowLoding } = props;
     const { userProductListData, fetchDealerProduct, dealerProductShowLoading, saveDealerProduct, showGlobalNotification } = props;
-    const { isUserDlrProductListLoding, handleButtonClick } = props;
+    const { isUserDlrProductListLoding, handleButtonClick, resetDealerProduct, resetProductHierarchyList } = props;
 
     const [form] = Form.useForm();
     const [searchValue, setSearchValue] = useState();
     const [checkedKeys, setCheckedKeys] = useState([]);
     const [productTreeList, setProductTreeList] = useState([]);
-    const [productHierarchyDataList, setProductHierarchyDataList] = useState([]); //make product list
+    const [productHierarchyDataList, setProductHierarchyDataList] = useState([]);
     const [mapProductList, setMapProductList] = useState([]);
 
     const extraParams = [
@@ -48,13 +48,21 @@ const ProductMapping = (props) => {
         },
     ];
 
+    useEffect(() => {
+        return () => {
+            resetDealerProduct();
+            resetProductHierarchyList();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     const mapSelectedKeyData = ({ data }) =>
-        data?.[0]?.attributeType !== 'MF'
+        data?.[0]?.attributeType !== 'MF' && data?.[0]?.attributeType !== 'MV' && data?.[0]?.attributeType !== 'MD'
             ? data?.map((item) => ({
                   ...item,
                   checkable: item?.attributeType === 'MG',
                   selectable: item?.attributeType !== 'MG',
-                  subProdct: item?.subProdct && item?.attributeType !== 'MF' ? mapSelectedKeyData({ data: item?.subProdct }) : null,
+                  subProdct: item?.subProdct && !(item?.subProdct?.[0]?.attributeType === 'MF' || item?.subProdct?.[0]?.attributeType === 'MV' || item?.subProdct?.[0]?.attributeType === 'MD') ? mapSelectedKeyData({ data: item?.subProdct }) : null,
               }))
             : null;
 
@@ -120,7 +128,7 @@ const ProductMapping = (props) => {
     };
 
     useEffect(() => {
-        if (userId && userProductListData?.length) {
+        if (userId && userProductListData?.length && !checkedKeys?.length) {
             handleDefaultCheckedKeys(userProductListData, 'productCode');
         }
 
@@ -129,7 +137,7 @@ const ProductMapping = (props) => {
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [productHierarchyData, userProductListData, productTreeList]);
+    }, [userProductListData, productTreeList]);
 
     const myProps = {
         fieldNames,
@@ -188,7 +196,7 @@ const ProductMapping = (props) => {
                                         <Search placeholder={preparePlaceholderSearch()} initialValue={searchValue} onChange={handleSearchValue} allowClear />
                                     </Form.Item>
                                     <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={`${styles.marB20}`}>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={formActionType?.viewMode ? `${styles.marB20} ${styles.viewModeTree}` : styles.marB20}>
                                             <div className={styles.prodMapTree}>
                                                 <LeftPanel {...myProps} />
                                             </div>
