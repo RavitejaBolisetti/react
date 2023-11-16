@@ -97,7 +97,11 @@ const VehicleDetailsMasterMain = (props) => {
     const [productHierarchyData, setProductHierarchyData] = useState([]);
     const [vehicleDetailData, setVehicleDetailData] = useState();
     const [filterVehicleData, setFilterVehicleData] = useState([]);
-
+    const [customerNameList, setCustomerNameList] = useState({});
+    const [nameChangeRequested, setNameChangeRequested] = useState(false);
+    const [confirmRequest, setConfirmRequest] = useState();
+    const [changeModel, setChangeModel] = useState(false);
+    const [onModelSubmit, setOnModelSubmit] = useState(false);
     const onSuccessAction = () => {
         return;
         //showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -173,7 +177,7 @@ const VehicleDetailsMasterMain = (props) => {
                 },
             ];
             fetchProductList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
-        }else {
+        } else {
             setButtonData({ ...buttonData, formBtnActive: !formActionType.viewMode });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -393,6 +397,19 @@ const VehicleDetailsMasterMain = (props) => {
         viewOnly: !isOTFModule,
         isOTFModule,
         orderStatus: selectedOrder?.orderStatus,
+        customerNameList,
+        setCustomerNameList,
+        nameChangeRequested,
+        setNameChangeRequested,
+        confirmRequest,
+        setConfirmRequest,
+        changeModel,
+        setChangeModel,
+        isVehicleServiceLoaded,
+        fetchServiceLov,
+        serviceLoading,
+        onModelSubmit,
+        setOnModelSubmit,
     };
 
     const viewProps = {
