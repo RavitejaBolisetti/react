@@ -514,6 +514,13 @@ export const MenuConstant = {
         parentMenuId: 'SACR-02.05',
         slug: 'POSO',
     },
+    [getMenyKey('SACR-05.19')]: {
+        key: 'SACR-05.19',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'SACR-02.05',
+        slug: 'delivery-challan-report',
+    },
     [getMenyKey('FINA-02.10')]: {
         key: 'FINA-02.10',
         link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
