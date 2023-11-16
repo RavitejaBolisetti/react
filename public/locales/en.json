@@ -52,6 +52,7 @@
         "generalMessage": {
             "noRecordsFound": "No records found",
             "noRecordsFoundAddNew": "Please add New {NAME} using below button",
+            "noRecordsFoundAddNewBtn": "Please add New {NAME} using add button",
             "comingSoon": "Coming Soon",
             "noDataFound": "No data found",
             "downloadStart": "Your download will start soon"
@@ -1043,18 +1044,18 @@
             }
         },
         "otpModal": {
-            "heading":{
+            "heading": {
                 "modalTitle": "Mobile Number Verification"
             },
-            "notification":{
+            "notification": {
                 "otpSent": "OTP Sent"
             },
-            "buttons":{
+            "buttons": {
                 "verifyOtp": "Verify OTP",
                 "enterOtp": "Enter OTP",
                 "resendOtp": "Resend OTP"
             },
-            "label":{
+            "label": {
                 "incorrectOtp": "Incorrect OTP",
                 "didntReceiveOtp": "Didn't receive an OTP?"
             }
