@@ -64,4 +64,9 @@ export const AMC_CONSTANTS = {
         key: 'AMC_CANCELLATION',
         title: 'AMC cancel',
     },
+    REGISTRATION_TYPE: {
+        id: 16,
+        key: 'AMC',
+        title: 'API key for registration type',
+    },
 };

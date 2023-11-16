@@ -58,8 +58,8 @@ export const AdvancedSearchFrom = (props) => {
     const modalProps = {
         reset: true,
         submit: true,
-        resetName: translateContent('stockTransferIndent.button.reset'),
-        submitName: translateContent('stockTransferIndent.button.apply'),
+        resetName: translateContent('global.buttons.reset'),
+        submitName: translateContent('global.buttons.apply'),
         handleResetFilter,
     };
 

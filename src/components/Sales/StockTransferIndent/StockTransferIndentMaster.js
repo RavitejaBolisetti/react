@@ -445,7 +445,7 @@ export const StockTransferIndentMasterBase = (props) => {
     const onFinishSearch = (values) => {};
 
     const handleResetFilter = (e) => {
-        setFilterString();
+        setFilterString({ current: 1, pageSize: 10 });
         advanceFilterForm.resetFields();
         searchForm.resetFields();
         setAdvanceSearchVisible(false);

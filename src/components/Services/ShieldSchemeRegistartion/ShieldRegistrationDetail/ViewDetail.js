@@ -16,7 +16,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { formData, saleTypes, isLoading } = props;
+    const { formData, saleTypes, employeeData, managerData, isLoading } = props;
 
     const [activeKey, setactiveKey] = useState([]);
 
@@ -52,8 +52,8 @@ const ViewDetailMain = (props) => {
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Sale Type">{checkAndSetDefaultValue(getCodeValue(saleTypes, formData?.registrationInformation?.saleType, isLoading))}</Descriptions.Item>
                         <Descriptions.Item label="Booking No.">{checkAndSetDefaultValue(formData?.registrationInformation?.otf, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Employee Name">{checkAndSetDefaultValue(formData?.registrationInformation?.employeeName, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Manager Name">{checkAndSetDefaultValue(formData?.registrationInformation?.managerName, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Employee Name">{checkAndSetDefaultValue(getCodeValue(employeeData, formData?.registrationInformation?.employeeName), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Manager Name">{checkAndSetDefaultValue(getCodeValue(managerData, formData?.registrationInformation?.managerName), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Credit Note Number">{checkAndSetDefaultValue(formData?.registrationInformation?.creditNoteNumber, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Credit Note Date">{checkAndSetDefaultValue(formData?.registrationInformation?.creditNoteDate ? convertDateMonthYear(formData?.registrationInformation?.creditNoteDate) : '', isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Credit Note Amount">{checkAndSetDefaultValue(formData?.registrationInformation?.creditNoteAmount, isLoading)}</Descriptions.Item>
