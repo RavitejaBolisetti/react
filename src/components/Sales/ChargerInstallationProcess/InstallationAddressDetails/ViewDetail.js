@@ -41,7 +41,7 @@ const ViewDetailMain = (props) => {
                                 <Descriptions {...addressProps}>
                                     <Descriptions.Item label="City">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.city, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="State">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.state, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Customer Mobile No.">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.otfDetails?.customerMobileNumber, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Customer Mobile No.">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.customerMobileNumber, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Customer Email Id.">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.customerEmail, isLoading)}</Descriptions.Item>
                                 </Descriptions>
                             </Card>

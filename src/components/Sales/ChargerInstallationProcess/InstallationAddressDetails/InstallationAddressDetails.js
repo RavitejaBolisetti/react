@@ -73,7 +73,7 @@ const InstallationAddressDetailsMasterBase = (props) => {
                     : { sameAsCustomerAddress: values?.sameAsCustomerAddress ? 'Y' : 'N', instAddressDetails: { address: values?.address, city: values?.city, state: values?.state, pinCode: values?.pinCode, customerMobileNumber: values?.customerMobileNumber } };
 
                 if (checked) {
-                    setRequestPayload((prev) => ({ ...prev, chargerInstAddressDetails: { sameAsCustomerAddress: values?.sameAsCustomerAddress ? 'Y' : 'N', instAddressDetails: { address: crmCustomerVehicleData?.customerDetails?.customerAddress, pinCode: crmCustomerVehicleData?.customerDetails?.pinCode, city: crmCustomerVehicleData?.customerDetails?.customerCity, state: crmCustomerVehicleData?.customerDetails?.state, customerMobileNumber: crmCustomerVehicleData?.otfDetails?.mobileNumber } } }));
+                    setRequestPayload((prev) => ({ ...prev, chargerInstAddressDetails: { sameAsCustomerAddress: values?.sameAsCustomerAddress ? 'Y' : 'N', instAddressDetails: { address: crmCustomerVehicleData?.customerDetails?.customerAddress, pinCode: crmCustomerVehicleData?.customerDetails?.pinCode, city: crmCustomerVehicleData?.customerDetails?.customerCity, state: crmCustomerVehicleData?.customerDetails?.state, customerMobileNumber: crmCustomerVehicleData?.customerDetails?.customerPhoneNumber } } }));
                 } else {
                     setRequestPayload((prev) => ({ ...prev, chargerInstAddressDetails: { sameAsCustomerAddress: values?.sameAsCustomerAddress ? 'Y' : 'N', instAddressDetails: { address: values?.address, city: values?.city, state: values?.state, pinCode: values?.pinCode, customerMobileNumber: values?.customerMobileNumber } } }));
                 }
