@@ -100,7 +100,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchProductLovCode: productHierarchyDataActions.fetchFilteredList,
             fetchProductData: productHierarchyDataActions.fetchList,
             ProductLovLoading: productHierarchyDataActions.listShowLoading,
-            resetCodeData: productHierarchyDataActions.resetData,
+            resetCodeData: productHierarchyDataActions.resetFilteredData,
 
             showGlobalNotification,
         },
@@ -358,6 +358,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
             if (filterString?.model && !selectedTreeSelectKey?.mode) setSelectedTreeSelectKey({ model: filterString?.model, modelName: filterString?.modelName });
             advanceFilterForm.setFieldsValue({ ...filterString, fromDate: formatDateToCalenderDate(fromDate), toDate: formatDateToCalenderDate(toDate) });
         } else {
+            if (!filterString?.model && selectedTreeSelectKey?.model) setSelectedTreeSelectKey({ model: undefined, modelName: [] });
             setrules({ fromdate: false, todate: false });
             advanceFilterForm.setFieldsValue({ ...filterString, fromDate: undefined, toDate: undefined, model: undefined });
         }
@@ -366,23 +367,23 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     }, [isAdvanceSearchVisible, filterString]);
 
     useEffect(() => {
-        if (VehicleLovCodeData && isProductHierarchyDataLoaded && userId) {
+        if (VehicleLovCodeData?.length > 0 && isProductHierarchyDataLoaded && userId) {
             setToolTipContent(
                 <div>
                     <p>
-                        Color - <span>{VehicleLovCodeData['0']['color'] ?? 'Na'}</span>
+                        Color - <span>{VehicleLovCodeData?.['0']?.['color'] ?? 'Na'}</span>
                     </p>
                     <p>
-                        Seating - <span>{VehicleLovCodeData['0']['seatingCapacity'] ?? 'Na'}</span>
+                        Seating - <span>{VehicleLovCodeData?.['0']?.['seatingCapacity'] ?? 'Na'}</span>
                     </p>
                     <p>
-                        Fuel - <span>{VehicleLovCodeData['0']['fuel'] ?? 'Na'}</span>
+                        Fuel - <span>{VehicleLovCodeData?.['0']?.['fuel'] ?? 'Na'}</span>
                     </p>
                     <p>
-                        Variant - <span>{VehicleLovCodeData['0']['variant'] ?? 'Na'}</span>
+                        Variant - <span>{VehicleLovCodeData?.['0']?.['variant'] ?? 'Na'}</span>
                     </p>
                     <p>
-                        Name - <span>{VehicleLovCodeData['0']['name'] ?? 'Na'}</span>
+                        Name - <span>{VehicleLovCodeData?.['0']?.['name'] ?? 'Na'}</span>
                     </p>
                 </div>
             );
@@ -415,6 +416,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
             setShowDataLoading(true);
         }
         setFilterString({ current: 1, pageSize: 10 });
+        setSelectedTreeSelectKey({ model: undefined, modelName: [] });
         setrules({ ...rulesIntialstate });
         advanceFilterForm.resetFields();
     };
