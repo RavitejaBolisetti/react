@@ -685,4 +685,10 @@ export const MenuConstant = {
         icon: undefined,
         parentMenuId: 'SACT-06.06',
     },
+    [getMenyKey('SRST-1.2')]: {
+        key: 'SRST-1.2',
+        link: routing.ROUTING_SHIELD_SCHEME_REGISTER,
+        icon: undefined,
+        parentMenuId: 'SRST-1',
+    },
 };
