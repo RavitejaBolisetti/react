@@ -24,7 +24,9 @@ import { DisableParent } from './ProductHierarchyUtils';
 import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
+
 const { Search } = Input;
+
 const mapStateToProps = (state) => {
     const {
         auth: { userId },

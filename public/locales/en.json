@@ -2281,8 +2281,8 @@
         "heading": {
             "mainTitle": "Vehicle Receipt Checklist",
             "drawerTitleMain": "Vehicle Receipt Checklist",
-            "section.1": "Checklist DetailsS",
-            "section.2": "Supporting Documents",
+            "section1": "Checklist Details",
+            "section2": "Supporting Documents",
 
             "collapse": {},
             "profileCard": {
@@ -2309,7 +2309,8 @@
                 "fromDate": "Receipt From Date",
                 "toDate": "Receipt To Date",
                 "message1": "Please select from date",
-                "message2": "Please select to date"
+                "message2": "Please select to date",
+                "receiptNumber": "receipt number"
             }
         },
         "placeholder": {},

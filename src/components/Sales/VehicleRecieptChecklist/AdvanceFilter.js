@@ -8,6 +8,8 @@ import { Button, Row, Col, Input, Form } from 'antd';
 import { FilterIcon } from 'Icons';
 import { RxCross2 } from 'react-icons/rx';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
+import { preparePlaceholderSearch } from 'utils/preparePlaceholder';
 
 const { Search } = Input;
 
@@ -22,7 +24,7 @@ export default function AdvanceFilter(props) {
                             <Form.Item name="Search">
                                 <div className={styles.verticallyCentered}>
                                     {title}
-                                    <Search placeholder="Search receipt number" allowClear onSearch={handleSearchChange} className={styles.headerSearchField} />
+                                    <Search placeholder={translateContent(preparePlaceholderSearch('vehicleReceiptChecklist.label.receiptNumber'))} allowClear onSearch={handleSearchChange} className={styles.headerSearchField} />
                                 </div>
                             </Form.Item>
                         </Form>
@@ -38,7 +40,7 @@ export default function AdvanceFilter(props) {
                                 setAdvanceSearchVisible(true);
                             }}
                         >
-                            Advance Filters
+                            {translateContent('global.advanceFilter.title')}
                         </Button>
                     </Col>
                 )}
@@ -66,8 +68,8 @@ export default function AdvanceFilter(props) {
                                 })}
                             </Col>
                             <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
-                                <Button className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
-                                    Clear
+                                <Button className={styles.clearBtn} onClick={handleResetFilter} danger>
+                                    {translateContent('global.buttons.clear')}
                                 </Button>
                             </Col>
                         </Row>
