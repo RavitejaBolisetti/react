@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-mocks-import */
 /*
  *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.

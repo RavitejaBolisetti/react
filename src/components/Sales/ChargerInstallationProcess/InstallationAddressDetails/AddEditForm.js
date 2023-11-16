@@ -158,15 +158,15 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                 <Form.Item label={translateContent('installationAddressDetials.label.installationAddress')} name="address" className={styles?.datePicker} rules={[validateRequiredInputField(translateContent('installationAddressDetials.validation.installationAddress'))]}>
-                                    <Input {...disabledProps} maxLength={50} placeholder={preparePlaceholderText(translateContent('installationAddressDetials.validation.installationAddress'))} />
+                                    <Input data-testid="installationAddress" {...disabledProps} maxLength={50} placeholder={preparePlaceholderText(translateContent('installationAddressDetials.validation.installationAddress'))} />
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Form.Item label={translateContent('installationAddressDetials.label.pincode')} name="pinCode" rules={[validateRequiredInputField(translateContent('installationAddressDetials.validation.pinCode')), validatePincodeField(translateContent('installationAddressDetials.validation.pinCode'))]}>
+                                <Form.Item label={translateContent('installationAddressDetials.label.pincode')} name="pinCode" data-testid="pinCode" rules={[validateRequiredInputField(translateContent('installationAddressDetials.validation.pinCode')), validatePincodeField('Pin Code')]}>
                                     <AutoComplete {...disabledProps} maxLength={6} options={options} onSelect={handleOnSelect} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
-                                        <Search onSearch={handleOnSearch} onChange={handleOnClear} placeholder={preparePlaceholderText(translateContent('installationAddressDetials.label.search'))} loading={isPinCodeLoading} type="text" allowClear />
+                                        <Search data-testid="pinCode" sonSearch={handleOnSearch} onChange={handleOnClear} placeholder={preparePlaceholderText(translateContent('installationAddressDetials.label.search'))} loading={isPinCodeLoading} type="text" allowClear />
                                     </AutoComplete>
                                 </Form.Item>
                             </Col>

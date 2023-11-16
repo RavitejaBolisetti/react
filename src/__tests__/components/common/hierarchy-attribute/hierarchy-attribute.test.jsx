@@ -1,10 +1,10 @@
+/* eslint-disable jest/no-mocks-import */
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
-import { screen, fireEvent, act, waitFor } from '@testing-library/react';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 import { HierarchyAttribute } from 'components/common/HierarchyAttribute';
-import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
 
 beforeEach(() => {
     jest.clearAllMocks();
@@ -115,11 +115,11 @@ describe('Hierarchy Attribute Master component', () => {
         fireEvent.click(searchBtn);
 
         const hierarchyType = screen.getByRole('combobox', { name: '' });
-        act(() => {
+       
             fireEvent.change(hierarchyType, { target: { value: 'Tax Test' } });
             const optionSelect = screen.getAllByText(/Tax Test/i);
             fireEvent.click(optionSelect[1]);
-        });
+     
 
         const refreshBtn = screen.getByTestId('refreshBtn');
         fireEvent.click(refreshBtn);
@@ -143,11 +143,11 @@ describe('Hierarchy Attribute Master component', () => {
             </Provider>
         );
         const hierarchyType = screen.getByRole('combobox', { name: '' });
-        act(() => {
+       
             fireEvent.change(hierarchyType, { target: { value: 'Tax Test' } });
             const optionSelect = screen.getAllByText(/Tax Test/i);
             fireEvent.click(optionSelect[1]);
-        });
+      
 
         const refreshBtn = screen.getByTestId('refreshBtn');
         fireEvent.click(refreshBtn);

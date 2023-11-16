@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-mocks-import */
 import React from 'react';
 import { fireEvent, screen } from '@testing-library/react';
 import { CustomerDetailMaster } from '@components/common/CustomerMaster/IndividualCustomer/CustomerDetail/CustomerDetailMaster';

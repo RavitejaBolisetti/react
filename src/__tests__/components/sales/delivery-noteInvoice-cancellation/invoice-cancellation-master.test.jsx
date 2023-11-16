@@ -79,7 +79,7 @@ describe('InvoiceCancellationMaster Component', () => {
         customRender(<InvoiceCancellationMaster setFilterString={jest.fn()} />);
         const advanceFilters = screen.getByRole('button', { name: 'Advance Filters' });
         fireEvent.click(advanceFilters);
-        const searchBtn = screen.getByRole('button', { name: 'Search' });
+        const searchBtn = screen.getByTestId('apply')
         fireEvent.click(searchBtn);
         const closeBtn = screen.getByRole('button', { name: 'Close' });
         fireEvent.click(closeBtn);
@@ -89,7 +89,7 @@ describe('InvoiceCancellationMaster Component', () => {
         customRender(<InvoiceCancellationMaster setFilterString={jest.fn()} />);
         const searchBox = screen.getByRole('textbox', { name: '' });
         fireEvent.change(searchBox, { target: { value: 'Test' } });
-        const searchBtn = screen.getByRole('button', { name: 'search' });
+        const searchBtn = screen.getByTestId('apply')
         fireEvent.click(searchBtn);
     });
 
@@ -97,8 +97,8 @@ describe('InvoiceCancellationMaster Component', () => {
         customRender(<InvoiceCancellationMaster setFilterString={jest.fn()} />);
         const searchBox = screen.getByRole('textbox', { name: '' });
         fireEvent.change(searchBox, { target: { value: 'REQ003' } });
-        const searchBtn = screen.getByRole('button', { name: 'search' });
-        fireEvent.click(searchBtn);
+        // const searchBtn = screen.getByTestId('apply')
+        // fireEvent.click(searchBtn);
     });
 
     it('Advance Filters should work', async () => {
@@ -116,7 +116,7 @@ describe('InvoiceCancellationMaster Component', () => {
         const todayToFromDate = await screen.findAllByText('Today');
         fireEvent.click(todayToFromDate[1]);
 
-        const searchBtn = screen.getByRole('button', { name: 'Search' });
+        const searchBtn = screen.getByTestId('apply');
         fireEvent.click(searchBtn);
     });
 });

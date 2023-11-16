@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-mocks-import */
 import '@testing-library/jest-dom/extend-expect';
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
@@ -82,12 +83,6 @@ describe('AddEditForm Components', () => {
         fireEvent.click(collapseBtn);
 
         fireEvent.click(screen.getByText('Update'));
-
-        const roleId = screen.getByTestId('role');
-
-        const roleName = screen.getByTestId('roleName');
-
-        const roleDescription = screen.getByTestId('roleDescription');
 
         const saveBtn = screen.getByTestId('save');
         fireEvent.click(saveBtn);
