@@ -36,6 +36,7 @@ import VehicleChecklistMasterPage from './VehicleChecklistMaster';
 import AMCRegistrationMasterPage from './AMCRegistration';
 import RsmAsmApprovalPage from './RsmAsmApproval';
 import RSARegistrationPage from './RSARegistration';
+import DealerCorporateClaimMasterPage from './DealerCorporateClaim'
 
 export {
     OTFMasterPage,
@@ -67,4 +68,5 @@ export {
     ChargerInstallationPage,
     AMCRegistrationMasterPage,
     RSARegistrationPage,
+    DealerCorporateClaimMasterPage
 };
