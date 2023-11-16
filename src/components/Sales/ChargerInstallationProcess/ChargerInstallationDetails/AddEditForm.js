@@ -63,7 +63,6 @@ const AddEditFormMain = (props) => {
     const addRequestProps = {
         ...props,
         isVisible: addRequestVisible,
-        icon: <FilterIcon size={20} />,
         titleOverride: 'Add Request',
         onCloseAction: onAdvanceSearchCloseAction,
         onAdvanceSearchCloseAction,

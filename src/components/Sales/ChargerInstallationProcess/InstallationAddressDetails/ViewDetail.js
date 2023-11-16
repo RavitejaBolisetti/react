@@ -26,7 +26,7 @@ const ViewDetailMain = (props) => {
 
     return (
         <div className={styles.viewDrawerContainer}>
-            <Row style={{ display: 'flex' }} size="middle">
+            <Space style={{ display: 'flex' }} size="small" direction="horizontal">
                 <Row gutter={20} xs={24} sm={24} md={12} lg={12} xl={12}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Space style={{ display: 'flex' }} size="middle" direction="vertical">
@@ -63,7 +63,7 @@ const ViewDetailMain = (props) => {
                         </Card>
                     </Col>
                 </Row>
-            </Row>
+            </Space>
         </div>
     );
 };

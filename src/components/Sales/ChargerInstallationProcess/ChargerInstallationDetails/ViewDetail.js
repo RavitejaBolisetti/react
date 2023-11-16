@@ -33,7 +33,6 @@ const ViewDetailMain = (props) => {
     const serviceActivityProps = {
         ...props,
         isVisible: modal,
-        //icon: <FilterIcon size={20} />,
         titleOverride: 'Service Activity:' + getCodeValue(typeData?.[PARAM_MASTER.CHRGR_INST_HDR_STAT.id], chargerInstallationMasterData?.chargerInstDetails?.requestStatus),
         onCloseAction: onAdvanceSearchCloseAction,
         onAdvanceSearchCloseAction,
@@ -46,39 +45,37 @@ const ViewDetailMain = (props) => {
             <div className={styles.viewDrawerContainer}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Space style={{ display: 'flex' }} size="middle" direction="vertical">
-                            <Card style={{ backgroundColor: '#F2F2F2' }}>
-                                <Descriptions {...viewProps}>
-                                    <Descriptions.Item label="Request Id">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.requestId, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Request Date">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.requestDate, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Request Status">{checkAndSetDefaultValue(getCodeValue(typeData?.[PARAM_MASTER.CHRGR_INST_HDR_STAT.id], chargerInstallationMasterData?.chargerInstDetails?.requestStatus), isLoading)}</Descriptions.Item>
+                        <Card style={{ backgroundColor: '#F2F2F2' }}>
+                            <Descriptions {...viewProps}>
+                                <Descriptions.Item label="Request Id">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.requestId, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Request Date">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.requestDate, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Request Status">{checkAndSetDefaultValue(getCodeValue(typeData?.[PARAM_MASTER.CHRGR_INST_HDR_STAT.id], chargerInstallationMasterData?.chargerInstDetails?.requestStatus), isLoading)}</Descriptions.Item>
 
-                                    <Descriptions.Item label="Model Group">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelGroup, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Model Variant">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelVarient, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Seating Capacity">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.seatingCapacity, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Color">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.color, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelCode, isLoading)}</Descriptions.Item>
-                                </Descriptions>
-                            </Card>
-                            {/* <Card style={{ backgroundColor: '#F2F2F2' }}>
+                                <Descriptions.Item label="Model Group">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelGroup, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Model Variant">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelVarient, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Seating Capacity">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.seatingCapacity, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Color">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.color, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelCode, isLoading)}</Descriptions.Item>
+                            </Descriptions>
+                        </Card>
+                        {/* <Card style={{ backgroundColor: '#F2F2F2' }}>
                                 <DataTable tableColumn={addRequestColumnsView(typeData, onHandleModal)} tableData={chargerInstallationMasterData?.chargerInstDetails?.requestDetails} pagination={false} scroll={{ x: 2400 }} />
                             </Card> */}
 
-                            <Collapse collapsible="icon" expandIcon={expandIcon} expandIconPosition="end">
-                                <Panel
-                                    header={
-                                        <Row type="flex" justify="space-between" align="middle" size="large">
-                                            <Row type="flex" justify="space-around" align="middle">
-                                                <Typography>Request Details</Typography>
-                                            </Row>
+                        <Collapse collapsible="icon" expandIcon={expandIcon} expandIconPosition="end">
+                            <Panel
+                                header={
+                                    <Row type="flex" justify="space-between" align="middle" size="large">
+                                        <Row type="flex" justify="space-around" align="middle">
+                                            <Typography>Request Details</Typography>
                                         </Row>
-                                    }
-                                    key="1"
-                                >
-                                    <DataTable tableColumn={addRequestColumnsView(typeData, onHandleModal)} tableData={chargerInstallationMasterData?.chargerInstDetails?.requestDetails} pagination={false} scroll={{ x: 2400 }} />
-                                </Panel>
-                            </Collapse>
-                        </Space>
+                                    </Row>
+                                }
+                                key="1"
+                            >
+                                <DataTable tableColumn={addRequestColumnsView(typeData, onHandleModal)} tableData={chargerInstallationMasterData?.chargerInstDetails?.requestDetails} pagination={false} scroll={{ x: 2400 }} />
+                            </Panel>
+                        </Collapse>
                     </Col>
                 </Row>
             </div>
