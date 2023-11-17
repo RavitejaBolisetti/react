@@ -9,6 +9,7 @@ import { Form, Row, Col } from 'antd';
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 import { VehicleReceiptFormButton } from '../VehicleReceiptFormButton';
+import { AMC_CONSTANTS } from '../utils/AMCConstants';
 
 import { connect } from 'react-redux';
 
@@ -17,7 +18,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import styles from 'assets/sass/app.module.scss';
 
 const ShieldRegistrationDetailMasterBase = (props) => {
-    const { typeData, detailShieldData, registrationDetails, employeeData, resetDetail } = props;
+    const { typeData, detailShieldData, registrationDetails, employeeData, managerData, resetDetail, fetchEmployeeList, fetchManagerList, listEmployeeShowLoading } = props;
     const { userId, buttonData, setButtonData, section, isDataLoaded, isLoading } = props;
     const { form, saleType, handleSaleTypeChange, handleOtfSearch, handleVinSearch, handleEmployeeSearch, schemeDetail, shieldDetailForm, formActionType, NEXT_ACTION, handleButtonClick } = props;
     const { setRequestPayload, vinNumber, setVinNumber, bookingNumber, isEmployeeDataLoading } = props;
@@ -26,6 +27,28 @@ const ShieldRegistrationDetailMasterBase = (props) => {
     const [options, setOptions] = useState(false);
     const [selectedEmployees, setSelectedEmployee] = useState(false);
 
+    const generateExtraParams = (key) => {
+        const extraParams = [
+            {
+                key: 'employeeType',
+                value: key,
+            },
+            {
+                key: 'registrationType',
+                value: AMC_CONSTANTS?.REGISTRATION_TYPE?.key,
+            },
+        ];
+        return extraParams;
+    };
+
+    useEffect(() => {
+        if (userId) {
+            fetchEmployeeList({ setIsLoading: listEmployeeShowLoading, extraParams: generateExtraParams(AMC_CONSTANTS?.EMPLOYEE?.key), userId });
+            fetchManagerList({ setIsLoading: listEmployeeShowLoading, extraParams: generateExtraParams(AMC_CONSTANTS?.MANAGER?.key), userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId]);
+
     useEffect(() => {
         if (detailShieldData?.vehicleAndCustomerDetails) {
             setButtonData({ ...buttonData, formBtnActive: true });
@@ -33,15 +56,15 @@ const ShieldRegistrationDetailMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, detailShieldData?.vehicleAndCustomerDetails]);
 
-    useEffect(() => {
-        const employeeOption = employeeData?.map((item) => ({
-            label: item?.employeeName,
-            value: item?.employeeName,
-            key: item?.employeeCode,
-        }));
-        setOptions(employeeOption);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [employeeData]);
+    // useEffect(() => {
+    //     const employeeOption = employeeData?.map((item) => ({
+    //         label: item?.employeeName,
+    //         value: item?.employeeName,
+    //         key: item?.employeeCode,
+    //     }));
+    //     setOptions(employeeOption);
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [employeeData]);
 
     useEffect(() => {
         return () => {
@@ -131,6 +154,8 @@ const ShieldRegistrationDetailMasterBase = (props) => {
         handleOnClear,
         activeKey,
         setActiveKey,
+        employeeData,
+        managerData,
     };
 
     const viewProps = {
@@ -141,6 +166,8 @@ const ShieldRegistrationDetailMasterBase = (props) => {
         formData: registrationDetails,
         activeKey,
         setActiveKey,
+        employeeData,
+        managerData,
         // formData: detailShieldData?.shieldRegistrationDetails,
     };
 

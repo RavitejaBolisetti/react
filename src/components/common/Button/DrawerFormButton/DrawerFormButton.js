@@ -21,7 +21,7 @@ const DrawerButtons = ({ formData, onCloseAction, buttonData, setButtonData, sav
                 )}
 
                 {buttonData?.cancelBtn && (
-                    <Button danger onClick={onCloseAction}>
+                    <Button danger onClick={onCloseAction} data-testid="cancel_btn">
                         {translateContent('global.buttons.cancel')}
                     </Button>
                 )}
@@ -46,19 +46,19 @@ const DrawerButtons = ({ formData, onCloseAction, buttonData, setButtonData, sav
                 )}
 
                 {buttonData?.editBtn && (
-                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record: formData })} form="configForm" key="submitAndNew" htmlType="submit" type="primary">
+                    <Button data-testid="edit" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record: formData })} form="configForm" key="submitAndNew" htmlType="submit" type="primary">
                         {translateContent('global.buttons.edit')}
                     </Button>
                 )}
 
                 {buttonData?.cancelOTFBtn && (
-                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF })} type="primary" htmlType="submit">
-                        {translateContent('global.buttons.cancelBooking')}
+                    <Button data-testid="otf-cancel" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF })} type="primary" htmlType="submit">
+                        {translateContent('global.buttons.edit')}
                     </Button>
                 )}
 
                 {buttonData?.transferOTFBtn && (
-                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.TRANSFER_OTF })} type="primary" htmlType="submit">
+                    <Button data-testid="transferBooking" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.TRANSFER_OTF })} type="primary" htmlType="submit">
                         {translateContent('global.buttons.transferBooking')}
                     </Button>
                 )}

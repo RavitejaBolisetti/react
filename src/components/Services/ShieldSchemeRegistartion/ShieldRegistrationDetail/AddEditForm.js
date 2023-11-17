@@ -4,21 +4,23 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Input, Form, Collapse, Divider, Select, DatePicker, AutoComplete } from 'antd';
+import { Row, Col, Input, Form, Collapse, Divider, Select, DatePicker } from 'antd';
 import { expandActionIcon } from 'utils/accordianExpandIcon';
 import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
+import { customSelectBox } from 'utils/customSelectBox';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { SALE_TYPE } from '../utils/saleTypeConstant';
 
-import { validateRequiredSelectField, validateOnlyPositiveNumber, validateLettersWithWhitespaces } from 'utils/validation';
+import { validateRequiredSelectField, validateOnlyPositiveNumber } from 'utils/validation';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 const { Search } = Input;
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { formData, saleTypes, vinNumber, bookingNumber, schemeDetail, options, shieldDetailForm, handleOtfSearch, handleVinSearch, handleEmployeeSearch, handleOtfChange, saleType, handleSaleTypeChange, formActionType, isSchemeLoading, isEmployeeDataLoading, handleOnSelect, handleOnClear, screenType } = props;
+    const { formData, saleTypes, vinNumber, bookingNumber, schemeDetail, employeeData, managerData, shieldDetailForm, handleOtfSearch, handleVinSearch, handleEmployeeSearch, handleOtfChange, saleType, handleSaleTypeChange, formActionType, isSchemeLoading, isEmployeeDataLoading, handleOnSelect, handleOnClear, screenType } = props;
     const { activeKey, setActiveKey } = props;
     // const [activeKey, setActiveKey] = useState([]);
     const [selectedScheme, setSelectedScheme] = useState([]);
@@ -111,15 +113,17 @@ const AddEditFormMain = (props) => {
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item initialValue={formData?.employeeName} label="Employee Name" name={['registrationInformation', 'employeeName']} rules={[validateLettersWithWhitespaces('Employee Name')]}>
-                                    <AutoComplete maxLength={50} options={options} onSelect={handleOnSelect} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
+                                <Form.Item initialValue={formData?.employeeName} label="Employee Name" name={['registrationInformation', 'employeeName']}>
+                                    {/* <AutoComplete maxLength={50} options={options} onSelect={handleOnSelect} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
                                         <Search onSearch={handleEmployeeSearch} onChange={handleOnClear} placeholder={preparePlaceholderText('Employee Name')} loading={isEmployeeDataLoading} type="text" allowClear />
-                                    </AutoComplete>
+                                    </AutoComplete> */}
+                                    {customSelectBox({ data: employeeData, placeholder: preparePlaceholderSelect(translateContent('amcRegistration.label.employeeName')) })}
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item initialValue={formData?.managerName} label="Manager Name" name={['registrationInformation', 'managerName']}>
-                                    <Input placeholder={preparePlaceholderText('Manager Name')} disabled={true} />
+                                    {/* <Input placeholder={preparePlaceholderText('Manager Name')} disabled={true} /> */}
+                                    {customSelectBox({ data: managerData, placeholder: preparePlaceholderSelect(translateContent('amcRegistration.label.managerName')) })}
                                 </Form.Item>
                             </Col>
                         </Row>

@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-mocks-import */
 import React from 'react';
 import { fireEvent, screen } from '@testing-library/react';
 import { CustomerDetailMaster } from '@components/common/CustomerMaster/IndividualCustomer/CustomerDetail/CustomerDetailMaster';
@@ -59,7 +60,7 @@ describe('Corporate customer  Details render', () => {
         const Contact = screen.getByRole('switch', { name: 'Contact over WhatsApp?' });
         fireEvent.click(Contact);
 
-        const mobileNo = screen.getByRole('switch', { name: 'Want to use mobile no as WhatsApp no' });
+        const mobileNo = screen.getByTestId('useMobileNumber');
         fireEvent.click(mobileNo);
 
         const viewHistory = screen.getByRole('button', { name: 'View History' });

@@ -272,7 +272,6 @@ const CustomerDetailMasterBase = (props) => {
             setButtonData({ ...buttonData, formBtnActive: false });
             setRefreshCustomerList(true);
             handleResetFilter();
-            setNumbValidatedSuccess(false);
 
             if (res.data) {
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
@@ -415,6 +414,7 @@ const CustomerDetailMasterBase = (props) => {
         mobNoVerificationData,
         hideGlobalNotification,
         numbValidatedSuccess,
+        setNumbValidatedSuccess,
         defaultExtraParam,
     };
 

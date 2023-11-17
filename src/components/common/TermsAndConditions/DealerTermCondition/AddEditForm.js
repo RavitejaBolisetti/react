@@ -110,7 +110,7 @@ const AddEditFormMain = (props) => {
 
                             <Row gutter={20}>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <Form.Item {...fromDateInitialValue} label={translateContent('termConditionDealer.label.effectivefrom')} name="effectiveFrom" rules={[validateRequiredInputField(translateContent('termConditionDealer.validation.date'))]}>
+                                    <Form.Item {...fromDateInitialValue} label={translateContent('termConditionDealer.label.effectiveFrom')} name="effectiveFrom" rules={[validateRequiredInputField(translateContent('termConditionDealer.validation.date'))]}>
                                         <DatePicker format={dateFormat} disabled={formActionType?.viewMode} style={{ width: '100%' }} onChange={handleFromDateChange} disabledDate={disableFromDate} />
                                     </Form.Item>
                                 </Col>

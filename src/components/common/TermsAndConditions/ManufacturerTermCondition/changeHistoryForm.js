@@ -44,15 +44,15 @@ const ChangeHistoryMain = (props) => {
         tblPrepareColumns({
             title: translateContent('termConditionManufacturer.changeHistory.effectivefrom'),
             dataIndex: 'effectivefrom',
-            width: '18%',
+            width: '15%',
             render: (text) => convertDateMonthYear(text),
             sorter: false,
         }),
-        
+
         tblPrepareColumns({
             title: translateContent('termConditionManufacturer.changeHistory.effectiveto'),
             dataIndex: 'effectiveto',
-            width: '18%',
+            width: '15%',
             render: (text) => convertDateMonthYear(text),
             sorter: false,
         }),
@@ -60,7 +60,7 @@ const ChangeHistoryMain = (props) => {
         tblPrepareColumns({
             title: translateContent('termConditionManufacturer.changeHistory.version'),
             dataIndex: 'version',
-            width: '7%',
+            width: '10%',
             sorter: false,
         }),
 
@@ -69,7 +69,7 @@ const ChangeHistoryMain = (props) => {
             dataIndex: 'termsconditiondescription',
             width: '15%',
             render: (text) => parser(text),
-            sorter: false,          
+            sorter: false,
         })
 
         // tblActionColumn({ handleButtonClick, styles, fixed: 'right', width: '10%' })
@@ -91,7 +91,7 @@ const ChangeHistoryMain = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Button danger onClick={onCloseAction}>
-                            {translateContent('global.changeHistory.close')}
+                            {translateContent('global.buttons.close')}
                         </Button>
                     </Col>
                 </Row>
@@ -100,4 +100,4 @@ const ChangeHistoryMain = (props) => {
     );
 };
 
-export const ChangeHistory = withDrawer(ChangeHistoryMain, { title: translateContent('global.changeHistory.title'), width: '90%' });
+export const ChangeHistory = withDrawer(ChangeHistoryMain, { width: '90%' });

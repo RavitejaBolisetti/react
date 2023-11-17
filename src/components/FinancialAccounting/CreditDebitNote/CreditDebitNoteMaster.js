@@ -536,7 +536,7 @@ export const CreditDebitNoteMasterBase = (props) => {
         setApportionTableData,
     };
 
-    const reportDetail = vouchertype === VOUCHER_TYPE?.CREDIT_TYPE?.key ? EMBEDDED_REPORTS?.CREDIT_DOCUMENT : EMBEDDED_REPORTS?.DEBIT_DOCUMENT;
+    const reportDetail = vouchertype === VOUCHER_TYPE?.CREDIT_TYPE?.key ? EMBEDDED_REPORTS?.CREDIT_DOCUMENT : VOUCHER_TYPE?.DEBIT_TYPE?.key ? EMBEDDED_REPORTS?.DEBIT_DOCUMENT : null;
     const reportProps = {
         isVisible: isReportVisible,
         titleOverride: reportDetail?.title,

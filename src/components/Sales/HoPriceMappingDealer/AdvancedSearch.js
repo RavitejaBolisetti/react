@@ -87,12 +87,12 @@ export const AdvancedSearchFrom = (props) => {
 
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
-                    <Button onClick={handleResetFilter} danger>
+                    <Button onClick={handleResetFilter} danger data-testid="reset">
                         {translateContent('global.buttons.reset')}
                     </Button>
                 </Col>
 
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
+                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight} data-testid="apply">
                     <Button htmlType="submit" type="primary">
                         {translateContent('global.buttons.apply')}
                     </Button>

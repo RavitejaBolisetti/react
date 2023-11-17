@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom/extend-expect';
-import { fireEvent, screen, act } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import customRender from '@utils/test-utils';
 import AllowedTimingList from '@components/common/CriticalityGroup/AllowedTimings/AllowedTimingList';
 
@@ -33,15 +33,13 @@ describe('AllowedTimingList Components', () => {
         fireEvent.click(okBtn1[1]);
 
         const saveButton = screen.getByRole('button', { name: 'Save', exact: false });
-        act(() => {
-            fireEvent.click(saveButton);
-        });
+        fireEvent.click(saveButton);
     });
 
     it('add time button should work', () => {
         const formActionType = { viewMode: false };
         customRender(<AllowedTimingList isAddTimeVisible={false} formActionType={formActionType} setIsAddTimeVisible={jest.fn()} />);
-        const addTimeBtn = screen.getByRole('button', { name: 'Add Time', exact: false });
+        const addTimeBtn = screen.getByTestId('addTime');
         fireEvent.click(addTimeBtn);
     });
 });

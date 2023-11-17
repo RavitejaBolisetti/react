@@ -7,7 +7,7 @@ afterEach(() => {
     jest.restoreAllMocks();
 });
 
-describe('Term Condition Manufacturer addedit components', () => {
+describe('Dealer Term Condition addedit components', () => {
     const props = { formActionType: { isViewModeVisible: true } };
     it('should render AddEdit component', () => {
         customRender(<AddEditForm {...props} isVisible={true} setButtonData={jest.fn()} />);
@@ -59,7 +59,8 @@ describe('Term Condition Manufacturer addedit components', () => {
 
     it('should render view component when true', () => {
         const props = { formActionType: { viewMode: true } };
+        const formData={ termsconditiondescription: "true" };
 
-        customRender(<AddEditForm {...props} isVisible={true} setButtonData={jest.fn()} />);
+        customRender(<AddEditForm {...props} isVisible={true} formData={formData} setButtonData={jest.fn()} />);
     });
 });

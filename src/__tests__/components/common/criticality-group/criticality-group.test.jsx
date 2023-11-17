@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-mocks-import */
 /*
  *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
@@ -49,13 +50,13 @@ describe('CriticalityGroup Components', () => {
         const groupName = screen.getAllByRole('textbox', { name: 'Criticality Group Name' });
         fireEvent.change(groupName[1], { target: { value: 'Kai' } });
 
-        const defaultGroup = screen.getByRole('switch', { name: 'Default Group' });
+        const defaultGroup = screen.getByTestId('default-toggle');
         fireEvent.click(defaultGroup);
 
-        const status = screen.getByRole('switch', { name: 'Status' });
+        const status = screen.getByTestId('toggle');
         fireEvent.click(status);
 
-        const saveBtn = screen.getByRole('button', { name: 'Save' });
+        const saveBtn = screen.getByTestId('save');
         fireEvent.click(saveBtn);
 
         await waitFor(() => {
@@ -86,13 +87,13 @@ describe('CriticalityGroup Components', () => {
         const editBtn = screen.getByTestId('edit');
         fireEvent.click(editBtn);
 
-        const cancelBtn = screen.getByRole('button', { name: 'Cancel' });
+        const cancelBtn = screen.getByTestId('cancel_btn');
         fireEvent.click(cancelBtn);
 
         const viewBtn = screen.getByTestId('view');
         fireEvent.click(viewBtn);
 
-        const closeBtn = screen.getAllByRole('button', { name: 'Close' });
+        const closeBtn = screen.getAllByTestId('close_btn');
         fireEvent.click(closeBtn[0]);
     });
 

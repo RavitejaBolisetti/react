@@ -24,10 +24,10 @@ const ViewTermConditionListMain = ({ formData, isLoading, styles }) => {
                     <Descriptions.Item label={translateContent('termConditionDealer.label.productHierarchy')}>{checkAndSetDefaultValue(formData?.productName, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('termConditionDealer.label.documentType')}>{checkAndSetDefaultValue(formData?.documentTypeCode, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('termConditionDealer.label.language')}>{checkAndSetDefaultValue(formData?.language || formData?.languageDesc, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('termConditionDealer.label.effectivefrom')}>{checkAndSetDefaultValue(formData?.effectiveFrom || formData?.effectivefrom, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('termConditionDealer.label.effectiveto')}>{checkAndSetDefaultValue(formData?.effectiveTo || formData?.effectiveto, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('termConditionDealer.label.effectiveFrom')}>{checkAndSetDefaultValue(formData?.effectiveFrom || formData?.effectivefrom, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('termConditionDealer.label.effectiveTo')}>{checkAndSetDefaultValue(formData?.effectiveTo || formData?.effectiveto, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('termConditionDealer.label.version')}>{checkAndSetDefaultValue(formData?.version, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('termConditionDealer.label.terms&Condition')}>{checkAndSetDefaultValue(parser(formData?.termConditionDescription || formData?.termsconditiondescription, isLoading))}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('termConditionDealer.label.terms&Condition')}>{checkAndSetDefaultValue(parser(formData?.termConditionDescription || formData?.termsconditiondescription || ''), isLoading)}</Descriptions.Item>
                 </Descriptions>
             </div>
         </>

@@ -66,7 +66,7 @@ describe('Advanced Search Component', () => {
         const TestproductOptionSelect = screen.getByText('prodctShrtName');
         fireEvent.click(TestproductOptionSelect);
 
-        const searchBtn = screen.getByRole('button', { name: /Apply/i });
+        const searchBtn = screen.getByTestId('apply');
         fireEvent.click(searchBtn);
     });
 
@@ -95,7 +95,7 @@ describe('Advanced Search Component', () => {
         const cityOptionSelect = screen.getByText('TestCity');
         fireEvent.click(cityOptionSelect);
 
-        const searchBtn = screen.getByRole('button', { name: /Apply/i });
+        const searchBtn = screen.getByTestId('apply');
         fireEvent.click(searchBtn);
     });
 });

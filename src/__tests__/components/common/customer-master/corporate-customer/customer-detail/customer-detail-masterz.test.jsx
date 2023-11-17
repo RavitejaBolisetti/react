@@ -8,6 +8,7 @@ import React from 'react';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { CustomerDetailMaster } from '@components/common/CustomerMaster/CorporateCustomer/CustomerDetail/CustomerDetailMaster';
 import customRender from '@utils/test-utils';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 import { Form } from 'antd';
@@ -36,7 +37,12 @@ const props = { formActionType: { viewMode: false } };
 
 const FormWrapper = (props) => {
     const [form] = Form.useForm();
-    return <CustomerDetailMaster form={form} {...props} />;
+
+    const myFormMock = {
+        ...form,
+        resetFields: jest.fn(),
+    };
+    return <CustomerDetailMaster form={myFormMock} {...props} />;
 };
 
 describe('Corporate customer  Details render', () => {
@@ -92,7 +98,7 @@ describe('Corporate customer  Details render', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <CustomerDetailMaster resetData={jest.fn()} setRefreshCustomerList={jest.fn()} formActionType={formActionType} fetchDetailList={fetchDetailList} saveData={saveData} handleButtonClick={jest.fn()} fetchList={fetchList} buttonData={buttonData} setButtonData={jest.fn()} />
+                <FormWrapper resetData={jest.fn()} setRefreshCustomerList={jest.fn()} formActionType={formActionType} fetchDetailList={fetchDetailList} saveData={saveData} handleButtonClick={jest.fn()} fetchList={fetchList} buttonData={buttonData} setButtonData={jest.fn()} />
             </Provider>
         );
         const save = screen.getAllByRole('button', { name: 'Save & Next' });

@@ -514,6 +514,13 @@ export const MenuConstant = {
         parentMenuId: 'SACR-02.05',
         slug: 'POSO',
     },
+    [getMenyKey('SACR-05.19')]: {
+        key: 'SACR-05.19',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'SACR-02.05',
+        slug: 'delivery-challan-report',
+    },
     [getMenyKey('FINA-02.10')]: {
         key: 'FINA-02.10',
         link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
@@ -684,5 +691,11 @@ export const MenuConstant = {
         link: routing.ROUTING_CHARGER_INSTALLATION_PROCESS,
         icon: undefined,
         parentMenuId: 'SACT-06.06',
+    },
+    [getMenyKey('SRST-1.2')]: {
+        key: 'SRST-1.2',
+        link: routing.ROUTING_SHIELD_SCHEME_REGISTER,
+        icon: undefined,
+        parentMenuId: 'SRST-1',
     },
 };
