@@ -13,9 +13,11 @@ import { ModalButtons } from 'components/common/Button';
 
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
+import TreeSelectField from 'components/common/TreeSelectField';
 
 export const AdvancedSearchFrom = (props) => {
     const { setAdvanceSearchVisible, vehicleModelData, isModelDataLoading } = props;
+    const { productHierarchyData, formData, handleSelectTreeClick, selectedTreeSelectKey, isProductDataLoading } = props;
     const {
         filterString,
         setFilterString,
@@ -29,8 +31,11 @@ export const AdvancedSearchFrom = (props) => {
         setFilterString({
             ...filterString,
             ...values,
+            ...selectedTreeSelectKey,
             fromDate: formatDate(values?.fromDate),
             toDate: formatDate(values?.toDate),
+            current: 1,
+            pageSize: 10,
             advanceFilter: true,
         });
 
@@ -44,6 +49,20 @@ export const AdvancedSearchFrom = (props) => {
 
     const onFinishFailed = () => {
         return;
+    };
+
+    const fieldNames = { label: 'prodctShrtName', value: 'prodctCode', children: 'subProdct' };
+
+    const treeSelectFieldProps = {
+        treeFieldNames: fieldNames,
+        treeData: productHierarchyData,
+        defaultParent: false,
+        selectedTreeSelectKey: selectedTreeSelectKey?.model,
+        handleSelectTreeClick,
+        treeExpandedKeys: [formData?.model],
+        placeholder: preparePlaceholderSelect('Model'),
+        loading: isProductDataLoading,
+        treeDisabled: false,
     };
 
     const modalProps = {
@@ -90,7 +109,8 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item label="Model Description" name="model">
-                        <Select optionFilterProp="children" options={vehicleModelData || []} placeholder={preparePlaceholderSelect('model')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} loading={isModelDataLoading} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
+                        <TreeSelectField {...treeSelectFieldProps} />
+                        {/* <Select optionFilterProp="children" options={vehicleModelData || []} placeholder={preparePlaceholderSelect('model')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} loading={isModelDataLoading} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} /> */}
                     </Form.Item>
                 </Col>
             </Row>

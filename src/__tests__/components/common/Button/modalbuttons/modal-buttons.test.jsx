@@ -1,3 +1,4 @@
+/* eslint-disable testing-library/no-node-access */
 /*
  *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.

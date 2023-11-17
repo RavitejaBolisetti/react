@@ -18,8 +18,9 @@ const responseMessageHandler = (message) => {
     const messageSplit = message?.split(' ')[3];
     if (messageSplit) return messageSplit;
     let index = -1;
+    // eslint-disable-next-line array-callback-return
     const likeMessageSplit = message?.split(' ')?.map((i, finalIndex) => {
-        if (i?.tolowercase() === 'number') {
+        if (i?.toLowerCase() === 'number') {
             index = finalIndex + 1;
         }
     });

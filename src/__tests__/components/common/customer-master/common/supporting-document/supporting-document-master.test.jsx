@@ -2,6 +2,7 @@ import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { fireEvent, screen } from '@testing-library/react';
 import { SupportingDocumentMaster } from 'components/common/CustomerMaster/Common/SupportingDocument';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 import { Form } from 'antd';
@@ -18,6 +19,7 @@ const FormWrapper = (props) => {
         validateFields: jest.fn().mockResolvedValue([{ name: 'Kai' }]),
         resetFields: jest.fn(),
         getFieldsValue: jest.fn().mockResolvedValue([{ name: 'Kai' }]),
+        getFieldValue: jest.fn().mockResolvedValue([{ name: 'Kai' }]),
     };
     return <SupportingDocumentMaster form={myFormMock} {...props} />;
 };
@@ -62,7 +64,7 @@ describe('View Detail component', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <SupportingDocumentMaster formActionType={formActionType} selectedCustomerId={'Kai'} />
+                <FormWrapper formActionType={formActionType} selectedCustomerId={'Kai'} />
             </Provider>
         );
 

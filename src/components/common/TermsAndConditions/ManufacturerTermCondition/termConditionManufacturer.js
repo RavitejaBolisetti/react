@@ -343,6 +343,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         isChangeHistoryContainer: false,
         tableData: searchData,
         showAddButton: false,
+        titleOverride: translateContent('global.changeHistory.title'),
     };
 
     return (

@@ -52,6 +52,7 @@
         "generalMessage": {
             "noRecordsFound": "No records found",
             "noRecordsFoundAddNew": "Please add New {NAME} using below button",
+            "noRecordsFoundAddNewBtn": "Please add New {NAME} using add button",
             "comingSoon": "Coming Soon",
             "noDataFound": "No data found",
             "downloadStart": "Your download will start soon"
@@ -1043,18 +1044,18 @@
             }
         },
         "otpModal": {
-            "heading":{
+            "heading": {
                 "modalTitle": "Mobile Number Verification"
             },
-            "notification":{
+            "notification": {
                 "otpSent": "OTP Sent"
             },
-            "buttons":{
+            "buttons": {
                 "verifyOtp": "Verify OTP",
                 "enterOtp": "Enter OTP",
                 "resendOtp": "Resend OTP"
             },
-            "label":{
+            "label": {
                 "incorrectOtp": "Incorrect OTP",
                 "didntReceiveOtp": "Didn't receive an OTP?"
             }
@@ -2280,8 +2281,8 @@
         "heading": {
             "mainTitle": "Vehicle Receipt Checklist",
             "drawerTitleMain": "Vehicle Receipt Checklist",
-            "section.1": "Checklist DetailsS",
-            "section.2": "Supporting Documents",
+            "section1": "Checklist Details",
+            "section2": "Supporting Documents",
 
             "collapse": {},
             "profileCard": {
@@ -2308,7 +2309,8 @@
                 "fromDate": "Receipt From Date",
                 "toDate": "Receipt To Date",
                 "message1": "Please select from date",
-                "message2": "Please select to date"
+                "message2": "Please select to date",
+                "receiptNumber": "receipt number"
             }
         },
         "placeholder": {},

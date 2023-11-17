@@ -231,7 +231,7 @@ const MacIdMasterMain = (props) => {
                                                     }}
                                                     description={
                                                         <span>
-                                                            {translateContent('global.generalMessage.noRecordsFoundAddNew').replace('{NAME}', translateContent('device'))} <br />
+                                                            {!formActionType?.viewMode ? translateContent('global.generalMessage.noRecordsFoundAddNewBtn').replace('{NAME}', translateContent('device')) : translateContent('global.generalMessage.noRecordsFound')} <br />
                                                         </span>
                                                     }
                                                 ></Empty>

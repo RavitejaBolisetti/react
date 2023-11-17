@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom/extend-expect';
-import { fireEvent, screen, act } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import customRender from '@utils/test-utils';
 import AllowedTimingList from '@components/common/CriticalityGroup/AllowedTimings/AllowedTimingList';
 

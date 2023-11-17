@@ -33,6 +33,7 @@ import { VehicleCheclistDetailsdataActions } from 'store/actions/data/VehicleRec
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { translateContent } from 'utils/translateContent';
 import { drawerTitle } from 'utils/drawerTitle';
+import { DisableParent } from 'components/common/ProductHierarchy/ProductHierarchyUtils';
 
 const mapStateToProps = (state) => {
     const {
@@ -47,7 +48,7 @@ const mapStateToProps = (state) => {
                 VehicleDetailsLov: { isFilteredListLoaded: isModelDataLoaded = false, isLoading: isModelDataLoading, filteredListData: vehicleModelData },
             },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            ProductHierarchy: { isFilteredListLoaded: isProductHierarchyDataLoaded = false, isLoading: isProductHierarchyLoading, filteredListData: VehicleLovCodeData = [] },
+            ProductHierarchy: { isFilteredListLoaded: isProductHierarchyDataLoaded = false, isLoading: isProductHierarchyLoading, filteredListData: VehicleLovCodeData = [], data: productHierarchyData = [] },
         },
     } = state;
     const moduleTitle = translateContent('vehicleReceiptChecklist.heading.mainTitle');
@@ -73,6 +74,7 @@ const mapStateToProps = (state) => {
         isProductHierarchyDataLoaded,
         isProductHierarchyLoading,
         VehicleLovCodeData,
+        productHierarchyData,
     };
     return returnValue;
 };
@@ -96,8 +98,9 @@ const mapDispatchToProps = (dispatch) => ({
             resetProfile: vehicleReceiptChecklistProfiledataActions.reset,
 
             fetchProductLovCode: productHierarchyDataActions.fetchFilteredList,
+            fetchProductData: productHierarchyDataActions.fetchList,
             ProductLovLoading: productHierarchyDataActions.listShowLoading,
-            resetCodeData: productHierarchyDataActions.resetData,
+            resetCodeData: productHierarchyDataActions.resetFilteredData,
 
             showGlobalNotification,
         },
@@ -110,7 +113,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     const { fetchList, listShowLoading, setFilterString, resetCheckListData, saveData, showGlobalNotification } = props;
     const { fetchModel, isModelDataLoaded, isModelDataLoading, vehicleModelData, modelLoading } = props;
     const { fetchProfile, profileLoading, isProfileDataLoaded, ProfileData, resetProfile, ChecklistData, typeData } = props;
-    const { isProductHierarchyDataLoaded, VehicleLovCodeData, fetchProductLovCode, ProductLovLoading, resetCodeData, isProfileDataLoading, isProductHierarchyLoading } = props;
+    const { isProductHierarchyDataLoaded, VehicleLovCodeData, fetchProductLovCode, ProductLovLoading, resetCodeData, isProfileDataLoading, isProductHierarchyLoading, fetchProductData, productHierarchyData } = props;
 
     const [listFilterForm] = Form.useForm();
 
@@ -127,6 +130,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     const [previousSection, setPreviousSection] = useState(1);
     const [sectionName, setSetionName] = useState();
     const [isLastSection, setLastSection] = useState(false);
+    const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState('');
 
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
@@ -150,7 +154,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         deliveryNote: false,
         cancelOtfBtn: false,
     };
-    const pageIntialState = {
+    const page = {
         pageSize: 10,
         current: 1,
     };
@@ -164,13 +168,12 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
     const [buttonType, setbuttonType] = useState(QUERY_BUTTONS_CONSTANTS?.PENDING?.key);
-
-    const [page, setPage] = useState({ ...pageIntialState });
     const dynamicPagination = true;
     const [formData, setFormData] = useState([]);
     const [otfSearchRules, setOtfSearchRules] = useState({ rules: [validateRequiredInputField('search parametar')] });
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [actionButtonVisibility, setactionButtonVisibility] = useState({ canEdit: false, canView: false, DeleteIcon: false, canAdd: true });
+    const [rules, setrules] = useState({ ...rulesIntialstate });
     const [toolTipContent, setToolTipContent] = useState(
         <div>
             <p>
@@ -191,8 +194,6 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         </div>
     );
 
-    const [rules, setrules] = useState({ ...rulesIntialstate });
-
     const onSuccessAction = (res) => {
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
@@ -209,7 +210,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         const buttonkey = item?.key;
         if (item?.key === buttonType) return;
         setbuttonType(buttonkey);
-        setPage({ ...pageIntialState });
+        setFilterString({ ...filterString, buttonType: item?.key, ...page });
 
         switch (buttonkey) {
             case QUERY_BUTTONS_CONSTANTS?.PENDING?.key: {
@@ -235,7 +236,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
             {
                 key: 'checklistStatus',
                 title: 'checklistStatus',
-                value: buttonType,
+                value: filterString?.buttonType || buttonType,
                 canRemove: false,
                 filter: false,
             },
@@ -267,37 +268,37 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
                 key: 'model',
                 title: 'Model',
                 value: filterString?.model,
-                name: vehicleModelData?.find((element) => filterString?.model === element?.prodctCode)?.prodctShrtName,
+                name: filterString?.modelName?.['0'],
                 canRemove: true,
                 filter: true,
             },
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: page?.pageSize,
+                value: filterString?.pageSize || page?.pageSize,
                 canRemove: true,
             },
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: page?.current,
+                value: filterString?.current || page?.current,
                 canRemove: true,
             },
             {
                 key: 'sortBy',
                 title: 'Sort By',
-                value: page?.sortBy,
+                value: filterString?.sortBy,
                 canRemove: true,
             },
             {
                 key: 'sortIn',
                 title: 'Sort Type',
-                value: page?.sortType,
+                value: filterString?.sortType,
                 canRemove: true,
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, page, buttonType]);
+    }, [filterString, buttonType]);
 
     useEffect(() => {
         if (userId) {
@@ -315,11 +316,19 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     }, [userId, isModelDataLoaded]);
 
     useEffect(() => {
+        if (!userId) return;
+        fetchProductData({ setIsLoading: ProductLovLoading, userId, onErrorAction });
+
         return () => {
             setFilterString();
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [userId]);
+
+    useEffect(() => {
+        if (productHierarchyData?.length > 0) productHierarchyData?.map((i) => DisableParent(i, 'subProdct'));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [productHierarchyData]);
 
     useEffect(() => {
         const defaultSection = VEHICLE_RECIEPT_CHECKLIST_SECTION.CHECKLIST_DETAILS.id;
@@ -346,8 +355,10 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
             advanceFilterForm.resetFields();
             const { toDate, fromDate } = filterString;
             if (fromDate && toDate) setrules({ fromdate: true, todate: true });
+            if (filterString?.model && !selectedTreeSelectKey?.mode) setSelectedTreeSelectKey({ model: filterString?.model, modelName: filterString?.modelName });
             advanceFilterForm.setFieldsValue({ ...filterString, fromDate: formatDateToCalenderDate(fromDate), toDate: formatDateToCalenderDate(toDate) });
         } else {
+            if (!filterString?.model && selectedTreeSelectKey?.model) setSelectedTreeSelectKey({ model: undefined, modelName: [] });
             setrules({ fromdate: false, todate: false });
             advanceFilterForm.setFieldsValue({ ...filterString, fromDate: undefined, toDate: undefined, model: undefined });
         }
@@ -356,23 +367,23 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     }, [isAdvanceSearchVisible, filterString]);
 
     useEffect(() => {
-        if (VehicleLovCodeData && isProductHierarchyDataLoaded && userId) {
+        if (VehicleLovCodeData?.length > 0 && isProductHierarchyDataLoaded && userId) {
             setToolTipContent(
                 <div>
                     <p>
-                        Color - <span>{VehicleLovCodeData['0']['color'] ?? 'Na'}</span>
+                        Color - <span>{VehicleLovCodeData?.['0']?.['color'] ?? 'Na'}</span>
                     </p>
                     <p>
-                        Seating - <span>{VehicleLovCodeData['0']['seatingCapacity'] ?? 'Na'}</span>
+                        Seating - <span>{VehicleLovCodeData?.['0']?.['seatingCapacity'] ?? 'Na'}</span>
                     </p>
                     <p>
-                        Fuel - <span>{VehicleLovCodeData['0']['fuel'] ?? 'Na'}</span>
+                        Fuel - <span>{VehicleLovCodeData?.['0']?.['fuel'] ?? 'Na'}</span>
                     </p>
                     <p>
-                        Variant - <span>{VehicleLovCodeData['0']['variant'] ?? 'Na'}</span>
+                        Variant - <span>{VehicleLovCodeData?.['0']?.['variant'] ?? 'Na'}</span>
                     </p>
                     <p>
-                        Name - <span>{VehicleLovCodeData['0']['name'] ?? 'Na'}</span>
+                        Name - <span>{VehicleLovCodeData?.['0']?.['name'] ?? 'Na'}</span>
                     </p>
                 </div>
             );
@@ -394,15 +405,18 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         setFilterString({
             ...filterString,
             grnNumber: value,
+            current: 1,
+            pageSize: 10,
             advanceFilter: true,
         });
     };
 
-    const handleResetFilter = (e) => {
+    const handleResetFilter = () => {
         if (filterString) {
             setShowDataLoading(true);
         }
-        setFilterString();
+        setFilterString({ current: 1, pageSize: 10 });
+        setSelectedTreeSelectKey({ model: undefined, modelName: [] });
         setrules({ ...rulesIntialstate });
         advanceFilterForm.resetFields();
     };
@@ -577,19 +591,24 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     const tableProps = {
         dynamicPagination,
         totalRecords,
-        page,
-        setPage,
+        page: filterString,
+        setPage: setFilterString,
         tableColumn: tableColumn({ handleButtonClick, actionButtonVisibility }),
-        tableData: data,
+        tableData: data || [],
         showAddButton: false,
         handleAdd: handleButtonClick,
         noMessge: LANGUAGE_EN.GENERAL.LIST_NO_DATA_FOUND.TITLE,
         isLoading: showDataLoading,
+        filterString,
     };
     const removeFilter = (key) => {
         if (key === 'fromDate') {
             const { fromDate, toDate, ...rest } = filterString;
             setrules({ ...rulesIntialstate });
+            setFilterString({ ...rest });
+        } else if (key === 'model') {
+            const { model, modelName, ...rest } = filterString;
+            setSelectedTreeSelectKey({ model: null, modelName: [] });
             setFilterString({ ...rest });
         } else {
             const { [key]: names, ...rest } = filterString;
@@ -691,6 +710,15 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         isModelDataLoading,
         rules,
         setrules,
+        productHierarchyData,
+        selectedTreeSelectKey,
+        handleSelectTreeClick: (key, treeLabelName) => {
+            if (!key) {
+                setSelectedTreeSelectKey({ model: null, modelName: [] });
+                return;
+            }
+            setSelectedTreeSelectKey({ model: key, modelName: treeLabelName });
+        },
     };
 
     return (

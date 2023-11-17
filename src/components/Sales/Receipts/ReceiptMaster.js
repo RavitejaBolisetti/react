@@ -388,6 +388,7 @@ export const ReceiptMasterBase = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             setButtonData({ ...buttonData, formBtnActive: false });
             setIsFormVisible(false);
+            onCloseAction();
         };
 
         const sectionKey = {

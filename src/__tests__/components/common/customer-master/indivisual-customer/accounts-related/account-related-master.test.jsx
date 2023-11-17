@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-mocks-import */
 import React from 'react';
 import { screen, fireEvent, waitFor } from '@testing-library/react';
 import customRender from '@utils/test-utils';
@@ -22,7 +23,6 @@ const props = {
     onCloseAction: jest.fn(),
     saveButtonName: 'Save & Next',
     isLoadingOnSave: 'undefined',
-    handleButtonClick: jest.fn(),
     resetData: jest.fn(),
     isLastSection: false,
     isLoading: false,
@@ -60,7 +60,7 @@ describe('AccountRelated Master  Component', () => {
         deliveryNote: true,
         changeHistory: true,
     };
-    it('should render AccountRelated Master ', async () => {
+    it('should render AccountRelated Master', async () => {
         customRender(<FormWrapper {...props} />);
     });
 

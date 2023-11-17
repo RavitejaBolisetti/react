@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom/extend-expect';
-import { AddEditForm } from '@components/common/TermsAndConditions/ManufacturerTermCondition/AddEditForm';
+import { AddEditForm } from 'components/common/TermsAndConditions/ManufacturerTermCondition/AddEditForm';
 import customRender from '@utils/test-utils';
 import { screen, fireEvent } from '@testing-library/react';
 
@@ -53,13 +53,13 @@ describe('Term Condition Manufacturer addedit components', () => {
 
     it('should render AddEdit component when true', () => {
         const props = { formActionType: { editMode: true } };
-
         customRender(<AddEditForm {...props} isVisible={true} setButtonData={jest.fn()} setStartDate={jest.fn()} />);
     });
 
     it('should render view component when true', () => {
         const props = { formActionType: { viewMode: true } };
+        const formData={ termsconditiondescription: "true" };
 
-        customRender(<AddEditForm {...props} isVisible={true} setButtonData={jest.fn()} />);
+        customRender(<AddEditForm {...props} isVisible={true} formData={formData} setButtonData={jest.fn()} />);
     });
 });

@@ -73,7 +73,7 @@ const mapStateToProps = (state) => {
                 SchemeDescription: { isLoaded: isSchemeDataLoaded = false, isLoading: isSchemeLoading, detailData: schemeDetail = [] },
             },
             AMCRegistration: {
-                EmployeeData: { isLoaded: isEmployeeDataLoaded = false, isLoading: isEmployeeDataLoading, data: employeeData = [] },
+                EmployeeData: { isLoaded: isEmployeeDataLoaded = false, isLoading: isEmployeeDataLoading, data: employeeData = [], detailData: managerData = [] },
             },
             DealerHierarchy: {
                 DealerParentsLov: { data: dealerParentsLovList },
@@ -101,6 +101,7 @@ const mapStateToProps = (state) => {
         isSchemeDataLoaded,
         isSchemeLoading,
         employeeData,
+        managerData,
         dealerParentsLovList,
         dealerLocations,
         schemeDetail,
@@ -119,7 +120,10 @@ const mapDispatchToProps = (dispatch) => ({
             setFilterString: shieldSchemeSearchDataAction.setFilter,
 
             fetchEmployeeList: employeeSearchDataAction.fetchList,
+            fetchManagerList: employeeSearchDataAction.fetchDetail,
             listEmployeeShowLoading: employeeSearchDataAction.listShowLoading,
+            resetEmployeeData: employeeSearchDataAction.reset,
+
             fetchDealerParentsLovList: dealerParentLovDataActions.fetchList,
             fetchDealerLocations: applicationMasterDataActions.fetchDealerLocations,
             saveData: shieldSchemeSearchDataAction.saveData,
@@ -135,7 +139,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ShieldSchemeRegistrationMasterMain = (props) => {
-    const { userId, loginUserData, invoiceStatusList, typeData, data, showGlobalNotification, totalRecords, moduleTitle, fetchList, fetchDetail, fetchSchemeDescription, fetchEmployeeList, saveData, listShowLoading, listSchemeLoading, listEmployeeShowLoading, setFilterString, filterString, detailShieldData, resetDetail, resetSchemeDetail, isEmployeeDataLoaded, isEmployeeDataLoading, isSchemeLoading, employeeData, schemeDetail, fetchDealerParentsLovList, dealerParentsLovList, fetchDealerLocations, dealerLocations } = props;
+    const { userId, loginUserData, invoiceStatusList, typeData, data, showGlobalNotification, totalRecords, moduleTitle, fetchList, fetchDetail, fetchSchemeDescription, fetchEmployeeList, fetchManagerList, saveData, listShowLoading, listSchemeLoading, listEmployeeShowLoading, setFilterString, filterString, detailShieldData, resetDetail, resetSchemeDetail, isEmployeeDataLoaded, isEmployeeDataLoading, isSchemeLoading, employeeData, managerData, schemeDetail, fetchDealerParentsLovList, dealerParentsLovList, fetchDealerLocations, dealerLocations } = props;
 
     const [selectedOrder, setSelectedOrder] = useState();
     const [selectedOrderId, setSelectedOrderId] = useState();
@@ -869,6 +873,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
 
     const containerProps = {
         userType,
+        userId,
         record: selectedOrder,
         form,
         shieldDetailForm,
@@ -944,6 +949,10 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         previousSection,
         setPreviousSection,
         setSection,
+        fetchEmployeeList,
+        listEmployeeShowLoading,
+        fetchManagerList,
+        managerData,
     };
 
     useEffect(() => {

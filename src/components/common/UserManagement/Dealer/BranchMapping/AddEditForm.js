@@ -15,7 +15,7 @@ const { Text } = Typography;
 
 const AddEditForm = (props) => {
     const { section, dealerBranches, setDealerBranches, setButtonData, formActionType, isUsrDlrBrLocationLoding, isDlrBrLocationLoding } = props;
-    
+
     useEffect(() => {
         if (!dealerBranches?.filter((el) => el?.id || el?.status)?.length) {
             setButtonData((prev) => ({ ...prev, nextBtn: true, saveBtn: !formActionType.viewMode, formBtnActive: false }));
@@ -76,7 +76,7 @@ const AddEditForm = (props) => {
                                                         {el?.locationName}
                                                     </Col>
                                                     <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
-                                                        <Checkbox.Group onChange={(checkedValues) => onChanges(el, checkedValues, i)} value={[el?.status && 'status', el?.defaultBranchIndicator && 'defaultBranchIndicator']} defaultValue={[el?.status && 'status', el?.defaultBranchIndicator && 'defaultBranchIndicator']}>
+                                                        <Checkbox.Group disabled={formActionType.viewMode} onChange={(checkedValues) => onChanges(el, checkedValues, i)} value={[el?.status && 'status', el?.defaultBranchIndicator && 'defaultBranchIndicator']} defaultValue={[el?.status && 'status', el?.defaultBranchIndicator && 'defaultBranchIndicator']}>
                                                             <Row gutter={20} justify="space-between">
                                                                 <Checkbox value={'status'} className={styles.marR20} defaultChecked={el?.status} checked={el?.status}>
                                                                     {translateContent('userManagement.label.accessible')}

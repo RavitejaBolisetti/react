@@ -35,7 +35,7 @@ describe('Add Edit Form Component', () => {
         const switchField=screen.getAllByRole('switch', { name: 'Yes No' });
         fireEvent.click(switchField[1]);
 
-        const saveBtn=screen.getByRole('button', { name: 'Save' });
+        const saveBtn=screen.getByTestId('save');
         fireEvent.click(saveBtn);
     });
 

@@ -11,6 +11,6 @@ export const drawerTitle = (formActionType) => {
     } else if (formActionType?.editMode) {
         return translateContent('global.drawerTitle.edit');
     } else {
-        return translateContent('global.drawerTitle.addNew');
+        return translateContent('global.drawerTitle.add');
     }
 };

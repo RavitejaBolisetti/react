@@ -2,6 +2,7 @@ import '@testing-library/jest-dom/extend-expect';
 
 import { PageNotFound } from '@components/PageNotFound/PageNotFound';
 import { fireEvent, screen } from '@testing-library/react';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 import customRender from '@utils/test-utils';
@@ -21,7 +22,7 @@ describe('Render components', () => {
             </Provider>
         );
 
-        const backBtn = screen.getByRole('button', { name: /Back Home/i });
+        const backBtn = screen.getByTestId('backButton');
         fireEvent.click(backBtn);
     });
 });

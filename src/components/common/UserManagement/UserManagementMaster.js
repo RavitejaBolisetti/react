@@ -523,6 +523,7 @@ const UserManagementMain = (props) => {
         defaultValue: 'employeeCode',
         handleChange: onChangeSearchHandler,
         valueReset: false,
+        validateTrigger: ['onSearch'],
     };
 
     return (
