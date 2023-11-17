@@ -1,11 +1,10 @@
 import React from 'react';
-import { ShieldSchemeRegistrationMaster } from '@components/Services/ShieldSchemeRegistartion/ShieldSchemeRegistrationMaster';
+import { ShieldSchemeRegistrationMaster } from 'components/Services/ShieldSchemeRegistartion/ShieldSchemeRegistrationMaster';
 import customRender from '@utils/test-utils';
 import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
 // eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
-// import { Form } from 'antd';
 
 afterEach(() => {
     jest.restoreAllMocks();
@@ -140,6 +139,7 @@ describe('Master Component', () => {
             auth: { userId: 106 },
 
             data: {
+                ConfigurableParameterEditing: { filteredListData: { AMC_REG_APRVL_STAT: [{ name: 'Kai' }] } },
                 ShieldSchemeRegistration: {
                     ShieldSchemeSearch: { isLoaded: true, data: { paginationData: [{ dealerLocation: 'kai', id: '106', shieldRegistrationNumber: 'SHL24D010065', status: 'Pending', vin: 'MA1NE2ZTFP6D10779' }] } },
                 },
@@ -153,7 +153,45 @@ describe('Master Component', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <ShieldSchemeRegistrationMaster fetchEmployeeList={fetchEmployeeList} fetchSchemeDescription={fetchSchemeDescription} fetchDealerParentsLovList={jest.fn()} fetchList={fetchList} saveData={saveData} setFilterString={jest.fn()} resetData={jest.fn()} />
+                <ShieldSchemeRegistrationMaster fetchDetail={jest.fn()} fetchEmployeeList={fetchEmployeeList} fetchSchemeDescription={fetchSchemeDescription} fetchDealerParentsLovList={jest.fn()} fetchList={fetchList} saveData={saveData} setFilterString={jest.fn()} resetData={jest.fn()} fetchManagerList={jest.fn()} />
+            </Provider>
+        );
+
+        fetchList.mock.calls[0][0].onErrorAction();
+
+        fetchList.mock.calls[0][0].onSuccessAction();
+
+        await waitFor(() => { expect(screen.getByText('kai')).toBeInTheDocument() });
+
+        const viewBtn = screen.getByTestId('view');
+        fireEvent.click(viewBtn);
+
+        const cancelBtn = screen.getByRole('button', { name: /cancel scheme/i });
+        fireEvent.click(cancelBtn);
+
+        const cancelrecipt = screen.getByRole('button', { name: /no/i });
+        fireEvent.click(cancelrecipt);
+    });
+    it('test2', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+
+            data: {
+                ConfigurableParameterEditing: { filteredListData: { AMC_REG_APRVL_STAT: [{ name: 'Kai' }] } },
+                ShieldSchemeRegistration: {
+                    ShieldSchemeSearch: { isLoaded: true, data: { paginationData: [{ dealerLocation: 'kai', id: '106', shieldRegistrationNumber: 'SHL24D010065', status: 'Pending', vin: 'MA1NE2ZTFP6D10779' }] } },
+                },
+            },
+        });
+
+        const fetchList = jest.fn();
+        const saveData = jest.fn();
+        const fetchEmployeeList = jest.fn();
+        const fetchSchemeDescription = jest.fn();
+
+        customRender(
+            <Provider store={mockStore}>
+                <ShieldSchemeRegistrationMaster fetchDetail={jest.fn()} fetchEmployeeList={fetchEmployeeList} fetchSchemeDescription={fetchSchemeDescription} fetchDealerParentsLovList={jest.fn()} fetchList={fetchList} saveData={saveData} setFilterString={jest.fn()} resetData={jest.fn()} fetchManagerList={jest.fn()} />
             </Provider>
         );
 
@@ -166,13 +204,96 @@ describe('Master Component', () => {
         });
 
         const viewBtn = screen.getByTestId('view');
-
         fireEvent.click(viewBtn);
 
         const cancelBtn = screen.getByRole('button', { name: /cancel scheme/i });
         fireEvent.click(cancelBtn);
 
-        const cancelrecipt = screen.getByRole('button', { name: /no/i });
+        const cancelrecipt = screen.getAllByRole('img', { name: /close/i });
+        fireEvent.click(cancelrecipt[1]);
+    });
+    it('test3', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+
+            data: {
+                ConfigurableParameterEditing: { filteredListData: { AMC_REG_APRVL_STAT: [{ name: 'Kai' }] } },
+                ShieldSchemeRegistration: {
+                    ShieldSchemeSearch: { isLoaded: true, data: { paginationData: [{ dealerLocation: 'kai', id: '106', shieldRegistrationNumber: 'SHL24D010065', status: 'Pending', vin: 'MA1NE2ZTFP6D10779' }] } },
+                },
+            },
+        });
+
+        const fetchList = jest.fn();
+        const saveData = jest.fn();
+        const fetchEmployeeList = jest.fn();
+        const fetchSchemeDescription = jest.fn();
+
+        customRender(
+            <Provider store={mockStore}>
+                <ShieldSchemeRegistrationMaster fetchDetail={jest.fn()} fetchEmployeeList={fetchEmployeeList} fetchSchemeDescription={fetchSchemeDescription} fetchDealerParentsLovList={jest.fn()} fetchList={fetchList} saveData={saveData} setFilterString={jest.fn()} resetData={jest.fn()} fetchManagerList={jest.fn()} />
+            </Provider>
+        );
+
+        fetchList.mock.calls[0][0].onErrorAction();
+
+        fetchList.mock.calls[0][0].onSuccessAction();
+
+        await waitFor(() => {
+            expect(screen.getByText('kai')).toBeInTheDocument();
+        });
+
+        const viewBtn = screen.getByTestId('view');
+        fireEvent.click(viewBtn);
+
+        const cancelBtn = screen.getByRole('button', { name: /cancel scheme/i });
+        fireEvent.click(cancelBtn);
+
+        const cancelrecipt = screen.getByRole('button', { name: /yes, cancel/i });
         fireEvent.click(cancelrecipt);
+
+        const reason = screen.getByRole('combobox', { name: 'Reason for Rejection' });
+        fireEvent.change(reason, { target: { value: 'Test' } });
+
+        const yesCancel = screen.getByRole('button', { name: /yes, cancel/i });
+        fireEvent.click(yesCancel);
+    });
+
+    it('test4', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+
+            data: {
+                ConfigurableParameterEditing: { filteredListData: { AMC_REG_APRVL_STAT: [{ name: 'Kai' }] } },
+                ShieldSchemeRegistration: {
+                    ShieldSchemeSearch: { isLoaded: true, data: { paginationData: [{ dealerLocation: 'kai', id: '106', shieldRegistrationNumber: 'SHL24D010065', status: 'Pending', vin: 'MA1NE2ZTFP6D10779' }] } },
+                },
+            },
+        });
+
+        const fetchList = jest.fn();
+        const saveData = jest.fn();
+        const fetchEmployeeList = jest.fn();
+        const fetchSchemeDescription = jest.fn();
+
+        customRender(
+            <Provider store={mockStore}>
+                <ShieldSchemeRegistrationMaster resetDetail={jest.fn()} fetchDetail={jest.fn()} fetchEmployeeList={fetchEmployeeList} fetchSchemeDescription={fetchSchemeDescription} fetchDealerParentsLovList={jest.fn()} fetchList={fetchList} saveData={saveData} setFilterString={jest.fn()} resetData={jest.fn()} fetchManagerList={jest.fn()} />
+            </Provider>
+        );
+
+        fetchList.mock.calls[0][0].onErrorAction();
+
+        fetchList.mock.calls[0][0].onSuccessAction();
+
+        await waitFor(() => {
+            expect(screen.getByText('kai')).toBeInTheDocument();
+        });
+
+        const viewBtn = screen.getByTestId('view');
+        fireEvent.click(viewBtn);
+
+        const closeBtn = screen.getAllByRole('button', { name: /close/i });
+        fireEvent.click(closeBtn[1]);
     });
 });

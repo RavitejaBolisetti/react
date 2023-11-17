@@ -25,33 +25,30 @@ const fetchStateLovList = jest.fn();
 const fetchViewDocument = jest.fn();
 const fetchList = jest.fn();
 
-
 describe('ListCustomerCreation components', () => {
-
     it('isStateDataLoaded', () => {
         const mockStore = createMockStore({
             auth: { userId: 123 },
             data: {
-                Geo: { State: { isStateDataLoaded: false } }
+                Geo: { State: { isStateDataLoaded: false } },
             },
         });
 
         customRender(
-
             <Provider store={mockStore}>
                 <ListCustomerCreation fetchStateLovList={jest.fn()} />
             </Provider>
         );
-    })
+    });
 
     it('should render upload button', () => {
         customRender(<ListCustomerCreation />);
 
-        const uploadBtn = screen.getByRole('button', { name: 'Upload' });
+        const uploadBtn = screen.getByRole('button', { name: 'Upload;' });
         fireEvent.click(uploadBtn);
 
         const cancelBtn = screen.getByRole('button', { name: 'Cancel' });
-        fireEvent.click(cancelBtn)
+        fireEvent.click(cancelBtn);
     });
 
     it('should render Save button', async () => {
@@ -60,20 +57,20 @@ describe('ListCustomerCreation components', () => {
             data: {
                 ConfigurableParameterEditing: { filteredListData: { FILE_DOWNLOAD_TMPLT: [{ key: 'VCLPRCMSTTMPLT' }] } },
                 LessorCustomerCreation: { isLoaded: false, data: { docId: '1234' } },
-                SupportingDocument: { isLoaded: false, data:{ docId: '1234' }  },
-                CustomerMaster: {ViewDocument: { isLoaded: false, data: { docId: '1234' } },},
-                Geo: {State: { isFilteredListLoaded: false, isLoading: false, filteredListData: { docId: '1234' }  },},
+                SupportingDocument: { isLoaded: false, data: { docId: '1234' } },
+                CustomerMaster: { ViewDocument: { isLoaded: false, data: { docId: '1234' } } },
+                Geo: { State: { isFilteredListLoaded: false, isLoading: false, filteredListData: { docId: '1234' } } },
             },
         });
 
-        const saveData = jest.fn();        
+        const saveData = jest.fn();
         customRender(
             <Provider store={mockStore}>
                 <ListCustomerCreation saveData={saveData} fetchList={fetchList} fetchViewDocument={fetchViewDocument} fetchStateLovList={fetchStateLovList} uploadButtonName={'Upload Lessor Form'} />
             </Provider>
         );
 
-        const uploadBtn = screen.getByRole('button', { name: 'Upload' });
+        const uploadBtn = screen.getByRole('button', { name: 'Upload;' });
         fireEvent.click(uploadBtn);
 
         const downloadTemplate = screen.getByRole('button', { name: 'Download Template' });
@@ -83,7 +80,7 @@ describe('ListCustomerCreation components', () => {
         fireEvent.click(uploadLessor);
 
         const saveBtn = screen.getByRole('button', { name: 'Save' });
-        fireEvent.click(saveBtn)
+        fireEvent.click(saveBtn);
     });
 
     it('should render download button', () => {
@@ -103,18 +100,18 @@ describe('ListCustomerCreation components', () => {
             </Provider>
         );
 
-        const downloadBtn = screen.getAllByRole('button', { name: 'Download' });
+        const downloadBtn = screen.getAllByRole('button', { name: 'Download;' });
         fireEvent.click(downloadBtn[0]);
 
-        const download = screen.getAllByRole('button', { name: 'Download' });
-        fireEvent.click(download[1]);
+        const download = screen.getAllByRole('button', { name: 'Download;' });
+        fireEvent.click(download[0]);
     });
 
-    it("Download Template", () => {
+    it('Download Template', () => {
         const mockStore = createMockStore({
             auth: { userId: 106 },
             data: {
-                ConfigurableParameterEditing: { filteredListData: { FILE_DOWNLOAD_TMPLT: [{ key: 'VCLPRCMSTTMPLT' }], }, },
+                ConfigurableParameterEditing: { filteredListData: { FILE_DOWNLOAD_TMPLT: [{ key: 'VCLPRCMSTTMPLT' }] } },
             },
         });
         customRender(
@@ -122,21 +119,21 @@ describe('ListCustomerCreation components', () => {
                 <ListCustomerCreation />
             </Provider>
         );
-        const uploadBtn = screen.getByRole('button', { name: 'Upload' });
+        const uploadBtn = screen.getByRole('button', { name: 'Upload;' });
         fireEvent.click(uploadBtn);
 
         const downloadTemplate = screen.getByRole('button', { name: 'Download Template' });
         fireEvent.click(downloadTemplate);
-    })
+    });
 
-    it("State Name", () => {
+    it('State Name', () => {
         const mockStore = createMockStore({
             auth: { userId: 106 },
             data: {
                 ConfigurableParameterEditing: { filteredListData: { FILE_DOWNLOAD_TMPLT: [{ key: 'VCLPRCMSTTMPLT' }] } },
                 LessorCustomerCreation: { isLoaded: false, data: { docId: '106' } },
                 Geo: {
-                    State: { isFilteredListLoaded: false, isLoading: false, filteredListData: [{ key: '26', parentKey: 'IND', value: "Delhi" }] },
+                    State: { isFilteredListLoaded: false, isLoading: false, filteredListData: [{ key: '26', parentKey: 'IND', value: 'Delhi' }] },
                 },
             },
         });
@@ -146,7 +143,7 @@ describe('ListCustomerCreation components', () => {
             </Provider>
         );
 
-        const downloadBtn = screen.getAllByRole('button', { name: 'Download' });
+        const downloadBtn = screen.getAllByRole('button', { name: 'Download;' });
         fireEvent.click(downloadBtn[0]);
 
         const stateBox = screen.getByRole('combobox', { name: 'State Name' });
@@ -156,7 +153,7 @@ describe('ListCustomerCreation components', () => {
             fireEvent.click(delhiState);
         });
 
-        const download = screen.getAllByRole('button', { name: 'Download' });
-        fireEvent.click(download[1]);
-    })
+        const download = screen.getAllByRole('button', { name: 'Download;' });
+        fireEvent.click(download[0]);
+    });
 });

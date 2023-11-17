@@ -9,10 +9,10 @@ import { validateRequiredInputField, validateRequiredSelectField, validatePincod
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { ViewDetail } from './ViewDetail';
 import { withDrawer } from 'components/withDrawer';
-import { DrawerFormButton } from 'components/common/Button'; 
+import { DrawerFormButton } from 'components/common/Button';
 
 import styles from 'assets/sass/app.module.scss';
-import { translateContent } from 'utils/translateContent'; 
+import { translateContent } from 'utils/translateContent';
 
 const { Option } = Select;
 
@@ -127,7 +127,7 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label={translateContent('pincode.label.city')} initialValue={formData?.cityCode} name="cityCode" rules={[validateRequiredSelectField(translateContent('pincode.validation.city'))]}>
+                                    <Form.Item label={translateContent('pincode.label.City')} initialValue={formData?.cityCode} name="cityCode" rules={[validateRequiredSelectField(translateContent('pincode.validation.city'))]}>
                                         <Select placeholder={preparePlaceholderSelect(translateContent('pincode.placeholder.city'))} {...selectProps}>
                                             {filteredCityData?.map((item) => (
                                                 <Option key={'cc' + item?.key} value={item?.key}>
@@ -141,7 +141,7 @@ const AddEditFormMain = (props) => {
 
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label={translateContent('pincode.label.tehsil')} initialValue={formData?.tehsilCode} name="tehsilCode" rules={[validateRequiredSelectField(translateContent('pincode.validation.tehsil'))]}>
+                                    <Form.Item label={translateContent('pincode.label.Tehsil')} initialValue={formData?.tehsilCode} name="tehsilCode" rules={[validateRequiredSelectField(translateContent('pincode.validation.tehsil'))]}>
                                         <Select {...selectProps} placeholder={preparePlaceholderSelect(translateContent('pincode.placeholder.tehsil'))}>
                                             {filteredTehsilData?.map((item) => (
                                                 <Option key={'tc' + item?.key} value={item?.key}>
@@ -153,7 +153,7 @@ const AddEditFormMain = (props) => {
                                 </Col>
 
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label={translateContent('pincode.label.pinCategory')}initialValue={formData?.pinCategory} name="pinCategory" rules={[validateRequiredSelectField(translateContent('pincode.validation.pinCategory'))]}>
+                                    <Form.Item label={translateContent('pincode.label.pinCategory')} initialValue={formData?.pinCategory} name="pinCategory" rules={[validateRequiredSelectField(translateContent('pincode.validation.pinCategory'))]}>
                                         <Select {...selectProps} placeholder={preparePlaceholderSelect(translateContent('pincode.placeholder.pinCategory'))}>
                                             {typeData?.map((item) => (
                                                 <Option key={'pnc' + item?.key} value={item?.key}>

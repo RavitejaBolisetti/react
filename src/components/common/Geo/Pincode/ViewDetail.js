@@ -21,7 +21,7 @@ export const ViewDetail = ({ formData, styles }) => {
                     <Descriptions.Item label={translateContent('pincode.label.pinCode')}>{formData?.pinCode}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('pincode.label.pinCategory')}>{formData?.pinCategoryName || 'NA'}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('pincode.label.locality')}>{formData?.localityName || 'NA'}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('pincode.label.tehsil')}>{formData?.tehsilName || 'NA'}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('pincode.label.Tehsil')}>{formData?.tehsilName || 'NA'}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('pincode.label.city')}>{formData?.cityName || 'NA'}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('pincode.label.district')}>{formData?.districtName || 'NA'}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('pincode.label.state')}>{formData?.stateName || 'NA'}</Descriptions.Item>
