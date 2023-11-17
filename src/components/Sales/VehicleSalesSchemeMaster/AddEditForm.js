@@ -30,6 +30,7 @@ import { zoneAreaTableColumn } from './zoneAreaTableColumn';
 import { ZoneAreaModal } from './ZoneAreaModal';
 import { translateContent } from 'utils/translateContent';
 import { FindProductName } from 'components/common/ProductHierarchy/ProductHierarchyUtils';
+import { ENCASH_CONSTANTS } from './constants/encashContants';
 
 const { Panel } = Collapse;
 
@@ -274,13 +275,13 @@ const AddEditFormMain = (props) => {
 
     useEffect(() => {
         if (saleService?.sales && saleService?.service) {
-            addSchemeForm.setFieldValue({ encash: 'A' });
+            addSchemeForm.setFieldValue({ encash: ENCASH_CONSTANTS.ALL?.key });
         } else if (saleService?.sales && !saleService?.service) {
-            addSchemeForm.setFieldValue({ encash: 'SL' });
+            addSchemeForm.setFieldValue({ encash: ENCASH_CONSTANTS.SALES?.key });
         } else if (!saleService?.sales && saleService?.service) {
-            addSchemeForm.setFieldValue({ encash: 'SE' });
+            addSchemeForm.setFieldValue({ encash: ENCASH_CONSTANTS.SERVICE?.key });
         } else if (!saleService?.sales && !saleService?.service) {
-            addSchemeForm.setFieldValue({ encash: 'N' });
+            addSchemeForm.setFieldValue({ encash: ENCASH_CONSTANTS.NO?.key });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [saleService]);
