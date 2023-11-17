@@ -3,6 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
+import React, { useState } from 'react';
 import { Button, Form, Row, Col, Input, Divider, DatePicker } from 'antd';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
@@ -10,17 +11,40 @@ import { AMC_CONSTANTS } from '../utils/AMCConstants';
 import styles from 'assets/sass/app.module.scss';
 import { dateFormat } from 'utils/formatDateTime';
 import { translateContent } from 'utils/translateContent';
+import { VehicleListModal } from './VehicleListModal';
 
 const { Search } = Input;
 
 const AddEditForm = (props) => {
-    const { requestPayload, onSaveFormData, handleVinSearch, contactform, setShowAddEditForm, setIsEditing, formActionType, handleFormValueChange, setIsAdding, handleVINChange } = props;
+    const { fnSetData, vehicleSelectedData, requestPayload, onSaveFormData, handleVinSearch, contactform, setShowAddEditForm, setIsEditing, formActionType, handleFormValueChange, setIsAdding, handleVINChange, vehicleSearchVisible, setVehicleSearchVisible } = props;
+    const [selectedRowData, setSelectedRowData] = useState();
 
     const handleCancelFormEdit = () => {
         contactform.resetFields();
         setIsAdding(false);
         setIsEditing(false);
         setShowAddEditForm(false);
+    };
+
+    const handleSelectedData = () => {
+        fnSetData({ ...selectedRowData });
+        // contactform.resetFields(['vin']);
+        setSelectedRowData();
+        setVehicleSearchVisible(false);
+    };
+
+    const customerListProps = {
+        isVisible: vehicleSearchVisible,
+        titleOverride: translateContent('amcRegistration.label.vehicleDetails'),
+        onCloseAction: () => {
+            setVehicleSearchVisible(false);
+        },
+        data: vehicleSelectedData,
+        handleFormValueChange,
+        fnSetData,
+        selectedRowData,
+        setSelectedRowData,
+        handleSelectedData,
     };
 
     return (
@@ -65,15 +89,16 @@ const AddEditForm = (props) => {
                         </Form.Item>
                     </Col>
                 </Row>
+                <VehicleListModal {...customerListProps} />
 
                 {!formActionType?.viewMode && !(formActionType?.addMode && requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.MNM_FOC?.key) && (
                     <Row gutter={20} className={styles.marB20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.buttonsGroupLeft}>
                             <Button onClick={onSaveFormData} type="primary">
-                                Add
+                                {translateContent('global.buttons.add')}
                             </Button>
                             <Button onClick={handleCancelFormEdit} danger>
-                                Cancel
+                                {translateContent('global.buttons.cancel')}
                             </Button>
                         </Col>
                     </Row>

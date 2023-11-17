@@ -10,9 +10,10 @@ import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/prepareP
 import { customSelectBox } from 'utils/customSelectBox';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { translateContent } from 'utils/translateContent';
+import { AMC_CONSTANTS } from '../utils/AMCConstants';
 
 const SchemeDetailsForm = (props) => {
-    const { schemeForm, formData, typeData, handleFormValueChange, handleSchemeDescriptionChange, schemeData } = props;
+    const { schemeForm, registrationForm, formData, typeData, handleFormValueChange, handleSchemeDescriptionChange, schemeData, schemeList } = props;
 
     const isDiscountLessThanAmount = (value) => {
         if (Number(schemeForm.getFieldValue('schemeBasicAmount')) < Number(value)) {
@@ -26,8 +27,15 @@ const SchemeDetailsForm = (props) => {
         <Form layout="vertical" autoComplete="off" form={schemeForm} onFieldsChange={handleFormValueChange}>
             <Row gutter={16}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.saleType} label={translateContent('amcRegistration.label.amcType')} name="amcType" rules={[validateRequiredSelectField(translateContent('amcRegistration.label.amcType'))]}>
-                        {customSelectBox({ data: typeData?.[PARAM_MASTER.AMC_SCHEME_TYPE.id], placeholder: preparePlaceholderSelect(translateContent('amcRegistration.label.amcType')) })}
+                    <Form.Item initialValue={formData?.amcType} label={translateContent('amcRegistration.label.amcType')} name="amcType" rules={[validateRequiredSelectField(translateContent('amcRegistration.label.amcType'))]}>
+                        {customSelectBox({
+                            data: typeData?.[PARAM_MASTER.AMC_SCHEME_TYPE.id],
+                            placeholder: preparePlaceholderSelect(translateContent('amcRegistration.label.amcType')),
+                            onChange: () => {
+                                schemeForm.resetFields(['schemeDescription']);
+                                schemeList(registrationForm?.getFieldValue('priceType') === AMC_CONSTANTS?.MNM_FOC?.key ? registrationForm?.getFieldValue('vin') : null);
+                            },
+                        })}
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>

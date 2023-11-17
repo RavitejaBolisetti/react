@@ -150,7 +150,7 @@ const AMCRegistrationDetailsMasterBase = (props) => {
     };
     const handleSaleTypeChange = (value) => {
         schemeForm.resetFields(['schemeDescription']);
-        schemeList(null);
+        // registrationForm?.getFieldValue('priceType') === AMC_CONSTANTS?.MNM_FOC?.key && schemeList(null);
         setselectedSaleType(value);
     };
     const formProps = {

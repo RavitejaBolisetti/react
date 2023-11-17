@@ -760,7 +760,8 @@
             "modelDescription": "Model Description",
             "addNewVehicleMsg": "Please add new vehicle using",
             "buttonAtTop": "button at top",
-            "vehicleDetails": "Vehicle Details"
+            "vehicleDetails": "Vehicle Details",
+            "selectVehicle": "Select Vehicle"
         },
         "placeholder": {
             "search": "Search"

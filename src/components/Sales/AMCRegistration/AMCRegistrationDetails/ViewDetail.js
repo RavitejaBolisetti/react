@@ -12,11 +12,13 @@ import { translateContent } from 'utils/translateContent';
 import { getCodeValue } from 'utils/getCodeValue';
 
 import styles from 'assets/sass/app.module.scss';
+import { DATA_TYPE } from 'constants/dataType';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading, selectedSaleType, employeeData, managerData } = props;
+    const { formData, isLoading, selectedSaleType, employeeData, managerData, typeData } = props;
     const [activeKey, setactiveKey] = useState([]);
     const viewProps = {
         bordered: false,
@@ -50,15 +52,16 @@ const ViewDetailMain = (props) => {
                         <Panel header={translateContent('amcRegistration.label.registrationInfo')} key="1">
                             <Divider />
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label={translateContent('amcRegistration.label.saleType')}>{checkAndSetDefaultValue(formData?.amcRegistration?.saleType, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('amcRegistration.label.priceType')}>{checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.DLVR_SALE_TYP.id], formData?.amcRegistration?.priceType), isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('amcRegistration.label.saleType')}>{checkAndSetDefaultValue(getCodeValue(typeData['SALE_TYP'], formData?.amcRegistration?.saleType), isLoading)}</Descriptions.Item>
                                 {selectedSaleType === AMC_CONSTANTS?.MNM_FOC?.key && (
                                     <>
                                         <Descriptions.Item label={translateContent('amcRegistration.label.bookingNumber')}>{checkAndSetDefaultValue(formData?.amcRegistration?.bookingNumber, isLoading)}</Descriptions.Item>
                                         <Descriptions.Item label={translateContent('amcRegistration.label.vin')}>{checkAndSetDefaultValue(formData?.amcRegistration?.vin, isLoading)}</Descriptions.Item>
                                     </>
                                 )}
-                                <Descriptions.Item label={translateContent('amcRegistration.label.employeeName')}>{checkAndSetDefaultValue(getCodeValue(employeeData, formData?.amcRegistration?.employeeName), isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label={translateContent('amcRegistration.label.managerName')}>{checkAndSetDefaultValue(getCodeValue(managerData, formData?.amcRegistration?.managerName), isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('amcRegistration.label.employeeName')}>{checkAndSetDefaultValue(getCodeValue(employeeData, formData?.amcRegistration?.employeeCode), isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('amcRegistration.label.managerName')}>{checkAndSetDefaultValue(getCodeValue(managerData, formData?.amcRegistration?.managerCode), isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('amcRegistration.label.remarks')}>{checkAndSetDefaultValue(formData?.amcRegistration?.remarks, isLoading)}</Descriptions.Item>
                             </Descriptions>
                             <Divider />
@@ -86,7 +89,7 @@ const ViewDetailMain = (props) => {
                                 <Descriptions.Item label={translateContent('amcRegistration.label.schemeBasicAmount')}>{checkAndSetDefaultValue(formData?.amcSchemeDetails?.schemeBasicAmount, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('amcRegistration.label.schemeDiscount')}>{checkAndSetDefaultValue(formData?.amcSchemeDetails?.schemeDiscount, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('amcRegistration.label.schemeTaxAmount')}>{checkAndSetDefaultValue(formData?.amcSchemeDetails?.schemeTaxAmount, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label={translateContent('amcRegistration.label.schemeEndDate')}>{checkAndSetDefaultValue(formData?.amcSchemeDetails?.schemeEndDate, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('amcRegistration.label.schemeEndDate')}>{checkAndSetDefaultValue(formData?.amcSchemeDetails?.schemeEndDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                             </Descriptions>
                         </Panel>
                     </Collapse>
