@@ -545,6 +545,22 @@ export const MenuConstant = {
         slug: 'co-dealer-invoice-report',
     },
 
+    [getMenyKey('SACR-05.22')]: {
+        key: 'SACR-05.22',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'SACR-02.05',
+        slug: 'so_mapping_unmapping_report',
+    },
+
+    [getMenyKey('SACR-05.23')]: {
+        key: 'SACR-05.23',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'SACR-02.05',
+        slug: 'otf_so_not_mapped_report',
+    },
+
     [getMenyKey('SACR-03.01')]: {
         key: 'SACR-03.01',
         link: routing.ROUTING_REPORT_EMBEDDED_REPORT,

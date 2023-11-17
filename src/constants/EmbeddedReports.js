@@ -168,7 +168,7 @@ export const EMBEDDED_REPORTS = {
         key: 'On_Road_Price_Detail_Summary_Report',
         title: 'On Road Price Detail Summary Report ',
         type: 'Report',
-        slug: 'on-road-price-detail-summary-Report',
+        slug: 'on-road-price-detail-summary-report',
     },
     RSA_REPORT: {
         id: 23,
@@ -210,5 +210,32 @@ export const EMBEDDED_REPORTS = {
         title: 'OTF SO Not Mapped Report ',
         type: 'Report',
         slug: 'otf_so_not_mapped_report',
+    },
+    Vehicle_Receipt_Report: {
+        id: 29,
+        key: 'Vehicle_Receipt_Report',
+        title: 'Vehicle Receipt Report ',
+        type: 'Report',
+        slug: 'vehicle_receipt_report',
+    },
+    Credit_Note_Service_Document: {
+        id: 30,
+        key: 'Credit_Note_Service_Document',
+        title: 'Credit Note Service Document ',
+        type: 'Document',
+    },
+    Enrolment_Transaction_Report: {
+        id: 31,
+        key: 'Enrolment_Transaction_Report',
+        title: 'Enrolment Transaction Report ',
+        type: 'Report',
+        slug: 'enrolment_transaction_report',
+    },
+    SO_Mapping_Unmapping_Report: {
+        id: 32,
+        key: 'SO_Mapping_Unmapping_Report',
+        title: 'SO Mapping Unmapping Report ',
+        type: 'Report',
+        slug: 'so_mapping_unmapping_report',
     },
 };
