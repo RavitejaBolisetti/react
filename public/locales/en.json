@@ -3868,5 +3868,86 @@
             "columnThree": "VIN",
             "columnFour": "Status"
         }
+    },
+    "vehicleSalesSchemeMaster":{
+        "heading":{
+            "moduleTitle": "Scheme",
+            "title": "Vehicle Sales Scheme Master",
+            "addZoneTitle": "Add Zone Details",
+            "addProductDetails": "Add Product Details"
+        },
+        "label":{
+            "downloadHere": "Download Here",
+            "errorMessage": "Please add Vehicle Details",
+            "schemeDetails" : "Scheme Details",
+            "manufacturerOrganisation": "Manufacturer Organisation Hierarchy",
+            "schemeType": "Scheme Type",
+            "offerType": "Offer Type",
+            "schemeDescription": "Scheme Description",
+            "validityToDate": "Validity To Date",
+            "validityFromDate": "Validity From Date",
+            "schemeCategory": "Scheme Category",
+            "amountWithTax": "Amount With Tax",
+            "amountWithoutTax": "Amount Without Tax",
+            "vehicleInvoiceToDate": "Vehicle Invoice To Date",
+            "vehicleInvoiceFromDate": "Vehicle Invoice From Date",
+            "encash": "Encash",
+            "encashOnSales": "Encash on Sales",
+            "encashOnService": "Encash on Service",
+            "zoneDetails": "Zone Details",
+            "productDetails": "Product Details",
+            "zone": "Zone",
+            "area": "Area",
+            "mandatory": "Mandatory?",
+            "model": "Model",
+            "schemeCode": "Scheme Code"
+        },
+        "placeholder":{
+            "parent": "Parent",
+            "schemeDetails" : "scheme details",
+            "manufacturerOrganisation": "manufacturer organisation hierarchy",
+            "schemeType": "scheme type",
+            "offerType": "offer type",
+            "schemeDescription": "scheme description",
+            "validityToDate": "validity to date",
+            "validityFromDate": "validity from date",
+            "schemeCategory": "scheme category",
+            "amountWithTax": "amount with tax",
+            "amountWithoutTax": "amount without tax",
+            "vehicleInvoiceToDate": "vehicle invoice to date",
+            "vehicleInvoiceFromDate": "vehicle invoice from date",
+            "encash": "Encash",
+            "zone": "zone",
+            "area": "area"
+        },
+        "validation":{
+            "schemeDetails" : "scheme details",
+            "manufacturerOrganisation": "manufacturer organisation hierarchy",
+            "schemeType": "scheme type",
+            "offerType": "offer type",
+            "schemeDescription": "scheme description",
+            "validityToDate": "validity to date",
+            "validityFromDate": "validity from date",
+            "schemeCategory": "scheme category",
+            "amountWithTax": "amount with tax",
+            "amountWithoutTax": "amount without tax",
+            "vehicleInvoiceToDate": "vehicle invoice to date",
+            "vehicleInvoiceFromDate": "vehicle invoice from date",
+            "zone": "zone",
+            "area": "area"
+        },
+        "text": {
+            "messageText": "Click or drop your file here to upload",
+            "validationText": "File type should be .xlxs and max file size to be 8Mb",
+            "errorMessageText1": "Product already exists",
+            "errorMessageText2": "Zone and Area already exists",
+            "dateError": "Date can't be less than Effective from date",
+            "downloadText": "Please download 'Vehicle Sales Scheme Template' using below button"
+        },
+        "button":{
+            "upload": "Upload Sales Scheme Master",
+            "addScheme": "Add Scheme",
+            "downloadTemplate": "Download Template"
+        }
     }
 }

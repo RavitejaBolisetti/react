@@ -401,6 +401,22 @@ export const PARAM_MASTER = {
         id: 'SO_RC',
         title: 'OTF SO Mapping',
     },
+    OFFER_TYPE: {
+        id: 'OFFER_TYPE',
+        title: 'Offer Type',
+    },
+    ENCASH: {
+        id: 'ENCASH',
+        title: 'Encash',
+    },
+    SCHEME_TYPE: {
+        id: 'SCHEME_TYPE',
+        title: 'Scheme Type',
+    },
+    SCHEME_CODE: {
+        id: 'SCHEME_CODE',
+        title: 'Scheme Code',
+    },
     CH_SER: {
         id: 'CH_SER',
         title: 'Charger Installation',
@@ -432,6 +448,10 @@ export const PARAM_MASTER = {
     DEVICE_TYPE: {
         id: 'DVIC_TYP',
         title: 'Device Type',
+    },
+    VCLSASCHMSTTMPL: {
+        id: 'VCLSASCHMSTTMPL',
+        title: 'Vehicle Sales Scheme template download',
     },
     AMC_SEARCH_TYPE: {
         id: 'AMC_SEARCH_TYPE',

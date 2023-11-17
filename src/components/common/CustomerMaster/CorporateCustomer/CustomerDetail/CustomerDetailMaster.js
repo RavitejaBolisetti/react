@@ -162,10 +162,13 @@ const CompanyCustomerDetailsMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        if (!numbValidatedSuccess && customerDetailsData?.mobileNumber !== values?.mobileNumber) {
+   
+        if ((!formActionType?.addMode && !numbValidatedSuccess && customerDetailsData?.mobileNumber !== values?.mobileNumber)) {
             showGlobalNotification({ message: 'Please verify mobile number to proceed.' });
+            console.log(numbValidatedSuccess, 'numbValidatedSuccess', customerDetailsData?.mobileNumber, 'CSMB', values?.mobileNumber, 'VMBN');
             return;
         }
+        
         const recordId = customerDetailsData?.id || '';
         const reqdata = { ...values, customerId: selectedCustomer?.customerId, id: recordId };
 

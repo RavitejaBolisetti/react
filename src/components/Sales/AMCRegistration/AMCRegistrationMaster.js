@@ -856,7 +856,6 @@ export const AMCRegistrationMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [reportButtonType]);
-
     const reportDetail = amcDocumentType;
     const reportProps = {
         isVisible: isReportVisible,

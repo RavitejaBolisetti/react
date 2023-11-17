@@ -53,6 +53,14 @@ import { RsmAsmApproval } from './rsmAsmApproval';
 import { EvrDetailsCapturing } from './evrDetailsCapturing';
 import { VehicleChecklistMaster } from './vehicleChecklistMaster';
 import { stockTransferIndentData } from './stockTransferIndent';
+import { VehicleSalesSchemeMaster } from './vehicleSalesSchemeMaster';
+import { VehicleSalesSchemeMasterUpload } from './vehicleSalesSchemeMasterUpload';
+import { AreaOffice } from './areaOfficeLov';
+import { ZoneMaster } from './zoneMaster';
+import { RSASchemeCategoryLov } from './rsaSchemeCategoryLov';
+import { AMCSchemeCategoryLov } from './amcSchemeCategoryLov';
+import { ShieldSchemeCategoryLov } from './shieldSchemeCategory';
+
 import { AMCRegistration } from './amcRegistration';
 import { CRMSchemeEnrollmentList } from './crmSchemeEnrollment';
 import { ShieldSchemeRegistration } from './services';
@@ -103,6 +111,8 @@ export const data = combineReducers({
     OTFBlockMaster,
     VehicleDeliveryNote,
     DealerBlockMaster,
+    VehicleSalesSchemeMaster,
+    VehicleSalesSchemeMasterUpload,
     ChargerInstallation,
     CRMCustomerVehicle,
     CRMSchemeEnrollmentList,
@@ -112,4 +122,9 @@ export const data = combineReducers({
     VehicleChecklistMaster,
     AMCRegistration,
     Dashboard,
+    AreaOffice,
+    ZoneMaster,
+    AMCSchemeCategoryLov,
+    RSASchemeCategoryLov,
+    ShieldSchemeCategoryLov,
 });
