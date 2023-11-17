@@ -5,21 +5,16 @@
  */
 
 import React, { useMemo, useEffect, useState } from 'react';
-import { Typography, Divider, Collapse, Card, Tag, Col, Row, Button, Space } from 'antd';
+import { Typography, Divider, Card, Tag, Row, Button, Space } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { TbRefresh } from 'react-icons/tb';
 
 import { showGlobalNotification } from 'store/actions/notification';
-
 import { AddEditForm } from './AddEditForm';
 import { STATUS } from 'components/common/CustomerMaster/IndividualCustomer/CustomerDetail/statusConstant';
 
-import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-import { getCodeValue } from 'utils/getCodeValue';
-
 import styles from 'assets/sass/app.module.scss';
-import { translateContent } from 'utils/translateContent';
 
 const { Text } = Typography;
 
@@ -46,7 +41,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ChangeModelVariantMasterBase = (props) => {
-    const { typeData, setCustomerNameList, status, setShowNameChangeHistory, selectedRecordId } = props;
+    const { typeData, setCustomerNameList, status, selectedRecordId } = props;
     const {
         formActionType: { addMode, editMode },
         formData,
@@ -62,22 +57,18 @@ const ChangeModelVariantMasterBase = (props) => {
         onModelSubmit,
         setOnModelSubmit,
         isLoading,
+        handleFormValueChange,
+        handleVehicleDetailChange,
+        filterVehicleData,
+        confirmRequest,
+        setConfirmRequest,
     } = props;
 
     const { selectedCustomerId } = props;
     const vehicleModelChangeRequest = formData?.vehicleModelChangeRequest || false;
-    const { isSupportingDocumentDataLoaded, supportingData, isViewDataLoaded, viewDocument } = props;
 
-    const [emptyList, setEmptyList] = useState(true);
-    const [fileList, setFileList] = useState([]);
     const [uploadedFileName, setUploadedFileName] = useState('');
-    const [editedMode, setEditedMode] = useState(false);
-    const [uploadedFile, setUploadedFile] = useState();
-    const [uploadImgDocId, setUploadImgDocId] = useState('');
-    const [supportingDataView, setSupportingDataView] = useState();
-    const [activeKey, setActiveKey] = useState([]);
-    const [changeNameAllowed, setChangeNameAllowed] = useState(false);
-    const [modelChangeHistoryItemList, setModelChangeHistoryItemList] = useState([]);
+    const [modelChangeItemList, setModelChangeItemList] = useState([]);
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message: message });
@@ -107,7 +98,7 @@ const ChangeModelVariantMasterBase = (props) => {
     }, [formData, editMode, vehicleModelChangeRequest]);
 
     useEffect(() => {
-        setModelChangeHistoryItemList(nameChangeHistoryItem);
+        setModelChangeItemList(nameChangeHistoryItem);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [nameChangeHistoryItem]);
 
@@ -198,75 +189,28 @@ const ChangeModelVariantMasterBase = (props) => {
     //     fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, selectedDocument, onSuccessAction });
     // };
 
-    const onViewHistoryChange = () => {
-        setShowNameChangeHistory(true);
-    };
+    // const onViewHistoryChange = () => {
+    //     setShowNameChangeHistory(true);
+    // };
 
     const formProps = {
         ...props,
         data,
-        setUploadImgDocId,
-        uploadImgDocId,
         typeData,
-        isSupportingDocumentDataLoaded,
-        supportingData,
-        isViewDataLoaded,
-        viewDocument,
         selectedCustomerId,
-        setUploadedFile,
-        uploadedFile,
-        // downloadFileFromButton,
-        // deleteFile,
-        editedMode,
-        setEditedMode,
-        // downloadFileFromList,
         setUploadedFileName,
         uploadedFileName,
-        setFileList,
-        fileList,
-        setEmptyList,
-        emptyList,
-        // handlePreview,
-        supportingDataView,
-        setSupportingDataView,
-        activeKey,
-        setActiveKey,
-        onViewHistoryChange,
-        setChangeNameAllowed,
         vehicleModelChangeRequest,
-        modelChangeHistoryItemList,
-        setModelChangeHistoryItemList,
+        modelChangeItemList,
+        setModelChangeItemList,
         onModelSubmit,
         setOnModelSubmit,
         setCustomerNameList,
-    };
-
-    const onEdit = (currentKey) => (e) => {
-        setModelChangeHistoryItemList(nameChangeHistoryItem?.map((i) => ({ ...i, changeAllowed: i?.id === currentKey ? true : false })));
-        setActiveKey(currentKey);
-    };
-
-    const customerName = ({ currentKey, formData, requestPending, canEdit }) => {
-        return checkAndSetDefaultValue(
-            <>
-                <Typography className={styles.verticallyCentered}>
-                    <div className={styles.flexDirectionColumn}>
-                        {getCodeValue(typeData?.TITLE, formData?.titleCode, '', false) + ' ' + (formData?.firstName || '') + ' ' + (formData?.middleName || '') + ' ' + (formData?.lastName || '')}
-                        {vehicleModelChangeRequest && (
-                            <Text type="secondary" style={{ fontSize: '12px', fontWeight: 'normal' }}>
-                                {requestPending ? 'Current' : 'Previous'} Name
-                            </Text>
-                        )}
-                    </div>
-                    {canEdit && (
-                        <Button className={`${styles.marL20} ${styles.verticallyCentered}`} disabled={changeNameAllowed} type="link" onClick={onEdit(currentKey)}>
-                            {translateContent('global.buttons.edit')}
-                        </Button>
-                    )}
-                </Typography>
-            </>,
-            isLoading
-        );
+        handleFormValueChange,
+        handleVehicleDetailChange,
+        filterVehicleData,
+        confirmRequest,
+        setConfirmRequest,
     };
 
     const handleRefresh = () => {
@@ -292,7 +236,7 @@ const ChangeModelVariantMasterBase = (props) => {
             {addMode ? (
                 <AddEditForm {...formProps} />
             ) : (
-                modelChangeHistoryItemList?.map((item) => {
+                modelChangeItemList?.map((item) => {
                     return (
                         <Card>
                             <Row justify="space-between" className={styles.fullWidth}>

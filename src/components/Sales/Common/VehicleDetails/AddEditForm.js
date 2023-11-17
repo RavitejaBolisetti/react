@@ -37,7 +37,7 @@ const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
     const { isProductDataLoading, productHierarchyData, toolTipContent, handleFormValueChange, optionalServices, setOptionalServices, formData, orderStatus, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, typeData, vehicleServiceData, setCustomerNameList, customerNameList, changeModel, setChangeModel, onModelSubmit, setOnModelSubmit } = props;
-    const { activeKey, onChange, formActionType, filterVehicleData, handleVehicleDetailChange, viewOnly, showPrintDiscount = false, isOTFModule } = props;
+    const { activeKey, onChange, formActionType, filterVehicleData, handleVehicleDetailChange, viewOnly, showPrintDiscount = false, isOTFModule, setFilterVehicleData } = props;
 
     const [optionForm] = Form.useForm();
     const [confirmRequest, setConfirmRequest] = useState();
@@ -117,12 +117,18 @@ const AddEditFormMain = (props) => {
         setOptionalServices,
         handleFormValueChange,
         vehicleServiceData,
+    };
+
+    const myProp = {
+        ...props,
+        ...OptionServicesFormProps,
         setCustomerNameList,
         customerNameList,
         editingOptionalData,
         setEditingOptionalData,
         onModelSubmit,
         setOnModelSubmit,
+        setFilterVehicleData,
     };
 
     const handleSelectTreeClick = (value) => {
@@ -213,7 +219,7 @@ const AddEditFormMain = (props) => {
                             {changeModel && (
                                 <Row>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <ChangeModelVariantMaster {...props} />
+                                        <ChangeModelVariantMaster {...myProp} />
                                     </Col>
                                 </Row>
                             )}

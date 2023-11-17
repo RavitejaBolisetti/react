@@ -4,10 +4,10 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 
-import React, { useState } from 'react';
-import { Col, Input, Form, Row, Select, Card, Button } from 'antd';
+import React, { useEffect } from 'react';
+import { Col, Input, Form, Row, Card, Button } from 'antd';
 
-import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetter } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import styles from 'assets/sass/app.module.scss';
@@ -18,31 +18,25 @@ import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { addToolTip } from 'utils/customMenuLink';
 
 const AddEditFormMain = (props) => {
-    const { formData, formActionType: { editMode } = undefined, showGlobalNotification, buttonData, setButtonData, confirmRequest, setConfirmRequest, setChangeModel, toolTipContent, setToolTipContent, onModelSubmit, setOnModelSubmit } = props;
-    const { form, setActiveKey, customerNameList, setCustomerNameList, setNameChangeRequested, modelChangeHistoryItemList, setModelChangeHistoryItemList, productHierarchyData, filterVehicleData, handleVehicleDetailChange, handleFormValueChange } = props;
+    const { formData, formActionType: { editMode } = undefined, showGlobalNotification, buttonData, setButtonData, confirmRequest, setConfirmRequest, setChangeModel, toolTipContent, onModelSubmit, setOnModelSubmit } = props;
+    const { form, modelChangeItemList, setModelChangeItemList, productHierarchyData, filterVehicleData, handleVehicleDetailChange, handleFormValueChange } = props;
 
     const formType = editMode ? 'New' : '';
-    const customerNameChangeField = ['model' + formType, 'modelCode' + formType];
+    const modelChangeField = ['model' + formType, 'modelCode' + formType];
+
     const onHandleSave = () => {
-        setNameChangeRequested(false);
-        form?.validateFields(customerNameChangeField)
+        form?.validateFields(modelChangeField)
             .then(() => {
-                const vehicleNewModel = form.getFieldsValue(customerNameChangeField);
+                const vehicleNewModel = form.getFieldsValue(modelChangeField);
                 const vehicleModelChangeRequest = { model: vehicleNewModel?.['model' + formType], modelCode: vehicleNewModel?.['modelCode' + formType] };
                 const vehicleCurrentModel = { model: formData?.model, modelCode: formData?.modelCode };
 
                 if (JSON.stringify(vehicleModelChangeRequest) === JSON.stringify(vehicleCurrentModel)) {
                     showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: 'Current and previous model are same' });
                 } else {
-                    setActiveKey([]);
                     setOnModelSubmit(true);
                     setButtonData({ ...buttonData, formBtnActive: true });
-                    setNameChangeRequested(true);
                     showGlobalNotification({ notificationType: 'warning', title: 'Pending for SAP Confirmation', message: 'Change model request approval is pending from SAP' });
-                    setCustomerNameList({
-                        ...vehicleModelChangeRequest,
-                        // supportingDocuments: uploadedFileInformation ? [{ id: formData?.id || '', documentName: uploadedFileInformation?.documentName, documentId: uploadedFileInformation?.docId || '' }] : [],
-                    });
                 }
             })
             .catch((err) => console.error(err));
@@ -57,11 +51,9 @@ const AddEditFormMain = (props) => {
             onCloseAction: onCloseAction,
             onSubmitAction: onSubmitAction,
         });
-        setModelChangeHistoryItemList(modelChangeHistoryItemList?.map((i) => ({ ...i, changeAllowed: false })));
+        setModelChangeItemList(modelChangeItemList?.map((i) => ({ ...i, changeAllowed: false })));
         form.setFieldsValue({ ['model' + formType]: formData?.model });
         form.setFieldsValue({ ['modelCode' + formType]: formData?.modelCode });
-
-        setActiveKey([]);
     };
 
     const onCloseAction = () => {
@@ -94,6 +86,7 @@ const AddEditFormMain = (props) => {
             onSubmitAction: () => {
                 const finalData = { ...filterVehicleData, productModelCode: value };
                 handleVehicleDetailChange(finalData);
+                form.setFieldsValue({ ['modelCode' + formType]: finalData?.productModelCode });
                 handleFormValueChange(true);
                 setConfirmRequest({
                     ...confirmRequest,
@@ -125,14 +118,14 @@ const AddEditFormMain = (props) => {
             <Card>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={14} lg={14} xl={14}>
-                        <Form.Item label="Revised Model Description" name={'model' + formType} rules={[validateRequiredSelectField('model')]}>
+                        <Form.Item label="Revised Model Description" name={'model' + formType} initialValue={formData?.model} rules={[validateRequiredSelectField('model')]}>
                             <TreeSelectField {...treeSelectFieldProps} />
                         </Form.Item>
                         {toolTipContent && <div className={styles.modelTooltip}>{addToolTip(toolTipContent, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle size={13} />)}</div>}
                     </Col>
                     <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                        <Form.Item label="Revised Model Code" name={'modelCode' + formType} rules={[validateRequiredInputField('model code')]}>
-                            <Input placeholder={preparePlaceholderText('Model Code')} disabled={onModelSubmit} />
+                        <Form.Item label="Revised Model Code" name={'modelCode' + formType} initialValue={formData?.modelCode} rules={[validateRequiredInputField('model code')]}>
+                            <Input placeholder={preparePlaceholderText('Model Code')} disabled={true} />
                         </Form.Item>
                     </Col>
                 </Row>
