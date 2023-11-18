@@ -156,13 +156,6 @@ export const EMBEDDED_REPORTS = {
         type: 'Document',
         slug: '',
     },
-    // STOCK_TRANSFER_ISSUE_NOTE_DOCUMENT: {
-    //     id: 13,
-    //     key: 'Stock_Transfer_Issue_Note_Document',
-    //     title: 'Stock Transfer Issue Note Document',
-    //     type: 'Document',
-    //     slug: 'stock-transfer-issue-note-document',
-    // },
     CO_DEALER_INVOICE_REPORT: {
         id: 21,
         key: 'Co_Dealer_Invoice_Report',
