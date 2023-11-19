@@ -7,9 +7,10 @@ import React from 'react';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 import { ShieldSchemeRegistrationMaster } from 'components/Services/ShieldSchemeRegistartion';
+import { translateContent } from 'utils/translateContent';
 
 const ShieldSchemeRegistrationPageBase = (props) => {
-    const pageTitle = 'Shield Scheme Registartion';
+    const pageTitle = translateContent('shieldSchemeRegistration.heading.moduleTitle');
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,
