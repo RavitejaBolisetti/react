@@ -831,7 +831,7 @@
             "customerType": "Customer Type",
             "emailID": "Email ID",
             "contactNo": "Contact over WhatsApp?",
-            "WhatsAppNoText": "Want to use mobile no as WhatsApp no",
+            "WhatsAppNoText": "Use mobile no as WhatsApp no?",
             "whatsappNumber": "Whatsapp Number",
             "corporateType": "Corporate Type",
             "corporateName": "Corporate Name",
@@ -973,7 +973,7 @@
             "documentType": "document type",
             "fileName": "File Name",
             "compName": "company name",
-            "compCode": "parent company code",
+            "companyCode": "parent company code",
             "corporateCode": "corporate code",
             "subCategory": "Usage/Application Sub-Category",
             "cusCategory": "Customer Category",
@@ -1970,13 +1970,13 @@
             "download": "Do you want to Print or download this Document"
         }
     },
-    "LessorCompanyCreation": {
+    "lessorCompanyCreation": {
         "heading": {
             "pageTitle": "Lessor Company Creation",
             "moduletitle": "Lessor Customer"
         },
         "label": {
-            "LessorCompany": "Lessor Customer Form",
+            "lessorCompany": "Lessor Customer Form",
             "companyName": "Company Name",
             "stateName": "State Name"
         },
@@ -3869,17 +3869,17 @@
             "columnFour": "Status"
         }
     },
-    "vehicleSalesSchemeMaster":{
-        "heading":{
+    "vehicleSalesSchemeMaster": {
+        "heading": {
             "moduleTitle": "Scheme",
             "title": "Vehicle Sales Scheme Master",
             "addZoneTitle": "Add Zone Details",
             "addProductDetails": "Add Product Details"
         },
-        "label":{
+        "label": {
             "downloadHere": "Download Here",
             "errorMessage": "Please add Vehicle Details",
-            "schemeDetails" : "Scheme Details",
+            "schemeDetails": "Scheme Details",
             "manufacturerOrganisation": "Manufacturer Organisation Hierarchy",
             "schemeType": "Scheme Type",
             "offerType": "Offer Type",
@@ -3902,9 +3902,9 @@
             "model": "Model",
             "schemeCode": "Scheme Code"
         },
-        "placeholder":{
+        "placeholder": {
             "parent": "Parent",
-            "schemeDetails" : "scheme details",
+            "schemeDetails": "scheme details",
             "manufacturerOrganisation": "manufacturer organisation hierarchy",
             "schemeType": "scheme type",
             "offerType": "offer type",
@@ -3920,8 +3920,8 @@
             "zone": "zone",
             "area": "area"
         },
-        "validation":{
-            "schemeDetails" : "scheme details",
+        "validation": {
+            "schemeDetails": "scheme details",
             "manufacturerOrganisation": "manufacturer organisation hierarchy",
             "schemeType": "scheme type",
             "offerType": "offer type",
@@ -3944,7 +3944,7 @@
             "dateError": "Date can't be less than Effective from date",
             "downloadText": "Please download 'Vehicle Sales Scheme Template' using below button"
         },
-        "button":{
+        "button": {
             "upload": "Upload Sales Scheme Master",
             "addScheme": "Add Scheme",
             "downloadTemplate": "Download Template"

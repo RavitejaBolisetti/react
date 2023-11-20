@@ -87,7 +87,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
     const [formData, setFormData] = useState();
     const [refershData, setRefershData] = useState(false);
     const [numbValidatedSuccess, setNumbValidatedSuccess] = useState(false);
-   
+
     useEffect(() => {
         if (customerDetailsData) {
             form?.setFieldsValue({ ...customerDetailsData });
@@ -162,13 +162,12 @@ const CompanyCustomerDetailsMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-   
-        if ((!formActionType?.addMode && !numbValidatedSuccess && customerDetailsData?.mobileNumber !== values?.mobileNumber)) {
+        if (!formActionType?.addMode && !numbValidatedSuccess && customerDetailsData?.mobileNumber !== values?.mobileNumber) {
             showGlobalNotification({ message: 'Please verify mobile number to proceed.' });
             console.log(numbValidatedSuccess, 'numbValidatedSuccess', customerDetailsData?.mobileNumber, 'CSMB', values?.mobileNumber, 'VMBN');
             return;
         }
-        
+
         const recordId = customerDetailsData?.id || '';
         const reqdata = { ...values, customerId: selectedCustomer?.customerId, id: recordId };
 
@@ -186,16 +185,12 @@ const CompanyCustomerDetailsMasterBase = (props) => {
             }
         };
 
-        const onError = (message) => {
-            showGlobalNotification({ message });
-        };
-
         const requestData = {
             data: reqdata,
             method: formActionType?.editMode ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
-            onError,
+            onError: onErrorAction,
             onSuccess,
         };
 
@@ -213,7 +208,8 @@ const CompanyCustomerDetailsMasterBase = (props) => {
                     name: 'parentCompanyCode',
                 },
             ];
-            fetchCustomerParentCompanyList({ setIsLoading: listCustomerParentCompanyShowLoading, extraParams, userId });
+
+            fetchCustomerParentCompanyList({ setIsLoading: listCustomerParentCompanyShowLoading, extraParams, userId, onErrorAction });
         }
     };
 
