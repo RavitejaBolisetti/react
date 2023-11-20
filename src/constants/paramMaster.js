@@ -489,4 +489,8 @@ export const PARAM_MASTER = {
         id: 'MITRA_TYPE',
         title: 'Mitra type in booking details',
     },
+    CO_DEALER_INV_SER: {
+        id: 'CO_DEALER_INV_SER',
+        title: 'Co Dealer Invoice',
+    },
 };

@@ -4026,5 +4026,16 @@
             "addScheme": "Add Scheme",
             "downloadTemplate": "Download Template"
         }
+    },
+    "coDealer": {
+        "heading": {
+            "moduleTitle": "Co Dealer Invoice",
+            "title": "Co Dealer Invoice"
+        },
+        "label": {},
+        "placeholder": {},
+        "validation": {},
+        "text": {},
+        "button": {}
     }
 }
