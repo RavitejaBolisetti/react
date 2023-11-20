@@ -70,7 +70,7 @@ const CustomerDetailsForm = (props) => {
                                         </Col>
 
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label={translateContent('amcRegistration.label.pinCode')} name="pinCode">
+                                            <Form.Item label={translateContent('amcRegistration.label.pinCode')} name="pincode">
                                                 <Input placeholder={preparePlaceholderText(translateContent('amcRegistration.label.pinCode'))} disabled={true} />
                                             </Form.Item>
                                         </Col>

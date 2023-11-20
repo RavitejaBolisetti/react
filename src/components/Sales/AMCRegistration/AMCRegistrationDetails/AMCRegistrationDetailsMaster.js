@@ -45,7 +45,7 @@ const AMCRegistrationDetailsMasterBase = (props) => {
             schemeForm.setFieldsValue({ ...requestPayload?.amcSchemeDetails, schemeEndDate: formatDateToCalenderDate(requestPayload?.amcSchemeDetails?.schemeEndDate) });
         }
         if (requestPayload && formActionType?.addMode) {
-            setselectedSaleType(requestPayload?.amcRegistration?.saleType);
+            setselectedSaleType(requestPayload?.amcRegistration?.priceType);
         }
         fetchEmployeeList({ setIsLoading: listEmployeeShowLoading, extraParams: generateExtraParams(AMC_CONSTANTS?.EMPLOYEE?.key), userId });
         fetchManagerList({ setIsLoading: listEmployeeShowLoading, extraParams: generateExtraParams(AMC_CONSTANTS?.MANAGER?.key), userId });

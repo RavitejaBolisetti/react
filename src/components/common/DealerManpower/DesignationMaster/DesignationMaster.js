@@ -249,7 +249,7 @@ export const DesignationMasterBase = (props) => {
         };
 
     const onFinish = (values) => {
-        let data = { ...values };
+        let data = { ...values, designationCode: formData?.designationCode };
 
         const onSuccess = (res) => {
             form.resetFields();
