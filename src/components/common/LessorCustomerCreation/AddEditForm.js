@@ -50,9 +50,9 @@ const AddEditFormMain = (props) => {
             showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationSuccess.error'), message: res, placement: 'bottomRight' });
         };
 
-        const filteredTypeData = typeData[PARAM_MASTER.FILE_DOWNLOAD_TMPLT.id].filter((value) => value.key === PARAM_MASTER.LSRCUSTTMPLT.id);
+        const filteredTypeData = typeData[PARAM_MASTER.FILE_DOWNLOAD_TMPLT.id]?.filter((value) => value.key === PARAM_MASTER.LSRCUSTTMPLT.id);
         let templateID = null;
-        if (filteredTypeData.length === 1) {
+        if (filteredTypeData?.length === 1) {
             templateID = filteredTypeData[0];
         }
         const extraParams = [
@@ -87,7 +87,7 @@ const AddEditFormMain = (props) => {
             showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationSuccess.error'), message: res, placement: 'bottomRight' });
         };
 
-        if (typeof form.getFieldValue('stateCode') === 'undefined') {
+        if (typeof form?.getFieldValue('stateCode') === 'undefined') {
             fetchList({ setIsLoading: listLessorShowLoading, isDataLoaded, userId, onSuccessAction, onErrorAction });
         } else {
             const extraParams = [
