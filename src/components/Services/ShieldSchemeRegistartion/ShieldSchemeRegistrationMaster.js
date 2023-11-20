@@ -164,7 +164,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const ShieldSchemeRegistrationMasterMain = (props) => {
     const { userId, loginUserData, invoiceStatusList, typeData, data, showGlobalNotification, totalRecords, moduleTitle, fetchList, fetchDetail, fetchSchemeDescription, fetchEmployeeList, fetchManagerList, saveData, listShowLoading, listSchemeLoading, listEmployeeShowLoading, setFilterString, filterString, detailShieldData, resetDetail, resetSchemeDetail, isEmployeeDataLoaded, isEmployeeDataLoading, isSchemeLoading, employeeData, managerData, schemeDetail, fetchDealerParentsLovList, dealerParentsLovList, fetchDealerLocations, dealerLocations } = props;
-    const { fetchModelFamilyLovList, listFamilyShowLoading, modelFamilyData, fetchModelList, listModelShowLoading } = props;
+    const { fetchModelFamilyLovList, listFamilyShowLoading, modelFamilyData, fetchModelList, listModelShowLoading, ProductHierarchyData } = props;
 
     const [selectedOrder, setSelectedOrder] = useState();
     const [selectedOrderId, setSelectedOrderId] = useState();
@@ -424,12 +424,12 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     }, [userId, vinNumber]);
 
     useEffect(() => {
-        if (detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelGroup) {
+        if (detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelFamily) {
             const makeExtraParams = [
                 {
                     key: 'familyCode',
                     title: 'familyCode',
-                    value: detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelGroup,
+                    value: detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelFamily,
                     name: 'familyCode',
                 },
             ];
@@ -444,7 +444,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
                 {
                     key: 'modelGroupCode',
                     title: 'modelGroupCode',
-                    value: detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelFamily,
+                    value: detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelGroup,
                     name: 'modelGroupCode',
                 },
             ];
@@ -1009,6 +1009,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         fetchManagerList,
         managerData,
         modelFamilyData,
+        ProductHierarchyData
     };
 
     useEffect(() => {
