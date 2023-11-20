@@ -9,6 +9,7 @@ import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import { convertDate, dateFormatView } from 'utils/formatDateTime';
 import dayjs from 'dayjs';
 import { translateContent } from 'utils/translateContent';
+import { VOUCHER_TYPE } from 'constants/VoucherType';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -47,7 +48,7 @@ const VoucherCard = (props) => {
             >
                 <Divider />
                 <div className={styles.detailCardText}>
-                    {translateContent('creditDebitNote.leftSideBar.label.voucherType')}: <span>{selectedRecord?.voucherType || '-'}</span>
+                    {translateContent('creditDebitNote.leftSideBar.label.voucherType')}: <span>{selectedRecord.voucherType === VOUCHER_TYPE?.DEBIT_TYPE?.type ? VOUCHER_TYPE?.DEBIT_TYPE?.key : VOUCHER_TYPE?.CREDIT_TYPE?.key || '-'}</span>
                 </div>
             </Panel>
         </Collapse>

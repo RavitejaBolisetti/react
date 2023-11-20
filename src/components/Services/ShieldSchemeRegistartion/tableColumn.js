@@ -16,7 +16,7 @@ export const tableColumn = (props) => {
     const { handleButtonClick, typeData } = props;
     const tableColumn = [
         tblPrepareColumns({
-            title: translateContent('shieldSchemeRegistration.label.columnOne'),
+            title: translateContent('shieldSchemeRegistration.label.shieldRegistrationDate'),
             dataIndex: 'shieldRegistrationNumber',
             width: '20%',
             render: (__, value) => {
@@ -30,19 +30,19 @@ export const tableColumn = (props) => {
         }),
 
         tblPrepareColumns({
-            title:  translateContent('shieldSchemeRegistration.label.columnTwo'),
+            title: translateContent('shieldSchemeRegistration.label.dealerLocation'),
             dataIndex: 'dealerLocation',
             width: '26%',
         }),
 
         tblPrepareColumns({
-            title:  translateContent('shieldSchemeRegistration.label.columnThree'),
+            title: translateContent('shieldSchemeRegistration.label.vin'),
             dataIndex: 'vin',
             width: '20%',
         }),
 
         tblPrepareColumns({
-            title:  translateContent('shieldSchemeRegistration.label.columnFour'),
+            title: translateContent('shieldSchemeRegistration.label.status'),
             dataIndex: 'status',
             width: '20%',
             render: (status) => {

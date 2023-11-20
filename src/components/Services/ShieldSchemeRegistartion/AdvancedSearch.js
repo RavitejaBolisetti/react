@@ -16,6 +16,7 @@ import { disableFutureDate } from 'utils/disableDate';
 
 import { AMC_CONSTANTS } from 'components/Sales/AMCRegistration/utils/AMCConstants';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const AdvancedSearchFrom = (props) => {
     const { setAdvanceSearchVisible, dealerParentsLovList, dealerLocations, userType, handleDealerParentChange } = props;
@@ -61,31 +62,31 @@ export const AdvancedSearchFrom = (props) => {
             {userType === AMC_CONSTANTS?.MNM?.key && (
                 <Row gutter={16}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item initialValue={filterString?.dealerParent} label="Dealer Parent" name="dealerParent">
-                            {customSelectBox({ data: dealerParentsLovList, placeholder: preparePlaceholderSelect('Dealer Parent'), onChange: handleDealerParentChange })}
+                        <Form.Item initialValue={filterString?.dealerParent} label={translateContent('shieldSchemeRegistration.label.dealerParent')} name="dealerParent">
+                            {customSelectBox({ data: dealerParentsLovList, placeholder: preparePlaceholderSelect(translateContent('shieldSchemeRegistration.label.dealerParent')), onChange: handleDealerParentChange })}
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item initialValue={filterString?.dealerLocation} label="Dealer Location" name="dealerLocation">
-                            {customSelectBox({ data: dealerLocations, placeholder: preparePlaceholderSelect('Dealer Location'), fieldNames: { key: 'locationCode', value: 'dealerLocationName' } })}
+                        <Form.Item initialValue={filterString?.dealerLocation} label={translateContent('shieldSchemeRegistration.label.dealerLocation')} name="dealerLocation">
+                            {customSelectBox({ data: dealerLocations, placeholder: preparePlaceholderSelect(translateContent('shieldSchemeRegistration.label.dealerLocation')), fieldNames: { key: 'locationCode', value: 'dealerLocationName' } })}
                         </Form.Item>
                     </Col>
                 </Row>
             )}
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="Scheme Registration From Date" name="fromDate" className={styles?.datePicker} rules={[validateRequiredInputField('invoice from date')]}>
+                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label={translateContent('shieldSchemeRegistration.label.schemeRegistrationFromDate')} name="fromDate" className={styles?.datePicker} rules={[validateRequiredInputField(translateContent('shieldSchemeRegistration.label.schemeRegistrationFromDate'))]}>
                         <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} onChange={() => advanceFilterForm.setFieldsValue({ toDate: undefined })} className={styles.fullWidth} disabledDate={disableFutureDate} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         initialValue={formatDateToCalenderDate(filterString?.toDate)}
-                        label="Scheme Registration To Date"
+                        label={translateContent('shieldSchemeRegistration.label.schemeRegistrationToDate')}
                         name="toDate"
                         className={styles?.datePicker}
                         rules={[
-                            validateRequiredInputField('invoice to date'),
+                            validateRequiredInputField(translateContent('shieldSchemeRegistration.label.schemeRegistrationToDate')),
                             {
                                 validator: (_, value) => {
                                     return advanceFilterForm.getFieldValue('fromDate') ? CheckDateEffectiveTo(value, advanceFilterForm?.getFieldValue('fromDate')) : Promise.resolve();
@@ -101,13 +102,13 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
                     <Button onClick={handleResetFilter} danger>
-                        Reset
+                        {translateContent('global.buttons.reset')}
                     </Button>
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
                     <Button htmlType="submit" type="primary">
-                        Apply
+                        {translateContent('global.buttons.apply')}
                     </Button>
                 </Col>
             </Row>

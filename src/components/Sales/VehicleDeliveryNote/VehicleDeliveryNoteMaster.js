@@ -411,8 +411,8 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         setReportVisible(true);
         setAdditionalReportParams([
             {
-                key: 'sa_od_delivery_challan_hdr_id',
-                value: selectedOrder?.deliveryHdrId,
+                key: deliveryType === DELIVERY_TYPE?.NOTE?.key ? 'delivery_note_id' : deliveryType === DELIVERY_TYPE?.CHALLAN?.key ? 'sa_od_delivery_challan_hdr_id' : null,
+                value: deliveryType === DELIVERY_TYPE?.NOTE?.key ? selectedOrder?.vehicleDeliveryNote : deliveryType === DELIVERY_TYPE?.CHALLAN?.key ? selectedOrder?.deliveryHdrId : null,
             },
         ]);
     };
@@ -864,7 +864,8 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         setSection,
     };
 
-    const reportDetail = soldByDealer ? EMBEDDED_REPORTS?.DELIVERY_NOTE_DOCUMENT : EMBEDDED_REPORTS?.CHALLAN_DOCUMENT;
+    const reportDetail = deliveryType === DELIVERY_TYPE?.NOTE?.key ? EMBEDDED_REPORTS?.DELIVERY_NOTE_DOCUMENT : deliveryType === DELIVERY_TYPE?.CHALLAN?.key ? EMBEDDED_REPORTS?.CHALLAN_DOCUMENT : null;
+
     const reportProps = {
         isVisible: isReportVisible,
         titleOverride: reportDetail?.title,

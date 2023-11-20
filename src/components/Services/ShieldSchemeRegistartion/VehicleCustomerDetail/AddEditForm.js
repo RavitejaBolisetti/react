@@ -4,18 +4,26 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Row, Col, Input, Form, Collapse, Divider, DatePicker } from 'antd';
+import { Row, Col, Input, Form, Collapse, Divider, DatePicker, Select } from 'antd';
 import { expandActionIcon } from 'utils/accordianExpandIcon';
 import { convertDateToCalender, dateFormat } from 'utils/formatDateTime';
 
-import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
+const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { formData, formActionType, vehicleDetailForm, customerDetailForm, handleFormValueChange } = props;
+    const { formData, formActionType, vehicleDetailForm, customerDetailForm, handleFormValueChange, modelFamilyData } = props;
 
     const [activeKey, setActiveKey] = useState([]);
+
+    const selectProps = {
+        optionFilterProp: 'children',
+        showSearch: true,
+        allowClear: true,
+    };
 
     const onChange = (values) => {
         const isPresent = activeKey?.includes(values);
@@ -40,40 +48,47 @@ const AddEditFormMain = (props) => {
         <Row gutter={20}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                 <Collapse collapsible="icon" expandIcon={({ isActive }) => expandActionIcon(isActive, formActionType)} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
-                    <Panel header="Vehicle Details" key="1">
+                    <Panel header={translateContent('shieldSchemeRegistration.heading.vehicleDetails')} key="1">
                         <Divider />
                         <Form layout="vertical" autoComplete="off" form={vehicleDetailForm} onFieldsChange={handleFormValueChange}>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item initialValue={formData?.vehicleDetails?.vin} label="VIN" name="vin">
-                                        <Input placeholder={preparePlaceholderText('VIN')} disabled={true} />
+                                    <Form.Item initialValue={formData?.vehicleDetails?.vin} label={translateContent('shieldSchemeRegistration.label.vin')} name="vin">
+                                        <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.vin'))} disabled={true} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item initialValue={formData?.vehicleDetails?.vehicleRegistrationNumber} label="Vehicle Registration No." name="vehicleRegistrationNumber">
-                                        <Input placeholder={preparePlaceholderText('Vehicle Registration No.')} disabled={true} />
+                                    <Form.Item initialValue={formData?.vehicleDetails?.vehicleRegistrationNumber} label={translateContent('shieldSchemeRegistration.label.vehicleRegistrationNo')} name="vehicleRegistrationNumber">
+                                        <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.vehicleRegistrationNo'))} disabled={true} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item {...fromDateInitialValue} label="Org. Warranty Start Date" name="orgWarrantyStartDate">
+                                    <Form.Item {...fromDateInitialValue} label={translateContent('shieldSchemeRegistration.label.orgWarrantyStartDate')} name="orgWarrantyStartDate">
                                         <DatePicker format={dateFormat} placeholder={preparePlaceholderText('Org. Warranty Start Date')} disabled={true} style={{ display: 'auto', width: '100%' }} />
                                     </Form.Item>
                                 </Col>
                             </Row>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item initialValue={formData?.vehicleDetails?.modelGroup} label="Model Group" name="modelGroup">
-                                        <Input placeholder={preparePlaceholderText('Model Group')} disabled={true} />
+                                    <Form.Item initialValue={formData?.vehicleDetails?.modelGroup} label={translateContent('shieldSchemeRegistration.label.modelGroup')} name="modelGroup">
+                                        <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.modelGroup'))} disabled={true} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item initialValue={formData?.vehicleDetails?.modelFamily} label="Model Family" name="modelFamily">
-                                        <Input placeholder={preparePlaceholderText('Model Family')} disabled={true} />
+                                    <Form.Item initialValue={formData?.vehicleDetails?.modelFamily} label={translateContent('shieldSchemeRegistration.label.modelFamily')} name="modelFamily">
+                                        <Select {...selectProps} placeholder={preparePlaceholderSelect(translateContent('shieldSchemeRegistration.label.modelFamily'))} disabled={true}>
+                                            {modelFamilyData?.map((item) => (
+                                                <Option key={'dv' + item.key} value={item.familyCode}>
+                                                    {item.familyDescription}
+                                                </Option>
+                                            ))}
+                                        </Select>
+                                        {/* <Input placeholder={preparePlaceholderText('Model Family')} disabled={true} /> */}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item initialValue={formData?.vehicleDetails?.modelDescription} label="Model Description" name="modelDescription">
-                                        <Input placeholder={preparePlaceholderText('Model Description')} disabled={true} />
+                                    <Form.Item initialValue={formData?.vehicleDetails?.modelDescription} label={translateContent('shieldSchemeRegistration.label.modelDescription')} name="modelDescription">
+                                        <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.modelDescription'))} disabled={true} />
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -81,69 +96,69 @@ const AddEditFormMain = (props) => {
                     </Panel>
                 </Collapse>
                 <Collapse collapsible="icon" expandIcon={({ isActive }) => expandActionIcon(isActive, formActionType)} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
-                    <Panel header="Customer Details" key="2">
+                    <Panel header={translateContent('shieldSchemeRegistration.heading.customerDetails')} key="2">
                         <Divider />
                         <Form layout="vertical" autoComplete="off" form={customerDetailForm} onFieldsChange={handleFormValueChange}>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item initialValue={formData?.customerDetails?.customerId} label="Customer ID" name="customerId">
-                                        <Input placeholder={preparePlaceholderText('Customer ID')} disabled={true} />
+                                    <Form.Item initialValue={formData?.customerDetails?.customerId} label={translateContent('shieldSchemeRegistration.label.customerId')} name="customerId">
+                                        <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.customerId'))} disabled={true} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item initialValue={formData?.customerDetails?.customerName} label="Customer Name" name="customerName">
-                                        <Input placeholder={preparePlaceholderText('Customer Name')} disabled={true} />
+                                    <Form.Item initialValue={formData?.customerDetails?.customerName} label={translateContent('shieldSchemeRegistration.label.customerName')} name="customerName">
+                                        <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.customerName'))} disabled={true} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item initialValue={formData?.customerDetails?.address} label="Address" name="address">
-                                        <Input placeholder={preparePlaceholderText('Address')} disabled={true} />
-                                    </Form.Item>
-                                </Col>
-                            </Row>
-                            <Row gutter={20}>
-                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item initialValue={formData?.customerDetails?.state} label="State" name="state">
-                                        <Input placeholder={preparePlaceholderText('State')} disabled={true} />
-                                    </Form.Item>
-                                </Col>
-                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item initialValue={formData?.customerDetails?.district} label="District" name="district">
-                                        <Input placeholder={preparePlaceholderText('District')} disabled={true} />
-                                    </Form.Item>
-                                </Col>
-                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item initialValue={formData?.customerDetails?.tehsil} label="Tehsil" name="tehsil">
-                                        <Input placeholder={preparePlaceholderText('Tehsil')} disabled={true} />
+                                    <Form.Item initialValue={formData?.customerDetails?.address} label={translateContent('shieldSchemeRegistration.label.address')} name="address">
+                                        <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.address'))} disabled={true} />
                                     </Form.Item>
                                 </Col>
                             </Row>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item initialValue={formData?.customerDetails?.city} label="City" name="city">
-                                        <Input placeholder={preparePlaceholderText('City')} disabled={true} />
+                                    <Form.Item initialValue={formData?.customerDetails?.state} label={translateContent('shieldSchemeRegistration.label.state')} name="state">
+                                        <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.state'))} disabled={true} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item initialValue={formData?.customerDetails?.locality} label="Locality" name="locality">
-                                        <Input placeholder={preparePlaceholderText('Locality')} disabled={true} />
+                                    <Form.Item initialValue={formData?.customerDetails?.district} label={translateContent('shieldSchemeRegistration.label.district')} name="district">
+                                        <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.district'))} disabled={true} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item initialValue={formData?.customerDetails?.pinCode} label="Pincode" name="pinCode">
-                                        <Input placeholder={preparePlaceholderText('Pincode')} disabled={true} />
+                                    <Form.Item initialValue={formData?.customerDetails?.tehsil} label={translateContent('shieldSchemeRegistration.label.tehsil')} name="tehsil">
+                                        <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.tehsil'))} disabled={true} />
                                     </Form.Item>
                                 </Col>
                             </Row>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item initialValue={formData?.customerDetails?.mobileNumber} label="Mobile Number" name="mobileNumber">
-                                        <Input placeholder={preparePlaceholderText('Mobile Number')} disabled={true} />
+                                    <Form.Item initialValue={formData?.customerDetails?.city} label={translateContent('shieldSchemeRegistration.label.city')} name="city">
+                                        <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.city'))} disabled={true} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item initialValue={formData?.customerDetails?.gstIn} label="GSTIN" name="gstIn">
-                                        <Input placeholder={preparePlaceholderText('gistin')} disabled={true} />
+                                    <Form.Item initialValue={formData?.customerDetails?.locality} label={translateContent('shieldSchemeRegistration.label.locality')} name="locality">
+                                        <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.locality'))} disabled={true} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item initialValue={formData?.customerDetails?.pinCode} label={translateContent('shieldSchemeRegistration.label.pincode')} name="pinCode">
+                                        <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.pincode'))} disabled={true} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item initialValue={formData?.customerDetails?.mobileNumber} label={translateContent('shieldSchemeRegistration.label.mobileNumber')} name="mobileNumber">
+                                        <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.mobileNumber'))} disabled={true} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item initialValue={formData?.customerDetails?.gstIn} label={translateContent('shieldSchemeRegistration.label.gstIn')} name="gstIn">
+                                        <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.gstIn'))} disabled={true} />
                                     </Form.Item>
                                 </Col>
                             </Row>

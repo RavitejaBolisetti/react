@@ -36,6 +36,25 @@ describe('Master Component', () => {
         const searchBtn = screen.getByRole('button', { name: 'search' });
         fireEvent.click(searchBtn);
     });
+
+    it('should click on available coulmnheader', () => {
+        customRender(<ShieldSchemeRegistrationMaster setFilterString={jest.fn()} resetData={jest.fn()} />);
+
+        const srlNo = screen.getByRole('columnheader', { name: 'Srl.' });
+        fireEvent.click(srlNo);
+
+        const shieldReg = screen.getByRole('columnheader', { name: 'Shield Registration No. & Date' });
+        fireEvent.click(shieldReg);
+
+        const dealerLocation = screen.getByRole('columnheader', { name: 'Dealer Location' });
+        fireEvent.click(dealerLocation);
+
+        const vinNo = screen.getByRole('columnheader', { name: 'VIN' });
+        fireEvent.click(vinNo);
+
+        const status = screen.getByRole('columnheader', { name: 'Status' });
+        fireEvent.click(status);
+    });
     it('reset button should work', () => {
         customRender(<ShieldSchemeRegistrationMaster setFilterString={jest.fn()} resetData={jest.fn()} />);
 
@@ -161,7 +180,9 @@ describe('Master Component', () => {
 
         fetchList.mock.calls[0][0].onSuccessAction();
 
-        await waitFor(() => { expect(screen.getByText('kai')).toBeInTheDocument() });
+        await waitFor(() => {
+            expect(screen.getByText('kai')).toBeInTheDocument();
+        });
 
         const viewBtn = screen.getByTestId('view');
         fireEvent.click(viewBtn);
