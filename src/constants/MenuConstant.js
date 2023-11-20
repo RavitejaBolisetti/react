@@ -613,6 +613,20 @@ export const MenuConstant = {
         parentMenuId: 'SACT-04',
     },
 
+    [getMenyKey('SAST-10.01')]: {
+        key: 'SAST-10.01',
+        link: routing.ROUTING_VEHICLE_SALES_SCHEME_MASTER,
+        icon: undefined,
+        parentMenuId: 'SAST-10',
+    },
+
+    [getMenyKey('SRST-05.06')]: {
+        key: 'SRST-05.06',
+        link: routing.ROUTING_CRM_SCHEME_ENROLMENT,
+        icon: undefined,
+        parentMenuId: 'SRST-05',
+    },
+
     [getMenyKey('SACT-04.08')]: {
         key: 'SACT-04.08',
         link: routing.ROUTING_VEHICLE_RECEIPT,
