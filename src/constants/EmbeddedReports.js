@@ -100,7 +100,7 @@ export const EMBEDDED_REPORTS = {
 
     STOCK_TRANSFER_ISSUE_NOTE_DOCUMENT: {
         id: 13,
-        key: 'Stock_Transfer_Issue_Note_Document',
+        key: 'Stock_Transfer_Issue_Note',
         title: 'Stock Transfer Issue Note Document',
         type: 'Document',
         slug: 'stock-transfer-issue-note-document',
