@@ -54,14 +54,14 @@ const ViewDetail = (props) => {
                         {/* <Tag style={{ float: 'right' }}>{getCodeValue(typeData?.AMC_REG_APRVL_STAT, selectedOrder?.status)}</Tag> */}
                     </Col>
                 </Row>
-                <Row type="flex" align="middle" className={styles?.marB20}>
+                <Row type="flex" align="middle" className={selectedOrder?.status === AMC_CONSTANTS?.PENDING_FOR_CANCELLATION?.title ? '' : styles.marB20}>
                     <Col xs={24} sm={24} md={24} lg={24}>
                         <div className={styles.tableTextColor85}>
                             {translateContent('shieldSchemeRegistration.label.requestedOn')}: {convertDateMonthYear(formData?.shieldRegistrationDate)}
                         </div>
                     </Col>
                 </Row>
-                {selectedOrder?.status === QUERY_BUTTONS_MNM_USER?.PENDING_FOR_APPROVAL?.key && <Divider className={styles.marT20} />}
+                {selectedOrder?.status === QUERY_BUTTONS_MNM_USER?.PENDING_FOR_CANCELLATION?.key && <Divider className={styles.marT20} />}
                 {userType === AMC_CONSTANTS?.MNM?.key ? (
                     selectedOrder?.status === QUERY_BUTTONS_MNM_USER?.PENDING_FOR_APPROVAL?.key || AMC_CONSTANTS?.PENDING_FOR_CANCELLATION?.title ? (
                         <>
@@ -116,7 +116,7 @@ const ViewDetail = (props) => {
                 ) : (
                     <>
                         {(selectedOrder?.status === QUERY_BUTTONS_CONSTANTS?.APPROVED?.key || selectedOrder?.status === QUERY_BUTTONS_CONSTANTS?.REJECTED?.key) && RejectionView}
-                        {selectedOrder?.status === QUERY_BUTTONS_MNM_USER?.PENDING_FOR_APPROVAL?.key && (
+                        {selectedOrder?.status === QUERY_BUTTONS_MNM_USER?.PENDING_FOR_CANCELLATION?.key && (
                             <Row gutter={20} className={styles.marB20}>
                                 <Col xs={4} sm={4} md={4} lg={4}>
                                     <Button type="primary" onClick={handleCancelRequest}>

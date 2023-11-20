@@ -19,6 +19,7 @@ import { schemeDescriptionDataAction } from 'store/actions/data/services/schemeD
 import { employeeSearchDataAction } from 'store/actions/data/amcRegistration/employeeSearch';
 import { dealerParentLovDataActions } from 'store/actions/data/dealer/dealerParentsLov';
 import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
+import { ProductModelGroupsDataActions } from 'store/actions/data/VehicleModelTaxChargesCategory/productModelGroup';
 import { otfModelFamilyDetailDataActions } from 'store/actions/data/otf/modelFamily';
 import { BASE_URL_APPLICATION_DEALER_LOCATION as customURL } from 'constants/routingApi';
 import { ListDataTable } from 'utils/ListDataTable';
@@ -84,6 +85,9 @@ const mapStateToProps = (state) => {
             OTF: {
                 ModelFamily: { isLoaded: isModelFamilyDataLoaded = false, isLoading: isModelFamilyLoading, data: modelFamilyData = [] },
             },
+            VehicleModelandTaxChargesCategory: {
+                ProductModelGroup: { isLoaded: isProductHierarchyDataLoaded = false, isLoading: isProductHierarchyDataLoading = false, data: ProductHierarchyData = [] },
+            },
         },
         common: {
             Header: { data: loginUserData = [] },
@@ -114,6 +118,9 @@ const mapStateToProps = (state) => {
         isModelFamilyDataLoaded,
         isModelFamilyLoading,
         modelFamilyData,
+        isProductHierarchyDataLoaded,
+        isProductHierarchyDataLoading,
+        ProductHierarchyData,
     };
     return returnValue;
 };
@@ -141,6 +148,10 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: shieldSchemeSearchDataAction.listShowLoading,
             listSchemeLoading: schemeDescriptionDataAction.listShowLoading,
 
+            fetchModelList: ProductModelGroupsDataActions.fetchList,
+            listModelShowLoading: ProductModelGroupsDataActions.listShowLoading,
+            resetProductData: ProductModelGroupsDataActions.reset,
+
             fetchModelFamilyLovList: otfModelFamilyDetailDataActions.fetchList,
             listFamilyShowLoading: otfModelFamilyDetailDataActions.listShowLoading,
             resetFamily: otfModelFamilyDetailDataActions.reset,
@@ -153,7 +164,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const ShieldSchemeRegistrationMasterMain = (props) => {
     const { userId, loginUserData, invoiceStatusList, typeData, data, showGlobalNotification, totalRecords, moduleTitle, fetchList, fetchDetail, fetchSchemeDescription, fetchEmployeeList, fetchManagerList, saveData, listShowLoading, listSchemeLoading, listEmployeeShowLoading, setFilterString, filterString, detailShieldData, resetDetail, resetSchemeDetail, isEmployeeDataLoaded, isEmployeeDataLoading, isSchemeLoading, employeeData, managerData, schemeDetail, fetchDealerParentsLovList, dealerParentsLovList, fetchDealerLocations, dealerLocations } = props;
-    const { fetchModelFamilyLovList, listFamilyShowLoading, modelFamilyData } = props;
+    const { fetchModelFamilyLovList, listFamilyShowLoading, modelFamilyData, fetchModelList, listModelShowLoading } = props;
 
     const [selectedOrder, setSelectedOrder] = useState();
     const [selectedOrderId, setSelectedOrderId] = useState();
@@ -413,12 +424,12 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     }, [userId, vinNumber]);
 
     useEffect(() => {
-        if (detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelFamily) {
+        if (detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelGroup) {
             const makeExtraParams = [
                 {
                     key: 'familyCode',
                     title: 'familyCode',
-                    value: detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelFamily,
+                    value: detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelGroup,
                     name: 'familyCode',
                 },
             ];
@@ -426,6 +437,21 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelFamily]);
+
+    useEffect(() => {
+        if (detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelGroup) {
+            const makeExtraParams = [
+                {
+                    key: 'modelGroupCode',
+                    title: 'modelGroupCode',
+                    value: detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelFamily,
+                    name: 'modelGroupCode',
+                },
+            ];
+            fetchModelList({ setIsLoading: listModelShowLoading, userId, extraParams: makeExtraParams });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelGroup]);
 
     const handleInvoiceTypeChange = (buttonName) => {
         setAmcStatus(buttonName?.key);
@@ -494,7 +520,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
                 setButtonData(Visibility);
                 // setButtonData({ ...Visibility, cancelReceiptBtn: true });
                 if (buttonAction === VIEW_ACTION) {
-                    amcStatus === QUERY_BUTTONS_CONSTANTS?.PENDING?.key ? setButtonData({ ...Visibility, editBtn: false, cancelSchemeBtn: true }) : setButtonData({ ...Visibility, editBtn: false, cancelSchemeBtn: false });
+                    amcStatus === QUERY_BUTTONS_CONSTANTS?.APPROVED?.key ? setButtonData({ ...Visibility, editBtn: false, cancelSchemeBtn: true }) : setButtonData({ ...Visibility, editBtn: false, cancelSchemeBtn: false });
                     // receiptStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: false, printReceiptBtn: true }) : receiptStatus === QUERY_BUTTONS_CONSTANTS.APPORTION.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: true, printReceiptBtn: true }) : setButtonData({ ...Visibility, editBtn: true, cancelReceiptBtn: true, printReceiptBtn: true });
                 }
             }
@@ -704,7 +730,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     const handleCancelRequest = () => {
         setCancelSchemeVisible(true);
         setAmcWholeCancellation(false);
-        setStatus(QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key);
+        setStatus(QUERY_BUTTONS_CONSTANTS?.APPROVED?.key);
     };
     const handleMNMApproval = () => {
         setCancelSchemeVisible(true);
