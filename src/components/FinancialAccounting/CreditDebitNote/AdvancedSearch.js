@@ -81,7 +81,7 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={filterString?.voucherType} label={translateContent('creditDebitNote.label.voucherType')} name="voucherType">
-                        <Select showSearch allowClear placeholder={preparePlaceholderSelect(translateContent('creditDebitNote.placeholder.voucherType'))} fieldNames={{ label: 'value', value: 'value' }} options={typeData[PARAM_MASTER.VOUCHR_TYPE.id]}></Select>
+                        <Select showSearch allowClear placeholder={preparePlaceholderSelect(translateContent('creditDebitNote.placeholder.voucherType'))} fieldNames={{ label: 'value', value: 'key' }} options={typeData[PARAM_MASTER.VOUCHR_TYPE.id]}></Select>
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>

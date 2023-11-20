@@ -693,7 +693,8 @@
             "doWantToDownload": "Do you want to Print or download invoice and registration certificate",
             "duplicateVehicle": "Vehicle is duplicate",
             "vehicleRegistrationNoMandatory": "Please add vehicle registration number to continue",
-            "onlyOneVehicleAllowed": "ACM type is comprehensive, Only one vehicle is allowed"
+            "onlyOneVehicleAllowed": "ACM type is comprehensive, Only one vehicle is allowed",
+            "taxValidation": "Please select sale type, scheme and scheme discount"
         },
         "label": {
             "amcRegNoDate": "AMC Registration No. & Date",
@@ -760,7 +761,8 @@
             "modelDescription": "Model Description",
             "addNewVehicleMsg": "Please add new vehicle using",
             "buttonAtTop": "button at top",
-            "vehicleDetails": "Vehicle Details"
+            "vehicleDetails": "Vehicle Details",
+            "selectVehicle": "Select Vehicle"
         },
         "placeholder": {
             "search": "Search"
@@ -830,7 +832,7 @@
             "customerType": "Customer Type",
             "emailID": "Email ID",
             "contactNo": "Contact over WhatsApp?",
-            "WhatsAppNoText": "Want to use mobile no as WhatsApp no",
+            "WhatsAppNoText": "Use mobile no as WhatsApp no?",
             "whatsappNumber": "Whatsapp Number",
             "corporateType": "Corporate Type",
             "corporateName": "Corporate Name",
@@ -972,7 +974,7 @@
             "documentType": "document type",
             "fileName": "File Name",
             "compName": "company name",
-            "compCode": "parent company code",
+            "companyCode": "parent company code",
             "corporateCode": "corporate code",
             "subCategory": "Usage/Application Sub-Category",
             "cusCategory": "Customer Category",
@@ -1969,13 +1971,13 @@
             "download": "Do you want to Print or download this Document"
         }
     },
-    "LessorCompanyCreation": {
+    "lessorCompanyCreation": {
         "heading": {
             "pageTitle": "Lessor Company Creation",
             "moduletitle": "Lessor Customer"
         },
         "label": {
-            "LessorCompany": "Lessor Customer Form",
+            "lessorCompany": "Lessor Customer Form",
             "companyName": "Company Name",
             "stateName": "State Name"
         },
@@ -3538,6 +3540,7 @@
             "titleOverride": "Un-Allot Booking",
             "title": "Search Booking",
             "allotmentDetails": "Allotment Details",
+            "unAllotmentDetails": "Un-Allotment Details",
             "vehicleSummary": "Vehicle Summary",
             "allotBooking": "Allot Booking"
         },
@@ -3861,11 +3864,167 @@
         }
     },
     "shieldSchemeRegistration": {
+        "heading": {
+            "moduleTitle": "Shield Scheme Registration",
+            "pageTitle": "Shield Scheme Registration",
+            "title": "Vin Block Master",
+            "registrationInformation": "Registration Information",
+            "schemeDetails": "Scheme Details",
+            "vehicleDetails": "Vehicle Details",
+            "customerDetails": "Customer Details"
+        },
         "label": {
-            "columnOne": "Shield Registration No. & Date",
-            "columnTwo": "Dealer Location",
-            "columnThree": "VIN",
-            "columnFour": "Status"
+            "shieldRegistrationDate": "Shield Registration No. & Date",
+            "dealerLocation": "Dealer Location",
+            "vin": "VIN",
+            "status": "Status",
+            "dealerParent": "Dealer Parent",
+            "schemeRegistrationFromDate": "Scheme Registration From Date",
+            "schemeRegistrationToDate": "Scheme Registration To Date",
+            "employeeName": "Employee Name",
+            "managerName": "Manager Name",
+            "saleType": "Sale Type",
+            "availableFunds": "Available Funds",
+            "bookingNo": "Booking No.",
+            "odometerReading": "Odometer Reading",
+            "schemeDescription": "Scheme Description",
+            "schemeCode": "Scheme Code",
+            "schemeBasicAmount": "Scheme Basic Amount",
+            "schemeDiscount": "Scheme Discount",
+            "schemeTaxAmount": "Scheme Tax Amount",
+            "schemeStartDate": "Scheme Start Date",
+            "schemeEndDate": "Scheme End Date",
+            "creditNoteNumber": "Credit Note Number",
+            "creditNoteDate": "Credit Note Date",
+            "creditNoteAmount": "Credit Note Amount",
+            "debitNoteNumber": "Debit Note Number",
+            "debitNoteDate": "Debit Note Date",
+            "debitNoteAmount": "Debit Note Amount",
+            "schemeIncentiveClaim": "Scheme Incentive Claim",
+            "invoiceDate": "Invoice Date",
+            "irnNo": "IRN No.",
+            "irnStatus": "IRN Status",
+            "schemeCertificateNo": "Scheme Certificate No.",
+            "invoiceNo": "Invoice No.",
+            "vehicleRegistrationNo": "Vehicle Registration No.",
+            "orgWarrantyStartDate": "Org. Warranty Start Date",
+            "modelGroup": "Model Group",
+            "modelFamily": "Model Family",
+            "modelDescription": "Model Description",
+            "customerId": "Customer ID",
+            "customerName": "Customer Name",
+            "address": "Address",
+            "state": "State",
+            "district": "District",
+            "tehsil": "Tehsil",
+            "city": "City",
+            "locality": "Locality",
+            "pincode": "Pincode",
+            "mobileNumber": "Mobile Number",
+            "gstIn": "GSTIN",
+            "approvedRejectedBy": "Approved/Rejected By",
+            "userId": "User ID",
+            "approvedDate": "Approved Date",
+            "reasonForRejection": "Reason for Rejection",
+            "registrationRequest": "Registration Request",
+            "requestedOn": "Requested On",
+            "reasonForCancellationRequest": "Reason for Cancellation Request",
+            "reasonForCancellation": "Reason for Cancellation",
+            "remarkforCancellation": "Remark for Cancellation",
+            "otherReason": "Other Reason",
+            "schemeRegNo": "Scheme Reg. No.",
+            "registrationDate": "Registration Date"
+        },
+        "buttons": {
+            "cancelScheme": "Cancel Scheme",
+            "cancelRSA": "Cancel RSA",
+            "viewRsaHistory": "View RSA History",
+            "invoice": "Invoice",
+            "no": "No"
+        },
+        "confirmationMessage": {
+            "downloadConfirmation": "Do you want to Print or download invoice"
+        }
+    },
+    "vehicleSalesSchemeMaster": {
+        "heading": {
+            "moduleTitle": "Scheme",
+            "title": "Vehicle Sales Scheme Master",
+            "addZoneTitle": "Add Zone Details",
+            "addProductDetails": "Add Product Details"
+        },
+        "label": {
+            "downloadHere": "Download Here",
+            "errorMessage": "Please add Vehicle Details",
+            "schemeDetails": "Scheme Details",
+            "manufacturerOrganisation": "Manufacturer Organisation Hierarchy",
+            "schemeType": "Scheme Type",
+            "offerType": "Offer Type",
+            "schemeDescription": "Scheme Description",
+            "validityToDate": "Validity To Date",
+            "validityFromDate": "Validity From Date",
+            "schemeCategory": "Scheme Category",
+            "amountWithTax": "Amount With Tax",
+            "amountWithoutTax": "Amount Without Tax",
+            "vehicleInvoiceToDate": "Vehicle Invoice To Date",
+            "vehicleInvoiceFromDate": "Vehicle Invoice From Date",
+            "encash": "Encash",
+            "encashOnSales": "Encash on Sales",
+            "encashOnService": "Encash on Service",
+            "zoneDetails": "Zone Details",
+            "productDetails": "Product Details",
+            "zone": "Zone",
+            "area": "Area",
+            "mandatory": "Mandatory?",
+            "model": "Model",
+            "schemeCode": "Scheme Code"
+        },
+        "placeholder": {
+            "parent": "Parent",
+            "schemeDetails": "scheme details",
+            "manufacturerOrganisation": "manufacturer organisation hierarchy",
+            "schemeType": "scheme type",
+            "offerType": "offer type",
+            "schemeDescription": "scheme description",
+            "validityToDate": "validity to date",
+            "validityFromDate": "validity from date",
+            "schemeCategory": "scheme category",
+            "amountWithTax": "amount with tax",
+            "amountWithoutTax": "amount without tax",
+            "vehicleInvoiceToDate": "vehicle invoice to date",
+            "vehicleInvoiceFromDate": "vehicle invoice from date",
+            "encash": "Encash",
+            "zone": "zone",
+            "area": "area"
+        },
+        "validation": {
+            "schemeDetails": "scheme details",
+            "manufacturerOrganisation": "manufacturer organisation hierarchy",
+            "schemeType": "scheme type",
+            "offerType": "offer type",
+            "schemeDescription": "scheme description",
+            "validityToDate": "validity to date",
+            "validityFromDate": "validity from date",
+            "schemeCategory": "scheme category",
+            "amountWithTax": "amount with tax",
+            "amountWithoutTax": "amount without tax",
+            "vehicleInvoiceToDate": "vehicle invoice to date",
+            "vehicleInvoiceFromDate": "vehicle invoice from date",
+            "zone": "zone",
+            "area": "area"
+        },
+        "text": {
+            "messageText": "Click or drop your file here to upload",
+            "validationText": "File type should be .xlxs and max file size to be 8Mb",
+            "errorMessageText1": "Product already exists",
+            "errorMessageText2": "Zone and Area already exists",
+            "dateError": "Date can't be less than Effective from date",
+            "downloadText": "Please download 'Vehicle Sales Scheme Template' using below button"
+        },
+        "button": {
+            "upload": "Upload Sales Scheme Master",
+            "addScheme": "Add Scheme",
+            "downloadTemplate": "Download Template"
         }
     }
 }

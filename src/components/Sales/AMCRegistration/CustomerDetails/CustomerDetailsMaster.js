@@ -19,6 +19,7 @@ const CustomerDetailsMasterBase = (props) => {
     const { otfData, form, fetchCustomerList, formActionType, selectedOtfNumber, setSelectedOtfNumber, showGlobalNotification } = props;
     const { FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch } = props;
     const [isReadOnly, setIsReadOnly] = useState(false);
+    const [validCustomerID, setvalidCustomerID] = useState(false);
     const disabledProps = { disabled: isReadOnly };
     useEffect(() => {
         if (formActionType?.addMode) {
@@ -52,6 +53,7 @@ const CustomerDetailsMasterBase = (props) => {
                 extraParams,
                 userId,
                 onSuccessAction: (response) => {
+                    setvalidCustomerID(true);
                     form.setFieldsValue({ ...response?.data, customerAddress: response?.data?.address, customerCity: response?.data?.city, customerPhoneNumber: response?.data?.mobileNumber });
                     setButtonData({ ...buttonData, formBtnActive: true });
                 },
@@ -77,6 +79,7 @@ const CustomerDetailsMasterBase = (props) => {
             form.resetFields();
         }
         setButtonData({ ...buttonData, formBtnActive: false });
+        setvalidCustomerID(false);
     };
 
     const formProps = {
@@ -97,6 +100,7 @@ const CustomerDetailsMasterBase = (props) => {
         handleCustomerSearch,
         disabledProps,
         handleCustomerChange,
+        validCustomerID,
     };
 
     const viewProps = {

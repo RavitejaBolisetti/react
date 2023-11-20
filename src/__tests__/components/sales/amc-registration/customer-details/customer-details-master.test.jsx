@@ -41,7 +41,8 @@ describe('Customer Details Master Components', () => {
         const fetchCustomerList = jest.fn();
         const requestPayload = { amcRegistration: { saleType: 'DMFOC' } };
         const formActionType = { addMode: true };
-        customRender(<FormWrapper formActionType={formActionType} setButtonData={jest.fn()} FormActionButton={FormActionButton} requestPayload={requestPayload} fetchCustomerList={fetchCustomerList} />);
+        const otfData={ otfDetails: [{ customerId: 106 }] };
+        customRender(<FormWrapper showGlobalNotification={jest.fn()} otfData={otfData} formActionType={formActionType} setButtonData={jest.fn()} FormActionButton={FormActionButton} requestPayload={requestPayload} fetchCustomerList={fetchCustomerList} />);
 
         const customerID = screen.getByRole('textbox', { name: 'Customer ID' });
         fireEvent.change(customerID, { target: { value: 'testing' } });

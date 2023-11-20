@@ -28,6 +28,7 @@ const AddEditFormMain = (props) => {
     useEffect(() => {
         if (formData && Object?.keys(formData)?.length > 0) {
             if (formData?.invoiceDate && formData?.customerPromiseDate && soldByDealer) {
+                handleReasonChange(formData?.reasonForDelay);
                 if (!disableFieldsOnFutureDate(dayjs(formData?.customerPromiseDate))) {
                     setButtonData((prev) => ({ ...prev, formBtnActive: true }));
                 } else {
@@ -56,7 +57,7 @@ const AddEditFormMain = (props) => {
         } else {
             if (value !== REASON_FOR_DELAY?.OTHER?.key) {
                 setReasonForDelayRules([]);
-                return;
+                return false;
             }
             setReasonForDelayRules([validateRequiredInputField('vehicleDeliveryNote.invoiceDetails.label.reasonForDelayRemarks')]);
         }
@@ -133,7 +134,7 @@ const AddEditFormMain = (props) => {
                                                 <>
                                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                         <Form.Item initialValue={formData?.reasonForDelay} label={translateContent('vehicleDeliveryNote.invoiceDetails.label.reasonForDelay')} name="reasonForDelay" rules={[validateRequiredSelectField(translateContent('vehicleDeliveryNote.invoiceDetails.label.reasonForDelay'))]}>
-                                                            {customSelectBox({ data: typeData['DLVR_DLY_RSN'], placeholder: preparePlaceholderSelect(translateContent('vehicleDeliveryNote.invoiceDetails.label.reasonForDelay')), onChange: handleReasonChange })}
+                                                            {customSelectBox({ data: typeData?.['DLVR_DLY_RSN'], placeholder: preparePlaceholderSelect(translateContent('vehicleDeliveryNote.invoiceDetails.label.reasonForDelay')), onChange: handleReasonChange })}
                                                         </Form.Item>
                                                     </Col>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>

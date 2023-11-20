@@ -64,7 +64,7 @@ const AddEditFormMain = (props) => {
             },
         ];
         const name = {
-            docName: translateContent('LessorCompanyCreation.message.docName'),
+            docName: translateContent('lessorCompanyCreation.message.docName'),
         };
         downloadFile({ setIsLoading: listShowLoading, userId, extraParams, name, onSuccessAction, onErrorAction });
         resetData();
@@ -123,8 +123,8 @@ const AddEditFormMain = (props) => {
                         <>
                             <div className={styles.contentHeaderBackground}>
                                 <Space direction="vertical">
-                                    <Space className={styles.accordianIconWithText}>{translateContent('LessorCompanyCreation.label.LessorCompany')}</Space>
-                                    <Space>{translateContent('LessorCompanyCreation.message.textMessage')}</Space>
+                                    <Space className={styles.accordianIconWithText}>{translateContent('lessorCompanyCreation.label.lessorCompany')}</Space>
+                                    <Space>{translateContent('lessorCompanyCreation.message.textMessage')}</Space>
                                     <Space>
                                         <Button type="primary" onClick={handleTemplateDownLoad}>
                                             {translateContent('global.buttons.downloadTemplate')}
@@ -140,8 +140,8 @@ const AddEditFormMain = (props) => {
                         <>
                             <Row>
                                 <Col xs={24} sm={24} md={24} lg={24}>
-                                    <Form.Item label={translateContent('LessorCompanyCreation.label.stateName')} name="stateCode">
-                                        <Select placeholder={preparePlaceholderSelect(translateContent('LessorCompanyCreation.placeholder.stateName'))} {...selectProps}>
+                                    <Form.Item label={translateContent('lessorCompanyCreation.label.stateName')} name="stateCode">
+                                        <Select placeholder={preparePlaceholderSelect(translateContent('lessorCompanyCreation.placeholder.stateName'))} {...selectProps}>
                                             {stateData?.map((item) => (
                                                 <Option value={item?.key}>{item?.value}</Option>
                                             ))}

@@ -156,6 +156,7 @@ const ViewDetailMain = (props) => {
         if (tableDataItem?.length > 0) {
             setButtonData({ ...buttonData, formBtnActive: true });
         } else setButtonData({ ...buttonData, formBtnActive: false });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [tableDataItem]);
 
     const handleChange = (e) => {
@@ -168,7 +169,7 @@ const ViewDetailMain = (props) => {
     const serachBoxProps = {
         searchForm,
         filterString,
-        optionType: typeData?.[PARAM_MASTER.OTF_SER.id].filter((searchType) => searchType.key !== 'mobileNumber'),
+        optionType: typeData?.[PARAM_MASTER.OTF_SER.id]?.filter((searchType) => searchType?.key !== 'mobileNumber'),
         setFilterString,
         selectWide: true,
         resetAdvanceFilter,
@@ -232,7 +233,7 @@ const ViewDetailMain = (props) => {
                         </Descriptions>
                     </Card>
                     <Divider className={styles.marT20} />
-                    <h4>{translateContent('orderDeliveryVehicleAllotment.heading.allotBooking')}</h4>
+                    <h4>{translateContent(toggleButton === VEHICLE_TYPE.ALLOTED.key ? 'orderDeliveryVehicleAllotment.heading.allotBooking' : 'orderDeliveryVehicleAllotment.heading.titleOverride')}</h4>
                     <Card>
                         {formData?.allotmentStatus !== VEHICLE_TYPE.ALLOTED.key && (
                             <>

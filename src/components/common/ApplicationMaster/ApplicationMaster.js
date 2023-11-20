@@ -6,7 +6,7 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Form, Row, Empty, Spin } from 'antd';
+import { Button, Col, Form, Row, Empty } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { menuDataActions } from 'store/actions/data/menu';
 import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
@@ -22,6 +22,7 @@ import { ContentHeader } from 'utils/ContentHeader';
 import { APPLICATION_ACTION_ID, ROOT_PARENT_APPLICATION, SPECIAL_MENU_ID } from 'constants/modules/applicationMaster';
 import { APPLICATION_DEVICE_TYPE } from 'utils/applicationDeviceType';
 import { translateContent } from 'utils/translateContent';
+import { withSpinner } from 'components/withSpinner';
 
 const mapStateToProps = (state) => {
     const {
@@ -278,59 +279,57 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationMasterData
             <ContentHeader {...ContentHeaderProps} />
             <Row gutter={20} span={24}>
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
-                    <Spin spinning={isLoading}>
-                        {menuData?.length <= 0 ? (
-                            <div className={styles.emptyContainer}>
-                                <Empty
-                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                    imageStyle={{
-                                        height: 60,
-                                    }}
-                                    description={
-                                        <span>
-                                            {noDataTitle} <br /> {noDataMessage}
-                                        </span>
-                                    }
-                                >
-                                    <Button icon={<PlusOutlined />} type="primary" onClick={() => handleAdd('add')}>
-                                        {translateContent('global.buttons.add')}
-                                    </Button>
-                                </Empty>
-                            </div>
-                        ) : (
-                            <div className={` ${styles.leftPanelScroll}`}>
-                                <LeftPanel {...myProps} />
-                            </div>
-                        )}
-                    </Spin>
+                    {menuData?.length <= 0 ? (
+                        <div className={styles.emptyContainer}>
+                            <Empty
+                                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                imageStyle={{
+                                    height: 60,
+                                }}
+                                description={
+                                    <span>
+                                        {noDataTitle} <br /> {noDataMessage}
+                                    </span>
+                                }
+                            >
+                                <Button icon={<PlusOutlined />} type="primary" onClick={() => handleAdd('add')}>
+                                    {translateContent('global.buttons.add')}
+                                </Button>
+                            </Empty>
+                        </div>
+                    ) : (
+                        <div className={` ${styles.leftPanelScroll}`}>
+                            <LeftPanel {...myProps} />
+                        </div>
+                    )}
                 </Col>
 
                 <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol}>
-                    <Spin spinning={isApplicationDeatilsLoading}>
-                        {selectedTreeKey?.length && applicationDetailsData?.length ? (
-                            <>
-                                <ViewApplicationDetailMain applicationDetailsData={applicationDetailsData} styles={styles} />
-                                <div className={styles.viewContainerFooter}>
-                                    <HierarchyFormButton buttonData={buttonData} handleButtonClick={handleButtonClick} />
-                                </div>
-                            </>
-                        ) : (
-                            <div className={styles.emptyContainer}>
-                                <Empty
-                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                    imageStyle={{
-                                        height: 60,
-                                    }}
-                                    description={
-                                        <span>
-                                            Please select product from left <br />
-                                            side hierarchy to view “Application Details”
-                                        </span>
-                                    }
-                                ></Empty>
+                    {/* <Spin spinning={isApplicationDeatilsLoading}> */}
+                    {selectedTreeKey?.length && applicationDetailsData?.length ? (
+                        <>
+                            <ViewApplicationDetailMain isLoading={isApplicationDeatilsLoading} applicationDetailsData={applicationDetailsData} styles={styles} />
+                            <div className={styles.viewContainerFooter}>
+                                <HierarchyFormButton isLoading={isApplicationDeatilsLoading} buttonData={buttonData} handleButtonClick={handleButtonClick} />
                             </div>
-                        )}
-                    </Spin>
+                        </>
+                    ) : (
+                        <div className={styles.emptyContainer}>
+                            <Empty
+                                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                imageStyle={{
+                                    height: 60,
+                                }}
+                                description={
+                                    <span>
+                                        Please select product from left <br />
+                                        side hierarchy to view “Application Details”
+                                    </span>
+                                }
+                            ></Empty>
+                        </div>
+                    )}
+                    {/* </Spin> */}
                 </Col>
             </Row>
 
@@ -339,4 +338,4 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationMasterData
     );
 };
 
-export const ApplicationMaster = connect(mapStateToProps, mapDispatchToProps)(ApplicationMasterMain);
+export const ApplicationMaster = connect(mapStateToProps, mapDispatchToProps)(withSpinner(ApplicationMasterMain));

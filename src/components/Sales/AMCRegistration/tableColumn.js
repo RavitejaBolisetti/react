@@ -28,7 +28,7 @@ export const tableColumn = ({ handleButtonClick, userType }) => {
             },
         }),
         tblPrepareColumns({
-            title: translateContent('amcRegistration.label.amcRegNoDate'),
+            title: translateContent('amcRegistration.label.dealerLocation'),
             dataIndex: 'dealerLocation',
             width: '25%',
         }),

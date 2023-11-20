@@ -78,7 +78,6 @@ export const CreditDebitNoteMasterBase = (props) => {
     const { fetchList, saveData, listShowLoading, userId, data, totalRecords, isDataLoaded, isDetailLoaded, showGlobalNotification } = props;
     const { typeData, moduleTitle } = props;
     const { fetchDetail, filterString, setFilterString, creditDebitData } = props;
-
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
@@ -194,7 +193,7 @@ export const CreditDebitNoteMasterBase = (props) => {
                 key: 'voucherType',
                 title: 'Voucher Type',
                 value: filterString?.voucherType,
-                name: filterString?.voucherType,
+                name: filterString?.voucherType && getCodeValue(typeData[PARAM_MASTER?.VOUCHR_TYPE?.id], filterString?.voucherType),
                 canRemove: true,
                 filter: true,
             },
@@ -324,18 +323,20 @@ export const CreditDebitNoteMasterBase = (props) => {
                 defaultSection && setCurrentSection(defaultSection);
                 setPreviousSection(1);
                 transactionType === 'debit' ? setTransactionType(TRANSACTION_TYPE?.Debit?.value) : setTransactionType(TRANSACTION_TYPE?.Credit?.value);
-                setRequestPayload({ ...requestPayload, voucherType: transactionType === 'credit' ? VOUCHER_TYPE?.CREDIT_TYPE?.key : VOUCHER_TYPE?.DEBIT_TYPE?.key });
+                setRequestPayload({ ...requestPayload, voucherType: transactionType === 'credit' ? VOUCHER_TYPE?.CREDIT_TYPE?.type : VOUCHER_TYPE?.DEBIT_TYPE?.type });
                 setSelectedRecord({
-                    voucherType: transactionType === 'debit' ? TRANSACTION_TYPE?.Debit?.value.concat(' Note') : TRANSACTION_TYPE?.Credit?.value.concat(' Note'),
+                    voucherType: transactionType === 'debit' ? VOUCHER_TYPE?.DEBIT_TYPE?.type : VOUCHER_TYPE?.CREDIT_TYPE?.type,
                 });
                 break;
             case EDIT_ACTION:
-                setSelectedRecord({ ...record, voucherType: record?.voucherType === VOUCHER_TYPE?.DEBIT_TYPE?.key ? TRANSACTION_TYPE?.Debit?.value.concat(' Note') : TRANSACTION_TYPE?.Credit?.value.concat(' Note') });
+                setSelectedRecord({ ...record, voucherType: record?.voucherType === VOUCHER_TYPE?.DEBIT_TYPE?.key ? VOUCHER_TYPE?.DEBIT_TYPE?.type : VOUCHER_TYPE?.CREDIT_TYPE?.type });
+
                 setSelectedVoucher();
                 openDefaultSection && setCurrentSection(defaultSection);
                 break;
             case VIEW_ACTION:
-                setSelectedRecord({ ...record, voucherType: record?.voucherType === VOUCHER_TYPE?.DEBIT_TYPE?.key ? TRANSACTION_TYPE?.Debit?.value.concat(' Note') : TRANSACTION_TYPE?.Credit?.value.concat(' Note') });
+                setSelectedRecord({ ...record, voucherType: record?.voucherType === VOUCHER_TYPE?.DEBIT_TYPE?.key ? VOUCHER_TYPE?.DEBIT_TYPE?.type : VOUCHER_TYPE?.CREDIT_TYPE?.type });
+
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case NEXT_ACTION:
@@ -376,8 +377,7 @@ export const CreditDebitNoteMasterBase = (props) => {
 
     const onFinish = () => {
         const recordId = selectedRecord?.id;
-
-        const data = { ...requestPayload, id: recordId ?? '', voucherNumber: selectedRecord?.voucherNumber, apportionDetailsDto: apportionTableData };
+        const data = { ...requestPayload, id: recordId ?? '', voucherNumber: selectedRecord?.voucherNumber, voucherType: selectedRecord?.voucherType, apportionDetailsDto: apportionTableData };
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);

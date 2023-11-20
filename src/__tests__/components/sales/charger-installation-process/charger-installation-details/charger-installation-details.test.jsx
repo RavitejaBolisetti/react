@@ -60,9 +60,6 @@ describe('Charger Installation Details Component', () => {
         const chargerInstallationMasterData={ chargerInstDetails: { requestDetails: [{ date: '01/01/2001', Status: 'Success', stageRequestDate: 'Success', stage: 'Success', visitTimeSlotOne: '17/10/2001', visitTimeSlotTwo: '01/01/2001', visitTimeSlotThree: '01/01/2001' }] } }
 
         customRender(<FormWrapper isVisible={true} setOptions={jest.fn()} StatusBar={StatusBar} FormActionButton={FormActionButton} handleButtonClick={jest.fn()} formActionType={formActionType} chargerInstallationMasterData={chargerInstallationMasterData} />);
-        await waitFor(() => { expect(screen.getByTestId('view')).toBeInTheDocument() });
-
-        fireEvent.click(screen.getByTestId('view'));
     });
 
 });

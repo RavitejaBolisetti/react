@@ -147,7 +147,7 @@ export const AMCRegistrationMasterBase = (props) => {
 
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [amcStatus, setAmcStatus] = useState(QUERY_BUTTONS_CONSTANTS.PENDING.key);
-    const defaultPayload = { amcRegistration: {}, amcSchemeDetails: {}, amcCustomerDetails: {}, amcVehicleDetails: [{}], amcRequestDetails: {} };
+    const defaultPayload = { amcRegistration: {}, amcSchemeDetails: {}, amcCustomerDetails: {}, amcVehicleDetails: [], amcRequestDetails: {} };
     const [requestPayload, setRequestPayload] = useState(defaultPayload);
     const [invoiceStatusList, setInvoiceStatusList] = useState([]);
     const [showSpinnerLoading, setShowSpinnerLoading] = useState(false);
@@ -382,7 +382,7 @@ export const AMCRegistrationMasterBase = (props) => {
             },
             {
                 key: 'schemeType',
-                value: AMC_CONSTANTS?.SCHEME?.key,
+                value: requestPayload?.amcSchemeDetails?.amcType || schemeForm.getFieldValue('amcType'),
             },
         ];
 
@@ -408,7 +408,7 @@ export const AMCRegistrationMasterBase = (props) => {
             } else {
                 setButtonData({ ...buttonData, formBtnActive: true });
                 registrationForm.setFieldsValue({ vin: res?.data?.otfDetails[0]?.vin });
-                schemeList(res?.data?.otfDetails[0]?.vin);
+                schemeForm.getFieldValue('amcType') && schemeList(res?.data?.otfDetails[0]?.vin);
             }
         };
 
@@ -714,23 +714,28 @@ export const AMCRegistrationMasterBase = (props) => {
         setIsMNMApproval(false);
     };
     const handleCancelRequests = () => {
-        if (isMNMApproval) {
-            setRequestPayload({ ...requestPayload, amcRequestDetails: { ...requestPayload?.amcRequestDetails, amcStatus: QUERY_BUTTONS_CONSTANTS?.APPROVED?.key } });
-            onFinish({ type: AMC_CONSTANTS?.CANCEL_REQUEST?.key });
-        } else if (!isMNMApproval && userType === AMC_CONSTANTS?.MNM?.key) {
-            setRejectRequest(true);
-            setAmcWholeCancellation(true);
-            rejectRequest && onFinish({ type: AMC_CONSTANTS?.CANCEL_REQUEST?.key });
-        } else if (!isMNMApproval && userType === AMC_CONSTANTS?.MNM?.key && rejectRequest) {
-            onFinish({ type: AMC_CONSTANTS?.AMC_CANCELLATION?.key });
-        } else if (rejectRequest && amcWholeCancellation) {
-            onFinish({ type: AMC_CONSTANTS?.AMC_CANCELLATION?.key });
-        } else if (amcWholeCancellation) {
-            setRejectRequest(true);
-        } else {
-            setRequestPayload({ ...requestPayload, amcRequestDetails: { ...requestPayload?.amcRequestDetails, amcStatus: QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key } });
-            onFinish({ type: AMC_CONSTANTS?.CANCEL_REQUEST?.key });
-        }
+        cancelAMCForm
+            .validateFields()
+            .then(() => {
+                if (isMNMApproval) {
+                    setRequestPayload({ ...requestPayload, amcRequestDetails: { ...requestPayload?.amcRequestDetails, amcStatus: QUERY_BUTTONS_CONSTANTS?.APPROVED?.key } });
+                    onFinish({ type: AMC_CONSTANTS?.CANCEL_REQUEST?.key });
+                } else if (!isMNMApproval && userType === AMC_CONSTANTS?.MNM?.key) {
+                    setRejectRequest(true);
+                    setAmcWholeCancellation(true);
+                    rejectRequest && onFinish({ type: AMC_CONSTANTS?.CANCEL_REQUEST?.key });
+                } else if (!isMNMApproval && userType === AMC_CONSTANTS?.MNM?.key && rejectRequest) {
+                    onFinish({ type: AMC_CONSTANTS?.AMC_CANCELLATION?.key });
+                } else if (rejectRequest && amcWholeCancellation) {
+                    onFinish({ type: AMC_CONSTANTS?.AMC_CANCELLATION?.key });
+                } else if (amcWholeCancellation) {
+                    setRejectRequest(true);
+                } else {
+                    setRequestPayload({ ...requestPayload, amcRequestDetails: { ...requestPayload?.amcRequestDetails, amcStatus: QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key } });
+                    onFinish({ type: AMC_CONSTANTS?.CANCEL_REQUEST?.key });
+                }
+            })
+            .catch(() => {});
     };
     const handleWholeAMCCancellation = () => {
         setRejectModalVisible(true);
@@ -823,6 +828,8 @@ export const AMCRegistrationMasterBase = (props) => {
         setIsPendingForCancellation,
         handlePrintDownload,
         schemeList,
+        fetchDetail,
+        listShowLoading,
     };
     const cancelModalProps = {
         isVisible: isRejectModalVisible,
@@ -851,7 +858,6 @@ export const AMCRegistrationMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [reportButtonType]);
-
     const reportDetail = amcDocumentType;
     const reportProps = {
         isVisible: isReportVisible,

@@ -6,8 +6,10 @@
 import React from 'react';
 import { Button, Row, Col } from 'antd';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
+
 export const VehicleReceiptFormButton = ({ formActionType, record, onCloseAction, handleWholeSchemeCancellation, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
     return (
         <div className={styles.formFooter}>
@@ -15,13 +17,13 @@ export const VehicleReceiptFormButton = ({ formActionType, record, onCloseAction
                 <Col xs={24} sm={8} md={6} lg={4} xl={4} className={styles.buttonsGroupLeft}>
                     {buttonData?.closeBtn && (
                         <Button danger onClick={onCloseAction}>
-                            Close
+                            {translateContent('global.buttons.close')}
                         </Button>
                     )}
 
                     {buttonData?.cancelBtn && (
                         <Button danger onClick={onCloseAction}>
-                            Cancel
+                            {translateContent('global.buttons.cancel')}
                         </Button>
                     )}
                 </Col>
@@ -29,14 +31,14 @@ export const VehicleReceiptFormButton = ({ formActionType, record, onCloseAction
                 <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.buttonsGroupRight}>
                     {buttonData?.editBtn && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
-                            Edit
+                            {translateContent('global.buttons.edit')}
                         </Button>
                     )}
 
                     {buttonData?.cancelSchemeBtn && (
                         <>
                             <Button danger onClick={handleWholeSchemeCancellation}>
-                                Cancel Scheme
+                                {translateContent('shieldSchemeRegistration.buttons.cancelScheme')}
                             </Button>
                         </>
                     )}
@@ -44,7 +46,7 @@ export const VehicleReceiptFormButton = ({ formActionType, record, onCloseAction
                     {buttonData?.cancelRSABtn && (
                         <>
                             <Button danger onClick={handleWholeSchemeCancellation}>
-                                Cancel RSA
+                                {translateContent('shieldSchemeRegistration.buttons.cancelRSA')}
                             </Button>
                         </>
                     )}
@@ -52,14 +54,14 @@ export const VehicleReceiptFormButton = ({ formActionType, record, onCloseAction
                     {buttonData?.viewRSAHistoryBtn && (
                         <>
                             <Button danger onClick={handleWholeSchemeCancellation}>
-                                View RSA Hostory
+                                {translateContent('shieldSchemeRegistration.buttons.viewRsaHistory')}
                             </Button>
                         </>
                     )}
 
                     {buttonData?.nextBtn && !isLastSection && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
-                            Next
+                            {translateContent('global.buttons.next')}
                         </Button>
                     )}
 

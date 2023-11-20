@@ -37,7 +37,7 @@ describe('Inovice Generation Main Cotainer component render', () => {
     });
     it('should render vehicle details component', () => {
         const currentSection = 2;
-        customRender(<FormWrapper isVisible={true} currentSection={currentSection} handleFormValueChange={jest.fn()} setButtonData={jest.fn()} typeData={'FNC_ARNGD'} />);
+        customRender(<FormWrapper formActionType={{viewMode: false}} isVisible={true} currentSection={currentSection} handleFormValueChange={jest.fn()} setButtonData={jest.fn()} typeData={'FNC_ARNGD'} />);
     });
     it('should render vehicle details component 1', () => {
         const currentSection = 3;

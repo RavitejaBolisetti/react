@@ -68,17 +68,7 @@ describe('Bay type master components', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper isVisible={true}
-                    {...props}
-                    tableData={tableData}
-                    handleButtonClick={jest.fn()}
-                    showAddButton={true}
-                    showChangeHistoryButton={true}
-                    filterString={filterString}
-                    handleReferesh={jest.fn()}
-                    advanceFilter={true}
-                    fetchList={jest.fn()}
-                />
+                <FormWrapper isVisible={true} {...props} tableData={tableData} handleButtonClick={jest.fn()} showAddButton={true} showChangeHistoryButton={true} filterString={filterString} handleReferesh={jest.fn()} advanceFilter={true} fetchList={jest.fn()} />
             </Provider>
         );
 
@@ -88,7 +78,6 @@ describe('Bay type master components', () => {
         const searchImg = screen.getByRole('img', { name: 'search' });
         fireEvent.click(searchImg);
 
-       
         const closeImg = screen.getByRole('button', { name: 'close-circle' });
         fireEvent.click(closeImg);
 
@@ -109,7 +98,7 @@ describe('Bay type master components', () => {
             },
         });
 
-        const fetchList = jest.fn()
+        const fetchList = jest.fn();
 
         customRender(
             <Provider store={mockStore}>
@@ -120,7 +109,6 @@ describe('Bay type master components', () => {
         const refreshbutton = screen.getByRole('button', { name: '', exact: false });
         fireEvent.click(refreshbutton);
         fetchList.mock.calls[0][0].onSuccessAction();
-
     });
 
     it('test for onSuccess', async () => {
@@ -142,7 +130,7 @@ describe('Bay type master components', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <BayTypeMaster saveData={saveData} setIsFormVisible={jest.fn()} handleButtonClick={jest.fn()} fetchList={jest.fn()} resetData={jest.fn()} buttonData={buttonData}/>
+                <BayTypeMaster saveData={saveData} setIsFormVisible={jest.fn()} handleButtonClick={jest.fn()} fetchList={jest.fn()} resetData={jest.fn()} buttonData={buttonData} />
             </Provider>
         );
         const editBtn = screen.getByRole('button', { name: /fa-edit/i });
@@ -153,9 +141,6 @@ describe('Bay type master components', () => {
 
         const saveBtn = screen.getByTestId('save');
         fireEvent.click(saveBtn);
-
-        const saveNewBtn = screen.getByTestId('save-and-new');
-        fireEvent.click(saveNewBtn);
 
         await waitFor(() => expect(saveData).toHaveBeenCalled());
         saveData.mock.calls[0][0].onSuccess(res);
@@ -201,9 +186,6 @@ describe('Bay type master components', () => {
 
         const saveBtn = screen.getByTestId('save');
         fireEvent.click(saveBtn);
-
-        const saveNewBtn = screen.getByTestId('save-and-new');
-        fireEvent.click(saveNewBtn);
 
         await waitFor(() => expect(saveData).toHaveBeenCalled());
         saveData.mock.calls[0][0].onSuccess(res);

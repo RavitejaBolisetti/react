@@ -88,7 +88,7 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label={translateContent('pincode.label.city')} initialValue={filterString?.cityCode} name="cityCode">
+                    <Form.Item label={translateContent('pincode.label.City')} initialValue={filterString?.cityCode} name="cityCode">
                         <Select placeholder={translateContent('global.placeholder.select')} {...selectProps} onChange={handleFilterChange('cityCode')}>
                             {filteredCityData?.map((item) => (
                                 <Option key={item?.code} value={item?.code}>
@@ -102,7 +102,7 @@ export const AdvancedSearchFrom = (props) => {
 
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label={translateContent('pincode.label.tehsil')} initialValue={filterString?.tehsilCode} name="tehsilCode">
+                    <Form.Item label={translateContent('pincode.label.Tehsil')} initialValue={filterString?.tehsilCode} name="tehsilCode">
                         <Select placeholder={translateContent('global.placeholder.select')} {...selectProps} onChange={handleFilterChange('tehsilCode')}>
                             {filteredTehsilData?.map((item) => (
                                 <Option key={item?.key} value={item?.key}>

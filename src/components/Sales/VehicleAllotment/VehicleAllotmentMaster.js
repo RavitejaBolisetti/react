@@ -127,6 +127,8 @@ export const VehicleAllotmentMasterBase = (props) => {
         cancelBtn: false,
         formBtnActive: false,
         deliveryNote: false,
+        unAllot: false,
+        allotBtn: false,
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -173,7 +175,7 @@ export const VehicleAllotmentMasterBase = (props) => {
         if (allotmentSummaryDetails) {
             setSelectedOrderOTFDetails();
             allotmentSummaryDetails?.allotmentStatus === VEHICLE_TYPE.ALLOTED.key && setSelectedOrderOTFDetails(allotmentSummaryDetails?.vehicleOTFDetails);
-            setButtonData(allotmentSummaryDetails?.allotmentStatus === VEHICLE_TYPE.ALLOTED.key ? { cancelBtn: false, closeBtn: true, unAllot: true } : { cancelBtn: false, allotBtn: true, closeBtn: true });
+            setButtonData(toggleButton === VEHICLE_TYPE.ALLOTED.key ? { cancelBtn: false, closeBtn: true, allotBtn: false, unAllot: true } : { cancelBtn: false, allotBtn: true, unAllot: false, closeBtn: true });
             // switch (allotmentSummaryDetails?.allotmentStatus) {
             //     case VEHICLE_TYPE.ALLOTED.key: {
             //         setButtonData({ cancelBtn: true, unAllot: true });
@@ -193,7 +195,7 @@ export const VehicleAllotmentMasterBase = (props) => {
             // }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [allotmentSummaryDetails]);
+    }, [allotmentSummaryDetails, toggleButton]);
 
     const extraParams = useMemo(() => {
         const defaultPage = defaultPageProps(filterString);
@@ -361,7 +363,7 @@ export const VehicleAllotmentMasterBase = (props) => {
             form.resetFields();
             setShowDataLoading(true);
 
-            showGlobalNotification({ notificationType: 'success', title:  translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             fetchVehicleAllotmentSearchedList({ customURL: customURL + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
             setButtonData({ ...buttonData, formBtnActive: false });
             setIsFormVisible(false);
@@ -396,7 +398,7 @@ export const VehicleAllotmentMasterBase = (props) => {
             form.resetFields();
             setShowDataLoading(true);
 
-            showGlobalNotification({ notificationType: 'success', title:  translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             fetchVehicleAllotmentSearchedList({ customURL: customURL + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
 
             setButtonData({ ...buttonData, formBtnActive: false });
@@ -515,7 +517,7 @@ export const VehicleAllotmentMasterBase = (props) => {
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(translateContent('orderDeliveryVehicleAllotment.heading.allotmentDetails')),
+        titleOverride: drawerTitle(formActionType).concat(translateContent(toggleButton === VEHICLE_TYPE.ALLOTED.key ? 'orderDeliveryVehicleAllotment.heading.allotmentDetails' : 'orderDeliveryVehicleAllotment.heading.unAllotmentDetails')),
         tableData: data,
         totalOTFRecords,
         buttonData,

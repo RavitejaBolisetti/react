@@ -10,7 +10,7 @@ import { PageHeader } from 'pages/common/PageHeader';
 import { translateContent } from 'utils/translateContent';
 
 export const LessorCompanyCreationBase = (props) => {
-    const pageTitle = translateContent('LessorCompanyCreation.heading.pageTitle');
+    const pageTitle = translateContent('lessorCompanyCreation.heading.pageTitle');
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

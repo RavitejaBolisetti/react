@@ -11,6 +11,7 @@ import { SearchBox } from 'components/utils/SearchBox';
 
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
+import { USER_TYPE } from 'constants/userType';
 
 export default function AdvanceVehiclePriceMasterFilter(props) {
     const {
@@ -27,6 +28,7 @@ export default function AdvanceVehiclePriceMasterFilter(props) {
         searchForm,
         searchForm: { setFieldsValue },
         handleOnClick,
+        userType,
     } = props;
 
     const serachBoxProps = {
@@ -73,11 +75,13 @@ export default function AdvanceVehiclePriceMasterFilter(props) {
                     </Form>
                 </Col>
 
-                <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.buttonsGroupRight}>
-                    <Button type="primary" onClick={handleOnClick}>
-                        {translateContent('global.buttons.upload')}
-                    </Button>
-                </Col>
+                {USER_TYPE?.DEALER?.key === userType && (
+                    <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.buttonsGroupRight}>
+                        <Button type="primary" onClick={handleOnClick}>
+                            {translateContent('global.buttons.upload')}
+                        </Button>
+                    </Col>
+                )}
             </Row>
             {advanceFilter && filterString?.advanceFilter && extraParams.find((i) => i.name) && (
                 <Row gutter={20}>

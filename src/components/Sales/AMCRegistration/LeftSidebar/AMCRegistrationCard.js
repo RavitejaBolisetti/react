@@ -11,7 +11,7 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
-import { AMCStatusTags } from '../utils/AMCStatusTags';
+import { AMCStatusValues } from '../utils/AMCStatusTags';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -37,10 +37,8 @@ const AMCRegistrationCard = (props) => {
                 header={
                     <>
                         <Space>
-                            <div>
-                                <Text>
-                                    {translateContent('amcRegistration.label.amcRegistrationNumber')}: <span>{checkAndSetDefaultValue(selectedAMC?.amcRegistrationNumber)}</span>
-                                </Text>
+                            <div className={styles.detailCardText}>
+                                {translateContent('amcRegistration.label.amcRegistrationNumber')}: <span>{checkAndSetDefaultValue(selectedAMC?.amcRegistrationNumber)}</span>
                             </div>
                         </Space>
                     </>
@@ -53,7 +51,7 @@ const AMCRegistrationCard = (props) => {
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    {translateContent('amcRegistration.label.status')}: <span>{AMCStatusTags(selectedAMC?.status)}</span>
+                    {translateContent('amcRegistration.label.status')}: <span>{AMCStatusValues(selectedAMC?.status)}</span>
                 </div>
             </Panel>
         </Collapse>

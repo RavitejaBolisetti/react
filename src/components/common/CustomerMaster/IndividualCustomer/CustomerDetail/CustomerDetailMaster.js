@@ -239,7 +239,7 @@ const CustomerDetailMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        if (!numbValidatedSuccess && data?.mobileNumber !== values?.mobileNumber) {
+        if (!formActionType?.addMode && !numbValidatedSuccess && data?.mobileNumber !== values?.mobileNumber) {
             showGlobalNotification({ message: 'Please verify mobile number to proceed.' });
             return;
         }

@@ -521,13 +521,6 @@ export const MenuConstant = {
         parentMenuId: 'SACR-02.05',
         slug: 'delivery-challan-report',
     },
-    [getMenyKey('FINA-02.10')]: {
-        key: 'FINA-02.10',
-        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
-        icon: undefined,
-        parentMenuId: 'SACR-02.03',
-        slug: 'voucher-report',
-    },
 
     [getMenyKey('VDNRPT')]: {
         key: 'VDNRPT',
@@ -545,12 +538,36 @@ export const MenuConstant = {
         slug: 'co-dealer-invoice-report',
     },
 
+    [getMenyKey('SACR-05.22')]: {
+        key: 'SACR-05.22',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'SACR-02.05',
+        slug: 'so_mapping_unmapping_report',
+    },
+
+    [getMenyKey('SACR-05.23')]: {
+        key: 'SACR-05.23',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'SACR-02.05',
+        slug: 'otf_so_not_mapped_report',
+    },
+
     [getMenyKey('SACR-03.01')]: {
         key: 'SACR-03.01',
         link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
         icon: undefined,
         parentMenuId: 'SACR-02.03',
         slug: 'on-road-price-detail-summary-report',
+    },
+
+    [getMenyKey('FINR-02')]: {
+        key: 'FINR-02',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'FIACC-REP',
+        slug: 'voucher-report',
     },
 
     [getMenyKey('RPT-DLRNOTE')]: {
