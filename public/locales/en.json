@@ -693,7 +693,8 @@
             "doWantToDownload": "Do you want to Print or download invoice and registration certificate",
             "duplicateVehicle": "Vehicle is duplicate",
             "vehicleRegistrationNoMandatory": "Please add vehicle registration number to continue",
-            "onlyOneVehicleAllowed": "ACM type is comprehensive, Only one vehicle is allowed"
+            "onlyOneVehicleAllowed": "ACM type is comprehensive, Only one vehicle is allowed",
+            "taxValidation": "Please select sale type, scheme and scheme discount"
         },
         "label": {
             "amcRegNoDate": "AMC Registration No. & Date",

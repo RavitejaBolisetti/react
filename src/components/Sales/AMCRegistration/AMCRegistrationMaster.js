@@ -408,7 +408,7 @@ export const AMCRegistrationMasterBase = (props) => {
             } else {
                 setButtonData({ ...buttonData, formBtnActive: true });
                 registrationForm.setFieldsValue({ vin: res?.data?.otfDetails[0]?.vin });
-                schemeList(res?.data?.otfDetails[0]?.vin);
+                schemeForm.getFieldValue('amcType') && schemeList(res?.data?.otfDetails[0]?.vin);
             }
         };
 
@@ -828,6 +828,8 @@ export const AMCRegistrationMasterBase = (props) => {
         setIsPendingForCancellation,
         handlePrintDownload,
         schemeList,
+        fetchDetail,
+        listShowLoading,
     };
     const cancelModalProps = {
         isVisible: isRejectModalVisible,

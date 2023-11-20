@@ -11,9 +11,10 @@ import { customSelectBox } from 'utils/customSelectBox';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { translateContent } from 'utils/translateContent';
 import { AMC_CONSTANTS } from '../utils/AMCConstants';
+import { dateFormat } from 'utils/formatDateTime';
 
 const SchemeDetailsForm = (props) => {
-    const { schemeForm, registrationForm, formData, typeData, handleFormValueChange, handleSchemeDescriptionChange, schemeData, schemeList } = props;
+    const { schemeForm, registrationForm, formData, typeData, handleFormValueChange, handleSchemeDescriptionChange, schemeData, schemeList, handleTaxChange } = props;
 
     const isDiscountLessThanAmount = (value) => {
         if (Number(schemeForm.getFieldValue('schemeBasicAmount')) < Number(value)) {
@@ -49,9 +50,8 @@ const SchemeDetailsForm = (props) => {
                     </Form.Item>
                 </Col>
 
-                <Form.Item hidden label="" name="id">
-                    <Input maxLength={50} />
-                </Form.Item>
+                <Form.Item hidden label="" name="id" />
+                
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label={translateContent('amcRegistration.label.schemeBasicAmount')} name="schemeBasicAmount" rules={[validateRequiredInputField(translateContent('amcRegistration.label.schemeBasicAmount'))]}>
                         <Input disabled maxLength={50} placeholder={preparePlaceholderText(translateContent('amcRegistration.label.schemeBasicAmount'))} />
@@ -59,7 +59,7 @@ const SchemeDetailsForm = (props) => {
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label={translateContent('amcRegistration.label.schemeDiscount')} name="schemeDiscount" rules={[validateRequiredInputField(translateContent('amcRegistration.label.schemeDiscount')), validateOnlyPositiveNumber(translateContent('amcRegistration.label.schemeDiscount')), { validator: (__, value) => isDiscountLessThanAmount(value) }]}>
-                        <Input maxLength={50} placeholder={preparePlaceholderText(translateContent('amcRegistration.label.schemeDiscount'))} />
+                        <Input onChange={handleTaxChange} maxLength={50} placeholder={preparePlaceholderText(translateContent('amcRegistration.label.schemeDiscount'))} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -73,7 +73,7 @@ const SchemeDetailsForm = (props) => {
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label={translateContent('amcRegistration.label.schemeEndDate')} name="schemeEndDate">
-                        <DatePicker disabled maxLength={50} placeholder={preparePlaceholderText(translateContent('amcRegistration.label.schemeEndDate'))} />
+                        <DatePicker format={dateFormat} disabled maxLength={50} placeholder={preparePlaceholderText(translateContent('amcRegistration.label.schemeEndDate'))} />
                     </Form.Item>
                 </Col>
             </Row>
