@@ -3540,6 +3540,7 @@
             "titleOverride": "Un-Allot Booking",
             "title": "Search Booking",
             "allotmentDetails": "Allotment Details",
+            "unAllotmentDetails": "Un-Allotment Details",
             "vehicleSummary": "Vehicle Summary",
             "allotBooking": "Allot Booking"
         },
