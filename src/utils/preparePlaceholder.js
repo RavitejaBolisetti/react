@@ -6,7 +6,7 @@
 import { translateContent } from "./translateContent";
 
 export const preparePlaceholderText = (name, prefix = true) => {
-    return prefix ? translateContent('global.placeholder.input').concat(' ' + name?.toLowerCase()) : name;
+    return prefix ? translateContent('global.placeholder.input').concat(name?.toLowerCase()) : name;
 };
 
 export const preparePlaceholderSelect = (name) => {

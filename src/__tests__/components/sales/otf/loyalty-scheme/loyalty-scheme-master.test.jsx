@@ -91,7 +91,7 @@ describe('Loyalty scheme master render', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper StatusBar={'test'} selectedRecordId={'testing'} FormActionButton={FormActionButton} fetchList={fetchList} />
+                <FormWrapper StatusBar={'test'} salesModuleType={'otf'} selectedRecordId={'testing'} FormActionButton={FormActionButton} fetchList={fetchList} />
             </Provider>
         );
         fetchList.mock.calls[0][0].onErrorAction();

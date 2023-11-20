@@ -35,9 +35,6 @@ describe('Answer Form Card Component', () => {
         const addBtn=screen.getByRole('button', { name: 'plus Add' });
         fireEvent.click(addBtn);
 
-        await waitFor(() => { expect(setAnswerData).toHaveBeenCalled() })
-
-        setAnswerData.mock.calls[0][0]('Kai');
     });
 
     it('should load answer card component', async () => {

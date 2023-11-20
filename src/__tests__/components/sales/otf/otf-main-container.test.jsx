@@ -39,7 +39,7 @@ describe('OtfMaster component render', () => {
             VEHCL_TYPE: [{ name: 'Car' }],
         };
         const currentSection = 3;
-        customRender(<FormWrapper setButtonData={jest.fn()} typeData={typeData} isVisible={true} currentSection={currentSection} handleFormValueChange={jest.fn()} />);
+        customRender(<FormWrapper formActionType={{viewMode: true}} setButtonData={jest.fn()} typeData={typeData} isVisible={true} currentSection={currentSection} handleFormValueChange={jest.fn()} />);
     });
 
     it('should render scheme and offer details component', () => {

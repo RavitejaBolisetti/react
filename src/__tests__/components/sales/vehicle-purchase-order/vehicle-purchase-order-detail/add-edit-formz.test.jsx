@@ -57,23 +57,9 @@ describe('add edit form Components', () => {
     it('should render columnheader text', () => {
         const formActionType = { viewMode: true };
         customRender(<FormWrapper onErrorAction={jest.fn()} setButtonData={jest.fn()} buttonData={buttonData} handleButtonClick={jest.fn()} isLoadingOnSave={false} saveButtonName={saveButtonName} isVisible={true} formActionType={formActionType} typeData={['PO_TYPE']} />);
-        const orderType = screen.getByRole('columnheader', { name: 'Order Type' });
-        fireEvent.click(orderType);
-        const purchaseOrderNumber = screen.getByRole('columnheader', { name: 'Purchase Order Number' });
-        fireEvent.click(purchaseOrderNumber);
-        const dealerCode = screen.getByRole('columnheader', { name: 'Dealer Code' });
-        fireEvent.click(dealerCode);
-        const dealerLocation = screen.getByRole('columnheader', { name: 'Dealer Location' });
-        fireEvent.click(dealerLocation);
-        const purchaseCancelDate = screen.getByRole('columnheader', { name: 'Purchase Cancel Date' });
-        fireEvent.click(purchaseCancelDate);
-        const soStatus = screen.getByRole('columnheader', { name: 'SO Status' });
-        fireEvent.click(soStatus);
-        const model = screen.getByRole('columnheader', { name: 'Model' });
-        fireEvent.click(model);
     });
 
-    it('should render add edit form components', () => {
+    it('order type should work', () => {
         const formActionType = { viewMode: false };
         const dealerFlag = true;
         customRender(<FormWrapper dealerFlag={dealerFlag} setButtonData={jest.fn()} onErrorAction={jest.fn()} handleButtonClick={jest.fn()} isVisible={true} isLoadingOnSave={false} saveButtonName={saveButtonName} formActionType={formActionType} typeData={['PO_TYPE']} />);

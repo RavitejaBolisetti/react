@@ -1,6 +1,7 @@
 import React from 'react';
 import { InsuranceDetailsMaster } from '@components/Sales/OTF/InsuranceDetails/InsuranceDetailsMaster';
 import customRender from '@utils/test-utils';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 import { Button } from 'antd';
@@ -10,6 +11,10 @@ import { screen, fireEvent, waitFor } from '@testing-library/react';
 beforeEach(() => {
     jest.clearAllMocks();
 });
+
+jest.mock('store/actions/data/otf/insuranceDetail', () => ({
+    insuranceDetailDataActions: {}
+}));
 
 const StatusBar = () => <div>No Status Bar</div>;
 
@@ -122,9 +127,7 @@ describe('Booking Insurance Details Component render', () => {
 
         fireEvent.click(saveBtn[1]);
 
-        await waitFor(() => {
-            expect(saveData).toHaveBeenCalled();
-        });
+        await waitFor(() => { expect(saveData).toHaveBeenCalled() });
 
         saveData.mock.calls[0][0].onSuccess(res);
     });

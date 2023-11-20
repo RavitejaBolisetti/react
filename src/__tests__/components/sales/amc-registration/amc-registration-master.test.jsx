@@ -169,10 +169,10 @@ describe('AMC Registration Master Components', () => {
         const employeeName = screen.getByRole('combobox', { name: 'Employee Name' });
         fireEvent.change(employeeName, { target: { value: 'Sale Type test' } });
 
-        const searchBtn = screen.getAllByRole('button', { name: 'search' });
-        fireEvent.click(searchBtn[1]);
+        const searchBtn = screen.getByRole('button', { name: 'search' });
+        fireEvent.click(searchBtn);
 
-        const managerName = screen.getByRole('textbox', { name: 'Manager Name' });
+        const managerName = screen.getByRole('combobox', { name: 'Manager Name' });
         fireEvent.change(managerName, { target: { value: 'testing' } });
 
         const remarks = screen.getByRole('textbox', { name: 'Remarks' });
