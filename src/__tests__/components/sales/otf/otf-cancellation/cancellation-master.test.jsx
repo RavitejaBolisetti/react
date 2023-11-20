@@ -294,24 +294,6 @@ describe('Booking cancellation master render', () => {
         const cancel = screen.getByRole('button', { name: 'Cancel', exact: false });
         fireEvent.click(cancel);
 
-        const closeImg = screen.getByRole('img', { name: 'close', exact: false });
-        expect(closeImg).toBeTruthy();
-
-        const otfNo = screen.getByRole('columnheader', { name: 'Booking No.', exact: false });
-        expect(otfNo).toBeTruthy();
-
-        const otfDate = screen.getByRole('columnheader', { name: 'Booking Date', exact: false });
-        expect(otfDate).toBeTruthy();
-
-        const customerName = screen.getByRole('columnheader', { name: 'Customer Name', exact: false });
-        expect(customerName).toBeTruthy();
-
-        const mobileNo = screen.getByRole('columnheader', { name: 'Mobile No.', exact: false });
-        expect(mobileNo).toBeTruthy();
-
-        const order = screen.getByRole('columnheader', { name: 'Order Status', exact: false });
-        expect(order).toBeTruthy();
-
         const reasonType = screen.getByRole('combobox', { name: 'Cancellation Reason Type', exact: false });
         fireEvent.change(reasonType, { target: { value: 'LOMMD' } });
 

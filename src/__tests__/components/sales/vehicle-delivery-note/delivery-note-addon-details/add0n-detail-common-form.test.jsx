@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom/extend-expect';
-import CommonForm from '@components/Sales/VehicleDeliveryNote/AddOnDetails/CommonForm';
+import CommonForm from 'components/Sales/VehicleDeliveryNote/AddOnDetails/CommonForm';
 import customRender from '@utils/test-utils';
 import { Form } from 'antd';
 import { screen, fireEvent } from '@testing-library/react';
@@ -67,9 +67,9 @@ describe('AddOn Detail Common Form components', () => {
             },
         ];
         const schemeDescriptionDatamain = {
-            RSA: ['Kai'],
+            'RSA': ['Kai'],
         };
-        customRender(<FormWrapper typeData={typeData}  registerDisabled={schemeDescriptionDatamain} schemeDescriptionDatamain={schemeDescriptionDatamain} schemeDescriptionData={schemeDescriptionData} />);
+        customRender(<FormWrapper typeData={typeData} openAccordian={'RSA'} registerDisabled={schemeDescriptionDatamain} schemeDescriptionDatamain={schemeDescriptionDatamain} schemeDescriptionData={schemeDescriptionData} />);
         const schemeType = screen.getByRole('combobox', { name: 'Scheme Description' });
         fireEvent.change(schemeType, { target: { value: 'Kai' } });
         // fireEvent.click(screen.getAllByText('Kai')[1]);

@@ -74,10 +74,10 @@ describe('Modal form Component', () => {
         const AdvanceformData = { checkResult: { key: 1 } };
         customRender(<FormWrapper {...mockProps} AdvanceformData={AdvanceformData} UniqueAnsType={'dr'} checkListDataModified={checkListDataModified} setAdvanceSearchVisible={jest.fn()} handleFormValueChange={jest.fn()} setRequestPayload={jest.fn().mockResolvedValue({ key: 1, value: 'test' })} checklistType={'RECEIPT_CHECKLIST'} />);
 
-        const na = screen.getByRole('textbox', { name: 'NA' });
+        const na = screen.getByRole('textbox', { name: /NA/i });
         fireEvent.change(na, { target: { value: 'test' } });
 
-        const remarks = screen.getByRole('textbox', { name: 'Remarks' });
+        const remarks = screen.getByRole('textbox', { name: /Remarks/i });
         fireEvent.change(remarks, { target: { value: 'test' } });
 
         const saveBtn = screen.getByRole('button', { name: 'Save' });

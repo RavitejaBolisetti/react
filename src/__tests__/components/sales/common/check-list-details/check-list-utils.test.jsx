@@ -1,17 +1,4 @@
-import React from 'react';
-import { BindFormAndResult } from '@components/Sales/Common/ChecklistDetails/CheckListUtils';
-import customRender from '@utils/test-utils';
-import { Form } from 'antd';
-
-const FormWrapper = (props) => {
-    const [aggregateForm] = Form.useForm();
-    const myMock = {
-        ...aggregateForm,
-        setFieldsValue: jest.fn(),
-        resetFields: jest.fn(),
-    };
-    return <BindFormAndResult aggregateForm={myMock} {...props} />;
-};
+import { BindFormAndResult } from 'components/Sales/Common/ChecklistDetails/CheckListUtils';
 
 describe('Check list utils form Component', () => {
     it('Should render Check list utils dr components', () => {
@@ -27,7 +14,7 @@ describe('Check list utils form Component', () => {
             answerFromNumberDecimal: 0.3,
             answerToNumberDecimal: 0.4,
         };
-        customRender(<FormWrapper data={data} />);
+        BindFormAndResult(data);
     });
 
     it('Should render Check list utils components', () => {
@@ -43,7 +30,7 @@ describe('Check list utils form Component', () => {
             answerFromNumberDecimal: 0.3,
             answerToNumberDecimal: 0.4,
         };
-        customRender(<FormWrapper data={data} />);
+        BindFormAndResult(data);
     });
 
     it('Should render Check list utils NWD components', () => {
@@ -59,7 +46,7 @@ describe('Check list utils form Component', () => {
             answerFromNumberDecimal: 0.3,
             answerToNumberDecimal: 0.4,
         };
-        customRender(<FormWrapper data={data} />);
+        BindFormAndResult(data);
     });
 
     it('Should render Check list utils NWD undefind components', () => {
@@ -75,7 +62,7 @@ describe('Check list utils form Component', () => {
             answerFromNumberDecimal: undefined,
             answerToNumberDecimal: 0.4,
         };
-        customRender(<FormWrapper data={data} />);
+        BindFormAndResult(data);
     });
 
     it('Should render Check list utils D components', () => {
@@ -91,7 +78,7 @@ describe('Check list utils form Component', () => {
             answerFromNumberDecimal: 0.3,
             answerToNumberDecimal: 0.4,
         };
-        customRender(<FormWrapper data={data} />);
+        BindFormAndResult(data);
     });
 
     it('Should render Check list utils D false components', () => {
@@ -107,7 +94,7 @@ describe('Check list utils form Component', () => {
             answerFromNumberDecimal: 0.3,
             answerToNumberDecimal: 0.4,
         };
-        customRender(<FormWrapper data={data} />);
+        BindFormAndResult(data);
     });
 
     it('Should render Check list utils TG components', () => {
@@ -123,7 +110,7 @@ describe('Check list utils form Component', () => {
             answerFromNumberDecimal: 0.3,
             answerToNumberDecimal: 0.4,
         };
-        customRender(<FormWrapper data={data} />);
+        BindFormAndResult(data);
     });
 
     it('Should render Check list utils TG false components', () => {
@@ -139,7 +126,7 @@ describe('Check list utils form Component', () => {
             answerFromNumberDecimal: 0.3,
             answerToNumberDecimal: 0.4,
         };
-        customRender(<FormWrapper data={data} />);
+        BindFormAndResult(data);
     });
 
     it('Should render Check list utils NRWTD components', () => {
@@ -155,7 +142,7 @@ describe('Check list utils form Component', () => {
             answerFromNumberDecimal: 0.3,
             answerToNumberDecimal: 0.4,
         };
-        customRender(<FormWrapper data={data} />);
+        BindFormAndResult(data);
     });
 
     it('Should render Check list utils NRWTD false components', () => {
@@ -171,7 +158,7 @@ describe('Check list utils form Component', () => {
             answerFromNumberDecimal: 0.3,
             answerToNumberDecimal: 0.4,
         };
-        customRender(<FormWrapper data={data} />);
+        BindFormAndResult(data);
     });
 
     it('Should render Check list utils NRWD components', () => {
@@ -187,7 +174,7 @@ describe('Check list utils form Component', () => {
             answerFromNumberDecimal: 0.3,
             answerToNumberDecimal: 0.4,
         };
-        customRender(<FormWrapper data={data} />);
+        BindFormAndResult(data);
     });
     it('Should render Check list utils NRWD false components', () => {
         const data = {
@@ -202,7 +189,7 @@ describe('Check list utils form Component', () => {
             answerFromNumberDecimal: undefined,
             answerToNumberDecimal: undefined,
         };
-        customRender(<FormWrapper data={data} />);
+        BindFormAndResult(data);
     });
 
     it('Should render Check list utils FIX components', () => {
@@ -219,7 +206,7 @@ describe('Check list utils form Component', () => {
             answerToNumberDecimal: 0.4,
             checklistAnswerResponses: [{ key: 1, value: 'test' }],
         };
-        customRender(<FormWrapper data={data} />);
+        BindFormAndResult(data);
     });
 
     it('Should render Check list utils FIX false components', () => {
@@ -235,7 +222,7 @@ describe('Check list utils form Component', () => {
             answerFromNumberDecimal: 0.3,
             answerToNumberDecimal: 0.4,
         };
-        customRender(<FormWrapper data={data} />);
+        BindFormAndResult(data);
     });
 
     it('Should render Check list utils OT components', () => {
@@ -251,7 +238,7 @@ describe('Check list utils form Component', () => {
             answerFromNumberDecimal: 0.3,
             answerToNumberDecimal: 0.4,
         };
-        customRender(<FormWrapper data={data} />);
+        BindFormAndResult(data);
     });
 
     it('Should render Check list utils nwtd false components', () => {
@@ -267,7 +254,7 @@ describe('Check list utils form Component', () => {
             answerFromNumberDecimal: 0.3,
             answerToNumberDecimal: 0.4,
         };
-        customRender(<FormWrapper data={data} />);
+        BindFormAndResult(data);
     });
 
     it('Should render Check list utils NWTD components', () => {
@@ -283,6 +270,6 @@ describe('Check list utils form Component', () => {
             answerFromNumberDecimal: 0.3,
             answerToNumberDecimal: 0.4,
         };
-        customRender(<FormWrapper data={data} />);
+        BindFormAndResult(data);
     });
 });

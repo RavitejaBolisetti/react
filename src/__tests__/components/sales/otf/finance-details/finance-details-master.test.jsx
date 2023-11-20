@@ -4,7 +4,13 @@ import { Provider } from 'react-redux';
 import { FinananceDetailsMaster } from 'components/Sales/OTF/FinananceDetails';
 import customRender from '@utils/test-utils';
 import { Button, Form } from 'antd';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
+
+jest.mock('store/actions/data/otf/financeDetail', () => ({
+    otfFinanceDetailDataActions: {}
+}));
+
 
 beforeEach(() => {
     jest.clearAllMocks();
@@ -136,7 +142,7 @@ describe('Booking finance view Details render', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper saveData={saveData} onFinishCustom={true} fetchList={fetchList} handleButtonClick={jest.fn()} setButtonData={jest.fn()} onCloseAction={jest.fn()} StatusBar={StatusBar} FormActionButton={FormActionButton} resetData={jest.fn()} typeData={FNC_ARNGD} />
+                <FormWrapper saveData={saveData} fetchList={fetchList} handleButtonClick={jest.fn()} setButtonData={jest.fn()} onCloseAction={jest.fn()} StatusBar={StatusBar} FormActionButton={FormActionButton} resetData={jest.fn()} typeData={FNC_ARNGD} />
             </Provider>
         );
 
@@ -144,9 +150,7 @@ describe('Booking finance view Details render', () => {
 
         fireEvent.click(saveBtn[1]);
 
-        await waitFor(() => {
-            expect(saveData).toHaveBeenCalled();
-        });
+        await waitFor(() => { expect(saveData).toHaveBeenCalled() });
 
         saveData.mock.calls[0][0].onSuccess(res);
     });
