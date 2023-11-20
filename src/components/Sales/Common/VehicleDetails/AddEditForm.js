@@ -169,7 +169,7 @@ const AddEditFormMain = (props) => {
         treeExpandedKeys: [formData?.model],
         placeholder: preparePlaceholderSelect('Model'),
         loading: !viewOnly ? isProductDataLoading : false,
-        treeDisabled: orderStatus === OTF_STATUS.BOOKED.key ? false : true,
+        treeDisabled: true,
     };
 
     const [timer, setTimer] = useState(null);
@@ -207,13 +207,13 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
 
-                                {/* {formData?.otfStatus === VEHICLE_TYPE?.UNALLOTED.key && ( */}
-                                <Col xs={24} sm={24} md={2} lg={2} xl={2}>
-                                    <Button style={{ marginTop: '30px' }} onClick={handleChangeModel} type="link" icon={<GrSync />} className={styles.verticallyCentered} disabled={onModelSubmit}>
-                                        Change
-                                    </Button>
-                                </Col>
-                                {/* )} */}
+                                {formData?.otfStatus === OTF_STATUS?.BOOKED.key && (
+                                    <Col xs={24} sm={24} md={2} lg={2} xl={2}>
+                                        <Button style={{ marginTop: '30px' }} onClick={handleChangeModel} type="link" icon={<GrSync />} className={styles.verticallyCentered} disabled={onModelSubmit}>
+                                            Change
+                                        </Button>
+                                    </Col>
+                                )}
                             </Row>
                             <Divider />
                             {changeModel && (

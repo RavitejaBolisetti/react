@@ -410,6 +410,8 @@ const VehicleDetailsMasterMain = (props) => {
         serviceLoading,
         onModelSubmit,
         setOnModelSubmit,
+        setRefreshData,
+        refreshData,
     };
 
     const viewProps = {

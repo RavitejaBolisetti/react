@@ -217,7 +217,6 @@ export const BASE_URL_VEHICLE_SALES_SCHEME_MASTER = BASE_URL_VEHICLE + 'schemema
 export const BASE_URL_VEHICLE_SALES_SCHEME_MASTER_DETAILS = BASE_URL_VEHICLE + 'schememaster';
 export const BASE_URL_VEHICLE_SALES_SCHEME_MASTER_UPLOAD = BASE_URL_VEHICLE + 'schememaster/upload';
 
-
 export const BASE_URL_ACCOUNT_HEAD = BASE_URL + 'finance/financialaccountheads';
 
 export const BASE_URL_CRM_SCHEME_ENROLLMENT = BASE_URL + 'vehicle/crmschemes/search';
@@ -345,6 +344,7 @@ export const BASE_URL_VEHICLE_CHALLAN_INSURANCE_DETAILS_DELIVERY_NOTE = BASE_URL
 export const BASE_URL_VEHICLE_CHALLAN_CANCEL_DELIVERY_NOTE = BASE_URL + 'otf/delivery/challan/cancel/info';
 export const BASE_URL_VEHICLE_INFO_CANCEL_DELIVERY_NOTE = BASE_URL + 'otf/deliverynote/cancellation/information';
 export const BASE_URL_VEHICLE_CHALLAN_CANCEL_NOTE = BASE_URL + 'otf/delivery/challan/cancel';
+export const BASE_URL_VEHICLE_CHANGE_MODEL_VARIANT = BASE_URL + 'otf/vehicle/modelchange';
 
 export const BASE_URL_RELATIONSHIP_MANAGER = BASE_URL_USER_MANAGEMENT_APPLICATIONS_DEALER + '/employees';
 export const BASE_URL_DELIVERY_NOTE_VEHICLE_DETAILS = BASE_URL_OTF_VEHICLE_DETAILS + '/search/registrationnumber';
@@ -381,9 +381,9 @@ export const BASE_URL_RSM_ASM_APPROVAL_DETAILS = BASE_URL_RSM_ASM_APPROVAL_SEARC
 export const BASE_URL_SHIELD_REGISTRATION = BASE_URL + 'vehicle/shieldschemes/registration';
 export const BASE_URL_SHIELD_REGISTRATION_SEARCH = BASE_URL_SHIELD_REGISTRATION + '/search';
 export const BASE_URL_SCHEME_DESCRIPTION_LOV = BASE_URL + 'vehicle/shieldschemes/lov';
-export const BASE_URL_SHIELD_SCHEME_CATEGORY_LOV = BASE_URL + 'vehicle/shieldschemes/category/lov'
-export const BASE_URL_RSA_SCHEME_CATEGORY_LOV = BASE_URL + 'vehicle/rsa/schemecategory/lov'
-export const BASE_URL_AMC_SCHEME_CATEGORY_LOV = BASE_URL + 'vehicle/amc/schemecategory/lov'
+export const BASE_URL_SHIELD_SCHEME_CATEGORY_LOV = BASE_URL + 'vehicle/shieldschemes/category/lov';
+export const BASE_URL_RSA_SCHEME_CATEGORY_LOV = BASE_URL + 'vehicle/rsa/schemecategory/lov';
+export const BASE_URL_AMC_SCHEME_CATEGORY_LOV = BASE_URL + 'vehicle/amc/schemecategory/lov';
 export const BASE_URL_RSA_REGISTRATION = BASE_URL + 'vehicle/rsa';
 export const BASE_URL_RSA_REGISTRATION_SEARCH = BASE_URL_RSA_REGISTRATION + '/search';
 export const BASE_URL_GET_REGISTRATION_DETAILS = BASE_URL_RSA_REGISTRATION + '/registration/details';

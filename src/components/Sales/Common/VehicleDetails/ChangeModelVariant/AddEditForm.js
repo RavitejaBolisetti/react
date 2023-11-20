@@ -4,12 +4,12 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { Col, Input, Form, Row, Card, Button } from 'antd';
 
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-
+import { BASE_URL_VEHICLE_CHANGE_MODEL_VARIANT } from 'constants/routingApi';
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
@@ -18,9 +18,9 @@ import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { addToolTip } from 'utils/customMenuLink';
 
 const AddEditFormMain = (props) => {
-    const { formData, formActionType: { editMode } = undefined, showGlobalNotification, buttonData, setButtonData, confirmRequest, setConfirmRequest, setChangeModel, toolTipContent, onModelSubmit, setOnModelSubmit } = props;
-    const { form, modelChangeItemList, setModelChangeItemList, productHierarchyData, filterVehicleData, handleVehicleDetailChange, handleFormValueChange } = props;
-
+    const { formData, formActionType: { editMode } = undefined, showGlobalNotification, userId, listShowLoading, setRefreshData, refreshData, buttonData, setButtonData, confirmRequest, setConfirmRequest, setChangeModel, toolTipContent, onModelSubmit, setOnModelSubmit } = props;
+    const { form, modelChangeItemList, setModelChangeItemList, productHierarchyData, selectedRecordId, filterVehicleData, saveData, handleVehicleDetailChange, handleFormValueChange } = props;
+    const [selectedTreeKey, setSelectedTreeKey] = useState(formData?.model);
     const formType = editMode ? 'New' : '';
     const modelChangeField = ['model' + formType, 'modelCode' + formType];
 
@@ -34,9 +34,29 @@ const AddEditFormMain = (props) => {
                 if (JSON.stringify(vehicleModelChangeRequest) === JSON.stringify(vehicleCurrentModel)) {
                     showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: 'Current and previous model are same' });
                 } else {
-                    setOnModelSubmit(true);
-                    setButtonData({ ...buttonData, formBtnActive: true });
-                    showGlobalNotification({ notificationType: 'warning', title: 'Pending for SAP Confirmation', message: 'Change model request approval is pending from SAP' });
+                    const data = {
+                        modelCode: vehicleModelChangeRequest?.modelCode,
+                        otfId: selectedRecordId,
+                    };
+                    const onError = (message) => {
+                        showGlobalNotification({ message });
+                    };
+                    const onSuccess = (res) => {
+                        setOnModelSubmit(true);
+                        setButtonData({ ...buttonData, formBtnActive: true });
+                        setRefreshData(!refreshData);
+                        showGlobalNotification({ notificationType: 'warning', title: 'Pending for SAP Confirmation', message: 'Change model request approval is pending from SAP' });
+                    };
+                    const requestData = {
+                        data: data,
+                        customURL: BASE_URL_VEHICLE_CHANGE_MODEL_VARIANT,
+                        method: 'put',
+                        setIsLoading: listShowLoading,
+                        userId,
+                        onError,
+                        onSuccess,
+                    };
+                    saveData(requestData);
                 }
             })
             .catch((err) => console.error(err));
@@ -87,6 +107,8 @@ const AddEditFormMain = (props) => {
                 const finalData = { ...filterVehicleData, productModelCode: value };
                 handleVehicleDetailChange(finalData);
                 form.setFieldsValue({ ['modelCode' + formType]: finalData?.productModelCode });
+                setSelectedTreeKey(finalData?.productModelCode);
+                // form.setFieldsValue({ ['model' + formType]: finalData?.productModelCode });
                 handleFormValueChange(true);
                 setConfirmRequest({
                     ...confirmRequest,
@@ -105,7 +127,7 @@ const AddEditFormMain = (props) => {
         treeFieldNames,
         treeData: productHierarchyData,
         defaultParent: false,
-        selectedTreeSelectKey: formData?.model,
+        selectedTreeSelectKey: selectedTreeKey,
         handleSelectTreeClick,
         treeExpandedKeys: [formData?.model],
         placeholder: preparePlaceholderSelect('Model'),

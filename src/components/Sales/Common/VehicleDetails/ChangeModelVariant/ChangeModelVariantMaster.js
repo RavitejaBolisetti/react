@@ -211,6 +211,9 @@ const ChangeModelVariantMasterBase = (props) => {
         filterVehicleData,
         confirmRequest,
         setConfirmRequest,
+        selectedRecordId,
+        listShowLoading,
+        userId,
     };
 
     const handleRefresh = () => {
