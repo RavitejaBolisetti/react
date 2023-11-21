@@ -106,8 +106,8 @@
             "printForm21": "Print Form 21",
             "printInvoice": "Print Invoice",
             "cancelInvoice": "Cancel Invoice",
-            "approve" : "Approve",
-            "reject" : "Reject"
+            "approve": "Approve",
+            "reject": "Reject"
         },
         "placeholder": {
             "input": "Enter ",
@@ -4034,9 +4034,14 @@
             "moduleTitle": "Co Dealer Invoice",
             "title": "Co Dealer Invoice"
         },
-        "label": {},
+        "label": {
+            "status": "Status",
+            "indentDealerToParent": "Indent Dealer To Parent"
+        },
         "placeholder": {},
-        "validation": {},
+        "validation": {
+            "toDate": "Date cant be less than Effective from date"
+        },
         "text": {},
         "button": {}
     }

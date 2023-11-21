@@ -10,16 +10,16 @@ export const CO_DEALER_QUERY_BUTTONS = {
         key: 'P',
         active: true,
     },
-    INVOICED: {
-        id: 'invoiced',
-        title: 'Invoiced',
-        key: 'I',
-        active: false,
-    },
     CANCELLED: {
         id: 'cancelled',
         title: 'Cancelled',
         key: 'C',
+        active: false,
+    },
+    INVOICED: {
+        id: 'invoiced',
+        title: 'Invoiced',
+        key: 'I',
         active: false,
     },
 };

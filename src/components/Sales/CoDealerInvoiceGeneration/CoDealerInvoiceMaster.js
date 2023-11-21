@@ -14,14 +14,17 @@ import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION } from 'utils/btnVisi
 import { CoDealerInvoiceMainContainer } from './CoDealerInvoiceMainContainer';
 import { ListDataTable } from 'utils/ListDataTable';
 import { CoDealerInvoiceAdvancedSearch } from './CoDealerInvoiceAdvancedSearch';
-import { CO_DEALER_QUERY_BUTTONS } from './constants';
+import { CO_DEALER_QUERY_BUTTONS, SEARCH_PARAM_CONSTANTS } from './constants';
 import { showGlobalNotification } from 'store/actions/notification';
 import { CO_DEALER_SECTIONS } from 'components/Sales/CoDealerInvoiceGeneration/constants';
 
 import { CoDealerInvoiceFilter } from './CoDealerInvoiceFilter';
 import { CoDealerSearchDataActions } from 'store/actions/data/CoDealerInvoice';
+import { dealerParentLovDataActions } from 'store/actions/data/dealer/dealerParentsLov';
 import { translateContent } from 'utils/translateContent';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
+import { getCodeValue } from 'utils/getCodeValue';
 
 const mapStateToProps = (state) => {
     const {
@@ -30,6 +33,9 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             CoDealerInvoice: {
                 CoDealerInvoiceSearch: { isDetailLoaded: isSearchDataLoaded = false, isDetailLoading: isSearchLoading, detailData: data, filter: filterString },
+            },
+            DealerHierarchy: {
+                DealerParentsLov: { filteredListData: indentToDealerData = [] },
             },
         },
     } = state;
@@ -46,6 +52,7 @@ const mapStateToProps = (state) => {
         isSearchLoading,
         isSearchDataLoaded,
         filterString,
+        indentToDealerData,
     };
     return returnValue;
 };
@@ -58,6 +65,9 @@ const mapDispatchToProps = (dispatch) => ({
             resetCoDealerData: CoDealerSearchDataActions.resetDetail,
             listShowCoDealerLoading: CoDealerSearchDataActions.listShowLoading,
             setFilterString: CoDealerSearchDataActions.setFilter,
+
+            fetchDealerParentsLovList: dealerParentLovDataActions.fetchFilteredList,
+            listShowDealerLoading: dealerParentLovDataActions.listShowLoading,
 
             // fetchList: CoDealerInvoiceSearchDataAction.fetchList,
             // fetchDeliveryNoteMasterData: vehicleDeliveryNoteDataActions.fetchDetail,
@@ -85,12 +95,13 @@ export const CoDealerInvoiceMasterBase = (props) => {
     const { typeData, receiptType = undefined, partySegmentType = undefined, paymentModeType = undefined, documentType = undefined, moduleTitle = '', totalRecords = 0, showGlobalNotification = () => {} } = props;
     const { filterString, setFilterString, coDealerInvoiceStatusList = Object?.values(CO_DEALER_QUERY_BUTTONS) } = props;
     const { fetchCoDealerInvoice, resetCoDealerData, listShowCoDealerLoading } = props;
+    const { indentToDealerData, fetchDealerParentsLovList, listShowDealerLoading } = props;
 
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
 
-    const [CoDealerInvoiceStateMaster, setCoDealerInvoiceStateMaster] = useState({ currentQuery: CO_DEALER_QUERY_BUTTONS?.PENDING?.key, current: 1, pageSize: 10 });
+    const [CoDealerInvoiceStateMaster, setCoDealerInvoiceStateMaster] = useState({ currentQuery: CO_DEALER_QUERY_BUTTONS?.PENDING?.key, current: 1, pageSize: 10, typeDataFilter: [] });
 
     const [section, setSection] = useState();
     const [defaultSection, setDefaultSection] = useState();
@@ -131,11 +142,23 @@ export const CoDealerInvoiceMasterBase = (props) => {
         showGlobalNotification({ message });
         setShowDataLoading(false);
     };
-    console.log(typeData?.[PARAM_MASTER.CO_DEALER_INV_SER.id]);
+
     useEffect(() => {
-        typeData && typeData?.[PARAM_MASTER.CO_DEALER_INV_SER.id]?.length && searchForm.setFieldsValue({ searchType: 'indentNumber' });
+        if (typeData && typeData?.[PARAM_MASTER.CO_DEALER_INV_SER.id]?.length) {
+            searchForm.setFieldsValue({ searchType: 'indentNumber' });
+            setCoDealerInvoiceStateMaster({ ...CoDealerInvoiceStateMaster, typeData: typeData?.[PARAM_MASTER.CO_DEALER_INV_SER.id], typeDataFilter: typeData?.[PARAM_MASTER.CO_DEALER_INV_SER.id]?.filter((i) => i?.key !== SEARCH_PARAM_CONSTANTS?.INVOICE_NUMBER?.key) });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [typeData, typeData?.[PARAM_MASTER.CO_DEALER_INV_SER.id]]);
+
+    useEffect(() => {
+        if (isAdvanceSearchVisible) {
+            advanceFilterForm.setFieldsValue({ status: CoDealerInvoiceStateMaster?.currentQuery, ...filterString });
+        } else {
+            advanceFilterForm.resetFields();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [CoDealerInvoiceStateMaster, isAdvanceSearchVisible, filterString]);
 
     const extraParams = useMemo(() => {
         return [
@@ -143,7 +166,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
                 key: 'searchType',
                 title: 'Type',
                 value: filterString?.searchType,
-                name: typeData?.[PARAM_MASTER.CO_DEALER_INV_SER.id]?.find((i) => i?.key === filterString?.searchType)?.value,
+                name: getCodeValue(typeData?.[PARAM_MASTER.CO_DEALER_INV_SER.id], filterString?.searchType, 'value', false),
                 canRemove: false,
                 filter: true,
             },
@@ -155,38 +178,30 @@ export const CoDealerInvoiceMasterBase = (props) => {
                 canRemove: true,
                 filter: true,
             },
-            // {
-            //     key: 'invoiceFromDate',
-            //     title: 'Invoice From Date',
-            //     value: filterString?.invoiceFromDate,
-            //     name: filterString?.invoiceFromDate ? convertDateTime(filterString?.invoiceFromDate, dateFormatView) : '',
-            //     canRemove: true,
-            //     filter: true,
-            // },
-            // {
-            //     key: 'invoiceToDate',
-            //     title: 'Invoce To Date',
-            //     value: filterString?.invoiceToDate,
-            //     name: filterString?.invoiceToDate ? convertDateTime(filterString?.invoiceToDate, dateFormatView) : '',
-            //     canRemove: true,
-            //     filter: true,
-            // },
-            // {
-            //     key: 'deliveryNoteFromDate',
-            //     title: 'Delivery From Date',
-            //     value: filterString?.deliveryNoteFromDate,
-            //     name: filterString?.deliveryNoteFromDate ? convertDateTime(filterString?.deliveryNoteFromDate, dateFormatView) : '',
-            //     canRemove: true,
-            //     filter: true,
-            // },
-            // {
-            //     key: 'deliveryNoteToDate',
-            //     title: 'Delivery To Date',
-            //     value: filterString?.deliveryNoteToDate,
-            //     name: filterString?.deliveryNoteToDate ? convertDateTime(filterString?.deliveryNoteToDate, dateFormatView) : '',
-            //     canRemove: true,
-            //     filter: true,
-            // },
+            {
+                key: 'dealerParentCode',
+                title: 'IndentParent',
+                value: filterString?.dealerParentCode,
+                name: getCodeValue(indentToDealerData, filterString?.dealerParentCode, 'value', false),
+                canRemove: true,
+                filter: true,
+            },
+            {
+                key: 'invoiceFromDate',
+                title: 'Invoice From Date',
+                value: filterString?.invoiceFromDate,
+                name: filterString?.invoiceFromDate ? convertDateTime(filterString?.invoiceFromDate, dateFormatView) : null,
+                canRemove: true,
+                filter: true,
+            },
+            {
+                key: 'invoiceToDate',
+                title: 'Invoice To Date',
+                value: filterString?.invoiceToDate,
+                name: filterString?.invoiceToDate ? convertDateTime(filterString?.invoiceToDate, dateFormatView) : null,
+                canRemove: true,
+                filter: true,
+            },
             {
                 key: 'coDealerStatus',
                 title: 'Delivery Status',
@@ -226,10 +241,13 @@ export const CoDealerInvoiceMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
 
+    console.log('extraParams', extraParams);
+
     useEffect(() => {
         if (userId && extraParams) {
             setShowDataLoading(true);
             fetchCoDealerInvoice({ setIsLoading: listShowCoDealerLoading, userId, extraParams, onSuccessAction, onErrorAction });
+            fetchDealerParentsLovList({ setIsLoading: listShowDealerLoading, userId, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, extraParams]);
@@ -254,26 +272,31 @@ export const CoDealerInvoiceMasterBase = (props) => {
 
     const handleDeliveryNoteTypeChange = (buttonName) => {
         const buttonKey = buttonName?.key;
+        let typeDataFilter = [];
         setFilterString({ ...filterString, currentQuery: buttonKey, current: 1, pageSize: 10 });
-        setCoDealerInvoiceStateMaster({ ...CoDealerInvoiceStateMaster, currentQuery: buttonKey });
         switch (buttonKey) {
             case CO_DEALER_QUERY_BUTTONS?.PENDING?.key: {
                 setActionButtonVisiblity({ canAdd: true, canView: false, canEdit: false });
+                typeDataFilter = CoDealerInvoiceStateMaster?.typeData?.filter((item) => item?.key !== SEARCH_PARAM_CONSTANTS?.INVOICE_NUMBER?.key);
                 break;
             }
             case CO_DEALER_QUERY_BUTTONS?.INVOICED?.key: {
                 setActionButtonVisiblity({ canAdd: false, canView: true, canEdit: false });
                 setButtonData({ ...buttonData, printDeliveryNoteBtn: true, cancelDeliveryNoteBtn: true });
+                typeDataFilter = CoDealerInvoiceStateMaster?.typeData;
                 break;
             }
             case CO_DEALER_QUERY_BUTTONS?.CANCELLED?.key: {
                 setActionButtonVisiblity({ canAdd: false, canView: true, canEdit: false });
+                typeDataFilter = CoDealerInvoiceStateMaster?.typeData;
                 break;
             }
             default: {
                 setActionButtonVisiblity({ canAdd: true, canView: false, canEdit: false });
+                typeDataFilter = CoDealerInvoiceStateMaster?.typeData;
             }
         }
+        setCoDealerInvoiceStateMaster({ ...CoDealerInvoiceStateMaster, currentQuery: buttonKey, typeDataFilter });
     };
 
     const handleDrawerButtonVisibility = (btnVisiblityProps) => {
@@ -313,7 +336,6 @@ export const CoDealerInvoiceMasterBase = (props) => {
             default:
                 break;
         }
-
         setButtonData(handleDrawerButtonVisibility({ buttonAction, record })?.btnVisibilityStatus);
         setFormActionType(handleDrawerButtonVisibility({ buttonAction, record })?.formAction);
         setIsFormVisible(true);
@@ -330,7 +352,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
-            // fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
+            fetchCoDealerInvoice({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             setButtonData({ ...buttonData, formBtnActive: false });
             section && setCurrentSection(CO_DEALER_SECTIONS.THANK_YOU_PAGE.id);
         };
@@ -353,11 +375,15 @@ export const CoDealerInvoiceMasterBase = (props) => {
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
+    const resetDataOnClose = () => {
+        resetCoDealerData();
+        setSelectedOrder();
+        setButtonData({ ...defaultBtnVisiblity });
+    };
 
     const onCloseAction = () => {
-        setSelectedOrder();
+        resetDataOnClose();
         setIsFormVisible(false);
-        setButtonData({ ...defaultBtnVisiblity });
     };
 
     const tableProps = {
@@ -365,13 +391,13 @@ export const CoDealerInvoiceMasterBase = (props) => {
         totalRecords,
         setPage: setFilterString,
         page: filterString,
-        tableColumn: tableColumnDeliveryNoteMaster({ handleButtonClick, actionButtonVisiblity }),
+        tableColumn: tableColumnDeliveryNoteMaster({ handleButtonClick, actionButtonVisiblity, currentQuery: CoDealerInvoiceStateMaster?.currentQuery }),
         tableData: data,
         typeData,
-        filterString,
         handleButtonClick,
         isLoading: showdataLoading,
         showAddButton: false,
+        filterString,
     };
 
     const onAdvanceSearchCloseAction = () => {
@@ -380,13 +406,13 @@ export const CoDealerInvoiceMasterBase = (props) => {
         advanceFilterForm.setFieldsValue();
         setAdvanceSearchVisible(false);
     };
-
     const removeFilter = (key) => {
         if (key === 'searchParam') {
             const { searchType, searchParam, ...rest } = filterString;
             setFilterString({ ...rest });
-        } else if (key === 'invoiceToDate' || key === 'invoiceFromDate' || key === 'deliveryNoteToDate' || key === 'deliveryNoteFromDate') {
-            setFilterString();
+        } else if (key === 'invoiceToDate' || key === 'invoiceFromDate') {
+            const { invoiceToDate, invoiceFromDate, ...rest } = filterString;
+            setFilterString({ ...rest });
             advanceFilterForm.resetFields();
         } else {
             const { [key]: names, ...rest } = filterString;
@@ -395,7 +421,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
     };
 
     const CoDealerInvoiceFilterProps = {
-        // extraParams,
+        extraParams,
         removeFilter,
         coDealerInvoiceStatusList,
         advanceFilter: true,
@@ -409,7 +435,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
         handleDeliveryNoteTypeChange,
         data,
         setAdvanceSearchVisible,
-        typeData,
+        typeData: CoDealerInvoiceStateMaster?.typeDataFilter,
         searchForm,
         onFinishSearch,
         status: CoDealerInvoiceStateMaster?.currentQuery,
@@ -419,7 +445,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
         isVisible: isAdvanceSearchVisible,
         receiptType,
         partySegmentType,
-        titleOverride: 'Advance Filters',
+        titleOverride: translateContent('global.advanceFilter.title'),
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
         filterString,
@@ -429,6 +455,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
         coDealerInvoiceStatusList,
         typeData,
         onFinishSearch,
+        indentToDealerData,
     };
 
     const drawerTitle = useMemo(() => {
@@ -449,7 +476,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
         deliveryNoteOnFinish: onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: moduleTitle,
+        titleOverride: drawerTitle.concat(moduleTitle),
         tableData: data || [],
         ADD_ACTION,
         EDIT_ACTION,

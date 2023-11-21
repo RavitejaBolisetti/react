@@ -101,7 +101,7 @@ export const BASE_URL_DEALER_PARENT = BASE_URL + 'dealer/parents';
 export const BASE_URL_DEALER_COMAPANY = BASE_URL + 'dealer/company';
 export const BASE_URL_DEALER_PARENT_GROUP_SEARCH = BASE_URL + 'dealer/search/parentgroups';
 export const BASE_URL_DEALER_PARENT_TITLE = BASE_URL + 'configurableparametertypes';
-export const BASE_URL_DEALER_COMPANY_LOV = BASE_URL + 'dealer/parents/lov';
+export const BASE_URL_DEALER_COMPANY_LOV = BASE_URL + 'dealer/parents';
 
 //get all applications
 export const BASE_URL_APPLICATIONS = BASE_URL + 'applications';

@@ -79,7 +79,7 @@ const mapStateToProps = (state) => {
                 EmployeeData: { isLoaded: isEmployeeDataLoaded = false, isLoading: isEmployeeDataLoading, data: employeeData = [], detailData: managerData = [] },
             },
             DealerHierarchy: {
-                DealerParentsLov: { data: dealerParentsLovList },
+                DealerParentsLov: { filteredListData: dealerParentsLovList },
             },
             ApplicationMaster: { dealerLocations = [] },
             OTF: {
@@ -139,7 +139,7 @@ const mapDispatchToProps = (dispatch) => ({
             listEmployeeShowLoading: employeeSearchDataAction.listShowLoading,
             resetEmployeeData: employeeSearchDataAction.reset,
 
-            fetchDealerParentsLovList: dealerParentLovDataActions.fetchList,
+            fetchDealerParentsLovList: dealerParentLovDataActions.fetchFilteredList,
             fetchDealerLocations: applicationMasterDataActions.fetchDealerLocations,
             saveData: shieldSchemeSearchDataAction.saveData,
             resetData: shieldSchemeSearchDataAction.reset,
@@ -1009,7 +1009,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         fetchManagerList,
         managerData,
         modelFamilyData,
-        ProductHierarchyData
+        ProductHierarchyData,
     };
 
     useEffect(() => {

@@ -20,7 +20,7 @@ const CoDealerInvoiceFilter = (props) => {
         searchForm,
         filterString,
         setFilterString,
-        optionType: typeData?.[PARAM_MASTER.CO_DEALER_INV_SER.id]?.length && typeData?.[PARAM_MASTER.CO_DEALER_INV_SER.id],
+        optionType: typeData,
     };
 
     return (
@@ -51,7 +51,7 @@ const CoDealerInvoiceFilter = (props) => {
                     </Form>
                 </Col>
             </Row>
-            {advanceFilter && filterString?.advanceFilter && extraParams.find((i) => i.name) && (
+            {advanceFilter && filterString?.advanceFilter && extraParams.find((i) => i?.name) && (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
                         <Row gutter={20}>
@@ -74,7 +74,7 @@ const CoDealerInvoiceFilter = (props) => {
                                 })}
                             </Col>
                             <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
-                                <Button className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
+                                <Button className={styles.clearBtn} onClick={handleResetFilter} danger>
                                     Clear
                                 </Button>
                             </Col>

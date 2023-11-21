@@ -493,4 +493,8 @@ export const PARAM_MASTER = {
         id: 'CO_DEALER_INV_SER',
         title: 'Co Dealer Invoice',
     },
+    CO_DEALER_INVC_STATS: {
+        id: 'CO_DEALER_INVC_STATS',
+        title: 'Co Dealer Invoice Status',
+    },
 };
