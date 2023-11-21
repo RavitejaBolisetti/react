@@ -18,7 +18,7 @@ import styles from 'assets/sass/app.module.scss';
 const { Text } = Typography;
 
 const ViewDetail = (props) => {
-    const { formData, userType, selectedOrder, handleCancelRequest, handleMNMApproval, handleMNMRejection, isPendingForCancellation, handleRequest } = props;
+    const { formData, userType, selectedOrder, handleCancelRequest, handleMNMApproval, handleMNMRejection, isPendingForCancellation } = props;
 
     const viewProps = {
         bordered: false,
