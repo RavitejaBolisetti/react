@@ -370,9 +370,6 @@ export const ProductHierarchyMain = ({ typeData, isLoading, moduleTitle, viewTit
     const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_CHILD_WARNING;
 
     const title = translateContent('productHierarchy.heading.title');
-
-    console.log(`manufacturerOrgHierarchyData`, manufacturerOrgHierarchyData);
-
     return (
         <>
             <div className={styles.contentHeaderBackground}>
