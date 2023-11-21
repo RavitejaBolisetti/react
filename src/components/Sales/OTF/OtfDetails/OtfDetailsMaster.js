@@ -125,7 +125,14 @@ const OtfDetailsMasterBase = (props) => {
 
     useEffect(() => {
         if (!isSalesConsultantDataLoaded && userId) {
-            fetchSalesConsultant({ setIsLoading: listConsultantShowLoading, userId });
+            const extraParams = [
+                {
+                    key: 'designation',
+                    value: 'SC',
+                },
+            ];
+
+            fetchSalesConsultant({ setIsLoading: listConsultantShowLoading, userId, extraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isSalesConsultantDataLoaded, userId]);

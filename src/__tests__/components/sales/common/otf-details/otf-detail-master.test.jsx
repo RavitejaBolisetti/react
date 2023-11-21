@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
-import { OtfDetailsMaster } from '@components/Sales/Common/OtfDetails/OtfDetailsMaster';
+import { OtfDetailsMaster } from 'components/Sales/Common/OtfDetails/OtfDetailsMaster';
 import customRender from '@utils/test-utils';
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';

@@ -43,6 +43,7 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchList: reportDataActions.fetchList,
             listShowLoading: reportDataActions.listShowLoading,
+            resetData: reportDataActions.reset,
             showGlobalNotification,
         },
         dispatch
@@ -50,7 +51,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const EmbeddedReportMasterBase = (props) => {
-    const { userId, data, fetchList, listShowLoading, reportDetail, additionalParams = [] } = props;
+    const { userId, data, fetchList, listShowLoading, reportDetail, additionalParams = [], resetData } = props;
 
     const [, setReport] = useState();
     const [sampleReportConfig, setReportConfig] = useState({
@@ -91,6 +92,11 @@ export const EmbeddedReportMasterBase = (props) => {
     }, [userId, reportDetail]);
 
     useEffect(() => {
+        resetData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
         let sExtraParamsString = '&rp:';
         additionalParams?.forEach((item, index) => {
             sExtraParamsString += item?.value && item?.key ? item?.value && item?.key + '=' + item?.value + '&' : '';
@@ -105,8 +111,8 @@ export const EmbeddedReportMasterBase = (props) => {
             type: 'report',
             id: data?.embedReports?.[0]?.reportId.substr(46, 92),
             embedUrl,
-            accessToken: data.embedToken,
-            tokenType: models.TokenType.Embed,
+            accessToken: data?.embedToken,
+            tokenType: models?.TokenType?.Embed,
             settings: {
                 panes: {
                     filters: {

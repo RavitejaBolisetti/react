@@ -23,7 +23,10 @@ const FormWrapper = (props) => {
 
 describe('Amc registration main container Components', () => {
     it('Should render Amc registration main container basic render', () => {
-        customRender(<FormWrapper isVisible={true} fetchSchemeList={jest.fn()} currentSection={"1"} />);
+
+        const typeData={ PRC_TYP: [{ name: 'Kai' }] };
+
+        customRender(<FormWrapper typeData={typeData} fetchManagerList={jest.fn()} fetchEmployeeList={jest.fn()} isVisible={true} fetchSchemeList={jest.fn()} currentSection={"1"} />);
 
         const plus = screen.getAllByRole('img', { name: "plus" })
         fireEvent.click(plus[0])

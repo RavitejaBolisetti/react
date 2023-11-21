@@ -507,6 +507,15 @@ export const MenuConstant = {
         parentMenuId: 'SACR-02.04',
         slug: 'stock-transfer-report',
     },
+
+    [getMenyKey('SACR-04.19')]: {
+        key: 'SACR-04.19',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'SACR-02.04',
+        slug: 'pool_stock_report',
+    },
+
     [getMenyKey('SACR-04.01')]: {
         key: 'SACR-04.01',
         link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
@@ -520,13 +529,6 @@ export const MenuConstant = {
         icon: undefined,
         parentMenuId: 'SACR-02.05',
         slug: 'delivery-challan-report',
-    },
-    [getMenyKey('FINA-02.10')]: {
-        key: 'FINA-02.10',
-        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
-        icon: undefined,
-        parentMenuId: 'SACR-02.03',
-        slug: 'voucher-report',
     },
 
     [getMenyKey('VDNRPT')]: {
@@ -567,6 +569,14 @@ export const MenuConstant = {
         icon: undefined,
         parentMenuId: 'SACR-02.03',
         slug: 'on-road-price-detail-summary-report',
+    },
+
+    [getMenyKey('FINR-02')]: {
+        key: 'FINR-02',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'FIACC-REP',
+        slug: 'voucher-report',
     },
 
     [getMenyKey('RPT-DLRNOTE')]: {
@@ -610,6 +620,34 @@ export const MenuConstant = {
         link: routing.ROUTING_VEHICLE_TRACKING,
         icon: undefined,
         parentMenuId: 'SACT-04',
+    },
+
+    [getMenyKey('SAST-10.01')]: {
+        key: 'SAST-10.01',
+        link: routing.ROUTING_VEHICLE_SALES_SCHEME_MASTER,
+        icon: undefined,
+        parentMenuId: 'SAST-10',
+    },
+
+    [getMenyKey('SACT-04.14')]: {
+        key: 'SACT-04.14',
+        link: routing.ROUTING_OTF_SO_MAPPING_CONTROL_MASTER,
+        icon: undefined,
+        parentMenuId: 'SACT-04',
+    },
+
+    [getMenyKey('SACT-03.04')]: {
+        key: 'SACT-03.04',
+        link: routing.ROUTING_VEHICLE_PRICE_MASTER,
+        icon: undefined,
+        parentMenuId: 'SACT-03',
+    },
+
+    [getMenyKey('SRST-05.06')]: {
+        key: 'SRST-05.06',
+        link: routing.ROUTING_CRM_SCHEME_ENROLMENT,
+        icon: undefined,
+        parentMenuId: 'SRST-05',
     },
 
     [getMenyKey('SACT-04.08')]: {

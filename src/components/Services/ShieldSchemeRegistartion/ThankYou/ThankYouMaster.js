@@ -11,6 +11,8 @@ import { CopytoClipboard } from 'utils/CopytoClipboard';
 import { AMC_CONSTANTS } from '../utils/AMCConstants';
 import { SHIELD_REPORT_DOCUMENT_TYPE } from '../utils/shieldReportDocumentType';
 
+import { translateContent } from 'utils/translateContent';
+
 import styles from 'assets/sass/app.module.scss';
 
 const { Title, Text } = Typography;
@@ -71,10 +73,10 @@ export const ThankYouMaster = (props) => {
 
                             <Divider />
                             <Space size="middle" direction="vertical">
-                                <Text>Do you want to Print or download invoice</Text>
+                                <Text>{translateContent('shieldSchemeRegistration.confirmationMessage.downloadConfirmation')}</Text>
                                 <Row justify="space-between">
                                     <Button onClick={() => handlePrintDownload({ ...record, typeRecord: SHIELD_REPORT_DOCUMENT_TYPE?.INVOICE_SHIELD?.value })} danger>
-                                        Invoice
+                                        {translateContent('shieldSchemeRegistration.buttons.invoice')}
                                     </Button>
                                     {/* <Button onClick={() => handlePrintDownload({ ...record, typeRecord: SHIELD_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_SHIELD?.value })} danger style={{ margin: '0 12px' }}>
                                         Registration Certificate

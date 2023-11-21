@@ -19,6 +19,8 @@ import { schemeDescriptionDataAction } from 'store/actions/data/services/schemeD
 import { employeeSearchDataAction } from 'store/actions/data/amcRegistration/employeeSearch';
 import { dealerParentLovDataActions } from 'store/actions/data/dealer/dealerParentsLov';
 import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
+import { ProductModelGroupsDataActions } from 'store/actions/data/VehicleModelTaxChargesCategory/productModelGroup';
+import { otfModelFamilyDetailDataActions } from 'store/actions/data/otf/modelFamily';
 import { BASE_URL_APPLICATION_DEALER_LOCATION as customURL } from 'constants/routingApi';
 import { ListDataTable } from 'utils/ListDataTable';
 import { ShieldSchemeMainConatiner } from './ShieldSchemeMainConatiner';
@@ -31,6 +33,7 @@ import { SHIELD_REPORT_DOCUMENT_TYPE } from './utils/shieldReportDocumentType';
 import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
 import { ReportModal } from 'components/common/ReportModal/ReportModal';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { translateContent } from 'utils/translateContent';
 
 import RegistrationFilter from './RegistrationFilter';
 import { AdvancedSearch } from './AdvancedSearch';
@@ -79,12 +82,18 @@ const mapStateToProps = (state) => {
                 DealerParentsLov: { data: dealerParentsLovList },
             },
             ApplicationMaster: { dealerLocations = [] },
+            OTF: {
+                ModelFamily: { isLoaded: isModelFamilyDataLoaded = false, isLoading: isModelFamilyLoading, data: modelFamilyData = [] },
+            },
+            VehicleModelandTaxChargesCategory: {
+                ProductModelGroup: { isLoaded: isProductHierarchyDataLoaded = false, isLoading: isProductHierarchyDataLoading = false, data: ProductHierarchyData = [] },
+            },
         },
         common: {
             Header: { data: loginUserData = [] },
         },
     } = state;
-    const moduleTitle = 'Shield Scheme Registration';
+    const moduleTitle = translateContent('shieldSchemeRegistration.heading.moduleTitle');
     let returnValue = {
         userId,
         typeData,
@@ -106,6 +115,12 @@ const mapStateToProps = (state) => {
         dealerLocations,
         schemeDetail,
         filterString,
+        isModelFamilyDataLoaded,
+        isModelFamilyLoading,
+        modelFamilyData,
+        isProductHierarchyDataLoaded,
+        isProductHierarchyDataLoading,
+        ProductHierarchyData,
     };
     return returnValue;
 };
@@ -132,6 +147,15 @@ const mapDispatchToProps = (dispatch) => ({
             resetSchemeDetail: schemeDescriptionDataAction.resetDetail,
             listShowLoading: shieldSchemeSearchDataAction.listShowLoading,
             listSchemeLoading: schemeDescriptionDataAction.listShowLoading,
+
+            fetchModelList: ProductModelGroupsDataActions.fetchList,
+            listModelShowLoading: ProductModelGroupsDataActions.listShowLoading,
+            resetProductData: ProductModelGroupsDataActions.reset,
+
+            fetchModelFamilyLovList: otfModelFamilyDetailDataActions.fetchList,
+            listFamilyShowLoading: otfModelFamilyDetailDataActions.listShowLoading,
+            resetFamily: otfModelFamilyDetailDataActions.reset,
+
             showGlobalNotification,
         },
         dispatch
@@ -140,6 +164,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const ShieldSchemeRegistrationMasterMain = (props) => {
     const { userId, loginUserData, invoiceStatusList, typeData, data, showGlobalNotification, totalRecords, moduleTitle, fetchList, fetchDetail, fetchSchemeDescription, fetchEmployeeList, fetchManagerList, saveData, listShowLoading, listSchemeLoading, listEmployeeShowLoading, setFilterString, filterString, detailShieldData, resetDetail, resetSchemeDetail, isEmployeeDataLoaded, isEmployeeDataLoading, isSchemeLoading, employeeData, managerData, schemeDetail, fetchDealerParentsLovList, dealerParentsLovList, fetchDealerLocations, dealerLocations } = props;
+    const { fetchModelFamilyLovList, listFamilyShowLoading, modelFamilyData, fetchModelList, listModelShowLoading, ProductHierarchyData } = props;
 
     const [selectedOrder, setSelectedOrder] = useState();
     const [selectedOrderId, setSelectedOrderId] = useState();
@@ -150,7 +175,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     const [sectionName, setSetionName] = useState();
     const [isLastSection, setLastSection] = useState(false);
     const [userType, setUserType] = useState('');
-    const [amcStatus, setAmcStatus] = useState(QUERY_BUTTONS_CONSTANTS.PENDING.key);
+    const [amcStatus, setAmcStatus] = useState();
     const [isMNMApproval, setIsMNMApproval] = useState(false);
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
 
@@ -218,7 +243,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     };
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        // showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
@@ -344,9 +369,11 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
             if (loginUserData?.userType === AMC_CONSTANTS?.DEALER?.key) {
                 setAmcStatus(QUERY_BUTTONS_CONSTANTS.PENDING.key);
                 setUserType(AMC_CONSTANTS?.DEALER?.key);
+                setFilterString({ ...filterString, amcStatus: QUERY_BUTTONS_CONSTANTS.PENDING.key });
             } else {
                 setAmcStatus(QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.key);
                 setUserType(AMC_CONSTANTS?.MNM?.key);
+                setFilterString({ ...filterString, amcStatus: QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.key });
             }
         }
 
@@ -354,7 +381,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     }, [loginUserData?.userType]);
 
     useEffect(() => {
-        if (userId) {
+        if (userId && filterString?.amcStatus) {
             setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
@@ -398,10 +425,41 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, vinNumber]);
 
+    useEffect(() => {
+        if (detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelFamily) {
+            const makeExtraParams = [
+                {
+                    key: 'familyCode',
+                    title: 'familyCode',
+                    value: detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelFamily,
+                    name: 'familyCode',
+                },
+            ];
+            fetchModelFamilyLovList({ setIsLoading: listFamilyShowLoading, userId, extraParams: makeExtraParams });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelFamily]);
+
+    useEffect(() => {
+        if (detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelGroup) {
+            const makeExtraParams = [
+                {
+                    key: 'modelGroupCode',
+                    title: 'modelGroupCode',
+                    value: detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelGroup,
+                    name: 'modelGroupCode',
+                },
+            ];
+            fetchModelList({ setIsLoading: listModelShowLoading, userId, extraParams: makeExtraParams });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelGroup]);
+
     const handleInvoiceTypeChange = (buttonName) => {
-        setAmcStatus(buttonName?.key);
-        setFilterString({ current: 1, pageSize: 10 });
+        const key = buttonName?.key;
+        setAmcStatus(key);
         searchForm.resetFields();
+        setFilterString({ amcStatus: key, current: 1, pageSize: 10 });
     };
 
     const handleChange = (e) => {
@@ -465,7 +523,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
                 setButtonData(Visibility);
                 // setButtonData({ ...Visibility, cancelReceiptBtn: true });
                 if (buttonAction === VIEW_ACTION) {
-                    amcStatus === QUERY_BUTTONS_CONSTANTS?.PENDING?.key ? setButtonData({ ...Visibility, editBtn: false, cancelSchemeBtn: true }) : setButtonData({ ...Visibility, editBtn: false, cancelSchemeBtn: false });
+                    amcStatus === QUERY_BUTTONS_CONSTANTS?.APPROVED?.key ? setButtonData({ ...Visibility, editBtn: false, cancelSchemeBtn: true }) : setButtonData({ ...Visibility, editBtn: false, cancelSchemeBtn: false });
                     // receiptStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: false, printReceiptBtn: true }) : receiptStatus === QUERY_BUTTONS_CONSTANTS.APPORTION.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: true, printReceiptBtn: true }) : setButtonData({ ...Visibility, editBtn: true, cancelReceiptBtn: true, printReceiptBtn: true });
                 }
             }
@@ -499,7 +557,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         if (value) {
             const onSuccessAction = (res) => {
                 setVinNumber(res?.data?.vehicleAndCustomerDetails?.vehicleDetails?.vin);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             };
             const extraParams = [
                 {
@@ -670,7 +728,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     const handleWholeSchemeCancellation = () => {
         setCancelSchemeVisible(true);
         setAmcWholeCancellation(true);
-        setStatus(QUERY_BUTTONS_MNM_USER?.PENDING_FOR_CANCELLATION?.key);
+        setStatus(QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key);
     };
     const handleCancelRequest = () => {
         setCancelSchemeVisible(true);
@@ -740,7 +798,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             setButtonData({ ...buttonData, formBtnActive: false });
             setCancelSchemeVisible(false);
@@ -836,7 +894,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
 
-        titleOverride: 'Advance Filters',
+        titleOverride: translateContent('global.advanceFilter.title'),
 
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
@@ -917,7 +975,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         isLastSection,
         typeData,
         handlePrintDownload,
-        saveButtonName: isLastSection ? 'Submit' : 'Save & Next',
+        saveButtonName: isLastSection ? translateContent('global.buttons.submit') : translateContent('global.buttons.saveAndNext'),
         setLastSection,
         // showCancelConfirm,
         confirmRequest,
@@ -953,6 +1011,8 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         listEmployeeShowLoading,
         fetchManagerList,
         managerData,
+        modelFamilyData,
+        ProductHierarchyData,
     };
 
     useEffect(() => {

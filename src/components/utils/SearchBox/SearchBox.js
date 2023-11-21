@@ -82,6 +82,7 @@ const SearchBox = (props) => {
         optionFilterProp: 'children',
         allowClear: allowClear,
         className: selectWide ? styles.headerSelectFieldWide : styles.headerSelectField,
+        loading: !optionType?.length,
     };
 
     return (
@@ -99,7 +100,7 @@ const SearchBox = (props) => {
                     </Form.Item>
                 )}
                 <Form.Item label={label} {...searchParamRule} name={singleField && singleFieldKey ? singleFieldKey : 'searchParam'} rules={validationRules} validateTrigger={validateTrigger} className={selectWide ? styles.headerSearchFieldWide : ''}>
-                    <Search onInput={captilized ? convertToUpperCase : undefined} loading={isLoading} disabled={disabled} placeholder={placeholder} maxLength={maxLength} value={filterString?.searchParam} allowClear onChange={handleChange} onSearch={'singleField' && handleSearchWithoutParameter ? handleSearchWithoutParameter : handleSearchParamSearch} className={styles.headerSearchField} />
+                    <Search onInput={captilized ? convertToUpperCase : undefined} loading={isLoading || !optionType?.length} disabled={disabled} placeholder={placeholder} maxLength={maxLength} value={filterString?.searchParam} allowClear onChange={handleChange} onSearch={'singleField' && handleSearchWithoutParameter ? handleSearchWithoutParameter : handleSearchParamSearch} className={styles.headerSearchField} />
                 </Form.Item>
             </Form>
         </div>

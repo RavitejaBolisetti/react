@@ -719,6 +719,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
             }
             setSelectedTreeSelectKey({ model: key, modelName: treeLabelName });
         },
+        setSelectedTreeSelectKey,
     };
 
     return (

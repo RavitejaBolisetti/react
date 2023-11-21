@@ -246,14 +246,19 @@ const CustomerMasterMain = (props) => {
     }, []);
 
     useEffect(() => {
+        if (typeData && typeData?.length) {
+            searchForm?.setFieldValue('searchType', 'customerName');
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [typeData]);
+
+    useEffect(() => {
         if (customerType) {
-            // setFilterString({ current: 1 });
             setFilterString({ ...filterString, customerType, current: 1 });
             const defaultSection = customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION.CUSTOMER_DETAILS.id : CUSTOMER_CORPORATE_SECTION.CUSTOMER_DETAILS.id;
             setSetionName(customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION : CUSTOMER_CORPORATE_SECTION);
             setDefaultSection(defaultSection);
             setSection(defaultSection);
-            // setShowDataLoading(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [customerType]);
@@ -435,8 +440,7 @@ const CustomerMasterMain = (props) => {
         searchForm,
         filterString,
         setFilterString,
-        optionType: typeData,
-        defaultOption: 'customerName',
+        optionType: typeData?.length && typeData,
         handleChange,
         allowClear: false,
     };

@@ -18,7 +18,7 @@ const { Search } = Input;
 const { TextArea } = Input;
 
 const RegistrationForm = (props) => {
-    const { employeeData, managerData, registrationForm, formData, typeData, handleFormValueChange, handleBookingNumberSearch, isVehicleInvoiceDataLoading, handleBookingNumberChange, handleSaleTypeChange, selectedSaleType } = props;
+    const { employeeData, managerData, registrationForm, formData, typeData, handleFormValueChange, handleBookingNumberSearch, isVehicleInvoiceDataLoading, handleBookingNumberChange, handleSaleTypeChange, selectedSaleType, handleTaxChange } = props;
 
     return (
         <>
@@ -31,7 +31,7 @@ const RegistrationForm = (props) => {
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item initialValue={formData?.saleType} label={translateContent('amcRegistration.label.saleType')} name="saleType" rules={[validateRequiredSelectField(translateContent('amcRegistration.label.saleType'))]}>
-                            {customSelectBox({ data: typeData['SALE_TYP'], placeholder: preparePlaceholderSelect(translateContent('amcRegistration.label.saleType')) })}
+                            {customSelectBox({ data: typeData['SALE_TYP'], placeholder: preparePlaceholderSelect(translateContent('amcRegistration.label.saleType')), onChange: handleTaxChange })}
                         </Form.Item>
                     </Col>
                     {selectedSaleType === AMC_CONSTANTS?.MNM_FOC?.key && (

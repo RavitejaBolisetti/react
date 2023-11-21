@@ -100,7 +100,7 @@ export const EMBEDDED_REPORTS = {
 
     STOCK_TRANSFER_ISSUE_NOTE_DOCUMENT: {
         id: 13,
-        key: 'Stock_Transfer_Issue_Note_Document',
+        key: 'Stock_Transfer_Issue_Note',
         title: 'Stock Transfer Issue Note Document',
         type: 'Document',
         slug: 'stock-transfer-issue-note-document',
@@ -237,5 +237,12 @@ export const EMBEDDED_REPORTS = {
         title: 'SO Mapping Unmapping Report ',
         type: 'Report',
         slug: 'so_mapping_unmapping_report',
+    },
+    Pool_Stock_Report: {
+        id: 33,
+        key: 'Pool_stock_report',
+        title: 'Pool Stock Report ',
+        type: 'Report',
+        slug: 'pool_stock_report',
     },
 };

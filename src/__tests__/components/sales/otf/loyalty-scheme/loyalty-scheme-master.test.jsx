@@ -1,9 +1,15 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React from 'react';
 import { screen, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { LoyaltySchemeMaster } from 'components/Sales/Common/LoyaltyScheme/LoyaltySchemeMaster';
 import customRender from '@utils/test-utils';
 import { Form, Button } from 'antd';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 
 jest.mock('store/actions/data/otf/loyaltyAndScheme', () => ({
@@ -91,7 +97,7 @@ describe('Loyalty scheme master render', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper StatusBar={'test'} selectedRecordId={'testing'} FormActionButton={FormActionButton} fetchList={fetchList} />
+                <FormWrapper StatusBar={'test'} salesModuleType={'otf'} selectedRecordId={'testing'} FormActionButton={FormActionButton} fetchList={fetchList} />
             </Provider>
         );
         fetchList.mock.calls[0][0].onErrorAction();

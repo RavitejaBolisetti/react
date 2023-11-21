@@ -38,7 +38,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = translateContent('LessorCompanyCreation.heading.moduletitle');
+    const moduleTitle = translateContent('lessorCompanyCreation.heading.moduletitle');
 
     let returnValue = {
         userId,
@@ -226,7 +226,7 @@ export const ListCustomerCreationBase = (props) => {
 
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(moduleTitle),
+        titleOverride: drawerTitle.concat(' ' + moduleTitle),
 
         ADD_ACTION,
         EDIT_ACTION,
@@ -267,9 +267,9 @@ export const ListCustomerCreationBase = (props) => {
         fileList,
         setFileList,
 
-        uploadButtonName: translateContent('LessorCompanyCreation.message.uploadButtonName'),
-        messageText: translateContent('LessorCompanyCreation.message.messageText'),
-        validationText: translateContent('LessorCompanyCreation.message.validationText'),
+        uploadButtonName: translateContent('lessorCompanyCreation.message.uploadButtonName'),
+        messageText: translateContent('lessorCompanyCreation.message.messageText'),
+        validationText: translateContent('lessorCompanyCreation.message.validationText'),
         supportedFileTypes,
         maxSize,
     };
@@ -287,7 +287,7 @@ export const ListCustomerCreationBase = (props) => {
         setIsFormVisible(true);
     };
 
-    const title = translateContent('LessorCompanyCreation.heading.title');
+    const title = translateContent('lessorCompanyCreation.heading.pageTitle');
 
     return (
         <>
@@ -299,12 +299,12 @@ export const ListCustomerCreationBase = (props) => {
                         </Form>
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.buttonsGroupRight}>
-                        <Button type="primary" onClick={handleOnClick}>
-                            {translateContent('global.buttons.upload')};
+                        <Button type="primary" onClick={handleOnClick} data-testid="upload">
+                            {translateContent('global.buttons.upload')}
                         </Button>
 
-                        <Button type="primary" onClick={handleDownload}>
-                            {translateContent('global.buttons.download')};
+                        <Button type="primary" onClick={handleDownload} data-testid="download">
+                            {translateContent('global.buttons.download')}
                         </Button>
                     </Col>
                 </Row>

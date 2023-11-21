@@ -7,7 +7,6 @@ import React, { useEffect } from 'react';
 import { Form, Col, Row } from 'antd';
 
 import { validateRequiredSelectField } from 'utils/validation';
-import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 import { ViewDetail } from './ViewDetail';
 import { withDrawer } from 'components/withDrawer';

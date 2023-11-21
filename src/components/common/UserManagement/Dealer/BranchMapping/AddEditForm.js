@@ -100,7 +100,7 @@ const AddEditForm = (props) => {
                                     }}
                                     description={
                                         <span>
-                                            {translateContent('global.generalMessage.noRecordsFoundAddNew')} <br />
+                                            {translateContent('global.generalMessage.noRecordsFoundAddNew').replace('{NAME}', translateContent('userManagement.label.branch'))} <br />
                                         </span>
                                     }
                                 ></Empty>

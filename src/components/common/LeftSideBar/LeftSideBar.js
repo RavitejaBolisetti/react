@@ -81,14 +81,16 @@ const LeftSideBarMain = (props) => {
     const pagePath = location.pathname;
     const [menuForm] = Form.useForm();
 
-    const menuId = flatternData?.find((i) => i.link === pagePath)?.menuId;
-    const fieldNames = { title: 'menuTitle', key: 'menuId', children: 'subMenu' };
+    const selectedMenu = flatternData?.find((i) => i.link === pagePath);
+    // const menuId = selectedMenu?.parentMenuId?.concat('_' + selectedMenu?.menuId);
+    const menuId = selectedMenu?.menuId;
+
+    const fieldNames = { title: 'menuTitle', key: 'menuId', parentKey: 'parentMenuId', children: 'subMenu' };
 
     const [options, setOptions] = useState([]);
     const [openKeys, setOpenKeys] = useState([]);
     const [selectedKeys, setSelectedKeys] = useState([]);
     const [selectedMenuId, setSelectedMenuId] = useState();
-    // const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
     const theme = 'light';
 
     useEffect(() => {
@@ -143,14 +145,15 @@ const LeftSideBarMain = (props) => {
     const prepareMenuItem = (data) => {
         return data.map(({ menuId, menuTitle, parentMenuId = '', subMenu = [] }) => {
             const isParentMenu = parentMenuId === 'Web';
-
+            // const modifiedMenuId = parentMenuId + menuId;
+            const modifiedMenuId = menuId;
             return subMenu?.length ? (
-                <SubMenu key={parentMenuId + menuId} title={prepareLink({ id: menuId, title: menuTitle, menuOrgTitle: menuTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
+                <SubMenu key={modifiedMenuId} title={prepareLink({ id: menuId, modifiedMenuId, title: menuTitle, menuOrgTitle: menuTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
                     {prepareMenuItem(subMenu)}
                 </SubMenu>
             ) : (
-                <Item key={parentMenuId + menuId} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
-                    {prepareLink({ id: menuId, title: menuTitle, menuOrgTitle: menuTitle, tooltip: true, icon: true, captlized: isParentMenu, isParentMenu, showTitle: collapsed ? !isParentMenu : true })}
+                <Item key={modifiedMenuId} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
+                    {prepareLink({ id: menuId, title: menuTitle, modifiedMenuId, menuOrgTitle: menuTitle, tooltip: true, icon: true, captlized: isParentMenu, isParentMenu, showTitle: collapsed ? !isParentMenu : true })}
                 </Item>
             );
         });

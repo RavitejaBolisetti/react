@@ -10,6 +10,7 @@ import { DATA_TYPE } from 'constants/dataType';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { CopytoClipboard } from 'utils/CopytoClipboard';
 import { getCodeValue } from 'utils/getCodeValue';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -36,7 +37,7 @@ const ShieldDetailCard = (props) => {
                 header={
                     <>
                         <div className={`${styles.detailCardText} ${styles.marB5}`} style={{ fontSize: '14px' }}>
-                            <span>Scheme Reg. No.:</span>
+                            <span>{translateContent('shieldSchemeRegistration.label.schemeRegNo')}:</span>
                             <span>
                                 {detailShieldData?.registrationDetails?.registrationInformation?.schemeRegistrationNumber}
                                 {detailShieldData?.registrationDetails?.registrationInformation?.schemeRegistrationNumber && (
@@ -53,11 +54,11 @@ const ShieldDetailCard = (props) => {
             >
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Registration Date: <span>{checkAndSetDefaultValue(detailShieldData?.registrationDetails?.registrationInformation?.registrationDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
+                    {translateContent('shieldSchemeRegistration.label.registrationDate')}: <span>{checkAndSetDefaultValue(detailShieldData?.registrationDetails?.registrationInformation?.registrationDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Status: <span>{checkAndSetDefaultValue(getCodeValue(typeData?.AMC_REG_APRVL_STAT, detailShieldData?.registrationDetails?.registrationInformation?.status), isLoading)}</span>
+                    {translateContent('shieldSchemeRegistration.label.status')}: <span>{checkAndSetDefaultValue(getCodeValue(typeData?.AMC_REG_APRVL_STAT, detailShieldData?.registrationDetails?.registrationInformation?.status), isLoading)}</span>
                 </div>
             </Panel>
         </Collapse>

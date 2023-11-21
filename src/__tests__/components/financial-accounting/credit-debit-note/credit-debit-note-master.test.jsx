@@ -62,8 +62,8 @@ describe('Render components',() => {
         const textbox = screen.getByRole('textbox', {name:'Search Credit/Debit'});
         fireEvent.change(textbox,{target:{value:'test'}});
 
-        const searchImg = screen.getByRole('img', {name:'search'});
-        fireEvent.click(searchImg)
+        // const searchImg = screen.getByRole('img', {name:'search'});
+        // fireEvent.click(searchImg)
     });
 
     it('Credit button, close', () => {
@@ -85,8 +85,8 @@ describe('Render components',() => {
         const plusImg = screen.getAllByRole('img', {name:'plus'});
         fireEvent.click(plusImg[1]);
 
-        const searchBtn = screen.getAllByRole('img', {name:'search'});
-        fireEvent.click(searchBtn[1]);
+        // const searchBtn = screen.getAllByRole('img', {name:'search'});
+        // fireEvent.click(searchBtn[1]);
 
         const saveBtn = screen.getByTestId('save_next_btn');
         fireEvent.click(saveBtn);

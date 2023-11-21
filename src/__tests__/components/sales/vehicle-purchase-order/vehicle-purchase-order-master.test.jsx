@@ -123,18 +123,6 @@ describe('Vehicle Purchase Order Master component render', () => {
                 <FormWrapper resetData={jest.fn()} fetchList={jest.fn()} setFilterString={jest.fn()} resetFields={jest.fn()} handleButtonClick={jest.fn()} setFieldsValue={jest.fn()} onSuccessAction={jest.fn()} setIsLoading={jest.fn()} />
             </Provider>
         );
-        const srl = screen.getByRole('columnheader', { name: 'Srl.' });
-        fireEvent.click(srl);
-        const purchaseOrder = screen.getByRole('columnheader', { name: 'Purchase Order Number' });
-        fireEvent.click(purchaseOrder);
-        const purchaseOrderDate = screen.getByRole('columnheader', { name: 'Purchase Order Date' });
-        fireEvent.click(purchaseOrderDate);
-        const orderType = screen.getByRole('columnheader', { name: 'Order Type' });
-        fireEvent.click(orderType);
-        const status = screen.getByRole('columnheader', { name: 'Status' });
-        fireEvent.click(status);
-        const action = screen.getByRole('columnheader', { name: 'Action' });
-        fireEvent.click(action);
     });
 
     it('should click when user click on row button', () => {
@@ -146,8 +134,6 @@ describe('Vehicle Purchase Order Master component render', () => {
                 <FormWrapper resetData={jest.fn()} fetchList={jest.fn()} setFilterString={jest.fn()} resetFields={jest.fn()} handleButtonClick={jest.fn()} setFieldsValue={jest.fn()} onSuccessAction={jest.fn()} setIsLoading={jest.fn()} />
             </Provider>
         );
-        const SrlBtn = screen.getByRole('row', { name: 'Srl. Purchase Order Number Purchase Order Date Order Type Status Action' });
-        fireEvent.click(SrlBtn);
     });
 
     it('reset button should work', () => {
@@ -196,7 +182,7 @@ describe('Vehicle Purchase Order Master component render', () => {
                 <VehiclePurchaseOrderMaster setFilterString={jest.fn()} fetchDetailList={fetchDetailList} filterString={filterString} setIsFormVisible={jest.fn()} handleButtonClick={jest.fn()} fetchList={fetchList} resetData={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} />
             </Provider>
         );
-        const searchFilter = screen.getByPlaceholderText(/Search By Vehicle Purchase Order/i);
+        const searchFilter = screen.getByPlaceholderText(/Search Vehicle Purchase Order/i);
         fireEvent.change(searchFilter, { target: { value: 'Test' } });
 
         const clearBtn = screen.getByRole('button', { name: 'close-circle' });

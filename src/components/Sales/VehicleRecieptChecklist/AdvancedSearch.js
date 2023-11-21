@@ -16,7 +16,7 @@ import { translateContent } from 'utils/translateContent';
 import TreeSelectField from 'components/common/TreeSelectField';
 
 export const AdvancedSearchFrom = (props) => {
-    const { setAdvanceSearchVisible, vehicleModelData, isModelDataLoading } = props;
+    const { setAdvanceSearchVisible, vehicleModelData, isModelDataLoading, setSelectedTreeSelectKey } = props;
     const { productHierarchyData, formData, handleSelectTreeClick, selectedTreeSelectKey, isProductDataLoading } = props;
     const {
         filterString,
@@ -44,6 +44,7 @@ export const AdvancedSearchFrom = (props) => {
 
     const handleResetFilter = (e) => {
         resetFields();
+        setSelectedTreeSelectKey({ model: undefined, modelName: [] });
         setrules({ fromdate: false, todate: false });
     };
 

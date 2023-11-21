@@ -20,6 +20,7 @@ const AddEditFormMain = (props) => {
     const { form, typeData, formData, corporateLovData, formActionType: { editMode } = undefined, data, customerType, userId, formActionType, numbValidatedSuccess, selectedCustomer, setNumbValidatedSuccess, defaultExtraParam } = props;
     const { contactOverWhatsApp, contactOverWhatsAppActive, sameMobileNoAsWhatsApp, sameMobileNoAsWhatsAppActive } = whatsAppConfiguration;
     const [corporateType, setCorporateType] = useState('');
+   
     useEffect(() => {
         setCorporateType(formData?.corporateType);
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -115,7 +116,7 @@ const AddEditFormMain = (props) => {
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        <Form.Item label={translateContent('customerMaster.label.contactNo')} initialValue={formData?.whatsappCommunicationIndicator} name="whatsappCommunicationIndicator" data-testid="contactedOverWhatsapp">
+                        <Form.Item valuePropName="checked" label={translateContent('customerMaster.label.contactNo')} initialValue={contactOverWhatsApp} name="whatsappCommunicationIndicator" data-testid="contactedOverWhatsapp">
                             <Switch
                                 onChange={(prev) => {
                                     if (!prev) {
@@ -123,18 +124,18 @@ const AddEditFormMain = (props) => {
                                         setWhatsAppConfiguration({ contactOverWhatsAppActive: true, sameMobileNoAsWhatsApp: false, sameMobileNoAsWhatsAppActive: true });
                                     }
                                 }}
-                                checked={contactOverWhatsApp}
+                                // checked={contactOverWhatsApp}
                             />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        <Form.Item label={translateContent('customerMaster.label.WhatsAppNoText')} initialValue={formData?.mobileNumberAsWhatsappNumber} name="mobileNumberAsWhatsappNumber" data-testid="useMobileNumber">
+                        <Form.Item valuePropName="checked" label={translateContent('customerMaster.label.WhatsAppNoText')} initialValue={sameMobileNoAsWhatsApp} name="mobileNumberAsWhatsappNumber" data-testid="useMobileNumber">
                             <Switch
                                 disabled={sameMobileNoAsWhatsAppActive}
                                 onChange={() => {
                                     form.validateFields(['whatsAppNumber']);
                                 }}
-                                checked={sameMobileNoAsWhatsApp}
+                                // checked={sameMobileNoAsWhatsApp}
                             />
                         </Form.Item>
                     </Col>
