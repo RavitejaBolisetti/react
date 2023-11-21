@@ -142,13 +142,13 @@ const AddEditFormMain = (props) => {
             <Card>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={14} lg={14} xl={14}>
-                        <Form.Item label={translateContent('bookingManagement.modelVariant.label.modelDescription')} name={'model' + formType} rules={[validateRequiredSelectField(translateContent('bookingManagement.modelVariant.validation.model'))]}>
+                        <Form.Item label={translateContent('bookingManagement.modelVariant.label.modelDescription')} initialValue={formData?.model} name={'model' + formType} rules={[validateRequiredSelectField(translateContent('bookingManagement.modelVariant.validation.model'))]}>
                             <TreeSelectField {...treeSelectFieldProps} />
                         </Form.Item>
                         {toolTipContent && <div className={styles.modelTooltip}>{addToolTip(toolTipContent, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle size={13} />)}</div>}
                     </Col>
                     <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                        <Form.Item label={translateContent('bookingManagement.modelVariant.label.modelCode')} name={'modelCode' + formType} rules={[validateRequiredInputField(translateContent('bookingManagement.modelVariant.validation.modelCode'))]}>
+                        <Form.Item label={translateContent('bookingManagement.modelVariant.label.modelCode')} initialValue={formData?.modelCode} name={'modelCode' + formType} rules={[validateRequiredInputField(translateContent('bookingManagement.modelVariant.validation.modelCode'))]}>
                             <Input placeholder={preparePlaceholderText(translateContent('bookingManagement.modelVariant.placeholder.modelCode'))} disabled={true} />
                         </Form.Item>
                     </Col>
