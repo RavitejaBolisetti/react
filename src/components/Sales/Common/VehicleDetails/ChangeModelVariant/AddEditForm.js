@@ -16,10 +16,11 @@ import { ConfirmationModal } from 'utils/ConfirmationModal';
 import TreeSelectField from 'components/common/TreeSelectField';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { addToolTip } from 'utils/customMenuLink';
+import { STATUS } from 'constants/modelVariant';
 
 const AddEditFormMain = (props) => {
     const { formData, formActionType: { editMode } = undefined, showGlobalNotification, userId, listShowLoading, setRefreshData, refreshData, buttonData, setButtonData, confirmRequest, setConfirmRequest, setChangeModel, toolTipContent, onModelSubmit, setOnModelSubmit } = props;
-    const { form, modelChangeItemList, setModelChangeItemList, productHierarchyData, selectedRecordId, filterVehicleData, saveData, handleVehicleDetailChange, handleFormValueChange } = props;
+    const { form, modelChangeItemList, setModelChangeItemList, productHierarchyData, setModelStatus, selectedRecordId, filterVehicleData, saveData, handleVehicleDetailChange, handleFormValueChange } = props;
     const [selectedTreeKey, setSelectedTreeKey] = useState(formData?.model);
     const formType = editMode ? 'New' : '';
     const modelChangeField = ['model' + formType, 'modelCode' + formType];
@@ -43,6 +44,7 @@ const AddEditFormMain = (props) => {
                     };
                     const onSuccess = (res) => {
                         setOnModelSubmit(true);
+                        setModelStatus(STATUS?.PENDING?.key);
                         setButtonData({ ...buttonData, formBtnActive: true });
                         setRefreshData(!refreshData);
                         showGlobalNotification({ notificationType: 'warning', title: 'Pending for SAP Confirmation', message: 'Change model request approval is pending from SAP' });
@@ -140,14 +142,14 @@ const AddEditFormMain = (props) => {
             <Card>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={14} lg={14} xl={14}>
-                        <Form.Item label="Revised Model Description" name={'model' + formType} initialValue={formData?.model} rules={[validateRequiredSelectField('model')]}>
+                        <Form.Item label={translateContent('bookingManagement.modelVariant.label.modelDescription')} name={'model' + formType} rules={[validateRequiredSelectField(translateContent('bookingManagement.modelVariant.validation.model'))]}>
                             <TreeSelectField {...treeSelectFieldProps} />
                         </Form.Item>
                         {toolTipContent && <div className={styles.modelTooltip}>{addToolTip(toolTipContent, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle size={13} />)}</div>}
                     </Col>
                     <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                        <Form.Item label="Revised Model Code" name={'modelCode' + formType} initialValue={formData?.modelCode} rules={[validateRequiredInputField('model code')]}>
-                            <Input placeholder={preparePlaceholderText('Model Code')} disabled={true} />
+                        <Form.Item label={translateContent('bookingManagement.modelVariant.label.modelCode')} name={'modelCode' + formType} rules={[validateRequiredInputField(translateContent('bookingManagement.modelVariant.validation.modelCode'))]}>
+                            <Input placeholder={preparePlaceholderText(translateContent('bookingManagement.modelVariant.placeholder.modelCode'))} disabled={true} />
                         </Form.Item>
                     </Col>
                 </Row>

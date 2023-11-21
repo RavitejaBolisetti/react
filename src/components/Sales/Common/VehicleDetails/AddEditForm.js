@@ -129,6 +129,7 @@ const AddEditFormMain = (props) => {
         onModelSubmit,
         setOnModelSubmit,
         setFilterVehicleData,
+        setChangeModel,
     };
 
     const handleSelectTreeClick = (value) => {

@@ -1398,6 +1398,19 @@
         },
         "button": {
             "selectPart": "Select Part"
+        },
+        "modelVariant": {
+            "label": {
+                "modelDescription": "Revised Model Description",
+                "modelCode": "Revised Model Code"
+            },
+            "validation": {
+                "model": "Model",
+                "modelCode": "Model Code"
+            },
+            "placeholder": {
+                "modelCode": "Model Code"
+            }
         }
     },
 

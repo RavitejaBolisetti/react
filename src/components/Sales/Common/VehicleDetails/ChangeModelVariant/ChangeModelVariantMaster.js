@@ -12,7 +12,7 @@ import { TbRefresh } from 'react-icons/tb';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
-import { STATUS } from 'components/common/CustomerMaster/IndividualCustomer/CustomerDetail/statusConstant';
+import { STATUS } from 'constants/modelVariant';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -41,7 +41,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ChangeModelVariantMasterBase = (props) => {
-    const { typeData, setCustomerNameList, status, selectedRecordId } = props;
+    const { typeData, setCustomerNameList, selectedRecordId, form } = props;
     const {
         formActionType: { addMode, editMode },
         formData,
@@ -64,10 +64,11 @@ const ChangeModelVariantMasterBase = (props) => {
         setConfirmRequest,
     } = props;
 
-    const { selectedCustomerId } = props;
+    const { selectedCustomerId, setChangeModel } = props;
     const vehicleModelChangeRequest = formData?.vehicleModelChangeRequest || false;
 
     const [uploadedFileName, setUploadedFileName] = useState('');
+    const [modelStatus, setModelStatus] = useState();
     const [modelChangeItemList, setModelChangeItemList] = useState([]);
 
     const onErrorAction = (message) => {
@@ -102,99 +103,9 @@ const ChangeModelVariantMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [nameChangeHistoryItem]);
 
-    // useEffect(() => {
-    //     if (data?.vehicleModelChangeRequest === null) {
-    //         setCustomerNameList({
-    //             titleCode: data?.titleCode,
-    //             firstName: data?.firstName,
-    //             middleName: data?.middleName,
-    //             lastName: data?.lastName,
-    //         });
-    //     } else {
-    //         setCustomerNameList({
-    //             titleCode: data?.vehicleModelChangeRequest?.titleCode,
-    //             firstName: data?.vehicleModelChangeRequest?.firstName,
-    //             middleName: data?.vehicleModelChangeRequest?.middleName,
-    //             lastName: data?.vehicleModelChangeRequest?.lastName,
-    //         });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [data]);
-
-    // const onSuccessAction = (res) => {
-    //     if (res?.data?.docId) {
-    //         let a = document.createElement('a');
-    //         a.href = `data:image/png;base64,${res?.data?.base64}`;
-    //         a.download = res?.data?.fileName;
-    //         a.click();
-    //         showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: 'Your download will start soon' });
-    //     }
-    // };
-
-    //     const extraParams = [
-    //         {
-    //             key: 'docId',
-    //             title: 'docId',
-    //             value: file?.documentId,
-    //             name: 'docId',
-    //         },
-    //     ];
-    //     const supportingDocument = file?.documentName;
-    //     fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, supportingDocument, onSuccessAction });
-    // };
-
-    // const deleteFile = (uploadData) => {
-    //     const data = { customerId: uploadData?.customerId, status: false, docId: uploadData?.docId, documentTypeId: uploadData?.documentType, id: uploadData?.id, documentName: uploadData?.documentName };
-    //     const onSuccess = (res) => {
-    //         showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: 'File deleted Successfully' });
-    //         fetchList({ setIsLoading: listSupportingDocumentShowLoading, userId });
-    //     };
-
-    //     const onError = (message) => {
-    //         showGlobalNotification({ message });
-    //     };
-    //     const requestData = {
-    //         data: data,
-    //         method: 'post',
-    //         setIsLoading: listSupportingDocumentShowLoading,
-    //         userId,
-    //         onError,
-    //         onSuccess,
-    //     };
-
-    //     saveData(requestData);
-    // };
-    // const downloadFileFromList = () => {
-    //     const extraParams = [
-    //         {
-    //             key: 'docId',
-    //             title: 'docId',
-    //             value: uploadedFile,
-    //             name: 'docId',
-    //         },
-    //     ];
-    //     const supportingDocument = uploadedFileName;
-    //     fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, supportingDocument, onSuccessAction });
-    // };
-
-    // const handlePreview = (selectedDocument) => {
-    //     const extraParams = [
-    //         {
-    //             key: 'docId',
-    //             title: 'docId',
-    //             value: selectedDocument?.docId,
-    //             name: 'docId',
-    //         },
-    //     ];
-    //     fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, selectedDocument, onSuccessAction });
-    // };
-
-    // const onViewHistoryChange = () => {
-    //     setShowNameChangeHistory(true);
-    // };
-
     const formProps = {
         ...props,
+        setModelStatus,
         data,
         typeData,
         selectedCustomerId,
@@ -225,7 +136,16 @@ const ChangeModelVariantMasterBase = (props) => {
                         value: selectedRecordId,
                     },
                 ];
-                fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+                const onSuccessAction = (res) => {
+                    setModelStatus(res?.sapStatusResponseCode);
+                    if (res?.sapStatusResponseCode === STATUS?.SUCCESS?.key) {
+                        setOnModelSubmit(false);
+                        setChangeModel(false);
+                        showGlobalNotification({ notificationType: 'success', title: 'Request Generated Successfully', message: 'Model Change Request has been submitted successfully' });
+                    }
+                };
+
+                fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams, onErrorAction });
             }
 
             if (!isVehicleServiceLoaded) {
@@ -233,7 +153,6 @@ const ChangeModelVariantMasterBase = (props) => {
             }
         }
     };
-
     return (
         <>
             {addMode ? (
@@ -249,7 +168,7 @@ const ChangeModelVariantMasterBase = (props) => {
                                     <Space>
                                         {onModelSubmit && (
                                             <>
-                                                {status === STATUS?.REJECTED?.title ? <Tag color="error">Rejected</Tag> : status === STATUS?.APPROVED?.title ? <Tag color="success">Approved</Tag> : <Tag color="warning">Pending For SAP Confirmation</Tag>}
+                                                {modelStatus === STATUS?.REJECTED?.key ? <Tag color="error">Rejected</Tag> : modelStatus === STATUS?.SUCCESS?.key ? <Tag color="success">Success</Tag> : <Tag color="warning">Pending For SAP Confirmation</Tag>}
                                                 <Button onClick={handleRefresh} type="link" icon={<TbRefresh />}></Button>
                                             </>
                                         )}
