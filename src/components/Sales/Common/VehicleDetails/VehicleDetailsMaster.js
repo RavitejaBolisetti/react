@@ -412,6 +412,7 @@ const VehicleDetailsMasterMain = (props) => {
         setOnModelSubmit,
         setRefreshData,
         refreshData,
+        setFormData,
     };
 
     const viewProps = {

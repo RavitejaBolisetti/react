@@ -61,6 +61,7 @@
             "title": "Change History"
         },
         "buttons": {
+            "retry": "Retry",
             "download": "Download",
             "downloadTemplate": "Download Template",
             "add": "Add",

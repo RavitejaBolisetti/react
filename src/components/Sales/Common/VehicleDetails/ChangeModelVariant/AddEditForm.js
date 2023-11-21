@@ -5,7 +5,7 @@
  */
 
 import React, { useState } from 'react';
-import { Col, Input, Form, Row, Card, Button } from 'antd';
+import { Col, Input, Form, Row, Card, Button, Space } from 'antd';
 
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -20,14 +20,16 @@ import { STATUS } from 'constants/modelVariant';
 
 const AddEditFormMain = (props) => {
     const { formData, formActionType: { editMode } = undefined, showGlobalNotification, userId, listShowLoading, setRefreshData, refreshData, buttonData, setButtonData, confirmRequest, setConfirmRequest, setChangeModel, toolTipContent, onModelSubmit, setOnModelSubmit } = props;
-    const { form, modelChangeItemList, setModelChangeItemList, productHierarchyData, setModelStatus, selectedRecordId, filterVehicleData, saveData, handleVehicleDetailChange, handleFormValueChange } = props;
+    const { form, modelChangeItemList, setModelChangeItemList, productHierarchyData, modelStatus, setModelStatus, selectedRecordId, filterVehicleData, saveData, handleVehicleDetailChange, handleFormValueChange } = props;
     const [selectedTreeKey, setSelectedTreeKey] = useState(formData?.model);
+    const [modelChange, setModelChange] = useState(true);
     const formType = editMode ? 'New' : '';
     const modelChangeField = ['model' + formType, 'modelCode' + formType];
 
     const onHandleSave = () => {
         form?.validateFields(modelChangeField)
             .then(() => {
+                setModelChange(false);
                 const vehicleNewModel = form.getFieldsValue(modelChangeField);
                 const vehicleModelChangeRequest = { model: vehicleNewModel?.['model' + formType], modelCode: vehicleNewModel?.['modelCode' + formType] };
                 const vehicleCurrentModel = { model: formData?.model, modelCode: formData?.modelCode };
@@ -106,6 +108,7 @@ const AddEditFormMain = (props) => {
                 });
             },
             onSubmitAction: () => {
+                setModelChange(false);
                 const finalData = { ...filterVehicleData, productModelCode: value };
                 handleVehicleDetailChange(finalData);
                 form.setFieldsValue({ ['modelCode' + formType]: finalData?.productModelCode });
@@ -139,36 +142,40 @@ const AddEditFormMain = (props) => {
 
     return (
         <>
-            <Card>
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={14} lg={14} xl={14}>
-                        <Form.Item label={translateContent('bookingManagement.modelVariant.label.modelDescription')} initialValue={formData?.model} name={'model' + formType} rules={[validateRequiredSelectField(translateContent('bookingManagement.modelVariant.validation.model'))]}>
-                            <TreeSelectField {...treeSelectFieldProps} />
-                        </Form.Item>
-                        {toolTipContent && <div className={styles.modelTooltip}>{addToolTip(toolTipContent, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle size={13} />)}</div>}
-                    </Col>
-                    <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                        <Form.Item label={translateContent('bookingManagement.modelVariant.label.modelCode')} initialValue={formData?.modelCode} name={'modelCode' + formType} rules={[validateRequiredInputField(translateContent('bookingManagement.modelVariant.validation.modelCode'))]}>
-                            <Input placeholder={preparePlaceholderText(translateContent('bookingManagement.modelVariant.placeholder.modelCode'))} disabled={true} />
-                        </Form.Item>
-                    </Col>
-                </Row>
-                {editMode && !onModelSubmit && (
-                    <>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24} className={`${styles.buttonsGroup} ${styles.marB20}`}>
-                                <Button type="primary" form="myNameForm" onClick={onHandleSave}>
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={14} lg={14} xl={14}>
+                    <Form.Item label={translateContent('bookingManagement.modelVariant.label.modelDescription')} initialValue={formData?.model} name={'model' + formType} rules={[validateRequiredSelectField(translateContent('bookingManagement.modelVariant.validation.model'))]}>
+                        <TreeSelectField {...treeSelectFieldProps} />
+                    </Form.Item>
+                    {toolTipContent && <div className={styles.modelTooltip}>{addToolTip(toolTipContent, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle size={13} />)}</div>}
+                </Col>
+                <Col xs={24} sm={24} md={10} lg={10} xl={10}>
+                    <Form.Item label={translateContent('bookingManagement.modelVariant.label.modelCode')} initialValue={formData?.modelCode} name={'modelCode' + formType} rules={[validateRequiredInputField(translateContent('bookingManagement.modelVariant.validation.modelCode'))]}>
+                        <Input placeholder={preparePlaceholderText(translateContent('bookingManagement.modelVariant.placeholder.modelCode'))} disabled={true} />
+                    </Form.Item>
+                </Col>
+            </Row>
+            {editMode && !onModelSubmit && (
+                <>
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={`${styles.buttonsGroup} ${styles.marB20}`}>
+                            {modelStatus !== STATUS?.PENDING?.key ? (
+                                <Button type="primary" form="myNameForm" onClick={onHandleSave} disabled={modelChange}>
+                                    {translateContent('global.buttons.retry')}
+                                </Button>
+                            ) : (
+                                <Button type="primary" form="myNameForm" onClick={onHandleSave} disabled={modelChange}>
                                     {translateContent('global.buttons.submit')}
                                 </Button>
-                                <Button onClick={() => handleCollapse(formType)} danger>
-                                    {translateContent('global.buttons.cancel')}
-                                </Button>
-                                <ConfirmationModal {...confirmRequest} />
-                            </Col>
-                        </Row>
-                    </>
-                )}
-            </Card>
+                            )}
+                            <Button onClick={() => handleCollapse(formType)} danger>
+                                {translateContent('global.buttons.cancel')}
+                            </Button>
+                            <ConfirmationModal {...confirmRequest} />
+                        </Col>
+                    </Row>
+                </>
+            )}
         </>
     );
 };

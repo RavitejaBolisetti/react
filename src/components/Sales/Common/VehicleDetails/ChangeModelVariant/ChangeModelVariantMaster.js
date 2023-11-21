@@ -5,10 +5,11 @@
  */
 
 import React, { useMemo, useEffect, useState } from 'react';
-import { Typography, Divider, Card, Tag, Row, Button, Space } from 'antd';
+import { Typography, Divider, Collapse, Tag, Row, Button, Space } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { TbRefresh } from 'react-icons/tb';
+import { ConfirmationModal } from 'utils/ConfirmationModal';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
@@ -17,6 +18,8 @@ import { STATUS } from 'constants/modelVariant';
 import styles from 'assets/sass/app.module.scss';
 
 const { Text } = Typography;
+
+const { Panel } = Collapse;
 
 const mapStateToProps = (state) => {
     const {
@@ -41,7 +44,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ChangeModelVariantMasterBase = (props) => {
-    const { typeData, setCustomerNameList, selectedRecordId, form } = props;
+    const { typeData, setCustomerNameList, selectedRecordId, setFormData } = props;
     const {
         formActionType: { addMode, editMode },
         formData,
@@ -69,6 +72,7 @@ const ChangeModelVariantMasterBase = (props) => {
 
     const [uploadedFileName, setUploadedFileName] = useState('');
     const [modelStatus, setModelStatus] = useState();
+    const [statusDescription, setStatusDescription] = useState();
     const [modelChangeItemList, setModelChangeItemList] = useState([]);
 
     const onErrorAction = (message) => {
@@ -106,6 +110,7 @@ const ChangeModelVariantMasterBase = (props) => {
     const formProps = {
         ...props,
         setModelStatus,
+        modelStatus,
         data,
         typeData,
         selectedCustomerId,
@@ -137,11 +142,42 @@ const ChangeModelVariantMasterBase = (props) => {
                     },
                 ];
                 const onSuccessAction = (res) => {
-                    setModelStatus(res?.sapStatusResponseCode);
+                    setModelStatus('RJ');
                     if (res?.sapStatusResponseCode === STATUS?.SUCCESS?.key) {
                         setOnModelSubmit(false);
+                        setFormData(res);
                         setChangeModel(false);
                         showGlobalNotification({ notificationType: 'success', title: 'Request Generated Successfully', message: 'Model Change Request has been submitted successfully' });
+                    }
+                    if ('RJ' === STATUS?.REJECTED?.key) {
+                        setModelStatus('RJ');
+                        setStatusDescription(res?.sapStatusResponse);
+                        setConfirmRequest({
+                            isVisible: true,
+                            titleOverride: 'Failed Request',
+                            closable: true,
+                            icon: false,
+                            onCloseAction: () => {
+                                setConfirmRequest({
+                                    ...confirmRequest,
+                                    isVisible: false,
+                                });
+                            },
+                            onSubmitAction: () => {
+                                setOnModelSubmit(false);
+                                setConfirmRequest({
+                                    ...confirmRequest,
+                                    isVisible: false,
+                                });
+                            },
+                            submitText: 'Okay',
+                            text: (
+                                <>
+                                    Requested Change Model is blocked for dealer
+                                    <br /> Please try again with different model
+                                </>
+                            ),
+                        });
                     }
                 };
 
@@ -155,36 +191,46 @@ const ChangeModelVariantMasterBase = (props) => {
     };
     return (
         <>
-            {addMode ? (
-                <AddEditForm {...formProps} />
-            ) : (
-                modelChangeItemList?.map((item) => {
-                    return (
-                        <Card>
-                            <Row justify="space-between" className={styles.fullWidth}>
-                                <Text strong> Change Model</Text>
-                                {/* {item?.pending &&  */}
-                                <div className={styles.verticallyCentered}>
-                                    <Space>
-                                        {onModelSubmit && (
-                                            <>
-                                                {modelStatus === STATUS?.REJECTED?.key ? <Tag color="error">Rejected</Tag> : modelStatus === STATUS?.SUCCESS?.key ? <Tag color="success">Success</Tag> : <Tag color="warning">Pending For SAP Confirmation</Tag>}
-                                                <Button onClick={handleRefresh} type="link" icon={<TbRefresh />}></Button>
-                                            </>
-                                        )}
-                                    </Space>
-                                </div>
-                                {/* // } */}
-                            </Row>
-                            <Divider className={styles.marT20} />
+            <div className={styles?.cardInsideBox}>
+                {addMode ? (
+                    <AddEditForm {...formProps} />
+                ) : (
+                    modelChangeItemList?.map((item) => {
+                        return (
+                            <Collapse key={1} defaultActiveKey={1} collapsible="disabled">
+                                <Panel
+                                    header={
+                                        <>
+                                            <Text strong> Change Model</Text>
+                                            {/* {item?.pending &&  */}
+                                            <div className={styles.verticallyCentered}>
+                                                <Space>
+                                                    {onModelSubmit && (
+                                                        <>
+                                                            {modelStatus === STATUS?.PENDING?.key ? <Tag color="warning">Pending for SAP Confirmation</Tag> : modelStatus === STATUS?.SUCCESS?.key ? <Tag color="success">Success</Tag> : <Tag color="error">Failed for SAP Confirmation</Tag>}
+                                                            <Button onClick={handleRefresh} type="link" icon={<TbRefresh />}></Button>
+                                                        </>
+                                                    )}
+                                                </Space>
+                                            </div>
+                                            {/* // } */}
+                                        </>
+                                    }
+                                    key={1}
+                                    showArrow={false}
+                                >
+                                    <Divider />
 
-                            {/* {item?.changeAllowed && */}
-                            <AddEditForm {...formProps} />
-                            {/* } */}
-                        </Card>
-                    );
-                })
-            )}
+                                    {/* {item?.changeAllowed && */}
+                                    <AddEditForm {...formProps} />
+                                    {/* } */}
+                                    <ConfirmationModal {...confirmRequest} />
+                                </Panel>
+                            </Collapse>
+                        );
+                    })
+                )}
+            </div>
         </>
     );
 };

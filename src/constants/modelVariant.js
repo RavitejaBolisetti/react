@@ -16,7 +16,7 @@ export const STATUS = {
     },
     REJECTED: {
         id: 'REJECTED',
-        title: 'Reject',
+        title: 'Failed for SAP Confirmation',
         key: 'RJ',
     },
 };
