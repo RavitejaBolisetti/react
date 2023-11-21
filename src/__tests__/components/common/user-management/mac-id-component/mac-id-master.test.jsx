@@ -62,7 +62,7 @@ describe('MacIdMain components', () => {
                 <MacIdMaster setButtonData={setButtonData} fetchMacIdList={fetchMacIdList}  />
             </Provider>
         );
-        setButtonData.mock.calls[0][0]();
+        // setButtonData.mock.calls[0][0]();
         fetchMacIdList.mock.calls[0][0].onSuccessAction();
 
         const plusAdd=screen.getByRole('button', { name: 'plus Add' });

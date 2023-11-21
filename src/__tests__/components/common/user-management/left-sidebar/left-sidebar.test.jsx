@@ -16,7 +16,7 @@ describe('Left Side Bar Component', () => {
 
     it('assign user roles button should work', () => {
         const formActionType={ addMode: true, editMode: true, }
-        customRender(<LeftSidebar formActionType={formActionType} currentSection={'Kai'} setCurrentSection={jest.fn()} />);
+        customRender(<LeftSidebar formActionType={formActionType} setPreviousSection={jest.fn()} currentSection={'Test'} previousSection={'Kai'} setCurrentSection={jest.fn()} />);
 
         const assignUserRoles=screen.getByText('Assign User Roles');
         fireEvent.click(assignUserRoles);

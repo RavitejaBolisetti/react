@@ -75,7 +75,7 @@ describe('Customer Master component', () => {
 
         await waitFor(() => { expect(screen.getAllByText('Customer name')[1]).toBeInTheDocument() });
 
-        const customerName=screen.getAllByText('Customer name')[1];
+        const customerName=screen.getByText('Customer name');
         fireEvent.click(customerName);
         
         const searchBox=screen.getByRole('textbox', { name: '' });
@@ -116,8 +116,8 @@ describe('Customer Master component', () => {
 
         await waitFor(() => { expect(screen.getAllByText('Customer name')[1]).toBeInTheDocument() });
 
-        const customerName=screen.getAllByText('Customer name')[1];
-        fireEvent.click(customerName);
+        const customerName=screen.getAllByText('Customer name');
+        fireEvent.click(customerName[1]);
         
         const searchBox=screen.getByRole('textbox', { name: '' });
         fireEvent.change(searchBox, { target: { value: 'Kai' } });
@@ -154,8 +154,8 @@ describe('Customer Master component', () => {
 
         await waitFor(() => { expect(screen.getAllByText('Customer name')[1]).toBeInTheDocument() });
 
-        const customerName=screen.getAllByText('Customer name')[1];
-        fireEvent.click(customerName);
+        const customerName=screen.getAllByText('Customer name');
+        fireEvent.click(customerName[1]);
         
         const searchBox=screen.getByRole('textbox', { name: '' });
         fireEvent.change(searchBox, { target: { value: 'Kai' } });
