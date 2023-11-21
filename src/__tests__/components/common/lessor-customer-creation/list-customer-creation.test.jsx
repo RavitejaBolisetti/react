@@ -55,11 +55,11 @@ describe('ListCustomerCreation components', () => {
     it('should render upload button', () => {
         customRender(<ListCustomerCreation />);
 
-        const uploadBtn = screen.getByRole('button', { name: 'Upload;' });
+        const uploadBtn = screen.getByTestId('upload');
         fireEvent.click(uploadBtn);
 
-        const cancelBtn = screen.getByRole('button', { name: 'Download;' });
-        fireEvent.click(cancelBtn);
+        const downloadBtn = screen.getByTestId('download');
+        fireEvent.click(downloadBtn);
     });
 
     it('should render download button', () => {
@@ -79,7 +79,7 @@ describe('ListCustomerCreation components', () => {
             </Provider>
         );
 
-        const downloadBtn = screen.getAllByRole('button', { name: 'Download;' });
+        const downloadBtn = screen.getAllByTestId('download');
         fireEvent.click(downloadBtn[0]);
     });
 
@@ -103,7 +103,7 @@ describe('ListCustomerCreation components', () => {
                 <ListCustomerCreation fetchSalesConsultant={jest.fn()} resetData={jest.fn()} fetchDetail={jest.fn()} setIsFormVisible={jest.fn()} handleButtonClick={jest.fn()} fetchList={fetchList} buttonData={buttonData} setButtonData={jest.fn()} />
             </Provider>
         );
-        const uploadBtn = screen.getByRole('button', { name: 'Upload;' });
+        const uploadBtn = screen.getByTestId('upload');
         fireEvent.click(uploadBtn);
 
         const cancelBtn = screen.getByRole('button', { name: 'Cancel' });
