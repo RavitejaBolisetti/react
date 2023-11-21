@@ -507,6 +507,15 @@ export const MenuConstant = {
         parentMenuId: 'SACR-02.04',
         slug: 'stock-transfer-report',
     },
+
+    [getMenyKey('SACR-04.19')]: {
+        key: 'SACR-04.19',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'SACR-02.04',
+        slug: 'pool_stock_report',
+    },
+
     [getMenyKey('SACR-04.01')]: {
         key: 'SACR-04.01',
         link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
