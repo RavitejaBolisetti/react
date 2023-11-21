@@ -1,7 +1,12 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React from 'react';
 import { fireEvent, screen } from '@testing-library/react';
 import customRender from '@utils/test-utils';
-import { Form, Button } from 'antd';
+import { Button } from 'antd';
 
 import { ThankYouMaster } from '@components/Sales/VehicleInvoiceGeneration/ThankYou/ThankYouMaster';
 
@@ -39,6 +44,5 @@ describe('ThankYouMaster Component', () => {
         const printDownloadButton = screen.getByText('Download/Print Invoice');
 
         fireEvent.click(printDownloadButton);
-
     });
 });

@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React from 'react';
 import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
@@ -61,6 +66,9 @@ describe('InvoiceCancellationMaster Component', () => {
         const yesBtn = screen.getByRole('button', { name: /yes, cancel/i });
         fireEvent.click(yesBtn);
 
+        await waitFor(() => {
+            expect(saveData).toHaveBeenCalled();
+        });
         saveData.mock.calls[0][0].onError();
         saveData.mock.calls[0][0].onSuccess();
 
@@ -79,7 +87,7 @@ describe('InvoiceCancellationMaster Component', () => {
         customRender(<InvoiceCancellationMaster setFilterString={jest.fn()} />);
         const advanceFilters = screen.getByRole('button', { name: 'Advance Filters' });
         fireEvent.click(advanceFilters);
-        const searchBtn = screen.getByTestId('apply')
+        const searchBtn = screen.getByTestId('apply');
         fireEvent.click(searchBtn);
         const closeBtn = screen.getByRole('button', { name: 'Close' });
         fireEvent.click(closeBtn);
@@ -89,7 +97,7 @@ describe('InvoiceCancellationMaster Component', () => {
         customRender(<InvoiceCancellationMaster setFilterString={jest.fn()} />);
         const searchBox = screen.getByRole('textbox', { name: '' });
         fireEvent.change(searchBox, { target: { value: 'Test' } });
-        const searchBtn = screen.getByTestId('apply')
+        const searchBtn = screen.getByTestId('search');
         fireEvent.click(searchBtn);
     });
 

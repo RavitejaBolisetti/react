@@ -15,7 +15,7 @@ const { Panel } = Collapse;
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { formData, formActionType, vehicleDetailForm, customerDetailForm, handleFormValueChange, modelFamilyData } = props;
+    const { formData, formActionType, vehicleDetailForm, customerDetailForm, handleFormValueChange, modelFamilyData, ProductHierarchyData } = props;
 
     const [activeKey, setActiveKey] = useState([]);
 
@@ -71,7 +71,14 @@ const AddEditFormMain = (props) => {
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item initialValue={formData?.vehicleDetails?.modelGroup} label={translateContent('shieldSchemeRegistration.label.modelGroup')} name="modelGroup">
-                                        <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.modelGroup'))} disabled={true} />
+                                        <Select {...selectProps} placeholder={preparePlaceholderSelect(translateContent('shieldSchemeRegistration.label.modelFamily'))} disabled={true}>
+                                            {ProductHierarchyData?.map((item) => (
+                                                <Option key={'dv' + item.key} value={item.modelGroupCode}>
+                                                    {item.modelGroupDescription}
+                                                </Option>
+                                            ))}
+                                        </Select>
+                                        {/* <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.modelGroup'))} disabled={true} /> */}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>

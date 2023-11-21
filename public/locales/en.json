@@ -105,7 +105,9 @@
             "applyFilter": "Apply Filter",
             "printForm21": "Print Form 21",
             "printInvoice": "Print Invoice",
-            "cancelInvoice": "Cancel Invoice"
+            "cancelInvoice": "Cancel Invoice",
+            "approve" : "Approve",
+            "reject" : "Reject"
         },
         "placeholder": {
             "input": "Enter ",

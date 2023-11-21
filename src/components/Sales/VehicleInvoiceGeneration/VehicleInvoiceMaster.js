@@ -345,6 +345,8 @@ export const VehicleInvoiceMasterBase = (props) => {
                 userId,
                 extraParams: extraParams,
                 onSuccessAction: (res) => {
+                    const CancelInvoice = res?.data?.otfStatus === OTF_STATUS.INVOICED.key && res?.data?.invoiceStatus === OTF_STATUS.INVOICED.key;
+                    setButtonData((prev) => ({ ...prev, cancelInvoiceBtn: CancelInvoice }));
                     setProfileCardData(res?.data);
                 },
                 onErrorAction,
