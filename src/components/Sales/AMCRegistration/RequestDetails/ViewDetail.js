@@ -6,7 +6,6 @@
 import React from 'react';
 import { Button, Card, Row, Col, Divider, Typography, Descriptions } from 'antd';
 import styles from 'assets/sass/app.module.scss';
-import { convertDateMonthYear } from 'utils/formatDateTime';
 import { AMC_CONSTANTS } from '../utils/AMCConstants';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { translateContent } from 'utils/translateContent';
@@ -32,7 +31,7 @@ const ViewDetail = (props) => {
                             <Row type="flex" justify="space-between" align="middle" size="large">
                                 <Row type="flex" justify="space-around" align="middle">
                                     <Typography>
-                                        {translateContent('amcRegistration.label.registrationRequest')} | {data?.customerName} | {selectedAMC?.amcRegistrationNumber}
+                                        {translateContent('amcRegistration.label.registrationRequest')} | {checkAndSetDefaultValue(data?.customerName, false)} | {selectedAMC?.amcRegistrationNumber}
                                     </Typography>
                                 </Row>
                                 {AMCStatusTags(selectedAMC?.status)}
@@ -40,7 +39,7 @@ const ViewDetail = (props) => {
                             <Row type="flex" align="middle" className={selectedAMC?.status === AMC_CONSTANTS?.PENDING_FOR_CANCELLATION?.key ? '' : styles.marB20}>
                                 <Col xs={24} sm={24} md={24} lg={24}>
                                     <div className={styles.tableTextColor85}>
-                                        {translateContent('amcRegistration.label.requestedOn')}: {convertDateMonthYear(data?.amcRegistrationDate)}
+                                        {translateContent('amcRegistration.label.requestedOn')}: {checkAndSetDefaultValue(data?.amcRegistrationDate, false, DATA_TYPE?.DATE?.key)}
                                     </div>
                                 </Col>
                             </Row>
@@ -62,12 +61,12 @@ const ViewDetail = (props) => {
                                         <Row gutter={20} className={styles.marB20}>
                                             <Col xs={8} sm={8} md={8} lg={8}>
                                                 <Button type="primary" onClick={handleMNMApproval}>
-                                                    Approve
+                                                    {translateContent('global.buttons.approve')}
                                                 </Button>
 
                                                 <span className={styles.marL5}>
                                                     <Button danger onClick={handleMNMRejection}>
-                                                        Reject
+                                                        {translateContent('global.buttons.reject')}
                                                     </Button>
                                                 </span>
                                             </Col>
@@ -98,7 +97,7 @@ const ViewDetail = (props) => {
                                     <Row gutter={20} className={styles.marB20}>
                                         <Col xs={4} sm={4} md={4} lg={4}>
                                             <Button type="primary" onClick={handleCancelRequest}>
-                                                Cancel
+                                                {translateContent('global.buttons.cancel')}
                                             </Button>
                                         </Col>
                                     </Row>

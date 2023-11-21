@@ -67,10 +67,10 @@ const ViewDetailMain = (props) => {
                             <Divider />
                             <Descriptions {...viewProps}>
                                 <Descriptions.Item label={translateContent('amcRegistration.label.creditNoteNumber')}>{checkAndSetDefaultValue(formData?.amcRegistration?.creditNoteNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label={translateContent('amcRegistration.label.creditNoteDate')}>{checkAndSetDefaultValue(formData?.amcRegistration?.creditNoteDate, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('amcRegistration.label.creditNoteDate')}>{checkAndSetDefaultValue(formData?.amcRegistration?.creditNoteDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('amcRegistration.label.creditNoteAmount')}>{checkAndSetDefaultValue(formData?.amcRegistration?.creditNoteAmount, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('amcRegistration.label.debitNoteNumber')}>{checkAndSetDefaultValue(formData?.amcRegistration?.debitNoteNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label={translateContent('amcRegistration.label.debitNoteDate')}>{checkAndSetDefaultValue(formData?.amcRegistration?.debitNoteDate, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('amcRegistration.label.debitNoteDate')}>{checkAndSetDefaultValue(formData?.amcRegistration?.debitNoteDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('amcRegistration.label.debitNoteAmount')}>{checkAndSetDefaultValue(formData?.amcRegistration?.debitNoteAmount, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         </Panel>

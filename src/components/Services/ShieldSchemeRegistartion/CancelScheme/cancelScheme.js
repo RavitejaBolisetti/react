@@ -72,7 +72,7 @@ export const CancelSchemeForm = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                         <Button onClick={rejectModalCloseAction} danger className={styles.fullWidth}>
-                            {translateContent('shieldSchemeRegistration.label.no')}
+                            {translateContent('shieldSchemeRegistration.buttons.no')}
                         </Button>
                     </Col>
 

@@ -20,7 +20,7 @@ const FormWrapper = (props) => {
 const buttonData = { closeBtn: true, cancelBtn: true, editBtn: true, allotBtn: true, unAllotBtn: true, invoiceBtn: true, deliveryNoteBtn: true, transferOTFBtn: true, cancelOTFBtn: true, changeHistory: true, nextBtn: true, saveBtn: true, formBtnActive: true, cancelVPOBtn: true, cancelOtfBtn: true, nextBtn: true, saveBtn: true };
 
 const saveButtonName = 'Save';
-const isLoadingOnSave = false;
+// const isLoadingOnSave = false;
 
 describe('add edit form Components', () => {
     it('should render add edit form components', () => {
