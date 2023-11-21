@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect, useReducer, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { Button, Col, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
@@ -34,6 +34,7 @@ import { amcSchemeCategoryDataAction } from 'store/actions/data/amcSchemeCategor
 import { rsaSchemeCategoryDataAction } from 'store/actions/data/rsaSchemeCategoryLov';
 import { shieldSchemeCategoryDataAction } from 'store/actions/data/shieldSchemeCategoryLov';
 import { translateContent } from 'utils/translateContent';
+import { ENCASH_CONSTANTS } from './constants/encashContants';
 
 const mapStateToProps = (state) => {
     const {
@@ -185,7 +186,6 @@ export const VehicleSalesSchemeMasterBase = (props) => {
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
-    const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [openAccordian, setOpenAccordian] = useState('');
     const [isUploadFormVisible, setIsUploadFormVisible] = useState(false);
@@ -311,7 +311,7 @@ export const VehicleSalesSchemeMasterBase = (props) => {
     useEffect(() => {
         if (userId && organizationId) {
             if (!organizationId) return;
-            fetchAdminList({ setIsLoading: DetailLoading, extraParams: makeExtraparms([{ key: 'manufacturerOrgId', title: 'manufacturerOrgId', value: organizationId, name: 'manufacturerOrgId' }]), userId, onErrorAction });
+            manufacturerOrgFetchList({ setIsLoading: DetailLoading, extraParams: makeExtraparms([{ key: 'manufacturerOrgId', title: 'manufacturerOrgId', value: organizationId, name: 'manufacturerOrgId' }]), userId, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [organizationId, userId]);
@@ -588,8 +588,8 @@ export const VehicleSalesSchemeMasterBase = (props) => {
             setSelectedTreeSelectKey(keys);
         }
         if (formData) {
-            const manufactureAdminShortName = flatternData.find((i) => formData?.data?.manufactureOrganizationId === i.key)?.data?.manufactureAdminShortName;
-            setSelectedTreeData({ ...formData?.data, parentName: manufactureAdminShortName });
+            const manufactureOrgShortName = flatternData.find((i) => formData?.data?.manufactureOrganizationId === i.key)?.data?.manufactureAdminShortName;
+            setSelectedTreeData({ ...formData?.data, parentName: manufactureOrgShortName });
         }
     };
 
@@ -598,23 +598,19 @@ export const VehicleSalesSchemeMasterBase = (props) => {
         let obj = {
             modelCode: value,
         };
-
-        // setModelCodeName(name);
-
         productHierarchyForm.setFieldsValue(obj);
         setSelectedTreeSelectKey(value);
     };
-
     const encashTypeFn = (values) => {
         let encash = '';
         if (values?.sales && values?.service) {
-            encash = 'A';
+            encash = ENCASH_CONSTANTS.ALL?.key;
         } else if (values?.sales && !values?.service) {
-            encash = 'SL';
+            encash = ENCASH_CONSTANTS.SALES?.key;
         } else if (!values?.sales && values?.service) {
-            encash = 'SE';
+            encash = ENCASH_CONSTANTS.SERVICE?.key;
         } else if (!values?.sales && !values?.service) {
-            encash = 'N';
+            encash = ENCASH_CONSTANTS.NO?.key;
         }
 
         return encash;
@@ -662,7 +658,7 @@ export const VehicleSalesSchemeMasterBase = (props) => {
     };
 
     const onCloseAction = () => {
-        // addSchemeForm.resetFields();
+        addSchemeForm.resetFields();
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
         setAdvanceSearchVisible(false);
@@ -670,7 +666,6 @@ export const VehicleSalesSchemeMasterBase = (props) => {
         advanceFilterForm.setFieldsValue();
     };
     const onAdvanceSearchCloseAction = () => {
-        // addSchemeForm.resetFields();
         advanceFilterForm.resetFields();
         advanceFilterForm.setFieldsValue();
         setAdvanceSearchVisible(false);
@@ -721,7 +716,6 @@ export const VehicleSalesSchemeMasterBase = (props) => {
         fetchPincodeDetail,
         dealerParentData,
         isPinCodeLoading,
-        forceUpdate,
         pinCodeShowLoading,
         showGlobalNotification,
         openAccordian,
@@ -780,7 +774,7 @@ export const VehicleSalesSchemeMasterBase = (props) => {
     };
 
     const tableProps = {
-        tableColumn: tableColumn({ handleButtonClick, schemeTypeData, encashTypeData }),
+        tableColumn: tableColumn({ handleButtonClick, schemeTypeData, encashTypeData, formActionType  }),
         tableData: vehicleSalesSchemeData,
         showAddButton,
         page,

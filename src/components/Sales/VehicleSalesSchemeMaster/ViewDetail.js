@@ -20,7 +20,7 @@ import { translateContent } from 'utils/translateContent';
 import { SCHEME_TYPE_CONSTANTS } from './constants/schemeTypeConstants';
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading, schemeTypeData, offerTypeData, encashTypeData, tableDataItem, zoneTableDataItem, activeKey, onChange } = props;
+    const { formData, isLoading, schemeTypeData, offerTypeData, encashTypeData, tableDataItem, zoneTableDataItem, activeKey, onChange, formActionType, handleButtonClick } = props;
 
     const viewProps = {
         bordered: false,
@@ -31,12 +31,12 @@ const ViewDetailMain = (props) => {
     const { Panel } = Collapse;
 
     const productTableProps = {
-        tableColumn: productTableColumn(),
+        tableColumn: productTableColumn({ formActionType, handleButtonClick }),
         tableData: tableDataItem,
     };
     const zoneAreaTableProps = {
-        tableColumn: zoneAreaTableColumn(),
-        tableDataItem: zoneTableDataItem,
+        tableColumn: zoneAreaTableColumn({ formActionType, handleButtonClick }),
+        tableData: zoneTableDataItem,
     };
 
     return (
@@ -52,7 +52,7 @@ const ViewDetailMain = (props) => {
                                     <Descriptions.Item label={translateContent('vehicleSalesSchemeMaster.label.manufacturerOrganisation')}>{checkAndSetDefaultValue(formData?.adminShortName, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label={translateContent('vehicleSalesSchemeMaster.label.schemeType')}>{checkAndSetDefaultValue(getCodeValue(schemeTypeData, formData?.schemeType), isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label={translateContent('vehicleSalesSchemeMaster.label.schemeDescription')}>{checkAndSetDefaultValue(formData?.schemeDescription)}</Descriptions.Item>
-                                    {[SCHEME_TYPE_CONSTANTS?.RSA_FOC?.key,SCHEME_TYPE_CONSTANTS?.AMC_FOC?.key, SCHEME_TYPE_CONSTANTS?.SHIELD_FOC?.key]?.includes(formData?.schemeType) && <Descriptions.Item label={translateContent('vehicleSalesSchemeMaster.label.schemeCategory')}>{checkAndSetDefaultValue(formData?.schemeCategory)}</Descriptions.Item>}
+                                    {[SCHEME_TYPE_CONSTANTS?.RSA_FOC?.key, SCHEME_TYPE_CONSTANTS?.AMC_FOC?.key, SCHEME_TYPE_CONSTANTS?.SHIELD_FOC?.key]?.includes(formData?.schemeType) && <Descriptions.Item label={translateContent('vehicleSalesSchemeMaster.label.schemeCategory')}>{checkAndSetDefaultValue(formData?.schemeCategory)}</Descriptions.Item>}
                                     <Descriptions.Item label={translateContent('vehicleSalesSchemeMaster.label.offerType')}>{checkAndSetDefaultValue(getCodeValue(offerTypeData, formData?.offerType), isLoading)}</Descriptions.Item>
                                     {formData?.offerType === OFFER_TYPE_CONSTANTS?.DISCOUNT?.key && (
                                         <>
