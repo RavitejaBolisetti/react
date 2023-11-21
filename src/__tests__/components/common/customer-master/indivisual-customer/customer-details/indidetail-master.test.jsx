@@ -10,13 +10,17 @@ import { Form } from 'antd';
 import { customerDetailsIndividualDataActions } from 'store/actions/data/customerMaster/customerDetailsIndividual';
 
 jest.mock('components/common/CustomerMaster/IndividualCustomer/CustomerDetail/AddEditForm', () => {
-    const AddEditForm = ({ onFinish, setNameChangeRequested }) => { 
+    const AddEditForm = ({ onFinish, setNameChangeRequested, handleFormFieldChange, onViewHistoryChange }) => { 
         const handleClick = () => {
             onFinish('test');
-            setNameChangeRequested('Test')
+            setNameChangeRequested('Test');
+            handleFormFieldChange();
         }
         return(
-            <div><button onClick={handleClick}>Save</button></div>
+            <div>
+                <button onClick={handleClick}>Save</button>
+                <button onClick={onViewHistoryChange}>Change History</button>
+            </div>
         )
     };
     return {
@@ -76,35 +80,9 @@ describe('Corporate customer  Details render', () => {
         saveData.mock.calls[0][0].onSuccess(res);
         saveData.mock.calls[0][0].onError();
 
-        // const mobileNumber = screen.getByRole('textbox', { name: 'Mobile Number' });
-        // fireEvent.change(mobileNumber, { target: { value: '1234567890' } });
+        const changeHistory=screen.getByRole('button', { name: 'Change History' });
+        fireEvent.click(changeHistory);
 
-        // const emailId = screen.getByRole('textbox', { name: 'Email ID' });
-        // fireEvent.change(emailId, { target: { value: 'Kai@test.com' } });
-
-        // const whatsappNumber = screen.getByRole('textbox', { name: 'Whatsapp Number' });
-        // fireEvent.change(whatsappNumber, { target: { value: '1234567890' } });
-
-        // const customerType = screen.getByRole('combobox', { name: 'Customer Type' });
-        // fireEvent.change(customerType, { target: { value: 'Individual' } });
-
-        // const corporateName = screen.getByRole('combobox', { name: 'Corporate Name' });
-        // fireEvent.change(corporateName, { target: { value: 'UYT Corporate' } });
-
-        // const corporateType = screen.getByRole('combobox', { name: 'Corporate Type' });
-        // fireEvent.change(corporateType, { target: { value: 'Listed' } });
-
-        // const Contact = screen.getByRole('switch', { name: 'Contact over WhatsApp?' });
-        // fireEvent.click(Contact);
-
-        // const mobileNo = screen.getByTestId('useMobileNumber');
-        // fireEvent.click(mobileNo);
-
-        // const viewHistory = screen.getByRole('button', { name: 'View History' });
-        // fireEvent.click(viewHistory);
-
-        // const plusImg = screen.getByRole('img', { name: 'plus' });
-        // fireEvent.click(plusImg);
     });
     it('should check view details', () => {
         const prop = { formActionType: { viewMode: true } };
