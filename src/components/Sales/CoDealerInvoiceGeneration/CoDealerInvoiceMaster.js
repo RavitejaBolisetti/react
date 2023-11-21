@@ -23,8 +23,10 @@ import { CoDealerSearchDataActions } from 'store/actions/data/CoDealerInvoice';
 import { dealerParentLovDataActions } from 'store/actions/data/dealer/dealerParentsLov';
 import { translateContent } from 'utils/translateContent';
 import { PARAM_MASTER } from 'constants/paramMaster';
-import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
+import { convertDateTime, dateFormatView, formatDateToCalenderDate } from 'utils/formatDateTime';
 import { getCodeValue } from 'utils/getCodeValue';
+import { DATE_CONSTANTS } from './constants/DateConstants';
+import { validateRequiredSelectField } from 'utils/validation';
 
 const mapStateToProps = (state) => {
     const {
@@ -32,7 +34,7 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             CoDealerInvoice: {
-                CoDealerInvoiceSearch: { isDetailLoaded: isSearchDataLoaded = false, isDetailLoading: isSearchLoading, detailData: data, filter: filterString },
+                CoDealerInvoiceSearch: { isDetailLoaded: isSearchDataLoaded = false, isDetailLoading: isSearchLoading, data, detailData, filter: filterString },
             },
             DealerHierarchy: {
                 DealerParentsLov: { filteredListData: indentToDealerData = [] },
@@ -61,7 +63,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchCoDealerInvoice: CoDealerSearchDataActions.fetchDetail,
+            fetchCoDealerInvoice: CoDealerSearchDataActions.fetchList,
             resetCoDealerData: CoDealerSearchDataActions.resetDetail,
             listShowCoDealerLoading: CoDealerSearchDataActions.listShowLoading,
             setFilterString: CoDealerSearchDataActions.setFilter,
@@ -101,7 +103,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
     const [searchForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
 
-    const [CoDealerInvoiceStateMaster, setCoDealerInvoiceStateMaster] = useState({ currentQuery: CO_DEALER_QUERY_BUTTONS?.PENDING?.key, current: 1, pageSize: 10, typeDataFilter: [] });
+    const [CoDealerInvoiceStateMaster, setCoDealerInvoiceStateMaster] = useState({ currentQuery: CO_DEALER_QUERY_BUTTONS?.PENDING?.key, current: 1, pageSize: 10, typeDataFilter: [], INVOICE_FROM_DATE: [], INVOICE_TO_DATE: [], requestpayload: {} });
 
     const [section, setSection] = useState();
     const [defaultSection, setDefaultSection] = useState();
@@ -152,13 +154,15 @@ export const CoDealerInvoiceMasterBase = (props) => {
     }, [typeData, typeData?.[PARAM_MASTER.CO_DEALER_INV_SER.id]]);
 
     useEffect(() => {
-        if (isAdvanceSearchVisible) {
-            advanceFilterForm.setFieldsValue({ status: CoDealerInvoiceStateMaster?.currentQuery, ...filterString });
+        if (isAdvanceSearchVisible && filterString?.invoiceFromDate && filterString?.invoiceToDate) {
+            advanceFilterForm.setFieldsValue({ ...filterString, status: CoDealerInvoiceStateMaster?.currentQuery, invoiceFromDate: formatDateToCalenderDate(filterString?.invoiceFromDate), invoiceToDate: formatDateToCalenderDate(filterString?.invoiceToDate) });
+        } else if (isAdvanceSearchVisible) {
+            advanceFilterForm.setFieldsValue({ ...filterString, status: CoDealerInvoiceStateMaster?.currentQuery });
         } else {
             advanceFilterForm.resetFields();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [CoDealerInvoiceStateMaster, isAdvanceSearchVisible, filterString]);
+    }, [CoDealerInvoiceStateMaster?.currentQuery, isAdvanceSearchVisible, filterString]);
 
     const extraParams = useMemo(() => {
         return [
@@ -190,7 +194,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
                 key: 'invoiceFromDate',
                 title: 'Invoice From Date',
                 value: filterString?.invoiceFromDate,
-                name: filterString?.invoiceFromDate ? convertDateTime(filterString?.invoiceFromDate, dateFormatView) : null,
+                name: convertDateTime(filterString?.invoiceFromDate, dateFormatView, 'NA'),
                 canRemove: true,
                 filter: true,
             },
@@ -198,12 +202,12 @@ export const CoDealerInvoiceMasterBase = (props) => {
                 key: 'invoiceToDate',
                 title: 'Invoice To Date',
                 value: filterString?.invoiceToDate,
-                name: filterString?.invoiceToDate ? convertDateTime(filterString?.invoiceToDate, dateFormatView) : null,
+                name: convertDateTime(filterString?.invoiceToDate, dateFormatView, 'NA'),
                 canRemove: true,
                 filter: true,
             },
             {
-                key: 'coDealerStatus',
+                key: 'status',
                 title: 'Delivery Status',
                 value: filterString?.currentQuery || CoDealerInvoiceStateMaster?.currentQuery,
                 canRemove: false,
@@ -240,8 +244,6 @@ export const CoDealerInvoiceMasterBase = (props) => {
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
-
-    console.log('extraParams', extraParams);
 
     useEffect(() => {
         if (userId && extraParams) {
@@ -347,6 +349,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
         setShowDataLoading(false);
         setFilterString({});
         advanceFilterForm.resetFields();
+        setCoDealerInvoiceStateMaster((prev) => ({ ...prev, INVOICE_FROM_DATE: [], INVOICE_TO_DATE: [] }));
     };
     const onFinish = () => {
         const onSuccess = (res) => {
@@ -385,6 +388,26 @@ export const CoDealerInvoiceMasterBase = (props) => {
         resetDataOnClose();
         setIsFormVisible(false);
     };
+    const handleDateChange = (value, type) => {
+        switch (type) {
+            case DATE_CONSTANTS?.INVOICE_FROM_DATE?.key:
+                if (value) {
+                    setCoDealerInvoiceStateMaster((prev) => ({ ...prev, INVOICE_FROM_DATE: [validateRequiredSelectField('invoice to date')], INVOICE_TO_DATE: [validateRequiredSelectField('invoice from date')] }));
+                    advanceFilterForm.getFieldValue('invoiceToDate') && advanceFilterForm.validateFields();
+                } else {
+                    setCoDealerInvoiceStateMaster((prev) => ({ ...prev, INVOICE_FROM_DATE: [], INVOICE_TO_DATE: [] }));
+                    advanceFilterForm.setFieldValue('invoiceToDate', undefined);
+                }
+                break;
+
+            case DATE_CONSTANTS?.INVOICE_TO_DATE?.key:
+                setCoDealerInvoiceStateMaster((prev) => ({ ...prev, INVOICE_FROM_DATE: [validateRequiredSelectField('invoice to date')], INVOICE_TO_DATE: [validateRequiredSelectField('invoice from date')] }));
+                break;
+
+            default:
+                return;
+        }
+    };
 
     const tableProps = {
         dynamicPagination: true,
@@ -411,13 +434,17 @@ export const CoDealerInvoiceMasterBase = (props) => {
             const { searchType, searchParam, ...rest } = filterString;
             setFilterString({ ...rest });
         } else if (key === 'invoiceToDate' || key === 'invoiceFromDate') {
-            const { invoiceToDate, invoiceFromDate, ...rest } = filterString;
+            const { invoiceToDate, invoiceFromDate, status, ...rest } = filterString;
+            setCoDealerInvoiceStateMaster((prev) => ({ ...prev, INVOICE_FROM_DATE: [], INVOICE_TO_DATE: [] }));
             setFilterString({ ...rest });
-            advanceFilterForm.resetFields();
+        } else if (key === 'dealerParentCode') {
+            const { dealerParentCode, status, ...rest } = filterString;
+            setFilterString({ ...rest });
         } else {
             const { [key]: names, ...rest } = filterString;
             setFilterString({ ...rest });
         }
+        advanceFilterForm.resetFields();
     };
 
     const CoDealerInvoiceFilterProps = {
@@ -456,6 +483,8 @@ export const CoDealerInvoiceMasterBase = (props) => {
         typeData,
         onFinishSearch,
         indentToDealerData,
+        CoDealerInvoiceStateMaster,
+        handleDateChange,
     };
 
     const drawerTitle = useMemo(() => {
