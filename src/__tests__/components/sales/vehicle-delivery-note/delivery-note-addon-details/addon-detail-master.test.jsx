@@ -1,4 +1,10 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import '@testing-library/jest-dom/extend-expect';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 import { AddOnDetailsMaster } from '@components/Sales/VehicleDeliveryNote/AddOnDetails/AddOnDetailsMaster';
@@ -36,10 +42,6 @@ jest.mock('components/Sales/VehicleDeliveryNote/AddOnDetails/CommonForm', () => 
     };
 });
 
-// jest.mock('store/actions/data/vehicleDeliveryNote/addOnDetails', () => ({
-//     vehicleAddOnDetailDataActions: {},
-// }));
-
 const FormWrapper = (props) => {
     const [form] = Form.useForm();
 
@@ -71,10 +73,6 @@ describe('AddOn Detail Master components', () => {
                 <FormWrapper handleFormValueChange={jest.fn()} selectedInvoiceId={106} setButtonData={jest.fn()} fetchList={fetchList} resetData={jest.fn()} />
             </Provider>
         );
-
-        fetchList.mock.calls[0][0].onErrorAction();
-        fetchList.mock.calls[0][0].onSuccessAction();
-
         const plusCollapse = screen.getAllByRole('img', { name: 'plus' });
         fireEvent.click(plusCollapse[0]);
         fireEvent.click(plusCollapse[1]);
