@@ -49,9 +49,6 @@ describe('RoleManagement Components', () => {
             </Provider>
         );
 
-        const viewBtn = screen.getByTestId('edit');
-        fireEvent.click(viewBtn);
-
         await waitFor(() => {
             expect(fetchMenuList).toHaveBeenCalled();
         });
@@ -61,6 +58,9 @@ describe('RoleManagement Components', () => {
         await waitFor(() => {
             expect(screen.getByText('Kai')).toBeInTheDocument();
         });
+
+        const viewBtn = screen.getByTestId('edit');
+        fireEvent.click(viewBtn);
 
         const collapseBtn = screen.getAllByRole('img', { name: 'plus' });
         fireEvent.click(collapseBtn[1]);

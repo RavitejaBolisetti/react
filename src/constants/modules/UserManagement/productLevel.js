@@ -6,14 +6,22 @@
 export const PRODUCT_LEVEL = {
     MF: {
         key: 'MF',
+        title: 'Model Family',
     },
     MG: {
         key: 'MG',
+        title: 'Model Group',
     },
     MV: {
         key: 'MV',
+        title: 'Model Varient',
     },
     MD: {
         key: 'MD',
+        title: 'Model Code',
+    },
+    PD: {
+        key: 'PD',
+        title: 'Product Division',
     },
 };

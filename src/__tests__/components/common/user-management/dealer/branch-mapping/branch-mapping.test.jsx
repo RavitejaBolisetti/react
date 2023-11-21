@@ -42,7 +42,10 @@ describe('Branch Mapping Component', () => {
 
     it('should set button data on loading', () => {
         const setButtonData = jest.fn();
-        customRender(<BranchMapping {...data} setButtonData={setButtonData} dlrBranchLocationDataList={dlrBranchLocationDataList} resetUsrDlrBranchLocationsList={jest.fn()} resetDlrBranchLocationsList={jest.fn()} isUsrdlrBrLocationsLoaded={true} />);
+        const formActionType={
+            viewMode: true
+        };
+        customRender(<BranchMapping formActionType={formActionType} {...data} setButtonData={setButtonData} dlrBranchLocationDataList={dlrBranchLocationDataList} resetUsrDlrBranchLocationsList={jest.fn()} resetDlrBranchLocationsList={jest.fn()} isUsrdlrBrLocationsLoaded={true} />);
         const callback = setButtonData.mock.calls[0][0];
         callback('Button Data');
     });
@@ -53,8 +56,12 @@ describe('Branch Mapping Component', () => {
             saveBtn: true,
         };
 
+        const formActionType={
+            viewMode: false
+        };
+
         const saveUsrDlrBrLoactionRoleDataList = jest.fn();
-        customRender(<BranchMapping {...data} {...props} buttonData={buttonData} saveUsrDlrBrLoactionRoleDataList={saveUsrDlrBrLoactionRoleDataList} dlrBranchLocationDataList={[{ name: 'Kai', id: 107 }]} isUsrdlrBrLocationsLoaded={true} handleButtonClick={jest.fn()} showGlobalNotification={jest.fn()} />);
+        customRender(<BranchMapping formActionType={formActionType} {...data} {...props} buttonData={buttonData} saveUsrDlrBrLoactionRoleDataList={saveUsrDlrBrLoactionRoleDataList} dlrBranchLocationDataList={[{ name: 'Kai', id: 107 }]} isUsrdlrBrLocationsLoaded={true} handleButtonClick={jest.fn()} showGlobalNotification={jest.fn()} />);
 
         const accessbile = screen.getByRole('checkbox', { name: 'Accessible' });
         fireEvent.click(accessbile);
@@ -68,6 +75,6 @@ describe('Branch Mapping Component', () => {
         await waitFor(() => expect(saveUsrDlrBrLoactionRoleDataList).toHaveBeenCalled());
 
         saveUsrDlrBrLoactionRoleDataList.mock.calls[0][0].onSuccess();
-        saveUsrDlrBrLoactionRoleDataList.mock.calls[0][0].onErrorAction();
+        saveUsrDlrBrLoactionRoleDataList.mock.calls[0][0].onError();
     });
 });
