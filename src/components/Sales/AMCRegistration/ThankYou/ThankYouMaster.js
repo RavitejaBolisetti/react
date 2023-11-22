@@ -4,13 +4,14 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 
-import { Row, Col, Space, Avatar, Typography, Divider, Button } from 'antd';
+import { Row, Col, Space, Avatar, Typography, Divider, Button, Popover } from 'antd';
 
 import { HiCheck } from 'react-icons/hi';
 import { CopytoClipboard } from 'utils/CopytoClipboard';
 import { AMC_CONSTANTS } from '../utils/AMCConstants';
 import { AMC_REPORT_DOCUMENT_TYPE } from '../utils/amcReportDocumentType';
 import { translateContent } from 'utils/translateContent';
+import { documentType } from '../utils/amcDocumentName';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -53,7 +54,7 @@ export const ThankYouMaster = (props) => {
                             <Space className={styles.marB20}>
                                 <div className={styles.deliveryNoteSuccessText}>
                                     <Text>
-                                      {translateContent('amcRegistration.label.amcRegistrationNumber')}  : <span>{selectedOrder?.message}</span>
+                                        {translateContent('amcRegistration.label.amcRegistrationNumber')} : <span>{selectedOrder?.message}</span>
                                     </Text>
                                 </div>
                                 <CopytoClipboard type={'primary'} buttonText={'Copy'} text={selectedOrder?.message} />
@@ -61,17 +62,15 @@ export const ThankYouMaster = (props) => {
 
                             <Divider />
                             <Space size="middle" direction="vertical">
-                                <Text>{translateContent('amcRegistration.validation.doWantToDownload')}   </Text>
+                                <Text>{translateContent('amcRegistration.validation.doWantToDownload')} </Text>
                                 <Row justify="space-between">
-                                    <Button onClick={() => handlePrintDownload({ ...record, typeRecord: AMC_REPORT_DOCUMENT_TYPE?.INVOICE_AMC?.value })} danger>
-                                        {translateContent('amcRegistration.label.invoice')}
-                                    </Button>
-                                    <Button onClick={() => handlePrintDownload({ ...record, typeRecord: AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_AMC?.value })} danger style={{ margin: '0 12px' }}>
-                                        {translateContent('amcRegistration.label.registrationCertificate')}
-                                    </Button>
-                                    <Button onClick={() => handlePrintDownload({ ...record, typeRecord: AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_AMC?.value })} danger>
-                                        {translateContent('amcRegistration.label.registrationIncentiveClaim')}
-                                    </Button>
+                                    {documentType?.map((type) => (
+                                        <Popover content={'Coming Soon'} trigger={type?.id === 2 ? 'none' : 'hover'}>
+                                            <Button onClick={() => (type?.id === 2 ? handlePrintDownload({ ...record, typeRecord: AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_AMC?.value }) : null)} danger style={{ margin: type?.id === 2 ? '0 12px' : '0' }}>
+                                                {type?.name}
+                                            </Button>
+                                        </Popover>
+                                    ))}
                                 </Row>
                             </Space>
                         </div>
