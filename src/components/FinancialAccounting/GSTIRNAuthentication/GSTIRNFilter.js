@@ -31,7 +31,7 @@ export default function GSTIRNFilter(props) {
                         </Col>
                         <Col xs={24} sm={5} md={5} lg={5} xl={5} className={styles.selectError}>
                             <Form.Item name="gstinNumber" className={styles.marB0} rules={[validateRequiredInputField(translateContent('gstIRNAuthentication.placeholder.gstin'))]}>
-                                <Select onChange={handleGstinNumber} placeholder={translateContent('global.placeholder.select')} allowClear>
+                                <Select data-testid="handleGstinNumber" onChange={handleGstinNumber} placeholder={translateContent('global.placeholder.select')} allowClear>
                                     {dealerGstData?.map((item) => (
                                         <Option value={item.value}>{item.value}</Option>
                                     ))}
