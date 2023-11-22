@@ -172,10 +172,10 @@ const AddEditFormMain = (props) => {
             if (isPresent && Object?.keys(isPresent)?.length > 0) {
                 showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: translateContent('vehicleSalesSchemeMaster.text.errorMessageText2') });
             } else {
-                setZoneTableDataItem([...zoneTableDataItem, { ...values, areaName, zoneName, id: Math.random() * 100000000 }]);
+                setZoneTableDataItem([...zoneTableDataItem, { ...values, areaName, zoneName, id: '' }]);
             }
         } else {
-            setZoneTableDataItem([{ ...values, areaName, zoneName, id: Math.random() * 100000000 }]);
+            setZoneTableDataItem([{ ...values, areaName, zoneName, id: ''}]);
         }
 
         setAddZoneArea(false);

@@ -570,7 +570,7 @@ export const VehicleSalesSchemeMasterBase = (props) => {
         return dataList;
     };
 
-    const flatternData = generateList(manufacturerAdminHierarchyData);
+    const flatternData = generateList(manufacturerOrgHierarchyData);
 
     const handleTreeViewClick = (keys) => {
         setButtonData({ ...defaultBtnVisiblity });
