@@ -42,7 +42,7 @@ export const optionalServicesColumns = ({ formActionType, handleButtonClick, sty
         }),
 
         tblPrepareColumns({
-            title: translateContent('vehicleInvoiceGeneration.label.vehicleDetails.optionalServices.serviceName'),
+            title: translateContent('vehicleInvoiceGeneration.label.vehicleDetails.optionalServices.amount'),
             dataIndex: 'amount',
             key: 'amount',
             width: '25%',
