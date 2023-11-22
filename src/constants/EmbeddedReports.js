@@ -252,4 +252,11 @@ export const EMBEDDED_REPORTS = {
         type: 'Report',
         slug: 'ibnd_report',
     },
+    Shield_Report: {
+        id: 35,
+        key: 'Shield_Report',
+        title: 'Shield Report ',
+        type: 'Report',
+        slug: 'shield_report',
+    },
 };
