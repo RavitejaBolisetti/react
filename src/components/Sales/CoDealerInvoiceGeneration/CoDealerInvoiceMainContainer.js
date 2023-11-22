@@ -6,11 +6,14 @@
 import React from 'react';
 import { Col, Row } from 'antd';
 import { withDrawer } from 'components/withDrawer';
-import { VEHICLE_DELIVERY_NOTE_SECTION } from 'constants/vehicleDeliveryNoteSection';
+import { CO_DEALER_SECTIONS } from 'components/Sales/CoDealerInvoiceGeneration/constants';
 
 import { LeftSidebar } from './LeftSidebar';
 
 import styles from 'assets/sass/app.module.scss';
+import { VehicleDetailsMaster } from '../Common/VehicleDetails';
+import { IndentDetailsMaster } from './IndentDetails';
+import { CoDealerFormButton } from './CoDealerFormButton';
 
 const CoDealerInvoiceContainerMain = (props) => {
     const { currentSection, selectedOtfNumber, selectedOrderId, soldByDealer, vehicleChallanData, customerDetailsDataSearched } = props;
@@ -18,13 +21,19 @@ const CoDealerInvoiceContainerMain = (props) => {
 
     const myProps = {
         ...props,
-        FormActionButton: <></>,
+        FormActionButton: CoDealerFormButton,
         selectedOrderId: selectedOtfNumber,
         selectedInvoiceId: selectedOrderId,
     };
 
     const renderSections = () => {
         switch (currentSection) {
+            case CO_DEALER_SECTIONS?.INDENT_DETAILS?.id:
+                return <IndentDetailsMaster {...myProps} />;
+            case CO_DEALER_SECTIONS?.VEHICLE_DETAILS?.id:
+                return <VehicleDetailsMaster {...myProps} />;
+            case CO_DEALER_SECTIONS?.THANK_YOU_PAGE?.id:
+                return <></>;
             default: {
                 return <></>;
             }

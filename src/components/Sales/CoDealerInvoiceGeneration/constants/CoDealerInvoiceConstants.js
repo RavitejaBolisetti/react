@@ -24,9 +24,9 @@ export const CO_DEALER_QUERY_BUTTONS = {
     },
 };
 export const CO_DEALER_SECTIONS = {
-    INVOICE_DETAILS: {
+    INDENT_DETAILS: {
         id: 1,
-        title: 'Invoice Details',
+        title: 'Indent Details',
         displayOnList: true,
     },
     VEHICLE_DETAILS: {

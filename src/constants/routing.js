@@ -112,7 +112,7 @@ export const ROUTING_FINANCIAL_ACCOUNTING_TAX_CHARGES = ROUTING_FINANCIAL_ACCOUN
 export const ROUTING_FINANCIAL_ACCOUNTING_TAX_CHARGES_CATEGORY = ROUTING_FINANCIAL_ACCOUNTING.concat('tax-charges-category');
 export const ROUTING_CREDIT_DEBIT_NOTE = ROUTING_FINANCIAL_ACCOUNTING.concat('credit-debit-note');
 export const ROUTING_FINANCIAL_ACCOUNTING_ACCOUNT_CATEGORY = ROUTING_FINANCIAL_ACCOUNTING.concat('account-category');
-export const ROUTING_DOCUMENT_TYPE = ROUTING_FINANCIAL_ACCOUNTING.concat('docment-type-other-charges-ledger-mapping');
+export const ROUTING_DOCUMENT_TYPE = ROUTING_FINANCIAL_ACCOUNTING.concat('document-type-other-charges-ledger-mapping');
 export const ROUTING_FINANCIAL_ACCOUNTING_CHART_OF_ACCOUNT = ROUTING_FINANCIAL_ACCOUNTING.concat('chart-of-account');
 
 export const ROUTING_REPORT_OTF_REPORTS = ROUTING_REPORT.concat('booking-reports');

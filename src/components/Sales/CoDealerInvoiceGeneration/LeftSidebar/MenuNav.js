@@ -12,8 +12,8 @@ import { getSelectedMenuAttribute } from 'utils/getSelectedMenuAttribute';
 import styles from 'assets/sass/app.module.scss';
 
 const MenuNav = (props) => {
-    const { currentSection, setCurrentSection, previousSection, formActionType, selectedOrder, soldByDealer, sectionName, setSection } = props;
-    const deliveryNoteSectionList = Object.values(CO_DEALER_SECTIONS);
+    const { currentSection, setCurrentSection, previousSection, formActionType, record, setSection } = props;
+    const CoDealerSectionList = Object.values(CO_DEALER_SECTIONS);
 
     const className = (id) => {
         if (currentSection === CO_DEALER_SECTIONS.THANK_YOU_PAGE.id) return styles.cursorNotAllowed;
@@ -21,24 +21,20 @@ const MenuNav = (props) => {
     };
 
     const onHandle = ({ key, item }) => {
-        selectedOrder && setCurrentSection(key);
-        selectedOrder && setSection(item);
+        record && setCurrentSection(key);
+        record && setSection(item);
     };
 
-    const items = deliveryNoteSectionList
-        ?.filter((i) => i?.displayOnList)
-        ?.map(
-            (item) =>
-                validateDeliveryNote({ item, soldByDealer }) && {
-                    dot: getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType })?.menuNavIcon,
-                    children: (
-                        <div className={className(item?.id)} onClick={() => ((!formActionType?.addMode || (formActionType?.addMode && item?.id <= previousSection)) && currentSection !== CO_DEALER_SECTIONS.THANK_YOU_PAGE.id ? onHandle({ item, key: item?.id }) : '')}>
-                            {item.title}
-                        </div>
-                    ),
-                    className: getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType })?.activeClassName,
-                }
-        )
+    const items = CoDealerSectionList?.filter((i) => i?.displayOnList)
+        ?.map((item) => ({
+            dot: getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType })?.menuNavIcon,
+            children: (
+                <div className={className(item?.id)} onClick={() => ((!formActionType?.addMode || (formActionType?.addMode && item?.id <= previousSection)) && currentSection !== CO_DEALER_SECTIONS.THANK_YOU_PAGE.id ? onHandle({ item, key: item?.id }) : '')}>
+                    {item.title}
+                </div>
+            ),
+            className: getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType })?.activeClassName,
+        }))
         .filter((i) => i);
 
     return items && <Timeline items={items} />;

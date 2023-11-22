@@ -9,7 +9,7 @@ import { bindActionCreators } from 'redux';
 
 import { Col, Form, Row } from 'antd';
 import { tableColumnDeliveryNoteMaster } from './tableColumn';
-import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION } from 'utils/btnVisiblity';
+import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 
 import { CoDealerInvoiceMainContainer } from './CoDealerInvoiceMainContainer';
 import { ListDataTable } from 'utils/ListDataTable';
@@ -255,7 +255,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
     }, [userId, extraParams]);
 
     useEffect(() => {
-        const defaultSection = CO_DEALER_SECTIONS.INVOICE_DETAILS;
+        const defaultSection = CO_DEALER_SECTIONS.INDENT_DETAILS;
         setDefaultSection(defaultSection?.id);
         setSetionName(CO_DEALER_SECTIONS);
         setSection(defaultSection);
@@ -303,8 +303,16 @@ export const CoDealerInvoiceMasterBase = (props) => {
 
     const handleDrawerButtonVisibility = (btnVisiblityProps) => {
         const { buttonAction } = btnVisiblityProps;
-        let formAction = { addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION };
-        let btnVisibilityStatus = { ...defaultBtnVisiblity };
+        let formAction = formActionType;
+        let btnVisibilityStatus = btnVisiblity({ defaultBtnVisiblity, buttonAction });
+        switch (buttonAction) {
+            case NEXT_ACTION:
+                break;
+
+            default:
+                formAction = { addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION };
+                break;
+        }
         return { formAction, btnVisibilityStatus };
     };
 
@@ -530,6 +538,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
         setLastSection,
         setSection,
     };
+    console.log('section', section);
 
     return (
         <>

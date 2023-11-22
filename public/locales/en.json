@@ -4036,7 +4036,18 @@
         },
         "label": {
             "status": "Status",
-            "indentDealerToParent": "Indent Dealer To Parent"
+            "indentDealerToParent": "Indent Dealer To Parent",
+            "indentDetails": {
+                "indentNumber": "Indent No.",
+                "indentDate": "Indent Date",
+                "dealerCode": "Dealer Code",
+                "dealerName": "Dealer Name",
+                "address": "Address",
+                "cityDistrict": "City/District",
+                "state": "State",
+                "pinCode": "Pin Code",
+                "gstIn": "GSTIN"
+            }
         },
         "placeholder": {},
         "validation": {

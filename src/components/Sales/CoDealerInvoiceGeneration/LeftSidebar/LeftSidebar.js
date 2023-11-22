@@ -5,14 +5,14 @@
  */
 import React from 'react';
 import MenuNav from './MenuNav';
-import VehicleDeliveryNoteCard from './VehicleDeliveryNoteCard';
+import CoDealerCard from './CoDealerCard';
 const LeftSidebar = (props) => {
     const { previousSection, setPreviousSection, currentSection } = props;
     if (currentSection > previousSection) setPreviousSection(currentSection);
 
     return (
         <>
-            <VehicleDeliveryNoteCard {...props} />
+            <CoDealerCard {...props} />
             <MenuNav {...props} />
         </>
     );
