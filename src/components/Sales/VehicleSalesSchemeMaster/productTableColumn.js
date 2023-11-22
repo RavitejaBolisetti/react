@@ -23,7 +23,7 @@ export const productTableColumn = (props) => {
         }),
     ];
     if (!formActionType?.viewMode) {
-        tableColumn.push(tblActionColumn({ handleButtonClick, styles, width: '10%', canEdit: true, canView: false, isDeletable: formActionType?.addMode }));
+        tableColumn.push(tblActionColumn({ handleButtonClick, styles, width: '10%', canEdit: true, canView: false, isDeletable: true }));
     }
 
     return tableColumn;

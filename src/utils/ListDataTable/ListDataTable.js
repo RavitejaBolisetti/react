@@ -7,6 +7,7 @@ import { DataTable } from 'utils/dataTable';
 import { Button, Empty, ConfigProvider } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { LANGUAGE_EN } from 'language/en';
+import { translateContent } from 'utils/translateContent';
 
 export default function ListDataTable(props) {
     const { tableData, handleButtonClick, handleAdd, addTitle = 'Record', showAddButton = true, noDataMessage = '' } = props;
@@ -31,7 +32,7 @@ export default function ListDataTable(props) {
                     >
                         {showAddButton && (
                             <Button icon={<PlusOutlined />} type="primary" danger onClick={handleButtonClick || handleAdd}>
-                                {`Add`}
+                                {translateContent('global.buttons.add')}
                             </Button>
                         )}
                     </Empty>

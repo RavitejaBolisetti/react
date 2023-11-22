@@ -164,7 +164,6 @@ const CompanyCustomerDetailsMasterBase = (props) => {
     const onFinish = (values) => {
         if (!formActionType?.addMode && !numbValidatedSuccess && customerDetailsData?.mobileNumber !== values?.mobileNumber) {
             showGlobalNotification({ message: 'Please verify mobile number to proceed.' });
-            console.log(numbValidatedSuccess, 'numbValidatedSuccess', customerDetailsData?.mobileNumber, 'CSMB', values?.mobileNumber, 'VMBN');
             return;
         }
 

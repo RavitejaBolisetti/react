@@ -143,26 +143,26 @@ const AddEditFormMain = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupLeft}>
                         <Button danger onClick={onCloseAction}>
-                            {footerEdit ? 'Close' : 'Cancel'}
+                            {footerEdit ? translateContent('global.buttons.close') : translateContent('global.buttons.cancel')}
                         </Button>
                     </Col>
 
                     <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
                         {!footerEdit && showSaveBtn && (
                             <Button loading={isLoadingOnSave} disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(false)} htmlType="submit" type="primary">
-                                Save
+                                {translateContent('global.buttons.save')}
                             </Button>
                         )}
 
                         {!formData?.id && (
                             <Button loading={isLoadingOnSave} htmlType="submit" disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(true)} type="primary">
-                                Save & Add New
+                                {translateContent('global.buttons.saveAndNew')}
                             </Button>
                         )}
 
                         {footerEdit && (
                             <Button onClick={hanndleEditData} form="configForm" key="submitAndNew" htmlType="submit" type="primary">
-                                Edit
+                               {translateContent('global.buttons.edit')}
                             </Button>
                         )}
                     </Col>
