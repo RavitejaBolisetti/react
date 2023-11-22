@@ -15,7 +15,9 @@
             "fromDate": "From Date",
             "toDate": "To Date",
             "serialNo": "Srl.",
-            "search": "Search"
+            "search": "Search",
+            "approvalStatus": "Approval Status"
+
         },
         "validation": {
             "input": "Please enter ",
@@ -1852,7 +1854,8 @@
     "pincode": {
         "heading": {
             "pageTitle": "Pincode",
-            "title": "Pincode Name"
+            "title": "Pincode Name",
+            "pinMaster": "PIN Master"
         },
         "tableColHeading": {
             "pinCode": "Pin Code",
