@@ -35,6 +35,7 @@ import { rsaSchemeCategoryDataAction } from 'store/actions/data/rsaSchemeCategor
 import { shieldSchemeCategoryDataAction } from 'store/actions/data/shieldSchemeCategoryLov';
 import { translateContent } from 'utils/translateContent';
 import { ENCASH_CONSTANTS } from './constants/encashContants';
+import { SCHEME_TYPE_CONSTANTS } from './constants/schemeTypeConstants';
 
 const mapStateToProps = (state) => {
     const {
@@ -209,6 +210,9 @@ export const VehicleSalesSchemeMasterBase = (props) => {
     const [zoneTableDataItem, setZoneTableDataItem] = useState([]);
     const [zone, setZone] = useState();
     const [productSelectedData, setProductSelectedData] = useState();
+    const [schemeCategorySelect, setSchemeCategorySelect] = useState();
+
+
 
     const dynamicPagination = true;
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
@@ -241,6 +245,8 @@ export const VehicleSalesSchemeMasterBase = (props) => {
         if (isVehicleSalesSchemeDataLoaded) {
             setFormData(vehicleSalesSchemeDetails);
             vehicleSalesSchemeDetails && addSchemeForm.setFieldsValue({ ...vehicleSalesSchemeDetails, validityFromDate: formattedCalendarDate(vehicleSalesSchemeDetails?.validityFromDate), validityToDate: formattedCalendarDate(vehicleSalesSchemeDetails?.validityToDate), vehicleInvoiceFromDate: formattedCalendarDate(vehicleSalesSchemeDetails?.vehicleInvoiceFromDate), vehicleInvoiceToDate: formattedCalendarDate(vehicleSalesSchemeDetails?.vehicleInvoiceToDate) });
+            setSchemeCategorySelect(vehicleSalesSchemeDetails?.schemeType);
+            handleSchemeCategory(vehicleSalesSchemeDetails?.schemeType);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isVehicleSalesSchemeDataLoaded, vehicleSalesSchemeDetails]);
@@ -262,7 +268,7 @@ export const VehicleSalesSchemeMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
-
+    // schemeCategorySelect, setSchemeCategorySelect
     useEffect(() => {
         if (schemeCategoryList?.amc) {
             fetchAmcSchemeCategoryLovList({ setIsLoading: listAmcSchemeCategoryLovListShowLoading, userId });
@@ -272,7 +278,7 @@ export const VehicleSalesSchemeMasterBase = (props) => {
             fetchShieldSchemeCategoryLovList({ setIsLoading: listShieldSchemeCategoryLovListShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [schemeCategoryList]);
+    }, [schemeCategoryList,  ]);
 
     useEffect(() => {
         if (schemeCategoryList?.amc && amcSchemeCategoryData?.length > 0) {
@@ -479,6 +485,17 @@ export const VehicleSalesSchemeMasterBase = (props) => {
             customURL: customUploadURL,
         };
         saveVehicleSalesSchemeData(requestData);
+    };
+
+    const handleSchemeCategory = (value) => {
+        if (value === SCHEME_TYPE_CONSTANTS?.AMC_FOC?.key) {
+            setSchemeCategoryList({ amc: true, rsa: false, shield: false });
+        } else if (value === SCHEME_TYPE_CONSTANTS?.RSA_FOC?.key) {
+            setSchemeCategoryList({ amc: false, rsa: true, shield: false });
+        } else if (value === SCHEME_TYPE_CONSTANTS?.SHIELD_FOC?.key) {
+            setSchemeCategoryList({ amc: false, rsa: false, shield: true });
+        }
+        setSchemeCategorySelect(value);
     };
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
@@ -771,6 +788,8 @@ export const VehicleSalesSchemeMasterBase = (props) => {
         schemeData,
         productSelectedData,
         setProductSelectedData,
+        schemeCategorySelect, setSchemeCategorySelect,
+        handleSchemeCategory,
     };
 
     const tableProps = {

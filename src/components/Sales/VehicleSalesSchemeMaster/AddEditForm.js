@@ -36,15 +36,14 @@ import { DELETE_ACTION } from 'utils/btnVisiblity';
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { formData, productHierarchyData, saleService, setSaleService, setSchemeCategoryList, schemeData } = props;
-    const { onFinish, openAccordian, setOpenAccordian, flatternData } = props;
+    const { formData, productHierarchyData, saleService, setSaleService, setSchemeCategoryList, schemeData,handleSchemeCategory } = props;
+    const { onFinish, openAccordian, setOpenAccordian, flatternData, schemeCategorySelect, setSchemeCategorySelect } = props;
     const { buttonData, setButtonData, onCloseAction, tableDataItem, zoneTableDataItem, setZoneTableDataItem, setTableDataItem, showGlobalNotification, formActionType } = props;
     const { handleButtonClick, selectedTreeSelectKey, setSelectedTreeSelectKey, handleSelectTreeClick, productHierarchyForm, typeData, isViewDetailVisible, onCloseActionViewDetails, schemeTypeData, encashTypeData, addSchemeForm, filterString, offerTypeData, manufacturerOrgHierarchyData, setOrganizationId, organizationId, manufacturerAdminHierarchyData, selectedTreeData, setSelectedId, isProductLoading, productHierarchyList, addZoneAreaForm, zoneMasterData, areaOfficeData, handleZoneChange, productHierarchyDataList, productSelectedData, setProductSelectedData } = props;
 
     const [isAddProductDetailsVisible, setIsAddProductDetailsVisible] = useState(false);
-    const [addZoneArea, setAddZoneArea] = useState(false);
     const [taxField, setTaxField] = useState();
-    const [schemeCategorySelect, setSchemeCategorySelect] = useState();
+    const [addZoneArea, setAddZoneArea] = useState(false);
     const [activeKey, setactiveKey] = useState([1]);
     const [editingData, setEditingData] = useState({});
 
@@ -73,8 +72,10 @@ const AddEditFormMain = (props) => {
             amountWithTax: formData?.amountWithTax,
             amountWithoutTax: formData?.amountWithoutTax,
         });
+        
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
+
 
     useEffect(() => {
         if (saleService?.sales && saleService?.service) {
@@ -104,17 +105,6 @@ const AddEditFormMain = (props) => {
         setTaxField(value);
     };
 
-    const handleSchemeCategory = (value) => {
-        if (value === SCHEME_TYPE_CONSTANTS?.AMC_FOC?.key) {
-            setSchemeCategoryList({ amc: true, rsa: false, shield: false });
-        } else if (value === SCHEME_TYPE_CONSTANTS?.RSA_FOC?.key) {
-            setSchemeCategoryList({ amc: false, rsa: true, shield: false });
-        } else if (value === SCHEME_TYPE_CONSTANTS?.SHIELD_FOC?.key) {
-            setSchemeCategoryList({ amc: false, rsa: false, shield: true });
-        }
-        setSchemeCategorySelect(value);
-    };
-
     const handleAddVehicleDetails = () => {
         setIsAddProductDetailsVisible(true);
     };
@@ -135,6 +125,7 @@ const AddEditFormMain = (props) => {
     const onFinishAddProductDetails = (values) => {
         setOpenAccordian([3]);
         let data = FindProductName(productHierarchyDataList, values?.modelCode);
+        console.log(data,'datadada')
         const index = tableDataItem?.findIndex((e) => e?.modelCode === editingData?.modelCode);
         const updatedvalue = [...tableDataItem];
         if (index >= 0) {
