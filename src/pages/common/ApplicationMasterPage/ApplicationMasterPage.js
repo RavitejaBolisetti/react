@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 import { ApplicationMaster } from '../../../components/common/ApplicationMaster/ApplicationMaster';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -24,7 +25,7 @@ const mapStateToProps = (state) => {
 };
 
 export const ApplicationMasterBase = (props) => {
-    const pageTitle = 'APPLICATION MASTER';
+    const pageTitle = translateContent('applicationMaster.title.applicationMaster');
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

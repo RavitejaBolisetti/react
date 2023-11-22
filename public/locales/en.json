@@ -3392,7 +3392,9 @@
             "termAndConRequired": "T&C Required",
             "digitalSignatureRequired": "Digital Signature Required",
             "isFinanceRelated": "Is Finance Related",
-            "irnIntegrationRequired": "IRN Integration Required"
+            "irnIntegrationRequired": "IRN Integration Required",
+            "description": "Please select product from left side hierarchy to view “Application Details”"
+
         },
         "validation": {
             "applicationAction": "application action",
@@ -3427,7 +3429,9 @@
             "no": "No",
             "applicationActions": "Application Actions",
             "documentType": "Document Type",
-            "accessibleDealerLocation": "Accessible Dealer Location"
+            "accessibleDealerLocation": "Accessible Dealer Location",
+            "web": "Web",
+            "mobile": "Mobile"
         }
     },
     "gstIRNAuthentication": {
