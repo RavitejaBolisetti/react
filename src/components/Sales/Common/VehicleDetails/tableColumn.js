@@ -5,26 +5,24 @@
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { translateContent } from 'utils/translateContent';
-export const tableColumnHeading ={
-  
-}
+export const tableColumnHeading = {};
 export const taxDetailsColumn = () => {
     const tableColumn = [
         tblPrepareColumns({
-            title: translateContent('vehicleDetails.tableColumn.description'),
+            title: translateContent('bookingManagement.tableColumn.description'),
             dataIndex: 'taxDescription',
             key: 'taxDescription',
             width: '35%',
         }),
 
         tblPrepareColumns({
-            title: translateContent('vehicleDetails.tableColumn.rate'),
+            title: translateContent('bookingManagement.tableColumn.rate'),
             dataIndex: 'taxRate',
             key: 'taxRate',
             width: '25%',
         }),
         tblPrepareColumns({
-            title: translateContent('vehicleDetails.tableColumn.amount'),
+            title: translateContent('bookingManagement.tableColumn.amount'),
             dataIndex: 'taxAmount',
             key: 'taxAmount',
             width: '15%',
@@ -37,14 +35,14 @@ export const taxDetailsColumn = () => {
 export const optionalServicesColumns = ({ formActionType, handleButtonClick, styles, record }) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: translateContent('vehicleDetails.tableColumn.serviceName'),
+            title: translateContent('vehicleInvoiceGeneration.label.vehicleDetails.optionalServices.serviceName'),
             dataIndex: 'serviceName',
             key: 'serviceName',
             width: '25%',
         }),
 
         tblPrepareColumns({
-            title: translateContent('vehicleDetails.tableColumn.amount'),
+            title: translateContent('vehicleInvoiceGeneration.label.vehicleDetails.optionalServices.serviceName'),
             dataIndex: 'amount',
             key: 'amount',
             width: '25%',

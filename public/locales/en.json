@@ -106,8 +106,8 @@
             "printForm21": "Print Form 21",
             "printInvoice": "Print Invoice",
             "cancelInvoice": "Cancel Invoice",
-            "approve" : "Approve",
-            "reject" : "Reject"
+            "approve": "Approve",
+            "reject": "Reject"
         },
         "placeholder": {
             "input": "Enter ",
@@ -1390,6 +1390,11 @@
             "mnmInvoice": "M&M Invoice",
             "pdiDone": "PDI Done",
             "allotVehicle": "Allot Vehicle"
+        },
+        "tableColumn": {
+            "description": "Description",
+            "rate": "Rate",
+            "amount": "Amount"
         },
         "placeholder": {
             "searchBooking": "Search Booking",
