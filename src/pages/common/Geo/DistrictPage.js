@@ -7,9 +7,10 @@ import React from 'react';
 import { ListDistrictMaster } from 'components/common/Geo';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
+import { translateContent } from 'utils/translateContent';
 
 export const DistrictGeoBase = (props) => {
-    const pageTitle = 'District';
+    const pageTitle = translateContent('district.title.district');
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

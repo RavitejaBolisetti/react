@@ -1712,7 +1712,8 @@
     "state": {
         "heading": {
             "moduleTitle": "State",
-            "title": "State Name"
+            "title": "State Name",
+            "stateMaster": "State Master"
         },
         "tableColHeading": {
             "stateCode": "State Code",
@@ -1774,7 +1775,8 @@
             "cityName": "City Name",
             "cityCode": "City Code",
             "districtName": "District Name",
-            "stateName": "State Name"
+            "stateName": "State Name",
+            "city": "City"
         }
     },
     "district": {
