@@ -10,6 +10,7 @@ import '@testing-library/jest-dom/extend-expect';
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { ViewSupportingDocDetail } from 'components/FinancialAccounting/GSTIRNAuthentication/ViewSupportingDocDetail';
 
 jest.mock('store/actions/data/financialAccounting/dealerGstAction', () => ({
     dealerGstAction: {},
@@ -27,56 +28,36 @@ const fetchGstDoc = jest.fn();
 const fetchList = jest.fn();
 
 afterEach(() => {
-    // restore replaced property
     jest.restoreAllMocks();
 });
-// jest.mock('components/FinancialAccounting/GSTIRNAuthentication/GSTLoginForm', () => {
-//     const GSTLoginForm = ({ onFinish }) => {
-//         return (
-//             <div>
-//                 <button onClick={onFinish}>Save</button>
-//             </div>
-//         );
-//     };
-//     return {
-//         __esModule: true,
-//         GSTLoginForm,
-//     };
-// });
-
-// jest.mock('components/FinancialAccounting/GSTIRNAuthentication/GSTAuthenticationFormButton/GstAuthFormButton', () => {
-//     const GstAuthFormButton = ({ onCloseAction }) => {
-//         return (
-//             <div>
-//                 <button onClick={onCloseAction}>Close</button>
-//             </div>
-//         );
-//     };
-//     return {
-//         __esModule: true,
-//         GstAuthFormButton,
-//     };
-// });
 
 describe('GSTIRNAuthenticationMaster components', () => {
     jest.setTimeout(30000);
     it('onFinish', async () => {
-        const values = { clientId: 'AAECS19TXPANP3F', gstinNumber: '19AAECS6807Q1ZL', password: 'Shree@#2020', secretId: '1yE3Ssg7MAaOo4IhWvk0', userName: 'SHREEAUTO', docId: 'c84f814c-f05f-4ac5-a36e-b4b184846ae8' };
         const mockStore = createMockStore({
             auth: { userId: 'test12', accessToken: '345', token: '321' },
-            data: { FinancialAccounting: { DealerGstDetails: { data: [{ value: 'GSTIN06' }] } } },
+            data: { FinancialAccounting: { DealerGstDetails: { data: [{ "key": "fc59f4b6-397e-4072-9816-f7fad5ecb08e", "value": "19AAECS6807Q1ZL", "parentKey": null }] } } },
         });
+
+        const saveData=jest.fn();
+        const fetchGstDoc=jest.fn();
+        const res={ data: { "documentId": "996111e0-73bd-4ae5-b439-9181f8210e4d", "pemFile": "secretkey-1696914838011.pem" } }
+
         customRender(
             <Provider store={mockStore}>
-                <GSTIRNAuthenticationMaster isVisible={true} values={values} fetchGstDoc={jest.fn()} fetchList={fetchList} />
+                <GSTIRNAuthenticationMaster isVisible={true} fetchListGstLogin={jest.fn()} saveData={saveData}  fetchGstDoc={fetchGstDoc} fetchList={fetchList} />
             </Provider>
         );
+
         const handleGstinNumber = screen.getByRole('combobox', { name: '' });
-        fireEvent.change(handleGstinNumber, { target: { value: 'GSTIN06' } });
+        fireEvent.change(handleGstinNumber, { target: { value: '19AAECS6807Q1ZL' } });
         await waitFor(() => {
-            expect(screen.getAllByText('GSTIN06')[1]).toBeInTheDocument();
+            expect(screen.getAllByText('19AAECS6807Q1ZL')[1]).toBeInTheDocument();
         });
-        fireEvent.click(screen.getAllByText('GSTIN06')[1]);
+        fireEvent.click(screen.getAllByText('19AAECS6807Q1ZL')[1]);
+
+        fetchGstDoc.mock.calls[0][0].onErrorAction();
+        fetchGstDoc.mock.calls[0][0].onSuccessAction(res);
 
         const userName = screen.getByTestId('userNameInput');
         fireEvent.change(userName, { target: { value: 'Test' } });
@@ -92,22 +73,17 @@ describe('GSTIRNAuthenticationMaster components', () => {
 
         const loginBtn = screen.getByRole('button', { name: 'Login & Continue' });
         fireEvent.click(loginBtn);
+
+        await waitFor(() => { expect(saveData).toHaveBeenCalled() });
+
+        saveData.mock.calls[0][0].onError();
+        saveData.mock.calls[0][0].onSuccess();
+
+        await waitFor(() => { expect(screen.getByRole('button', { name: 'Cancel' })).toBeInTheDocument() });
+
+        const cancelBtn=screen.getByRole('button', { name: 'Cancel' });
+        fireEvent.click(cancelBtn);
     });
-    // it('onFinish', () => {
-    //     const buttonData = { closeBtn: true };
-    //     customRender(<GSTIRNAuthenticationMaster buttonData={buttonData} />);
-    //     const loginBtn = screen.getByRole('button', { name: 'Save' });
-    //     fireEvent.click(loginBtn);
-    //     //  screen.getByRole("");
-    // });
-    // it("onCloseAction",()=>{
-    //     const buttonData = {closeBtn:true}
-    // customRender(
-    // <GSTIRNAuthenticationMaster buttonData={buttonData}/>
-    //  )
-    // // const closeBtn = screen.getByRole('button', {name:'Close'});
-    // // fireEvent.click(closeBtn)
-    // });
 
     it('fileProps', () => {
         const docData = { documentId: '123', pemFile: 'secretkey-1696914838011.pem' };
