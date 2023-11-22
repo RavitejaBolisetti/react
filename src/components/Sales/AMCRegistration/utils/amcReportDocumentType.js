@@ -11,7 +11,7 @@ export const AMC_REPORT_DOCUMENT_TYPE = {
     },
     REGISTRATION_CERTIFICATE_AMC: {
         id: 2,
-        value: 'registration_certificate_amc',
+        value: 'AMC_Certificate_Document',
         key: 'amc_registration_hdr_id',
     },
     REGISTRATION_INCENTIVE_CLAIM_AMC: {

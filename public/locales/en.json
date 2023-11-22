@@ -106,8 +106,8 @@
             "printForm21": "Print Form 21",
             "printInvoice": "Print Invoice",
             "cancelInvoice": "Cancel Invoice",
-            "approve" : "Approve",
-            "reject" : "Reject"
+            "approve": "Approve",
+            "reject": "Reject"
         },
         "placeholder": {
             "input": "Enter ",
@@ -764,7 +764,13 @@
             "addNewVehicleMsg": "Please add new vehicle using",
             "buttonAtTop": "button at top",
             "vehicleDetails": "Vehicle Details",
-            "selectVehicle": "Select Vehicle"
+            "selectVehicle": "Select Vehicle",
+            "invoiceNumber" : "Invoice Number",
+            "invoiceDate" : "Invoice Date",
+            "irnNo" : "IRN No.",
+            "irnStatus" : "IRN Status",
+            "amcCertificateNo" : "AMC Registration Number",
+            "amcIncenticeClaim" : "AMC Incentive Claim"
         },
         "placeholder": {
             "search": "Search"
@@ -1390,6 +1396,11 @@
             "mnmInvoice": "M&M Invoice",
             "pdiDone": "PDI Done",
             "allotVehicle": "Allot Vehicle"
+        },
+        "tableColumn": {
+            "description": "Description",
+            "rate": "Rate",
+            "amount": "Amount"
         },
         "placeholder": {
             "searchBooking": "Search Booking",

@@ -53,7 +53,7 @@ const ViewDetail = (props) => {
                                                 <Divider className={styles.marB20} />
                                                 <Descriptions {...viewProps} column={{ xs: 1, sm: 1, lg: 1, xl: 1, xxl: 1 }}>
                                                     <Descriptions.Item label={translateContent('amcRegistration.label.reasonForCancellationRquest')}>{checkAndSetDefaultValue(formData?.amcRequestDetails?.amcCancelRemarks)}</Descriptions.Item>
-                                                    <Descriptions.Item label={translateContent('amcRegistration.label.remarkForCancellation')}>{checkAndSetDefaultValue(formData?.amcRequestDetails?.otherReason)}</Descriptions.Item>
+                                                    <Descriptions.Item label={translateContent('amcRegistration.label.otherReason')}>{checkAndSetDefaultValue(formData?.amcRequestDetails?.otherReason)}</Descriptions.Item>
                                                 </Descriptions>
                                             </>
                                         )}
@@ -78,7 +78,7 @@ const ViewDetail = (props) => {
                                             <>
                                                 <Descriptions {...viewProps}>
                                                     <Descriptions.Item label={translateContent('amcRegistration.label.reasonForCancellationRquest')}>{checkAndSetDefaultValue(formData?.amcRequestDetails?.amcCancelRemarks)}</Descriptions.Item>
-                                                    <Descriptions.Item label={translateContent('amcRegistration.label.remarkForCancellation')}>{checkAndSetDefaultValue(formData?.amcRequestDetails?.otherReason)}</Descriptions.Item>
+                                                    <Descriptions.Item label={translateContent('amcRegistration.label.otherReason')}>{checkAndSetDefaultValue(formData?.amcRequestDetails?.otherReason)}</Descriptions.Item>
                                                 </Descriptions>
                                             </>
                                         )}

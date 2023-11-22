@@ -548,7 +548,7 @@ export const AMCRegistrationMasterBase = (props) => {
                 setIsPendingForCancellation(false);
             } else {
                 section && setCurrentSection(AMC_REGISTRATION_SECTION.THANK_YOU_PAGE.id);
-                setSelectedOrder({ message: res?.responseMessage.split(' ')[3] });
+                setSelectedOrder({ message: res?.responseMessage.split(' ')[3], data: res?.data });
                 registrationForm.resetFields();
                 schemeForm.resetFields();
                 customerForm.resetFields();
