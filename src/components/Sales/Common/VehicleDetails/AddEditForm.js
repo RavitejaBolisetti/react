@@ -209,8 +209,8 @@ const AddEditFormMain = (props) => {
                                 </Col>
 
                                 {formData?.otfStatus === OTF_STATUS?.BOOKED.key && (
-                                    <Col xs={24} sm={24} md={2} lg={2} xl={2}>
-                                        <Button style={{ marginTop: '30px' }} onClick={handleChangeModel} type="link" icon={<GrSync />} className={styles.verticallyCentered} disabled={onModelSubmit}>
+                                    <Col xs={24} sm={24} md={2} lg={2} xl={2} className={styles.vehicleInfo}>
+                                        <Button onClick={handleChangeModel} type="link" icon={<GrSync />} className={`${styles.verticallyCentered} ${styles.marT30}`} disabled={onModelSubmit}>
                                             Change
                                         </Button>
                                     </Col>

@@ -44,7 +44,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ChangeModelVariantMasterBase = (props) => {
-    const { typeData, setCustomerNameList, selectedRecordId, setFormData } = props;
+    const { typeData, setCustomerNameList, selectedRecordId, setButtonData, buttonData, setFormData } = props;
     const {
         formActionType: { addMode, editMode },
         formData,
@@ -71,7 +71,7 @@ const ChangeModelVariantMasterBase = (props) => {
     const vehicleModelChangeRequest = formData?.vehicleModelChangeRequest || false;
 
     const [uploadedFileName, setUploadedFileName] = useState('');
-    const [modelStatus, setModelStatus] = useState();
+    const [modelStatus, setModelStatus] = useState(STATUS?.PENDING?.key);
     const [statusDescription, setStatusDescription] = useState();
     const [modelChangeItemList, setModelChangeItemList] = useState([]);
 
@@ -142,16 +142,16 @@ const ChangeModelVariantMasterBase = (props) => {
                     },
                 ];
                 const onSuccessAction = (res) => {
-                    setModelStatus('RJ');
-                    if (res?.sapStatusResponseCode === STATUS?.SUCCESS?.key) {
+                    setModelStatus(res?.data?.sapStatusResponseCode);
+                    if (res?.data?.sapStatusResponseCode === STATUS?.SUCCESS?.key) {
+                        setButtonData({ ...buttonData, formBtnActive: true });
                         setOnModelSubmit(false);
-                        setFormData(res);
+                        setFormData(res?.data);
                         setChangeModel(false);
                         showGlobalNotification({ notificationType: 'success', title: 'Request Generated Successfully', message: 'Model Change Request has been submitted successfully' });
                     }
-                    if ('RJ' === STATUS?.REJECTED?.key) {
-                        setModelStatus('RJ');
-                        setStatusDescription(res?.sapStatusResponse);
+                    if (res?.data?.sapStatusResponseCode === STATUS?.REJECTED?.key) {
+                        setStatusDescription(res?.data?.sapStatusResponse);
                         setConfirmRequest({
                             isVisible: true,
                             titleOverride: 'Failed Request',
@@ -201,18 +201,19 @@ const ChangeModelVariantMasterBase = (props) => {
                                 <Panel
                                     header={
                                         <>
-                                            <Text strong> Change Model</Text>
-                                            {/* {item?.pending &&  */}
-                                            <div className={styles.verticallyCentered}>
-                                                <Space>
+                                            <Row justify="space-between" className={styles.fullWidth}>
+                                                <Text strong> Change Model</Text>
+
+                                                {/* {item?.pending &&  */}
+                                                <div className={styles.verticallyCentered}>
                                                     {onModelSubmit && (
                                                         <>
                                                             {modelStatus === STATUS?.PENDING?.key ? <Tag color="warning">Pending for SAP Confirmation</Tag> : modelStatus === STATUS?.SUCCESS?.key ? <Tag color="success">Success</Tag> : <Tag color="error">Failed for SAP Confirmation</Tag>}
                                                             <Button onClick={handleRefresh} type="link" icon={<TbRefresh />}></Button>
                                                         </>
                                                     )}
-                                                </Space>
-                                            </div>
+                                                </div>
+                                            </Row>
                                             {/* // } */}
                                         </>
                                     }
