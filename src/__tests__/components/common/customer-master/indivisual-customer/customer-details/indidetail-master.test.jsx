@@ -8,9 +8,10 @@ import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 import { Form } from 'antd';
 import { customerDetailsIndividualDataActions } from 'store/actions/data/customerMaster/customerDetailsIndividual';
+import { CustomerNameChangeHistory } from 'components/common/CustomerMaster/IndividualCustomer/CustomerDetail/CustomerNameChange';
 
 jest.mock('components/common/CustomerMaster/IndividualCustomer/CustomerDetail/AddEditForm', () => {
-    const AddEditForm = ({ onFinish, setNameChangeRequested, handleFormFieldChange, onViewHistoryChange }) => { 
+    const AddEditForm = ({ onFinish, setNameChangeRequested, handleFormFieldChange, onViewHistoryChange, deleteFile }) => { 
         const handleClick = () => {
             onFinish('test');
             setNameChangeRequested('Test');
@@ -20,12 +21,27 @@ jest.mock('components/common/CustomerMaster/IndividualCustomer/CustomerDetail/Ad
             <div>
                 <button onClick={handleClick}>Save</button>
                 <button onClick={onViewHistoryChange}>Change History</button>
+                <button onClick={deleteFile}>Delete File</button>
             </div>
         )
     };
     return {
         __esModule: true,
         AddEditForm,
+    };
+});
+
+jest.mock('components/common/CustomerMaster/IndividualCustomer/CustomerDetail/CustomerNameChange', () => {
+    const CustomerNameChangeHistory = ({ downloadFileFromButton}) => { 
+        return(
+            <div>
+                <button onClick={downloadFileFromButton}>Download File</button>
+            </div>
+        )
+    };
+    return {
+        __esModule: true,
+        CustomerNameChangeHistory,
     };
 });
 
@@ -83,9 +99,11 @@ describe('Corporate customer  Details render', () => {
         const changeHistory=screen.getByRole('button', { name: 'Change History' });
         fireEvent.click(changeHistory);
 
-    });
-    it('should check view details', () => {
-        const prop = { formActionType: { viewMode: true } };
-        customRender(<FormWrapper resetData={jest.fn()} {...prop} />);
+        const downloadFile=screen.getByRole('button', { name: 'Download File' });
+        fireEvent.click(downloadFile);
+
+        const deleteFile=screen.getByRole('button', { name: 'Delete File' });
+        fireEvent.click(deleteFile);
+
     });
 });
