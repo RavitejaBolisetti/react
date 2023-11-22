@@ -228,6 +228,7 @@ const AMCRegistrationDetailsMasterBase = (props) => {
         selectedSaleType,
         employeeData,
         managerData,
+        ...props,
     };
 
     return (

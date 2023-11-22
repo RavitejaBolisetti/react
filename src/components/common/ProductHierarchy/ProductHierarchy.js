@@ -24,6 +24,7 @@ import { DisableParent } from './ProductHierarchyUtils';
 import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
+import { PRODUCT_LEVEL } from '../../../constants/modules/UserManagement/productLevel';
 
 const { Search } = Input;
 
@@ -107,6 +108,7 @@ export const ProductHierarchyMain = ({ typeData, isLoading, moduleTitle, viewTit
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [disabledEdit, setDisabledEdit] = useState(false);
     const [viewData, setViewData] = useState([]);
+    const [selectedOrganization, setSelectedOrganization] = useState();
     const organizationFieldNames = { title: 'manufactureOrgShrtName', key: 'manufactureOrgCode', children: 'subManufactureOrg' };
     const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
 
@@ -155,11 +157,36 @@ export const ProductHierarchyMain = ({ typeData, isLoading, moduleTitle, viewTit
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [productDetail]);
 
+    useEffect(() => {
+        if (organizationId) {
+            setViewData([]);
+            setSelectedOrganization(flatternOrgData?.find((e) => e?.key === organizationId)?.data?.manufactureOrgShrtName);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [organizationId]);
+
     const onChange = (e) => {
         setSearchValue(e.target.value);
     };
 
     const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
+
+    const dataOrgList = [];
+    const generateOrgList = (data) => {
+        for (let i = 0; i < data?.length; i++) {
+            const node = data[i];
+            const { [organizationFieldNames?.key]: key } = node;
+            dataOrgList.push({
+                key,
+                data: node,
+            });
+            if (node[organizationFieldNames?.children]) {
+                generateOrgList(node[organizationFieldNames?.children]);
+            }
+        }
+        return dataOrgList;
+    };
+    const flatternOrgData = generateOrgList(manufacturerOrgHierarchyData);
 
     const dataList = [];
     const generateList = (data) => {
@@ -194,9 +221,13 @@ export const ProductHierarchyMain = ({ typeData, isLoading, moduleTitle, viewTit
             ];
             fetchProductDetail({ setIsLoading: () => {}, userId, onCloseAction, extraParams, onErrorAction });
         } else {
-            const parentName = selectedProductData && selectedProductData?.parntProdctCode && flatternData?.find((e) => e?.key === selectedProductData?.parntProdctCode)?.data?.prodctShrtName;
             setFormData({ ...selectedProductData });
-            setViewData({ ...selectedProductData, parentName: parentName });
+            if (selectedProductData?.attributeType === PRODUCT_LEVEL?.PD.key) {
+                setViewData({ ...selectedProductData, parentName: selectedOrganization });
+            } else {
+                const parentName = selectedProductData && selectedProductData?.parntProdctCode && flatternData?.find((e) => e?.key === selectedProductData?.parntProdctCode)?.data?.prodctShrtName;
+                setViewData({ ...selectedProductData, parentName: parentName });
+            }
         }
 
         setSelectedTreeKey(keys);
@@ -339,7 +370,6 @@ export const ProductHierarchyMain = ({ typeData, isLoading, moduleTitle, viewTit
     const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_CHILD_WARNING;
 
     const title = translateContent('productHierarchy.heading.title');
-
     return (
         <>
             <div className={styles.contentHeaderBackground}>

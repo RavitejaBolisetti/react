@@ -299,11 +299,11 @@ export const ListCustomerCreationBase = (props) => {
                         </Form>
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.buttonsGroupRight}>
-                        <Button type="primary" onClick={handleOnClick}>
+                        <Button type="primary" onClick={handleOnClick} data-testid="upload">
                             {translateContent('global.buttons.upload')}
                         </Button>
 
-                        <Button type="primary" onClick={handleDownload}>
+                        <Button type="primary" onClick={handleDownload} data-testid="download">
                             {translateContent('global.buttons.download')}
                         </Button>
                     </Col>

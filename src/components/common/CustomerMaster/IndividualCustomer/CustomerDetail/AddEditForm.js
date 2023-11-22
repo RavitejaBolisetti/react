@@ -36,7 +36,6 @@ const AddEditFormMain = (props) => {
     }, [data?.mobileNumber, form, formData]);
 
     useEffect(() => {
-        console.log('🚀 ~ file: AddEditForm.js:39 ~ useEffect ~ formData:', formData);
         setWhatsAppConfiguration({ contactOverWhatsApp: formData?.whatsappCommunicationIndicator, sameMobileNoAsWhatsApp: formData?.mobileNumberAsWhatsappNumber });
         handleFormFieldChange();
         // eslint-disable-next-line react-hooks/exhaustive-deps
