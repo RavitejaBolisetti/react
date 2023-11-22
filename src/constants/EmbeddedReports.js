@@ -245,4 +245,11 @@ export const EMBEDDED_REPORTS = {
         type: 'Report',
         slug: 'pool_stock_report',
     },
+    IBND_Report: {
+        id: 34,
+        key: 'IBND_Report',
+        title: 'IBND Report ',
+        type: 'Report',
+        slug: 'ibnd_report',
+    },
 };
