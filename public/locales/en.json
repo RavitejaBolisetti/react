@@ -106,8 +106,8 @@
             "printForm21": "Print Form 21",
             "printInvoice": "Print Invoice",
             "cancelInvoice": "Cancel Invoice",
-            "approve" : "Approve",
-            "reject" : "Reject"
+            "approve": "Approve",
+            "reject": "Reject"
         },
         "placeholder": {
             "input": "Enter ",
@@ -3448,7 +3448,8 @@
             "parent": "parent",
             "secretId": "Secret Id",
             "password": "password",
-            "dealerName": "Dealer Name"
+            "dealerName": "Dealer Name",
+            "gstin": "Select GSTIN"
         },
         "validation": {
             "userName": "User Name",
