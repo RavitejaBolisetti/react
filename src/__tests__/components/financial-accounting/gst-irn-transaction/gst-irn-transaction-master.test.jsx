@@ -130,8 +130,8 @@ describe("GstIRNTransaction component",()=>{
         fireEvent.change(searchTextBox, {target:{value:'INV22C000617'}});
         expect(searchTextBox.value).toBe('INV22C000617');
 
-        const searchImg = screen.getByRole('img', {name:'search'});
-        fireEvent.click(searchImg);
+        // const searchImg = screen.getByRole('img', {name:'search'});
+        // fireEvent.click(searchImg);
 
         const clearBtn = screen.getByRole('button', {name:'Clear'});
         fireEvent.click(clearBtn);

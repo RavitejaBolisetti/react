@@ -78,7 +78,7 @@ export const GstIRNTransactionMain = (props) => {
 
     const onSuccessAction = (res) => {
         setShowDataLoading(false);
-        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.title'), message: res?.responseMessage });
+        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
     };
 
     const onErrorAction = (message) => {
@@ -192,7 +192,7 @@ export const GstIRNTransactionMain = (props) => {
         const data = { id: record?.id, invoiceNumber: record?.invoiceDocumentNumber };
         const onSuccess = (res) => {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         };
         const onError = (message) => {
             showGlobalNotification({ message });

@@ -6,7 +6,7 @@
 import React, { useState } from 'react';
 import { Row, Col, Input, Form, Collapse, Divider, DatePicker, Select } from 'antd';
 import { expandActionIcon } from 'utils/accordianExpandIcon';
-import { convertDateToCalender, dateFormat } from 'utils/formatDateTime';
+import { dateFormat, formatDateToCalenderDate } from 'utils/formatDateTime';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { translateContent } from 'utils/translateContent';
@@ -42,7 +42,7 @@ const AddEditFormMain = (props) => {
         }
     };
 
-    const fromDateInitialValue = { initialValue: convertDateToCalender(formData?.vehicleDetails?.orgWarrantyStartDate) };
+    const fromDateInitialValue = { initialValue: formatDateToCalenderDate(formData?.vehicleDetails?.orgWarrantyStartDate) };
 
     return (
         <Row gutter={20}>

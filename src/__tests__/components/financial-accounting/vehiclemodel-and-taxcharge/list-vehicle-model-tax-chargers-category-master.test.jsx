@@ -3,10 +3,11 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { screen, fireEvent, waitFor} from '@testing-library/react';
+import { screen, fireEvent} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { VehicleModelAndTaxChargersCategory } from '@components/FinancialAccounting/VehicleModelAndTaxCharges/ListVehicleModelTaxChargersCategoryMaster';
 import customRender from '@utils/test-utils';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 
@@ -35,7 +36,7 @@ describe('VehicleModelAndTaxChargersCategory component', () => {
         const ModelOptions = [{modelGroupCode: "ECOM", modelGroupDescription: "ECOMOBILE"}]; 
 
         customRender(
-            <VehicleModelAndTaxChargersCategory fieldNames={fieldNames} ModelOptions={ModelOptions} isProductHierarchyDataLoading={false}resetData={resetData} resetProductData={resetProductData}/>
+            <VehicleModelAndTaxChargersCategory fieldNames={fieldNames} ModelOptions={ModelOptions} isProductHierarchyDataLoading={false}resetData={resetData} resetProductData={resetProductData} fetchModelList={jest.fn()} setFilterString={jest.fn()} />
         );
 
         const inputBox = screen.getByRole('combobox', { name: '', exact: false});
@@ -58,7 +59,7 @@ describe('VehicleModelAndTaxChargersCategory component', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <VehicleModelAndTaxChargersCategory buttonAction={'add'} fetchList={fetchList} resetData={resetData} resetProductData={resetProductData}/>
+                <VehicleModelAndTaxChargersCategory buttonAction={'add'} fetchList={fetchList} resetData={resetData} resetProductData={resetProductData} fetchModelList={jest.fn()} setFilterString={jest.fn()} />
             </Provider>
         );
 
@@ -86,7 +87,7 @@ describe('VehicleModelAndTaxChargersCategory component', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <VehicleModelAndTaxChargersCategory buttonAction={'add'} fetchList={fetchList} resetData={resetData} resetProductData={resetProductData} fetchModelList={fetchModelList} />
+                <VehicleModelAndTaxChargersCategory buttonAction={'add'} fetchList={fetchList} resetData={resetData} resetProductData={resetProductData} fetchModelList={fetchModelList} setFilterString={jest.fn()} />
             </Provider>
         );
 
@@ -121,7 +122,7 @@ describe('VehicleModelAndTaxChargersCategory component', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <VehicleModelAndTaxChargersCategory fetchList={fetchList} resetData={jest.fn()} resetProductData={resetProductData} fetchModelList={fetchModelList} />
+                <VehicleModelAndTaxChargersCategory fetchList={fetchList} resetData={jest.fn()} resetProductData={resetProductData} fetchModelList={fetchModelList} setFilterString={jest.fn()} />
             </Provider>
         );
 
@@ -144,7 +145,7 @@ describe('VehicleModelAndTaxChargersCategory component', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <VehicleModelAndTaxChargersCategory buttonAction={'add'} fetchList={fetchList} resetData={resetData} fetchModelList={fetchModelList} resetProductData={resetProductData}/>
+                <VehicleModelAndTaxChargersCategory buttonAction={'add'} fetchList={fetchList} resetData={resetData} fetchModelList={fetchModelList} resetProductData={resetProductData} setFilterString={jest.fn()} />
             </Provider>
         );
 
@@ -181,7 +182,7 @@ describe('VehicleModelAndTaxChargersCategory component', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <VehicleModelAndTaxChargersCategory fetchList={fetchList} resetData={resetData} resetProductData={resetProductData} />
+                <VehicleModelAndTaxChargersCategory fetchList={fetchList} resetData={resetData} resetProductData={resetProductData} fetchModelList={fetchModelList} setFilterString={jest.fn()} />
             </Provider>
         );
 
