@@ -2,13 +2,10 @@
 import React from 'react';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { CustomerDetailMaster } from 'components/common/CustomerMaster/IndividualCustomer/CustomerDetail/CustomerDetailMaster';
-import { AddEditForm } from 'components/common/CustomerMaster/IndividualCustomer/CustomerDetail/AddEditForm';
 import customRender from '@utils/test-utils';
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 import { Form } from 'antd';
-import { customerDetailsIndividualDataActions } from 'store/actions/data/customerMaster/customerDetailsIndividual';
-import { CustomerNameChangeHistory } from 'components/common/CustomerMaster/IndividualCustomer/CustomerDetail/CustomerNameChange';
 
 jest.mock('components/common/CustomerMaster/IndividualCustomer/CustomerDetail/AddEditForm', () => {
     const AddEditForm = ({ onFinish, setNameChangeRequested, handleFormFieldChange, onViewHistoryChange, deleteFile }) => { 
@@ -79,7 +76,7 @@ describe('Corporate customer  Details render', () => {
         );
     });
 
-    it('should render all fields', async () => {
+    it('change history, download file and delete file button should work', async () => {
         const formActionType={ 
             editMode: true,
         };
@@ -104,6 +101,9 @@ describe('Corporate customer  Details render', () => {
 
         const deleteFile=screen.getByRole('button', { name: 'Delete File' });
         fireEvent.click(deleteFile);
+
+        saveData.mock.calls[2][0].onSuccess(res);
+        saveData.mock.calls[2][0].onError();
 
     });
 });
