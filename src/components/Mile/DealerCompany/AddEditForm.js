@@ -48,12 +48,16 @@ const AddEditFormMain = (props) => {
     let groupValue = null;
     let parentGroupId = null;
     const parentName = (values) => {
+        console.log(values);
         const parentData = dealerParentData?.find((item) => item?.key === values);
-        if (parentData) {
+        if (values) {
             groupValue = parentData?.value;
             parentGroupId = parentData?.key;
             form.setFieldValue('dealerParentName', groupValue);
             form.setFieldValue('parentId', parentGroupId);
+        } else {
+            form.setFieldValue('dealerParentName', null);
+            form.setFieldValue('parentId', null);
         }
     };
 
