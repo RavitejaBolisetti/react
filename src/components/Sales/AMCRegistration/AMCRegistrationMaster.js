@@ -42,6 +42,7 @@ import { AMC_REQUEST_TITLE_CONSTANTS } from './utils/AMCRequestTitleConstant';
 import { ReportModal } from 'components/common/ReportModal/ReportModal';
 import { translateContent } from 'utils/translateContent';
 import { drawerTitle } from 'utils/drawerTitle';
+import { dealerLocationsDataAction } from 'store/actions/data/amcRegistration/dealerLocations';
 
 const mapStateToProps = (state) => {
     const {
@@ -52,6 +53,7 @@ const mapStateToProps = (state) => {
                 AMCRegistrationSearch: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString, detailData: amcRegistrationDetailData = [] },
                 EmployeeData: { isLoaded: isEmployeeDataLoaded = false, isLoading: isEmployeeDataLoading, data: employeeData = [], detailData: managerData = [] },
                 AMCScheme: { isLoaded: isSchemeDataLoaded = false, isLoading: isSchemeDataLoading, filteredListData: schemeData = [] },
+                DealerLocations: { filteredListData: locations = [] },
             },
             OTF: {
                 OtfSearchList: { isLoaded: isOTFDataLoaded = false, isLoading: isOTFSearchLoading, data: otfData = [] },
@@ -95,6 +97,8 @@ const mapStateToProps = (state) => {
 
         dealerParentsLovList,
         dealerLocations,
+
+        locations,
     };
     return returnValue;
 };
@@ -127,6 +131,9 @@ const mapDispatchToProps = (dispatch) => ({
             fetchDealerParentsLovList: dealerParentDataActions.fetchFilteredList,
             listDealerParentShowLoading: dealerParentDataActions.listShowLoading,
 
+            fetchLocationLovList: dealerLocationsDataAction.fetchFilteredList,
+            listLocationShowLoading: dealerLocationsDataAction.listShowLoading,
+
             fetchDealerLocations: applicationMasterDataActions.fetchDealerLocations,
             locationDataLoding: applicationMasterDataActions.locationDataLoding,
 
@@ -139,7 +146,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const AMCRegistrationMasterBase = (props) => {
     const { data, userId, fetchList, listShowLoading, showGlobalNotification } = props;
     const { typeData, saveData, documentType, moduleTitle, totalRecords } = props;
-    const { filterString, setFilterString } = props;
+    const { filterString, setFilterString, fetchLocationLovList, listLocationShowLoading, locations } = props;
     const { fetchDetail, isDataLoaded, fetchCustomerList, listCustomerShowLoading } = props;
     const { amcRegistrationDetailData, isEmployeeDataLoaded, isEmployeeDataLoading, employeeData, fetchEmployeeList, fetchManagerList, managerData, listEmployeeShowLoading, resetEmployeeData, loginUserData } = props;
     const { fetchOTFSearchedList, listOTFShowLoading, otfData, fetchDealerLocations, locationDataLoding, dealerLocations } = props;
@@ -339,6 +346,7 @@ export const AMCRegistrationMasterBase = (props) => {
         setSection(defaultSection);
         if (userId) {
             fetchDealerParentsLovList({ setIsLoading: listDealerParentShowLoading, userId });
+            fetchLocationLovList({ setIsLoading: listLocationShowLoading, userId });
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -469,7 +477,6 @@ export const AMCRegistrationMasterBase = (props) => {
                 break;
             case EDIT_ACTION:
                 fetchDetail({ setIsLoading: listShowLoading, userId, extraParams: detailExtraParams, customURL, onErrorAction });
-
                 record && setSelectedAMC(record);
                 openDefaultSection && setCurrentSection(defaultSection);
                 break;
@@ -555,6 +562,8 @@ export const AMCRegistrationMasterBase = (props) => {
                 setSelectedAMC({ amcRegistrationNumber: res?.responseMessage.split(' ')[3], amcRegistrationDate: res?.data?.amcRegistration?.amcRegistrationDate, status: res?.data?.amcRegistration?.amcStatus });
                 setRequestPayload(defaultPayload);
             }
+            setAmcWholeCancellation(false);
+            setRejectRequest(false);
             cancelAMCForm.resetFields();
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         };
@@ -598,7 +607,7 @@ export const AMCRegistrationMasterBase = (props) => {
         dynamicPagination,
         totalRecords,
         setPage,
-        tableColumn: tableColumn({ handleButtonClick, userType }),
+        tableColumn: tableColumn({ handleButtonClick, userType, locations }),
         tableData: data,
         showAddButton: false,
         typeData,

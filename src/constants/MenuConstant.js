@@ -539,6 +539,14 @@ export const MenuConstant = {
         slug: 'vehicle-delivery-note-report',
     },
 
+    [getMenyKey('SACR-05.16')]: {
+        key: 'SACR-05.16',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'SACR-02.05',
+        slug: 'ibnd_report',
+    },
+
     [getMenyKey('SACR-05.06')]: {
         key: 'SACR-05.06',
         link: routing.ROUTING_REPORT_EMBEDDED_REPORT,

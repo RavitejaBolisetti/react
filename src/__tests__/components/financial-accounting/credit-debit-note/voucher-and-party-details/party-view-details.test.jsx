@@ -23,16 +23,29 @@ describe('ViewDetail components', () => {
     };
 
     it('render image1', () => {
-        customRender(<ViewDetail  {...props}  activeKey={[1]}/>);
+        const activeKey = []
+        const isPresent = true;
+
+        customRender(<ViewDetail  {...props}  activeKey={activeKey} isPresent={isPresent} />);
 
         const plusImg1 = screen.getAllByRole('img', {name:'plus'});
         fireEvent.click(plusImg1[0]);
+
+        const minusImg = screen.getByRole('img', {name:'minus'});
+        fireEvent.click(minusImg);
     });
 
     it('render image2', () => {
-        customRender(<ViewDetail  {...props}  activeKey={[2]}/>);
+        const activeKey = [];
+        const isPresent = true;
+        
+        customRender(<ViewDetail  {...props}  activeKey={activeKey} isPresent={isPresent} />);
 
         const plusImg = screen.getAllByRole('img', {name:'plus'});
         fireEvent.click(plusImg[1]);
+
+        const minusImg = screen.getByRole('img', {name:'minus'});
+        fireEvent.click(minusImg);
     });
+    
 });

@@ -393,7 +393,7 @@ export const ProductHierarchyMain = ({ typeData, isLoading, moduleTitle, viewTit
                     {/* {organizationId && (
                         <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.buttonsGroupRight}>
                             <Button icon={<FaHistory />} type="primary" className={styles.verticallyCentered} onClick={changeHistoryModelOpen}>
-                                Change History
+                                {translateContent('global.changeHistory.title')}
                             </Button>
                         </Col>
                     )} */}

@@ -405,7 +405,7 @@ const ListPinCodeMasterBase = (props) => {
         let data = { ...values, id: recordId };
         const onSuccess = (res) => {
             form.resetFields();
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             loadPinCodeDataList();
 
             setButtonData({ ...buttonData, formBtnActive: false });

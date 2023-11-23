@@ -34,7 +34,7 @@ export const tableColumnInvoice = (typeData) => {
     return tableColumn;
 };
 
-export const tableColumnDelivery = () => {
+export const tableColumnDelivery = (typeData) => {
     const tableColumn = [
         tblPrepareColumns({
             title: translateContent('bookingManagement.label.deliveryNoteNumber'),
@@ -52,6 +52,7 @@ export const tableColumnDelivery = () => {
             title: translateContent('bookingManagement.label.deliveryNoteStatus'),
             dataIndex: 'deliveryNoteStatus',
             sorter: false,
+            render: (_, record) => getCodeValue(typeData?.DLVR_NT_STS, record?.deliveryNoteStatus),
         }),
     ];
 

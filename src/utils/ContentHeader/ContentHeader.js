@@ -8,6 +8,7 @@ import { Button, Col, Form, Row, Input } from 'antd';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { FaHistory } from 'react-icons/fa';
 import TreeSelectField from 'components/common/TreeSelectField';
+import { translateContent } from 'utils/translateContent';
 
 const { Search } = Input;
 
@@ -27,7 +28,7 @@ const ContentHeader = ({ isAdvanceFilter = false, isTogglePresent = false, isDef
                                 {toggleSecond}
                             </Button>
                         </div>
-                        <Search placeholder="Search" allowClear onChange={onChange} className={styles?.headerSearchField} />
+                        <Search placeholder={translateContent('global.placeholder.search')} allowClear onChange={onChange} className={styles?.headerSearchField} />
                     </Col>
                 </Row>
             </div>
@@ -45,7 +46,7 @@ const ContentHeader = ({ isAdvanceFilter = false, isTogglePresent = false, isDef
                                     </Col>
                                     {organizationId && (
                                         <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                            <Search placeholder="Search" allowClear onChange={onChange} className={styles?.headerSearchField} />
+                                            <Search placeholder={translateContent('global.placeholder.search')} allowClear onChange={onChange} className={styles?.headerSearchField} />
                                         </Col>
                                     )}
                                 </Row>
@@ -55,7 +56,7 @@ const ContentHeader = ({ isAdvanceFilter = false, isTogglePresent = false, isDef
                     {organizationId && (
                         <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles?.buttonsGroupRight}>
                             <Button icon={<FaHistory />} type="primary" className={styles?.verticallyCentered} onClick={changeHistoryModelOpen}>
-                                Change History
+                                {translateContent('global.changeHistory.title')}
                             </Button>
                         </Col>
                     )}

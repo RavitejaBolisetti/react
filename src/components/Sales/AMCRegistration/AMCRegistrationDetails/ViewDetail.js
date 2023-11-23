@@ -14,14 +14,13 @@ import { getCodeValue } from 'utils/getCodeValue';
 import styles from 'assets/sass/app.module.scss';
 import { DATA_TYPE } from 'constants/dataType';
 import { PARAM_MASTER } from 'constants/paramMaster';
-import { convertDateMonthYear } from 'utils/formatDateTime';
 import { AMC_REPORT_DOCUMENT_TYPE } from '../utils/amcReportDocumentType';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading, selectedSaleType, employeeData, managerData, typeData, handlePrintDownload, record } = props;
+    const { formData, isLoading, employeeData, managerData, typeData, handlePrintDownload, record } = props;
     const [activeKey, setactiveKey] = useState([]);
     const viewProps = {
         bordered: false,
@@ -57,7 +56,7 @@ const ViewDetailMain = (props) => {
                             <Descriptions {...viewProps}>
                                 <Descriptions.Item label={translateContent('amcRegistration.label.priceType')}>{checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.DLVR_SALE_TYP.id], formData?.amcRegistration?.priceType), isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('amcRegistration.label.saleType')}>{checkAndSetDefaultValue(getCodeValue(typeData['SALE_TYP'], formData?.amcRegistration?.saleType), isLoading)}</Descriptions.Item>
-                                {selectedSaleType === AMC_CONSTANTS?.MNM_FOC?.key && (
+                                {formData?.amcRegistration?.priceType === AMC_CONSTANTS?.MNM_FOC?.key && (
                                     <>
                                         <Descriptions.Item label={translateContent('amcRegistration.label.bookingNumber')}>{checkAndSetDefaultValue(formData?.amcRegistration?.bookingNumber, isLoading)}</Descriptions.Item>
                                         <Descriptions.Item label={translateContent('amcRegistration.label.vin')}>{checkAndSetDefaultValue(formData?.amcRegistration?.vin, isLoading)}</Descriptions.Item>
