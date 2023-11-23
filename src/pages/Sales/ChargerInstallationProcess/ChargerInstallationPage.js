@@ -7,8 +7,10 @@ import React from 'react';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 import { ChargerInstallationMaster } from 'components/Sales/ChargerInstallationProcess';
+import { translateContent } from 'utils/translateContent';
+
 const ChargerInstallationBase = (props) => {
-    const pageTitle = 'Charger Installation Process';
+    const pageTitle = translateContent('chargerInstallationProcess.heading.pageTitle');
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

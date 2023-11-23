@@ -9,6 +9,7 @@ import { Form, Row, Col } from 'antd';
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 import { convertDateTimedayjs } from 'utils/formatDateTime';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -32,7 +33,7 @@ const ChargerInstallatioDetailsMasterBase = (props) => {
                 handleFormValueChange();
             })
             .catch(() => {
-                showGlobalNotification({ message: 'Please add Request' });
+                showGlobalNotification({ message: translateContent('chargerInstallationDetails.notification.addRequest') });
             });
     };
 
@@ -42,7 +43,7 @@ const ChargerInstallatioDetailsMasterBase = (props) => {
 
     const onFinish = () => {
         if (!addRequestData) {
-            showGlobalNotification({ message: 'Please Add Request' });
+            showGlobalNotification({ message: translateContent('chargerInstallationDetails.notification.addRequest') });
         } else {
             handleButtonClick({ buttonAction: NEXT_ACTION });
             setButtonData({ ...buttonData, formBtnActive: false });
