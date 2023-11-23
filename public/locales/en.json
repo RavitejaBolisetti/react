@@ -14,7 +14,7 @@
             "action": "Action",
             "fromDate": "From Date",
             "toDate": "To Date",
-            "serialNo": "Srl.",
+            "serialNo": "#",
             "search": "Search",
             "approvalStatus": "Approval Status"
 
