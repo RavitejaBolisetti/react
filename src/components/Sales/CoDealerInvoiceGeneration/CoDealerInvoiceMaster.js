@@ -325,14 +325,19 @@ export const CoDealerInvoiceMasterBase = (props) => {
         }
         return { formAction, btnVisibilityStatus };
     };
-    const HandleIndentDetails = (id = '') => {
+    const HandleIndentDetails = (id = '', record) => {
         if (id) {
-            const ExtraParams = (customkey = 'id') => {
+            const ExtraParams = (customkey = 'id', indentStatus = null) => {
                 return [
                     {
                         key: customkey,
                         title: customkey,
                         value: id,
+                    },
+                    {
+                        key: 'indentStatus',
+                        title: 'indentStatus',
+                        value: indentStatus,
                     },
                 ];
             };
@@ -341,7 +346,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
                 customURL: BASE_URL_CO_DEALER_DETAILS,
                 setIsLoading: listCoDealerDetailShowLoading,
                 userId,
-                extraParams: ExtraParams(),
+                extraParams: ExtraParams('id', record?.indentStatus),
                 onSuccessAction: (res) => {
                     setCoDealerInvoiceStateMaster((prev) => ({ ...prev, CoDealerData: res?.data }));
                 },
@@ -371,7 +376,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
                 defaultSection && setCurrentSection(defaultSection);
                 setPreviousSection(1);
                 setSelectedOrder(record);
-                HandleIndentDetails(record?.id);
+                HandleIndentDetails(record?.id, record);
                 break;
             case EDIT_ACTION:
                 setSelectedOrder(record);
@@ -380,7 +385,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
             case VIEW_ACTION:
                 setSelectedOrder(record);
                 defaultSection && setCurrentSection(defaultSection);
-                HandleIndentDetails(record?.id);
+                HandleIndentDetails(record?.id, record);
                 break;
             case NEXT_ACTION:
                 const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
