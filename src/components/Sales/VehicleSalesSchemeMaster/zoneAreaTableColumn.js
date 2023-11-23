@@ -11,13 +11,13 @@ export const zoneAreaTableColumn = (props) => {
     const tableColumn = [
         tblPrepareColumns({
             title: translateContent('vehicleSalesSchemeMaster.label.zone'),
-            dataIndex: 'zone',
+            dataIndex: 'zoneName',
             width: '18%',
         }),
 
         tblPrepareColumns({
             title: translateContent('vehicleSalesSchemeMaster.label.area'),
-            dataIndex: 'area',
+            dataIndex: 'areaName',
             width: '18%',
         }),
     ];
