@@ -16,7 +16,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { translateContent } from 'utils/translateContent';
 
 export default function AdvanceFilter(props) {
-    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, title, filterString, setFilterString, typeData, setAdvanceSearchVisible, searchForm, showAddButton = true, handleButtonClick, handleOnClick ,record} = props;
+    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, title, filterString, setFilterString, typeData, setAdvanceSearchVisible, searchForm, showAddButton = true, handleButtonClick, handleOnClick, record } = props;
 
     const serachBoxProps = {
         searchForm,

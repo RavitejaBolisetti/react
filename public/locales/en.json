@@ -3951,13 +3951,15 @@
     "vehicleSalesSchemeMaster": {
         "heading": {
             "moduleTitle": "Scheme",
-            "title": "Vehicle Sales Scheme Master",
+            "title": "Vehicle Sales Scheme Master ",
             "addZoneTitle": "Add Zone Details",
             "addProductDetails": "Add Product Details"
         },
         "label": {
             "downloadHere": "Download Here",
-            "errorMessage": "Please add Vehicle Details",
+            "errorMessage1": "Please add Product Details",
+            "errorMessage2": "Please add Zone Details",
+            "errorMessage3": "Please add Product and Zone Details",
             "schemeDetails": "Scheme Details",
             "manufacturerOrganisation": "Manufacturer Organisation Hierarchy",
             "schemeType": "Scheme Type",

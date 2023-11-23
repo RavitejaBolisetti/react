@@ -37,7 +37,7 @@ const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
     const { formData, productHierarchyData, saleService, setSaleService, schemeData, handleSchemeCategory, disableAmountTaxField, resetDetailData } = props;
-    const { onFinish, openAccordian, setOpenAccordian, flatternData, schemeCategorySelect, taxField, setTaxField } = props;
+    const { onFinish, openAccordian, setOpenAccordian, flatternData, schemeCategorySelect, taxField, setTaxField, productAddMode, setProductAddMode } = props;
     const { buttonData, setButtonData, onCloseAction, tableDataItem, zoneTableDataItem, setZoneTableDataItem, setTableDataItem, showGlobalNotification, formActionType } = props;
     const { handleButtonClick, selectedTreeSelectKey, setSelectedTreeSelectKey, handleSelectTreeClick, productHierarchyForm, typeData, isViewDetailVisible, onCloseActionViewDetails, schemeTypeData, encashTypeData, addSchemeForm, filterString, offerTypeData, manufacturerOrgHierarchyData, setOrganizationId, organizationId, manufacturerAdminHierarchyData, selectedTreeData, isProductLoading, productHierarchyList, addZoneAreaForm, zoneMasterData, areaOfficeData, handleZoneChange, productHierarchyDataList } = props;
 
@@ -93,6 +93,7 @@ const AddEditFormMain = (props) => {
     };
 
     const handleAddVehicleDetails = () => {
+        setProductAddMode(true);
         setIsAddProductDetailsVisible(true);
     };
 
@@ -102,8 +103,8 @@ const AddEditFormMain = (props) => {
 
     const handleDeleteZoneArea = ({ buttonAction, record }) => {
         if (buttonAction === DELETE_ACTION) {
-            const index = zoneTableDataItem?.findIndex((e) => e?.zoneCode === record?.zone);
-            const updatedvalue = [...zoneTableDataItem];
+            let updatedvalue = [...zoneTableDataItem];
+            const index = zoneTableDataItem?.findIndex((e) => e?.area === record?.area);
             if (record?.id) {
                 updatedvalue.splice(index, 1, { ...record, status: false });
             } else {
@@ -121,8 +122,13 @@ const AddEditFormMain = (props) => {
         if (index >= 0) {
             updatedvalue.splice(index, 1, { ...values, modelName: data, toggleStatus: values?.toggleStatus, status: true });
             setTableDataItem([...updatedvalue]);
-        } else {
-            setTableDataItem((prev) => [...prev, { ...values, modelName: data, toggleStatus: values?.toggleStatus, status: true }]);
+        } else if (productAddMode) {
+            let isPresent = tableDataItem?.find((e) => e?.modelCode === values?.modelCode);
+            if (isPresent && Object?.keys(isPresent)?.length > 0) {
+                showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: translateContent('vehicleSalesSchemeMaster.text.errorMessageText1') });
+            } else {
+                setTableDataItem((prev) => [...prev, { ...values, modelName: data, toggleStatus: values?.toggleStatus, status: true }]);
+            }
         }
         setEditingData({});
         setIsAddProductDetailsVisible(false);
@@ -130,6 +136,7 @@ const AddEditFormMain = (props) => {
         productHierarchyForm.resetFields();
     };
     const handleEditProduct = ({ buttonAction, record }) => {
+        setProductAddMode(false);
         if (buttonAction === DELETE_ACTION) {
             const index = tableDataItem?.findIndex((e) => e?.modelCode === record?.modelCode);
             const updatedvalue = [...tableDataItem];
@@ -147,6 +154,11 @@ const AddEditFormMain = (props) => {
         }
     };
 
+    const onchangeSchemeCategory = (value) => {
+        let vehicleSchemeData = schemeData?.find((el) => el.schemeCode === value);
+        addSchemeForm.setFieldsValue({ amountWithoutTax: vehicleSchemeData?.schemeAmount, amountWithTax: vehicleSchemeData?.schemeTaxAmount });
+    };
+
     const onFinishAddZoneDetails = (values) => {
         setOpenAccordian([2]);
 
@@ -154,14 +166,14 @@ const AddEditFormMain = (props) => {
         let areaName = areaOfficeData?.find((e) => e?.areaCode === values?.area)?.areaDescription;
 
         if (zoneTableDataItem?.length > 0) {
-            let isPresent = zoneTableDataItem?.find((e) => e?.areaCode === values?.area && e?.zoneCode === values?.zone);
+            let isPresent = zoneTableDataItem?.find((e) => e?.area === values?.area && e?.zone === values?.zone);
             if (isPresent && Object?.keys(isPresent)?.length > 0) {
                 showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: translateContent('vehicleSalesSchemeMaster.text.errorMessageText2') });
             } else {
                 setZoneTableDataItem([...zoneTableDataItem, { ...values, areaName, zoneName, id: '', status: true }]);
             }
         } else {
-            setZoneTableDataItem([{ ...values, areaName, zoneName, id: '', status: true }]);
+            setZoneTableDataItem((prev) => [...prev, { ...values, areaName, zoneName, id: '', status: true }]);
         }
 
         setAddZoneArea(false);
@@ -194,6 +206,17 @@ const AddEditFormMain = (props) => {
         }
     };
 
+    const zoneAreaModalProps = {
+        isVisible: addZoneArea,
+        titleOverride: translateContent('vehicleSalesSchemeMaster.heading.addZoneTitle'),
+        onCloseAction: onCloseZoneDetails,
+        addZoneAreaForm,
+        zoneMasterData,
+        areaOfficeData,
+        onFinishAddZoneDetails,
+        handleZoneChange,
+    };
+
     const productHierarchyModalProps = {
         isVisible: isAddProductDetailsVisible,
         titleOverride: translateContent('vehicleSalesSchemeMaster.heading.addProductDetails'),
@@ -209,6 +232,7 @@ const AddEditFormMain = (props) => {
         productHierarchyList,
         addSchemeForm,
         editingData,
+        formActionType,
     };
 
     const organizationFieldNames = { title: 'manufactureOrgShrtName', key: 'id', children: 'subManufactureOrg' };
@@ -233,7 +257,7 @@ const AddEditFormMain = (props) => {
 
     const zoneAreaTableProps = {
         tableColumn: zoneAreaTableColumn({ handleButtonClick: handleDeleteZoneArea, styles, formActionType, zoneTableDataItem, areaOfficeData }),
-        tableData: zoneTableDataItem,
+        tableData: zoneTableDataItem?.filter((i) => i?.status),
     };
 
     const productTableProps = {
@@ -263,6 +287,7 @@ const AddEditFormMain = (props) => {
         manufacturerOrgHierarchyData,
         zoneTableDataItem,
         formActionType,
+        schemeData,
     };
 
     const buttonProps = {
@@ -274,21 +299,6 @@ const AddEditFormMain = (props) => {
         handleButtonClick,
     };
 
-    const zoneAreaModalProps = {
-        isVisible: addZoneArea,
-        titleOverride: translateContent('vehicleSalesSchemeMaster.heading.addZoneTitle'),
-        onCloseAction: onCloseZoneDetails,
-        addZoneAreaForm,
-        zoneMasterData,
-        areaOfficeData,
-        onFinishAddZoneDetails,
-        handleZoneChange,
-    };
-
-    const onchangeSchemeCategory = (value) => {
-        let vehicleSchemeData = schemeData?.find((el) => el.schemeCode === value);
-        addSchemeForm.setFieldsValue({ amountWithoutTax: vehicleSchemeData?.schemeAmount, amountWithTax: vehicleSchemeData?.schemeTaxAmount });
-    };
     return (
         <Form form={addSchemeForm} data-testid="test" onFinish={onFinish} layout="vertical" autocomplete="off" colon="false">
             {formActionType?.viewMode ? (

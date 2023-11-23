@@ -56,7 +56,7 @@ const mapStateToProps = (state) => {
             CustomerMaster: {
                 ViewDocument: { isLoaded: isViewDataLoaded = false, data: viewDocument },
             },
-            VehicleSalesSchemeMaster: { isLoaded: isVehicleSalesSchemeDataLoaded = false, isLoading: isVehicleSalesSchemeLoading = false, data, detailData: vehicleSalesSchemeDetails = [], filter: filterString },
+            VehicleSalesSchemeMaster: { isLoaded: isVehicleSalesSchemeDataLoaded = false, isLoading: isVehicleSalesSchemeLoading = false, data, detailData: vehicleSalesSchemeDetails = [] },
             VehicleSalesSchemeMasterUpload: { isLoaded: isVehicleSalesSchemeUploadDataLoaded = false, isLoading: isVehicleSalesSchemeUploadDataLoading = false, data: vehicleSalesSchemeUploadData = [] },
         },
     } = state;
@@ -70,7 +70,6 @@ const mapStateToProps = (state) => {
         isManufacturerAdminLoaded,
         ManufacturerAdminHierarchyLoading,
         manufacturerAdminHierarchyData,
-        filterString,
         totalRecords: data?.totalRecords || [],
         moduleTitle,
         typeData,
@@ -154,7 +153,6 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: vehicleSalesSchemeMaster.fetchList,
             fetchDetail: vehicleSalesSchemeMaster.fetchDetail,
             listShowLoading: vehicleSalesSchemeMaster.listShowLoading,
-            setFilterString: vehicleSalesSchemeMaster.setFilter,
             saveData: vehicleSalesSchemeMaster.saveData,
             resetDetailData: vehicleSalesSchemeMaster.resetDetail,
 
@@ -167,8 +165,9 @@ const mapDispatchToProps = (dispatch) => ({
 export const VehicleSalesSchemeMasterBase = (props) => {
     const { data, saveData, fetchList, userId, fetchProductLovList, listShowLoading, showGlobalNotification, fetchDetail, amcSchemeCategoryData, shieldSchemeCategoryData } = props;
     const { isVehicleSalesSchemeDataLoaded, listProductShowLoading, vehicleSalesSchemeData, schemeTypeData, encashTypeData, offerTypeData, rsaSchemeCategoryData } = props;
-    const { typeData, setFilterString, filterString, resetViewData, fetchViewDocument, viewDocument, viewListShowLoading, isViewDataLoaded, isVehicleSalesSchemeUploadDataLoaded, isVehicleSalesSchemeUploadDataLoading, vehicleSalesSchemeUploadData, downloadFile, resetUploadSalesSchemeData, totalRecords, downloadShowLoading, manufacturerOrgHierarchyData, DetailLoading, fetchAmcSchemeCategoryLovList, listAmcSchemeCategoryLovListShowLoading } = props;
+    const { typeData, resetViewData, fetchViewDocument, viewDocument, viewListShowLoading, isViewDataLoaded, isVehicleSalesSchemeUploadDataLoaded, isVehicleSalesSchemeUploadDataLoading, vehicleSalesSchemeUploadData, downloadFile, resetUploadSalesSchemeData, totalRecords, downloadShowLoading, manufacturerOrgHierarchyData, DetailLoading, fetchAmcSchemeCategoryLovList, listAmcSchemeCategoryLovListShowLoading } = props;
     const { accessToken, resetDetailData, token, vehicleSalesSchemeDetails, fetchDocumentFileDocId, saveVehicleSalesSchemeData, vehicleSalesSchemelistShowLoading, manufacturerOrgFetchList, manufacturerOrgListShowLoading, fetchModelList, productHierarchyDataList, fetchRsaSchemeCategoryLovList, fetchShieldSchemeCategoryLovList, listRsaSchemeCategoryLovListShowLoading, listShieldSchemeCategoryLovListShowLoading, fetchZoneMasterList, listZoneMasterShowLoading, fetchAreaOfficeList, listAreaOfficeListShowLoading, zoneMasterData, areaOfficeData } = props;
+    const DEFAULT_PAGINATION = { pageSize: 10, current: 1 };
 
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
@@ -179,7 +178,7 @@ export const VehicleSalesSchemeMasterBase = (props) => {
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [refershData, setRefershData] = useState(false);
     const [searchValue, setSearchValue] = useState(false);
-
+    const [filterString, setFilterString] = useState(DEFAULT_PAGINATION);
     const [formData, setFormData] = useState({});
 
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -200,8 +199,9 @@ export const VehicleSalesSchemeMasterBase = (props) => {
     const [schemeCategoryList, setSchemeCategoryList] = useState({ amc: false, rsa: false, shield: false });
     const [schemeData, isSchemeData] = useState([]);
 
+    const [productAddMode, setProductAddMode] = useState(false);
     const [saleService, setSaleService] = useState({ sales: false, service: false });
-    const [page, setPage] = useState({ pageSize: 10, current: 1 });
+    const [page, setPage] = useState({});
     const [organizationId, setOrganizationId] = useState('');
     const [selectedTreeData, setSelectedTreeData] = useState();
     const [productHierarchyData, setProductHierarchyData] = useState([]);
@@ -211,6 +211,7 @@ export const VehicleSalesSchemeMasterBase = (props) => {
     const [schemeCategorySelect, setSchemeCategorySelect] = useState();
     const [disableAmountTaxField, setDisableAmountTaxField] = useState(false);
     const [taxField, setTaxField] = useState();
+    const [singleDisabled, setSingleDisabled] = useState(false);
 
     const dynamicPagination = true;
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
@@ -218,6 +219,12 @@ export const VehicleSalesSchemeMasterBase = (props) => {
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
     const fieldNames = { title: 'manufactureOrgShrtName', key: 'id', children: 'subManufactureOrg' };
+
+    const onRemove = () => {
+        setFileList([]);
+        setUploadedFile();
+        setSingleDisabled(false);
+    };
 
     const makeExtraparms = (Params) => {
         const extraParams = [];
@@ -247,11 +254,11 @@ export const VehicleSalesSchemeMasterBase = (props) => {
             handleSchemeCategory(vehicleSalesSchemeDetails?.schemeType);
             vehicleSalesSchemeDetails?.offerType && setTaxField(vehicleSalesSchemeDetails?.offerType);
         }
-        if (vehicleSalesSchemeDetails?.productDetails?.length > 0) {
+        if (vehicleSalesSchemeDetails?.productDetails) {
             setTableDataItem(vehicleSalesSchemeDetails?.productDetails?.map((i) => ({ ...i, status: true })));
         }
 
-        if (vehicleSalesSchemeDetails?.zoneAreaDetails?.length > 0) {
+        if (vehicleSalesSchemeDetails?.zoneAreaDetails) {
             setZoneTableDataItem(vehicleSalesSchemeDetails?.zoneAreaDetails?.map((i) => ({ ...i, status: true })));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -308,87 +315,98 @@ export const VehicleSalesSchemeMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [organizationId, userId]);
 
-    const extraParams = useMemo(() => {
+    const defaultExtraParam = useMemo(() => {
         return [
-            {
-                key: 'searchType',
-                title: 'Search Type',
-                value: filterString?.searchType,
-                name: typeData?.[PARAM_MASTER.SCHEME_CODE.id]?.find((i) => i?.key === filterString?.searchType)?.value,
-                canRemove: false,
-                filter: true,
-            },
-            {
-                key: 'searchParam',
-                title: 'Search Param',
-                value: filterString?.searchParam,
-                name: filterString?.searchParam,
-                canRemove: true,
-                filter: true,
-            },
-            {
-                key: 'schemeType',
-                title: 'Scheme Type',
-                value: filterString?.schemeType,
-                name: schemeTypeData?.find((i) => i?.key === filterString?.schemeType)?.value,
-                canRemove: true,
-                filter: true,
-            },
-            {
-                key: 'encash',
-                title: 'Encash',
-                value: filterString?.encash,
-                name: encashTypeData?.find((i) => i?.key === filterString?.encash)?.value,
-                canRemove: true,
-                filter: true,
-            },
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: page?.pageSize,
+                value: filterString?.pageSize,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: page?.current,
+                value: filterString?.current,
                 canRemove: true,
                 filter: false,
             },
             {
-                key: 'fromDate',
-                title: 'Value',
-                value: filterString?.fromDate,
-                name: filterString?.fromDate ? convertDateTime(filterString?.fromDate, dateFormatView) : '',
-                canRemove: true,
-                filter: true,
-            },
-            {
-                key: 'toDate',
-                title: 'Value',
-                value: filterString?.toDate,
-                name: filterString?.toDate ? convertDateTime(filterString?.toDate, dateFormatView) : '',
-                canRemove: true,
-                filter: true,
-            },
-            {
                 key: 'sortBy',
                 title: 'Sort By',
-                value: page?.sortBy,
+                value: filterString?.sortBy,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'sortIn',
                 title: 'Sort Type',
-                value: page?.sortType,
+                value: filterString?.sortType,
                 canRemove: true,
                 filter: false,
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, page, searchValue]);
+    }, [filterString]);
+
+    const extraParams = useMemo(() => {
+        if (filterString) {
+            return [
+                ...defaultExtraParam,
+                {
+                    key: 'searchType',
+                    title: 'Search Type',
+                    value: filterString?.searchType,
+                    name: typeData?.[PARAM_MASTER.SCHEME_CODE.id]?.find((i) => i?.key === filterString?.searchType)?.value,
+                    canRemove: false,
+                    filter: true,
+                },
+                {
+                    key: 'searchParam',
+                    title: 'Search Param',
+                    value: filterString?.searchParam,
+                    name: filterString?.searchParam,
+                    canRemove: true,
+                    filter: true,
+                },
+                {
+                    key: 'schemeType',
+                    title: 'Scheme Type',
+                    value: filterString?.schemeType,
+                    name: schemeTypeData?.find((i) => i?.key === filterString?.schemeType)?.value,
+                    canRemove: true,
+                    filter: true,
+                },
+                {
+                    key: 'encash',
+                    title: 'Encash',
+                    value: filterString?.encash,
+                    name: encashTypeData?.find((i) => i?.key === filterString?.encash)?.value,
+                    canRemove: true,
+                    filter: true,
+                },
+                {
+                    key: 'fromDate',
+                    title: 'Value',
+                    value: filterString?.fromDate,
+                    name: filterString?.fromDate ? convertDateTime(filterString?.fromDate, dateFormatView) : '',
+                    canRemove: true,
+                    filter: true,
+                },
+                {
+                    key: 'toDate',
+                    title: 'Value',
+                    value: filterString?.toDate,
+                    name: filterString?.toDate ? convertDateTime(filterString?.toDate, dateFormatView) : '',
+                    canRemove: true,
+                    filter: true,
+                },
+            ];
+        } else {
+            return defaultExtraParam;
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filterString, searchValue, defaultExtraParam]);
 
     useEffect(() => {
         if (userId) {
@@ -441,7 +459,6 @@ export const VehicleSalesSchemeMasterBase = (props) => {
             setEmptyList(false);
             setUploadedFile();
             setFileList([]);
-
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         };
@@ -546,14 +563,14 @@ export const VehicleSalesSchemeMasterBase = (props) => {
     };
 
     const handleResetFilter = (e) => {
-        setFilterString();
+        setFilterString((prev) => ({ current: 1, pageSize: prev?.pageSize }));
         setShowDataLoading(false);
         advanceFilterForm.resetFields();
     };
 
     const handleClearInSearch = (e) => {
         if (e?.target?.value === '') {
-            setFilterString();
+            setFilterString((prev) => ({ current: 1, pageSize: prev?.pageSize }));
             searchForm.resetFields();
             setShowDataLoading(false);
         } else if (e.target.value.length > 2) {
@@ -623,8 +640,14 @@ export const VehicleSalesSchemeMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        if (tableDataItem.length === 0) {
-            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: translateContent('vehicleSalesSchemeMaster.label.errorMessage') });
+        if (tableDataItem?.length === 0 && zoneTableDataItem?.length === 0) {
+            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: translateContent('vehicleSalesSchemeMaster.label.errorMessage3') });
+            return;
+        } else if (zoneTableDataItem?.length === 0 && tableDataItem?.length !== 0) {
+            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: translateContent('vehicleSalesSchemeMaster.label.errorMessage2') });
+            return;
+        } else if (zoneTableDataItem?.length !== 0 && tableDataItem?.length === 0) {
+            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: translateContent('vehicleSalesSchemeMaster.label.errorMessage1') });
             return;
         }
         let data = { ...values, id: values?.id || '', productDetails: tableDataItem, zoneAreaDetails: zoneTableDataItem, moHierarchyMstId: organizationId, encash: encashTypeFn(values) };
@@ -671,6 +694,7 @@ export const VehicleSalesSchemeMasterBase = (props) => {
         advanceFilterForm.resetFields();
         advanceFilterForm.setFieldsValue();
         setTaxField(undefined);
+        setZoneTableDataItem([]);
     };
 
     const onAdvanceSearchCloseAction = () => {
@@ -775,14 +799,16 @@ export const VehicleSalesSchemeMasterBase = (props) => {
         taxField,
         setTaxField,
         resetDetailData,
+        productAddMode,
+        setProductAddMode,
     };
 
     const tableProps = {
         tableColumn: tableColumn({ handleButtonClick, schemeTypeData, encashTypeData, formActionType }),
         tableData: vehicleSalesSchemeData,
         showAddButton,
-        page,
-        setPage,
+        page: filterString,
+        setPage: setFilterString,
         totalRecords,
         dynamicPagination,
     };
@@ -875,6 +901,10 @@ export const VehicleSalesSchemeMasterBase = (props) => {
         supportedFileTypes: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
         maxSize: 8,
         downloadShowLoading,
+        singleDisabled,
+        setSingleDisabled,
+        onRemove,
+        single: true,
     };
 
     return (
