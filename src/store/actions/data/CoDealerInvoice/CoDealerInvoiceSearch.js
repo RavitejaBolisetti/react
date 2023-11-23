@@ -6,7 +6,7 @@
 import { dataActions } from 'store/actions/crud/dataAction';
 import { BASE_URL_CO_DEALER_INVOICE as baseURL } from 'constants/routingApi';
 
-const PREFIX = 'CO_DEALER_INVOICE_SEARCH';
+const PREFIX = 'CO_DEALER_INVOICE_SEARCH_';
 const moduleName = 'Co Dealer Invoice Search';
 
 export const RECEIVE_DATA_LOADING_ACTION_CONSTANT = PREFIX + 'LOADING_DATA';
@@ -16,6 +16,7 @@ export const RECIEVE_DATA_DETAIL_ACTION_CONSTANT = PREFIX + 'RECIEVE_DETAIL_DATA
 export const SAVE_DATA_ACTION_CONSTANT = PREFIX + 'SAVE_DATA';
 export const RESET_DATA_ACTION_CONSTANT = PREFIX + 'RESET_DATA';
 export const RESET_DETAIL_DATA_ACTION_CONSTANT = PREFIX + 'RESET_DETAIL_DATA';
+export const RECEIVE_DETAIL_DATA_LOADING_ACTION_CONSTANT = PREFIX + 'RECIEVE_DETAIL_DATA_LOADING';
 
 export const CoDealerSearchDataActions = dataActions({
     baseURL,
@@ -27,4 +28,5 @@ export const CoDealerSearchDataActions = dataActions({
     SAVE_DATA_ACTION_CONSTANT,
     RESET_DATA_ACTION_CONSTANT,
     RESET_DETAIL_DATA_ACTION_CONSTANT,
+    RECEIVE_DETAIL_DATA_LOADING_ACTION_CONSTANT,
 });

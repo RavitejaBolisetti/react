@@ -21,13 +21,7 @@ import { DATE_CONSTANTS } from './constants/DateConstants';
 export const AdvancedSearchFrom = (props) => {
     const { setAdvanceSearchVisible, typeData, isReadonly = true, indentToDealerData, handleDateChange, CoDealerInvoiceStateMaster } = props;
     const disabledProps = { disabled: isReadonly };
-    const {
-        filterString,
-        setFilterString,
-        advanceFilterForm,
-        advanceFilterForm: { resetFields },
-        handleResetFilter,
-    } = props;
+    const { filterString, setFilterString, advanceFilterForm, handleResetFilter } = props;
 
     const onFinish = (values) => {
         setFilterString({
@@ -51,7 +45,7 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label={translateContent('coDealer.label.status')} name="status" rules={[validateRequiredSelectField('status')]}>
+                    <Form.Item label={translateContent('coDealer.label.status')} name="invoiceStatus" rules={[validateRequiredSelectField('status')]}>
                         <Select options={typeData?.[PARAM_MASTER?.CO_DEALER_INVC_STATS?.id]} fieldNames={{ label: 'value', value: 'key' }} {...disabledProps} placeholder={preparePlaceholderSelect('')} />
                     </Form.Item>
                 </Col>
@@ -87,7 +81,7 @@ export const AdvancedSearchFrom = (props) => {
 
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
-                    <Button onClick={handleResetFilter} danger>
+                    <Button onClick={() => handleResetFilter(false)} danger>
                         {translateContent('global.buttons.reset')}
                     </Button>
                 </Col>

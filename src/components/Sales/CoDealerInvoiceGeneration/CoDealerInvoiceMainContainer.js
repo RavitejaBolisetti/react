@@ -24,6 +24,7 @@ const CoDealerInvoiceContainerMain = (props) => {
         FormActionButton: CoDealerFormButton,
         selectedOrderId: selectedOtfNumber,
         selectedInvoiceId: selectedOrderId,
+        showOptionalService: false,
     };
 
     const renderSections = () => {

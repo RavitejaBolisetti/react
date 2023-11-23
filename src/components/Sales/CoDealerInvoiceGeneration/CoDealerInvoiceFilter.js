@@ -21,6 +21,7 @@ const CoDealerInvoiceFilter = (props) => {
         filterString,
         setFilterString,
         optionType: typeData,
+        allowClear: false,
     };
 
     return (
@@ -36,14 +37,7 @@ const CoDealerInvoiceFilter = (props) => {
                                 </div>
                             </Col>
                             <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.verticallyCentered}>
-                                <Button
-                                    icon={<FilterIcon />}
-                                    type="link"
-                                    className={styles.verticallyCentered}
-                                    onClick={() => {
-                                        setAdvanceSearchVisible(true);
-                                    }}
-                                >
+                                <Button icon={<FilterIcon />} type="link" className={styles.verticallyCentered} onClick={() => setAdvanceSearchVisible(true)}>
                                     Advanced Filters
                                 </Button>
                             </Col>
@@ -74,7 +68,7 @@ const CoDealerInvoiceFilter = (props) => {
                                 })}
                             </Col>
                             <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
-                                <Button className={styles.clearBtn} onClick={handleResetFilter} danger>
+                                <Button className={styles.clearBtn} onClick={() => handleResetFilter(true)} danger>
                                     Clear
                                 </Button>
                             </Col>
