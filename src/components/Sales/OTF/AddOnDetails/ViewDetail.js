@@ -33,7 +33,7 @@ const ViewDetailMain = (props) => {
                         <Panel header={translateContent('bookingManagement.label.accessoriesInformation')} key={'ci'}>
                             <Divider />
                             <div className={styles.innerCollapse}>
-                                {formData?.partDetailsResponses?.length &&
+                                {formData?.partDetailsResponses?.length > 0 &&
                                     formData?.partDetailsResponses?.map((element, i) => {
                                         return (
                                             <Collapse expandIcon={expandIcon} activeKey={myActiveKey} onChange={() => handleCollapses(i)} expandIconPosition="end" collapsible="icon">
