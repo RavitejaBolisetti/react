@@ -260,7 +260,7 @@ export const ListStateMasterBase = (props) => {
         onCloseAction: onAdvanceSearchCloseAction,
         setAdvanceSearchVisible,
         // icon: <FilterIcon size={20} />,
-        titleOverride: 'Advance Filters',
+        titleOverride: translateContent('state.title.advanceFilters'),
         isDataCountryLoaded,
         isCountryLoading,
         countryData,
