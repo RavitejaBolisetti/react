@@ -179,10 +179,9 @@ export const EMBEDDED_REPORTS = {
     },
     AMC_REGISTRATION_INVOICE_DOCUMENT: {
         id: 24,
-        key: 'AMC_Registration_Invoice_document',
+        key: 'AMC_Certificate_Document',
         title: 'AMC Registration Invoice Document ',
         type: 'Document',
-        slug: '-report',
     },
     CHALLAN_DOCUMENT: {
         id: 25,
