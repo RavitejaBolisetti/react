@@ -23,8 +23,8 @@ describe('ViewDetailMain Component', () => {
         };
 
         customRender(<ViewDetail setActiveKey={setActiveKey} activeKey={activeKey} formData={formData} isLoading={isLoading} appCategoryData={appCategoryData} />);
-        const plusBtn = screen.getAllByRole('img', { name: 'plus' });
-        fireEvent.click(plusBtn[0]);
+        const plusBtn = screen.getByRole('img', { name: 'plus' });
+        fireEvent.click(plusBtn);
 
         const panelHeader = screen.getByText('Individual Information');
         expect(panelHeader).toBeInTheDocument();
