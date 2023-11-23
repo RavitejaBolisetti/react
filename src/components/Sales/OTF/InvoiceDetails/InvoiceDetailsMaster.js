@@ -131,7 +131,7 @@ export const InvoiceDetailsMasterBase = (props) => {
                         <Collapse onChange={() => onChange(2)} expandIconPosition="end" expandIcon={expandIcon} activeKey={activeKey} collapsible="icon">
                             <Panel header={translateContent('bookingManagement.label.deliveryInformation')} key={2}>
                                 <Divider />
-                                <DataTable srlTitle={'#'} pagination={false} tableColumn={tableColumnDelivery()} tableData={invoiceData?.deliveryDetails} />
+                                <DataTable srlTitle={'#'} pagination={false} tableColumn={tableColumnDelivery(typeData)} tableData={invoiceData?.deliveryDetails} />
                             </Panel>
                         </Collapse>
                     )}
