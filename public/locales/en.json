@@ -1762,6 +1762,9 @@
         "link": {}
     },
     "state": {
+        "title": {
+            "advanceFilters": "Advance Filters"
+        },
         "heading": {
             "moduleTitle": "State",
             "title": "State Name",
