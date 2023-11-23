@@ -108,8 +108,9 @@
             "printForm21": "Print Form 21",
             "printInvoice": "Print Invoice",
             "cancelInvoice": "Cancel Invoice",
-            "approve" : "Approve",
-            "reject" : "Reject"
+            "approve": "Approve",
+            "reject": "Reject",
+            "addRequest": "Add request"
         },
         "placeholder": {
             "input": "Enter ",
@@ -766,7 +767,13 @@
             "addNewVehicleMsg": "Please add new vehicle using",
             "buttonAtTop": "button at top",
             "vehicleDetails": "Vehicle Details",
-            "selectVehicle": "Select Vehicle"
+            "selectVehicle": "Select Vehicle",
+            "invoiceNumber" : "Invoice Number",
+            "invoiceDate" : "Invoice Date",
+            "irnNo" : "IRN No.",
+            "irnStatus" : "IRN Status",
+            "amcCertificateNo" : "AMC Registration Number",
+            "amcIncenticeClaim" : "AMC Incentive Claim"
         },
         "placeholder": {
             "search": "Search"
@@ -1393,6 +1400,11 @@
             "pdiDone": "PDI Done",
             "allotVehicle": "Allot Vehicle"
         },
+        "tableColumn": {
+            "description": "Description",
+            "rate": "Rate",
+            "amount": "Amount"
+        },
         "placeholder": {
             "searchBooking": "Search Booking",
             "searchResult": "Search Result",
@@ -1409,7 +1421,10 @@
         "heading": {
             "title": "Charger Installation",
             "titleOverride": "Advance Filters",
-            "mainTitle": "Charger Installation"
+            "mainTitle": "Charger Installation",
+            "chargerDetailsTitle": "Charger Installation Details",
+            "addressDetailsTitle": "Installation Address Details",
+            "pageTitle": "Charger Installation Process"
         },
         "label": {
             "bookingNumber": "Booking No.",
@@ -1422,6 +1437,41 @@
         "cardText": {
             "bookingNo": "Booking No:",
             "overallStatus": "Overall Status:"
+        }
+    },
+
+    "chargerInstallationDetails": {
+        "label":{
+            "bookingNumber": "Booking Number",
+            "bookingStatus": "Booking Status",
+            "modelGroup": "Model Group",
+            "modelVariant": "Model Variant",
+            "seatingCapacity": "Seating Capacity",
+            "color": "Color",
+            "modelCode": "Model Code",
+            "requestId": "Request Id",
+            "requestDate": "Request Date",
+            "requestStatus": "Request Status",
+            "addRequest": "Add Request",
+            "preferredDate1": "Preferred Date & Time 1",
+            "preferredDate2": "Preferred Date & Time 2",
+            "preferredDate3": "Preferred Date & Time 3",
+            "stage": "Stage",
+            "requestDetails": "Request Details",
+            "serviceActivity": "Service Activity:",
+            "electric": "Electric"
+        },
+        "placeholder": {
+            "bookingNumber": "Booking Number",
+            "bookingStatus": "Booking Status",
+            "requestStage": "Request Stage"
+        },
+        "validation": {
+            "bookingNumber": "Booking Number",
+            "stage": "Stage"
+        },
+        "notification": {
+            "addRequest": "Please add Request"
         }
     },
 
@@ -1439,7 +1489,9 @@
             "custMobNo": "Customer Mobile No.",
             "custEmailId": "Customer Email Id.",
             "address": "Address",
-            "sameAsCustomerAddress": "Same as Customer Address"
+            "sameAsCustomerAddress": "Same as Customer Address",
+            "contactNo": "Contact No.",
+            "customerName": "Customer Name"
         },
         "validation": {
             "installationAddress": "Installation Address",

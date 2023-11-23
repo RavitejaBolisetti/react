@@ -24,15 +24,15 @@ const ViewDetailMain = (props) => {
             <Divider />
             <Descriptions {...viewProps}>
                 <Descriptions.Item label={translateContent('amcRegistration.label.customerName')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.customerName, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label={translateContent('amcRegistration.label.customerAddress')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.customerAddress, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('amcRegistration.label.customerAddress')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.address, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label={translateContent('amcRegistration.label.state')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.state, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label={translateContent('amcRegistration.label.city')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.customerCity, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('amcRegistration.label.city')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.city, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label={translateContent('amcRegistration.label.district')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label={translateContent('amcRegistration.label.tehsil')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.tehsil, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label={translateContent('amcRegistration.label.locality')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.locality, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label={translateContent('amcRegistration.label.pinCode')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.pinCode, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label={translateContent('amcRegistration.label.mobile')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.customerPhoneNumber, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label={translateContent('amcRegistration.label.gstin')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.gstin, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('amcRegistration.label.pinCode')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.pincode, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('amcRegistration.label.mobile')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.mobileNumber, isLoading)}</Descriptions.Item>
+                {/* <Descriptions.Item label={translateContent('amcRegistration.label.gstin')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.gstIn, isLoading)}</Descriptions.Item> */}
             </Descriptions>
         </Card>
     );

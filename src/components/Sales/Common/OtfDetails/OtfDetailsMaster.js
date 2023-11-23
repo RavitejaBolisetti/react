@@ -20,7 +20,7 @@ import { BASE_URL_OTF_DETAILS as customURL } from 'constants/routingApi';
 import { formatDate } from 'utils/formatDateTime';
 import { translateContent } from 'utils/translateContent';
 
-import { OTFStatusBar } from '../utils/OTFStatusBar';
+import { OTFStatusBar } from 'components/Sales/OTF/utils/OTFStatusBar';
 
 import styles from 'assets/sass/app.module.scss';
 

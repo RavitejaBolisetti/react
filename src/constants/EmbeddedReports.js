@@ -238,4 +238,25 @@ export const EMBEDDED_REPORTS = {
         type: 'Report',
         slug: 'so_mapping_unmapping_report',
     },
+    Pool_Stock_Report: {
+        id: 33,
+        key: 'Pool_stock_report',
+        title: 'Pool Stock Report ',
+        type: 'Report',
+        slug: 'pool_stock_report',
+    },
+    IBND_Report: {
+        id: 34,
+        key: 'IBND_Report',
+        title: 'IBND Report ',
+        type: 'Report',
+        slug: 'ibnd_report',
+    },
+    Shield_Report: {
+        id: 35,
+        key: 'Shield_Report',
+        title: 'Shield Report ',
+        type: 'Report',
+        slug: 'shield_report',
+    },
 };

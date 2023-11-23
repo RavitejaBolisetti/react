@@ -175,7 +175,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     const [sectionName, setSetionName] = useState();
     const [isLastSection, setLastSection] = useState(false);
     const [userType, setUserType] = useState('');
-    const [amcStatus, setAmcStatus] = useState(QUERY_BUTTONS_CONSTANTS.PENDING.key);
+    const [amcStatus, setAmcStatus] = useState();
     const [isMNMApproval, setIsMNMApproval] = useState(false);
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
 
@@ -243,7 +243,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     };
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
+        // showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
@@ -369,9 +369,11 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
             if (loginUserData?.userType === AMC_CONSTANTS?.DEALER?.key) {
                 setAmcStatus(QUERY_BUTTONS_CONSTANTS.PENDING.key);
                 setUserType(AMC_CONSTANTS?.DEALER?.key);
+                setFilterString({ ...filterString, amcStatus: QUERY_BUTTONS_CONSTANTS.PENDING.key });
             } else {
                 setAmcStatus(QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.key);
                 setUserType(AMC_CONSTANTS?.MNM?.key);
+                setFilterString({ ...filterString, amcStatus: QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.key });
             }
         }
 
@@ -379,7 +381,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     }, [loginUserData?.userType]);
 
     useEffect(() => {
-        if (userId) {
+        if (userId && filterString?.amcStatus) {
             setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
@@ -454,9 +456,10 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     }, [userId, detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelGroup]);
 
     const handleInvoiceTypeChange = (buttonName) => {
-        setAmcStatus(buttonName?.key);
-        setFilterString({ current: 1, pageSize: 10 });
+        const key = buttonName?.key;
+        setAmcStatus(key);
         searchForm.resetFields();
+        setFilterString({ amcStatus: key, current: 1, pageSize: 10 });
     };
 
     const handleChange = (e) => {
@@ -725,12 +728,12 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     const handleWholeSchemeCancellation = () => {
         setCancelSchemeVisible(true);
         setAmcWholeCancellation(true);
-        setStatus(QUERY_BUTTONS_MNM_USER?.PENDING_FOR_CANCELLATION?.key);
+        setStatus(QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key);
     };
     const handleCancelRequest = () => {
         setCancelSchemeVisible(true);
         setAmcWholeCancellation(false);
-        setStatus(QUERY_BUTTONS_CONSTANTS?.APPROVED?.key);
+        setStatus(QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key);
     };
     const handleMNMApproval = () => {
         setCancelSchemeVisible(true);
@@ -1009,7 +1012,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         fetchManagerList,
         managerData,
         modelFamilyData,
-        ProductHierarchyData
+        ProductHierarchyData,
     };
 
     useEffect(() => {

@@ -51,6 +51,10 @@ const mapStateToProps = (state) => {
         VehicleModelTaxChargesCategoryisLoading,
         VehicleModelTaxChargesCategoryDataLoaded,
 
+        dynamicPagination: true,
+        totalRecords: VehicleModelTaxChargesCategoryData?.totalRecords,
+        data: VehicleModelTaxChargesCategoryData?.vehicleModel,
+
         isAccountDataLoaded,
         isAccountDataLoading,
         AccountData,
@@ -96,7 +100,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const VehicleModelAndTaxChargersCategoryMain = (props) => {
     const { userId, moduleTitle } = props;
 
-    const { VehicleModelTaxChargesCategoryData, VehicleModelTaxChargesCategoryisLoading, VehicleModelTaxChargesCategoryDataLoaded } = props;
+    const { VehicleModelTaxChargesCategoryData, VehicleModelTaxChargesCategoryisLoading, VehicleModelTaxChargesCategoryDataLoaded, totalRecords, dynamicPagination, data } = props;
     const { ProductHierarchyData, isProductHierarchyDataLoading, isProductHierarchyDataLoaded } = props;
     const { isAccountDataLoaded, AccountData, listAccountCategoryLovLoading } = props;
     const { isTaxCategoryDataLoaded, TaxCategoryData } = props;
@@ -172,20 +176,22 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
 
-    const loadData = () => {
+    const loadData = ({ fetchAction = true, modelAction = true, accountAction = true, taxCategory = true }) => {
         setshowDataLoading(true);
-        fetchList({ setIsLoading: listShowLoading, onErrorAction, extraParams, userId, onSuccessAction });
-        fetchModelList({ setIsLoading: listModelShowLoading, errorAction, userId, onSuccessAction });
-        fetchAccountCategoryLov({ setIsLoading: listAccountCategoryLovLoading, errorAction, userId, onSuccessAction });
-        fetchTaxCategoryLov({ setIsLoading: listTaxCategoryLovLoading, errorAction, userId, onSuccessAction });
+        fetchAction && fetchList({ setIsLoading: listShowLoading, onErrorAction, extraParams, userId, onSuccessAction });
+        modelAction && fetchModelList({ setIsLoading: listModelShowLoading, errorAction, userId, onSuccessAction });
+        accountAction && fetchAccountCategoryLov({ setIsLoading: listAccountCategoryLovLoading, errorAction, userId, onSuccessAction });
+        taxCategory && fetchTaxCategoryLov({ setIsLoading: listTaxCategoryLovLoading, errorAction, userId, onSuccessAction });
     };
 
     useEffect(() => {
-        if (userId) {
-            loadData();
+        if (userId && !filterString?.current && !filterString?.pageSize) {
+            loadData({ fetchAction: true, modelAction: true, accountAction: true, taxCategory: true });
+        } else {
+            loadData({ fetchAction: true, modelAction: false, accountAction: false, taxCategory: false });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
+    }, [userId, extraParams]);
 
     useEffect(() => {
         if (isProductHierarchyDataLoaded && ProductHierarchyData) {
@@ -214,24 +220,10 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
     }, []);
 
     useEffect(() => {
-        userId && refershData && loadData();
+        userId && refershData && loadData({ fetchAction: true, modelAction: true, accountAction: true, taxCategory: true });
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [refershData]);
-
-    useEffect(() => {
-        if (userId) {
-            setshowDataLoading(true);
-            fetchList({ setIsLoading: listShowLoading, onErrorAction, extraParams, userId, onSuccessAction });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString?.modelGroup]);
-
-    useEffect(() => {
-        if (VehicleModelTaxChargesCategoryDataLoaded && VehicleModelTaxChargesCategoryData?.['vehicleModel'] && userId) {
-            setSearchdata(VehicleModelTaxChargesCategoryData?.['vehicleModel']?.map((el, i) => ({ ...el, srl: i + 1 })));
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [VehicleModelTaxChargesCategoryDataLoaded, VehicleModelTaxChargesCategoryData?.vehicleModel, userId]);
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
@@ -282,10 +274,12 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
         setIsFormVisible(true);
     };
     const tableProps = {
+        dynamicPagination,
+        totalRecords,
         page: filterString,
         setPage: setFilterString,
         VehicleModelTaxChargesCategoryisLoading,
-        tableData: searchData,
+        tableData: data,
         tableColumn: tableColumn(handleButtonClick),
         filterString,
     };
@@ -323,7 +317,7 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
     const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
 
     const handleChange = (value) => {
-        setFilterString({ ...filterString, modelGroup: value });
+        setFilterString({ ...filterString, modelGroup: value, current: 1, pageSize: 10 });
     };
 
     const ContentHeaderProps = {

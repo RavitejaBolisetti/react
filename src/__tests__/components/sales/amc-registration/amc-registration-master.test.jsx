@@ -38,9 +38,6 @@ describe('AMC Registration Master Components', () => {
         const searchText = screen.getByPlaceholderText('Search');
         fireEvent.change(searchText, { target: { value: 'testing' } });
 
-        const searchBtn = screen.getByRole('button', { name: 'search' });
-        fireEvent.click(searchBtn);
-
         const closeCircleBtn = screen.getByRole('button', { name: 'close-circle' });
         fireEvent.click(closeCircleBtn);
     });

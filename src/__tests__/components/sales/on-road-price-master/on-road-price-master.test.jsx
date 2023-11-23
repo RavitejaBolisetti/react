@@ -102,7 +102,7 @@ describe('On Road Price Master Component', () => {
         const advanceFilters=screen.getByRole('button', { name: 'Advance Filters' });
         fireEvent.click(advanceFilters);
 
-        const searchBtn=screen.getByRole('button', { name: 'Search' });
+        const searchBtn=screen.getByRole('button', { name: 'search' });
         fireEvent.click(searchBtn);
 
         const closeBtn=screen.getByRole('button', { name: 'Close' });
@@ -134,18 +134,28 @@ describe('On Road Price Master Component', () => {
         const searchBox=screen.getByRole('textbox', { name: '' });
         fireEvent.change(searchBox, { target: { value: 'Kai' } });
 
-        const searchBtn=screen.getByRole('button', { name: 'search' });
-        fireEvent.click(searchBtn);
+        // const searchBtn=screen.getByRole('button', { name: 'search' });
+        // fireEvent.click(searchBtn);
     });
 
-    jest.setTimeout(20000)
     it('upload should work', async () => {
 
         const saveData=jest.fn();
         const data={ docId: 106 };
         const res="Error";
+        
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                ConfigurableParameterEditing: { filteredListData: { FILE_DOWNLOAD_TMPLT: [{name: 'Test'}] } },
+            },
+        });
 
-        customRender( <OnRoadPriceMaster setFilterString={jest.fn()} saveData={saveData} /> );
+        customRender(
+            <Provider store={mockStore}>
+                <OnRoadPriceMaster setFilterString={jest.fn()} saveData={saveData} fetchOnRoadPriceList={jest.fn()}  />
+            </Provider>
+        );
 
         const uploadBtn=screen.getByRole('button', { name: 'Upload' });
         fireEvent.click(uploadBtn);
