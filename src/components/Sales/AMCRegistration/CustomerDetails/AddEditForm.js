@@ -39,7 +39,7 @@ const CustomerDetailsForm = (props) => {
                                             </Form.Item>
                                         </Col>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label={translateContent('amcRegistration.label.customerAddress')} name="customerAddress">
+                                            <Form.Item label={translateContent('amcRegistration.label.customerAddress')} name="address">
                                                 <Input placeholder={preparePlaceholderText(translateContent('amcRegistration.label.customerAddress'))} disabled={true} />
                                             </Form.Item>
                                         </Col>
@@ -49,7 +49,7 @@ const CustomerDetailsForm = (props) => {
                                             </Form.Item>
                                         </Col>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label={translateContent('amcRegistration.label.city')} name="customerCity">
+                                            <Form.Item label={translateContent('amcRegistration.label.city')} name="city">
                                                 <Input placeholder={preparePlaceholderText(translateContent('amcRegistration.label.city'))} disabled={true} />
                                             </Form.Item>
                                         </Col>
@@ -76,16 +76,16 @@ const CustomerDetailsForm = (props) => {
                                         </Col>
 
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label={translateContent('amcRegistration.label.mobile')} name="customerPhoneNumber">
+                                            <Form.Item label={translateContent('amcRegistration.label.mobile')} name="mobileNumber">
                                                 <Input placeholder={preparePlaceholderText(translateContent('amcRegistration.label.mobile'))} disabled={true} />
                                             </Form.Item>
                                         </Col>
 
-                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                        {/* <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                             <Form.Item label={translateContent('amcRegistration.label.gstin')} name="gstin">
                                                 <Input placeholder={preparePlaceholderText(translateContent('amcRegistration.label.gstin'))} disabled={true} />
                                             </Form.Item>
-                                        </Col>
+                                        </Col> */}
                                     </Row>
                                 )}
                             </Card>

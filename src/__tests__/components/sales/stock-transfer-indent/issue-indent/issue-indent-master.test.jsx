@@ -124,7 +124,7 @@ describe("IssueIndentMaster component", ()=>{
         const vinTextBox = screen.getByRole('textbox', {name:'VIN'});
         fireEvent.change(vinTextBox, {target:{value:'test'}});
 
-        const issueChargesBox = screen.getByRole('textbox', {name:'Issue Charges'});
+        const issueChargesBox = screen.getByRole('textbox', {name:'Issue Charge'});
         fireEvent.change(issueChargesBox, {target:{value:'test1'}});
 
         const submitBtn = screen.getByRole('button', {name:'Submit'});

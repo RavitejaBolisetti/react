@@ -179,10 +179,9 @@ export const EMBEDDED_REPORTS = {
     },
     AMC_REGISTRATION_INVOICE_DOCUMENT: {
         id: 24,
-        key: 'AMC_Registration_Invoice_document',
+        key: 'AMC_Certificate_Document',
         title: 'AMC Registration Invoice Document ',
         type: 'Document',
-        slug: '-report',
     },
     CHALLAN_DOCUMENT: {
         id: 25,
@@ -193,7 +192,7 @@ export const EMBEDDED_REPORTS = {
     },
     SHIELD_REGISTRATION_INVOICE_DOCUMENT: {
         id: 26,
-        key: 'Shield_Registration_Invoice_document',
+        key: 'Shield_Document',
         title: 'Shield Registration Invoice Document ',
         type: 'Document',
     },
@@ -244,5 +243,37 @@ export const EMBEDDED_REPORTS = {
         title: 'Pool Stock Report ',
         type: 'Report',
         slug: 'pool_stock_report',
+    },
+    IBND_Report: {
+        id: 34,
+        key: 'IBND_Report',
+        title: 'IBND Report ',
+        type: 'Report',
+        slug: 'ibnd_report',
+    },
+    Shield_Report: {
+        id: 35,
+        key: 'Shield_Report',
+        title: 'Shield Report ',
+        type: 'Report',
+        slug: 'shield_report',
+    },
+    RSA_REGISTRATION_INVOICE_DOCUMENT: {
+        id: 36,
+        key: 'RSA_Registration_Invoice_Document',
+        title: 'RSA Registration Invoice Document ',
+        type: 'Document',
+    },
+    RSA_CERTIFICATE_DOCUMENT: {
+        id: 37,
+        key: 'RSA_Certificate_Document',
+        title: 'RSA Certificate Document ',
+        type: 'Document',
+    },
+    SHIELD_REGISTRATION_CERTIFICATE_DOCUMENT: {
+        id: 38,
+        key: 'Shield_Certificate_Document',
+        title: 'Shield Registration Certificate Document ',
+        type: 'Document',
     },
 };

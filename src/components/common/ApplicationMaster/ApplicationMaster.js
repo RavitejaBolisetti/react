@@ -31,7 +31,7 @@ const mapStateToProps = (state) => {
             ApplicationMaster: { applicationCriticalityGroupData: criticalityGroupData, applicationDetailsData, dealerLocations, applicationData, configurableParamData, actions, isApplicationDeatilsLoading, isApplicatinoOnSaveLoading, isLoading, isActionsLoaded },
         },
     } = state;
-    const moduleTitle = 'Application Details';
+    const moduleTitle = translateContent('applicationMaster.title.applicationDetails');
 
     let returnValue = {
         criticalityGroupData: criticalityGroupData?.sort((a, b) => b?.activeIndicator - a?.activeIndicator),
@@ -273,7 +273,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationMasterData
     const rightCol = menuData?.length > 0 ? 10 : 24;
     const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
     const noDataMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
-    const ContentHeaderProps = { isAdvanceFilter: false, isTogglePresent: true, isDefaultContentHeader: false, toggleFirst: 'Web', toggleSecond: 'Mobile', styles, onChange, onFinish, validateTriggervalue: ['onSearch'], menuType, title: '', handleTypeClick };
+    const ContentHeaderProps = { isAdvanceFilter: false, isTogglePresent: true, isDefaultContentHeader: false, toggleFirst: translateContent('applicationMaster.text.web'), toggleSecond: translateContent('applicationMaster.text.mobile'), styles, onChange, onFinish, validateTriggervalue: ['onSearch'], menuType, title: '', handleTypeClick };
     return (
         <>
             <ContentHeader {...ContentHeaderProps} />
@@ -322,8 +322,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationMasterData
                                 }}
                                 description={
                                     <span>
-                                        Please select product from left <br />
-                                        side hierarchy to view “Application Details”
+                                        {translateContent('applicationMaster.label.description')}
                                     </span>
                                 }
                             ></Empty>

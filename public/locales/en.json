@@ -14,8 +14,10 @@
             "action": "Action",
             "fromDate": "From Date",
             "toDate": "To Date",
-            "serialNo": "Srl.",
-            "search": "Search"
+            "serialNo": "#",
+            "search": "Search",
+            "approvalStatus": "Approval Status"
+
         },
         "validation": {
             "input": "Please enter ",
@@ -69,7 +71,7 @@
             "close": "Close",
             "cancel": "Cancel",
             "print/download": "Print/Download",
-            "saveAndNew": "Save and New",
+            "saveAndNew": "Save & New",
             "saveAndNext": "Save & Next",
             "next": "Next",
             "edit": "Edit",
@@ -106,8 +108,9 @@
             "printForm21": "Print Form 21",
             "printInvoice": "Print Invoice",
             "cancelInvoice": "Cancel Invoice",
-            "approve" : "Approve",
-            "reject" : "Reject"
+            "approve": "Approve",
+            "reject": "Reject",
+            "addRequest": "Add request"
         },
         "placeholder": {
             "input": "Enter ",
@@ -764,7 +767,13 @@
             "addNewVehicleMsg": "Please add new vehicle using",
             "buttonAtTop": "button at top",
             "vehicleDetails": "Vehicle Details",
-            "selectVehicle": "Select Vehicle"
+            "selectVehicle": "Select Vehicle",
+            "invoiceNumber" : "Invoice Number",
+            "invoiceDate" : "Invoice Date",
+            "irnNo" : "IRN No.",
+            "irnStatus" : "IRN Status",
+            "amcCertificateNo" : "AMC Registration Number",
+            "amcIncenticeClaim" : "AMC Incentive Claim"
         },
         "placeholder": {
             "search": "Search"
@@ -1391,6 +1400,11 @@
             "pdiDone": "PDI Done",
             "allotVehicle": "Allot Vehicle"
         },
+        "tableColumn": {
+            "description": "Description",
+            "rate": "Rate",
+            "amount": "Amount"
+        },
         "placeholder": {
             "searchBooking": "Search Booking",
             "searchResult": "Search Result",
@@ -1407,7 +1421,10 @@
         "heading": {
             "title": "Charger Installation",
             "titleOverride": "Advance Filters",
-            "mainTitle": "Charger Installation"
+            "mainTitle": "Charger Installation",
+            "chargerDetailsTitle": "Charger Installation Details",
+            "addressDetailsTitle": "Installation Address Details",
+            "pageTitle": "Charger Installation Process"
         },
         "label": {
             "bookingNumber": "Booking No.",
@@ -1420,6 +1437,41 @@
         "cardText": {
             "bookingNo": "Booking No:",
             "overallStatus": "Overall Status:"
+        }
+    },
+
+    "chargerInstallationDetails": {
+        "label":{
+            "bookingNumber": "Booking Number",
+            "bookingStatus": "Booking Status",
+            "modelGroup": "Model Group",
+            "modelVariant": "Model Variant",
+            "seatingCapacity": "Seating Capacity",
+            "color": "Color",
+            "modelCode": "Model Code",
+            "requestId": "Request Id",
+            "requestDate": "Request Date",
+            "requestStatus": "Request Status",
+            "addRequest": "Add Request",
+            "preferredDate1": "Preferred Date & Time 1",
+            "preferredDate2": "Preferred Date & Time 2",
+            "preferredDate3": "Preferred Date & Time 3",
+            "stage": "Stage",
+            "requestDetails": "Request Details",
+            "serviceActivity": "Service Activity:",
+            "electric": "Electric"
+        },
+        "placeholder": {
+            "bookingNumber": "Booking Number",
+            "bookingStatus": "Booking Status",
+            "requestStage": "Request Stage"
+        },
+        "validation": {
+            "bookingNumber": "Booking Number",
+            "stage": "Stage"
+        },
+        "notification": {
+            "addRequest": "Please add Request"
         }
     },
 
@@ -1437,7 +1489,9 @@
             "custMobNo": "Customer Mobile No.",
             "custEmailId": "Customer Email Id.",
             "address": "Address",
-            "sameAsCustomerAddress": "Same as Customer Address"
+            "sameAsCustomerAddress": "Same as Customer Address",
+            "contactNo": "Contact No.",
+            "customerName": "Customer Name"
         },
         "validation": {
             "installationAddress": "Installation Address",
@@ -1710,7 +1764,8 @@
     "state": {
         "heading": {
             "moduleTitle": "State",
-            "title": "State Name"
+            "title": "State Name",
+            "stateMaster": "State Master"
         },
         "tableColHeading": {
             "stateCode": "State Code",
@@ -1772,7 +1827,8 @@
             "cityName": "City Name",
             "cityCode": "City Code",
             "districtName": "District Name",
-            "stateName": "State Name"
+            "stateName": "State Name",
+            "city": "City"
         }
     },
     "district": {
@@ -1852,7 +1908,8 @@
     "pincode": {
         "heading": {
             "pageTitle": "Pincode",
-            "title": "Pincode Name"
+            "title": "Pincode Name",
+            "pinMaster": "PIN Master"
         },
         "tableColHeading": {
             "pinCode": "Pin Code",
@@ -3392,7 +3449,9 @@
             "termAndConRequired": "T&C Required",
             "digitalSignatureRequired": "Digital Signature Required",
             "isFinanceRelated": "Is Finance Related",
-            "irnIntegrationRequired": "IRN Integration Required"
+            "irnIntegrationRequired": "IRN Integration Required",
+            "description": "Please select product from left side hierarchy to view “Application Details”"
+
         },
         "validation": {
             "applicationAction": "application action",
@@ -3427,7 +3486,9 @@
             "no": "No",
             "applicationActions": "Application Actions",
             "documentType": "Document Type",
-            "accessibleDealerLocation": "Accessible Dealer Location"
+            "accessibleDealerLocation": "Accessible Dealer Location",
+            "web": "Web",
+            "mobile": "Mobile"
         }
     },
     "gstIRNAuthentication": {
@@ -3448,7 +3509,8 @@
             "parent": "parent",
             "secretId": "Secret Id",
             "password": "password",
-            "dealerName": "Dealer Name"
+            "dealerName": "Dealer Name",
+            "gstin": "Select GSTIN"
         },
         "validation": {
             "userName": "User Name",

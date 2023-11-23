@@ -13,6 +13,7 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 import styles from 'assets/sass/app.module.scss';
 import { DataTable } from 'utils/dataTable';
 import { addRequestColumnsView } from './tableColumn';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 
@@ -33,7 +34,7 @@ const ViewDetailMain = (props) => {
     const serviceActivityProps = {
         ...props,
         isVisible: modal,
-        titleOverride: 'Service Activity:' + getCodeValue(typeData?.[PARAM_MASTER.CHRGR_INST_HDR_STAT.id], chargerInstallationMasterData?.chargerInstDetails?.requestStatus),
+        titleOverride: translateContent('chargerInstallationDetails.label.serviceActivity') + getCodeValue(typeData?.[PARAM_MASTER.CHRGR_INST_HDR_STAT.id], chargerInstallationMasterData?.chargerInstDetails?.requestStatus),
         onCloseAction: onAdvanceSearchCloseAction,
         onAdvanceSearchCloseAction,
         setModal,
@@ -47,15 +48,15 @@ const ViewDetailMain = (props) => {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Card style={{ backgroundColor: '#F2F2F2' }}>
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Request Id">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.requestId, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Request Date">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.requestDate, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Request Status">{checkAndSetDefaultValue(getCodeValue(typeData?.[PARAM_MASTER.CHRGR_INST_HDR_STAT.id], chargerInstallationMasterData?.chargerInstDetails?.requestStatus), isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('chargerInstallationDetails.label.requestId')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.requestId, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('chargerInstallationDetails.label.requestDate')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.requestDate, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('chargerInstallationDetails.label.requestStatus')}>{checkAndSetDefaultValue(getCodeValue(typeData?.[PARAM_MASTER.CHRGR_INST_HDR_STAT.id], chargerInstallationMasterData?.chargerInstDetails?.requestStatus), isLoading)}</Descriptions.Item>
 
-                                <Descriptions.Item label="Model Group">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelGroup, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Model Variant">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelVarient, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Seating Capacity">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.seatingCapacity, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Color">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.color, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelCode, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('chargerInstallationDetails.label.modelGroup')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelGroup, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('chargerInstallationDetails.label.modelVariant')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelVarient, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('chargerInstallationDetails.label.seatingCapacity')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.seatingCapacity, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('chargerInstallationDetails.label.color')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.color, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('chargerInstallationDetails.label.modelCode')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelCode, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         </Card>
                         {/* <Card style={{ backgroundColor: '#F2F2F2' }}>
@@ -67,7 +68,7 @@ const ViewDetailMain = (props) => {
                                 header={
                                     <Row type="flex" justify="space-between" align="middle" size="large">
                                         <Row type="flex" justify="space-around" align="middle">
-                                            <Typography>Request Details</Typography>
+                                            <Typography>{translateContent('chargerInstallationDetails.label.requestDetails')}</Typography>
                                         </Row>
                                     </Row>
                                 }

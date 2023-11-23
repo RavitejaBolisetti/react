@@ -3,10 +3,11 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { findByText, fireEvent, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { TaxChargesCategory } from '@components/FinancialAccounting/AccountTaxCharges/TaxAndChargesCategory/TaxChargesCategory';
 import customRender from '@utils/test-utils';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 

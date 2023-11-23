@@ -128,7 +128,7 @@ export const CreditDebitNoteMasterBase = (props) => {
 
     const dynamicPagination = true;
 
-    const [transactionType, setTransactionType] = useState(TRANSACTION_TYPE?.Credit?.value);
+    // const [transactionType, setTransactionType] = useState(TRANSACTION_TYPE?.Credit?.value);
     const [selectedVoucher, setSelectedVoucher] = useState('');
 
     useEffect(() => {
@@ -322,7 +322,7 @@ export const CreditDebitNoteMasterBase = (props) => {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
                 setPreviousSection(1);
-                transactionType === 'debit' ? setTransactionType(TRANSACTION_TYPE?.Debit?.value) : setTransactionType(TRANSACTION_TYPE?.Credit?.value);
+                // transactionType === 'debit' ? setTransactionType(TRANSACTION_TYPE?.Debit?.value) : setTransactionType(TRANSACTION_TYPE?.Credit?.value);
                 setRequestPayload({ ...requestPayload, voucherType: transactionType === 'credit' ? VOUCHER_TYPE?.CREDIT_TYPE?.type : VOUCHER_TYPE?.DEBIT_TYPE?.type });
                 setSelectedRecord({
                     voucherType: transactionType === 'debit' ? VOUCHER_TYPE?.DEBIT_TYPE?.type : VOUCHER_TYPE?.CREDIT_TYPE?.type,
@@ -526,7 +526,6 @@ export const CreditDebitNoteMasterBase = (props) => {
         saveButtonName: isLastSection ? translateContent('global.buttons.submit') : translateContent('global.buttons.saveAndNext'),
         previousSection,
         setPreviousSection,
-        requestPayload,
         setRequestPayload,
         selectedVoucher,
         setSelectedVoucher,

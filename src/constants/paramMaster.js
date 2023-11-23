@@ -489,4 +489,8 @@ export const PARAM_MASTER = {
         id: 'MITRA_TYPE',
         title: 'Mitra type in booking details',
     },
+    RSA_SEARCH_TYPE: {
+        id: 'RSA_SEARCH_TYPE',
+        title: 'RSA Search Type',
+    },
 };
