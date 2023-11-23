@@ -21,6 +21,8 @@ const SearchBox = (props) => {
     const { maxLength = 25, selectWide, searchForm, optionType, searchParamRule, filterString, setFilterString, handleChange, disabled = false, isLoading, handleSearchWithoutParameter = undefined } = props;
     const { validateTrigger = ['onChange', 'onSearch'], allowClear = true, singleField = false, label = '', placeholder = translateContent('global.placeholder.search'), singleFieldKey = 'searchParam', defaultOption = undefined, captilized = undefined, valueReset = true } = props;
 
+    console.log('🚀 ~ file: SearchBox.js:24 ~ SearchBox ~ optionType?.length:', optionType?.length);
+    console.log('🚀 ~ file: SearchBox.js:24 ~ SearchBox ~ isLoading:', isLoading);
     const [validationRules, setValidationRules] = useState([validateRequiredInputField('input')]);
 
     const onKeyPressHandler = (e) => {
@@ -100,7 +102,7 @@ const SearchBox = (props) => {
                     </Form.Item>
                 )}
                 <Form.Item label={label} {...searchParamRule} name={singleField && singleFieldKey ? singleFieldKey : 'searchParam'} rules={validationRules} validateTrigger={validateTrigger} className={selectWide ? styles.headerSearchFieldWide : ''}>
-                    <Search onInput={captilized ? convertToUpperCase : undefined} loading={isLoading || !optionType?.length} disabled={disabled} placeholder={placeholder} maxLength={maxLength} value={filterString?.searchParam} allowClear onChange={handleChange} onSearch={'singleField' && handleSearchWithoutParameter ? handleSearchWithoutParameter : handleSearchParamSearch} className={styles.headerSearchField} />
+                    <Search onInput={captilized ? convertToUpperCase : undefined} loading={singleField ? isLoading : !optionType?.length} disabled={disabled} placeholder={placeholder} maxLength={maxLength} value={filterString?.searchParam} allowClear onChange={handleChange} onSearch={'singleField' && handleSearchWithoutParameter ? handleSearchWithoutParameter : handleSearchParamSearch} className={styles.headerSearchField} />
                 </Form.Item>
             </Form>
         </div>
