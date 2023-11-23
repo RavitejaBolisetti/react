@@ -94,4 +94,29 @@ export const AMC_CONSTANTS = {
         key: 'CNCL',
         title: 'Cancelled',
     },
+    REGISTRATION_REQUEST: {
+        id: 18,
+        key: 'REG',
+        title: 'Registration Request',
+    },
+    CANCELLATION_REQUEST: {
+        id: 19,
+        key: 'CNCL',
+        title: 'Cancellation Request',
+    },
+    WORKFLOW_REJECT: {
+        id: 20,
+        key: 'WFACTREJ',
+        title: 'Reject',
+    },
+    WORKFLOW_APPROVE: {
+        id: 21,
+        key: 'WFACTAPR',
+        title: 'Approve',
+    },
+};
+
+export const REQUEST_CONSTANT = {
+    REG: 'Registration Request',
+    CNCL: 'Cancellation Request',
 };

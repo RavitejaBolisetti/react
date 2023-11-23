@@ -13,7 +13,7 @@ import { AMC_CONSTANTS } from '../utils/AMCConstants';
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 import { BASE_URL_AMC_REGISTRATION_DATA as customURL } from 'constants/routingApi';
-import { convertDateAndTime, formatDateToCalenderDate } from 'utils/formatDateTime';
+import { formatDateToCalenderDate } from 'utils/formatDateTime';
 
 const AMCRegistrationDetailsMasterBase = (props) => {
     const { typeData, selectedOrderId } = props;
@@ -47,11 +47,14 @@ const AMCRegistrationDetailsMasterBase = (props) => {
         if (requestPayload && formActionType?.addMode) {
             setselectedSaleType(requestPayload?.amcRegistration?.priceType);
         }
-        fetchEmployeeList({ setIsLoading: listEmployeeShowLoading, extraParams: generateExtraParams(AMC_CONSTANTS?.EMPLOYEE?.key), userId });
-        fetchManagerList({ setIsLoading: listEmployeeShowLoading, extraParams: generateExtraParams(AMC_CONSTANTS?.MANAGER?.key), userId });
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [requestPayload]);
+
+    useEffect(() => {
+        fetchEmployeeList({ setIsLoading: listEmployeeShowLoading, extraParams: generateExtraParams(AMC_CONSTANTS?.EMPLOYEE?.key), userId });
+        fetchManagerList({ setIsLoading: listEmployeeShowLoading, extraParams: generateExtraParams(AMC_CONSTANTS?.MANAGER?.key), userId });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [requestPayload, formActionType]);
     // useEffect(() => {
     //     const employeeOption = employeeData?.map((item) => ({
     //         label: item?.employeeName,
@@ -76,7 +79,7 @@ const AMCRegistrationDetailsMasterBase = (props) => {
         const onSuccessAction = (res) => {
             // showGlobalNotification({ message });
             // registrationForm.setFieldsValue({ ...res?.data?.amcRegistration });
-            schemeForm.setFieldsValue({ schemeTaxAmount: res?.data?.amcSchemeDetails?.schemeTaxAmount, schemeEndDate: formatDateToCalenderDate(res?.data?.amcSchemeDetails?.schemeEndDate) });
+            schemeForm.setFieldsValue({ igstAmount: res?.data?.amcSchemeDetails?.igstAmount, sgstAmount: res?.data?.amcSchemeDetails?.sgstAmount, cgstAmount: res?.data?.amcSchemeDetails?.cgstAmount, schemeTaxAmount: res?.data?.amcSchemeDetails?.schemeTaxAmount, schemeEndDate: formatDateToCalenderDate(res?.data?.amcSchemeDetails?.schemeEndDate) });
         };
         const extraParams = [
             {
@@ -182,7 +185,7 @@ const AMCRegistrationDetailsMasterBase = (props) => {
             });
     };
     const handleSaleTypeChange = (value) => {
-        schemeForm.resetFields(['schemeDescription']);
+        schemeForm.resetFields();
         // registrationForm?.getFieldValue('priceType') === AMC_CONSTANTS?.MNM_FOC?.key && schemeList(null);
         setselectedSaleType(value);
     };
