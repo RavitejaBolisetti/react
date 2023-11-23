@@ -7,9 +7,10 @@ import React from 'react';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 import { ChartOfAccountMaster } from 'components/FinancialAccounting';
+import { translateContent } from 'utils/translateContent';
 
 const ChartOfAccountBase = (props) => {
-    const pageTitle = 'Chart of Account';
+    const pageTitle = translateContent('chartOfAccount.heading.pageTitle');
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,
