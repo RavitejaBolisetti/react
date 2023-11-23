@@ -208,7 +208,6 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
 
     const onFinish = (values) => {
         const data = { ...values, docId: uploadedFile ? uploadedFile : docData.documentId };
-
         const onSuccess = (res) => {
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });

@@ -52,7 +52,7 @@ export const tableColumnDelivery = (typeData) => {
             title: translateContent('bookingManagement.label.deliveryNoteStatus'),
             dataIndex: 'deliveryNoteStatus',
             sorter: false,
-            render: (_, record) => getCodeValue(typeData?.DLVR_NT_STS, record?.invoiceStatus),
+            render: (_, record) => getCodeValue(typeData?.DLVR_NT_STS, record?.deliveryNoteStatus),
         }),
     ];
 

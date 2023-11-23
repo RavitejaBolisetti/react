@@ -7,9 +7,10 @@ import React from 'react';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 import { TaxChargesMaster } from 'components/FinancialAccounting';
+import { translateContent } from 'utils/translateContent';
 
 const TaxChargesBase = (props) => {
-    const pageTitle = 'Tax & Charges';
+    const pageTitle = translateContent('taxCharges.heading.title');;
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

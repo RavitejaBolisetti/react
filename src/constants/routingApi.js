@@ -395,3 +395,4 @@ export const BASE_URL_ZONE_MASTER = BASE_URL + 'zone/lov';
 export const BASE_URL_AREA_OFFICE = BASE_URL + 'area/lov';
 export const BASE_URL_CO_DEALER_INVOICE = BASE_URL_OTF + 'codealerinvoice/search';
 export const BASE_URL_CO_DEALER_DETAILS = BASE_URL + 'codealerinvoice';
+export const BASE_URL_DEALER_LOCATIONS = BASE_URL + 'dealer/location';

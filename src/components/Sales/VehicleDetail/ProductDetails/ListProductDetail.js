@@ -148,7 +148,7 @@ const ProductDetailMasterMain = (props) => {
     };
 
     const onSuccessAction = () => {
-        return;
+        return false;
     };
 
     const onErrorAction = (message) => {
@@ -218,6 +218,7 @@ const ProductDetailMasterMain = (props) => {
     useEffect(() => {
         if (isDataLoaded && ProductDetailsData) {
             setformData(ProductDetailsData);
+            console.log('ProductDetailsData', ProductDetailsData);
             fetchModelLovList({ setIsLoading: listModelShowLoading, userId, extraParams: makeExtraParams({ key: 'modelGroupCode', title: 'modelGroupCode', value: ProductDetailsData?.productAttributeDetail?.modelGroup, name: 'modelGroupCode' }) });
             fetchVariantLovList({ setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams({ key: 'variantCode', title: 'variantCode', value: ProductDetailsData?.productAttributeDetail?.modelVariant, name: 'variantCode' }) });
             fetchModelFamilyLovList({ setIsLoading: listFamilyShowLoading, userId, extraParams: makeExtraParams({ key: 'familyCode', title: 'familyCode', value: ProductDetailsData?.productAttributeDetail?.modelFamily, name: 'familyCode' }) });
@@ -235,7 +236,7 @@ const ProductDetailMasterMain = (props) => {
             variantData.length > 0 && form.setFieldsValue({ modelVariant: variantData[0]?.variantDescription });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isModelDataLoaded, isVariantDataLoaded, isModelFamilyDataLoaded]);
+    }, [isModelDataLoaded, isVariantDataLoaded, isModelFamilyDataLoaded, formActionType]);
 
     useEffect(() => {
         if (typeData) {

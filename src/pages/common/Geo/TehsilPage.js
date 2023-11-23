@@ -7,9 +7,10 @@ import React from 'react';
 import { ListTehsilMaster } from 'components/common/Geo';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
+import { translateContent } from 'utils/translateContent';
 
 export const TehsilGeoBase = (props) => {
-    const pageTitle = 'Tehsil';
+    const pageTitle = translateContent('tehsil.heading.pageTitle');
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

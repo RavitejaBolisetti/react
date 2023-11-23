@@ -11,6 +11,7 @@ import { Form } from 'antd';
 
 jest.mock('components/FinancialAccounting/CreditDebitNote/CreditDebitFormButton', () => {
     const CreditDebitNoteFormButton = ({ onFinish }) => {
+        // const values = {partyDetails:{partyId: "4", partyName: "United India Insurance Company Limited", partySegment: "MIT"}};
         return(
             <div><button onClick={onFinish}>Save</button></div>
         )
@@ -132,10 +133,13 @@ describe('VoucherAndPartyDetailsMaster component', () => {
             saveAndNewBtn:true,
             cancelBtn:true
         }
+
         customRender(<FormWrapper buttonData={buttonData} />);
 
         const saveAndNextBtn = screen.getByRole('button', {name:'Save'});
         fireEvent.click(saveAndNextBtn);
+
+
     })
 
 });

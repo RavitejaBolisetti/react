@@ -54,7 +54,7 @@ const CustomerDetailsMasterBase = (props) => {
                 userId,
                 onSuccessAction: (response) => {
                     setvalidCustomerID(true);
-                    form.setFieldsValue({ ...response?.data, customerAddress: response?.data?.address, customerCity: response?.data?.city, customerPhoneNumber: response?.data?.mobileNumber });
+                    form.setFieldsValue({ ...response?.data });
                     setButtonData({ ...buttonData, formBtnActive: true });
                 },
                 onErrorAction: (message) => {

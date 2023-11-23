@@ -7,9 +7,10 @@ import React from 'react';
 import { ListDealerLocationTypeMaster } from 'components/common/DealerManpower/DealerLocationTypeMaster/ListDealerLocationTypeMaster';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
+import { translateContent } from 'utils/translateContent';
 
 export const DealerLocationTypePageBase = (props) => {
-    const pageTitle = 'Dealer Location Type Master';
+    const pageTitle = translateContent('locationTypeMaster.heading.mainTitle');
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

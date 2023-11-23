@@ -51,7 +51,10 @@ const SchemeDetailsForm = (props) => {
                 </Col>
 
                 <Form.Item hidden label="" name="id" />
-                
+                <Form.Item hidden label="" name="sgstAmount" />
+                <Form.Item hidden label="" name="igstAmount" />
+                <Form.Item hidden label="" name="cgstAmount" />
+
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label={translateContent('amcRegistration.label.schemeBasicAmount')} name="schemeBasicAmount" rules={[validateRequiredInputField(translateContent('amcRegistration.label.schemeBasicAmount'))]}>
                         <Input disabled maxLength={50} placeholder={preparePlaceholderText(translateContent('amcRegistration.label.schemeBasicAmount'))} />

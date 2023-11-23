@@ -164,7 +164,7 @@ const AddEditFormMain = (props) => {
                         </Row>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Form.Item label={translateContent('installationAddressDetials.label.pincode')} name="pinCode" rules={[validateRequiredInputField(translateContent('installationAddressDetials.validation.pinCode')), validatePincodeField('Pin Code')]}>
+                                <Form.Item label={translateContent('installationAddressDetials.label.pincode')} name="pinCode" rules={[validateRequiredInputField(translateContent('installationAddressDetials.validation.pinCode')), validatePincodeField(translateContent('installationAddressDetials.validation.pinCode'))]}>
                                     <AutoComplete {...disabledProps} maxLength={6} options={options} onSelect={handleOnSelect} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
                                         <Search data-testid="pinCode" sonSearch={handleOnSearch} onChange={handleOnClear} placeholder={preparePlaceholderText(translateContent('installationAddressDetials.label.search'))} loading={isPinCodeLoading} type="text" allowClear />
                                     </AutoComplete>

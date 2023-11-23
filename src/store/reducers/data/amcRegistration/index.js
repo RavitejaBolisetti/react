@@ -7,9 +7,11 @@ import { combineReducers } from 'redux';
 import { AMCRegistrationSearch } from './amcRegistration';
 import { EmployeeData } from './employeeSearch';
 import { AMCScheme } from './amcScheme';
+import { DealerLocations } from './dealerLocations';
 
 export const AMCRegistration = combineReducers({
     AMCRegistrationSearch,
     EmployeeData,
     AMCScheme,
+    DealerLocations,
 });
