@@ -34,8 +34,8 @@ describe('dashboard component render', () => {
         const container = {
             getBoundingClientRect: () => ({ width: 100, height: 100 }),
         };
-
-        const config = PieChart().props;
+        const data = [{ key: 1 }];
+        const config = PieChart(data).props;
         const titleCustomHtml = config.statistic.title.customHtml;
         let result = titleCustomHtml(container, null, { type: 'Test' });
         expect(result).toContain('Test');

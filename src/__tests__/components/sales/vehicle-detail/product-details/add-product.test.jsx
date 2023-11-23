@@ -54,13 +54,13 @@ describe('Vehicle ProductDetails render', () => {
     });
 
     it('Cancel button should work', async () => {
-        customRender(<FormWrapper isReadOnly={true} setIsReadOnly={jest.fn()} />);
+        customRender(<FormWrapper isReadOnly={true} setIsReadOnly={jest.fn()} makeOptions={[{ key: 1, value: 'test' }]} />);
         const cancelBtn = screen.getByRole('button', { name: 'Cancel' });
         fireEvent.click(cancelBtn);
     });
 
     it('Save button should work', async () => {
-        customRender(<FormWrapper isReadOnly={true} setIsReadOnly={jest.fn()} />);
+        customRender(<FormWrapper isReadOnly={true} setIsReadOnly={jest.fn()} makeOptions={[{ key: 1, value: 'test' }]} />);
         const saveBtn = screen.getByRole('button', { name: 'Save' });
         fireEvent.click(saveBtn);
     });

@@ -84,9 +84,6 @@ describe('Vehicle Allotment Master Component', () => {
         const search = screen.getByPlaceholderText('Search by VIN');
         fireEvent.change(search, { target: { value: 'kai' } });
 
-        const searchImg = screen.getByRole('img', { name: 'search' });
-        fireEvent.click(searchImg);
-
         const closeBtn = screen.getByRole('img', { name: 'close-circle' });
         fireEvent.click(closeBtn);
     });
@@ -122,7 +119,7 @@ describe('Vehicle Allotment Master Component', () => {
         const pdiDone = screen.getByRole('combobox', { name: 'PDI Done' });
         fireEvent.change(pdiDone, { target: { value: 'test' } });
 
-        const applyFilter = screen.getByRole('button', { name: 'Apply Filter' });
+        const applyFilter = screen.getByTestId('apply');
         fireEvent.click(applyFilter);
     });
 
@@ -132,7 +129,7 @@ describe('Vehicle Allotment Master Component', () => {
         const filter = screen.getByRole('button', { name: 'Advance Filters' });
         fireEvent.click(filter);
 
-        const reset = screen.getByRole('button', { name: 'Reset' });
+        const reset = screen.getByTestId('reset');
         fireEvent.click(reset);
     });
 
@@ -395,7 +392,7 @@ describe('Vehicle Allotment Master Component', () => {
 
         fireEvent.click(viewBtn);
 
-        const yesBtn = screen.getByTestId('cancel');
+        const yesBtn = screen.getByRole('button', { name: "Cancel" });
         fireEvent.click(yesBtn);
     });
 
@@ -465,7 +462,7 @@ describe('Vehicle Allotment Master Component', () => {
         const searchBox = screen.getAllByRole('img', { name: /search/i });
         fireEvent.click(searchBox[1]);
 
-        const yesBtn = screen.getByTestId('cancel');
+        const yesBtn = screen.getByRole('button', { name: "Cancel" });
         fireEvent.click(yesBtn);
     });
 });
