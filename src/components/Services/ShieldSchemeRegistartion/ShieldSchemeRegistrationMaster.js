@@ -766,31 +766,9 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         } else {
             handleCancelScheme();
         }
-
-        // if (isMNMApproval) {
-        //     setRequestPayload({ ...requestPayload, amcRequestDetails: { ...requestPayload?.amcRequestDetails, amcStatus: QUERY_BUTTONS_CONSTANTS?.APPROVED?.key } });
-        //     onFinish({ type: AMC_CONSTANTS?.CANCEL_REQUEST?.key });
-        // } else if (!isMNMApproval && userType === AMC_CONSTANTS?.MNM?.key) {
-        //     setRejectRequest(true);
-        // } else if (!isMNMApproval && userType === AMC_CONSTANTS?.MNM?.key && rejectRequest) {
-        //     onFinish({ type: AMC_CONSTANTS?.AMC_CANCELLATION?.key });
-        // } else if (rejectRequest && amcWholeCancellation) {
-        //     onFinish({ type: AMC_CONSTANTS?.AMC_CANCELLATION?.key });
-        // } else if (amcWholeCancellation) {
-        //     setRejectRequest(true);
-        // } else {
-        // setRequestPayload({ ...requestPayload, amcRequestDetails: { ...requestPayload?.amcRequestDetails, amcStatus: QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key } });
-        // onFinish({ type: AMC_CONSTANTS?.CANCEL_REQUEST?.key });
-        // // }
     };
 
     const handleCancelScheme = () => {
-        // var status = '';
-        // if (amcWholeCancellation) {
-        //     status = QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key;
-        // } else if (!amcWholeCancellation) {
-        //     status = QUERY_BUTTONS_MNM_USER?.PENDING_FOR_CANCELLATION?.key;
-        // }
         const cancelRemarks = cancelSchemeForm.getFieldValue().cancelRemarks;
         const reasonForRejection = cancelSchemeForm.getFieldValue().reasonForRejection;
         const otherReason = cancelSchemeForm.getFieldValue().otherReason;
@@ -830,7 +808,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         setAdditionalReportParams([
             {
                 key: typeRecordKey,
-                value: record?.res?.data?.id,
+                value: record?.id ? record?.id : record?.res?.data?.id,
             },
         ]);
     };
@@ -991,6 +969,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         registrationDetails: detailShieldData?.registrationDetails,
         vehicleCustomerDetails: detailShieldData?.vehicleAndCustomerDetails,
         requestDetails: detailShieldData?.requestDetails,
+        workflowDetails: detailShieldData?.workflowMasterDetails,
         handleSaleTypeChange,
         handleOtfSearch,
         handleVinSearch,
@@ -1016,14 +995,14 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     };
 
     useEffect(() => {
+        setShieldDocumentType();
         if (reportButtonType === SHIELD_REPORT_DOCUMENT_TYPE?.INVOICE_SHIELD?.value) {
             setShieldDocumentType(EMBEDDED_REPORTS?.SHIELD_REGISTRATION_INVOICE_DOCUMENT);
+        } else if (reportButtonType === SHIELD_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_SHIELD?.value) {
+            setShieldDocumentType(EMBEDDED_REPORTS?.SHIELD_REGISTRATION_CERTIFICATE_DOCUMENT);
+        } else if (reportButtonType === SHIELD_REPORT_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_SHIELD?.value) {
+            setShieldDocumentType(EMBEDDED_REPORTS?.SHIELD_REGISTRATION_INVOICE_DOCUMENT);
         }
-        // else if (reportButtonType === SHIELD_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_SHIELD?.value) {
-        //     setShieldDocumentType(EMBEDDED_REPORTS?.SHIELD_REGISTRATION_INVOICE_DOCUMENT);
-        // } else if (reportButtonType === SHIELD_REPORT_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_SHIELD?.value) {
-        //     setShieldDocumentType(EMBEDDED_REPORTS?.SHIELD_REGISTRATION_INVOICE_DOCUMENT);
-        // }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [reportButtonType]);
 

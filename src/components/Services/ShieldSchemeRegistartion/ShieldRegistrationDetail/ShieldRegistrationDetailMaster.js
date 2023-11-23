@@ -20,7 +20,7 @@ import styles from 'assets/sass/app.module.scss';
 const ShieldRegistrationDetailMasterBase = (props) => {
     const { typeData, detailShieldData, registrationDetails, employeeData, managerData, resetDetail, fetchEmployeeList, fetchManagerList, listEmployeeShowLoading } = props;
     const { userId, buttonData, setButtonData, section, isDataLoaded, isLoading } = props;
-    const { form, saleType, handleSaleTypeChange, handleOtfSearch, handleVinSearch, handleEmployeeSearch, schemeDetail, shieldDetailForm, formActionType, NEXT_ACTION, handleButtonClick } = props;
+    const { form, saleType, handlePrintDownload, handleSaleTypeChange, handleOtfSearch, handleVinSearch, handleEmployeeSearch, schemeDetail, shieldDetailForm, formActionType, NEXT_ACTION, handleButtonClick } = props;
     const { setRequestPayload, vinNumber, setVinNumber, bookingNumber, isEmployeeDataLoading } = props;
 
     const [activeKey, setActiveKey] = useState('');
@@ -105,6 +105,7 @@ const ShieldRegistrationDetailMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
+        console.log('🚀 ~ file: ShieldRegistrationDetailMaster.js:108 ~ onFinish ~ values:', values);
         if (values?.hasOwnProperty('schemeDetails') && !values?.hasOwnProperty('registrationInformation')) {
             setActiveKey(1);
         } else if (!values?.hasOwnProperty('schemeDetails') && values?.hasOwnProperty('registrationInformation')) {
@@ -168,6 +169,8 @@ const ShieldRegistrationDetailMasterBase = (props) => {
         setActiveKey,
         employeeData,
         managerData,
+        handlePrintDownload,
+        ...props,
         // formData: detailShieldData?.shieldRegistrationDetails,
     };
 

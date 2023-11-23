@@ -6,12 +6,12 @@
 export const SHIELD_REPORT_DOCUMENT_TYPE = {
     INVOICE_SHIELD: {
         id: 1,
-        value: 'shield_amc',
+        value: 'Shield_Document',
         key: 'scheme_registration_request_hdr_id',
     },
     REGISTRATION_CERTIFICATE_SHIELD: {
         id: 2,
-        value: 'registration_certificate_shield',
+        value: 'Shield_Certificate_Document',
         key: 'scheme_registration_request_hdr_id',
     },
     REGISTRATION_INCENTIVE_CLAIM_SHIELD: {

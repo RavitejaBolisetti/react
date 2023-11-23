@@ -497,4 +497,8 @@ export const PARAM_MASTER = {
         id: 'CO_DEALER_INVC_STATS',
         title: 'Co Dealer Invoice Status',
     },
+    RSA_SEARCH_TYPE: {
+        id: 'RSA_SEARCH_TYPE',
+        title: 'RSA Search Type',
+    },
 };
