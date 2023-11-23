@@ -9,14 +9,13 @@ import { FilterIcon } from 'Icons';
 import { RxCross2 } from 'react-icons/rx';
 import { QueryButtons } from 'components/Sales/VehicleRecieptChecklist/QueryButtons';
 import { SearchBox } from 'components/utils/SearchBox';
-import { PARAM_MASTER } from 'constants/paramMaster';
-import { DELIVERY_TYPE } from 'constants/modules/vehicleDetailsNotes.js/deliveryType';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
 const CoDealerInvoiceFilter = (props) => {
     const { status, extraParams, removeFilter, searchForm, filterString, coDealerInvoiceStatusList, setFilterString, handleResetFilter, advanceFilter = false, handleDeliveryNoteTypeChange, setAdvanceSearchVisible, typeData } = props;
-    const serachBoxProps = {
+    const searchBoxProps = {
         searchForm,
         filterString,
         setFilterString,
@@ -33,12 +32,12 @@ const CoDealerInvoiceFilter = (props) => {
                             <Col xs={24} sm={24} md={18} lg={18} xl={18} className={styles.verticallyCentered}>
                                 <QueryButtons currentItem={status} items={coDealerInvoiceStatusList} onClick={handleDeliveryNoteTypeChange} />
                                 <div className={styles.fullWidth}>
-                                    <SearchBox {...serachBoxProps} />
+                                    <SearchBox {...searchBoxProps} />
                                 </div>
                             </Col>
                             <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.verticallyCentered}>
                                 <Button icon={<FilterIcon />} type="link" className={styles.verticallyCentered} onClick={() => setAdvanceSearchVisible(true)}>
-                                    Advanced Filters
+                                    {translateContent('global.advanceFilter.title')}
                                 </Button>
                             </Col>
                         </Row>
@@ -69,7 +68,7 @@ const CoDealerInvoiceFilter = (props) => {
                             </Col>
                             <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
                                 <Button className={styles.clearBtn} onClick={() => handleResetFilter(true)} danger>
-                                    Clear
+                                    {translateContent('global.buttons.clear')}
                                 </Button>
                             </Col>
                         </Row>

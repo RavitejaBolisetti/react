@@ -11,7 +11,7 @@ import { CO_DEALER_SECTIONS } from 'components/Sales/CoDealerInvoiceGeneration/c
 import { LeftSidebar } from './LeftSidebar';
 
 import styles from 'assets/sass/app.module.scss';
-import { VehicleDetailsMaster } from '../Common/VehicleDetails';
+import { VehicleDetailsMaster } from './VehicleDetails';
 import { IndentDetailsMaster } from './IndentDetails';
 import { CoDealerFormButton } from './CoDealerFormButton';
 

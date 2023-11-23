@@ -405,10 +405,8 @@ export const CoDealerInvoiceMasterBase = (props) => {
         setIsFormVisible(true);
     };
 
-    const onFinishSearch = (values) => {};
-
     const handleResetFilter = (emptyFilterString) => {
-        emptyFilterString && setFilterString({});
+        emptyFilterString && setFilterString({ invoiceStatus: CoDealerInvoiceStateMaster?.currentQuery });
         setShowDataLoading(false);
         advanceFilterForm.resetFields();
         setCoDealerInvoiceStateMaster((prev) => ({ ...prev, INVOICE_FROM_DATE: [], INVOICE_TO_DATE: [] }));
@@ -523,7 +521,6 @@ export const CoDealerInvoiceMasterBase = (props) => {
         setAdvanceSearchVisible,
         typeData: CoDealerInvoiceStateMaster?.typeDataFilter,
         searchForm,
-        onFinishSearch,
         status: CoDealerInvoiceStateMaster?.currentQuery,
     };
 
@@ -540,7 +537,6 @@ export const CoDealerInvoiceMasterBase = (props) => {
         setAdvanceSearchVisible,
         coDealerInvoiceStatusList,
         typeData,
-        onFinishSearch,
         indentToDealerData,
         CoDealerInvoiceStateMaster,
         handleDateChange,
