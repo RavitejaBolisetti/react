@@ -8,7 +8,9 @@ import CardDocTypeAcMapping from './CardDocTypeAcMapping';
 import FormDocTypeAcMapping from './FormDocTypeAcMapping';
 
 export const DocTypeAcMappingMaster = (props) => {
-    const { isVisible, selectedTreeData, showGlobalNotification, taxChargeCategoryTypeData, docTypeLedger, form, editForm, docTypeHeadMappingForm, formEdit, setFormEdit, docTypeHeadMappingList, setDocTypeHeadMappingList, buttonData, setButtonData, viewMode, dropdownItems, setDropdownItems, typeData, financialAccount, financialAccHeadData, selectedTreeSelectKey, setSelectedTreeSelectKey, userApplicationId, setUserApplicationId } = props;
+    const { isVisible, selectedTreeData, showGlobalNotification, taxChargeCategoryTypeData, docTypeLedger, form, editForm, docTypeHeadMappingForm, formEdit, setFormEdit, docTypeHeadMappingList, setDocTypeHeadMappingList, buttonData, setButtonData, viewMode
+        // dropdownItems, setDropdownItems
+        , typeData, financialAccount, financialAccHeadData, selectedTreeSelectKey, setSelectedTreeSelectKey  } = props;
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [disableSaveButton, setDisableSaveButton] = useState(false);
     const [changeValue, setChangeValue] = useState(null);
@@ -72,8 +74,8 @@ export const DocTypeAcMappingMaster = (props) => {
         buttonData,
         setButtonData,
         viewMode,
-        dropdownItems,
-        setDropdownItems,
+        // dropdownItems,
+        // setDropdownItems,
         financialAccount,
         financialAccHeadData,
         handleSelectTreeClick,

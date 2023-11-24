@@ -96,7 +96,7 @@ export const DocumentTypeOtherChargesMain = (props) => {
     const [docTypeHeadMappingForm] = Form.useForm();
     const [formEdit, setFormEdit] = useState(false);
     const [docTypeHeadMappingList, setDocTypeHeadMappingList] = useState([]);
-    const [dropdownItems, setDropdownItems] = useState([]);
+    // const [dropdownItems, setDropdownItems] = useState([]);
     const [userApplicationId, setUserApplicationId] = useState();
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState(null);
 
@@ -230,7 +230,7 @@ export const DocumentTypeOtherChargesMain = (props) => {
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
         setDocTypeHeadMappingList(() => []);
-        setDropdownItems(() => []);
+        // setDropdownItems(() => []);
     };
 
     const formProps = {
@@ -260,8 +260,8 @@ export const DocumentTypeOtherChargesMain = (props) => {
         setFormEdit,
         docTypeHeadMappingList,
         setDocTypeHeadMappingList,
-        dropdownItems,
-        setDropdownItems,
+        // dropdownItems,
+        // setDropdownItems,
         isFormBtnActive,
         typeData,
         financialAccHeadData,

@@ -1660,6 +1660,14 @@
         "cardText": {
             "bookingNo": "Booking No:",
             "overallStatus": "Overall Status:"
+        },
+        "section": {
+            "chargerDetails": {
+                "title": "Charger Installation Details"
+            },
+            "addressDetails": {
+                "title": "Installation Address Details"
+            }
         }
     },
 
