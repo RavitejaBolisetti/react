@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Col, Row, Descriptions, Space, Card, Collapse, Typography } from 'antd';
+import { Col, Row, Descriptions, Card, Collapse, Typography } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { ServiceActivity } from './ServiceActivity';
 import { getCodeValue } from 'utils/getCodeValue';

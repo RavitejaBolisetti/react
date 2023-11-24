@@ -94,7 +94,6 @@ export const EvrDetailsCapturingMasterBase = (props) => {
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [chargingStatusType, setChargingStatusType] = useState(EVR_STATUS?.DUE_FOR_CHARGING.key);
     const dynamicPagination = true;
-    const page = { pageSize: 10, current: 1 };
 
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -133,6 +132,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
     };
 
     const extraParams = useMemo(() => {
+        const page = { pageSize: 10, current: 1 };
         return [
             {
                 key: 'searchParam',
@@ -201,7 +201,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [chargingStatusType, filterString, page]);
+    }, [chargingStatusType, filterString]);
 
     useEffect(() => {
         if (userId) {
@@ -479,7 +479,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
 
     const formProps = {
         isVisible: isFormVisible,
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(translateContent('evrDetailsCapturing.heading.moduleTitle')),
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(translateContent('evrDetailsCapturing.heading.moduleTitle')),
         handleButtonClick,
         formActionType,
         onCloseAction,
