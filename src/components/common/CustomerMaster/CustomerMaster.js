@@ -107,8 +107,8 @@ const CustomerMasterMain = (props) => {
     const [refreshCustomerList, setRefreshCustomerList] = useState(false);
 
     const [section, setSection] = useState();
-    const [defaultSection, setDefaultSection] = useState();
-    const [currentSection, setCurrentSection] = useState();
+    const [defaultSection, setDefaultSection] = useState(1);
+    const [currentSection, setCurrentSection] = useState(1);
     const [sectionName, setSetionName] = useState();
     const [isLastSection, setLastSection] = useState(false);
 
@@ -123,7 +123,7 @@ const CustomerMasterMain = (props) => {
     const [isUnsavedDataPopup, setIsUnsavedDataPopup] = useState(false);
     const [nextCurentSection, setNextCurrentSection] = useState('');
 
-    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false, changeHistory: true };
+    const defaultBtnVisiblity = { nextBtn: false, editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false, changeHistory: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
@@ -286,6 +286,7 @@ const CustomerMasterMain = (props) => {
 
         switch (buttonAction) {
             case ADD_ACTION:
+                // setFilterString({});
                 defaultSection && setCurrentSection(defaultSection);
                 setPreviousSection(1);
                 break;
@@ -324,6 +325,8 @@ const CustomerMasterMain = (props) => {
             });
 
             setButtonData(btnVisiblity({ defaultBtnVisiblity: { ...defaultBtnVisiblity, changeHistory: buttonAction !== ADD_ACTION }, buttonAction }));
+        } else {
+            setButtonData((prev) => ({ ...prev, nextBtn: isLastSection || (currentSection === 1 && buttonAction !== NEXT_ACTION) ? false : true }));
         }
         setIsFormVisible(true);
     };
@@ -494,6 +497,7 @@ const CustomerMasterMain = (props) => {
         VIEW_ACTION,
         NEXT_ACTION,
         buttonData,
+        setFilterString,
 
         setButtonData,
         handleButtonClick,

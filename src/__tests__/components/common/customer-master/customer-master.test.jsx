@@ -3,6 +3,7 @@ import customRender from '@utils/test-utils';
 import { Provider } from 'react-redux';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { CustomerMaster } from 'components/common/CustomerMaster/CustomerMaster';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 
 afterEach(() => {

@@ -1,5 +1,4 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
 import customRender from '@utils/test-utils';
 import { ViewDetail } from '@components/common/CustomerMaster/IndividualCustomer/AccountRelated/ViewDetail';
 

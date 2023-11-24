@@ -3,6 +3,7 @@ import { UnMappingMaster } from '@components/Sales/OtfSoMappingUnmapping/MasterC
 import customRender from '@utils/test-utils';
 import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 
 afterEach(() => {

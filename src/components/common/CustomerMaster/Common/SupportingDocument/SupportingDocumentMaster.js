@@ -288,7 +288,7 @@ const SupportingDocumentBase = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <CustomerFormButton {...myProps} />
+                    <CustomerFormButton {...myProps} buttonData={{ ...buttonData, nextBtn: false, formBtnActive: formActionType?.addMode}} />
                 </Col>
             </Row>
         </Form>

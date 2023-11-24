@@ -1,7 +1,8 @@
 import React from 'react';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
-import { screen, fireEvent, waitFor } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 import { OtfListMaster } from 'components/Sales/OtfSoMappingUnmapping/OtfListMaster';
 import customRender from '@utils/test-utils';
 

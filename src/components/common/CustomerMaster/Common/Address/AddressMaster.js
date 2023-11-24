@@ -121,20 +121,25 @@ const AddressMasterBase = (props) => {
     }, [addressIndData?.customerAddress, addressCompanyData?.customerAddress]);
 
     useEffect(() => {
-        if (!formActionType?.addMode && selectedCustomer?.customerId) {
+        if (userId && selectedCustomer?.customerId) {
             if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
                 fetchList({ setIsLoading: listShowLoading, userId, extraParams });
             } else if (customerType === CUSTOMER_TYPE?.CORPORATE?.id) {
                 fetchListCorporate({ setIsLoading: listShowLoading, userId, extraParams });
             }
         }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, selectedCustomer?.customerId]);
+
+    useEffect(() => {
         return () => {
             resetData();
             resetDataCorporate();
             resetPincodeData();
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedCustomer?.customerId]);
+    }, []);
 
     const onCheckdefaultAddClick = (e, value) => {
         e.stopPropagation();

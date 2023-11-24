@@ -8,6 +8,7 @@ import '@testing-library/jest-dom/extend-expect';
 import { AdvancedSearch } from '@components/Sales/StockTransferIndent/AdvancedSearch';
 import customRender from '@utils/test-utils';
 import { Form } from 'antd';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 

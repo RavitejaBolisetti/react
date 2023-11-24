@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { ChargerInstallationFormButton } from 'components/Sales/ChargerInstallationProcess/ChargerInstallationFormButton/ChargerInstallationFormButton';

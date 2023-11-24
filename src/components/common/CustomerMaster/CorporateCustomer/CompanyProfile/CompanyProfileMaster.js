@@ -90,8 +90,7 @@ const CompanyProfileBase = (props) => {
     const NEXT_ACTION = FROM_ACTION_TYPE?.NEXT;
 
     useEffect(() => {
-        if (!formActionType?.addMode && userId && selectedCustomerId) {
-            resetData();
+        if ( userId && selectedCustomer?.customerId) {
             const extraParams = [
                 {
                     key: 'customerId',
@@ -103,7 +102,7 @@ const CompanyProfileBase = (props) => {
             fetchCompanyProfileData({ setIsLoading: listShowLoading, userId, extraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedCustomer]);
+    }, [userId, selectedCustomer?.customerId]);
 
     useEffect(() => {
         return () => {
