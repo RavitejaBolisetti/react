@@ -34,7 +34,7 @@ export const ThankYouMaster = (props) => {
                     <Space direction="vertical">
                         <Avatar size={180} icon={<HiCheck />} />
                         <Title level={5} style={{ margin: '18px 0', fontSize: '32px' }}>
-                            <h2>{translateContent(`global.heading.sectionHeading.thankYou`)}</h2>
+                            <h2>{translateContent(`global.sectionHeading.thankYou`)}</h2>
                         </Title>
                     </Space>
                 </Col>

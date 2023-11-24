@@ -61,20 +61,20 @@ const ApplicationDetails = ({ setCanFormSave, form, onFinishFailed = () => {}, p
             <Form form={form} id="myForm" onFieldsChange={onFieldsChange} autoComplete="off" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label={translateContent('applicationMaster.label.applicationId')} name="applicationId" rules={[validateRequiredInputField('applicationMaster.validation.applicationId')]}>
-                            <Input disabled={isFieldDisable} maxLength={50} placeholder={preparePlaceholderText('applicationMaster.placeholder.applicationId')} />
+                        <Form.Item label={translateContent('applicationMaster.label.applicationId')} name="applicationId" rules={[validateRequiredInputField(translateContent('applicationMaster.validation.applicationId'))]}>
+                            <Input disabled={isFieldDisable} maxLength={50} placeholder={preparePlaceholderText(translateContent('applicationMaster.placeholder.applicationId'))} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label={translateContent('applicationMaster.label.applicationName')} name="applicationName" rules={[validateRequiredInputField('applicationMaster.validation.applicationName')]}>
-                            <Input disabled={isFieldDisable} maxLength={50} placeholder={preparePlaceholderText('applicationMaster.placeholder.applicationName')} />
+                        <Form.Item label={translateContent('applicationMaster.label.applicationName')} name="applicationName" rules={[validateRequiredInputField(translateContent('applicationMaster.validation.applicationName'))]}>
+                            <Input disabled={isFieldDisable} maxLength={50} placeholder={preparePlaceholderText(translateContent('applicationMaster.placeholder.applicationName'))} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label={translateContent('applicationMaster.label.applicationTitle')} name="applicationTitle" rules={[validateRequiredInputField('applicationMaster.validation.applicationTitle')]}>
-                            <Input maxLength={50} placeholder={preparePlaceholderText('applicationMaster.placeholder.applicationTitle')} />
+                        <Form.Item label={translateContent('applicationMaster.label.applicationTitle')} name="applicationTitle" rules={[validateRequiredInputField(translateContent('applicationMaster.validation.applicationTitle'))]}>
+                            <Input maxLength={50} placeholder={preparePlaceholderText(translateContent('applicationMaster.placeholder.applicationTitle'))} />
                         </Form.Item>
                     </Col>
 

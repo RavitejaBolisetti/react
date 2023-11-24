@@ -332,7 +332,7 @@ const AddEditFormMain = (props) => {
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.subTitle}>
-                                        {translateContent('partyMaster.label.drawerSubheadingOtherDetails')}
+                                        {translateContent('partyMaster.heading.drawerSubheadingOtherDetails')}
                                     </Col>
                                 </Row>
                                 <Row gutter={16}>
