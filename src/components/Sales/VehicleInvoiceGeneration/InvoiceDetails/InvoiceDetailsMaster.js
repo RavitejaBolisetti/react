@@ -51,11 +51,11 @@ const InvoiceDetailsMasterBase = (props) => {
         const { otfDetailsRequest, ...bookingAndBillingCustomerDto } = values;
         if (!Object?.keys(bookingAndBillingCustomerDto)?.length) {
             if (!requestPayload?.invoiceDetails?.bookingAndBillingCustomerDto?.billingCustomer) {
-                showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please provide billing customer details' });
+                showGlobalNotification({ notificationType: 'error', title: 'Error', message: translateContent('vehicleInvoiceGeneration.validation.BillingCustomerDetails') });
                 setActiveKey([3, 2]);
                 return false;
             } else if (!requestPayload?.invoiceDetails?.bookingAndBillingCustomerDto?.bookingCustomer) {
-                showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please provide booking customer details' });
+                showGlobalNotification({ notificationType: 'error', title: 'Error', message: translateContent('vehicleInvoiceGeneration.validation.BookingCustomerDetails') });
                 setActiveKey([3, 1]);
                 return false;
             } else setRequestPayload({ ...requestPayload, invoiceDetails: { otfDetailsRequest, bookingAndBillingCustomerDto: { ...requestPayload?.invoiceDetails?.bookingAndBillingCustomerDto } } });

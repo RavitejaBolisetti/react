@@ -4,10 +4,11 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { Select } from 'antd';
+import { translateContent } from 'utils/translateContent';
 
 const { Option } = Select;
 
-export const customSelectBox = ({ data, placeholder = 'Select', mode = '', loading = false, testId, onChange = undefined, disabled = false, disableOptionsList = [], fieldNames = { key: 'key', value: 'value' } }, disableOptionsKey = fieldNames?.key || 'key') => {
+export const customSelectBox = ({ data, placeholder = translateContent('global.placeholder.select'), mode = '', loading = false, testId, onChange = undefined, disabled = false, disableOptionsList = [], fieldNames = { key: 'key', value: 'value' } }, disableOptionsKey = fieldNames?.key || 'key') => {
     const selectProps = {
         optionFilterProp: 'children',
         showSearch: true,

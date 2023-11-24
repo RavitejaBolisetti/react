@@ -550,7 +550,7 @@ export const OtfBlockMasterMain = (props) => {
 
         buttonData,
 
-        titleOverride: (formData?.id ? translateContent('global.drawerTitle.edit') : translateContent('global.drawerTitle.add')).concat(moduleTitle),
+        titleOverride: (formData?.id ? translateContent('global.drawerTitle.edit') : translateContent('global.drawerTitle.add')).concat(" ").concat(moduleTitle),
 
         isFormBtnActive,
 

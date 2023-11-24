@@ -332,7 +332,7 @@ export const TaxChargesCategoryMain = (props) => {
 
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(translateContent('taxChargeCatagory.heading.moduleTitle')),
+        titleOverride: drawerTitle(formActionType).concat(" ").concat(translateContent('taxChargeCatagory.heading.moduleTitle')),
 
         ADD_ACTION,
         EDIT_ACTION,

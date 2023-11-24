@@ -6,7 +6,6 @@
 import React from 'react';
 import { Row, Col, Form, Button, Select } from 'antd';
 import { withModal } from 'components/withModal';
-import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
@@ -15,8 +14,6 @@ const { Option } = Select;
 
 export const ZoneAreaModalForm = (props) => {
     const { onCloseAction, formData, zoneMasterData, areaOfficeData, addZoneAreaForm, onFinishAddZoneDetails, handleZoneChange } = props;
-
-
 
     return (
         <Form autoComplete="off" layout="vertical" form={addZoneAreaForm} onFinish={onFinishAddZoneDetails}>
@@ -50,7 +47,7 @@ export const ZoneAreaModalForm = (props) => {
                 </Col>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
                     <Button htmlType="submit" type="primary">
-                    {translateContent('global.buttons.submit')}
+                        {translateContent('global.buttons.submit')}
                     </Button>
                 </Col>
             </Row>

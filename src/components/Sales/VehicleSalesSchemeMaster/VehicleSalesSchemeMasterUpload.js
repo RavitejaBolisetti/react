@@ -70,7 +70,7 @@ const VehicleSalesSchemeMasterUploadMain = (uploadProps) => {
                             <Space>{translateContent('vehicleSalesSchemeMaster.text.downloadText')} </Space>
                             <Space>
                                 <Button type="primary" onClick={handleTemplateDownLoad}>
-                                {translateContent('vehicleSalesSchemeMaster.button.downloadTemplate')}
+                                    {translateContent('vehicleSalesSchemeMaster.button.downloadTemplate')}
                                 </Button>
                             </Space>
                         </Space>

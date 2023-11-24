@@ -538,7 +538,7 @@ export const ChargerInstallationMasterBase = (props) => {
         onChargerInstallationFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,

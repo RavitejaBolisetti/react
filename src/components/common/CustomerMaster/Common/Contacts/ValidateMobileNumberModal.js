@@ -9,7 +9,7 @@ import { Row, Col, Button, Space } from 'antd';
 import { withModal } from '../../../../withModal/withModal';
 
 import styles from 'assets/sass/app.module.scss';
-
+import { translateContent } from 'utils/translateContent';
 
 const ValidateMobileModalMain = (props) => {
     const { onCloseAction, onCloseActionOnContinue } = props;
@@ -25,10 +25,10 @@ const ValidateMobileModalMain = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Space>
                         <Button onClick={onCloseAction} htmlType="submit" danger className={styles.modalButton}>
-                            No
+                            {translateContent('customerMaster.button.no')}
                         </Button>
                         <Button onClick={onCloseActionOnContinue} htmlType="submit" type="primary" className={styles.modalButton}>
-                            Yes, Continue
+                            {translateContent('customerMaster.button.yes')}
                         </Button>
                     </Space>
                 </Col>

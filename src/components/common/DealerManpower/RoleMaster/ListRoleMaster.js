@@ -273,7 +273,7 @@ export const ListRoleMasterBase = (props) => {
 
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat('Role'),
+        titleOverride: drawerTitle(formActionType).concat(" ").concat('Role'),
         tableData: searchData,
 
         isDivisionDataLoaded,

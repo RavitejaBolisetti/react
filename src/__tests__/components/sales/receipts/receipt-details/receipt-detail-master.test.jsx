@@ -4,6 +4,7 @@ import customRender from '@utils/test-utils';
 import { screen, fireEvent } from '@testing-library/react';
 import { Form } from 'antd';
 import { Provider } from 'react-redux';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 
 afterEach(() => {

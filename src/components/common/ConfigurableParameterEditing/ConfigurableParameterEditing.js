@@ -326,7 +326,7 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
             form.resetFields();
             setFormData([]);
         },
-        titleOverride: drawerTitle.concat(moduleTitle),
+        titleOverride: drawerTitle.concat(" ").concat(moduleTitle),
         onFinish,
         isFormBtnActive,
         setFormBtnActive,

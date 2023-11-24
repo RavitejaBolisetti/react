@@ -102,7 +102,6 @@ const mapDispatchToProps = (dispatch) => ({
 
             listEmployeeShowLoading: employeeSearchDataAction.listShowLoading,
             saveData: rsaRegistrationDataAction.saveData,
-            resetData: shieldSchemeSearchDataAction.reset,
             resetDetail: shieldSchemeSearchDataAction.resetDetail,
             listShowLoading: shieldSchemeSearchDataAction.listShowLoading,
             showGlobalNotification,
@@ -436,7 +435,6 @@ export const RSARegistrationMasterBase = (props) => {
                 },
             ];
             fetchSchemeDescription({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-            // eslint-disable-next-line react-hooks/exhaustive-deps
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, vinNumber]);
@@ -727,7 +725,7 @@ export const RSARegistrationMasterBase = (props) => {
         onFinalSubmit: onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
         ADD_ACTION,
         EDIT_ACTION,
         VIEW_ACTION,

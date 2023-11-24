@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Row, Col, Input, Form, Collapse, Divider, Select, DatePicker } from 'antd';
 import { expandActionIcon } from 'utils/accordianExpandIcon';
 import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
@@ -20,9 +20,8 @@ const { Search } = Input;
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { formData, saleTypes, vinNumber, bookingNumber, schemeDetail, employeeData, managerData, shieldDetailForm, handleOtfSearch, handleVinSearch, handleEmployeeSearch, handleOtfChange, saleType, handleSaleTypeChange, formActionType, isSchemeLoading, isEmployeeDataLoading, handleOnSelect, handleOnClear, screenType } = props;
+    const { formData, saleTypes, vinNumber, bookingNumber, schemeDetail, employeeData, managerData, shieldDetailForm, handleOtfSearch, handleVinSearch, handleOtfChange, saleType, handleSaleTypeChange, formActionType, isSchemeLoading } = props;
     const { activeKey, setActiveKey } = props;
-    const [selectedScheme, setSelectedScheme] = useState([]);
 
     useEffect(() => {
         shieldDetailForm.setFieldsValue({ registrationInformation: { vin: vinNumber, otf: bookingNumber } });
@@ -41,7 +40,6 @@ const AddEditFormMain = (props) => {
 
     const handleSchemeDescription = (key) => {
         const selectedScheme = schemeDetail?.find((i) => i.schemeDescription === key);
-        setSelectedScheme(selectedScheme);
         if (selectedScheme) {
             shieldDetailForm.setFieldsValue({
                 schemeDetails: {

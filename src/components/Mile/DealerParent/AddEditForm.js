@@ -112,7 +112,7 @@ const AddEditFormMain = (props) => {
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item initialValue={editMode ? formData.status : true} label={translateContent('dealerParent.label.groupCode')} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" data-testid="status">
-                                        <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
+                                        <Switch checkedChildren={translateContent('dealerCompany.label.active')} unCheckedChildren={translateContent('dealerCompany.label.inActive')} onChange={(checked) => (checked ? 1 : 0)} />
                                     </Form.Item>
                                 </Col>
                             </Row>

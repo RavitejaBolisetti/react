@@ -274,7 +274,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
         codeIsReadOnly,
         tableData: detailData?.hierarchyAttribute,
         onCloseAction,
-        titleOverride: (isViewModeVisible ? translateContent('global.drawerTitle.view') : editRow?.id ? translateContent('global.drawerTitle.edit') : translateContent('global.drawerTitle.add')).concat(moduleTitle),
+        titleOverride: (isViewModeVisible ? translateContent('global.drawerTitle.view') : editRow?.id ? translateContent('global.drawerTitle.edit') : translateContent('global.drawerTitle.add')).concat(" ").concat(moduleTitle),
         selectedHierarchy,
         onFinish,
         setEditRow,

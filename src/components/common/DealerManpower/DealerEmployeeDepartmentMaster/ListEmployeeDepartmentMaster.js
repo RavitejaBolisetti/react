@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Col, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
@@ -95,7 +95,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
     const onSuccessAction = (res) => {
-        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        refershData && showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         setRefershData(false);
         setShowDataLoading(false);
     };
@@ -241,7 +241,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(translateContent('employeeDepartment.label.division')),
+        titleOverride: drawerTitle(formActionType).concat(" ").concat(translateContent('employeeDepartment.label.division')),
         tableData: searchData,
 
         isDivisionLoading,
@@ -300,7 +300,6 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         }
     };
 
-    const title = 'Department Name';
     const advanceFilterResultProps = {
         advanceFilter: true,
         filterString,

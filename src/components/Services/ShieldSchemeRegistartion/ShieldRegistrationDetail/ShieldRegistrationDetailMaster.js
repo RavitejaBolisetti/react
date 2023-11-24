@@ -5,14 +5,13 @@
  */
 import React, { useEffect, useState } from 'react';
 import { Form, Row, Col } from 'antd';
+import { connect } from 'react-redux';
 
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 import { VehicleReceiptFormButton } from '../VehicleReceiptFormButton';
+
 import { AMC_CONSTANTS } from '../utils/AMCConstants';
-
-import { connect } from 'react-redux';
-
 import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'assets/sass/app.module.scss';
@@ -25,7 +24,6 @@ const ShieldRegistrationDetailMasterBase = (props) => {
 
     const [activeKey, setActiveKey] = useState('');
     const [options, setOptions] = useState(false);
-    const [selectedEmployees, setSelectedEmployee] = useState(false);
 
     const generateExtraParams = (key) => {
         const extraParams = [
@@ -79,7 +77,6 @@ const ShieldRegistrationDetailMasterBase = (props) => {
 
     const handleOnSelect = (key) => {
         const selectedEmployee = employeeData?.find((i) => i.employeeName === key);
-        setSelectedEmployee(selectedEmployee);
         if (selectedEmployee) {
             form?.setFieldsValue({
                 employeeName: selectedEmployee?.employeeName,

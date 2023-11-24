@@ -70,7 +70,7 @@ export const AdvancedSearchFrom = (props) => {
             )}
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label={translateContent('amcRegistration.label.amcFromDate')} name="fromDate" className={styles?.datePicker} rules={[validateRequiredInputField('invoice from date')]}>
+                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label={translateContent('amcRegistration.label.amcFromDate')} name="fromDate" className={styles?.datePicker} rules={[validateRequiredInputField(translateContent('amcRegistration.label.amcFromDate'))]}>
                         <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} onChange={() => advanceFilterForm.setFieldsValue({ toDate: undefined })} className={styles.fullWidth} disabledDate={disableFutureDate} />
                     </Form.Item>
                 </Col>
@@ -81,7 +81,7 @@ export const AdvancedSearchFrom = (props) => {
                         name="toDate"
                         className={styles?.datePicker}
                         rules={[
-                            validateRequiredInputField('invoice to date'),
+                            validateRequiredInputField(translateContent('amcRegistration.label.amcToDate')),
                             {
                                 validator: (_, value) => {
                                     return advanceFilterForm.getFieldValue('fromDate') ? CheckDateEffectiveTo(value, advanceFilterForm?.getFieldValue('fromDate')) : Promise.resolve();
@@ -97,13 +97,13 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
                     <Button onClick={handleResetFilter} danger>
-                        Reset
+                        {translateContent('global.buttons.reset')}
                     </Button>
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
                     <Button htmlType="submit" type="primary">
-                        Apply
+                        {translateContent('global.buttons.apply')}
                     </Button>
                 </Col>
             </Row>

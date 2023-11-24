@@ -46,7 +46,7 @@ const ViewDetailMain = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" collapsible="icon">
-                        <Panel header={translateContent('vehicleDetail.vehicledetails.label.mnfcWarrEndDate')} key="1">
+                        <Panel header={translateContent('vehicleDetail.vehicledetails.label.ownerDetails')} key="1">
                             <Divider />
                             <Descriptions {...viewProps}>
                                 <Descriptions.Item label={translateContent('vehicleDetail.customerDetails.label.customerId')}>{checkAndSetDefaultValue(ownerCustomer?.customerId, isLoading)}</Descriptions.Item>
