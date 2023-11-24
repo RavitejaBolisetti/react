@@ -8,7 +8,6 @@ import React, { useEffect, useState } from 'react';
 import { Button, Collapse, Form, Typography, Row, Col, Input, Divider } from 'antd';
 
 import { PlusOutlined } from '@ant-design/icons';
-import { DataTable } from 'utils/dataTable';
 import { addToolTip } from 'utils/customMenuLink';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 

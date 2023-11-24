@@ -29,7 +29,6 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { VEHICLE_TYPE } from 'constants/VehicleType';
 import { BASE_URL_OTF_DETAILS as baseURL, BASE_URL_OTF_TRANSFER as otfTransferURL, BASE_URL_OTF_CANCELLATION as otfCancelURL, BASE_URL_OTF_CANCELLATION_WF as customURLCancelWF } from 'constants/routingApi';
 
-import { LANGUAGE_EN } from 'language/en';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { validateOTFMenu } from './utils/validateOTFMenu';
 
