@@ -99,7 +99,7 @@ const ProductDetailMasterMain = (props) => {
     const { fetchList, resetData, saveData, listShowLoading, showGlobalNotification, typeData } = props;
     const { form, selectedRecordId, section, formActionType, handleFormValueChange, NEXT_ACTION } = props;
     const { fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading } = props;
-    const { isModelDataLoaded, isModelLoading, modelData, isVariantDataLoaded, isVariantLoading, variantData, isModelFamilyDataLoaded, isModelFamilyLoading, modelFamilyData, fetchModelFamilyLovList, listFamilyShowLoading, ITEM_TYPE } = props;
+    const { isModelLoading, modelData, isVariantLoading, variantData, isModelFamilyLoading, modelFamilyData, fetchModelFamilyLovList, listFamilyShowLoading, ITEM_TYPE } = props;
 
     const [formData, setformData] = useState({});
     const [optionalServices, setOptionalServices] = useState([]);
@@ -230,15 +230,6 @@ const ProductDetailMasterMain = (props) => {
     }, [isDataLoaded, ProductDetailsData]);
 
     useEffect(() => {
-        if (isModelDataLoaded && isVariantDataLoaded && isModelFamilyDataLoaded) {
-            modelData?.length > 0 && form.setFieldsValue({ modelGroup: modelData[0]?.modelGroupDescription });
-            modelFamilyData.length > 0 && form.setFieldsValue({ modelFamily: modelFamilyData[0]?.familyDescription });
-            variantData.length > 0 && form.setFieldsValue({ modelVariant: variantData[0]?.variantDescription });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isModelDataLoaded, isVariantDataLoaded, isModelFamilyDataLoaded, formActionType]);
-
-    useEffect(() => {
         if (typeData) {
             if (typeData[PARAM_MASTER?.VEH_MAKE?.id]) {
                 setmakeOptions(typeData[PARAM_MASTER?.VEH_MAKE?.id]);
@@ -316,6 +307,9 @@ const ProductDetailMasterMain = (props) => {
         ITEM_TYPE,
         page,
         setPage,
+        modelData,
+        modelFamilyData,
+        variantData,
     };
 
     const viewProps = {

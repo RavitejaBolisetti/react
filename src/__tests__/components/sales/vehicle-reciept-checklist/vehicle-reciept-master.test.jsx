@@ -73,7 +73,7 @@ describe('Vehicle Reciept Master container', () => {
         const rightBtn = screen.getByRole('button', { name: 'right' });
         fireEvent.click(rightBtn);
 
-        const search = screen.getByPlaceholderText('Search receipt number');
+        const search = screen.getByRole('textbox', { name: '' });
         fireEvent.change(search, { target: { value: 'test' } });
 
         const closeBtn = screen.getByRole('button', { name: 'close-circle' });
@@ -133,7 +133,7 @@ describe('Vehicle Reciept Master container', () => {
             </Provider>
         );
 
-        const advanceFilter = screen.getByPlaceholderText(/Search receipt number/i);
+        const advanceFilter = screen.getByRole('textbox', { name: '' });
         fireEvent.change(advanceFilter, { target: { value: 'Test' } });
 
         const removeFilter = screen.getByTestId('removeFilter');
@@ -241,7 +241,7 @@ describe('Vehicle Reciept Master container', () => {
         const searchBtn = screen.getByRole('button', { name: 'search' });
         fireEvent.click(searchBtn);
 
-        const advanceFilter = screen.getByPlaceholderText(/Search receipt number/i);
+        const advanceFilter = screen.getByRole('textbox', { name: '' });
         fireEvent.change(advanceFilter, { target: { value: 'Test' } });
 
         const clearBtn = screen.getByRole('button', { name: /Clear/i });

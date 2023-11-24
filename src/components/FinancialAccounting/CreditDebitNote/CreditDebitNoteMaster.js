@@ -28,7 +28,6 @@ import { CREDIT_DEBIT_SECTION } from 'constants/CreditDebitSection';
 import { LANGUAGE_EN } from 'language/en';
 
 import { PARAM_MASTER } from 'constants/paramMaster';
-import { TRANSACTION_TYPE } from './transactionType';
 import { translateContent } from 'utils/translateContent';
 import { drawerTitle } from 'utils/drawerTitle';
 

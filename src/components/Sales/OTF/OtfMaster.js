@@ -424,7 +424,7 @@ export const OtfMasterBase = (props) => {
                             onCloseAction: onCloseConfirmationModalAction,
                             onSubmitAction: () => handleVehicleAllotment(record, VEHICLE_TYPE?.UNALLOTED.key, resp?.data?.vinNumber),
                             submitText: translateContent('global.yesNo.yes'),
-                            text: translateContent('bookingManagement.label.unallotBookingConfirmation'),
+                            text: translateContent('bookingManagement.validation.unallotBookingConfirmation'),
                             content: resp?.data ? resp?.data?.vinNumber : '',
                         });
                     };
@@ -691,7 +691,7 @@ export const OtfMasterBase = (props) => {
             return translateContent('bookingManagement.label.addNewBooking');
         }
     }, [formActionType]);
-    
+
     const ChangeHistoryProps = {
         isVisible: ChangeHistoryVisible,
         onCloseAction: () => {

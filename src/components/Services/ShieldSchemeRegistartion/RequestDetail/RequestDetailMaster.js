@@ -49,7 +49,7 @@ import styles from 'assets/sass/app.module.scss';
 // });
 
 const RequestDetailMasterBase = (props) => {
-    const { typeData, handleMNMApproval, handleMNMRejection, handleRequest } = props;
+    const { typeData, workflowDetails, handleMNMApproval, handleMNMRejection, handleRequest } = props;
     const { userType, buttonData, setButtonData, section, isLoading } = props;
     const { partyDetailForm, handleFormValueChange, handleCancelRequest, NEXT_ACTION, handleButtonClick } = props;
     const { requestPayload, setRequestPayload, requestDetails, selectedOrder, showCancelConfirm, confirmRequest, setConfirmRequest } = props;
@@ -77,6 +77,7 @@ const RequestDetailMasterBase = (props) => {
         handleMNMApproval,
         handleMNMRejection,
         handleRequest,
+        workflowDetails,
     };
 
     return (
