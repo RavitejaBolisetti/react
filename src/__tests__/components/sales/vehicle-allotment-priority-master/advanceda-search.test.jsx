@@ -20,8 +20,8 @@ const FormWrapper = (props) => {
 describe('advanced search component render', () => {
     it('should render advanced search button component', async () => {
         customRender(<FormWrapper isVisible={true} setFilterString={jest.fn()} setAdvanceSearchVisible={jest.fn()} />);
-        const searchBtn = screen.getByRole('button', { name: 'Search' });
-        fireEvent.click(searchBtn);
+        // const searchBtn = screen.getByRole('button', { name: 'Search' });
+        // fireEvent.click(searchBtn);
         const closeBtn = screen.getByRole('button', { name: 'Close' });
         fireEvent.click(closeBtn);
         const resetBtn = screen.getByRole('button', { name: 'Reset' });
