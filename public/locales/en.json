@@ -17,7 +17,6 @@
             "serialNo": "#",
             "search": "Search",
             "approvalStatus": "Approval Status"
-
         },
         "validation": {
             "input": "Please enter ",
@@ -321,7 +320,8 @@
         "heading": {
             "title": "Company Name",
             "drawerTitle": "Dealer Parent Company",
-            "moduleTitle": "Dealer Parent Company"
+            "moduleTitle": "Dealer Parent Company",
+            "pageTitle": "Dealer Parent Company"
         },
 
         "tableColHeading": {
@@ -768,12 +768,12 @@
             "buttonAtTop": "button at top",
             "vehicleDetails": "Vehicle Details",
             "selectVehicle": "Select Vehicle",
-            "invoiceNumber" : "Invoice Number",
-            "invoiceDate" : "Invoice Date",
-            "irnNo" : "IRN No.",
-            "irnStatus" : "IRN Status",
-            "amcCertificateNo" : "AMC Registration Number",
-            "amcIncenticeClaim" : "AMC Incentive Claim"
+            "invoiceNumber": "Invoice Number",
+            "invoiceDate": "Invoice Date",
+            "irnNo": "IRN No.",
+            "irnStatus": "IRN Status",
+            "amcCertificateNo": "AMC Registration Number",
+            "amcIncenticeClaim": "AMC Incentive Claim"
         },
         "placeholder": {
             "search": "Search"
@@ -1441,7 +1441,7 @@
     },
 
     "chargerInstallationDetails": {
-        "label":{
+        "label": {
             "bookingNumber": "Booking Number",
             "bookingStatus": "Booking Status",
             "modelGroup": "Model Group",
@@ -3451,7 +3451,6 @@
             "isFinanceRelated": "Is Finance Related",
             "irnIntegrationRequired": "IRN Integration Required",
             "description": "Please select product from left side hierarchy to view “Application Details”"
-
         },
         "validation": {
             "applicationAction": "application action",

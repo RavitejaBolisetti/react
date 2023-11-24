@@ -355,11 +355,11 @@ const AddEditFormMain = (props) => {
                                             initialValue={formData?.panNumber}
                                             rules={[
                                                 // validateRequiredInputField('PAN'),
-                                                validatePanField(translateContent('partyMaster.label.gstinNumber')),
+                                                validatePanField(translateContent('partyMaster.label.pan')),
                                             ]}
                                             name="panNumber"
                                         >
-                                            <Input {...disabledProps} placeholder={preparePlaceholderText(translateContent('partyMaster.label.gstinNumber'))} maxLength={10} />
+                                            <Input {...disabledProps} placeholder={preparePlaceholderText(translateContent('partyMaster.label.pan'))} maxLength={10} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
