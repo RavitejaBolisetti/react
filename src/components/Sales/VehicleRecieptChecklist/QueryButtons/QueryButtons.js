@@ -14,7 +14,7 @@ export const QueryButtons = ({ items = {}, onClick, currentItem = items?.PENDING
             {Object.entries(items)?.map(([keyName, item], index) => {
                 return (
                     <Button onClick={() => onClick(item, keyName)} type={currentItem === item?.key ? 'primary' : 'link'}>
-                        {translateContent(item?.translateKey)}
+                        {item?.title}
                     </Button>
                 );
             })}
