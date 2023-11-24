@@ -2420,14 +2420,14 @@
             "drawerTitleMaster": "Invoice",
             "cancelRequestTitle": "Cancel Request",
 
-            "section.1": "Invoice Details",
-            "section.2": "Vehicle Details",
-            "section.3": "Scheme and Offer Details",
-            "section.4": "Insurance Details",
-            "section.5": "Finance Details",
-            "section.6": "Exchange Details",
-            "section.7": "Referrals",
-            "section.8": "Loyalty Scheme",
+            "section1": "Invoice Details",
+            "section2": "Vehicle Details",
+            "section3": "Scheme and Offer Details",
+            "section4": "Insurance Details",
+            "section5": "Finance Details",
+            "section6": "Exchange Details",
+            "section7": "Referrals",
+            "section8": "Loyalty Scheme",
 
             "collapse.bookingDetails": "Booking Details",
             "collapse.bookingCustomer": "Booking Customer",
@@ -3260,7 +3260,10 @@
             "cancelDeliveryNote": "Cancel Delivery Note",
             "cancelChallan": "Cancel Challan",
             "printDeliveryNote": "Print Delivery Note",
-            "printChallan": "Print Challan"
+            "printChallan": "Print Challan",
+
+            "deliveryNote": "Delivery Note",
+            "deliveryChallan": "Delivery Note"
         },
         "label": {
             "customerName": "Customer Name",
@@ -3392,6 +3395,21 @@
         "thankYouPage": {
             "downloadDeliveryNote": "Do you want to Print or download this Delivery Note",
             "printDownload": "Download/Print"
+        },
+        "constants": {
+            "pending": "Pending",
+            "generated": "Generated",
+            "cancelled": "Cancelled"
+        },
+        "sections": {
+            "invoiceDetails": "Invoice Details",
+            "customerDetails": "Customer Details",
+            "vehicleDetails": "Vehicle Details",
+            "financeDetails": "Finance Details",
+            "insuranceDetails": "Insurance Details",
+            "addonDetails": "Add On Details",
+            "deliverableChecklist": "Deliverable Checklist",
+            "thankYou": "Thank You"
         }
     },
     "creditDebitNote": {

@@ -9,26 +9,28 @@ export const QUERY_BUTTONS = {
         title: 'Pending',
         key: 'pending',
         active: true,
+        translateKey: 'pending',
     },
     GENERATED: {
         id: 'generated',
         title: 'Generated',
         key: 'generated',
         active: false,
+        translateKey: 'generated',
     },
     CANCELLED: {
         id: 'cancelled',
         title: 'Cancelled',
         key: 'cancelled',
         active: false,
+        translateKey: 'cancelled',
     },
 };
-export const DELIVERY_NOTE_MESSAGE_CONSTANTS ={
-    DELIVERY_NOTE_DETAILS_NOT_PRESENT:{
+export const DELIVERY_NOTE_MESSAGE_CONSTANTS = {
+    DELIVERY_NOTE_DETAILS_NOT_PRESENT: {
         id: 1,
         notificationType: 'error',
         title: 'Error',
         message: 'delivery note details not present',
-    }
-}
-
+    },
+};
