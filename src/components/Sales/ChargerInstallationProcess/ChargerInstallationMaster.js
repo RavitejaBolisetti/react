@@ -7,7 +7,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Col, Form, Row, Tag } from 'antd';
+import { Col, Form, Row } from 'antd';
 import { tableColumn } from './tableColumn';
 import ChargerInstallationFilter from './ChargerInstallationFilter';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';

@@ -7,17 +7,15 @@ import React, { useEffect } from 'react';
 import { Input, Form, Col, Row, Switch, Select, Button } from 'antd';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
-import { LANGUAGE_EN } from 'language/en';
 import { ROOT_PARENT_APPLICATION, ACCESSIBLE_LOCATION_INDICATOR_SELECT_DATA } from 'constants/modules/applicationMaster';
 
-import styles from 'assets/sass/app.module.scss';
 import TreeSelectField from '../TreeSelectField';
 import { customSelectBox } from 'utils/customSelectBox';
 import { translateContent } from 'utils/translateContent';
 
-const { Option } = Select;
-// const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_CHILD_WARNING;
+import styles from 'assets/sass/app.module.scss';
 
+const { Option } = Select;
 const ApplicationDetails = ({ setCanFormSave, form, onFinishFailed = () => {}, parentAppCode, isReadOnly, isFieldDisable, onFinish, setIsRestrictedLocation, setParentAppCode, setIsDocumentToGenerate, finalFormdata, criticalityGroupData, configurableParamData, menuData, setSelectedTreeKey, selectedTreeKey, showGlobalNotification, isApplicatinoOnSaveLoading, canFormSave, onCloseAction }) => {
     useEffect(() => {
         form?.setFieldsValue({ ...finalFormdata?.applicationDetails, applicationStatus: finalFormdata?.applicationDetails?.status, parentApplicationId: finalFormdata?.applicationDetails?.parentApplicationId || ROOT_PARENT_APPLICATION });

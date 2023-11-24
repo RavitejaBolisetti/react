@@ -6,7 +6,7 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Form, Row, Empty, Spin } from 'antd';
+import { Button, Col, Form, Row, Empty } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { menuDataActions } from 'store/actions/data/menu';
 import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
