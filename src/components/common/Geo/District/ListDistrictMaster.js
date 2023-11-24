@@ -281,7 +281,7 @@ export const ListDistrictBase = (props) => {
         onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat('District'),
+        titleOverride: drawerTitle(formActionType).concat(" ").concat('District'),
         tableData: searchData,
         isDataCountryLoaded,
         isCountryLoading,

@@ -211,7 +211,7 @@ export const ListDealerLocationTypeMasterBase = (props) => {
 
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(translateContent('locationTypeMaster.heading.drawerTitle')),
+        titleOverride: drawerTitle(formActionType).concat(" ").concat(translateContent('locationTypeMaster.heading.drawerTitle')),
         tableData: searchData,
 
         ADD_ACTION,

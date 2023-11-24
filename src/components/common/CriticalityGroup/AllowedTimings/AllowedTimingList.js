@@ -6,7 +6,6 @@
 import React from 'react';
 import { Form, Row, Col, Button, Divider } from 'antd';
 import moment from 'moment';
-import { LANGUAGE_EN } from 'language/en';
 import AddEditForm from './AddEditForm';
 import AllowedTimingCard from './AllowedTimingCard';
 import { translateContent } from 'utils/translateContent';
@@ -22,7 +21,7 @@ const AllowedTimingList = (props) => {
     const validatedDuplicateTime = (timeSlotFrom, timeSlotTo) => {
         const isBefore = moment(timeSlotFrom, 'HH:mm').isBefore(moment(timeSlotTo, 'HH:mm'));
         if (!isBefore) {
-            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationSuccess.error'), message: LANGUAGE_EN.GENERAL.START_TIME_GREATER_THAN_END_TIME.MESSAGE, placement: 'bottomRight' });
+            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationSuccess.error'), message: translateContent('global.generalMessage.startTimeEndTimeValidation') , placement: 'bottomRight' });
             return true;
         }
         let timeSegments = [...timeData, { timeSlotFrom, timeSlotTo }];
@@ -36,7 +35,7 @@ const AllowedTimingList = (props) => {
             const currentEndTime = timeSegments[i]['timeSlotTo'];
             const nextStartTime = timeSegments[i + 1]['timeSlotFrom'];
             if (currentEndTime > nextStartTime) {
-                showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationSuccess.error'), message: LANGUAGE_EN.GENERAL.TIME_OVERLAPPING.MESSAGE, placement: 'bottomRight' });
+                showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationSuccess.error'), message: translateContent('global.generalMessage.timeOverlaps'), placement: 'bottomRight' });
                 return true;
             }
         }

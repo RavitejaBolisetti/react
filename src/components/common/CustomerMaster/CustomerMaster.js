@@ -486,7 +486,7 @@ const CustomerMasterMain = (props) => {
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction: onCloseDrawer,
-        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
         tableData: data,
         customerType,
         ADD_ACTION,
@@ -510,7 +510,7 @@ const CustomerMasterMain = (props) => {
         shouldResetForm,
         handleFormValueChange,
         isLastSection,
-        saveButtonName: !selectedCustomerId ? 'Create Customer ID' : isLastSection ? translateContent('global.buttons.submit') : translateContent('global.buttons.saveAndNext'),
+        saveButtonName: !selectedCustomerId ? translateContent('customerMaster.button.customerID') : isLastSection ? translateContent('global.buttons.submit') : translateContent('global.buttons.saveAndNext'),
         setIsFormVisible,
         setRefreshCustomerList,
         profileCardLoading,
@@ -534,13 +534,13 @@ const CustomerMasterMain = (props) => {
 
     const unsavedDataModalProps = {
         isVisible: isUnsavedDataPopup,
-        titleOverride: LANGUAGE_EN.GENERAL.UNSAVE_DATA_WARNING.TITLE,
+        titleOverride: translateContent('global.generalNotifications.unsaveDataWarning.title'),
         closable: false,
         onCloseAction: handleCancelUnsaveDataModal,
         onSubmitAction: handleOkUnsavedModal,
         submitText: 'Leave',
         showField: false,
-        text: LANGUAGE_EN.GENERAL.UNSAVE_DATA_WARNING.MESSAGE,
+        text: translateContent('global.generalNotifications.unsaveDataWarning.message'),
     };
 
     return (
@@ -582,7 +582,7 @@ const CustomerMasterMain = (props) => {
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={24} lg={22} xl={22} className={styles.advanceFilterContainer}>
-                                            <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
+                                            <div className={styles.advanceFilterTitle}>{translateContent('global.advanceFilter.appliedAdvanceFilter')}</div>
                                             {extraParams?.map((filter) => {
                                                 return (
                                                     filter?.value &&
@@ -601,7 +601,7 @@ const CustomerMasterMain = (props) => {
                                         </Col>
                                         <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
                                             <Button className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
-                                                Clear
+                                                {translateContent('global.buttons.clear')}
                                             </Button>
                                         </Col>
                                     </Row>
@@ -623,14 +623,16 @@ const CustomerMasterMain = (props) => {
                                 }}
                                 description={
                                     <>
-                                        No Record Found <br /> Please <b>"Add New Customer"</b> using below <br />
-                                        button
+                                        {translateContent('customerMaster.label.noRecordFound')} <br /> {translateContent('customerMaster.label.please')}
+                                        <b> {translateContent('customerMaster.label.addCus')} </b>
+                                        {translateContent('customerMaster.label.usingBelow')} <br />
+                                        {translateContent('customerMaster.label.button')}
                                     </>
                                 }
                             >
                                 {showAddButton && !data?.length && (
                                     <Button icon={<PlusOutlined />} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                        {`Add`}
+                                        {translateContent('global.buttons.add')}
                                     </Button>
                                 )}
                             </Empty>

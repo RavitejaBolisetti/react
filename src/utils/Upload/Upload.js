@@ -272,9 +272,9 @@ const UploadBase = (props) => {
 
     useEffect(() => {
         if (showStatus.status === 'done') {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: `${showStatus.name + ' file uploaded successfully'}` });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: `${showStatus.name + ' ' + translateContent('global.generalMessage.fileUploadedSuccessfully')}` });
         } else if (showStatus.status === 'error') {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Error' });
+            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationSuccess.error'), message: 'Error' });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [showStatus]);
@@ -310,7 +310,7 @@ const UploadBase = (props) => {
                         <Space direction="vertical" className={styles.viewDragger}>
                             <Space>
                                 <Avatar size={24} icon={<HiCheck />} />
-                                <Title level={5}>{uploadedFileName || 'Contact Picture'}</Title>
+                                <Title level={5}>{uploadedFileName}</Title>
                             </Space>
                             <Space>
                                 <Image
@@ -330,7 +330,7 @@ const UploadBase = (props) => {
                                 />
                                 {!formActionType?.viewMode && (
                                     <Button onClick={onReplaceClick} type="link">
-                                        Replace Image
+                                        {translateContent('global.buttons.replaceImage')}
                                     </Button>
                                 )}
                             </Space>
@@ -351,7 +351,7 @@ const UploadBase = (props) => {
                                     </Button>
                                     {isReplacing && (
                                         <Button onClick={onCancelReplace} danger>
-                                            Cancel
+                                            {translateContent('global.buttons.cancel')}
                                         </Button>
                                     )}
                                 </Space>

@@ -24,6 +24,8 @@ import { MenuConstant } from 'constants/MenuConstant';
 import { InputSkeleton } from '../Skeleton';
 
 import styles from './LeftSideBar.module.scss';
+import { translateContent } from 'utils/translateContent';
+import { preparePlaceholderSearch } from 'utils/preparePlaceholder';
 
 const { SubMenu, Item } = Menu;
 const { Sider } = Layout;
@@ -221,7 +223,7 @@ const LeftSideBarMain = (props) => {
                                     ) : (
                                         <Form.Item name="searchKeyword">
                                             <AutoComplete options={options} onSelect={onSelect} onChange={handleSearch}>
-                                                <Input.Search placeholder="Search" allowClear type="text" />
+                                                <Input.Search placeholder={preparePlaceholderSearch()} allowClear type="text" />
                                             </AutoComplete>
                                         </Form.Item>
                                     )}
@@ -263,19 +265,19 @@ const LeftSideBarMain = (props) => {
                             theme === 'light' ? (
                                 <BsSun size={20} className={styles.sun} />
                             ) : (
-                                <Popover content={'Coming Soon'} trigger="hover">
+                                <Popover content={translateContent('global.toolTip.comingSoon')} trigger="hover">
                                     <BsMoon size={20} className={styles.moon} />
                                 </Popover>
                             )
                         ) : (
                             <>
                                 <Button className={theme === 'light' ? styles.lightThemeActive : styles.lightTheme} danger>
-                                    <BsSun size={20} /> Light Mode
+                                    <BsSun size={20} /> {translateContent('global.buttons.lightMode')}
                                 </Button>
 
-                                <Popover content={'Coming Soon'} trigger="hover">
+                                <Popover content={translateContent('global.toolTip.comingSoon')} trigger="hover">
                                     <Button className={theme === 'dark' ? styles.darkThemeActive : styles.darkTheme} danger>
-                                        <BsMoon size={20} /> Dark Mode
+                                        <BsMoon size={20} /> {translateContent('global.buttons.darkMode')}
                                     </Button>
                                 </Popover>
                             </>

@@ -36,7 +36,7 @@ export default function VehicleDeliveryNoteFilter(props) {
                         onChange={onDeliveryTabChange}
                         items={Object.values(DELIVERY_TYPE)?.map((item) => ({
                             key: item?.key,
-                            label: <>{item?.title}</>,
+                            label: item?.title,
                         }))}
                     />
                 </Col>
@@ -52,14 +52,7 @@ export default function VehicleDeliveryNoteFilter(props) {
                                 </div>
                             </Col>
                             <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.verticallyCentered}>
-                                <Button
-                                    icon={<FilterIcon />}
-                                    type="link"
-                                    className={styles.verticallyCentered}
-                                    onClick={() => {
-                                        setAdvanceSearchVisible(true);
-                                    }}
-                                >
+                                <Button icon={<FilterIcon />} type="link" className={styles.verticallyCentered} onClick={() => setAdvanceSearchVisible(true)}>
                                     {translateContent('global.advanceFilter.title')}
                                 </Button>
                             </Col>

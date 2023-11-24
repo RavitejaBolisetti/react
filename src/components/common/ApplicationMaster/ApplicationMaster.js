@@ -6,7 +6,7 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Form, Row, Empty } from 'antd';
+import { Button, Col, Form, Row, Empty, Spin } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { menuDataActions } from 'store/actions/data/menu';
 import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
@@ -258,7 +258,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationMasterData
         configurableParamData,
         actions,
         menuData,
-        titleOverride: (finalFormdata?.applicationDetails?.id ? translateContent('global.buttons.edit') : translateContent('global.buttons.add')).concat(moduleTitle),
+        titleOverride: (finalFormdata?.applicationDetails?.id ? translateContent('global.buttons.edit') : translateContent('global.buttons.add')).concat(" "+ moduleTitle),
         setSelectedTreeKey,
         selectedTreeKey,
         isApplicatinoOnSaveLoading,
@@ -271,37 +271,38 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationMasterData
 
     const leftCol = menuData?.length > 0 ? 14 : 24;
     const rightCol = menuData?.length > 0 ? 10 : 24;
-    const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
-    const noDataMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
-    const ContentHeaderProps = { isAdvanceFilter: false, isTogglePresent: true, isDefaultContentHeader: false, toggleFirst: translateContent('applicationMaster.text.web'), toggleSecond: translateContent('applicationMaster.text.mobile'), styles, onChange, onFinish, validateTriggervalue: ['onSearch'], menuType, title: '', handleTypeClick };
+    const ContentHeaderProps = { isAdvanceFilter: false, isTogglePresent: true, isDefaultContentHeader: false, toggleFirst: 'Web', toggleSecond: 'Mobile', styles, onChange, onFinish, validateTriggervalue: ['onSearch'], menuType, title: '', handleTypeClick };
     return (
         <>
             <ContentHeader {...ContentHeaderProps} />
             <Row gutter={20} span={24}>
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
-                    {menuData?.length <= 0 ? (
-                        <div className={styles.emptyContainer}>
-                            <Empty
-                                image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                imageStyle={{
-                                    height: 60,
-                                }}
-                                description={
-                                    <span>
-                                        {noDataTitle} <br /> {noDataMessage}
-                                    </span>
-                                }
-                            >
-                                <Button icon={<PlusOutlined />} type="primary" onClick={() => handleAdd('add')}>
-                                    {translateContent('global.buttons.add')}
-                                </Button>
-                            </Empty>
-                        </div>
-                    ) : (
-                        <div className={` ${styles.leftPanelScroll}`}>
-                            <LeftPanel {...myProps} />
-                        </div>
-                    )}
+                    {/* <Spin spinning={isLoading}> */}
+                        {menuData?.length <= 0 ? (
+                            <div className={styles.emptyContainer}>
+                                <Empty
+                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                    imageStyle={{
+                                        height: 60,
+                                    }}
+                                    description={
+                                        <span>
+                                            {translateContent(global.generalMessage.noRecordsFound)} <br /> {translateContent(global.generalMessage.noRecordsFoundAddNew).replace('{NAME}', moduleTitle)}
+                                            {}
+                                        </span>
+                                    }
+                                >
+                                    <Button icon={<PlusOutlined />} type="primary" onClick={() => handleAdd('add')}>
+                                        {translateContent('global.buttons.add')}
+                                    </Button>
+                                </Empty>
+                            </div>
+                        ) : (
+                            <div className={` ${styles.leftPanelScroll}`}>
+                                <LeftPanel {...myProps} />
+                            </div>
+                        )}
+                    {/* </Spin> */}
                 </Col>
 
                 <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol}>

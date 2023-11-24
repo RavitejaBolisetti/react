@@ -95,7 +95,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
     const onSuccessAction = (res) => {
-        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        refershData && showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         setRefershData(false);
         setShowDataLoading(false);
     };
@@ -241,7 +241,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(translateContent('employeeDepartment.label.division')),
+        titleOverride: drawerTitle(formActionType).concat(" ").concat(translateContent('employeeDepartment.label.division')),
         tableData: searchData,
 
         isDivisionLoading,

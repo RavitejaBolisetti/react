@@ -4,6 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
+import { translateContent } from './translateContent';
 
 const PasswordStrength = () => {
     const [password, setPassword] = useState('');
@@ -45,7 +46,7 @@ const PasswordStrength = () => {
     return (
         <div style={{ marginBottom: '20px', width: '100%' }}>
             <input type="password" id="password" value={password} onChange={handleChange} />
-            {password && <div>Password strength: {strength}</div>}
+            {password && <div>{translateContent('global.label.passwordStrength')}: {strength}</div>}
         </div>
     );
 };

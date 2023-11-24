@@ -106,7 +106,7 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={16}>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                         <Form.Item initialValue={formData?.dealerSelectOnRoadPrice} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="dealerSelectOnRoadPrice" label={translateContent('hoPriceMapping.label.dealerSelectOnRoadPrice')}>
-                                            <Switch checkedChildren="Yes" unCheckedChildren="No" onChange={(checked) => (checked ? 1 : 0)} />
+                                            <Switch checkedChildren={translateContent('global.yesNo.yes')} unCheckedChildren={translateContent('global.yesNo.no')} onChange={(checked) => (checked ? 1 : 0)} />
                                         </Form.Item>
                                     </Col>
                                 </Row>

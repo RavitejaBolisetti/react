@@ -20,32 +20,12 @@ export const CustomerDetailsMain = (props) => {
     const [form] = Form.useForm();
     const [billCstmForm] = Form.useForm();
 
-    // const onFinish = (values) => {
-    //     if (!values?.bookingCustomer?.customerId) {
-    //         showGlobalNotification({ message: 'Please provide booking customer' });
-    //         setActiveKey([...activeKey, !values?.bookingCustomer?.customerId ? 1 : '']);
-    //         return false;
-    //     } else if (!values?.billingCustomer?.customerId) {
-    //         showGlobalNotification({ message: 'Please provide billing customer' });
-    //         setActiveKey([...activeKey, !values?.billingCustomer?.customerId ? 2 : '']);
-    //         return false;
-    //     } else {
-    //         form.getFieldsValue();
-    //         const data = { bookingCustomer: { ...values?.bookingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BOOKING', id: formData?.bookingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer }, billingCustomer: { ...values?.billingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BILLING', id: formData?.billingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer } };
-
-    //         onFinishCustom({ key: formKey, values: data });
-    //         handleButtonClick({ buttonAction: NEXT_ACTION });
-    //         setButtonData({ ...buttonData, formBtnActive: false });
-    //     }
-    // };
-
     const formProps = {
         ...props,
         form,
         billCstmForm,
         formData,
         formActionType,
-        // onFinish,
         listPinCodeShowLoading,
         fetchPincodeDetail,
         isPinCodeLoading,

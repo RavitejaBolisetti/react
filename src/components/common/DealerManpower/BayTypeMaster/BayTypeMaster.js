@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Col, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
@@ -22,6 +22,7 @@ import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 
 import { AddEditForm } from './AddEditForm';
 import { drawerTitle } from 'utils/drawerTitle';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -33,7 +34,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Bay Type Master';
+    const moduleTitle = translateContent('bayTypeMaster.heading.moduleTitle');
 
     let returnValue = {
         userId,
@@ -206,7 +207,7 @@ export const BayTypeMasterBase = (props) => {
 
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat('Bay Type'),
+        titleOverride: drawerTitle(formActionType).concat(" ").concat('Bay Type'),
         tableData: searchData,
 
         ADD_ACTION,
@@ -223,7 +224,7 @@ export const BayTypeMasterBase = (props) => {
         tableData: searchData,
     };
 
-    const title = 'Bay Type Name';
+    const title = translateContent('bayTypeMaster.label.bayTypeName');
 
     const advanceFilterResultProps = {
         advanceFilter: false,

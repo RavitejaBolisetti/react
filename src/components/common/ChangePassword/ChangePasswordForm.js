@@ -19,6 +19,7 @@ import { useNavigate } from 'react-router-dom';
 import { PasswordStrengthMeter } from 'utils/PasswordStrengthMeter';
 
 import styles from 'components/Auth/Auth.module.scss';
+import { translateContent } from 'utils/translateContent';
 const mapStateToProps = (state) => {
     const {
         auth: { token, isLoggedIn, userId },
@@ -67,7 +68,7 @@ const ChangePasswordBase = ({ form, password, fieldData, setFieldData, setPasswo
         const data = { ...values };
         const onSuccess = (res) => {
             form.resetFields();
-            showGlobalNotification({ notificationType: 'successBeforeLogin', title: 'Password Changed', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'successBeforeLogin', title: translateContent('global.generalMessage.passwordChanged'), message: res?.responseMessage });
 
             doLogout({
                 onSuccess: (res) => {
@@ -117,18 +118,18 @@ const ChangePasswordBase = ({ form, password, fieldData, setFieldData, setPasswo
         <Form form={form} name="change_password" layout="vertical" autoComplete="off" onFinish={onFinish}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.inputLabelPlaceholder}>
-                    <Form.Item name="oldPassword" rules={[validateRequiredInputField('old password', false)]}>
+                    <Form.Item name="oldPassword" rules={[validateRequiredInputField(translateContent('updatePassword.label.oldPassword'), false)]}>
                         <Input data-testid="oldPasswordInput" type={showPassword?.oldPassword ? 'text' : 'password'} ref={oldPasswordInput} prefix={<FiLock size={16} />} onChange={handleFormChange('oldPassword')} suffix={passwordSuffix('oldPassword')} />
                     </Form.Item>
-                    {!fieldData?.oldPassword && <label onClick={handleFieldFocus(oldPasswordInput)}>Old password</label>}
+                    {!fieldData?.oldPassword && <label onClick={handleFieldFocus(oldPasswordInput)}>{translateContent('updatePassword.label.oldPassword')}</label>}
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.inputLabelPlaceholder}>
-                    <Form.Item name="newPassword" rules={[validateRequiredInputField('new password')]}>
+                    <Form.Item name="newPassword" rules={[validateRequiredInputField(translateContent('updatePassword.label.newPassword'))]}>
                         <Input data-testid="newPasswordInput" onChange={handleNewPasswordChange} type={showPassword?.newPassword ? 'text' : 'password'} ref={newPasswordInput} prefix={<FiLock size={16} />} suffix={passwordSuffix('newPassword')} onFocus={() => setTooltipVisible(true)} onBlur={() => setTooltipVisible(false)} />
                     </Form.Item>
-                    {!fieldData?.newPassword && <label onClick={handleFieldFocus(newPasswordInput)}>New password</label>}
+                    {!fieldData?.newPassword && <label onClick={handleFieldFocus(newPasswordInput)}>{translateContent('updatePassword.label.newPassword')}</label>}
                     {password && <PasswordStrengthMeter Row={Row} Col={Col} password={password} tooltipVisible={tooltipVisible} />}
                 </Col>
             </Row>
@@ -138,26 +139,26 @@ const ChangePasswordBase = ({ form, password, fieldData, setFieldData, setPasswo
                         name="confirmNewPassword"
                         dependencies={['newPassword']}
                         rules={[
-                            validateRequiredInputField('confirm password', false),
+                            validateRequiredInputField(translateContent('updatePassword.label.confirmPassword'), false),
                             ({ getFieldValue }) => ({
                                 validator(_, value) {
                                     if (!value || getFieldValue('newPassword') === value) {
                                         return Promise.resolve();
                                     }
-                                    return Promise.reject(new Error("New Password and Confirm Password doesn't match!"));
+                                    return Promise.reject(new Error(translateContent('global.validation.passwordNotMatch')));
                                 },
                             }),
                         ]}
                     >
                         <Input data-testid="confirmNewPasswordInput" type={showPassword?.confirmNewPassword ? 'text' : 'password'} ref={confirmPasswordInput} prefix={<FiLock size={16} />} onChange={handleFormChange('confirmNewPassword')} suffix={passwordSuffix('confirmNewPassword')} />
                     </Form.Item>
-                    {!fieldData?.confirmNewPassword && <label onClick={handleFieldFocus(confirmPasswordInput)}>Confirm password</label>}
+                    {!fieldData?.confirmNewPassword && <label onClick={handleFieldFocus(confirmPasswordInput)}>{translateContent('updatePassword.label.confirmPassword')}</label>}
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Button className={styles.fullWidth} data-testid="changePassword" type="primary" htmlType="submit">
-                        Change Password
+                        {translateContent('updatePassword.button.changePassword')}
                     </Button>
                 </Col>
             </Row>

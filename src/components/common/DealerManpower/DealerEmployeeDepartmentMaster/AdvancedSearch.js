@@ -9,6 +9,7 @@ import { withModal } from 'components/withModal';
 
 import { validateRequiredSelectField, searchValidator } from 'utils/validation';
 import { ModalButtons } from 'components/common/Button';
+import { translateContent } from 'utils/translateContent';
 
 const { Option } = Select;
 
@@ -33,20 +34,20 @@ export const AdvancedSearchFrom = (props) => {
         showSearch: true,
         allowClear: true,
     };
-    
+
     const modalProps = {
         reset: true,
         submit: true,
-        resetName: 'Reset',
-        submitName: 'Search',
+        resetName: translateContent('global.buttons.reset'),
+        submitName: translateContent('global.buttons.search'),
         handleResetFilter,
     };
     return (
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Division Name" name="divisionCode" initialValue={filterString?.divisionCode} rules={[validateRequiredSelectField('Division')]}>
-                        <Select placeholder="Select" {...selectProps}>
+                    <Form.Item label={translateContent('employeeDepartment.label.divisionName')} name="divisionCode" initialValue={filterString?.divisionCode} rules={[validateRequiredSelectField(translateContent('employeeDepartment.validation.division'))]}>
+                        <Select placeholder={translateContent('global.placeholder.select')} {...selectProps}>
                             {divisionData?.map((item) => (
                                 <Option key={item?.key} value={item?.key}>
                                     {item?.value}
@@ -57,7 +58,7 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item
-                        label="Department Name"
+                        label={translateContent('employeeDepartment.label.departmentName')}
                         initialValue={filterString?.keyword}
                         name="keyword"
                         rules={[
@@ -67,7 +68,7 @@ export const AdvancedSearchFrom = (props) => {
                         ]}
                         validateTrigger={['onFinish']}
                     >
-                        <Input placeholder="Search" allowClear />
+                        <Input placeholder={translateContent('employeeDepartment.label.search')} allowClear />
                     </Form.Item>
                 </Col>
             </Row>

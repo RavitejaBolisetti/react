@@ -19,7 +19,7 @@ const expandIcon = ({ isActive }) =>
         </>
     ) : (
         <>
-            <span>See more</span>
+            <span>{translateContent('global.buttons.seeMore')}</span>
             <SlArrowDown size={13} />
         </>
     );

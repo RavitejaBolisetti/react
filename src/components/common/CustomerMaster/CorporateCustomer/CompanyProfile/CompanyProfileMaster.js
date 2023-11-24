@@ -130,7 +130,7 @@ const CompanyProfileBase = (props) => {
     const onFinish = (values) => {
         const recordId = customerProfileData?.id || '';
         if (uploadedFile && !values?.customerConsent) {
-            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: 'Please accept consent.', placement: 'bottomRight' });
+            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: translateContent('customerMaster.notification.accept'), placement: 'bottomRight' });
             return;
         }
         const customerId = selectedCustomerId;
@@ -196,7 +196,7 @@ const CompanyProfileBase = (props) => {
     }, []);
 
     const downloadFileFromList = () => {
-        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: 'Your download will start soon' });
+        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: translateContent('global.generalMessage.downloadStart') });
         const extraParams = [
             {
                 key: 'docId',

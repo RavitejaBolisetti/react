@@ -635,7 +635,7 @@ export const VehiclePriceMasterBase = (props) => {
         handleButtonClick,
     };
     const viewProps = {
-        titleOverride: translateContent('global.drawerTitle.view').concat(moduleTitle),
+        titleOverride: translateContent('global.drawerTitle.view').concat(" ").concat(moduleTitle),
         isVisible: isFormVisible,
         onCloseAction,
         formData,

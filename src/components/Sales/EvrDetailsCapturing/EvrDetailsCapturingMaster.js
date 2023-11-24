@@ -479,7 +479,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
 
     const formProps = {
         isVisible: isFormVisible,
-        titleOverride: drawerTitle(formActionType).concat(translateContent('evrDetailsCapturing.heading.moduleTitle')),
+        titleOverride: drawerTitle(formActionType).concat(" ").concat(translateContent('evrDetailsCapturing.heading.moduleTitle')),
         handleButtonClick,
         formActionType,
         onCloseAction,

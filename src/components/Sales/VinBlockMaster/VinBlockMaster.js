@@ -276,7 +276,7 @@ export const VinBlockMasterBase = (props) => {
         handleButtonClick,
     };
     const viewProps = {
-        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
         isVisible: isFormVisible,
         onCloseAction,
         formData,

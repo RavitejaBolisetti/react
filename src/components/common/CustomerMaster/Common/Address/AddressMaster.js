@@ -20,7 +20,6 @@ import AddEditForm from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
 import ViewAddressList from './ViewAddressList';
 import { CardSkeleton } from 'components/common/Skeleton';
-import { LANGUAGE_EN } from 'language/en';
 
 import { NoDataFound } from 'utils/noDataFound';
 import { translateContent } from 'utils/translateContent';
@@ -94,7 +93,7 @@ const AddressMasterBase = (props) => {
     const [editingData, setEditingData] = useState({});
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
-    const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
+    const noDataTitle = translateContent('global.generalNotifications.noDataExist.title');
     const addDataTitle = (
         <p className={styles.textCenter}>
             Please add new address using <br /> <strong>“Add”</strong> button at top
