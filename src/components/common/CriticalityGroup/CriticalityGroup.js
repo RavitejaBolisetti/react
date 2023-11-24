@@ -218,7 +218,7 @@ export const CriticalityGroupMain = (props) => {
         showGlobalNotification,
         onFinish,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
         formData,
         setIsFormVisible,
         formActionType,

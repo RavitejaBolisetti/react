@@ -40,7 +40,7 @@ export default function EvrDetailsCapturingFilter(props) {
                                                 setAdvanceSearchVisible(true);
                                             }}
                                         >
-                                            Advance Filters
+                                            {translateContent('global.advanceFilter.title')}
                                         </Button>
                                     </Col>
                                 )}
@@ -73,7 +73,7 @@ export default function EvrDetailsCapturingFilter(props) {
                             </Col>
                             <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
                                 <Button className={styles.clearBtn} onClick={() => handleClear()} danger>
-                                    Clear
+                                    {translateContent('global.buttons.clear')}
                                 </Button>
                             </Col>
                         </Row>

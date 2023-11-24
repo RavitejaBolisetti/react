@@ -9,6 +9,7 @@ import { InputSkeleton } from 'components/common/Skeleton';
 import { tblSerialNumberColumn } from 'utils/tableColumn';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export default function DataTable({ filterString, isLoading, rowSelection = undefined, showSizeChanger = true, dynamicPagination = false, totalRecords = '10', pagination = true, removePagination = false, srl = true, srlTitle = '#', tableColumn, scroll = 'auto', tableData, rowKey = 'index', page = undefined, setPage = () => {} }) {
     const [tablePagination, setPagination] = useState({
@@ -80,7 +81,7 @@ export default function DataTable({ filterString, isLoading, rowSelection = unde
                         {tablePagination?.total && (
                             <>
                                 <span className={`${styles.marR20} ${styles.tableTextColor54}`}>
-                                    Total <span style={{ color: '#0b0b0c' }}> {tablePagination?.total} </span> {tablePagination?.total > 1 ? 'items' : 'item'}
+                                    {translateContent('global.label.Total')} <span style={{ color: '#0b0b0c' }}> {tablePagination?.total} </span> {tablePagination?.total > 1 ? translateContent('global.label.items') : translateContent('global.label.item')}
                                 </span>
                                 <Select defaultValue={tablePagination?.pageSize} onChange={handleChange} options={options} />
                             </>

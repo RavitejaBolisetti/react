@@ -111,7 +111,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={false} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label={translateContent('chartOfAccount.label.status')}>
-                                <Switch disabled={disableCheckBox} checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
+                                <Switch disabled={disableCheckBox} checkedChildren={translateContent('chartOfAccount.label.active')} unCheckedChildren={translateContent('chartOfAccount.label.inActive')} onChange={(checked) => (checked ? 1 : 0)} />
                             </Form.Item>
                         </Col>
                     </Row>

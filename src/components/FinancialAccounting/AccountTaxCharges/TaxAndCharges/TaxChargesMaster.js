@@ -294,7 +294,7 @@ export const TaxChargesMain = ({ typeData, moduleTitle, fetchDocumentDescription
             setAttributeType();
             setCalculationType();
         },
-        titleOverride: (formData?.taxChargesTypeCode ? 'Edit ' : 'Add ').concat(moduleTitle),
+        titleOverride: (formData?.taxChargesTypeCode ? 'Edit' : 'Add').concat(" ").concat(moduleTitle),
         onFinish,
         selectedTreeKey,
         selectedTreeData,

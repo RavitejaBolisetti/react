@@ -334,7 +334,7 @@ export const ProductHierarchyMain = ({ typeData, isLoading, moduleTitle, viewTit
         },
         handleResetBtn,
         buttonData,
-        titleOverride: (formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
+        titleOverride: (formData?.id ? 'Edit ' : 'Add ').concat(" ").concat(moduleTitle),
         onFinish,
         isFormBtnActive,
         setFormBtnActive,

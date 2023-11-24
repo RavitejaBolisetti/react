@@ -99,7 +99,7 @@ const ProductDetailMasterMain = (props) => {
     const { fetchList, resetData, saveData, listShowLoading, showGlobalNotification, typeData } = props;
     const { form, selectedRecordId, section, formActionType, handleFormValueChange, NEXT_ACTION } = props;
     const { fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading } = props;
-    const { isModelDataLoaded, isModelLoading, modelData, isVariantDataLoaded, isVariantLoading, variantData, isModelFamilyDataLoaded, isModelFamilyLoading, modelFamilyData, fetchModelFamilyLovList, listFamilyShowLoading, ITEM_TYPE } = props;
+    const { isModelLoading, modelData, isVariantLoading, variantData, isModelFamilyLoading, modelFamilyData, fetchModelFamilyLovList, listFamilyShowLoading, ITEM_TYPE } = props;
 
     const [formData, setformData] = useState({});
     const [optionalServices, setOptionalServices] = useState([]);

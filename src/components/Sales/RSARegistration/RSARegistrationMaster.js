@@ -7,13 +7,13 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Col, Form, Row, Empty } from 'antd';
+import { Col, Form, Row } from 'antd';
 
 import { tableColumn } from './tableColumn';
 import AdvanceFilter from './AdvanceFilter';
 import { RSAMainConatiner } from './RSAMainConatiner';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
+import { NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { ReportModal } from 'components/common/ReportModal/ReportModal';
 import { RSA_DOCUMENT_TYPE } from '../../Services/ShieldSchemeRegistartion/utils/rsaReportType';
@@ -26,14 +26,13 @@ import { rsaRegistrationDataAction } from 'store/actions/data/sales/rsaRegistrat
 import { schemeDescriptionDataAction } from 'store/actions/data/services/schemeDescriptionLov';
 import { employeeSearchDataAction } from 'store/actions/data/amcRegistration/employeeSearch';
 import { ListDataTable } from 'utils/ListDataTable';
-import { QUERY_BUTTONS_CONSTANTS, QUERY_BUTTONS_MNM_USER } from 'components/Services/ShieldSchemeRegistartion/utils/ShieldRegistrationContant';
+import { QUERY_BUTTONS_CONSTANTS } from 'components/Services/ShieldSchemeRegistartion/utils/ShieldRegistrationContant';
 import { AMC_CONSTANTS } from 'components/Services/ShieldSchemeRegistartion/utils/AMCConstants';
 import { RSA_REGISTRATION_STATUS, RSA_REGISTRATION_STATUS_MNM_USER } from './utils/RSARegistrationStatus';
 import { AMC_REQUEST_TITLE_CONSTANTS } from 'components/Services/ShieldSchemeRegistartion/utils/AMCRequestTitleConstant';
 import { CancelScheme } from 'components/Services/ShieldSchemeRegistartion/CancelScheme';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { AdvancedSearch } from './AdvancedSearch';
-import styles from 'assets/sass/app.module.scss';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
 import { validateRSAMenu } from './utils/validateRSAMenu';
 import { RSA_LEFTMENU_SECTION } from 'components/Sales/RSARegistration/constant/RSALeftMenuSection';
@@ -71,8 +70,6 @@ const mapStateToProps = (state) => {
         invoiceStatusList: loginUserData?.userType === AMC_CONSTANTS?.DEALER?.key ? Object.values(RSA_REGISTRATION_STATUS) : Object.values(RSA_REGISTRATION_STATUS_MNM_USER),
         rsaDetails,
         detailShieldData,
-        // receiptDetailData,
-        // isLoading,
         moduleTitle,
         isSearchLoading,
         isSearchDataLoaded,
@@ -105,7 +102,6 @@ const mapDispatchToProps = (dispatch) => ({
 
             listEmployeeShowLoading: employeeSearchDataAction.listShowLoading,
             saveData: rsaRegistrationDataAction.saveData,
-            resetData: shieldSchemeSearchDataAction.reset,
             resetDetail: shieldSchemeSearchDataAction.resetDetail,
             listShowLoading: shieldSchemeSearchDataAction.listShowLoading,
             showGlobalNotification,
@@ -115,7 +111,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const RSARegistrationMasterBase = (props) => {
-    const { userId, loginUserData, typeData, data, showGlobalNotification, totalRecords, moduleTitle, invoiceStatusList, fetchList, fetchDetail, fetchDetailByVINNOTF, fetchSchemeDescription, fetchEmployeeList, listShowLoading, listEmployeeShowLoading, setFilterString, filterString, rsaDetails, detailShieldData, resetData, resetDetail, isEmployeeDataLoaded, isEmployeeDataLoading, employeeData, managerData, fetchManagerList, schemeDetail, saveData } = props;
+    const { userId, loginUserData, typeData, data, showGlobalNotification, totalRecords, moduleTitle, invoiceStatusList, fetchList, fetchDetail, fetchDetailByVINNOTF, fetchSchemeDescription, fetchEmployeeList, listShowLoading, listEmployeeShowLoading, setFilterString, filterString, rsaDetails, detailShieldData, resetDetail, isEmployeeDataLoaded, isEmployeeDataLoading, employeeData, managerData, fetchManagerList, schemeDetail, saveData } = props;
     const [selectedOrder, setSelectedOrder] = useState();
     const [selectedOrderId, setSelectedOrderId] = useState();
 
@@ -194,8 +190,7 @@ export const RSARegistrationMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [loginUserData?.userType]);
 
-    const onSuccessAction = (res) => {
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+    const onSuccessAction = () => {
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
@@ -295,8 +290,6 @@ export const RSARegistrationMasterBase = (props) => {
             const nextSection = Object.values(sectionName)?.find((i) => i?.displayOnList && i.id > currentSection);
             setLastSection(!nextSection?.id);
         }
-        // form.resetFields();
-        // form.setFieldsValue(undefined);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
 
@@ -358,8 +351,6 @@ export const RSARegistrationMasterBase = (props) => {
         }
     };
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
-        // form.resetFields();
-        // form.setFieldsValue(undefined);
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
@@ -372,11 +363,6 @@ export const RSARegistrationMasterBase = (props) => {
                 record && setSelectedOrderId(record?.id);
                 defaultSection && setCurrentSection(defaultSection);
                 setIsFormVisible(true);
-                // setSelectedOrder(record);
-                // record && setSelectedRecordId(record?.otfId);
-                // record && setSelectedOrderId(record?.otfNumber);
-                // record && setSelectedBookingId(record?.bookingNumber);
-                // defaultSection && setCurrentSection(defaultSection);
                 break;
             case NEXT_ACTION:
                 const nextSection = Object.values(sectionName)?.find((i) => validateRSAMenu({ item: i, formActionType }) && i.id > currentSection);
@@ -449,23 +435,11 @@ export const RSARegistrationMasterBase = (props) => {
                 },
             ];
             fetchSchemeDescription({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-            // eslint-disable-next-line react-hooks/exhaustive-deps
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, vinNumber]);
 
-    // const handleEmployeeSearch = (value) => {
-    //     if (value) {
-    //         const extraParams = [
-    //             {
-    //                 key: 'searchParam',
-    //                 value: value,
-    //             },
-    //         ];
-    //         fetchEmployeeList({ setIsLoading: listEmployeeShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-    //     }
-    // };
-
-    const onFinish = ({ type = null }) => {
+    const onFinish = () => {
         const data = { ...requestPayload, rsaRegistrationDetails: { ...requestPayload?.registrationDetails, registrationInformation: { ...requestPayload?.registrationDetails?.registrationInformation, employeeCode: requestPayload?.registrationDetails?.registrationInformation?.employeeName, managerCode: requestPayload?.registrationDetails?.registrationInformation?.managerName } }, vehicleAndCustomerDetails: requestPayload?.vehicleAndCustomerDetails };
         delete data?.registrationDetails;
         delete data?.rsaRegistrationDetails?.registrationInformation?.employeeName;
@@ -479,17 +453,8 @@ export const RSARegistrationMasterBase = (props) => {
             setIsFormVisible(false);
         };
 
-        // const sectionKey = {
-        //     partyDetails: RECEIPT_SECTION.PARTY_DETAILS.id,
-        //     receiptsDetails: RECEIPT_SECTION.RECEIPT_DETAILS.id,
-        //     apportionDetails: RECEIPT_SECTION.APPORTION_DETAILS.id,
-        // };
-
-        const onError = (message, errorData, errorSection) => {
+        const onError = (message) => {
             showGlobalNotification({ message });
-            // if (errorSection) {
-            //     errorSection && setCurrentSection(sectionKey?.[errorSection]);
-            // }
         };
 
         const requestData = {
@@ -505,10 +470,6 @@ export const RSARegistrationMasterBase = (props) => {
 
         saveData(requestData);
     };
-
-    // const showCancelConfirm = () => {
-    //     setCancelSchemeVisible(true);
-    // };
 
     const onCloseAction = () => {
         resetDetail();
@@ -527,7 +488,6 @@ export const RSARegistrationMasterBase = (props) => {
 
         setSelectedOrder();
         setIsFormVisible(false);
-        // setCancelReceiptVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
         setRequestPayload();
     };
@@ -546,17 +506,6 @@ export const RSARegistrationMasterBase = (props) => {
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
-
-    const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
-
-    // const showCancelSchemeConfirm = () => {
-    //     setCancelSchemeVisible(true);
-    // };
-
-    // const handleCloseScheme = () => {
-    //     setCancelSchemeVisible(false);
-    //     cancelSchemeForm.resetFields();
-    // };
 
     const handleCancelScheme = () => {
         const cancelRemarks = cancelSchemeForm.getFieldValue().cancelRemarks;
@@ -689,8 +638,6 @@ export const RSARegistrationMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [cancelSchemeVisible]);
 
-    const onCancelScheme = () => {};
-
     const handlePrintDownload = (record) => {
         let typeRecordKey = record?.typeRecord === RSA_DOCUMENT_TYPE?.INVOICE_RSA?.value ? RSA_DOCUMENT_TYPE?.INVOICE_RSA?.key : record?.typeRecord === RSA_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_RSA?.value ? RSA_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_RSA?.key : record?.typeRecord === RSA_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_RSA?.value ? RSA_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_RSA?.key : null;
         setReportButtonType(record?.typeRecord);
@@ -741,7 +688,7 @@ export const RSARegistrationMasterBase = (props) => {
         setAdvanceSearchVisible,
         invoiceStatusList,
         typeData,
-        // onFinishSearch,
+
         userType,
     };
 
@@ -776,10 +723,9 @@ export const RSARegistrationMasterBase = (props) => {
         setFormActionType,
         resetDetail,
         onFinalSubmit: onFinish,
-        // onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
         ADD_ACTION,
         EDIT_ACTION,
         VIEW_ACTION,
@@ -788,7 +734,6 @@ export const RSARegistrationMasterBase = (props) => {
         requestPayload,
         setRequestPayload,
         handleCancelRequest,
-        vehicleCustomerForm,
         buttonData,
         setButtonData,
         handleButtonClick,
@@ -804,18 +749,15 @@ export const RSARegistrationMasterBase = (props) => {
         currentSection,
         sectionName,
         setCurrentSection,
-        // handleFormValueChange,
         isLastSection,
         typeData,
-        // handlePrintDownload,
         saveButtonName: isLastSection ? 'Submit' : 'Save & Next',
         setLastSection,
-        // showCancelConfirm,
+
         confirmRequest,
         setConfirmRequest,
         handleWholeSchemeCancellation,
         handleCancelScheme,
-        // showCancelSchemeConfirm,
         saleType,
         rsaDetails,
         detailShieldData,
@@ -825,7 +767,6 @@ export const RSARegistrationMasterBase = (props) => {
         handleSaleTypeChange,
         handleOtfSearch,
         handleVinSearch,
-        // handleEmployeeSearch,
         vinNumber,
         setVinNumber,
         bookingNumber,

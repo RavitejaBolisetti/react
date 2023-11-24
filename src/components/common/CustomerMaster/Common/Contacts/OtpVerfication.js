@@ -14,6 +14,7 @@ import { RxCrossCircled } from 'react-icons/rx';
 import { withModal } from 'components/withModal';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 const OtpVarificationModalMain = (props) => {
     const {  inValidOTP, counter, handleVerifyOTP, otpMessage, disableVerifyOTP, handleSendOTP, otpInput, onSentOTP, handleOTPInput } = props;
     const [form] = Form.useForm();
@@ -45,24 +46,24 @@ const OtpVarificationModalMain = (props) => {
                                             {inValidOTP ? (
                                                 <span>
                                                     <RxCrossCircled />
-                                                    {'Incorrect OTP'}
+                                                    {translateContent('global.validation.incorrectOTP')}
                                                 </span>
                                             ) : (
-                                                <span>{"Didn't receive an OTP?"}</span>
+                                                <span>{translateContent('global.label.DidnotReceiveAnOTP')}</span>
                                             )}
                                         </div>
                                     )}
                                 </Col>
                                 <Col xs={10} sm={10} md={8} lg={8} xl={8}>
                                     <div onClick={() => handleSendOTP()} className={counter ? styles.resendDisabled : styles.resendEnabled} type="radio">
-                                        <TbRefresh /> Resend OTP
+                                        <TbRefresh /> {translateContent('global.buttons.resendOTP')}
                                     </div>
                                 </Col>
                             </Row>
                         </Col>
                     </Row>
                     <Button onClick={handleVerifyOTP} disabled={disableVerifyOTP} loading={false} className={styles.button} type="primary">
-                        Verify OTP
+                    {translateContent('global.buttons.verifyOTP')}
                     </Button>
 
                     <Row gutter={20}>

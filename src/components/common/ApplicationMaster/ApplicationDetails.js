@@ -16,7 +16,7 @@ import { customSelectBox } from 'utils/customSelectBox';
 import { translateContent } from 'utils/translateContent';
 
 const { Option } = Select;
-const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_CHILD_WARNING;
+// const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_CHILD_WARNING;
 
 const ApplicationDetails = ({ setCanFormSave, form, onFinishFailed = () => {}, parentAppCode, isReadOnly, isFieldDisable, onFinish, setIsRestrictedLocation, setParentAppCode, setIsDocumentToGenerate, finalFormdata, criticalityGroupData, configurableParamData, menuData, setSelectedTreeKey, selectedTreeKey, showGlobalNotification, isApplicatinoOnSaveLoading, canFormSave, onCloseAction }) => {
     useEffect(() => {
@@ -35,7 +35,7 @@ const ApplicationDetails = ({ setCanFormSave, form, onFinishFailed = () => {}, p
 
     const handleSelectTreeClick = (value) => {
         if (value === finalFormdata?.applicationDetails?.applicationId) {
-            return showGlobalNotification({ notificationType: 'warning', title: sameParentAndChildWarning?.TITLE, message: sameParentAndChildWarning?.MESSAGE, placement: 'bottomRight' });
+            return showGlobalNotification({ notificationType: 'warning', title: translateContent('global.notificationSuccess.warning'), message: translateContent('global.generalMessage.selectDifferentParent'), placement: 'bottomRight' });
         }
 
         setCanFormSave(true);
@@ -67,7 +67,7 @@ const ApplicationDetails = ({ setCanFormSave, form, onFinishFailed = () => {}, p
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label={translateContent('applicationMaster.label.applicationName')}name="applicationName" rules={[validateRequiredInputField('applicationMaster.validation.applicationName')]}>
+                        <Form.Item label={translateContent('applicationMaster.label.applicationName')} name="applicationName" rules={[validateRequiredInputField('applicationMaster.validation.applicationName')]}>
                             <Input disabled={isFieldDisable} maxLength={50} placeholder={preparePlaceholderText('applicationMaster.placeholder.applicationName')} />
                         </Form.Item>
                     </Col>

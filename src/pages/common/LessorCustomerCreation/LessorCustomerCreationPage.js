@@ -7,9 +7,10 @@ import React from 'react';
 import { ListCustomerCreation } from 'components/common/LessorCustomerCreation';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
+import { translateContent } from 'utils/translateContent';
 
 export const LessorCustomerCreationBase = (props) => {
-    const pageTitle = 'Lessor Customer Creation';
+    const pageTitle = translateContent('lessorCompanyCreation.heading.pageTitle');
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

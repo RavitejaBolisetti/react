@@ -298,7 +298,7 @@ export const DesignationMasterBase = (props) => {
         onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(translateContent('designationMaster.heading.drawerTitle')),
+        titleOverride: drawerTitle(formActionType).concat(" ").concat(translateContent('designationMaster.heading.drawerTitle')),
         tableData: searchData,
         divisionData,
         departmentData,

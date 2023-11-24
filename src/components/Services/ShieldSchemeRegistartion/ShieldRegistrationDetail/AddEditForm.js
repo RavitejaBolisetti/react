@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Row, Col, Input, Form, Collapse, Divider, Select, DatePicker } from 'antd';
 import { expandActionIcon } from 'utils/accordianExpandIcon';
 import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
@@ -20,10 +20,8 @@ const { Search } = Input;
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { formData, saleTypes, vinNumber, bookingNumber, schemeDetail, employeeData, managerData, shieldDetailForm, handleOtfSearch, handleVinSearch, handleEmployeeSearch, handleOtfChange, saleType, handleSaleTypeChange, formActionType, isSchemeLoading, isEmployeeDataLoading, handleOnSelect, handleOnClear, screenType } = props;
+    const { formData, saleTypes, vinNumber, bookingNumber, schemeDetail, employeeData, managerData, shieldDetailForm, handleOtfSearch, handleVinSearch, handleOtfChange, saleType, handleSaleTypeChange, formActionType, isSchemeLoading } = props;
     const { activeKey, setActiveKey } = props;
-    // const [activeKey, setActiveKey] = useState([]);
-    const [selectedScheme, setSelectedScheme] = useState([]);
 
     useEffect(() => {
         shieldDetailForm.setFieldsValue({ registrationInformation: { vin: vinNumber, otf: bookingNumber } });
@@ -42,7 +40,6 @@ const AddEditFormMain = (props) => {
 
     const handleSchemeDescription = (key) => {
         const selectedScheme = schemeDetail?.find((i) => i.schemeDescription === key);
-        setSelectedScheme(selectedScheme);
         if (selectedScheme) {
             shieldDetailForm.setFieldsValue({
                 schemeDetails: {
@@ -64,7 +61,6 @@ const AddEditFormMain = (props) => {
                 <Collapse collapsible="icon" expandIcon={({ isActive }) => expandActionIcon(isActive, formActionType)} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
                     <Panel header={translateContent('shieldSchemeRegistration.heading.registrationInformation')} key="1">
                         <Divider />
-                        {/* <Form layout="vertical" autoComplete="off" form={registrationForm} onFieldsChange={handleFormValueChange}> */}
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item initialValue={formData?.saleType} label={translateContent('shieldSchemeRegistration.label.saleType')} name={['registrationInformation', 'saleType']} rules={[validateRequiredSelectField(translateContent('shieldSchemeRegistration.label.saleType'))]}>

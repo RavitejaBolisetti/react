@@ -17,7 +17,6 @@ import { STATUS } from '../statusConstant';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
 import { getCodeValue } from 'utils/getCodeValue';
-import { LANGUAGE_EN } from 'language/en';
 import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
@@ -74,7 +73,7 @@ const ViewDetailMain = (props) => {
             });
             setRefreshCustomerList(true);
             setRefreshData(true);
-            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: 'Customer name change request updated successfully' });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: translateContent('customerMaster.notification.cusNameChange') });
         };
 
         const onError = (message) => {
@@ -95,13 +94,13 @@ const ViewDetailMain = (props) => {
     const handleRequest = (type) => {
         setConfirmRequest({
             isVisible: true,
-            titleOverride: STATUS?.APPROVED?.key === type ? LANGUAGE_EN.GENERAL.APPROVE_CONFIRMATION.TITLE : REJECT_TITLE,
+            titleOverride: STATUS?.APPROVED?.key === type ? translateContent('global.generalNotifications.approveConfirmation.title') : REJECT_TITLE,
             closable: true,
             icon: false,
             onCloseAction,
             onSubmitAction: (values) => onStatusChange({ ...values, status: type }),
             submitText: STATUS?.APPROVED?.key === type ? 'Yes, Approve' : 'Yes, Reject',
-            text: STATUS?.APPROVED?.key === type && LANGUAGE_EN.GENERAL.APPROVE_CONFIRMATION.MESSAGE,
+            text: STATUS?.APPROVED?.key === type && translateContent('global.generalNotifications.approveConfirmation.message'),
             showField: STATUS?.REJECTED?.key === type,
         });
     };

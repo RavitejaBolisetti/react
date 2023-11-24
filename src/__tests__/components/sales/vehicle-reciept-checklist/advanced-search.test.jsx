@@ -34,6 +34,7 @@ describe('vehicle reciept checklist Advance Search components', () => {
 
     it('should render advanced search button component', () => {
         customRender(<FormWrapper setSelectedTreeSelectKey={jest.fn()} isVisible={true} setrules={jest.fn()} />);
+        
         const closeBtn = screen.getAllByRole('button', { value: 'Close' });
         fireEvent.click(closeBtn[0]);
         fireEvent.click(closeBtn[1]);

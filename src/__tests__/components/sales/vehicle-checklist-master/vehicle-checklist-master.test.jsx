@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-mocks-import */
 /*
  *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
@@ -6,6 +7,7 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 import { VehicleChecklistMaster } from 'components/Sales/VehicleChecklistMaster';

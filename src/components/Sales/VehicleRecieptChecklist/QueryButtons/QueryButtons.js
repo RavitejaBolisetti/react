@@ -6,6 +6,7 @@
 import { Button } from 'antd';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const QueryButtons = ({ items = {}, onClick, currentItem = items?.PENDING?.key }) => {
     return (
@@ -13,7 +14,7 @@ export const QueryButtons = ({ items = {}, onClick, currentItem = items?.PENDING
             {Object.entries(items)?.map(([keyName, item], index) => {
                 return (
                     <Button onClick={() => onClick(item, keyName)} type={currentItem === item?.key ? 'primary' : 'link'}>
-                        {item?.title}
+                        {translateContent(item?.translateKey)}
                     </Button>
                 );
             })}

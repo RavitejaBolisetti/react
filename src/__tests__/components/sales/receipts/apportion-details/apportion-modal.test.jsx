@@ -47,7 +47,7 @@ describe('Receipts apportion details Master components', () => {
 
         const docNo = screen.getByRole('textbox', { name: 'Document Number' });
         fireEvent.change(docNo, { target: { value: '112' } });
-        const closeCircle = screen.getByRole('img', { name: /close\-circle/i });
+        const closeCircle = screen.getByRole('img', { name: /close-circle/i });
         fireEvent.click(closeCircle);
         fireEvent.change(docNo, { target: { value: '11' } });
 

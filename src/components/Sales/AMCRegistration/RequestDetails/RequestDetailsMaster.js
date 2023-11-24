@@ -34,7 +34,6 @@ const RequestDetailsMasterBase = (props) => {
         isPendingForCancellation,
         setIsPendingForCancellation,
         userType,
-        typeData
     };
 
     return (

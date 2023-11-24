@@ -357,7 +357,7 @@ export const ListCityMasterBase = (props) => {
         onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
         tableData: data,
         isDataCountryLoaded,
         isCountryLoading,
