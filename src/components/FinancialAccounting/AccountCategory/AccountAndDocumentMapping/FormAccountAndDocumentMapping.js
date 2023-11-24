@@ -74,7 +74,7 @@ function FormAccountAndDocumentMapping(props) {
                                     addDocAndMapp();
                                 }}
                             >
-                                {translateContent('global.button.add')}
+                                {translateContent('global.buttons.add')}
                             </Button>
                         </Col>
                     )}

@@ -9,7 +9,7 @@ import { translateContent } from 'utils/translateContent';
 
 export const validateRequiredInputField = (fieldName, lowercase = true) => ({
     required: true,
-    message: translateContent('global.validation.input ').concat(lowercase ? fieldName?.toLowerCase() : fieldName),
+    message: translateContent('global.validation.input').concat(lowercase ? fieldName?.toLowerCase() : fieldName),
 });
 
 export const validateRequiredInputFieldMinLength = (fieldName, lowercase = true) => ({
