@@ -12,9 +12,8 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { addToolTip } from 'utils/customMenuLink';
 import { DataTable } from 'utils/dataTable';
 import { expandIcon } from 'utils/accordianExpandIcon';
-import { DATA_TYPE } from 'constants/dataType';
 
-import { taxDetailsColumn, optionalServicesColumns } from './tableColumn';
+import { taxDetailsColumn } from './tableColumn';
 import { getCodeValue } from 'utils/getCodeValue';
 import { prepareCaption } from 'utils/prepareCaption';
 import { translateContent } from 'utils/translateContent';
@@ -22,7 +21,7 @@ import { CollapseOnChange } from 'utils/CollapseOnChange';
 
 const { Panel } = Collapse;
 export const ViewDetail = (props) => {
-    const { typeData, isLoading, formActionType, activeKey, toolTipContent, styles, formData, showPrintDiscount = false, isOTFModule, collapseActiveKey, setcollapseActiveKey } = props;
+    const { typeData, isLoading, activeKey, toolTipContent, styles, formData, collapseActiveKey, setcollapseActiveKey } = props;
     const viewProps = {
         bordered: false,
         colon: false,
@@ -44,17 +43,6 @@ export const ViewDetail = (props) => {
                                     </div>
                                 </Descriptions.Item>
                                 <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(formData?.modelCode, isLoading)}</Descriptions.Item>
-                                {isOTFModule && (
-                                    <>
-                                        <Descriptions.Item label="Available Stock">{checkAndSetDefaultValue(formData?.availableStock, isLoading)}</Descriptions.Item>
-
-                                        <Descriptions.Item label="PO Number">{checkAndSetDefaultValue(formData?.poNumber, isLoading)}</Descriptions.Item>
-                                        <Descriptions.Item label="PO Date">{checkAndSetDefaultValue(formData?.poDate ? formData?.poDate : undefined, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                                        <Descriptions.Item label="PO Status">{checkAndSetDefaultValue(formData?.poStatus, isLoading)}</Descriptions.Item>
-                                        <Descriptions.Item label="SO Number">{checkAndSetDefaultValue(formData?.soNumber, isLoading)}</Descriptions.Item>
-                                        <Descriptions.Item label="SO Status">{checkAndSetDefaultValue(formData?.soStatus, isLoading)}</Descriptions.Item>
-                                    </>
-                                )}
                                 <Descriptions.Item label="VIN">{checkAndSetDefaultValue(formData?.vinNumber, isLoading)}</Descriptions.Item>
                             </Descriptions>
 
@@ -68,7 +56,6 @@ export const ViewDetail = (props) => {
                             <Descriptions {...viewProps} title={prepareCaption(translateContent('vehicleInvoiceGeneration.heading.captions.benefit'))}>
                                 <Descriptions.Item label="Dealer Discount with TAX">{checkAndSetDefaultValue(formData?.discountAmount, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Consumer Scheme with TAX">{checkAndSetDefaultValue(formData?.taxAmount, isLoading)}</Descriptions.Item>
-                                {showPrintDiscount && <Descriptions.Item label="Print Discount">{formData?.printDiscount === 'Y' ? 'Yes' : 'No'}</Descriptions.Item>}
                             </Descriptions>
                         </Panel>
                     </Collapse>
@@ -76,14 +63,7 @@ export const ViewDetail = (props) => {
                     <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => CollapseOnChange(2, collapseActiveKey, setcollapseActiveKey)} expandIconPosition="end" className={styles?.collapseContainer} collapsible="icon">
                         <Panel header="Tax Details" key="2">
                             <Divider />
-                            <DataTable tableColumn={taxDetailsColumn()} tableData={formData['taxDetails']} pagination={false} />
-                        </Panel>
-                    </Collapse>
-
-                    <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => CollapseOnChange(3, collapseActiveKey, setcollapseActiveKey)} expandIconPosition="end" className={styles?.collapseContainer} collapsible="icon">
-                        <Panel header="Optional Services" key="3">
-                            <Divider />
-                            <DataTable tableColumn={optionalServicesColumns({ formActionType })} tableData={formData['optionalServices']} pagination={false} />
+                            <DataTable tableColumn={taxDetailsColumn()} tableData={formData?.['taxDetails']} pagination={false} />
                         </Panel>
                     </Collapse>
                 </Col>

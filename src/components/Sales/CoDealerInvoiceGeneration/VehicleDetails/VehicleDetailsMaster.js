@@ -17,7 +17,6 @@ import { ViewDetail } from './ViewDetail';
 import { CoDealerFormButton } from '../CoDealerFormButton';
 
 import styles from 'assets/sass/app.module.scss';
-import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -56,16 +55,28 @@ const mapDispatchToProps = (dispatch) => ({
 
 const VehicleDetailsMain = (props) => {
     const { CoDealerInvoiceStateMaster, form, handleFormValueChange, section, formActionType } = props;
+
+    const [formData, setFormData] = useState();
     const [collapseActiveKey, setcollapseActiveKey] = useState([1]);
 
+    useEffect(() => {
+        if (CoDealerInvoiceStateMaster?.vehicleDetailRequest) {
+            setFormData({ ...CoDealerInvoiceStateMaster?.vehicleDetailRequest });
+        }
+        return () => {
+            setFormData();
+        };
+    }, [CoDealerInvoiceStateMaster?.vehicleDetailRequest, form, section?.id]);
+
     const formProps = {
-        formdata: CoDealerInvoiceStateMaster?.vehicleDetails,
-        formActionType,
+        ...props,
+        formData,
         collapseActiveKey,
         setcollapseActiveKey,
     };
     const viewProps = {
-        formdata: CoDealerInvoiceStateMaster?.vehicleDetails,
+        ...formProps,
+        formData,
     };
 
     return (
@@ -82,7 +93,7 @@ const VehicleDetailsMain = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <CoDealerFormButton {...props} buttonData={{ ...props.buttonData, saveBtn: false, nextBtn: true }} />
+                    <CoDealerFormButton {...props} />
                 </Col>
             </Row>
         </Form>

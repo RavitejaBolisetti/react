@@ -3,36 +3,39 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
-import { Col, Input, Form, Row, Button, Collapse, Typography, Divider, Switch } from 'antd';
+import React, { useEffect } from 'react';
+import { Col, Input, Form, Row, Collapse, Divider } from 'antd';
 import { validateRequiredSelectField, validateNumberWithTwoDecimalPlaces, validateRequiredInputField, compareAmountValidator } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { PlusOutlined } from '@ant-design/icons';
 import { PARAM_MASTER } from 'constants/paramMaster';
-import dayjs from 'dayjs';
 
 import { DataTable } from 'utils/dataTable';
-import { taxDetailsColumn, optionalServicesColumns } from './tableColumn';
+import { taxDetailsColumn } from './tableColumn';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { addToolTip } from 'utils/customMenuLink';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
-import { getCodeValue } from 'utils/getCodeValue';
 import { CollapseOnChange } from 'utils/CollapseOnChange';
 
 import { customSelectBox } from 'utils/customSelectBox';
-import { prepareCaption } from 'utils/prepareCaption';
 import styles from 'assets/sass/app.module.scss';
-import { ConfirmationModal } from 'utils/ConfirmationModal';
 import { translateContent } from 'utils/translateContent';
+import { CardSkeleton } from 'components/common/Skeleton';
 
-const { Text } = Typography;
 const { Panel } = Collapse;
 
 export const AddEditForm = (props) => {
     const { toolTipContent, formData, typeData } = props;
-    const { collapseActiveKey, setcollapseActiveKey, formActionType, filterVehicleData, handleVehicleDetailChange, showPrintDiscount = false, isOTFModule } = props;
+    const { collapseActiveKey, setcollapseActiveKey, CoDealerInvoiceStateMaster } = props;
     const { isDisabled = true, form } = props;
     const disabledProps = { disabled: isDisabled };
+
+    useEffect(() => {
+        if (formData) {
+            form.setFieldsValue({ ...formData });
+        }
+    }, [formData, form]);
+
+    if (!formData) return <CardSkeleton title={false} />;
 
     return (
         <>
@@ -47,7 +50,7 @@ export const AddEditForm = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.modelDescription')} name="model" data-testid="model">
+                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.modelDescription')} name="modelDescription" data-testid="model">
                                         <Input {...disabledProps} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.modelDescription'))} />
                                     </Form.Item>
                                     {toolTipContent && <div className={styles.modelTooltip}>{addToolTip(toolTipContent, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle size={13} />)}</div>}
@@ -60,17 +63,17 @@ export const AddEditForm = (props) => {
 
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item initialValue={formData?.saleType} name="saleType" label={translateContent('commonModules.label.vehicleDetails.saleType')} rules={[validateRequiredSelectField('Sale Type')]}>
-                                        {customSelectBox({ data: typeData?.['SALE_TYPE'], onChange: (value) => handleVehicleDetailChange({ ...filterVehicleData, saleType: value }) })}
+                                        {customSelectBox({ data: CoDealerInvoiceStateMaster?.SALE_TYPE, onChange: (value) => {} })}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item initialValue={formData?.priceType} label={translateContent('commonModules.label.vehicleDetails.priceType')} name="priceType">
-                                        {customSelectBox({ data: typeData?.['PRC_TYP'], onChange: (value) => handleVehicleDetailChange({ ...filterVehicleData, priceType: value }) })}
+                                        {customSelectBox({ data: CoDealerInvoiceStateMaster?.PRC_TYP, onChange: (value) => {} })}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item initialValue={formData?.taxCalculationType} label={translateContent('commonModules.label.bookingDetails.taxCalculation')} name="taxCalculationType" rules={[validateRequiredSelectField('Tax Calculation')]}>
-                                        {customSelectBox({ data: typeData?.[PARAM_MASTER.TAX_CALCLTN_TYPE.id], placeholder: preparePlaceholderSelect('Tax Calculation') })}
+                                        {customSelectBox({ data: CoDealerInvoiceStateMaster?.TAX_CALCLTN_TYPE, placeholder: preparePlaceholderSelect('Tax Calculation') })}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -106,7 +109,7 @@ export const AddEditForm = (props) => {
                         </Panel>
                     </Collapse>
 
-                    <Collapse expandIcon={expandIcon} collapseActiveKey={collapseActiveKey} onChange={() => CollapseOnChange(2, collapseActiveKey, setcollapseActiveKey)} expandIconPosition="end" collapsible="icon">
+                    <Collapse expandIcon={expandIcon} activeKey={collapseActiveKey} onChange={() => CollapseOnChange(2, collapseActiveKey, setcollapseActiveKey)} expandIconPosition="end" collapsible="icon">
                         <Panel header={translateContent('vehicleInvoiceGeneration.heading.collapse.taxDetails')} key="2">
                             <Divider />
                             <DataTable tableColumn={taxDetailsColumn()} tableData={formData?.['taxDetails']} pagination={false} />

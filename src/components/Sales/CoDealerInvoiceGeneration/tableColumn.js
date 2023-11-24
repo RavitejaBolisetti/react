@@ -25,7 +25,7 @@ const handleTableColumn = (currentQuery) => {
     }
 };
 
-export const tableColumnDeliveryNoteMaster = ({ handleButtonClick, actionButtonVisiblity, currentQuery }) => {
+export const tableColumnCoDealer = ({ handleButtonClick, actionButtonVisiblity, currentQuery }) => {
     const tableColumn = [
         handleTableColumn(currentQuery)?.invoiceNumber &&
             tblPrepareColumns({

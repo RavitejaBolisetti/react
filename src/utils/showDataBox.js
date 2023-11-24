@@ -21,7 +21,7 @@ export const ShowDataBox = (DATA_1 = null, DATA_2 = null, type = '') => {
                 return (
                     <>
                         <Text strong>{DATA_1}</Text>
-                        <div className={styles.tableTextColor85}>{convertDateMonthYear(DATA_2)}</div>
+                        <div className={styles.tableTextColor85}>{DATA_2 ? convertDateMonthYear(DATA_2) : '-'}</div>
                     </>
                 );
 

@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Form, Row, Col } from 'antd';
 
 import { connect } from 'react-redux';
@@ -18,6 +18,7 @@ import { CoDealerFormButton } from '../CoDealerFormButton';
 
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
+import { convertDateTimedayjs, dateFormatView } from 'utils/formatDateTime';
 
 const mapStateToProps = (state) => {
     const {
@@ -62,13 +63,25 @@ const mapDispatchToProps = (dispatch) => ({
 
 const IndentDetailsMain = (props) => {
     const { CoDealerInvoiceStateMaster, form, handleFormValueChange, section, formActionType } = props;
+    const [formData, setFormData] = useState();
+
+    useEffect(() => {
+        if (CoDealerInvoiceStateMaster?.indentDetails) {
+            setFormData({ ...CoDealerInvoiceStateMaster?.indentDetails });
+        }
+        return () => {
+            setFormData();
+        };
+    }, [CoDealerInvoiceStateMaster?.indentDetails, form, section?.id]);
 
     const formProps = {
-        formdata: CoDealerInvoiceStateMaster?.indentDetails,
+        formData,
         formActionType,
+        form,
     };
     const viewProps = {
-        formdata: CoDealerInvoiceStateMaster?.indentDetails,
+        formData,
+        form,
     };
 
     return (
