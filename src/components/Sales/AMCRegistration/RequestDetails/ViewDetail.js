@@ -11,6 +11,8 @@ import { translateContent } from 'utils/translateContent';
 import { DATA_TYPE } from 'constants/dataType';
 import { AMCStatusTags } from '../utils/AMCStatusTags';
 import styles from 'assets/sass/app.module.scss';
+import { getCodeValue } from 'utils/getCodeValue';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 const ViewDetail = (props) => {
     const { workflowMasterDetails, formData, userType, selectedAMC, handleCancelRequest, handleMNMApproval, handleMNMRejection, typeData } = props;
@@ -36,10 +38,10 @@ const ViewDetail = (props) => {
                                 </Row>
                                 {AMCStatusTags(data?.amcStatus)}
                             </Row>
-                            <Row type="flex" align="middle" className={selectedAMC?.status === AMC_CONSTANTS?.PENDING_FOR_CANCELLATION?.key ? '' : styles.marB20}>
+                            <Row type="flex" align="middle" className={data?.status === AMC_CONSTANTS?.PENDING_FOR_CANCELLATION?.key ? '' : styles.marB20}>
                                 <Col xs={24} sm={24} md={24} lg={24}>
                                     <div className={styles.tableTextColor85}>
-                                        {translateContent('amcRegistration.label.requestedOn')}: {checkAndSetDefaultValue(data?.amcCancelDate, false, DATA_TYPE?.DATE?.key)}
+                                        {translateContent('amcRegistration.label.requestedOn')}: {checkAndSetDefaultValue(data?.status === AMC_CONSTANTS?.PENDING_FOR_APPROVAL?.key ? data?.amcRegistrationDate : data?.status === AMC_CONSTANTS?.APPROVED?.key || data?.status === AMC_CONSTANTS?.REJECTED?.key ? data?.approvedDate : data?.amcCancelDate, false, DATA_TYPE?.DATE?.key)}
                                     </div>
                                 </Col>
                             </Row>
@@ -50,7 +52,7 @@ const ViewDetail = (props) => {
                                         <>
                                             <Divider className={styles.marB20} />
                                             <Descriptions {...viewProps} column={{ xs: 1, sm: 1, lg: 1, xl: 1, xxl: 1 }}>
-                                                <Descriptions.Item label={translateContent('amcRegistration.label.reasonForCancellationRquest')}>{checkAndSetDefaultValue(data?.amcCancelRemarks)}</Descriptions.Item>
+                                                <Descriptions.Item label={translateContent('amcRegistration.label.reasonForCancellationRquest')}>{checkAndSetDefaultValue(getCodeValue(typeData?.[PARAM_MASTER.AMC_CANCEL_REASON.id], data?.amcCancelRemarks))}</Descriptions.Item>
                                                 {data?.amcCancelRemarks === AMC_CONSTANTS?.OTHERS?.key && <Descriptions.Item label={translateContent('amcRegistration.label.otherReason')}>{checkAndSetDefaultValue(data?.otherReason)}</Descriptions.Item>}
                                             </Descriptions>
                                         </>
@@ -70,9 +72,11 @@ const ViewDetail = (props) => {
                                         </Col> */}
                                         {workflowMasterDetails?.allowedActions?.map((element, i) => {
                                             return (
-                                                <Button onClick={element?.actionCode === AMC_CONSTANTS?.WORKFLOW_APPROVE?.key ? () => handleMNMApproval() : () => handleMNMRejection()} type="primary" key={i}>
-                                                    {element?.actionName}
-                                                </Button>
+                                                <Col xs={8} sm={8} md={8} lg={8}>
+                                                    <Button onClick={element?.actionCode === AMC_CONSTANTS?.WORKFLOW_APPROVE?.key ? () => handleMNMApproval() : () => handleMNMRejection()} type="primary" key={i}>
+                                                        {element?.actionName}
+                                                    </Button>
+                                                </Col>
                                             );
                                         })}
                                     </Row>
@@ -85,7 +89,7 @@ const ViewDetail = (props) => {
                                                 <>
                                                     <Divider className={styles.marB20} />
                                                     <Descriptions {...viewProps}>
-                                                        <Descriptions.Item label={translateContent('amcRegistration.label.reasonForCancellationRquest')}>{checkAndSetDefaultValue(data?.amcCancelRemarks)}</Descriptions.Item>
+                                                        <Descriptions.Item label={translateContent('amcRegistration.label.reasonForCancellationRquest')}>{checkAndSetDefaultValue(getCodeValue(typeData?.[PARAM_MASTER.AMC_CANCEL_REASON.id], data?.amcCancelRemarks))}</Descriptions.Item>
                                                         {data?.amcCancelRemarks === AMC_CONSTANTS?.OTHERS?.key && <Descriptions.Item label={translateContent('amcRegistration.label.otherReason')}>{checkAndSetDefaultValue(data?.otherReason)}</Descriptions.Item>}
                                                     </Descriptions>
                                                 </>
@@ -98,7 +102,7 @@ const ViewDetail = (props) => {
                                                         <Descriptions.Item label={translateContent('amcRegistration.label.approvedOrRejectedBy')}>{checkAndSetDefaultValue(data?.approvedByOrRejectedBy)}</Descriptions.Item>
                                                         <Descriptions.Item label={translateContent('amcRegistration.label.userId')}>{checkAndSetDefaultValue(data?.userId)}</Descriptions.Item>
                                                         <Descriptions.Item label={translateContent('amcRegistration.label.approvedDate')}>{checkAndSetDefaultValue(data?.approvedDate, false, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                                                        {data?.requestStatus === AMC_CONSTANTS?.REJECTED?.key && <Descriptions.Item label={translateContent('amcRegistration.label.reasonForRejection')}>{checkAndSetDefaultValue(data?.reasonForRejection)}</Descriptions.Item>}
+                                                        {data?.requestStatus === AMC_CONSTANTS?.REJECTED?.key && <Descriptions.Item label={translateContent('amcRegistration.label.reasonForRejection')}>{checkAndSetDefaultValue(getCodeValue(typeData?.[PARAM_MASTER.AMC_CANCEL_REASON.id], data?.reasonForRejection))}</Descriptions.Item>}
                                                     </Descriptions>
                                                 </>
                                             )}
