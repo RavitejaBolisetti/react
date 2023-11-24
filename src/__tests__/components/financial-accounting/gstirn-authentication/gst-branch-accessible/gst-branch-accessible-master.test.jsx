@@ -5,6 +5,7 @@
  */
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import { GstBranchAccessibleMaster } from 'components/FinancialAccounting/GSTIRNAuthentication/GstBranchAccessible';
 import { Provider } from 'react-redux';

@@ -23,6 +23,7 @@ i18n.use(initReactI18next).init({
     },
 });
 
+// eslint-disable-next-line no-undef
 Object.defineProperty(globalThis, 'crypto', {
     value: { getRandomValues: randomFillSync },
 });

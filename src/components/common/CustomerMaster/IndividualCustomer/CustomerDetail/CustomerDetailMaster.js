@@ -179,9 +179,8 @@ const CustomerDetailMasterBase = (props) => {
         },
     ];
 
-
     const downloadFileFromButton = (uploadData) => {
-        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: 'Your download will start soon' });
+        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: translateContent('global.generalMessage.downloadStart') });
         const extraParams = [
             {
                 key: 'docId',
@@ -197,7 +196,7 @@ const CustomerDetailMasterBase = (props) => {
     const deleteFile = (uploadData) => {
         const data = { customerId: uploadData?.customerId, status: false, docId: uploadData?.docId, documentTypeId: uploadData?.documentType, id: uploadData?.id, documentName: uploadData?.documentName };
         const onSuccess = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: 'File deleted Successfully' });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: translateContent('customerMaster.notification.deleted') });
             fetchList({ setIsLoading: listSupportingDocumentShowLoading, userId });
         };
 
@@ -217,7 +216,7 @@ const CustomerDetailMasterBase = (props) => {
     };
 
     const downloadFileFromList = () => {
-        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: 'Your download will start soon' });
+        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: translateContent('global.generalMessage.downloadStart') });
         const extraParams = [
             {
                 key: 'docId',
@@ -240,7 +239,7 @@ const CustomerDetailMasterBase = (props) => {
 
     const onFinish = (values) => {
         if (!formActionType?.addMode && !numbValidatedSuccess && data?.mobileNumber !== values?.mobileNumber) {
-            showGlobalNotification({ message: 'Please verify mobile number to proceed.' });
+            showGlobalNotification({ message: translateContent('customerMaster.notification.verify') });
             return;
         }
         setFileList([]);

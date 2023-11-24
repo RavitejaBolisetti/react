@@ -23,7 +23,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CopytoClipboardMaster = (props) => {
-    const { text = '', type = 'link', buttonText, showGlobalNotification } = props;
+    const { text = '', type = 'link', buttonText = 'Copy', showGlobalNotification } = props;
 
     const handleClick = () => {
         text && navigator.clipboard.writeText(text);

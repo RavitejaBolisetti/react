@@ -870,7 +870,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         setFormActionType,
         isVisible: isFormVisible,
         onCloseAction: onCloseDrawer,
-        titleOverride: drawerTitle(formActionType).concat(translateContent('vehicleInvoiceGeneration.heading.drawerTitleMaster')),
+        titleOverride: drawerTitle(formActionType).concat(" ").concat(translateContent('vehicleInvoiceGeneration.heading.drawerTitleMaster')),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,

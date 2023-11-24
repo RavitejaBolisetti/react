@@ -8,21 +8,6 @@ import customRender from '@utils/test-utils';
 import { screen, fireEvent } from '@testing-library/react';
 import { AddEditForm } from '@components/Sales/VehicleAllotmentPriorityMaster/AddEditForm';
 
-const props = {
-    buttonData: {
-        cancelBtn: false,
-        closeBtn: true,
-        editBtn: false,
-        formBtnActive: false,
-        saveAndNewBtn: false,
-        saveAndNewBtnClicked: false,
-        saveBtn: true,
-        handleButtonClick: jest.fn(),
-        setButtonData: jest.fn(),
-        formBtnActive: true,
-    },
-};
-
 
 describe('add edit form component', () => {
     const viewVehicleAllotData = {
@@ -39,7 +24,7 @@ describe('add edit form component', () => {
         customRender(<AddEditForm isVisible={true} setButtonData={jest.fn()} viewVehicleAllotData={viewVehicleAllotData} formActionType={formActionType} />);
     });
 
-    it('it should click when user click on button ', () => {
+    it('should click when user click on button', () => {
         const formActionType = { editMode: true };
 
         customRender(<AddEditForm setButtonData={jest.fn()} viewVehicleAllotData={viewVehicleAllotData} isVisible={true} formActionType={formActionType} />);

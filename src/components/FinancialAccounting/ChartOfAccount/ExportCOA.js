@@ -13,17 +13,17 @@ import { translateContent } from 'utils/translateContent';
 export const ExportCOA = (props) => {
     const { modalOpen, setModalOpen, exportCoaForm, onCoaFinish } = props;
     return (
-        <Modal title={translateContent('chartOfAccount.heading.exportCoa')} centered open={modalOpen} onOk={onCoaFinish} onCancel={() => setModalOpen(false)} okText="Download" cancelText="Cancel">
+        <Modal title={translateContent('chartOfAccount.heading.exportCoa')} centered open={modalOpen} onOk={onCoaFinish} onCancel={() => setModalOpen(false)} okText={translateContent('global.buttons.download')} cancelText={translateContent('global.buttons.cancel')}>
             <Form autoComplete="off" form={exportCoaForm} layout="vertical" onFinish={onCoaFinish}>
                 <Row xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                        <Form.Item label={translateContent('chartOfAccount.label.fromDate')} name="fromDate" rules={[validateRequiredSelectField('From Date')]}>
+                        <Form.Item label={translateContent('chartOfAccount.label.fromDate')} name="fromDate" rules={[validateRequiredSelectField(translateContent('chartOfAccount.validation.fromDate'))]}>
                             <DatePicker placeholder={translateContent('chartOfAccount.placeholder.fromDate')} format={dateFormat} disabledDate={(current) => current > new Date()} getPopupContainer={(triggerNode) => triggerNode.parentElement} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                        <Form.Item label={translateContent('chartOfAccount.label.toDate')} name="toDate" rules={[validateRequiredSelectField('To Date')]}>
+                        <Form.Item label={translateContent('chartOfAccount.label.toDate')} name="toDate" rules={[validateRequiredSelectField(translateContent('chartOfAccount.validation.toDate'))]}>
                             <DatePicker placeholder={translateContent('chartOfAccount.placeholder.toDate')} format={dateFormat} disabledDate={(current) => current < exportCoaForm?.getFieldValue('fromDate') || current > new Date()} getPopupContainer={(triggerNode) => triggerNode.parentElement} />
                         </Form.Item>
                     </Col>

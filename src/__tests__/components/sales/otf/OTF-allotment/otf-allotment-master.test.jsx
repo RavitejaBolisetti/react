@@ -38,7 +38,7 @@ describe('OTFAllotmentMaster Component', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <OTFAllotmentMaster isVisible={true} setIsAllotVisible={true} setShowOTFDataLoading={setShowOTFDataLoading} fetchVehicleAllotmentSearchedList={fetchVehicleAllotmentSearchedList} saveData={saveData} setFilterString={jest.fn()} selectedOrder={selectedOrder} setIsAllotVisible={jest.fn()} setIsFormVisible={jest.fn()} setRefreshData={jest.fn()} />
+                <OTFAllotmentMaster isVisible={true} setIsAllotVisible={true} setShowOTFDataLoading={setShowOTFDataLoading} fetchVehicleAllotmentSearchedList={fetchVehicleAllotmentSearchedList} saveData={saveData} setFilterString={jest.fn()} selectedOrder={selectedOrder} setIsFormVisible={jest.fn()} setRefreshData={jest.fn()} />
             </Provider>
         );
 

@@ -5,13 +5,13 @@
  */
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
-import { screen, fireEvent, cleanup, waitFor } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 import { CustomerDetailsMaster } from '@components/Sales/Common/CustomerDetails/CustomerDetailsMaster';
 import { Provider } from 'react-redux';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import { Button, Form } from 'antd';
 
-beforeEach(cleanup);
 const FormWrapper = (props) => {
     const [form] = Form.useForm();
     return <CustomerDetailsMaster form={form} {...props} />;
@@ -83,7 +83,7 @@ describe('CustomerDetailsMaster Components', () => {
         },
     });
 
-    it('it should render success and otfnumber heading when user click', async () => {
+    it('should render success and otfnumber heading when user', async () => {
         customRender(
             <Provider store={mockStore}>
                 <FormWrapper {...mockProps} StatusBar={StatusBar} FormActionButton={FormActionButton} />
@@ -175,7 +175,6 @@ describe('CustomerDetailsMaster Components', () => {
             },
         });
 
-        const res = { data: { bookingCustomer: { otfNumber: '7e6f4990-f57d-477f-bace-ecd3da30ae5a', bookingAndBillingType: 'BOOKING', id: '4f966aeb-4076-4a83-af80-f853cd6b79d8', sameAsBookingCustomer: true }, billingCustomer: { otfNumber: '7e6f4990-f57d-477f-bace-ecd3da30ae5a', bookingAndBillingType: 'BILLING', id: '4f966aeb-4076-4a83-af80-f853cd6b79d8', sameAsBookingCustomer: true } } };
 
         const saveData = jest.fn();
         const fetchList = jest.fn();

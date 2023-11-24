@@ -16,8 +16,18 @@
             "toDate": "To Date",
             "serialNo": "#",
             "search": "Search",
-            "approvalStatus": "Approval Status"
-
+            "approvalStatus": "Approval Status",
+            "number": "No.",
+            "Total": "Total",
+            "items": "items",
+            "item": "item",
+            "state": "State",
+            "city": "City",
+            "district": "District",
+            "tehsil": "Tehsil",
+            "select": "Select",
+            "passwordStrength": "Password strength",
+            "actions": "Actions"
         },
         "validation": {
             "input": "Please enter ",
@@ -28,16 +38,59 @@
             "state": "State",
             "city": "City",
             "productHierarchy": "Product Hierarchy",
-            "fromDate": "from date",
-            "toDate": "to date"
+            "fromDate": "From date",
+            "toDate": "To date",
+            "pleasechooseLeastoneoption": "Please choose at least one option",
+            "mustBeCharactersLong": "{NAME} must be {LENGTH} characters long",
+            "mustBeLessCharactersLong": "{NAME} must be less then {LENGTH} characters",
+            "onlyOneAddressCanbeDefault": "Only one address can be default",
+            "onlyOneContactCanbeDefault": "Only one contact can be default",
+            "internetConnectivity": "Check your internet connectivity",
+            "select": "Please select"
+        },
+        "generalNotifications": {
+            "networkError": { "title": "Network Error", "message": "Please check your internet connection." },
+            "requestTimeout": { "title": "Request Timeout", "message": "Request timeout. Please try again." },
+            "authorizedRequest": { "title": "Authorized Request", "message": "Sorry you are not authorised to view this page. Please login again." },
+            "noResponse": { "title": "Error", "message": "No response received from the server." },
+            "error": { "title": "ERROR", "message": "We are facing server issue. Please try again." },
+            "internalServerError": { "title": "Server Error", "message": "Internal server error. Please try again." },
+            "sessionExpired": { "title": "Session Expired", "message": "Your session has been expired. Please login again" },
+            "noDataExist": { "title": "No records found", "message": "Please add New \"{NAME}\" using below button" },
+            "listNoDataFound": { "title": "No records found", "message": "Please add New \"{NAME}\" using below button" },
+            "listNoDataFoundMessage": { "title": "No records found", "message": "" },
+            "nodataValidation": { "title": "Error", "message": "Please add {NAME}  to proceed" },
+            "addDealerLocation": { "title": "Success", "message": "Location added successfully" },
+            "addDuplicateDealerLocation": { "title": "Error", "message": "This location is already added" },
+            "removeDealerLocation": { "title": "Delete", "message": "{NAME} deleted sucessfully" },
+            "allowedTimingDeleted": { "title": "SUCCESS", "message": "Group Timing has been deleted Successfully" },
+            "timeOverlapping": { "title": "ERROR", "message": "Time overlaps with other time" },
+            "startTimeGreaterThanEndTime": { "title": "ERROR", "message": "Start Time cannot be greater than End Time" },
+            "hierarchySameParentChildWarning": { "title": "WARNING", "message": "Select different parent" },
+            "thankYouPageOTF": { "title": "Booking form updated successfully", "message": "Booking number: {ORDER_ID}" },
+            "customerUpdate": { "title": "Success", "message": "Customer detail edited successfully" },
+            "thankYouPageInvoice": { "title": "Invoice number created successfully", "message": "Booking number: {ORDER_ID}" },
+            "downloadStart": { "title": "Download", "message": "Your download will start soon" },
+            "userTokenValidation": { "title": "Error", "message": "User token number {DealerSearchvalue} does not exist. Try again with valid token number" },
+            "applicationRequireValidation": { "title": "Error", "message": "Please provide {NAME} to proceed" },
+            "deliveryNoteMessage": { "title": "Delivery {NAME} created successfully", "message": "Delivery Note No.: {ORDER_ID}" },
+            "userNotFound": { "title": "User not found", "message": "User does not exist, do you want to create user?" },
+            "pageNotFound": { "title": "Page Not Found", "message": "<p>Sorry, the page you visited does not exist. Redirecting to dashboard in <b>{COUNTER}</b></p>" },
+            "unauthorizedAccess": { "title": "Unauthorized Access", "message": "<p>Sorry, you are not authorized to access this page.</p>" },
+            "noEmployeesFound": { "title": "Employees not found", "message": "No employees found for searched name" },
+            "noVinFound": { "title": "VIN not found", "message": "No VIN found for searched Booking Number" },
+            "approveConfirmation": { "title": "Approve Name", "message": "Are you sure want to approve the changes within the current name?" },
+            "unsaveDataWarning": { "title": "Are you sure you want to leave ?", "message": "You have unsave changes. All changes may lost." }
         },
         "notificationSuccess": {
             "success": "Success",
             "error": "Error",
-            "warning": "Warning"
+            "warning": "Warning",
+            "logoutSuccess": "Logout Successful"
         },
         "notificationError": {
-            "title": "ERROR"
+            "title": "ERROR",
+            "delete": "Delete"
         },
 
         "advanceFilter": {
@@ -49,7 +102,8 @@
             "color": "Color:",
             "seating": "Seating Capaity:",
             "fuel": "Fuel:",
-            "variant": "Variant:"
+            "variant": "Variant:",
+            "comingSoon": "Coming Soon"
         },
         "generalMessage": {
             "noRecordsFound": "No records found",
@@ -57,7 +111,24 @@
             "noRecordsFoundAddNewBtn": "Please add New {NAME} using add button",
             "comingSoon": "Coming Soon",
             "noDataFound": "No data found",
-            "downloadStart": "Your download will start soon"
+            "downloadStart": "Your download will start soon",
+            "otpSent": "OTP Sent",
+            "otpVerified": "OTP Verified",
+            "passwordChanged": "Password Changed",
+            "deletedSucessfully": "{NAME} deleted sucessfully",
+            "duplicateLocationMessage": "This location is already added",
+            "locationAddedSuccessfully": "Location added successfully",
+            "selectDifferentParent": "Select different parent",
+            "allowedTimingDeleted": "Group Timing has been deleted Successfully",
+            "startTimeEndTimeValidation": "Start Time cannot be greater than End Time",
+            "timeOverlaps": "Time overlaps with other time",
+            "atLeastOneContactShouldDefault": "At least one contact should have default contact",
+            "Incorrect OTP": "Incorrect OTP",
+
+            "fileDeletedSuccessfully": "File deleted Successfully",
+            "customerdetailDataSave": "Customer detail edited successfully",
+            "fileUploadedSuccessfully": "file uploaded successfully",
+            "filedownloadFailed": "File download failed"
         },
         "changeHistory": {
             "title": "Change History"
@@ -69,12 +140,16 @@
             "clear": "Clear",
             "save": "Save",
             "close": "Close",
+            "view": "View",
             "cancel": "Cancel",
             "print/download": "Print/Download",
-            "saveAndNew": "Save & New",
+            "replaceImage": "Replace Image",
+            "saveAndNew": "Save and New",
+            "saveAndAddNew": "Save & Add New",
             "saveAndNext": "Save & Next",
             "next": "Next",
             "edit": "Edit",
+            "delete": "Delete",
             "cancelBooking": "Cancel Booking",
             "transferBooking": "Transfer Booking",
             "bookingMappingHistory": "Booking Mapping History",
@@ -83,7 +158,7 @@
             "seeLess": "See less",
             "upload": "Upload",
             "reset": "Reset",
-            "search": "search",
+            "search": "Search",
             "addIndent": "Add Indent",
             "apply": "Apply",
             "submit": "Submit",
@@ -108,9 +183,19 @@
             "printForm21": "Print Form 21",
             "printInvoice": "Print Invoice",
             "cancelInvoice": "Cancel Invoice",
+            "sendOTP": "Send OTP",
+            "backToLogin": "Back to Login",
+            "resendOTP": "Resend OTP",
+            "verifyOTP": "Verify OTP",
+            "leave":"Leave",
+            "lightMode": "Light Mode",
+            "darkMode": "Dark Mode",
             "approve": "Approve",
             "reject": "Reject",
-            "addRequest": "Add request"
+            "addRequest": "Add request",
+            "registerNow": "Register Now",
+            "generateIRN": "Generate IRN",
+            "reGenerateIRN": "Re-Generate IRN"
         },
         "placeholder": {
             "input": "Enter ",
@@ -128,7 +213,8 @@
     "commonModules": {
         "heading": {
             "collapse.bookingCustomer": "Booking Customer",
-            "collapse.billingCustomer": "Billing Customer"
+            "collapse.billingCustomer": "Billing Customer",
+            "confirmation": "Confirmation"
         },
         "label": {
             "bookingDetails.bookingNumber": "Booking Number",
@@ -155,6 +241,7 @@
             "bookingCustomerAndBillingCustomer.birthDate": "Birth Date",
             "bookingCustomerAndBillingCustomer.sameAsBookingCustomer": "Same as Booking Customer",
 
+            "vehicleDetails.vehicleDetails": "Vehicle Details",
             "vehicleDetails.modelDescription": "Model Description",
             "vehicleDetails.modelCode": "Model Code",
             "vehicleDetails.vin": "VIN",
@@ -164,7 +251,14 @@
             "vehicleDetails.vehicleAmount": "Vehicle Amount",
             "vehicleDetails.dealerDiscountWithTax": "Dealer Discount with TAX",
             "vehicleDetails.consumerSchemeWithTax": "Consumer Scheme with TAX",
-            "vehicleDetails.printDiscount": "Print Discount?",
+            "vehicleDetails.availableStock": "Available Stock",
+            "vehicleDetails.poNumber": "PO Number",
+            "vehicleDetails.poDate": "PO Date",
+            "vehicleDetails.poStatus": "PO Status",
+            "vehicleDetails.soNumber": "SO Number",
+            "vehicleDetails.soStatus": "SO Status",
+            "vehicleDetails.printDiscount": "Print",
+            "vehicleDetails.model": "Model",
 
             "schemeAndOfferDetails.schemeType": "Scheme Type",
             "schemeAndOfferDetails.schemeCategory": "Scheme Category",
@@ -237,6 +331,14 @@
                 "supportingDocument": "No Supporting Document Available"
             }
         },
+        "toolTip": {
+            "modelName": "Model Name ",
+            "color": "Color ",
+            "seating": "Seating ",
+            "fuel": "Fuel ",
+            "variant": "Variant ",
+            "name": "Name "
+        },
         "checklistMaster": {
             "tableColumnHeading": {
                 "column1": "Group",
@@ -260,7 +362,8 @@
         },
         "validation": {
             "mandatoryBookingCustomer": "Please provide booking customer",
-            "mandatoryBillingCustomer": "Please provide billing customer"
+            "modelValidation": "Model selected is not valid",
+            "modelChangeConfirmation": "If you proceed with model change, the price will be calculated as per the selected model. Do you wish to continue?"
         }
     },
     "login": {
@@ -292,6 +395,83 @@
             "mnmLogin": "M&M User Login"
         }
     },
+    "sessionTimeout": {
+        "heading": {
+            "title": "Session Timeout"
+        },
+        "notification": {
+            "loggedOut": "Your session is about to expire. You will be logged out",
+            "in": "in",
+            "continue": ". Click \"Continue\" if you want to continue and stay logged in.",
+            "seconds": "seconds",
+            "second": "second"
+        },
+        "buttons": {
+            "logout": "Logout",
+            "continue": "Continue"
+        }
+    },
+    "forgotPassoerd": {
+        "heading": {
+            "mainTitle": "Forgot Your Password",
+            "subtitle": "Please enter your user credential",
+            "createNewPassword": "Create New Password"
+        },
+        "label": {
+            "userId": "user id",
+            "username": "User ID (MILE ID.Parent ID)",
+            "password": "Password",
+            "usercredentialsVerifiedSuccessfully": "User credentials verified successfully",
+            "pleaseChooseTheOptionforGettingTheOTP": "Please choose the option for getting the OTP",
+            "registeredMobileNumber": "Registered Mobile Number",
+            "registeredEmailAddress": "Registered Email Address",
+            "dealerManagementSystem": "Dealer Management System",
+            "otpVerification": "OTP Verification",
+            "enterOTP": "Enter OTP",
+            "newPassword": "new password",
+            "confirmPassword": "Confirm password",
+            "DidnotReceiveAnOTP": "Didn't receive an OTP"
+        },
+        "placeholder": {
+            "username": "User ID (MILE ID.Parent ID)",
+            "password": "Password"
+        },
+        "validation": {
+            "incorrectOTP": "Incorrect OTP",
+            "passwordNotMatch": "New Password and confirm Password doesn't match!"
+        },
+        "button": {
+            "verifyUser": "Verify User",
+            "backToLogin": "Back to Login",
+            "resendOTP": "Resend OTP",
+            "verifyOTP": "Verify OTP"
+        },
+        "link": {}
+    },
+    "updatePassword": {
+        "heading": {
+            "mainTitle": "Dealer Management System",
+            "subtitle": "Update Your Password",
+            "createNewPassword": "Create New Password"
+        },
+        "label": {
+            "oldPassword": "old password",
+            "newPassword": "new password",
+            "confirmPassword": "confirm password",
+            "updatePassword": "Update Password"
+        },
+        "placeholder": {},
+        "validation": {
+            "NewPasswordAndConfirmPassworddoesnMatch": "New Password and confirm Password doesn't match!"
+        },
+        "button": {
+            "updatePassword": "Update Password",
+            "changePassword": "Change Password",
+            "skipForNow": "Skip For Now",
+            "backToLogin": "Back To Login"
+        },
+        "link": {}
+    },
     "dashboard": {
         "heading": {
             "pageTitle": "Dashboard",
@@ -321,7 +501,8 @@
         "heading": {
             "title": "Company Name",
             "drawerTitle": "Dealer Parent Company",
-            "moduleTitle": "Dealer Parent Company"
+            "moduleTitle": "Dealer Parent Company",
+            "pageTitle": "Dealer Parent Company"
         },
 
         "tableColHeading": {
@@ -348,7 +529,9 @@
             "pan": "PAN",
             "status": "Status",
             "parentGroupCode": "Parent Group Code",
-            "parentGroupName": "Parent Group Name"
+            "parentGroupName": "Parent Group Name",
+            "active": "Active",
+            "inActive": "Inactive"
         },
 
         "placeholder": {
@@ -371,7 +554,8 @@
         "heading": {
             "title": "Group Name",
             "drawerTitle": "Dealer Parent Group",
-            "moduleTitle": "Group Name"
+            "moduleTitle": "Group Name",
+            "pageTitle": "Dealer Parent Group"
         },
 
         "tableColHeading": {
@@ -391,7 +575,9 @@
             "contactNumber": "Contact Number",
             "emailId": "Email ID",
             "Active": "Active",
-            "status": "Status"
+            "status": "Status",
+            "active": "Active",
+            "inActive": "Inactive"
         },
 
         "validation": {
@@ -432,7 +618,9 @@
             "departmentName": "Department Name",
             "roleName": "Role Name",
             "roleCode": "Role Code",
-            "status": "Status"
+            "status": "Status",
+            "active": "Active",
+            "inActive": "Inactive"
         },
 
         "validation": {
@@ -493,7 +681,8 @@
             "title": "Financial Company",
             "viewTitle": "Chart of Account Hierarchy",
             "moduleTitle": "Chart of Account Hierarchy",
-            "exportCoa": "Export COA"
+            "exportCoa": "Export COA",
+            "pageTitle": "Chart of Account"
         },
 
         "label": {
@@ -507,7 +696,9 @@
             "openingBalanceCr": "Opening Balance Cr.",
             "openingBalanceDr": "Opening Balance Dr",
             "fromDate": "From Date",
-            "toDate": "To Date"
+            "toDate": "To Date",
+            "active": "Active",
+            "inActive": "Inactive"
         },
 
         "validation": {
@@ -515,7 +706,9 @@
             "code": "Code",
             "accountDescription": "Account description",
             "openingBalanceCredit": "Opening Balance Credit",
-            "openingBalanceDebit": "Opening Balance Debit"
+            "openingBalanceDebit": "Opening Balance Debit",
+            "fromDate": "From Date",
+            "toDate": "To Date"
         },
 
         "placeholder": {
@@ -768,15 +961,18 @@
             "buttonAtTop": "button at top",
             "vehicleDetails": "Vehicle Details",
             "selectVehicle": "Select Vehicle",
-            "invoiceNumber" : "Invoice Number",
-            "invoiceDate" : "Invoice Date",
-            "irnNo" : "IRN No.",
-            "irnStatus" : "IRN Status",
-            "amcCertificateNo" : "AMC Registration Number",
-            "amcIncenticeClaim" : "AMC Incentive Claim"
+            "invoiceNumber": "Invoice Number",
+            "invoiceDate": "Invoice Date",
+            "irnNo": "IRN No.",
+            "irnStatus": "IRN Status",
+            "amcCertificateNo": "AMC Registration Number",
+            "amcIncenticeClaim": "AMC Incentive Claim"
         },
         "placeholder": {
             "search": "Search"
+        },
+        "buttons": {
+            "cancelAMC": "Cancel AMC"
         }
     },
     "roleManagement": {
@@ -925,7 +1121,13 @@
             "accDate": "Account Mapping Date",
             "dealer": "VIP Dealer",
             "cusType": "Customer Type:",
-            "mobile": " Mobile No.:"
+            "mobile": " Mobile No.:",
+            "noRecordFound": "No Record Found",
+            "please": "Please",
+            "addCus": "Add New Customer",
+            "usingBelow": "using below",
+            "button": "button",
+            "uploadDocuments": "Upload supporting documents"
         },
         "placeholder": {
             "mobileNumber": "mobile number",
@@ -1032,7 +1234,28 @@
             "parentCode": "parent company code"
         },
         "button": {
-            "verify": "Verify"
+            "verify": "Verify",
+            "customerID": "Create Customer ID",
+            "saveAndProceed": "Save & Proceed",
+            "no": "No",
+            "yes": "Yes, Continue"
+        },
+        "notification": {
+            "address": "Only one address can be default",
+            "contact": "Only one contact can be default",
+            "atLeast": "At least one contact should have default contact",
+            "deleted": "File deleted Successfully",
+            "upload": "Please upload at least one file to continue",
+            "accept": "Please accept consent.",
+            "name": "Current and previous name are same",
+            "document": "Kindly upload document",
+            "cusNameChange": "Customer name change request updated successfully",
+            "familyData": "Family Data Not Exists",
+            "user": "User Not Found",
+            "familyMember": "Can not Add Same User as family member",
+            "customerId": "Entered Customer Id is already added to this customer",
+            "familydetails": "Please add family detail before submit",
+            "verify": "Please verify mobile number to proceed."
         },
         "link": {
             "mnmLogin": "M&M User Login"
@@ -1441,7 +1664,7 @@
     },
 
     "chargerInstallationDetails": {
-        "label":{
+        "label": {
             "bookingNumber": "Booking Number",
             "bookingStatus": "Booking Status",
             "modelGroup": "Model Group",
@@ -2074,7 +2297,9 @@
             "enableBy": "Enable By",
             "select": "Select",
             "stateCode": "State Code",
-            "searchDealerParent": "Search Dealer Parent"
+            "searchDealerParent": "Search Dealer Parent",
+            "yes": "Yes",
+            "no": "No"
         }
     },
     "stockTransferIndent": {
@@ -2307,11 +2532,16 @@
             "referrals.customerName": "Customer Name",
             "referrals.mobileNumber": "Mobile Number",
             "referrals.emailId": "Email Id",
-            "referrals.dateOfBirth": "Date of Birth"
+            "referrals.dateOfBirth": "Date of Birth",
+
+            "cancelInvoice.reasonForCancellation": "Reason for Cancellation",
+            "digitalSignature": "Digital Signature"
         },
         "placeholder": {},
         "validation": {
-            "referrals.mobileNumber": "Phone number must be minimum 10 digits Long."
+            "referrals.mobileNumber": "Phone number must be minimum 10 digits Long.",
+            "BillingCustomerDetails": "Please provide billing customer details",
+            "BookingCustomerDetails": "Please provide booking customer details"
         },
         "buttons": {
             "generate": "Generate"
@@ -3038,7 +3268,10 @@
             "status": "Status:",
             "invoiceNo": " Invoice Number:",
             "invoiceDate": "Invoice Date:",
-            "bookingNumber": "Booking Number:"
+            "bookingNumber": "Booking Number:",
+            "cancelledDate": "Cancelled Date",
+            "cancelledBy": "Cancelled By",
+            "remarksForCancellation": "Remarks for Cancellation"
         },
         "placeholder": {
             "select": "Select"
@@ -3450,8 +3683,8 @@
             "digitalSignatureRequired": "Digital Signature Required",
             "isFinanceRelated": "Is Finance Related",
             "irnIntegrationRequired": "IRN Integration Required",
+            "location": "location",
             "description": "Please select product from left side hierarchy to view “Application Details”"
-
         },
         "validation": {
             "applicationAction": "application action",
@@ -3537,7 +3770,7 @@
         "leftSideBar": {
             "label": {
                 "dealerName": "Dealer Name:",
-                "gstin:": "GSTIN:"
+                "gstin": "GSTIN:"
             }
         },
         "irnTransactionListMaster": {
@@ -3648,10 +3881,16 @@
             "Keyword": "Keyword",
             "divisionName": "Division Name",
             "departmentCode": "Department Code",
-            "departmentName": "Department Name"
+            "departmentName": "Department Name",
+            "search": "Search"
         },
+
+        "validation": {
+            "division": "Division"
+        },
+
         "placeholder": {},
-        "validation": {},
+
         "button": {},
         "link": {}
     },
@@ -3888,6 +4127,10 @@
         }
     },
     "bayTypeMaster": {
+        "heading": {
+            "moduleTitle": "Bay Type Master",
+            "pageTitle": "Bay Type Master"
+        },
         "label": {
             "bayTypeCode": "Bay Type Code",
             "bayTypeName": "Bay Type Name"

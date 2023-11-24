@@ -8,7 +8,7 @@ import { convertDateMonthYear } from 'utils/formatDateTime';
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 
-export const tableColumn = (handleButtonClick, page, pageSize) => {
+export const tableColumn = (handleButtonClick) => {
     const tableColumn = [
         tblPrepareColumns({
             title: translateContent('vehicleInvoiceGeneration.tableColumn.invoiceMaster.columnOne'),
@@ -35,7 +35,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             title: translateContent('vehicleInvoiceGeneration.tableColumn.invoiceMaster.columnFive'),
             dataIndex: 'invoiceDate',
             width: '14%',
-            render: (text) => (text ? convertDateMonthYear(text) : ''),
+            render: (text) => (text ? convertDateMonthYear(text) : '-'),
         }),
         tblPrepareColumns({
             title: translateContent('vehicleInvoiceGeneration.tableColumn.invoiceMaster.columnSix'),

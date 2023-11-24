@@ -8,21 +8,22 @@ import { Button, Row, Col } from 'antd';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
-export const AMCRegistrationFormButton = ({ record, onCloseAction, handleWholeAMCCancellation, onApproveCancel, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
+export const AMCRegistrationFormButton = ({ record, onCloseAction, handleWholeAMCCancellation, onApproveCancel, buttonData, setButtonData, saveButtonName = translateContent('global.buttons.saveAndNext'), handleButtonClick, isLoadingOnSave, isLastSection }) => {
     return (
         <div className={styles.formFooter}>
             <Row gutter={20}>
                 <Col xs={24} sm={8} md={6} lg={4} xl={4} className={styles.buttonsGroupLeft}>
                     {buttonData?.closeBtn && (
                         <Button danger onClick={onCloseAction}>
-                            Close
+                            {translateContent('global.buttons.close')}
                         </Button>
                     )}
 
                     {buttonData?.cancelBtn && (
                         <Button danger onClick={onCloseAction}>
-                            Cancel
+                            {translateContent('global.buttons.cancel')}
                         </Button>
                     )}
                 </Col>
@@ -30,25 +31,25 @@ export const AMCRegistrationFormButton = ({ record, onCloseAction, handleWholeAM
                 <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.buttonsGroupRight}>
                     {buttonData?.cancelAMCBtn && (
                         <Button onClick={handleWholeAMCCancellation} danger>
-                            Cancel AMC
+                            {translateContent('amcRegistration.buttons.cancelAMC')}
                         </Button>
                     )}
 
                     {buttonData?.rejectCancelBtn && (
                         <Button onClick={onApproveCancel} type="primary">
-                            Reject
+                            {translateContent('global.buttons.reject')}
                         </Button>
                     )}
 
                     {buttonData?.approveCancelBtn && (
                         <Button onClick={onApproveCancel} type="primary">
-                            Approve
+                            {translateContent('global.buttons.approve')}
                         </Button>
                     )}
 
                     {buttonData?.nextBtn && !isLastSection && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
-                            Next
+                            {translateContent('global.buttons.next')}
                         </Button>
                     )}
                     {buttonData?.saveBtn && (

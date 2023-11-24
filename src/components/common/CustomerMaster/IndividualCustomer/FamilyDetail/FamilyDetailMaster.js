@@ -89,7 +89,7 @@ const FamilyDetailMasterBase = (props) => {
     useEffect(() => {
         if (!formActionType?.addMode && userId && selectedCustomerId) {
             let onErrorAction = (res) => {
-                showGlobalNotification({ message: 'Family Data Not Exists' });
+                showGlobalNotification({ message: translateContent('customerMaster.notification.familyData') });
                 setFamilyDetailsList(() => []);
             };
             fetchFamilyDetailsList({ setIsLoading: listFamilyDetailsShowLoading, userId, onErrorAction, extraParams });
@@ -102,7 +102,7 @@ const FamilyDetailMasterBase = (props) => {
     };
 
     const onErrorAction = (res) => {
-        showGlobalNotification({ message: 'User Not Found' });
+        showGlobalNotification({ message: translateContent('customerMaster.notification.user') });
         form.setFieldsValue({
             customerName: null,
             dateOfBirth: null,
@@ -113,13 +113,13 @@ const FamilyDetailMasterBase = (props) => {
     const onSearch = (value) => {
         if (value) {
             if (value === selectedCustomerId) {
-                showGlobalNotification({ message: 'Can not Add Same User as family member' });
+                showGlobalNotification({ message: translateContent('customerMaster.notification.familyMember') });
                 return;
             } else if (value !== '') {
                 let found = null;
                 found = familyDetailList?.find((e) => e?.relationCustomerId === value);
                 if (found) {
-                    showGlobalNotification({ message: 'Entered Customer Id is already added to this customer' });
+                    showGlobalNotification({ message: translateContent('customerMaster.notification.customerId') });
                     return;
                 }
             }
@@ -187,7 +187,7 @@ const FamilyDetailMasterBase = (props) => {
 
     const onFinish = () => {
         if (!familyDetailList || familyDetailList.length <= 0) {
-            showGlobalNotification({ message: 'Please add family detail before submit' });
+            showGlobalNotification({ message: translateContent('customerMaster.notification.familydetails') });
             return false;
         }
 

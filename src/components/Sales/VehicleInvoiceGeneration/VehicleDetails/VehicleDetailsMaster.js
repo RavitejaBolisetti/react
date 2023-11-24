@@ -21,6 +21,8 @@ import dayjs from 'dayjs';
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 
+const NOT_AVAILABLE = 'NA';
+
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -175,19 +177,23 @@ const VehicleDetailsMasterMain = (props) => {
             setToolTipContent(
                 <div>
                     <p>
-                        Color - <span>{productAttributeData['0']['color'] ?? 'Na'}</span>
+                        {translateContent('global.toolTip.color')} <span>{productAttributeData?.['0']?.['color'] ?? NOT_AVAILABLE}</span>
                     </p>
                     <p>
-                        Seating - <span>{productAttributeData['0']['seatingCapacity'] ?? 'Na'}</span>
+                        {translateContent('global.toolTip.seating')}
+                        <span>{productAttributeData?.['0']?.['seatingCapacity'] ?? NOT_AVAILABLE}</span>
                     </p>
                     <p>
-                        Fuel - <span>{productAttributeData['0']['fuel'] ?? 'Na'}</span>
+                        {translateContent('global.toolTip.fuel')}
+                        <span>{productAttributeData?.['0']?.['fuel'] ?? NOT_AVAILABLE}</span>
                     </p>
                     <p>
-                        Variant - <span>{productAttributeData['0']['variant'] ?? 'Na'}</span>
+                        {translateContent('global.toolTip.variant')}
+                        <span>{productAttributeData?.['0']?.['variant'] ?? NOT_AVAILABLE}</span>
                     </p>
                     <p>
-                        Name - <span>{productAttributeData['0']['name'] ?? 'Na'}</span>
+                        {translateContent('global.toolTip.modelName')}
+                        <span>{productAttributeData?.['0']?.['name'] ?? NOT_AVAILABLE}</span>
                     </p>
                 </div>
             );

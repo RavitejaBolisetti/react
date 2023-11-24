@@ -1,8 +1,9 @@
 import '@testing-library/jest-dom/extend-expect';
 import { PartyDetailMaster } from '@components/Sales/Receipts/PartyDetails/PartyDetailMaster';
 import customRender from '@utils/test-utils';
-import { screen, fireEvent, waitFor } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import { Form } from 'antd';
 

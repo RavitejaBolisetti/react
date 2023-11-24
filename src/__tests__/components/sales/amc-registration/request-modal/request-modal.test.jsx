@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { RejectRequest } from '@components/Sales/AMCRegistration/RequestModal/RequestModal';
-import { screen, fireEvent, waitFor } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
 afterEach(() => {

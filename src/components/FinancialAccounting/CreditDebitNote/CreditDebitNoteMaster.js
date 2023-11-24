@@ -28,7 +28,6 @@ import { CREDIT_DEBIT_SECTION } from 'constants/CreditDebitSection';
 import { LANGUAGE_EN } from 'language/en';
 
 import { PARAM_MASTER } from 'constants/paramMaster';
-import { TRANSACTION_TYPE } from './transactionType';
 import { translateContent } from 'utils/translateContent';
 import { drawerTitle } from 'utils/drawerTitle';
 
@@ -127,8 +126,6 @@ export const CreditDebitNoteMasterBase = (props) => {
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
     const dynamicPagination = true;
-
-    // const [transactionType, setTransactionType] = useState(TRANSACTION_TYPE?.Credit?.value);
     const [selectedVoucher, setSelectedVoucher] = useState('');
 
     useEffect(() => {
@@ -322,7 +319,6 @@ export const CreditDebitNoteMasterBase = (props) => {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
                 setPreviousSection(1);
-                // transactionType === 'debit' ? setTransactionType(TRANSACTION_TYPE?.Debit?.value) : setTransactionType(TRANSACTION_TYPE?.Credit?.value);
                 setRequestPayload({ ...requestPayload, voucherType: transactionType === 'credit' ? VOUCHER_TYPE?.CREDIT_TYPE?.type : VOUCHER_TYPE?.DEBIT_TYPE?.type });
                 setSelectedRecord({
                     voucherType: transactionType === 'debit' ? VOUCHER_TYPE?.DEBIT_TYPE?.type : VOUCHER_TYPE?.CREDIT_TYPE?.type,
@@ -501,7 +497,7 @@ export const CreditDebitNoteMasterBase = (props) => {
         setIsFormVisible,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
         ADD_ACTION,
         EDIT_ACTION,
         VIEW_ACTION,

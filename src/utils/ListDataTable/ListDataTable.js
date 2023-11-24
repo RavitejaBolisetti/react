@@ -6,16 +6,14 @@
 import { DataTable } from 'utils/dataTable';
 import { Button, Empty, ConfigProvider } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { LANGUAGE_EN } from 'language/en';
 import { translateContent } from 'utils/translateContent';
 
 export default function ListDataTable(props) {
     const { tableData, handleButtonClick, handleAdd, addTitle = 'Record', showAddButton = true, noDataMessage = '' } = props;
-    const noDataExistTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
-    const noDataExistMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', addTitle);
+   
     const noDataInformation = (
         <>
-            {noDataExistTitle} <br /> {showAddButton && noDataExistMessage}
+            {translateContent('global.generalMessage.noRecordsFound')} <br /> {showAddButton && translateContent('global.generalMessage.noRecordsFoundAddNew').replace('{NAME}', addTitle)}
         </>
     );
 
@@ -28,7 +26,7 @@ export default function ListDataTable(props) {
                         imageStyle={{
                             height: '20%',
                         }}
-                        description={!tableData?.length ? <span>{noDataMessage || noDataInformation}</span> : <span> No records found.</span>}
+                        description={!tableData?.length ? <span>{noDataMessage || noDataInformation}</span> : <span>{translateContent('global.generalMessage.noRecordsFound')}</span>}
                     >
                         {showAddButton && (
                             <Button icon={<PlusOutlined />} type="primary" danger onClick={handleButtonClick || handleAdd}>

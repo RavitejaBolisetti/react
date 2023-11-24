@@ -5,7 +5,6 @@
  */
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { LANGUAGE_EN } from 'language/en';
 
 import { bindActionCreators } from 'redux';
 import { Row, Col, Form, Card } from 'antd';
@@ -141,7 +140,7 @@ const SupportingDocumentBase = (props) => {
     const deleteFile = (uploadData) => {
         const data = [{ customerId: uploadData?.customerId, status: false, docId: uploadData?.docId, documentTypeId: uploadData?.documentType, id: uploadData?.id, documentName: uploadData?.documentName }];
         const onSuccess = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: 'File deleted Successfully' });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: translateContent('global.generalMessage.fileDeletedSuccessfully') });
             fetchList({ setIsLoading: listShowLoading, userId, extraParams });
         };
 
@@ -161,8 +160,8 @@ const SupportingDocumentBase = (props) => {
     };
 
     const onFinish = () => {
-        const title = LANGUAGE_EN.GENERAL.CUSTOMER_UPDATE.TITLE;
-        const message = LANGUAGE_EN.GENERAL.CUSTOMER_UPDATE.MESSAGE;
+        const title = translateContent('global.generalNotifications.customerUpdate.title');
+        const message = translateContent('global.generalNotifications.customerUpdate.message');
 
         if (fileList.length > 0) {
             const onSuccess = (res) => {
@@ -192,9 +191,9 @@ const SupportingDocumentBase = (props) => {
             saveData(requestData);
         } else {
             if (mandatoryFields) {
-                showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: 'Please upload at least one file to continue' });
+                showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: translateContent('customerMaster.notification.upload') });
             } else {
-                showGlobalNotification({ notificationType: 'success', title, message });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.generalMessage.customerdetailDataSave'), message });
                 setFileList([]);
                 setEmptyList(false);
                 setUploadedFile();
@@ -289,7 +288,7 @@ const SupportingDocumentBase = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <CustomerFormButton {...myProps} />
+                    <CustomerFormButton {...myProps} buttonData={{ ...buttonData, nextBtn: false, formBtnActive: formActionType?.addMode}} />
                 </Col>
             </Row>
         </Form>

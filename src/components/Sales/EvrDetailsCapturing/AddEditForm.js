@@ -26,7 +26,7 @@ const AddEditFormMain = (props) => {
     };
 
     const buttonProps = {
-        saveButtonName: 'Submit',
+        saveButtonName: translateContent('global.buttons.submit'),
         formData,
         onCloseAction,
         buttonData,

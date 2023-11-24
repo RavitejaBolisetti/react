@@ -1,7 +1,8 @@
 import '@testing-library/jest-dom/extend-expect';
 import { UserManagementMaster } from '@components/common/UserManagement/UserManagementMaster';
 import customRender from '@utils/test-utils';
-import { fireEvent, screen, act, waitFor } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 

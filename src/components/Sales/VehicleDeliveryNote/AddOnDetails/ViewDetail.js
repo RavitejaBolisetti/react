@@ -72,7 +72,7 @@ const ViewDetailMain = (props) => {
                                 <Descriptions.Item label={translateContent('vehicleDeliveryNote.addOnDetails.label.manager')}>{checkAndSetDefaultValue(formData?.rsaRequest?.manager, isLoading)}</Descriptions.Item>
                             </Descriptions>
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Reason Of Rejection">{checkAndSetDefaultValue(formData?.rsaRequest?.reasonOfRejection, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('amcRegistration.label.reasonForRejection')}>{checkAndSetDefaultValue(formData?.rsaRequest?.reasonOfRejection, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         </Panel>
                     </Collapse>

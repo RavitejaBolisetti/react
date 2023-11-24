@@ -8,6 +8,7 @@ import { Dropdown, Menu } from 'antd';
 import Icon from '@ant-design/icons';
 
 import styles from 'utils/tableColumn.module.scss';
+import { translateContent } from './translateContent';
 const myMenuAction = (actions, moduleType) => (props) => (record) => {
     return (
         <Menu>
@@ -27,13 +28,13 @@ const customActionDropDown = (actions, moduleType) => (props) => (record) => {
 
     return record.isReadOnly ? (
         <>
-            {<span className={styles.mobData}>{'Actions'} :</span>}
+            {<span className={styles.mobData}>{translateContent('global.label.actions')} :</span>}
             <Icon type="ellipsis" style={{ fontSize: '36px' }} />
         </>
     ) : (
         <Dropdown overlay={myAction} trigger={['click']}>
             <a className="ant-dropdown-link" href="/">
-                {<span className={styles.mobData}>{'Actions'} :</span>}
+                {<span className={styles.mobData}>{translateContent('global.label.actions')} :</span>}
                 <Icon type="ellipsis" style={{ fontSize: '36px' }} />
             </a>
         </Dropdown>

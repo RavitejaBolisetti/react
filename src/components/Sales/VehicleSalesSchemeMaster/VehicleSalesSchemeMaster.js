@@ -740,7 +740,7 @@ export const VehicleSalesSchemeMasterBase = (props) => {
         onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(translateContent('vehicleSalesSchemeMaster.heading.moduleTitle')),
+        titleOverride: drawerTitle.concat(" ").concat(translateContent('vehicleSalesSchemeMaster.heading.moduleTitle')),
         buttonData,
         setButtonData,
         handleButtonClick,

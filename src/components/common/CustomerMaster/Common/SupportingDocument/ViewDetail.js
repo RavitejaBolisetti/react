@@ -11,6 +11,7 @@ import { AiOutlineEye } from 'react-icons/ai';
 import { LANGUAGE_EN } from 'language/en';
 import { NoDataFound } from 'utils/noDataFound';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const ViewDetail = (props) => {
     const {
@@ -22,7 +23,7 @@ export const ViewDetail = (props) => {
         downloadFile,
     } = props;
 
-    const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
+    const noDataTitle = translateContent('global.generalNotifications.noDataExist.title');
 
     const downloadFileFromButton = (uploadData) => {
         const extraParams = [

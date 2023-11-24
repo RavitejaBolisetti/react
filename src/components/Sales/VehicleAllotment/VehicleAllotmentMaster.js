@@ -517,7 +517,7 @@ export const VehicleAllotmentMasterBase = (props) => {
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(translateContent(toggleButton === VEHICLE_TYPE.ALLOTED.key ? 'orderDeliveryVehicleAllotment.heading.allotmentDetails' : 'orderDeliveryVehicleAllotment.heading.unAllotmentDetails')),
+        titleOverride: drawerTitle(formActionType).concat(" ").concat(translateContent(toggleButton === VEHICLE_TYPE.ALLOTED.key ? 'orderDeliveryVehicleAllotment.heading.allotmentDetails' : 'orderDeliveryVehicleAllotment.heading.unAllotmentDetails')),
         tableData: data,
         totalOTFRecords,
         buttonData,

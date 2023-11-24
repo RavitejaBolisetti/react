@@ -21,7 +21,7 @@ const CommonFooterButton = (props) => {
             </Col>
             <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                 <Button type="primary" htmlType={isHtmltype ? 'submit' : 'button'} onClick={isHtmltype ? Random : onFinish} className={styles?.floatRight}>
-                    Save & Proceed
+                    {translateContent('customerMaster.button.saveAndProceed')}
                 </Button>
             </Col>
         </Row>

@@ -78,14 +78,13 @@ const mapDispatchToProps = (dispatch) => ({
 
 const CompanyCustomerDetailsMasterBase = (props) => {
     const { userId, isLoading, showGlobalNotification, customerDetailsData, section, fetchList, listShowLoading, typeData, saveData, fetchCorporateLovList, listCorporateLovShowLoading, isCorporateLovDataLoaded, fetchCustomerParentCompanyList, listCustomerParentCompanyShowLoading, customerParentCompanyData, corporateLovData, customerType } = props;
-    const { setRefreshCustomerList, selectedCustomer, setSelectedCustomer, selectedCustomerId, setSelectedCustomerId, resetData } = props;
-    const { form, handleFormValueChange, buttonData, setButtonData, formActionType, handleButtonClick, NEXT_ACTION } = props;
+    const { selectedCustomer, setSelectedCustomer, selectedCustomerId, setSelectedCustomerId, resetData } = props;
+    const { setFilterString, form, handleFormValueChange, buttonData, formActionType, handleButtonClick, NEXT_ACTION } = props;
 
     const [customerDetailsList] = useState([]);
     const [showForm, setShowForm] = useState(false);
 
     const [formData, setFormData] = useState();
-    const [refershData, setRefershData] = useState(false);
     const [numbValidatedSuccess, setNumbValidatedSuccess] = useState(false);
 
     useEffect(() => {
@@ -110,20 +109,21 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isCorporateLovDataLoaded]);
 
+    const extraParams = [
+        {
+            key: 'customerId',
+            title: 'customerId',
+            value: selectedCustomerId,
+            name: 'Customer ID',
+        },
+    ];
+
     useEffect(() => {
         if (userId && selectedCustomerId) {
-            const extraParams = [
-                {
-                    key: 'customerId',
-                    title: 'customerId',
-                    value: selectedCustomerId,
-                    name: 'Customer ID',
-                },
-            ];
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedCustomerId]);
+    }, [userId]);
 
     const defaultExtraParam = [
         {
@@ -153,8 +153,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
     ];
 
     const onSuccessAction = (res) => {
-        refershData && showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
-        setRefershData(false);
+        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
     };
 
     const onErrorAction = (message) => {
@@ -163,7 +162,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
 
     const onFinish = (values) => {
         if (!formActionType?.addMode && !numbValidatedSuccess && customerDetailsData?.mobileNumber !== values?.mobileNumber) {
-            showGlobalNotification({ message: 'Please verify mobile number to proceed.' });
+            showGlobalNotification({ message: translateContent('customerMaster.notification.verify') });
             return;
         }
 
@@ -173,9 +172,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         const onSuccess = (res) => {
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId });
-            setButtonData({ ...buttonData, formBtnActive: false });
-            setRefreshCustomerList(true);
+            setFilterString({ current: 1, pageSize: 10 });
 
             if (res?.data) {
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });

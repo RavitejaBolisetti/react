@@ -2,6 +2,7 @@ import '@testing-library/jest-dom/extend-expect';
 import { ApportionDetailMaster } from '@components/Sales/Receipts/ApportionDetails/ApportionDetailMaster';
 import customRender from '@utils/test-utils';
 import { Provider } from 'react-redux';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import { screen, fireEvent } from '@testing-library/react';
 import { Form } from 'antd';
