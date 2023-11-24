@@ -22,7 +22,6 @@ const { Option } = Select;
 const AddEditFormMain = (props) => {
     const { formData, saleTypes, vinNumber, bookingNumber, schemeDetail, employeeData, managerData, shieldDetailForm, handleOtfSearch, handleVinSearch, handleEmployeeSearch, handleOtfChange, saleType, handleSaleTypeChange, formActionType, isSchemeLoading, isEmployeeDataLoading, handleOnSelect, handleOnClear, screenType } = props;
     const { activeKey, setActiveKey } = props;
-    // const [activeKey, setActiveKey] = useState([]);
     const [selectedScheme, setSelectedScheme] = useState([]);
 
     useEffect(() => {
@@ -64,7 +63,6 @@ const AddEditFormMain = (props) => {
                 <Collapse collapsible="icon" expandIcon={({ isActive }) => expandActionIcon(isActive, formActionType)} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
                     <Panel header={translateContent('shieldSchemeRegistration.heading.registrationInformation')} key="1">
                         <Divider />
-                        {/* <Form layout="vertical" autoComplete="off" form={registrationForm} onFieldsChange={handleFormValueChange}> */}
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item initialValue={formData?.saleType} label={translateContent('shieldSchemeRegistration.label.saleType')} name={['registrationInformation', 'saleType']} rules={[validateRequiredSelectField(translateContent('shieldSchemeRegistration.label.saleType'))]}>
@@ -77,7 +75,7 @@ const AddEditFormMain = (props) => {
                                     </Select>
                                 </Form.Item>
                             </Col>
-                            {saleType === SALE_TYPE?.PAID?.key && screenType !== 'RSA' && (
+                            {saleType === SALE_TYPE?.PAID?.key && (
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item initialValue={formData?.availableFund} label={translateContent('shieldSchemeRegistration.label.availableFunds')} name={['registrationInformation', 'availableFund']}>
                                         <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.availableFunds'))} disabled={true} />
@@ -113,7 +111,7 @@ const AddEditFormMain = (props) => {
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item initialValue={formData?.employeeName} label={translateContent('shieldSchemeRegistration.label.employeeName')} name={['registrationInformation', 'employeeName']}>
+                                <Form.Item initialValue={formData?.employeeName} label={translateContent('shieldSchemeRegistration.label.employeeName')} name={['registrationInformation', 'employeeName']} rules={[validateRequiredSelectField(translateContent('shieldSchemeRegistration.label.employeeName'))]}>
                                     {/* <AutoComplete maxLength={50} options={options} onSelect={handleOnSelect} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
                                         <Search onSearch={handleEmployeeSearch} onChange={handleOnClear} placeholder={preparePlaceholderText('Employee Name')} loading={isEmployeeDataLoading} type="text" allowClear />
                                     </AutoComplete> */}

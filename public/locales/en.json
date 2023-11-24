@@ -14,7 +14,7 @@
             "action": "Action",
             "fromDate": "From Date",
             "toDate": "To Date",
-            "serialNo": "Srl.",
+            "serialNo": "#",
             "search": "Search",
             "approvalStatus": "Approval Status"
 
@@ -71,7 +71,7 @@
             "close": "Close",
             "cancel": "Cancel",
             "print/download": "Print/Download",
-            "saveAndNew": "Save and New",
+            "saveAndNew": "Save & New",
             "saveAndNext": "Save & Next",
             "next": "Next",
             "edit": "Edit",

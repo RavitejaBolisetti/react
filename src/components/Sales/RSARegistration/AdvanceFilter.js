@@ -13,7 +13,7 @@ import { SearchBox } from 'components/utils/SearchBox';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import styles from 'assets/sass/app.module.scss';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-const { Search } = Input;
+import { translateContent } from 'utils/translateContent';
 
 export default function AdvanceFilter(props) {
     const { extraParams, handleResetFilter, typeData, selectedStatusType, advanceFilter = false, filterString, setFilterString, setResetAdvanceFilter, setAdvanceSearchVisible, searchForm, removeFilter, setSelectedStatusType, handleButtonClick, invoiceStatusList, showAddButton } = props;
@@ -28,8 +28,8 @@ export default function AdvanceFilter(props) {
         searchForm,
         filterString,
         setFilterString,
-        optionType: typeData?.[PARAM_MASTER.AMC_SEARCH_TYPE.id],
-        placeholder: 'Input Parameter',
+        optionType: typeData?.[PARAM_MASTER.RSA_SEARCH_TYPE.id],
+        placeholder: translateContent('global.placeholder.search'),
         singleFieldKey: 'searchParam',
         setResetAdvanceFilter,
         //defaultOption: 'vin',

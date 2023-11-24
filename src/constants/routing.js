@@ -69,6 +69,7 @@ export const ROUTING_COMMON_MANUFACTURER_ADMINISTRATIVE_HIERARCHY = ROUTING_COMM
 export const ROUTING_COMMON_MANUFACTURER_ORGANIZATION_HIERARCHY = ROUTING_COMMON.concat('manufacturer-organization-hierarchy');
 export const ROUTING_COMMON_DEALER_HIERARCHY = ROUTING_COMMON.concat('dealer-hierarchy');
 export const ROUTING_AMC_REGISTRATION = ROUTING_COMMON.concat('amc-registration');
+export const ROUTING_RSA_REGISTRATION = ROUTING_COMMON.concat('rsa-registration');
 
 export const ROUTING_USER = '/user/';
 export const ROUTING_USER_PROFILE = ROUTING_USER.concat('profile');
@@ -140,4 +141,3 @@ export const ROUTING_SHIELD_SCHEME_REGISTER = ROUTING_SERVICES.concat('shield-sc
 
 export const ROUTING_VIN_BLOCK_MASTER = ROUTING_SALES.concat('vin-block-master');
 export const ROUTING_GST_IRN_TRANSACTION = ROUTING_FINANCIAL_ACCOUNTING.concat('gst-irn-transaction');
-export const ROUTING_RSA_REGISTRATION = ROUTING_SALES.concat('rsa-registration');

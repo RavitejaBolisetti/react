@@ -6,7 +6,7 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Input, Form, Row, Switch, AutoComplete } from 'antd';
 import { validateRequiredInputField, searchValidator, validatePanField, validateTan, validateTin, validateRequiredSelectField, validatePincodeField } from 'utils/validation';
-import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { ViewDetail } from './ViewDetail';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
@@ -48,12 +48,16 @@ const AddEditFormMain = (props) => {
     let groupValue = null;
     let parentGroupId = null;
     const parentName = (values) => {
+        console.log(values);
         const parentData = dealerParentData?.find((item) => item?.key === values);
-        if (parentData) {
+        if (values) {
             groupValue = parentData?.value;
             parentGroupId = parentData?.key;
             form.setFieldValue('dealerParentName', groupValue);
             form.setFieldValue('parentId', parentGroupId);
+        } else {
+            form.setFieldValue('dealerParentName', null);
+            form.setFieldValue('parentId', null);
         }
     };
 

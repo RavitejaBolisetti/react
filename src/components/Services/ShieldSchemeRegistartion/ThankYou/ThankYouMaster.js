@@ -4,12 +4,14 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 
-import { Row, Col, Space, Avatar, Typography, Divider, Button } from 'antd';
+import { Row, Col, Space, Avatar, Typography, Divider, Button, Popover } from 'antd';
 
 import { HiCheck } from 'react-icons/hi';
 import { CopytoClipboard } from 'utils/CopytoClipboard';
 import { AMC_CONSTANTS } from '../utils/AMCConstants';
 import { SHIELD_REPORT_DOCUMENT_TYPE } from '../utils/shieldReportDocumentType';
+import { SALE_TYPE } from '../utils/saleTypeConstant';
+import { shieldDocName } from '../utils/ShieldReportName';
 
 import { translateContent } from 'utils/translateContent';
 
@@ -72,20 +74,20 @@ export const ThankYouMaster = (props) => {
                             </Space>
 
                             <Divider />
-                            <Space size="middle" direction="vertical">
-                                <Text>{translateContent('shieldSchemeRegistration.confirmationMessage.downloadConfirmation')}</Text>
-                                <Row justify="space-between">
-                                    <Button onClick={() => handlePrintDownload({ ...record, typeRecord: SHIELD_REPORT_DOCUMENT_TYPE?.INVOICE_SHIELD?.value })} danger>
-                                        {translateContent('shieldSchemeRegistration.buttons.invoice')}
-                                    </Button>
-                                    {/* <Button onClick={() => handlePrintDownload({ ...record, typeRecord: SHIELD_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_SHIELD?.value })} danger style={{ margin: '0 12px' }}>
-                                        Registration Certificate
-                                    </Button>
-                                    <Button onClick={() => handlePrintDownload({ ...record, typeRecord: SHIELD_REPORT_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_SHIELD?.value })} danger>
-                                        Registration Incentive Claim
-                                    </Button> */}
-                                </Row>
-                            </Space>
+                            {record?.res?.data?.registrationDetails?.registrationInformation?.saleType === SALE_TYPE?.PAID?.key && (
+                                <Space size="middle" direction="vertical">
+                                    <Text>{translateContent('shieldSchemeRegistration.confirmationMessage.downloadConfirmation')}</Text>
+                                    <Row justify="space-between">
+                                        {shieldDocName?.map((type) => (
+                                            <Popover content={'Coming Soon'} trigger={type?.id === 3 ? 'hover' : 'none'}>
+                                                <Button onClick={() => (type?.id !== 3 ? handlePrintDownload({ ...record, typeRecord: type?.id === 1 ? SHIELD_REPORT_DOCUMENT_TYPE?.INVOICE_SHIELD?.value : type?.id === 2 ? SHIELD_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_SHIELD?.value : null }) : null)} danger style={{ margin: type?.id === 2 ? '0 12px' : '0' }}>
+                                                    {type?.name}
+                                                </Button>
+                                            </Popover>
+                                        ))}
+                                    </Row>
+                                </Space>
+                            )}
                         </div>
                     </Space>
                 </Col>
