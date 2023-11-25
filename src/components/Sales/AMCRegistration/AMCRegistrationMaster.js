@@ -196,7 +196,6 @@ export const AMCRegistrationMasterBase = (props) => {
     const [reportButtonType, setReportButtonType] = useState();
     const [amcDocumentType, setAmcDocumentType] = useState();
 
-    const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
 
     const [isRejectModalVisible, setRejectModalVisible] = useState(false);
@@ -294,41 +293,46 @@ export const AMCRegistrationMasterBase = (props) => {
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: page?.current,
+                value: filterString?.current || 1,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: page?.pageSize,
+                value: filterString?.pageSize ?? 10,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'status',
                 title: 'Status',
-                value: amcStatus,
+                value: filterString?.amcStatus ?? amcStatus,
                 canRemove: false,
                 filter: false,
             },
             {
                 key: 'sortBy',
                 title: 'Sort By',
-                value: page?.sortBy,
+                value: filterString?.sortBy,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'sortIn',
                 title: 'Sort Type',
-                value: page?.sortType,
+                value: filterString?.sortType,
                 canRemove: true,
                 filter: false,
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchValue, amcStatus, filterString, page]);
+    }, [filterString]);
+
+    useEffect(() => {
+        setFilterString({ ...filterString, amcStatus: QUERY_BUTTONS_CONSTANTS.PENDING.key, pageSize: 10, current: 1 });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         if (userId) {
@@ -336,7 +340,7 @@ export const AMCRegistrationMasterBase = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, amcStatus, filterString, page]);
+    }, [userId, filterString]);
 
     useEffect(() => {
         const defaultSection = AMC_REGISTRATION_SECTION.AMC_REGISTRATION_DETAILS.id;
@@ -430,6 +434,10 @@ export const AMCRegistrationMasterBase = (props) => {
                     value: otfNumber,
                 },
                 {
+                    key: 'otfStatus',
+                    value: 'I',
+                },
+                {
                     key: 'pageNumber',
                     value: '1',
                 },
@@ -444,6 +452,7 @@ export const AMCRegistrationMasterBase = (props) => {
 
     const handleInvoiceTypeChange = (buttonName) => {
         setAmcStatus(buttonName?.key);
+        setFilterString({ amcStatus: buttonName?.key, current: 1, pageSize: 10 });
         searchForm.resetFields();
     };
 
@@ -453,7 +462,6 @@ export const AMCRegistrationMasterBase = (props) => {
 
     const handleSearch = (value) => {
         setFilterString({ ...filterString, searchParam: value });
-        setSearchValue(value);
     };
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
@@ -605,7 +613,9 @@ export const AMCRegistrationMasterBase = (props) => {
     const tableProps = {
         dynamicPagination,
         totalRecords,
-        setPage,
+        setPage: setFilterString,
+        page: filterString,
+        filterString,
         tableColumn: tableColumn({ handleButtonClick, userType, locations }),
         tableData: data,
         showAddButton: false,

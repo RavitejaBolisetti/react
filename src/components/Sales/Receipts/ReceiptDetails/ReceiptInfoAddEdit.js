@@ -12,6 +12,7 @@ import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/prepareP
 import { ReceiptTypeForm } from './ReceiptInformation/ReceiptTypeForm';
 import { ReceiptType } from 'components/Sales/Receipts/utils/ReceiptType';
 import { translateContent } from 'utils/translateContent';
+import { disableFutureDate } from 'utils/disableDate';
 
 const { Panel } = Collapse;
 const { Option } = Select;
@@ -38,7 +39,7 @@ const PaymentAddEdit = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                             <Form.Item initialValue={formattedCalendarDate(receiptData?.receiptDate)} label={translateContent('receipts.label.receiptDetails.actualReceiptDate')} name="receiptDate" rules={[validateRequiredInputField(translateContent('receipts.label.receiptDetails.actualReceiptDate'))]}>
-                                <DatePicker format={dateFormat} placeholder={preparePlaceholderText(translateContent('receipts.placeholder.actualReceiptDate'))} disabled={formActionType?.editMode} />
+                                <DatePicker disabledDate={disableFutureDate} format={dateFormat} placeholder={preparePlaceholderText(translateContent('receipts.placeholder.actualReceiptDate'))} disabled={formActionType?.editMode} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>

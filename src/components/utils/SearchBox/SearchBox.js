@@ -89,7 +89,7 @@ const SearchBox = (props) => {
         <div className={singleField ? styles.masterListSearchForm : styles.selectSearchBg}>
             <Form onKeyPress={onKeyPressHandler} form={searchForm} layout={singleField ? 'horizontal' : 'vertical'} colon={false} autoComplete="off">
                 {!singleField && (
-                    <Form.Item name="searchType" initialValue={optionType?.length ? defaultOption : null} rules={[validateRequiredSelectField('parameter')]}>
+                    <Form.Item name="searchType" initialValue={optionType?.length > 0 ? defaultOption : null} rules={[validateRequiredSelectField('parameter')]}>
                         <Select onChange={handleValidation} disabled={disabled} placeholder="Select Parameter" {...selectProps}>
                             {optionType?.map((item) => (
                                 <Option key={'st' + item.key} value={item.key}>

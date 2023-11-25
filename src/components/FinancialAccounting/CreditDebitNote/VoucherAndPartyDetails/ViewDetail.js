@@ -49,10 +49,10 @@ const ViewDetailMain = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" className={styles.collapseContainer}>
-                        <Panel header="Voucher Details" key="1">
+                        <Panel header={translateContent('creditDebitNote.label.voucherDetails')} key="1">
                             <Divider />
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label={translateContent('creditDebitNote.voucherAndPartyDetails.label.partySegment')}>{checkAndSetDefaultValue(voucherDetailsDto?.totalSettledAmount, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('creditDebitNote.voucherAndPartyDetails.label.totalSettledAmount')}>{checkAndSetDefaultValue(voucherDetailsDto?.totalSettledAmount, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('creditDebitNote.voucherAndPartyDetails.label.totalWrite-OffAmount')}>{checkAndSetDefaultValue(voucherDetailsDto?.totalWriteOffAmount, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('creditDebitNote.voucherAndPartyDetails.label.totalApportionedAmount')}>{checkAndSetDefaultValue(voucherDetailsDto?.totalApportionedAmount, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('creditDebitNote.voucherAndPartyDetails.label.totalAmount')}>{checkAndSetDefaultValue(voucherDetailsDto?.totalAmount, isLoading)}</Descriptions.Item>
@@ -61,7 +61,7 @@ const ViewDetailMain = (props) => {
                         </Panel>
                     </Collapse>
                     <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end" className={styles.collapseContainer}>
-                        <Panel header="Party Details" key="2">
+                        <Panel header={translateContent('creditDebitNote.label.partyDetails')} key="2">
                             <Divider />
                             <Descriptions {...viewProps}>
                                 <Descriptions.Item label={translateContent('creditDebitNote.voucherAndPartyDetails.label.partySegment')}>{getCodeValue(typeData[PARAM_MASTER?.PARTY_CATEG?.id], partyDetailsDto?.partySegment)}</Descriptions.Item>
@@ -71,6 +71,7 @@ const ViewDetailMain = (props) => {
                                 <Descriptions.Item label={translateContent('creditDebitNote.voucherAndPartyDetails.label.city')}>{checkAndSetDefaultValue(partyDetailsDto?.city, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('creditDebitNote.voucherAndPartyDetails.label.state')}>{checkAndSetDefaultValue(partyDetailsDto?.state, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('creditDebitNote.voucherAndPartyDetails.label.phoneNo')}>{checkAndSetDefaultValue(partyDetailsDto?.mobileNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('creditDebitNote.voucherAndPartyDetails.label.remarks')}>{checkAndSetDefaultValue(partyDetailsDto?.remarks, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         </Panel>
                     </Collapse>

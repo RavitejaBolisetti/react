@@ -105,31 +105,31 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label={translateContent('bookingManagement.label.partNumber')} name="partNumber">
-                            <Input {...disableProp} placeholder={preparePlaceholderText(translateContent('bookingManagement.label.partNumber'))} />
+                            <Input {...disableProp} placeholder={translateContent('bookingManagement.label.partNumber')} />
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label={translateContent('bookingManagement.label.partNumber')} name="type">
-                            <Input {...disableProp} placeholder={preparePlaceholderText(translateContent('bookingManagement.label.partNumber'))} />
+                        <Form.Item label={translateContent('bookingManagement.label.partType')} name="type">
+                            <Input {...disableProp} placeholder={translateContent('bookingManagement.label.partType')} />
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label={translateContent('bookingManagement.label.partNumber')} name="sellingPrice">
-                            <Input {...disableProp} placeholder={preparePlaceholderText(translateContent('bookingManagement.label.partNumber'))} />
+                        <Form.Item label={translateContent('bookingManagement.label.sellingPrice')} name="sellingPrice">
+                            <Input {...disableProp} placeholder={preparePlaceholderText(translateContent('bookingManagement.label.sellingPrice'))} />
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label={translateContent('bookingManagement.label.partNumber')} name="mrp">
-                            <Input {...disableProp} placeholder={preparePlaceholderText(translateContent('bookingManagement.label.partNumber'))} />
+                        <Form.Item label={translateContent('bookingManagement.label.mrp')} name="mrp">
+                            <Input {...disableProp} placeholder={preparePlaceholderText(translateContent('bookingManagement.label.mrp'))} />
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item
-                            label={translateContent('bookingManagement.label.partNumber')}
+                            label={translateContent('bookingManagement.label.requiredQuantity')}
                             name="requiredQuantity"
                             rules={[
-                                validateRequiredInputField(translateContent('bookingManagement.label.partNumber')),
-                                validationNumber(translateContent('bookingManagement.label.partNumber')),
+                                validateRequiredInputField(translateContent('bookingManagement.label.requiredQuantity')),
+                                validationNumber(translateContent('bookingManagement.label.requiredQuantity')),
                                 {
                                     validator: (_, value) => {
                                         if (value > 50 || value < 0) {
@@ -141,7 +141,7 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
                                 },
                             ]}
                         >
-                            <Input type="number" max={50} placeholder={preparePlaceholderText(translateContent('bookingManagement.label.partNumber'))} />
+                            <Input type="number" max={50} placeholder={preparePlaceholderText(translateContent('bookingManagement.label.requiredQuantity'))} />
                         </Form.Item>
                     </Col>
                     <Form.Item hidden name="id">

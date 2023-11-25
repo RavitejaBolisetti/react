@@ -9,22 +9,22 @@ import { RSA_REGISTRATION_STATUS, RSA_REGISTRATION_STATUS_MNM_USER } from './RSA
 export const RSARegistrationStatusTag = (status) => {
     let tag = '';
     switch (status) {
-        case RSA_REGISTRATION_STATUS.PENDING.title:
+        case RSA_REGISTRATION_STATUS.PENDING.key:
             tag = <Tag color="warning">{RSA_REGISTRATION_STATUS.PENDING.title}</Tag>;
             break;
-        case RSA_REGISTRATION_STATUS_MNM_USER.PENDING_FOR_APPROVAL.desc:
+        case RSA_REGISTRATION_STATUS_MNM_USER.PENDING_FOR_APPROVAL.key:
             tag = <Tag color="warning">{RSA_REGISTRATION_STATUS_MNM_USER.PENDING_FOR_APPROVAL.title}</Tag>;
             break;
-        case RSA_REGISTRATION_STATUS_MNM_USER.PENDING_FOR_CANCELLATION.desc:
+        case RSA_REGISTRATION_STATUS_MNM_USER.PENDING_FOR_CANCELLATION.key:
             tag = <Tag color="warning">{RSA_REGISTRATION_STATUS_MNM_USER.PENDING_FOR_CANCELLATION.title}</Tag>;
             break;
-        case RSA_REGISTRATION_STATUS.APPROVED.title:
+        case RSA_REGISTRATION_STATUS.APPROVED.key:
             tag = <Tag color="success">{RSA_REGISTRATION_STATUS.APPROVED.title}</Tag>;
             break;
-        case RSA_REGISTRATION_STATUS.REJECTED.title:
+        case RSA_REGISTRATION_STATUS.REJECTED.key:
             tag = <Tag color="error">{RSA_REGISTRATION_STATUS.REJECTED.title}</Tag>;
             break;
-        case RSA_REGISTRATION_STATUS.CANCELLED.title:
+        case RSA_REGISTRATION_STATUS.CANCELLED.key:
             tag = <Tag color="error">{RSA_REGISTRATION_STATUS.CANCELLED.title}</Tag>;
             break;
 

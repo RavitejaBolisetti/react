@@ -344,6 +344,7 @@ export const BASE_URL_VEHICLE_CHALLAN_INSURANCE_DETAILS_DELIVERY_NOTE = BASE_URL
 export const BASE_URL_VEHICLE_CHALLAN_CANCEL_DELIVERY_NOTE = BASE_URL + 'otf/delivery/challan/cancel/info';
 export const BASE_URL_VEHICLE_INFO_CANCEL_DELIVERY_NOTE = BASE_URL + 'otf/deliverynote/cancellation/information';
 export const BASE_URL_VEHICLE_CHALLAN_CANCEL_NOTE = BASE_URL + 'otf/delivery/challan/cancel';
+export const BASE_URL_VEHICLE_CHANGE_MODEL_VARIANT = BASE_URL + 'otf/vehicle/modelchange';
 
 export const BASE_URL_RELATIONSHIP_MANAGER = BASE_URL_USER_MANAGEMENT_APPLICATIONS_DEALER + '/employees';
 export const BASE_URL_DELIVERY_NOTE_VEHICLE_DETAILS = BASE_URL_OTF_VEHICLE_DETAILS + '/search/registrationnumber';

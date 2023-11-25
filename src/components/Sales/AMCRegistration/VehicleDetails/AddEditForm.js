@@ -50,7 +50,7 @@ const AddEditForm = (props) => {
     return (
         <>
             <Form form={contactform} autoComplete="off" onFinish={onSaveFormData} onFieldsChange={handleFormValueChange} layout="vertical">
-                {!(formActionType?.addMode && requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.MNM_FOC?.key) && (
+                {!(formActionType?.addMode && requestPayload?.amcRegistration?.priceType === AMC_CONSTANTS?.MNM_FOC?.key) && (
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item label={translateContent('amcRegistration.label.vin')} name="vin">
@@ -91,7 +91,7 @@ const AddEditForm = (props) => {
                 </Row>
                 <VehicleListModal {...customerListProps} />
 
-                {!formActionType?.viewMode && !(formActionType?.addMode && requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.MNM_FOC?.key) && (
+                {!formActionType?.viewMode && !(formActionType?.addMode && requestPayload?.amcRegistration?.priceType === AMC_CONSTANTS?.MNM_FOC?.key) && (
                     <Row gutter={20} className={styles.marB20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.buttonsGroupLeft}>
                             <Button onClick={onSaveFormData} type="primary">
