@@ -32,7 +32,7 @@ describe('tableColumnAddEdit function', () => {
         expect(checkboxColumn.width).toBe('30%');
         expect(checkboxColumn.sorter).toBe(false);
 
-        const { container } = render(checkboxColumn.render('Some Text', {}, 0));
+         render(checkboxColumn.render('Some Text', {}, 0));
         const checkbox = screen.getByRole('checkbox');
         expect(checkbox).toBeInTheDocument();
     });

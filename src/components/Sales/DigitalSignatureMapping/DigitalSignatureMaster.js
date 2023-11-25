@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -57,11 +57,9 @@ export const DigitalSignatureMasterBase = (props) => {
     const { userId, fetchList, listShowLoading, data } = props;
     const { typeData, moduleTitle, totalRecords } = props;
     const { filterString, setFilterString } = props;
-    const [selectedOrderId, setSelectedOrderId] = useState();
-
+    
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
-    const [advanceFilterForm] = Form.useForm();
 
     const [showDataLoading, setShowDataLoading] = useState(false);
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -108,19 +106,18 @@ export const DigitalSignatureMasterBase = (props) => {
     }, [userId, filterString, page]);
 
     useEffect(() => {
-        if (userId && selectedOrderId) {
+        if (userId) {
             const extraParams = [
                 {
                     key: 'id',
                     title: 'id',
-                    value: selectedOrderId,
                     name: 'id',
                 },
             ];
-            // eslint-disable-next-line react-hooks/exhaustive-deps
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
-    }, [userId, selectedOrderId]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId]);
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
@@ -153,7 +150,7 @@ export const DigitalSignatureMasterBase = (props) => {
 
     const formProps = {
         isVisible: isFormVisible,
-        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
         formActionType,
         ADD_ACTION,
         EDIT_ACTION,

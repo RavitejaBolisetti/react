@@ -59,12 +59,8 @@ const CommonForm = ({ formData, typeData, formKey = 'Shield', addOnForm, openAcc
                         <Input placeholder={preparePlaceholderText(translateContent('vehicleDeliveryNote.addOnDetails.label.manager'))} disabled={true} />
                     </Form.Item>
                 </Col>
-                <Form.Item hidden name="schemeCode">
-                    <Input />
-                </Form.Item>
-                <Form.Item value={true} initialValue={true} hidden name="mappedInDelivery">
-                    <Input />
-                </Form.Item>
+                <Form.Item hidden name="schemeCode" />
+                <Form.Item value={true} initialValue={true} hidden name="mappedInDelivery" />
             </Row>
             {!formActionType?.viewMode &&
                 (!registerDisabled?.[openAccordian] ? (

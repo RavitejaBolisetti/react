@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Row, Col, Input, Form, Collapse, Divider, Select, DatePicker } from 'antd';
 import { expandActionIcon } from 'utils/accordianExpandIcon';
 import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
@@ -14,16 +14,15 @@ import { SALE_TYPE } from '../utils/saleTypeConstant';
 
 import { validateRequiredSelectField, validateOnlyPositiveNumber } from 'utils/validation';
 import { translateContent } from 'utils/translateContent';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 const { Panel } = Collapse;
 const { Search } = Input;
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { formData, saleTypes, vinNumber, bookingNumber, schemeDetail, employeeData, managerData, shieldDetailForm, handleOtfSearch, handleVinSearch, handleEmployeeSearch, handleOtfChange, saleType, handleSaleTypeChange, formActionType, isSchemeLoading, isEmployeeDataLoading, handleOnSelect, handleOnClear, screenType } = props;
+    const { formData, saleTypes, vinNumber, bookingNumber, schemeDetail, employeeData, managerData, shieldDetailForm, handleOtfSearch, handleVinSearch, handleEmployeeSearch, handleOtfChange, saleType, handleSaleTypeChange, formActionType, isSchemeLoading, isEmployeeDataLoading, handleOnSelect, handleOnClear, typeData, screenType, handleTaxChange } = props;
     const { activeKey, setActiveKey } = props;
-    // const [activeKey, setActiveKey] = useState([]);
-    const [selectedScheme, setSelectedScheme] = useState([]);
 
     useEffect(() => {
         shieldDetailForm.setFieldsValue({ registrationInformation: { vin: vinNumber, otf: bookingNumber } });
@@ -42,7 +41,6 @@ const AddEditFormMain = (props) => {
 
     const handleSchemeDescription = (key) => {
         const selectedScheme = schemeDetail?.find((i) => i.schemeDescription === key);
-        setSelectedScheme(selectedScheme);
         if (selectedScheme) {
             shieldDetailForm.setFieldsValue({
                 schemeDetails: {
@@ -64,20 +62,36 @@ const AddEditFormMain = (props) => {
                 <Collapse collapsible="icon" expandIcon={({ isActive }) => expandActionIcon(isActive, formActionType)} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
                     <Panel header={translateContent('shieldSchemeRegistration.heading.registrationInformation')} key="1">
                         <Divider />
-                        {/* <Form layout="vertical" autoComplete="off" form={registrationForm} onFieldsChange={handleFormValueChange}> */}
                         <Row gutter={20}>
-                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item initialValue={formData?.saleType} label={translateContent('shieldSchemeRegistration.label.saleType')} name={['registrationInformation', 'saleType']} rules={[validateRequiredSelectField(translateContent('shieldSchemeRegistration.label.saleType'))]}>
-                                    <Select {...selectProps} onChange={handleSaleTypeChange} placeholder={preparePlaceholderSelect(translateContent('shieldSchemeRegistration.label.saleType'))} disabled={!formActionType?.addMode}>
-                                        {saleTypes?.map((item) => (
-                                            <Option key={'dv' + item.key} value={item.key}>
-                                                {item.value}
-                                            </Option>
-                                        ))}
-                                    </Select>
-                                </Form.Item>
-                            </Col>
-                            {saleType === SALE_TYPE?.PAID?.key && screenType !== 'RSA' && (
+                            {screenType !== 'RSA' && (
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item initialValue={formData?.saleType} label={translateContent('shieldSchemeRegistration.label.saleType')} name={['registrationInformation', 'saleType']} rules={[validateRequiredSelectField(translateContent('shieldSchemeRegistration.label.saleType'))]}>
+                                        <Select {...selectProps} onChange={handleSaleTypeChange} placeholder={preparePlaceholderSelect(translateContent('shieldSchemeRegistration.label.saleType'))} disabled={!formActionType?.addMode}>
+                                            {saleTypes?.map((item) => (
+                                                <Option key={'dv' + item.key} value={item.key}>
+                                                    {item.value}
+                                                </Option>
+                                            ))}
+                                        </Select>
+                                    </Form.Item>
+                                </Col>
+                            )}
+
+                            {screenType === 'RSA' && (
+                                <>
+                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                        <Form.Item initialValue={formData?.priceType} label={translateContent('amcRegistration.label.priceType')} name={['registrationInformation', 'priceType']} rules={[validateRequiredSelectField(translateContent('amcRegistration.label.priceType'))]}>
+                                            {customSelectBox({ data: typeData?.[PARAM_MASTER.DLVR_SALE_TYP.id], placeholder: preparePlaceholderSelect(translateContent('amcRegistration.label.priceType')), onChange: handleSaleTypeChange })}
+                                        </Form.Item>
+                                    </Col>
+                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                        <Form.Item initialValue={formData?.saleType} label={translateContent('amcRegistration.label.saleType')} name={['registrationInformation', 'saleType']} rules={[validateRequiredSelectField(translateContent('amcRegistration.label.saleType'))]}>
+                                            {customSelectBox({ data: typeData['SALE_TYP'], placeholder: preparePlaceholderSelect(translateContent('amcRegistration.label.saleType')), onChange: handleTaxChange })}
+                                        </Form.Item>
+                                    </Col>
+                                </>
+                            )}
+                            {saleType === SALE_TYPE?.PAID?.key && (
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item initialValue={formData?.availableFund} label={translateContent('shieldSchemeRegistration.label.availableFunds')} name={['registrationInformation', 'availableFund']}>
                                         <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.availableFunds'))} disabled={true} />
@@ -113,7 +127,7 @@ const AddEditFormMain = (props) => {
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item initialValue={formData?.employeeName} label={translateContent('shieldSchemeRegistration.label.employeeName')} name={['registrationInformation', 'employeeName']}>
+                                <Form.Item initialValue={formData?.employeeName} label={translateContent('shieldSchemeRegistration.label.employeeName')} name={['registrationInformation', 'employeeName']} rules={[validateRequiredSelectField(translateContent('shieldSchemeRegistration.label.employeeName'))]}>
                                     {/* <AutoComplete maxLength={50} options={options} onSelect={handleOnSelect} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
                                         <Search onSearch={handleEmployeeSearch} onChange={handleOnClear} placeholder={preparePlaceholderText('Employee Name')} loading={isEmployeeDataLoading} type="text" allowClear />
                                     </AutoComplete> */}
@@ -160,7 +174,7 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item initialValue={formData?.schemeDiscount} label={translateContent('shieldSchemeRegistration.label.schemeDiscount')} name={['schemeDetails', 'schemeDiscount']} rules={[validateOnlyPositiveNumber(translateContent('shieldSchemeRegistration.label.schemeDiscount'))]}>
-                                    <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.schemeDiscount'))} />
+                                    <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.schemeDiscount'))} onChange={screenType === 'RSA' ? handleTaxChange : () => {}} />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>

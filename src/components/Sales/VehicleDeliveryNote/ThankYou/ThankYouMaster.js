@@ -69,7 +69,7 @@ export const ThankYouMaster = (props) => {
                             <Space className={styles.marB20}>
                                 <div className={styles.deliveryNoteSuccessText}>
                                     <Text>
-                                        {ThankYoutitles?.invoiceType} No.: <span>{ThankYoutitles?.Number}</span>
+                                        {ThankYoutitles?.invoiceType} {translateContent('global.label.number')}: <span>{ThankYoutitles?.Number}</span>
                                     </Text>
                                 </div>
                                 <CopytoClipboard type={'primary'} buttonText={'Copy'} text={ThankYoutitles?.Number} />
@@ -78,7 +78,7 @@ export const ThankYouMaster = (props) => {
                             <Divider />
                             <Space size="middle" direction="vertical">
                                 <Text>{translateContent('vehicleDeliveryNote.thankYouPage.downloadDeliveryNote')}</Text>
-                                <Button onClick={() => handlePrintDownload(record)} danger>
+                                <Button danger onClick={() => handlePrintDownload(record)}>
                                     {`Download/Print ${ThankYoutitles?.invoiceType}`}
                                 </Button>
                             </Space>

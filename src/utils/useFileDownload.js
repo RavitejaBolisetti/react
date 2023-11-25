@@ -4,6 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { useState, useEffect } from 'react';
+import { translateContent } from './translateContent';
 
 const useFileDownload = (url) => {
     const [fileData, setFileData] = useState(null);
@@ -17,7 +18,7 @@ const useFileDownload = (url) => {
             try {
                 const response = await fetch(url);
                 if (!response.ok) {
-                    throw new Error('File download failed');
+                    throw new Error(translateContent('global.generalMessage.filedownloadFailed'));
                 }
                 const data = await response.blob();
                 setFileData(data);

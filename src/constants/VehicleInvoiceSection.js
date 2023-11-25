@@ -9,6 +9,7 @@ export const VEHICLE_INVOICE_SECTION = {
         title: 'Invoice Details',
         advance: true,
         displayOnList: true,
+        translateKey: 'vehicleInvoiceGeneration.heading.section1',
     },
 
     VEHICLE_DETAILS: {
@@ -16,6 +17,7 @@ export const VEHICLE_INVOICE_SECTION = {
         title: 'Vehicle Details',
         advance: true,
         displayOnList: true,
+        translateKey: 'vehicleInvoiceGeneration.heading.section2',
     },
 
     SCHEME_OFFER_DETAILS: {
@@ -23,6 +25,7 @@ export const VEHICLE_INVOICE_SECTION = {
         title: 'Scheme and Offer Details',
         advance: false,
         displayOnList: true,
+        translateKey: 'vehicleInvoiceGeneration.heading.section3',
     },
 
     INSURANCE_DETAILS: {
@@ -30,6 +33,7 @@ export const VEHICLE_INVOICE_SECTION = {
         title: 'Insurance Details',
         advance: false,
         displayOnList: true,
+        translateKey: 'vehicleInvoiceGeneration.heading.section4',
     },
 
     FINANACE_DETAILS: {
@@ -37,6 +41,7 @@ export const VEHICLE_INVOICE_SECTION = {
         title: 'Finance Details',
         advance: false,
         displayOnList: true,
+        translateKey: 'vehicleInvoiceGeneration.heading.section5',
     },
 
     EXCHANGE_DETAILS: {
@@ -44,6 +49,7 @@ export const VEHICLE_INVOICE_SECTION = {
         title: 'Exchange Details',
         advance: false,
         displayOnList: true,
+        translateKey: 'vehicleInvoiceGeneration.heading.section6',
     },
 
     REFERRALS: {
@@ -51,6 +57,7 @@ export const VEHICLE_INVOICE_SECTION = {
         title: 'Referrals',
         advance: false,
         displayOnList: true,
+        translateKey: 'vehicleInvoiceGeneration.heading.section7',
     },
 
     LOYALTY_SCHEME: {
@@ -58,11 +65,13 @@ export const VEHICLE_INVOICE_SECTION = {
         title: 'Loyalty Scheme Details',
         advance: false,
         displayOnList: true,
+        translateKey: 'vehicleInvoiceGeneration.heading.section8',
     },
 
     THANK_YOU_PAGE: {
         id: 12,
         title: 'Thank You',
         displayOnList: false,
+        translateKey: 'vehicleInvoiceGeneration.heading.section9',
     },
 };

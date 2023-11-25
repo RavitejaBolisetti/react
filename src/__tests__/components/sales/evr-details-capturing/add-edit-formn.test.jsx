@@ -4,10 +4,9 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import '@testing-library/jest-dom/extend-expect';
-import { screen, fireEvent, getByRole } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 import customRender from '@utils/test-utils';
 import { AddEditForm } from '@components/Sales/EvrDetailsCapturing/AddEditForm';
-import { Tag } from 'antd';
 import { Form } from 'antd';
 
 const FormWrapper = (props) => {

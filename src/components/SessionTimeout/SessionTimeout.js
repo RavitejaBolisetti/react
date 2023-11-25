@@ -15,6 +15,7 @@ import { AiOutlineWarning } from 'react-icons/ai';
 import { Modal } from 'antd';
 import * as routing from 'constants/routing';
 import { showGlobalNotification } from 'store/actions/notification';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -117,7 +118,7 @@ const SessionTimeoutMain = ({ isLoggedIn, doLogout, doRefreshToken, showGlobalNo
 
     const onSuccess = (res) => {
         if (res?.data) {
-            showGlobalNotification({ notificationType: 'successBeforeLogin', title: res?.title || 'Logout Successful', message: Array.isArray(res?.responseMessage) ? res?.responseMessage[0] : res?.responseMessage });
+            showGlobalNotification({ notificationType: 'successBeforeLogin', title: res?.title || translateContent('global.notificationSuccess.logoutSuccess'), message: Array.isArray(res?.responseMessage) ? res?.responseMessage[0] : res?.responseMessage });
             navigate(routing.ROUTING_LOGIN);
         }
     };
@@ -129,7 +130,7 @@ const SessionTimeoutMain = ({ isLoggedIn, doLogout, doRefreshToken, showGlobalNo
     const modalProps = {
         isVisible: isModalOpen,
         icon: <AiOutlineWarning />,
-        titleOverride: 'Session Timeout',
+        titleOverride: translateContent('sessionTimeout.heading.title'),
         remaining,
         closable: false,
         handleLogoutAction: onIdle,

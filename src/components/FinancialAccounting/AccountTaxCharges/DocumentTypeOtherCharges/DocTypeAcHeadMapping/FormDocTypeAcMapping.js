@@ -15,7 +15,7 @@ import TreeSelectField from 'components/common/TreeSelectField';
 import { translateContent } from 'utils/translateContent';
 
 function FormDocTypeAcMapping(props) {
-    const { docTypeHeadMappingForm, typeData, addDocHeadMapping, formEdit, editForm, financialAccount, financialAccHeadData, handleSelectTreeClick, selectedTreeSelectKey, financialAccHeadName } = props;
+    const { docTypeHeadMappingForm, typeData, addDocHeadMapping, formEdit, editForm, financialAccHeadData, handleSelectTreeClick, selectedTreeSelectKey } = props;
 
     const fieldNames = { title: 'accountDescription', key: 'id', children: 'subGroup' };
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
@@ -37,7 +37,7 @@ function FormDocTypeAcMapping(props) {
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label={translateContent('documentTypeOtherChargesMaster.placeholder.financialAccountHead')} name="financialAccountHeadId" initialValue={props?.financialAccountHeadId} rules={[validateRequiredSelectField('Financial Account Head')]}>
+                    <Form.Item label={translateContent('documentTypeOtherChargesMaster.placeholder.financialAccountHead')} name="financialAccountHeadId" initialValue={props?.financialAccountHeadId} rules={[validateRequiredSelectField(translateContent('documentTypeOtherChargesMaster.placeholder.financialAccountHead'))]}>
                         <TreeSelectField {...treeSelectFieldProps} />
                     </Form.Item>
                 </Col>
@@ -49,6 +49,7 @@ function FormDocTypeAcMapping(props) {
                 {!props?.internalId && (
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Button
+                            data-testid="add_btn"
                             disabled={formEdit}
                             type="primary"
                             icon={<PlusOutlined />}
@@ -57,7 +58,7 @@ function FormDocTypeAcMapping(props) {
                                 addDocHeadMapping();
                             }}
                         >
-                            Add
+                            {translateContent('global.buttons.add')}
                         </Button>
                     </Col>
                 )}

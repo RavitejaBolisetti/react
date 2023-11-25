@@ -8,10 +8,13 @@ export const DELIVERY_TYPE = {
         id: 1,
         title: 'Delivery Note',
         key: 'DN',
+        translateTitle: 'vehicleDeliveryNote.buttons.deliveryNote',
     },
     CHALLAN: {
         id: 2,
         title: 'Delivery Challan',
         key: 'DC',
+        translateTitle: 'vehicleDeliveryNote.buttons.deliveryChallan',
+
     },
 };

@@ -6,6 +6,7 @@
 
 import { LANGUAGE_EN } from 'language/en';
 import { ConfirmationModal } from './ConfirmationModal';
+import { translateContent } from './translateContent';
 
 export const UnSaveDataConfirmation = ({ isVisible = false, onCloseAction, onSubmitAction }) => {
     const unsavedDataModalProps = {
@@ -14,7 +15,7 @@ export const UnSaveDataConfirmation = ({ isVisible = false, onCloseAction, onSub
         closable: false,
         onCloseAction,
         onSubmitAction,
-        submitText: 'Leave',
+        submitText: translateContent('global.buttons.leave'),
         showField: false,
         text: LANGUAGE_EN.GENERAL.UNSAVE_DATA_WARNING.MESSAGE,
     };

@@ -9,11 +9,13 @@ export const CHARGER_INSTALLATION_SECTION = {
         title: 'Charger Installation Details',
         advance: true,
         displayOnList: true,
+        translateKey: 'chargerInstallationProcess.section.chargerDetails.title',
     },
     INSTALLATION_ADDRESS_DETAILS: {
         id: 2,
         title: 'Installation Address Details',
         advance: true,
         displayOnList: true,
+        translateKey: 'chargerInstallationProcess.section.addressDetails.title',
     },
 };

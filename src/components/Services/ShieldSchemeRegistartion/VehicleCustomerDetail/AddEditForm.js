@@ -6,7 +6,7 @@
 import React, { useState } from 'react';
 import { Row, Col, Input, Form, Collapse, Divider, DatePicker, Select } from 'antd';
 import { expandActionIcon } from 'utils/accordianExpandIcon';
-import { convertDateToCalender, dateFormat } from 'utils/formatDateTime';
+import { dateFormat, formatDateToCalenderDate } from 'utils/formatDateTime';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { translateContent } from 'utils/translateContent';
@@ -15,7 +15,7 @@ const { Panel } = Collapse;
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { formData, formActionType, vehicleDetailForm, customerDetailForm, handleFormValueChange, modelFamilyData } = props;
+    const { formData, formActionType, vehicleDetailForm, customerDetailForm, handleFormValueChange, modelFamilyData, ProductHierarchyData } = props;
 
     const [activeKey, setActiveKey] = useState([]);
 
@@ -42,7 +42,7 @@ const AddEditFormMain = (props) => {
         }
     };
 
-    const fromDateInitialValue = { initialValue: convertDateToCalender(formData?.vehicleDetails?.orgWarrantyStartDate) };
+    const fromDateInitialValue = { initialValue: formatDateToCalenderDate(formData?.vehicleDetails?.orgWarrantyStartDate) };
 
     return (
         <Row gutter={20}>
@@ -71,7 +71,14 @@ const AddEditFormMain = (props) => {
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item initialValue={formData?.vehicleDetails?.modelGroup} label={translateContent('shieldSchemeRegistration.label.modelGroup')} name="modelGroup">
-                                        <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.modelGroup'))} disabled={true} />
+                                        <Select {...selectProps} placeholder={preparePlaceholderSelect(translateContent('shieldSchemeRegistration.label.modelFamily'))} disabled={true}>
+                                            {ProductHierarchyData?.map((item) => (
+                                                <Option key={'dv' + item.key} value={item.modelGroupCode}>
+                                                    {item.modelGroupDescription}
+                                                </Option>
+                                            ))}
+                                        </Select>
+                                        {/* <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.modelGroup'))} disabled={true} /> */}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>

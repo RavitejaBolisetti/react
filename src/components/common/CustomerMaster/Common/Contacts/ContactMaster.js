@@ -20,7 +20,6 @@ import ViewContactList from './ViewContactList';
 import { CustomerFormButton } from '../../CustomerFormButton';
 import { CardSkeleton } from 'components/common/Skeleton';
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
-import { LANGUAGE_EN } from 'language/en';
 import { NoDataFound } from 'utils/noDataFound';
 
 import styles from 'assets/sass/app.module.scss';
@@ -38,7 +37,6 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
         },
-       
     } = state;
 
     let returnValue = {
@@ -51,7 +49,6 @@ const mapStateToProps = (state) => {
         isCustomerIndDataLoaded,
         isCustomerIndDataLoading,
         customerIndData,
-        
     };
     return returnValue;
 };
@@ -69,7 +66,6 @@ const mapDispatchToProps = (dispatch) => ({
             listContactIndividualDetailsShowLoading: customerDetailIndividualDataActions.listShowLoading,
             saveIndividualData: customerDetailIndividualDataActions.saveData,
             resetIndividualData: customerDetailIndividualDataActions.reset,
-
 
             showGlobalNotification,
         },
@@ -90,8 +86,6 @@ const ContactMain = (props) => {
     const [isAdding, setIsAdding] = useState(false);
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
-
-    const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
     const addDataTitle = (
         <p className={styles.textCenter}>
             Please add new contact using <br /> <strong>“Add”</strong> button at top
@@ -149,7 +143,7 @@ const ContactMain = (props) => {
             .then((value) => {
                 const defaultAdddress = contactData.find((i) => i?.defaultContactIndicator && i?.purposeOfContact !== value?.purposeOfContact) && value?.defaultContactIndicator;
                 if (defaultAdddress) {
-                    return showGlobalNotification({ message: 'Only one contact can be default' });
+                    return showGlobalNotification({ message: translateContent('customerMaster.notification.contact') });
                 }
 
                 if (isEditing) {
@@ -232,7 +226,7 @@ const ContactMain = (props) => {
 
     const onFinish = () => {
         if (contactData.findIndex((i) => i?.defaultContactIndicator) === -1) {
-            return showGlobalNotification({ message: 'At least one contact should have default contact' });
+            return showGlobalNotification({ message: translateContent('global.generalMessage.atLeastOneContactShouldDefault') });
         }
 
         let data = { customerId: selectedCustomer?.customerId, customerContact: contactData };
@@ -304,7 +298,7 @@ const ContactMain = (props) => {
                                     </Row>
                                     <Divider className={styles.marT20} />
                                     {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
-                                    {!contactData?.length && !isAdding ? <NoDataFound informtion={formActionType?.viewMode ? noDataTitle : addDataTitle} /> : <ViewContactList {...formProps} />}
+                                    {!contactData?.length && !isAdding ? <NoDataFound informtion={formActionType?.viewMode ? translateContent('global.generalMessage.noRecordsFoundAddNew') : addDataTitle} /> : <ViewContactList {...formProps} />}
                                 </>
                             )}
                         </Card>

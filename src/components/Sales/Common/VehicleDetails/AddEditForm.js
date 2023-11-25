@@ -135,7 +135,7 @@ const AddEditFormMain = (props) => {
     const handleSelectTreeClick = (value) => {
         setConfirmRequest({
             isVisible: true,
-            titleOverride: 'Confirmation',
+            titleOverride: translateContent('commonModules.heading.confirmation'),
             closable: true,
             icon: false,
             onCloseAction: () => {
@@ -153,8 +153,8 @@ const AddEditFormMain = (props) => {
                     isVisible: false,
                 });
             },
-            submitText: 'Yes',
-            text: 'If you proceed with model change, the price will be calculated as per the selected model. Do you wish to continue?',
+            submitText: translateContent('global.yesNo.yes'),
+            text: translateContent('commonModules.validation.modelChangeConfirmation'),
         });
     };
 
@@ -168,7 +168,7 @@ const AddEditFormMain = (props) => {
         selectedTreeSelectKey: formData?.model,
         handleSelectTreeClick,
         treeExpandedKeys: [formData?.model],
-        placeholder: preparePlaceholderSelect('Model'),
+        placeholder: preparePlaceholderSelect(translateContent('commonModules.vehicleDetails.model')),
         loading: !viewOnly ? isProductDataLoading : false,
         treeDisabled: true,
     };
@@ -229,33 +229,33 @@ const AddEditFormMain = (props) => {
                                 {isOTFModule && (
                                     <>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label="Available Stock" name="availableStock" data-testid="availableStock">
-                                                <Input {...disabledProp} placeholder={preparePlaceholderText('Available Stock')} />
+                                            <Form.Item label={translateContent('commonModules.label.vehicleDetails.availableStock')} name="availableStock" data-testid="availableStock">
+                                                <Input {...disabledProp} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.availableStock'))} />
                                             </Form.Item>
                                         </Col>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label="PO Number" name="poNumber">
-                                                <Input {...disabledProp} placeholder={preparePlaceholderText('PO Number')} />
+                                            <Form.Item label={translateContent('commonModules.label.vehicleDetails.poNumber')} name="poNumber">
+                                                <Input {...disabledProp} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.poNumber'))} />
                                             </Form.Item>
                                         </Col>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label="PO Date" name="poDate">
-                                                <Input {...disabledProp} placeholder={preparePlaceholderText('PO Date')} />
+                                            <Form.Item label={translateContent('commonModules.label.vehicleDetails.poDate')} name="poDate">
+                                                <Input {...disabledProp} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.poDate'))} />
                                             </Form.Item>
                                         </Col>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label="PO Status" name="poStatus">
+                                            <Form.Item label={translateContent('commonModules.label.vehicleDetails.poStatus')} name="poStatus">
                                                 {customSelectBox({ data: typeData?.PO_STATS, disabled: true })}
                                             </Form.Item>
                                         </Col>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label="SO Number" name="soNumber">
-                                                <Input {...disabledProp} placeholder={preparePlaceholderText('SO Number')} />
+                                            <Form.Item label={translateContent('commonModules.label.vehicleDetails.soNumber')} name="soNumber">
+                                                <Input {...disabledProp} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.soNumber'))} />
                                             </Form.Item>
                                         </Col>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label="SO Status" name="soStatus">
-                                                <Input {...disabledProp} placeholder={preparePlaceholderText('SO Status')} />
+                                            <Form.Item label={translateContent('commonModules.label.vehicleDetails.soStatus')} name="soStatus">
+                                                <Input {...disabledProp} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.soStatus'))} />
                                             </Form.Item>
                                         </Col>
                                     </>
@@ -263,7 +263,7 @@ const AddEditFormMain = (props) => {
 
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item label={translateContent('commonModules.label.vehicleDetails.vin')} name="vinNumber">
-                                        <Input {...disabledProp} placeholder={preparePlaceholderText('VIN')} />
+                                        <Input {...disabledProp} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.vin'))} />
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -285,12 +285,12 @@ const AddEditFormMain = (props) => {
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item label={translateContent('commonModules.label.vehicleDetails.vehicleSellingPrice')} name="vehicleSellingPrice">
-                                        <Input {...disabledProp} placeholder={preparePlaceholderText('Vehicle Selling Price')} />
+                                        <Input {...disabledProp} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.vehicleSellingPrice'))} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item label={translateContent('commonModules.label.vehicleDetails.vehicleAmount')} name="vehicleAmount">
-                                        <Input {...disabledProp} placeholder={preparePlaceholderText('Vehicle Amount')} />
+                                        <Input {...disabledProp} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.vehicleAmount'))} />
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -305,24 +305,24 @@ const AddEditFormMain = (props) => {
                                         label={translateContent('commonModules.label.vehicleDetails.dealerDiscountWithTax')}
                                         name="discountAmount"
                                         rules={[
-                                            validateNumberWithTwoDecimalPlaces('Dealer Discount with TAX'),
+                                            validateNumberWithTwoDecimalPlaces(translateContent('commonModules.label.vehicleDetails.dealerDiscountWithTax')),
                                             {
                                                 validator: () => compareAmountValidator(form.getFieldValue('vehicleSellingPrice'), form.getFieldValue('discountAmount'), 'Discount'),
                                             },
                                         ]}
                                     >
-                                        <Input placeholder={preparePlaceholderText('Dealer Discount with TAX')} onChange={onDiscountAmountChange} />
+                                        <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.dealerDiscountWithTax'))} onChange={onDiscountAmountChange} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.consumerSchemeWithTax')} name="taxAmount">
-                                        <Input {...disabledProp} placeholder={preparePlaceholderText('Consumer Scheme with TAX')} />
+                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.consumerSchemeWithTax')} name="consumerSchemeWithTax">
+                                        <Input {...disabledProp} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.consumerSchemeWithTax'))} />
                                     </Form.Item>
                                 </Col>
                                 {showPrintDiscount && (
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                         <Form.Item initialValue={formActionType?.editMode ? (formData?.printDiscount === 'Y' ? true : false) : false} labelAlign="left" wrapperCol={{ span: 24 }} name="printDiscount" label={translateContent('commonModules.label.vehicleDetails.printDiscount')}>
-                                            <Switch checkedChildren="Yes" unCheckedChildren="No" onChange={(checked) => (checked ? 'Y' : 'N')} />
+                                            <Switch checkedChildren={translateContent('global.yesNo.yes')} unCheckedChildren={translateContent('global.yesNo.no')} onChange={(checked) => (checked ? 'Y' : 'N')} />
                                         </Form.Item>
                                     </Col>
                                 )}
@@ -342,7 +342,7 @@ const AddEditFormMain = (props) => {
                                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                         <Text strong>{translateContent('vehicleInvoiceGeneration.heading.collapse.optionalService')}</Text>
                                         <Button className={styles.marL10} onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly}>
-                                            Add
+                                            {translateContent('global.buttons.add')}
                                         </Button>
                                     </Col>
                                 </Row>

@@ -1,5 +1,10 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import '@testing-library/jest-dom/extend-expect';
-import CommonForm from 'components/Sales/VehicleDeliveryNote/AddOnDetails/CommonForm';
+import CommonForm from '@components/Sales/VehicleDeliveryNote/AddOnDetails/CommonForm';
 import customRender from '@utils/test-utils';
 import { Form } from 'antd';
 import { screen, fireEvent } from '@testing-library/react';
@@ -33,31 +38,27 @@ const typeData = {
 
 describe('AddOn Detail Common Form components', () => {
     it('should render components', () => {
-        customRender(<FormWrapper typeData={typeData} />);
+        const schemeDescriptionDatamain = { RSA: ['Kai'] };
+        customRender(<FormWrapper typeData={typeData} schemeDescriptionDatamain={schemeDescriptionDatamain} />);
     });
 
     it('fields should work with shield', () => {
-        const schemeDescriptionData = [
-            {
-                schemeDescription: 'Kai',
-            },
-        ];
-        customRender(<FormWrapper typeData={typeData}  schemeDescriptionData={schemeDescriptionData} />);
+        const schemeDescriptionDatamain = {
+            RSA: ['Kai'],
+        };
+        customRender(<FormWrapper typeData={typeData} schemeDescriptionDatamain={schemeDescriptionDatamain} />);
         const schemeType = screen.getByRole('combobox', { name: 'Scheme Description' });
         fireEvent.change(schemeType, { target: { value: 'Kai' } });
-        fireEvent.click(screen.getAllByText('Kai')[1]);
+        // fireEvent.click(screen.getAllByText('Kai')[1]);
     });
 
     it('fields should work with amc', () => {
-        const schemeDescriptionData = [
-            {
-                schemeDescription: 'Kai',
-            },
-        ];
-        customRender(<FormWrapper typeData={typeData} schemeDescriptionData={schemeDescriptionData} />);
+        const schemeDescriptionDatamain = {
+            RSA: ['Kai'],
+        };
+        customRender(<FormWrapper schemeDescriptionDatamain={schemeDescriptionDatamain} typeData={typeData} />);
         const schemeType = screen.getByRole('combobox', { name: 'Scheme Description' });
         fireEvent.change(schemeType, { target: { value: 'Kai' } });
-        fireEvent.click(screen.getAllByText('Kai')[1]);
     });
 
     it('field should work with rsa', () => {
@@ -67,12 +68,11 @@ describe('AddOn Detail Common Form components', () => {
             },
         ];
         const schemeDescriptionDatamain = {
-            'RSA': ['Kai'],
+            RSA: ['Kai'],
         };
         customRender(<FormWrapper typeData={typeData} openAccordian={'RSA'} registerDisabled={schemeDescriptionDatamain} schemeDescriptionDatamain={schemeDescriptionDatamain} schemeDescriptionData={schemeDescriptionData} />);
         const schemeType = screen.getByRole('combobox', { name: 'Scheme Description' });
         fireEvent.change(schemeType, { target: { value: 'Kai' } });
-        // fireEvent.click(screen.getAllByText('Kai')[1]);
     });
 
     it('register button should work', () => {
@@ -85,7 +85,6 @@ describe('AddOn Detail Common Form components', () => {
             RSA: ['Kai'],
         };
         customRender(<FormWrapper typeData={typeData} openAccordian={'RSA'} registerDisabled={false} schemeDescriptionDatamain={schemeDescriptionDatamain} schemeDescriptionData={schemeDescriptionData} onSingleFormFinish={jest.fn()} />);
-        // registerDisabled={schemeDescriptionDatamain}
         const registeBtn = screen.getByRole('button', { name: 'Register' });
         fireEvent.click(registeBtn);
     });

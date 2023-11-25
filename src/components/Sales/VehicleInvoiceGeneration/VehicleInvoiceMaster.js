@@ -345,6 +345,8 @@ export const VehicleInvoiceMasterBase = (props) => {
                 userId,
                 extraParams: extraParams,
                 onSuccessAction: (res) => {
+                    const CancelInvoice = res?.data?.otfStatus === OTF_STATUS.INVOICED.key && res?.data?.invoiceStatus === OTF_STATUS.INVOICED.key;
+                    setButtonData((prev) => ({ ...prev, cancelInvoiceBtn: CancelInvoice }));
                     setProfileCardData(res?.data);
                 },
                 onErrorAction,
@@ -868,7 +870,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         setFormActionType,
         isVisible: isFormVisible,
         onCloseAction: onCloseDrawer,
-        titleOverride: drawerTitle(formActionType).concat(translateContent('vehicleInvoiceGeneration.heading.drawerTitleMaster')),
+        titleOverride: drawerTitle(formActionType).concat(" ").concat(translateContent('vehicleInvoiceGeneration.heading.drawerTitleMaster')),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,

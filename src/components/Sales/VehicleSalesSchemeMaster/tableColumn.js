@@ -12,7 +12,6 @@ import { translateContent } from 'utils/translateContent';
 export const tableColumn = ({ handleButtonClick, schemeTypeData, encashTypeData }) => {
     const tableColumn = [];
 
-
     tableColumn.push(
         tblPrepareColumns({
             title: translateContent('vehicleSalesSchemeMaster.label.schemeCode'),

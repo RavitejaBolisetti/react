@@ -12,7 +12,7 @@ import { withDrawer } from 'components/withDrawer';
 
 import { ManufacturerAdminHierarchyChangeHistoryDataActions } from 'store/actions/data/manufacturerAdminHierarchy/manufacturerAdminHierarchyChangeHistory';
 import { ManufacturerOrgHierarchyChangeHistoryDataActions } from 'store/actions/data/manufacturerOrgHierarchy/manufacturerorgHierarchyChangeHistory';
-import { tableColumnAdmin, tableColumnAuthority } from './tableColumn';
+import { adminChangeHistory, authorityChangeHistory } from './tableColumn';
 
 import { DataTable } from 'utils/dataTable';
 import { MANUFACTURER_HIERARCHY_TYPE } from 'constants/manufacturerHierarchyType';
@@ -89,7 +89,7 @@ const ChangeHistoryMain = (props) => {
     const tableProps = {
         pagination: false,
         isLoading: activeKey === isAdministrative ? isAdminHierarchyHistoryLoading : isHistoryOrgHierarchyLoading,
-        tableColumn: activeKey === isAdministrative ? tableColumnAdmin : tableColumnAuthority,
+        tableColumn: activeKey === isAdministrative ? adminChangeHistory() : authorityChangeHistory(),
         tableData: activeKey === isAdministrative ? ChangeHistoryAdminData : ChangeHistoryOrgData,
         scroll: { x: 1600, y: 'calc(100vh - 312px)' },
     };

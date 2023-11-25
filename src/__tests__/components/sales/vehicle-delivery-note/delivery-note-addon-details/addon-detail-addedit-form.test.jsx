@@ -1,8 +1,12 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import '@testing-library/jest-dom/extend-expect';
 import { AddEditForm } from '@components/Sales/VehicleDeliveryNote/AddOnDetails/AddEditForm';
 import customRender from '@utils/test-utils';
-import { screen, fireEvent, buildQueries } from '@testing-library/react';
-
+import { screen, fireEvent } from '@testing-library/react';
 import { Form } from 'antd';
 
 afterEach(() => {
@@ -28,12 +32,16 @@ const typeData = {
     ],
 };
 
+const registerDisabled = { openAccordian: true };
+const schemeDescriptionDatamain = { openAccordian: true };
+const disabled = { isReadOnly: false };
+
 describe('AddOn Detail Common Form components', () => {
     it('should render components', () => {
-        customRender(<AddEditForm setformDataSetter={jest.fn()} />);
+        customRender(<AddEditForm registerDisabled={registerDisabled} />);
     });
     it('should click on buttons', () => {
-        customRender(<FormWrapper setformDataSetter={jest.fn()} typeData={typeData} setOpenAccordian={jest.fn()} />);
+        customRender(<FormWrapper typeData={typeData} disabled={disabled} schemeDescriptionDatamain={schemeDescriptionDatamain} setOpenAccordian={jest.fn()} registerDisabled={registerDisabled} />);
 
         const plusBtn = screen.getAllByRole('img', { name: /plus/i });
         fireEvent.click(plusBtn[0]);

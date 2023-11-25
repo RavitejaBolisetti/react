@@ -95,7 +95,7 @@ export default function AppliedAdvanceFilter(props) {
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={22} xl={22} className={styles.advanceFilterContainer}>
-                                    <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
+                                    <div className={styles.advanceFilterTitle}>{translateContent('global.advanceFilter.appliedAdvanceFilter')}</div>
                                     {extraParams
                                         ?.filter((item, index) => index <= 5)
                                         ?.map((filter) => {

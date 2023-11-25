@@ -6,7 +6,7 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Input, Form, Row, Switch, AutoComplete } from 'antd';
 import { validateRequiredInputField, searchValidator, validatePanField, validateTan, validateTin, validateRequiredSelectField, validatePincodeField } from 'utils/validation';
-import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { ViewDetail } from './ViewDetail';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
@@ -48,12 +48,16 @@ const AddEditFormMain = (props) => {
     let groupValue = null;
     let parentGroupId = null;
     const parentName = (values) => {
+        console.log(values);
         const parentData = dealerParentData?.find((item) => item?.key === values);
-        if (parentData) {
+        if (values) {
             groupValue = parentData?.value;
             parentGroupId = parentData?.key;
             form.setFieldValue('dealerParentName', groupValue);
             form.setFieldValue('parentId', parentGroupId);
+        } else {
+            form.setFieldValue('dealerParentName', null);
+            form.setFieldValue('parentId', null);
         }
     };
 
@@ -276,7 +280,7 @@ const AddEditFormMain = (props) => {
                                 </Col>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" data-testid="status" label={translateContent('dealerCompany.label.status')}>
-                                        <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
+                                        <Switch checkedChildren={translateContent('global.label.active')} unCheckedChildren={translateContent('global.label.inActive')} onChange={(checked) => (checked ? 1 : 0)} />
                                     </Form.Item>
                                 </Col>
                             </Row>

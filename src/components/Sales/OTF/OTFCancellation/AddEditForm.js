@@ -28,7 +28,7 @@ const AddEditFormMain = (props) => {
     const { otfCancellationForm, formData, selectedOrder, fieldNames, onFinishOTFCancellation } = props;
     const { handleButtonClick, buttonData, setButtonData, onCloseAction, handleFormValueChange, typeData, setUploadedFile, showGlobalNotification, viewDocument, setEmptyList } = props;
     const { searchDealerValue, setSearchDealerValue, dealerDataList, productHierarchyData } = props;
-    const { uploadedFileName, setUploadedFileName, uploadedFile, parentAppCode, setParentAppCode, resetDealerList,singleDisabled, setSingleDisabled } = props;
+    const { uploadedFileName, setUploadedFileName, uploadedFile, parentAppCode, setParentAppCode, resetDealerList, singleDisabled, setSingleDisabled } = props;
 
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
     const [reasonTypeChange, setReasonTypeChange] = useState('');
@@ -103,7 +103,7 @@ const AddEditFormMain = (props) => {
                 setDealerList([
                     {
                         value: '',
-                        label:translateContent('bookingManagement.label.noDealerFound'),
+                        label: translateContent('bookingManagement.label.noDealerFound'),
                         disabled: true, // disable this option
                     },
                 ]);
@@ -180,10 +180,10 @@ const AddEditFormMain = (props) => {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Card className={styles.marB20}>
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label={translateContent('bookingManagement.heading.profileCard.bookingNumber')}>{checkAndSetDefaultValue(selectedOrder?.bookingNumber || selectedOrder?.otfNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label={translateContent('bookingManagement.heading.profileCard.bookingDate')}>{checkAndSetDefaultValue(convertDateTime(selectedOrder?.otfDate, dateFormatView), isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('bookingManagement.profileCard.bookingNumber')}>{checkAndSetDefaultValue(selectedOrder?.bookingNumber || selectedOrder?.otfNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('bookingManagement.profileCard.bookingDate')}>{checkAndSetDefaultValue(convertDateTime(selectedOrder?.otfDate, dateFormatView), isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('commonModules.label.bookingCustomerAndBillingCustomer.customerName')}>{checkAndSetDefaultValue(selectedOrder?.customerName, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label={translateContent('bookingManagement.heading.profileCard.mobileNumber')}>{checkAndSetDefaultValue(selectedOrder?.mobileNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('bookingManagement.profileCard.mobileNumber')}>{checkAndSetDefaultValue(selectedOrder?.mobileNumber, isLoading)}</Descriptions.Item>
                             </Descriptions>
                             <Descriptions {...singleItemViewProps}>
                                 <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.modelDescription')}>{checkAndSetDefaultValue(selectedOrder?.model, isLoading)}</Descriptions.Item>

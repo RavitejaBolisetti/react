@@ -10,6 +10,7 @@ export const QUERY_BUTTONS = {
         key: 'SRV',
         displayOnView: true,
         active: true,
+        translateKey: 'queryButtons.label.siteSurvey',
     },
     SITE_VALIDATION: {
         id: 2,
@@ -17,6 +18,7 @@ export const QUERY_BUTTONS = {
         key: 'VLD',
         displayOnView: true,
         active: false,
+        translateKey: 'queryButtons.label.siteValidation',
     },
     INSTALLATION: {
         id: 3,
@@ -24,6 +26,7 @@ export const QUERY_BUTTONS = {
         key: 'INS',
         displayOnView: true,
         active: false,
+        translateKey: 'queryButtons.label.installation',
     },
     COMMISSION: {
         id: 4,
@@ -31,5 +34,6 @@ export const QUERY_BUTTONS = {
         key: 'COM',
         displayOnView: true,
         active: false,
+        translateKey: 'queryButtons.label.checklistCode',
     },
 };

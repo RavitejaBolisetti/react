@@ -40,7 +40,7 @@ export const addRequestColumns = (typeData) => {
             render: (_, record) => (record?.visitTimeSlotThree ? converDateDayjs(record?.visitTimeSlotThree) : ''),
         }),
         tblPrepareColumns({
-            title: 'Status',
+            title: translateContent('global.label.status'),
             dataIndex: 'response',
             width: '180px',
             render: (_, record) => ChargerStatusTag(record?.response),

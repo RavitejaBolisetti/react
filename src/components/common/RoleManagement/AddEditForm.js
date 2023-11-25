@@ -157,7 +157,7 @@ const AddEditFormMain = (props) => {
         const filteredMobileMenuData = unFilteredMenuData?.[APPLICATION_MOBILE]?.filter((i) => i?.checked) || [];
 
         if (!recordId && !filteredWebMenuData?.length && !filteredMobileMenuData?.length) {
-            showGlobalNotification({ message: noApplicationValidationMessage.MESSAGE.replace('{NAME}', 'application access'), placement: 'bottomRight' });
+            showGlobalNotification({ message: noApplicationValidationMessage.MESSAGE.replace('{NAME}', translateContent('global.access.accessProvide')), placement: 'bottomRight' });
             return;
         }
 
@@ -278,7 +278,7 @@ const AddEditFormMain = (props) => {
                                     header={
                                         <>
                                             {el?.label}
-                                            {allowedAccess?.length > 0 && <Tag color="default" className={styles.marL10}>{`${allowedAccess?.length >= 2 ? `${allowedAccess?.length} Accesses Provided` : `${allowedAccess?.length} Access Provided`}`}</Tag>}
+                                            {allowedAccess?.length > 0 && <Tag color="default" className={styles.marL10}>{`${allowedAccess?.length >= 2 ? `${allowedAccess?.length} ${translateContent('global.access.accessProvide')}` : `${allowedAccess?.length} Access Provided`}`}</Tag>}
                                         </>
                                     }
                                     key={el?.value}

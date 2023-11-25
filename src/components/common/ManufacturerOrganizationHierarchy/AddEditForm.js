@@ -36,7 +36,7 @@ const AddEditFormMain = (props) => {
             const Attribute = unFilteredAttributeData?.find((attribute) => attribute.id === formData?.attributeKey);
             if (Attribute) {
                 attributeHierarchyFieldValidation.initialValue = Attribute?.hierarchyAttribueName;
-                attributeHierarchyFieldValidation.rules.push({ type: 'number', message: Attribute?.hierarchyAttribueName + translateContent('manufactuereOrganisation.validation.attributeHierarchyFieldValidation')});
+                attributeHierarchyFieldValidation.rules.push({ type: 'number', message: Attribute?.hierarchyAttribueName + translateContent('manufactuereOrganisation.validation.attributeHierarchyFieldValidation') });
             }
         }
     }
@@ -84,7 +84,7 @@ const AddEditFormMain = (props) => {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label={'manufacturerOrganisation.label.attributeType'} rules={[validateRequiredSelectField(translateContent('manufacturerOrganisation.validation.attributeTypeCode'))]}>
+                                <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label={translateContent('manufacturerOrganisation.label.attributeLevel')} rules={[validateRequiredSelectField(translateContent('manufacturerOrganisation.validation.attributeTypeCode'))]}>
                                     <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect(translateContent('manufacturerOrganisation.placeholder.attributeTypeCode'))} disabled={formData?.id || isReadOnly} showSearch allowClear>
                                         {attributeData?.map((item) => (
                                             <Option key={item?.id} value={item?.id}>

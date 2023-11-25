@@ -7,9 +7,10 @@ import React from 'react';
 import { ListStateCrudMaster } from 'components/common/Geo';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
+import { translateContent } from 'utils/translateContent';
 
 export const StateGeoBase = (props) => {
-    const pageTitle = 'State Master';
+    const pageTitle = translateContent('state.heading.stateMaster');
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

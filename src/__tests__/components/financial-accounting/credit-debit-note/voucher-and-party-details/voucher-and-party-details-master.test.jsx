@@ -9,11 +9,24 @@ import { VoucherAndPartyDetailsMaster } from '@components/FinancialAccounting/Cr
 import customRender from '@utils/test-utils';
 import { Form } from 'antd';
 
+jest.mock('components/FinancialAccounting/CreditDebitNote/CreditDebitFormButton', () => {
+    const CreditDebitNoteFormButton = ({ onFinish }) => {
+        return(
+            <div><button onClick={onFinish}>Save</button></div>
+        )
+    };
+    return {
+        __esModule: true,
+        CreditDebitNoteFormButton
+    };
+})
+
 const FormWrapper = (props) =>{
    const [form] = Form.useForm();
     const myMock = {
         ...form,
         resetFields:jest.fn(),
+        getFieldsValue: jest.fn().mockResolvedValue([{ partyDetails:{partyId: "4", partySegment: "MIT"} }]),
     }
     return <VoucherAndPartyDetailsMaster form={myMock} {...props}/>
 }
@@ -21,6 +34,19 @@ const FormWrapper = (props) =>{
 afterEach(() => {
     jest.restoreAllMocks();
 });
+
+jest.mock('store/actions/data/vehicle/customerCommonDetails', ()=>({
+    vehicleCustomerCommonDetailsDataAction:{}
+}));
+
+jest.mock('store/actions/data/partyMaster', ()=>({
+    partyMasterDataActions:{}
+}));
+
+const fetchDetail = jest.fn();
+const fetchList = jest.fn();
+const listShowLoading = jest.fn();
+const listPartyShowLoading = jest.fn();
 
 describe('VoucherAndPartyDetailsMaster component', () => {
     const typeData = [{
@@ -54,36 +80,65 @@ describe('VoucherAndPartyDetailsMaster component', () => {
         customRender(<FormWrapper creditDebitData={{voucherDetailsDto:'test'}} isDetailLoaded={true} handleFormValueChange={jest.fn()} />)
     })
 
-    const formProps = {
-        formData:{partyDetailsDto:'test'},
-    }
-
-    it('formProps, Party ID', ()=>{
-        const formActionType = {addMode: true, editMode: false, viewMode: false};
-
-        customRender(<FormWrapper {...formProps}  typeData={typeData} formActionType={formActionType} onSuccessAction={jest.fn()} onSuccessCustomerAction={jest.fn()} handlePartyIdChange={jest.fn()} handleSearchParamSearch={jest.fn()} />);
+    it('close-circle', ()=>{
+        customRender(
+            <FormWrapper  typeData={typeData}  fetchDetail={fetchDetail} setButtonData={jest.fn()} fetchList={fetchList} listPartyShowLoading={listPartyShowLoading} listShowLoading={listShowLoading} />
+        );
 
         const plusImg = screen.getAllByRole('img', {name:'plus'});
         fireEvent.click(plusImg[1]);
 
-        const partyId = screen.getByTestId('party_id_input');
-        fireEvent.change(partyId, {target:{name:'test'}});
+        const partyId = screen.getByRole("textbox", {name:'Party Id'});
+        fireEvent.change(partyId, {target:{value:'4'}});
+
+        const closeImg = screen.getByRole('img', {name:'close-circle'});
+        fireEvent.click(closeImg);
+    })
+
+    it('empty value in Party ID', ()=>{
+        customRender(
+            <FormWrapper  typeData={typeData}  fetchDetail={fetchDetail} setButtonData={jest.fn()} fetchList={fetchList} listPartyShowLoading={listPartyShowLoading} listShowLoading={listShowLoading} />
+        );
+
+        const plusImg = screen.getAllByRole('img', {name:'plus'});
+        fireEvent.click(plusImg[1]);
 
         const searchBtn = screen.getByRole('img', {name:'search'});
         fireEvent.click(searchBtn);
     })
 
-    it('formProps, Party Segment', ()=>{
-        const formActionType={addMode:false, editMode:true};
+    it('Party Segment and Party ID value present', ()=>{
 
-        customRender(<FormWrapper {...formProps} typeData={typeData} formActionType={formActionType} handlePartySegmentChange={jest.fn()} />);
+        customRender(
+            <FormWrapper  typeData={typeData}  fetchDetail={fetchDetail} setButtonData={jest.fn()} fetchList={fetchList} listPartyShowLoading={listPartyShowLoading} listShowLoading={listShowLoading} />
+        );
 
         const plusImg = screen.getAllByRole('img', {name:'plus'});
         fireEvent.click(plusImg[1]);
 
         const partySeg = screen.getByRole('combobox', {name:'Party Segment'});
-        fireEvent.change(partySeg, {target:{value:'test1'}});
+        fireEvent.change(partySeg, {target:{value:'MIT'}});
+
+        const partyId = screen.getByRole("textbox", {name:'Party Id'});
+        fireEvent.change(partyId, {target:{value:'4'}});
+
+        const searchBtn = screen.getByRole('img', {name:'search'});
+        fireEvent.click(searchBtn);
     })
 
+    it('save & next btn', ()=>{
+        const buttonData = {
+            saveBtn:true,
+            saveAndNewBtn:true,
+            cancelBtn:true
+        }
+
+        customRender(<FormWrapper buttonData={buttonData} />);
+
+        const saveAndNextBtn = screen.getByRole('button', {name:'Save'});
+        fireEvent.click(saveAndNextBtn);
+
+
+    })
 
 });

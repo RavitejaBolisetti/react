@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import { SchemeStatusTag } from '@components/Services/ShieldSchemeRegistartion/utils/schemeStatusTag';
 import { QUERY_BUTTONS_CONSTANTS } from '@components/Services/ShieldSchemeRegistartion/utils/ShieldRegistrationContant';
 import { QUERY_BUTTONS_MNM_USER } from '@components/Services/ShieldSchemeRegistartion/utils/ShieldRegistrationContant';
-import { screen, fireEvent, waitFor } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 
 describe('SchemeStatusTag', () => {
     it('renders the correct tag for each status', () => {
@@ -14,7 +14,7 @@ describe('SchemeStatusTag', () => {
         const pendingForApprovalTag = SchemeStatusTag(QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.key);
         const pendingForCancellationTag = SchemeStatusTag(QUERY_BUTTONS_MNM_USER.PENDING_FOR_CANCELLATION.key);
 
-        const { getByText } = render(
+        render(
             <div>
                 {pendingTag}
                 {approvedTag}
@@ -25,11 +25,11 @@ describe('SchemeStatusTag', () => {
             </div>
         );
 
-        expect(getByText(QUERY_BUTTONS_CONSTANTS.PENDING.title)).toBeInTheDocument();
-        expect(getByText(QUERY_BUTTONS_CONSTANTS.APPROVED.title)).toBeInTheDocument();
-        expect(getByText(QUERY_BUTTONS_CONSTANTS.REJECTED.title)).toBeInTheDocument();
-        expect(getByText(QUERY_BUTTONS_CONSTANTS.CANCELLED.title)).toBeInTheDocument();
-        expect(getByText(QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.title)).toBeInTheDocument();
-        expect(getByText(QUERY_BUTTONS_MNM_USER.PENDING_FOR_CANCELLATION.title)).toBeInTheDocument();
+        expect(screen.getByText(QUERY_BUTTONS_CONSTANTS.PENDING.title)).toBeInTheDocument();
+        expect(screen.getByText(QUERY_BUTTONS_CONSTANTS.APPROVED.title)).toBeInTheDocument();
+        expect(screen.getByText(QUERY_BUTTONS_CONSTANTS.REJECTED.title)).toBeInTheDocument();
+        expect(screen.getByText(QUERY_BUTTONS_CONSTANTS.CANCELLED.title)).toBeInTheDocument();
+        expect(screen.getByText(QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.title)).toBeInTheDocument();
+        expect(screen.getByText(QUERY_BUTTONS_MNM_USER.PENDING_FOR_CANCELLATION.title)).toBeInTheDocument();
     });
 });

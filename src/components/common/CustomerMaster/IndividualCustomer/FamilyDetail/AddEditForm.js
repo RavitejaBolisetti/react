@@ -12,7 +12,6 @@ import { ViewDetail } from './ViewDetail';
 import { FormContainer } from './FormContainer';
 
 import dayjs from 'dayjs';
-import { LANGUAGE_EN } from 'language/en';
 import { NoDataFound } from 'utils/noDataFound';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { YES_NO_FLAG } from 'constants/yesNoFlag';
@@ -31,7 +30,7 @@ const AddEditFormMain = (props) => {
     const [initialVal, setInitialVal] = useState(null);
     const [editedValues, setEditedValues] = useState({});
 
-    const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
+    const noDataTitle = translateContent('global.generalNotifications.noDataExist.title');
     const addDataTitle = (
         <p className={styles.textCenter}>
             Please add familiy details using <br /> <strong>“Add”</strong> button at top

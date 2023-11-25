@@ -5,7 +5,7 @@
  */
 import React from 'react';
 import customRender from '@utils/test-utils';
-import AddEditForm from '@components/common/CustomerMaster/CorporateCustomer/Contacts/AddEditForm';
+import AddEditForm from 'components/common/CustomerMaster/CorporateCustomer/Contacts/AddEditForm';
 import { fireEvent, screen } from '@testing-library/react';
 import { Form } from 'antd';
 
@@ -21,9 +21,13 @@ const FormWrapper = (props) => {
 
 describe('add edit form component', () => {
     it('should render add edit form component', () => {
+        const file = new File(['(⌐□_□)'], 'kai.png', { type: 'image/png' });
+
         customRender(<FormWrapper />);
         const uploadFile = screen.getAllByRole('button', { name: 'Upload File' });
-        fireEvent.click(uploadFile[0]);
+        fireEvent.drop(uploadFile[0], {
+            dataTransfer: { files: [file] },
+        });
         const sendOTP = screen.getAllByRole('button', { name: 'Send OTP' });
         fireEvent.click(sendOTP[0]);
         const saveBtn = screen.getAllByRole('button', { name: 'Save' });

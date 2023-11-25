@@ -16,7 +16,7 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
-    const { formData, modelFamilyData, isLoading } = props;
+    const { formData, modelFamilyData, ProductHierarchyData, isLoading } = props;
     const [activeKey, setactiveKey] = useState([]);
 
     const viewProps = {
@@ -52,8 +52,8 @@ const ViewDetailMain = (props) => {
                         <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.vin')}>{checkAndSetDefaultValue(formData?.vehicleDetails?.vin, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.vehicleRegistrationNo')}>{checkAndSetDefaultValue(formData?.vehicleDetails?.vehicleRegistrationNumber, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.orgWarrantyStartDate')}>{checkAndSetDefaultValue(convertDateMonthYear(formData?.vehicleDetails?.orgWarrantyStartDate), isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.modelGroup')}>{checkAndSetDefaultValue(formData?.vehicleDetails?.modelGroup, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.modelFamily')}>{checkAndSetDefaultValue(getCodeValue(modelFamilyData, formData?.vehicleDetails?.modelFamily, isLoading))}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.modelGroup')}>{checkAndSetDefaultValue(getCodeValue(ProductHierarchyData, formData?.vehicleDetails?.modelGroup, 'modelGroupDescription', false, 'modelGroupCode'), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.modelFamily')}>{checkAndSetDefaultValue(getCodeValue(modelFamilyData, formData?.vehicleDetails?.modelFamily, 'familyDescription', false, 'familyCode'), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.modelDescription')}>{checkAndSetDefaultValue(formData?.vehicleDetails?.modelDescription, isLoading)}</Descriptions.Item>
                     </Descriptions>
                 </Panel>

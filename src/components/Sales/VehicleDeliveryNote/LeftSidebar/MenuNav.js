@@ -10,6 +10,7 @@ import { VEHICLE_DELIVERY_NOTE_SECTION } from 'constants/vehicleDeliveryNoteSect
 import { validateDeliveryNote } from 'components/Sales/VehicleDeliveryNote/utils/validateDeliveryNote';
 import { getSelectedMenuAttribute } from 'utils/getSelectedMenuAttribute';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const MenuNav = (props) => {
     const { currentSection, setCurrentSection, previousSection, formActionType, selectedOrder, soldByDealer, sectionName, setSection } = props;
@@ -33,7 +34,7 @@ const MenuNav = (props) => {
                     dot: getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType })?.menuNavIcon,
                     children: (
                         <div className={className(item?.id)} onClick={() => ((!formActionType?.addMode || (formActionType?.addMode && item?.id <= previousSection)) && currentSection !== VEHICLE_DELIVERY_NOTE_SECTION.THANK_YOU_PAGE.id ? onHandle({ item, key: item?.id }) : '')}>
-                            {item.title}
+                            {translateContent(item?.translateKey)}
                         </div>
                     ),
                     className: getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType })?.activeClassName,

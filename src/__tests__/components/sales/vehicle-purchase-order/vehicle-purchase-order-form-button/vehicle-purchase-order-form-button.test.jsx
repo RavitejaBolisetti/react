@@ -24,8 +24,6 @@ const buttonData = {
     formBtnActive: true,
     cancelVPOBtn: true,
     cancelOtfBtn: true,
-    nextBtn: true,
-    saveBtn: true,
 };
 const saveButtonName = 'Save';
 const isLoadingOnSave = false;

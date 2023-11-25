@@ -8,7 +8,6 @@ import React, { useEffect, useState } from 'react';
 import { Button, Collapse, Form, Typography, Row, Col, Input, Divider } from 'antd';
 
 import { PlusOutlined } from '@ant-design/icons';
-import { DataTable } from 'utils/dataTable';
 import { addToolTip } from 'utils/customMenuLink';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 
@@ -29,7 +28,7 @@ const { Text } = Typography;
 
 const AddEditFormMain = (props) => {
     const { isReadOnly, setIsReadOnly, typeData } = props;
-    const { itemOptions, setitemOptions, makeOptions, setmakeOptions } = props;
+    const { itemOptions, setitemOptions, makeOptions, setmakeOptions, modelData, modelFamilyData, variantData } = props;
     const { formData, formActionType, handleCollapse, showGlobalNotification, selectedRecordId, form, openAccordian, setOpenAccordian, optionalServices, setOptionalServices, handleFormValueChange, tooltTipText, isVariantLoading, isModelFamilyLoading, isModelLoading } = props;
     const { MakefieldNames, ItemFieldNames, bindCodeValue, ITEM_TYPE } = props;
     const { collapseProps, disabledProps, bindStatus } = props;
@@ -41,6 +40,16 @@ const AddEditFormMain = (props) => {
     const [isEditing, setisEditing] = useState(false);
     const [AdvanceformData, setAdvanceformData] = useState();
     const AggregateModuleTitle = `Aggregates`;
+
+    useEffect(() => {
+        if (modelData && modelFamilyData && variantData) {
+            modelData?.length > 0 && form.setFieldsValue({ modelGroup: modelData[0]?.modelGroupDescription });
+            modelFamilyData.length > 0 && form.setFieldsValue({ modelFamily: modelFamilyData[0]?.familyDescription });
+            variantData.length > 0 && form.setFieldsValue({ modelVariant: variantData[0]?.variantDescription });
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [modelData, modelFamilyData, variantData]);
 
     useEffect(() => {
         if (formData?.productAttributeDetail) {
@@ -156,12 +165,12 @@ const AddEditFormMain = (props) => {
                             <Divider />
                             <Row gutter={20}>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label={translateContent('vehicleDetail.productDetails.label.productDivision')} name="productDivision"  initialValue={formData?.productAttributeDetail?.productDivision}>
+                                    <Form.Item label={translateContent('vehicleDetail.productDetails.label.productDivision')} name="productDivision" initialValue={formData?.productAttributeDetail?.productDivision}>
                                         <Input maxLength={15} placeholder={preparePlaceholderText(translateContent('vehicleDetail.productDetails.label.productDivision'))} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label={translateContent('vehicleDetail.productDetails.label.modelFamily')} name="modelFamily" initialValue={formData?.productAttributeDetail?.modelFamily}>
+                                    <Form.Item label={translateContent('vehicleDetail.productDetails.label.modelFamily')} name="modelFamily">
                                         <Input loading={isModelFamilyLoading} maxLength={15} placeholder={preparePlaceholderText(translateContent('vehicleDetail.productDetails.label.modelFamily'))} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
@@ -173,7 +182,7 @@ const AddEditFormMain = (props) => {
                             </Row>
                             <Row gutter={20}>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label={translateContent('vehicleDetail.productDetails.label.modelVariant')} name="modelVariant" initialValue={formData?.productAttributeDetail?.modelVariant}>
+                                    <Form.Item label={translateContent('vehicleDetail.productDetails.label.modelVariant')} name="modelVariant">
                                         <Input loading={isVariantLoading} maxLength={15} placeholder={preparePlaceholderText(translateContent('vehicleDetail.productDetails.label.modelVariant'))} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
