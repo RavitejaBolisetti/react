@@ -9,6 +9,7 @@ import { Form, Row, Col } from 'antd';
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 import { convertDateTimedayjs } from 'utils/formatDateTime';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -32,7 +33,7 @@ const ChargerInstallatioDetailsMasterBase = (props) => {
                 handleFormValueChange();
             })
             .catch(() => {
-                showGlobalNotification({ message: 'Please add Request' });
+                showGlobalNotification({ message: translateContent('chargerInstallationDetails.notification.addRequest') });
             });
     };
 
@@ -42,7 +43,7 @@ const ChargerInstallatioDetailsMasterBase = (props) => {
 
     const onFinish = () => {
         if (!addRequestData) {
-            showGlobalNotification({ message: 'Please Add Request' });
+            showGlobalNotification({ message: translateContent('chargerInstallationDetails.notification.addRequest') });
         } else {
             handleButtonClick({ buttonAction: NEXT_ACTION });
             setButtonData({ ...buttonData, formBtnActive: false });
@@ -89,7 +90,7 @@ const ChargerInstallatioDetailsMasterBase = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <h2>{section?.title}</h2>
+                            <h2>{translateContent(section?.translateKey)}</h2>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             {!formActionType?.addMode && <StatusBar status={chargerInstallationMasterData?.chargerInstDetails?.requestDetails[0].stageType} />}

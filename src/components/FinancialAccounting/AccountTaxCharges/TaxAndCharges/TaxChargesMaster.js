@@ -229,7 +229,7 @@ export const TaxChargesMain = ({ typeData, moduleTitle, fetchDocumentDescription
                 const attributeParentName = flatternData.find((i) => res?.data?.parentCode === i.key)?.data?.taxChargesTypeCode;
                 res?.data && setSelectedTreeData({ ...res?.data, hierarchyAttribueName, parentName: attributeParentName });
 
-                setSelectedTreeKey([res?.data?.id || res?.data?.taxChargesTypeCode]);
+                setSelectedTreeKey([res?.data?.taxChargesTypeCode]);
                 setFormActionType(FROM_ACTION_TYPE.VIEW);
                 setFormBtnActive(false);
                 setIsFormVisible(false);
@@ -294,7 +294,7 @@ export const TaxChargesMain = ({ typeData, moduleTitle, fetchDocumentDescription
             setAttributeType();
             setCalculationType();
         },
-        titleOverride: (formData?.taxChargesTypeCode ? 'Edit ' : 'Add ').concat(moduleTitle),
+        titleOverride: (formData?.taxChargesTypeCode ? 'Edit' : 'Add').concat(" ").concat(moduleTitle),
         onFinish,
         selectedTreeKey,
         selectedTreeData,

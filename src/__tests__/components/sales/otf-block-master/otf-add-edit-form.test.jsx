@@ -2,6 +2,7 @@ import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { AddEditForm } from '@components/Sales/OtfBlockMaster/AddEditForm';
 import { fireEvent, screen } from '@testing-library/react';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 import { Form } from 'antd';

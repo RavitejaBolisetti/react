@@ -33,8 +33,8 @@ const RoleApplicationModalrMain = (props) => {
         hideSaveBtn: formActionType?.viewMode,
         saveDisabled: disableMdlSaveBtn,
         htmltype: false,
-        resetName: 'Cancel',
-        submitName: 'Save',
+        resetName: translateContent('global.buttons.cancel'),
+        submitName: translateContent('global.buttons.save'),
         onClickAction: handleSaveUserRoleAppliactions,
         handleResetFilter: handleCancelModal,
     };

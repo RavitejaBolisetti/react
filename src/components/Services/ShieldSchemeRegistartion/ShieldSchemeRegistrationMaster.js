@@ -19,6 +19,7 @@ import { schemeDescriptionDataAction } from 'store/actions/data/services/schemeD
 import { employeeSearchDataAction } from 'store/actions/data/amcRegistration/employeeSearch';
 import { dealerParentLovDataActions } from 'store/actions/data/dealer/dealerParentsLov';
 import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
+import { ProductModelGroupsDataActions } from 'store/actions/data/VehicleModelTaxChargesCategory/productModelGroup';
 import { otfModelFamilyDetailDataActions } from 'store/actions/data/otf/modelFamily';
 import { BASE_URL_APPLICATION_DEALER_LOCATION as customURL } from 'constants/routingApi';
 import { ListDataTable } from 'utils/ListDataTable';
@@ -39,32 +40,6 @@ import { AdvancedSearch } from './AdvancedSearch';
 import { VehicleReceiptFormButton } from './VehicleReceiptFormButton';
 import { drawerTitle } from 'utils/drawerTitle';
 
-// const loginUserData = {
-//     header: null,
-//     tickerMessage: 'Ticker Message',
-//     notificationCount: 2,
-//     userType: 'MNM',
-//     firstName: 'Vishal Gaurav',
-//     lastName: null,
-//     mobileNo: '+919900060706',
-//     emailId: '50003940@mahindra.com',
-//     userId: 'gaurav.vishal',
-//     dealerId: null,
-//     dealerName: 'Mahindra & Mahindra LTD',
-//     mnmLocation: 'Mumbai',
-//     dealerLocations: null,
-//     userRoles: [
-//         {
-//             roleId: '96cb838f-a4ea-4978-8489-c12d74dcde28',
-//             roleCode: 'R0L005',
-//             roleName: 'M&M ADMIN',
-//             isDefault: true,
-//         },
-//     ],
-//     dealerImage: null,
-//     parentGroupCode: null,
-// };
-
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -83,6 +58,9 @@ const mapStateToProps = (state) => {
             ApplicationMaster: { dealerLocations = [] },
             OTF: {
                 ModelFamily: { isLoaded: isModelFamilyDataLoaded = false, isLoading: isModelFamilyLoading, data: modelFamilyData = [] },
+            },
+            VehicleModelandTaxChargesCategory: {
+                ProductModelGroup: { isLoaded: isProductHierarchyDataLoaded = false, isLoading: isProductHierarchyDataLoading = false, data: ProductHierarchyData = [] },
             },
         },
         common: {
@@ -114,6 +92,9 @@ const mapStateToProps = (state) => {
         isModelFamilyDataLoaded,
         isModelFamilyLoading,
         modelFamilyData,
+        isProductHierarchyDataLoaded,
+        isProductHierarchyDataLoading,
+        ProductHierarchyData,
     };
     return returnValue;
 };
@@ -141,6 +122,10 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: shieldSchemeSearchDataAction.listShowLoading,
             listSchemeLoading: schemeDescriptionDataAction.listShowLoading,
 
+            fetchModelList: ProductModelGroupsDataActions.fetchList,
+            listModelShowLoading: ProductModelGroupsDataActions.listShowLoading,
+            resetProductData: ProductModelGroupsDataActions.reset,
+
             fetchModelFamilyLovList: otfModelFamilyDetailDataActions.fetchList,
             listFamilyShowLoading: otfModelFamilyDetailDataActions.listShowLoading,
             resetFamily: otfModelFamilyDetailDataActions.reset,
@@ -153,7 +138,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const ShieldSchemeRegistrationMasterMain = (props) => {
     const { userId, loginUserData, invoiceStatusList, typeData, data, showGlobalNotification, totalRecords, moduleTitle, fetchList, fetchDetail, fetchSchemeDescription, fetchEmployeeList, fetchManagerList, saveData, listShowLoading, listSchemeLoading, listEmployeeShowLoading, setFilterString, filterString, detailShieldData, resetDetail, resetSchemeDetail, isEmployeeDataLoaded, isEmployeeDataLoading, isSchemeLoading, employeeData, managerData, schemeDetail, fetchDealerParentsLovList, dealerParentsLovList, fetchDealerLocations, dealerLocations } = props;
-    const { fetchModelFamilyLovList, listFamilyShowLoading, modelFamilyData } = props;
+    const { fetchModelFamilyLovList, listFamilyShowLoading, modelFamilyData, fetchModelList, listModelShowLoading, ProductHierarchyData } = props;
 
     const [selectedOrder, setSelectedOrder] = useState();
     const [selectedOrderId, setSelectedOrderId] = useState();
@@ -164,7 +149,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     const [sectionName, setSetionName] = useState();
     const [isLastSection, setLastSection] = useState(false);
     const [userType, setUserType] = useState('');
-    const [amcStatus, setAmcStatus] = useState(QUERY_BUTTONS_CONSTANTS.PENDING.key);
+    const [amcStatus, setAmcStatus] = useState();
     const [isMNMApproval, setIsMNMApproval] = useState(false);
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
 
@@ -232,7 +217,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     };
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
+        // showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
@@ -348,8 +333,6 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
             const nextSection = Object.values(sectionName)?.find((i) => i?.displayOnList && i.id > currentSection);
             setLastSection(!nextSection?.id);
         }
-        // form.resetFields();
-        // form.setFieldsValue(undefined);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
 
@@ -358,9 +341,11 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
             if (loginUserData?.userType === AMC_CONSTANTS?.DEALER?.key) {
                 setAmcStatus(QUERY_BUTTONS_CONSTANTS.PENDING.key);
                 setUserType(AMC_CONSTANTS?.DEALER?.key);
+                setFilterString({ ...filterString, amcStatus: QUERY_BUTTONS_CONSTANTS.PENDING.key });
             } else {
                 setAmcStatus(QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.key);
                 setUserType(AMC_CONSTANTS?.MNM?.key);
+                setFilterString({ ...filterString, amcStatus: QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.key });
             }
         }
 
@@ -368,7 +353,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     }, [loginUserData?.userType]);
 
     useEffect(() => {
-        if (userId) {
+        if (userId && filterString?.amcStatus) {
             setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
@@ -427,10 +412,26 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelFamily]);
 
+    useEffect(() => {
+        if (detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelGroup) {
+            const makeExtraParams = [
+                {
+                    key: 'modelGroupCode',
+                    title: 'modelGroupCode',
+                    value: detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelGroup,
+                    name: 'modelGroupCode',
+                },
+            ];
+            fetchModelList({ setIsLoading: listModelShowLoading, userId, extraParams: makeExtraParams });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelGroup]);
+
     const handleInvoiceTypeChange = (buttonName) => {
-        setAmcStatus(buttonName?.key);
-        setFilterString({ current: 1, pageSize: 10 });
+        const key = buttonName?.key;
+        setAmcStatus(key);
         searchForm.resetFields();
+        setFilterString({ amcStatus: key, current: 1, pageSize: 10 });
     };
 
     const handleChange = (e) => {
@@ -494,7 +495,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
                 setButtonData(Visibility);
                 // setButtonData({ ...Visibility, cancelReceiptBtn: true });
                 if (buttonAction === VIEW_ACTION) {
-                    amcStatus === QUERY_BUTTONS_CONSTANTS?.PENDING?.key ? setButtonData({ ...Visibility, editBtn: false, cancelSchemeBtn: true }) : setButtonData({ ...Visibility, editBtn: false, cancelSchemeBtn: false });
+                    amcStatus === QUERY_BUTTONS_CONSTANTS?.APPROVED?.key ? setButtonData({ ...Visibility, editBtn: false, cancelSchemeBtn: true }) : setButtonData({ ...Visibility, editBtn: false, cancelSchemeBtn: false });
                     // receiptStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: false, printReceiptBtn: true }) : receiptStatus === QUERY_BUTTONS_CONSTANTS.APPORTION.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: true, printReceiptBtn: true }) : setButtonData({ ...Visibility, editBtn: true, cancelReceiptBtn: true, printReceiptBtn: true });
                 }
             }
@@ -616,10 +617,6 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         saveData(requestData);
     };
 
-    // const showCancelConfirm = () => {
-    //     setCancelSchemeVisible(true);
-    // };
-
     const onCloseAction = () => {
         resetDetail();
         resetSchemeDetail();
@@ -672,7 +669,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
 
     const handleResetFilter = (e) => {
         setShowDataLoading(false);
-        setFilterString();
+        setFilterString({ amcStatus: filterString?.amcStatus });
         advanceFilterForm.resetFields();
     };
 
@@ -699,7 +696,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     const handleWholeSchemeCancellation = () => {
         setCancelSchemeVisible(true);
         setAmcWholeCancellation(true);
-        setStatus(QUERY_BUTTONS_MNM_USER?.PENDING_FOR_CANCELLATION?.key);
+        setStatus(QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key);
     };
     const handleCancelRequest = () => {
         setCancelSchemeVisible(true);
@@ -737,31 +734,9 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         } else {
             handleCancelScheme();
         }
-
-        // if (isMNMApproval) {
-        //     setRequestPayload({ ...requestPayload, amcRequestDetails: { ...requestPayload?.amcRequestDetails, amcStatus: QUERY_BUTTONS_CONSTANTS?.APPROVED?.key } });
-        //     onFinish({ type: AMC_CONSTANTS?.CANCEL_REQUEST?.key });
-        // } else if (!isMNMApproval && userType === AMC_CONSTANTS?.MNM?.key) {
-        //     setRejectRequest(true);
-        // } else if (!isMNMApproval && userType === AMC_CONSTANTS?.MNM?.key && rejectRequest) {
-        //     onFinish({ type: AMC_CONSTANTS?.AMC_CANCELLATION?.key });
-        // } else if (rejectRequest && amcWholeCancellation) {
-        //     onFinish({ type: AMC_CONSTANTS?.AMC_CANCELLATION?.key });
-        // } else if (amcWholeCancellation) {
-        //     setRejectRequest(true);
-        // } else {
-        // setRequestPayload({ ...requestPayload, amcRequestDetails: { ...requestPayload?.amcRequestDetails, amcStatus: QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key } });
-        // onFinish({ type: AMC_CONSTANTS?.CANCEL_REQUEST?.key });
-        // // }
     };
 
     const handleCancelScheme = () => {
-        // var status = '';
-        // if (amcWholeCancellation) {
-        //     status = QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key;
-        // } else if (!amcWholeCancellation) {
-        //     status = QUERY_BUTTONS_MNM_USER?.PENDING_FOR_CANCELLATION?.key;
-        // }
         const cancelRemarks = cancelSchemeForm.getFieldValue().cancelRemarks;
         const reasonForRejection = cancelSchemeForm.getFieldValue().reasonForRejection;
         const otherReason = cancelSchemeForm.getFieldValue().otherReason;
@@ -801,7 +776,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         setAdditionalReportParams([
             {
                 key: typeRecordKey,
-                value: record?.res?.data?.id,
+                value: record?.id ? record?.id : record?.res?.data?.id,
             },
         ]);
     };
@@ -918,7 +893,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         // onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(moduleTitle),
         isSchemeLoading,
         ADD_ACTION,
         EDIT_ACTION,
@@ -962,6 +937,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         registrationDetails: detailShieldData?.registrationDetails,
         vehicleCustomerDetails: detailShieldData?.vehicleAndCustomerDetails,
         requestDetails: detailShieldData?.requestDetails,
+        workflowDetails: detailShieldData?.workflowMasterDetails,
         handleSaleTypeChange,
         handleOtfSearch,
         handleVinSearch,
@@ -983,17 +959,20 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         fetchManagerList,
         managerData,
         modelFamilyData,
+        ProductHierarchyData,
+        filterString,
+        amcStatus,
     };
 
     useEffect(() => {
+        setShieldDocumentType();
         if (reportButtonType === SHIELD_REPORT_DOCUMENT_TYPE?.INVOICE_SHIELD?.value) {
             setShieldDocumentType(EMBEDDED_REPORTS?.SHIELD_REGISTRATION_INVOICE_DOCUMENT);
+        } else if (reportButtonType === SHIELD_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_SHIELD?.value) {
+            setShieldDocumentType(EMBEDDED_REPORTS?.SHIELD_REGISTRATION_CERTIFICATE_DOCUMENT);
+        } else if (reportButtonType === SHIELD_REPORT_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_SHIELD?.value) {
+            setShieldDocumentType(EMBEDDED_REPORTS?.SHIELD_REGISTRATION_INVOICE_DOCUMENT);
         }
-        // else if (reportButtonType === SHIELD_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_SHIELD?.value) {
-        //     setShieldDocumentType(EMBEDDED_REPORTS?.SHIELD_REGISTRATION_INVOICE_DOCUMENT);
-        // } else if (reportButtonType === SHIELD_REPORT_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_SHIELD?.value) {
-        //     setShieldDocumentType(EMBEDDED_REPORTS?.SHIELD_REGISTRATION_INVOICE_DOCUMENT);
-        // }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [reportButtonType]);
 

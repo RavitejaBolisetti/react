@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Button, Row, Col, Input, Form } from 'antd';
+import { Button, Row, Col, Form } from 'antd';
 import { FilterIcon } from 'Icons';
 import { RxCross2 } from 'react-icons/rx';
 import { FiPlus } from 'react-icons/fi';
@@ -13,23 +13,24 @@ import { SearchBox } from 'components/utils/SearchBox';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import styles from 'assets/sass/app.module.scss';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-const { Search } = Input;
+import { translateContent } from 'utils/translateContent';
+import { QueryButtons } from 'components/Sales/VehicleRecieptChecklist/QueryButtons';
 
 export default function AdvanceFilter(props) {
-    const { extraParams, handleResetFilter, typeData, selectedStatusType, advanceFilter = false, filterString, setFilterString, setResetAdvanceFilter, setAdvanceSearchVisible, searchForm, removeFilter, setSelectedStatusType, handleButtonClick, invoiceStatusList, showAddButton } = props;
+    const { extraParams, handleResetFilter, typeData, rsaStatus, advanceFilter = false, filterString, setFilterString, setResetAdvanceFilter, setAdvanceSearchVisible, searchForm, removeFilter, handleInvoiceTypeChange, handleButtonClick, invoiceStatusList, showAddButton } = props;
 
     useEffect(() => {
         searchForm.resetFields();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedStatusType]);
+    }, [rsaStatus]);
 
     const searchBoxProps = {
         singleField: false,
         searchForm,
         filterString,
         setFilterString,
-        optionType: typeData?.[PARAM_MASTER.AMC_SEARCH_TYPE.id],
-        placeholder: 'Input Parameter',
+        optionType: typeData?.[PARAM_MASTER.RSA_SEARCH_TYPE.id],
+        placeholder: translateContent('global.placeholder.search'),
         singleFieldKey: 'searchParam',
         setResetAdvanceFilter,
         //defaultOption: 'vin',
@@ -43,15 +44,7 @@ export default function AdvanceFilter(props) {
                         <Form.Item>
                             <Row gutter={24}>
                                 <Col xs={24} sm={24} md={14} lg={14} xl={14} className={styles.verticallyCentered}>
-                                    <div className={`${styles.userManagement} ${styles.headingToggle}`}>
-                                        {Object.values(invoiceStatusList)?.map((item) => {
-                                            return (
-                                                <Button type={selectedStatusType === item?.key ? 'primary' : 'link'} onClick={() => setSelectedStatusType(item?.key)}>
-                                                    {item?.title}
-                                                </Button>
-                                            );
-                                        })}
-                                    </div>
+                                    <QueryButtons currentItem={rsaStatus} items={invoiceStatusList} onClick={handleInvoiceTypeChange} />
                                     <Col xs={24} sm={24} md={20} lg={20} xl={20}>
                                         <SearchBox {...searchBoxProps} />
                                     </Col>

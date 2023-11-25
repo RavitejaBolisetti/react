@@ -32,6 +32,7 @@ export default function RegistrationFilter(props) {
         optionType: searchParameters(),
         setFilterString,
         allowClear: false,
+        defaultOption: 'amcRegistrationNumber',
     };
 
     return (
@@ -55,7 +56,7 @@ export default function RegistrationFilter(props) {
                                         setAdvanceSearchVisible(true);
                                     }}
                                 >
-                                    Advance Filters
+                                    {translateContent('global.advanceFilter.title')}
                                 </Button>
                             </Col>
                         </Row>
@@ -64,7 +65,7 @@ export default function RegistrationFilter(props) {
                 {showAddButton && (
                     <Col xs={24} sm={4} md={4} lg={4} xl={4} className={styles.buttonsGroupRight}>
                         <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                            Add
+                        {translateContent('global.buttons.add')}
                         </Button>
                     </Col>
                 )}
@@ -93,7 +94,7 @@ export default function RegistrationFilter(props) {
                             </Col>
                             <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
                                 <Button className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
-                                    Clear
+                                {translateContent('global.buttons.clear')}
                                 </Button>
                             </Col>
                         </Row>

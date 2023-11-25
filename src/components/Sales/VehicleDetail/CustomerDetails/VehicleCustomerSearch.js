@@ -10,6 +10,7 @@ import { withModal } from 'components/withModal';
 import { tableColumn } from './tableColumn';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const VehicleCustomerSearchForm = (props) => {
     const { onCloseAction } = props;
@@ -32,13 +33,13 @@ export const VehicleCustomerSearchForm = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
                     <Button onClick={onCloseAction} danger>
-                        Cancel
+                        {translateContent('global.buttons.cancel')}
                     </Button>
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
                     <Button htmlType="submit" type="primary">
-                        Select
+                        {translateContent('vehicleDetail.placeholder.select')}
                     </Button>
                 </Col>
             </Row>

@@ -20,6 +20,7 @@ import Footer from '../Footer';
 import { PasswordStrengthMeter } from 'utils/PasswordStrengthMeter';
 
 import styles from '../Auth.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -128,7 +129,7 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
                         <img src={IMAGES.RL_LOGO} className={styles.mainLogo} alt="" />
                         <br></br>
                         <img src={IMAGES.LINE} className={styles.mainLogoLine} alt="" />
-                        <div className={styles.logoText}>Dealer Management System</div>
+                        <div className={styles.logoText}>{translateContent('updatePassword.heading.mainTitle')}</div>
                     </div>
                     <div className={styles.loginWrap}>
                         <Form form={form} name="update_password" layout="vertical" autoComplete="false" onFinish={onFinish}>
@@ -138,24 +139,24 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
                                         <div className={styles.centerInner}>
                                             <div className={styles.loginForm}>
                                                 <div className={styles.loginHeading}>
-                                                    <h1>Update Your Password</h1>
+                                                    <h1>{translateContent('updatePassword.heading.subtitle')}</h1>
                                                     <div className={styles.loginSubHeading}></div>
                                                 </div>
                                                 {/* className={`${styles.inputBox}`} */}
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.inputLabelPlaceholder}>
-                                                        <Form.Item name="oldPassword" rules={[validateRequiredInputField('old password', false)]} className={styles.inputBox}>
+                                                        <Form.Item name="oldPassword" rules={[validateRequiredInputField(translateContent('updatePassword.label.oldPassword'), false)]} className={styles.inputBox}>
                                                             <Input data-testid="oldPasswordInput" type={showPassword?.oldPassword ? 'text' : 'password'} ref={oldPasswordInput} prefix={<FiLock size={16} />} onChange={handleFormChange('oldPassword')} suffix={passwordSuffix('oldPassword')} />
                                                         </Form.Item>
-                                                        {!fieldData?.oldPassword && <label onClick={handleFieldFocus(oldPasswordInput)}>Old password</label>}
+                                                        {!fieldData?.oldPassword && <label onClick={handleFieldFocus(oldPasswordInput)}>{translateContent('updatePassword.label.oldPassword')}</label>}
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.inputLabelPlaceholder}>
-                                                        <Form.Item name="newPassword" rules={[validateRequiredInputField('new password')]} className={styles.inputBox}>
+                                                        <Form.Item name="newPassword" rules={[validateRequiredInputField(translateContent('updatePassword.label.newPassword'))]} className={styles.inputBox}>
                                                             <Input data-testid="newPasswordInput" onChange={handleNewPasswordChange} type={showPassword?.newPassword ? 'text' : 'password'} ref={newPasswordInput} prefix={<FiLock size={16} />} suffix={passwordSuffix('newPassword')} onFocus={() => setTooltipVisible(true)} onBlur={() => setTooltipVisible(false)} />
                                                         </Form.Item>
-                                                        {!fieldData?.newPassword && <label onClick={handleFieldFocus(newPasswordInput)}>New password</label>}
+                                                        {!fieldData?.newPassword && <label onClick={handleFieldFocus(newPasswordInput)}>{translateContent('updatePassword.label.newPassword')}</label>}
                                                         {password && <PasswordStrengthMeter password={password} beforeLogin={true} tooltipVisible={tooltipVisible} />}
                                                     </Col>
                                                 </Row>
@@ -166,27 +167,27 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
                                                             dependencies={['newPassword']}
                                                             className={styles.inputBox}
                                                             rules={[
-                                                                validateRequiredInputField('confirm password', false),
+                                                                validateRequiredInputField(translateContent('updatePassword.label.confirmPassword'), false),
                                                                 ({ getFieldValue }) => ({
                                                                     validator(_, value) {
                                                                         if (!value || getFieldValue('newPassword') === value) {
                                                                             return Promise.resolve();
                                                                         }
-                                                                        return Promise.reject(new Error("New Password and confirm Password doesn't match!"));
+                                                                        return Promise.reject(new Error(translateContent('updatePassword.validation.NewPasswordAndConfirmPassworddoesnMatch')));
                                                                     },
                                                                 }),
                                                             ]}
                                                         >
                                                             <Input data-testid="confirmNewPasswordInput" type={showPassword?.confirmNewPassword ? 'text' : 'password'} ref={confirmPasswordInput} prefix={<FiLock size={16} />} onChange={handleFormChange('confirmNewPassword')} suffix={passwordSuffix('confirmNewPassword')} />
                                                         </Form.Item>
-                                                        {!fieldData?.confirmNewPassword && <label onClick={handleFieldFocus(confirmPasswordInput)}>Confirm password</label>}
+                                                        {!fieldData?.confirmNewPassword && <label onClick={handleFieldFocus(confirmPasswordInput)}>{translateContent('updatePassword.label.confirmPassword')}</label>}
                                                     </Col>
                                                 </Row>
 
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <Button data-testid="updatePassword" className={styles.button} type="primary" htmlType="submit">
-                                                            Update Password
+                                                            {translateContent('updatePassword.button.updatePassword')}
                                                         </Button>
                                                     </Col>
                                                 </Row>
@@ -195,10 +196,10 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
                                                         <div className={styles.loginFooter} type="radio">
                                                             {canSkip ? (
                                                                 <span className={styles.cursorPointer} onClick={handleSkipNow}>
-                                                                    Skip For Now
+                                                                    {translateContent('updatePassword.button.skipForNow')}
                                                                 </span>
                                                             ) : (
-                                                                <Link to={ROUTING_LOGIN}>Back To Login</Link>
+                                                                <Link to={ROUTING_LOGIN}>{translateContent('updatePassword.button.backToLogin')}</Link>
                                                             )}
                                                         </div>
                                                     </Col>

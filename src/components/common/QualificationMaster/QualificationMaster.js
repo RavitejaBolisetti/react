@@ -206,7 +206,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
         onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(translateContent('qualificationMaster.heading.drawerTitle')),
+        titleOverride: drawerTitle(formActionType).concat(" ").concat(translateContent('qualificationMaster.heading.drawerTitle')),
         tableData: searchData,
         ADD_ACTION,
         EDIT_ACTION,

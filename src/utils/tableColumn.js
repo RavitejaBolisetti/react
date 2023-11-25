@@ -59,7 +59,7 @@ export const tblSerialNumberColumn = ({ page = 1, pageSize = DEFAULT_PAGE_SIZE, 
 
 export const tblApprovalStatusColumn = ({ width = '15%' }) => {
     return {
-        title: 'Approval Status',
+        title: translateContent('global.label.approvalStatus'),
         dataIndex: 'approvalStatus',
         sorter: (a, b) => (a && b ? String(a['approvalStatus']).localeCompare(String(b['approvalStatus']), undefined, { sensitivity: 'base' }) : a),
         render: (_, record) => (record?.approvalStatus ? <div className={styles.activeText}>Approved</div> : <div className={styles.inactiveText}>Not Approved</div>),
@@ -92,10 +92,10 @@ export const tblActionColumnCurd =
             render: (record) => [
                 <Space size="middle">
                     <Button data-testid="view" type="link" aria-label="ai-view" onClick={(record) => onEditAction(record?.code)}>
-                        {addToolTip('View')(<FaRegEye />)}
+                        {addToolTip(translateContent('global.buttons.view'))(<FaRegEye />)}
                     </Button>
                     <Button data-testid="edit" type="link" aria-label="fa-edit" onClick={(record) => onEditAction(record?.code)}>
-                        {addToolTip('Edit')(<FiEdit />)}
+                        {addToolTip(translateContent('global.buttons.edit'))(<FiEdit />)}
                     </Button>
                 </Space>,
             ],
@@ -134,37 +134,37 @@ export const tblActionColumn = ({
             <Space size="middle">
                 {canAdd && (
                     <Button data-testid="add" type="link" aria-label="fa-add" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD, record, index })}>
-                        {addToolTip('Add')(<PlusOutlined />)}
+                        {addToolTip(translateContent('global.buttons.add'))(<PlusOutlined />)}
                     </Button>
                 )}
 
                 {canEdit && (
                     <Button data-testid="edit" type="link" aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record, index })}>
-                        {addToolTip('Edit')(<FiEdit />)}
+                        {addToolTip(translateContent('global.buttons.edit'))(<FiEdit />)}
                     </Button>
                 )}
 
                 {canView && (
                     <Button data-testid="view" type="link" aria-label="ai-view" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record, index })}>
-                        {addToolTip('View')(<FaRegEye />)}
+                        {addToolTip(translateContent('global.buttons.view'))(<FaRegEye />)}
                     </Button>
                 )}
 
                 {canUpload && record?.irnStatus !== GST_IRN_TRANSACTION_STATUS.SUCCESS.title && (
                     <Button data-testid="upload" type="link" aria-label="fa-upload" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.UPLOAD, record, index })}>
-                        {record?.irnStatus === GST_IRN_TRANSACTION_STATUS.PENDING.title ? addToolTip('Generate IRN')(<FiUpload />) : addToolTip('Re-Generate IRN')(<FiUpload />)}
+                        {record?.irnStatus === GST_IRN_TRANSACTION_STATUS.PENDING.title ? addToolTip(translateContent('global.buttons.generateIRN'))(<FiUpload />) : addToolTip(translateContent('global.buttons.reGenerateIRN'))(<FiUpload />)}
                     </Button>
                 )}
 
                 {canServerDataEdit && !record?.id && (
                     <Button data-testid="edit" type="link" aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record, index })}>
-                        {addToolTip('Edit')(<FiEdit />)}
+                        {addToolTip(translateContent('global.buttons.edit'))(<FiEdit />)}
                     </Button>
                 )}
 
                 {(isDeletable || (canDelete && !record?.id)) && (
                     <Button data-testid="delete" type="link" aria-label="fa-trash" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.DELETE, record, index })}>
-                        {addToolTip('Delete')(<RxCross1 size={18} />)}
+                        {addToolTip(translateContent('global.buttons.delete'))(<RxCross1 size={18} />)}
                     </Button>
                 )}
 
@@ -184,7 +184,7 @@ export const tableColumnStringWithTag = ({ title, dataIndex, sorter = true }) =>
     render: (record) => {
         return (
             <Tag className={styles.tagWidth} color={record[dataIndex] ? 'green' : 'red'}>
-                {record[dataIndex] ? 'Active' : 'Inactive'}
+                {record[dataIndex] ? translateContent('global.label.active') : translateContent('global.label.inActive')}
             </Tag>
         );
     },
@@ -199,10 +199,10 @@ export const tableColumnActionsEditDelete =
         render: (record) => [
             <Space size="middle">
                 <Button data-testid="view" type="link" aria-label="ai-view" onClick={(e) => onEditAction(record?.code)}>
-                    {addToolTip('View')(<FaRegEye />)}
+                    {addToolTip(translateContent('global.buttons.view'))(<FaRegEye />)}
                 </Button>
                 <Button data-testid="edit" type="link" aria-label="fa-edit" onClick={(e) => onEditAction(record?.code)}>
-                    {addToolTip('Edit')(<FiEdit />)}
+                    {addToolTip(translateContent('global.buttons.edit'))(<FiEdit />)}
                 </Button>
             </Space>,
         ],

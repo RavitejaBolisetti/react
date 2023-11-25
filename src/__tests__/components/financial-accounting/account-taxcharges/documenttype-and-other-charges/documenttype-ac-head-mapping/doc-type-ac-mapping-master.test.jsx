@@ -3,11 +3,12 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { fireEvent, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { DocTypeAcMappingMaster } from '@components/FinancialAccounting/AccountTaxCharges/DocumentTypeOtherCharges/DocTypeAcHeadMapping/DocTypeAcMappingMaster';
 import customRender from '@utils/test-utils';
 import { Form } from 'antd';
+import React from 'react';
 
 afterEach(() => {
     jest.restoreAllMocks();
@@ -35,13 +36,21 @@ describe('Render components', () => {
     }
 
     it('docTypeLedger', ()=>{
+        const setDocTypeHeadMappingList = jest.fn();
+        jest.spyOn(React, 'useState').mockReturnValue([null, setDocTypeHeadMappingList]);
+
         const docTypeLedger = {
             applicationName: "Financial Accounting", documentType: null, documentTypeCode: "REC", documentTypeId: "698", documentTypeName: "Receipts(Finance)",
             accountLedgerMappingDtoList:[{
                 chargeCode: "CCRD",chargeCodeDesc: "Credit Card", financialAccountHeadCode: null, financialAccountHeadDesc: "BIMALJEET", financialAccountHeadId: "143", id: "563"
             }]
         }
-        customRender(<FormWrapper docTypeLedger={docTypeLedger} setDocTypeHeadMappingList={jest.fn()} />);
+        render(<FormWrapper docTypeLedger={docTypeLedger} setDocTypeHeadMappingList={setDocTypeHeadMappingList} />);
+
+        expect(setDocTypeHeadMappingList).toHaveBeenCalledWith(expect.any(Function));
+        const setDocTypeHeadMappingListFunction = setDocTypeHeadMappingList.mock.calls[0][0];
+        const item = [{ internalId: '12345' }];
+        setDocTypeHeadMappingListFunction(item);
     })
 
     it('formEdit = false', () => {

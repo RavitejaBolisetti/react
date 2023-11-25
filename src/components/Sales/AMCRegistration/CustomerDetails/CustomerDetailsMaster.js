@@ -23,7 +23,7 @@ const CustomerDetailsMasterBase = (props) => {
     const disabledProps = { disabled: isReadOnly };
     useEffect(() => {
         if (formActionType?.addMode) {
-            if (requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.MNM_FOC?.key) {
+            if (requestPayload?.amcRegistration?.priceType === AMC_CONSTANTS?.MNM_FOC?.key) {
                 form.setFieldsValue({ customerCode: otfData?.otfDetails[0]?.customerId });
                 setIsReadOnly(true);
                 setButtonData({ ...buttonData, formBtnActive: true });
@@ -54,7 +54,7 @@ const CustomerDetailsMasterBase = (props) => {
                 userId,
                 onSuccessAction: (response) => {
                     setvalidCustomerID(true);
-                    form.setFieldsValue({ ...response?.data, customerAddress: response?.data?.address, customerCity: response?.data?.city, customerPhoneNumber: response?.data?.mobileNumber });
+                    form.setFieldsValue({ ...response?.data });
                     setButtonData({ ...buttonData, formBtnActive: true });
                 },
                 onErrorAction: (message) => {

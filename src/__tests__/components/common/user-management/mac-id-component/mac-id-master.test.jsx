@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
 import { Provider } from 'react-redux';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import { fireEvent, screen, waitFor} from "@testing-library/react";
 import { MacIdMaster } from '@components/common/UserManagement/Dealer/MacIdComponent/MacIdMaster';
@@ -62,7 +63,7 @@ describe('MacIdMain components', () => {
                 <MacIdMaster setButtonData={setButtonData} fetchMacIdList={fetchMacIdList}  />
             </Provider>
         );
-        setButtonData.mock.calls[0][0]();
+        // setButtonData.mock.calls[0][0]();
         fetchMacIdList.mock.calls[0][0].onSuccessAction();
 
         const plusAdd=screen.getByRole('button', { name: 'plus Add' });

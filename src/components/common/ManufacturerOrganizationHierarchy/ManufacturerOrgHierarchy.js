@@ -252,7 +252,7 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
         formActionType,
         isVisible: isFormVisible,
         onCloseAction: () => setIsFormVisible(false),
-        titleOverride: (formData?.id ? translateContent('global.drawerTitle.edit') : translateContent('global.drawerTitle.add')).concat(moduleTitle),
+        titleOverride: (formData?.id ? translateContent('global.drawerTitle.edit') : translateContent('global.drawerTitle.add')).concat(" ").concat(moduleTitle),
         onFinish,
         selectedTreeKey,
         selectedTreeData,

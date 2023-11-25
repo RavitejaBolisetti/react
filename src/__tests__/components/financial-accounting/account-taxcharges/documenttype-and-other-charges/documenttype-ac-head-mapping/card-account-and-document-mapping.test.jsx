@@ -3,11 +3,12 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { fireEvent, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import  CardDocTypeAcMapping  from '@components/FinancialAccounting/AccountTaxCharges/DocumentTypeOtherCharges/DocTypeAcHeadMapping/CardDocTypeAcMapping';
 import customRender from '@utils/test-utils';
 import { Form } from 'antd';
+import React from 'react';
 
 afterEach(() => {
     jest.restoreAllMocks();
@@ -51,12 +52,27 @@ describe("CardDocTypeAcMapping component",()=>{
         isVisible:true,
     }
 
+    it("typeData", ()=>{
+        const typeData = [{key:"CASH"}];
+        const financialAccHeadData = [{id:'123'}]
+        const props = {chargeCode:"CASH", financialAccountHeadId:"123"};
+
+        customRender(<CardDocTypeAcMapping isVisible={true} typeData={typeData} props={props} financialAccHeadData={financialAccHeadData} />);
+    })
+
     it('deletBtn', ()=>{
-        
-        customRender(<DeleteFormWrapper {...cardProps} formEdit={false} setDocTypeHeadMappingList={jest.fn()} setFormEdit={jest.fn()} forceUpdate={jest.fn()} />);
+        const setDocTypeHeadMappingList = jest.fn();
+        jest.spyOn(React, 'useState').mockReturnValue([null, setDocTypeHeadMappingList]);
+
+        render(<DeleteFormWrapper {...cardProps} formEdit={false} setDocTypeHeadMappingList={setDocTypeHeadMappingList} setFormEdit={jest.fn()} forceUpdate={jest.fn()} />);
 
         const editBtn = screen.getAllByRole('button', {name:""});
         fireEvent.click(editBtn[1]);
+
+        expect(setDocTypeHeadMappingList).toHaveBeenCalledWith(expect.any(Function));
+        const setDocTypeHeadMappingListFunction = setDocTypeHeadMappingList.mock.calls[0][0];
+        const prev = [{ internalId: '12345' }];
+        setDocTypeHeadMappingListFunction(prev);
     });
 
     it('Cancel Button', () => {

@@ -30,11 +30,11 @@ const VehicleDeliveryNoteConatinerMain = (props) => {
         setRequestPayload({ ...requestPayload, [key]: values });
     };
     const requestData = requestPayload;
-    
+
     const invoiceDataPayload = soldByDealer ? requestData?.deliveryNoteInvoiveDetails : requestData?.engineDetailDto;
     const customerdataPayload = soldByDealer ? requestData?.customerDetails : props?.formActionType?.addMode ? customerDetailsDataSearched : requestData?.customerDetails;
     const vehicleDataPayload = soldByDealer ? requestData?.vehicleDetails : props?.formActionType?.addMode ? vehicleChallanData : requestData?.vehicleInformationDto;
-    
+
     const myProps = {
         ...props,
         FormActionButton: VehicleDeliveryNoteFormButton,
@@ -43,7 +43,7 @@ const VehicleDeliveryNoteConatinerMain = (props) => {
         selectedInvoiceId: selectedOrderId,
     };
 
-    const renderElement = () => {
+    const renderSections = () => {
         switch (currentSection) {
             case VEHICLE_DELIVERY_NOTE_SECTION.INVOICE_DETAILS.id: {
                 return <InvoiceDetailsMaster {...myProps} invoiceData={invoiceDataPayload} />;
@@ -81,7 +81,7 @@ const VehicleDeliveryNoteConatinerMain = (props) => {
                 <LeftSidebar {...myProps} />
             </Col>
             <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18} className={styles.drawerRightMainContainer}>
-                <div>{renderElement()}</div>
+                <div>{renderSections()}</div>
             </Col>
         </Row>
     );

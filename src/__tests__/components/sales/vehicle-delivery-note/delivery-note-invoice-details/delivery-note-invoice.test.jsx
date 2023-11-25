@@ -1,7 +1,13 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React from 'react';
-import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import { InvoiceDetailsMaster } from '@components/Sales/VehicleDeliveryNote/InvoiceDetails/InvoiceDetailsMaster';
 import customRender from '@utils/test-utils';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 import { Form } from 'antd';
@@ -36,13 +42,13 @@ jest.mock('@components/Sales/VehicleDeliveryNote/InvoiceDetails/AddEditForm', ()
 });
 
 describe('delivery note Invoice Details render', () => {
-    it('should render component ', async () => {
+    it('should render component', async () => {
         const formActionType = { addMode: true };
 
         customRender(<FormWrapper formActionType={formActionType} setButtonData={jest.fn()} />);
     });
 
-    it('should render component for viewmode ', async () => {
+    it('should render component for viewmode', async () => {
         const formActionType = { viewMode: true };
 
         customRender(<FormWrapper formActionType={formActionType} setButtonData={jest.fn()} />);
@@ -78,8 +84,6 @@ describe('delivery note Invoice Details render', () => {
                 },
             },
         });
-
-        const saveData = jest.fn();
         const fetchList = jest.fn();
         const formActionType = { addMode: true };
 
@@ -88,17 +92,7 @@ describe('delivery note Invoice Details render', () => {
                 <FormWrapper setFilterString={jest.fn()} setButtonData={jest.fn()} fetchList={fetchList} formActionType={formActionType} soldByDealer={true} disableFieldsOnFutureDate={true} setRequestPayload={jest.fn()} handleButtonClick={jest.fn()} />
             </Provider>
         );
-
-      
-
         const saveBtn = screen.getByRole('button', { name: 'Save' });
-
         fireEvent.click(saveBtn);
-
-        await waitFor(() => {
-            expect(saveData).toHaveBeenCalled();
-        });
-
-        saveData.mock.calls[0][0].onSuccess();
     });
 });

@@ -201,13 +201,13 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
             setToolTipContent(
                 <div>
                     <p>
-                        Cancelled Date - <span>{deliveryNoteMasterData?.cancellationInformation?.cancelledDate ? dayjs(deliveryNoteMasterData?.cancellationInformation?.cancelledDate)?.format('DD MMM YYYY') : 'Na'}</span>
+                        {translateContent('vehicleDeliveryNote.label.cancelledDate')} - <span>{deliveryNoteMasterData?.cancellationInformation?.cancelledDate ? dayjs(deliveryNoteMasterData?.cancellationInformation?.cancelledDate)?.format('DD MMM YYYY') : 'Na'}</span>
                     </p>
                     <p>
-                        Cancelled By - <span>{deliveryNoteMasterData?.cancellationInformation?.cancelledBy ?? 'Na'}</span>
+                        {translateContent('vehicleDeliveryNote.label.cancelledBy')} - <span>{deliveryNoteMasterData?.cancellationInformation?.cancelledBy ?? 'Na'}</span>
                     </p>
                     <p>
-                        Remarks for Cancellation - <span>{deliveryNoteMasterData?.cancellationInformation?.remarks ?? 'Na'}</span>
+                        {translateContent('vehicleDeliveryNote.label.remarksForCancellation')} - <span>{deliveryNoteMasterData?.cancellationInformation?.remarks ?? 'Na'}</span>
                     </p>
                 </div>
             );
@@ -805,7 +805,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         deliveryNoteOnFinish: onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(soldByDealer ? moduleTitle : translateContent('vehicleDeliveryNote.cancelTitle.challan')),
+        titleOverride: drawerTitle(formActionType).concat(" ").concat(soldByDealer ? moduleTitle : translateContent('vehicleDeliveryNote.cancelTitle.challan')),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,

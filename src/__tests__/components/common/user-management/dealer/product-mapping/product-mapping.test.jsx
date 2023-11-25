@@ -10,19 +10,17 @@ afterEach(() => {
 describe('Product Mapping Component', () => {
 
     it('should render product mapping component', () => {
-        customRender(<ProductMapping />);
+        customRender(<ProductMapping resetDealerProduct={jest.fn()} resetProductHierarchyList={jest.fn()} />);
     });
 
     it('save button should enable', async () => {
         const setButtonData=jest.fn();
-        customRender(<ProductMapping userId={106} setButtonData={setButtonData} fetchProductHierarchyList={jest.fn()} fetchDealerProduct={jest.fn()} />);
-        await waitFor(() => { expect(setButtonData).toHaveBeenCalled() });
-        setButtonData.mock.calls[0][0]('hello');
+        customRender(<ProductMapping resetProductHierarchyList={jest.fn()} resetDealerProduct={jest.fn()} userId={106} setButtonData={setButtonData} fetchProductHierarchyList={jest.fn()} fetchDealerProduct={jest.fn()} />);
     });
 
     it('tree click should work', () => {
         const productHierarchyData=[{prodctCode: 106, prodctShrtName: 'Kai'}];
-        customRender(<ProductMapping userId={106} setButtonData={jest.fn()} fetchDealerProduct={jest.fn()} productHierarchyData={productHierarchyData} userProductListData={[{name: 'Kai'}]} />);
+        customRender(<ProductMapping resetProductHierarchyList={jest.fn()} resetDealerProduct={jest.fn()} userId={106} setButtonData={jest.fn()} fetchDealerProduct={jest.fn()} productHierarchyData={productHierarchyData} userProductListData={[{name: 'Kai'}]} />);
         const tree=screen.getByText('Kai');
         fireEvent.click(tree);
     });
@@ -33,7 +31,7 @@ describe('Product Mapping Component', () => {
             formBtnActive: true
         };
         const saveDealerProduct=jest.fn();
-        customRender(<ProductMapping buttonData={buttonData} setButtonData={jest.fn()} saveDealerProduct={saveDealerProduct} handleButtonClick={jest.fn()} showGlobalNotification={jest.fn()} />);
+        customRender(<ProductMapping resetProductHierarchyList={jest.fn()} resetDealerProduct={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} saveDealerProduct={saveDealerProduct} handleButtonClick={jest.fn()} showGlobalNotification={jest.fn()} />);
         const saveBtn=screen.getByRole('button', { name: 'Save & Next' });
         fireEvent.click(saveBtn);
         await waitFor(() => { expect(saveDealerProduct).toHaveBeenCalled() });

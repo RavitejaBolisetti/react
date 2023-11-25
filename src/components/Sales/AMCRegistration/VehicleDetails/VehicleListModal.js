@@ -41,7 +41,7 @@ export const VehicleListBase = (props) => {
         },
         pagination: false,
         isLoading: false,
-        tableColumn,
+        tableColumn: tableColumn(),
         tableData: data,
         scroll: { x: 1000, y: 'calc(100vh - 324px)' },
     };

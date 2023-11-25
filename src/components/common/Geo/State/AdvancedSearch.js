@@ -29,8 +29,8 @@ export const AdvancedSearchFrom = (props) => {
     const modalProps = {
         reset: true,
         submit: true,
-        resetName: 'Reset',
-        submitName: 'Search',
+        resetName: translateContent('global.buttons.reset'),
+        submitName: translateContent('global.buttons.search'),
         handleResetFilter,
     };
 
@@ -38,7 +38,7 @@ export const AdvancedSearchFrom = (props) => {
         <Form layout="vertical" autoComplete="off" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={defaultCountry} label={translateContent('state.label.country')} name="countryCode" rules={[validateRequiredSelectField('Country')]}>
+                    <Form.Item initialValue={defaultCountry} label={translateContent('state.label.country')} name="countryCode" rules={[validateRequiredSelectField(translateContent('state.validation.country'))]}>
                         {defaultCountry && (
                             <Select defaultValue={defaultCountry} showSearch loading={!isDataCountryLoaded} placeholder={translateContent('global.placeholder.select')} allowClear>
                                 {countryData?.map((item) => (

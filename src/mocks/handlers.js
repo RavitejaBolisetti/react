@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import { rest } from "msw";
 import { 
   BASE_URL_LOGIN, 
@@ -29,7 +34,7 @@ export const handlers = [
   rest.get(BASE_URL_HEADER_DETAIL, null),
   rest.post(BASE_URL_VERIFY_USER, (req, res, ctx) => {
     const { userId } = req.json();
-    if (userId == 'test') {
+    if (userId === 'test') {
       return res(
         ctx.status(200),
         ctx.json({
@@ -47,7 +52,7 @@ export const handlers = [
   }),
   rest.post(BASE_URL_GENERATE_OTP, (req,res,ctx) => {
     const { userId } = req.json();
-    if (userId == 'test') {
+    if (userId === 'test') {
       return res(
         ctx.status(200),
         ctx.json({userId: "sushil", sentOnMobile: true, sentOnEmail: true})
@@ -62,7 +67,8 @@ export const handlers = [
   }),
   rest.post(BASE_URL_VALIDATE_OTP, (req, res, ctx) =>{
     const { userId } = req.json();
-    if (userId == 'test' && otp==='123456') {
+    // eslint-disable-next-line no-undef
+    if (userId === 'test' && otp==='123456') {
       return res(
         ctx.status(200),
         ctx.json({userId: "sushil", otp: "123456",validationKey:"2b4b15bf-a5c1-46b6-b75e-08666490cee7"}),
@@ -76,8 +82,9 @@ export const handlers = [
     }
   }),
   rest.post(BASE_URL_CHANGE_PASSWORD, (req, res, ctx) => {
-    const { userId, oldPassword } = req.json();
-    if (oldPassword == 'Dmatest@123' && ( newPassword == 'Dma@test1234' && confirmNewPassword == 'Dma@test1234')) {
+    const { oldPassword } = req.json();
+    // eslint-disable-next-line no-undef
+    if (oldPassword === 'Dmatest@123' && ( newPassword === 'Dma@test1234' && confirmNewPassword === 'Dma@test1234')) {
       return res(
         ctx.status(200),
         ctx.json({

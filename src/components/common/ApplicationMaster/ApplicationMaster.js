@@ -31,7 +31,7 @@ const mapStateToProps = (state) => {
             ApplicationMaster: { applicationCriticalityGroupData: criticalityGroupData, applicationDetailsData, dealerLocations, applicationData, configurableParamData, actions, isApplicationDeatilsLoading, isApplicatinoOnSaveLoading, isLoading, isActionsLoaded },
         },
     } = state;
-    const moduleTitle = 'Application Details';
+    const moduleTitle = translateContent('applicationMaster.title.applicationDetails');
 
     let returnValue = {
         criticalityGroupData: criticalityGroupData?.sort((a, b) => b?.activeIndicator - a?.activeIndicator),
@@ -258,7 +258,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationMasterData
         configurableParamData,
         actions,
         menuData,
-        titleOverride: (finalFormdata?.applicationDetails?.id ? translateContent('global.buttons.edit') : translateContent('global.buttons.add')).concat(moduleTitle),
+        titleOverride: (finalFormdata?.applicationDetails?.id ? translateContent('global.buttons.edit') : translateContent('global.buttons.add')).concat(" "+ moduleTitle),
         setSelectedTreeKey,
         selectedTreeKey,
         isApplicatinoOnSaveLoading,
@@ -271,37 +271,38 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationMasterData
 
     const leftCol = menuData?.length > 0 ? 14 : 24;
     const rightCol = menuData?.length > 0 ? 10 : 24;
-    const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
-    const noDataMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
     const ContentHeaderProps = { isAdvanceFilter: false, isTogglePresent: true, isDefaultContentHeader: false, toggleFirst: 'Web', toggleSecond: 'Mobile', styles, onChange, onFinish, validateTriggervalue: ['onSearch'], menuType, title: '', handleTypeClick };
     return (
         <>
             <ContentHeader {...ContentHeaderProps} />
             <Row gutter={20} span={24}>
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
-                    {menuData?.length <= 0 ? (
-                        <div className={styles.emptyContainer}>
-                            <Empty
-                                image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                imageStyle={{
-                                    height: 60,
-                                }}
-                                description={
-                                    <span>
-                                        {noDataTitle} <br /> {noDataMessage}
-                                    </span>
-                                }
-                            >
-                                <Button icon={<PlusOutlined />} type="primary" onClick={() => handleAdd('add')}>
-                                    {translateContent('global.buttons.add')}
-                                </Button>
-                            </Empty>
-                        </div>
-                    ) : (
-                        <div className={` ${styles.leftPanelScroll}`}>
-                            <LeftPanel {...myProps} />
-                        </div>
-                    )}
+                    {/* <Spin spinning={isLoading}> */}
+                        {menuData?.length <= 0 ? (
+                            <div className={styles.emptyContainer}>
+                                <Empty
+                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                    imageStyle={{
+                                        height: 60,
+                                    }}
+                                    description={
+                                        <span>
+                                            {translateContent(global.generalMessage.noRecordsFound)} <br /> {translateContent(global.generalMessage.noRecordsFoundAddNew).replace('{NAME}', moduleTitle)}
+                                            {}
+                                        </span>
+                                    }
+                                >
+                                    <Button icon={<PlusOutlined />} type="primary" onClick={() => handleAdd('add')}>
+                                        {translateContent('global.buttons.add')}
+                                    </Button>
+                                </Empty>
+                            </div>
+                        ) : (
+                            <div className={` ${styles.leftPanelScroll}`}>
+                                <LeftPanel {...myProps} />
+                            </div>
+                        )}
+                    {/* </Spin> */}
                 </Col>
 
                 <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol}>
@@ -322,8 +323,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationMasterData
                                 }}
                                 description={
                                     <span>
-                                        Please select product from left <br />
-                                        side hierarchy to view “Application Details”
+                                        {translateContent('applicationMaster.label.description')}
                                     </span>
                                 }
                             ></Empty>

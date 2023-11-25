@@ -42,7 +42,7 @@ describe("AddEditForm",()=>{
         const indent = screen.getByRole('combobox', {name:'Indent To Location'});
         fireEvent.change(indent, {target:{value:'test'}});
 
-        const requested = screen.getByRole('combobox', {name:'Requested by'});
+        const requested = screen.getByRole('combobox', {name:'Requested By'});
         fireEvent.change(requested, {target:{value:'test1'}});
     });
 

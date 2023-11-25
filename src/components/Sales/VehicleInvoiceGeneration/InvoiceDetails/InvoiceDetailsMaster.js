@@ -51,11 +51,11 @@ const InvoiceDetailsMasterBase = (props) => {
         const { otfDetailsRequest, ...bookingAndBillingCustomerDto } = values;
         if (!Object?.keys(bookingAndBillingCustomerDto)?.length) {
             if (!requestPayload?.invoiceDetails?.bookingAndBillingCustomerDto?.billingCustomer) {
-                showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please provide billing customer details' });
+                showGlobalNotification({ notificationType: 'error', title: 'Error', message: translateContent('vehicleInvoiceGeneration.validation.BillingCustomerDetails') });
                 setActiveKey([3, 2]);
                 return false;
             } else if (!requestPayload?.invoiceDetails?.bookingAndBillingCustomerDto?.bookingCustomer) {
-                showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please provide booking customer details' });
+                showGlobalNotification({ notificationType: 'error', title: 'Error', message: translateContent('vehicleInvoiceGeneration.validation.BookingCustomerDetails') });
                 setActiveKey([3, 1]);
                 return false;
             } else setRequestPayload({ ...requestPayload, invoiceDetails: { otfDetailsRequest, bookingAndBillingCustomerDto: { ...requestPayload?.invoiceDetails?.bookingAndBillingCustomerDto } } });
@@ -104,7 +104,7 @@ const InvoiceDetailsMasterBase = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <h2>{translateContent(`vehicleInvoiceGeneration.heading.section.` + section?.id)}</h2>
+                            <h2>{translateContent(section?.translateKey)}</h2>
                         </Col>
                     </Row>
                     {formActionType?.viewMode ? <ViewDetail {...viewProps} formData={vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest} /> : <AddEditForm {...formProps} formData={vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest} />}

@@ -8,6 +8,7 @@ import { Timeline } from 'antd';
 
 import { CHARGER_INSTALLATION_SECTION } from 'constants/ChargerInstallationConstant';
 import { getSelectedMenuAttribute } from 'utils/getSelectedMenuAttribute';
+import { translateContent } from 'utils/translateContent';
 
 const MenuNav = (props) => {
     const { currentSection, setCurrentSection, selectedOtfNumber, formActionType } = props;
@@ -21,7 +22,9 @@ const MenuNav = (props) => {
         ?.filter((i) => i?.displayOnList)
         ?.map((item) => ({
             dot: getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType })?.menuNavIcon,
-            children: <p onClick={() => onHandle(item?.id)}>{item?.title}</p>,
+            children: <p onClick={() => onHandle(item?.id)}> {translateContent(item?.translateKey)}
+                {/* {item?.title} */}
+                </p>,
             className: getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType })?.activeClassName,
         }));
 

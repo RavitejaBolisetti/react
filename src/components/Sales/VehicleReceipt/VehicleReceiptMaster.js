@@ -462,8 +462,8 @@ export const VehicleReceiptMasterBase = (props) => {
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
-        // icon: <FilterIcon size={20} />,
-        titleOverride: translateContent('vehicleReceipt.labelMaster.advanceFilters'),
+        // icon: <FilterIcon size={20} />,  
+        titleOverride: translateContent('global.advanceFilter.title'),
 
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
@@ -485,7 +485,7 @@ export const VehicleReceiptMasterBase = (props) => {
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,

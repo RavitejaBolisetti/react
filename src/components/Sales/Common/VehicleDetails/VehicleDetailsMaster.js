@@ -18,6 +18,7 @@ import { SALES_MODULE_TYPE } from 'constants/salesModuleType';
 
 import styles from 'assets/sass/app.module.scss';
 import { withSpinner } from 'components/withSpinner';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -31,7 +32,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Vehicle Details';
+    const moduleTitle = translateContent('commonModules.label.vehicleDetails.vehicleDetails');
 
     let returnValue = {
         userId,
@@ -211,19 +212,19 @@ const VehicleDetailsMasterMain = (props) => {
             setToolTipContent(
                 <div>
                     <p>
-                        Color - <span>{productAttributeData['0']['color'] ?? 'Na'}</span>
+                        {translateContent('commonModules.toolTip.color')} - <span>{productAttributeData['0']['color'] ?? 'Na'}</span>
                     </p>
                     <p>
-                        Seating - <span>{productAttributeData['0']['seatingCapacity'] ?? 'Na'}</span>
+                        {translateContent('commonModules.toolTip.seating')} - <span>{productAttributeData['0']['seatingCapacity'] ?? 'Na'}</span>
                     </p>
                     <p>
-                        Fuel - <span>{productAttributeData['0']['fuel'] ?? 'Na'}</span>
+                        {translateContent('commonModules.toolTip.fuel')} - <span>{productAttributeData['0']['fuel'] ?? 'Na'}</span>
                     </p>
                     <p>
-                        Variant - <span>{productAttributeData['0']['variant'] ?? 'Na'}</span>
+                        {translateContent('commonModules.toolTip.variant')} - <span>{productAttributeData['0']['variant'] ?? 'Na'}</span>
                     </p>
                     <p>
-                        Name - <span>{productAttributeData['0']['name'] ?? 'Na'}</span>
+                        {translateContent('commonModules.toolTip.name')} - <span>{productAttributeData['0']['name'] ?? 'Na'}</span>
                     </p>
                 </div>
             );
@@ -309,7 +310,7 @@ const VehicleDetailsMasterMain = (props) => {
         switch (salesModuleType) {
             case SALES_MODULE_TYPE.OTF.KEY:
                 if (productAttributeData?.length === 0) {
-                    showGlobalNotification({ message: 'Model selected is not valid' });
+                    showGlobalNotification({ message: translateContent('commonModules.validation.modelValidation') });
                     return;
                 }
 

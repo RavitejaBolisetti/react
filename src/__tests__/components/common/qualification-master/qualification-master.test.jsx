@@ -7,6 +7,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { screen, fireEvent, waitFor } from '@testing-library/react';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 import { QualificationMaster } from '@components/common/QualificationMaster/QualificationMaster';
@@ -36,7 +37,7 @@ describe('Qualification Master Test', () => {
         customRender(<QualificationMaster {...props} />);
         const inputBox = screen.getByRole('textbox');
         fireEvent.change(inputBox, { target: { value: 'Dmatest' } });
-        expect(inputBox.value.includes('Dmatest'));
+      
 
         const searchButton = screen.getByRole('button', { name: /search/i });
         fireEvent.click(searchButton);

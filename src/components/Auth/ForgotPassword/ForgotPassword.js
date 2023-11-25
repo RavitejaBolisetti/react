@@ -27,6 +27,7 @@ import { validateRequiredInputField } from 'utils/validation';
 import { PasswordStrengthMeter } from 'utils/PasswordStrengthMeter';
 
 import styles from '../Auth.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -100,7 +101,7 @@ const ForgotPasswordBase = (props) => {
     };
 
     const onError = (message) => {
-        showGlobalNotification({ title: 'ERROR', message: Array.isArray(message[0]) || message });
+        showGlobalNotification({ title: translateContent('global.notificationError.title'), message: Array.isArray(message[0]) || message });
         if (otpInput?.length === 6) {
             setCounter(0);
         }
@@ -164,7 +165,7 @@ const ForgotPasswordBase = (props) => {
 
                 const onSuccess = (res) => {
                     setCounter(RESEND_OTP_TIME);
-                    showGlobalNotification({ notificationType: 'warning', title: 'OTP Sent', message: res?.responseMessage });
+                    showGlobalNotification({ notificationType: 'warning', title: translateContent('global.generalMessage.otpSent'), message: res?.responseMessage });
                     setOTPMessage(res?.data?.message);
                     setCurrentStep(3);
                 };
@@ -188,7 +189,7 @@ const ForgotPasswordBase = (props) => {
 
             const onSuccess = (res) => {
                 setValidationKey(res?.data?.validationKey);
-                showGlobalNotification({ notificationType: 'successBeforeLogin', title: 'OTP Verified', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'successBeforeLogin', title: translateContent('global.generalMessage.otpVerified'), message: res?.responseMessage });
                 setCurrentStep(4);
             };
 
@@ -210,7 +211,7 @@ const ForgotPasswordBase = (props) => {
         const onSuccess = (res) => {
             form.resetFields();
 
-            showGlobalNotification({ notificationType: 'successBeforeLogin', title: 'Password Changed', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'successBeforeLogin', title: translateContent('global.generalMessage.passwordChanged'), message: res?.responseMessage });
             navigate(ROUTING_LOGIN);
         };
 
@@ -226,7 +227,7 @@ const ForgotPasswordBase = (props) => {
 
     const validateOTPOption = (_, value) => {
         if (!value || value?.length <= 0) {
-            return Promise.reject(new Error('Please choose at least one option'));
+            return Promise.reject(new Error(translateContent('global.validation.pleasechooseLeastoneoption')));
         }
         return Promise.resolve();
     };
@@ -274,7 +275,7 @@ const ForgotPasswordBase = (props) => {
                         <img src={IMAGES.RL_LOGO} className={styles.mainLogo} alt="" />
                         <br></br>
                         <img src={IMAGES.LINE} className={styles.mainLogoLine} alt="" />
-                        <div className={styles.logoText}>Dealer Management System</div>
+                        <div className={styles.logoText}>{translateContent('forgotPassoerd.label.dealerManagementSystem')}</div>
                     </div>
                     <div className={styles.loginWrap}>
                         <Row>
@@ -285,23 +286,23 @@ const ForgotPasswordBase = (props) => {
                                             <div className={styles.loginForm}>
                                                 <Form form={form} id="verifyUser" autoComplete="off" onFinish={onVerifyUser} onFinishFailed={onFinishFailed}>
                                                     <div className={styles.loginHeading}>
-                                                        <h1>Forgot Your Password</h1>
-                                                        <div className={styles.loginSubHeading}>Please enter your user credential</div>
+                                                        <h1>{translateContent('forgotPassoerd.heading.mainTitle')}</h1>
+                                                        <div className={styles.loginSubHeading}>{translateContent('forgotPassoerd.heading.subtitle')}</div>
                                                     </div>
 
                                                     <Row gutter={20}>
                                                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.inputLabelPlaceholder}>
-                                                            <Form.Item name="userId" data-testid="userIdInput" rules={[validateRequiredInputField('user id')]} className={styles.inputBox}>
+                                                            <Form.Item name="userId" data-testid="userIdInput" rules={[validateRequiredInputField(translateContent('forgotPassoerd.label.userId'))]} className={styles.inputBox}>
                                                                 {<Input ref={userIdRef} prefix={<BiUser size={16} />} type="text" maxLength={25} onChange={handleFormChange('userId')} />}
                                                             </Form.Item>
-                                                            {!fieldData?.userId && <label onClick={handleFieldFocus(userIdRef)}>User ID (MILE ID.Parent ID)</label>}
+                                                            {!fieldData?.userId && <label onClick={handleFieldFocus(userIdRef)}>{translateContent('forgotPassoerd.label.username')}</label>}
                                                         </Col>
                                                     </Row>
 
                                                     <Row gutter={20}>
                                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                             <Button icon={<FiLock size={18} />} form="verifyUser" loading={isLoading} className={styles.button} type="primary" htmlType="submit">
-                                                                Verify User
+                                                                {translateContent('forgotPassoerd.button.verifyUser')}
                                                             </Button>
                                                         </Col>
                                                     </Row>
@@ -309,7 +310,7 @@ const ForgotPasswordBase = (props) => {
                                                     <Row gutter={20}>
                                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                             <div className={styles.loginFooter} type="radio">
-                                                                <Link to={ROUTING_LOGIN}>Back to Login</Link>
+                                                                <Link to={ROUTING_LOGIN}> {translateContent('forgotPassoerd.button.backToLogin')}</Link>
                                                             </div>
                                                         </Col>
                                                     </Row>
@@ -321,21 +322,21 @@ const ForgotPasswordBase = (props) => {
                                             <div className={`${styles.centerInner} ${styles.verifyUser}`}>
                                                 <div className={styles.loginForm}>
                                                     <div className={styles.loginHeading}>
-                                                        <h1>Forgot Your Password</h1>
+                                                        <h1>{translateContent('forgotPassoerd.heading.mainTitle')}</h1>
                                                     </div>
                                                     <Form form={form} id="sendOTP" autoComplete="off" onFinish={onSentOTP} onFinishFailed={onFinishFailed}>
                                                         <Row gutter={20}>
                                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                                 <Form.Item initialValue={selectedUserId} name="userId" rules={[validateRequiredInputField('User id, mobile no, or email id')]} className={`${styles.inputBox} ${styles.disabledInput}`}>
-                                                                    <Input value={selectedUserId} disabled prefix={<BiUser size={16} />} type="text" placeholder="User ID (MILE ID.Parent ID)" />
-                                                                    <p>User credentials verified successfully</p>
+                                                                    <Input value={selectedUserId} disabled prefix={<BiUser size={16} />} type="text" placeholder={translateContent('forgotPassoerd.label.username')} />
+                                                                    <p>{translateContent('forgotPassoerd.label.usercredentialsVerifiedSuccessfully')}</p>
                                                                 </Form.Item>
                                                             </Col>
                                                         </Row>
 
                                                         <Row gutter={20}>
                                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                <div className={styles.registered}>Please choose the option for getting the OTP</div>
+                                                                <div className={styles.registered}>{translateContent('forgotPassoerd.label.pleaseChooseTheOptionforGettingTheOTP')}</div>
                                                             </Col>
                                                         </Row>
                                                         <Form.Item
@@ -351,13 +352,13 @@ const ForgotPasswordBase = (props) => {
                                                                 <Row>
                                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.fielderror}>
                                                                         <Checkbox className={styles.registered} name="mobileCheckBox" value="sentOnMobile">
-                                                                            Registered Mobile Number
+                                                                            {translateContent('forgotPassoerd.label.registeredMobileNumber')}
                                                                             <p>{verifiedUserData?.contactNumber}</p>
                                                                         </Checkbox>
                                                                     </Col>
                                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.fielderror}>
                                                                         <Checkbox className={styles.registered} name="emailCheckBox" value="sentOnEmail">
-                                                                            Registered Email Address
+                                                                            {translateContent('forgotPassoerd.label.registeredEmailAddress')}
                                                                             <p>{verifiedUserData?.email}</p>
                                                                         </Checkbox>
                                                                     </Col>
@@ -368,7 +369,7 @@ const ForgotPasswordBase = (props) => {
                                                         <Row gutter={20}>
                                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                                 <Button icon={<FiLock size={18} />} form="sendOTP" loading={isLoading} className={styles.button} type="primary" htmlType="submit">
-                                                                    Send OTP
+                                                                    {translateContent('global.buttons.sendOTP')}
                                                                 </Button>
                                                             </Col>
                                                         </Row>
@@ -376,7 +377,7 @@ const ForgotPasswordBase = (props) => {
                                                         <Row gutter={20}>
                                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                                 <div className={styles.loginFooter} type="radio">
-                                                                    <Link to={ROUTING_LOGIN}>Back to Login</Link>
+                                                                    <Link to={ROUTING_LOGIN}>{translateContent('global.buttons.backToLogin')}</Link>
                                                                 </div>
                                                             </Col>
                                                         </Row>
@@ -388,12 +389,12 @@ const ForgotPasswordBase = (props) => {
                                         <div className={styles.centerInner}>
                                             <div className={styles.loginForm}>
                                                 <div className={styles.loginHeading}>
-                                                    <h1>OTP Verification</h1>
+                                                    <h1>{translateContent('forgotPassoerd.label.otpVerification')}</h1>
                                                     <div className={styles.loginSubHeading}>{otpMessage}</div>
                                                 </div>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <div className={styles.otpTitle}>Enter OTP</div>
+                                                        <div className={styles.otpTitle}>{translateContent('forgotPassoerd.label.enterOTP')}</div>
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
@@ -410,7 +411,7 @@ const ForgotPasswordBase = (props) => {
                                                                 {inValidOTP ? (
                                                                     <span>
                                                                         <RxCrossCircled />
-                                                                        {'Incorrect OTP'}
+                                                                        {translateContent('forgotPassoerd.validation.incorrectOTP')}
                                                                     </span>
                                                                 ) : (
                                                                     <span>{"Didn't receive an OTP?"}</span>
@@ -420,18 +421,18 @@ const ForgotPasswordBase = (props) => {
                                                     </Col>
                                                     <Col xs={10} sm={10} md={8} lg={8} xl={8}>
                                                         <div onClick={() => handleSendOTP()} className={counter ? styles.resendDisabled : styles.resendEnabled} type="radio">
-                                                            <TbRefresh /> Resend OTP
+                                                            <TbRefresh /> {translateContent('forgotPassoerd.button.resendOTP')}
                                                         </div>
                                                     </Col>
                                                 </Row>
                                                 <Button icon={<FiLock size={18} />} onClick={handleVerifyOTP} disabled={disableVerifyOTP} loading={isLoading} className={styles.button} type="primary">
-                                                    Verify OTP
+                                                    {translateContent('forgotPassoerd.button.verifyOTP')}
                                                 </Button>
 
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <div className={styles.loginFooter} type="radio">
-                                                            <Link to={ROUTING_LOGIN}>Back to Login</Link>
+                                                            <Link to={ROUTING_LOGIN}>{translateContent('forgotPassoerd.button.backToLogin')}</Link>
                                                         </div>
                                                     </Col>
                                                 </Row>
@@ -442,13 +443,13 @@ const ForgotPasswordBase = (props) => {
                                             <div className={styles.loginForm}>
                                                 <Form id="updatePassword" form={form} autoComplete="off" onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onUpdatePassword} layout="vertical">
                                                     <div className={styles.loginHeading}>
-                                                        <h1 className={styles.mb20}>Create New Password</h1>
+                                                        <h1 className={styles.mb20}>{translateContent('forgotPassoerd.heading.newPassword')}</h1>
                                                         <Row gutter={20}>
                                                             <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.inputLabelPlaceholder}>
-                                                                <Form.Item name="newPassword" className={styles.inputBox} rules={[validateRequiredInputField('new password')]}>
+                                                                <Form.Item name="newPassword" className={styles.inputBox} rules={[validateRequiredInputField(translateContent('forgotPassoerd.label.newPassword'))]}>
                                                                     <Input data-testid="newPassword" onChange={handleNewPasswordChange} type={showPassword?.newPassword ? 'text' : 'password'} ref={newPasswordInput} prefix={<FiLock size={16} />} suffix={passwordSuffix('newPassword')} onFocus={() => setTooltipVisible(true)} onBlur={() => setTooltipVisible(false)} />
                                                                 </Form.Item>
-                                                                {!fieldData?.newPassword && <label onClick={handleFieldFocus(newPasswordInput)}>New password</label>}
+                                                                {!fieldData?.newPassword && <label onClick={handleFieldFocus(newPasswordInput)}>{translateContent('forgotPassoerd.label.newPassword')}</label>}
                                                                 {form.getFieldValue('newPassword') && <PasswordStrengthMeter password={form.getFieldValue('newPassword')} beforeLogin={true} tooltipVisible={tooltipVisible} />}
                                                             </Col>
                                                         </Row>
@@ -465,20 +466,20 @@ const ForgotPasswordBase = (props) => {
                                                                                 if (!value || getFieldValue('newPassword') === value) {
                                                                                     return Promise.resolve();
                                                                                 }
-                                                                                return Promise.reject(new Error("New Password and confirm Password doesn't match!"));
+                                                                                return Promise.reject(new Error(translateContent('forgotPassoerd.validation.passwordNotMatch')));
                                                                             },
                                                                         }),
                                                                     ]}
                                                                 >
                                                                     <Input data-testid="confirmPassword" type={showPassword?.confirmNewPassword ? 'text' : 'password'} ref={confirmPasswordInput} prefix={<FiLock size={16} />} onChange={handleFormChange('confirmNewPassword')} suffix={passwordSuffix('confirmNewPassword')} />
                                                                 </Form.Item>
-                                                                {!fieldData?.confirmNewPassword && <label onClick={handleFieldFocus(confirmPasswordInput)}>Confirm password</label>}
+                                                                {!fieldData?.confirmNewPassword && <label onClick={handleFieldFocus(confirmPasswordInput)}>{translateContent('forgotPassoerd.label.confirmPassword')}</label>}
                                                             </Col>
                                                         </Row>
                                                         <Row gutter={20}>
                                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                                 <Button icon={<FiLock size={18} />} loading={isLoading} disabled={submitButtonActive} form="updatePassword" className={styles.button} type="primary" htmlType="submit">
-                                                                    Submit
+                                                                    {translateContent('global.buttons.submit')}
                                                                 </Button>
                                                             </Col>
                                                         </Row>
