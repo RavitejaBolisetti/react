@@ -8,12 +8,13 @@ import { Row, Col } from 'antd';
 import { withModal } from 'components/withModal';
 
 import styles from './SessionTimeoutModal.module.scss';
+import { translateContent } from 'utils/translateContent';
 const OfflineModalMain = (props) => {
     return (
         <>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.information}>
-                    Check your internet connectivity
+                    {translateContent('global.validation.internetConnectivity')}
                 </Col>
             </Row>
         </>

@@ -19,6 +19,11 @@ export const AMC_CONSTANTS = {
         key: 'GENERATED_SUCCESSFULLY',
         title: 'Scheme Registration Completed Successfully',
     },
+    RSA_GENERATED_SUCCESSFULLY: {
+        id: 3,
+        key: 'GENERATED_SUCCESSFULLY',
+        title: 'RSA Registration Completed Successfully',
+    },
     DEALER: {
         id: 4,
         key: 'DLR',

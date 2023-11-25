@@ -10,7 +10,6 @@ import '@testing-library/jest-dom/extend-expect';
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
-import { ViewSupportingDocDetail } from 'components/FinancialAccounting/GSTIRNAuthentication/ViewSupportingDocDetail';
 
 jest.mock('store/actions/data/financialAccounting/dealerGstAction', () => ({
     dealerGstAction: {},

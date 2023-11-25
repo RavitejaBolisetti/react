@@ -1,7 +1,8 @@
 import '@testing-library/jest-dom/extend-expect';
 import { OtfBlockMaster } from '@components/Sales/OtfBlockMaster/OtfBlockMaster';
 import customRender from '@utils/test-utils';
-import { screen, fireEvent, waitFor, act } from '@testing-library/react';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 

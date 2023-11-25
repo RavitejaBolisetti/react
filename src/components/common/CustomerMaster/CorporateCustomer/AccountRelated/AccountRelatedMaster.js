@@ -84,18 +84,22 @@ export const AccountRelatedMasterBase = (props) => {
             form.setFieldsValue({ ...accountData });
             setFormData(accountData);
         }
-        return () => {
-            resetData();
-        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
 
     useEffect(() => {
-        if (!formActionType?.addMode && userId && selectedCustomerId) {
+        if (userId && selectedCustomerId) {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomerId]);
+
+    useEffect(() => {
+        return () => {
+            resetData();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const onFinish = (values) => {
         const data = { ...values, customerId: selectedCustomerId };

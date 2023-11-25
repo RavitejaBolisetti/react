@@ -3,18 +3,19 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { translateContent } from 'utils/translateContent';
 export const CHARGER_INSTALLATION_SECTION = {
     CHARGER_DETAILS: {
         id: 1,
-        title: translateContent('chargerInstallationProcess.heading.chargerDetailsTitle'),
+        title: 'Charger Installation Details',
         advance: true,
         displayOnList: true,
+        translateKey: 'chargerInstallationProcess.section.chargerDetails.title',
     },
     INSTALLATION_ADDRESS_DETAILS: {
         id: 2,
-        title: translateContent('chargerInstallationProcess.heading.addressDetailsTitle'),
+        title: 'Installation Address Details',
         advance: true,
         displayOnList: true,
+        translateKey: 'chargerInstallationProcess.section.addressDetails.title',
     },
 };

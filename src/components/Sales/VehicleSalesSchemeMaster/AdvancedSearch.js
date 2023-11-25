@@ -66,19 +66,19 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={filterString?.schemeType} label={translateContent('vehicleSalesSchemeMaster.label.schemeType')}  name="schemeType">
-                        {customSelectBox({ data: typeData[PARAM_MASTER?.SCHEME_TYPE?.id], placeholder: preparePlaceholderSelect(translateContent('vehicleSalesSchemeMaster.placeholder.schemeType') ) })}
+                    <Form.Item initialValue={filterString?.schemeType} label={translateContent('vehicleSalesSchemeMaster.label.schemeType')} name="schemeType">
+                        {customSelectBox({ data: typeData[PARAM_MASTER?.SCHEME_TYPE?.id], placeholder: preparePlaceholderSelect(translateContent('vehicleSalesSchemeMaster.placeholder.schemeType')) })}
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={filterString?.encash} label={translateContent('vehicleSalesSchemeMaster.label.encash')}  name="encash">
+                    <Form.Item initialValue={filterString?.encash} label={translateContent('vehicleSalesSchemeMaster.label.encash')} name="encash">
                         {customSelectBox({ data: typeData[PARAM_MASTER?.ENCASH?.id], placeholder: preparePlaceholderSelect(translateContent('vehicleSalesSchemeMaster.placeholder.encash')) })}
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label={translateContent('vehicleSalesSchemeMaster.label.validityFromDate')}  name="fromDate" rules={[validateRequiredSelectField(translateContent('vehicleSalesSchemeMaster.validation.validityFromDate'))]} className={styles?.datePicker}>
+                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label={translateContent('vehicleSalesSchemeMaster.label.validityFromDate')} name="fromDate" rules={[validateRequiredSelectField(translateContent('vehicleSalesSchemeMaster.validation.validityFromDate'))]} className={styles?.datePicker}>
                         <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} onChange={() => advanceFilterForm.setFieldsValue({ toDate: undefined })} />
                     </Form.Item>
                 </Col>

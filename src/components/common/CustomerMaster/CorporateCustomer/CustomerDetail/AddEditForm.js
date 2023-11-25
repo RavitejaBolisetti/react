@@ -24,6 +24,11 @@ const AddEditFormMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData?.corporateType]);
 
+    useEffect(() => {
+            form.setFieldsValue({ parentCompanyName: customerParentCompanyData?.parentCompanyName || formData?.parentCompanyName });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [customerParentCompanyData?.parentCompanyName]);
+
     const handleCorporateChange = (value) => {
         setCorporateType(value);
         if (value === 'NON-LIS') {

@@ -8,6 +8,7 @@ import '@testing-library/jest-dom/extend-expect';
 import { ApportionDetailsMaster } from '@components/FinancialAccounting/CreditDebitNote/ApportionDetails/ApportionDetailsMaster';
 import customRender from '@utils/test-utils';
 import { Provider } from 'react-redux';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 
 afterEach(() => {

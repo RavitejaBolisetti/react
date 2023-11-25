@@ -36,7 +36,7 @@ export default function VehicleDeliveryNoteFilter(props) {
                         onChange={onDeliveryTabChange}
                         items={Object.values(DELIVERY_TYPE)?.map((item) => ({
                             key: item?.key,
-                            label: <>{item?.title}</>,
+                            label: translateContent(item?.translateTitle),
                         }))}
                     />
                 </Col>
@@ -46,20 +46,13 @@ export default function VehicleDeliveryNoteFilter(props) {
                     <Form autoComplete="off" colon={false} className={styles.masterListSearchForm}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={18} lg={18} xl={18} className={styles.verticallyCentered}>
-                                <QueryButtons currentItem={deliveryStatus} items={deliveryStatusList} onClick={handleDeliveryNoteTypeChange} />
+                                <QueryButtons moduleKey={'vehicleDeliveryNote'} currentItem={deliveryStatus} items={deliveryStatusList} onClick={handleDeliveryNoteTypeChange} />
                                 <div className={styles.fullWidth}>
                                     <SearchBox {...serachBoxProps} />
                                 </div>
                             </Col>
                             <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.verticallyCentered}>
-                                <Button
-                                    icon={<FilterIcon />}
-                                    type="link"
-                                    className={styles.verticallyCentered}
-                                    onClick={() => {
-                                        setAdvanceSearchVisible(true);
-                                    }}
-                                >
+                                <Button icon={<FilterIcon />} type="link" className={styles.verticallyCentered} onClick={() => setAdvanceSearchVisible(true)}>
                                     {translateContent('global.advanceFilter.title')}
                                 </Button>
                             </Col>

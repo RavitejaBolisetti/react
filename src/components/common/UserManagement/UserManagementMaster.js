@@ -463,7 +463,7 @@ const UserManagementMain = (props) => {
         formActionType,
         isReadOnly,
         setFormData,
-        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
         productHierarchyData,
         onCloseAction,
         finalFormdata,

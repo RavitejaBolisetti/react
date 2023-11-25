@@ -161,26 +161,7 @@ describe('Loyalty scheme master render', () => {
         const fetchList = jest.fn();
         const saveData = jest.fn();
 
-        const response = {
-            data: {
-                customerCode: 'C230847215',
-                customerName: 'HABHIT WELLNESS PRIVATE LIMITED',
-                id: 'aa5c723e-42bd-4dd3-991a-197b0b181849',
-                make: 'MM',
-                oldChassisNumber: 'NJK49563',
-                otfId: '08be0405-bf89-4bd1-97fe-0b1b3330d6e7',
-                registrationMonthCode: '6',
-                registrationNumber: 'MH02FL2787',
-                registrationYearCode: '2021',
-                relationCode: 'F',
-                remarks: null,
-                schemeAmount: 25000,
-                schemeCode: '2b926ad0-cf5d-4927-b3ec-75bed042dbab',
-                variantCode: 'MM866',
-                vehicleModelGroup: 'ZOR',
-                vehicleUsageCode: 'F',
-            },
-        };
+  
 
         customRender(
             <Provider store={mockStore}>

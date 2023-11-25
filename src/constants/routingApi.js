@@ -396,3 +396,4 @@ export const BASE_URL_AREA_OFFICE = BASE_URL + 'area/lov';
 export const BASE_URL_CO_DEALER_INVOICE = BASE_URL_OTF + 'codealerinvoice/search';
 export const BASE_URL_CO_DEALER_DETAILS = BASE_URL_OTF + 'codealerinvoice';
 export const BASE_URL_DEALER_LOCATIONS = BASE_URL + 'dealer/location';
+export const BASE_URL_SCHEME_RSA_DESCRIPTION = BASE_URL_VEHICLE + 'scheme/rsa/lov';

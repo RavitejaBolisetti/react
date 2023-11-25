@@ -2,6 +2,7 @@ import '@testing-library/jest-dom/extend-expect';
 import { DeliverableChecklistMaster } from '@components/Sales/VehicleDeliveryNote/DeliverableChecklist/DeliverableChecklistMaster';
 import customRender from '@utils/test-utils';
 import { Provider } from 'react-redux';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import { screen, fireEvent } from '@testing-library/react';
 

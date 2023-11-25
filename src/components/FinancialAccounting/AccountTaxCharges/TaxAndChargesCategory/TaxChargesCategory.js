@@ -262,12 +262,6 @@ export const TaxChargesCategoryMain = (props) => {
         }
     };
 
-    const handleResetFilter = () => {
-        setFilterString({ current: 1, pageSize: 10 });
-        listFilterForm.resetFields();
-        setShowDataLoading(false);
-    };
-
     const handleClearInSearch = (e) => {
         if (e.target.value.length > 2) {
             listFilterForm.validateFields(['code']);
@@ -332,7 +326,7 @@ export const TaxChargesCategoryMain = (props) => {
 
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(translateContent('taxChargeCatagory.heading.moduleTitle')),
+        titleOverride: drawerTitle(formActionType).concat(" ").concat(translateContent('taxChargeCatagory.heading.moduleTitle')),
 
         ADD_ACTION,
         EDIT_ACTION,
@@ -378,7 +372,6 @@ export const TaxChargesCategoryMain = (props) => {
         from: listFilterForm,
         onFinish,
         onSearchHandle,
-        handleResetFilter,
         handleClearInSearch,
         handleReferesh,
         handleButtonClick,

@@ -40,7 +40,7 @@ const OtfDetailsForm = (props) => {
         <>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Form.Item label={translateContent('commonModules.label.bookingDetails.bookingNumber')} name={[formName, 'otfNumber']} rules={[validateRequiredInputField('Booking Number')]}>
+                    <Form.Item label={translateContent('commonModules.label.bookingDetails.bookingNumber')} name={[formName, 'otfNumber']} rules={[validateRequiredInputField(translateContent('commonModules.label.bookingDetails.bookingNumber'))]}>
                         <Search maxLength={50} placeholder={preparePlaceholderText('Booking Number')} loading={isVehicleInvoiceDataLoading} onSearch={(value) => handleBookingNumberSearch(value)} allowClear onChange={handleBookingChange} />
                     </Form.Item>
                 </Col>
@@ -60,12 +60,12 @@ const OtfDetailsForm = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formData?.taxCalculationType} label={translateContent('commonModules.label.bookingDetails.taxCalculation')} name={[formName, 'taxCalculationType']} rules={[validateRequiredSelectField('Tax Calculation')]}>
+                            <Form.Item initialValue={formData?.taxCalculationType} label={translateContent('commonModules.label.bookingDetails.taxCalculation')} name={[formName, 'taxCalculationType']} rules={[validateRequiredSelectField(translateContent('commonModules.label.bookingDetails.taxCalculation'))]}>
                                 {customSelectBox({ data: typeData?.[PARAM_MASTER.TAX_CALCLTN_TYPE.id], placeholder: preparePlaceholderSelect('Tax Calculation') })}
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formData?.taxPayableOnReverseCharges} label={translateContent('commonModules.label.bookingDetails.taxPayableOnReverseCharges')} name={[formName, 'taxPayableOnReverseCharges']} rules={[validateRequiredSelectField('Tax Payable On Reverse Charges')]}>
+                            <Form.Item initialValue={formData?.taxPayableOnReverseCharges} label={translateContent('commonModules.label.bookingDetails.taxPayableOnReverseCharges')} name={[formName, 'taxPayableOnReverseCharges']} rules={[validateRequiredSelectField(translateContent('commonModules.label.bookingDetails.taxPayableOnReverseCharges'))]}>
                                 {customSelectBox({ data: typeData?.[PARAM_MASTER.RFRL.id], placeholder: preparePlaceholderSelect('Tax Payable On Reverse Charges') })}
                             </Form.Item>
                         </Col>

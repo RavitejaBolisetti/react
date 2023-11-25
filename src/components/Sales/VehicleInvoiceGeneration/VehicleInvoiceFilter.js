@@ -14,6 +14,7 @@ import { SearchBox } from 'components/utils/SearchBox';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export default function VehicleInvoiceFilter(props) {
     const { extraParams, removeFilter, typeData, invoiceStatusList, searchForm, filterString, setFilterString, handleResetFilter, advanceFilter = false, handleInvoiceTypeChange, setAdvanceSearchVisible, handleButtonClick, invoiceStatus } = props;
@@ -40,15 +41,8 @@ export default function VehicleInvoiceFilter(props) {
                                 </div>
                             </Col>
                             <Col xs={24} sm={24} md={4} lg={4} xl={4} className={styles.verticallyCentered}>
-                                <Button
-                                    icon={<FilterIcon />}
-                                    type="link"
-                                    className={styles.verticallyCentered}
-                                    onClick={() => {
-                                        setAdvanceSearchVisible(true);
-                                    }}
-                                >
-                                    Advance Filters
+                                <Button icon={<FilterIcon />} type="link" className={styles.verticallyCentered} onClick={() => setAdvanceSearchVisible(true)}>
+                                    {translateContent('global.buttons.advancedFilter')}
                                 </Button>
                             </Col>
                         </Row>
@@ -56,7 +50,7 @@ export default function VehicleInvoiceFilter(props) {
                 </Col>
                 <Col xs={24} sm={4} md={4} lg={4} xl={4} className={styles.buttonsGroupRight}>
                     <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                        Add
+                        {translateContent('global.buttons.add')}
                     </Button>
                 </Col>
             </Row>
@@ -84,7 +78,7 @@ export default function VehicleInvoiceFilter(props) {
                             </Col>
                             <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
                                 <Button className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
-                                    Clear
+                                    {translateContent('global.buttons.clear')}
                                 </Button>
                             </Col>
                         </Row>

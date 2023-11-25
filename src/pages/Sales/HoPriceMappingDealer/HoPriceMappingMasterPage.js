@@ -10,7 +10,7 @@ import { HoPriceMappingMaster } from 'components/Sales';
 import { translateContent } from 'utils/translateContent';
 
 const HoPriceMappingMasterBase = (props) => {
-    const pageTitle = translateContent('vinBlockMaster.heading.pageTitle');
+    const pageTitle = translateContent('hoPriceMapping.heading.pageTitle');
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

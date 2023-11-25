@@ -16,6 +16,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { convertDateToCalender } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -145,7 +146,7 @@ export const FinananceDetailsMasterBase = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <h2>{section?.title}</h2>
+                            <h2>{translateContent(section?.translateKey)}</h2>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             {StatusBar && <StatusBar status={props?.selectedOrder?.orderStatus} />}

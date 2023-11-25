@@ -20,7 +20,6 @@ import AddEditForm from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
 import ViewAddressList from './ViewAddressList';
 import { CardSkeleton } from 'components/common/Skeleton';
-import { LANGUAGE_EN } from 'language/en';
 
 import { NoDataFound } from 'utils/noDataFound';
 import { translateContent } from 'utils/translateContent';
@@ -94,7 +93,7 @@ const AddressMasterBase = (props) => {
     const [editingData, setEditingData] = useState({});
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
-    const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
+    const noDataTitle = translateContent('global.generalNotifications.noDataExist.title');
     const addDataTitle = (
         <p className={styles.textCenter}>
             Please add new address using <br /> <strong>“Add”</strong> button at top
@@ -122,20 +121,25 @@ const AddressMasterBase = (props) => {
     }, [addressIndData?.customerAddress, addressCompanyData?.customerAddress]);
 
     useEffect(() => {
-        if (!formActionType?.addMode && selectedCustomer?.customerId) {
+        if (userId && selectedCustomer?.customerId) {
             if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
                 fetchList({ setIsLoading: listShowLoading, userId, extraParams });
             } else if (customerType === CUSTOMER_TYPE?.CORPORATE?.id) {
                 fetchListCorporate({ setIsLoading: listShowLoading, userId, extraParams });
             }
         }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, selectedCustomer?.customerId]);
+
+    useEffect(() => {
         return () => {
             resetData();
             resetDataCorporate();
             resetPincodeData();
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedCustomer?.customerId]);
+    }, []);
 
     const onCheckdefaultAddClick = (e, value) => {
         e.stopPropagation();

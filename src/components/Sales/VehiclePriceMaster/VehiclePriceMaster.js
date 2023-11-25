@@ -166,6 +166,12 @@ export const VehiclePriceMasterBase = (props) => {
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
 
+    const onRemove = () => {
+        setFileList([]);
+        setUploadedFile();
+        setSingleDisabled(false);
+    };
+
     const onSuccessAction = (res) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
@@ -625,6 +631,7 @@ export const VehiclePriceMasterBase = (props) => {
         single: true,
         singleDisabled,
         setSingleDisabled,
+        onRemove,
     };
 
     const buttonProps = {
@@ -635,7 +642,7 @@ export const VehiclePriceMasterBase = (props) => {
         handleButtonClick,
     };
     const viewProps = {
-        titleOverride: translateContent('global.drawerTitle.view').concat(moduleTitle),
+        titleOverride: translateContent('global.drawerTitle.view').concat(" ").concat(moduleTitle),
         isVisible: isFormVisible,
         onCloseAction,
         formData,

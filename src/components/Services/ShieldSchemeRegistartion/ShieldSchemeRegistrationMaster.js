@@ -40,32 +40,6 @@ import { AdvancedSearch } from './AdvancedSearch';
 import { VehicleReceiptFormButton } from './VehicleReceiptFormButton';
 import { drawerTitle } from 'utils/drawerTitle';
 
-// const loginUserData = {
-//     header: null,
-//     tickerMessage: 'Ticker Message',
-//     notificationCount: 2,
-//     userType: 'MNM',
-//     firstName: 'Vishal Gaurav',
-//     lastName: null,
-//     mobileNo: '+919900060706',
-//     emailId: '50003940@mahindra.com',
-//     userId: 'gaurav.vishal',
-//     dealerId: null,
-//     dealerName: 'Mahindra & Mahindra LTD',
-//     mnmLocation: 'Mumbai',
-//     dealerLocations: null,
-//     userRoles: [
-//         {
-//             roleId: '96cb838f-a4ea-4978-8489-c12d74dcde28',
-//             roleCode: 'R0L005',
-//             roleName: 'M&M ADMIN',
-//             isDefault: true,
-//         },
-//     ],
-//     dealerImage: null,
-//     parentGroupCode: null,
-// };
-
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -359,8 +333,6 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
             const nextSection = Object.values(sectionName)?.find((i) => i?.displayOnList && i.id > currentSection);
             setLastSection(!nextSection?.id);
         }
-        // form.resetFields();
-        // form.setFieldsValue(undefined);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
 
@@ -645,10 +617,6 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         saveData(requestData);
     };
 
-    // const showCancelConfirm = () => {
-    //     setCancelSchemeVisible(true);
-    // };
-
     const onCloseAction = () => {
         resetDetail();
         resetSchemeDetail();
@@ -701,7 +669,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
 
     const handleResetFilter = (e) => {
         setShowDataLoading(false);
-        setFilterString();
+        setFilterString({ amcStatus: filterString?.amcStatus });
         advanceFilterForm.resetFields();
     };
 
@@ -925,7 +893,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         // onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(moduleTitle),
         isSchemeLoading,
         ADD_ACTION,
         EDIT_ACTION,
@@ -992,6 +960,8 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         managerData,
         modelFamilyData,
         ProductHierarchyData,
+        filterString,
+        amcStatus,
     };
 
     useEffect(() => {

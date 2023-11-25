@@ -54,38 +54,41 @@ const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, c
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isHistoryLoaded, userId]);
 
-    const tableColumn = [
-        tblPrepareColumns({
-            title: translateContent('adminHierarchy.label.changedDate'),
-            dataIndex: 'changedDate',
-            render: (text) => convertDateTime(text),
-        }),
-        tblPrepareColumns({
-            title: translateContent('adminHierarchy.label.changedBy'),
-            dataIndex: 'changedBy',
-        }),
-        tblPrepareColumns({
-            title: translateContent('adminHierarchy.label.attributeCode'),
-            dataIndex: 'attributeCode',
-        }),
-        tblPrepareColumns({
-            title: translateContent('adminHierarchy.label.shortDescription'),
-            dataIndex: 'shortDescription',
-        }),
-        tblPrepareColumns({
-            title: translateContent('adminHierarchy.label.longDescription'),
-            dataIndex: 'longDescription',
-        }),
-        tblPrepareColumns({
-            title: translateContent('adminHierarchy.label.hierarchyCode'),
-            dataIndex: 'code',
-        }),
-        tblStatusColumn({ styles, width: '15%' }),
-    ];
+    const adminHierarchyTableColumn = () => {
+        const tableColumn = [
+            tblPrepareColumns({
+                title: translateContent('adminHierarchy.label.changedDate'),
+                dataIndex: 'changedDate',
+                render: (text) => convertDateTime(text),
+            }),
+            tblPrepareColumns({
+                title: translateContent('adminHierarchy.label.changedBy'),
+                dataIndex: 'changedBy',
+            }),
+            tblPrepareColumns({
+                title: translateContent('adminHierarchy.label.attributeCode'),
+                dataIndex: 'attributeCode',
+            }),
+            tblPrepareColumns({
+                title: translateContent('adminHierarchy.label.shortDescription'),
+                dataIndex: 'shortDescription',
+            }),
+            tblPrepareColumns({
+                title: translateContent('adminHierarchy.label.longDescription'),
+                dataIndex: 'longDescription',
+            }),
+            tblPrepareColumns({
+                title: translateContent('adminHierarchy.label.hierarchyCode'),
+                dataIndex: 'code',
+            }),
+            tblStatusColumn({ styles, width: '15%' }),
+        ];
+        return tableColumn;
+    };
 
     const tableProps = {
         isLoading: !isHistoryLoaded,
-        tableColumn,
+        tableColumn: adminHierarchyTableColumn(),
         tableData: changeHistoryData,
     };
     return (

@@ -14,7 +14,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { expandIcon } from 'utils/accordianExpandIcon';
 
 import { DataTable } from 'utils/dataTable';
-import { OTFStatusBar } from '../utils/OTFStatusBar';
+import { OTFStatusBar } from 'components/Sales/OTF/utils/OTFStatusBar';
 import { OTFFormButton } from '../OTFFormButton';
 
 import { tableColumnInvoice, tableColumnDelivery } from './tableColumn';

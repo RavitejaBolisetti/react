@@ -81,7 +81,7 @@ export const DealerParentBase = (props) => {
     const VIEW_ONLY_ACTION = FROM_ACTION_TYPE?.VIEW_ONLY;
 
     const onSuccessAction = (res) => {
-        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        refershData && showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         setRefershData(false);
         setShowDataLoading(false);
     };
@@ -167,7 +167,7 @@ export const DealerParentBase = (props) => {
             form.resetFields();
             setShowDataLoading(true);
 
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, onErrorAction });
 
             setButtonData({ ...buttonData, formBtnActive: false });
@@ -216,7 +216,7 @@ export const DealerParentBase = (props) => {
         dealerParentData: data,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(translateContent('dealerParent.heading.drawerTitle')),
+        titleOverride: drawerTitle(formActionType).concat(" ").concat(translateContent('dealerParent.heading.drawerTitle')),
         buttonData,
         setButtonData,
         handleButtonClick,

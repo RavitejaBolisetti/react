@@ -226,7 +226,7 @@ export const ListCustomerCreationBase = (props) => {
 
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(' ' + moduleTitle),
+        titleOverride: drawerTitle.concat(" ").concat(moduleTitle),
 
         ADD_ACTION,
         EDIT_ACTION,

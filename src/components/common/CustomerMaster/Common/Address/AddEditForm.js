@@ -105,7 +105,7 @@ const AddEditForm = (props) => {
             .then((value) => {
                 const defaultAdddress = addressData.find((i) => i?.deafultAddressIndicator && i?.addressType !== editingData?.addressType) && value?.deafultAddressIndicator;
                 if (defaultAdddress) {
-                    return showGlobalNotification({ message: 'Only one address can be default' });
+                    return showGlobalNotification({ message: translateContent('global.validation.onlyOneAddressCanbeDefault') });
                 }
 
                 if (editingData?.addressType) {

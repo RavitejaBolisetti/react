@@ -36,7 +36,7 @@ describe('VehicleModelAndTaxChargersCategory component', () => {
         const ModelOptions = [{modelGroupCode: "ECOM", modelGroupDescription: "ECOMOBILE"}]; 
 
         customRender(
-            <VehicleModelAndTaxChargersCategory fieldNames={fieldNames} ModelOptions={ModelOptions} isProductHierarchyDataLoading={false}resetData={resetData} resetProductData={resetProductData} fetchModelList={jest.fn()} setFilterString={jest.fn()} />
+            <VehicleModelAndTaxChargersCategory fieldNames={fieldNames} ModelOptions={ModelOptions} isProductHierarchyDataLoading={false}resetData={resetData} resetProductData={resetProductData} fetchModelList={jest.fn()} setFilterString={jest.fn()} fetchList={fetchList} />
         );
 
         const inputBox = screen.getByRole('combobox', { name: '', exact: false});

@@ -7,6 +7,7 @@ import { Button, Row, Col } from 'antd';
 import React from 'react';
 import { OTF_FORM_ACTION_TYPE } from 'constants/otfActionType';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const OTFFormButton = ({ buttonData, id = { edit: 'edit', transfer: 'transfer', cancel: 'cancelOTF', allot: 'allot', unallot: 'unallot', invoice: 'invoice', deliverynote: 'deliveryNote', Next: 'myform' }, onCloseAction, handleButtonClick, formData }) => {
     return (
@@ -14,58 +15,58 @@ const OTFFormButton = ({ buttonData, id = { edit: 'edit', transfer: 'transfer', 
             <Row gutter={20}>
                 <Col xs={24} sm={2} md={2} lg={2} xl={2}>
                     <Button danger onClick={onCloseAction}>
-                        Close
+                        {translateContent('global.buttons.close')}
                     </Button>
                 </Col>
 
                 <Col xs={24} sm={22} md={22} lg={22} xl={22} className={styles.buttonsGroupRight}>
                     {buttonData?.editBtn && (
                         <Button type="primary" form={id?.edit} onClick={() => handleButtonClick({ buttonAction: OTF_FORM_ACTION_TYPE.EDIT, record: formData })}>
-                            Edit
+                            {translateContent('global.buttons.edit')}
                         </Button>
                     )}
 
                     {buttonData?.transferBtn && (
                         <Button type="primary" form={id?.edit} onClick={() => handleButtonClick({ buttonAction: OTF_FORM_ACTION_TYPE.EDIT, record: formData })}>
-                            Transfer
+                            {translateContent('global.buttons.transfer')}
                         </Button>
                     )}
                     {buttonData?.cancelBtn && (
                         <Button type="primary" onClick={() => handleButtonClick({ buttonAction: OTF_FORM_ACTION_TYPE.CANCEL, record: formData })}>
-                            Cancel Booking
+                            {translateContent('global.buttons.cancelBooking')}
                         </Button>
                     )}
 
                     {buttonData?.allotBtn && (
                         <Button type="primary" form={id?.allot} onClick={() => handleButtonClick({ buttonAction: OTF_FORM_ACTION_TYPE.ALLOT, record: formData })}>
-                            Allot
+                            {translateContent('global.buttons.allot')}
                         </Button>
                     )}
                     {buttonData?.unallotBtn && (
                         <Button type="primary" form={id?.allot} onClick={() => handleButtonClick({ buttonAction: OTF_FORM_ACTION_TYPE.ALLOT, record: formData })}>
-                            Un-Allot
+                            {translateContent('global.buttons.unAllot')}
                         </Button>
                     )}
 
                     {buttonData?.invoiceBtn && (
                         <Button type="primary" form={id?.invoice} onClick={() => handleButtonClick({ buttonAction: OTF_FORM_ACTION_TYPE.INVOICE, record: formData })}>
-                            Invoice
+                            {translateContent('global.buttons.invoice')}
                         </Button>
                     )}
 
                     {buttonData?.deliverBtn && (
                         <Button type="primary" form={id?.deliverynote} onClick={() => handleButtonClick({ buttonAction: OTF_FORM_ACTION_TYPE.NEXT, record: formData })}>
-                            Delivery Note
+                            {translateContent('global.buttons.deliveryNote')}
                         </Button>
                     )}
                     {buttonData?.nextBtn && (
                         <Button type="primary" form={id?.Next} onClick={() => handleButtonClick({ buttonAction: OTF_FORM_ACTION_TYPE.NEXT, record: formData })}>
-                            Next
+                            {translateContent('global.buttons.next')}
                         </Button>
                     )}
                     {buttonData?.saveNext && (
                         <Button type="primary" htmlType="submit" form={id?.Next} onClick={() => handleButtonClick({ buttonAction: OTF_FORM_ACTION_TYPE.NEXT, record: formData })}>
-                            Save & Next
+                            {translateContent('global.buttons.saveAndNext')}
                         </Button>
                     )}
                 </Col>

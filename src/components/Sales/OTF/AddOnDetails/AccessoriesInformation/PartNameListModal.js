@@ -9,7 +9,7 @@ import { Col, Row, Button } from 'antd';
 import { withModal } from 'components/withModal';
 import { DataTable } from 'utils/dataTable';
 
-import { tableColumn } from './tableColumn';
+import { addOnTable } from './tableColumn';
 
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
@@ -41,7 +41,7 @@ export const PartNameListBase = (props) => {
         },
         pagination: false,
         isLoading: false,
-        tableColumn,
+        tableColumn: addOnTable(),
         tableData: data,
         scroll: { x: 1000, y: 'calc(100vh - 324px)' },
     };

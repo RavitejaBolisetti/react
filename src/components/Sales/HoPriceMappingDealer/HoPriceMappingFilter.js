@@ -35,7 +35,7 @@ export default function HoPriceMappingFilter(props) {
                                         })}
                                     </div>
                                     <div className={styles.fullWidth}>
-                                        <Search placeholder="Search Dealer Parent" onSearch={handleSearch} allowClear className={styles.headerSearchField} />
+                                        <Search placeholder={translateContent('hoPriceMapping.label.searchDealerParent')} onSearch={handleSearch} allowClear className={styles.headerSearchField} />
                                     </div>
                                 </Col>
                                 {advanceFilter && (

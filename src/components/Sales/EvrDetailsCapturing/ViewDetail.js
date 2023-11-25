@@ -9,6 +9,7 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { DATA_TYPE } from 'constants/dataType';
 import { getCodeValue } from 'utils/getCodeValue';
 
+import { translateContent } from 'utils/translateContent';
 import styles from 'assets/sass/app.module.scss';
 
 const ViewDetailMain = (props) => {
@@ -24,20 +25,20 @@ const ViewDetailMain = (props) => {
         <div className={styles.viewDrawerContainer}>
             <Card>
                 <Descriptions {...viewProps}>
-                    <Descriptions.Item label="VIN">{checkAndSetDefaultValue(formData?.vin, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Model Group">{checkAndSetDefaultValue(formData?.modelGroupCode, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(formData?.modelCode, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Model Description">{checkAndSetDefaultValue(formData?.modelDescription, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="GRN ID">{checkAndSetDefaultValue(formData?.grnId, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="GRN Date">{checkAndSetDefaultValue(formData?.grnDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                    <Descriptions.Item label="GRN Status">{checkAndSetDefaultValue(getCodeValue(grnStatusType, formData?.grnStatus), isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Vehicle Status">{checkAndSetDefaultValue(formData?.vehicleStatus, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Age In Days">{checkAndSetDefaultValue(formData?.ageInDays, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Date of Last Charge">{checkAndSetDefaultValue(formData?.lastChargeDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                    <Descriptions.Item label="Charging Due Date">{checkAndSetDefaultValue(formData?.chargingDueDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                    <Descriptions.Item label="Charging Status">{checkAndSetDefaultValue(formData?.chargingStatus, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Remarks">{checkAndSetDefaultValue(formData?.remarks, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Status">{checkAndSetDefaultValue(formData?.chargeIndicator ? 'Charged' : 'UnCharged', isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('evrDetailsCapturing.label.vin')}>{checkAndSetDefaultValue(formData?.vin, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('evrDetailsCapturing.label.modelGroup')}>{checkAndSetDefaultValue(formData?.modelGroupCode, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('evrDetailsCapturing.label.modelCode')}>{checkAndSetDefaultValue(formData?.modelCode, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('evrDetailsCapturing.label.modelDescription')}>{checkAndSetDefaultValue(formData?.modelDescription, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('evrDetailsCapturing.label.grnId')}>{checkAndSetDefaultValue(formData?.grnId, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('evrDetailsCapturing.label.grnDate')}>{checkAndSetDefaultValue(formData?.grnDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('evrDetailsCapturing.label.grnStatus')}>{checkAndSetDefaultValue(getCodeValue(grnStatusType, formData?.grnStatus), isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('evrDetailsCapturing.label.vehicleStatus')}>{checkAndSetDefaultValue(formData?.vehicleStatus, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('evrDetailsCapturing.label.ageInDays')}>{checkAndSetDefaultValue(formData?.ageInDays, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('evrDetailsCapturing.label.lastChargeDate')}>{checkAndSetDefaultValue(formData?.lastChargeDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('evrDetailsCapturing.label.chargingDueDate')}>{checkAndSetDefaultValue(formData?.chargingDueDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('evrDetailsCapturing.label.chargingStatus')}>{checkAndSetDefaultValue(formData?.chargingStatus, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('evrDetailsCapturing.label.remarks')}>{checkAndSetDefaultValue(formData?.remarks, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('evrDetailsCapturing.label.status')}>{checkAndSetDefaultValue(formData?.chargeIndicator ? translateContent('evrDetailsCapturing.label.charged') : translateContent('evrDetailsCapturing.label.unCharged'), isLoading)}</Descriptions.Item>
                 </Descriptions>
             </Card>
         </div>

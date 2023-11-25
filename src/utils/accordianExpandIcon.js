@@ -9,6 +9,7 @@ import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 
 import styles from 'assets/sass/app.module.scss';
 import { FiEdit } from 'react-icons/fi';
+import { translateContent } from './translateContent';
 
 export const accordianExpandIcon = ({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />);
 
@@ -36,7 +37,7 @@ export const expandActionIcon = (isActive, formActionType = undefined, editIcon 
             <div className={styles.accordianIconWithText}>
                 <div className={isActive ? styles.activeTextColor : ''}>
                     <FiEdit />
-                    Edit
+                    {translateContent('global.buttons.edit')}
                 </div>
             </div>
         );

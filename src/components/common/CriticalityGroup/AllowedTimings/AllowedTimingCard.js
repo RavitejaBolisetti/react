@@ -11,7 +11,6 @@ import moment from 'moment';
 import { RxCross2 } from 'react-icons/rx';
 import { BsTrash3 } from 'react-icons/bs';
 
-import { LANGUAGE_EN } from 'language/en';
 import { translateContent } from 'utils/translateContent';
 
 
@@ -22,7 +21,7 @@ const AllowedTimingCard = (props) => {
     const { deletedTime, setDeletedTime, buttonData, setButtonData, formActionType, setIsAddTimeVisible, setTimeData, timeSlotFrom, timeSlotTo, showGlobalNotification } = props;
 
     const handleDeleteAction = (val) => {
-        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: LANGUAGE_EN.GENERAL.ALLOWED_TIMING_DELETED.MESSAGE, placement: 'bottomRight' });
+        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: translateContent('global.generalMessage.allowedTimingDeleted'), placement: 'bottomRight' });
         setTimeData((prev) => {
             const newList = prev;
             const index = prev?.findIndex((el) => el?.timeSlotFrom === val);
@@ -31,7 +30,7 @@ const AllowedTimingCard = (props) => {
         });
     };
     const handleDeleteActionServer = (val) => {
-        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: LANGUAGE_EN.GENERAL.ALLOWED_TIMING_DELETED.MESSAGE, placement: 'bottomRight' });
+        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message:  translateContent('global.generalMessage.allowedTimingDeleted'), placement: 'bottomRight' });
         setButtonData({ ...buttonData, formBtnActive: true });
 
         setTimeData((prev) => {

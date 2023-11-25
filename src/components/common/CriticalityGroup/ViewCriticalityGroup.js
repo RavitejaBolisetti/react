@@ -25,10 +25,10 @@ const ViewCriticalityGroupMain = (props) => {
                     <Descriptions.Item label={translateContent('criticalityGroup.label.criticalityGroupId')}>{formData?.criticalityGroupCode}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('criticalityGroup.label.criticalityGroupName')}>{formData?.criticalityGroupName}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('criticalityGroup.label.defaultGroup')}>
-                        <span className={formData?.criticalityDefaultGroup ? styles.activeText : styles?.inactiveText}>{formData?.criticalityDefaultGroup ? 'Active' : 'Inactive'}</span>
+                        <span className={formData?.criticalityDefaultGroup ? styles.activeText : styles?.inactiveText}>{formData?.criticalityDefaultGroup ? translateContent('global.label.active') : translateContent('global.label.inActive')}</span>
                     </Descriptions.Item>
                     <Descriptions.Item label={translateContent('criticalityGroup.label.status')}>
-                        <span className={formData?.activeIndicator ? styles.activeText : styles?.inactiveText}>{formData?.activeIndicator ? 'Active' : 'Inactive'}</span>
+                        <span className={formData?.activeIndicator ? styles.activeText : styles?.inactiveText}>{formData?.activeIndicator ? translateContent('global.label.active') : translateContent('global.label.inActive')}</span>
                     </Descriptions.Item>
                 </Descriptions>
             </>

@@ -19,11 +19,10 @@ import { translateContent } from 'utils/translateContent';
 import styles from 'assets/sass/app.module.scss';
 
 const AddEditFormMain = (props) => {
-    const { formData, form, formActionType, editableOnSearch, showAlert } = props;
+    const { formData, form, formActionType, editableOnSearch, showAlert, visible, setVisible } = props;
     const { financeLovData, schemeLovData, typeData, isMahindraMake } = props;
     const { isConfigLoading, isSchemeLovLoading, isMakeLoading, isModelLoading, isVariantLoading } = props;
     const { filteredModelData, filteredVariantData, handleFilterChange, MAHINDRA_MAKE, fnSetData, handleSchemeChange, viewOnly = false } = props;
-    const [visible, setVisible] = useState(false);
     const [disabled, setDisabled] = useState(false);
 
     useEffect(() => {
@@ -59,7 +58,7 @@ const AddEditFormMain = (props) => {
     };
 
     const disabledProps = { disabled: viewOnly };
-
+    console.log(visible);
     return (
         <Card className={styles.ExchangeCard}>
             <Row gutter={20}>
@@ -71,7 +70,7 @@ const AddEditFormMain = (props) => {
             </Row>
             {visible && (
                 <>
-                    {!viewOnly && <CustomerListMaster fnSetData={fnSetData} defaultOption={'registrationNumber'} />}
+                    {!viewOnly && <CustomerListMaster fnSetData={fnSetData} defaultOption={'registrationNumber'} setVisible={setVisible} />}
 
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
