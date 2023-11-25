@@ -4092,7 +4092,8 @@
                 "purchaseOrderCancelDate": "Purchase Order Cancel Date",
                 "soNo": "So No",
                 "soDate": "So Date",
-                "soStatus": "So Status"
+                "soStatus": "So Status",
+                "sapStatus":"Sap Status"
             },
             "placeholder": {
                 "dealerCode": "Enter Dealer Code",

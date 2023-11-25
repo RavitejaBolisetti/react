@@ -35,6 +35,7 @@ const ViewDetailMain = (props) => {
                     <Descriptions.Item label={translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.label.soNo')}>{checkAndSetDefaultValue(formData?.soNumber, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.label.soDate')}>{checkAndSetDefaultValue(formData?.soDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.label.soStatus')}>{checkAndSetDefaultValue(formData?.soStatus, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.label.sapStatus')}>{checkAndSetDefaultValue(formData?.sapStatusResponse, isLoading)}</Descriptions.Item>
                 </Descriptions>
             </Card>
 

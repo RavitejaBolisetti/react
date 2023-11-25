@@ -84,6 +84,7 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
     const { typeData, fetchProductList, productHierarchyList, fetchDealerParentsLovList, viewVehiclePODetails, fetchDealerLocation, selectedRecord, setSelectedRecord, setIsFormVisible, showDataLoading } = props;
     const { userId, formActionType, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, saveData, isLoading } = props;
     const { form, selectedRecordId, salesConsultantLov, NEXT_ACTION, handleButtonClick, fetchListView, extraParamsAfterSave, changeView } = props;
+    const { productHierarchyDataArray } = props;
     const [activeKey, setactiveKey] = useState([1]);
     const [dealerLocation, setDealerLocation] = useState();
 
@@ -117,12 +118,12 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
         },
     ];
 
-    useEffect(() => {
-        if (userId) {
-            fetchProductList({ setIsLoading: listShowLoading, userId });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
+    // useEffect(() => {
+    //     if (userId) {
+    //         fetchProductList({ setIsLoading: listShowLoading, userId });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [userId]);
 
     useEffect(() => {
         if (userId) {
@@ -215,6 +216,7 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
         showDataLoading,
         setDealerLocation,
         dealerLocation,
+        productHierarchyDataArray,
     };
 
     return (

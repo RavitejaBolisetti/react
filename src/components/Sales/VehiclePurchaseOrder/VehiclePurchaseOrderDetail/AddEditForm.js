@@ -16,12 +16,14 @@ import { customSelectBox } from 'utils/customSelectBox';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { PURCHASE_ORDER_TYPE_STATUS } from 'constants/PurchaseOrderTypeStatus';
 import { translateContent } from 'utils/translateContent';
+import TreeSelectField from 'components/common/TreeSelectField';
 
 import styles from 'assets/sass/app.module.scss';
 const { Option } = Select;
 const { Search } = Input;
 const AddEditFormMain = (props) => {
-    const { buttonData, setButtonData, formActionType, onFinish, productHierarchyList, getDealerlocation, setDealerLocation, dealerLocation } = props;
+    //productHierarchyList
+    const { productHierarchyDataArray, buttonData, setButtonData, formActionType, onFinish, getDealerlocation, setDealerLocation, dealerLocation } = props;
     const { form, formData, typeData, isReadOnly = true } = props;
     const disabledProps = { disabled: isReadOnly };
     const [dealerFlag, setDealerFlag] = useState();
@@ -57,6 +59,23 @@ const AddEditFormMain = (props) => {
         showSearch: true,
         allowClear: true,
     };
+
+    const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
+    const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
+
+    const treeSelectFieldProps = {
+        treeFieldNames,
+        treeData: productHierarchyDataArray,
+        defaultParent: false,
+        selectedTreeSelectKey: formData?.model,
+        // handleSelectTreeClick,
+        treeExpandedKeys: [formData?.model],
+        placeholder: preparePlaceholderSelect('Model'),
+        // placeholder: preparePlaceholderSelect(translateContent('commonModules.vehicleDetails.model')),
+        // loading: !viewOnly ? isProductDataLoading : false,
+        // treeDisabled: orderStatus === OTF_STATUS.BOOKED.key ? false : true,
+    };
+
     return (
         <Form form={form} layout="vertical" autocomplete="off" colon="false" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBody}>
@@ -121,11 +140,17 @@ const AddEditFormMain = (props) => {
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                     <h3> {translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.heading.productDetails')} </h3>
                                 </Col>
-                                <Col xs={24} sm={24} md={14} lg={14} xl={14} xxl={14}>
+                                <Col xs={24} sm={24} md={14} lg={14} xl={14}>
+                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.modelDescription')} name="model" data-testid="model">
+                                        <TreeSelectField {...treeSelectFieldProps} />
+                                    </Form.Item>
+                                    {/* {toolTipContent && <div className={styles.modelTooltip}>{addToolTip(toolTipContent, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle size={13} />)}</div>} */}
+                                </Col>
+                                {/* <Col xs={24} sm={24} md={14} lg={14} xl={14} xxl={14}>
                                     <Form.Item name="modelCode" label={translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.label.modelDescription')} initialValue={formData?.modelCode} rules={[validateRequiredSelectField(translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.validation.modelDescription'))]}>
                                         {customSelectBox({ data: productHierarchyList, fieldNames: { key: 'prodctCode', value: 'prodctShrtName' }, placeholder: preparePlaceholderSelect(translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.placeholder.modelDescription')) })}
                                     </Form.Item>
-                                </Col>
+                                </Col> */}
                                 <Col xs={24} sm={24} md={10} lg={10} xl={10} xxl={10}>
                                     <Form.Item name="quantity" label={translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.label.quantity')} initialValue={'1'} rules={[validateOnlyPositiveNumber('Quantity')]}>
                                         <InputNumber />
