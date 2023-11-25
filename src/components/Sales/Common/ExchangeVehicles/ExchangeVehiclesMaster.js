@@ -198,11 +198,11 @@ const ExchangeVehiclesBase = (props) => {
 
     const fnSetData = (data) => {
         if (data?.make) {
-            setFormData({ ...data, oldRegistrationNumber: data?.registrationNumber, oldChessisNumber: data?.chassisNumber });
+            setFormData({ ...data, exchange: isExchangeVisible, oldRegistrationNumber: data?.registrationNumber, oldChessisNumber: data?.chassisNumber });
             handleFormValueChange();
             setEditableOnSearch(true);
         } else if (data && !data?.make) {
-            setFormData({ ...data, modelGroup: null, variant: null, oldRegistrationNumber: data?.registrationNumber, oldChessisNumber: data?.chassisNumber });
+            setFormData({ ...data, exchange: isExchangeVisible, modelGroup: null, variant: null, oldRegistrationNumber: data?.registrationNumber, oldChessisNumber: data?.chassisNumber });
             handleFormValueChange();
             setEditableOnSearch(true);
         } else if (!data) {

@@ -19,7 +19,7 @@ import { translateContent } from 'utils/translateContent';
 import styles from 'assets/sass/app.module.scss';
 
 const AddEditFormMain = (props) => {
-    const { formData, form, formActionType, editableOnSearch, showAlert,  isExchangeVisible,setExchangeVisible } = props;
+    const { formData, form, formActionType, editableOnSearch, showAlert, isExchangeVisible, setExchangeVisible } = props;
     const { financeLovData, schemeLovData, typeData, isMahindraMake } = props;
     const { isConfigLoading, isSchemeLovLoading, isMakeLoading, isModelLoading, isVariantLoading } = props;
     const { filteredModelData, filteredVariantData, handleFilterChange, MAHINDRA_MAKE, fnSetData, handleSchemeChange, viewOnly = false } = props;
@@ -69,7 +69,7 @@ const AddEditFormMain = (props) => {
             </Row>
             {isExchangeVisible && (
                 <>
-                    {!viewOnly && <CustomerListMaster fnSetData={fnSetData} defaultOption={'registrationNumber'} setVisible={setExchangeVisible} />}
+                    {!viewOnly && <CustomerListMaster fnSetData={fnSetData} defaultOption={'registrationNumber'} />}
 
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
@@ -144,7 +144,7 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="oldChessisNumber" label={translateContent('commonModules.label.exchangeDetails.vin')} rules={[validateRequiredInputField(translateContent('commonModules.label.exchangeDetails.vin'))]}>
+                            <Form.Item name="oldChessisNumber" initialValue={formData?.oldChessisNumber} label={translateContent('commonModules.label.exchangeDetails.vin')} rules={[validateRequiredInputField(translateContent('commonModules.label.exchangeDetails.vin'))]}>
                                 <Input {...disabledProps} onInput={convertToUpperCase} maxLength={50} placeholder={preparePlaceholderText(translateContent('commonModules.label.exchangeDetails.vin'))} />
                             </Form.Item>
                         </Col>
@@ -168,7 +168,7 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col> */}
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="customerName" label={translateContent('commonModules.label.exchangeDetails.customerName')} rules={[validateRequiredInputField('customer number')]}>
+                            <Form.Item initialValue={formData?.customerName} name="customerName" label={translateContent('commonModules.label.exchangeDetails.customerName')} rules={[validateRequiredInputField('customer name')]}>
                                 <Input disabled={viewOnly || editableOnSearch} placeholder={preparePlaceholderText(translateContent('commonModules.label.exchangeDetails.customerName'))} maxLength={50} />
                             </Form.Item>
                         </Col>
