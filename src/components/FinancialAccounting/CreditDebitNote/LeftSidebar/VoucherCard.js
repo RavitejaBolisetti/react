@@ -18,12 +18,12 @@ const { Panel } = Collapse;
 const expandIcon = ({ isActive }) =>
     isActive ? (
         <>
-            <span>See less</span>
+            <span>{translateContent('global.buttons.seeLess')}</span>
             <SlArrowUp size={13} />
         </>
     ) : (
         <>
-            <span>See more</span>
+            <span>{translateContent('global.buttons.seeMore')}</span>
             <SlArrowDown size={13} />
         </>
     );

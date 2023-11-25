@@ -30,7 +30,7 @@ export const PartyDetailsForm = (props) => {
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name={[formType, 'partyId']} label={translateContent('creditDebitNote.voucherAndPartyDetails.label.partyId')} initialValue={formData?.partyId} rules={[validateRequiredSelectField(translateContent('creditDebitNote.voucherAndPartyDetails.validation.partyId')), noWhiteSpaceinBeginning(translateContent('creditDebitNote.voucherAndPartyDetails.validation.partyId'))]} validateTrigger={['onSearch', 'onChange']} data-testid="party_id_input">
-                        {formActionType?.editMode ? <Input {...disabledProps} placeholder={preparePlaceholderText(translateContent('creditDebitNote.voucherAndPartyDetails.placeholder.partyId'))} /> : <Search {...disabledProps} placeholder="Search" maxLength={25} allowClear onSearch={handleSearchParamSearch} onChange={handlePartyIdChange} className={styles.headerSearchField} />}
+                        {formActionType?.editMode ? <Input {...disabledProps} placeholder={preparePlaceholderText(translateContent('creditDebitNote.voucherAndPartyDetails.placeholder.partyId'))} /> : <Search {...disabledProps} placeholder={translateContent('global.placeholder.select')} maxLength={25} allowClear onSearch={handleSearchParamSearch} onChange={handlePartyIdChange} className={styles.headerSearchField} />}
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -60,6 +60,12 @@ export const PartyDetailsForm = (props) => {
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name={[formType, 'mobileNumber']} label={translateContent('creditDebitNote.voucherAndPartyDetails.label.phoneNo')} initialValue={formData?.mobileNumber}>
                         <Input placeholder={preparePlaceholderText(translateContent('creditDebitNote.voucherAndPartyDetails.placeholder.phoneNo'))} disabled={true} />
+                    </Form.Item>
+                </Col>
+
+                <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
+                    <Form.Item name={[formType, 'remarks']} label={translateContent('creditDebitNote.voucherAndPartyDetails.label.remarks')} initialValue={formData?.remarks}>
+                        <Input placeholder={preparePlaceholderText(translateContent('creditDebitNote.voucherAndPartyDetails.placeholder.remarks'))} {...disabledProps} />
                     </Form.Item>
                 </Col>
             </Row>

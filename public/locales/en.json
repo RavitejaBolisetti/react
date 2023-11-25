@@ -194,6 +194,7 @@
             "approve": "Approve",
             "reject": "Reject",
             "addRequest": "Add request",
+            "printCreditDebit": "Print Credit Debit Note",
             "registerNow": "Register Now",
             "generateIRN": "Generate IRN",
             "reGenerateIRN": "Re-Generate IRN"
@@ -3449,7 +3450,9 @@
             "customerName": "Customer Name",
             "paidAmount": "Paid Amount",
             "fromDate": "From Date",
-            "toDate": "To Date"
+            "toDate": "To Date",
+            "voucherDetails": "Voucher Details",
+            "partyDetails": "Party Details"
         },
         "placeholder": {
             "searchTitle": "Search Credit/Debit",
@@ -3532,7 +3535,8 @@
                 "totalWrite-OffAmount": "Total Write-Off Amount",
                 "totalApportionedAmount": "Total Apportioned Amount",
                 "totalAmount": "Total Amount",
-                "totalBalancedAmount": "Total Balanced Amount"
+                "totalBalancedAmount": "Total Balanced Amount",
+                "remarks": "Remarks"
             },
             "placeholder": {
                 "searchTitle": "Search Credit/Debit",
@@ -3546,7 +3550,13 @@
                 "address": "Address",
                 "city": "City",
                 "state": "State",
-                "phoneNo": "Phone No"
+                "phoneNo": "Phone No",
+                "remarks": "Remarks",
+                "totalSettledAmount": "Total Settled Amount",
+                "totalWrite-OffAmount": "Total Write-Off Amount",
+                "totalApportionedAmount": "Total Apportioned Amount",
+                "totalAmount": "Total Amount",
+                "totalBalancedAmount": "Total Balanced Amount"
             },
             "validation": {
                 "selectPartySegment": "Please select party segment",
@@ -4135,7 +4145,8 @@
                 "purchaseOrderCancelDate": "Purchase Order Cancel Date",
                 "soNo": "So No",
                 "soDate": "So Date",
-                "soStatus": "So Status"
+                "soStatus": "So Status",
+                "sapStatus": "SAP Response Status"
             },
             "placeholder": {
                 "dealerCode": "Enter Dealer Code",
