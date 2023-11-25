@@ -54,13 +54,9 @@ const ViewDetailMain = (props) => {
                 <Panel header={translateContent('shieldSchemeRegistration.heading.registrationInformation')} key="1">
                     <Divider />
                     <Descriptions {...viewProps}>
-                        {screenType !== 'RSA' && <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.saleType')}>{checkAndSetDefaultValue(getCodeValue(saleTypes, formData?.registrationInformation?.saleType, isLoading))}</Descriptions.Item>}
-                        {screenType === 'RSA' && (
-                            <>
-                                <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.priceType')}>{checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.DLVR_SALE_TYP.id], formData?.registrationInformation?.saleType), isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.saleType')}>{checkAndSetDefaultValue(getCodeValue(typeData['SALE_TYP'], formData?.registrationInformation?.saleType), isLoading)}</Descriptions.Item>
-                            </>
-                        )}
+                        <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.priceType')}>{checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.DLVR_SALE_TYP.id], formData?.registrationInformation?.priceType), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.saleType')}>{checkAndSetDefaultValue(getCodeValue(typeData['SALE_TYP'], formData?.registrationInformation?.saleType), isLoading)}</Descriptions.Item>
+
                         <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.bookingNo')}>{checkAndSetDefaultValue(formData?.registrationInformation?.otf, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.employeeName')}>{checkAndSetDefaultValue(getCodeValue(employeeData, formData?.registrationInformation?.employeeCode), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.managerName')}>{checkAndSetDefaultValue(getCodeValue(managerData, formData?.registrationInformation?.managerCode), isLoading)}</Descriptions.Item>

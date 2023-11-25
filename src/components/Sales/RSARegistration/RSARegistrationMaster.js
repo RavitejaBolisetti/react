@@ -605,6 +605,10 @@ export const RSARegistrationMasterBase = (props) => {
             setButtonData({ ...buttonData, formBtnActive: false });
             setCancelSchemeVisible(false);
             setIsFormVisible(false);
+            cancelSchemeForm.resetFields();
+            setRejectRequest(false);
+            setIsMNMApproval(false);
+            setAmcWholeCancellation(false);
         };
         const onError = (message) => {
             showGlobalNotification({ message });
