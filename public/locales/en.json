@@ -1585,6 +1585,7 @@
             "deliveryInformation": "Delivery Information",
             "addAccessories": "Add accessories",
             "partName": "Part Name",
+            "partDescription": "Part Description",
             "partNumber": "Part Number",
             "partType": "Part Type",
             "sellingPrice": "Selling Price",
