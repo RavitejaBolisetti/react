@@ -7,14 +7,14 @@ import React from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
-export const CardSkeleton = ({ title = true, content = true }) => {
+export const CardSkeleton = ({ title = true, content = true, titleHeight = 48, contentHeight = 265 }) => {
     const theme = 'light';
     return (
         <div>
             {title ? (
                 <SkeletonTheme baseColor={`${theme === 'dark' ? '#444' : '#f5f5f5'}`} highlightColor={`${theme === 'dark' ? '#50535a' : '#ebebeb'}`}>
                     <div data-testid="title-skeleton">
-                        <Skeleton height={48} />
+                        <Skeleton height={titleHeight} />
                     </div>
                 </SkeletonTheme>
             ) : (
@@ -23,7 +23,7 @@ export const CardSkeleton = ({ title = true, content = true }) => {
             {content ? (
                 <SkeletonTheme baseColor={`${theme === 'dark' ? '#444' : '#f5f5f5'}`} highlightColor={`${theme === 'dark' ? '#50535a' : '#ebebeb'}`}>
                     <div data-testid="content-skeleton">
-                        <Skeleton height={265} />
+                        <Skeleton height={contentHeight} />
                     </div>
                 </SkeletonTheme>
             ) : (

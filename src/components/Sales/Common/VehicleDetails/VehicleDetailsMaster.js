@@ -86,7 +86,7 @@ const VehicleDetailsMasterMain = (props) => {
     const { refreshData, setRefreshData, isVehicleServiceLoaded, vehicleServiceData, fetchServiceLov, serviceLoading, selectedOrder, setSelectedOrder } = props;
     const { isProductHierarchyDataLoaded, typeData, fetchList, fetchData, resetData, userId, listShowLoading, showGlobalNotification } = props;
     const { formKey, onFinishCustom = undefined, FormActionButton, StatusBar, salesModuleType } = props;
-    const { fetchProductList, productHierarchyDataList } = props;
+    const { fetchProductList, productHierarchyDataList, showOptionalService = true } = props;
 
     const [activeKey, setactiveKey] = useState([1]);
     const [formData, setFormData] = useState({});
@@ -104,7 +104,7 @@ const VehicleDetailsMasterMain = (props) => {
     const [changeModel, setChangeModel] = useState(false);
     const [onModelSubmit, setOnModelSubmit] = useState(false);
     const onSuccessAction = () => {
-        return;
+        return false;
         //showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
@@ -398,6 +398,7 @@ const VehicleDetailsMasterMain = (props) => {
         viewOnly: !isOTFModule,
         isOTFModule,
         orderStatus: selectedOrder?.orderStatus,
+        showOptionalService,
         customerNameList,
         setCustomerNameList,
         nameChangeRequested,
@@ -429,6 +430,7 @@ const VehicleDetailsMasterMain = (props) => {
         typeData,
         isLoading,
         isOTFModule,
+        showOptionalService,
     };
 
     return (

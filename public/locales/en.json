@@ -257,14 +257,17 @@
             "vehicleDetails.vehicleAmount": "Vehicle Amount",
             "vehicleDetails.dealerDiscountWithTax": "Dealer Discount with TAX",
             "vehicleDetails.consumerSchemeWithTax": "Consumer Scheme with TAX",
+            "vehicleDetails.printDiscount": "Print Discount?",
+            "vehicleDetails.taxCalculation": "Tax Calculation",
             "vehicleDetails.availableStock": "Available Stock",
             "vehicleDetails.poNumber": "PO Number",
             "vehicleDetails.poDate": "PO Date",
             "vehicleDetails.poStatus": "PO Status",
             "vehicleDetails.soNumber": "SO Number",
             "vehicleDetails.soStatus": "SO Status",
-            "vehicleDetails.printDiscount": "Print",
             "vehicleDetails.model": "Model",
+            "vehicleDetails.totalTaxAmount": "Total Tax Amount",
+            "vehicleDetails.tcsAmount": "TCS Amount",
 
             "schemeAndOfferDetails.schemeType": "Scheme Type",
             "schemeAndOfferDetails.schemeCategory": "Scheme Category",
@@ -4401,6 +4404,42 @@
             "upload": "Upload Sales Scheme Master",
             "addScheme": "Add Scheme",
             "downloadTemplate": "Download Template"
+        }
+    },
+    "coDealer": {
+        "heading": {
+            "moduleTitle": "Co Dealer Invoice",
+            "title": "Co Dealer Invoice"
+        },
+        "label": {
+            "status": "Status",
+            "indentDealerToParent": "Indent Dealer To Parent",
+            "indentDetails": {
+                "indentNumber": "Indent No.",
+                "indentDate": "Indent Date",
+                "dealerCode": "Dealer Code",
+                "dealerName": "Dealer Name",
+                "address": "Address",
+                "cityDistrict": "City/District",
+                "state": "State",
+                "pinCode": "Pin Code",
+                "gstIn": "GSTIN"
+            },
+            "profileCard": {
+                "invoiceNumber": "Invoice Number",
+                "invoiceDate": "Invoice Date",
+                "invoiceStatus": "Invoice Status"
+            }
+        },
+        "placeholder": {},
+        "validation": {
+            "toDate": "Date cant be less than Effective from date",
+            "ModelCode": "Model code is not present"
+        },
+        "text": {},
+        "button": {
+            "printCoDealerInvoice": "Download/Print Co-Dealer Invoice",
+            "cancelInvoice": "Cancel Invoice"
         }
     }
 }

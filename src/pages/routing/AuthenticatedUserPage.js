@@ -76,6 +76,7 @@ import {
     ChargerInstallationPage,
     AMCRegistrationMasterPage,
     RSARegistrationPage,
+    CoDealerInvoiceGenerationPage,
 } from 'pages/Sales';
 
 import { ShieldSchemeRegistrationPage } from 'pages/Services';
@@ -262,6 +263,7 @@ const AuthenticatedUserPageMain = (props) => {
                 <Route path={routing.ROUTING_RSM_ASM_APPROVAL} element={<RsmAsmApprovalPage />} exact />
                 <Route path={routing.ROUTING_RSA_REGISTRATION} element={<RSARegistrationPage />} exact />
                 <Route path={routing.PAGE_NOT_FOUND} element={<PageNotFound />} exact />
+                <Route path={routing.CO_DEALER_INVOICE} element={<CoDealerInvoiceGenerationPage />} exact />
             </Routes>
         ) : (
             <Routes>

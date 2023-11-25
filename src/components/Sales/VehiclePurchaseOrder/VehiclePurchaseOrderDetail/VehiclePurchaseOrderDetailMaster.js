@@ -29,7 +29,7 @@ const mapStateToProps = (state) => {
                 ProductHierarchyData: { data: productHierarchyList },
             },
             DealerHierarchy: {
-                DealerParent: { data: dealerParentsLovList },
+                DealerParentsLov: { filteredListData: dealerParentsLovList = [] },
             },
             Vehicle: {
                 ViewVPODetail: { isLoaded: isDataLoaded = false, isLoading, data: viewVehiclePODetails = {} },
@@ -65,7 +65,7 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchProductList: tncProductHierarchyDataActions.fetchList,
             listShowLoading: tncProductHierarchyDataActions.listShowLoading,
-            fetchDealerParentsLovList: dealerParentLovDataActions.fetchList,
+            fetchDealerParentsLovList: dealerParentLovDataActions.fetchFilteredList,
             listShowLoadingOnLoad: dealerParentLovDataActions.listShowLoading,
             fetchList: viewVPODataActions.fetchList,
             fetchListView: vehiclePurchaseOrderDataActions.fetchList,
