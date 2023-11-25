@@ -6,13 +6,14 @@
 import React from 'react';
 import { Col, Row } from 'antd';
 import { withDrawer } from 'components/withDrawer';
-import { VEHICLE_RECIEPT_CHECKLIST_SECTION } from 'constants/VehicleRecieptCheckListSection';
 
-// import { VehicleRecieptCheckListMaster } from './CheckListDetails';
 // import { SupportingDocumentMaster } from './SupportingDocument';
 import { LeftSidebar } from './LeftSidebar';
 
 import styles from 'assets/sass/app.module.scss';
+import { DEALER_CORPORATE_SECTION } from 'constants/modules/DealerCorporateClaim/dealerClaimSections';
+import { CorporateClaimMaster } from './CorporateClaim';
+import { ClaimDetailsMaster } from './ClaimDetails';
 
 const DealerCorporateClaimMasterMainContainerMain = (props) => {
     const { currentSection } = props;
@@ -22,14 +23,16 @@ const DealerCorporateClaimMasterMainContainerMain = (props) => {
 
     const renderElement = () => {
         switch (currentSection) {
-            case VEHICLE_RECIEPT_CHECKLIST_SECTION.CHECKLIST_DETAILS.id: {
-                // return <VehicleRecieptCheckListMaster {...myProps} />;
-                return <>one</>;
+            // case DEALER_CORPORATE_SECTION.DEALER_CORPORATE_CLAIM.id: {
+            //     return <CorporateClaimMaster {...myProps} />;
+            // }
+            case DEALER_CORPORATE_SECTION.CLAIM_DETAILS.id: {
+                return <ClaimDetailsMaster {...myProps} />;
 
             }
-            case VEHICLE_RECIEPT_CHECKLIST_SECTION.DOCUMENTS.id: {
+            case DEALER_CORPORATE_SECTION.DOCUMENTS.id: {
                 // return <SupportingDocumentMaster {...myProps} />;
-                return <>two</>;
+                return <>Supporting Document</>;
 
             }
             default: {

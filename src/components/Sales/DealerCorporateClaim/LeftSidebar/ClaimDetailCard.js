@@ -31,7 +31,7 @@ const expandIcon = ({ isActive }) =>
         </>
     );
 
-const VehicleDetailCard = (props) => {
+const ClaimDetailCard = (props) => {
     const { ProfileData, typeData, tooltTipText, isProductHierarchyLoading, record, isProfileDataLoading } = props;
     if (isProfileDataLoading || isProductHierarchyLoading) return <CardSkeleton />;
 
@@ -42,57 +42,47 @@ const VehicleDetailCard = (props) => {
             <Panel
                 header={
                     <div className={`${styles.detailCardText} ${styles.marB5}`} style={{ fontSize: '14px' }}>
-                        {translateContent('vehicleReceiptChecklist.heading.profileCard.checklistNumber')}
+                        {/* {translateContent('vehicleReceiptChecklist.heading.profileCard.checklistNumber')} */}
+                        {record?.calimNumber || 'CLAIM8978'}
                         <span className={styles.activeForm}>
-                            {ProfileData?.checklistNumber || 'New'}
+                            {record?.status || 'Pending status'}
                             <CopytoClipboard text={ProfileData?.checklistNumber} />
                         </span>
                     </div>
                 }
                 key={1}
             >
-                <Divider />
                 <div className={styles.detailCardText}>
-                    {translateContent('vehicleReceiptChecklist.heading.profileCard.checklistDate')}
-                    <span>{ProfileData?.checklistDate ? dayjs(ProfileData?.checklistDate)?.format(dateFormatView) : 'NA'}</span>
+                    Claim Type
+                    <span>{record?.claimType}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    {translateContent('vehicleReceiptChecklist.heading.profileCard.checklistStatus')}
-                    <span>{findStatus(ProfileData?.checklistStatus)}</span>
+                    {'Claim Number'}
+                    <span>{record?.claimNumber}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    {translateContent('vehicleReceiptChecklist.heading.profileCard.grnNumber')}
-                    <span>{ProfileData?.grnNumber || 'NA'}</span>
+                    {'Claim Date'}
+                    <span>{record?.claimDate}</span>
                 </div>
                 <Divider />
-                <div className={styles.detailCardText}>
-                    {translateContent('vehicleReceiptChecklist.heading.profileCard.grnDate')}
-                    <span>{ProfileData?.grnDate ? dayjs(ProfileData?.grnDate)?.format(dateFormatView) : 'NA'}</span>
-                </div>
-                <Divider />
-                <div className={styles.detailCardText}>
-                    {translateContent('vehicleReceiptChecklist.heading.profileCard.grnStatus')}
-                    <span>{ProfileData?.grnStatusDescription || 'NA'}</span>
-                </div>
-                <Divider />
-                <div className={styles.detailCardText}>
-                    {translateContent('vehicleReceiptChecklist.heading.profileCard.vin')}
-                    <span>{ProfileData?.vinNumber || 'NA'}</span>
-                </div>
-                <Divider />
-                <div className={styles.detailCardText}>
+                {/* <div className={styles.detailCardText}>
+                    {'Claim Status'}
+                    <span>{record?.claimStatus}</span>
+                </div> */}
+
+                {/* <div className={styles.detailCardText}>
                     {translateContent('vehicleReceiptChecklist.heading.profileCard.model')}
 
                     <span>
                         {record?.modelName ? record?.modelName : 'NA'}
                         {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
                     </span>
-                </div>
+                </div> */}
             </Panel>
         </Collapse>
     );
 };
 
-export default VehicleDetailCard;
+export default ClaimDetailCard;

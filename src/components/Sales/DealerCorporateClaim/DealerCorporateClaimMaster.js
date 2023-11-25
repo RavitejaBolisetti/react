@@ -7,7 +7,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Col, Form, Row } from 'antd';
+import { Button, Col, Form, Row } from 'antd';
 
 import { tableColumn } from './tableColumn';
 import AdvanceFilter from './AdvanceFilter';
@@ -18,55 +18,32 @@ import { DealerCorporateClaimMasterMainContainer } from './DealerCorporateClaimM
 import { AdvancedSearch } from './AdvancedSearch';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { VEHICLE_RECIEPT_CHECKLIST_SECTION } from 'constants/VehicleRecieptCheckListSection';
-import { otfvehicleDetailsLovDataActions } from 'store/actions/data/otf/vehicleDetailsLov';
-
 import { formatDateToCalenderDate, convertDateTime, dateFormatView } from 'utils/formatDateTime';
+import styles from 'assets/sass/app.module.scss';
 
 import { validateRequiredInputField } from 'utils/validation';
 import { LANGUAGE_EN } from 'language/en';
 
-import { QueryButtons, QUERY_BUTTONS_CONSTANTS, CHECKLIST_MESSAGE_CONSTANTS } from './QueryButtons';
-import { vehicleReceiptChecklistdataActions } from 'store/actions/data/VehicleReceiptCheckList/VehicleReceiptChecklistMain';
-import { vehicleReceiptChecklistProfiledataActions } from 'store/actions/data/VehicleReceiptCheckList/VehicleReceiptChecklistProfile';
-import { VehicleCheclistDetailsdataActions } from 'store/actions/data/VehicleReceiptCheckList/VehicleReceiptChecklistMaster';
-import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
-import { translateContent } from 'utils/translateContent';
+import { QUERY_BUTTONS_CONSTANTS, QueryButtons } from './QueryButtons';
 import { drawerTitle } from 'utils/drawerTitle';
+import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
+import { DEALER_CORPORATE_SECTION } from 'constants/modules/DealerCorporateClaim/dealerClaimSections';
+import { CLAIM_STATUS_BUTTONS } from 'constants/modules/DealerCorporateClaim/buttons';
+import { tableColumnPendingGeneration } from './tableColumnPendingGeneration';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            VehicleReceiptChecklist: {
-                VehicleReceiptMain: { isLoaded: isChecklistDataLoaded = false, isLoading: isChecklistDataLoading = true, data, filter: filterString },
-                VehicleReceiptProfile: { isLoaded: isProfileDataLoaded = false, isLoading: isProfileDataLoading = false, data: ProfileData = [] },
-                VehicleReceiptMaster: { data: ChecklistData = [] },
-            },
-            OTF: {
-                VehicleDetailsLov: { isFilteredListLoaded: isModelDataLoaded = false, isLoading: isModelDataLoading, filteredListData: vehicleModelData },
-            },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             ProductHierarchy: { isFilteredListLoaded: isProductHierarchyDataLoaded = false, isLoading: isProductHierarchyLoading, filteredListData: VehicleLovCodeData = [] },
         },
     } = state;
-    const moduleTitle = translateContent('vehicleReceiptChecklist.heading.mainTitle');
+    const moduleTitle = 'Claim';
 
     let returnValue = {
         userId,
-        isChecklistDataLoaded,
-        isChecklistDataLoading,
-        data: data?.paginationData,
-        totalRecords: data?.totalRecords || [],
         moduleTitle,
-        filterString,
-        isModelDataLoaded,
-        isModelDataLoading,
-        vehicleModelData,
-        isProfileDataLoaded,
-        isProfileDataLoading,
-        ProfileData,
-        ChecklistData: ChecklistData['supportingDocumentList'],
         typeData: typeData['CHK_STATS'],
         typedataMaster: typeData,
 
@@ -81,24 +58,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: vehicleReceiptChecklistdataActions.fetchList,
-            listShowLoading: vehicleReceiptChecklistdataActions.listShowLoading,
-            setFilterString: vehicleReceiptChecklistdataActions.setFilter,
-            resetData: vehicleReceiptChecklistdataActions.reset,
-            saveData: VehicleCheclistDetailsdataActions.saveData,
-            resetCheckListData: VehicleCheclistDetailsdataActions.reset,
-
-            fetchModel: otfvehicleDetailsLovDataActions.fetchFilteredList,
-            modelLoading: otfvehicleDetailsLovDataActions.listShowLoading,
-
-            fetchProfile: vehicleReceiptChecklistProfiledataActions.fetchList,
-            profileLoading: vehicleReceiptChecklistProfiledataActions.listShowLoading,
-            resetProfile: vehicleReceiptChecklistProfiledataActions.reset,
-
-            fetchProductLovCode: productHierarchyDataActions.fetchFilteredList,
-            ProductLovLoading: productHierarchyDataActions.listShowLoading,
-            resetCodeData: productHierarchyDataActions.resetData,
-
             showGlobalNotification,
         },
         dispatch
@@ -106,14 +65,13 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const DealerCorporateClaimMasterBase = (props) => {
-    const { userId, data, totalRecords, moduleTitle, filterString } = props;
-    const { fetchList, listShowLoading, setFilterString, resetCheckListData, saveData, showGlobalNotification } = props;
-    const { fetchModel, isModelDataLoaded, isModelDataLoading, vehicleModelData, modelLoading } = props;
-    const { fetchProfile, profileLoading, isProfileDataLoaded, ProfileData, resetProfile, ChecklistData, typeData } = props;
-    const { isProductHierarchyDataLoaded, VehicleLovCodeData, fetchProductLovCode, ProductLovLoading, resetCodeData, isProfileDataLoading, isProductHierarchyLoading } = props;
+    const { userId, data, totalRecords, moduleTitle } = props;
+    const { isModelDataLoading, vehicleModelData } = props;
+    const { isProfileDataLoaded, ProfileData, ChecklistData, typeData } = props;
+    const { VehicleLovCodeData, isProfileDataLoading, isProductHierarchyLoading } = props;
 
     const [listFilterForm] = Form.useForm();
-
+    const [filterString, setFilterString] = useState({});
     const [selectedRecord, setSelectedRecord] = useState();
     const [selectedRecordId, setSelectedRecordId] = useState();
     const [checkListDataModified, setcheckListDataModified] = useState([]);
@@ -132,7 +90,7 @@ export const DealerCorporateClaimMasterBase = (props) => {
     const [searchForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
 
-    const [showDataLoading, setShowDataLoading] = useState(true);
+    const [showDataLoading, setShowDataLoading] = useState(false);
     const [isFormVisible, setIsFormVisible] = useState(false);
 
     const defaultBtnVisiblity = {
@@ -171,64 +129,8 @@ export const DealerCorporateClaimMasterBase = (props) => {
     const [otfSearchRules, setOtfSearchRules] = useState({ rules: [validateRequiredInputField('search parametar')] });
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [actionButtonVisibility, setactionButtonVisibility] = useState({ canEdit: false, canView: false, DeleteIcon: false, canAdd: true });
-    const [toolTipContent, setToolTipContent] = useState(
-        <div>
-            <p>
-                Color - <span>NA</span>
-            </p>
-            <p>
-                Seating - <span>NA</span>
-            </p>
-            <p>
-                Fuel - <span>NA</span>
-            </p>
-            <p>
-                Variant - <span>NA</span>
-            </p>
-            <p>
-                Name - <span>NA</span>
-            </p>
-        </div>
-    );
-
     const [rules, setrules] = useState({ ...rulesIntialstate });
-
-    const onSuccessAction = (res) => {
-        searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
-        searchForm.resetFields();
-        setShowDataLoading(false);
-    };
-
-    const onErrorAction = (message) => {
-        showGlobalNotification({ message });
-        setShowDataLoading(false);
-    };
-
-    const handleButtonQuery = (item, keyName) => {
-        handleResetFilter();
-        const buttonkey = item?.key;
-        if (item?.key === buttonType) return;
-        setbuttonType(buttonkey);
-        setPage({ ...pageIntialState });
-
-        switch (buttonkey) {
-            case QUERY_BUTTONS_CONSTANTS?.PENDING?.key: {
-                setactionButtonVisibility({ canEdit: false, canView: false, canAdd: true });
-                break;
-            }
-            case QUERY_BUTTONS_CONSTANTS?.PARTIALLY_COMPLETED?.key: {
-                setactionButtonVisibility({ canEdit: true, canView: true, canAdd: false });
-                break;
-            }
-            case QUERY_BUTTONS_CONSTANTS?.COMPLETED?.key: {
-                setactionButtonVisibility({ canEdit: false, canView: true, canAdd: false });
-                break;
-            }
-            default: {
-                setactionButtonVisibility({ canEdit: false, canView: false, canAdd: true });
-            }
-        }
-    };
+    const [claimStatus, setClaimStatus] = useState('PFG');
 
     const extraParams = useMemo(() => {
         return [
@@ -300,21 +202,6 @@ export const DealerCorporateClaimMasterBase = (props) => {
     }, [filterString, page, buttonType]);
 
     useEffect(() => {
-        if (userId) {
-            setShowDataLoading(true);
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, extraParams]);
-
-    useEffect(() => {
-        if (userId && !isModelDataLoaded) {
-            fetchModel({ setIsLoading: modelLoading, userId, onErrorAction });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isModelDataLoaded]);
-
-    useEffect(() => {
         return () => {
             setFilterString();
         };
@@ -322,9 +209,9 @@ export const DealerCorporateClaimMasterBase = (props) => {
     }, []);
 
     useEffect(() => {
-        const defaultSection = VEHICLE_RECIEPT_CHECKLIST_SECTION.CHECKLIST_DETAILS.id;
+        const defaultSection = DEALER_CORPORATE_SECTION.CLAIM_DETAILS.id;
         setDefaultSection(defaultSection);
-        setSetionName(VEHICLE_RECIEPT_CHECKLIST_SECTION);
+        setSetionName(DEALER_CORPORATE_SECTION);
         setSection(defaultSection);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -355,32 +242,6 @@ export const DealerCorporateClaimMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAdvanceSearchVisible, filterString]);
 
-    useEffect(() => {
-        if (VehicleLovCodeData && isProductHierarchyDataLoaded && userId) {
-            setToolTipContent(
-                <div>
-                    <p>
-                        Color - <span>{VehicleLovCodeData['0']['color'] ?? 'Na'}</span>
-                    </p>
-                    <p>
-                        Seating - <span>{VehicleLovCodeData['0']['seatingCapacity'] ?? 'Na'}</span>
-                    </p>
-                    <p>
-                        Fuel - <span>{VehicleLovCodeData['0']['fuel'] ?? 'Na'}</span>
-                    </p>
-                    <p>
-                        Variant - <span>{VehicleLovCodeData['0']['variant'] ?? 'Na'}</span>
-                    </p>
-                    <p>
-                        Name - <span>{VehicleLovCodeData['0']['name'] ?? 'Na'}</span>
-                    </p>
-                </div>
-            );
-        }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [VehicleLovCodeData, isProductHierarchyDataLoaded, userId]);
-
     const onAdvanceSearchCloseAction = () => {
         setAdvanceSearchVisible(false);
         setrules({ fromdate: false, todate: false });
@@ -408,46 +269,7 @@ export const DealerCorporateClaimMasterBase = (props) => {
     };
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
-        if (!record?.chassisNumber && buttonAction !== NEXT_ACTION) {
-            showGlobalNotification({ ...CHECKLIST_MESSAGE_CONSTANTS?.CHASSIS_NOT_PRESENT });
-            return false;
-        }
         form.resetFields();
-        form.setFieldsValue(undefined);
-        const handleProfile = () => {
-            if (record?.grnNumber && record?.chassisNumber && record?.id) {
-                const myParams = [
-                    {
-                        key: 'grnNumber',
-                        title: 'grnNumber',
-                        value: record?.grnNumber,
-                    },
-                    {
-                        key: 'chassisNumber',
-                        title: 'chassisNumber',
-                        value: record?.chassisNumber,
-                    },
-                    {
-                        key: 'id',
-                        title: 'id',
-                        value: record?.id,
-                    },
-                ];
-
-                fetchProfile({ setIsLoading: profileLoading, userId, onErrorAction, extraParams: myParams });
-            }
-            if (record?.modelCode) {
-                const LovParams = [
-                    {
-                        key: 'prodctCode',
-                        title: 'prodctCode',
-                        value: record?.modelCode,
-                        name: 'Product Code',
-                    },
-                ];
-                fetchProductLovCode({ setIsLoading: ProductLovLoading, userId, onErrorAction, extraParams: LovParams });
-            }
-        };
 
         switch (buttonAction) {
             case ADD_ACTION:
@@ -458,13 +280,11 @@ export const DealerCorporateClaimMasterBase = (props) => {
                 setPayload([]);
                 setdeletedUpload([]);
                 setFileList([]);
-                handleProfile();
                 break;
             case EDIT_ACTION:
                 setSelectedRecord(record);
                 record && setSelectedRecordId(record?.grnNumber ?? '');
                 openDefaultSection && setCurrentSection(defaultSection);
-                !isProfileDataLoaded && handleProfile();
                 setcheckListDataModified([]);
                 setPayload([]);
                 setdeletedUpload([]);
@@ -475,7 +295,6 @@ export const DealerCorporateClaimMasterBase = (props) => {
                 setSelectedRecord(record);
                 record && setSelectedRecordId(record?.grnNumber ?? '');
                 defaultSection && setCurrentSection(defaultSection);
-                !isProfileDataLoaded && handleProfile();
                 setcheckListDataModified([]);
                 setPayload([]);
                 setdeletedUpload([]);
@@ -505,54 +324,8 @@ export const DealerCorporateClaimMasterBase = (props) => {
 
     const onFinishSearch = (values) => {};
 
-    const onFinish = () => {
-        const checklistNumber = ProfileData?.checklistNumber ?? '';
-        const chassisNumber = selectedRecord?.chassisNumber ?? '';
-        const checklistModifiedData = checkListDataModified?.flatMap((item) => {
-            if (item?.ismodified) {
-                if (item?.hasOwnProperty('ismodified') && item?.hasOwnProperty('index')) {
-                    const { ismodified, index, ...rest } = item;
-                    return { ...rest, answerFromDate: rest?.answerFromDate?.toISOString(), answerToDate: rest?.answerToDate?.toISOString() };
-                }
-                return { ...item, answerFromDate: item?.answerFromDate?.toISOString(), answerToDate: item?.answerToDate?.toISOString() };
-            }
-            return [];
-        });
-
-        const data = {
-            checklistDetailList: checklistModifiedData,
-            supportingDocumentList: [...payload, ...deletedUpload],
-            checklistNumber: checklistNumber,
-            chassisNumber: chassisNumber,
-        };
-
-        const onSuccess = (res) => {
-            form.resetFields();
-            setShowDataLoading(true);
-            resetCheckListData();
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-            setButtonData({ ...buttonData, formBtnActive: false });
-            setIsFormVisible(false);
-            setcheckListDataModified([]);
-            setPayload([]);
-            resetProfile();
-        };
-
-        const onError = (message) => {
-            showGlobalNotification({ message });
-        };
-
-        const requestData = {
-            data: data,
-            method: formActionType?.editMode ? 'put' : 'post',
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-
-        saveData(requestData);
+    const onFinish = (data) => {
+        console.log('🚀 ~ file: DealerCorporateClaimMaster.js:438 ~ onFinish ~ data:', data);
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -566,12 +339,9 @@ export const DealerCorporateClaimMasterBase = (props) => {
     const onCloseAction = () => {
         form.resetFields();
         form.setFieldsValue();
-        resetCodeData();
         setSelectedRecord();
         setIsFormVisible(false);
-        resetCheckListData();
         setButtonData({ ...defaultBtnVisiblity });
-        resetProfile();
     };
 
     const tableProps = {
@@ -579,7 +349,8 @@ export const DealerCorporateClaimMasterBase = (props) => {
         totalRecords,
         page,
         setPage,
-        tableColumn: tableColumn({ handleButtonClick, actionButtonVisibility }),
+        // tableColumn: tableColumn({ handleButtonClick, actionButtonVisibility }),
+        tableColumn: claimStatus === 'PFG' ? tableColumnPendingGeneration({ handleButtonClick, actionButtonVisibility }) : tableColumn({ handleButtonClick, actionButtonVisibility }),
         tableData: data,
         showAddButton: false,
         handleAdd: handleButtonClick,
@@ -597,6 +368,10 @@ export const DealerCorporateClaimMasterBase = (props) => {
         }
     };
 
+    const handleQuickFilter = (value) => {
+        setClaimStatus(value?.key);
+    };
+
     const advanceFilterResultProps = {
         extraParams,
         removeFilter,
@@ -607,7 +382,15 @@ export const DealerCorporateClaimMasterBase = (props) => {
         from: listFilterForm,
         onFinish,
         onFinishFailed,
-        title: <QueryButtons items={QUERY_BUTTONS_CONSTANTS} onClick={handleButtonQuery} currentItem={buttonType} />,
+        // title: 'Corporate Claim',
+        title:<QueryButtons currentItem={claimStatus} items={CLAIM_STATUS_BUTTONS} onClick={handleQuickFilter} />,
+        // title: Object.values(CLAIM_STATUS_BUTTONS)?.map((item) => {
+        //     return (
+        //         <Button className={styles.marR10} key={item?.id} type={claimStatus === item?.id ? 'primary' : 'link'} danger onClick={() => handleQuickFilter(item?.id)}>
+        //             {item?.title}
+        //         </Button>
+        //     );
+        // }),
         data,
         otfSearchRules,
         setOtfSearchRules,
@@ -617,6 +400,7 @@ export const DealerCorporateClaimMasterBase = (props) => {
         isAdvanceSearchVisible,
         setAdvanceSearchVisible,
         handleSearchChange,
+        handleButtonClick,
     };
 
     const containerProps = {
@@ -671,7 +455,6 @@ export const DealerCorporateClaimMasterBase = (props) => {
         fileList,
         setFileList,
         typeData,
-        tooltTipText: toolTipContent,
         VehicleLovCodeData,
         data,
         isProfileDataLoading,
@@ -686,17 +469,23 @@ export const DealerCorporateClaimMasterBase = (props) => {
         setFilterString,
         advanceFilterForm,
         setAdvanceSearchVisible,
+        isAdvanceSearchVisible,
         onFinishSearch,
         vehicleModelData,
         isModelDataLoading,
         rules,
         setrules,
+        showAddButton: true,
+        showRefreshBtn: false,
+        tableData: [{}],
     };
 
     return (
         <>
             <AdvanceFilter {...advanceFilterResultProps} />
             <AdvancedSearch {...advanceFilterProps} />
+
+            {/* <AppliedAdvanceFilter {...advanceFilterResultProps} {...advanceFilterProps} /> */}
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>

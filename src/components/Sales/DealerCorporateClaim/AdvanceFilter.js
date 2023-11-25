@@ -7,22 +7,25 @@ import React from 'react';
 import { Button, Row, Col, Input, Form } from 'antd';
 import { FilterIcon } from 'Icons';
 import { RxCross2 } from 'react-icons/rx';
+import { PlusOutlined } from '@ant-design/icons';
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
+
 import styles from 'assets/sass/app.module.scss';
 
 const { Search } = Input;
 
 export default function AdvanceFilter(props) {
-    const { extraParams, removeFilter, handleResetFilter, handleSearchChange, advanceFilter = false, filter = false, title, filterString, setAdvanceSearchVisible, searchForm } = props;
+    const { extraParams, handleButtonClick, removeFilter, handleResetFilter, handleSearchChange, advanceFilter = false, filter = false, title, filterString, setAdvanceSearchVisible, searchForm } = props;
     return (
         <div className={styles.contentHeaderBackground}>
-            <Row gutter={20}>
+            <Row gutter={20} justify={'space-between'}>
                 <Col xs={24} sm={24} md={14} lg={14} xl={14}>
                     {filter && (
                         <Form form={searchForm} className={styles.masterListSearchForm}>
                             <Form.Item name="Search">
                                 <div className={styles.verticallyCentered}>
                                     {title}
-                                    <Search placeholder="Search receipt number" allowClear onSearch={handleSearchChange} className={styles.headerSearchField} />
+                                    <Search placeholder="Search Claim Number" allowClear onSearch={handleSearchChange} className={styles.headerSearchField} />
                                 </div>
                             </Form.Item>
                         </Form>
@@ -42,6 +45,9 @@ export default function AdvanceFilter(props) {
                         </Button>
                     </Col>
                 )}
+                <Button icon={<PlusOutlined />} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                    Add
+                </Button>
             </Row>
             {filterString?.advanceFilter && extraParams.find((i) => i.name) && (
                 <Row gutter={20}>

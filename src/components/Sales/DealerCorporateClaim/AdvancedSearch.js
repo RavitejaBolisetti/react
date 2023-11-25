@@ -56,10 +56,45 @@ export const AdvancedSearchFrom = (props) => {
     return (
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item label="Zone" name="zone">
+                        <Select optionFilterProp="children" options={vehicleModelData || []} placeholder={preparePlaceholderSelect('zone')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} loading={isModelDataLoading} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
+                    </Form.Item>
+                </Col>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item label="Area Office" name="zone">
+                        <Select optionFilterProp="children" options={vehicleModelData || []} placeholder={preparePlaceholderSelect('zone')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} loading={isModelDataLoading} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
+                    </Form.Item>
+                </Col>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item label="Dealer Name" name="zone">
+                        <Select optionFilterProp="children" options={vehicleModelData || []} placeholder={preparePlaceholderSelect('zone')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} loading={isModelDataLoading} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
+                    </Form.Item>
+                </Col>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item label="Location Name" name="zone">
+                        <Select optionFilterProp="children" options={vehicleModelData || []} placeholder={preparePlaceholderSelect('zone')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} loading={isModelDataLoading} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
+                    </Form.Item>
+                </Col>
+
+                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item label="Claim Type" name="zone">
+                        <Select optionFilterProp="children" options={vehicleModelData || []} placeholder={preparePlaceholderSelect('zone')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} loading={isModelDataLoading} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
+                    </Form.Item>
+                </Col>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item label="Zone" name="zone">
+                        <Select optionFilterProp="children" options={vehicleModelData || []} placeholder={preparePlaceholderSelect('zone')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} loading={isModelDataLoading} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
+                    </Form.Item>
+                </Col>
+            </Row>
+
+
+            <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item label={translateContent('vehicleReceiptChecklist.label.advanceFilter.fromDate')} name="fromDate" className={styles?.datePicker} rules={[{ required: rules?.fromdate, message: translateContent('vehicleReceiptChecklist.advanceFilter.message1') }]}>
                         <DatePicker
-                            placeholder={preparePlaceholderSelect(translateContent('vehicleReceiptChecklist.label.advanceFilter.fromDate'))}
+                            placeholder={'Claim from Date' ||preparePlaceholderSelect(translateContent('vehicleReceiptChecklist.label.advanceFilter.fromDate'))}
                             format={dateFormat}
                             className={styles.fullWidth}
                             disabledDate={(current) => current > new Date()}
@@ -72,7 +107,7 @@ export const AdvancedSearchFrom = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label={translateContent('vehicleReceiptChecklist.label.advanceFilter.toDate')} name="toDate" className={styles?.datePicker} rules={[{ required: rules?.todate, message: translateContent('vehicleReceiptChecklist.advanceFilter.message2') }]}>
+                    <Form.Item label={"Claim to Date" || translateContent('vehicleReceiptChecklist.label.advanceFilter.toDate')} name="toDate" className={styles?.datePicker} rules={[{ required: rules?.todate, message: translateContent('vehicleReceiptChecklist.advanceFilter.message2') }]}>
                         <DatePicker
                             placeholder={preparePlaceholderSelect(translateContent('vehicleReceiptChecklist.label.advanceFilter.toDate'))}
                             format={dateFormat}
@@ -83,14 +118,6 @@ export const AdvancedSearchFrom = (props) => {
                                 if (!event && !advanceFilterForm?.getFieldValue('fromDate')) setrules({ fromdate: false, todate: false });
                             }}
                         />
-                    </Form.Item>
-                </Col>
-            </Row>
-
-            <Row gutter={16}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Form.Item label="Model Description" name="model">
-                        <Select optionFilterProp="children" options={vehicleModelData || []} placeholder={preparePlaceholderSelect('model')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} loading={isModelDataLoading} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
                     </Form.Item>
                 </Col>
             </Row>

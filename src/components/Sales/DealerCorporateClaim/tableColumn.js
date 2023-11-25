@@ -12,26 +12,41 @@ import { translateContent } from 'utils/translateContent';
 export const tableColumn = ({ handleButtonClick, page, pageSize, actionButtonVisibility }) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: translateContent('vehicleReceiptChecklist.tableColumn.checklistMaster.column1'),
-            dataIndex: 'grnNumber',
+            title: 'Dealer Name',
+            dataIndex: 'dealerName',
             width: '14%',
         }),
         tblPrepareColumns({
-            title: translateContent('vehicleReceiptChecklist.tableColumn.checklistMaster.column2'),
-            dataIndex: 'grnDate',
+            title: 'Dealer Branch',
+            dataIndex: 'dealerBranch',
             width: '14%',
-            render: (text) => (text ? convertDateTime(text, dateFormatView) : 'NA'),
+        }),
+        tblPrepareColumns({
+            title: 'Claim Type',
+            dataIndex: 'claimType',
+            width: '14%',
+        }),
+        tblPrepareColumns({
+            title: 'Claim Number',
+            dataIndex: 'clameNo',
+            width: '14%',
         }),
 
         tblPrepareColumns({
-            title: translateContent('vehicleReceiptChecklist.tableColumn.checklistMaster.column3'),
+            title:'Claim Date' ||  translateContent('vehicleReceiptChecklist.tableColumn.checklistMaster.column3'),
             dataIndex: 'modelName',
             width: '14%',
         }),
 
         tblPrepareColumns({
-            title: translateContent('vehicleReceiptChecklist.tableColumn.checklistMaster.column4'),
-            dataIndex: 'chassisNumber',
+            title: 'Claim Status' || translateContent('vehicleReceiptChecklist.tableColumn.checklistMaster.column4'),
+            dataIndex: 'claimStatus',
+            width: '14%',
+        }),
+        
+        tblPrepareColumns({
+            title: 'Customer Name' || translateContent('vehicleReceiptChecklist.tableColumn.checklistMaster.column4'),
+            dataIndex: 'claimStatus',
             width: '14%',
         }),
 

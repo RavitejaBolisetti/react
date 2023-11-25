@@ -5,7 +5,7 @@
  */
 import React from 'react';
 import MenuNav from './MenuNav';
-import VehicleDetailCard from './VehicleDetailCard';
+import ClaimDetailCard from './ClaimDetailCard';
 
 const LeftSidebar = (props) => {
     const { previousSection, setPreviousSection, currentSection } = props;
@@ -13,7 +13,7 @@ const LeftSidebar = (props) => {
 
     return (
         <>
-            <VehicleDetailCard {...props} />
+            <ClaimDetailCard {...props} />
             <MenuNav {...props} />
         </>
     );

@@ -19,7 +19,7 @@ import { translateContent } from 'utils/translateContent';
 
 const { Search } = Input;
 export default function AppliedAdvanceFilter(props) {
-    const { tableData = [], showAddButton = true, advanceFilter = false, title, filterString, from, onFinish, onFinishFailed, extraParams, removeFilter, handleResetFilter, handleClearInSearch, onSearchHandle, setAdvanceSearchVisible, handleReferesh, handleButtonClick, validator = searchValidator, downloadReport = false, handleDownloadReport = false, showChangeHistoryButton = false, showChangeHistoryList } = props;
+    const { tableData = [], showAddButton = true,showRefreshBtn=true, advanceFilter = false, title, filterString, from, onFinish, onFinishFailed, extraParams, removeFilter, handleResetFilter, handleClearInSearch, onSearchHandle, setAdvanceSearchVisible, handleReferesh, handleButtonClick, validator = searchValidator, downloadReport = false, handleDownloadReport = false, showChangeHistoryButton = false, showChangeHistoryList } = props;
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();
     };
@@ -80,7 +80,7 @@ export default function AppliedAdvanceFilter(props) {
 
                         {tableData?.length > 0 && (
                             <>
-                                <Button icon={<TfiReload />} onClick={handleReferesh} data-testid="refreshBtn" danger />
+                                {showRefreshBtn && <Button icon={<TfiReload />} onClick={handleReferesh} data-testid="refreshBtn" danger />}
                                 {showAddButton && (
                                     <Button icon={<PlusOutlined />} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                         {translateContent('global.buttons.add')}
