@@ -11,7 +11,6 @@ import { Form } from 'antd';
 
 jest.mock('components/FinancialAccounting/CreditDebitNote/CreditDebitFormButton', () => {
     const CreditDebitNoteFormButton = ({ onFinish }) => {
-        // const values = {partyDetails:{partyId: "4", partyName: "United India Insurance Company Limited", partySegment: "MIT"}};
         return(
             <div><button onClick={onFinish}>Save</button></div>
         )

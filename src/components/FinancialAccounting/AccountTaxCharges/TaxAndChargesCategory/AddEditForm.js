@@ -173,7 +173,7 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                             </Row>
-                            <Collapse className={openAccordian === 1 ? styles.accordianHeader : ''} onChange={() => handleCollapse(1)} expandIcon={accordianExpandIcon} collapsible="icon">
+                            <Collapse className={openAccordian === 1 ? styles.accordianHeader : ''} onChange={() => handleCollapse(1)} expandIcon={accordianExpandIcon} collapsible="icon" data-testId="collapse_icon">
                                 <Panel header={translateContent('taxChargeCatagory.heading.panelHeader')} key="1">
                                     <Divider />
                                     <ViewEditContext.Provider value={viewMode}>
