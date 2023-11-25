@@ -394,3 +394,4 @@ export const BASE_URL_DASHBOARD_RETAIL_STATICS = BASE_URL + 'geography/retailcou
 export const BASE_URL_ZONE_MASTER = BASE_URL + 'zone/lov';
 export const BASE_URL_AREA_OFFICE = BASE_URL + 'area/lov';
 export const BASE_URL_DEALER_LOCATIONS = BASE_URL + 'dealer/location';
+export const BASE_URL_SCHEME_RSA_DESCRIPTION = BASE_URL_VEHICLE + 'scheme/rsa/lov';

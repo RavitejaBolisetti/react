@@ -5,11 +5,7 @@
  */
 import { RSA_LEFTMENU_SECTION } from 'components/Sales/RSARegistration/constant/RSALeftMenuSection';
 
-export const validateRSAMenu = ({ item, status, formActionType: { viewMode } }) => {
-    if (item?.id === RSA_LEFTMENU_SECTION.THANK_YOU_PAGE.id) {
-        return status === '';
-    }
-
+export const validateRSAMenu = ({ item, formActionType: { viewMode } }) => {
     switch (item?.id) {
         case RSA_LEFTMENU_SECTION.REQUEST_DETAILS.id:
             return viewMode;

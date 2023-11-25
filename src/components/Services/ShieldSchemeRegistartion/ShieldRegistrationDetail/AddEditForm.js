@@ -14,13 +14,14 @@ import { SALE_TYPE } from '../utils/saleTypeConstant';
 
 import { validateRequiredSelectField, validateOnlyPositiveNumber } from 'utils/validation';
 import { translateContent } from 'utils/translateContent';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 const { Panel } = Collapse;
 const { Search } = Input;
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { formData, saleTypes, vinNumber, bookingNumber, schemeDetail, employeeData, managerData, shieldDetailForm, handleOtfSearch, handleVinSearch, handleOtfChange, saleType, handleSaleTypeChange, formActionType, isSchemeLoading } = props;
+    const { formData, saleTypes, vinNumber, bookingNumber, schemeDetail, employeeData, managerData, shieldDetailForm, handleOtfSearch, handleVinSearch, handleEmployeeSearch, handleOtfChange, saleType, handleSaleTypeChange, formActionType, isSchemeLoading, isEmployeeDataLoading, handleOnSelect, handleOnClear, typeData, screenType, handleTaxChange } = props;
     const { activeKey, setActiveKey } = props;
 
     useEffect(() => {
@@ -62,17 +63,34 @@ const AddEditFormMain = (props) => {
                     <Panel header={translateContent('shieldSchemeRegistration.heading.registrationInformation')} key="1">
                         <Divider />
                         <Row gutter={20}>
-                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item initialValue={formData?.saleType} label={translateContent('shieldSchemeRegistration.label.saleType')} name={['registrationInformation', 'saleType']} rules={[validateRequiredSelectField(translateContent('shieldSchemeRegistration.label.saleType'))]}>
-                                    <Select {...selectProps} onChange={handleSaleTypeChange} placeholder={preparePlaceholderSelect(translateContent('shieldSchemeRegistration.label.saleType'))} disabled={!formActionType?.addMode}>
-                                        {saleTypes?.map((item) => (
-                                            <Option key={'dv' + item.key} value={item.key}>
-                                                {item.value}
-                                            </Option>
-                                        ))}
-                                    </Select>
-                                </Form.Item>
-                            </Col>
+                            {screenType !== 'RSA' && (
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item initialValue={formData?.saleType} label={translateContent('shieldSchemeRegistration.label.saleType')} name={['registrationInformation', 'saleType']} rules={[validateRequiredSelectField(translateContent('shieldSchemeRegistration.label.saleType'))]}>
+                                        <Select {...selectProps} onChange={handleSaleTypeChange} placeholder={preparePlaceholderSelect(translateContent('shieldSchemeRegistration.label.saleType'))} disabled={!formActionType?.addMode}>
+                                            {saleTypes?.map((item) => (
+                                                <Option key={'dv' + item.key} value={item.key}>
+                                                    {item.value}
+                                                </Option>
+                                            ))}
+                                        </Select>
+                                    </Form.Item>
+                                </Col>
+                            )}
+
+                            {screenType === 'RSA' && (
+                                <>
+                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                        <Form.Item initialValue={formData?.priceType} label={translateContent('amcRegistration.label.priceType')} name={['registrationInformation', 'priceType']} rules={[validateRequiredSelectField(translateContent('amcRegistration.label.priceType'))]}>
+                                            {customSelectBox({ data: typeData?.[PARAM_MASTER.DLVR_SALE_TYP.id], placeholder: preparePlaceholderSelect(translateContent('amcRegistration.label.priceType')), onChange: handleSaleTypeChange })}
+                                        </Form.Item>
+                                    </Col>
+                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                        <Form.Item initialValue={formData?.saleType} label={translateContent('amcRegistration.label.saleType')} name={['registrationInformation', 'saleType']} rules={[validateRequiredSelectField(translateContent('amcRegistration.label.saleType'))]}>
+                                            {customSelectBox({ data: typeData['SALE_TYP'], placeholder: preparePlaceholderSelect(translateContent('amcRegistration.label.saleType')), onChange: handleTaxChange })}
+                                        </Form.Item>
+                                    </Col>
+                                </>
+                            )}
                             {saleType === SALE_TYPE?.PAID?.key && (
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item initialValue={formData?.availableFund} label={translateContent('shieldSchemeRegistration.label.availableFunds')} name={['registrationInformation', 'availableFund']}>
@@ -156,7 +174,7 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item initialValue={formData?.schemeDiscount} label={translateContent('shieldSchemeRegistration.label.schemeDiscount')} name={['schemeDetails', 'schemeDiscount']} rules={[validateOnlyPositiveNumber(translateContent('shieldSchemeRegistration.label.schemeDiscount'))]}>
-                                    <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.schemeDiscount'))} />
+                                    <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.schemeDiscount'))} onChange={screenType === 'RSA' ? handleTaxChange : () => {}} />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>

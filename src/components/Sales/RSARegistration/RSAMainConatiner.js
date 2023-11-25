@@ -16,6 +16,7 @@ import { SHIELD_REGISTRATION_SECTION } from 'constants/ShieldSchemeRegistrationS
 import { ShieldRegistrationDetailMaster } from 'components/Services/ShieldSchemeRegistartion/ShieldRegistrationDetail';
 import { VehicleCustomerDetailMaster } from 'components/Services/ShieldSchemeRegistartion/VehicleCustomerDetail';
 import { RequestDetailMaster } from 'components/Services/ShieldSchemeRegistartion/RequestDetail';
+import { ThankYouMaster } from 'components/Services/ShieldSchemeRegistartion/ThankYou';
 
 import styles from 'assets/sass/app.module.scss';
 const RSAMainConatinerMain = (props) => {
@@ -46,6 +47,9 @@ const RSAMainConatinerMain = (props) => {
             }
             case SHIELD_REGISTRATION_SECTION.REQUEST_DETAILS.id: {
                 return <RequestDetailMaster {...myProps} />;
+            }
+            case SHIELD_REGISTRATION_SECTION.THANK_YOU_PAGE.id: {
+                return <ThankYouMaster {...myProps} />;
             }
             default: {
                 return <ShieldRegistrationDetailMaster {...myProps} />;

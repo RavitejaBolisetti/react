@@ -4220,6 +4220,7 @@
             "employeeName": "Employee Name",
             "managerName": "Manager Name",
             "saleType": "Sale Type",
+            "priceType": "Price Type",
             "availableFunds": "Available Funds",
             "bookingNo": "Booking No.",
             "odometerReading": "Odometer Reading",
