@@ -283,7 +283,7 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.consumerSchemeWithTax')} name="taxAmount">
+                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.consumerSchemeWithTax')} name="consumerSchemeWithTax">
                                         <Input {...disabledProp} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.consumerSchemeWithTax'))} />
                                     </Form.Item>
                                 </Col>
