@@ -208,6 +208,10 @@
         },
         "sectionHeading": {
             "thankYou": "Thank You"
+        },
+        "access":{
+            "accessProvide" : "Accesses Provided",
+            "applicationAccess": "application access"
         }
     },
     "commonModules": {
@@ -1944,6 +1948,12 @@
         }
     },
     "userManagement": {
+        "constant":{
+            "userType":{
+                "Manufacturer":"Manufacturer",
+                "Dealer": "Dealer"
+            }
+        },
         "heading": {
             "pageTitle": "User Management",
             "role": "Role",
