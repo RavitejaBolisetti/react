@@ -10,7 +10,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 
-export const CoDealerFormButton = ({ handlePrintDownload, record, onCloseAction, onCancelDeliveryNote, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection, CancelDeliveryButtonName = 'Cancel Delivery Note', PrintButtonName = 'Print Delivery Note' }) => {
+export const CoDealerFormButton = ({ handlePrintDownload, record, onCloseAction, onCancelDeliveryNote, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection, cancelInvoiceBtnName = translateContent('coDealer.button.cancelInvoice'), PrintButtonName = 'Print Delivery Note' }) => {
     return (
         <div className={styles.formFooter}>
             <Row gutter={20}>
@@ -35,9 +35,9 @@ export const CoDealerFormButton = ({ handlePrintDownload, record, onCloseAction,
                         </Button>
                     )}
 
-                    {buttonData?.cancelDeliveryNoteBtn && (
+                    {buttonData?.cancelInvoice && (
                         <Button onClick={onCancelDeliveryNote} danger>
-                            {CancelDeliveryButtonName}
+                            {cancelInvoiceBtnName}
                         </Button>
                     )}
 

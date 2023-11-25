@@ -55,10 +55,11 @@ const mapDispatchToProps = (dispatch) => ({
 
 const VehicleDetailsMain = (props) => {
     const { CoDealerInvoiceStateMaster, form, handleFormValueChange, section, formActionType, setButtonData } = props;
-    const { fetchData, listShowLoading, userId } = props;
+    const { fetchData, listShowLoading, userId, coDealerOnFinish } = props;
     const [formData, setFormData] = useState();
     const [collapseActiveKey, setcollapseActiveKey] = useState([1]);
     const [dealerDiscount, setDealerDicountValue] = useState();
+    const [changeStatus, setchangeStatus] = useState();
     const trueDealerDiscount = useDeferredValue(dealerDiscount);
 
     const handleVehicleDetailChange = ({ modelCode, discountAmount, saleType, priceType }) => {
@@ -66,7 +67,7 @@ const VehicleDetailsMain = (props) => {
             const extraParams = [
                 {
                     key: 'modelCode',
-                    value: 'X700M028817182190',
+                    value: modelCode,
                 },
                 {
                     key: 'discountAmount',
@@ -105,13 +106,21 @@ const VehicleDetailsMain = (props) => {
         return () => {
             setFormData();
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [CoDealerInvoiceStateMaster?.vehicleDetailRequest, form, section?.id]);
 
     useEffect(() => {
-        if (trueDealerDiscount) {
+        if (trueDealerDiscount && changeStatus) {
             handleVehicleDetailChange({ modelCode: form.getFieldValue('modelCode'), discountAmount: form.getFieldValue('discountAmount'), saleType: form.getFieldValue('saleType'), priceType: form.getFieldValue('priceType') });
         }
-    }, [trueDealerDiscount]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [trueDealerDiscount, form, changeStatus]);
+
+    const onFinish = (values) => {
+        if (values) {
+            coDealerOnFinish({ ...CoDealerInvoiceStateMaster, vehicleDetailRequest: { ...values, taxDetails: formData?.taxDetails } });
+        }
+    };
 
     const formProps = {
         ...props,
@@ -119,14 +128,17 @@ const VehicleDetailsMain = (props) => {
         collapseActiveKey,
         setcollapseActiveKey,
         setDealerDicountValue,
+        changeStatus,
+        setchangeStatus,
     };
     const viewProps = {
         ...formProps,
         formData,
+        isLoading: !formData,
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange}>
+        <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

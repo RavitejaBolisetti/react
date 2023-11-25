@@ -18,7 +18,6 @@ import { CoDealerFormButton } from '../CoDealerFormButton';
 
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
-import { convertDateTimedayjs, dateFormatView } from 'utils/formatDateTime';
 
 const mapStateToProps = (state) => {
     const {
@@ -72,6 +71,7 @@ const IndentDetailsMain = (props) => {
         return () => {
             setFormData();
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [CoDealerInvoiceStateMaster?.indentDetails, form, section?.id]);
 
     const formProps = {
@@ -82,6 +82,8 @@ const IndentDetailsMain = (props) => {
     const viewProps = {
         formData,
         form,
+        styles,
+        isLoading: !formData,
     };
 
     return (

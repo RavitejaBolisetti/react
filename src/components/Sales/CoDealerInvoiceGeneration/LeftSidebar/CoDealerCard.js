@@ -14,6 +14,7 @@ import styles from 'assets/sass/app.module.scss';
 import { addToolTip } from 'utils/customMenuLink';
 
 import { AiOutlineInfoCircle } from 'react-icons/ai';
+import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
@@ -50,7 +51,7 @@ const CoDealerCard = (props) => {
                         </Space>
                         <Divider />
                         <div className={styles.detailCardText}>
-                            Invoice Number: <span> {checkAndSetDefaultValue(selectedOrder?.invoiceNumber)}</span>
+                            {translateContent('coDealer.label.profileCard.invoiceNumber')} : <span> {checkAndSetDefaultValue(selectedOrder?.invoiceNumber)}</span>
                         </div>
                     </>
                 }
@@ -58,11 +59,11 @@ const CoDealerCard = (props) => {
             >
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Invoice Date: <span> {checkAndSetDefaultValue(selectedOrder?.invoiceDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
+                    {translateContent('coDealer.label.profileCard.invoiceDate')} : <span> {checkAndSetDefaultValue(selectedOrder?.invoiceDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Invoice Status: <span> {checkAndSetDefaultValue(selectedOrder?.invoiceId)}</span>
+                    {translateContent('coDealer.label.profileCard.invoiceStatus')} : <span> {checkAndSetDefaultValue(selectedOrder?.invoiceStatus)}</span>
                 </div>
             </Panel>
         </Collapse>

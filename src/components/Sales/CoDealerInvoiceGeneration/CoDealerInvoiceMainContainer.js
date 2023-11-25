@@ -29,7 +29,7 @@ const CoDealerInvoiceContainerMain = (props) => {
     };
     const thankYouPageProps = {
         FormActionButton: CoDealerFormButton,
-        thankyouPageTitle: CoDealerInvoiceStateMaster?.thankyouPageTitle,
+        thankyouPageTitle: CoDealerInvoiceStateMaster?.selected?.thankyouPageTitle,
         generationTitle: CoDealerInvoiceStateMaster?.generationTitle,
         generationMessage: CoDealerInvoiceStateMaster?.generationMessage,
         handleThankyouButtonClick,

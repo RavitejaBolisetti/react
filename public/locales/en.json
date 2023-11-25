@@ -4397,6 +4397,11 @@
                 "state": "State",
                 "pinCode": "Pin Code",
                 "gstIn": "GSTIN"
+            },
+            "profileCard": {
+                "invoiceNumber": "Invoice Number",
+                "invoiceDate": "Invoice Date",
+                "invoiceStatus": "Invoice Status"
             }
         },
         "placeholder": {},
@@ -4406,7 +4411,8 @@
         },
         "text": {},
         "button": {
-            "printCoDealerInvoice": "Download/Print Co-Dealer Invoice"
+            "printCoDealerInvoice": "Download/Print Co-Dealer Invoice",
+            "cancelInvoice": "Cancel Invoice"
         }
     }
 }

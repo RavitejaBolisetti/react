@@ -26,7 +26,7 @@ const { Panel } = Collapse;
 export const AddEditForm = (props) => {
     const { toolTipContent, formData, typeData } = props;
     const { collapseActiveKey, setcollapseActiveKey, CoDealerInvoiceStateMaster, HandleVinList, setDealerDicountValue, isVinLoading } = props;
-    const { isDisabled = true, form } = props;
+    const { isDisabled = true, form, changeStatus, setchangeStatus } = props;
     const disabledProps = { disabled: isDisabled };
 
     useEffect(() => {
@@ -36,6 +36,7 @@ export const AddEditForm = (props) => {
                 HandleVinList(formData?.modelCode);
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData, form]);
 
     if (!formData) return <CardSkeleton title={false} />;
@@ -66,12 +67,12 @@ export const AddEditForm = (props) => {
 
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item initialValue={formData?.saleType} name="saleType" label={translateContent('commonModules.label.vehicleDetails.saleType')} rules={[validateRequiredSelectField('Sale Type')]}>
-                                        {customSelectBox({ data: CoDealerInvoiceStateMaster?.SALE_TYPE })}
+                                        {customSelectBox({ data: CoDealerInvoiceStateMaster?.SALE_TYPE, onChange: () => setchangeStatus('saleType') })}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item initialValue={formData?.priceType} label={translateContent('commonModules.label.vehicleDetails.priceType')} name="priceType">
-                                        {customSelectBox({ data: CoDealerInvoiceStateMaster?.PRC_TYP })}
+                                    <Form.Item initialValue={formData?.priceType} label={translateContent('commonModules.label.vehicleDetails.priceType')} name="priceType" rules={[validateRequiredSelectField(translateContent('commonModules.label.vehicleDetails.priceType'))]}>
+                                        {customSelectBox({ data: CoDealerInvoiceStateMaster?.PRC_TYP, onChange: () => setchangeStatus('priceType') })}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>

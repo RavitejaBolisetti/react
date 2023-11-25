@@ -20,6 +20,7 @@ export const AddEditForm = (props) => {
         if (formData) {
             form.setFieldsValue({ ...formData, indentDate: convertDateTimedayjs(formData?.indentDate, dateFormatView) });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
     if (!formData) return <CardSkeleton title={false} contentHeight={230} />;
