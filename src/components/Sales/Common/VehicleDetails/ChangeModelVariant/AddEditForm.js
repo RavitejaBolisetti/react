@@ -49,6 +49,8 @@ const AddEditFormMain = (props) => {
                         setModelStatus(STATUS?.PENDING?.key);
                         if (res?.data?.sapStatusResponseCode === STATUS?.SUCCESS?.key) {
                             setButtonData({ ...buttonData, formBtnActive: true });
+                        } else {
+                            setButtonData({ ...buttonData, formBtnActive: false });
                         }
                         setRefreshData(!refreshData);
                         showGlobalNotification({ notificationType: 'warning', title: 'Pending for SAP Confirmation', message: 'Change model request approval is pending from SAP' });
@@ -116,7 +118,8 @@ const AddEditFormMain = (props) => {
                 form.setFieldsValue({ ['modelCode' + formType]: finalData?.productModelCode });
                 setSelectedTreeKey(finalData?.productModelCode);
                 // form.setFieldsValue({ ['model' + formType]: finalData?.productModelCode });
-                handleFormValueChange(true);
+                handleFormValueChange(false);
+                setButtonData({ ...buttonData, formBtnActive: false });
                 setConfirmRequest({
                     ...confirmRequest,
                     isVisible: false,
