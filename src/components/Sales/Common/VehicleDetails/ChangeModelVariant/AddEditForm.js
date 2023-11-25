@@ -5,7 +5,7 @@
  */
 
 import React, { useState } from 'react';
-import { Col, Input, Form, Row, Card, Button, Space } from 'antd';
+import { Col, Input, Form, Row, Card, Button } from 'antd';
 
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -142,7 +142,7 @@ const AddEditFormMain = (props) => {
         treeDisabled: onModelSubmit,
     };
     return (
-        <>
+        <div className={styles.cardInnerBox}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={14} lg={14} xl={14}>
                     <Form.Item label={translateContent('bookingManagement.modelVariant.label.modelDescription')} initialValue={formData?.model} name={'model' + formType} rules={[validateRequiredSelectField(translateContent('bookingManagement.modelVariant.validation.model'))]}>
@@ -177,7 +177,7 @@ const AddEditFormMain = (props) => {
                     </Row>
                 </>
             )}
-        </>
+        </div>
     );
 };
 

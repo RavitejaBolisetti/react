@@ -31,6 +31,7 @@ import { EDIT_ACTION, DELETE_ACTION } from 'utils/btnVisiblity';
 import { OTF_STATUS } from 'constants/OTFStatus';
 import { translateContent } from 'utils/translateContent';
 import { ChangeModelVariantMaster } from './ChangeModelVariant';
+import { TbRefresh } from 'react-icons/tb';
 
 const { Text } = Typography;
 const { Panel } = Collapse;
@@ -202,15 +203,15 @@ const AddEditFormMain = (props) => {
                                     {toolTipContent && <div className={styles.modelTooltip}>{addToolTip(toolTipContent, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle size={13} />)}</div>}
                                 </Col>
 
-                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                <Col xs={24} sm={24} md={7} lg={7} xl={7}>
                                     <Form.Item label={translateContent('commonModules.label.vehicleDetails.modelCode')} name="modelCode" data-testid="vehicleVariant" rules={[validateRequiredInputField('Model Code')]}>
                                         <Input {...disabledProp} placeholder={preparePlaceholderText('Model Code')} />
                                     </Form.Item>
                                 </Col>
 
                                 {formData?.otfStatus === OTF_STATUS?.BOOKED.key && (
-                                    <Col xs={24} sm={24} md={2} lg={2} xl={2} className={styles.vehicleInfo}>
-                                        <Button onClick={handleChangeModel} type="link" icon={<GrSync />} className={`${styles.verticallyCentered} ${styles.marT30}`} disabled={onModelSubmit}>
+                                    <Col xs={24} sm={24} md={3} lg={3} xl={3} style={{ display: 'flex', alignItems: 'center' }}>
+                                        <Button onClick={handleChangeModel} type="link" icon={<TbRefresh className={styles.marT10} size={18} />} disabled={onModelSubmit}>
                                             Change
                                         </Button>
                                     </Col>

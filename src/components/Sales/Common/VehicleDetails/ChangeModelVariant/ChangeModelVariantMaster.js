@@ -5,7 +5,7 @@
  */
 
 import React, { useMemo, useEffect, useState } from 'react';
-import { Typography, Divider, Collapse, Tag, Row, Button, Space } from 'antd';
+import { Typography, Divider, Collapse, Tag, Row, Button, Card } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { TbRefresh } from 'react-icons/tb';
@@ -190,49 +190,44 @@ const ChangeModelVariantMasterBase = (props) => {
         }
     };
     return (
-        <>
-            <div className={styles?.cardInsideBox}>
-                {addMode ? (
-                    <AddEditForm {...formProps} />
-                ) : (
-                    modelChangeItemList?.map((item) => {
-                        return (
-                            <Collapse key={1} defaultActiveKey={1} collapsible="disabled">
-                                <Panel
-                                    header={
-                                        <>
-                                            <Row justify="space-between" className={styles.fullWidth}>
-                                                <Text strong> Change Model</Text>
-
-                                                {/* {item?.pending &&  */}
-                                                <div className={styles.verticallyCentered}>
-                                                    {onModelSubmit && (
-                                                        <>
-                                                            {modelStatus === STATUS?.PENDING?.key ? <Tag color="warning">Pending for SAP Confirmation</Tag> : modelStatus === STATUS?.SUCCESS?.key ? <Tag color="success">Success</Tag> : <Tag color="error">Failed for SAP Confirmation</Tag>}
-                                                            <Button onClick={handleRefresh} type="link" icon={<TbRefresh />}></Button>
-                                                        </>
-                                                    )}
+        <div className={`${styles.cardInsideBox} ${styles.pad10}`}>
+            {addMode ? (
+                <AddEditForm {...formProps} />
+            ) : (
+                modelChangeItemList?.map((item) => {
+                    return (
+                        <>
+                            <Row justify="space-between" className={styles.fullWidth}>
+                                <div className={styles.marB10}>
+                                    <Text strong> Change Model</Text>
+                                </div>
+                                {/* {item?.pending &&  */}
+                                {onModelSubmit && (
+                                    <div className={styles.verticallyCentered}>
+                                        {modelStatus === STATUS?.PENDING?.key ? <Tag color="warning">Pending for SAP Confirmation</Tag> : modelStatus === STATUS?.SUCCESS?.key ? <Tag color="success">Success</Tag> : <Tag color="error">Failed for SAP Confirmation</Tag>}
+                                        <Button
+                                            onClick={handleRefresh}
+                                            type="link"
+                                            icon={
+                                                <div className={`${styles.marL10} ${styles.verticallyCentered}`}>
+                                                    <TbRefresh size={18} />
                                                 </div>
-                                            </Row>
-                                            {/* // } */}
-                                        </>
-                                    }
-                                    key={1}
-                                    showArrow={false}
-                                >
-                                    <Divider />
+                                            }
+                                        ></Button>
+                                    </div>
+                                )}
+                            </Row>
+                            <Divider />
 
-                                    {/* {item?.changeAllowed && */}
-                                    <AddEditForm {...formProps} />
-                                    {/* } */}
-                                    <ConfirmationModal {...confirmRequest} />
-                                </Panel>
-                            </Collapse>
-                        );
-                    })
-                )}
-            </div>
-        </>
+                            {/* {item?.changeAllowed && */}
+                            <AddEditForm {...formProps} />
+                            {/* } */}
+                            <ConfirmationModal {...confirmRequest} />
+                        </>
+                    );
+                })
+            )}
+        </div>
     );
 };
 export const ChangeModelVariantMaster = connect(mapStateToProps, mapDispatchToProps)(ChangeModelVariantMasterBase);
