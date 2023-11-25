@@ -48,7 +48,6 @@ const AddEditFormMain = (props) => {
     let groupValue = null;
     let parentGroupId = null;
     const parentName = (values) => {
-        console.log(values);
         const parentData = dealerParentData?.find((item) => item?.key === values);
         if (values) {
             groupValue = parentData?.value;
@@ -156,21 +155,6 @@ const AddEditFormMain = (props) => {
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item initialValue={formData?.parentCode} label={translateContent('dealerCompany.label.groupCode')} rules={[validateRequiredSelectField('Group Code')]} name="parentCode">
-                                        {/* <Select
-                                            placeholder={preparePlaceholderSelect('Group Code')}
-                                            style={{
-                                                width: '100%',
-                                            }}
-                                            {...selectProps}
-                                            onChange={parentName}
-                                            disabled={editMode}
-                                        >
-                                            {dealerParentData?.map((item) => (
-                                                <Option key={item?.key} value={item?.key}>
-                                                    {item?.key}
-                                                </Option>
-                                            ))}
-                                        </Select> */}
                                         {customSelectBox({ data: dealerParentData, fieldNames: { key: 'key', value: 'key' }, onChange: parentName, placeholder: preparePlaceholderSelect('Group Code'), disabled: editMode })}
                                     </Form.Item>
                                 </Col>
@@ -183,6 +167,9 @@ const AddEditFormMain = (props) => {
                                     <Form.Item label={translateContent('dealerCompany.label.parentId')} name="parentId" initialValue={formData?.parentId}>
                                         <Input />
                                     </Form.Item>
+                                </Col>
+                                <Col xs={0}>
+                                    <Form.Item label={translateContent('id')} name="id" initialValue={formData?.id}/>
                                 </Col>
                             </Row>
                             <Row gutter={16}>
