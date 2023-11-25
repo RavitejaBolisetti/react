@@ -148,8 +148,6 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [productHierarchyDataListArray]);
 
-    console.log('productHierarchyDataArray-vpo', productHierarchyDataArray);
-
     useEffect(() => {
         if (userId) {
             // && selectedOrder?.modelCode

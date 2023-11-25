@@ -24,7 +24,7 @@ const { Search } = Input;
 const AddEditFormMain = (props) => {
     //productHierarchyList
     const { productHierarchyDataArray, buttonData, setButtonData, formActionType, onFinish, getDealerlocation, setDealerLocation, dealerLocation } = props;
-    const { form, formData, typeData, isReadOnly = true } = props;
+    const { form, formData, typeData, isReadOnly = true, modelCode, setModelCode } = props;
     const disabledProps = { disabled: isReadOnly };
     const [dealerFlag, setDealerFlag] = useState();
 
@@ -59,7 +59,10 @@ const AddEditFormMain = (props) => {
         showSearch: true,
         allowClear: true,
     };
-
+    const handleSelectTreeClick = (value) => {
+        setModelCode(value);
+        setButtonData({ ...buttonData, formBtnActive: true });
+    };
     const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
 
@@ -67,9 +70,8 @@ const AddEditFormMain = (props) => {
         treeFieldNames,
         treeData: productHierarchyDataArray,
         defaultParent: false,
-        selectedTreeSelectKey: formData?.model,
-        // handleSelectTreeClick,
-        treeExpandedKeys: [formData?.model],
+        selectedTreeSelectKey: modelCode,
+        handleSelectTreeClick,
         placeholder: preparePlaceholderSelect('Model'),
         // placeholder: preparePlaceholderSelect(translateContent('commonModules.vehicleDetails.model')),
         // loading: !viewOnly ? isProductDataLoading : false,

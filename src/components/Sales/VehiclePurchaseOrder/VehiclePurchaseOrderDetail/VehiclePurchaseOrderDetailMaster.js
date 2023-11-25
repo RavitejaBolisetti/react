@@ -87,6 +87,7 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
     const { productHierarchyDataArray } = props;
     const [activeKey, setactiveKey] = useState([1]);
     const [dealerLocation, setDealerLocation] = useState();
+    const [modelCode, setModelCode] = useState();
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -158,7 +159,7 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
 
     const onFinish = (values) => {
         const recordId = viewVehiclePODetails?.id || '';
-
+        console.log(values);
         const onSuccess = (res) => {
             showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
 
@@ -176,7 +177,7 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
                 id: recordId,
                 orderTypeCode: values?.orderTypeCode,
                 dealerParentCode: values?.dealerParentCode,
-                modelCode: values?.modelCode,
+                modelCode: modelCode,
                 quantity: values?.quantity,
                 purchaseOrderDate: values?.purchaseOrderDate?.format('YYYY-MM-DD'),
                 purchaseOrderNumber: '',
@@ -216,6 +217,8 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
         showDataLoading,
         setDealerLocation,
         dealerLocation,
+        modelCode,
+        setModelCode,
         productHierarchyDataArray,
     };
 
