@@ -25,13 +25,16 @@ const { Panel } = Collapse;
 
 export const AddEditForm = (props) => {
     const { toolTipContent, formData, typeData } = props;
-    const { collapseActiveKey, setcollapseActiveKey, CoDealerInvoiceStateMaster } = props;
+    const { collapseActiveKey, setcollapseActiveKey, CoDealerInvoiceStateMaster, HandleVinList } = props;
     const { isDisabled = true, form } = props;
     const disabledProps = { disabled: isDisabled };
 
     useEffect(() => {
         if (formData) {
             form.setFieldsValue({ ...formData });
+            if (formData?.modelCode) {
+                HandleVinList(formData?.modelCode);
+            }
         }
     }, [formData, form]);
 
@@ -56,8 +59,8 @@ export const AddEditForm = (props) => {
                                     {toolTipContent && <div className={styles.modelTooltip}>{addToolTip(toolTipContent, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle size={13} />)}</div>}
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.vin')} name="vinNumber">
-                                        <Input {...disabledProps} placeholder={preparePlaceholderText('VIN')} />
+                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.vin')} rules={[validateRequiredSelectField(translateContent('commonModules.label.vehicleDetails.vin'))]} name="vinNumber">
+                                        {customSelectBox({ data: CoDealerInvoiceStateMaster?.VinData, fieldNames: { key: '', value: '' } })}
                                     </Form.Item>
                                 </Col>
 
@@ -101,8 +104,18 @@ export const AddEditForm = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.totalTaxAmount')} name="totalTaxAmount">
+                                        <Input {...disabledProps} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.totalTaxAmount'))} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.tcsAmount')} name="tcsAmount">
+                                        <Input {...disabledProps} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.tcsAmount'))} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item label={translateContent('commonModules.label.vehicleDetails.vehicleAmount')} name="vehicleAmount">
-                                        <Input {...disabledProps} placeholder={preparePlaceholderText('Vehicle Amount')} />
+                                        <Input {...disabledProps} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.vehicleAmount'))} />
                                     </Form.Item>
                                 </Col>
                             </Row>

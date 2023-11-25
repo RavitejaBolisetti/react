@@ -209,8 +209,8 @@
         "sectionHeading": {
             "thankYou": "Thank You"
         },
-        "access":{
-            "accessProvide" : "Accesses Provided",
+        "access": {
+            "accessProvide": "Accesses Provided",
             "applicationAccess": "application access"
         }
     },
@@ -263,8 +263,9 @@
             "vehicleDetails.poStatus": "PO Status",
             "vehicleDetails.soNumber": "SO Number",
             "vehicleDetails.soStatus": "SO Status",
-            "vehicleDetails.printDiscount": "Print",
             "vehicleDetails.model": "Model",
+            "vehicleDetails.totalTaxAmount": "Total Tax Amount",
+            "vehicleDetails.tcsAmount": "TCS Amount",
 
             "schemeAndOfferDetails.schemeType": "Scheme Type",
             "schemeAndOfferDetails.schemeCategory": "Scheme Category",
@@ -1950,9 +1951,9 @@
         }
     },
     "userManagement": {
-        "constant":{
-            "userType":{
-                "Manufacturer":"Manufacturer",
+        "constant": {
+            "userType": {
+                "Manufacturer": "Manufacturer",
                 "Dealer": "Dealer"
             }
         },
@@ -4400,7 +4401,8 @@
         },
         "placeholder": {},
         "validation": {
-            "toDate": "Date cant be less than Effective from date"
+            "toDate": "Date cant be less than Effective from date",
+            "ModelCode": "Model code is not present"
         },
         "text": {},
         "button": {}

@@ -20,7 +20,7 @@ import { CO_DEALER_SECTIONS } from 'components/Sales/CoDealerInvoiceGeneration/c
 import { drawerTitle } from 'utils/drawerTitle';
 
 import { CoDealerInvoiceFilter } from './CoDealerInvoiceFilter';
-import { CoDealerSearchDataActions } from 'store/actions/data/CoDealerInvoice';
+import { CoDealerSearchDataActions, CoDealerVinNumberDataActions } from 'store/actions/data/CoDealerInvoice';
 import { dealerParentLovDataActions } from 'store/actions/data/dealer/dealerParentsLov';
 import { translateContent } from 'utils/translateContent';
 import { PARAM_MASTER } from 'constants/paramMaster';
@@ -30,7 +30,6 @@ import { DATE_CONSTANTS } from './constants/DateConstants';
 import { validateRequiredSelectField } from 'utils/validation';
 import { BASE_URL_CO_DEALER_DETAILS, BASE_URL_VEHICLE_INVOICE_PROFILE_CARD } from 'constants/routingApi';
 import { vehicleInvoiceGenerationDataActions } from 'store/actions/data/sales/vehicleInvoiceGeneration';
-import { InputSkeleton } from 'components/common/Skeleton';
 
 const mapStateToProps = (state) => {
     const {
@@ -39,6 +38,7 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             CoDealerInvoice: {
                 CoDealerInvoiceSearch: { isDetailLoaded: isCoDealerLoaded = false, isDetailLoading: isSearchLoading, data, detailData: CoDealerData = [], filter: filterString },
+                CoDealerVINNumber: { data: VinData, isLoading: isVinLoading, isLoaded: isVinLoaded },
             },
             DealerHierarchy: {
                 DealerParentsLov: { filteredListData: indentToDealerData = [] },
@@ -47,6 +47,7 @@ const mapStateToProps = (state) => {
     } = state;
 
     const moduleTitle = translateContent('coDealer.heading.title');
+    const VIN_SEARCH_TYPE = 'C';
 
     let returnValue = {
         userId,
@@ -60,6 +61,11 @@ const mapStateToProps = (state) => {
         filterString,
         indentToDealerData,
         CoDealerData,
+
+        VinData,
+        isVinLoading,
+        isVinLoaded,
+        VIN_SEARCH_TYPE,
     };
     return returnValue;
 };
@@ -69,7 +75,7 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             fetchCoDealerInvoice: CoDealerSearchDataActions.fetchList,
-            resetCoDealerData: CoDealerSearchDataActions.resetData,
+            resetCoDealerData: CoDealerSearchDataActions.reset,
             listShowCoDealerLoading: CoDealerSearchDataActions.listShowLoading,
             setFilterString: CoDealerSearchDataActions.setFilter,
             fetchCoDealerProfileData: vehicleInvoiceGenerationDataActions.fetchData,
@@ -81,8 +87,10 @@ const mapDispatchToProps = (dispatch) => ({
             fetchDealerParentsLovList: dealerParentLovDataActions.fetchFilteredList,
             listShowDealerLoading: dealerParentLovDataActions.listShowLoading,
 
-            // fetchList: CoDealerInvoiceSearchDataAction.fetchList,
-            // fetchDeliveryNoteMasterData: vehicleDeliveryNoteDataActions.fetchDetail,
+            fetchVin: CoDealerVinNumberDataActions.fetchList,
+            listVinLoading: CoDealerVinNumberDataActions.listShowLoading,
+            resetVinData: CoDealerVinNumberDataActions.reset,
+
             // saveData: vehicleDeliveryNoteDataActions.saveData,
 
             // fetchCustomerListData: vehicleDeliveryNoteCustomerDetailDataActions.fetchList,
@@ -108,12 +116,13 @@ export const CoDealerInvoiceMasterBase = (props) => {
     const { filterString, setFilterString, coDealerInvoiceStatusList = Object?.values(CO_DEALER_QUERY_BUTTONS) } = props;
     const { fetchCoDealerInvoice, isCoDealerLoaded, listShowCoDealerLoading } = props;
     const { indentToDealerData, fetchDealerParentsLovList, listShowDealerLoading, fetchCoDealerDetails, resetCoDealerDetailData, listCoDealerDetailShowLoading, CoDealerData, fetchCoDealerProfileData } = props;
+    const { VinData, isVinLoading, isVinLoaded, fetchVin, listVinLoading, resetVinData, VIN_SEARCH_TYPE } = props;
 
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
 
-    const [CoDealerInvoiceStateMaster, setCoDealerInvoiceStateMaster] = useState({ currentQuery: CO_DEALER_QUERY_BUTTONS?.PENDING?.key, current: 1, pageSize: 10, typeDataFilter: [], INVOICE_FROM_DATE: [], INVOICE_TO_DATE: [], requestpayload: {} });
+    const [CoDealerInvoiceStateMaster, setCoDealerInvoiceStateMaster] = useState({ currentQuery: CO_DEALER_QUERY_BUTTONS?.PENDING?.key, current: 1, pageSize: 10, typeDataFilter: [], INVOICE_FROM_DATE: [], INVOICE_TO_DATE: [], requestpayload: {}, VinData: [] });
 
     const [section, setSection] = useState();
     const [defaultSection, setDefaultSection] = useState();
@@ -324,6 +333,26 @@ export const CoDealerInvoiceMasterBase = (props) => {
         }
         setCoDealerInvoiceStateMaster({ ...CoDealerInvoiceStateMaster, currentQuery: buttonKey, typeDataFilter });
     };
+    const HandleVinList = (modelCode, searchType = VIN_SEARCH_TYPE) => {
+        if (modelCode && searchType) {
+            const onSuccessAction = (res) => {
+                setCoDealerInvoiceStateMaster((prev) => ({ ...prev, VinData: res?.data }));
+            };
+            const extraParams = [
+                {
+                    key: 'searchType',
+                    value: searchType,
+                },
+                {
+                    key: 'modelValue',
+                    value: modelCode,
+                },
+            ];
+            fetchVin({ setIsLoading: listVinLoading, userId, extraParams, onSuccessAction, onErrorAction });
+        } else {
+            showGlobalNotification({ title: translateContent('coDealer.validation.ModelCode') });
+        }
+    };
 
     const handleDrawerButtonVisibility = (btnVisiblityProps) => {
         const { buttonAction } = btnVisiblityProps;
@@ -458,10 +487,8 @@ export const CoDealerInvoiceMasterBase = (props) => {
         setSelectedOrder();
         setButtonData({ ...defaultBtnVisiblity });
         resetCoDealerDetailData();
-        if (CoDealerInvoiceStateMaster?.hasOwnProperty('indentDetails') && CoDealerInvoiceStateMaster?.hasOwnProperty('vehicleDetailRequest')) {
-            const { indentDetails, vehicleDetailRequest, ...rest } = CoDealerInvoiceStateMaster;
-            setCoDealerInvoiceStateMaster((prev) => ({ ...rest }));
-        }
+        resetVinData();
+        setCoDealerInvoiceStateMaster((prev) => ({ ...prev, VinData: [], indentDetails: {}, vehicleDetailRequest: {} }));
     };
 
     const onCloseAction = () => {
@@ -599,6 +626,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
         setSection,
         saveButtonName: isLastSection ? translateContent('global.buttons.submit') : translateContent('global.buttons.submit'),
         CoDealerInvoiceStateMaster,
+        HandleVinList,
     };
 
     return (

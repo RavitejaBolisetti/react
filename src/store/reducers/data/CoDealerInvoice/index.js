@@ -6,7 +6,9 @@
 import { combineReducers } from 'redux';
 
 import { CoDealerInvoiceSearch } from './CoDealerInvoiceSearch';
+import { CoDealerVINNumber } from './CoDealerVin';
 
 export const CoDealerInvoice = combineReducers({
     CoDealerInvoiceSearch,
+    CoDealerVINNumber,
 });
