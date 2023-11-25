@@ -4405,6 +4405,8 @@
             "ModelCode": "Model code is not present"
         },
         "text": {},
-        "button": {}
+        "button": {
+            "printCoDealerInvoice": "Download/Print Co-Dealer Invoice"
+        }
     }
 }

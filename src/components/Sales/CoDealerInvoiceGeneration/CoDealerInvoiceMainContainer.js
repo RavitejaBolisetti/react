@@ -14,10 +14,11 @@ import styles from 'assets/sass/app.module.scss';
 import { VehicleDetailsMaster } from './VehicleDetails';
 import { IndentDetailsMaster } from './IndentDetails';
 import { CoDealerFormButton } from './CoDealerFormButton';
+import { ThankYouMaster } from 'utils/ThankYouPage';
+import { THANK_YOU_BUTTONS_CONSTANTS } from './constants';
 
 const CoDealerInvoiceContainerMain = (props) => {
-    const { currentSection, selectedOtfNumber, selectedOrderId, soldByDealer, vehicleChallanData, customerDetailsDataSearched } = props;
-    const { requestPayload, setRequestPayload } = props;
+    const { currentSection, selectedOtfNumber, selectedOrderId, CoDealerInvoiceStateMaster, handleThankyouButtonClick } = props;
 
     const myProps = {
         ...props,
@@ -25,6 +26,14 @@ const CoDealerInvoiceContainerMain = (props) => {
         selectedOrderId: selectedOtfNumber,
         selectedInvoiceId: selectedOrderId,
         showOptionalService: false,
+    };
+    const thankYouPageProps = {
+        FormActionButton: CoDealerFormButton,
+        thankyouPageTitle: CoDealerInvoiceStateMaster?.thankyouPageTitle,
+        generationTitle: CoDealerInvoiceStateMaster?.generationTitle,
+        generationMessage: CoDealerInvoiceStateMaster?.generationMessage,
+        handleThankyouButtonClick,
+        THANK_YOU_BUTTONS_CONSTANTS,
     };
 
     const renderSections = () => {
@@ -34,7 +43,8 @@ const CoDealerInvoiceContainerMain = (props) => {
             case CO_DEALER_SECTIONS?.VEHICLE_DETAILS?.id:
                 return <VehicleDetailsMaster {...myProps} />;
             case CO_DEALER_SECTIONS?.THANK_YOU_PAGE?.id:
-                return <></>;
+                return <ThankYouMaster {...thankYouPageProps} />;
+
             default: {
                 return <></>;
             }

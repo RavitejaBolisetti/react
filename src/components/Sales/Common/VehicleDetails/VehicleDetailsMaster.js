@@ -100,7 +100,7 @@ const VehicleDetailsMasterMain = (props) => {
     const [filterVehicleData, setFilterVehicleData] = useState([]);
 
     const onSuccessAction = () => {
-        return;
+        return false;
         //showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 

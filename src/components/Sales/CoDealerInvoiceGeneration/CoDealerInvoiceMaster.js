@@ -30,6 +30,7 @@ import { DATE_CONSTANTS } from './constants/DateConstants';
 import { validateRequiredSelectField } from 'utils/validation';
 import { BASE_URL_CO_DEALER_DETAILS, BASE_URL_VEHICLE_INVOICE_PROFILE_CARD } from 'constants/routingApi';
 import { vehicleInvoiceGenerationDataActions } from 'store/actions/data/sales/vehicleInvoiceGeneration';
+import { otfvehicleDetailsDataActions } from 'store/actions/data/otf/vehicleDetails';
 
 const mapStateToProps = (state) => {
     const {
@@ -91,6 +92,8 @@ const mapDispatchToProps = (dispatch) => ({
             listVinLoading: CoDealerVinNumberDataActions.listShowLoading,
             resetVinData: CoDealerVinNumberDataActions.reset,
 
+            resetTaxDetails: otfvehicleDetailsDataActions.reset,
+
             // saveData: vehicleDeliveryNoteDataActions.saveData,
 
             // fetchCustomerListData: vehicleDeliveryNoteCustomerDetailDataActions.fetchList,
@@ -116,7 +119,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
     const { filterString, setFilterString, coDealerInvoiceStatusList = Object?.values(CO_DEALER_QUERY_BUTTONS) } = props;
     const { fetchCoDealerInvoice, isCoDealerLoaded, listShowCoDealerLoading } = props;
     const { indentToDealerData, fetchDealerParentsLovList, listShowDealerLoading, fetchCoDealerDetails, resetCoDealerDetailData, listCoDealerDetailShowLoading, CoDealerData, fetchCoDealerProfileData } = props;
-    const { VinData, isVinLoading, isVinLoaded, fetchVin, listVinLoading, resetVinData, VIN_SEARCH_TYPE } = props;
+    const { VinData, isVinLoading, isVinLoaded, fetchVin, listVinLoading, resetVinData, VIN_SEARCH_TYPE, resetTaxDetails } = props;
 
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
@@ -336,7 +339,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
     const HandleVinList = (modelCode, searchType = VIN_SEARCH_TYPE) => {
         if (modelCode && searchType) {
             const onSuccessAction = (res) => {
-                setCoDealerInvoiceStateMaster((prev) => ({ ...prev, VinData: res?.data }));
+                setCoDealerInvoiceStateMaster((prev) => ({ ...prev, VinData: res?.data?.paginationData }));
             };
             const extraParams = [
                 {
@@ -415,7 +418,6 @@ export const CoDealerInvoiceMasterBase = (props) => {
     };
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
-        console.log('record', record);
         form.resetFields();
         form.setFieldsValue(undefined);
         switch (buttonAction) {
@@ -460,24 +462,26 @@ export const CoDealerInvoiceMasterBase = (props) => {
         !emptyString && advanceFilterForm.setFieldValue('invoiceStatus', CoDealerInvoiceStateMaster?.currentQuery);
     };
     const onFinish = () => {
+        const finalPayload = { indentDetails: CoDealerInvoiceStateMaster?.indentDetails, vehicleDetailRequest: CoDealerInvoiceStateMaster?.vehicleDetailRequest };
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
-            fetchCoDealerInvoice({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
-            setButtonData({ ...buttonData, formBtnActive: false });
+            fetchCoDealerInvoice({ setIsLoading: listShowCoDealerLoading, userId, onSuccessAction, extraParams });
+            setButtonData({ ...defaultBtnVisiblity, closeBtn: true });
             section && setCurrentSection(CO_DEALER_SECTIONS.THANK_YOU_PAGE.id);
+            setCoDealerInvoiceStateMaster((prev) => ({ ...prev, thankyouPageTitle: res?.thankyouPageTitle, generationTitle: res?.generationTitle, generationMessage: res?.generationMessage }));
         };
 
-        // const requestData = {
-        //     data: finalPayload,
-        //     method: 'post',
-        //     setIsLoading: listShowLoading,
-        //     userId,
-        //     onError: onErrorAction,
-        //     onSuccess,
-        //     customURL: '',
-        // };
-        // saveData(requestData);
+        const requestData = {
+            data: finalPayload,
+            method: 'post',
+            setIsLoading: listShowCoDealerLoading,
+            userId,
+            onError: onErrorAction,
+            onSuccess,
+        };
+
+        saveData(requestData);
     };
 
     const handleFormValueChange = () => {
@@ -488,6 +492,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
         resetCoDealerDetailData();
         resetVinData();
+        resetTaxDetails();
         setCoDealerInvoiceStateMaster((prev) => ({ ...prev, VinData: [], indentDetails: {}, vehicleDetailRequest: {} }));
     };
 
@@ -627,6 +632,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
         saveButtonName: isLastSection ? translateContent('global.buttons.submit') : translateContent('global.buttons.submit'),
         CoDealerInvoiceStateMaster,
         HandleVinList,
+        isVinLoading,
     };
 
     return (

@@ -25,7 +25,7 @@ const { Panel } = Collapse;
 
 export const AddEditForm = (props) => {
     const { toolTipContent, formData, typeData } = props;
-    const { collapseActiveKey, setcollapseActiveKey, CoDealerInvoiceStateMaster, HandleVinList } = props;
+    const { collapseActiveKey, setcollapseActiveKey, CoDealerInvoiceStateMaster, HandleVinList, setDealerDicountValue, isVinLoading } = props;
     const { isDisabled = true, form } = props;
     const disabledProps = { disabled: isDisabled };
 
@@ -60,18 +60,18 @@ export const AddEditForm = (props) => {
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item label={translateContent('commonModules.label.vehicleDetails.vin')} rules={[validateRequiredSelectField(translateContent('commonModules.label.vehicleDetails.vin'))]} name="vinNumber">
-                                        {customSelectBox({ data: CoDealerInvoiceStateMaster?.VinData, fieldNames: { key: '', value: '' } })}
+                                        {customSelectBox({ data: CoDealerInvoiceStateMaster?.VinData, fieldNames: { key: 'vehicleIdentificationNumber', value: 'vehicleIdentificationNumber' }, loading: isVinLoading })}
                                     </Form.Item>
                                 </Col>
 
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item initialValue={formData?.saleType} name="saleType" label={translateContent('commonModules.label.vehicleDetails.saleType')} rules={[validateRequiredSelectField('Sale Type')]}>
-                                        {customSelectBox({ data: CoDealerInvoiceStateMaster?.SALE_TYPE, onChange: (value) => {} })}
+                                        {customSelectBox({ data: CoDealerInvoiceStateMaster?.SALE_TYPE })}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item initialValue={formData?.priceType} label={translateContent('commonModules.label.vehicleDetails.priceType')} name="priceType">
-                                        {customSelectBox({ data: CoDealerInvoiceStateMaster?.PRC_TYP, onChange: (value) => {} })}
+                                        {customSelectBox({ data: CoDealerInvoiceStateMaster?.PRC_TYP })}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -100,7 +100,7 @@ export const AddEditForm = (props) => {
                                             },
                                         ]}
                                     >
-                                        <Input placeholder={preparePlaceholderText('Dealer Discount with TAX')} onChange={() => {}} />
+                                        <Input placeholder={preparePlaceholderText('Dealer Discount with TAX')} onChange={(value) => setDealerDicountValue(value)} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
