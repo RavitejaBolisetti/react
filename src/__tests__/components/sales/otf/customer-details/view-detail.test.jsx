@@ -20,5 +20,9 @@ describe('view details Components', () => {
         const plusicon = screen.getAllByRole('img', { name: 'plus' });
         fireEvent.click(plusicon[0]);
         fireEvent.click(plusicon[1]);
+
+        const minusIcon = screen.getAllByRole('img', { name: 'minus' });
+        fireEvent.click(minusIcon[0]);
+        fireEvent.click(minusIcon[1]);
     });
 });
