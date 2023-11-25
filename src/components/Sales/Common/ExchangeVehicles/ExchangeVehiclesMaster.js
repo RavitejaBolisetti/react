@@ -148,6 +148,7 @@ const ExchangeVehiclesBase = (props) => {
     const [modalOpen, setModalOpen] = useState(false);
     const [modelGroup, setModelGroup] = useState(null);
     const [isMahindraMake, setIsMahindraMake] = useState(false);
+    const [isExchangeVisible, setExchangeVisible] = useState(false);
 
     const [exhangeDataParams, setExchangeDataParams] = useState();
 
@@ -493,6 +494,8 @@ const ExchangeVehiclesBase = (props) => {
         handleSchemeChange,
         MAHINDRA_MAKE,
         isMahindraMake,
+        isExchangeVisible,
+        setExchangeVisible,
     };
 
     const viewProps = {

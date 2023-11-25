@@ -169,7 +169,7 @@ const AddEditFormMain = (props) => {
         selectedTreeSelectKey: formData?.model,
         handleSelectTreeClick,
         treeExpandedKeys: [formData?.model],
-        placeholder: preparePlaceholderSelect(translateContent('commonModules.vehicleDetails.model')),
+        placeholder: preparePlaceholderSelect(translateContent('commonModules.label.vehicleDetails.modelDescription')),
         loading: !viewOnly ? isProductDataLoading : false,
         treeDisabled: true,
     };
