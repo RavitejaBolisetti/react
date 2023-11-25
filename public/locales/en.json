@@ -211,8 +211,8 @@
         "sectionHeading": {
             "thankYou": "Thank You"
         },
-        "access":{
-            "accessProvide" : "Accesses Provided",
+        "access": {
+            "accessProvide": "Accesses Provided",
             "applicationAccess": "application access"
         }
     },
@@ -1964,9 +1964,9 @@
         }
     },
     "userManagement": {
-        "constant":{
-            "userType":{
-                "Manufacturer":"Manufacturer",
+        "constant": {
+            "userType": {
+                "Manufacturer": "Manufacturer",
                 "Dealer": "Dealer"
             }
         },
@@ -2825,6 +2825,7 @@
                 "paymentMode": "Payment Mode",
                 "creditCardTransactionsNumber": "Credit Card Transaction No.",
                 "receiveAmount": "Receive Amount",
+                "receivedAmount": "Received Amount",
                 "serviceChargePercentage": "Service Charge Percentage",
                 "serviceChargeAmount": "Service Charge Amount",
                 "taxOnServiceCharge": "Tax On Service Charge",
