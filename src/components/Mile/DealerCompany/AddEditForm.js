@@ -13,6 +13,7 @@ import { DrawerFormButton } from 'components/common/Button';
 import styles from 'assets/sass/app.module.scss';
 import { customSelectBox } from 'utils/customSelectBox';
 import { translateContent } from 'utils/translateContent';
+import { convertToUpperCase } from 'utils/convertToUpperCase';
 
 const { TextArea } = Input;
 
@@ -262,7 +263,7 @@ const AddEditFormMain = (props) => {
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item initialValue={formData?.companyPan} label={translateContent('dealerCompany.label.pan')} name="companyPan" rules={[validateRequiredInputField('PAN'), validatePanField('PAN')]}>
-                                        <Input placeholder={translateContent('dealerCompany.placeholder.pan')} />
+                                        <Input onInput={convertToUpperCase} placeholder={translateContent('dealerCompany.placeholder.pan')} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>

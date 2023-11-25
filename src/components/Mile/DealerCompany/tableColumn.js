@@ -22,7 +22,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             width: '15%',
         }),
         tblPrepareColumns({
-            title: translateContent('dealerCompany.tableColHeading.stateName'),
+            title: translateContent('dealerCompany.tableColHeading.companyName'),
             dataIndex: 'companyName',
             width: '20%',
         }),
