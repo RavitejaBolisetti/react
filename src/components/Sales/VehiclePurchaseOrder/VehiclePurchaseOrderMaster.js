@@ -157,10 +157,6 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
                     value: 'Sales',
                 },
                 {
-                    key: 'prodctCode',
-                    value: 'SCNM033017183935', //selectedOrder?.modelCode,
-                },
-                {
                     key: 'hierarchyNode',
                     value: 'MV',
                 },
