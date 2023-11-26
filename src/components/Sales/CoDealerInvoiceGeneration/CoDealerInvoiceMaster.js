@@ -437,7 +437,6 @@ export const CoDealerInvoiceMasterBase = (props) => {
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
         form.setFieldsValue(undefined);
-        console.log('record', record);
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
@@ -477,7 +476,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
 
         setAdditionalReportParams([
             {
-                key: 'hdr_id',
+                key: 'sa_od_invoice_hdr_id',
                 value: record?.id,
             },
         ]);

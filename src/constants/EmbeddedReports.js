@@ -271,7 +271,7 @@ export const EMBEDDED_REPORTS = {
     CO_DEALER_INVOICE_DOCUMENT: {
         id: 39,
         key: '',
-        title: 'Co Dealer Invoice Document',
+        title: 'Co Dealer Invoice Document ',
         type: 'Document',
     },
 };
