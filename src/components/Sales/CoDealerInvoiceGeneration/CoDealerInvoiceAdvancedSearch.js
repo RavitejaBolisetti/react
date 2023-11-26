@@ -56,13 +56,13 @@ export const AdvancedSearchFrom = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label={translateContent('vehicleDeliveryNote.label.deliveryNoteFromDate')} name="invoiceFromDate" className={styles?.datePicker} rules={CoDealerInvoiceStateMaster?.INVOICE_FROM_DATE}>
+                    <Form.Item label={translateContent('vehicleDeliveryNote.label.invoiceFromDate')} name="invoiceFromDate" className={styles?.datePicker} rules={CoDealerInvoiceStateMaster?.INVOICE_FROM_DATE}>
                         <DatePicker onChange={(value) => handleDateChange(value, DATE_CONSTANTS?.INVOICE_FROM_DATE?.key)} placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                        label={translateContent('vehicleDeliveryNote.label.deliveryNoteToDate')}
+                        label={translateContent('vehicleDeliveryNote.label.invoiceToDate')}
                         name="invoiceToDate"
                         className={styles?.datePicker}
                         rules={[
