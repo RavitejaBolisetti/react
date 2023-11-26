@@ -2487,7 +2487,9 @@
             "profileCard.cancelReason": "Cancellation Reason:",
 
             "notification.allotedOtfMessage": "Only alloted OTF can be invoice",
-            "notification.otfAlreadyInvoiced": "OTF number is already invoiced"
+            "notification.otfAlreadyInvoiced": "OTF number is already invoiced",
+            "thankYouMessage": "Invoice number created successfully",
+            "thankYouPrintInvoce": "Do you want to Print or download this invoice"
         },
         "label": {
             "bookingDetails.bookingNumber": "Booking Number",
