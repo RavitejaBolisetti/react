@@ -18,6 +18,8 @@ import { CO_DEALER_QUERY_BUTTONS, SEARCH_PARAM_CONSTANTS, THANK_YOU_TYPE } from 
 import { showGlobalNotification } from 'store/actions/notification';
 import { CO_DEALER_SECTIONS } from 'components/Sales/CoDealerInvoiceGeneration/constants';
 import { drawerTitle } from 'utils/drawerTitle';
+import { ReportModal } from 'components/common/ReportModal/ReportModal';
+import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
 
 import { CoDealerInvoiceFilter } from './CoDealerInvoiceFilter';
 import { CoDealerSearchDataActions, CoDealerVinNumberDataActions } from 'store/actions/data/CoDealerInvoice';
@@ -131,6 +133,8 @@ export const CoDealerInvoiceMasterBase = (props) => {
 
     const [CoDealerInvoiceStateMaster, setCoDealerInvoiceStateMaster] = useState({ currentQuery: CO_DEALER_QUERY_BUTTONS?.PENDING?.key, currentButtonName: CO_DEALER_QUERY_BUTTONS?.PENDING?.title, current: 1, pageSize: 10, typeDataFilter: [], INVOICE_FROM_DATE: [], INVOICE_TO_DATE: [], requestpayload: {}, VinData: [] });
 
+    const [additionalReportParams, setAdditionalReportParams] = useState();
+    const [isReportVisible, setReportVisible] = useState();
     const [section, setSection] = useState();
     const [defaultSection, setDefaultSection] = useState();
     const [currentSection, setCurrentSection] = useState();
@@ -155,7 +159,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
         deliveryNote: false,
         nextBtn: false,
         cancelDeliveryNoteBtn: false,
-        printDeliveryNoteBtn: false,
+        printInvoiceBtn: false,
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -326,7 +330,6 @@ export const CoDealerInvoiceMasterBase = (props) => {
             }
             case CO_DEALER_QUERY_BUTTONS?.INVOICED?.key: {
                 setActionButtonVisiblity({ canAdd: false, canView: true, canEdit: false });
-                setButtonData({ ...buttonData, printDeliveryNoteBtn: true, cancelDeliveryNoteBtn: true });
                 typeDataFilter = CoDealerInvoiceStateMaster?.TYPE_DATA_INV_SEARCH;
                 break;
             }
@@ -372,9 +375,9 @@ export const CoDealerInvoiceMasterBase = (props) => {
                 break;
             case VIEW_ACTION:
                 if (record?.invoiceStatus === CO_DEALER_QUERY_BUTTONS?.INVOICED?.key) {
-                    btnVisibilityStatus = { ...buttonData, cancelInvoice: true, closeBtn: true, nextBtn: !isLastSection };
+                    btnVisibilityStatus = { ...buttonData, cancelInvoice: true, closeBtn: true, nextBtn: !isLastSection, printInvoiceBtn: true };
                 } else {
-                    btnVisibilityStatus = { ...buttonData, cancelInvoice: false };
+                    btnVisibilityStatus = { ...buttonData, cancelInvoice: false, printInvoiceBtn: false };
                 }
                 formAction = { addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION };
                 break;
@@ -468,7 +471,17 @@ export const CoDealerInvoiceMasterBase = (props) => {
         setFormActionType(handleDrawerButtonVisibility({ buttonAction, record })?.formAction);
         setIsFormVisible(true);
     };
-    const handleInvoicePrint = (selectedOrder) => {};
+
+    const handleInvoicePrint = (record) => {
+        setReportVisible(true);
+
+        setAdditionalReportParams([
+            {
+                key: 'hdr_id',
+                value: record?.id,
+            },
+        ]);
+    };
 
     const handleThankyouButtonClick = (item) => {
         const buttonKey = item?.key;
@@ -694,6 +707,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
         isVinLoading,
         handleThankyouButtonClick,
         selectedOrder: CoDealerInvoiceStateMaster?.selectedOrder,
+        handleInvoicePrint,
     };
     const onCancelCloseAction = () => {
         setCancelInvoiceVisible(false);
@@ -709,6 +723,16 @@ export const CoDealerInvoiceMasterBase = (props) => {
         typeData,
     };
 
+    const reportDetail = EMBEDDED_REPORTS?.CO_DEALER_INVOICE_DOCUMENT;
+    const reportProps = {
+        isVisible: isReportVisible,
+        titleOverride: reportDetail?.title,
+        additionalParams: additionalReportParams,
+        onCloseAction: () => {
+            setReportVisible(false);
+        },
+    };
+
     return (
         <>
             <CoDealerInvoiceFilter {...CoDealerInvoiceFilterProps} />
@@ -720,6 +744,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
             <CoDealerInvoiceAdvancedSearch {...CoDealerInvoiceAdvancedSearchProps} />
             <CoDealerInvoiceMainContainer {...containerProps} />
             <CancelInvoice {...cancelInvoiceProps} />
+            <ReportModal {...reportProps} reportDetail={reportDetail} />
         </>
     );
 };
