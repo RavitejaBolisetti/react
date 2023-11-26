@@ -179,13 +179,13 @@ const OTFAllotmentMasterBase = (props) => {
     }, [userId, filterString, searchParamValue, toggleButton, extraParams]);
 
     useEffect(() => {
-        if (allotmentSearchedList?.paginationData.length > 0) {
+        if (allotmentSearchedList?.paginationData?.length > 0) {
             setButtonData({ ...buttonData, formBtnActive: true });
         } else {
             setButtonData({ ...buttonData, formBtnActive: false });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [allotmentSearchedList?.paginationData]);
+    }, [allotmentSearchedList]);
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
         switch (buttonAction) {
