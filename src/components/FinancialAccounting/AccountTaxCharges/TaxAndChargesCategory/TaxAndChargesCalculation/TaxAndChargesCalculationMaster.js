@@ -30,7 +30,7 @@ export const TaxAndChargesCalculationMaster = (props) => {
                 if (taxChargeCalList?.length > 0) {
                     let insertFlag = false;
                     for (let i = 0; i < taxChargeCalList?.length; i++) {
-                        if (taxChargeCalList[i]?.gstStateCode === data?.gstStateCode && taxChargeCalList[i]?.saleType === data?.saleType && taxChargeCalList[i]?.chargeType === data?.chargeType && taxChargeCalList[i]?.chargeCode === data?.chargeCode) {
+                        if (taxChargeCalList[i]?.stateCode === data?.stateCode && taxChargeCalList[i]?.saleType === data?.saleType && taxChargeCalList[i]?.chargeType === data?.chargeType && taxChargeCalList[i]?.chargeCode === data?.chargeCode) {
                             insertFlag = true;
                             break;
                         }
@@ -129,7 +129,7 @@ export const TaxAndChargesCalculationMaster = (props) => {
 
             {taxChargeCalList?.length > 0 &&
                 taxChargeCalList?.map((action) => {
-                    return <CardProductAttribute {...cardAttributeProps} chargeType={action?.chargeType} chargeCode={action?.chargeCode} chargeDescription={action?.chargeDescription} internalId={action?.internalId} id={action?.id} taxMasterId={action?.taxMasterId} gstStateCode={action?.gstStateCode} saleType={action?.saleType} />;
+                    return <CardProductAttribute {...cardAttributeProps} chargeType={action?.chargeType} chargeCode={action?.chargeCode} chargeDescription={action?.chargeDescription} internalId={action?.internalId} id={action?.id} taxMasterId={action?.taxMasterId} stateCode={action?.stateCode} saleType={action?.saleType} />;
                 })}
         </>
     );
