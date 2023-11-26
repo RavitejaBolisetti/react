@@ -34,13 +34,13 @@ const DrawerButtons = ({ formData, onCloseAction, buttonData, setButtonData, sav
                     </Button>
                 )}
                 {buttonData?.saveBtn && (
-                    <Button loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive} data-testid="save" onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
+                    <Button loading={isLoadingOnSave?.isSaveBtnLoading} disabled={!buttonData?.formBtnActive} data-testid="save" onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
                         {saveButtonName}
                     </Button>
                 )}
 
                 {buttonData?.saveAndNewBtn && (
-                    <Button loading={isLoadingOnSave} data-testid="save-and-new" htmlType="submit" disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: true })} type="primary">
+                    <Button loading={isLoadingOnSave?.isSaveAndNewBtnLoading} data-testid="save-and-new" htmlType="submit" disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: true })} type="primary">
                         {translateContent('global.buttons.saveAndNew')}
                     </Button>
                 )}
