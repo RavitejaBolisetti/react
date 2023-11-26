@@ -11,32 +11,30 @@ import customRender from '@utils/test-utils';
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 
-jest.mock('store/actions/data/financialAccounting/documentTypeLedger', ()=>({
-    documentTypeLedgerDataActions:{}
+jest.mock('store/actions/data/financialAccounting/documentTypeLedger', () => ({
+    documentTypeLedgerDataActions: {},
 }));
 
 const fetchDocTypeLedger = jest.fn();
-const fetchDocTypeLedgerDetail = jest.fn();
 
 afterEach(() => {
     jest.restoreAllMocks();
 });
 
 describe('DocumentTypeOtherChargesMaster components', () => {
-
-    it('edit and view button', async() => {
+    it('edit and view button', async () => {
         const mockStore = createMockStore({
-            auth: { userId:123 },
+            auth: { userId: 123 },
             data: {
                 FinancialAccounting: {
-                    DocumentTypeLedger: { isLoaded: false, isLoading: false, data: { pageNumber:1, pageSize:10, totalRecords:1, paginationData: [{applicationId: "Finac", applicationName: "test", documentType: "REC", documentTypeCode: "REC", documentTypeId: "153"}] } }
-                }
-            }
+                    DocumentTypeLedger: { isLoaded: false, isLoading: false, data: { pageNumber: 1, pageSize: 10, totalRecords: 1, paginationData: [{ applicationId: 'Finac', applicationName: 'test', documentType: 'REC', documentTypeCode: 'REC', documentTypeId: '153' }] } },
+                },
+            },
         });
 
         customRender(
             <Provider store={mockStore}>
-                <DocumentTypeOtherChargesMaster fetchDocTypeLedger={fetchDocTypeLedger} fetchDocTypeLedgerDetail={fetchDocTypeLedgerDetail} />
+                <DocumentTypeOtherChargesMaster fetchDocTypeLedger={fetchDocTypeLedger} fetchDocTypeLedgerDetail={jest.fn()} />
             </Provider>
         );
 
@@ -45,7 +43,7 @@ describe('DocumentTypeOtherChargesMaster components', () => {
         const tableText = await screen.findByText(/test/i);
         expect(tableText).toBeTruthy();
 
-        const eyeIcon = screen.getByRole('button', {name:'ai-view'});
+        const eyeIcon = screen.getByRole('button', { name: 'ai-view' });
         fireEvent.click(eyeIcon);
     });
 });

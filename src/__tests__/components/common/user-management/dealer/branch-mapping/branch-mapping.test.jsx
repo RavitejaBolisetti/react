@@ -42,8 +42,8 @@ describe('Branch Mapping Component', () => {
 
     it('should set button data on loading', () => {
         const setButtonData = jest.fn();
-        const formActionType={
-            viewMode: true
+        const formActionType = {
+            viewMode: true,
         };
         customRender(<BranchMapping formActionType={formActionType} {...data} setButtonData={setButtonData} dlrBranchLocationDataList={dlrBranchLocationDataList} resetUsrDlrBranchLocationsList={jest.fn()} resetDlrBranchLocationsList={jest.fn()} isUsrdlrBrLocationsLoaded={true} />);
         const callback = setButtonData.mock.calls[0][0];
@@ -56,8 +56,8 @@ describe('Branch Mapping Component', () => {
             saveBtn: true,
         };
 
-        const formActionType={
-            viewMode: false
+        const formActionType = {
+            viewMode: false,
         };
 
         const saveUsrDlrBrLoactionRoleDataList = jest.fn();
@@ -69,7 +69,7 @@ describe('Branch Mapping Component', () => {
         const defaultCheckbox = screen.getByRole('checkbox', { name: 'Default' });
         fireEvent.click(defaultCheckbox);
 
-        const saveBtn = screen.getByRole('button', { name: 'Save & Next' });
+        const saveBtn = screen.getByRole('button', { name: 'Save & Close' });
         fireEvent.click(saveBtn);
 
         await waitFor(() => expect(saveUsrDlrBrLoactionRoleDataList).toHaveBeenCalled());
