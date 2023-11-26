@@ -55,21 +55,21 @@ export const OTFFormButton = ({ record, handleChangeHistory, handleOtfSoMappingH
                         </Button>
                     )}
 
-                    {buttonData?.invoiceBtn && (
+                    {/* {buttonData?.invoiceBtn && (
                         <Popover content={content} trigger="hover">
                             <Button onClick={() => {}} type="primary">
                                 {translateContent('global.buttons.invoice')}
                             </Button>
                         </Popover>
-                    )}
+                    )} */}
 
-                    {buttonData?.deliveryNoteBtn && (
+                    {/* {buttonData?.deliveryNoteBtn && (
                         <Popover content={content} trigger="hover">
                             <Button onClick={() => {}} type="primary">
                                 {translateContent('global.buttons.deliveryNote')}
                             </Button>
                         </Popover>
-                    )}
+                    )} */}
 
                     {buttonData?.transferOTFBtn && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.TRANSFER_OTF, record })} type="primary">

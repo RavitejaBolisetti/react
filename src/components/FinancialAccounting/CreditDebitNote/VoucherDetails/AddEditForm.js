@@ -19,7 +19,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const AddEditFormMain = (props) => {
-    const { isReadOnly, setIsReadOnly, typeData } = props;
+    const { isReadOnly, setIsReadOnly, typeData, styles } = props;
     const { itemOptions, setitemOptions } = props;
     const { formData, formActionType, handleCollapse, showGlobalNotification, selectedRecordId, openAccordian, setOpenAccordian, handleFormValueChange } = props;
     const { MakefieldNames, ItemFieldNames, bindCodeValue } = props;
@@ -119,13 +119,11 @@ const AddEditFormMain = (props) => {
                     <Collapse collapsible="icon" onChange={() => handleCollapse('voucher')} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} {...collapseProps}>
                         <Panel
                             header={
-                                <Row>
-                                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                        <Text strong>{translateContent('creditDebitNote.voucherDetails.heading.title')}</Text>
-                                        <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary">
-                                            {translateContent('global.buttons.add')}
-                                        </Button>
-                                    </Col>
+                                <Row type="flex" align="middle">
+                                    <Text>{translateContent('creditDebitNote.voucherDetails.heading.title')}</Text>
+                                    <Button className={styles.marL5} onClick={addContactHandeler} icon={<PlusOutlined />} type="primary">
+                                        {translateContent('global.buttons.add')}
+                                    </Button>
                                 </Row>
                             }
                             key="voucher"

@@ -42,7 +42,7 @@ const ViewDetailMain = (props) => {
                         <Descriptions.Item label={translateContent('vehicleDetail.productDetails.label.productDivision')}>{checkAndSetDefaultValue(productAttributeDetail?.productDivision, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label={translateContent('vehicleDetail.productDetails.label.modelFamily')}>{checkAndSetDefaultValue(modelFamilyData?.length > 0 && modelFamilyData[0]?.familyDescription, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label={translateContent('vehicleDetail.productDetails.label.modelGroup')}>{checkAndSetDefaultValue(modelData?.length > 0 && modelData[0]?.modelGroupDescription, isLoading)}</Descriptions.Item>
-
+                        <Descriptions.Item label={translateContent('vehicleDetail.productDetails.label.modelVariant')}>{checkAndSetDefaultValue(variantData?.length > 0 && variantData[0]?.variantDescription, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label={translateContent('vehicleDetail.productDetails.label.model')}>
                             {isLoading ? (
                                 <InputSkeleton width={'100px'} height={20} theme={'card'} />
@@ -55,7 +55,6 @@ const ViewDetailMain = (props) => {
                                 </div>
                             )}
                         </Descriptions.Item>
-                        <Descriptions.Item label={translateContent('vehicleDetail.productDetails.label.modelVariant')}>{checkAndSetDefaultValue(variantData?.length > 0 && variantData[0]?.variantDescription, isLoading)}</Descriptions.Item>
                         {/* <Descriptions.Item label="Manufacturer Invoice Date">{!isLoading ? productAttributeDetail?.manufacturerInvoiceDate?.slice(0, 10) ?? '-' : <InputSkeleton width={'100px'} height={20} theme={'card'} />}</Descriptions.Item>
                         <Descriptions.Item label="Manufacturer Warrenty Start Date">{!isLoading ? productAttributeDetail?.manufacturerWarrantyStartDate?.slice(0, 10) ?? '-' : <InputSkeleton width={'100px'} height={20} theme={'card'} />}</Descriptions.Item> */}
                     </Descriptions>
