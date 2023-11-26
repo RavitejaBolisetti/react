@@ -13,7 +13,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { translateContent } from 'utils/translateContent';
 
 function FormProductAttribute(props) {
-    const { taxChargeCalForm, taxCharges, addTaxChargeCal, formEdit, editForm, handleCodeFunction, handleDescriptionChange, mainFomEdit, dropdownItems, stateData, saleData, taxCategory, isTaxCategoryCodeLoading } = props;
+    const { taxChargeCalForm, taxCharges, addTaxChargeCal, formEdit, editForm, handleCodeFunction, handleDescriptionChange, mainFomEdit, taxChargeCategoryCodeData, stateData, saleData, taxCategory, isTaxCategoryCodeLoading } = props;
 
     const fieldNames = { key: 'taxCode', value: 'taxCode' };
 
@@ -22,7 +22,7 @@ function FormProductAttribute(props) {
             <Form form={formEdit ? editForm : taxChargeCalForm} id="myForm" autoComplete="off" layout="vertical">
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label={translateContent('taxChargeCatagory.label.state')} initialValue={taxCategory?.stateCode} name="stateCode" rules={[validateRequiredSelectField(translateContent('taxChargeCatagory.label.state'))]}>
+                        <Form.Item label={translateContent('taxChargeCatagory.label.state')} initialValue={taxCategory?.gstStateCode} name="gstStateCode" rules={[validateRequiredSelectField(translateContent('taxChargeCatagory.label.state'))]}>
                             {customSelectBox({ disabled: mainFomEdit, data: stateData, fieldNames: { key: 'gstStateCode', value: 'name' }, placeholder: preparePlaceholderSelect(translateContent('taxChargeCatagory.label.state')) })}
                         </Form.Item>
                     </Col>
@@ -38,7 +38,7 @@ function FormProductAttribute(props) {
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item label={translateContent('taxChargeCatagory.label.tax/chargeCode')} name="chargeCode" initialValue={props?.code} rules={[validateRequiredSelectField(translateContent('taxChargeCatagory.placeholder.taxCode'))]}>
-                            <Select options={dropdownItems} disabled={mainFomEdit} fieldNames={fieldNames} placeholder={preparePlaceholderSelect(translateContent('taxChargeCatagory.placeholder.taxCode'))} onChange={handleDescriptionChange} loading={isTaxCategoryCodeLoading} />
+                            <Select options={taxChargeCategoryCodeData} disabled={mainFomEdit} fieldNames={fieldNames} placeholder={preparePlaceholderSelect(translateContent('taxChargeCatagory.placeholder.taxCode'))} onChange={handleDescriptionChange} loading={isTaxCategoryCodeLoading} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>

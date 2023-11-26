@@ -15,7 +15,6 @@ import { TaxAndChargesCalculationMaster } from './TaxAndChargesCalculation';
 import { taxChargeCategoryDataActions } from 'store/actions/data/financialAccounting/taxChargesCategory';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { showGlobalNotification } from 'store/actions/notification';
 import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
@@ -45,7 +44,6 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchTaxChargeCategoryDetail: taxChargeCategoryDataActions.fetchData,
             listShowLoadingTaxChargeCategory: taxChargeCategoryDataActions.listShowLoading,
-            showGlobalNotification,
         },
         dispatch
     ),
@@ -55,7 +53,7 @@ export const ViewEditContext = createContext(null);
 
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType, formActionType: { editMode, viewMode } = undefined, isVisible, fetchTaxChargeCategoryDetail, userId, handleCodeFunction, taxChargeCategoryCodeData, onFinish, stateData, saleData, taxChargeCategoryTypeData, editForm, taxChargeCalForm, dropdownItems, setDropdownItems } = props;
-    const { buttonData, setButtonData, handleButtonClick, formEdit, setFormEdit, taxChargeCalList, setTaxChargeCalList, isTaxCategoryCodeLoading, isConfigurableLoading } = props;
+    const { buttonData, setButtonData, handleButtonClick, formEdit, setFormEdit, taxChargeCalList, setTaxChargeCalList, isTaxCategoryCodeLoading, isConfigurableLoading, showGlobalNotification } = props;
 
     const [openAccordian, setOpenAccordian] = useState(1);
     const [taxCategory, setTaxCategory] = useState();
@@ -96,7 +94,7 @@ const AddEditFormMain = (props) => {
             form.setFieldsValue({
                 taxCategoryCode: taxCategory?.taxCategoryCode,
                 taxCategoryDescription: taxCategory?.taxCategoryDescription,
-                stateCode: taxCategory?.stateCode,
+                gstStateCode: taxCategory?.gstStateCode,
                 saleType: taxCategory?.saleType,
                 status: taxCategory?.status,
             });
@@ -145,6 +143,7 @@ const AddEditFormMain = (props) => {
         saleData,
         isTaxCategoryCodeLoading,
         isConfigurableLoading,
+        showGlobalNotification,
     };
 
     return (

@@ -16,7 +16,7 @@ const { Text } = Typography;
 const CardProductAttribute = (props) => {
     const { finalFormdata, taxChargeCalForm, forceUpdate, taxCharges, productHierarchyAttributeData, taxChargeCategoryCodeData, taxChargeCalList, setTaxChargeCalList, objTaxCharge, setOpenAccordian, changeValue, setChangeValue, handleCodeFunction, editForm, formEdit, setFormEdit, uniqueCardEdit, setuniqueCardEdit, handleDescriptionChange, buttonData, setButtonData, dropdownItems, setDropdownItems, viewMode, internalId, stateData, saleData, taxCategory } = props;
     const taxChargeDesc = taxCharges?.find((e) => e?.taxType === props?.chargeType)?.taxDescription;
-    const stateName = stateData?.find((e) => e?.gstStateCode === props?.stateCode)?.name;
+    const stateName = stateData?.find((e) => e?.gstStateCode === props?.gstStateCode)?.name;
     const saleTypeName = saleData?.find((e) => e?.key === props?.saleType)?.value;
 
     const taxChargeCalEdit = (props) => {
@@ -30,7 +30,7 @@ const CardProductAttribute = (props) => {
             chargeDescription: props?.chargeDescription,
             internalId: props?.internalId,
             taxMasterId: props?.taxMasterId,
-            stateCode: props?.stateCode,
+            gstStateCode: props?.gstStateCode,
             saleType: props?.saleType,
         });
 
@@ -47,7 +47,7 @@ const CardProductAttribute = (props) => {
                 obj.chargeDescription = newFormData?.chargeDescription;
                 obj.internalId = newFormData?.internalId;
                 obj.taxMasterId = newFormData?.taxMasterId;
-                obj.stateCode = newFormData?.stateCode;
+                obj.gstStateCode = newFormData?.gstStateCode;
                 obj.saleType = newFormData?.saleType;
             }
             return obj;
