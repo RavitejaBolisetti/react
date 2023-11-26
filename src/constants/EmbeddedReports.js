@@ -270,7 +270,7 @@ export const EMBEDDED_REPORTS = {
     },
     CO_DEALER_INVOICE_DOCUMENT: {
         id: 39,
-        key: '',
+        key: 'Co_Dealer_Invoice_Doument',
         title: 'Co Dealer Invoice Document ',
         type: 'Document',
     },
