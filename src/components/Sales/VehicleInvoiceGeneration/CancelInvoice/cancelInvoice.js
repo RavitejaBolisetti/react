@@ -20,7 +20,7 @@ export const CancelInvoiceForm = ({ handleCloseReceipt, handleCancelReceipt, can
         <Form autoComplete="off" form={cancelInvoiceForm} onFinish={handleCancelReceipt} layout="vertical">
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Form.Item label={translateContent('vehicleInvoiceGeneration.labelcancelInvoice.reasonForCancellation')} name="cancelReason" rules={[validateRequiredInputField('Reason for Cancellation')]}>
+                    <Form.Item label={translateContent('vehicleInvoiceGeneration.label.cancelInvoice.reasonForCancellation')} name="cancelReason" rules={[validateRequiredInputField('Reason for Cancellation')]}>
                         {customSelectBox({ data: typeData?.[PARAM_MASTER.INVOICE_CANCEL_REASON.id], placeholder: preparePlaceholderSelect('Reason for Cancellation') })}
                     </Form.Item>
                 </Col>

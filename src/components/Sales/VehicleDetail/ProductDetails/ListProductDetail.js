@@ -218,7 +218,6 @@ const ProductDetailMasterMain = (props) => {
     useEffect(() => {
         if (isDataLoaded && ProductDetailsData) {
             setformData(ProductDetailsData);
-            console.log('ProductDetailsData', ProductDetailsData);
             fetchModelLovList({ setIsLoading: listModelShowLoading, userId, extraParams: makeExtraParams({ key: 'modelGroupCode', title: 'modelGroupCode', value: ProductDetailsData?.productAttributeDetail?.modelGroup, name: 'modelGroupCode' }) });
             fetchVariantLovList({ setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams({ key: 'variantCode', title: 'variantCode', value: ProductDetailsData?.productAttributeDetail?.modelVariant, name: 'variantCode' }) });
             fetchModelFamilyLovList({ setIsLoading: listFamilyShowLoading, userId, extraParams: makeExtraParams({ key: 'familyCode', title: 'familyCode', value: ProductDetailsData?.productAttributeDetail?.modelFamily, name: 'familyCode' }) });

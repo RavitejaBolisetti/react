@@ -127,7 +127,7 @@ const AddEditFormMain = (props) => {
             if (isPresent && Object?.keys(isPresent)?.length > 0) {
                 showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: translateContent('vehicleSalesSchemeMaster.text.errorMessageText1') });
             } else {
-                setTableDataItem((prev) => [...prev, { ...values, modelName: data, toggleStatus: values?.toggleStatus, status: true }]);
+                setTableDataItem((prev) => [ { ...values, modelName: data, toggleStatus: values?.toggleStatus, status: true },...prev]);
             }
         }
         setEditingData({});
@@ -170,10 +170,10 @@ const AddEditFormMain = (props) => {
             if (isPresent && Object?.keys(isPresent)?.length > 0) {
                 showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: translateContent('vehicleSalesSchemeMaster.text.errorMessageText2') });
             } else {
-                setZoneTableDataItem([...zoneTableDataItem, { ...values, areaName, zoneName, id: '', status: true }]);
+                setZoneTableDataItem([{ ...values, areaName, zoneName, id: '', status: true }, ...zoneTableDataItem]);
             }
         } else {
-            setZoneTableDataItem((prev) => [...prev, { ...values, areaName, zoneName, id: '', status: true }]);
+            setZoneTableDataItem((prev) => [{ ...values, areaName, zoneName, id: '', status: true }, ...prev]);
         }
 
         setAddZoneArea(false);

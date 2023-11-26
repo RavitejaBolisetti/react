@@ -30,7 +30,7 @@ const ViewDetailMain = (props) => {
                 <Descriptions.Item label={translateContent('coDealer.label.indentDetails.address')}>{checkAndSetDefaultValue(formData?.address, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label={translateContent('coDealer.label.indentDetails.cityDistrict')}>{checkAndSetDefaultValue(formData?.city, isLoading)}</Descriptions.Item>
 
-                <Descriptions.Item label={translateContent('coDealer.label.indentDetails.state')}>{(checkAndSetDefaultValue(formData?.state), isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('coDealer.label.indentDetails.state')}>{checkAndSetDefaultValue(formData?.state, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label={translateContent('coDealer.label.indentDetails.pinCode')}>{checkAndSetDefaultValue(formData?.pinCode, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label={translateContent('coDealer.label.indentDetails.gstIn')}>{checkAndSetDefaultValue(formData?.gstIn, isLoading)}</Descriptions.Item>
             </Descriptions>

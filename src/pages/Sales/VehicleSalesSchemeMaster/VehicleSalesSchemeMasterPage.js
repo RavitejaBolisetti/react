@@ -7,9 +7,10 @@ import React from 'react';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 import {VehicleSalesSchemeMaster} from 'components/Sales/VehicleSalesSchemeMaster';
+import { translateContent } from 'utils/translateContent';
 
 const VehicleSalesSchemeMasterBase = (props) => {
-    const pageTitle = 'Vehicle Sales Scheme Master';
+    const pageTitle = translateContent('vehicleSalesSchemeMaster.heading.title');
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

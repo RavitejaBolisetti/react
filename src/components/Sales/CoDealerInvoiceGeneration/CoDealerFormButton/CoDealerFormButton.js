@@ -41,7 +41,7 @@ export const CoDealerFormButton = ({ handleInvoicePrint, record, onCloseAction, 
                     )}
 
                     {buttonData?.cancelInvoice && (
-                        <Button onClick={onCancelDeliveryNote} danger>
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_INVOICE, record })} danger>
                             {cancelInvoiceBtnName}
                         </Button>
                     )}

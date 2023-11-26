@@ -18,7 +18,7 @@ import { ThankYouMaster } from 'utils/ThankYouPage';
 import { THANK_YOU_BUTTONS_CONSTANTS } from './constants';
 
 const CoDealerInvoiceContainerMain = (props) => {
-    const { currentSection, selectedOtfNumber, selectedOrderId, CoDealerInvoiceStateMaster, handleThankyouButtonClick } = props;
+    const { currentSection, selectedOtfNumber, selectedOrderId, CoDealerInvoiceStateMaster, handleThankyouButtonClick, buttonData, onCloseAction } = props;
 
     const myProps = {
         ...props,
@@ -26,14 +26,17 @@ const CoDealerInvoiceContainerMain = (props) => {
         selectedOrderId: selectedOtfNumber,
         selectedInvoiceId: selectedOrderId,
         showOptionalService: false,
+        selectedOrder: CoDealerInvoiceStateMaster?.selectedOrder,
     };
     const thankYouPageProps = {
         FormActionButton: CoDealerFormButton,
-        thankyouPageTitle: CoDealerInvoiceStateMaster?.selected?.thankyouPageTitle,
+        thankyouPageTitle: CoDealerInvoiceStateMaster?.thankyouPageTitle,
         generationTitle: CoDealerInvoiceStateMaster?.generationTitle,
         generationMessage: CoDealerInvoiceStateMaster?.generationMessage,
         handleThankyouButtonClick,
         THANK_YOU_BUTTONS_CONSTANTS,
+        buttonData,
+        onCloseAction,
     };
 
     const renderSections = () => {
