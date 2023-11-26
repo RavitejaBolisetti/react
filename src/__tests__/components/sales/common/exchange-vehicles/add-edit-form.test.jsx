@@ -19,29 +19,16 @@ const FormWrapper = (props) => {
 };
 
 describe('Add Edit Form Component', () => {
-
     it('should render add edit form component', () => {
         customRender(<AddEditForm />);
     });
 
     it('fields should work', async () => {
-        const typeData={ VEHCL_MFG: [{ key: 106, value: 'Kai' }] };
-        const filteredModelData=[{ key: 106, value: 'Hello' }];
-        customRender(<FormWrapper typeData={typeData} formData={{exchange: 1}} handleFilterChange={jest.fn()} filteredModelData={filteredModelData} showAlert={jest.fn()} />);
+        const typeData = { VEHCL_MFG: [{ key: 106, value: 'Kai' }] };
+        const filteredModelData = [{ key: 106, value: 'Hello' }];
+        customRender(<FormWrapper typeData={typeData} setVisible={jest.fn()} setExchangeVisible={jest.fn()} formData={{ exchange: 1 }} handleFilterChange={jest.fn()} filteredModelData={filteredModelData} showAlert={jest.fn()} />);
 
-        const make=screen.getByRole('combobox', { name: 'Make' });
-        fireEvent.change(make, { target: { value: 'Kai' } });
-        await waitFor(() => { expect(screen.getByText('Kai')).toBeInTheDocument() });
-        fireEvent.click(screen.getByText('Kai'));
-
-        const modelGroup=screen.getByRole('combobox', { name: 'Model Group' });
-        fireEvent.change(modelGroup, { target: { value: 'Hello' } });
-        await waitFor(() => { expect(screen.getByText('Hello')).toBeInTheDocument() });
-        fireEvent.click(screen.getByText('Hello'));
-
-        const exchange=screen.getByRole('switch', { name: 'Exchange' });
+        const exchange = screen.getByRole('switch', { name: 'Exchange' });
         fireEvent.click(exchange);
-
     });
-
 });

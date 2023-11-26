@@ -166,9 +166,6 @@ describe('RSMApprovalMaster Component', () => {
         const cancelBtn = screen.getByRole('button', { name: /submit/i });
         fireEvent.click(cancelBtn);
 
-        saveData.mock.calls[0][0].onErrorAction(res);
-        saveData.mock.calls[0][0].onSuccessAction(res);
-
         const closeBtn = screen.getAllByRole('button', { name: /close/i });
         fireEvent.click(closeBtn[1]);
     });

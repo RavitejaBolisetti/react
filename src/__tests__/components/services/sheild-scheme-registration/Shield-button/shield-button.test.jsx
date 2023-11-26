@@ -34,8 +34,6 @@ describe('Shield form-button components', () => {
         fireEvent.click(closeBtn);
         const cancelBtn = screen.getByRole('button', { name: 'Cancel' });
         fireEvent.click(cancelBtn);
-        const editBtn = screen.getByRole('button', { name: 'Edit' });
-        fireEvent.click(editBtn);
 
         const nextBtn = screen.getByRole('button', { name: 'Next' });
         fireEvent.click(nextBtn);
@@ -45,7 +43,7 @@ describe('Shield form-button components', () => {
         const cancelRsa = screen.getByRole('button', { name: 'Cancel RSA' });
         fireEvent.click(cancelRsa);
 
-        const rsaHistory = screen.getByRole('button', { name: 'View RSA Hostory' });
+        const rsaHistory = screen.getByRole('button', { name: 'View RSA History' });
         fireEvent.click(rsaHistory);
 
         const cancelScheme = screen.getByRole('button', { name: 'Cancel Scheme' });

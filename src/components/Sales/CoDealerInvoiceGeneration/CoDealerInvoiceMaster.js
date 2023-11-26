@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -18,6 +18,8 @@ import { CO_DEALER_QUERY_BUTTONS, SEARCH_PARAM_CONSTANTS, THANK_YOU_TYPE } from 
 import { showGlobalNotification } from 'store/actions/notification';
 import { CO_DEALER_SECTIONS } from 'components/Sales/CoDealerInvoiceGeneration/constants';
 import { drawerTitle } from 'utils/drawerTitle';
+import { ReportModal } from 'components/common/ReportModal/ReportModal';
+import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
 
 import { CoDealerInvoiceFilter } from './CoDealerInvoiceFilter';
 import { CoDealerSearchDataActions, CoDealerVinNumberDataActions } from 'store/actions/data/CoDealerInvoice';
@@ -135,6 +137,8 @@ export const CoDealerInvoiceMasterBase = (props) => {
 
     const [CoDealerInvoiceStateMaster, setCoDealerInvoiceStateMaster] = useState({ currentQuery: CO_DEALER_QUERY_BUTTONS?.PENDING?.key, currentButtonName: CO_DEALER_QUERY_BUTTONS?.PENDING?.title, current: 1, pageSize: 10, typeDataFilter: [], INVOICE_FROM_DATE: [], INVOICE_TO_DATE: [], requestpayload: {}, VinData: [] });
 
+    const [additionalReportParams, setAdditionalReportParams] = useState();
+    const [isReportVisible, setReportVisible] = useState();
     const [section, setSection] = useState();
     const [defaultSection, setDefaultSection] = useState();
     const [currentSection, setCurrentSection] = useState();
@@ -161,7 +165,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
         deliveryNote: false,
         nextBtn: false,
         cancelDeliveryNoteBtn: false,
-        printDeliveryNoteBtn: false,
+        printInvoiceBtn: false,
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -377,9 +381,9 @@ export const CoDealerInvoiceMasterBase = (props) => {
                 break;
             case VIEW_ACTION:
                 if (record?.invoiceStatus === CO_DEALER_QUERY_BUTTONS?.INVOICED?.key) {
-                    btnVisibilityStatus = { ...buttonData, cancelInvoice: true, closeBtn: true, nextBtn: !isLastSection };
+                    btnVisibilityStatus = { ...buttonData, cancelInvoice: true, closeBtn: true, nextBtn: !isLastSection, printInvoiceBtn: true };
                 } else {
-                    btnVisibilityStatus = { ...buttonData, cancelInvoice: false, closeBtn: true, nextBtn: !isLastSection };
+                    btnVisibilityStatus = { ...buttonData, cancelInvoice: false, closeBtn: true, nextBtn: !isLastSection,printInvoiceBtn: false };
                 }
                 formAction = { addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION };
                 break;
@@ -448,7 +452,6 @@ export const CoDealerInvoiceMasterBase = (props) => {
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
         form.setFieldsValue(undefined);
-        console.log('record', record);
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
@@ -489,6 +492,17 @@ export const CoDealerInvoiceMasterBase = (props) => {
         setFormActionType(handleDrawerButtonVisibility({ buttonAction, record })?.formAction);
         setIsFormVisible(true);
     };
+
+    const handleInvoicePrint = (record) => {
+        setReportVisible(true);
+
+        setAdditionalReportParams([
+            {
+                key: 'sa_od_invoice_hdr_id',
+                value: record?.id,
+            },
+        ]);
+    };
     const handleIRNGeneration = () => {
         const data = { id: invoiceId, invoiceNumber: selectedOrder?.invoiceNumber };
         const onSuccess = (res) => {
@@ -511,7 +525,6 @@ export const CoDealerInvoiceMasterBase = (props) => {
 
         generateIrn(requestData);
     };
-    const handleInvoicePrint = (selectedOrder) => {};
 
     const handleThankyouButtonClick = (item) => {
         const buttonKey = item?.key;
@@ -740,6 +753,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
         isVinLoading,
         handleThankyouButtonClick,
         selectedOrder: CoDealerInvoiceStateMaster?.selectedOrder,
+        handleInvoicePrint,
         confirmRequest,
         setConfirmRequest,
         handleIRNGeneration,
@@ -758,6 +772,16 @@ export const CoDealerInvoiceMasterBase = (props) => {
         typeData,
     };
 
+    const reportDetail = EMBEDDED_REPORTS?.CO_DEALER_INVOICE_DOCUMENT;
+    const reportProps = {
+        isVisible: isReportVisible,
+        titleOverride: reportDetail?.title,
+        additionalParams: additionalReportParams,
+        onCloseAction: () => {
+            setReportVisible(false);
+        },
+    };
+
     return (
         <>
             <CoDealerInvoiceFilter {...CoDealerInvoiceFilterProps} />
@@ -769,6 +793,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
             <CoDealerInvoiceAdvancedSearch {...CoDealerInvoiceAdvancedSearchProps} />
             <CoDealerInvoiceMainContainer {...containerProps} />
             <CancelInvoice {...cancelInvoiceProps} />
+            <ReportModal {...reportProps} reportDetail={reportDetail} />
         </>
     );
 };
