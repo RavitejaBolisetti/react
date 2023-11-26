@@ -92,8 +92,6 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
     const { fetchProductList, productHierarchyDataListArray } = props;
     const [productHierarchyDataArray, setProductHierarchyDataArray] = useState([]);
 
-    // console.log('productHierarchyDataListArray-vpo1', productHierarchyDataListArray);
-
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [listFilterForm] = Form.useForm();
     const [selectedRecord, setSelectedRecord] = useState();

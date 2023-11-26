@@ -159,7 +159,6 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
 
     const onFinish = (values) => {
         const recordId = viewVehiclePODetails?.id || '';
-        console.log(values);
         const onSuccess = (res) => {
             showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
 

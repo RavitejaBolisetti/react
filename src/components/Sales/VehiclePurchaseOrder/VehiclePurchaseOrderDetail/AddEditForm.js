@@ -72,8 +72,7 @@ const AddEditFormMain = (props) => {
         defaultParent: false,
         selectedTreeSelectKey: modelCode,
         handleSelectTreeClick,
-        placeholder: preparePlaceholderSelect('Model'),
-        // placeholder: preparePlaceholderSelect(translateContent('commonModules.vehicleDetails.model')),
+        placeholder: preparePlaceholderSelect(translateContent('vehiclePurchaseOrder.label.modal')),
         // loading: !viewOnly ? isProductDataLoading : false,
         // treeDisabled: orderStatus === OTF_STATUS.BOOKED.key ? false : true,
     };
