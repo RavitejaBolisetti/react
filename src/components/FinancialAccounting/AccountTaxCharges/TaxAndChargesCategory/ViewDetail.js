@@ -33,7 +33,7 @@ const ViewDetailBase = ({ styles, taxCharges, taxCategory, setDisabledEdit, stat
                                 <Panel header={translateContent('taxChargeCatagory.heading.panelHeader')} key="2">
                                     <Divider />
                                     {taxCategory?.taxCategoryDetail?.map((item) => (
-                                        <CardProductAttribute key={'tax' + item?.taxChargeTypeCode} chargeCode={item?.chargeCode} chargeDescription={item?.chargeDescription} chargeType={item?.chargeType} id={item?.id} setDisabledEdit={setDisabledEdit} taxCharges={taxCharges} gstStateCode={item?.gstStateCode} saleType={item?.saleType} stateData={stateData} saleData={saleData} />
+                                        <CardProductAttribute key={'tax' + item?.taxChargeTypeCode} chargeCode={item?.chargeCode} chargeDescription={item?.chargeDescription} chargeType={item?.chargeType} id={item?.id} setDisabledEdit={setDisabledEdit} taxCharges={taxCharges} stateCode={item?.stateCode} saleType={item?.saleType} stateData={stateData} saleData={saleData} />
                                     ))}
                                 </Panel>
                             </Collapse>

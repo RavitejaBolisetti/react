@@ -335,7 +335,7 @@ export const TaxChargesCategoryMain = (props) => {
 
         setButtonData,
         handleButtonClick,
-        stateData: stateData?.filter((e) => e?.gstStateCode !== null),
+        stateData: stateData?.filter((e) => e?.stateCode !== null),
         saleData,
         taxChargeCategoryTypeData,
         taxChargeCategoryCodeData,
