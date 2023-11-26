@@ -20,7 +20,7 @@ const { Text } = Typography;
 
 const AddEditFormMain = (props) => {
     const { isReadOnly, setIsReadOnly } = props;
-    const { itemOptions, setitemOptions } = props;
+    const { itemOptions, setitemOptions, styles } = props;
     const { formData, formActionType, handleCollapse, showGlobalNotification, selectedRecordId, openAccordian, setOpenAccordian, handleFormValueChange } = props;
     const { collapseProps, fetchInvoiceList, listInvoiceShowLoading, apportionTableData, setApportionTableData, documentTypeData, isDocumentTypeLoading, typeData, documentTypeOptions, setDocumentTypeOptions } = props;
 
@@ -114,8 +114,8 @@ const AddEditFormMain = (props) => {
                             header={
                                 <Row>
                                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                        <Text strong> { translateContent('creditDebitNote.ApportionDetails.heading.title')}</Text>
-                                        <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary">
+                                        <Text strong> {translateContent('creditDebitNote.ApportionDetails.heading.title')}</Text>
+                                        <Button className={styles.marL5} onClick={addContactHandeler} icon={<PlusOutlined />} type="primary">
                                             {translateContent('global.buttons.add')}
                                         </Button>
                                     </Col>

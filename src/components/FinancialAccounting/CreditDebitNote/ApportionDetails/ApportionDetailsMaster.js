@@ -113,7 +113,7 @@ export const ApportionDetailsMasterMain = (props) => {
 
     const formProps = {
         ...props,
-
+        styles,
         openAccordian,
         setOpenAccordian,
         handleCollapse,
