@@ -7,13 +7,13 @@ import React from 'react';
 import { Col, Row } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 
-// import { SupportingDocumentMaster } from './SupportingDocument';
 import { LeftSidebar } from './LeftSidebar';
 
 import styles from 'assets/sass/app.module.scss';
 import { DEALER_CORPORATE_SECTION } from 'constants/modules/DealerCorporateClaim/dealerClaimSections';
-import { CorporateClaimMaster } from './CorporateClaim';
 import { ClaimDetailsMaster } from './ClaimDetails';
+import { ClaimApprovalRequestMaster } from './ClaimApprovalRequest/ClaimApprovalRequestMaster';
+import { SupportingDocumentMaster } from './SupportingDocument';
 
 const DealerCorporateClaimMasterMainContainerMain = (props) => {
     const { currentSection } = props;
@@ -23,17 +23,14 @@ const DealerCorporateClaimMasterMainContainerMain = (props) => {
 
     const renderElement = () => {
         switch (currentSection) {
-            // case DEALER_CORPORATE_SECTION.DEALER_CORPORATE_CLAIM.id: {
-            //     return <CorporateClaimMaster {...myProps} />;
-            // }
             case DEALER_CORPORATE_SECTION.CLAIM_DETAILS.id: {
                 return <ClaimDetailsMaster {...myProps} />;
-
             }
             case DEALER_CORPORATE_SECTION.DOCUMENTS.id: {
-                // return <SupportingDocumentMaster {...myProps} />;
-                return <>Supporting Document</>;
-
+                return <SupportingDocumentMaster {...myProps} />;
+            }
+            case DEALER_CORPORATE_SECTION.APPROVAL_REQUEST.id: {
+                return <ClaimApprovalRequestMaster {...myProps} />;
             }
             default: {
                 return false;

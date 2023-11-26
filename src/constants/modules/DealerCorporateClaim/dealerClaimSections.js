@@ -16,7 +16,12 @@ export const DEALER_CORPORATE_SECTION = {
     },
     DOCUMENTS: {
         id: 2,
-        title: 'Document List',
+        title: 'Supporting Document',
+        displayOnList: true,
+    },
+    APPROVAL_REQUEST: {
+        id: 3,
+        title: 'Approval Request',
         displayOnList: true,
     },
 };

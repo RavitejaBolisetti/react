@@ -3,14 +3,17 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState } from 'react';
-import { Form, Row, Col } from 'antd';
+import React, { useState, useEffect, useMemo } from 'react';
+import { Form, Row, Col, Card } from 'antd';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { showGlobalNotification } from 'store/actions/notification';
 
+import { AddEditForm } from './AddEditForm';
 import { MODULE_TYPE_CONSTANTS } from 'constants/modules/vehicleChecklistConstants';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 import { DealerCorporateClaimFormButton } from '../CorporateClaimFormButton';
 import ViewDetail from './ViewDetail';
 
@@ -37,11 +40,11 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators({}, dispatch),
 });
 
-const ClaimDetailsMain = (props) => {
+const ClaimApprovalRequestMain = (props) => {
     const { userId, handleButtonClick, selectedRecord } = props;
-    const { isChecklistDataLoading } = props;
+    const { isChecklistDataLoading, ChecklistData } = props;
     const { showGlobalNotification } = props;
-    const { form, selectedCheckListId, section, formActionType, handleFormValueChange, uniqueMatchKey } = props;
+    const { form, selectedCheckListId, section, formActionType, handleFormValueChange, NEXT_ACTION, paginationDataKey, uniqueMatchKey } = props;
 
     const pageIntialState = {
         pageSize: 10,
@@ -101,4 +104,4 @@ const ClaimDetailsMain = (props) => {
         </Form>
     );
 };
-export const ClaimDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(ClaimDetailsMain);
+export const ClaimApprovalRequestMaster = connect(mapStateToProps, mapDispatchToProps)(ClaimApprovalRequestMain);

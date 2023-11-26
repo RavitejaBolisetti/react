@@ -18,7 +18,7 @@ export default function AdvanceFilter(props) {
     const { extraParams, handleButtonClick, removeFilter, handleResetFilter, handleSearchChange, advanceFilter = false, filter = false, title, filterString, setAdvanceSearchVisible, searchForm } = props;
     return (
         <div className={styles.contentHeaderBackground}>
-            <Row gutter={20} justify={'space-between'}>
+            <Row gutter={20}>
                 <Col xs={24} sm={24} md={14} lg={14} xl={14}>
                     {filter && (
                         <Form form={searchForm} className={styles.masterListSearchForm}>
@@ -45,9 +45,7 @@ export default function AdvanceFilter(props) {
                         </Button>
                     </Col>
                 )}
-                <Button icon={<PlusOutlined />} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                    Add
-                </Button>
+               
             </Row>
             {filterString?.advanceFilter && extraParams.find((i) => i.name) && (
                 <Row gutter={20}>

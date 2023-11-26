@@ -7,7 +7,7 @@ import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
-import { translateContent } from 'utils/translateContent';
+
 
 export const tableColumnPendingGeneration = ({ handleButtonClick, page, pageSize, actionButtonVisibility }) => {
     const tableColumn = [

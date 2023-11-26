@@ -4,32 +4,68 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Row, Col, Form, Input } from 'antd';
+import { Row, Col, Form, Select, Input } from 'antd';
 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField } from 'utils/validation';
 import { UploadUtil } from 'utils/Upload';
 import { translateContent } from 'utils/translateContent';
 
+const { Option } = Select;
+
 const AddEditForm = (uploadProps) => {
-    const messageText = <>Click or drop your file here to Upload the Documents.</>;
-    const { mandatoryFields } = uploadProps;
+    const { typeData, mandatoryFields, handleClearChange } = uploadProps;
+
+    const selectProps = {
+        optionFilterProp: 'children',
+        showSearch: true,
+        allowClear: true,
+    };
+
+    const typedataTemp = [
+        {
+            key: 1,
+            value: 'Purchase Order Copy',
+        },
+        {
+            key: 2,
+            value: 'Latest salary slip or bonafied certificate fron HRD/Admin of company',
+        },
+        {
+            key: 3,
+            value: 'Employee ID Copy',
+        },
+        {
+            key: 4,
+            value: 'Copy of corporate advantage card',
+        },
+        {
+            key: 5,
+            value: "Copy on Corporate / BPO Vendor's letter head confirming buyers identity",
+        },
+    ];
 
     return (
         <>
-            <Row gutter={20}>
+            <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Form.Item label={translateContent('vehicleReceiptChecklist.label.supportingDocument.fileName')} name="fileName" rules={mandatoryFields ? [validateRequiredInputField(translateContent('vehicleReceiptChecklist.label.supportingDocument.fileName'))] : ''}>
-                        <Input placeholder={preparePlaceholderText(translateContent('vehicleReceiptChecklist.label.supportingDocument.fileName'))} allowClear />
+                    <Form.Item label={ 'Document List'|| translateContent('customerMaster.label.documentType')} name="documentTypeId" rules={mandatoryFields ? [validateRequiredInputField(translateContent('customerMaster.validation.documentType'))] : ''} placeholder={translateContent('customerMaster.placeholder.documentType')}>
+                        <Select loading={!(typedataTemp?.length !== 0)} onChange={handleClearChange} placeholder={translateContent('global.placeholder.select')} {...selectProps}>
+                            {typedataTemp?.map((item) => (
+                                <Option key={item?.key} value={item?.key}>
+                                    {item?.value}
+                                </Option>
+                            ))}
+                        </Select>
                     </Form.Item>
                 </Col>
-                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Form.Item label={translateContent('vehicleReceiptChecklist.label.supportingDocument.documentDescription')} name="documentDescription" rules={mandatoryFields ? [validateRequiredInputField(translateContent('vehicleReceiptChecklist.label.supportingDocument.documentDescription'))] : ''}>
-                        <Input placeholder={preparePlaceholderText(translateContent('vehicleReceiptChecklist.label.supportingDocument.documentDescription'))} allowClear />
+                {/* <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                    <Form.Item label={translateContent('customerMaster.label.fileName')} name="documentName" rules={mandatoryFields ? [validateRequiredInputField(translateContent('customerMaster.validation.fileName'))] : ''}>
+                        <Input onChange={handleClearChange} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.fileName'))} allowClear />
                     </Form.Item>
-                </Col>
+                </Col> */}
             </Row>
-            <UploadUtil {...uploadProps} messageText={messageText} />
+            <UploadUtil {...uploadProps} />
         </>
     );
 };

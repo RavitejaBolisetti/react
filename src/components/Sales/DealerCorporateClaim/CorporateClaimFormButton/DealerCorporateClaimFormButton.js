@@ -11,7 +11,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 
-export const DealerCorporateClaimFormButton = ({ record, onCloseAction, buttonData, setButtonData, saveButtonName = translateContent('global.buttons.saveAndNext'), handleButtonClick, isLoadingOnSave, isLastSection, buttonType = false }) => {
+export const DealerCorporateClaimFormButton = ({ record, onCloseAction, buttonData, setButtonData, saveButtonName = translateContent('global.buttons.continue'), handleButtonClick, isLoadingOnSave, isLastSection, buttonType = false }) => {
     return (
         <div className={styles.formFooter}>
             <Row gutter={20}>

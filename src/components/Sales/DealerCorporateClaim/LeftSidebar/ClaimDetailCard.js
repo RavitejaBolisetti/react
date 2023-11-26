@@ -65,6 +65,7 @@ const ClaimDetailCard = (props) => {
                     {'Claim Status'}
                     <span>{record?.claimStatus}</span>
                 </div>
+                <Divider />
                 <div className={styles.detailCardText}>
                     {'IRN Status'}
                     <span>{record?.irnStatus}</span>

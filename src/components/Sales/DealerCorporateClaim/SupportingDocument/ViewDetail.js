@@ -4,33 +4,52 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Card } from 'antd';
-import { FiDownload, FiTrash } from 'react-icons/fi';
 
+import { Card } from 'antd';
+import { FiTrash } from 'react-icons/fi';
+import { AiOutlineEye } from 'react-icons/ai';
+import { LANGUAGE_EN } from 'language/en';
+import { NoDataFound } from 'utils/noDataFound';
 import styles from 'assets/sass/app.module.scss';
 
 export const ViewDetail = (props) => {
     const {
+        viewListShowLoading,
+        userId,
         formActionType: { viewMode },
         supportingData,
         deleteFile,
-        downloadFileFromButton,
+        downloadFile,
     } = props;
+
+    const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
+
+    const downloadFileFromButton = (uploadData) => {
+        const extraParams = [
+            {
+                key: 'docId',
+                title: 'docId',
+                value: uploadData?.docId,
+                name: 'docId',
+            },
+        ];
+        downloadFile({ setIsLoading: viewListShowLoading, userId, extraParams });
+    };
 
     return (
         <div className={styles.viewDrawerContainer}>
-            {supportingData?.length > 0 ? (
+            {supportingData.length > 0 ? (
                 <>
-                    {supportingData?.map((uploadData) => {
+                    {supportingData.map((uploadData) => {
                         return (
                             <Card
                                 className={styles.viewDocumentStrip}
-                                key={uploadData?.id}
-                                title={uploadData?.fileName}
+                                key={uploadData.id}
+                                title={uploadData?.documentName}
                                 extra={
                                     <>
-                                        <FiDownload onClick={() => downloadFileFromButton(uploadData)} />
-                                        {!viewMode && <FiTrash onClick={() => deleteFile(uploadData)} />}
+                                        <AiOutlineEye onClick={() => downloadFileFromButton(uploadData)} data-testid="downloadBtn" />
+                                        {!viewMode && <FiTrash onClick={() => deleteFile(uploadData)} data-testid="deleteFileBtn" />}
                                     </>
                                 }
                             ></Card>
@@ -38,7 +57,7 @@ export const ViewDetail = (props) => {
                     })}
                 </>
             ) : (
-                viewMode && <div className={styles.marB20}>No Supporting Document Available</div>
+                viewMode && <NoDataFound informtion={noDataTitle} />
             )}
         </div>
     );

@@ -54,6 +54,27 @@ const mapStateToProps = (state) => {
     return returnValue;
 };
 
+const tabledataOth = [
+    {
+        dealerName: 'Test Autos',
+        dealerBranch: 'Greater noida',
+        claimType: 'Test Calim type',
+        clameNo: 'CLM988',
+        modelName: 'XUV700',
+        claimStatus: 'Pending For Approval'
+    },
+];
+
+const tabledataPFG = [
+    {
+        invoiceNuber : "Inv00987",
+        invoiceDate: '07-12-1997',
+        deliveryNoteNo: 'DNN933',
+        deliveryNoteDate: '07-12-1997',
+
+    },
+];
+
 const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
@@ -100,7 +121,7 @@ export const DealerCorporateClaimMasterBase = (props) => {
         saveAndNewBtnClicked: false,
         closeBtn: false,
         cancelBtn: false,
-        formBtnActive: false,
+        formBtnActive: true,
         transferBtn: false,
         allotBtn: false,
         unAllotBtn: false,
@@ -351,7 +372,7 @@ export const DealerCorporateClaimMasterBase = (props) => {
         setPage,
         // tableColumn: tableColumn({ handleButtonClick, actionButtonVisibility }),
         tableColumn: claimStatus === 'PFG' ? tableColumnPendingGeneration({ handleButtonClick, actionButtonVisibility }) : tableColumn({ handleButtonClick, actionButtonVisibility }),
-        tableData: data,
+        tableData: claimStatus !== 'PFG' ? tabledataOth : tabledataPFG,
         showAddButton: false,
         handleAdd: handleButtonClick,
         noMessge: LANGUAGE_EN.GENERAL.LIST_NO_DATA_FOUND.TITLE,
@@ -382,15 +403,7 @@ export const DealerCorporateClaimMasterBase = (props) => {
         from: listFilterForm,
         onFinish,
         onFinishFailed,
-        // title: 'Corporate Claim',
         title:<QueryButtons currentItem={claimStatus} items={CLAIM_STATUS_BUTTONS} onClick={handleQuickFilter} />,
-        // title: Object.values(CLAIM_STATUS_BUTTONS)?.map((item) => {
-        //     return (
-        //         <Button className={styles.marR10} key={item?.id} type={claimStatus === item?.id ? 'primary' : 'link'} danger onClick={() => handleQuickFilter(item?.id)}>
-        //             {item?.title}
-        //         </Button>
-        //     );
-        // }),
         data,
         otfSearchRules,
         setOtfSearchRules,
@@ -401,6 +414,8 @@ export const DealerCorporateClaimMasterBase = (props) => {
         setAdvanceSearchVisible,
         handleSearchChange,
         handleButtonClick,
+        // saveButtonName: !isLastSection && 'Save'
+        saveButtonName:'Save'
     };
 
     const containerProps = {
