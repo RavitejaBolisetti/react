@@ -518,7 +518,7 @@
             "parentGroupName": "Parent Group Name",
             "companyCode": "Company Code",
             "stateName": "State Name",
-            "Company Name": "Company Name"
+            "companyName": "Company Name"
         },
 
         "label": {
@@ -996,7 +996,7 @@
             "roleDescription": "Role Description"
         },
         "placeholder": {
-            "search": "Search"
+            "search": "Search by Role Name"
         },
         "validation": {
             "noApplicationText": "No Application Available"
