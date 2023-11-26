@@ -99,6 +99,9 @@ const mapDispatchToProps = (dispatch) => ({
             CancelInvoiceGenerated: vehicleInvoiceGenerationDataActions.saveData,
             restCancellationData: vehicleInvoiceGenerationDataActions.reset,
 
+            generateIrn: vehicleInvoiceGenerationDataActions.saveData,
+            listIrnLoading: vehicleInvoiceGenerationDataActions.listShowLoading,
+
             // fetchCustomerListData: vehicleDeliveryNoteCustomerDetailDataActions.fetchList,
             // listCustomerListLoading: vehicleDeliveryNoteCustomerDetailDataActions.listShowLoading,
 
@@ -122,7 +125,8 @@ export const CoDealerInvoiceMasterBase = (props) => {
     const { filterString, setFilterString, coDealerInvoiceStatusList = Object?.values(CO_DEALER_QUERY_BUTTONS) } = props;
     const { fetchCoDealerInvoice, isCoDealerLoaded, listShowCoDealerLoading } = props;
     const { indentToDealerData, fetchDealerParentsLovList, listShowDealerLoading, fetchCoDealerDetails, resetCoDealerDetailData, listCoDealerDetailShowLoading, CoDealerData, fetchCoDealerProfileData } = props;
-    const { CancelInvoiceGenerated, isVinLoading, isVinLoaded, fetchVin, listVinLoading, resetVinData, VIN_SEARCH_TYPE, resetTaxDetails, restCancellationData } = props;
+    const { CancelInvoiceGenerated, isVinLoading, fetchVin, listVinLoading, resetVinData, VIN_SEARCH_TYPE, resetTaxDetails, restCancellationData } = props;
+    const { generateIrn, listIrnLoading } = props;
 
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
@@ -319,7 +323,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
         }
         setShowDataLoading(true);
         let typeDataFilter = [];
-        setFilterString({ ...filterString, currentQuery: buttonKey, current: 1, pageSize: 10 });
+        setFilterString({ currentQuery: buttonKey, current: 1, pageSize: 10 });
         switch (buttonKey) {
             case CO_DEALER_QUERY_BUTTONS?.PENDING?.key: {
                 setActionButtonVisiblity({ canAdd: true, canView: false, canEdit: false });
@@ -328,7 +332,6 @@ export const CoDealerInvoiceMasterBase = (props) => {
             }
             case CO_DEALER_QUERY_BUTTONS?.INVOICED?.key: {
                 setActionButtonVisiblity({ canAdd: false, canView: true, canEdit: false });
-                setButtonData({ ...buttonData, printDeliveryNoteBtn: true, cancelDeliveryNoteBtn: true });
                 typeDataFilter = CoDealerInvoiceStateMaster?.TYPE_DATA_INV_SEARCH;
                 break;
             }
@@ -490,7 +493,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
         const data = { id: invoiceId, invoiceNumber: selectedOrder?.invoiceNumber };
         const onSuccess = (res) => {
             setConfirmRequest({ ...confirmRequest, isVisible: false });
-            handleProfile('invoiceId', null, invoiceId);
+            handleProfile(VIEW_ACTION, invoiceId);
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
         };
         const onError = (message) => {
@@ -500,14 +503,13 @@ export const CoDealerInvoiceMasterBase = (props) => {
             customURL: BASE_URL_VEHICLE_INVOICE_IRN_GENERATION,
             data: data,
             method: 'post',
-            setIsLoading: listShowLoading,
+            setIsLoading: listIrnLoading,
             userId,
             onError,
             onSuccess,
         };
-        console.log('requestData', requestData);
-        return false;
-        saveData(requestData);
+
+        generateIrn(requestData);
     };
     const handleInvoicePrint = (selectedOrder) => {};
 
@@ -645,7 +647,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
             setIsFormVisible(false);
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             setButtonData((prev) => ({ ...prev, cancelInvoice: false }));
-            fetchCoDealerInvoice({ setIsLoading: listShowCoDealerLoading, userId, extraParams, onSuccessAction, onErrorAction });
+            setFilterString({ current: 1, pageSize: 10, currentQuery: CoDealerInvoiceStateMaster?.currentQuery });
         };
         const onError = (message) => {
             showGlobalNotification({ message });
