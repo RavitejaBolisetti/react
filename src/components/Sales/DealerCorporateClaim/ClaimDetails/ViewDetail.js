@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -9,9 +9,11 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Card, Descriptions, Divider } from 'antd';
+import { Card, Descriptions, Divider, Input } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { translateContent } from 'utils/translateContent';
+
+const { TextArea } = Input;
 
 const ViewDetailMain = (props) => {
     const { formData, isLoading } = props;
@@ -24,26 +26,28 @@ const ViewDetailMain = (props) => {
     return (
         <Card>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label={translateContent('amcRegistration.label.customerId')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.customerCode, isLoading)}</Descriptions.Item>
-            </Descriptions>
+            {/* </Descriptions>
             <Divider />
-            <Descriptions {...viewProps}>
-                <Descriptions.Item label={"Invoice Number" || translateContent('amcRegistration.label.customerName')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.invoiceNo, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label={"Invoice Date" ||translateContent('amcRegistration.label.invoiceDate')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.customerAddress, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label={"Customer Name" || translateContent('amcRegistration.label.customerName')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.state, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label={"Customer Category" || translateContent('amcRegistration.label.customerCategory')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.customerCity, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label={"Chassis Number" || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label={"Ins. Cover Note No." || translateContent('amcRegistration.label.insCoverNoteNo')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.tehsil, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label={"Ins. Cover Note Date"||translateContent('amcRegistration.label.insCoverNoteDate')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.locality, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label={"Ins Premium Value"||translateContent('amcRegistration.label.insPremiumValue')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.pinCode, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label={"Insurance Company Name" || translateContent('amcRegistration.label.insCompanyName')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.customerPhoneNumber, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label={"Financier Name" || translateContent('amcRegistration.label.financierName')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.gstin, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label={"Dealer Share Amount" || translateContent('amcRegistration.label.dealerShareAmount')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.gstin, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label={"OEM Share Amount" || translateContent('amcRegistration.label.oemShareAmount')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.gstin, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label={"M & M Claim No" || translateContent('amcRegistration.label.mnmClaimNo')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.gstin, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label={"M & M Claim Date" || translateContent('amcRegistration.label.mnmClaimDate')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.gstin, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label={"Remarks" || translateContent('amcRegistration.label.remarks')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.gstin, isLoading)}</Descriptions.Item>
+        <Descriptions {...viewProps}> */}
+                <Descriptions.Item label={'Invoice Number' || translateContent('amcRegistration.label.customerName')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.invoiceNo, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={'Invoice Date' || translateContent('amcRegistration.label.invoiceDate')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.customerAddress, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={'Customer Name' || translateContent('amcRegistration.label.customerName')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.state, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('amcRegistration.label.customerId')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.customerCode, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={'Customer Category' || translateContent('amcRegistration.label.customerCategory')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.customerCity, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={'Chassis Number' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
+                {/* <Descriptions.Item label={'Ins. Cover Note No.' || translateContent('amcRegistration.label.insCoverNoteNo')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.tehsil, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={'Ins. Cover Note Date' || translateContent('amcRegistration.label.insCoverNoteDate')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.locality, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={'Ins Premium Value' || translateContent('amcRegistration.label.insPremiumValue')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.pinCode, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={'Insurance Company Name' || translateContent('amcRegistration.label.insCompanyName')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.customerPhoneNumber, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={'Financier Name' || translateContent('amcRegistration.label.financierName')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.gstin, isLoading)}</Descriptions.Item> */}
+                <Descriptions.Item label={'Dealer Share Amount' || translateContent('amcRegistration.label.dealerShareAmount')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.gstin, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={'OEM Share Amount' || translateContent('amcRegistration.label.oemShareAmount')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.gstin, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={'M & M Claim No' || translateContent('amcRegistration.label.mnmClaimNo')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.gstin, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={'M & M Claim Date' || translateContent('amcRegistration.label.mnmClaimDate')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.gstin, isLoading)}</Descriptions.Item>
+                {/* <Descriptions.Item label={'Remarks' || translateContent('amcRegistration.label.remarks')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.gstin, isLoading)}</Descriptions.Item> */}
+            <TextArea  placeholder="Remarks" autoSize />
             </Descriptions>
+            
         </Card>
     );
 };

@@ -42,10 +42,9 @@ const ClaimDetailCard = (props) => {
             <Panel
                 header={
                     <div className={`${styles.detailCardText} ${styles.marB5}`} style={{ fontSize: '14px' }}>
-                        {/* {translateContent('vehicleReceiptChecklist.heading.profileCard.checklistNumber')} */}
-                        {record?.calimNumber || 'CLAIM8978'}
-                        <span className={styles.activeForm}>
-                            {record?.status || 'Pending status'}
+                        {'Claim Number'}
+                        <span className={styles.detailCardText}>
+                            {'N/A'}
                             <CopytoClipboard text={ProfileData?.checklistNumber} />
                         </span>
                     </div>
@@ -58,28 +57,19 @@ const ClaimDetailCard = (props) => {
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    {'Claim Number'}
-                    <span>{record?.claimNumber}</span>
-                </div>
-                <Divider />
-                <div className={styles.detailCardText}>
                     {'Claim Date'}
                     <span>{record?.claimDate}</span>
                 </div>
                 <Divider />
-                {/* <div className={styles.detailCardText}>
+                <div className={styles.detailCardText}>
                     {'Claim Status'}
                     <span>{record?.claimStatus}</span>
-                </div> */}
-
-                {/* <div className={styles.detailCardText}>
-                    {translateContent('vehicleReceiptChecklist.heading.profileCard.model')}
-
-                    <span>
-                        {record?.modelName ? record?.modelName : 'NA'}
-                        {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
-                    </span>
-                </div> */}
+                </div>
+                <div className={styles.detailCardText}>
+                    {'IRN Status'}
+                    <span>{record?.irnStatus}</span>
+                </div>
+                <Divider />
             </Panel>
         </Collapse>
     );
