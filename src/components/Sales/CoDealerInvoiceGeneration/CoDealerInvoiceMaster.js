@@ -32,6 +32,8 @@ import { BASE_URL_CO_DEALER_DETAILS, BASE_URL_VEHICLE_INVOICE_IRN_GENERATION, BA
 import { vehicleInvoiceGenerationDataActions } from 'store/actions/data/sales/vehicleInvoiceGeneration';
 import { otfvehicleDetailsDataActions } from 'store/actions/data/otf/vehicleDetails';
 import { CancelInvoice } from '../VehicleInvoiceGeneration/CancelInvoice';
+import { geoStateDataActions } from 'store/actions/data/geo/states';
+import { geoCityDataActions } from 'store/actions/data/geo/cities';
 
 const mapStateToProps = (state) => {
     const {
@@ -44,6 +46,10 @@ const mapStateToProps = (state) => {
             },
             DealerHierarchy: {
                 DealerParentsLov: { filteredListData: indentToDealerData = [] },
+            },
+            Geo: {
+                City: { filteredListData: cityData = [] },
+                State: { filteredListData: stateData = [] },
             },
         },
     } = state;
@@ -68,6 +74,9 @@ const mapStateToProps = (state) => {
         isVinLoading,
         isVinLoaded,
         VIN_SEARCH_TYPE,
+
+        cityData,
+        stateData,
     };
     return returnValue;
 };
@@ -102,6 +111,11 @@ const mapDispatchToProps = (dispatch) => ({
             generateIrn: vehicleInvoiceGenerationDataActions.saveData,
             listIrnLoading: vehicleInvoiceGenerationDataActions.listShowLoading,
 
+            fetchStateLovList: geoStateDataActions.fetchFilteredList,
+            listStateLoading: geoStateDataActions.listShowLoading,
+            fetchCityLovList: geoCityDataActions.fetchFilteredList,
+            listCityLoading: geoCityDataActions.listShowLoading,
+
             // fetchCustomerListData: vehicleDeliveryNoteCustomerDetailDataActions.fetchList,
             // listCustomerListLoading: vehicleDeliveryNoteCustomerDetailDataActions.listShowLoading,
 
@@ -127,6 +141,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
     const { indentToDealerData, fetchDealerParentsLovList, listShowDealerLoading, fetchCoDealerDetails, resetCoDealerDetailData, listCoDealerDetailShowLoading, CoDealerData, fetchCoDealerProfileData } = props;
     const { CancelInvoiceGenerated, isVinLoading, fetchVin, listVinLoading, resetVinData, VIN_SEARCH_TYPE, resetTaxDetails, restCancellationData } = props;
     const { generateIrn, listIrnLoading } = props;
+    const { cityData, stateData, fetchStateLovList, fetchCityLovList, listCityLoading, listStateLoading } = props;
 
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
@@ -181,7 +196,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
     useEffect(() => {
         if (typeData && typeData?.[PARAM_MASTER.CO_DEALER_INV_SER.id]?.length) {
             searchForm.setFieldsValue({ searchType: 'indentNumber' });
-            setCoDealerInvoiceStateMaster({ ...CoDealerInvoiceStateMaster, RFRL: typeData?.[PARAM_MASTER.RFRL.id], TAX_CALCLTN_TYPE: typeData?.[PARAM_MASTER.TAX_CALCLTN_TYPE.id], VEHCL_TYPE: typeData?.[PARAM_MASTER.VEHCL_TYPE.id], PRC_TYP: typeData?.[PARAM_MASTER.PRC_TYP.id], SALE_TYPE: typeData?.[PARAM_MASTER.SALE_TYPE.id], TYPE_DATA_INV_SEARCH: typeData?.[PARAM_MASTER.CO_DEALER_INV_SER.id], typeData: typeData?.[PARAM_MASTER.CO_DEALER_INV_SER.id], typeDataFilter: typeData?.[PARAM_MASTER.CO_DEALER_INV_SER.id]?.filter((i) => i?.key !== SEARCH_PARAM_CONSTANTS?.INVOICE_NUMBER?.key) });
+            setCoDealerInvoiceStateMaster({ ...CoDealerInvoiceStateMaster, RFRL: typeData?.[PARAM_MASTER.RFRL.id], TAX_CALCLTN_TYPE: typeData?.[PARAM_MASTER.TAX_CALCLTN_TYPE.id], VEHCL_TYPE: typeData?.[PARAM_MASTER.VEHCL_TYPE.id], PRC_TYP: typeData?.[PARAM_MASTER.PRC_TYP.id], SALE_TYPE: typeData?.[PARAM_MASTER.SALE_TYPE.id], TYPE_DATA_INV_SEARCH: typeData?.[PARAM_MASTER.CO_DEALER_INV_SER.id], typeData: typeData?.[PARAM_MASTER.CO_DEALER_INV_SER.id], typeDataFilter: typeData?.[PARAM_MASTER.CO_DEALER_INV_SER.id]?.filter((i) => [SEARCH_PARAM_CONSTANTS?.INDENT_NUMBER?.key]?.includes(i?.key)) });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [typeData, typeData?.[PARAM_MASTER.CO_DEALER_INV_SER.id]]);
@@ -294,7 +309,11 @@ export const CoDealerInvoiceMasterBase = (props) => {
     }, [CoDealerData, isCoDealerLoaded]);
 
     useEffect(() => {
-        userId && fetchDealerParentsLovList({ setIsLoading: listShowDealerLoading, userId, onErrorAction });
+        if (userId) {
+            fetchStateLovList({ setIsLoading: listStateLoading, userId, onErrorAction });
+            fetchCityLovList({ setIsLoading: listCityLoading, userId, onErrorAction });
+            fetchDealerParentsLovList({ setIsLoading: listShowDealerLoading, userId, onErrorAction });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
@@ -327,7 +346,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
         switch (buttonKey) {
             case CO_DEALER_QUERY_BUTTONS?.PENDING?.key: {
                 setActionButtonVisiblity({ canAdd: true, canView: false, canEdit: false });
-                typeDataFilter = CoDealerInvoiceStateMaster?.TYPE_DATA_INV_SEARCH?.filter((item) => item?.key !== SEARCH_PARAM_CONSTANTS?.INVOICE_NUMBER?.key);
+                typeDataFilter = CoDealerInvoiceStateMaster?.TYPE_DATA_INV_SEARCH?.filter((i) => [SEARCH_PARAM_CONSTANTS?.INDENT_NUMBER?.key]?.includes(i?.key));
                 break;
             }
             case CO_DEALER_QUERY_BUTTONS?.INVOICED?.key: {
@@ -545,6 +564,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
             setShowDataLoading(true);
             resetDataOnClose();
             setFilterString({ currentQuery: CoDealerInvoiceStateMaster?.currentQuery, current: 1, pageSize: 10 });
+            
             setButtonData({ ...defaultBtnVisiblity, closeBtn: true });
             section && setCurrentSection(CO_DEALER_SECTIONS.THANK_YOU_PAGE.id);
             setCoDealerInvoiceStateMaster((prev) => ({ ...prev, invoiceNumber: MessageSplit(data)?.invoiceNumber, selectedOrder: MessageSplit(data)?.selectedOrder, thankyouPageTitle: MessageSplit(data)?.thankyouPageTitle, generationTitle: MessageSplit(data)?.generationTitle, generationMessage: MessageSplit(data)?.generationMessage }));
@@ -655,7 +675,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
         const requestData = {
             data: data,
             method: 'put',
-            setIsLoading: listShowLoading,
+            setIsLoading: listIrnLoading,
             userId,
             onError,
             onSuccess,
@@ -743,7 +763,10 @@ export const CoDealerInvoiceMasterBase = (props) => {
         confirmRequest,
         setConfirmRequest,
         handleIRNGeneration,
+        stateData,
+        cityData
     };
+    
     const onCancelCloseAction = () => {
         setCancelInvoiceVisible(false);
         cancelInvoiceForm.resetFields();

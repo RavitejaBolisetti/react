@@ -118,7 +118,7 @@ const VehicleDetailsMain = (props) => {
 
     const onFinish = (values) => {
         if (values) {
-            coDealerOnFinish({ ...CoDealerInvoiceStateMaster, vehicleDetailRequest: { ...values, taxDetails: formData?.taxDetails } });
+            coDealerOnFinish({ ...CoDealerInvoiceStateMaster, vehicleDetailRequest: { ...values, discountAmount: values?.discountAmount || 0, taxDetails: formData?.taxDetails } });
         }
     };
 

@@ -7,9 +7,9 @@ import { Tag } from 'antd';
 import { IRN_CONSTANTS, NO_DATA_AVALAIBLE } from 'components/Sales/CoDealerInvoiceGeneration/constants';
 
 export const DEFAULT_COLOR = 'error';
-export const DEFAULT_DESCRIPTION = 'NOT AVAILABLE';
+export const DEFAULT_DESCRIPTION = 'NOT GENERATED';
 
-export const StatusTag = ({ TAGTYPE, TAG_CONSTANT = IRN_CONSTANTS, children }) => {
+export const StatusTag = ({ TAGTYPE, TAG_CONSTANT = IRN_CONSTANTS, children,CustomDefaultDescription= DEFAULT_DESCRIPTION}) => {
     if (TAG_CONSTANT && typeof TAG_CONSTANT === 'object') {
         const NEW_TAG_CONSTANT = Object?.values(TAG_CONSTANT)?.reduce((initial, curr) => {
             if (curr && typeof curr === 'object') {

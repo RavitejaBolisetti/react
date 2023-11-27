@@ -8,9 +8,10 @@ import { Card, Descriptions } from 'antd';
 import { translateContent } from 'utils/translateContent';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
+import { DATA_TYPE } from 'constants/dataType';
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading } = props;
+    const { formData, isLoading ,stateData, cityData } = props;
 
     const viewProps = {
         bordered: false,
@@ -23,14 +24,14 @@ const ViewDetailMain = (props) => {
         <Card>
             <Descriptions {...viewProps}>
                 <Descriptions.Item label={translateContent('coDealer.label.indentDetails.indentNumber')}>{checkAndSetDefaultValue(formData?.indentNumber, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label={translateContent('coDealer.label.indentDetails.indentDate')}>{checkAndSetDefaultValue(formData?.indentDate, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('coDealer.label.indentDetails.indentDate')}>{checkAndSetDefaultValue(formData?.indentDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                 <Descriptions.Item label={translateContent('coDealer.label.indentDetails.dealerCode')}>{checkAndSetDefaultValue(formData?.dealerCode, isLoading)}</Descriptions.Item>
 
                 <Descriptions.Item label={translateContent('coDealer.label.indentDetails.dealerName')}>{checkAndSetDefaultValue(formData?.dealerName, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label={translateContent('coDealer.label.indentDetails.address')}>{checkAndSetDefaultValue(formData?.address, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label={translateContent('coDealer.label.indentDetails.cityDistrict')}>{checkAndSetDefaultValue(formData?.city, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('coDealer.label.indentDetails.cityDistrict')}>{checkAndSetDefaultValue(getCodeValue(cityData,formData?.city,'name',true,'code'), isLoading)}</Descriptions.Item>
 
-                <Descriptions.Item label={translateContent('coDealer.label.indentDetails.state')}>{checkAndSetDefaultValue(formData?.state, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('coDealer.label.indentDetails.state')}>{checkAndSetDefaultValue(getCodeValue(stateData,formData?.state), isLoading)}</Descriptions.Item>
                 <Descriptions.Item label={translateContent('coDealer.label.indentDetails.pinCode')}>{checkAndSetDefaultValue(formData?.pinCode, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label={translateContent('coDealer.label.indentDetails.gstIn')}>{checkAndSetDefaultValue(formData?.gstIn, isLoading)}</Descriptions.Item>
             </Descriptions>

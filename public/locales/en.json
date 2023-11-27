@@ -4431,6 +4431,13 @@
                 "invoiceNumber": "Invoice Number",
                 "invoiceDate": "Invoice Date",
                 "invoiceStatus": "Invoice Status"
+            },
+            "tableColumn": {
+                "invoiceNumberAndDate": "Invoice No. & Date",
+                "DealerName": "Indent Dealer Name",
+                "ModelDescription": "Model Description",
+                "IndentNumberAndDate": "Indent No. & Date",
+                "IRNStatus": "IRN Status"
             }
         },
         "placeholder": {},
