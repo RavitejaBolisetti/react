@@ -3295,7 +3295,7 @@
             "printChallan": "Print Challan",
 
             "deliveryNote": "Delivery Note",
-            "deliveryChallan": "Delivery Note"
+            "deliveryChallan": "Delivery Challan"
         },
         "label": {
             "customerName": "Customer Name",
