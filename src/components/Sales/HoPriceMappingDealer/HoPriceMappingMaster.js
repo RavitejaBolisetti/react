@@ -129,6 +129,9 @@ export const HoPriceMappingMasterBase = (props) => {
     const [searchForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
 
+    const [modelCodeName, setModelCodeName] = useState();
+    const [modelGroupProductData, setModelGroupProductData] = useState([]);
+    const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [pricingType, setPricingType] = useState(PRICING_TYPE?.RSO_PLANT.key);
@@ -254,7 +257,21 @@ export const HoPriceMappingMasterBase = (props) => {
 
     useEffect(() => {
         if (userId) {
-            fetchProductList({ setIsLoading: listProductMainShowLoading, userId, onCloseAction, onErrorAction });
+            const extraParams = [
+                {
+                    key: 'unit',
+                    value: 'Sales',
+                },
+                // {
+                //     key: 'prodctCode',
+                //     value: productHierarchyData?.modelCode,
+                // },
+                // {
+                //     key: 'hierarchyNode',
+                //     value: 'MV',
+                // },
+            ];
+            fetchProductList({ setIsLoading: listProductMainShowLoading, userId, onCloseAction, onErrorAction, extraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
@@ -274,6 +291,13 @@ export const HoPriceMappingMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
+
+    useEffect(() => {
+        if (isAdvanceSearchVisible && filterString) {
+            setSelectedTreeSelectKey(modelCodeName);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isAdvanceSearchVisible, filterString]);
 
     const handlePricingTypeChange = (key) => {
         setPricingType(key);
@@ -491,6 +515,28 @@ export const HoPriceMappingMasterBase = (props) => {
         }
     };
 
+    const disableExceptModelsGroup = (node) => {
+        if (node?.attributeType === MODEL_TYPE?.MODAL_GROUP?.key) {
+            node[`disabled`] = false;
+        } else {
+            node[`disabled`] = true;
+        }
+
+        if (node?.subProdct?.length > 0) {
+            node?.subProdct?.forEach((child) => {
+                disableExceptModelsGroup(child);
+            });
+        }
+
+        return node;
+    };
+
+    useEffect(() => {
+        setModelGroupProductData(productHierarchyData?.map((e) => disableExceptModelsGroup(e)));
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [productHierarchyData]);
+
     const title = translateContent('hoPriceMapping.heading.title');
     const drawerTitleHeading = translateContent('hoPriceMapping.heading.drawerTitleHeading');
 
@@ -521,7 +567,6 @@ export const HoPriceMappingMasterBase = (props) => {
         filteredCityData,
         productHierarchyList,
         handleFilterChange,
-
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
         filterString,
@@ -532,11 +577,14 @@ export const HoPriceMappingMasterBase = (props) => {
         setFilteredCityData,
         isProductLoading,
         isStateLoading,
+        selectedTreeSelectKey,
+        modelGroupProductData,
+        modelCodeName,
     };
 
     const formProps = {
         isVisible: isFormVisible,
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(drawerTitleHeading),
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(drawerTitleHeading),
         handleButtonClick,
         formActionType,
         onCloseAction,
