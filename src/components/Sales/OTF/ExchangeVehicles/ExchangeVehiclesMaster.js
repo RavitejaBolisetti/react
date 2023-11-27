@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { AddEditForm, ViewDetail } from 'components/Sales/Common/ExchangeVehicles';
-import VehiclePriorityAllotmentAlert from './VehiclePriorityAllotmentAlert';
+import VehiclePriorityAllotmentAlert from 'components/Sales/Common/ExchangeVehicles/VehiclePriorityAllotmentAlert';
 
 import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
 import { financeLovDataActions } from 'store/actions/data/otf/financeLov';

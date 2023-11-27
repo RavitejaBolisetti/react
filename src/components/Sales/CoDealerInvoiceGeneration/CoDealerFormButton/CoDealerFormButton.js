@@ -10,7 +10,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 
-export const CoDealerFormButton = ({ record, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection, cancelInvoiceBtnName = translateContent('coDealer.button.cancelInvoice'), PrintButtonName = 'Print Delivery Note' }) => {
+export const CoDealerFormButton = ({ handleInvoicePrint, record, onCloseAction, onCancelDeliveryNote, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection, cancelInvoiceBtnName = translateContent('coDealer.button.cancelInvoice'), PrintButtonName = 'Print Delivery Note' }) => {
     return (
         <div className={styles.formFooter}>
             <Row gutter={20}>
@@ -29,6 +29,11 @@ export const CoDealerFormButton = ({ record, onCloseAction, buttonData, setButto
                 </Col>
 
                 <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.buttonsGroupRight}>
+                    {buttonData?.printInvoiceBtn && (
+                        <Button loading={isLoadingOnSave} onClick={() => handleInvoicePrint({ buttonAction: FROM_ACTION_TYPE.PRINT_INVOICE, record })} danger>
+                            Print Invoice
+                        </Button>
+                    )}
                     {buttonData?.editBtn && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
                             {translateContent('global.buttons.edit')}

@@ -111,35 +111,30 @@ export const EMBEDDED_REPORTS = {
         key: 'Receipt_Note',
         title: 'Reciept Document',
         type: 'Document',
-        slug: '',
     },
     INVOICE_DOCUMENT: {
         id: 15,
         key: 'Invoice_Document',
         title: 'Invoice Document',
         type: 'Document',
-        slug: '',
     },
     DEBIT_DOCUMENT: {
         id: 16,
         key: 'Debit_Note',
         title: 'Credit Debit Document',
         type: 'Document',
-        slug: '',
     },
     CREDIT_DOCUMENT: {
         id: 17,
         key: 'credit_note_document',
         title: 'Credit Debit Document',
         type: 'Document',
-        slug: '',
     },
     DELIVERY_NOTE_DOCUMENT: {
         id: 18,
         key: 'Delivery_Note_Document',
         title: 'Delivery Note Document',
         type: 'Document',
-        slug: '',
     },
 
     FORM_21_DOCUMENT: {
@@ -147,14 +142,12 @@ export const EMBEDDED_REPORTS = {
         key: 'Form21',
         title: 'Form 21 Document',
         type: 'Document',
-        slug: '',
     },
     STOCK_TRANSFER_RECIEVE_NOTE_DOCUMENT: {
         id: 20,
         key: 'Stock_Transfer_Receipt_Note',
         title: 'Stock Transfer Recieve Note Document',
         type: 'Document',
-        slug: '',
     },
     CO_DEALER_INVOICE_REPORT: {
         id: 21,
@@ -188,7 +181,6 @@ export const EMBEDDED_REPORTS = {
         key: 'Challan_Document',
         title: 'Challan Document',
         type: 'Document',
-        slug: '',
     },
     SHIELD_REGISTRATION_INVOICE_DOCUMENT: {
         id: 26,
@@ -274,6 +266,12 @@ export const EMBEDDED_REPORTS = {
         id: 38,
         key: 'Shield_Certificate_Document',
         title: 'Shield Registration Certificate Document ',
+        type: 'Document',
+    },
+    CO_DEALER_INVOICE_DOCUMENT: {
+        id: 39,
+        key: 'Co_Dealer_Invoice_Doument',
+        title: 'Co Dealer Invoice Document ',
         type: 'Document',
     },
 };

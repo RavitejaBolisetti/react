@@ -258,7 +258,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationMasterData
         configurableParamData,
         actions,
         menuData,
-        titleOverride: (finalFormdata?.applicationDetails?.id ? translateContent('global.buttons.edit') : translateContent('global.buttons.add')).concat(" "+ moduleTitle),
+        titleOverride: (finalFormdata?.applicationDetails?.id ? translateContent('global.buttons.edit') : translateContent('global.buttons.add')).concat(' ' + moduleTitle),
         setSelectedTreeKey,
         selectedTreeKey,
         isApplicatinoOnSaveLoading,
@@ -278,30 +278,30 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationMasterData
             <Row gutter={20} span={24}>
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
                     {/* <Spin spinning={isLoading}> */}
-                        {menuData?.length <= 0 ? (
-                            <div className={styles.emptyContainer}>
-                                <Empty
-                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                    imageStyle={{
-                                        height: 60,
-                                    }}
-                                    description={
-                                        <span>
-                                            {translateContent(global.generalMessage.noRecordsFound)} <br /> {translateContent(global.generalMessage.noRecordsFoundAddNew).replace('{NAME}', moduleTitle)}
-                                            {}
-                                        </span>
-                                    }
-                                >
-                                    <Button icon={<PlusOutlined />} type="primary" onClick={() => handleAdd('add')}>
-                                        {translateContent('global.buttons.add')}
-                                    </Button>
-                                </Empty>
-                            </div>
-                        ) : (
-                            <div className={` ${styles.leftPanelScroll}`}>
-                                <LeftPanel {...myProps} />
-                            </div>
-                        )}
+                    {menuData?.length <= 0 ? (
+                        <div className={styles.emptyContainer}>
+                            <Empty
+                                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                imageStyle={{
+                                    height: 60,
+                                }}
+                                description={
+                                    <span>
+                                        {translateContent(global.generalMessage?.noRecordsFound)} <br /> {translateContent(global.generalMessage?.noRecordsFoundAddNew).replace('{NAME}', moduleTitle)}
+                                        {}
+                                    </span>
+                                }
+                            >
+                                <Button icon={<PlusOutlined />} type="primary" onClick={() => handleAdd('add')}>
+                                    {translateContent('global.buttons.add')}
+                                </Button>
+                            </Empty>
+                        </div>
+                    ) : (
+                        <div className={` ${styles.leftPanelScroll}`}>
+                            <LeftPanel {...myProps} />
+                        </div>
+                    )}
                     {/* </Spin> */}
                 </Col>
 
@@ -321,11 +321,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationMasterData
                                 imageStyle={{
                                     height: 60,
                                 }}
-                                description={
-                                    <span>
-                                        {translateContent('applicationMaster.label.description')}
-                                    </span>
-                                }
+                                description={<span>{translateContent('applicationMaster.label.description')}</span>}
                             ></Empty>
                         </div>
                     )}

@@ -94,7 +94,7 @@ const AddEditFormMain = (props) => {
             form.setFieldsValue({
                 taxCategoryCode: taxCategory?.taxCategoryCode,
                 taxCategoryDescription: taxCategory?.taxCategoryDescription,
-                gstStateCode: taxCategory?.gstStateCode,
+                stateCode: taxCategory?.stateCode,
                 saleType: taxCategory?.saleType,
                 status: taxCategory?.status,
             });

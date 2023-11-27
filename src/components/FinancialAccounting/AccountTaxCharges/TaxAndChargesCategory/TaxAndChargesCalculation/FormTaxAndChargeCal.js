@@ -22,8 +22,8 @@ function FormProductAttribute(props) {
             <Form form={formEdit ? editForm : taxChargeCalForm} id="myForm" autoComplete="off" layout="vertical">
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label={translateContent('taxChargeCatagory.label.state')} initialValue={taxCategory?.gstStateCode} name="gstStateCode" rules={[validateRequiredSelectField(translateContent('taxChargeCatagory.label.state'))]}>
-                            {customSelectBox({ disabled: mainFomEdit, data: stateData, fieldNames: { key: 'gstStateCode', value: 'name' }, placeholder: preparePlaceholderSelect(translateContent('taxChargeCatagory.label.state')) })}
+                        <Form.Item label={translateContent('taxChargeCatagory.label.state')} initialValue={taxCategory?.stateCode} name="stateCode" rules={[validateRequiredSelectField(translateContent('taxChargeCatagory.label.state'))]}>
+                            {customSelectBox({ disabled: mainFomEdit, data: stateData, fieldNames: { key: 'code', value: 'name' }, placeholder: preparePlaceholderSelect(translateContent('taxChargeCatagory.label.state')) })}
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
