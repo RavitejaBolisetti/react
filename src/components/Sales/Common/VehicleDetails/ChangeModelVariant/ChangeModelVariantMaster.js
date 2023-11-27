@@ -5,7 +5,7 @@
  */
 
 import React, { useMemo, useEffect, useState } from 'react';
-import { Typography, Divider, Collapse, Tag, Row, Button, Card } from 'antd';
+import { Typography, Divider, Tag, Row, Button } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { TbRefresh } from 'react-icons/tb';
@@ -19,12 +19,9 @@ import styles from 'assets/sass/app.module.scss';
 
 const { Text } = Typography;
 
-const { Panel } = Collapse;
-
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
-        data: {},
     } = state;
 
     let returnValue = {
