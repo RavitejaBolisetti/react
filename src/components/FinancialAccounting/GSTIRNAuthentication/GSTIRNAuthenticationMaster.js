@@ -22,10 +22,10 @@ import { supportingDocumentDataActions } from 'store/actions/data/supportingDocu
 import { gstIrnLoginAction } from 'store/actions/data/financialAccounting/gstIrnLoginAction';
 import { selectGstToDocAction } from 'store/actions/data/financialAccounting/selectGstToDocAction';
 import { BASE_URL_GST_DOCID_NAME as customURL } from 'constants/routingApi';
-import { drawerTitle } from 'utils/drawerTitle';
 
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -264,7 +264,6 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
 
     const containerProps = {
         titleOverride: drawerTitle(formActionType).concat(' ').concat(moduleTitle),
-
         record: selectedRecord,
         form,
         formActionType,
