@@ -90,7 +90,7 @@ const AddEditFormMain = (props) => {
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={formData?.parentCompanyCode} label={translateContent('customerMaster.label.companyCode')} name="parentCompanyCode" data-testid="parentCode" >
-                            <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.companyCode'))} onBlur={validateParentCode} disabled={editMode} />
+                            <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.companyCode'))} onChange={validateParentCode} disabled={editMode} />
                         </Form.Item>
                         {/* rules={[validateRequiredInputField(translateContent('customerMaster.validation.parentCode'))]} */}
                     </Col>
