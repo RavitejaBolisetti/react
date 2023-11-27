@@ -17,11 +17,10 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './search/AdvancedSearch';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { BASE_URL_CRM_SCHEME_ENROLLMENT_DETAILS as customURL } from 'constants/routingApi';
-import { salesConsultantActions } from 'store/actions/data/otf/salesConsultant';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
-
+import { ReportModal } from 'components/common/ReportModal/ReportModal';
 import { crmSchemeEnrollmentDataActions } from 'store/actions/data/crmSchemeEnrollment';
-
+import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
 import { showGlobalNotification } from 'store/actions/notification';
 import { translateContent } from 'utils/translateContent';
 
@@ -88,6 +87,8 @@ export const CrmScreenEnrolmentBase = (props) => {
     const [searchForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
 
+    const [additionalReportParams, setAdditionalReportParams] = useState();
+    const [isReportVisible, setReportVisible] = useState();
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
@@ -313,6 +314,17 @@ export const CrmScreenEnrolmentBase = (props) => {
 
     const onFinishSearch = (values) => {};
 
+    const handlePrintDownload = (record) => {
+        setReportVisible(true);
+
+        setAdditionalReportParams([
+            {
+                key: 'sc_ws_enrolment_detail_id',
+                value: record?.id,
+            },
+        ]);
+    };
+
     const onFinish = (values) => {
         if (formActionType?.addMode) {
             const data = { ...values };
@@ -469,6 +481,17 @@ export const CrmScreenEnrolmentBase = (props) => {
         vehicleDataDetails,
         isSearchLoading,
         generatedData,
+        handlePrintDownload,
+    };
+
+    const reportDetail = EMBEDDED_REPORTS?.REFERRAL_SCHEME_REGISTRATION_DOCUMENT;
+    const reportProps = {
+        isVisible: isReportVisible,
+        titleOverride: reportDetail?.title,
+        additionalParams: additionalReportParams,
+        onCloseAction: () => {
+            setReportVisible(false);
+        },
     };
 
     return (
@@ -483,6 +506,7 @@ export const CrmScreenEnrolmentBase = (props) => {
             <AdvancedSearch {...advanceFilterProps} />
 
             <AddViewFormMaster {...formProps} />
+            <ReportModal {...reportProps} reportDetail={reportDetail} />
         </>
     );
 };
