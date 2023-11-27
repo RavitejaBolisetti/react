@@ -403,7 +403,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
                 if (record?.invoiceStatus === CO_DEALER_QUERY_BUTTONS?.INVOICED?.key) {
                     btnVisibilityStatus = { ...buttonData, cancelInvoice: true, closeBtn: true, nextBtn: !isLastSection, printInvoiceBtn: true };
                 } else {
-                    btnVisibilityStatus = { ...buttonData, cancelInvoice: false, closeBtn: true, nextBtn: !isLastSection,printInvoiceBtn: false };
+                    btnVisibilityStatus = { ...buttonData, cancelInvoice: false, closeBtn: true, nextBtn: !isLastSection, printInvoiceBtn: false };
                 }
                 formAction = { addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION };
                 break;
@@ -530,6 +530,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
         const onSuccess = (res) => {
             setConfirmRequest({ ...confirmRequest, isVisible: false });
             handleProfile(VIEW_ACTION, invoiceId);
+            fetchCoDealerInvoice({ setIsLoading: listShowCoDealerLoading, userId, extraParams, onSuccessAction, onErrorAction });
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
         };
         const onError = (message) => {
@@ -570,7 +571,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
     };
 
     const MessageSplit = (message) => {
-        return { thankyouPageTitle: message?.responseMessage, generationTitle: 'Invoice No.', generationMessage: message?.data?.invoiceNumber, selectedOrder: {customerName:message?.data?.dealerName,customerId:message?.data?.dealerCode, invoiceNumber: message?.data?.invoiceNumber, invoiceStatus: CO_DEALER_QUERY_BUTTONS?.INVOICED?.title, invoiceDate: convertDateTimedayjs( message?.data?.invoiceDate, dateFormatView) } };
+        return { thankyouPageTitle: message?.responseMessage, generationTitle: 'Invoice No.', generationMessage: message?.data?.invoiceNumber, selectedOrder: { customerName: message?.data?.dealerName, customerId: message?.data?.dealerCode, invoiceNumber: message?.data?.invoiceNumber, invoiceStatus: CO_DEALER_QUERY_BUTTONS?.INVOICED?.title, invoiceDate: convertDateTimedayjs(message?.data?.invoiceDate, dateFormatView) } };
     };
     const onFinish = (values) => {
         const finalPayload = { invoiceNumber: '', indentDetails: values?.indentDetails, vehicleDetailRequest: values?.vehicleDetailRequest };
