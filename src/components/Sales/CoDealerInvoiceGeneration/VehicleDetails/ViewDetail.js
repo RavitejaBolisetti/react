@@ -40,7 +40,7 @@ export const ViewDetail = (props) => {
                                 <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.modelDescription')}>
                                     <div className={styles?.tooltipAlign}>
                                         {checkAndSetDefaultValue(formData?.modelDescription, isLoading)}
-                                        {formData?.modelDescription && checkAndSetDefaultValue(addToolTip(toolTipContent, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles?.infoIconColor} size={13} />), isLoading)}
+                                        {formData?.modelDescription && checkAndSetDefaultValue(addToolTip(toolTipContent, 'bottom', '#D3EDFE', styles?.toolTip)(<AiOutlineInfoCircle className={styles?.infoIconColor} size={13} />), isLoading)}
                                     </div>
                                 </Descriptions.Item>
                                 <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.modelCode')}>{checkAndSetDefaultValue(formData?.modelCode, isLoading)}</Descriptions.Item>

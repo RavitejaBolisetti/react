@@ -34,6 +34,7 @@ import { otfvehicleDetailsDataActions } from 'store/actions/data/otf/vehicleDeta
 import { CancelInvoice } from '../VehicleInvoiceGeneration/CancelInvoice';
 import { geoStateDataActions } from 'store/actions/data/geo/states';
 import { geoCityDataActions } from 'store/actions/data/geo/cities';
+import { IRN_STATUS } from 'constants/IRNStatus';
 
 const mapStateToProps = (state) => {
     const {
@@ -438,6 +439,8 @@ export const CoDealerInvoiceMasterBase = (props) => {
                 extraParams: ExtraParams('invoiceId', null, id),
                 onSuccessAction: (res) => {
                     setCoDealerInvoiceStateMaster((prev) => ({ ...prev, selectedOrder: { ...res?.data, invoiceDate: convertDateTimedayjs(res?.data?.invoiceDate, dateFormatView) } }));
+                    const showCancelInvoice = [IRN_STATUS?.APPROVED?.key, IRN_STATUS?.REJECTED?.key, null]?.includes(res?.data?.irnStatus) && !formActionType?.addMode;
+                    setButtonData((prev) => ({ ...prev, cancelInvoice: showCancelInvoice }));
                 },
                 onErrorAction,
             });
@@ -554,7 +557,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
     };
 
     const MessageSplit = (message) => {
-        return { thankyouPageTitle: message?.responseMessage, generationTitle: 'Invoice No.', generationMessage: message?.data?.invoiceNumber, selectedOrder: { invoiceNumber: message?.data?.invoiceNumber, invoiceStatus: CO_DEALER_QUERY_BUTTONS?.INVOICED?.title, invoiceDate: convertDateTimedayjs(selectedOrder?.invoiceDate, dateFormatView) } };
+        return { thankyouPageTitle: message?.responseMessage, generationTitle: 'Invoice No.', generationMessage: message?.data?.invoiceNumber, selectedOrder: {customerName:message?.data?.dealerName,customerId:message?.data?.dealerCode, invoiceNumber: message?.data?.invoiceNumber, invoiceStatus: CO_DEALER_QUERY_BUTTONS?.INVOICED?.title, invoiceDate: convertDateTimedayjs( message?.data?.invoiceDate, dateFormatView) } };
     };
     const onFinish = (values) => {
         const finalPayload = { invoiceNumber: '', indentDetails: values?.indentDetails, vehicleDetailRequest: values?.vehicleDetailRequest };
@@ -564,10 +567,9 @@ export const CoDealerInvoiceMasterBase = (props) => {
             setShowDataLoading(true);
             resetDataOnClose();
             setFilterString({ currentQuery: CoDealerInvoiceStateMaster?.currentQuery, current: 1, pageSize: 10 });
-            
             setButtonData({ ...defaultBtnVisiblity, closeBtn: true });
             section && setCurrentSection(CO_DEALER_SECTIONS.THANK_YOU_PAGE.id);
-            setCoDealerInvoiceStateMaster((prev) => ({ ...prev, invoiceNumber: MessageSplit(data)?.invoiceNumber, selectedOrder: MessageSplit(data)?.selectedOrder, thankyouPageTitle: MessageSplit(data)?.thankyouPageTitle, generationTitle: MessageSplit(data)?.generationTitle, generationMessage: MessageSplit(data)?.generationMessage }));
+            setCoDealerInvoiceStateMaster((prev) => ({ ...prev, selectedOrder: MessageSplit(data)?.selectedOrder, thankyouPageTitle: MessageSplit(data)?.thankyouPageTitle, generationTitle: MessageSplit(data)?.generationTitle, generationMessage: MessageSplit(data)?.generationMessage }));
         };
 
         const requestData = {
@@ -764,9 +766,9 @@ export const CoDealerInvoiceMasterBase = (props) => {
         setConfirmRequest,
         handleIRNGeneration,
         stateData,
-        cityData
+        cityData,
     };
-    
+
     const onCancelCloseAction = () => {
         setCancelInvoiceVisible(false);
         cancelInvoiceForm.resetFields();
