@@ -57,8 +57,6 @@ export const ThankYouMaster = (props) => {
         buttonData: { ...defaultBtnVisiblity },
     };
 
-    console.log(`record`, record);
-
     return (
         <>
             <Row gutter={20} className={styles?.drawerBodyRight}>

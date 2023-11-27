@@ -26,7 +26,7 @@ const { Panel } = Collapse;
 export const AddEditForm = (props) => {
     const { toolTipContent, formData, typeData } = props;
     const { collapseActiveKey, setcollapseActiveKey, CoDealerInvoiceStateMaster, HandleVinList, setDealerDicountValue, isVinLoading } = props;
-    const { isDisabled = true, form, changeStatus, setchangeStatus } = props;
+    const { isDisabled = true, form, setButtonData, setchangeStatus } = props;
     const disabledProps = { disabled: isDisabled };
 
     useEffect(() => {
@@ -34,6 +34,9 @@ export const AddEditForm = (props) => {
             form.setFieldsValue({ ...formData });
             if (formData?.modelCode) {
                 HandleVinList(formData?.modelCode);
+            }
+            if (formData?.vehicleAmount) {
+                setButtonData((prev) => ({ ...prev, formBtnActive: true }));
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

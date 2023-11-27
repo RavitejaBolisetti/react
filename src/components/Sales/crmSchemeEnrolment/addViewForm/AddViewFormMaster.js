@@ -43,7 +43,6 @@ const AddViewFormMain = (props) => {
         generatedData,
     };
 
-
     return (
         <>
             <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>

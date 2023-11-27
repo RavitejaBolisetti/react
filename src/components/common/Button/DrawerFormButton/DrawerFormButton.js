@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Button, Row, Col } from 'antd';
+import { Button, Row, Col, Popover } from 'antd';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import styles from './DrawerFormButton.module.scss';
@@ -29,9 +29,9 @@ const DrawerButtons = ({ formData, onCloseAction, buttonData, setButtonData, sav
 
             <Col xs={24} sm={18} md={18} lg={18} xl={18} className={styles.buttonsGroupRight}>
                 {buttonData?.printDownloadBtn && (
-                    <Button danger onClick={onCloseAction}>
-                        {translateContent('global.buttons.print/download')}
-                    </Button>
+                    <Popover content={translateContent('global.toolTip.comingSoon')} trigger="hover">
+                        <Button danger>{translateContent('global.buttons.print/download')}</Button>
+                    </Popover>
                 )}
                 {buttonData?.saveBtn && (
                     <Button loading={isLoadingOnSave?.isSaveBtnLoading} disabled={!buttonData?.formBtnActive} data-testid="save" onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">

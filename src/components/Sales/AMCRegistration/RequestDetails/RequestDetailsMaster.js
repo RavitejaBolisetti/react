@@ -46,7 +46,7 @@ const RequestDetailsMasterBase = (props) => {
                         </Col>
                     </Row>
 
-                    {formActionType?.viewMode && <ViewDetail {...viewProps} workflowMasterDetails={requestPayload?.workflowMasterDetails} formData={Array?.isArray(requestPayload?.amcRequestDetails) ? requestPayload?.amcRequestDetails : [requestPayload?.amcRequestDetails]} />}
+                    {formActionType?.viewMode && <ViewDetail {...viewProps} amcRegistration={requestPayload?.amcRegistration} workflowMasterDetails={requestPayload?.workflowMasterDetails} formData={Array?.isArray(requestPayload?.amcRequestDetails) ? requestPayload?.amcRequestDetails : [requestPayload?.amcRequestDetails]} />}
                 </Col>
             </Row>
             <Row>

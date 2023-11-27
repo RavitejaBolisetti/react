@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Col, Form, Row, Button, DatePicker, Select } from 'antd';
 
 import { withModal } from 'components/withModal';
@@ -17,9 +17,10 @@ import { validateRequiredSelectField } from 'utils/validation';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { translateContent } from 'utils/translateContent';
 import { DATE_CONSTANTS } from './constants/DateConstants';
+import { CO_DEALER_QUERY_BUTTONS } from './constants';
 
 export const AdvancedSearchFrom = (props) => {
-    const { setAdvanceSearchVisible, typeData, isReadonly = true, indentToDealerData, handleDateChange, CoDealerInvoiceStateMaster } = props;
+    const { setAdvanceSearchVisible, typeData, isReadonly = true, indentToDealerData, handleDateChange, CoDealerInvoiceStateMaster, isVisible } = props;
     const disabledProps = { disabled: isReadonly };
     const { filterString, setFilterString, advanceFilterForm, handleResetFilter } = props;
 
@@ -41,6 +42,14 @@ export const AdvancedSearchFrom = (props) => {
         }
         return Promise.reject(new Error(translateContent('coDealer.validation.toDate')));
     };
+    const handleDateLabel = useMemo(() => {
+        if (CoDealerInvoiceStateMaster?.currentQuery === CO_DEALER_QUERY_BUTTONS?.PENDING?.key) {
+            return { fromDate: translateContent('stockTransferIndent.label.indentfromdate'), toDate: translateContent('stockTransferIndent.label.indentTodate') };
+        } else {
+            return { fromDate: translateContent('vehicleDeliveryNote.label.invoiceFromDate'), toDate: translateContent('vehicleDeliveryNote.label.invoiceToDate') };
+        }
+    }, [CoDealerInvoiceStateMaster?.currentQuery]);
+    
     return (
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
@@ -56,13 +65,13 @@ export const AdvancedSearchFrom = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label={translateContent('vehicleDeliveryNote.label.invoiceFromDate')} name="invoiceFromDate" className={styles?.datePicker} rules={CoDealerInvoiceStateMaster?.INVOICE_FROM_DATE}>
+                    <Form.Item label={handleDateLabel?.fromDate} name="invoiceFromDate" className={styles?.datePicker} rules={CoDealerInvoiceStateMaster?.INVOICE_FROM_DATE}>
                         <DatePicker onChange={(value) => handleDateChange(value, DATE_CONSTANTS?.INVOICE_FROM_DATE?.key)} placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                        label={translateContent('vehicleDeliveryNote.label.invoiceToDate')}
+                        label={handleDateLabel?.toDate}
                         name="invoiceToDate"
                         className={styles?.datePicker}
                         rules={[

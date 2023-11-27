@@ -2240,7 +2240,7 @@
     "crmSchemeEnrolment": {
         "heading": {
             "drawerTitle": " Scheme Enrolment Details",
-            "title": "CRM Scheme Enrolment Screens",
+            "title": "CRM Scheme Enrolment",
             "moduleTitle": "Dealer List",
             "enrollmentTitle": "Enrolment Number Generated Successfully",
             "enrolmentDetails": "Enrolment Details",
@@ -3286,6 +3286,9 @@
             "mainTitle": "Delivery Note",
             "title": "Vehicle Delivery Note"
         },
+        "cancelTitle": {
+            "challan": "Challan"
+        },
         "buttons": {
             "cancelTitle": "Cancel ",
             "challan": "Challan",
@@ -3295,7 +3298,7 @@
             "printChallan": "Print Challan",
 
             "deliveryNote": "Delivery Note",
-            "deliveryChallan": "Delivery Note"
+            "deliveryChallan": "Delivery Challan"
         },
         "label": {
             "customerName": "Customer Name",
@@ -4312,7 +4315,8 @@
             "remarkforCancellation": "Remark for Cancellation",
             "otherReason": "Other Reason",
             "schemeRegNo": "Scheme Reg. No.",
-            "registrationDate": "Registration Date"
+            "registrationDate": "Registration Date",
+            "mobileNo": "Mobile No"
         },
         "buttons": {
             "cancelScheme": "Cancel Scheme",
@@ -4431,6 +4435,13 @@
                 "invoiceNumber": "Invoice Number",
                 "invoiceDate": "Invoice Date",
                 "invoiceStatus": "Invoice Status"
+            },
+            "tableColumn": {
+                "invoiceNumberAndDate": "Invoice No. & Date",
+                "DealerName": "Indent Dealer Name",
+                "ModelDescription": "Model Description",
+                "IndentNumberAndDate": "Indent No. & Date",
+                "IRNStatus": "IRN Status"
             }
         },
         "placeholder": {},

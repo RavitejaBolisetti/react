@@ -323,7 +323,7 @@ const AddEditFormMain = (props) => {
                                         </Col>
                                         {[SCHEME_TYPE_CONSTANTS?.RSA_FOC?.key, SCHEME_TYPE_CONSTANTS?.AMC_FOC?.key, SCHEME_TYPE_CONSTANTS?.SHIELD_FOC?.key]?.includes(schemeCategorySelect) && (
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                                <Form.Item label={translateContent('vehicleSalesSchemeMaster.label.schemeCategory')} name="schemeCategory" rules={[validateRequiredInputField(translateContent('vehicleSalesSchemeMaster.validation.schemeCategory'))]}>
+                                                <Form.Item initialValue={formData?.schemeCategory} label={translateContent('vehicleSalesSchemeMaster.label.schemeCategory')} name="schemeCategory" rules={[validateRequiredInputField(translateContent('vehicleSalesSchemeMaster.validation.schemeCategory'))]}>
                                                     {customSelectBox({ data: schemeData, onChange: onchangeSchemeCategory, placeholder: preparePlaceholderSelect(translateContent('vehicleSalesSchemeMaster.placeholder.schemeCategory')), fieldNames: { key: 'schemeCode', value: 'schemeDescription' } })}
                                                 </Form.Item>
                                             </Col>
@@ -343,12 +343,12 @@ const AddEditFormMain = (props) => {
                                         {taxField === OFFER_TYPE_CONSTANTS?.DISCOUNT?.key && (
                                             <>
                                                 <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                                    <Form.Item label={translateContent('vehicleSalesSchemeMaster.label.amountWithoutTax')} name="amountWithoutTax">
+                                                    <Form.Item initialValue={formData?.amountWithoutTax} label={translateContent('vehicleSalesSchemeMaster.label.amountWithoutTax')} name="amountWithoutTax">
                                                         <Input placeholder={preparePlaceholderText(translateContent('vehicleSalesSchemeMaster.placeholder.amountWithoutTax'))} disabled={disableAmountTaxField} />
                                                     </Form.Item>
                                                 </Col>
                                                 <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                                    <Form.Item label={translateContent('vehicleSalesSchemeMaster.label.amountWithTax')} name="amountWithTax">
+                                                    <Form.Item initialValue={formData?.amountWithTax} label={translateContent('vehicleSalesSchemeMaster.label.amountWithTax')} name="amountWithTax">
                                                         <Input placeholder={preparePlaceholderText(translateContent('vehicleSalesSchemeMaster.placeholder.amountWithTax'))} disabled={disableAmountTaxField} />
                                                     </Form.Item>
                                                 </Col>

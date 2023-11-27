@@ -41,22 +41,14 @@ const AddEditFormMain = (props) => {
     const [AdvanceformData, setAdvanceformData] = useState();
     const AggregateModuleTitle = `Aggregates`;
 
-    useEffect(() => {
-        if (modelData && modelFamilyData && variantData) {
-            form.setFieldsValue({
-                ...formData?.productAttributeDetail,
-                modelGroup: modelData[0]?.modelGroupDescription,
-                modelFamily: modelFamilyData[0]?.familyDescription,
-                modelVariant: variantData[0]?.variantDescription,
-            });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [modelData, modelFamilyData, variantData, formActionType]);
 
     useEffect(() => {
         if (formData?.productAttributeDetail) {
             form.setFieldsValue({
                 ...formData?.productAttributeDetail,
+                modelGroup: modelData?.[0]?.modelGroupDescription,
+                modelFamily: modelFamilyData?.[0]?.familyDescription,
+                modelVariant: variantData?.[0]?.variantDescription,
                 manufacturerInvoiceDate: formattedCalendarDate(formData?.productAttributeDetail?.manufacturerInvoiceDate),
                 manufacturerWarrantyStartDate: formattedCalendarDate(formData?.productAttributeDetail?.manufacturerWarrantyStartDate),
             });
@@ -69,7 +61,7 @@ const AddEditFormMain = (props) => {
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData]);
+    }, [formData,modelData, modelFamilyData, variantData, formActionType,formData]);
 
     const addContactHandeler = (e) => {
         aggregateForm.resetFields();

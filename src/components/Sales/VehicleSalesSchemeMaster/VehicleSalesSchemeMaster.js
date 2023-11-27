@@ -296,13 +296,10 @@ export const VehicleSalesSchemeMasterBase = (props) => {
     useEffect(() => {
         if (schemeCategoryList?.amc && amcSchemeCategoryData?.length > 0) {
             isSchemeData(amcSchemeCategoryData);
-            addSchemeForm.setFieldsValue({ amountWithoutTax: amcSchemeCategoryData?.schemeAmount, amountWithTax: amcSchemeCategoryData?.schemeTaxAmount });
         } else if (schemeCategoryList?.rsa && rsaSchemeCategoryData?.length > 0) {
             isSchemeData(rsaSchemeCategoryData);
-            addSchemeForm.setFieldsValue({ amountWithoutTax: rsaSchemeCategoryData?.data?.schemeAmount, amountWithTax: rsaSchemeCategoryData?.data?.schemeTaxAmount });
         } else if (schemeCategoryList?.shield && shieldSchemeCategoryData?.length > 0) {
             isSchemeData(shieldSchemeCategoryData);
-            addSchemeForm.setFieldsValue({ amountWithoutTax: shieldSchemeCategoryData?.schemeAmount, amountWithTax: shieldSchemeCategoryData?.schemeTaxAmount });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [amcSchemeCategoryData, rsaSchemeCategoryData, shieldSchemeCategoryData]);
@@ -489,6 +486,8 @@ export const VehicleSalesSchemeMasterBase = (props) => {
             customURL: customUploadURL,
         };
         saveVehicleSalesSchemeData(requestData);
+        form.resetFields();
+        setSingleDisabled(false);
     };
 
     const handleSchemeCategory = (value) => {
@@ -513,6 +512,7 @@ export const VehicleSalesSchemeMasterBase = (props) => {
         addSchemeForm.resetFields();
         setTableDataItem([]);
         if (buttonAction === VIEW_ACTION || buttonAction === EDIT_ACTION) {
+            //setFormData([])
             const extraParams = [
                 {
                     key: 'id',
@@ -541,7 +541,7 @@ export const VehicleSalesSchemeMasterBase = (props) => {
             setButtonData({ closeBtn: true });
         }
 
-        setFormData(record);
+        //setFormData(record);
         setIsFormVisible(true);
         setIsViewDetailVisible(true);
     };
@@ -863,6 +863,7 @@ export const VehicleSalesSchemeMasterBase = (props) => {
             form.resetFields();
             setFileList([]);
             resetViewData();
+            setSingleDisabled(false);
         },
         buttonData,
         setButtonData,

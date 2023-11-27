@@ -781,7 +781,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     const cancelDeliveryNoteProps = {
         isVisible: cancelDeliveryNoteVisible,
         onCloseAction: cancelModalCloseAction,
-        titleOverride: translateContent('vehicleDeliveryNote.buttons.cancelTitle') + (soldByDealer ? moduleTitle : translateContent('vehicleDeliveryNote.buttons.challan')),
+        titleOverride: translateContent('vehicleDeliveryNote.buttons.cancelTitle').concat(' ') + (soldByDealer ? moduleTitle : translateContent('vehicleDeliveryNote.buttons.challan')),
         cancelDeliveryNoteForm,
         cancelModalCloseAction,
         onFinish: onCancelFormFinish,
@@ -805,7 +805,9 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         deliveryNoteOnFinish: onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(soldByDealer ? moduleTitle : translateContent('vehicleDeliveryNote.cancelTitle.challan')),
+        titleOverride: drawerTitle(formActionType)
+            .concat(' ')
+            .concat(soldByDealer ? moduleTitle : translateContent('vehicleDeliveryNote.cancelTitle.challan')),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,

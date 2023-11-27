@@ -15,9 +15,12 @@ import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { ModalButtons } from 'components/common/Button';
 
 import styles from 'assets/sass/app.module.scss';
+import { RSA_CONSTANTS } from './utils/RSA_CONSTANT';
+import { customSelectBox } from 'utils/customSelectBox';
+import { translateContent } from 'utils/translateContent';
 
 export const AdvancedSearchFrom = (props) => {
-    const { setAdvanceSearchVisible, typeData, handleResetFilter } = props;
+    const { setAdvanceSearchVisible, handleResetFilter, userType, handleDealerParentChange, dealerParentsLovList, dealerLocations } = props;
     const {
         filterString,
         setFilterString,
@@ -63,6 +66,20 @@ export const AdvancedSearchFrom = (props) => {
 
     return (
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            {userType === RSA_CONSTANTS?.MNM?.key && (
+                <Row gutter={16}>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item initialValue={filterString?.dealerParent} label={translateContent('shieldSchemeRegistration.label.dealerParent')} name="dealerParent">
+                            {customSelectBox({ data: dealerParentsLovList, placeholder: preparePlaceholderSelect(translateContent('shieldSchemeRegistration.label.dealerParent')), onChange: handleDealerParentChange })}
+                        </Form.Item>
+                    </Col>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item initialValue={filterString?.dealerLocation} label={translateContent('shieldSchemeRegistration.label.dealerLocation')} name="dealerLocation">
+                            {customSelectBox({ data: dealerLocations, placeholder: preparePlaceholderSelect(translateContent('shieldSchemeRegistration.label.dealerLocation')), fieldNames: { key: 'locationCode', value: 'dealerLocationName' } })}
+                        </Form.Item>
+                    </Col>
+                </Row>
+            )}
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="RSA Registration From Date" name="fromDate" rules={[validateRequiredSelectField('From Date')]} className={styles?.datePicker}>

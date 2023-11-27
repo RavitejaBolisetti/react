@@ -150,7 +150,6 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
                 setDocData();
                 setSingleDisabled(false);
                 setDraggerDisable(false);
-                // showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationSuccess.error'), message: res });
             },
         });
     };

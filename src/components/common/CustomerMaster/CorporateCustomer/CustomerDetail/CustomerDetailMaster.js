@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Row, Col, Form } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -19,6 +19,7 @@ import { CustomerFormButton } from '../../CustomerFormButton';
 import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
+import { debounce } from 'utils/debounce';
 
 const mapStateToProps = (state) => {
     const {
@@ -193,7 +194,8 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         saveData(requestData);
     };
 
-    const validateParentCode = (e) => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const validateParentCode = useCallback(debounce((e) => {
         const parentCompanyData = e?.target?.value;
         if (parentCompanyData) {
             const extraParams = [
@@ -207,7 +209,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
 
             fetchCustomerParentCompanyList({ setIsLoading: listCustomerParentCompanyShowLoading, extraParams, userId, onErrorAction });
         }
-    };
+    }), []);
 
     const formProps = {
         ...props,

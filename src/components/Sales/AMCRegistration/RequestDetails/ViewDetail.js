@@ -13,9 +13,10 @@ import { AMCStatusTags } from '../utils/AMCStatusTags';
 import styles from 'assets/sass/app.module.scss';
 import { getCodeValue } from 'utils/getCodeValue';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import RequestedOnDate from '../utils/RequestedOnDate';
 
 const ViewDetail = (props) => {
-    const { workflowMasterDetails, formData, userType, selectedAMC, handleCancelRequest, handleMNMApproval, handleMNMRejection, typeData } = props;
+    const { workflowMasterDetails, amcRegistration, formData, userType, selectedAMC, handleCancelRequest, handleMNMApproval, handleMNMRejection, typeData } = props;
 
     const viewProps = {
         bordered: false,
@@ -41,7 +42,7 @@ const ViewDetail = (props) => {
                             <Row type="flex" align="middle" className={data?.requestStatus === AMC_CONSTANTS?.PENDING_FOR_CANCELLATION?.key ? '' : styles.marB20}>
                                 <Col xs={24} sm={24} md={24} lg={24}>
                                     <div className={styles.tableTextColor85}>
-                                        {translateContent('amcRegistration.label.requestedOn')}: {checkAndSetDefaultValue(data?.requestStatus === AMC_CONSTANTS?.PENDING_FOR_APPROVAL?.key ? data?.amcRegistrationDate : data?.requestStatus === AMC_CONSTANTS?.APPROVED?.key || data?.requestStatus === AMC_CONSTANTS?.REJECTED?.key ? data?.approvedDate : data?.amcCancelDate, false, DATA_TYPE?.DATE?.key)}
+                                        {translateContent('amcRegistration.label.requestedOn')}: {checkAndSetDefaultValue(RequestedOnDate(data, data?.requestStatus, amcRegistration?.priceType), false, DATA_TYPE?.DATE?.key)}
                                     </div>
                                 </Col>
                             </Row>

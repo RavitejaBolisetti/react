@@ -25,7 +25,6 @@ import { crmSchemeEnrollmentDataActions } from 'store/actions/data/crmSchemeEnro
 import { showGlobalNotification } from 'store/actions/notification';
 import { translateContent } from 'utils/translateContent';
 
-import { FilterIcon } from 'Icons';
 import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
@@ -34,9 +33,6 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             CRMSchemeEnrollmentList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString, isDetailLoaded, detailData = [] },
-            OTF: {
-                salesConsultantLov: { isLoaded: isSalesConsultantDataLoaded, isLoading: isSalesConsultantDataLoading, data: salesConsultantLovData = [] },
-            },
         },
     } = state;
 
@@ -52,9 +48,6 @@ const mapStateToProps = (state) => {
         filterString,
         isDetailLoaded,
         detailData,
-        isSalesConsultantDataLoaded,
-        salesConsultantLovData,
-        isSalesConsultantDataLoading,
     };
     return returnValue;
 };
@@ -71,10 +64,6 @@ const mapDispatchToProps = (dispatch) => ({
             fetchDetail: crmSchemeEnrollmentDataActions.fetchDetail,
             listDetailShowLoading: crmSchemeEnrollmentDataActions.listShowLoading,
             saveData: crmSchemeEnrollmentDataActions.saveData,
-
-            fetchSalesConsultant: salesConsultantActions.fetchList,
-            listConsultantShowLoading: salesConsultantActions.listShowLoading,
-
             showGlobalNotification,
         },
         dispatch
@@ -82,8 +71,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const CrmScreenEnrolmentBase = (props) => {
-    const { filterString, setFilterString, fetchList, saveData, data, listShowLoading, userId, salesConsultantLovData, isSearchLoading } = props;
-    const { typeData, totalRecords, showGlobalNotification, fetchDetail, listDetailShowLoading, detailData, fetchSalesConsultant, listConsultantShowLoading, isSalesConsultantDataLoading } = props;
+    const { filterString, setFilterString, fetchList, saveData, data, listShowLoading, userId, isSearchLoading } = props;
+    const { typeData, totalRecords, showGlobalNotification, fetchDetail, listDetailShowLoading, detailData } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [openAccordian, setOpenAccordian] = useState('');
     const [isEnrolmentGenerated, setIsEnrolmentGenerated] = useState(false);
@@ -215,13 +204,6 @@ export const CrmScreenEnrolmentBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, page, filterString]);
-
-    useEffect(() => {
-        if (userId) {
-            fetchSalesConsultant({ setIsLoading: listConsultantShowLoading, userId });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
 
     useEffect(() => {
         if (Object.values(detailData)?.length > 0) {
@@ -428,8 +410,8 @@ export const CrmScreenEnrolmentBase = (props) => {
         }
     };
 
-    const title = translateContent('crmSchemeEnrolment.heading.title');
     const drawerShortTitle = translateContent('crmSchemeEnrolment.heading.drawerTitle');
+    const title = translateContent('crmSchemeEnrolment.heading.title');
 
     const normalSearchProps = {
         extraParams,
@@ -452,9 +434,10 @@ export const CrmScreenEnrolmentBase = (props) => {
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
-        icon: <FilterIcon size={20} />,
+        // icon: <FilterIcon size={20} />,
         titleOverride: translateContent('global.advanceFilter.title'),
         onCloseAction: onAdvanceSearchCloseAction,
+        title,
         handleResetFilter,
         filterString,
         setFilterString,
@@ -466,7 +449,7 @@ export const CrmScreenEnrolmentBase = (props) => {
 
     const formProps = {
         isVisible: isFormVisible,
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(drawerShortTitle),
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(drawerShortTitle),
         handleButtonClick,
         formActionType,
         onCloseAction,
@@ -484,8 +467,6 @@ export const CrmScreenEnrolmentBase = (props) => {
         detailData,
         customerData,
         vehicleDataDetails,
-        isSalesConsultantDataLoading,
-        salesConsultantLovData,
         isSearchLoading,
         generatedData,
     };

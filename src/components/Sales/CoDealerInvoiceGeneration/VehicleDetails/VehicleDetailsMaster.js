@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect, useDeferredValue } from 'react';
+import React, { useState, useEffect, useDeferredValue, useMemo } from 'react';
 import { Form, Row, Col } from 'antd';
 
 import { connect } from 'react-redux';
@@ -18,24 +18,26 @@ import { BASE_URL_TAX_CALCULATION } from 'constants/routingApi';
 
 import styles from 'assets/sass/app.module.scss';
 import { otfvehicleDetailsDataActions } from 'store/actions/data/otf/vehicleDetails';
+import { translateContent } from 'utils/translateContent';
+import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            VehicleDeliveryNote: {
-                DeliverableChecklistMain: { isLoaded: isChecklistDataLoaded = false, isLoading: isChecklistDataLoading, data: ChecklistData = [] },
-            },
+            ProductHierarchy: { isFilteredListLoaded: isProductHierarchyDataLoaded = false, isLoading: isProductHierarchyLoading, filteredListData: productAttributeData = [] },
+
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
         },
     } = state;
 
     let returnValue = {
         userId,
-        isChecklistDataLoaded,
-        isChecklistDataLoading,
-        ChecklistData,
         typeData,
+
+        isProductHierarchyDataLoaded,
+        isProductHierarchyLoading,
+        productAttributeData,
     };
     return returnValue;
 };
@@ -47,6 +49,10 @@ const mapDispatchToProps = (dispatch) => ({
             fetchData: otfvehicleDetailsDataActions.fetchData,
             listShowLoading: otfvehicleDetailsDataActions.listShowLoading,
             resetData: otfvehicleDetailsDataActions.reset,
+
+            fetchProductLovCode: productHierarchyDataActions.fetchFilteredList,
+            listProductShowLoading: productHierarchyDataActions.listShowLoading,
+            resetProductData: productHierarchyDataActions.resetData,
             showGlobalNotification,
         },
         dispatch
@@ -54,13 +60,26 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const VehicleDetailsMain = (props) => {
-    const { CoDealerInvoiceStateMaster, form, handleFormValueChange, section, formActionType, setButtonData } = props;
-    const { fetchData, listShowLoading, userId, coDealerOnFinish } = props;
+    const { CoDealerInvoiceStateMaster, form, handleFormValueChange, section, formActionType, setButtonData, resetProductData } = props;
+    const { fetchData, listShowLoading, userId, coDealerOnFinish, listProductShowLoading, fetchProductLovCode, isProductHierarchyDataLoaded, productAttributeData } = props;
     const [formData, setFormData] = useState();
     const [collapseActiveKey, setcollapseActiveKey] = useState([1]);
     const [dealerDiscount, setDealerDicountValue] = useState();
     const [changeStatus, setchangeStatus] = useState();
     const trueDealerDiscount = useDeferredValue(dealerDiscount);
+    const [toolTipContent, setToolTipContent] = useState();
+
+    const onErrorAction = (message) => {
+        showGlobalNotification({ message });
+    };
+    const modelCodeParams = useMemo(() => {
+        return [
+            {
+                key: 'prodctCode',
+                value: CoDealerInvoiceStateMaster?.vehicleDetailRequest?.modelCode,
+            },
+        ];
+    }, [CoDealerInvoiceStateMaster?.vehicleDetailRequest?.modelCode]);
 
     const handleVehicleDetailChange = ({ modelCode, discountAmount, saleType, priceType }) => {
         if (modelCode && discountAmount && saleType && priceType) {
@@ -92,7 +111,6 @@ const VehicleDetailsMain = (props) => {
 
             const onErrorAction = (message) => {
                 showGlobalNotification({ message });
-                setButtonData((prev) => ({ ...prev, formBtnActive: false }));
             };
 
             fetchData({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction, customURL: BASE_URL_TAX_CALCULATION });
@@ -102,9 +120,11 @@ const VehicleDetailsMain = (props) => {
     useEffect(() => {
         if (CoDealerInvoiceStateMaster?.vehicleDetailRequest) {
             setFormData({ ...CoDealerInvoiceStateMaster?.vehicleDetailRequest });
+            fetchProductLovCode({ setIsLoading: listProductShowLoading, userId, extraParams: modelCodeParams, onErrorAction });
         }
         return () => {
             setFormData();
+            resetProductData();
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [CoDealerInvoiceStateMaster?.vehicleDetailRequest, form, section?.id]);
@@ -115,10 +135,34 @@ const VehicleDetailsMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [trueDealerDiscount, form, changeStatus]);
+    useEffect(() => {
+        if (userId && isProductHierarchyDataLoaded && productAttributeData?.length > 0) {
+            setToolTipContent(
+                <div>
+                    <p>
+                        {translateContent('commonModules.toolTip.color')} - <span>{productAttributeData['0']['color'] ?? 'Na'}</span>
+                    </p>
+                    <p>
+                        {translateContent('commonModules.toolTip.seating')} - <span>{productAttributeData['0']['seatingCapacity'] ?? 'Na'}</span>
+                    </p>
+                    <p>
+                        {translateContent('commonModules.toolTip.fuel')} - <span>{productAttributeData['0']['fuel'] ?? 'Na'}</span>
+                    </p>
+                    <p>
+                        {translateContent('commonModules.toolTip.variant')} - <span>{productAttributeData['0']['variant'] ?? 'Na'}</span>
+                    </p>
+                    <p>
+                        {translateContent('commonModules.toolTip.name')} - <span>{productAttributeData['0']['name'] ?? 'Na'}</span>
+                    </p>
+                </div>
+            );
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [productAttributeData, isProductHierarchyDataLoaded, userId]);
 
     const onFinish = (values) => {
         if (values) {
-            coDealerOnFinish({ ...CoDealerInvoiceStateMaster, vehicleDetailRequest: { ...values, taxDetails: formData?.taxDetails } });
+            coDealerOnFinish({ ...CoDealerInvoiceStateMaster, vehicleDetailRequest: { ...values, discountAmount: values?.discountAmount || 0, taxDetails: formData?.taxDetails } });
         }
     };
 
@@ -130,15 +174,20 @@ const VehicleDetailsMain = (props) => {
         setDealerDicountValue,
         changeStatus,
         setchangeStatus,
+        toolTipContent,
+        setToolTipContent,
     };
     const viewProps = {
         ...formProps,
         formData,
         isLoading: !formData,
+        styles,
+        toolTipContent,
+        setToolTipContent,
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange}>
+        <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

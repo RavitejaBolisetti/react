@@ -577,6 +577,14 @@ export const MenuConstant = {
         slug: 'otf_so_not_mapped_report',
     },
 
+    [getMenyKey('SACR-04.24')]: {
+        key: 'SACR-04.24',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'SACR-02.04',
+        slug: 'so_mapping_unmapping_report',
+    },
+
     [getMenyKey('SACR-02.25')]: {
         key: 'SACR-02.25',
         link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
@@ -615,6 +623,14 @@ export const MenuConstant = {
         icon: undefined,
         parentMenuId: 'FINR-02',
         slug: 'voucher-report',
+    },
+
+    [getMenyKey('SACR-05.08')]: {
+        key: 'SACR-05.08',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'SACR-02.05',
+        slug: 'sale_register_report',
     },
 
     [getMenyKey('RPT-DLRNOTE')]: {

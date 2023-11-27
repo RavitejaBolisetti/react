@@ -14,7 +14,7 @@ import { translateContent } from 'utils/translateContent';
 const { Search } = Input;
 
 const EnrolmentAdd = (props) => {
-    const { typeData, salesConsultantLovData, onHandleRegistrationNumber, isSearchLoading, isSalesConsultantDataLoading } = props;
+    const { typeData, onHandleRegistrationNumber, isSearchLoading } = props;
 
     return (
         <>
@@ -37,7 +37,7 @@ const EnrolmentAdd = (props) => {
                 </Col>
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                     <Form.Item label={translateContent('crmSchemeEnrolment.label.enrolledBy')} name="enrolledBy" rules={[validateRequiredInputField(translateContent('crmSchemeEnrolment.label.enrolledBy'))]}>
-                        {customSelectBox({ data: salesConsultantLovData, placeholder: preparePlaceholderSelect(translateContent('crmSchemeEnrolment.label.enrolledBy')), loading: isSalesConsultantDataLoading })}
+                        {customSelectBox({ data: typeData[PARAM_MASTER?.ENROLLED_BY?.id], placeholder: preparePlaceholderSelect(translateContent('crmSchemeEnrolment.label.enrolledBy')) })}
                     </Form.Item>
                 </Col>
             </Row>
