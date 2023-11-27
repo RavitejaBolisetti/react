@@ -3286,6 +3286,9 @@
             "mainTitle": "Delivery Note",
             "title": "Vehicle Delivery Note"
         },
+        "cancelTitle": {
+            "challan": "Challan"
+        },
         "buttons": {
             "cancelTitle": "Cancel ",
             "challan": "Challan",
