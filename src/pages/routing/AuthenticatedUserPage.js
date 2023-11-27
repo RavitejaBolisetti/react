@@ -76,8 +76,9 @@ import {
     ChargerInstallationPage,
     AMCRegistrationMasterPage,
     RSARegistrationPage,
-    DealerCorporateClaimMasterPage,
     CoDealerInvoiceGenerationPage,
+    DealerCorporateClaimMasterPage,
+    CorporateMasterPage,
 } from 'pages/Sales';
 
 import { ShieldSchemeRegistrationPage } from 'pages/Services';
@@ -263,9 +264,10 @@ const AuthenticatedUserPageMain = (props) => {
                 <Route path={routing.ROUTING_VEHICLE_CHECKLIST_MASTER} element={<VehicleChecklistMasterPage />} exact />
                 <Route path={routing.ROUTING_RSM_ASM_APPROVAL} element={<RsmAsmApprovalPage />} exact />
                 <Route path={routing.ROUTING_RSA_REGISTRATION} element={<RSARegistrationPage />} exact />
-                <Route path={routing.ROUTING_DEALER_CORPORATE_CLAIM} element={<DealerCorporateClaimMasterPage />} exact />
                 <Route path={routing.PAGE_NOT_FOUND} element={<PageNotFound />} exact />
                 <Route path={routing.CO_DEALER_INVOICE} element={<CoDealerInvoiceGenerationPage />} exact />
+                <Route path={routing.ROUTING_DEALER_CORPORATE_CLAIM} element={<DealerCorporateClaimMasterPage />} exact />
+                <Route path={routing.ROUTING_CORPORATE_MASTER} element={<CorporateMasterPage />} exact />
             </Routes>
         ) : (
             <Routes>

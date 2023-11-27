@@ -38,6 +38,8 @@ import RsmAsmApprovalPage from './RsmAsmApproval';
 import RSARegistrationPage from './RSARegistration';
 import DealerCorporateClaimMasterPage from './DealerCorporateClaim';
 import CoDealerInvoiceGenerationPage from './CoDealerInvoiceGeneration';
+import CorporateMasterPage from './CorporateMaster'
+
 
 export {
     OTFMasterPage,
@@ -69,6 +71,7 @@ export {
     ChargerInstallationPage,
     AMCRegistrationMasterPage,
     RSARegistrationPage,
-    DealerCorporateClaimMasterPage,
     CoDealerInvoiceGenerationPage,
+    DealerCorporateClaimMasterPage,
+    CorporateMasterPage,
 };
