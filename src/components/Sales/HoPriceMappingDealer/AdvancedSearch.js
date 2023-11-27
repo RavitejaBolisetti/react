@@ -17,7 +17,7 @@ import styles from 'assets/sass/app.module.scss';
 const { Option } = Select;
 
 export const AdvancedSearchFrom = (props) => {
-    const { setAdvanceSearchVisible, filteredStateData, filteredCityData, productHierarchyList, handleFilterChange, setFilteredCityData,  isStateLoading, selectedTreeSelectKey, modelGroupProductData } = props;
+    const { setAdvanceSearchVisible, filteredStateData, filteredCityData, productHierarchyList, handleFilterChange, setFilteredCityData, isStateLoading, selectedTreeSelectKey, modelGroupProductData } = props;
     const {
         filterString,
         setFilterString,
@@ -44,10 +44,11 @@ export const AdvancedSearchFrom = (props) => {
     };
 
     const handleSelectTreeClick = (value, name) => {
-        console.log('..', value, name);
-        let obj = {
-            modelCode: value,
-        };
+        console.log('shaka_last_option');
+
+        // let obj = {
+        //     modelCode: value,
+        // };
 
         // setModelCodeName(name);
 
@@ -61,18 +62,27 @@ export const AdvancedSearchFrom = (props) => {
         allowClear: true,
     };
 
-    const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
-    const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
+    const treeFieldNames = { label: 'prodctShrtName', value: 'prodctCode', children: 'subProdct' };
 
     const treeSelectFieldProps = {
         treeFieldNames,
         treeData: modelGroupProductData,
-        handleSelectTreeClick,
+        handleSelectTreeClick: () => {
+            console.log('shaka_last_option');
+
+            // let obj = {
+            //     modelCode: value,
+            // };
+
+            // setModelCodeName(name);
+
+            // advanceFilterForm.setFieldsValue(obj);
+            // setSelectedTreeSelectKey(value);
+        },
         selectedTreeSelectKey,
         defaultParent: false,
         placeholder: preparePlaceholderSelect(translateContent('evrDetailsCapturing.label.productHierarchy')),
     };
-
 
     return (
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
@@ -99,7 +109,8 @@ export const AdvancedSearchFrom = (props) => {
 
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Form.Item initialValue={filterString?.modelCode} label={translateContent('hoPriceMapping.label.productHierarchy')} name="modelCode" rules={[validateRequiredSelectField(translateContent('global.validation.productHierarchy'))]}>
+                    {/* initialValue={filterString?.modelCode} */}
+                    <Form.Item label={translateContent('hoPriceMapping.label.productHierarchy')} name="modelCode" rules={[validateRequiredSelectField(translateContent('global.validation.productHierarchy'))]}>
                         {/* <Select placeholder={preparePlaceholderSelect(translateContent('hoPriceMapping.label.productHierarchy'))} {...selectProps} loading={isProductLoading}>
                             {productHierarchyList?.map((item) => (
                                 <Option key={'ph' + item.prodctCode} value={item.prodctCode}>

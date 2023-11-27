@@ -262,14 +262,14 @@ export const HoPriceMappingMasterBase = (props) => {
                     key: 'unit',
                     value: 'Sales',
                 },
-                // {
-                //     key: 'prodctCode',
-                //     value: productHierarchyData?.modelCode,
-                // },
-                // {
-                //     key: 'hierarchyNode',
-                //     value: 'MV',
-                // },
+                {
+                    key: 'prodctCode',
+                    value: productHierarchyData?.modelCode,
+                },
+                {
+                    key: 'hierarchyNode',
+                    value: 'MV',
+                },
             ];
             fetchProductList({ setIsLoading: listProductMainShowLoading, userId, onCloseAction, onErrorAction, extraParams });
         }
@@ -292,12 +292,12 @@ export const HoPriceMappingMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
-    useEffect(() => {
-        if (isAdvanceSearchVisible && filterString) {
-            setSelectedTreeSelectKey(modelCodeName);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isAdvanceSearchVisible, filterString]);
+    // useEffect(() => {
+    //     if (isAdvanceSearchVisible && filterString) {
+    //         setSelectedTreeSelectKey(modelCodeName);
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [isAdvanceSearchVisible, filterString]);
 
     const handlePricingTypeChange = (key) => {
         setPricingType(key);
@@ -340,6 +340,18 @@ export const HoPriceMappingMasterBase = (props) => {
         setShowDataLoading(false);
         advanceFilterForm.setFieldsValue({ stateCode: undefined, cityCode: undefined, modelCode: undefined });
         setFilteredCityData([]);
+    };
+
+    const handleSelectTreeClick = (value, name) => {
+        console.log('..', value, name);
+        let obj = {
+            modelCode: value,
+        };
+
+        setModelCodeName(name);
+
+        advanceFilterForm.setFieldsValue(obj);
+        setSelectedTreeSelectKey(value);
     };
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
@@ -577,8 +589,10 @@ export const HoPriceMappingMasterBase = (props) => {
         setFilteredCityData,
         isProductLoading,
         isStateLoading,
-        selectedTreeSelectKey,
+
+        handleSelectTreeClick,
         modelGroupProductData,
+        selectedTreeSelectKey,
         modelCodeName,
     };
 
