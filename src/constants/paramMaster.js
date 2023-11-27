@@ -501,4 +501,8 @@ export const PARAM_MASTER = {
         id: 'RSA_SEARCH_TYPE',
         title: 'RSA Search Type',
     },
+    ENROLLED_BY: {
+        id: 'ENROLLED_BY',
+        title: 'Enrolled By',
+    },
 };
