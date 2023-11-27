@@ -4312,7 +4312,8 @@
             "remarkforCancellation": "Remark for Cancellation",
             "otherReason": "Other Reason",
             "schemeRegNo": "Scheme Reg. No.",
-            "registrationDate": "Registration Date"
+            "registrationDate": "Registration Date",
+            "mobileNo": "Mobile No"
         },
         "buttons": {
             "cancelScheme": "Cancel Scheme",

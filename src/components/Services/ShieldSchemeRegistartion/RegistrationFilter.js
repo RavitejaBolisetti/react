@@ -15,17 +15,26 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
+import { AMC_CONSTANTS } from './utils/AMCConstants';
 
 export default function RegistrationFilter(props) {
-    const { extraParams, removeFilter, typeData, invoiceStatusList, searchForm, filterString, setFilterString, handleResetFilter, advanceFilter = false, handleInvoiceTypeChange, setAdvanceSearchVisible, handleButtonClick, amcStatus, showAddButton } = props;
+    const { userType, extraParams, removeFilter, typeData, invoiceStatusList, searchForm, filterString, setFilterString, handleResetFilter, advanceFilter = false, handleInvoiceTypeChange, setAdvanceSearchVisible, handleButtonClick, amcStatus, showAddButton } = props;
+
+    const searchParameters = () => {
+        if (userType === AMC_CONSTANTS?.DEALER?.key) {
+            return typeData?.[PARAM_MASTER.SHIELD_SEARCH_TYPE.id]?.filter((value) => {
+                return value?.key !== AMC_CONSTANTS?.CUSTOMER_MOBILE_NO?.key;
+            });
+        } else return typeData?.[PARAM_MASTER.SHIELD_SEARCH_TYPE.id];
+    };
 
     const serachBoxProps = {
         searchForm,
         filterString,
-        optionType: typeData?.[PARAM_MASTER?.SHIELD_SEARCH_TYPE?.id],
+        optionType: searchParameters(),
         setFilterString,
         allowClear: false,
-        // defaultOption: 'customerName',
+        defaultOption: 'shieldRegistrationNumber',
     };
 
     return (

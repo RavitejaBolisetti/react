@@ -107,7 +107,7 @@ const VehicleDetailsMasterBase = (props) => {
     );
 
     useEffect(() => {
-        if (!formActionType?.viewMode && requestPayload?.amcVehicleDetails?.length > 0) {
+        if (!formActionType?.viewMode && requestPayload?.amcVehicleDetails?.length > 0 && !(requestPayload?.amcRegistration?.priceType === AMC_CONSTANTS?.MNM_FOC?.key)) {
             setContactData([...requestPayload?.amcVehicleDetails]);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -180,10 +180,11 @@ const VehicleDetailsMasterBase = (props) => {
         const onVehicleSearchSuccessAction = (data) => {
             if (data?.data?.vehicleSearch?.length === 1) {
                 fnSetData(data?.data?.vehicleSearch[0]);
+                if (requestPayload?.amcRegistration?.priceType === AMC_CONSTANTS?.MNM_FOC?.key) {
+                    setRequestPayload({ ...requestPayload, amcVehicleDetails: [{ vin: requestPayload?.amcRegistration?.vin }] });
+                }
             } else if (data?.data?.vehicleSearch?.length > 1) {
                 setVehicleSearchVisible(true);
-            } else if (formActionType?.addMode) {
-                setRequestPayload({ ...requestPayload, amcVehicleDetails: [{ vin: requestPayload?.amcRegistration?.vin }] });
             }
         };
         const vehicleExtraParams = [

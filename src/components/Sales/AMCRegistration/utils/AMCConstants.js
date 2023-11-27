@@ -91,7 +91,7 @@ export const AMC_CONSTANTS = {
     },
     CANCELLED: {
         id: 17,
-        key: 'CNCL',
+        key: 'CAN',
         title: 'Cancelled',
     },
     REGISTRATION_REQUEST: {
@@ -101,7 +101,7 @@ export const AMC_CONSTANTS = {
     },
     CANCELLATION_REQUEST: {
         id: 19,
-        key: 'CNCL',
+        key: 'CAN',
         title: 'Cancellation Request',
     },
     WORKFLOW_REJECT: {
@@ -113,6 +113,16 @@ export const AMC_CONSTANTS = {
         id: 21,
         key: 'WFACTAPR',
         title: 'Approve',
+    },
+    UNDER_PROGRESS: {
+        id: 22,
+        key: 'UPR',
+        title: 'Under Progress',
+    },
+    PAID: {
+        id: 23,
+        key: 'DP',
+        title: 'Paid',
     },
 };
 

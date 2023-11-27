@@ -45,14 +45,23 @@ const AddEditFormMain = (props) => {
             shieldDetailForm.setFieldsValue({
                 schemeDetails: {
                     schemeCode: selectedScheme?.schemeCode,
-                    schemeAmount: selectedScheme?.schemeAmount,
+                    schemeBasicAmount: selectedScheme?.schemeAmount,
                     schemeDiscount: selectedScheme?.schemeDiscount,
                     schemeTaxAmount: selectedScheme?.schemeTaxAmount,
                     schemeStartDate: formattedCalendarDate(selectedScheme?.schemeStartDate),
                     schemeEndDate: formattedCalendarDate(selectedScheme?.schemeEndDate),
+                    familyCode: selectedScheme?.familyCode,
                     id: selectedScheme?.id,
                 },
             });
+        }
+    };
+
+    const isDiscountLessThanAmount = (value) => {
+        if (Number(shieldDetailForm.getFieldValue()?.schemeDetails?.schemeBasicAmount) < Number(value)) {   
+            return Promise.reject(translateContent('amcRegistration.validation.discoutGreaterThanScheme'));
+        } else {
+            return Promise.resolve();
         }
     };
 
@@ -145,21 +154,25 @@ const AddEditFormMain = (props) => {
                                     </Select>
                                 </Form.Item>
                             </Col>
+                            <Form.Item hidden label="" name={['schemeDetails', 'sgstAmount']} />
+                            <Form.Item hidden label="" name={['schemeDetails', 'igstAmount']} />
+                            <Form.Item hidden label="" name={['schemeDetails', 'cgstAmount']} />
+                            <Form.Item hidden label="" name={['schemeDetails', 'familyCode']} />
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item initialValue={formData?.schemeCode} label={translateContent('shieldSchemeRegistration.label.schemeCode')} name={['schemeDetails', 'schemeCode']}>
                                     <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.schemeCode'))} disabled={true} />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item initialValue={formData?.schemeAmount} label={translateContent('shieldSchemeRegistration.label.schemeBasicAmount')} name={['schemeDetails', 'schemeAmount']}>
+                                <Form.Item initialValue={formData?.schemeAmount} label={translateContent('shieldSchemeRegistration.label.schemeBasicAmount')} name={['schemeDetails', 'schemeBasicAmount']}>
                                     <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.schemeBasicAmount'))} disabled={true} />
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item initialValue={formData?.schemeDiscount} label={translateContent('shieldSchemeRegistration.label.schemeDiscount')} name={['schemeDetails', 'schemeDiscount']} rules={[validateOnlyPositiveNumber(translateContent('shieldSchemeRegistration.label.schemeDiscount'))]}>
-                                    <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.schemeDiscount'))} onChange={screenType === 'RSA' ? handleTaxChange : () => {}} />
+                                <Form.Item initialValue={formData?.schemeDiscount} label={translateContent('shieldSchemeRegistration.label.schemeDiscount')} name={['schemeDetails', 'schemeDiscount']} rules={[validateOnlyPositiveNumber(translateContent('shieldSchemeRegistration.label.schemeDiscount')), { validator: (__, value) => isDiscountLessThanAmount(value) }]}>
+                                    <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.schemeDiscount'))} onChange={handleTaxChange} />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>

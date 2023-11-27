@@ -36,7 +36,7 @@ export const CancelSchemeForm = (props) => {
                     <>
                         {userType === AMC_CONSTANTS?.DEALER?.key ? (
                             <Row gutter={16}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                     <Form.Item label={translateContent('shieldSchemeRegistration.label.reasonForCancellation')} name="cancelRemarks" rules={[validateRequiredInputField(translateContent('shieldSchemeRegistration.label.reasonForCancellation'))]} initialValue={formData?.amcCancelRemarks}>
                                         {customSelectBox({ data: typeData?.[PARAM_MASTER.AMC_CANCEL_REASON.id], placeholder: preparePlaceholderSelect(translateContent('shieldSchemeRegistration.label.reasonForCancellation')), onChange: handleRemarksChange })}
                                     </Form.Item>
@@ -44,7 +44,7 @@ export const CancelSchemeForm = (props) => {
                             </Row>
                         ) : (
                             <Row gutter={16}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                     <Form.Item label={translateContent('shieldSchemeRegistration.label.reasonForRejection')} name="reasonForRejection" rules={[validateRequiredInputField(translateContent('shieldSchemeRegistration.label.reasonForRejection'))]} initialValue={formData?.reasonForRejection}>
                                         {customSelectBox({ data: typeData?.[PARAM_MASTER.AMC_CANCEL_REASON.id], placeholder: preparePlaceholderSelect(translateContent('shieldSchemeRegistration.label.reasonForRejection')), onChange: handleRemarksChange })}
                                     </Form.Item>

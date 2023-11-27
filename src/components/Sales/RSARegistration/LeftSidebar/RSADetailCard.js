@@ -4,10 +4,11 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Collapse, Typography, Divider } from 'antd';
+import { Collapse, Divider } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { CopytoClipboard } from 'utils/CopytoClipboard';
+import { RSAStatusValues } from '../utils/RSARegistrationStatusTag';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -27,15 +28,22 @@ const expandIcon = ({ isActive }) =>
     );
 
 const RSADetailCard = (props) => {
-    const { selectedOrder, formActionType } = props;
+    const { selectedCardData } = props;
     return (
         <Collapse bordered={true} expandIcon={expandIcon} collapsible="icon">
             <Panel
                 header={
                     <>
-                        <div className={styles.detailCardText}>
-                            RSA Reg. No.: <span>{formActionType?.addMode === true ? '-' : selectedOrder?.rsaRegistrationNumber || 'NA'}</span>
-                            <CopytoClipboard type={'link'} text={selectedOrder?.rsaRegistrationNumber} />
+                        <div className={`${styles.detailCardText} ${styles.marB5}`} style={{ fontSize: '14px' }}>
+                            <span> RSA Reg. No.:</span>
+                            <span>
+                                {selectedCardData?.rsaRegistrationNumber}
+                                {selectedCardData?.rsaRegistrationNumber && (
+                                    <a className={styles.marL5}>
+                                        <CopytoClipboard buttonText={null} text={selectedCardData?.rsaRegistrationNumber} />
+                                    </a>
+                                )}
+                            </span>
                         </div>
                     </>
                 }
@@ -43,11 +51,11 @@ const RSADetailCard = (props) => {
             >
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Registration Date: <span>{formActionType?.addMode === true ? '-' : convertDateTime(selectedOrder?.rsaRegistrationDate || '', dateFormatView) || 'NA'}</span>
+                    Registration Date: <span>{convertDateTime(selectedCardData?.rsaRegistrationDate || '', dateFormatView)}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Status: <span>{formActionType?.addMode === true ? 'In-Progress' : selectedOrder?.status || '-'}</span>
+                    Status: <span>{RSAStatusValues(selectedCardData?.status) || 'In-Progress'}</span>
                 </div>
             </Panel>
         </Collapse>

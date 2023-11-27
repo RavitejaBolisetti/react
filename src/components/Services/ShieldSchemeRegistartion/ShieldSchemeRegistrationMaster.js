@@ -39,6 +39,7 @@ import RegistrationFilter from './RegistrationFilter';
 import { AdvancedSearch } from './AdvancedSearch';
 import { VehicleReceiptFormButton } from './VehicleReceiptFormButton';
 import { drawerTitle } from 'utils/drawerTitle';
+import { dealerLocationsDataAction } from 'store/actions/data/amcRegistration/dealerLocations';
 
 const mapStateToProps = (state) => {
     const {
@@ -51,6 +52,7 @@ const mapStateToProps = (state) => {
             },
             AMCRegistration: {
                 EmployeeData: { isLoaded: isEmployeeDataLoaded = false, isLoading: isEmployeeDataLoading, data: employeeData = [], detailData: managerData = [] },
+                DealerLocations: { filteredListData: locations = [] },
             },
             DealerHierarchy: {
                 DealerParentsLov: { filteredListData: dealerParentsLovList },
@@ -95,6 +97,8 @@ const mapStateToProps = (state) => {
         isProductHierarchyDataLoaded,
         isProductHierarchyDataLoading,
         ProductHierarchyData,
+
+        locations,
     };
     return returnValue;
 };
@@ -130,6 +134,9 @@ const mapDispatchToProps = (dispatch) => ({
             listFamilyShowLoading: otfModelFamilyDetailDataActions.listShowLoading,
             resetFamily: otfModelFamilyDetailDataActions.reset,
 
+            fetchLocationLovList: dealerLocationsDataAction.fetchFilteredList,
+            listLocationShowLoading: dealerLocationsDataAction.listShowLoading,
+
             showGlobalNotification,
         },
         dispatch
@@ -138,7 +145,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const ShieldSchemeRegistrationMasterMain = (props) => {
     const { userId, loginUserData, invoiceStatusList, typeData, data, showGlobalNotification, totalRecords, moduleTitle, fetchList, fetchDetail, fetchSchemeDescription, fetchEmployeeList, fetchManagerList, saveData, listShowLoading, listSchemeLoading, listEmployeeShowLoading, setFilterString, filterString, detailShieldData, resetDetail, resetSchemeDetail, isEmployeeDataLoaded, isEmployeeDataLoading, isSchemeLoading, employeeData, managerData, schemeDetail, fetchDealerParentsLovList, dealerParentsLovList, fetchDealerLocations, dealerLocations } = props;
-    const { fetchModelFamilyLovList, listFamilyShowLoading, modelFamilyData, fetchModelList, listModelShowLoading, ProductHierarchyData } = props;
+    const { fetchModelFamilyLovList, listFamilyShowLoading, modelFamilyData, fetchModelList, listModelShowLoading, ProductHierarchyData, locations, fetchLocationLovList, listLocationShowLoading } = props;
 
     const [selectedOrder, setSelectedOrder] = useState();
     const [selectedOrderId, setSelectedOrderId] = useState();
@@ -152,6 +159,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     const [amcStatus, setAmcStatus] = useState();
     const [isMNMApproval, setIsMNMApproval] = useState(false);
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
+    const [vehicleCustomerDetailsOnly, setVehicleCustomeDetailsOnly] = useState({});
 
     const page = { pageSize: 10, current: 1 };
     const dynamicPagination = true;
@@ -167,6 +175,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     const [amcWholeCancellation, setAmcWholeCancellation] = useState(false);
     const [rejectRequest, setRejectRequest] = useState(false);
     const [status, setStatus] = useState();
+    const [selectedCardData, setSelectedCardData] = useState();
 
     const [additionalReportParams, setAdditionalReportParams] = useState();
     const [isReportVisible, setReportVisible] = useState();
@@ -265,7 +274,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
                 key: 'dealerLocation',
                 title: 'Dealer Location',
                 value: filterString?.dealerLocation,
-                name: dealerLocations?.find((i) => i?.key === filterString?.dealerLocation)?.dealerLocationName,
+                name: dealerLocations?.find((i) => i?.locationId === filterString?.dealerLocation)?.dealerLocationName,
                 canRemove: true,
                 filter: true,
             },
@@ -363,6 +372,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     useEffect(() => {
         if (userId) {
             fetchDealerParentsLovList({ setIsLoading: listShowLoading, userId });
+            fetchLocationLovList({ setIsLoading: listLocationShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
@@ -434,6 +444,44 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         setFilterString({ amcStatus: key, current: 1, pageSize: 10 });
     };
 
+    const handleTaxChange = () => {
+        const onErrorAction = (message) => {
+            showGlobalNotification({ message });
+        };
+        const onSuccessAction = (res) => {
+            shieldDetailForm?.setFieldsValue({ schemeDetails: { igstAmount: res?.data?.registrationDetails?.schemeDetails?.igstAmount, sgstAmount: res?.data?.registrationDetails?.schemeDetails?.sgstAmount, cgstAmount: res?.data?.registrationDetails?.schemeDetails?.cgstAmount, schemeTaxAmount: res?.data?.registrationDetails?.schemeDetails?.schemeTaxAmount } });
+        };
+
+        const extraParams = [
+            {
+                key: 'saleType',
+                value: shieldDetailForm?.getFieldsValue()?.registrationInformation?.saleType,
+            },
+            {
+                key: 'discount',
+                value: shieldDetailForm?.getFieldsValue()?.schemeDetails?.schemeDiscount,
+            },
+            {
+                key: 'schemeCode',
+                value: shieldDetailForm?.getFieldsValue()?.schemeDetails?.schemeCode,
+            },
+            {
+                key: 'familyCode',
+                value: shieldDetailForm?.getFieldsValue()?.schemeDetails?.familyCode,
+            },
+            {
+                key: 'rate',
+                value: shieldDetailForm?.getFieldsValue()?.schemeDetails?.schemeBasicAmount,
+            },
+        ];
+        if (!shieldDetailForm?.getFieldsValue()?.registrationInformation?.saleType || !shieldDetailForm?.getFieldsValue()?.schemeDetails?.schemeDescription || !shieldDetailForm?.getFieldsValue()?.schemeDetails?.schemeCode || !shieldDetailForm?.getFieldsValue()?.schemeDetails?.schemeBasicAmount) {
+            showGlobalNotification({ message: translateContent('amcRegistration.validation.taxValidation'), notificationType: 'warning' });
+            return false;
+        } else {
+            fetchDetail({ setIsLoading: listShowLoading, userId, customURL: BASE_URL_SHIELD_REGISTRATION, extraParams, onSuccessAction, onErrorAction });
+        }
+    };
+
     const handleChange = (e) => {
         setSearchValue(e.target.value);
     };
@@ -467,6 +515,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
                 break;
             case VIEW_ACTION:
                 setSelectedOrder(record);
+                setSelectedCardData({ schemeNumber: record?.shieldRegistrationNumber, schemeDate: record?.date, status: record?.status });
                 record && setSelectedOrderId(record?.id);
                 defaultSection && setCurrentSection(defaultSection);
 
@@ -529,6 +578,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         if (value) {
             const onSuccessAction = (res) => {
                 setVinNumber(res?.data?.vehicleAndCustomerDetails?.vehicleDetails?.vin);
+                setVehicleCustomeDetailsOnly(res?.data);
                 showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             };
             const extraParams = [
@@ -544,13 +594,16 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     };
 
     const handleVinSearch = (value) => {
+        const onSuccessAction = (res) => {
+            setVehicleCustomeDetailsOnly(res?.data);
+        };
         setVinNumber(value);
         resetSchemeDetail();
         shieldDetailForm.setFieldsValue({
             schemeDetails: {
                 schemeDescription: undefined,
                 schemeCode: '',
-                schemeAmount: '',
+                schemeBasicAmount: '',
                 schemeDiscount: '',
                 schemeTaxAmount: '',
                 schemeStartDate: '',
@@ -595,6 +648,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             setButtonData({ ...buttonData, formBtnActive: false });
             setSelectedOrder({ ...selectedOrder, res });
+            setSelectedCardData({ schemeNumber: res?.data?.registrationDetails?.registrationInformation?.schemeRegistrationNumber, schemeDate: res?.data?.registrationDetails?.registrationInformation?.registrationDate, status: res?.data?.registrationDetails?.registrationInformation?.status });
             // setSelectedOrderId(res?.id);
             setCurrentSection(SHIELD_REGISTRATION_SECTION?.THANK_YOU_PAGE?.id);
         };
@@ -618,8 +672,11 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     };
 
     const onCloseAction = () => {
+        setSelectedCardData();
         resetDetail();
         resetSchemeDetail();
+        cancelSchemeForm.resetFields();
+
         form.resetFields();
         form.setFieldsValue();
         shieldDetailForm.resetFields();
@@ -648,7 +705,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         totalRecords,
         setPage: setFilterString,
         page: filterString,
-        tableColumn: tableColumn({ handleButtonClick, typeData }),
+        tableColumn: tableColumn({ handleButtonClick, userType, locations }),
         tableData: data,
         showAddButton: true,
         filterString,
@@ -721,26 +778,30 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     };
 
     const handleCancelRequests = () => {
-        if (isMNMApproval) {
-            handleCancelScheme();
-        } else if (rejectRequest && amcWholeCancellation) {
-            handleCancelScheme();
-        } else if (!isMNMApproval && userType === AMC_CONSTANTS?.MNM?.key && rejectRequest) {
-            handleCancelScheme();
-        } else if (!isMNMApproval && userType === AMC_CONSTANTS?.MNM?.key) {
-            setRejectRequest(true);
-        } else if (amcWholeCancellation) {
-            setRejectRequest(true);
-        } else {
-            handleCancelScheme();
-        }
+        cancelSchemeForm
+            .validateFields()
+            .then(() => {
+                if (isMNMApproval) {
+                    handleCancelScheme();
+                } else if (rejectRequest && amcWholeCancellation) {
+                    handleCancelScheme();
+                } else if (!isMNMApproval && userType === AMC_CONSTANTS?.MNM?.key && rejectRequest) {
+                    handleCancelScheme();
+                } else if (!isMNMApproval && userType === AMC_CONSTANTS?.MNM?.key) {
+                    setRejectRequest(true);
+                } else if (amcWholeCancellation) {
+                    setRejectRequest(true);
+                } else {
+                    handleCancelScheme();
+                }
+            })
+            .catch(() => {
+                return;
+            });
     };
 
     const handleCancelScheme = () => {
-        const cancelRemarks = cancelSchemeForm.getFieldValue().cancelRemarks;
-        const reasonForRejection = cancelSchemeForm.getFieldValue().reasonForRejection;
-        const otherReason = cancelSchemeForm.getFieldValue().otherReason;
-        const data = { id: detailShieldData?.id, customerName: '', amcRegistrationDate: detailShieldData?.registrationDetails?.registrationDate, approvedByOrRejectedBy: '', userId: userId, status: status, cancelRemarks: cancelRemarks, otherReason: otherReason, reasonForRejection: reasonForRejection };
+        const data = { id: detailShieldData?.id, customerName: '', shieldRegistrationDate: detailShieldData?.registrationDetails?.registrationDate, status: status, requestDetails: { ...requestPayload?.requestDetails, userId: userId, ...cancelSchemeForm.getFieldsValue() } };
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
@@ -839,6 +900,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         // onFinishSearch,
         // userType,
         showAddButton: loginUserData?.userType === AMC_CONSTANTS?.DEALER?.key,
+        userType,
     };
 
     const advanceFilterProps = {
@@ -939,7 +1001,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         saleType,
         detailShieldData,
         registrationDetails: detailShieldData?.registrationDetails,
-        vehicleCustomerDetails: detailShieldData?.vehicleAndCustomerDetails,
+        vehicleCustomerDetails: formActionType?.viewMode ? detailShieldData?.vehicleAndCustomerDetails : vehicleCustomerDetailsOnly?.vehicleAndCustomerDetails,
         requestDetails: detailShieldData?.requestDetails,
         workflowDetails: detailShieldData?.workflowMasterDetails,
         handleSaleTypeChange,
@@ -966,6 +1028,8 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         ProductHierarchyData,
         filterString,
         amcStatus,
+        handleTaxChange,
+        selectedCardData,
     };
 
     useEffect(() => {

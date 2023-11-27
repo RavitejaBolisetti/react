@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-export const AMC_CONSTANTS = {
+export const RSA_CONSTANTS = {
     SCHEME: {
         id: 1,
         key: 'SCHM',
@@ -17,12 +17,7 @@ export const AMC_CONSTANTS = {
     GENERATED_SUCCESSFULLY: {
         id: 3,
         key: 'GENERATED_SUCCESSFULLY',
-        title: 'Scheme Registration Completed Successfully',
-    },
-    RSA_GENERATED_SUCCESSFULLY: {
-        id: 3,
-        key: 'GENERATED_SUCCESSFULLY',
-        title: 'RSA Registration Completed Successfully',
+        title: 'AMC Registration Completed Successfully',
     },
     DEALER: {
         id: 4,
@@ -36,12 +31,12 @@ export const AMC_CONSTANTS = {
     },
     PENDING_FOR_APPROVAL: {
         id: 6,
-        key: 'PENDING_FOR_APPROVAL',
+        key: 'PFA',
         title: 'Pending for approval',
     },
     PENDING_FOR_CANCELLATION: {
         id: 7,
-        key: 'PENDING_FOR_CANCELLATION',
+        key: 'PFC',
         title: 'Pending for cancellation',
     },
     APPROVED: {
@@ -69,6 +64,26 @@ export const AMC_CONSTANTS = {
         key: 'AMC_CANCELLATION',
         title: 'AMC cancel',
     },
+    CUSTOMER_MOBILE_NO: {
+        id: 13,
+        key: 'vincustomerMobileNo',
+        title: 'Customer Mobile number in filter',
+    },
+    AMC_TYPE_COMPREHENSIVE: {
+        id: 14,
+        key: 'COMP',
+        title: 'AMC type comprehensive',
+    },
+    EMPLOYEE: {
+        id: 15,
+        key: 'E',
+        title: 'API key for employee list',
+    },
+    MANAGER: {
+        id: 16,
+        key: 'M',
+        title: 'API key for manager list',
+    },
     REGISTRATION_TYPE: {
         id: 16,
         key: 'AMC',
@@ -76,7 +91,7 @@ export const AMC_CONSTANTS = {
     },
     CANCELLED: {
         id: 17,
-        key: 'CNCL',
+        key: 'CAN',
         title: 'Cancelled',
     },
     REGISTRATION_REQUEST: {
@@ -86,7 +101,7 @@ export const AMC_CONSTANTS = {
     },
     CANCELLATION_REQUEST: {
         id: 19,
-        key: 'CNCL',
+        key: 'CAN',
         title: 'Cancellation Request',
     },
     WORKFLOW_REJECT: {
@@ -109,10 +124,9 @@ export const AMC_CONSTANTS = {
         key: 'DP',
         title: 'Paid',
     },
-    CUSTOMER_MOBILE_NO : {
-        id : 24,
-        key : 'customerMobileNo',
-        title : 'customer mobile number parameter'
-    }
+};
 
+export const REQUEST_CONSTANT = {
+    REG: 'Registration Request',
+    CNCL: 'Cancellation Request',
 };

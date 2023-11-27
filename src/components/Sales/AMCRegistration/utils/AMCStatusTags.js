@@ -26,6 +26,9 @@ export const AMCStatusTags = (status) => {
         case AMC_CONSTANTS?.CANCELLED?.key:
             tag = <Tag color="error">{AMC_CONSTANTS?.CANCELLED?.title}</Tag>;
             break;
+        case AMC_CONSTANTS?.UNDER_PROGRESS?.key:
+            tag = <Tag color="warning">{AMC_CONSTANTS?.UNDER_PROGRESS?.title}</Tag>;
+            break;
 
         default:
     }
@@ -51,6 +54,9 @@ export const AMCStatusValues = (status) => {
             break;
         case AMC_CONSTANTS?.CANCELLED?.key:
             value = AMC_CONSTANTS?.CANCELLED?.title;
+            break;
+        case AMC_CONSTANTS?.UNDER_PROGRESS?.key:
+            value = AMC_CONSTANTS?.UNDER_PROGRESS?.title;
             break;
 
         default:
