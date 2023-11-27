@@ -92,7 +92,7 @@ const ClaimApprovalRequestMain = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                     </Row>
-                    <ViewDetail />
+                    <ViewDetail {...formProps} />
                     {/* <AddEditForm {...formProps} /> */}
                 </Col>
             </Row>

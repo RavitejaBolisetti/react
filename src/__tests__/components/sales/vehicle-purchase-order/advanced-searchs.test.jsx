@@ -28,7 +28,7 @@ describe('advanced search component render', () => {
         fireEvent.click(closeBtn);
         const resetBtn = screen.getByRole('button', { name: 'Reset' });
         fireEvent.click(resetBtn);
-        const searchBtn = screen.getByRole('button', { name: 'Search' });
+        const searchBtn = screen.getByTestId('searchButton');
         fireEvent.click(searchBtn);
     });
 
@@ -45,7 +45,7 @@ describe('advanced search component render', () => {
         customRender(<FormWrapper setFilterString={jest.fn()} isVisible={true} typeData={['PO_CNCL_RSN']} />);
         const closeBtn = screen.getByRole('combobox', { name: 'Order Type' });
         fireEvent.click(closeBtn);
-        const calendarBtn = screen.getByRole('combobox', { name: 'Order Status' });
+        const calendarBtn = screen.getByRole('combobox', { name: 'Status' });
         fireEvent.click(calendarBtn);
     });
 

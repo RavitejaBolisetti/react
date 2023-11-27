@@ -10,34 +10,59 @@ afterEach(() => {
 });
 
 describe('Booking Reports components', () => {
-    
     it('should render OTFReports components', () => {
-        const mockStore=createMockStore({
+        const mockStore = createMockStore({
             auth: { userId: 106 },
             data: {
-                OtfReports: { isLoaded: true, data: [{status: 'Active'}] },
+                OtfReports: { isLoaded: false, data: [{ status: 'Active' }] },
             },
-        })
-        customRender(
-        <Provider store={mockStore}>
-            <OtfReportsMaster />
-        </Provider>
-        );
-    });
-
-    it('download button should work', () => {
-        const mockStore=createMockStore({
-            auth: { userId: 106 },
-            data: {
-                OtfReports: { isLoaded: true, data: [{status: 'Active'}] },
-            },
-        })
+        });
         customRender(
             <Provider store={mockStore}>
                 <OtfReportsMaster />
             </Provider>
         );
-        const selectColumn=screen.getByRole('button', { name: 'Download' });
+    });
+
+    it('download button should work', () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                OtfReports: { isLoaded: true, data: [{ status: 'Active' }] },
+            },
+        });
+        customRender(
+            <Provider store={mockStore}>
+                <OtfReportsMaster />
+            </Provider>
+        );
+        const selectColumn = screen.getByRole('button', { name: 'Download' });
         fireEvent.click(selectColumn);
+    });
+
+    it('test for all fields', () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                OtfReports: { isLoaded: true, data: [{ status: 'Active' }] },
+            },
+        });
+        customRender(
+            <Provider store={mockStore}>
+                <OtfReportsMaster />
+            </Provider>
+        );
+
+        const modelGrp = screen.getByRole('combobox', { name: 'Model Group' });
+        fireEvent.change(modelGrp, { target: { value: 'Dmatest' } });
+
+        const location = screen.getByRole('combobox', { name: 'Location' });
+        fireEvent.change(location, { target: { value: 'Dmatest' } });
+
+        const aging = screen.getByRole('combobox', { name: 'Aging' });
+        fireEvent.change(aging, { target: { value: 'Dmatest' } });
+
+        const selectColumn = screen.getByRole('combobox', { name: 'Column' });
+        fireEvent.change(selectColumn, { target: { value: 'Dmatest' } });
     });
 });

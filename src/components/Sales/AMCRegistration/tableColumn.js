@@ -10,8 +10,10 @@ import { translateContent } from 'utils/translateContent';
 import { AMCStatusTags } from './utils/AMCStatusTags';
 
 import styles from 'assets/sass/app.module.scss';
+import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { getCodeValue } from 'utils/getCodeValue';
 
-export const tableColumn = ({ handleButtonClick, userType }) => {
+export const tableColumn = ({ handleButtonClick, userType, locations }) => {
     const tableColumn = [
         tblPrepareColumns({
             title: translateContent('amcRegistration.label.amcRegNoDate'),
@@ -28,8 +30,11 @@ export const tableColumn = ({ handleButtonClick, userType }) => {
             },
         }),
         tblPrepareColumns({
-            title: translateContent('amcRegistration.label.amcRegNoDate'),
+            title: translateContent('amcRegistration.label.dealerLocation'),
             dataIndex: 'dealerLocation',
+            render: (value) => {
+                return checkAndSetDefaultValue(getCodeValue(locations, value, 'dealerLocationName', true, 'locationId'));
+            },
             width: '25%',
         }),
         tblPrepareColumns({

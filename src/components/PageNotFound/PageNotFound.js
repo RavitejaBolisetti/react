@@ -48,7 +48,7 @@ const PageNotFoundMaster = ({ isLoggedIn }) => {
                     subTitle={parse(pageDescription)}
                     icon={<Image height={45} width={300} src={ROBIN_LIGHT_THEME} preview={false} />}
                     extra={
-                        <Button danger onClick={() => navigate(routing.ROUTING_DASHBOARD)}>
+                        <Button data-testid="backButton" danger onClick={() => navigate(routing.ROUTING_DASHBOARD)}>
                             {backButtonName}
                         </Button>
                     }

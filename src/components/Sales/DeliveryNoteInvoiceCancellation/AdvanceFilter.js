@@ -24,8 +24,8 @@ export default function AdvanceFilter(props) {
                     <QueryButtons currentItem={invoiceStatusType} items={Object.values(DELIVERY_NOTE_INVOICE_STATUS)} onClick={handleButtonQuery} />
                     {filter && (
                         <Form form={searchForm} className={styles.masterListSearchForm}>
-                            <Form.Item name="Search">
-                                <div className={styles.verticallyCentered}>
+                            <Form.Item name="Search" data-testid="search">
+                                 <div className={styles.verticallyCentered}>
                                     <Search placeholder={translateContent('deliveryNoteInvoiceCancellation.placeholder.search')} allowClear onSearch={handleSearchChange} className={styles.headerSearchField} />
                                 </div>
                             </Form.Item>
@@ -37,6 +37,7 @@ export default function AdvanceFilter(props) {
                                 icon={<FilterIcon />}
                                 type="link"
                                 className={styles.verticallyCentered}
+                                data-testid="advanceFilter"
                                 onClick={() => {
                                     setAdvanceSearchVisible(true);
                                 }}
@@ -70,7 +71,7 @@ export default function AdvanceFilter(props) {
                                 })}
                             </Col>
                             <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
-                                <Button className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
+                                <Button className={styles.clearBtn} onClick={() => handleResetFilter()} danger data-testid="clear">
                                     {translateContent('global.buttons.clear')}
                                 </Button>
                             </Col>

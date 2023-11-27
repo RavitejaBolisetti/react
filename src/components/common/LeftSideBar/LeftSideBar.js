@@ -24,6 +24,8 @@ import { MenuConstant } from 'constants/MenuConstant';
 import { InputSkeleton } from '../Skeleton';
 
 import styles from './LeftSideBar.module.scss';
+import { translateContent } from 'utils/translateContent';
+import { preparePlaceholderSearch } from 'utils/preparePlaceholder';
 
 const { SubMenu, Item } = Menu;
 const { Sider } = Layout;
@@ -81,14 +83,16 @@ const LeftSideBarMain = (props) => {
     const pagePath = location.pathname;
     const [menuForm] = Form.useForm();
 
-    const menuId = flatternData?.find((i) => i.link === pagePath)?.menuId;
-    const fieldNames = { title: 'menuTitle', key: 'menuId', children: 'subMenu' };
+    const selectedMenu = flatternData?.find((i) => i.link === pagePath);
+    // const menuId = selectedMenu?.parentMenuId?.concat('_' + selectedMenu?.menuId);
+    const menuId = selectedMenu?.menuId;
+
+    const fieldNames = { title: 'menuTitle', key: 'menuId', parentKey: 'parentMenuId', children: 'subMenu' };
 
     const [options, setOptions] = useState([]);
     const [openKeys, setOpenKeys] = useState([]);
     const [selectedKeys, setSelectedKeys] = useState([]);
     const [selectedMenuId, setSelectedMenuId] = useState();
-    // const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
     const theme = 'light';
 
     useEffect(() => {
@@ -143,14 +147,15 @@ const LeftSideBarMain = (props) => {
     const prepareMenuItem = (data) => {
         return data.map(({ menuId, menuTitle, parentMenuId = '', subMenu = [] }) => {
             const isParentMenu = parentMenuId === 'Web';
-
+            // const modifiedMenuId = parentMenuId + menuId;
+            const modifiedMenuId = menuId;
             return subMenu?.length ? (
-                <SubMenu key={parentMenuId + menuId} title={prepareLink({ id: menuId, title: menuTitle, menuOrgTitle: menuTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
+                <SubMenu key={modifiedMenuId} title={prepareLink({ id: menuId, modifiedMenuId, title: menuTitle, menuOrgTitle: menuTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
                     {prepareMenuItem(subMenu)}
                 </SubMenu>
             ) : (
-                <Item key={parentMenuId + menuId} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
-                    {prepareLink({ id: menuId, title: menuTitle, menuOrgTitle: menuTitle, tooltip: true, icon: true, captlized: isParentMenu, isParentMenu, showTitle: collapsed ? !isParentMenu : true })}
+                <Item key={modifiedMenuId} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
+                    {prepareLink({ id: menuId, title: menuTitle, modifiedMenuId, menuOrgTitle: menuTitle, tooltip: true, icon: true, captlized: isParentMenu, isParentMenu, showTitle: collapsed ? !isParentMenu : true })}
                 </Item>
             );
         });
@@ -218,7 +223,7 @@ const LeftSideBarMain = (props) => {
                                     ) : (
                                         <Form.Item name="searchKeyword">
                                             <AutoComplete options={options} onSelect={onSelect} onChange={handleSearch}>
-                                                <Input.Search placeholder="Search" allowClear type="text" />
+                                                <Input.Search placeholder={preparePlaceholderSearch()} allowClear type="text" />
                                             </AutoComplete>
                                         </Form.Item>
                                     )}
@@ -260,19 +265,19 @@ const LeftSideBarMain = (props) => {
                             theme === 'light' ? (
                                 <BsSun size={20} className={styles.sun} />
                             ) : (
-                                <Popover content={'Coming Soon'} trigger="hover">
+                                <Popover content={translateContent('global.toolTip.comingSoon')} trigger="hover">
                                     <BsMoon size={20} className={styles.moon} />
                                 </Popover>
                             )
                         ) : (
                             <>
                                 <Button className={theme === 'light' ? styles.lightThemeActive : styles.lightTheme} danger>
-                                    <BsSun size={20} /> Light Mode
+                                    <BsSun size={20} /> {translateContent('global.buttons.lightMode')}
                                 </Button>
 
-                                <Popover content={'Coming Soon'} trigger="hover">
+                                <Popover content={translateContent('global.toolTip.comingSoon')} trigger="hover">
                                     <Button className={theme === 'dark' ? styles.darkThemeActive : styles.darkTheme} danger>
-                                        <BsMoon size={20} /> Dark Mode
+                                        <BsMoon size={20} /> {translateContent('global.buttons.darkMode')}
                                     </Button>
                                 </Popover>
                             </>

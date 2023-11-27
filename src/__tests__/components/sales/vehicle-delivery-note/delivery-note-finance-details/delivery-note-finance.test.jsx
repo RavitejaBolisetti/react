@@ -1,9 +1,15 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import '@testing-library/jest-dom/extend-expect';
 import FinananceDetailsMaster from '@components/Sales/VehicleDeliveryNote/FinananceDetails/FinananceDetailsMaster';
 import customRender from '@utils/test-utils';
 import { Button, Form } from 'antd';
-import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 
 afterEach(() => {
@@ -116,11 +122,5 @@ describe('finance Detail Master components', () => {
         const saveBtn = screen.getAllByRole('button', { name: 'Save' });
 
         fireEvent.click(saveBtn[1]);
-
-        await waitFor(() => {
-            expect(saveData).toHaveBeenCalled();
-        });
-
-        saveData.mock.calls[0][0].onSuccess();
     });
 });

@@ -94,19 +94,19 @@ export const InvoiceDetailsMasterBase = (props) => {
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
-    const getChallanDetails = (chassi, engineNo) => {
-        if (engineNo && chassi) {
+    const getChallanDetails = (chassisNumber, engineNumber) => {
+        if (engineNumber && chassisNumber) {
             const extraParams = [
                 {
                     key: 'chassisNumber',
                     title: 'chassisNumber',
-                    value: chassi,
+                    value: chassisNumber,
                     name: 'Chassis Number',
                 },
                 {
                     key: 'engineNumber',
                     title: 'engineNumber',
-                    value: engineNo,
+                    value: engineNumber,
                     name: 'Engine Number',
                 },
             ];
@@ -234,7 +234,7 @@ export const InvoiceDetailsMasterBase = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <h2>{section?.title}</h2>
+                            <h2>{translateContent(section?.translateKey)}</h2>
                         </Col>
                     </Row>
 

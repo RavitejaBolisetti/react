@@ -32,10 +32,9 @@ const expandIcon = ({ isActive }) =>
     );
 
 const ClaimDetailCard = (props) => {
-    const { ProfileData, typeData, tooltTipText, isProductHierarchyLoading, record, isProfileDataLoading } = props;
+    const { ProfileData, isProductHierarchyLoading, record, isProfileDataLoading } = props;
     if (isProfileDataLoading || isProductHierarchyLoading) return <CardSkeleton />;
 
-    const findStatus = (key) => typeData?.find((element) => element?.key === key)?.value || 'NA';
 
     return (
         <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon} collapsible="icon">

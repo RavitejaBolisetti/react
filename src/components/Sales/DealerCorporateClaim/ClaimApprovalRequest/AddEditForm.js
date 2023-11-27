@@ -3,11 +3,10 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
-import { Row, Col, Input, Form, DatePicker, InputNumber, Divider, Card, Space } from 'antd';
-import { validateRequiredInputField, validateOnlyPositiveNumber, valueBetween0to100 } from 'utils/validation';
+import React from 'react';
+import { Row, Col, Input, Form, DatePicker, Divider, Card, Space } from 'antd';
 
-import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
+import { dateFormat } from 'utils/formatDateTime';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import styles from 'assets/sass/app.module.scss';
 
@@ -15,32 +14,7 @@ const AddEditFormMain = (props) => {
     const { formData } = props;
     const { isReadOnly = true } = props;
     const disabledProps = { disabled: isReadOnly };
-    //Invoice Date
-    //Customer Name
-    //Customer ID
-    //Customer Category
-    //Corporate Category
-    //Corporate Name
-    //Chassis No
-
-    //Ins. Cover Note No.
-    //Ins. Cover Note Date
-    //Ins. Premium Value
-    //Insurance Co. Name
-    //Financie Name
-    //Dealer Share Amount
-    //OEM Share Amount
-    //M & M Claim No
-    //M & M Claim Date
-    //Remarks
-
-    //Credit Note No.
-    //Credit Note Date
-    //Credit Note Amount
-    //Debit Note No.
-    //Debit Note Date
-    //Debit Note Amount
-
+   
     return (
         <>
             <Row gutter={20}>

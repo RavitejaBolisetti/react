@@ -76,7 +76,8 @@ import {
     ChargerInstallationPage,
     AMCRegistrationMasterPage,
     RSARegistrationPage,
-    DealerCorporateClaimMasterPage
+    DealerCorporateClaimMasterPage,
+    CoDealerInvoiceGenerationPage,
 } from 'pages/Sales';
 
 import { ShieldSchemeRegistrationPage } from 'pages/Services';
@@ -90,6 +91,7 @@ import { EmbeddedDocumentPage } from 'pages/report/EmbeddedDocument/EmbeddedDocu
 
 import { CMSPage } from 'pages/cms';
 import { DealerCompanyPage } from 'pages/common/Dealer';
+import { VehicleSalesSchemeMasterPage } from 'pages/Sales/VehicleSalesSchemeMaster/VehicleSalesSchemeMasterPage';
 import { UnAuthozisedAccess } from 'components/UnAuthozisedAccess';
 import { withSpinner } from 'components/withSpinner';
 
@@ -127,7 +129,7 @@ const AuthenticatedUserPageMain = (props) => {
 
     const location = useLocation();
     const pagePath = location.pathname;
-    const canViewPage = flatternData?.find((menu) => (menu.link === pagePath || (menu.link && menu.slug) ? menu.link?.replace(':slug', menu.slug) === pagePath : false))?.menuId;
+    const canViewPage = true || flatternData?.find((menu) => (menu.link === pagePath || (menu.link && menu.slug) ? menu.link?.replace(':slug', menu.slug) === pagePath : false))?.menuId;
 
     useEffect(() => {
         if (!isDataLoaded && userId) {
@@ -143,8 +145,7 @@ const AuthenticatedUserPageMain = (props) => {
     }, [isDataLoaded, userId]);
 
     const routeExclusion = [routing?.ROUTING_HOME, routing?.ROUTING_DASHBOARD];
-    // const authorized = canViewPage || routeExclusion?.includes(pagePath);
-    const authorized = true;
+    const authorized = canViewPage || routeExclusion?.includes(pagePath);
     return !isLoading ? (
         authorized ? (
             <Routes>
@@ -175,6 +176,17 @@ const AuthenticatedUserPageMain = (props) => {
                 <Route path={routing.ROUTING_MILE_DEALER_HIERARCHY_DEALER_PARENT} element={<DealerParentPage />} />
                 <Route path={routing.ROUTING_MILE_DEALER_HIERARCHY_DEALER_COMPANY} element={<DealerCompanyPage />} />
 
+                <Route path={routing.ROUTING_RSM_APPROVAL} element={<RSMApprovalPage />} exact />
+                <Route path={routing.ROUTING_DELIVERY_NOTE_INVOICE_CANELLATION} element={<DeliveryNoteInvoiceCancellationPage />} exact />
+                <Route path={routing.ROUTING_VEHICLE_TRACKING} element={<VehicleTrackingPage />} exact />
+                <Route path={routing.ROUTING_VEHICLE_DETAILS} element={<VehicleDetailMasterPage />} exact />
+                <Route path={routing.ROUTING_VEHICLE_PRICE_MASTER} element={<VehiclePriceMasterPage />} exact />
+                <Route path={routing.ROUTING_VEHICLE_RECEIPT} element={<VehicleReceiptMasterPage />} exact />
+                <Route path={routing.ROUTING_RECEIPTS} element={<ReceiptMasterPage />} exact />
+                <Route path={routing.ROUTING_VEHICLE_INVOICE_GENERATION} element={<VehicleInvoiceMasterPage />} exact />
+                <Route path={routing.ROUTING_VEHICLE_DELIVERY_NOTE} element={<VehicleDeliveryNoteMasterPage />} exact />
+                <Route path={routing.ROUTING_VEHICLE_SALES_SCHEME_MASTER} element={<VehicleSalesSchemeMasterPage />} exact />
+                <Route path={routing.ROUTING_CHARGER_INSTALLATION_PROCESS} element={<ChargerInstallationPage />} exact />
                 <Route path={routing.ROUTING_COMMON_APPLICATION_MASTER} element={<ApplicationMasterPage />} />
                 <Route path={routing.ROUTING_COMMON_QUALIFICATION_MASTER} element={<QualificationMasterPage />} />
                 <Route path={routing.ROUTING_COMMON_CRITICALITY_GROUP} element={<CriticalityGroupPage />} />
@@ -253,6 +265,7 @@ const AuthenticatedUserPageMain = (props) => {
                 <Route path={routing.ROUTING_RSA_REGISTRATION} element={<RSARegistrationPage />} exact />
                 <Route path={routing.ROUTING_DEALER_CORPORATE_CLAIM} element={<DealerCorporateClaimMasterPage />} exact />
                 <Route path={routing.PAGE_NOT_FOUND} element={<PageNotFound />} exact />
+                <Route path={routing.CO_DEALER_INVOICE} element={<CoDealerInvoiceGenerationPage />} exact />
             </Routes>
         ) : (
             <Routes>

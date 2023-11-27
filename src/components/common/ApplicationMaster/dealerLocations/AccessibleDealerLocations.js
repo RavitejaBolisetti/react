@@ -12,16 +12,10 @@ import { bindActionCreators } from 'redux';
 import { showGlobalNotification } from 'store/actions/notification';
 import { preparePlaceholderAutoComplete } from 'utils/preparePlaceholder';
 import { debounce } from 'utils/debounce';
-import { LANGUAGE_EN } from 'language/en';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
-const locationDeleteTitle = LANGUAGE_EN.GENERAL.REMOVE_DEALER_LOCATION.TITLE;
-const locationDeleteMessage = LANGUAGE_EN.GENERAL.REMOVE_DEALER_LOCATION.MESSAGE.replace('{NAME}', 'Location');
-const addDealerLocation = LANGUAGE_EN.GENERAL.ADD_DEALER_LOCATION.MESSAGE;
-const addDealerLocationTitle = LANGUAGE_EN.GENERAL.ADD_DEALER_LOCATION.TITLE;
-const addDuplicateDealerLocation = LANGUAGE_EN.GENERAL.ADD_DUPLICATE_DEALER_LOCATION.MESSAGE;
-const addDuplicateDealerLocationTitle = LANGUAGE_EN.GENERAL.ADD_DUPLICATE_DEALER_LOCATION.TITLE;
 
 const mapStateToProps = (state) => {
     const {
@@ -108,11 +102,11 @@ const AccessibleDealerLocationMain = ({ setCanFormSave, userId, dealerLocations,
     const handleSelect = (value) => {
         let locationDetails = dealerLocations?.find((location) => location?.dealerLocationName === value);
         if (finalFormdata?.accessibleLocation?.findIndex((el) => el?.dealerMasterLocationId === locationDetails?.id) !== -1) {
-            showGlobalNotification({ notificationType: 'error', title: addDuplicateDealerLocationTitle, message: addDuplicateDealerLocation, placement: 'bottomRight' });
+            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: translateContent('global.generalMessage.duplicateLocationMessage'), placement: 'bottomRight' });
             return;
         }
         setFinalFormdata((prev) => ({ ...prev, accessibleLocation: [...finalFormdata?.accessibleLocation, { dealerMasterLocationId: locationDetails?.id, locationName: value, id: '' }] }));
-        showGlobalNotification({ notificationType: 'success', title: addDealerLocationTitle, message: addDealerLocation, placement: 'bottomRight' });
+        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: translateContent('global.generalMessage.locationAddedSuccessfully'), placement: 'bottomRight' });
         setCanFormSave(true);
     };
 
@@ -127,7 +121,7 @@ const AccessibleDealerLocationMain = ({ setCanFormSave, userId, dealerLocations,
             prevData?.accessibleLocation?.splice(index, 1);
             return prevData;
         });
-        showGlobalNotification({ notificationType: 'success', title: locationDeleteTitle, message: locationDeleteMessage, placement: 'bottomRight' });
+        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationError.delete'), message: translateContent('global.generalMessage.deletedSucessfully').replace('{NAME}', translateContent('applicationMaster.label.location')), placement: 'bottomRight' });
         forceUpdate();
     };
 

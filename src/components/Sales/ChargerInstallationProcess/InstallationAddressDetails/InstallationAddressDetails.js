@@ -73,7 +73,7 @@ const InstallationAddressDetailsMasterBase = (props) => {
                     : { sameAsCustomerAddress: values?.sameAsCustomerAddress ? 'Y' : 'N', instAddressDetails: { address: values?.address, city: values?.city, state: values?.state, pinCode: values?.pinCode, customerMobileNumber: values?.customerMobileNumber } };
 
                 if (checked) {
-                    setRequestPayload((prev) => ({ ...prev, chargerInstAddressDetails: { sameAsCustomerAddress: values?.sameAsCustomerAddress ? 'Y' : 'N', instAddressDetails: { address: crmCustomerVehicleData?.customerDetails?.customerAddress, pinCode: crmCustomerVehicleData?.customerDetails?.pinCode, city: crmCustomerVehicleData?.customerDetails?.customerCity, state: crmCustomerVehicleData?.customerDetails?.state, customerMobileNumber: crmCustomerVehicleData?.otfDetails?.mobileNumber } } }));
+                    setRequestPayload((prev) => ({ ...prev, chargerInstAddressDetails: { sameAsCustomerAddress: values?.sameAsCustomerAddress ? 'Y' : 'N', instAddressDetails: { address: crmCustomerVehicleData?.customerDetails?.customerAddress, pinCode: crmCustomerVehicleData?.customerDetails?.pinCode, city: crmCustomerVehicleData?.customerDetails?.customerCity, state: crmCustomerVehicleData?.customerDetails?.state, customerMobileNumber: crmCustomerVehicleData?.customerDetails?.customerPhoneNumber } } }));
                 } else {
                     setRequestPayload((prev) => ({ ...prev, chargerInstAddressDetails: { sameAsCustomerAddress: values?.sameAsCustomerAddress ? 'Y' : 'N', instAddressDetails: { address: values?.address, city: values?.city, state: values?.state, pinCode: values?.pinCode, customerMobileNumber: values?.customerMobileNumber } } }));
                 }
@@ -129,7 +129,7 @@ const InstallationAddressDetailsMasterBase = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <h2>{section?.title}</h2>
+                            <h2>{translateContent(section?.translateKey)}</h2>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             {!formActionType?.addMode && <StatusBar status={chargerInstallationMasterData?.chargerInstDetails?.requestDetails[0].stageType} />}

@@ -1,16 +1,56 @@
+/* eslint-disable jest/no-mocks-import */
 import React from 'react';
-import { fireEvent, screen } from '@testing-library/react';
-import { CustomerDetailMaster } from '@components/common/CustomerMaster/IndividualCustomer/CustomerDetail/CustomerDetailMaster';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { CustomerDetailMaster } from 'components/common/CustomerMaster/IndividualCustomer/CustomerDetail/CustomerDetailMaster';
 import customRender from '@utils/test-utils';
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 import { Form } from 'antd';
 
+jest.mock('components/common/CustomerMaster/IndividualCustomer/CustomerDetail/AddEditForm', () => {
+    const AddEditForm = ({ onFinish, setNameChangeRequested, handleFormFieldChange, onViewHistoryChange, deleteFile }) => { 
+        const handleClick = () => {
+            onFinish('test');
+            setNameChangeRequested('Test');
+            handleFormFieldChange();
+        }
+        return(
+            <div>
+                <button onClick={handleClick}>Save</button>
+                <button onClick={onViewHistoryChange}>Change History</button>
+                <button onClick={deleteFile}>Delete File</button>
+            </div>
+        )
+    };
+    return {
+        __esModule: true,
+        AddEditForm,
+    };
+});
+
+jest.mock('components/common/CustomerMaster/IndividualCustomer/CustomerDetail/CustomerNameChange', () => {
+    const CustomerNameChangeHistory = ({ downloadFileFromButton}) => { 
+        return(
+            <div>
+                <button onClick={downloadFileFromButton}>Download File</button>
+            </div>
+        )
+    };
+    return {
+        __esModule: true,
+        CustomerNameChangeHistory,
+    };
+});
+
+jest.mock('store/actions/data/customerMaster/customerDetailsIndividual', () => ({
+    customerDetailsIndividualDataActions: {}
+}))
+
 beforeEach(() => {
     jest.clearAllMocks();
 });
 
-const props = { formActionType: { viewMode: false } };
+const props = { formActionType: { viewMode: false, editMode: true } };
 
 const FormWrapper = (props) => {
     const [form] = Form.useForm();
@@ -31,45 +71,39 @@ describe('Corporate customer  Details render', () => {
         });
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper {...props} selectedCustomerId={'kai'} />
+                <FormWrapper fetchList={jest.fn()} resetData={jest.fn()} {...props} selectedCustomerId={'kai'} />
             </Provider>
         );
     });
 
-    it('should render all fields', async () => {
-        customRender(<FormWrapper {...props} setIsHistoryVisible={jest.fn()} setShowNameChangeHistory={jest.fn()} />);
-        const mobileNumber = screen.getByRole('textbox', { name: 'Mobile Number' });
-        fireEvent.change(mobileNumber, { target: { value: '1234567890' } });
+    it('change history, download file and delete file button should work', async () => {
+        const formActionType={ 
+            editMode: true,
+        };
 
-        const emailId = screen.getByRole('textbox', { name: 'Email ID' });
-        fireEvent.change(emailId, { target: { value: 'Kai@test.com' } });
+        const saveData=jest.fn();
+        const res={ data: 'Kai' };
+        customRender(<FormWrapper setSelectedCustomerId={jest.fn()} handleButtonClick={jest.fn()} handleResetFilter={jest.fn()} setRefreshCustomerList={jest.fn()} setButtonData={jest.fn()} fetchList={jest.fn()} resetData={jest.fn()} saveData={saveData} formActionType={formActionType} setIsHistoryVisible={jest.fn()} setShowNameChangeHistory={jest.fn()} />);
 
-        const whatsappNumber = screen.getByRole('textbox', { name: 'Whatsapp Number' });
-        fireEvent.change(whatsappNumber, { target: { value: '1234567890' } });
+        const saveBtn=screen.getByRole('button', { name: 'Save' });
+        fireEvent.click(saveBtn);
 
-        const customerType = screen.getByRole('combobox', { name: 'Customer Type' });
-        fireEvent.change(customerType, { target: { value: 'Individual' } });
+        await waitFor(() => { expect(saveData).toHaveBeenCalled() });
 
-        const corporateName = screen.getByRole('combobox', { name: 'Corporate Name' });
-        fireEvent.change(corporateName, { target: { value: 'UYT Corporate' } });
+        saveData.mock.calls[0][0].onSuccess(res);
+        saveData.mock.calls[0][0].onError();
 
-        const corporateType = screen.getByRole('combobox', { name: 'Corporate Type' });
-        fireEvent.change(corporateType, { target: { value: 'Listed' } });
+        const changeHistory=screen.getByRole('button', { name: 'Change History' });
+        fireEvent.click(changeHistory);
 
-        const Contact = screen.getByRole('switch', { name: 'Contact over WhatsApp?' });
-        fireEvent.click(Contact);
+        const downloadFile=screen.getByRole('button', { name: 'Download File' });
+        fireEvent.click(downloadFile);
 
-        const mobileNo = screen.getByTestId('useMobileNumber');
-        fireEvent.click(mobileNo);
+        const deleteFile=screen.getByRole('button', { name: 'Delete File' });
+        fireEvent.click(deleteFile);
 
-        const viewHistory = screen.getByRole('button', { name: 'View History' });
-        fireEvent.click(viewHistory);
+        saveData.mock.calls[2][0].onSuccess(res);
+        saveData.mock.calls[2][0].onError();
 
-        const plusImg = screen.getByRole('img', { name: 'plus' });
-        fireEvent.click(plusImg);
-    });
-    it('should check view details', () => {
-        const prop = { formActionType: { viewMode: true } };
-        customRender(<FormWrapper {...prop} />);
     });
 });

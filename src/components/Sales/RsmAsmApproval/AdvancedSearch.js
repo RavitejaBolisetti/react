@@ -44,8 +44,8 @@ export const AdvancedSearchFrom = (props) => {
     const modalProps = {
         reset: true,
         submit: true,
-        resetName: 'Reset',
-        submitName: 'Search',
+        resetName: translateContent('global.buttons.reset'),
+        submitName: translateContent('global.buttons.search'),
         handleResetFilter,
     };
 
@@ -54,7 +54,7 @@ export const AdvancedSearchFrom = (props) => {
         if (bool) {
             return Promise.resolve();
         }
-        return Promise.reject(new Error('Date cant be less than Effective from date'));
+        return Promise.reject(new Error(translateContent('global.validation.dateLessThan')));
     };
 
     return (

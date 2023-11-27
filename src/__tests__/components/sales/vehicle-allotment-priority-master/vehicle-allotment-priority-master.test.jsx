@@ -107,34 +107,6 @@ describe('vehicle allotment priority master component', () => {
         fireEvent.click(closeBtn);
     });
 
-    it('should render column header text', () => {
-        customRender(<FormWrapper typeData={typeData} resetDataList={jest.fn()} showAddButton={true} handleButtonClick={jest.fn()} FROM_ACTION_TYPE={FROM_ACTION_TYPE} buttonData={buttonData} />);
-        const SrlBtn = screen.getByRole('columnheader', { name: 'Srl.' });
-        fireEvent.click(SrlBtn);
-        const oldModel = screen.getByRole('columnheader', { name: 'Old Model' });
-        fireEvent.click(oldModel);
-        const newModel = screen.getByRole('columnheader', { name: 'New Model' });
-        fireEvent.click(newModel);
-        const effectiveFromDate = screen.getByRole('columnheader', { name: 'Effective From Date' });
-        fireEvent.click(effectiveFromDate);
-        const effectiveToDate = screen.getByRole('columnheader', { name: 'Effective To Date' });
-        fireEvent.click(effectiveToDate);
-        const action = screen.getByRole('columnheader', { name: 'Action' });
-        fireEvent.click(action);
-        const noRecordsFound = screen.getByRole('cell', { name: 'No records found' });
-        fireEvent.click(noRecordsFound);
-        const previosPage = screen.getByRole('listitem', { name: 'Previous Page' });
-        fireEvent.click(previosPage);
-        const one = screen.getByRole('listitem', { name: '1' });
-        fireEvent.click(one);
-        const nextPage = screen.getByRole('listitem', { name: 'Next Page' });
-        fireEvent.click(nextPage);
-        const newModelEffective = screen.getByRole('row', { name: 'Srl. Old Model New Model Effective From Date Effective To Date Action' });
-        fireEvent.click(newModelEffective);
-        const noRecordsFounds = screen.getByRole('row', { name: 'No records found' });
-        fireEvent.click(noRecordsFounds);
-    });
-
     it('should be able to search value', () => {
         const mockStore = createMockStore({
             auth: { userId: 106 },

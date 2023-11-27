@@ -5,8 +5,9 @@
  */
 import React from 'react';
 import customRender from '@utils/test-utils';
-import { CompanyProfileMaster } from '@components/common/CustomerMaster/CorporateCustomer/CompanyProfile/CompanyProfileMaster';
+import { CompanyProfileMaster } from 'components/common/CustomerMaster/CorporateCustomer/CompanyProfile/CompanyProfileMaster';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 
@@ -22,8 +23,12 @@ jest.mock('@components/common/CustomerMaster/CorporateCustomer/CompanyProfile/Ad
     };
 });
 
-jest.mock('store/actions/data/crmSchemeEnrollment', () => ({
-    crmSchemeEnrollmentDataActions: {},
+jest.mock('store/actions/data/customerMaster/documentView', () => ({
+    documentViewDataActions: {},
+}));
+
+jest.mock('store/actions/data/customerMaster/corporateCompanyProfileAction', () => ({
+    corporateCompanyProfileDataActions: {},
 }));
 
 describe('company profile', () => {
@@ -34,10 +39,15 @@ describe('company profile', () => {
         const buttonData = {
             saveBtn: true,
             formBtnActive: false,
+            closeBtn: true,
+            cancelBtn: true
         };
-        customRender(<CompanyProfileMaster formActionType={formActionType} buttonData={buttonData} setButtonData={jest.fn()} />);
+        customRender(<CompanyProfileMaster resetViewData={jest.fn()} resetData={jest.fn()} formActionType={formActionType} buttonData={buttonData} setButtonData={jest.fn()} />);
         const saveBtn = screen.getByRole('button', { name: 'Save & Next' });
         fireEvent.click(saveBtn);
+
+        const cancelBtn = screen.getByRole('button', { name: 'Cancel' });
+        fireEvent.click(cancelBtn);
     });
 
     it('should render view detail component', () => {
@@ -50,14 +60,14 @@ describe('company profile', () => {
                 CustomerMaster: {
                     CompanyProfile: {
                         isLoaded: 'false',
-                        data: { id: '123', value: 'test123' },
+                        data: { id: '123', value: 'test123', customerFormDocId: '106' },
                     },
                 },
             },
         });
         customRender(
             <Provider store={mockStore}>
-                <CompanyProfileMaster formActionType={formActionType} formData={true} />
+                <CompanyProfileMaster resetViewData={jest.fn()} fetchViewDocument={jest.fn()} selectedCustomerId={106} fetchCompanyProfileData={jest.fn()} resetData={jest.fn()} formActionType={formActionType} formData={true} />
             </Provider>
         );
         const minusBtn = screen.getByRole('img', { name: 'minus' });
@@ -86,20 +96,20 @@ describe('company profile', () => {
         const fetchList = jest.fn();
         const fetchDetailList = jest.fn();
         const saveData = jest.fn();
+        const res={ data: { name: 'Test' } };
+
         const buttonData = { closeBtn: true, cancelBtn: true, editBtn: true, allotBtn: true, unAllotBtn: true, invoiceBtn: true, deliveryNoteBtn: true, transferOTFBtn: true, changeHistory: true, nextBtn: true, saveBtn: true, formBtnActive: true, cancelOtfBtn: true };
 
         customRender(
             <Provider store={mockStore}>
-                <CompanyProfileMaster formActionType={formActionType} fetchDetailList={fetchDetailList} saveData={saveData} handleButtonClick={jest.fn()} fetchList={fetchList} buttonData={buttonData} setButtonData={jest.fn()} />
+                <CompanyProfileMaster resetViewData={jest.fn()} fetchCompanyProfileData={jest.fn()} listShowLoading={jest.fn()} resetData={jest.fn()} formActionType={formActionType} fetchDetailList={fetchDetailList} saveData={saveData} handleButtonClick={jest.fn()} fetchList={fetchList} buttonData={buttonData} setButtonData={jest.fn()} />
             </Provider>
         );
         const save = screen.getAllByRole('button', { name: 'Save & Next' });
         fireEvent.click(save[0]);
 
-        await waitFor(() => {
-            expect(saveData).toHaveBeenCalled();
-        });
-        saveData.mock.calls[0][0].onSuccess();
+        await waitFor(() => { expect(saveData).toHaveBeenCalled(); });
+        saveData.mock.calls[0][0].onSuccess(res);
         saveData.mock.calls[0][0].onError();
     });
 });

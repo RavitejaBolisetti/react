@@ -388,6 +388,7 @@ export const ReceiptMasterBase = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             setButtonData({ ...buttonData, formBtnActive: false });
             setIsFormVisible(false);
+            onCloseAction();
         };
 
         const sectionKey = {
@@ -567,7 +568,7 @@ export const ReceiptMasterBase = (props) => {
         receiptOnFinish: onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,

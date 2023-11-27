@@ -18,8 +18,8 @@ const { Option } = Select;
 const { Search } = Input;
 
 const SearchBox = (props) => {
-    const { maxLength = 25, selectWide, searchForm, optionType, searchParamRule, filterString, setFilterString, handleChange, disabled = false, isLoading, handleSearchWithoutParameter = undefined } = props;
-    const { allowClear = true, singleField = false, label = '', placeholder = translateContent('global.placeholder.search'), singleFieldKey = 'searchParam', defaultOption = undefined, captilized = undefined, valueReset = true } = props;
+    const { maxLength = 25, selectWide, searchForm, optionType, searchParamRule, filterString, setFilterString, handleChange, disabled = false, handleSearchWithoutParameter = undefined } = props;
+    const { validateTrigger = ['onChange', 'onSearch'], allowClear = true, singleField = false, label = '', placeholder = translateContent('global.placeholder.search'), singleFieldKey = 'searchParam', defaultOption = undefined, captilized = undefined, valueReset = true } = props;
 
     const [validationRules, setValidationRules] = useState([validateRequiredInputField('input')]);
 
@@ -82,13 +82,14 @@ const SearchBox = (props) => {
         optionFilterProp: 'children',
         allowClear: allowClear,
         className: selectWide ? styles.headerSelectFieldWide : styles.headerSelectField,
+        loading: !optionType?.length,
     };
 
     return (
         <div className={singleField ? styles.masterListSearchForm : styles.selectSearchBg}>
             <Form onKeyPress={onKeyPressHandler} form={searchForm} layout={singleField ? 'horizontal' : 'vertical'} colon={false} autoComplete="off">
                 {!singleField && (
-                    <Form.Item name="searchType" initialValue={defaultOption} rules={[validateRequiredSelectField('parameter')]}>
+                    <Form.Item name="searchType" initialValue={optionType?.length > 0 ? defaultOption : null} rules={[validateRequiredSelectField('parameter')]}>
                         <Select onChange={handleValidation} disabled={disabled} placeholder="Select Parameter" {...selectProps}>
                             {optionType?.map((item) => (
                                 <Option key={'st' + item.key} value={item.key}>
@@ -98,8 +99,8 @@ const SearchBox = (props) => {
                         </Select>
                     </Form.Item>
                 )}
-                <Form.Item label={label} {...searchParamRule} name={singleField && singleFieldKey ? singleFieldKey : 'searchParam'} rules={validationRules} validateTrigger={['onChange', 'onSearch']} className={selectWide ? styles.headerSearchFieldWide : ''}>
-                    <Search onInput={captilized ? convertToUpperCase : undefined} loading={isLoading} disabled={disabled} placeholder={placeholder} maxLength={maxLength} value={filterString?.searchParam} allowClear onChange={handleChange} onSearch={'singleField' && handleSearchWithoutParameter ? handleSearchWithoutParameter : handleSearchParamSearch} className={styles.headerSearchField} />
+                <Form.Item label={label} {...searchParamRule} name={singleField && singleFieldKey ? singleFieldKey : 'searchParam'} rules={validationRules} validateTrigger={validateTrigger} className={selectWide ? styles.headerSearchFieldWide : ''}>
+                    <Search onInput={captilized ? convertToUpperCase : undefined} disabled={disabled} placeholder={placeholder} maxLength={maxLength} value={filterString?.searchParam} allowClear onChange={handleChange} onSearch={'singleField' && handleSearchWithoutParameter ? handleSearchWithoutParameter : handleSearchParamSearch} className={styles.headerSearchField} />
                 </Form.Item>
             </Form>
         </div>

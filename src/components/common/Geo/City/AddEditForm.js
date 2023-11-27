@@ -27,7 +27,6 @@ const AddEditFormMain = (props) => {
     const { stateData, districtData } = props;
     const [filteredStateData, setFilteredStateData] = useState(stateData?.filter((i) => i?.parentKey === defaultCountry));
     const [filteredDistrictData, setFilteredDistrictData] = useState(districtData?.filter((i) => i?.parentKey === formData?.stateCode));
-  
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -133,14 +132,14 @@ const AddEditFormMain = (props) => {
                                 )}
 
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label={translateContent('city.label.city_name')} initialValue={formData?.name} rules={[validateRequiredInputField(translateContent('city.validation.cityName'))]} name="name">
+                                    <Form.Item label={translateContent('city.label.cityName')} initialValue={formData?.name} rules={[validateRequiredInputField(translateContent('city.validation.cityName'))]} name="name">
                                         <Input placeholder={preparePlaceholderText(translateContent('city.placeholder.cityName'))} maxLength={50} />
                                     </Form.Item>
                                 </Col>
 
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label={translateContent('global.label.status')}>
-                                        <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
+                                        <Switch checkedChildren={translateContent('global.label.active')} unCheckedChildren={translateContent('global.label.inActive')} onChange={(checked) => (checked ? 1 : 0)} />
                                     </Form.Item>
                                 </Col>
                             </Row>

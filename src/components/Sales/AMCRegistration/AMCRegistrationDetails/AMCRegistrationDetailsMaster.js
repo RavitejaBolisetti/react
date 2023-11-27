@@ -12,13 +12,15 @@ import AddEditForm from './AddEditForm';
 import { AMC_CONSTANTS } from '../utils/AMCConstants';
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
+import { BASE_URL_AMC_REGISTRATION_DATA as customURL } from 'constants/routingApi';
+import { formatDateToCalenderDate } from 'utils/formatDateTime';
 
 const AMCRegistrationDetailsMasterBase = (props) => {
     const { typeData, selectedOrderId } = props;
     const { userId, buttonData, setButtonData, section, isDataLoaded, isLoading, form } = props;
     const { registrationForm, formActionType, selectedOtfNumber, setSelectedOtfNumber, handleFormValueChange, showGlobalNotification } = props;
 
-    const { schemeForm, FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch, employeeData, fetchEmployeeList, listEmployeeShowLoading, schemeData, schemeList, fetchManagerList, managerData } = props;
+    const { schemeForm, FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch, employeeData, fetchEmployeeList, listEmployeeShowLoading, schemeData, listShowLoading, fetchManagerList, managerData, fetchDetail } = props;
 
     const [activeKey, setActiveKey] = useState([]);
     // const [options, setOptions] = useState([]);
@@ -40,16 +42,19 @@ const AMCRegistrationDetailsMasterBase = (props) => {
     useEffect(() => {
         if (requestPayload) {
             registrationForm.setFieldsValue({ ...requestPayload?.amcRegistration });
-            schemeForm.setFieldsValue({ ...requestPayload?.amcSchemeDetails });
+            schemeForm.setFieldsValue({ ...requestPayload?.amcSchemeDetails, schemeEndDate: formatDateToCalenderDate(requestPayload?.amcSchemeDetails?.schemeEndDate) });
         }
         if (requestPayload && formActionType?.addMode) {
-            setselectedSaleType(requestPayload?.amcRegistration?.saleType);
+            setselectedSaleType(requestPayload?.amcRegistration?.priceType);
         }
-        fetchEmployeeList({ setIsLoading: listEmployeeShowLoading, extraParams: generateExtraParams(AMC_CONSTANTS?.EMPLOYEE?.key), userId });
-        fetchManagerList({ setIsLoading: listEmployeeShowLoading, extraParams: generateExtraParams(AMC_CONSTANTS?.MANAGER?.key), userId });
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [requestPayload]);
+
+    useEffect(() => {
+        fetchEmployeeList({ setIsLoading: listEmployeeShowLoading, extraParams: generateExtraParams(AMC_CONSTANTS?.EMPLOYEE?.key), userId });
+        fetchManagerList({ setIsLoading: listEmployeeShowLoading, extraParams: generateExtraParams(AMC_CONSTANTS?.MANAGER?.key), userId });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [requestPayload, formActionType]);
     // useEffect(() => {
     //     const employeeOption = employeeData?.map((item) => ({
     //         label: item?.employeeName,
@@ -66,6 +71,37 @@ const AMCRegistrationDetailsMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedOtfNumber]);
+
+    const handleTaxChange = () => {
+        const onErrorAction = (message) => {
+            showGlobalNotification({ message });
+        };
+        const onSuccessAction = (res) => {
+            // showGlobalNotification({ message });
+            // registrationForm.setFieldsValue({ ...res?.data?.amcRegistration });
+            schemeForm.setFieldsValue({ igstAmount: res?.data?.amcSchemeDetails?.igstAmount, sgstAmount: res?.data?.amcSchemeDetails?.sgstAmount, cgstAmount: res?.data?.amcSchemeDetails?.cgstAmount, schemeTaxAmount: res?.data?.amcSchemeDetails?.schemeTaxAmount, schemeEndDate: formatDateToCalenderDate(res?.data?.amcSchemeDetails?.schemeEndDate) });
+        };
+        const extraParams = [
+            {
+                key: 'saleType',
+                value: registrationForm?.getFieldValue('saleType'),
+            },
+            {
+                key: 'discountAmount',
+                value: schemeForm?.getFieldValue('schemeDiscount'),
+            },
+            {
+                key: 'schemeCode',
+                value: schemeForm?.getFieldValue('schemeCode'),
+            },
+        ];
+        if (!registrationForm?.getFieldValue('saleType') || !schemeForm?.getFieldValue('schemeDiscount') || !schemeForm?.getFieldValue('schemeCode')) {
+            showGlobalNotification({ message: translateContent('amcRegistration.validation.taxValidation'), notificationType: 'warning' });
+            return false;
+        } else {
+            fetchDetail({ setIsLoading: listShowLoading, userId, extraParams, customURL, onErrorAction, onSuccessAction });
+        }
+    };
 
     const handleChange = (e) => {
         setButtonData({ ...buttonData, formBtnActive: false });
@@ -149,8 +185,8 @@ const AMCRegistrationDetailsMasterBase = (props) => {
             });
     };
     const handleSaleTypeChange = (value) => {
-        schemeForm.resetFields(['schemeDescription']);
-        schemeList(null);
+        schemeForm.resetFields();
+        // registrationForm?.getFieldValue('priceType') === AMC_CONSTANTS?.MNM_FOC?.key && schemeList(null);
         setselectedSaleType(value);
     };
     const formProps = {
@@ -181,6 +217,7 @@ const AMCRegistrationDetailsMasterBase = (props) => {
         selectedSaleType,
         employeeData,
         managerData,
+        handleTaxChange,
     };
 
     const viewProps = {
@@ -194,6 +231,7 @@ const AMCRegistrationDetailsMasterBase = (props) => {
         selectedSaleType,
         employeeData,
         managerData,
+        ...props,
     };
 
     return (

@@ -15,7 +15,7 @@ import { connect } from 'react-redux';
 import styles from 'assets/sass/app.module.scss';
 
 const VehicleCustomerDetailMasterBase = (props) => {
-    const { setLastSection, typeData, vehicleCustomerDetails } = props;
+    const { setLastSection, typeData, vehicleCustomerDetails, modelFamilyData, ProductHierarchyData } = props;
     const { userId, buttonData, setButtonData, section, isDataLoaded, isLoading } = props;
     const { form, onFinalSubmit, vehicleCustomerForm, vehicleDetailForm, customerDetailForm, formActionType, handleFormValueChange } = props;
     const { requestPayload, setRequestPayload, partySegment, setPartySegment } = props;
@@ -44,7 +44,8 @@ const VehicleCustomerDetailMasterBase = (props) => {
         vehicleDetailForm,
         customerDetailForm,
         formActionType,
-
+        modelFamilyData,
+        ProductHierarchyData,
         userId,
         isDataLoaded,
         formData: vehicleCustomerDetails,
@@ -56,6 +57,8 @@ const VehicleCustomerDetailMasterBase = (props) => {
     const viewProps = {
         typeData,
         formData: vehicleCustomerDetails,
+        modelFamilyData,
+        ProductHierarchyData,
         styles,
         isLoading,
     };

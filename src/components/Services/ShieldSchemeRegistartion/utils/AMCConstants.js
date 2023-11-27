@@ -19,6 +19,11 @@ export const AMC_CONSTANTS = {
         key: 'GENERATED_SUCCESSFULLY',
         title: 'Scheme Registration Completed Successfully',
     },
+    RSA_GENERATED_SUCCESSFULLY: {
+        id: 3,
+        key: 'GENERATED_SUCCESSFULLY',
+        title: 'RSA Registration Completed Successfully',
+    },
     DEALER: {
         id: 4,
         key: 'DLR',
@@ -63,5 +68,10 @@ export const AMC_CONSTANTS = {
         id: 12,
         key: 'AMC_CANCELLATION',
         title: 'AMC cancel',
+    },
+    REGISTRATION_TYPE: {
+        id: 16,
+        key: 'AMC',
+        title: 'API key for registration type',
     },
 };

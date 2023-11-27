@@ -6,13 +6,14 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Input, Form, Row, Switch, AutoComplete } from 'antd';
 import { validateRequiredInputField, searchValidator, validatePanField, validateTan, validateTin, validateRequiredSelectField, validatePincodeField } from 'utils/validation';
-import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { ViewDetail } from './ViewDetail';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import styles from 'assets/sass/app.module.scss';
 import { customSelectBox } from 'utils/customSelectBox';
 import { translateContent } from 'utils/translateContent';
+import { convertToUpperCase } from 'utils/convertToUpperCase';
 
 const { TextArea } = Input;
 
@@ -49,11 +50,14 @@ const AddEditFormMain = (props) => {
     let parentGroupId = null;
     const parentName = (values) => {
         const parentData = dealerParentData?.find((item) => item?.key === values);
-        if (parentData) {
+        if (values) {
             groupValue = parentData?.value;
             parentGroupId = parentData?.key;
             form.setFieldValue('dealerParentName', groupValue);
             form.setFieldValue('parentId', parentGroupId);
+        } else {
+            form.setFieldValue('dealerParentName', null);
+            form.setFieldValue('parentId', null);
         }
     };
 
@@ -152,21 +156,6 @@ const AddEditFormMain = (props) => {
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item initialValue={formData?.parentCode} label={translateContent('dealerCompany.label.groupCode')} rules={[validateRequiredSelectField('Group Code')]} name="parentCode">
-                                        {/* <Select
-                                            placeholder={preparePlaceholderSelect('Group Code')}
-                                            style={{
-                                                width: '100%',
-                                            }}
-                                            {...selectProps}
-                                            onChange={parentName}
-                                            disabled={editMode}
-                                        >
-                                            {dealerParentData?.map((item) => (
-                                                <Option key={item?.key} value={item?.key}>
-                                                    {item?.key}
-                                                </Option>
-                                            ))}
-                                        </Select> */}
                                         {customSelectBox({ data: dealerParentData, fieldNames: { key: 'key', value: 'key' }, onChange: parentName, placeholder: preparePlaceholderSelect('Group Code'), disabled: editMode })}
                                     </Form.Item>
                                 </Col>
@@ -179,6 +168,9 @@ const AddEditFormMain = (props) => {
                                     <Form.Item label={translateContent('dealerCompany.label.parentId')} name="parentId" initialValue={formData?.parentId}>
                                         <Input />
                                     </Form.Item>
+                                </Col>
+                                <Col xs={0}>
+                                    <Form.Item label={translateContent('id')} name="id" initialValue={formData?.id}/>
                                 </Col>
                             </Row>
                             <Row gutter={16}>
@@ -271,12 +263,12 @@ const AddEditFormMain = (props) => {
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item initialValue={formData?.companyPan} label={translateContent('dealerCompany.label.pan')} name="companyPan" rules={[validateRequiredInputField('PAN'), validatePanField('PAN')]}>
-                                        <Input placeholder={translateContent('dealerCompany.placeholder.pan')} />
+                                        <Input onInput={convertToUpperCase} placeholder={translateContent('dealerCompany.placeholder.pan')} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" data-testid="status" label={translateContent('dealerCompany.label.status')}>
-                                        <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
+                                        <Switch checkedChildren={translateContent('global.label.active')} unCheckedChildren={translateContent('global.label.inActive')} onChange={(checked) => (checked ? 1 : 0)} />
                                     </Form.Item>
                                 </Col>
                             </Row>

@@ -3,11 +3,10 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
-import { Row, Col, Input, Form, DatePicker, InputNumber, Divider, Card, Space } from 'antd';
-import { validateRequiredInputField, validateOnlyPositiveNumber, valueBetween0to100 } from 'utils/validation';
+import React from 'react';
+import { Row, Col, Input, Form, DatePicker, Divider, Card, Space } from 'antd';
 
-import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
+import { dateFormat } from 'utils/formatDateTime';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import styles from 'assets/sass/app.module.scss';
 
@@ -15,31 +14,6 @@ const AddEditFormMain = (props) => {
     const { formData } = props;
     const { isReadOnly = true } = props;
     const disabledProps = { disabled: isReadOnly };
-    //Invoice Date
-    //Customer Name
-    //Customer ID
-    //Customer Category
-    //Corporate Category
-    //Corporate Name
-    //Chassis No
-
-    //Ins. Cover Note No.
-    //Ins. Cover Note Date
-    //Ins. Premium Value
-    //Insurance Co. Name
-    //Financie Name
-    //Dealer Share Amount
-    //OEM Share Amount
-    //M & M Claim No
-    //M & M Claim Date
-    //Remarks
-
-    //Credit Note No.
-    //Credit Note Date
-    //Credit Note Amount
-    //Debit Note No.
-    //Debit Note Date
-    //Debit Note Amount
 
     return (
         <>
@@ -76,29 +50,6 @@ const AddEditFormMain = (props) => {
                                         <Input placeholder={preparePlaceholderText('Chassis Number')} maxLength={50} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
-
-                                {/* <Divider /> */}
-
-                                {/* <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="claimNumber" label={'Claim Number'}>
-                                <Input placeholder={preparePlaceholderText('Claim Number')} maxLength={50} {...disabledProps} />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="claimType" label={'Claim Type'}>
-                                <Input placeholder={preparePlaceholderText('Claim Type')} maxLength={50} {...disabledProps} />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item label={'Claim Date'} name="claimDate" className={styles?.oemShareAmount}>
-                                <DatePicker placeholder={preparePlaceholderSelect('Claim Date')} format={dateFormat} className={styles.fullWidth} {...disabledProps} />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="claimStatus" label={'Claim Status'}>
-                                <Input placeholder={preparePlaceholderText('Claim Status')} maxLength={50} {...disabledProps} />
-                            </Form.Item>
-                        </Col> */}
 
                                 <Divider />
 

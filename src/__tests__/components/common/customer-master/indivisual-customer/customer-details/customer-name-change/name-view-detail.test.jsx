@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
-import { fireEvent, screen, act } from '@testing-library/react';
-import { ViewDetail } from '@components/common/CustomerMaster/IndividualCustomer/CustomerDetail/CustomerNameChange/ViewDetail';
+import { fireEvent, screen } from '@testing-library/react';
+import { ViewDetail } from 'components/common/CustomerMaster/IndividualCustomer/CustomerDetail/CustomerNameChange/ViewDetail';
 
 beforeEach(() => {
     jest.clearAllMocks();
@@ -17,7 +17,7 @@ describe('View Form component', () => {
 
     it('should click on No button for approval', async () => {
         const formData = {
-            customerNameChangeRequest: { id: 1, supportingDocuments: [{ id: 106 }] },
+            customerNameChangeRequest: { id: 1, supportingDocuments: [{ id: 106 }], workFlowDetails: { allowedActions: [{ id: 'APPROVED', actionName: 'Approve' }] } },
         };
         const styles = {
             cardInsideBox: '',
@@ -36,7 +36,7 @@ describe('View Form component', () => {
 
     it('should click on rejection model  Cancel buttons', async () => {
         const formData = {
-            customerNameChangeRequest: { id: 1, supportingDocuments: [{ id: 106 }] },
+            customerNameChangeRequest: { id: 1, supportingDocuments: [{ id: 106 }], workFlowDetails: { allowedActions: [{ actionName: 'Reject' }] } },
         };
         const styles = {
             cardInsideBox: '',
@@ -51,7 +51,7 @@ describe('View Form component', () => {
     });
     it('should click on rejection model Submit buttons', async () => {
         const formData = {
-            customerNameChangeRequest: { id: 1, supportingDocuments: [{ id: 106 }] },
+            customerNameChangeRequest: { id: 1, supportingDocuments: [{ id: 106 }], workFlowDetails: { allowedActions: [{ actionName: 'Reject' }] } },
         };
         const styles = {
             cardInsideBox: '',
@@ -60,9 +60,6 @@ describe('View Form component', () => {
 
         const rejectedBtn = screen.getByRole('button', { name: 'Reject' });
         fireEvent.click(rejectedBtn);
-
-        const rejectionText = screen.getByRole('textbox', { name: 'Remark for Rejection' });
-        fireEvent.change(rejectionText, { target: { value: 'helo' } });
 
         const closeBtn = screen.getByRole('button', { name: /yes, reject/i });
         fireEvent.click(closeBtn);

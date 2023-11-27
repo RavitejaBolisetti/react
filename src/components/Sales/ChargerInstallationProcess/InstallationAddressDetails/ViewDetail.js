@@ -8,6 +8,7 @@ import { Col, Row, Descriptions, Divider, Typography, Space, Card } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const ViewDetailMain = (props) => {
     const { chargerInstallationMasterData, isLoading } = props;
@@ -26,23 +27,23 @@ const ViewDetailMain = (props) => {
 
     return (
         <div className={styles.viewDrawerContainer}>
-            <Row style={{ display: 'flex' }} size="middle">
+            <Space style={{ display: 'flex' }} size="small" direction="horizontal">
                 <Row gutter={20} xs={24} sm={24} md={12} lg={12} xl={12}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Space style={{ display: 'flex' }} size="middle" direction="vertical">
                             <Card style={{ backgroundColor: '#F2F2F2' }}>
-                                <Typography>Customer Details</Typography>
+                                <Typography>{translateContent('installationAddressDetials.heading.customerDetails')}</Typography>
                                 <Divider className={styles.marT20} />
                                 <Descriptions {...customerProps}>
-                                    <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.customerName, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Address">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.address, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Pincode">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.pinCode, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label={translateContent('installationAddressDetials.label.customerName')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.customerName, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label={translateContent('installationAddressDetials.label.address')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.address, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label={translateContent('installationAddressDetials.label.pincode')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.pinCode, isLoading)}</Descriptions.Item>
                                 </Descriptions>
                                 <Descriptions {...addressProps}>
-                                    <Descriptions.Item label="City">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.city, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="State">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.state, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Customer Mobile No.">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.otfDetails?.customerMobileNumber, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Customer Email Id.">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.customerEmail, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label={translateContent('installationAddressDetials.label.city')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.city, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label={translateContent('installationAddressDetials.label.state')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.state, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label={translateContent('installationAddressDetials.label.custMobNo')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.customerMobileNumber, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label={translateContent('installationAddressDetials.label.custEmailId')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.customerEmail, isLoading)}</Descriptions.Item>
                                 </Descriptions>
                             </Card>
                         </Space>
@@ -51,19 +52,19 @@ const ViewDetailMain = (props) => {
                 <Row gutter={20} xs={24} sm={24} md={12} lg={12} xl={12}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Card style={{ backgroundColor: '#F2F2F2' }}>
-                            <Typography>Installation Address</Typography>
+                            <Typography>{translateContent('installationAddressDetials.label.installationAddress')}</Typography>
                             <Divider className={styles.marT20} />
                             <Descriptions {...customerProps}>
-                                <Descriptions.Item label="Installation Address">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.address, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Pincode">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.pinCode, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="City">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.city, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="State">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.state, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Contact No.">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.customerMobileNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('installationAddressDetials.label.installationAddress')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.address, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('installationAddressDetials.label.pincode')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.pinCode, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('installationAddressDetials.label.city')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.city, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('installationAddressDetials.label.state')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.state, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('installationAddressDetials.label.contactNo')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstAddressDetails?.instAddressDetails?.customerMobileNumber, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         </Card>
                     </Col>
                 </Row>
-            </Row>
+            </Space>
         </div>
     );
 };

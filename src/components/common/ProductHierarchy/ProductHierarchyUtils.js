@@ -45,13 +45,17 @@ export const FindProductName = (node, prodctCode, key) => {
 
 export const DisableParent = (node, key = 'subManufactureOrg') => {
     function datas(node) {
-        if (node?.[key] && node?.[key].length) {
+        if (node?.[key] && node?.[key]?.length > 0) {
             node['disabled'] = true;
             node?.[key]?.forEach((child) => {
                 datas(child);
             });
         } else {
-            return;
+            if (node?.hasOwnProperty(key)) {
+                node[key] = null;
+            } else {
+                return;
+            }
         }
     }
     datas(node);

@@ -1,9 +1,15 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React from 'react';
 import { screen, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { LoyaltySchemeMaster } from 'components/Sales/Common/LoyaltyScheme/LoyaltySchemeMaster';
 import customRender from '@utils/test-utils';
 import { Form, Button } from 'antd';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 
 jest.mock('store/actions/data/otf/loyaltyAndScheme', () => ({
@@ -91,7 +97,7 @@ describe('Loyalty scheme master render', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper StatusBar={'test'} selectedRecordId={'testing'} FormActionButton={FormActionButton} fetchList={fetchList} />
+                <FormWrapper StatusBar={'test'} salesModuleType={'otf'} selectedRecordId={'testing'} FormActionButton={FormActionButton} fetchList={fetchList} />
             </Provider>
         );
         fetchList.mock.calls[0][0].onErrorAction();
@@ -155,26 +161,7 @@ describe('Loyalty scheme master render', () => {
         const fetchList = jest.fn();
         const saveData = jest.fn();
 
-        const response = {
-            data: {
-                customerCode: 'C230847215',
-                customerName: 'HABHIT WELLNESS PRIVATE LIMITED',
-                id: 'aa5c723e-42bd-4dd3-991a-197b0b181849',
-                make: 'MM',
-                oldChassisNumber: 'NJK49563',
-                otfId: '08be0405-bf89-4bd1-97fe-0b1b3330d6e7',
-                registrationMonthCode: '6',
-                registrationNumber: 'MH02FL2787',
-                registrationYearCode: '2021',
-                relationCode: 'F',
-                remarks: null,
-                schemeAmount: 25000,
-                schemeCode: '2b926ad0-cf5d-4927-b3ec-75bed042dbab',
-                variantCode: 'MM866',
-                vehicleModelGroup: 'ZOR',
-                vehicleUsageCode: 'F',
-            },
-        };
+  
 
         customRender(
             <Provider store={mockStore}>

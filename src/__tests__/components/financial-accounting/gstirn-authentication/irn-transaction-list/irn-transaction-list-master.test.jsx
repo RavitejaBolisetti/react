@@ -5,6 +5,7 @@
  */
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import { IrnTransactionListMaster } from "components/FinancialAccounting/GSTIRNAuthentication/IrnTransactionList";
 import { Provider } from 'react-redux';

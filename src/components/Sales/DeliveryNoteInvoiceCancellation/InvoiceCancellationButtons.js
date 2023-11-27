@@ -15,7 +15,7 @@ export const InvoiceCancellationButtons = ({ record, onCloseAction, buttonData, 
             <Row gutter={20}>
                 <Col xs={24} sm={8} md={6} lg={4} xl={4} className={styles.buttonsGroupLeft}>
                     {buttonData?.closeBtn && (
-                        <Button danger onClick={onCloseAction}>
+                        <Button danger onClick={onCloseAction} data-testid="close">
                             {translateContent('global.buttons.close')}
                         </Button>
                     )}
@@ -23,7 +23,7 @@ export const InvoiceCancellationButtons = ({ record, onCloseAction, buttonData, 
 
                 <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.buttonsGroupRight}>
                     {buttonData?.cancelRequest && (
-                        <Button onClick={() => handleCancelRequest()} type="primary">
+                        <Button onClick={() => handleCancelRequest()} type="primary" data-testid="cancelRequest">
                             {translateContent('deliveryNoteInvoiceCancellation.button.cancelRequest')}
                         </Button>
                     )}

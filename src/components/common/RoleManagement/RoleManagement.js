@@ -176,7 +176,7 @@ export const RoleManagementMain = (props) => {
         form,
         setDeviceType,
         isVisible: isFormVisible,
-        titleOverride: drawerTitle(formActionType).concat(translateContent('roleManagement.heading.role')),
+        titleOverride: drawerTitle(formActionType).concat(" ").concat(translateContent('roleManagement.heading.role')),
         onCloseAction,
 
         formData,

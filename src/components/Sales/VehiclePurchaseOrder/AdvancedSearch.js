@@ -89,7 +89,7 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
-                    <Button htmlType="submit" type="primary">
+                    <Button htmlType="submit" type="primary" data-testid="searchButton">
                         {translateContent('global.buttons.search')}
                     </Button>
                 </Col>

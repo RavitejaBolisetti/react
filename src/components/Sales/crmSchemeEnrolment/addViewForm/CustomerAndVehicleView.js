@@ -61,7 +61,7 @@ const CustomerAndVehicleViewMain = (props) => {
                     <Divider />
                     <Card>
                         <Descriptions {...viewProps}>
-                            <Descriptions.Item label={translateContent('crmSchemeEnrolment.label.vehicleNo')}>{checkAndSetDefaultValue(vehicleDataDetails?.vehicleNumber, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('crmSchemeEnrolment.label.vehicleNo')}>{checkAndSetDefaultValue(vehicleDataDetails?.registrationNumber, isLoading)}</Descriptions.Item>
                             {/* <Descriptions.Item label="Model">
                                 {checkAndSetDefaultValue(vehicleDataDetails?.model, isLoading)}
                                 <Tooltip title={modelInfo} placement="bottom" color="#6495ED" key="#6495ED">

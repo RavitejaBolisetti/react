@@ -22,12 +22,12 @@ function DocumentTypesForm({ form, onFieldsChange, onFinish, isEditing, isBtnDis
         <Form form={form} onFieldsChange={onFieldsChange} autoComplete="off" id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label={translateContent('applicationMaster.label.code')} name="documentTypeCode" rules={[{ max: 3, message: 'Code must be 3 characters long.' }, validateRequiredInputField('document code'), validationFieldLetterAndNumber('document code'), { validator: (rule, value) => duplicateValidator(value, 'documentTypeCode', finalFormdata?.documentType, documentTypeCode) }]}>
+                    <Form.Item label={translateContent('applicationMaster.label.code')} name="documentTypeCode" rules={[{ max: 3, message: translateContent('global.validation.mustBeCharactersLong').replace('{NAME}', 'code').replace('{Length}', '3') }, validateRequiredInputField(translateContent('applicationMaster.label.code')), validationFieldLetterAndNumber(translateContent('applicationMaster.label.code')), { validator: (rule, value) => duplicateValidator(value, 'documentTypeCode', finalFormdata?.documentType, documentTypeCode) }]}>
                         <Input disabled={isBtnDisabled} placeholder={preparePlaceholderText('document code')} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label={translateContent('applicationMaster.label.documentName')} name="documentTypeDescription" rules={[{ max: 50, message: 'Document Name must be less then 50 characters.' }, validateRequiredInputField('document name'), validateAlphanumericWithSpace('document name'), { validator: (rule, value) => duplicateValidator(value, 'documentTypeDescription', finalFormdata?.documentType, documentTypeDescription) }]}>
+                    <Form.Item label={translateContent('applicationMaster.label.documentName')} name="documentTypeDescription" rules={[{ max: 50, message: translateContent('global.validation.mustBeLessCharactersLong').replace('{NAME}', translateContent('applicationMaster.label.documentName')).replace('{Length}', '50') }, validateRequiredInputField(translateContent('applicationMaster.label.documentName')), validateAlphanumericWithSpace(translateContent('applicationMaster.label.documentName')), { validator: (rule, value) => duplicateValidator(value, 'documentTypeDescription', finalFormdata?.documentType, documentTypeDescription) }]}>
                         <Input disabled={isBtnDisabled} maxLength={50} placeholder={preparePlaceholderText('document name')} />
                     </Form.Item>
                 </Col>

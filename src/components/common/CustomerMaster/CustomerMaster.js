@@ -33,7 +33,6 @@ import DataTable from 'utils/dataTable/DataTable';
 import { CustomerMainConatiner } from './CustomerMainConatiner';
 import styles from 'assets/sass/app.module.scss';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
-import { LANGUAGE_EN } from 'language/en';
 import { translateContent } from 'utils/translateContent';
 import { drawerTitle } from 'utils/drawerTitle';
 
@@ -107,8 +106,8 @@ const CustomerMasterMain = (props) => {
     const [refreshCustomerList, setRefreshCustomerList] = useState(false);
 
     const [section, setSection] = useState();
-    const [defaultSection, setDefaultSection] = useState();
-    const [currentSection, setCurrentSection] = useState();
+    const [defaultSection, setDefaultSection] = useState(1);
+    const [currentSection, setCurrentSection] = useState(1);
     const [sectionName, setSetionName] = useState();
     const [isLastSection, setLastSection] = useState(false);
 
@@ -123,7 +122,7 @@ const CustomerMasterMain = (props) => {
     const [isUnsavedDataPopup, setIsUnsavedDataPopup] = useState(false);
     const [nextCurentSection, setNextCurrentSection] = useState('');
 
-    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false, changeHistory: true };
+    const defaultBtnVisiblity = { nextBtn: false, editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false, changeHistory: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
@@ -246,14 +245,19 @@ const CustomerMasterMain = (props) => {
     }, []);
 
     useEffect(() => {
+        if (typeData && typeData?.length) {
+            searchForm?.setFieldValue('searchType', 'customerName');
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [typeData]);
+
+    useEffect(() => {
         if (customerType) {
-            // setFilterString({ current: 1 });
             setFilterString({ ...filterString, customerType, current: 1 });
             const defaultSection = customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION.CUSTOMER_DETAILS.id : CUSTOMER_CORPORATE_SECTION.CUSTOMER_DETAILS.id;
             setSetionName(customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION : CUSTOMER_CORPORATE_SECTION);
             setDefaultSection(defaultSection);
             setSection(defaultSection);
-            // setShowDataLoading(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [customerType]);
@@ -281,6 +285,7 @@ const CustomerMasterMain = (props) => {
 
         switch (buttonAction) {
             case ADD_ACTION:
+                // setFilterString({});
                 defaultSection && setCurrentSection(defaultSection);
                 setPreviousSection(1);
                 break;
@@ -319,6 +324,8 @@ const CustomerMasterMain = (props) => {
             });
 
             setButtonData(btnVisiblity({ defaultBtnVisiblity: { ...defaultBtnVisiblity, changeHistory: buttonAction !== ADD_ACTION }, buttonAction }));
+        } else {
+            setButtonData((prev) => ({ ...prev, nextBtn: isLastSection || (currentSection === 1 && buttonAction !== NEXT_ACTION) ? false : true }));
         }
         setIsFormVisible(true);
     };
@@ -435,8 +442,7 @@ const CustomerMasterMain = (props) => {
         searchForm,
         filterString,
         setFilterString,
-        optionType: typeData,
-        defaultOption: 'customerName',
+        optionType: typeData?.length && typeData,
         handleChange,
         allowClear: false,
     };
@@ -482,7 +488,7 @@ const CustomerMasterMain = (props) => {
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction: onCloseDrawer,
-        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
         tableData: data,
         customerType,
         ADD_ACTION,
@@ -490,6 +496,7 @@ const CustomerMasterMain = (props) => {
         VIEW_ACTION,
         NEXT_ACTION,
         buttonData,
+        setFilterString,
 
         setButtonData,
         handleButtonClick,
@@ -506,7 +513,7 @@ const CustomerMasterMain = (props) => {
         shouldResetForm,
         handleFormValueChange,
         isLastSection,
-        saveButtonName: !selectedCustomerId ? 'Create Customer ID' : isLastSection ? translateContent('global.buttons.submit') : translateContent('global.buttons.saveAndNext'),
+        saveButtonName: !selectedCustomerId ? translateContent('customerMaster.button.customerID') : isLastSection ? translateContent('global.buttons.submit') : translateContent('global.buttons.saveAndNext'),
         setIsFormVisible,
         setRefreshCustomerList,
         profileCardLoading,
@@ -530,13 +537,13 @@ const CustomerMasterMain = (props) => {
 
     const unsavedDataModalProps = {
         isVisible: isUnsavedDataPopup,
-        titleOverride: LANGUAGE_EN.GENERAL.UNSAVE_DATA_WARNING.TITLE,
+        titleOverride: translateContent('global.generalNotifications.unsaveDataWarning.title'),
         closable: false,
         onCloseAction: handleCancelUnsaveDataModal,
         onSubmitAction: handleOkUnsavedModal,
         submitText: 'Leave',
         showField: false,
-        text: LANGUAGE_EN.GENERAL.UNSAVE_DATA_WARNING.MESSAGE,
+        text: translateContent('global.generalNotifications.unsaveDataWarning.message'),
     };
 
     return (
@@ -578,7 +585,7 @@ const CustomerMasterMain = (props) => {
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={24} lg={22} xl={22} className={styles.advanceFilterContainer}>
-                                            <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
+                                            <div className={styles.advanceFilterTitle}>{translateContent('global.advanceFilter.appliedAdvanceFilter')}</div>
                                             {extraParams?.map((filter) => {
                                                 return (
                                                     filter?.value &&
@@ -597,7 +604,7 @@ const CustomerMasterMain = (props) => {
                                         </Col>
                                         <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
                                             <Button className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
-                                                Clear
+                                                {translateContent('global.buttons.clear')}
                                             </Button>
                                         </Col>
                                     </Row>
@@ -619,14 +626,16 @@ const CustomerMasterMain = (props) => {
                                 }}
                                 description={
                                     <>
-                                        No Record Found <br /> Please <b>"Add New Customer"</b> using below <br />
-                                        button
+                                        {translateContent('customerMaster.label.noRecordFound')} <br /> {translateContent('customerMaster.label.please')}
+                                        <b> {translateContent('customerMaster.label.addCus')} </b>
+                                        {translateContent('customerMaster.label.usingBelow')} <br />
+                                        {translateContent('customerMaster.label.button')}
                                     </>
                                 }
                             >
                                 {showAddButton && !data?.length && (
                                     <Button icon={<PlusOutlined />} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                        {`Add`}
+                                        {translateContent('global.buttons.add')}
                                     </Button>
                                 )}
                             </Empty>

@@ -13,13 +13,14 @@ import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredInputField } from 'utils/validation';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const CancelInvoiceForm = ({ handleCloseReceipt, handleCancelReceipt, cancelInvoiceForm, typeData }) => {
     return (
         <Form autoComplete="off" form={cancelInvoiceForm} onFinish={handleCancelReceipt} layout="vertical">
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Form.Item label="Reason for Cancellation" name="cancelReason" rules={[validateRequiredInputField('Reason for Cancellation')]}>
+                    <Form.Item label={translateContent('vehicleInvoiceGeneration.label.cancelInvoice.reasonForCancellation')} name="cancelReason" rules={[validateRequiredInputField('Reason for Cancellation')]}>
                         {customSelectBox({ data: typeData?.[PARAM_MASTER.INVOICE_CANCEL_REASON.id], placeholder: preparePlaceholderSelect('Reason for Cancellation') })}
                     </Form.Item>
                 </Col>
@@ -27,13 +28,13 @@ export const CancelInvoiceForm = ({ handleCloseReceipt, handleCancelReceipt, can
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
                     <Button onClick={handleCloseReceipt} danger>
-                        Cancel
+                        {translateContent('global.buttons.cancel')}
                     </Button>
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
                     <Button htmlType="submit" type="primary">
-                        Submit
+                        {translateContent('global.buttons.submit')}
                     </Button>
                 </Col>
             </Row>

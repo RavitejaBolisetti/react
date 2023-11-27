@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Button, Row, Col, Popover } from 'antd';
+import { Button, Row, Col } from 'antd';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { translateContent } from 'utils/translateContent';
@@ -12,7 +12,7 @@ import { translateContent } from 'utils/translateContent';
 import styles from 'assets/sass/app.module.scss';
 
 export const OTFFormButton = ({ record, handleChangeHistory, handleOtfSoMappingHistory, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save', handleButtonClick, isLoadingOnSave, isLastSection, workFlowDetails }) => {
-    const content = <div>{translateContent('global.generalMessage.comingSoon')}</div>;
+    // const content = <div>{translateContent('global.generalMessage.comingSoon')}</div>;
     return (
         <div className={styles.formFooter}>
             <Row gutter={20}>
@@ -55,21 +55,21 @@ export const OTFFormButton = ({ record, handleChangeHistory, handleOtfSoMappingH
                         </Button>
                     )}
 
-                    {buttonData?.invoiceBtn && (
+                    {/* {buttonData?.invoiceBtn && (
                         <Popover content={content} trigger="hover">
                             <Button onClick={() => {}} type="primary">
                                 {translateContent('global.buttons.invoice')}
                             </Button>
                         </Popover>
-                    )}
+                    )} */}
 
-                    {buttonData?.deliveryNoteBtn && (
+                    {/* {buttonData?.deliveryNoteBtn && (
                         <Popover content={content} trigger="hover">
                             <Button onClick={() => {}} type="primary">
                                 {translateContent('global.buttons.deliveryNote')}
                             </Button>
                         </Popover>
-                    )}
+                    )} */}
 
                     {buttonData?.transferOTFBtn && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.TRANSFER_OTF, record })} type="primary">

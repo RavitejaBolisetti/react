@@ -155,7 +155,7 @@ export const StockTransferIndentMasterBase = (props) => {
     const [isReportVisible, setReportVisible] = useState();
     const [selectedRecord, setSelectedRecord] = useState();
     const [refershIndentData, setRefershIndentData] = useState();
-    const [recordType, setRecordType] = useState();
+    // const [recordType, setRecordType] = useState();
     const [reportDetail, setReportDetail] = useState();
     const defaultDealerLocationCode = dealerLocations?.find((i) => i?.isDefault)?.locationCode;
 
@@ -445,7 +445,7 @@ export const StockTransferIndentMasterBase = (props) => {
     const onFinishSearch = (values) => {};
 
     const handleResetFilter = (e) => {
-        setFilterString();
+        setFilterString({ current: 1, pageSize: 10 });
         advanceFilterForm.resetFields();
         searchForm.resetFields();
         setAdvanceSearchVisible(false);
@@ -490,7 +490,7 @@ export const StockTransferIndentMasterBase = (props) => {
     };
 
     const handlePrintDownload = (record) => {
-        setRecordType(record?.issueStatus);
+       // setRecordType(record?.issueStatus);
         setReportVisible(true);
         setAdditionalReportParams([
             {
@@ -501,9 +501,9 @@ export const StockTransferIndentMasterBase = (props) => {
     };
 
     useEffect(() => {
-        if (recordType) setReportDetail(recordType === ISSUE_ACTION_LIST?.ISSUED?.key ? EMBEDDED_REPORTS?.STOCK_TRANSFER_ISSUE_NOTE_DOCUMENT : recordType === ISSUE_ACTION_LIST?.RECEIVED?.key ? EMBEDDED_REPORTS?.STOCK_TRANSFER_RECIEVE_NOTE_DOCUMENT : null);
+        setReportDetail(toggleButton === STOCK_TRANSFER?.RAISED?.key ? EMBEDDED_REPORTS?.STOCK_TRANSFER_ISSUE_NOTE_DOCUMENT : toggleButton === STOCK_TRANSFER?.RECEIVED?.key ? EMBEDDED_REPORTS?.STOCK_TRANSFER_RECIEVE_NOTE_DOCUMENT : null);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [recordType]);
+    }, [toggleButton]);
 
     const tableProps = {
         dynamicPagination,

@@ -5,188 +5,87 @@
  */
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
-import { screen, fireEvent, cleanup, waitFor } from '@testing-library/react';
-import { CustomerDetailsMaster } from '@components/Sales/Common/CustomerDetails/CustomerDetailsMaster';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
+import { CustomerDetailsMaster } from 'components/Sales/OTF/CustomerDetails/CustomerDetailsMaster';
 import { Provider } from 'react-redux';
 import createMockStore from '__mocks__/store';
-import { Button, Form } from 'antd';
 
-beforeEach(cleanup);
-const FormWrapper = (props) => {
-    const [form] = Form.useForm();
-    return <CustomerDetailsMaster form={form} {...props} />;
+const StatusBar = () => <div>Status Bar</div>;
+const FormActionButton = () => <div>Form Action Button</div>;
+
+let mockValues = {
+    bookingCustomer: {
+        customerId: '123',
+    },
 };
 
-const StatusBar = () => <div>No Status Bar</div>;
-
-const FormActionButton = () => (
-    <div>
-        <Button htmlType="submit" type="primary">
-            Save
-        </Button>
-    </div>
-);
-
-jest.mock('@components/Sales/Common/CustomerDetails/AddEditForm', () => {
-    const AddEditForm = ({ onFinish }) => (
-        <div>
-            <button onClick={onFinish}>Save</button>
-        </div>
-    );
-
+jest.mock('components/Sales/Common/CustomerDetails/AddEditForm', () => {
+    const AddEditForm = ({ onFinish, fnSetData }) => {
+        const values = mockValues;
+        return (
+            <div>
+                <button onClick={() => onFinish(values)}>Save</button>
+                <button onClick={fnSetData}>Set Data</button>
+            </div>
+        );
+    };
     return {
         __esModule: true,
-
         AddEditForm,
     };
 });
 
+jest.mock('store/actions/data/otf/customerDetails', () => ({
+    otfCustomerDetailsAction: {},
+}));
+
 describe('CustomerDetailsMaster Components', () => {
-    const mockProps = {
-        section: {
-            title: 'Success And otfNumber',
-        },
-        formActionType: {
-            viewMode: false,
-        },
-        handleButtonClick: jest.fn(),
-        NEXT_ACTION: 'next',
-        ADD_ACTION: 'Add',
-        CANCEL_ACTION: 'cancel_otf',
-        EDIT_ACTION: 'Edit',
-        VIEW_ACTION: 'View',
-        userId: 'user123',
-        selectedOrderId: 'order123',
-        isLoading: false,
-        showGlobalNotification: jest.fn(),
-        onFinishFailed: jest.fn(),
-        handleFormValueChange: jest.fn(),
-        setFormData: jest.fn(),
-    };
-
-    const CustomerDetailData = [
-        {
-            id: 'test',
-            value: 'test1',
-        },
-        {
-            id: 'test1',
-            value: 'test1',
-        },
-    ];
-    const mockStore = createMockStore({
-        auth: { userId: '123456' },
-        data: {
-            OTF: {
-                OtfCustomerDetails: { isLoaded: true, isLoading: true, data: CustomerDetailData },
-            },
-        },
-    });
-
-    it('it should render success and otfnumber heading when user click', async () => {
-        customRender(
-            <Provider store={mockStore}>
-                <FormWrapper {...mockProps} StatusBar={StatusBar} FormActionButton={FormActionButton} />
-            </Provider>
-        );
-        const successOtfNumber = screen.getByRole('heading', { name: 'Success And otfNumber' });
-        fireEvent.click(successOtfNumber);
-    });
-
-    it('test for onSuccess', async () => {
+    it('test for success', async () => {
         const mockStore = createMockStore({
-            auth: { userId: 123 },
+            auth: { userId: 106 },
             data: {
                 OTF: {
-                    OtfCustomerDetails: {
-                        isLoaded: true,
-                        data: {
-                            otfNumber: 'OTF23D010023',
-                            billingCustomer: [
-                                {
-                                    aadharNumber: null,
-                                    address: 'Greater Noida Delta 1  ',
-                                    ageGroup: null,
-                                    alternateNumber: '8818072268',
-                                    birthDate: '2023-10-08',
-                                    bookingAndBillingType: 'BILLING',
-                                    cityCode: 'A19',
-                                    customerId: 'C23D000056',
-                                    customerName: 'deepak Pandey',
-                                    customerType: 'INDIVIDUAL',
-                                    district: 'NEW DELHI',
-                                    districtCode: 'D10001',
-                                    drivingLicense: null,
-                                    email: 'nnk1Y27@gmail.com',
-                                    gender: 'M',
-                                    gstin: '04AABCU9603R1ZT',
-                                    id: '4f966aeb-4076-4a83-af80-f853cd6b79d8',
-                                    mobileNumber: '9991234422',
-                                    otfNumber: null,
-                                    panNo: 'MMYIJ7755K',
-                                    pincode: '110001',
-                                    saluation: 'Mr',
-                                    sameAsBookingCustomer: true,
-                                    state: 'Delhi',
-                                    stateCode: '30',
-                                    tehsilCode: 'T10001',
-                                    tehsilName: 'NEW DELHI',
-                                    tradeLicense: null,
-                                    otfId: '7e6f4990-f57d-477f-bace-ecd3da30ae5a',
-                                },
-                            ],
-
-                            bookingCustomer: [
-                                {
-                                    aadharNumber: null,
-                                    address: 'Greater Noida Delta 1  ',
-                                    ageGroup: null,
-                                    alternateNumber: '8818072268',
-                                    birthDate: '2023-10-08',
-                                    bookingAndBillingType: 'BILLING',
-                                    cityCode: 'A19',
-                                    customerId: 'C23D000056',
-                                    customerName: 'deepak Pandey',
-                                    customerType: 'INDIVIDUAL',
-                                    district: 'NEW DELHI',
-                                    districtCode: 'D10001',
-                                    drivingLicense: null,
-                                    email: 'nnk1Y27@gmail.com',
-                                    gender: 'M',
-                                    gstin: '04AABCU9603R1ZT',
-                                    id: '4f966aeb-4076-4a83-af80-f853cd6b79d8',
-                                    mobileNumber: '9991234422',
-                                    otfNumber: null,
-                                    panNo: 'MMYIJ7755K',
-                                    pincode: '110001',
-                                    saluation: 'Mr',
-                                    sameAsBookingCustomer: true,
-                                    state: 'Delhi',
-                                    stateCode: '30',
-                                    tehsilCode: 'T10001',
-                                    tehsilName: 'NEW DELHI',
-                                    tradeLicense: null,
-                                    otfId: '7e6f4990-f57d-477f-bace-ecd3da30ae5a',
-                                },
-                            ],
-                        },
-                    },
+                    OtfCustomerDetails: { isLoaded: true, data: [{ name: 'Kai' }] },
                 },
             },
         });
 
-        const res = { data: { bookingCustomer: { otfNumber: '7e6f4990-f57d-477f-bace-ecd3da30ae5a', bookingAndBillingType: 'BOOKING', id: '4f966aeb-4076-4a83-af80-f853cd6b79d8', sameAsBookingCustomer: true }, billingCustomer: { otfNumber: '7e6f4990-f57d-477f-bace-ecd3da30ae5a', bookingAndBillingType: 'BILLING', id: '4f966aeb-4076-4a83-af80-f853cd6b79d8', sameAsBookingCustomer: true } } };
-
-        const saveData = jest.fn();
         const fetchList = jest.fn();
+        const saveData = jest.fn();
 
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper saveData={saveData} setButtonData={jest.fn()} onFinishCustom={true} fetchList={fetchList} handleButtonClick={jest.fn()} onCloseAction={jest.fn()} StatusBar={StatusBar} FormActionButton={FormActionButton} resetData={jest.fn()} />
+                <CustomerDetailsMaster handleButtonClick={jest.fn()} saveData={saveData} resetData={jest.fn()} StatusBar={StatusBar} fetchList={fetchList} FormActionButton={FormActionButton} setButtonData={jest.fn()} selectedRecordId={106} />
             </Provider>
         );
 
-        const saveBtn = screen.getAllByRole('button', { name: 'Save' });
-        fireEvent.click(saveBtn[1]);
+        fetchList.mock.calls[0][0].onErrorAction();
+
+        mockValues = {
+            bookingCustomer: {
+                customerId: '123',
+            },
+        };
+
+        const saveBtn = screen.getByRole('button', { name: 'Save' });
+        fireEvent.click(saveBtn);
+
+        const setData = screen.getByRole('button', { name: 'Set Data' });
+        fireEvent.click(setData);
+
+        await waitFor(() => {
+            expect(saveData).toHaveBeenCalled();
+        });
+
+        saveData.mock.calls[0][0].onSuccess();
+        saveData.mock.calls[0][0].onError();
+    });
+
+    it('test for view', async () => {
+        const formActionType = { viewMode: true };
+        const fetchList = jest.fn();
+        const saveData = jest.fn();
+
+        customRender(<CustomerDetailsMaster formActionType={formActionType} handleButtonClick={jest.fn()} saveData={saveData} resetData={jest.fn()} StatusBar={StatusBar} fetchList={fetchList} FormActionButton={FormActionButton} setButtonData={jest.fn()} selectedRecordId={106} />);
     });
 });

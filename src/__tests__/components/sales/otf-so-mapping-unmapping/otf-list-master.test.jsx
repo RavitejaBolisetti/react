@@ -1,7 +1,8 @@
 import React from 'react';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
-import { screen, fireEvent, waitFor } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 import { OtfListMaster } from 'components/Sales/OtfSoMappingUnmapping/OtfListMaster';
 import customRender from '@utils/test-utils';
 
@@ -141,7 +142,7 @@ describe('Booking List Master Component', () => {
         fireEvent.change(reasonDesc, { target: { value: 'ReasonDesc' } });
         // fireEvent.click(screen.getAllByText('ReasonDesc')[1]);
 
-        const soNo = screen.getByRole('textbox', { name: 'SO No.' });
+        const soNo = screen.getByRole('textbox', { name: 'SO Number' });
         fireEvent.change(soNo, { target: { value: 'Kai' } });
 
         const bookingNo = screen.getByRole('textbox', { name: 'Booking No.' });
@@ -226,6 +227,4 @@ describe('Booking List Master Component', () => {
         // fetchList.mock.calls[0][0].onSuccessAction();
         // fetchList.mock.calls[0][0].onErrorAction();
     });
-
-  
 });

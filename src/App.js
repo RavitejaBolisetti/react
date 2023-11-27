@@ -17,6 +17,7 @@ import { readFromStorageAndValidateAuth } from 'store/actions/auth';
 import { hideGlobalNotification } from 'store/actions/notification';
 
 import styles from './App.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => ({
     notificationState: state.notification,
@@ -45,7 +46,7 @@ const AppBase = ({ readFromStorageAndValidateAuth, hideGlobalNotification, notif
     }, [notificationState?.visible]);
 
     const informationModalBox = useCallback(
-        ({ type = 'error', title = 'ERROR', message, duration = 3, placement = 'topRight', showTitle = true }) => {
+        ({ type = 'error', title = translateContent('global.notificationError.title'), message, duration = 3, placement = 'topRight', showTitle = true }) => {
             const checkIcon = {
                 success: <AiOutlineCheckCircle />,
                 warning: <AiOutlineInfoCircle />,

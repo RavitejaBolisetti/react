@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect, useMemo } from 'react';
-import { Button, Col, Row, Select, Form, Empty, ConfigProvider, Space } from 'antd';
+import { Button, Col, Row, Form, Empty, ConfigProvider, Space } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -463,7 +463,7 @@ const UserManagementMain = (props) => {
         formActionType,
         isReadOnly,
         setFormData,
-        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
         productHierarchyData,
         onCloseAction,
         finalFormdata,
@@ -523,6 +523,7 @@ const UserManagementMain = (props) => {
         defaultValue: 'employeeCode',
         handleChange: onChangeSearchHandler,
         valueReset: false,
+        validateTrigger: ['onSearch'],
     };
 
     return (

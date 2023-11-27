@@ -4,9 +4,8 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Row, Col, Form, Select, Input } from 'antd';
+import { Row, Col, Form, Select } from 'antd';
 
-import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField } from 'utils/validation';
 import { UploadUtil } from 'utils/Upload';
 import { translateContent } from 'utils/translateContent';
@@ -14,7 +13,7 @@ import { translateContent } from 'utils/translateContent';
 const { Option } = Select;
 
 const AddEditForm = (uploadProps) => {
-    const { typeData, mandatoryFields, handleClearChange } = uploadProps;
+    const { mandatoryFields, handleClearChange } = uploadProps;
 
     const selectProps = {
         optionFilterProp: 'children',
@@ -59,11 +58,6 @@ const AddEditForm = (uploadProps) => {
                         </Select>
                     </Form.Item>
                 </Col>
-                {/* <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Form.Item label={translateContent('customerMaster.label.fileName')} name="documentName" rules={mandatoryFields ? [validateRequiredInputField(translateContent('customerMaster.validation.fileName'))] : ''}>
-                        <Input onChange={handleClearChange} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.fileName'))} allowClear />
-                    </Form.Item>
-                </Col> */}
             </Row>
             <UploadUtil {...uploadProps} />
         </>

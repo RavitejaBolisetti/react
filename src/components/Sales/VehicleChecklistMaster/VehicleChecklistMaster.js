@@ -449,7 +449,7 @@ export const VehicleChecklistMain = ({ typeData, moduleTitle, viewTitle, userId,
             setAttributeType(formData?.attributeLevel);
             setFormActionType(FROM_ACTION_TYPE?.VIEW);
         },
-        titleOverride: (formActionType === FROM_ACTION_TYPE?.EDIT ? translateContent('global.drawerTitle.edit') : translateContent('global.drawerTitle.add')).concat(moduleTitle),
+        titleOverride: (formActionType === FROM_ACTION_TYPE?.EDIT ? translateContent('global.drawerTitle.edit') : translateContent('global.drawerTitle.add')).concat(" ").concat(moduleTitle),
         onFinish,
         selectedTreeSelectKey,
         handleResetBtn,

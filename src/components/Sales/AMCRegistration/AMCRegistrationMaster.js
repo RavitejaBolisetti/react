@@ -42,6 +42,7 @@ import { AMC_REQUEST_TITLE_CONSTANTS } from './utils/AMCRequestTitleConstant';
 import { ReportModal } from 'components/common/ReportModal/ReportModal';
 import { translateContent } from 'utils/translateContent';
 import { drawerTitle } from 'utils/drawerTitle';
+import { dealerLocationsDataAction } from 'store/actions/data/amcRegistration/dealerLocations';
 
 const mapStateToProps = (state) => {
     const {
@@ -52,6 +53,7 @@ const mapStateToProps = (state) => {
                 AMCRegistrationSearch: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString, detailData: amcRegistrationDetailData = [] },
                 EmployeeData: { isLoaded: isEmployeeDataLoaded = false, isLoading: isEmployeeDataLoading, data: employeeData = [], detailData: managerData = [] },
                 AMCScheme: { isLoaded: isSchemeDataLoaded = false, isLoading: isSchemeDataLoading, filteredListData: schemeData = [] },
+                DealerLocations: { filteredListData: locations = [] },
             },
             OTF: {
                 OtfSearchList: { isLoaded: isOTFDataLoaded = false, isLoading: isOTFSearchLoading, data: otfData = [] },
@@ -95,6 +97,8 @@ const mapStateToProps = (state) => {
 
         dealerParentsLovList,
         dealerLocations,
+
+        locations,
     };
     return returnValue;
 };
@@ -127,6 +131,9 @@ const mapDispatchToProps = (dispatch) => ({
             fetchDealerParentsLovList: dealerParentDataActions.fetchFilteredList,
             listDealerParentShowLoading: dealerParentDataActions.listShowLoading,
 
+            fetchLocationLovList: dealerLocationsDataAction.fetchFilteredList,
+            listLocationShowLoading: dealerLocationsDataAction.listShowLoading,
+
             fetchDealerLocations: applicationMasterDataActions.fetchDealerLocations,
             locationDataLoding: applicationMasterDataActions.locationDataLoding,
 
@@ -139,7 +146,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const AMCRegistrationMasterBase = (props) => {
     const { data, userId, fetchList, listShowLoading, showGlobalNotification } = props;
     const { typeData, saveData, documentType, moduleTitle, totalRecords } = props;
-    const { filterString, setFilterString } = props;
+    const { filterString, setFilterString, fetchLocationLovList, listLocationShowLoading, locations } = props;
     const { fetchDetail, isDataLoaded, fetchCustomerList, listCustomerShowLoading } = props;
     const { amcRegistrationDetailData, isEmployeeDataLoaded, isEmployeeDataLoading, employeeData, fetchEmployeeList, fetchManagerList, managerData, listEmployeeShowLoading, resetEmployeeData, loginUserData } = props;
     const { fetchOTFSearchedList, listOTFShowLoading, otfData, fetchDealerLocations, locationDataLoding, dealerLocations } = props;
@@ -147,7 +154,7 @@ export const AMCRegistrationMasterBase = (props) => {
 
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [amcStatus, setAmcStatus] = useState(QUERY_BUTTONS_CONSTANTS.PENDING.key);
-    const defaultPayload = { amcRegistration: {}, amcSchemeDetails: {}, amcCustomerDetails: {}, amcVehicleDetails: [{}], amcRequestDetails: {} };
+    const defaultPayload = { amcRegistration: {}, amcSchemeDetails: {}, amcCustomerDetails: {}, amcVehicleDetails: [], amcRequestDetails: {} };
     const [requestPayload, setRequestPayload] = useState(defaultPayload);
     const [invoiceStatusList, setInvoiceStatusList] = useState([]);
     const [showSpinnerLoading, setShowSpinnerLoading] = useState(false);
@@ -189,13 +196,11 @@ export const AMCRegistrationMasterBase = (props) => {
     const [reportButtonType, setReportButtonType] = useState();
     const [amcDocumentType, setAmcDocumentType] = useState();
 
-    const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
 
     const [isRejectModalVisible, setRejectModalVisible] = useState(false);
     const [isMNMApproval, setIsMNMApproval] = useState(false);
     const [isPendingForCancellation, setIsPendingForCancellation] = useState(selectedAMC?.status === AMC_CONSTANTS?.PENDING_FOR_CANCELLATION?.key);
-
     useEffect(() => {
         if (loginUserData?.userType) {
             if (loginUserData?.userType === AMC_CONSTANTS?.DEALER?.key) {
@@ -288,41 +293,46 @@ export const AMCRegistrationMasterBase = (props) => {
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: page?.current,
+                value: filterString?.current || 1,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: page?.pageSize,
+                value: filterString?.pageSize ?? 10,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'status',
                 title: 'Status',
-                value: amcStatus,
+                value: filterString?.amcStatus ?? amcStatus,
                 canRemove: false,
                 filter: false,
             },
             {
                 key: 'sortBy',
                 title: 'Sort By',
-                value: page?.sortBy,
+                value: filterString?.sortBy,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'sortIn',
                 title: 'Sort Type',
-                value: page?.sortType,
+                value: filterString?.sortType,
                 canRemove: true,
                 filter: false,
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchValue, amcStatus, filterString, page]);
+    }, [filterString]);
+
+    useEffect(() => {
+        setFilterString({ ...filterString, amcStatus: QUERY_BUTTONS_CONSTANTS.PENDING.key, pageSize: 10, current: 1 });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         if (userId) {
@@ -330,7 +340,7 @@ export const AMCRegistrationMasterBase = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, amcStatus, filterString, page]);
+    }, [userId, filterString]);
 
     useEffect(() => {
         const defaultSection = AMC_REGISTRATION_SECTION.AMC_REGISTRATION_DETAILS.id;
@@ -339,6 +349,7 @@ export const AMCRegistrationMasterBase = (props) => {
         setSection(defaultSection);
         if (userId) {
             fetchDealerParentsLovList({ setIsLoading: listDealerParentShowLoading, userId });
+            fetchLocationLovList({ setIsLoading: listLocationShowLoading, userId });
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -382,7 +393,7 @@ export const AMCRegistrationMasterBase = (props) => {
             },
             {
                 key: 'schemeType',
-                value: AMC_CONSTANTS?.SCHEME?.key,
+                value: requestPayload?.amcSchemeDetails?.amcType || schemeForm.getFieldValue('amcType'),
             },
         ];
 
@@ -408,7 +419,7 @@ export const AMCRegistrationMasterBase = (props) => {
             } else {
                 setButtonData({ ...buttonData, formBtnActive: true });
                 registrationForm.setFieldsValue({ vin: res?.data?.otfDetails[0]?.vin });
-                schemeList(res?.data?.otfDetails[0]?.vin);
+                schemeForm.getFieldValue('amcType') && schemeList(res?.data?.otfDetails[0]?.vin);
             }
         };
 
@@ -421,6 +432,10 @@ export const AMCRegistrationMasterBase = (props) => {
                 {
                     key: 'searchParam',
                     value: otfNumber,
+                },
+                {
+                    key: 'otfStatus',
+                    value: 'I',
                 },
                 {
                     key: 'pageNumber',
@@ -437,6 +452,7 @@ export const AMCRegistrationMasterBase = (props) => {
 
     const handleInvoiceTypeChange = (buttonName) => {
         setAmcStatus(buttonName?.key);
+        setFilterString({ amcStatus: buttonName?.key, current: 1, pageSize: 10 });
         searchForm.resetFields();
     };
 
@@ -446,7 +462,6 @@ export const AMCRegistrationMasterBase = (props) => {
 
     const handleSearch = (value) => {
         setFilterString({ ...filterString, searchParam: value });
-        setSearchValue(value);
     };
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
@@ -469,7 +484,6 @@ export const AMCRegistrationMasterBase = (props) => {
                 break;
             case EDIT_ACTION:
                 fetchDetail({ setIsLoading: listShowLoading, userId, extraParams: detailExtraParams, customURL, onErrorAction });
-
                 record && setSelectedAMC(record);
                 openDefaultSection && setCurrentSection(defaultSection);
                 break;
@@ -548,13 +562,15 @@ export const AMCRegistrationMasterBase = (props) => {
                 setIsPendingForCancellation(false);
             } else {
                 section && setCurrentSection(AMC_REGISTRATION_SECTION.THANK_YOU_PAGE.id);
-                setSelectedOrder({ message: res?.responseMessage.split(' ')[3] });
+                setSelectedOrder({ message: res?.responseMessage.split(' ')[3], data: res?.data });
                 registrationForm.resetFields();
                 schemeForm.resetFields();
                 customerForm.resetFields();
                 setSelectedAMC({ amcRegistrationNumber: res?.responseMessage.split(' ')[3], amcRegistrationDate: res?.data?.amcRegistration?.amcRegistrationDate, status: res?.data?.amcRegistration?.amcStatus });
                 setRequestPayload(defaultPayload);
             }
+            setAmcWholeCancellation(false);
+            setRejectRequest(false);
             cancelAMCForm.resetFields();
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         };
@@ -597,8 +613,10 @@ export const AMCRegistrationMasterBase = (props) => {
     const tableProps = {
         dynamicPagination,
         totalRecords,
-        setPage,
-        tableColumn: tableColumn({ handleButtonClick, userType }),
+        setPage: setFilterString,
+        page: filterString,
+        filterString,
+        tableColumn: tableColumn({ handleButtonClick, userType, locations }),
         tableData: data,
         showAddButton: false,
         typeData,
@@ -714,23 +732,28 @@ export const AMCRegistrationMasterBase = (props) => {
         setIsMNMApproval(false);
     };
     const handleCancelRequests = () => {
-        if (isMNMApproval) {
-            setRequestPayload({ ...requestPayload, amcRequestDetails: { ...requestPayload?.amcRequestDetails, amcStatus: QUERY_BUTTONS_CONSTANTS?.APPROVED?.key } });
-            onFinish({ type: AMC_CONSTANTS?.CANCEL_REQUEST?.key });
-        } else if (!isMNMApproval && userType === AMC_CONSTANTS?.MNM?.key) {
-            setRejectRequest(true);
-            setAmcWholeCancellation(true);
-            rejectRequest && onFinish({ type: AMC_CONSTANTS?.CANCEL_REQUEST?.key });
-        } else if (!isMNMApproval && userType === AMC_CONSTANTS?.MNM?.key && rejectRequest) {
-            onFinish({ type: AMC_CONSTANTS?.AMC_CANCELLATION?.key });
-        } else if (rejectRequest && amcWholeCancellation) {
-            onFinish({ type: AMC_CONSTANTS?.AMC_CANCELLATION?.key });
-        } else if (amcWholeCancellation) {
-            setRejectRequest(true);
-        } else {
-            setRequestPayload({ ...requestPayload, amcRequestDetails: { ...requestPayload?.amcRequestDetails, amcStatus: QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key } });
-            onFinish({ type: AMC_CONSTANTS?.CANCEL_REQUEST?.key });
-        }
+        cancelAMCForm
+            .validateFields()
+            .then(() => {
+                if (isMNMApproval) {
+                    setRequestPayload({ ...requestPayload, amcRequestDetails: { ...requestPayload?.amcRequestDetails, amcStatus: QUERY_BUTTONS_CONSTANTS?.APPROVED?.key } });
+                    onFinish({ type: AMC_CONSTANTS?.CANCEL_REQUEST?.key });
+                } else if (!isMNMApproval && userType === AMC_CONSTANTS?.MNM?.key) {
+                    setRejectRequest(true);
+                    setAmcWholeCancellation(true);
+                    rejectRequest && onFinish({ type: AMC_CONSTANTS?.CANCEL_REQUEST?.key });
+                } else if (!isMNMApproval && userType === AMC_CONSTANTS?.MNM?.key && rejectRequest) {
+                    onFinish({ type: AMC_CONSTANTS?.AMC_CANCELLATION?.key });
+                } else if (rejectRequest && amcWholeCancellation) {
+                    onFinish({ type: AMC_CONSTANTS?.AMC_CANCELLATION?.key });
+                } else if (amcWholeCancellation) {
+                    setRejectRequest(true);
+                } else {
+                    setRequestPayload({ ...requestPayload, amcRequestDetails: { ...requestPayload?.amcRequestDetails, amcStatus: QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key } });
+                    onFinish({ type: AMC_CONSTANTS?.CANCEL_REQUEST?.key });
+                }
+            })
+            .catch(() => {});
     };
     const handleWholeAMCCancellation = () => {
         setRejectModalVisible(true);
@@ -755,7 +778,7 @@ export const AMCRegistrationMasterBase = (props) => {
         AMConFinish: onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(moduleTitle),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,
@@ -823,6 +846,8 @@ export const AMCRegistrationMasterBase = (props) => {
         setIsPendingForCancellation,
         handlePrintDownload,
         schemeList,
+        fetchDetail,
+        listShowLoading,
     };
     const cancelModalProps = {
         isVisible: isRejectModalVisible,
@@ -851,7 +876,6 @@ export const AMCRegistrationMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [reportButtonType]);
-
     const reportDetail = amcDocumentType;
     const reportProps = {
         isVisible: isReportVisible,

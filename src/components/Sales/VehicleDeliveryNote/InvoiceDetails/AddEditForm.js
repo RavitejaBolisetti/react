@@ -3,35 +3,43 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 
 import { Col, Input, Form, Row, Card, DatePicker, Space, Select } from 'antd';
 
 import { disableFutureDate, disableFieldsOnFutureDate } from 'utils/disableDate';
 import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
-import { validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import styles from 'assets/sass/app.module.scss';
 import { customSelectBox } from 'utils/customSelectBox';
 import { translateContent } from 'utils/translateContent';
+import { REASON_FOR_DELAY } from '../constants';
 
 const { TextArea } = Input;
 const AddEditFormMain = (props) => {
-    const { formData, relationshipManagerData, typeData, form, soldByDealer, handleRelationShipManagerChange, setButtonData } = props;
+    const { formData, relationshipManagerData, typeData, form, soldByDealer, handleRelationShipManagerChange, setButtonData, IS_MNM = false } = props;
     const { vinData, getChallanDetails } = props;
+
+    const [reasonForDelayRules, setReasonForDelayRules] = useState({ rules: [], showField: false });
 
     useEffect(() => {
         if (formData && Object?.keys(formData)?.length > 0) {
-            if (formData?.invoiceDate && formData?.customerPromiseDate && soldByDealer) {
-                if (!disableFieldsOnFutureDate(dayjs(formData?.customerPromiseDate))) {
-                    setButtonData((prev) => ({ ...prev, formBtnActive: true }));
-                } else {
-                    setButtonData((prev) => ({ ...prev, formBtnActive: false }));
+            if (soldByDealer) {
+                handleReasonChange(formData?.reasonForDelay);
+                if (formData?.customerPromiseDate) {
+                    if (!disableFieldsOnFutureDate(dayjs(formData?.customerPromiseDate))) {
+                        setButtonData((prev) => ({ ...prev, formBtnActive: true }));
+                    } else {
+                        setButtonData((prev) => ({ ...prev, formBtnActive: false }));
+                    }
                 }
                 form.setFieldsValue({ ...formData, invoiceDate: formattedCalendarDate(formData?.invoiceDate), customerPromiseDate: formattedCalendarDate(formData?.customerPromiseDate) });
-            } else if (!soldByDealer) form.setFieldsValue({ ...formData });
+            } else {
+                form.setFieldsValue({ ...formData });
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
@@ -45,6 +53,17 @@ const AddEditFormMain = (props) => {
             getChallanDetails(value, ValueObj?.engineNumber);
         } else {
             setButtonData((prev) => ({ ...prev, formBtnActive: false }));
+        }
+    };
+    const handleReasonChange = (value) => {
+        if (!value) {
+            setReasonForDelayRules({ rules: [], showField: false });
+        } else {
+            if (value !== REASON_FOR_DELAY?.OTHER?.key) {
+                setReasonForDelayRules({ rules: [], showField: false });
+            } else {
+                setReasonForDelayRules({ rules: [validateRequiredInputField('vehicleDeliveryNote.invoiceDetails.label.reasonForDelayRemarks')], showField: true });
+            }
         }
     };
     return (
@@ -115,18 +134,20 @@ const AddEditFormMain = (props) => {
                                                     <DatePicker format={dateFormat} placeholder={preparePlaceholderSelect(translateContent('vehicleDeliveryNote.invoiceDetails.label.customerPromiseDate'))} disabled={true} />
                                                 </Form.Item>
                                             </Col>
-                                            {formData?.customerPromiseDate && disableFieldsOnFutureDate(dayjs(formData?.customerPromiseDate)) && (
+                                            {!IS_MNM && formData?.customerPromiseDate && disableFieldsOnFutureDate(dayjs(formData?.customerPromiseDate)) && (
                                                 <>
                                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                         <Form.Item initialValue={formData?.reasonForDelay} label={translateContent('vehicleDeliveryNote.invoiceDetails.label.reasonForDelay')} name="reasonForDelay" rules={[validateRequiredSelectField(translateContent('vehicleDeliveryNote.invoiceDetails.label.reasonForDelay'))]}>
-                                                            {customSelectBox({ data: typeData['DLVR_DLY_RSN'], placeholder: preparePlaceholderSelect(translateContent('vehicleDeliveryNote.invoiceDetails.label.reasonForDelay')) })}
+                                                            {customSelectBox({ data: typeData?.['DLVR_DLY_RSN'], placeholder: preparePlaceholderSelect(translateContent('vehicleDeliveryNote.invoiceDetails.label.reasonForDelay')), onChange: handleReasonChange })}
                                                         </Form.Item>
                                                     </Col>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                                        <Form.Item label={translateContent('vehicleDeliveryNote.invoiceDetails.label.reasonForDelayRemarks')} name="reasonForDelayRemarks" initialValue={formData?.reasonForDelayRemarks}>
-                                                            <TextArea showCount maxLength={300} placeholder={preparePlaceholderText(translateContent('vehicleDeliveryNote.invoiceDetails.label.reasonForDelayRemarks'))} />
-                                                        </Form.Item>
-                                                    </Col>
+                                                    {reasonForDelayRules?.showField && (
+                                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                                            <Form.Item rules={reasonForDelayRules?.rules} label={translateContent('vehicleDeliveryNote.invoiceDetails.label.reasonForDelayRemarks')} name="reasonForDelayRemarks" initialValue={formData?.reasonForDelayRemarks}>
+                                                                <TextArea showCount maxLength={300} placeholder={preparePlaceholderText(translateContent('vehicleDeliveryNote.invoiceDetails.label.reasonForDelayRemarks'))} />
+                                                            </Form.Item>
+                                                        </Col>
+                                                    )}
                                                 </>
                                             )}
                                         </>

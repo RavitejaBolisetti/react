@@ -114,7 +114,7 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <Form.Item {...toDateInitialValue} label={translateContent('termConditionManufacturer.label.effectiveTo')} name="effectiveto">
+                                    <Form.Item {...toDateInitialValue} label={translateContent('termConditionManufacturer.label.effectiveto')} name="effectiveto">
                                         <DatePicker format={dateFormat} disabled style={{ width: '100%' }} disabledDate={disableToDate} />
                                     </Form.Item>
                                 </Col>

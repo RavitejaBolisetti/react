@@ -66,7 +66,7 @@ export function GSTLoginForm(props) {
                         <div className={styles.centerInner}>
                             <div className={styles.loginForm}></div>
                             <div className={styles.loginHeading}>
-                                <h1>{translateContent('gstIRNAuthentication.text.login')}</h1>
+                                <h1>{translateContent('gstIRNAuthentication.text.Login')}</h1>
                                 <Divider />
                             </div>
                             <Row gutter={20}>

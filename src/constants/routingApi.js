@@ -101,7 +101,7 @@ export const BASE_URL_DEALER_PARENT = BASE_URL + 'dealer/parents';
 export const BASE_URL_DEALER_COMAPANY = BASE_URL + 'dealer/company';
 export const BASE_URL_DEALER_PARENT_GROUP_SEARCH = BASE_URL + 'dealer/search/parentgroups';
 export const BASE_URL_DEALER_PARENT_TITLE = BASE_URL + 'configurableparametertypes';
-export const BASE_URL_DEALER_COMPANY_LOV = BASE_URL + 'dealer/parents/lov';
+export const BASE_URL_DEALER_COMPANY_LOV = BASE_URL + 'dealer/parents';
 
 //get all applications
 export const BASE_URL_APPLICATIONS = BASE_URL + 'applications';
@@ -213,6 +213,9 @@ export const BASE_URL_VEHICLE_MAKE = BASE_URL_VEHICLE + 'make';
 export const BASE_URL_VEHICLE_MODEL = BASE_URL_VEHICLE + 'model';
 export const BASE_URL_VEHICLE_TRACKING = BASE_URL_VEHICLE + 'tracking';
 export const BASE_URL_VEHICLE_CHECKLIST = BASE_URL_VEHICLE + 'checklist';
+export const BASE_URL_VEHICLE_SALES_SCHEME_MASTER = BASE_URL_VEHICLE + 'schememaster/search';
+export const BASE_URL_VEHICLE_SALES_SCHEME_MASTER_DETAILS = BASE_URL_VEHICLE + 'schememaster';
+export const BASE_URL_VEHICLE_SALES_SCHEME_MASTER_UPLOAD = BASE_URL_VEHICLE + 'schememaster/upload';
 
 export const BASE_URL_ACCOUNT_HEAD = BASE_URL + 'finance/financialaccountheads';
 
@@ -341,6 +344,7 @@ export const BASE_URL_VEHICLE_CHALLAN_INSURANCE_DETAILS_DELIVERY_NOTE = BASE_URL
 export const BASE_URL_VEHICLE_CHALLAN_CANCEL_DELIVERY_NOTE = BASE_URL + 'otf/delivery/challan/cancel/info';
 export const BASE_URL_VEHICLE_INFO_CANCEL_DELIVERY_NOTE = BASE_URL + 'otf/deliverynote/cancellation/information';
 export const BASE_URL_VEHICLE_CHALLAN_CANCEL_NOTE = BASE_URL + 'otf/delivery/challan/cancel';
+export const BASE_URL_VEHICLE_CHANGE_MODEL_VARIANT = BASE_URL + 'otf/vehicle/modelchange';
 
 export const BASE_URL_RELATIONSHIP_MANAGER = BASE_URL_USER_MANAGEMENT_APPLICATIONS_DEALER + '/employees';
 export const BASE_URL_DELIVERY_NOTE_VEHICLE_DETAILS = BASE_URL_OTF_VEHICLE_DETAILS + '/search/registrationnumber';
@@ -377,6 +381,9 @@ export const BASE_URL_RSM_ASM_APPROVAL_DETAILS = BASE_URL_RSM_ASM_APPROVAL_SEARC
 export const BASE_URL_SHIELD_REGISTRATION = BASE_URL + 'vehicle/shieldschemes/registration';
 export const BASE_URL_SHIELD_REGISTRATION_SEARCH = BASE_URL_SHIELD_REGISTRATION + '/search';
 export const BASE_URL_SCHEME_DESCRIPTION_LOV = BASE_URL + 'vehicle/shieldschemes/lov';
+export const BASE_URL_SHIELD_SCHEME_CATEGORY_LOV = BASE_URL + 'vehicle/shieldschemes/category/lov';
+export const BASE_URL_RSA_SCHEME_CATEGORY_LOV = BASE_URL + 'vehicle/rsa/schemecategory/lov';
+export const BASE_URL_AMC_SCHEME_CATEGORY_LOV = BASE_URL + 'vehicle/amc/schemecategory/lov';
 export const BASE_URL_RSA_REGISTRATION = BASE_URL + 'vehicle/rsa';
 export const BASE_URL_RSA_REGISTRATION_SEARCH = BASE_URL_RSA_REGISTRATION + '/search';
 export const BASE_URL_GET_REGISTRATION_DETAILS = BASE_URL_RSA_REGISTRATION + '/registration/details';
@@ -384,3 +391,12 @@ export const BASE_URL_GET_REGISTRATION_DETAILS = BASE_URL_RSA_REGISTRATION + '/r
 export const BASE_URL_DASHBOARD_STOCKS_STATICS = BASE_URL + 'invoice/ibdnstockscount';
 export const BASE_URL_DASHBOARD_BILLING_STATICS = BASE_URL + 'geography/billingcount';
 export const BASE_URL_DASHBOARD_RETAIL_STATICS = BASE_URL + 'geography/retailcount';
+
+export const BASE_URL_ZONE_MASTER = BASE_URL + 'zone/lov';
+export const BASE_URL_AREA_OFFICE = BASE_URL + 'area/lov';
+export const BASE_URL_CO_DEALER_INVOICE = BASE_URL_OTF + 'codealerinvoice/search';
+export const BASE_URL_CO_DEALER_DETAILS = BASE_URL_OTF + 'codealerinvoice';
+export const BASE_URL_DEALER_LOCATIONS = BASE_URL + 'dealer/location';
+export const BASE_URL_SCHEME_RSA_DESCRIPTION = BASE_URL_VEHICLE + 'scheme/rsa/lov';
+export const BASE_URL_CO_DEALER_VIN_DETAILS = BASE_URL_VEHICLE_ALLOTMENT + '/search';
+export const BASE_URL_TAX_CALCULATION = BASE_URL_OTF + 'codealerinvoice/taxdetails';

@@ -33,6 +33,9 @@ import { productHierarchyDataActions } from 'store/actions/data/productHierarchy
 const mapStateToProps = (state) => {
     const {
         auth: { userId, accessToken, token },
+        common: {
+            Header: { data: loginUserData = [] },
+        },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             ProductHierarchy: { data: productHierarchyData = [] },
@@ -65,6 +68,7 @@ const mapStateToProps = (state) => {
         userId,
         accessToken,
         token,
+        userType: loginUserData?.userType,
         viewDocument,
         isViewDataLoaded,
         isSupportingDataLoaded,
@@ -130,7 +134,7 @@ export const VehiclePriceMasterBase = (props) => {
     const { accessToken, token, viewDocument, isViewDataLoaded, viewListShowLoading, resetViewData, fetchViewDocument } = props;
     const { isDataCountryLoaded, isCountryLoading, countryData, findDistrictCode, defaultCountry, isDistrictDataLoaded, districtData, typeData, fetchVehiclePriceList, listVehiclePriceShowLoading } = props;
     const { isStateDataLoaded, stateData, moduleTitle, vehiclePriceData, totalRecords, isCityDataLoaded, cityData, isProductHierarchyDataLoaded, productHierarchyList, isProductHierarchyLoading, isTehsilDataLoaded, tehsilData, productHierarchyDataList, fetchModelList } = props;
-    const { resetData, isSupportingDataLoaded, isSupportingDataLoading, supportingData, downloadFile, listShowLoading } = props;
+    const { resetData, isSupportingDataLoaded, isSupportingDataLoading, supportingData, downloadFile, listShowLoading, userType } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
@@ -161,6 +165,12 @@ export const VehiclePriceMasterBase = (props) => {
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
+
+    const onRemove = () => {
+        setFileList([]);
+        setUploadedFile();
+        setSingleDisabled(false);
+    };
 
     const onSuccessAction = (res) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -569,6 +579,7 @@ export const VehiclePriceMasterBase = (props) => {
         handleOnClick,
         resetAdvanceFilter,
         setResetAdvanceFilter,
+        userType,
     };
 
     const uploadProps = {
@@ -620,6 +631,7 @@ export const VehiclePriceMasterBase = (props) => {
         single: true,
         singleDisabled,
         setSingleDisabled,
+        onRemove,
     };
 
     const buttonProps = {
@@ -630,7 +642,7 @@ export const VehiclePriceMasterBase = (props) => {
         handleButtonClick,
     };
     const viewProps = {
-        titleOverride: translateContent('global.drawerTitle.view').concat(moduleTitle),
+        titleOverride: translateContent('global.drawerTitle.view').concat(" ").concat(moduleTitle),
         isVisible: isFormVisible,
         onCloseAction,
         formData,

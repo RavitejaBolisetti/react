@@ -3,25 +3,26 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
-import { Row, Col, Input, Form, Collapse, Divider, Select, DatePicker, AutoComplete } from 'antd';
+import React, { useEffect } from 'react';
+import { Row, Col, Input, Form, Collapse, Divider, Select, DatePicker } from 'antd';
 import { expandActionIcon } from 'utils/accordianExpandIcon';
 import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
+import { customSelectBox } from 'utils/customSelectBox';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { SALE_TYPE } from '../utils/saleTypeConstant';
 
-import { validateRequiredSelectField, validateOnlyPositiveNumber, validateLettersWithWhitespaces } from 'utils/validation';
+import { validateRequiredSelectField, validateOnlyPositiveNumber } from 'utils/validation';
+import { translateContent } from 'utils/translateContent';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 const { Panel } = Collapse;
 const { Search } = Input;
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { formData, saleTypes, vinNumber, bookingNumber, schemeDetail, options, shieldDetailForm, handleOtfSearch, handleVinSearch, handleEmployeeSearch, handleOtfChange, saleType, handleSaleTypeChange, formActionType, isSchemeLoading, isEmployeeDataLoading, handleOnSelect, handleOnClear, screenType } = props;
+    const { formData, saleTypes, vinNumber, bookingNumber, schemeDetail, employeeData, managerData, shieldDetailForm, handleOtfSearch, handleVinSearch, handleEmployeeSearch, handleOtfChange, saleType, handleSaleTypeChange, formActionType, isSchemeLoading, isEmployeeDataLoading, handleOnSelect, handleOnClear, typeData, screenType, handleTaxChange } = props;
     const { activeKey, setActiveKey } = props;
-    // const [activeKey, setActiveKey] = useState([]);
-    const [selectedScheme, setSelectedScheme] = useState([]);
 
     useEffect(() => {
         shieldDetailForm.setFieldsValue({ registrationInformation: { vin: vinNumber, otf: bookingNumber } });
@@ -40,7 +41,6 @@ const AddEditFormMain = (props) => {
 
     const handleSchemeDescription = (key) => {
         const selectedScheme = schemeDetail?.find((i) => i.schemeDescription === key);
-        setSelectedScheme(selectedScheme);
         if (selectedScheme) {
             shieldDetailForm.setFieldsValue({
                 schemeDetails: {
@@ -60,66 +60,69 @@ const AddEditFormMain = (props) => {
         <Row gutter={20}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                 <Collapse collapsible="icon" expandIcon={({ isActive }) => expandActionIcon(isActive, formActionType)} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
-                    <Panel header="Registration Information" key="1">
+                    <Panel header={translateContent('shieldSchemeRegistration.heading.registrationInformation')} key="1">
                         <Divider />
-                        {/* <Form layout="vertical" autoComplete="off" form={registrationForm} onFieldsChange={handleFormValueChange}> */}
                         <Row gutter={20}>
-                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item initialValue={formData?.saleType} label="Sale Type" name={['registrationInformation', 'saleType']} rules={[validateRequiredSelectField('Sale Type')]}>
-                                    <Select {...selectProps} onChange={handleSaleTypeChange} placeholder={preparePlaceholderSelect('Sale Type')} disabled={!formActionType?.addMode}>
-                                        {saleTypes?.map((item) => (
-                                            <Option key={'dv' + item.key} value={item.key}>
-                                                {item.value}
-                                            </Option>
-                                        ))}
-                                    </Select>
-                                </Form.Item>
-                            </Col>
-                            {saleType === SALE_TYPE?.PAID?.key && screenType !== 'RSA' && (
+                            <>
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                    <Form.Item initialValue={formData?.priceType} label={translateContent('amcRegistration.label.priceType')} name={['registrationInformation', 'priceType']} rules={[validateRequiredSelectField(translateContent('amcRegistration.label.priceType'))]}>
+                                        {customSelectBox({ data: typeData?.[PARAM_MASTER.DLVR_SALE_TYP.id], placeholder: preparePlaceholderSelect(translateContent('amcRegistration.label.priceType')), onChange: handleSaleTypeChange })}
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                    <Form.Item initialValue={formData?.saleType} label={translateContent('amcRegistration.label.saleType')} name={['registrationInformation', 'saleType']} rules={[validateRequiredSelectField(translateContent('amcRegistration.label.saleType'))]}>
+                                        {customSelectBox({ data: typeData['SALE_TYP'], placeholder: preparePlaceholderSelect(translateContent('amcRegistration.label.saleType')), onChange: handleTaxChange })}
+                                    </Form.Item>
+                                </Col>
+                            </>
+
+                            {saleType === SALE_TYPE?.PAID?.key && (
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item initialValue={formData?.availableFund} label="Available Funds" name={['registrationInformation', 'availableFund']}>
-                                        <Input placeholder={preparePlaceholderText('Available Funds')} disabled={true} />
+                                    <Form.Item initialValue={formData?.availableFund} label={translateContent('shieldSchemeRegistration.label.availableFunds')} name={['registrationInformation', 'availableFund']}>
+                                        <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.availableFunds'))} disabled={true} />
                                     </Form.Item>
                                 </Col>
                             )}
                             {saleType !== SALE_TYPE?.PAID?.key && (
                                 <>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={formData?.otf} label="Booking No." name={['registrationInformation', 'otf']}>
-                                            <Search allowClear onChange={handleOtfChange} onSearch={handleOtfSearch} loading={isSchemeLoading} placeholder={preparePlaceholderText('OTF')} disabled={!formActionType?.addMode} />
+                                        <Form.Item initialValue={formData?.otf} label={translateContent('shieldSchemeRegistration.label.bookingNo')} name={['registrationInformation', 'otf']}>
+                                            <Search allowClear onChange={handleOtfChange} onSearch={handleOtfSearch} loading={isSchemeLoading} placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.bookingNo'))} disabled={!formActionType?.addMode} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={formData?.vin} label="VIN" name={['registrationInformation', 'vin']}>
-                                            <Input placeholder={preparePlaceholderText('Vin')} disabled={true} />
+                                        <Form.Item initialValue={formData?.vin} label={translateContent('shieldSchemeRegistration.label.vin')} name={['registrationInformation', 'vin']}>
+                                            <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.vin'))} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                 </>
                             )}
                             {saleType === SALE_TYPE?.PAID?.key && (
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item initialValue={formData?.vin} label="VIN" name={['registrationInformation', 'vin']}>
-                                        <Search allowClear onSearch={handleVinSearch} loading={isSchemeLoading} placeholder={preparePlaceholderText('VIN')} disabled={!formActionType?.addMode} />
+                                    <Form.Item initialValue={formData?.vin} label={translateContent('shieldSchemeRegistration.label.vin')} name={['registrationInformation', 'vin']}>
+                                        <Search allowClear onSearch={handleVinSearch} loading={isSchemeLoading} placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.vin'))} disabled={!formActionType?.addMode} />
                                     </Form.Item>
                                 </Col>
                             )}
                         </Row>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item initialValue={formData?.odometerReading} label="Odometer Reading" name={['registrationInformation', 'odometerReading']} rules={[validateRequiredSelectField('Odometer Reading'), validateOnlyPositiveNumber('Odometer Reading')]}>
-                                    <Input placeholder={preparePlaceholderText('Odometer Reading')} />
+                                <Form.Item initialValue={formData?.odometerReading} label={translateContent('shieldSchemeRegistration.label.odometerReading')} name={['registrationInformation', 'odometerReading']} rules={[validateRequiredSelectField(translateContent('shieldSchemeRegistration.label.odometerReading')), validateOnlyPositiveNumber(translateContent('shieldSchemeRegistration.label.odometerReading'))]}>
+                                    <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.odometerReading'))} />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item initialValue={formData?.employeeName} label="Employee Name" name={['registrationInformation', 'employeeName']} rules={[validateLettersWithWhitespaces('Employee Name')]}>
-                                    <AutoComplete maxLength={50} options={options} onSelect={handleOnSelect} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
+                                <Form.Item initialValue={formData?.employeeName} label={translateContent('shieldSchemeRegistration.label.employeeName')} name={['registrationInformation', 'employeeName']} rules={[validateRequiredSelectField(translateContent('shieldSchemeRegistration.label.employeeName'))]}>
+                                    {/* <AutoComplete maxLength={50} options={options} onSelect={handleOnSelect} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
                                         <Search onSearch={handleEmployeeSearch} onChange={handleOnClear} placeholder={preparePlaceholderText('Employee Name')} loading={isEmployeeDataLoading} type="text" allowClear />
-                                    </AutoComplete>
+                                    </AutoComplete> */}
+                                    {customSelectBox({ data: employeeData, placeholder: preparePlaceholderSelect(translateContent('shieldSchemeRegistration.label.employeeName')) })}
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item initialValue={formData?.managerName} label="Manager Name" name={['registrationInformation', 'managerName']}>
-                                    <Input placeholder={preparePlaceholderText('Manager Name')} disabled={true} />
+                                <Form.Item initialValue={formData?.managerName} label={translateContent('shieldSchemeRegistration.label.managerName')} name={['registrationInformation', 'managerName']}>
+                                    {/* <Input placeholder={preparePlaceholderText('Manager Name')} disabled={true} /> */}
+                                    {customSelectBox({ data: managerData, placeholder: preparePlaceholderSelect(translateContent('shieldSchemeRegistration.label.managerName')) })}
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -127,13 +130,13 @@ const AddEditFormMain = (props) => {
                     </Panel>
                 </Collapse>
                 <Collapse collapsible="icon" expandIcon={({ isActive }) => expandActionIcon(isActive, formActionType)} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
-                    <Panel header="Scheme Details" key="2">
+                    <Panel header={translateContent('shieldSchemeRegistration.heading.schemeDetails')} key="2">
                         <Divider />
                         {/* <Form layout="vertical" autoComplete="off" form={schemeForm} onFieldsChange={handleFormValueChange}> */}
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item initialValue={formData?.schemeDescription} label="Scheme Description" name={['schemeDetails', 'schemeDescription']} rules={[validateRequiredSelectField('Scheme Description')]}>
-                                    <Select {...selectProps} onChange={handleSchemeDescription} placeholder={preparePlaceholderSelect('Scheme Description')} disabled={!formActionType?.addMode}>
+                                <Form.Item initialValue={formData?.schemeDescription} label={translateContent('shieldSchemeRegistration.label.schemeDescription')} name={['schemeDetails', 'schemeDescription']} rules={[validateRequiredSelectField(translateContent('shieldSchemeRegistration.label.schemeDescription'))]}>
+                                    <Select {...selectProps} onChange={handleSchemeDescription} placeholder={preparePlaceholderSelect(translateContent('shieldSchemeRegistration.label.schemeDescription'))} disabled={!formActionType?.addMode}>
                                         {schemeDetail?.map((item) => (
                                             <Option key={'dv' + item.schemeDescription} value={item.schemeDescription}>
                                                 {item.schemeDescription}
@@ -143,37 +146,37 @@ const AddEditFormMain = (props) => {
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item initialValue={formData?.schemeCode} label="Scheme Code" name={['schemeDetails', 'schemeCode']}>
-                                    <Input placeholder={preparePlaceholderText('Scheme Code')} disabled={true} />
+                                <Form.Item initialValue={formData?.schemeCode} label={translateContent('shieldSchemeRegistration.label.schemeCode')} name={['schemeDetails', 'schemeCode']}>
+                                    <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.schemeCode'))} disabled={true} />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item initialValue={formData?.schemeAmount} label="Scheme Basic Amount" name={['schemeDetails', 'schemeAmount']}>
-                                    <Input placeholder={preparePlaceholderText('Scheme Basic Amount')} disabled={true} />
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item initialValue={formData?.schemeDiscount} label="Scheme Discount" name={['schemeDetails', 'schemeDiscount']} rules={[validateOnlyPositiveNumber('Scheme Discount')]}>
-                                    <Input placeholder={preparePlaceholderText('Scheme Discount')} />
-                                </Form.Item>
-                            </Col>
-                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item initialValue={formData?.schemeTaxAmount} label="Scheme Tax Amount" name={['schemeDetails', 'schemeTaxAmount']}>
-                                    <Input placeholder={preparePlaceholderText('Scheme Tax Amount')} disabled={true} />
-                                </Form.Item>
-                            </Col>
-                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item initialValue={formData?.schemeStartDate} label="Scheme Start Date" name={['schemeDetails', 'schemeStartDate']}>
-                                    <DatePicker format={dateFormat} placeholder={preparePlaceholderText('Scheme Start Date')} disabled={true} style={{ display: 'auto', width: '100%' }} />
+                                <Form.Item initialValue={formData?.schemeAmount} label={translateContent('shieldSchemeRegistration.label.schemeBasicAmount')} name={['schemeDetails', 'schemeAmount']}>
+                                    <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.schemeBasicAmount'))} disabled={true} />
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item initialValue={formData?.schemeEndDate} label="Scheme End Date" name={['schemeDetails', 'schemeEndDate']}>
-                                    <DatePicker format={dateFormat} placeholder={preparePlaceholderText('Scheme End Date')} disabled={true} style={{ display: 'auto', width: '100%' }} />
+                                <Form.Item initialValue={formData?.schemeDiscount} label={translateContent('shieldSchemeRegistration.label.schemeDiscount')} name={['schemeDetails', 'schemeDiscount']} rules={[validateOnlyPositiveNumber(translateContent('shieldSchemeRegistration.label.schemeDiscount'))]}>
+                                    <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.schemeDiscount'))} onChange={screenType === 'RSA' ? handleTaxChange : () => {}} />
+                                </Form.Item>
+                            </Col>
+                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                <Form.Item initialValue={formData?.schemeTaxAmount} label={translateContent('shieldSchemeRegistration.label.schemeTaxAmount')} name={['schemeDetails', 'schemeTaxAmount']}>
+                                    <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.schemeTaxAmount'))} disabled={true} />
+                                </Form.Item>
+                            </Col>
+                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                <Form.Item initialValue={formData?.schemeStartDate} label={translateContent('shieldSchemeRegistration.label.schemeStartDate')} name={['schemeDetails', 'schemeStartDate']}>
+                                    <DatePicker format={dateFormat} placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.schemeStartDate'))} disabled={true} style={{ display: 'auto', width: '100%' }} />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                <Form.Item initialValue={formData?.schemeEndDate} label={translateContent('shieldSchemeRegistration.label.schemeEndDate')} name={['schemeDetails', 'schemeEndDate']}>
+                                    <DatePicker format={dateFormat} placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.schemeEndDate'))} disabled={true} style={{ display: 'auto', width: '100%' }} />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>

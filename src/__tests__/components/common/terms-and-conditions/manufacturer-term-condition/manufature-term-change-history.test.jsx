@@ -8,7 +8,7 @@ afterEach(() => {
 });
 
 describe('Manufacturer term Change History components', () => {
-    const ChangeHistoryTermsConditionsData = [{ id: '1', name: 'kai' }];
+    const ChangeHistoryTermsConditionsData = [{ id: '1', name: 'kai', termsconditiondescription: 'Sample' }];
     it('Should render Change History components', () => {
         customRender(<ChangeHistory isVisible={true} ChangeHistoryTermsConditionsData={ChangeHistoryTermsConditionsData} onCloseAction={jest.fn()} showChangeHistoryList={true} />);
     });

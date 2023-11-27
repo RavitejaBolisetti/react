@@ -7,9 +7,10 @@ import React from 'react';
 import { ListPinCodeMaster } from 'components/common/Geo';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
+import { translateContent } from 'utils/translateContent';
 
 export const PincodeGeoBase = (props) => {
-    const pageTitle = 'PIN Master';
+    const pageTitle = translateContent('pincode.heading.pinMaster');
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

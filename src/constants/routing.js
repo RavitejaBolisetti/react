@@ -112,7 +112,7 @@ export const ROUTING_FINANCIAL_ACCOUNTING_TAX_CHARGES = ROUTING_FINANCIAL_ACCOUN
 export const ROUTING_FINANCIAL_ACCOUNTING_TAX_CHARGES_CATEGORY = ROUTING_FINANCIAL_ACCOUNTING.concat('tax-charges-category');
 export const ROUTING_CREDIT_DEBIT_NOTE = ROUTING_FINANCIAL_ACCOUNTING.concat('credit-debit-note');
 export const ROUTING_FINANCIAL_ACCOUNTING_ACCOUNT_CATEGORY = ROUTING_FINANCIAL_ACCOUNTING.concat('account-category');
-export const ROUTING_DOCUMENT_TYPE = ROUTING_FINANCIAL_ACCOUNTING.concat('docment-type-other-charges-ledger-mapping');
+export const ROUTING_DOCUMENT_TYPE = ROUTING_FINANCIAL_ACCOUNTING.concat('document-type-other-charges-ledger-mapping');
 export const ROUTING_FINANCIAL_ACCOUNTING_CHART_OF_ACCOUNT = ROUTING_FINANCIAL_ACCOUNTING.concat('chart-of-account');
 
 export const ROUTING_REPORT_OTF_REPORTS = ROUTING_REPORT.concat('booking-reports');
@@ -131,7 +131,7 @@ export const ROUTING_DIGITAL_SIGNATURE_MAPPING = ROUTING_SALES.concat('digital-s
 export const ROUTING_HO_PRICE_MAPPING = ROUTING_SALES.concat('ho-price-mapping');
 export const STOCK_TRANSFER_INDENT = ROUTING_SALES.concat('stock-transfer-indent');
 export const ROUTING_SO_MAPPING_UNMAPPING = ROUTING_SALES.concat('booking-so-mapping');
-
+export const ROUTING_VEHICLE_SALES_SCHEME_MASTER = ROUTING_SALES.concat('vehicle-sales-scheme-master');
 export const ROUTING_RSM_ASM_APPROVAL = ROUTING_SALES.concat('rsm-asm-approval');
 export const ROUTING_EVR_DETAILS_CAPTURING = ROUTING_SALES.concat('evr-details-capturing');
 
@@ -142,3 +142,4 @@ export const ROUTING_VIN_BLOCK_MASTER = ROUTING_SALES.concat('vin-block-master')
 export const ROUTING_GST_IRN_TRANSACTION = ROUTING_FINANCIAL_ACCOUNTING.concat('gst-irn-transaction');
 export const ROUTING_RSA_REGISTRATION = ROUTING_SALES.concat('rsa-registration');
 export const ROUTING_DEALER_CORPORATE_CLAIM = ROUTING_SALES.concat('dealer-corporate-claim');
+export const CO_DEALER_INVOICE = ROUTING_SALES.concat('co-dealer-invoice');

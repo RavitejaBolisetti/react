@@ -14,7 +14,7 @@ import { translateContent } from 'utils/translateContent';
 const { Title, Text } = Typography;
 
 export const ThankYouMaster = (props) => {
-    const { FormActionButton, otfData, onPrintInvoice, defaultBtnVisiblity, setButtonData } = props;
+    const { FormActionButton, otfData, onPrintInvoice, defaultBtnVisiblity, setButtonData, section } = props;
 
     const myProps = {
         ...props,
@@ -34,7 +34,7 @@ export const ThankYouMaster = (props) => {
                     <Space direction="vertical">
                         <Avatar size={180} icon={<HiCheck />} />
                         <Title level={5} style={{ margin: '18px 0', fontSize: '32px' }}>
-                            <h2>{translateContent(`global.heading.sectionHeading.thankYou`)}</h2>
+                            <h2>{translateContent('vehicleInvoiceGeneration.heading.thankYouMessage')}</h2>
                         </Title>
                     </Space>
                 </Col>
@@ -45,12 +45,12 @@ export const ThankYouMaster = (props) => {
                             <Col className={styles.fullyCentered} style={{ flexDirection: 'column', height: '222px' }}>
                                 <Space align="center" justify="center">
                                     <Space style={{ backgroundColor: '#F2F2F2', padding: '10px 16px', color: '#858585', borderRadius: '4px' }}>
-                                        Invoice No.:<span style={{ color: '#0B0B0C' }}>{otfData?.invoiceNumber}</span>
+                                        {translateContent('vehicleInvoiceGeneration.heading.profileCard.invoiceNumber')} <span style={{ color: '#0B0B0C' }}>{otfData?.invoiceNumber}</span>
                                     </Space>
-                                    <CopytoClipboard type={'primary'} buttonText={'Copy'} text={otfData?.invoiceNumber} />
+                                    <CopytoClipboard type={'primary'} text={otfData?.invoiceNumber} />
                                 </Space>
                                 <Divider style={{ margin: '18px 0' }} />
-                                <Text style={{ color: '#858585', fontWeight: '500' }}>Do you want to Print or download this invoice </Text>
+                                <Text style={{ color: '#858585', fontWeight: '500' }}>{translateContent('vehicleInvoiceGeneration.heading.thankYouPrintInvoce')}</Text>
                                 <Button
                                     danger
                                     style={{ margin: '18px 0' }}
@@ -60,9 +60,9 @@ export const ThankYouMaster = (props) => {
                                             <path d="M7.64062 1.75V5.425H11.3156" stroke="#FF3E5B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                         </svg>
                                     }
-                                    onClick={() => onPrintInvoice()}
+                                    onClick={onPrintInvoice}
                                 >
-                                    Download/Print Invoice
+                                    {translateContent('global.buttons.download') + '/' + translateContent('global.buttons.printInvoice')}
                                 </Button>
                             </Col>
                         </Card>
@@ -78,7 +78,7 @@ export const ThankYouMaster = (props) => {
                                         <Row style={{ margin: '0 16px' }} justify="space-between" align="middle">
                                             <Text style={{ color: '#545454', fontWeight: '400' }}>{name?.title}</Text>
                                             <Popover content={'Coming Soon'}>
-                                                <Button type="secondary">Register Now</Button>
+                                                <Button type="secondary">{translateContent('global.buttons.registerNow')}</Button>
                                             </Popover>
                                         </Row>
                                         <Divider style={{ margin: '0' }} />

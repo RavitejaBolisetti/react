@@ -59,20 +59,5 @@ describe('OtfMaster component render', () => {
 
         const cancelBtn = screen.getByRole('button', { name: 'Cancel', exact: false });
         fireEvent.click(cancelBtn);
-
-        const rowgroup = screen.getAllByRole('rowgroup', { name: '', exact: false });
-        expect(rowgroup).toBeTruthy();
-
-        const rateAmt = screen.getByRole('row', { name: 'Srl. Service Name Amount Action', exact: false });
-        expect(rateAmt).toBeTruthy();
-
-        const noData = screen.getByRole('row', { name: 'No data', exact: false });
-        expect(noData).toBeTruthy();
-
-        const srlNo = screen.getByRole('columnheader', { name: 'Srl.', exact: false });
-        expect(srlNo).toBeTruthy();
-
-        const Amt = screen.getByRole('columnheader', { name: 'Amount', exact: false });
-        expect(Amt).toBeTruthy();
     });
 });

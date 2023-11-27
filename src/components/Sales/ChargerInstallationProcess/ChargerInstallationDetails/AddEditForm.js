@@ -14,10 +14,10 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField } from 'utils/validation';
 import { PlusOutlined } from '@ant-design/icons';
 import { AddRequestModal } from './AddRequestModal';
-import { FilterIcon } from 'Icons';
 import { addRequestColumns } from './tableColumn';
 import { getCodeValue } from 'utils/getCodeValue';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { translateContent } from 'utils/translateContent';
 
 const { Search } = Input;
 const { Panel } = Collapse;
@@ -63,8 +63,7 @@ const AddEditFormMain = (props) => {
     const addRequestProps = {
         ...props,
         isVisible: addRequestVisible,
-        icon: <FilterIcon size={20} />,
-        titleOverride: 'Add Request',
+        titleOverride: translateContent('chargerInstallationDetails.label.addRequest'),
         onCloseAction: onAdvanceSearchCloseAction,
         onAdvanceSearchCloseAction,
         addRequestForm,
@@ -88,14 +87,14 @@ const AddEditFormMain = (props) => {
                                 <Card style={{ backgroundColor: '#F2F2F2' }}>
                                     <Row gutter={18}>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item initialValue={formData?.bookingNumber || formData?.otfNumber} label="Booking Number" name="otfNumber" rules={[validateRequiredInputField('Booking Number')]}>
-                                                <Search maxLength={50} placeholder={preparePlaceholderText('Booking Number')} onSearch={(value) => handleBookingNumberSearch(value)} allowClear onChange={handleBookingChange} />
+                                            <Form.Item initialValue={formData?.bookingNumber || formData?.otfNumber} label={translateContent('chargerInstallationDetails.label.bookingNumber')} name="otfNumber" rules={[validateRequiredInputField(translateContent('chargerInstallationDetails.validation.bookingNumber'))]}>
+                                                <Search maxLength={50} placeholder={preparePlaceholderText(translateContent('chargerInstallationDetails.placeholder.bookingNumber'))} onSearch={(value) => handleBookingNumberSearch(value)} allowClear onChange={handleBookingChange} />
                                             </Form.Item>
                                         </Col>
                                         {chargerDetails && (
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item initialValue={getCodeValue(typeData['ORDR_STATS'], crmCustomerVehicleData?.otfDetails?.orderStatus)} label="Booking Status" name="bookingStatus">
-                                                    <Input placeholder={preparePlaceholderText('Booking Status')} disabled={true} />
+                                                <Form.Item initialValue={getCodeValue(typeData['ORDR_STATS'], crmCustomerVehicleData?.otfDetails?.orderStatus)} label={translateContent('chargerInstallationDetails.label.bookingStatus')} name="bookingStatus">
+                                                    <Input placeholder={preparePlaceholderText(translateContent('chargerInstallationDetails.placeholder.bookingStatus'))} disabled={true} />
                                                 </Form.Item>
                                             </Col>
                                         )}
@@ -105,11 +104,11 @@ const AddEditFormMain = (props) => {
                                         <>
                                             <Divider />
                                             <Descriptions {...viewProps}>
-                                                <Descriptions.Item label="Model Group">{checkAndSetDefaultValue(crmCustomerVehicleData?.vehicleDetails?.modelGroup, isLoading)}</Descriptions.Item>
-                                                <Descriptions.Item label="Model Variant">{checkAndSetDefaultValue(crmCustomerVehicleData?.vehicleDetails?.modelVariant, isLoading)}</Descriptions.Item>
-                                                <Descriptions.Item label="Seating Capacity">{checkAndSetDefaultValue(crmCustomerVehicleData?.vehicleDetails?.seatingCapacity, isLoading)}</Descriptions.Item>
-                                                <Descriptions.Item label="Color">{checkAndSetDefaultValue(crmCustomerVehicleData?.vehicleDetails?.color, isLoading)}</Descriptions.Item>
-                                                <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(crmCustomerVehicleData?.vehicleDetails?.modelCode, isLoading)}</Descriptions.Item>
+                                                <Descriptions.Item label={translateContent('chargerInstallationDetails.label.modelGroup')}>{checkAndSetDefaultValue(crmCustomerVehicleData?.vehicleDetails?.modelGroup, isLoading)}</Descriptions.Item>
+                                                <Descriptions.Item label={translateContent('chargerInstallationDetails.label.modelVariant')}>{checkAndSetDefaultValue(crmCustomerVehicleData?.vehicleDetails?.modelVariant, isLoading)}</Descriptions.Item>
+                                                <Descriptions.Item label={translateContent('chargerInstallationDetails.label.seatingCapacity')}>{checkAndSetDefaultValue(crmCustomerVehicleData?.vehicleDetails?.seatingCapacity, isLoading)}</Descriptions.Item>
+                                                <Descriptions.Item label={translateContent('chargerInstallationDetails.label.color')}>{checkAndSetDefaultValue(crmCustomerVehicleData?.vehicleDetails?.color, isLoading)}</Descriptions.Item>
+                                                <Descriptions.Item label={translateContent('chargerInstallationDetails.label.modelCode')}>{checkAndSetDefaultValue(crmCustomerVehicleData?.vehicleDetails?.modelCode, isLoading)}</Descriptions.Item>
                                             </Descriptions>
                                         </>
                                     )}
@@ -118,14 +117,14 @@ const AddEditFormMain = (props) => {
                             {formActionType?.editMode && (
                                 <Card style={{ backgroundColor: '#F2F2F2' }}>
                                     <Descriptions {...viewProps}>
-                                        <Descriptions.Item label="Request Id">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.requestId, isLoading)}</Descriptions.Item>
-                                        <Descriptions.Item label="Request Date">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.requestDate, isLoading)}</Descriptions.Item>
-                                        <Descriptions.Item label="Request Status">{checkAndSetDefaultValue(getCodeValue(typeData?.[PARAM_MASTER.CHRGR_INST_HDR_STAT.id], chargerInstallationMasterData?.chargerInstDetails?.requestStatus), isLoading)}</Descriptions.Item>
-                                        <Descriptions.Item label="Model Group">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelGroup, isLoading)}</Descriptions.Item>
-                                        <Descriptions.Item label="Model Variant">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelVarient, isLoading)}</Descriptions.Item>
-                                        <Descriptions.Item label="Seating Capacity">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.seatingCapacity, isLoading)}</Descriptions.Item>
-                                        <Descriptions.Item label="Color">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.color, isLoading)}</Descriptions.Item>
-                                        <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelCode, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label={translateContent('chargerInstallationDetails.label.requestId')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.requestId, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label={translateContent('chargerInstallationDetails.label.requestDate')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.requestDate, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label={translateContent('chargerInstallationDetails.label.requestStatus')}>{checkAndSetDefaultValue(getCodeValue(typeData?.[PARAM_MASTER.CHRGR_INST_HDR_STAT.id], chargerInstallationMasterData?.chargerInstDetails?.requestStatus), isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label={translateContent('chargerInstallationDetails.label.modelGroup')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelGroup, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label={translateContent('chargerInstallationDetails.label.modelVariant')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelVarient, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label={translateContent('chargerInstallationDetails.label.seatingCapacity')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.seatingCapacity, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label={translateContent('chargerInstallationDetails.label.color')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.color, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label={translateContent('chargerInstallationDetails.label.modelCode')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelCode, isLoading)}</Descriptions.Item>
                                     </Descriptions>
                                 </Card>
                             )}
@@ -136,11 +135,11 @@ const AddEditFormMain = (props) => {
                                         header={
                                             <Row type="flex" justify="space-between" align="middle" size="large">
                                                 <Row type="flex" justify="space-around" align="middle">
-                                                    <Typography>Add Request</Typography>
+                                                    <Typography>{translateContent('chargerInstallationDetails.label.addRequest')}</Typography>
 
                                                     {!formActionType?.viewMode && (
                                                         <Button className={styles.marL10} type="primary" disabled={disabled} onClick={handleAddRequestChange} icon={<PlusOutlined />}>
-                                                            Add
+                                                            {translateContent('global.buttons.add')}
                                                         </Button>
                                                     )}
                                                 </Row>

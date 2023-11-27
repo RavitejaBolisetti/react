@@ -7,9 +7,9 @@ import React from 'react';
 import { Col, Input, Form, Row, Button, Switch } from 'antd';
 import TreeSelectField from '../../common/TreeSelectField';
 import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
-import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { COA_ACCOUNT_TYPE } from 'constants/modules/ChartOfAccount/coaAccountType';
-
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { withDrawer } from 'components/withDrawer';
 import { customSelectBox } from 'utils/customSelectBox';
 import { translateContent } from 'utils/translateContent';
@@ -18,7 +18,7 @@ import styles from 'assets/sass/app.module.scss';
 
 const AddEditFormMain = (props) => {
     const { onCloseAction, chartOfAccountHierarchy, selectedTreeSelectKey, setSelectedTreeSelectKey, disableCheckBox } = props;
-    const { isFormBtnActive, setFormBtnActive, onFinish, form, disable, accountTyp, setAccountTyp } = props;
+    const { isFormBtnActive, setFormBtnActive, onFinish, form, disable, accountTyp, setAccountTyp, formActionType } = props;
     const treeFieldNames = { label: 'accountDescription', value: 'accountCode', children: 'subGroup' };
 
     const handleFormValueChange = () => {
@@ -48,7 +48,7 @@ const AddEditFormMain = (props) => {
     const treeSelectFieldProps = {
         treeFieldNames,
         treeData: chartOfAccountHierarchy,
-        treeDisabled: true,
+        treeDisabled: formActionType === FROM_ACTION_TYPE?.EDIT ? false : true,
         selectedTreeSelectKey,
         handleSelectTreeClick,
         defaultValue: selectedTreeSelectKey?.[0],
@@ -111,7 +111,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={false} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label={translateContent('chartOfAccount.label.status')}>
-                                <Switch disabled={disableCheckBox} checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
+                                <Switch disabled={disableCheckBox} checkedChildren={translateContent('chartOfAccount.label.active')} unCheckedChildren={translateContent('chartOfAccount.label.inActive')} onChange={(checked) => (checked ? 1 : 0)} />
                             </Form.Item>
                         </Col>
                     </Row>

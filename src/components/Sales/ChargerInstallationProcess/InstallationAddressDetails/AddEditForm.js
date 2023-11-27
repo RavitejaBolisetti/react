@@ -68,7 +68,7 @@ const AddEditFormMain = (props) => {
                     customerMobileNumber: chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.customerMobileNumber,
                 });
             } else {
-                form?.setFieldsValue({ address: crmCustomerVehicleData?.customerDetails?.customerAddress, pinCode: crmCustomerVehicleData?.customerDetails?.pinCode, city: crmCustomerVehicleData?.customerDetails?.customerCity, state: crmCustomerVehicleData?.customerDetails?.state, customerMobileNumber: crmCustomerVehicleData?.otfDetails?.mobileNumber });
+                form?.setFieldsValue({ address: crmCustomerVehicleData?.customerDetails?.customerAddress, pinCode: crmCustomerVehicleData?.customerDetails?.pinCode, city: crmCustomerVehicleData?.customerDetails?.customerCity, state: crmCustomerVehicleData?.customerDetails?.state, customerMobileNumber: crmCustomerVehicleData?.customerDetails?.customerPhoneNumber });
             }
         } else {
             setDisabled(false);
@@ -127,17 +127,17 @@ const AddEditFormMain = (props) => {
             <Row gutter={16}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                     <Card data-testid="test-case" className={styles.cardContanerOverflow}>
-                        <Typography>{translateContent('installationAddressDetials.heading.customerDetail')}</Typography>
+                        <Typography>{translateContent('installationAddressDetials.heading.customerDetails')}</Typography>
                         <Divider className={styles.marT20} />
                         <Descriptions {...customerProps}>
-                            <Descriptions.Item label={translateContent('installationAddressDetials.heading.customerDetail')}>{checkAndSetDefaultValue(crmCustomerVehicleData?.customerDetails?.customerName || chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.customerName, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('installationAddressDetials.heading.customerDetails')}>{checkAndSetDefaultValue(crmCustomerVehicleData?.customerDetails?.customerName || chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.customerName, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label={translateContent('installationAddressDetials.label.address')}>{checkAndSetDefaultValue(crmCustomerVehicleData?.customerDetails?.customerAddress || chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.address, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label={translateContent('installationAddressDetials.label.pincode')}>{checkAndSetDefaultValue(crmCustomerVehicleData?.customerDetails?.pinCode || chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.pinCode, isLoading)}</Descriptions.Item>
                         </Descriptions>
                         <Descriptions {...addressProps}>
                             <Descriptions.Item label={translateContent('installationAddressDetials.label.city')}>{checkAndSetDefaultValue(crmCustomerVehicleData?.customerDetails?.customerCity || chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.city, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label={translateContent('installationAddressDetials.label.state')}>{checkAndSetDefaultValue(crmCustomerVehicleData?.customerDetails?.state || chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.state, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label={translateContent('installationAddressDetials.label.custMobNo')}>{checkAndSetDefaultValue(crmCustomerVehicleData?.otfDetails?.mobileNumber || chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.customerMobileNumber, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('installationAddressDetials.label.custMobNo')}>{checkAndSetDefaultValue(crmCustomerVehicleData?.customerDetails?.customerPhoneNumber || chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.customerMobileNumber, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label={translateContent('installationAddressDetials.label.sameAsCustomerAddress')}>{checkAndSetDefaultValue(crmCustomerVehicleData?.customerDetails?.email || chargerInstallationMasterData?.chargerInstAddressDetails?.customerDetails?.customerEmail, isLoading)}</Descriptions.Item>
                         </Descriptions>
                     </Card>
@@ -158,7 +158,7 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                 <Form.Item label={translateContent('installationAddressDetials.label.installationAddress')} name="address" className={styles?.datePicker} rules={[validateRequiredInputField(translateContent('installationAddressDetials.validation.installationAddress'))]}>
-                                    <Input {...disabledProps} maxLength={50} placeholder={preparePlaceholderText(translateContent('installationAddressDetials.validation.installationAddress'))} />
+                                    <Input data-testid="installationAddress" {...disabledProps} maxLength={50} placeholder={preparePlaceholderText(translateContent('installationAddressDetials.validation.installationAddress'))} />
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -166,7 +166,7 @@ const AddEditFormMain = (props) => {
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                 <Form.Item label={translateContent('installationAddressDetials.label.pincode')} name="pinCode" rules={[validateRequiredInputField(translateContent('installationAddressDetials.validation.pinCode')), validatePincodeField(translateContent('installationAddressDetials.validation.pinCode'))]}>
                                     <AutoComplete {...disabledProps} maxLength={6} options={options} onSelect={handleOnSelect} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
-                                        <Search onSearch={handleOnSearch} onChange={handleOnClear} placeholder={preparePlaceholderText(translateContent('installationAddressDetials.label.search'))} loading={isPinCodeLoading} type="text" allowClear />
+                                        <Search data-testid="pinCode" sonSearch={handleOnSearch} onChange={handleOnClear} placeholder={preparePlaceholderText(translateContent('installationAddressDetials.label.search'))} loading={isPinCodeLoading} type="text" allowClear />
                                     </AutoComplete>
                                 </Form.Item>
                             </Col>

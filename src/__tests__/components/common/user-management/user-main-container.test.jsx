@@ -47,7 +47,7 @@ describe('User Main Container Component', () => {
         const formActionType={
             addMode: true
         }
-        customRender(<UserMainContainer isVisible={true} formActionType={formActionType} userType={'DLR'} currentSection={3} setButtonData={jest.fn()} />);
+        customRender(<UserMainContainer resetProductHierarchyList={jest.fn()} resetDealerProduct={jest.fn()} isVisible={true} formActionType={formActionType} userType={'DLR'} currentSection={3} setButtonData={jest.fn()} />);
     });
 
     it('should render mac id component', () => {

@@ -8,21 +8,22 @@ import { Button, Row, Col } from 'antd';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
-export const ChargerInstallationFormButton = ({ record, onCloseAction, onApproveCancel, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
+export const ChargerInstallationFormButton = ({ record, onCloseAction, onApproveCancel, buttonData, setButtonData, saveButtonName = translateContent('global.buttons.saveAndNext'), handleButtonClick, isLoadingOnSave, isLastSection }) => {
     return (
         <div className={styles.formFooter}>
             <Row gutter={20}>
                 <Col xs={24} sm={8} md={6} lg={4} xl={4} className={styles.footerBtnLeft}>
                     {buttonData?.closeBtn && (
                         <Button danger onClick={onCloseAction}>
-                            Close
+                            {translateContent('global.buttons.close')}
                         </Button>
                     )}
 
                     {buttonData?.cancelBtn && (
                         <Button danger onClick={onCloseAction}>
-                            Cancel
+                            {translateContent('global.buttons.cancel')}
                         </Button>
                     )}
                 </Col>
@@ -30,7 +31,7 @@ export const ChargerInstallationFormButton = ({ record, onCloseAction, onApprove
                 <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.footerBtnRight}>
                     {buttonData?.approveCancelBtn && (
                         <Button onClick={onApproveCancel} type="primary">
-                            Approve
+                            {translateContent('global.buttons.approve')}
                         </Button>
                     )}
                     {/* {buttonData?.editBtn && (
@@ -40,12 +41,12 @@ export const ChargerInstallationFormButton = ({ record, onCloseAction, onApprove
                 )} */}
                     {buttonData?.addRequestBtn && !isLastSection && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record })} type="primary">
-                            Add request
+                            {translateContent('global.buttons.addRequest')}
                         </Button>
                     )}
                     {buttonData?.nextBtn && !isLastSection && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
-                            Next
+                            {translateContent('global.buttons.next')}
                         </Button>
                     )}
                     {buttonData?.saveBtn && (

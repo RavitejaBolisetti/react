@@ -88,6 +88,11 @@ const AddEditFormMain = (props) => {
     }, [attributeKey, selectedValue, userId]);
 
     useEffect(() => {
+        form.setFieldsValue({ status: formData?.status });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData]);
+
+    useEffect(() => {
         if (organizationId && userId) {
             if (!organizationId) return;
 

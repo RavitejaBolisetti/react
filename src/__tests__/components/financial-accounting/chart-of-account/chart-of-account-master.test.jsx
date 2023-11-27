@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { fireEvent, screen, act } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { ChartOfAccountMaster } from '@components/FinancialAccounting/ChartOfAccount/ChartOfAccountMaster';
 import customRender from '@utils/test-utils';
@@ -21,6 +21,31 @@ export const createMockStore = (initialState) => {
 
     return mockStore;
 };
+
+
+jest.mock('store/actions/data/financialAccounting/chartOfAccount/exportCOA', ()=>({
+    chartOfAccountDataExportCOAActions:{}
+}));
+
+jest.mock('store/actions/data/financialAccounting/chartOfAccount/chartOfAccount', ()=>({
+    chartOfAccountDataActions:{}
+}));
+
+const saveData = jest.fn();
+const fetchChartOfAccount = jest.fn();
+
+const fetchChartOfExportCoaAccount=jest.fn();
+
+jest.mock('components/FinancialAccounting/ChartOfAccount/ExportCOA', ()=>{
+    const ExportCOA = ({onCoaFinish}) => {
+        return (
+            <div><button onClick={onCoaFinish}>Download</button></div>
+        )
+    };
+    return {
+        ExportCOA
+    }
+})
 
 afterEach(() => {
     jest.restoreAllMocks();
@@ -106,9 +131,12 @@ describe("ChartOfAccountMaster component render", ()=>{
         fireEvent.click(coaBtn)
     });
 
-    it("saveBtn",()=>{
+    it("saveBtn",async ()=>{
         const formActionType={EDIT: 'edit',  SIBLING: 'sibling'};
         const buttonData = {editBtn:true, save:true}
+        const res = {
+            data: 'Kai',
+        };
 
         const mockStore = createMockStore({
             auth:{userId:123},
@@ -125,7 +153,7 @@ describe("ChartOfAccountMaster component render", ()=>{
 
         customRender(
             <Provider store={mockStore}>
-                <ChartOfAccountMaster selectedTreeKey={["NKAJ"]} buttonData={buttonData} formActionType={formActionType} disable={false}/>
+                <ChartOfAccountMaster selectedTreeKey={["NKAJ"]} buttonData={buttonData} formActionType={formActionType} disable={false} saveData={saveData} fetchChartOfAccount={fetchChartOfAccount} />
             </Provider>
         )
 
@@ -146,6 +174,16 @@ describe("ChartOfAccountMaster component render", ()=>{
 
         const saveBtn = screen.getByRole('button', {name:'Save'});
         fireEvent.click(saveBtn);
+
+        await waitFor(() => {
+            expect(saveData).toHaveBeenCalled();
+        });
+
+        saveData.mock.calls[0][0].onSuccess(res);
+        saveData.mock.calls[0][0].onError();
+
+        const treeBtn = screen.getByRole('tree', {name:''});
+        fireEvent.click(treeBtn);
     });
 
     it("editBtn",()=>{
@@ -165,7 +203,7 @@ describe("ChartOfAccountMaster component render", ()=>{
 
         customRender(
             <Provider store={mockStore}>
-                <ChartOfAccountMaster selectedTreeKey={["CODEPE"]} buttonData={buttonData} formActionType={formActionType} />
+                <ChartOfAccountMaster selectedTreeKey={["CODEPE"]} buttonData={buttonData} formActionType={formActionType} fetchChartOfAccount={fetchChartOfAccount} />
             </Provider>
         )
 
@@ -179,10 +217,9 @@ describe("ChartOfAccountMaster component render", ()=>{
         fireEvent.click(cancelBtn)
     });
 
-    it("isChildAvailable",()=>{
+    it('handleAdd', ()=>{
         const formActionType={EDIT: 'edit'};
         const buttonData = {editBtn:true}
-
         const mockStore = createMockStore({
             auth:{userId:123},
             data: {
@@ -197,7 +234,7 @@ describe("ChartOfAccountMaster component render", ()=>{
 
         customRender(
             <Provider store={mockStore}>
-                <ChartOfAccountMaster selectedTreeKey={["AVAILABLE"]} buttonData={buttonData} formActionType={formActionType} />
+                <ChartOfAccountMaster selectedTreeKey={["AVAILABLE"]} buttonData={buttonData} formActionType={formActionType} fetchChartOfAccount={fetchChartOfAccount} />
             </Provider>
         )
 
@@ -225,7 +262,7 @@ describe("ChartOfAccountMaster component render", ()=>{
 
         customRender(
             <Provider store={mockStore}>
-                <ChartOfAccountMaster selectedTreeKey={["DONEIT1"]} buttonData={buttonData} formActionType={formActionType} />
+                <ChartOfAccountMaster selectedTreeKey={["DONEIT1"]} buttonData={buttonData} formActionType={formActionType} fetchChartOfAccount={fetchChartOfAccount} />
             </Provider>
         )
 
@@ -253,7 +290,7 @@ describe("ChartOfAccountMaster component render", ()=>{
 
         customRender(
             <Provider store={mockStore}>
-                <ChartOfAccountMaster selectedTreeKey={["DONEIII123"]} buttonData={buttonData} formActionType={formActionType} />
+                <ChartOfAccountMaster selectedTreeKey={["DONEIII123"]} buttonData={buttonData} formActionType={formActionType} fetchChartOfAccount={fetchChartOfAccount} />
             </Provider>
         )
 
@@ -282,7 +319,7 @@ describe("ChartOfAccountMaster component render", ()=>{
 
         customRender(
             <Provider store={mockStore}>
-                <ChartOfAccountMaster selectedTreeKey={["DONE"]} buttonData={buttonData} formActionType={formActionType} />
+                <ChartOfAccountMaster selectedTreeKey={["DONE"]} buttonData={buttonData} formActionType={formActionType} fetchChartOfAccount={fetchChartOfAccount} />
             </Provider>
         )
 
@@ -292,6 +329,27 @@ describe("ChartOfAccountMaster component render", ()=>{
         const siblingBtn = screen.getByRole('button', {name:'Add Sibling'});
         fireEvent.click(siblingBtn);
     });
+
+    it("onCoaFinish", async()=>{
+        customRender(<ChartOfAccountMaster fetchChartOfExportCoaAccount={fetchChartOfExportCoaAccount} />);
+
+        const coaBtn = screen.getByRole('button', {name:'Download'});
+        fireEvent.click(coaBtn);
+
+        await waitFor(() => {
+            expect(fetchChartOfExportCoaAccount).toHaveBeenCalled();
+        });
+
+        fetchChartOfExportCoaAccount.mock.calls[0][0].onSuccessAction();
+        fetchChartOfExportCoaAccount.mock.calls[0][0].onErrorAction();
+    })
+
+    it("exportBtn", ()=>{
+        customRender(<ChartOfAccountMaster  />);
+
+        const exportBtn = screen.getByRole('button', {name:'Export COA'});
+        fireEvent.click(exportBtn);
+    })
 
     it("onSelect function", ()=>{
         const fieldNames = { value: 'companyName', key: 'companyCode' };
@@ -309,17 +367,15 @@ describe("ChartOfAccountMaster component render", ()=>{
             <Provider store={mockStore}>
                 <ChartOfAccountMaster fieldNames={fieldNames} modalOpen={true} disabled={false} companyCode={'WP01'} />
             </Provider>
-        )
+        );
 
         const companyName = screen.getByRole('combobox', { name: '',});
-        act(async () => {
+        // act(async () => {
             fireEvent.change(companyName, { target: { value: 'Wipro' } });
             const company = screen.getByText('Wipro');
             fireEvent.click(company);
-        });
-
-        const exportBtn = screen.getByRole('button', {name:'Export COA'});
-        fireEvent.click(exportBtn);
+        // });
     }); 
 
+    
 });

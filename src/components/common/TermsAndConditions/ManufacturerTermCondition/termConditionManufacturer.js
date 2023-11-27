@@ -267,7 +267,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         saveandnewclick,
         setIsFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
         selectedRecord,
         formBtnDisable,
         setFormBtnDisable,
@@ -343,6 +343,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         isChangeHistoryContainer: false,
         tableData: searchData,
         showAddButton: false,
+        titleOverride: translateContent('global.changeHistory.title'),
     };
 
     return (

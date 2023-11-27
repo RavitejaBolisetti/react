@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Row, Col, Form, Input, AutoComplete } from 'antd';
+import { Row, Col, Form, Input } from 'antd';
 import { validateRequiredSelectField, validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { customSelectBox } from 'utils/customSelectBox';
@@ -18,7 +18,7 @@ const { Search } = Input;
 const { TextArea } = Input;
 
 const RegistrationForm = (props) => {
-    const { employeeData, managerData, options, handleOnSelect, handleOnClear, registrationForm, formData, typeData, handleFormValueChange, handleBookingNumberSearch, isEmployeeDataLoading, handleEmployeeNameSearch, isVehicleInvoiceDataLoading, handleBookingNumberChange, handleSaleTypeChange, selectedSaleType } = props;
+    const { employeeData, managerData, registrationForm, formData, typeData, handleFormValueChange, handleBookingNumberSearch, isVehicleInvoiceDataLoading, handleBookingNumberChange, handleSaleTypeChange, selectedSaleType, handleTaxChange } = props;
 
     return (
         <>
@@ -26,12 +26,12 @@ const RegistrationForm = (props) => {
                 <Row gutter={16}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item initialValue={formData?.priceType} label={translateContent('amcRegistration.label.priceType')} name="priceType" rules={[validateRequiredSelectField(translateContent('amcRegistration.label.priceType'))]}>
-                            {customSelectBox({ data: typeData['PRC_TYP'], placeholder: preparePlaceholderSelect(translateContent('amcRegistration.label.priceType')) })}
+                            {customSelectBox({ data: typeData?.[PARAM_MASTER.DLVR_SALE_TYP.id], placeholder: preparePlaceholderSelect(translateContent('amcRegistration.label.priceType')), onChange: handleSaleTypeChange })}
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item initialValue={formData?.saleType} label={translateContent('amcRegistration.label.saleType')} name="saleType" rules={[validateRequiredSelectField(translateContent('amcRegistration.label.saleType'))]}>
-                            {customSelectBox({ data: typeData?.[PARAM_MASTER.DLVR_SALE_TYP.id], placeholder: preparePlaceholderSelect(translateContent('amcRegistration.label.saleType')), onChange: handleSaleTypeChange })}
+                            {customSelectBox({ data: typeData['SALE_TYP'], placeholder: preparePlaceholderSelect(translateContent('amcRegistration.label.saleType')), onChange: handleTaxChange })}
                         </Form.Item>
                     </Col>
                     {selectedSaleType === AMC_CONSTANTS?.MNM_FOC?.key && (
@@ -49,7 +49,7 @@ const RegistrationForm = (props) => {
                         </>
                     )}
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label={translateContent('amcRegistration.label.employeeName')} name="employeeName" rules={[validateRequiredInputField(translateContent('amcRegistration.label.employeeName'))]}>
+                        <Form.Item label={translateContent('amcRegistration.label.employeeName')} name="employeeCode" rules={[validateRequiredInputField(translateContent('amcRegistration.label.employeeName'))]}>
                             {/* <AutoComplete maxLength={50} options={options} onSelect={handleOnSelect} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
                                 <Search onSearch={handleEmployeeNameSearch} onChange={handleOnClear} placeholder={translateContent('amcRegistration.placeholder.search')} loading={isEmployeeDataLoading} type="text" allowClear />
                             </AutoComplete> */}
@@ -57,7 +57,7 @@ const RegistrationForm = (props) => {
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label={translateContent('amcRegistration.label.managerName')} name="managerName">
+                        <Form.Item label={translateContent('amcRegistration.label.managerName')} name="managerCode">
                             {customSelectBox({ data: managerData, placeholder: preparePlaceholderSelect(translateContent('amcRegistration.label.managerName')) })}
                         </Form.Item>
                     </Col>

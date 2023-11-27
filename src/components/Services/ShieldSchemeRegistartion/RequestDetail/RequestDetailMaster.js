@@ -12,44 +12,8 @@ import { connect } from 'react-redux';
 
 import styles from 'assets/sass/app.module.scss';
 
-// const mapStateToProps = (state) => {
-//     const {
-//         auth: { userId },
-//         data: {
-//             VehicleReceipt: {
-//                 VehicleReceiptSearch: { isLoaded: isSearchDataLoaded = false, isLoading, data, filter: filterString },
-//             },
-//         },
-//     } = state;
-
-//     const moduleTitle = 'Request Details';
-
-//     let returnValue = {
-//         userId,
-//         data,
-//         isSearchDataLoaded,
-//         isLoading,
-//         moduleTitle,
-//     };
-//     return returnValue;
-// };
-
-// const mapDispatchToProps = (dispatch) => ({
-//     dispatch,
-//     ...bindActionCreators(
-//         {
-//             fetchCustomerDetail: vehicleReceiptDataActions.fetchList,
-//             fetchPartyDetail: vehicleReceiptDataActions.fetchList,
-//             resetData: vehicleReceiptDataActions.reset,
-//             listShowLoading: vehicleReceiptDataActions.listShowLoading,
-//             showGlobalNotification,
-//         },
-//         dispatch
-//     ),
-// });
-
 const RequestDetailMasterBase = (props) => {
-    const { typeData, handleMNMApproval, handleMNMRejection, handleRequest } = props;
+    const { typeData, workflowDetails, handleMNMApproval, handleMNMRejection, handleRequest } = props;
     const { userType, buttonData, setButtonData, section, isLoading } = props;
     const { partyDetailForm, handleFormValueChange, handleCancelRequest, NEXT_ACTION, handleButtonClick } = props;
     const { requestPayload, setRequestPayload, requestDetails, selectedOrder, showCancelConfirm, confirmRequest, setConfirmRequest } = props;
@@ -77,6 +41,7 @@ const RequestDetailMasterBase = (props) => {
         handleMNMApproval,
         handleMNMRejection,
         handleRequest,
+        workflowDetails,
     };
 
     return (

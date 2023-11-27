@@ -33,54 +33,54 @@ const ViewDetailMain = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" className={styles?.collapseContainer} collapsible="icon">
-                        <Panel header="Vehicle Information" key="1">
+                        <Panel header={translateContent('commonModules.label.vehicleDetails.vehicleDetails')} key="1">
                             <Divider />
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Model Description">
+                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.modelDescription')}>
                                     <div className={styles?.tooltipAlign}>
                                         {checkAndSetDefaultValue(formData?.model, isLoading)}
                                         {formData?.model && checkAndSetDefaultValue(addToolTip(toolTipContent, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles?.infoIconColor} size={13} />), isLoading)}
                                     </div>
                                 </Descriptions.Item>
-                                <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(formData?.modelCode, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.modelCode')}>{checkAndSetDefaultValue(formData?.modelCode, isLoading)}</Descriptions.Item>
                                 {isOTFModule && (
                                     <>
-                                        <Descriptions.Item label="Available Stock">{checkAndSetDefaultValue(formData?.availableStock, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.availableStock')}>{checkAndSetDefaultValue(formData?.availableStock, isLoading)}</Descriptions.Item>
 
-                                        <Descriptions.Item label="PO Number">{checkAndSetDefaultValue(formData?.poNumber, isLoading)}</Descriptions.Item>
-                                        <Descriptions.Item label="PO Date">{checkAndSetDefaultValue(formData?.poDate ? formData?.poDate : undefined, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                                        <Descriptions.Item label="PO Status">{checkAndSetDefaultValue(formData?.poStatus, isLoading)}</Descriptions.Item>
-                                        <Descriptions.Item label="SO Number">{checkAndSetDefaultValue(formData?.soNumber, isLoading)}</Descriptions.Item>
-                                        <Descriptions.Item label="SO Status">{checkAndSetDefaultValue(formData?.soStatus, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.poNumber')}>{checkAndSetDefaultValue(formData?.poNumber, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.poDate')}>{checkAndSetDefaultValue(formData?.poDate ? formData?.poDate : undefined, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                                        <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.poStatus')}>{checkAndSetDefaultValue(formData?.poStatus, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.soNumber')}>{checkAndSetDefaultValue(formData?.soNumber, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.soStatus')}>{checkAndSetDefaultValue(formData?.soStatus, isLoading)}</Descriptions.Item>
                                     </>
                                 )}
-                                <Descriptions.Item label="VIN">{checkAndSetDefaultValue(formData?.vinNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.vin')}>{checkAndSetDefaultValue(formData?.vinNumber, isLoading)}</Descriptions.Item>
                             </Descriptions>
 
                             <Descriptions {...viewProps} title={prepareCaption(translateContent('vehicleInvoiceGeneration.heading.captions.priceInformation'))}>
-                                <Descriptions.Item label="Sale Type">{checkAndSetDefaultValue(getCodeValue(typeData?.SALE_TYPE, formData?.saleType), isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Price Type">{checkAndSetDefaultValue(getCodeValue(typeData?.PRC_TYP, formData?.priceType), isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Vehicle Selling Price">{checkAndSetDefaultValue(formData?.vehicleSellingPrice, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Vehicle Amount">{checkAndSetDefaultValue(formData?.vehicleAmount, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.saleType')}>{checkAndSetDefaultValue(getCodeValue(typeData?.SALE_TYPE, formData?.saleType), isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.priceType')}>{checkAndSetDefaultValue(getCodeValue(typeData?.PRC_TYP, formData?.priceType), isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.vehicleSellingPrice')}>{checkAndSetDefaultValue(formData?.vehicleSellingPrice, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.vehicleAmount')}>{checkAndSetDefaultValue(formData?.vehicleAmount, isLoading)}</Descriptions.Item>
                             </Descriptions>
 
                             <Descriptions {...viewProps} title={prepareCaption(translateContent('vehicleInvoiceGeneration.heading.captions.benefit'))}>
-                                <Descriptions.Item label="Dealer Discount with TAX">{checkAndSetDefaultValue(formData?.discountAmount, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Consumer Scheme with TAX">{checkAndSetDefaultValue(formData?.taxAmount, isLoading)}</Descriptions.Item>
-                                {showPrintDiscount && <Descriptions.Item label="Print Discount">{formData?.printDiscount === 'Y' ? 'Yes' : 'No'}</Descriptions.Item>}
+                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.dealerDiscountWithTax')}>{checkAndSetDefaultValue(formData?.discountAmount, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.consumerSchemeWithTax')}>{checkAndSetDefaultValue(formData?.consumerSchemeWithTax, isLoading)}</Descriptions.Item>
+                                {showPrintDiscount && <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.printDiscount')}>{formData?.printDiscount === 'Y' ? translateContent('global.yesNo.yes') : translateContent('global.yesNo.no')}</Descriptions.Item>}
                             </Descriptions>
                         </Panel>
                     </Collapse>
 
                     <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end" className={styles?.collapseContainer} collapsible="icon">
-                        <Panel header="Tax Details" key="2">
+                        <Panel header={translateContent('vehicleInvoiceGeneration.heading.collapse.taxDetails')} key="2">
                             <Divider />
                             <DataTable tableColumn={taxDetailsColumn()} tableData={formData['taxDetails']} pagination={false} />
                         </Panel>
                     </Collapse>
 
                     <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end" className={styles?.collapseContainer} collapsible="icon">
-                        <Panel header="Optional Services" key="3">
+                        <Panel header={translateContent('vehicleInvoiceGeneration.heading.collapse.optionalService')} key="3">
                             <Divider />
                             <DataTable tableColumn={optionalServicesColumns({ formActionType })} tableData={formData['optionalServices']} pagination={false} />
                         </Panel>

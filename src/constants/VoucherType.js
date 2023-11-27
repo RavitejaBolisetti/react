@@ -7,14 +7,14 @@
 export const VOUCHER_TYPE = {
     CREDIT_TYPE: {
         id: 1,
-        key: 'CRN',
+        key: 'Credit Note',
         title: 'Credit Type',
-        type: 'Credit Type',
+        type: 'CRN',
     },
     DEBIT_TYPE: {
         id: 2,
-        key: 'DBN',
+        key: 'Debit Note',
         title: 'Debit Type',
-        type: 'Debit Type',
+        type: 'DBN',
     },
 };

@@ -6,29 +6,45 @@
 import React, { useReducer, useState, useEffect } from 'react';
 import CardProductAttribute from './CardTaxAndChargeCal';
 import FormProductAttribute from './FormTaxAndChargeCal';
-import { translateContent } from 'utils/translateContent';
-
 
 export const TaxAndChargesCalculationMaster = (props) => {
-    const { isVisible, selectedTreeData, showGlobalNotification, taxChargeCategoryTypeData, taxCategory, taxChargeCategoryCodeData, handleCodeFunction, form, editForm, taxChargeCalForm, formEdit, setFormEdit, taxChargeCalList, setTaxChargeCalList, buttonData, setButtonData, viewMode, dropdownItems, setDropdownItems, stateData, saleData, isTaxCategoryCodeLoading } = props;
+    const { isVisible, selectedTreeData, taxChargeCategoryTypeData, taxCategory, taxChargeCategoryCodeData, handleCodeFunction, form, editForm, taxChargeCalForm, formEdit, setFormEdit, taxChargeCalList, setTaxChargeCalList, buttonData, setButtonData, viewMode, dropdownItems, setDropdownItems, stateData, saleData, isTaxCategoryCodeLoading, showGlobalNotification } = props;
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [disableSaveButton, setDisableSaveButton] = useState(false);
     const [changeValue, setChangeValue] = useState(null);
     const [uniqueCardEdit, setuniqueCardEdit] = useState(null);
     const [mainFomEdit, setMainFormEdit] = useState(false);
 
+    const commonFun = () => {
+        taxChargeCalForm.resetFields();
+        setButtonData({ ...buttonData, formBtnActive: true });
+        handleCodeFunction();
+    };
+
     const addTaxChargeCal = () => {
         taxChargeCalForm
             .validateFields()
             .then(() => {
                 let data = taxChargeCalForm.getFieldsValue();
-
                 let updateData = { ...data, internalId: Math.floor(Math.random() * 100000000 + 1), id: '' };
-                setTaxChargeCalList((item) => [updateData, ...item]);
-                taxChargeCalForm.resetFields();
-                forceUpdate();
-                setButtonData({ ...buttonData, formBtnActive: true });
-                handleCodeFunction();
+                if (taxChargeCalList?.length > 0) {
+                    let insertFlag = false;
+                    for (let i = 0; i < taxChargeCalList?.length; i++) {
+                        if (taxChargeCalList[i]?.stateCode === data?.stateCode && taxChargeCalList[i]?.saleType === data?.saleType && taxChargeCalList[i]?.chargeType === data?.chargeType && taxChargeCalList[i]?.chargeCode === data?.chargeCode) {
+                            insertFlag = true;
+                            break;
+                        }
+                    }
+                    if (insertFlag) {
+                        showGlobalNotification({ message: 'record with this combination already exists' });
+                    } else {
+                        setTaxChargeCalList((item) => [updateData, ...item]);
+                        commonFun();
+                    }
+                } else {
+                    setTaxChargeCalList([updateData]);
+                    commonFun();
+                }
             })
             .catch((err) => console.error(err));
     };

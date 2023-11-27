@@ -63,8 +63,8 @@ export const AdvancedSearchFrom = (props) => {
     const modalProps = {
         reset: true,
         submit: true,
-        resetName: 'Reset',
-        submitName: 'Search',
+        resetName: translateContent('global.buttons.reset'),
+        submitName: translateContent('global.buttons.search'),
         handleResetFilter,
     };
 
@@ -81,7 +81,7 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={filterString?.voucherType} label={translateContent('creditDebitNote.label.voucherType')} name="voucherType">
-                        <Select showSearch allowClear placeholder={preparePlaceholderSelect(translateContent('creditDebitNote.placeholder.voucherType'))} fieldNames={{ label: 'value', value: 'value' }} options={typeData[PARAM_MASTER.VOUCHR_TYPE.id]}></Select>
+                        <Select showSearch allowClear placeholder={preparePlaceholderSelect(translateContent('creditDebitNote.placeholder.voucherType'))} fieldNames={{ label: 'value', value: 'key' }} options={typeData[PARAM_MASTER.VOUCHR_TYPE.id]}></Select>
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
@@ -94,7 +94,7 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label={translateContent('creditDebitNote.label.fromDate')} name="fromDate" rules={[validateRequiredSelectField(translateContent('creditDebitNote.validation.fromDate'))]} className={styles?.datePicker}>
-                        <DatePicker format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} onChange={() => advanceFilterForm.setFieldsValue({ toDate: undefined })} />
+                        <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} onChange={() => advanceFilterForm.setFieldsValue({ toDate: undefined })} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
@@ -112,7 +112,7 @@ export const AdvancedSearchFrom = (props) => {
                         ]}
                         className={styles?.datePicker}
                     >
-                        <DatePicker format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
+                        <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
                     </Form.Item>
                 </Col>
             </Row>

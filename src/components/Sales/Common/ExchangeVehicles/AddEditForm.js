@@ -19,16 +19,15 @@ import { translateContent } from 'utils/translateContent';
 import styles from 'assets/sass/app.module.scss';
 
 const AddEditFormMain = (props) => {
-    const { formData, form, formActionType, editableOnSearch, showAlert } = props;
+    const { formData, form, formActionType, editableOnSearch, showAlert, isExchangeVisible, setExchangeVisible } = props;
     const { financeLovData, schemeLovData, typeData, isMahindraMake } = props;
     const { isConfigLoading, isSchemeLovLoading, isMakeLoading, isModelLoading, isVariantLoading } = props;
     const { filteredModelData, filteredVariantData, handleFilterChange, MAHINDRA_MAKE, fnSetData, handleSchemeChange, viewOnly = false } = props;
-    const [visible, setVisible] = useState(false);
     const [disabled, setDisabled] = useState(false);
 
     useEffect(() => {
         if (formData) {
-            setVisible(!!formData?.exchange);
+            setExchangeVisible(!!formData?.exchange);
             form.setFieldsValue({
                 ...formData,
             });
@@ -59,17 +58,16 @@ const AddEditFormMain = (props) => {
     };
 
     const disabledProps = { disabled: viewOnly };
-
     return (
         <Card className={styles.ExchangeCard}>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formActionType?.editMode ? (formData?.exchange === 1 ? true : false) : false} labelAlign="left" wrapperCol={{ span: 24 }} name="exchange" label={translateContent('commonModules.label.exchangeDetails.exchange')} valuePropName="checked">
-                        <Switch {...disabledProps} checkedChildren="Yes" unCheckedChildren="No" onClick={(value) => setVisible(value)} />
+                        <Switch {...disabledProps} checkedChildren="Yes" unCheckedChildren="No" onClick={(value) => setExchangeVisible(value)} />
                     </Form.Item>
                 </Col>
             </Row>
-            {visible && (
+            {isExchangeVisible && (
                 <>
                     {!viewOnly && <CustomerListMaster fnSetData={fnSetData} defaultOption={'registrationNumber'} />}
 
@@ -146,7 +144,7 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="oldChessisNumber" label={translateContent('commonModules.label.exchangeDetails.vin')} rules={[validateRequiredInputField(translateContent('commonModules.label.exchangeDetails.vin'))]}>
+                            <Form.Item name="oldChessisNumber" initialValue={formData?.oldChessisNumber} label={translateContent('commonModules.label.exchangeDetails.vin')} rules={[validateRequiredInputField(translateContent('commonModules.label.exchangeDetails.vin'))]}>
                                 <Input {...disabledProps} onInput={convertToUpperCase} maxLength={50} placeholder={preparePlaceholderText(translateContent('commonModules.label.exchangeDetails.vin'))} />
                             </Form.Item>
                         </Col>
@@ -170,7 +168,7 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col> */}
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="customerName" label={translateContent('commonModules.label.exchangeDetails.customerName')} rules={[validateRequiredInputField('customer number')]}>
+                            <Form.Item initialValue={formData?.customerName} name="customerName" label={translateContent('commonModules.label.exchangeDetails.customerName')} rules={[validateRequiredInputField('customer name')]}>
                                 <Input disabled={viewOnly || editableOnSearch} placeholder={preparePlaceholderText(translateContent('commonModules.label.exchangeDetails.customerName'))} maxLength={50} />
                             </Form.Item>
                         </Col>

@@ -3,6 +3,7 @@ import { TermConditionManufacturerMaster } from '@components/common/TermsAndCond
 import customRender from '@utils/test-utils';
 import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 
 afterEach(() => {
@@ -48,7 +49,7 @@ describe('Term Condition Manufacturer Master components', () => {
                     DocumentTypeData: { isLoaded: true },
                     LanguageData: { isLoaded: true },
                     ManufacturerTermsConditions: { isLoaded: true, data: [{ id: '1', productName: 'Sample Product', documentTypeCode: 'Doc Type 1', language: 'English', effectiveFrom: '2023-08-15', effectiveTo: '2023-08-31', version: '1.0', termConditionDescription: 'Sample' }] },
-                    ChangeHistoryManufacturerTermsConditions: { isLoaded: true, data: [{ id: '1' }, { id: '2', name: 'kaii' }] },
+                    ChangeHistoryManufacturerTermsConditions: { isLoaded: true, data: [{ id: '2', name: 'kaii', termsconditiondescription: 'Sample' }] },
                 },
             },
         });

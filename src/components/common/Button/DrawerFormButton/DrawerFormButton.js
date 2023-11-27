@@ -34,31 +34,31 @@ const DrawerButtons = ({ formData, onCloseAction, buttonData, setButtonData, sav
                     </Button>
                 )}
                 {buttonData?.saveBtn && (
-                    <Button loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive} data-testid="save" onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
+                    <Button loading={isLoadingOnSave?.isSaveBtnLoading} disabled={!buttonData?.formBtnActive} data-testid="save" onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
                         {saveButtonName}
                     </Button>
                 )}
 
                 {buttonData?.saveAndNewBtn && (
-                    <Button loading={isLoadingOnSave} data-testid="save-and-new" htmlType="submit" disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: true })} type="primary">
+                    <Button loading={isLoadingOnSave?.isSaveAndNewBtnLoading} data-testid="save-and-new" htmlType="submit" disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: true })} type="primary">
                         {translateContent('global.buttons.saveAndNew')}
                     </Button>
                 )}
 
                 {buttonData?.editBtn && (
-                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record: formData })} form="configForm" key="submitAndNew" htmlType="submit" type="primary">
+                    <Button data-testid="edit" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record: formData })} form="configForm" key="submitAndNew" htmlType="submit" type="primary">
                         {translateContent('global.buttons.edit')}
                     </Button>
                 )}
 
                 {buttonData?.cancelOTFBtn && (
-                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF })} type="primary" htmlType="submit">
+                    <Button data-testid="otf-cancel" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF })} type="primary" htmlType="submit">
                         {translateContent('global.buttons.cancelBooking')}
                     </Button>
                 )}
 
                 {buttonData?.transferOTFBtn && (
-                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.TRANSFER_OTF })} type="primary" htmlType="submit">
+                    <Button data-testid="transferBooking" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.TRANSFER_OTF })} type="primary" htmlType="submit">
                         {translateContent('global.buttons.transferBooking')}
                     </Button>
                 )}

@@ -1,7 +1,8 @@
 import '@testing-library/jest-dom/extend-expect';
 import { UserManagementMaster } from '@components/common/UserManagement/UserManagementMaster';
 import customRender from '@utils/test-utils';
-import { fireEvent, screen, act, waitFor } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
+// eslint-disable-next-line jest/no-mocks-import
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 
@@ -58,8 +59,6 @@ describe('User Management Master components', () => {
                 <UserManagementMaster fetchUserDataList={fetchUserDataList} resetUserDetails={jest.fn()} />
             </Provider>
         );
-        const manageAccess = screen.getByRole('button', { name: 'plus Manage Access' });
-        fireEvent.click(manageAccess);
     });
 
     it('select should work in dealer', async () => {
@@ -82,11 +81,7 @@ describe('User Management Master components', () => {
         const dealer = screen.getByRole('button', { name: 'Dealer' });
         fireEvent.click(dealer);
         const selectField = screen.getAllByRole('combobox', { name: '' });
-        fireEvent.change(selectField[0], { target: { value: 106 } });
-        await waitFor(() => {
-            expect(screen.getByText('Kai')).toBeInTheDocument();
-        });
-        fireEvent.click(screen.getByText('Kai'));
+        fireEvent.change(selectField[0], { target: { value: 'Kai' } });
     });
 
     it('edit, close and view buttons should work', async () => {

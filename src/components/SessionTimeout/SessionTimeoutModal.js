@@ -8,30 +8,31 @@ import { Row, Col, Button } from 'antd';
 import { withModal } from 'components/withModal';
 
 import styles from './SessionTimeoutModal.module.scss';
+import { translateContent } from 'utils/translateContent';
 const SessionTimeoutModalMain = (props) => {
     const { remaining, handleLogoutAction, handleSessionContinueAction } = props;
-    const seconds = remaining > 1 ? 'seconds' : 'second';
+    const seconds = remaining > 1 ? translateContent('sessionTimeout.notification.seconds') : translateContent('sessionTimeout.notification.second');
     return (
         <>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.information}>
-                    Your session is about to expire. You will be logged out <br />
-                    in{' '}
+                    {translateContent('sessionTimeout.notification.loggedOut')} <br />
+                    {translateContent('sessionTimeout.notification.in')}{' '}
                     <b>
                         {remaining} {seconds}
                     </b>
-                    . Click "Continue" if you want to continue and stay logged in.
+                    {translateContent('sessionTimeout.notification.continue')}
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Button onClick={handleLogoutAction} danger className={styles.button}>
-                        Logout
+                        {translateContent('sessionTimeout.buttons.logout')}
                     </Button>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Button onClick={handleSessionContinueAction} htmlType="submit" type="primary" className={styles.button}>
-                        Continue
+                        {translateContent('sessionTimeout.buttons.continue')}
                     </Button>
                 </Col>
             </Row>

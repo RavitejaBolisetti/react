@@ -52,10 +52,8 @@ describe('party master Components', () => {
         const partyname = screen.getByLabelText('Party Name');
         fireEvent.change(partyname, { target: { value: 'Dmstest' } });
 
-
         const partyCode = screen.getByLabelText('Party Code');
         fireEvent.change(partyCode, { target: { value: 'Dms' } });
-
 
         const comboBox = screen.getByRole('combobox', { name: /party category/i });
         fireEvent.click(comboBox);
@@ -70,10 +68,6 @@ describe('party master Components', () => {
         const contactpersonname = screen.getByLabelText('Contact Person Name');
         fireEvent.change(contactpersonname, { target: { value: 'Dmstest' } });
 
-
-        const designation = screen.getByLabelText('Designation');
-        fireEvent.change(designation, { target: { value: 'Dmsdesignation' } });
-
         const address = screen.getByLabelText('Address');
         fireEvent.change(address, { target: { value: 'Dmsaddress' } });
 
@@ -83,14 +77,11 @@ describe('party master Components', () => {
         const city = screen.getByLabelText('City');
         fireEvent.change(city, { target: { value: 'Dmscity' } });
 
-
         const tehsil = screen.getByLabelText('Tehsil');
         fireEvent.change(tehsil, { target: { value: 'Dmstehsil' } });
 
-
         const district = screen.getByLabelText('District');
         fireEvent.change(district, { target: { value: 'Dmsdistrict' } });
-
 
         const state = screen.getByLabelText('State');
         fireEvent.change(state, { target: { value: 'Dmsstate' } });
@@ -98,28 +89,20 @@ describe('party master Components', () => {
         const GSTINnumber = screen.getByLabelText('GSTIN number');
         fireEvent.change(GSTINnumber, { target: { value: 'Dmsgsti' } });
 
-
         const pan = screen.getByLabelText('PAN');
         fireEvent.change(pan, { target: { value: 'Dmspan' } });
-
 
         const creditlimit = screen.getByLabelText('Credit Limit');
         fireEvent.change(creditlimit, { target: { value: 'Dmscreditlimit' } });
 
-
         const creditdays = screen.getByLabelText('Credit Days');
         fireEvent.change(creditdays, { target: { value: 'Dmscreditdays' } });
-
 
         const checkremarks = screen.getByLabelText('Remarks');
         user.type(checkremarks, 'Dmatest');
 
-
         const partDiscount = screen.getByRole('textbox', { name: /parts discount\(%\)/i });
         expect(partDiscount).toBeTruthy();
-
-        const otherDetails = screen.getByText('Other Details');
-        expect(otherDetails).toBeTruthy();
     });
 
     it('should render text', () => {

@@ -24,8 +24,6 @@ const buttonData = {
     formBtnActive: true,
     cancelVPOBtn: true,
     cancelOtfBtn: true,
-    nextBtn: true,
-    saveBtn: true,
 };
 const saveButtonName = 'Save';
 const isLoadingOnSave = false;
@@ -45,13 +43,13 @@ describe('Vehicle Purchase Order Form Button Components', () => {
         fireEvent.click(cancelBtn);
         const nextBtn = screen.getByRole('button', { name: 'Next', exact: false });
         fireEvent.click(nextBtn);
-        const cancelPOBtn = screen.getByRole('button', { name: 'Cancel PO', exact: false });
-        fireEvent.click(cancelPOBtn);
+        const cancelPOBtn = screen.getAllByRole('button', { name: 'Cancel Vehicle Purchase Order', exact: false });
+        fireEvent.click(cancelPOBtn[0]);
         const cancelOtfBtn = screen.getAllByRole('button', { name: 'Cancel Booking', exact: false });
         fireEvent.click(cancelOtfBtn[0]);
         fireEvent.click(cancelOtfBtn[1]);
-        const cancelVpoBtn = screen.getByRole('button', { name: 'Cancel VPO', exact: false });
-        fireEvent.click(cancelVpoBtn);
+        const cancelVpoBtn = screen.getAllByRole('button', { name: 'Cancel Vehicle Purchase Order', exact: false });
+        fireEvent.click(cancelVpoBtn[1]);
         const saveNextBtn = screen.getByRole('button', { name: 'Save & Next', exact: false });
         fireEvent.click(saveNextBtn);
     });

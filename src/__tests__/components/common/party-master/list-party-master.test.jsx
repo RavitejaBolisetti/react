@@ -7,13 +7,17 @@ import '@testing-library/jest-dom/extend-expect';
 import { Provider } from 'react-redux';
 import customRender from '@utils/test-utils';
 import createMockStore from '__mocks__/store';
-import { ListPartyMaster } from '@components/common/PartyMaster/listpartymaster';
+import { ListPartyMaster } from '@components/common/PartyMaster/ListPartyMaster';
 import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
-import { partyMasterDataActions } from 'store/actions/data/partyMaster';
 
 jest.mock('components/common/PartyMaster/AddEditForm', () => {
-    const AddEditForm = ({ onFinish, onCloseAction }) => <div><button onClick={onFinish}>Save</button><button onClick={onCloseAction}>Cancel</button></div>;
+    const AddEditForm = ({ onFinish, onCloseAction }) => (
+        <div>
+            <button onClick={onFinish}>Save</button>
+            <button onClick={onCloseAction}>Cancel</button>
+        </div>
+    );
     return {
         __esModule: true,
         AddEditForm,
@@ -21,7 +25,7 @@ jest.mock('components/common/PartyMaster/AddEditForm', () => {
 });
 
 jest.mock('store/actions/data/partyMaster', () => ({
-    partyMasterDataActions: {}
+    partyMasterDataActions: {},
 }));
 
 afterEach(() => {
@@ -109,7 +113,7 @@ describe('List party master Components', () => {
             },
         });
 
-        const fetchList=jest.fn();
+        const fetchList = jest.fn();
 
         customRender(
             <Provider store={mockStore}>
@@ -131,7 +135,7 @@ describe('List party master Components', () => {
             },
         });
 
-        const saveData=jest.fn();
+        const saveData = jest.fn();
 
         customRender(
             <Provider store={mockStore}>
@@ -142,10 +146,12 @@ describe('List party master Components', () => {
         const btnClick = screen.getByRole('button', { name: 'plus Add', exact: false });
         fireEvent.click(btnClick);
 
-        const saveBtn=screen.getByRole('button', { name: 'Save' });
+        const saveBtn = screen.getByRole('button', { name: 'Save' });
         fireEvent.click(saveBtn);
 
-        await waitFor(() => { expect(saveData).toHaveBeenCalled() });
+        await waitFor(() => {
+            expect(saveData).toHaveBeenCalled();
+        });
 
         saveData.mock.calls[0][0].onSuccess();
         saveData.mock.calls[0][0].onError();
@@ -191,5 +197,4 @@ describe('List party master Components', () => {
         const btnClick2 = screen.getAllByRole('button', { name: 'Cancel', exact: false });
         fireEvent.click(btnClick2[1]);
     });
-    
 });

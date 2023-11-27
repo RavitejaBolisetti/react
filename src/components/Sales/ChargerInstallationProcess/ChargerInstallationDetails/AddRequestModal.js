@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Col, Form, Row, Button, DatePicker, Input } from 'antd';
 
 import { withModal } from 'components/withModal';
@@ -16,6 +16,7 @@ import { disableFutureDate } from 'utils/disableDate';
 import styles from 'assets/sass/app.module.scss';
 import { validateRequiredInputField } from 'utils/validation';
 import { CHARGER_STATUS } from 'constants/ChargerStatus';
+import { translateContent } from 'utils/translateContent';
 
 export const AddRequestModalForm = (props) => {
     const { onAdvanceSearchCloseAction, typeData, chargerStatus, formActionType } = props;
@@ -34,10 +35,10 @@ export const AddRequestModalForm = (props) => {
         <Form autoComplete="off" layout="vertical" form={addRequestForm} onFinish={onModalFinish}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Stage" name="requestStage" rules={[validateRequiredInputField('Stage')]}>
+                    <Form.Item label={translateContent('chargerInstallationDetails.label.stage')} name="requestStage" rules={[validateRequiredInputField(translateContent('chargerInstallationDetails.validation.stage'))]}>
                         {customSelectBox({
                             data: typeData?.CHRGR_INST_STG_TYPE,
-                            placeholder: preparePlaceholderText('Request Stage'),
+                            placeholder: preparePlaceholderText(translateContent('chargerInstallationDetails.placeholder.requestStage')),
                             disableOptionsList:
                                 !formActionType?.addMode &&
                                 typeData?.CHRGR_INST_STG_TYPE?.flatMap((item) => {
@@ -50,19 +51,19 @@ export const AddRequestModalForm = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Preferred Date & Time 1" name="visitTimeSlotOne" className={styles?.datePicker} rules={[validateRequiredInputField('fromDate')]}>
+                    <Form.Item label={translateContent('chargerInstallationDetails.label.preferredDate1')} name="visitTimeSlotOne" className={styles?.datePicker} rules={[validateRequiredInputField('fromDate')]}>
                         <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Preferred Date & Time 2" name="visitTimeSlotTwo" className={styles?.datePicker}>
+                    <Form.Item label={translateContent('chargerInstallationDetails.label.preferredDate2')} name="visitTimeSlotTwo" className={styles?.datePicker}>
                         <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Preferred Date & Time 3" name="visitTimeSlotThree" className={styles?.datePicker}>
+                    <Form.Item label={translateContent('chargerInstallationDetails.label.preferredDate3')} name="visitTimeSlotThree" className={styles?.datePicker}>
                         <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
                     </Form.Item>
                 </Col>
@@ -74,13 +75,13 @@ export const AddRequestModalForm = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.buttonsGroupLeft}>
                     <Button onClick={onAdvanceSearchCloseAction} danger>
-                        Cancel
+                        {translateContent('global.buttons.cancel')}
                     </Button>
                 </Col>
 
                 <Col xs={24} m={24} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
                     <Button htmlType="submit" type="primary">
-                        Add
+                        {translateContent('global.buttons.add')}
                     </Button>
                 </Col>
             </Row>

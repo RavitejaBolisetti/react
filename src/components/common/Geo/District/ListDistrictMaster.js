@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Col, Form, Row } from 'antd';
@@ -281,7 +281,7 @@ export const ListDistrictBase = (props) => {
         onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat('District'),
+        titleOverride: drawerTitle(formActionType).concat(" ").concat('District'),
         tableData: searchData,
         isDataCountryLoaded,
         isCountryLoading,

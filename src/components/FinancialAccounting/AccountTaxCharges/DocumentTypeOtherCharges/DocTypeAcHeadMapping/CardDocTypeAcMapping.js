@@ -13,7 +13,9 @@ import FormDocTypeAcMapping from './FormDocTypeAcMapping';
 const { Text } = Typography;
 
 const CardDocTypeAcMapping = (props) => {
-    const { finalFormdata, docTypeHeadMappingForm, forceUpdate, taxCharges, financialAccount, typeData, productHierarchyAttributeData, docTypeHeadMappingList, setDocTypeHeadMappingList, objTaxCharge, setOpenAccordian, changeValue, setChangeValue, editForm, formEdit, setFormEdit, uniqueCardEdit, setuniqueCardEdit, buttonData, setButtonData, dropdownItems, setDropdownItems, viewMode, internalId, financialAccHeadData, financialAccHeadName, setSelectedTreeSelectKey, selectedTreeSelectKey, handleSelectTreeClick } = props;
+    const { finalFormdata, docTypeHeadMappingForm, forceUpdate, taxCharges, financialAccount, typeData, productHierarchyAttributeData, docTypeHeadMappingList, setDocTypeHeadMappingList, objTaxCharge, setOpenAccordian, changeValue, setChangeValue, editForm, formEdit, setFormEdit, uniqueCardEdit, setuniqueCardEdit, buttonData, setButtonData, dropdownItems,
+        //  setDropdownItems, 
+         viewMode, internalId, financialAccHeadData, financialAccHeadName, setSelectedTreeSelectKey, selectedTreeSelectKey, handleSelectTreeClick } = props;
 
     const docTypeHeadMappingEdit = (props) => {
         setuniqueCardEdit(props?.internalId);
@@ -43,7 +45,7 @@ const CardDocTypeAcMapping = (props) => {
         });
 
         setDocTypeHeadMappingList([...upd_obj]);
-        setDropdownItems(() => []);
+        // setDropdownItems(() => []);
         setFormEdit(false);
         forceUpdate();
     };
@@ -63,7 +65,7 @@ const CardDocTypeAcMapping = (props) => {
 
     const onDocTypeHeadMappingCancel = () => {
         setFormEdit(false);
-        setDropdownItems(() => []);
+        // setDropdownItems(() => []);
     };
 
     const FormProductAttributeProp = {

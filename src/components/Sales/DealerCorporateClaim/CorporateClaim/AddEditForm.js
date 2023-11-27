@@ -4,17 +4,14 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Row, Col, Input, Form, DatePicker, InputNumber, Checkbox } from 'antd';
-import { validateRequiredInputField, validateOnlyPositiveNumber, valueBetween0to100 } from 'utils/validation';
+import { Row, Col, Input, Form, DatePicker, Checkbox } from 'antd';
 
-import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
+import { dateFormat } from 'utils/formatDateTime';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { translateContent } from 'utils/translateContent';
 import styles from 'assets/sass/app.module.scss';
 
 const AddEditFormMain = (props) => {
-    const { buttonData, setButtonData, formData, saveData, isLoading, onFinish } = props;
-    const { form, isReadOnly = true, userId, listShowLoading, handleButtonClick, setIsFormVisible, showGlobalNotification } = props;
+    const {  formData, isReadOnly = true } = props;
     const disabledProps = { disabled: isReadOnly };
 
     return (
@@ -37,11 +34,6 @@ const AddEditFormMain = (props) => {
                                 <Input placeholder={preparePlaceholderText('Claim Status')} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
-                        {/* <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item label={'Co-Dealer Invoice'} initialValue={false} valuePropName="checked" name="defaultContactIndicator">
-                                <Checkbox></Checkbox>
-                            </Form.Item>
-                        </Col> */}
 
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
                             <Form.Item name="chassisNumber" label={'Chassis Number'} initialValue={formData?.chassisNumber}>

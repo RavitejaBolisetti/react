@@ -7,9 +7,10 @@ import React from 'react';
 import { DesignationMaster } from 'components/common/DealerManpower/DesignationMaster/DesignationMaster';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
+import { translateContent } from 'utils/translateContent';
 
 export const DesignationMasterPageBase = (props) => {
-    const pageTitle = 'Designation Master';
+    const pageTitle = translateContent('designationMaster.heading.mainTitle');
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

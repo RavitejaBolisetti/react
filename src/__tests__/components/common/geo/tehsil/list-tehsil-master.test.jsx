@@ -190,7 +190,7 @@ describe('List City Master Component', () => {
         await waitFor(() => { expect(screen.getAllByText('KAI')[1]).toBeInTheDocument() });
         fireEvent.click(screen.getAllByText('KAI')[1]);
 
-        const stateSelect=screen.getByRole('combobox', { name: 'State' });
+        const stateSelect=screen.getByRole('combobox', { name: 'State Name' });
         fireEvent.change(stateSelect, { target: { value: 'TestState' } });
         await waitFor(() => { expect(screen.getAllByText('TestState')[1]).toBeInTheDocument() });
         fireEvent.click(screen.getAllByText('TestState')[1]);

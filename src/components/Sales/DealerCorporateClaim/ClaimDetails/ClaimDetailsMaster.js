@@ -8,11 +8,11 @@ import { Form, Row, Col } from 'antd';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import ViewDetail from './ViewDetail';
+import { DealerCorporateClaimFormButton } from '../CorporateClaimFormButton';
 
 import { MODULE_TYPE_CONSTANTS } from 'constants/modules/vehicleChecklistConstants';
 import styles from 'assets/sass/app.module.scss';
-import { DealerCorporateClaimFormButton } from '../CorporateClaimFormButton';
-import ViewDetail from './ViewDetail';
 
 const mapStateToProps = (state) => {
     const {

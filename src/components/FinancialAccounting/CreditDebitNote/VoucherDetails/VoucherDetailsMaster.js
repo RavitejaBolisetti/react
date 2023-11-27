@@ -67,6 +67,7 @@ export const VoucherDetailsMasterMain = (props) => {
 
     const formProps = {
         ...props,
+        styles,
         tableData: requestPayload?.voucherAccountHeadDetailsDto,
         fetchFinancialAccountList,
         listFinanceShowLoading,

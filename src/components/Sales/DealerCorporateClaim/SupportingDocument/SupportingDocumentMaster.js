@@ -16,7 +16,6 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
-// import { CustomerFormButton } from '../../CustomerFormButton';
 import AddEditForm from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
 import styles from 'assets/sass/app.module.scss';
@@ -128,7 +127,6 @@ const SupportingDocumentBase = (props) => {
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
-        // setMandatoryFields(true);
     };
     const handleClearChange = () => {
         if (!form.getFieldValue('documentTypeId') && !form.getFieldValue('documentName')) {

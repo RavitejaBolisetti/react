@@ -201,13 +201,13 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
             setToolTipContent(
                 <div>
                     <p>
-                        Cancelled Date - <span>{deliveryNoteMasterData?.cancellationInformation?.cancelledDate ? dayjs(deliveryNoteMasterData?.cancellationInformation?.cancelledDate)?.format('DD MMM YYYY') : 'Na'}</span>
+                        {translateContent('vehicleDeliveryNote.label.cancelledDate')} - <span>{deliveryNoteMasterData?.cancellationInformation?.cancelledDate ? dayjs(deliveryNoteMasterData?.cancellationInformation?.cancelledDate)?.format('DD MMM YYYY') : 'Na'}</span>
                     </p>
                     <p>
-                        Cancelled By - <span>{deliveryNoteMasterData?.cancellationInformation?.cancelledBy ?? 'Na'}</span>
+                        {translateContent('vehicleDeliveryNote.label.cancelledBy')} - <span>{deliveryNoteMasterData?.cancellationInformation?.cancelledBy ?? 'Na'}</span>
                     </p>
                     <p>
-                        Remarks for Cancellation - <span>{deliveryNoteMasterData?.cancellationInformation?.remarks ?? 'Na'}</span>
+                        {translateContent('vehicleDeliveryNote.label.remarksForCancellation')} - <span>{deliveryNoteMasterData?.cancellationInformation?.remarks ?? 'Na'}</span>
                     </p>
                 </div>
             );
@@ -411,8 +411,8 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         setReportVisible(true);
         setAdditionalReportParams([
             {
-                key: 'sa_od_delivery_challan_hdr_id',
-                value: selectedOrder?.deliveryHdrId,
+                key: deliveryType === DELIVERY_TYPE?.NOTE?.key ? 'delivery_note_id' : deliveryType === DELIVERY_TYPE?.CHALLAN?.key ? 'sa_od_delivery_challan_hdr_id' : null,
+                value: deliveryType === DELIVERY_TYPE?.NOTE?.key ? selectedOrder?.vehicleDeliveryNote : deliveryType === DELIVERY_TYPE?.CHALLAN?.key ? selectedOrder?.deliveryHdrId : null,
             },
         ]);
     };
@@ -805,7 +805,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         deliveryNoteOnFinish: onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(soldByDealer ? moduleTitle : translateContent('vehicleDeliveryNote.cancelTitle.challan')),
+        titleOverride: drawerTitle(formActionType).concat(" ").concat(soldByDealer ? moduleTitle : translateContent('vehicleDeliveryNote.cancelTitle.challan')),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,
@@ -864,7 +864,8 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         setSection,
     };
 
-    const reportDetail = soldByDealer ? EMBEDDED_REPORTS?.DELIVERY_NOTE_DOCUMENT : EMBEDDED_REPORTS?.CHALLAN_DOCUMENT;
+    const reportDetail = deliveryType === DELIVERY_TYPE?.NOTE?.key ? EMBEDDED_REPORTS?.DELIVERY_NOTE_DOCUMENT : deliveryType === DELIVERY_TYPE?.CHALLAN?.key ? EMBEDDED_REPORTS?.CHALLAN_DOCUMENT : null;
+
     const reportProps = {
         isVisible: isReportVisible,
         titleOverride: reportDetail?.title,

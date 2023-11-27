@@ -7,7 +7,6 @@ import dayjs from 'dayjs';
 import { GetAge } from './getAge';
 import { translateContent } from 'utils/translateContent';
 
-
 export const validateRequiredInputField = (fieldName, lowercase = true) => ({
     required: true,
     message: translateContent('global.validation.input').concat(lowercase ? fieldName?.toLowerCase() : fieldName),
@@ -21,7 +20,9 @@ export const validateRequiredInputFieldMinLength = (fieldName, lowercase = true)
 
 export const validateRequiredSelectField = (fieldName, lowercase = true) => ({
     required: true,
-    message: 'Please select ' + (lowercase ? fieldName?.toLowerCase() : fieldName),
+    message: translateContent('global.validation.select')
+        .concat(' ')
+        .concat(lowercase ? fieldName?.toLowerCase() : fieldName),
 });
 
 export const validateEmailField = (fieldName, lowercase = true) => ({
@@ -248,8 +249,8 @@ export const validateNegativeNumber = (fieldName) => ({
 
 export const isIssuePriceValid = (value, dealerPrice) => {
     if (!value) return Promise.resolve();
-    else if (!dealerPrice) return Promise.reject(new Error(`Net Dealer Price not present`));
-    else if (value > dealerPrice) return Promise.reject(`Issue charge can't be greater than dealer price`);
+    // else if (!dealerPrice) return Promise.reject(new Error(`Net Dealer Price not present`));
+    else if (!dealerPrice || value > dealerPrice) return Promise.reject(`Issue charge can't be greater than dealer price`);
     else return Promise.resolve();
 };
 

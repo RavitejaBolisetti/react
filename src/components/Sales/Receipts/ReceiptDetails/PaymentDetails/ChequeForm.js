@@ -10,6 +10,7 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { dateFormat } from 'utils/formatDateTime';
 import { validateLettersWithWhitespaces, validationFieldLetterAndNumber, validateRequiredInputField, validateNumberWithTwoDecimalPlaces, validationNumber } from 'utils/validation';
 import { translateContent } from 'utils/translateContent';
+import { disableFutureDate } from 'utils/disableDate';
 
 const { Search } = Input;
 
@@ -31,7 +32,7 @@ const ChequeFormBase = (props) => {
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.ddCheckDate} label={translateContent('receipts.label.receiptDetails.chequeDDDate')} name="ddCheckDate">
-                        <DatePicker format={dateFormat} placeholder={preparePlaceholderText(translateContent('receipts.placeholder.chequeDate'))} style={{ display: 'auto', width: '100%' }} />
+                        <DatePicker format={dateFormat} disabledDate={disableFutureDate} placeholder={preparePlaceholderText(translateContent('receipts.placeholder.chequeDate'))} style={{ display: 'auto', width: '100%' }} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -43,7 +44,7 @@ const ChequeFormBase = (props) => {
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.bankLocationName} label={translateContent('receipts.label.receiptDetails.bankLocation')} name="bankLocationName" rules={[validateLettersWithWhitespaces(translateContent('receipts.validation.bankLocationName'))]}>
-                        <Input placeholder={preparePlaceholderText(translateContent('receipts.placeholder.paymentBankName'))} />
+                        <Input placeholder={preparePlaceholderText(translateContent('receipts.placeholder.bankLocation'))} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>

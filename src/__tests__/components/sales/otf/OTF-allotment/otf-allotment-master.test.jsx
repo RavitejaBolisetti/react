@@ -34,11 +34,11 @@ describe('OTFAllotmentMaster Component', () => {
         const fetchVehicleAllotmentSearchedList = jest.fn();
         const saveData = jest.fn();
         const selectedOrder = { otfId: 106, otfNumber: 106 };
-        const setShowOTFDataLoading = jest.fn()
+        const setShowOTFDataLoading = jest.fn();
 
         customRender(
             <Provider store={mockStore}>
-                <OTFAllotmentMaster isVisible={true} setIsAllotVisible={true} setShowOTFDataLoading={setShowOTFDataLoading} fetchVehicleAllotmentSearchedList={fetchVehicleAllotmentSearchedList} saveData={saveData} setFilterString={jest.fn()} selectedOrder={selectedOrder} setIsAllotVisible={jest.fn()} setIsFormVisible={jest.fn()} setRefreshData={jest.fn()} />
+                <OTFAllotmentMaster setShowOTFDataLoading={setShowOTFDataLoading} isVisible={true} setIsAllotVisible={true} fetchVehicleAllotmentSearchedList={fetchVehicleAllotmentSearchedList} saveData={saveData} setFilterString={jest.fn()} selectedOrder={selectedOrder} setIsFormVisible={jest.fn()} setRefreshData={jest.fn()} />
             </Provider>
         );
 

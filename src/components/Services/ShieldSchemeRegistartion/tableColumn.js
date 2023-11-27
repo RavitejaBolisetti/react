@@ -3,20 +3,19 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { Tag } from 'antd';
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { convertDateMonthYear } from 'utils/formatDateTime';
-import { getCodeValue } from 'utils/getCodeValue';
-import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+
 
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
+import { AMCStatusTags } from 'components/Sales/AMCRegistration/utils/AMCStatusTags';
 
 export const tableColumn = (props) => {
     const { handleButtonClick, typeData } = props;
     const tableColumn = [
         tblPrepareColumns({
-            title: translateContent('shieldSchemeRegistration.label.columnOne'),
+            title: translateContent('shieldSchemeRegistration.label.shieldRegistrationDate'),
             dataIndex: 'shieldRegistrationNumber',
             width: '20%',
             render: (__, value) => {
@@ -30,23 +29,23 @@ export const tableColumn = (props) => {
         }),
 
         tblPrepareColumns({
-            title:  translateContent('shieldSchemeRegistration.label.columnTwo'),
+            title: translateContent('shieldSchemeRegistration.label.dealerLocation'),
             dataIndex: 'dealerLocation',
             width: '26%',
         }),
 
         tblPrepareColumns({
-            title:  translateContent('shieldSchemeRegistration.label.columnThree'),
+            title: translateContent('shieldSchemeRegistration.label.vin'),
             dataIndex: 'vin',
             width: '20%',
         }),
 
         tblPrepareColumns({
-            title:  translateContent('shieldSchemeRegistration.label.columnFour'),
+            title: translateContent('shieldSchemeRegistration.label.status'),
             dataIndex: 'status',
             width: '20%',
             render: (status) => {
-                return <Tag color="warning">{checkAndSetDefaultValue(getCodeValue(typeData?.AMC_REG_APRVL_STAT, status))}</Tag>;
+                return AMCStatusTags(status);
             },
         }),
 

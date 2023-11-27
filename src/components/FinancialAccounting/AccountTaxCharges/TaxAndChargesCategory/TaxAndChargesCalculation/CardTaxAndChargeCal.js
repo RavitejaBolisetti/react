@@ -16,7 +16,7 @@ const { Text } = Typography;
 const CardProductAttribute = (props) => {
     const { finalFormdata, taxChargeCalForm, forceUpdate, taxCharges, productHierarchyAttributeData, taxChargeCategoryCodeData, taxChargeCalList, setTaxChargeCalList, objTaxCharge, setOpenAccordian, changeValue, setChangeValue, handleCodeFunction, editForm, formEdit, setFormEdit, uniqueCardEdit, setuniqueCardEdit, handleDescriptionChange, buttonData, setButtonData, dropdownItems, setDropdownItems, viewMode, internalId, stateData, saleData, taxCategory } = props;
     const taxChargeDesc = taxCharges?.find((e) => e?.taxType === props?.chargeType)?.taxDescription;
-    const stateName = stateData?.find((e) => e?.gstStateCode === props?.stateCode)?.name;
+    const stateName = stateData?.find((e) => e?.code === props?.stateCode)?.name;
     const saleTypeName = saleData?.find((e) => e?.key === props?.saleType)?.value;
 
     const taxChargeCalEdit = (props) => {

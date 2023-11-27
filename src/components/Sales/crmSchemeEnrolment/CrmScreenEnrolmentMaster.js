@@ -466,7 +466,7 @@ export const CrmScreenEnrolmentBase = (props) => {
 
     const formProps = {
         isVisible: isFormVisible,
-        titleOverride: drawerTitle(formActionType).concat(drawerShortTitle),
+        titleOverride: drawerTitle(formActionType).concat(" ").concat(drawerShortTitle),
         handleButtonClick,
         formActionType,
         onCloseAction,

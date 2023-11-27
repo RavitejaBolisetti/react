@@ -12,6 +12,7 @@ import styles from '../../../TreeView.module.scss';
 import { NEXT_ACTION } from 'utils/btnVisiblity';
 import { translateContent } from 'utils/translateContent';
 import { preparePlaceholderSearch } from 'utils/preparePlaceholder';
+import { PRODUCT_LEVEL } from 'constants/modules/UserManagement/productLevel';
 
 const { Text } = Typography;
 const { Search } = Input;
@@ -57,12 +58,12 @@ const ProductMapping = (props) => {
     }, []);
 
     const mapSelectedKeyData = ({ data }) =>
-        data?.[0]?.attributeType !== 'MF' && data?.[0]?.attributeType !== 'MV' && data?.[0]?.attributeType !== 'MD'
+        data?.[0]?.attributeType !== PRODUCT_LEVEL.MF.key && data?.[0]?.attributeType !== PRODUCT_LEVEL.MV.key && data?.[0]?.attributeType !== PRODUCT_LEVEL.MD.key
             ? data?.map((item) => ({
                   ...item,
-                  checkable: item?.attributeType === 'MG',
-                  selectable: item?.attributeType !== 'MG',
-                  subProdct: item?.subProdct && !(item?.subProdct?.[0]?.attributeType === 'MF' || item?.subProdct?.[0]?.attributeType === 'MV' || item?.subProdct?.[0]?.attributeType === 'MD') ? mapSelectedKeyData({ data: item?.subProdct }) : null,
+                  checkable: item?.attributeType === PRODUCT_LEVEL.MG.key,
+                  selectable: item?.attributeType !== PRODUCT_LEVEL.MG.key,
+                  subProdct: item?.subProdct && !(item?.subProdct?.[0]?.attributeType === PRODUCT_LEVEL.MF.key || item?.subProdct?.[0]?.attributeType === PRODUCT_LEVEL.MV.key || item?.subProdct?.[0]?.attributeType === PRODUCT_LEVEL.MD.key) ? mapSelectedKeyData({ data: item?.subProdct }) : null,
               }))
             : null;
 
