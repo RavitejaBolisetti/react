@@ -288,4 +288,10 @@ export const EMBEDDED_REPORTS = {
         type: 'Report',
         slug: 'sale_register_report',
     },
+    REFERRAL_SCHEME_REGISTRATION_DOCUMENT: {
+        id: 42,
+        key: 'Referral_Scheme_Registration_Document',
+        title: 'Referral Scheme Registration Document ',
+        type: 'Document',
+    },
 };
