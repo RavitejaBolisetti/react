@@ -7,49 +7,43 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Button, Col, Form, Row } from 'antd';
+import { Col, Form, Row } from 'antd';
 
 import { tableColumn } from './tableColumn';
-import AdvanceFilter from './AdvanceFilter';
+// import AdvanceFilter from './AdvanceFilter';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 
 import { ListDataTable } from 'utils/ListDataTable';
-import { DealerCorporateClaimMasterMainContainer } from './DealerCorporateClaimMasterMainContainer';
 import { AdvancedSearch } from './AdvancedSearch';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { formatDateToCalenderDate, convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import styles from 'assets/sass/app.module.scss';
 
 import { validateRequiredInputField } from 'utils/validation';
-import { LANGUAGE_EN } from 'language/en';
 
-import { QUERY_BUTTONS_CONSTANTS, QueryButtons } from './QueryButtons';
 import { drawerTitle } from 'utils/drawerTitle';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { DEALER_CORPORATE_SECTION } from 'constants/modules/DealerCorporateClaim/dealerClaimSections';
 import { CLAIM_STATUS_BUTTONS } from 'constants/modules/DealerCorporateClaim/buttons';
-import { tableColumnPendingGeneration } from './tableColumnPendingGeneration';
+import { formatDateToCalenderDate } from 'utils/formatDateTime';
+import { LANGUAGE_EN } from 'language/en';
+import { QUERY_BUTTONS_CONSTANTS, QueryButtons } from './QueryButtons';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            ProductHierarchy: { isFilteredListLoaded: isProductHierarchyDataLoaded = false, isLoading: isProductHierarchyLoading, filteredListData: VehicleLovCodeData = [] },
         },
     } = state;
-    const moduleTitle = 'Claim';
+    const moduleTitle = 'Corporate Master';
 
     let returnValue = {
         userId,
         moduleTitle,
-        typeData: typeData['CHK_STATS'],
+        typeData,
         typedataMaster: typeData,
 
-        isProductHierarchyDataLoaded,
-        isProductHierarchyLoading,
-        VehicleLovCodeData,
     };
     return returnValue;
 };
@@ -65,16 +59,6 @@ const tabledataOth = [
     },
 ];
 
-const tabledataPFG = [
-    {
-        invoiceNuber : "Inv00987",
-        invoiceDate: '07-12-1997',
-        deliveryNoteNo: 'DNN933',
-        deliveryNoteDate: '07-12-1997',
-
-    },
-];
-
 const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
@@ -85,11 +69,8 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const DealerCorporateClaimMasterBase = (props) => {
+export const CorporateMasterBase = (props) => {
     const { userId, data, totalRecords, moduleTitle } = props;
-    const { isModelDataLoading, vehicleModelData } = props;
-    const { isProfileDataLoaded, ProfileData, ChecklistData, typeData } = props;
-    const { VehicleLovCodeData, isProfileDataLoading, isProductHierarchyLoading } = props;
 
     const [listFilterForm] = Form.useForm();
     const [filterString, setFilterString] = useState({});
@@ -174,7 +155,7 @@ export const DealerCorporateClaimMasterBase = (props) => {
                 key: 'fromDate',
                 title: 'Reciept From Date',
                 value: filterString?.fromDate,
-                name: convertDateTime(filterString?.fromDate, dateFormatView, 'fromDate'),
+                // name: convertDateTime(filterString?.fromDate, dateFormatView, 'fromDate'),
                 canRemove: true,
                 filter: true,
             },
@@ -182,7 +163,7 @@ export const DealerCorporateClaimMasterBase = (props) => {
                 key: 'toDate',
                 title: 'Reciept To Date',
                 value: filterString?.toDate,
-                name: convertDateTime(filterString?.toDate, dateFormatView, 'toDate'),
+                // name: convertDateTime(filterString?.toDate, dateFormatView, 'toDate'),
                 canRemove: false,
                 filter: true,
             },
@@ -190,7 +171,7 @@ export const DealerCorporateClaimMasterBase = (props) => {
                 key: 'model',
                 title: 'Model',
                 value: filterString?.model,
-                name: vehicleModelData?.find((element) => filterString?.model === element?.prodctCode)?.prodctShrtName,
+                // name: vehicleModelData?.find((element) => filterString?.model === element?.prodctCode)?.prodctShrtName,
                 canRemove: true,
                 filter: true,
             },
@@ -370,9 +351,8 @@ export const DealerCorporateClaimMasterBase = (props) => {
         totalRecords,
         page,
         setPage,
-        // tableColumn: tableColumn({ handleButtonClick, actionButtonVisibility }),
-        tableColumn: claimStatus === 'PFG' ? tableColumnPendingGeneration({ handleButtonClick, actionButtonVisibility }) : tableColumn({ handleButtonClick, actionButtonVisibility }),
-        tableData: claimStatus !== 'PFG' ? tabledataOth : tabledataPFG,
+        tableColumn: tableColumn({ handleButtonClick, actionButtonVisibility }),
+        tableData: tabledataOth,
         showAddButton: false,
         handleAdd: handleButtonClick,
         noMessge: LANGUAGE_EN.GENERAL.LIST_NO_DATA_FOUND.TITLE,
@@ -419,8 +399,6 @@ export const DealerCorporateClaimMasterBase = (props) => {
     };
 
     const containerProps = {
-        isProfileDataLoaded,
-        ProfileData,
         record: selectedRecord,
         form,
         formActionType,
@@ -457,8 +435,7 @@ export const DealerCorporateClaimMasterBase = (props) => {
         handleFormValueChange,
         isLastSection,
         VehicelReceiptChecklistOnfinish: onFinish,
-        supportingData: ChecklistData,
-        buttonType: buttonType === QUERY_BUTTONS_CONSTANTS?.COMPLETED?.key ? true : false,
+        // buttonType: buttonType === QUERY_BUTTONS_CONSTANTS?.COMPLETED?.key ? true : false,
         checkListDataModified,
         setcheckListDataModified,
         addMode: formActionType?.addMode,
@@ -469,11 +446,6 @@ export const DealerCorporateClaimMasterBase = (props) => {
         setdeletedUpload,
         fileList,
         setFileList,
-        typeData,
-        VehicleLovCodeData,
-        data,
-        isProfileDataLoading,
-        isProductHierarchyLoading,
     };
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
@@ -486,8 +458,6 @@ export const DealerCorporateClaimMasterBase = (props) => {
         setAdvanceSearchVisible,
         isAdvanceSearchVisible,
         onFinishSearch,
-        vehicleModelData,
-        isModelDataLoading,
         rules,
         setrules,
         showAddButton: true,
@@ -497,8 +467,8 @@ export const DealerCorporateClaimMasterBase = (props) => {
 
     return (
         <>
-            <AdvanceFilter {...advanceFilterResultProps} />
-            <AdvancedSearch {...advanceFilterProps} />
+            {/* <AdvanceFilter {...advanceFilterResultProps} /> */}
+            {/* <AdvancedSearch {...advanceFilterProps} /> */}
 
             {/* <AppliedAdvanceFilter {...advanceFilterResultProps} {...advanceFilterProps} /> */}
 
@@ -507,9 +477,9 @@ export const DealerCorporateClaimMasterBase = (props) => {
                     <ListDataTable {...tableProps} />
                 </Col>
             </Row>
-            <DealerCorporateClaimMasterMainContainer {...containerProps} />
+            {/* <DealerCorporateClaimMasterMainContainer {...containerProps} /> */}
         </>
     );
 };
 
-export const DealerCorporateClaimMaster = connect(mapStateToProps, mapDispatchToProps)(DealerCorporateClaimMasterBase);
+export const CorporateMasterMaster = connect(mapStateToProps, mapDispatchToProps)(CorporateMasterBase);

@@ -6,6 +6,7 @@
 import React from 'react';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
+import { CorporateMaster } from 'components/Sales/CorporateMaster';
 
 // import { CorporateMaster } from 'components/Sales';
 const CorporateMasterBase = (props) => {
@@ -19,8 +20,7 @@ const CorporateMasterBase = (props) => {
     return (
         <>
             <PageHeader {...pageHeaderData} />
-            {/* <CorporateMaster/> */}
-            <h2>Vivek</h2>
+            <CorporateMaster/>
         </>
     );
 };

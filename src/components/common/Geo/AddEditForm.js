@@ -12,7 +12,7 @@ import styles from 'assets/sass/app.module.scss';
 import TreeSelectField from '../TreeSelectField';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
-import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetter } from 'utils/validation';
+import { validateLettersWithWhitespaces, validateRequiredInputField, validateRequiredSelectField, validationFieldLetter } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 const { Option } = Select;
