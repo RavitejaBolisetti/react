@@ -9,6 +9,7 @@ import { Col, Input, Form, Row, Select, Button } from 'antd';
 import { withModal } from 'components/withModal';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { translateContent } from 'utils/translateContent';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 
@@ -16,10 +17,10 @@ import styles from 'assets/sass/app.module.scss';
 
 export const AdvanceForm = (props) => {
     const { AdvanceformData, setAdvanceformData } = props;
-    const { handleCancel, handleFormValueChange, optionalServices, setOptionalServices, aggregateForm } = props;
+    const { handleCancel, handleFormValueChange, optionalServices, typeData, setOptionalServices, aggregateForm } = props;
     const { setAdvanceSearchVisible } = props;
     const { isVisible, setisEditing, isEditing } = props;
-    const { itemOptions, setitemOptions, makeOptions, MakefieldNames, ItemFieldNames, page, setPage } = props;
+    const { itemOptions, setitemOptions, makeOptions, MakefieldNames, ItemFieldNames, page, setmakeOptions, setPage } = props;
     const [filteredMakeoptions, setfilteredMakeoptions] = useState([...makeOptions]);
     useEffect(() => {
         if (AdvanceformData && isVisible) {
@@ -95,12 +96,12 @@ export const AdvanceForm = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item name="item" label={translateContent('vehicleDetail.productDetails.label.item')} rules={[validateRequiredSelectField('Item')]}>
-                                <Select allowClear placeholder={preparePlaceholderText(translateContent('vehicleDetail.productDetails.label.item'))} options={itemOptions} fieldNames={ItemFieldNames} />
+                                <Select allowClear placeholder={preparePlaceholderText(translateContent('vehicleDetail.productDetails.label.item'))} onChange={handleItemChange} options={itemOptions} fieldNames={ItemFieldNames} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item label={translateContent('vehicleDetail.productDetails.label.make')} name="make" rules={[validateRequiredInputField('Make')]}>
-                                <Select allowClear placeholder={preparePlaceholderText(translateContent('vehicleDetail.productDetails.label.make'))} fieldNames={MakefieldNames} options={makeOptions} />
+                                <Select allowClear placeholder={preparePlaceholderText(translateContent('vehicleDetail.productDetails.label.make'))} fieldNames={MakefieldNames} options={filteredMakeoptions} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
