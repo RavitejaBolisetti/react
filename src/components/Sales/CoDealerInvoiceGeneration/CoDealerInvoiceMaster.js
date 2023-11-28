@@ -514,7 +514,6 @@ export const CoDealerInvoiceMasterBase = (props) => {
 
     const handleInvoicePrint = (record) => {
         setReportVisible(true);
-
         setAdditionalReportParams([
             {
                 key: 'sa_od_invoice_hdr_id',
@@ -768,6 +767,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
         setLastSection,
         setSection,
         saveButtonName: translateContent('global.buttons.submit'),
+        nextBtnName: formActionType?.addMode ? translateContent('global.buttons.continue') : translateContent('global.buttons.next'),
         CoDealerInvoiceStateMaster,
         HandleVinList,
         isVinLoading,

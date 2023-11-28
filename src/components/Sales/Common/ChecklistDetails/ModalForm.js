@@ -78,6 +78,7 @@ export const ChecklistModalForms = (props) => {
                 setisEditing(false);
                 setAdvanceformData();
                 setPage((prev) => ({ pageIntialState, current: prev?.current }));
+                setsaveDisabled(true);
             })
             .catch((err) => console.error(err));
     };
