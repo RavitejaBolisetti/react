@@ -304,6 +304,28 @@ export const HoPriceMappingMasterBase = (props) => {
         searchForm.resetFields();
     };
 
+    const disableExceptModelsGroup = (node) => {
+        if (node?.attributeType === MODEL_TYPE?.MODAL_GROUP?.key) {
+            node[`disabled`] = false;
+        } else {
+            node[`disabled`] = true;
+        }
+
+        if (node?.subProdct?.length > 0) {
+            node?.subProdct?.forEach((child) => {
+                disableExceptModelsGroup(child);
+            });
+        }
+
+        return node;
+    };
+
+    useEffect(() => {
+        setModelGroupProductData(productHierarchyData?.map((e) => disableExceptModelsGroup(e)));
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [productHierarchyData]);
+
     const handleFilterChange =
         (name, type = 'value') =>
         (value) => {
@@ -526,28 +548,6 @@ export const HoPriceMappingMasterBase = (props) => {
                 break;
         }
     };
-
-    const disableExceptModelsGroup = (node) => {
-        if (node?.attributeType === MODEL_TYPE?.MODAL_GROUP?.key) {
-            node[`disabled`] = false;
-        } else {
-            node[`disabled`] = true;
-        }
-
-        if (node?.subProdct?.length > 0) {
-            node?.subProdct?.forEach((child) => {
-                disableExceptModelsGroup(child);
-            });
-        }
-
-        return node;
-    };
-
-    useEffect(() => {
-        setModelGroupProductData(productHierarchyData?.map((e) => disableExceptModelsGroup(e)));
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [productHierarchyData]);
 
     const title = translateContent('hoPriceMapping.heading.title');
     const drawerTitleHeading = translateContent('hoPriceMapping.heading.drawerTitleHeading');
