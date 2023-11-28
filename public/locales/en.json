@@ -3834,7 +3834,7 @@
         },
         "gstBranchAccessibleMaster": {
             "heading": {
-                "moduleTitle": " GST Details"
+                "moduleTitle": "GST Details"
             },
             "label": {
                 "branchName": "Branch Name",

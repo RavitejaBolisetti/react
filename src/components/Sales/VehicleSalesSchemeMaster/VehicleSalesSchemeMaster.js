@@ -249,6 +249,7 @@ export const VehicleSalesSchemeMasterBase = (props) => {
     useEffect(() => {
         if (isVehicleSalesSchemeDataLoaded) {
             setFormData(vehicleSalesSchemeDetails);
+            setOrganizationId(vehicleSalesSchemeDetails?.moHierarchyMstId)
             vehicleSalesSchemeDetails && addSchemeForm.setFieldsValue({ ...vehicleSalesSchemeDetails, validityFromDate: formattedCalendarDate(vehicleSalesSchemeDetails?.validityFromDate), validityToDate: formattedCalendarDate(vehicleSalesSchemeDetails?.validityToDate), vehicleInvoiceFromDate: formattedCalendarDate(vehicleSalesSchemeDetails?.vehicleInvoiceFromDate), vehicleInvoiceToDate: formattedCalendarDate(vehicleSalesSchemeDetails?.vehicleInvoiceToDate) });
             setSchemeCategorySelect(vehicleSalesSchemeDetails?.schemeType);
             handleSchemeCategory(vehicleSalesSchemeDetails?.schemeType);
@@ -510,6 +511,7 @@ export const VehicleSalesSchemeMasterBase = (props) => {
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
         addSchemeForm.resetFields();
+        setOrganizationId([]);
         setTableDataItem([]);
         if (buttonAction === VIEW_ACTION || buttonAction === EDIT_ACTION) {
             //setFormData([])

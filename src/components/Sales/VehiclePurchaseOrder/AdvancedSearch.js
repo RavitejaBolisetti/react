@@ -19,7 +19,8 @@ import { translateContent } from 'utils/translateContent';
 import styles from 'assets/sass/app.module.scss';
 
 export const AdvancedSearchFrom = (props) => {
-    const { setAdvanceSearchVisible, typeData } = props;
+    const { setAdvanceSearchVisible, typeData, isReadOnly = true } = props;
+    const disabledProps = { disabled: isReadOnly };
     const {
         filterString,
         setFilterString,
@@ -53,7 +54,7 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={filterString?.orderType || PURCHASE_ORDER_TYPE_STATUS.AGAINSTSTOCK.key} label={translateContent('vehiclePurchaseOrder.label.orderType')} name="orderType" rules={[validateRequiredSelectField(translateContent('vehiclePurchaseOrder.validation.orderType'))]}>
-                        <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'value', value: 'key' }} options={typeData['PO_TYPE']} className={styles.headerSelectField}></Select>
+                        <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'value', value: 'key' }} options={typeData['PO_TYPE']} className={styles.headerSelectField} {...disabledProps}></Select>
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>

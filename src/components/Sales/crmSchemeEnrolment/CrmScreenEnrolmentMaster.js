@@ -162,13 +162,13 @@ export const CrmScreenEnrolmentBase = (props) => {
             {
                 key: 'sortBy',
                 title: 'Sort By',
-                value: page?.sortBy,
+                value: filterString?.sortBy,
                 filter: false,
             },
             {
                 key: 'sortIn',
                 title: 'Sort Type',
-                value: page?.sortType,
+                value: filterString?.sortType,
                 filter: false,
             },
             {
@@ -201,6 +201,7 @@ export const CrmScreenEnrolmentBase = (props) => {
 
     useEffect(() => {
         if (userId) {
+            setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -280,6 +281,9 @@ export const CrmScreenEnrolmentBase = (props) => {
     // };
 
     const handleResetFilter = () => {
+        if(filterString){
+            setShowDataLoading(true);
+        }
         setShowDataLoading(false);
         setFilterString();
         advanceFilterForm.resetFields();
