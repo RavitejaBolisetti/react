@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
-import { Col, Input, Form, Row, Button, Collapse, Card, Typography, Divider, Switch } from 'antd';
+import { Col, Input, Form, Row, Button, Collapse, Typography, Divider, Switch } from 'antd';
 import { validateRequiredSelectField, validateNumberWithTwoDecimalPlaces, validateRequiredInputField, compareAmountValidator } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { PlusOutlined } from '@ant-design/icons';
@@ -17,7 +17,6 @@ import { taxDetailsColumn, optionalServicesColumns } from './tableColumn';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { addToolTip } from 'utils/customMenuLink';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
-import { GrSync } from 'react-icons/gr';
 import { getCodeValue } from 'utils/getCodeValue';
 import { VEHICLE_TYPE } from 'constants/VehicleType';
 
