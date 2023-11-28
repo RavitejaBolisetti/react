@@ -19,7 +19,7 @@ import styles from 'assets/sass/app.module.scss';
 const { Panel } = Collapse;
 
 const AddViewFormMain = (props) => {
-    const { form, formData, buttonData, setButtonData, handleButtonClick, onCloseAction, formActionType, onFinish, isEnrolmentGenerated, activeKey, onChange, generatedData } = props;
+    const { form, formData, buttonData, setButtonData, handleButtonClick, onCloseAction, formActionType, onFinish, isEnrolmentGenerated, activeKey, onChange, generatedData, handlePrintDownload } = props;
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -36,6 +36,7 @@ const AddViewFormMain = (props) => {
         setButtonData,
         handleButtonClick,
         saveButtonName: formActionType?.addMode ? translateContent('global.buttons.saveAndNext') : translateContent('global.buttons.next'),
+        handlePrintDownload,
     };
 
     const myProps = {

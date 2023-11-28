@@ -17,7 +17,7 @@ const { Text } = Typography;
 const ViewVehicleList = (props) => {
     const { styles, contactData, deleteContactHandeler, setEditingData, typeData } = props;
     const { isAdding, setShowAddEditForm, showAddEditForm, setContactData, onFinish, form, contactform, isEditing, setIsEditing, formActionType } = props;
-    const { setButtonData, buttonData } = props;
+    const { requestPayload, setRequestPayload, setButtonData, buttonData } = props;
     const [openAccordian, setOpenAccordian] = useState('');
 
     const deleteVehicle = (e, data, i) => {
@@ -29,6 +29,11 @@ const ViewVehicleList = (props) => {
         setContactData((prev) => {
             prev?.splice(i, 1);
             return [...prev];
+        });
+
+        setRequestPayload((prev) => {
+            prev?.amcVehicleDetails?.splice(i, 1);
+            return { ...requestPayload, amcVehicleDetails: [...prev?.amcVehicleDetails] };
         });
     };
 
