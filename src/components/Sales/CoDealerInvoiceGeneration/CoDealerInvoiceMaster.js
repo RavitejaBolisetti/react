@@ -400,11 +400,8 @@ export const CoDealerInvoiceMasterBase = (props) => {
             case NEXT_ACTION:
                 break;
             case VIEW_ACTION:
-                if (record?.invoiceStatus === CO_DEALER_QUERY_BUTTONS?.INVOICED?.key) {
-                    btnVisibilityStatus = { ...buttonData, cancelInvoice: true, closeBtn: true, nextBtn: !isLastSection, printInvoiceBtn: true };
-                } else {
-                    btnVisibilityStatus = { ...buttonData, cancelInvoice: false, closeBtn: true, nextBtn: !isLastSection, printInvoiceBtn: false };
-                }
+                const isInvoiced = record?.invoiceStatus === CO_DEALER_QUERY_BUTTONS?.INVOICED?.key;
+                btnVisibilityStatus = { ...buttonData, closeBtn: true, nextBtn: !isLastSection, printInvoiceBtn: isInvoiced };
                 formAction = { addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION };
                 break;
             case CANCEL_INVOICE:
@@ -443,7 +440,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
                 extraParams: ExtraParams('invoiceId', null, id),
                 onSuccessAction: (res) => {
                     setCoDealerInvoiceStateMaster((prev) => ({ ...prev, selectedOrder: { ...res?.data, invoiceDate: convertDateTimedayjs(res?.data?.invoiceDate, dateFormatView) } }));
-                    const showCancelInvoice = [IRN_STATUS?.APPROVED?.key, IRN_STATUS?.REJECTED?.key, null]?.includes(res?.data?.irnStatus) && !formActionType?.addMode;
+                    const showCancelInvoice = [IRN_STATUS?.APPROVED?.key, IRN_STATUS?.REJECTED?.key, null]?.includes(res?.data?.irnStatus) && !formActionType?.addMode && res?.data?.invoiceStatus === CO_DEALER_QUERY_BUTTONS?.INVOICED?.key;
                     setButtonData((prev) => ({ ...prev, cancelInvoice: showCancelInvoice }));
                 },
                 onErrorAction,
