@@ -338,12 +338,12 @@ export const HoPriceMappingMasterBase = (props) => {
 
     const handleResetFilter = () => {
         setShowDataLoading(false);
+        setSelectedTreeSelectKey([])
         advanceFilterForm.setFieldsValue({ stateCode: undefined, cityCode: undefined, modelCode: undefined });
         setFilteredCityData([]);
     };
 
     const handleSelectTreeClick = (value, name) => {
-
         let obj = {
             modelCode: value,
         };
@@ -504,7 +504,7 @@ export const HoPriceMappingMasterBase = (props) => {
         form.resetFields();
         advanceFilterForm.resetFields();
         advanceFilterForm.setFieldsValue();
-        setSelectedTreeSelectKey([])
+        setSelectedTreeSelectKey([]);
         setAdvanceSearchVisible(false);
     };
 
@@ -595,6 +595,7 @@ export const HoPriceMappingMasterBase = (props) => {
         modelGroupProductData,
         selectedTreeSelectKey,
         modelCodeName,
+        setSelectedTreeSelectKey,
     };
 
     const formProps = {
