@@ -33,6 +33,9 @@ export const VechilePurchaseOrderStatusTag = (status) => {
         case VEHICLE_PURCHASE_ORDER_STATUS.INVOICED.key:
             tag = <Tag color="purple">{VEHICLE_PURCHASE_ORDER_STATUS.INVOICED.title}</Tag>;
             break;
+        case VEHICLE_PURCHASE_ORDER_STATUS.DLT?.key:
+            tag = <Tag color="error">{VEHICLE_PURCHASE_ORDER_STATUS.DLT.title}</Tag>;
+            break;
 
         default:
     }
