@@ -389,7 +389,7 @@ export const CorporateMasterBase = (props) => {
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
         onCloseAction: onAdvanceSearchCloseAction,
-        titleOverride: `${translateContent('city.title.advanceFilters')}`,
+        titleOverride: translateContent('city.title.advanceFilters'),
         isDataCountryLoaded,
         isCountryLoading,
         countryData,
@@ -409,11 +409,9 @@ export const CorporateMasterBase = (props) => {
         setAdvanceSearchVisible,
     };
 
-    const showAddButton = false;
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick),
         tableData: searchData,
-        showAddButton,
     };
 
     const title = moduleTitle || translateContent('city.title.cityName');
@@ -434,7 +432,8 @@ export const CorporateMasterBase = (props) => {
         title,
         setFilteredDistrictData,
         tableData: searchData,
-        showAddButton,
+        showAddButton: true,
+
     };
 
     return (
