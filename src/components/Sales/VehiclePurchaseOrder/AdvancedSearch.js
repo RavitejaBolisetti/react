@@ -19,7 +19,8 @@ import { translateContent } from 'utils/translateContent';
 import styles from 'assets/sass/app.module.scss';
 
 export const AdvancedSearchFrom = (props) => {
-    const { setAdvanceSearchVisible, typeData, isReadOnly = true } = props;
+    const { setAdvanceSearchVisible, typeData } = props;
+    const { isReadOnly = true } = props;
     const disabledProps = { disabled: isReadOnly };
     const {
         filterString,
