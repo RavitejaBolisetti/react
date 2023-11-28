@@ -45,7 +45,7 @@ const VehicleDetailCard = (props) => {
                         {translateContent('vehicleReceiptChecklist.heading.profileCard.checklistNumber')}
                         <span className={styles.activeForm}>
                             {ProfileData?.checklistNumber || 'New'}
-                            <CopytoClipboard text={ProfileData?.checklistNumber} />
+                            <CopytoClipboard buttonText={null} text={ProfileData?.checklistNumber} />
                         </span>
                     </div>
                 }

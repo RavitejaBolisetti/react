@@ -512,7 +512,7 @@ export const RSARegistrationMasterBase = (props) => {
         if (value) {
             const onSuccessAction = (res) => {
                 setVehicleCustomeDetailsOnly(res?.data);
-                setVinNumber(res?.data?.vehicleAndCustomerDetails?.shieldVehicleDetails?.vin);
+                setVinNumber(res?.data?.vehicleAndCustomerDetails?.vehicleDetails?.vin);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             };
             const extraParams = [
