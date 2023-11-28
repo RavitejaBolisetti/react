@@ -324,7 +324,7 @@ export const CrmScreenEnrolmentBase = (props) => {
         setAdditionalReportParams([
             {
                 key: 'sc_ws_enrolment_detail_id',
-                value: record?.id,
+                value: record?.record?.id,
             },
         ]);
     };

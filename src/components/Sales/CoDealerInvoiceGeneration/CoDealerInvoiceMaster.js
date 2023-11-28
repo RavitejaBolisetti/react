@@ -517,7 +517,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
         setAdditionalReportParams([
             {
                 key: 'sa_od_invoice_hdr_id',
-                value: record?.id,
+                value: record?.record?.id,
             },
         ]);
     };
