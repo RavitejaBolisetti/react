@@ -159,17 +159,26 @@
 
 			.ant-upload-list {
 				.ant-upload-list-item {
+					// height: auto;
+					// margin-top: 10px;
+					// padding: 0;
+					// background-color: $transparentColor;
+					// border: none;
+					// box-shadow: none;
+
 					height: auto;
-					margin-top: 10px;
-					padding: 0;
-					background-color: $transparentColor;
-					border: none;
-					box-shadow: none;
+                    margin-top: 10px;
+                    padding: 10px 20px;
+                    border: 1px solid $neutralGrey1;
+                    background-color: $neutralGrey0;
+                    border-radius: 4px;
+                    box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.15);
 
-					.ant-upload-icon {
-						display: none;
-					}
 
+					// .ant-upload-icon {
+					// 	display: none;
+					// }
+					
 					.ant-upload-list-item-name {
 						padding-left: 0;
 						color: $primaryBlack;
@@ -189,6 +198,11 @@
 					.ant-upload-list-item-actions {
 						display: flex;
 						align-items: center;
+						.ant-btn {
+							&:not(:first-child) {
+								margin-left: 20px;
+							}
+						}
 
 						.ant-upload-list-item-action {
 							opacity: 1;
