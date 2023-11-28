@@ -99,7 +99,14 @@ const AMCRegistrationDetailsMasterBase = (props) => {
             showGlobalNotification({ message: translateContent('amcRegistration.validation.taxValidation'), notificationType: 'warning' });
             return false;
         } else {
-            fetchDetail({ setIsLoading: listShowLoading, userId, extraParams, customURL, onErrorAction, onSuccessAction });
+            schemeForm
+                .validateFields()
+                .then(() => {
+                    fetchDetail({ setIsLoading: listShowLoading, userId, extraParams, customURL, onErrorAction, onSuccessAction });
+                })
+                .catch(() => {
+                    return;
+                });
         }
     };
 

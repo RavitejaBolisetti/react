@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Collapse, Space, Typography, Divider } from 'antd';
+import { Collapse, Space, Divider } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import { DATA_TYPE } from 'constants/dataType';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
@@ -12,9 +12,10 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 import { AMCStatusValues } from '../utils/AMCStatusTags';
+import dayjs from 'dayjs';
+import { dateFormatView } from 'utils/formatDateTime';
 
 const { Panel } = Collapse;
-const { Text } = Typography;
 
 const expandIcon = ({ isActive }) =>
     isActive ? (
@@ -30,7 +31,7 @@ const expandIcon = ({ isActive }) =>
     );
 
 const AMCRegistrationCard = (props) => {
-    const { selectedAMC, requestPayload, isLoading } = props;
+    const { formActionType, selectedAMC, requestPayload, isLoading } = props;
     return (
         <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon} collapsible="icon">
             <Panel
@@ -47,11 +48,11 @@ const AMCRegistrationCard = (props) => {
             >
                 <Divider />
                 <div className={styles.detailCardText}>
-                    {translateContent('amcRegistration.label.amcRegistrationDate')}: <span>{checkAndSetDefaultValue(requestPayload?.amcRegistration?.amcRegistrationDate || selectedAMC?.amcRegistrationDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
+                    {translateContent('amcRegistration.label.amcRegistrationDate')}: <span>{formActionType?.addMode ? dayjs()?.format(dateFormatView) : checkAndSetDefaultValue(requestPayload?.amcRegistration?.amcRegistrationDate || selectedAMC?.amcRegistrationDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    {translateContent('amcRegistration.label.status')}: <span>{AMCStatusValues(selectedAMC?.status)}</span>
+                    {translateContent('amcRegistration.label.status')}: <span>{selectedAMC?.status ? AMCStatusValues(selectedAMC?.status) : 'In-Progress'}</span>
                 </div>
             </Panel>
         </Collapse>
