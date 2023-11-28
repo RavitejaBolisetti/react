@@ -7,6 +7,8 @@ import React from 'react';
 import { Card, Descriptions } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { translateContent } from 'utils/translateContent';
+import { DATA_TYPE } from 'constants/dataType';
+
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -24,7 +26,7 @@ const EnrolmentMain = (props) => {
             <Card>
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label={translateContent('crmSchemeEnrolment.label.enrolmentNumber')}>{checkAndSetDefaultValue(detailData?.enrolmentDetailsDto?.enrollmentNumber, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('crmSchemeEnrolment.label.enrolmentDate')}>{checkAndSetDefaultValue(detailData?.enrolmentDetailsDto?.enrollmentDate, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('crmSchemeEnrolment.label.enrolmentDate')}>{checkAndSetDefaultValue(detailData?.enrolmentDetailsDto?.enrolmentDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('crmSchemeEnrolment.label.enrolmentStatus')}>{checkAndSetDefaultValue(detailData?.enrolmentDetailsDto?.enrollmentStatus === true ? 'Active' : 'Inactive', isLoading)}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('crmSchemeEnrolment.label.schemeType')}>{checkAndSetDefaultValue(detailData?.enrolmentDetailsDto?.schemeType, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('crmSchemeEnrolment.label.vin')}>{checkAndSetDefaultValue(detailData?.enrolmentDetailsDto?.vin, isLoading)}</Descriptions.Item>
