@@ -16,7 +16,6 @@ import { debounce } from 'utils/debounce';
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 
-
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -102,7 +101,7 @@ const AccessibleDealerLocationMain = ({ setCanFormSave, userId, dealerLocations,
     const handleSelect = (value) => {
         let locationDetails = dealerLocations?.find((location) => location?.dealerLocationName === value);
         if (finalFormdata?.accessibleLocation?.findIndex((el) => el?.dealerMasterLocationId === locationDetails?.id) !== -1) {
-            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: translateContent('global.generalMessage.duplicateLocationMessage'), placement: 'bottomRight' });
+            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: translateContent('global.generalMessage.duplicateLocationMessage') });
             return;
         }
         setFinalFormdata((prev) => ({ ...prev, accessibleLocation: [...finalFormdata?.accessibleLocation, { dealerMasterLocationId: locationDetails?.id, locationName: value, id: '', status: true }] }));
@@ -126,6 +125,7 @@ const AccessibleDealerLocationMain = ({ setCanFormSave, userId, dealerLocations,
             }
         });
         forceUpdate();
+        setCanFormSave(true);
     };
 
     const handleClearInput = (val) => {
@@ -143,8 +143,7 @@ const AccessibleDealerLocationMain = ({ setCanFormSave, userId, dealerLocations,
                     </AutoComplete>
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    {finalFormdata?.accessibleLocation?.length > 0 &&
-                        finalFormdata?.accessibleLocation?.filter(i=>i?.status).map((location) => location?.status && <LocationCard key={location?.id} {...location} handleDeleteLocation={handleDeleteLocation} />)}
+                    {finalFormdata?.accessibleLocation?.length > 0 && finalFormdata?.accessibleLocation?.filter((i) => i?.status).map((location) => location?.status && <LocationCard key={location?.id} {...location} handleDeleteLocation={handleDeleteLocation} />)}
                 </Col>
             </Row>
         </>

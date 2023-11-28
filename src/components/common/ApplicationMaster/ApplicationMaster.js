@@ -171,7 +171,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationMasterData
                 status: values?.applicationStatus,
                 parentApplicationId: parentAppCode,
                 documentType: documentType?.map((el) => ({ ...el, id: el.id || '' })),
-                accessibleLocation: accessibleLocation?.map(({ dealerMasterLocationId, id }) => ({ id: id || '', dealerMasterLocationId: dealerMasterLocationId })),
+                accessibleLocation: accessibleLocation?.map(({ dealerMasterLocationId, id, status }) => ({ id: id || '', dealerMasterLocationId: dealerMasterLocationId, status })),
                 deviceType: menuType,
                 applicationAction: actionData,
                 accessableIndicator: Number(values?.accessableIndicator),
