@@ -19,7 +19,7 @@ export const tableColumn = (handleButtonClick) => {
 
         tblPrepareColumns({
             title: translateContent('crmSchemeEnrolment.label.enrolmentDate'),
-            dataIndex: 'enrolledDate',
+            dataIndex: 'enrolmentDate',
             width: '13%',
             render: (text) => (text ? convertDateMonthYear(text) : 'NA'),
         }),

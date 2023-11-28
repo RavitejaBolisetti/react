@@ -42,6 +42,8 @@ const AddViewFormMain = (props) => {
     const myProps = {
         ...props,
         generatedData,
+        handlePrintDownload,
+        formData,
     };
 
     return (
