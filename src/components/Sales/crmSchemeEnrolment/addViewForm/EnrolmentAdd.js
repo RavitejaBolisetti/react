@@ -29,12 +29,12 @@ const EnrolmentAdd = (props) => {
                         <Search placeholder={preparePlaceholderText(translateContent('crmSchemeEnrolment.label.vehicleRegistrationNumber'), false)} allowClear onSearch={onHandleRegistrationNumber} loading={isSearchLoading} />
                     </Form.Item>
                 </Col>
-                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                {/* <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                     <Form.Item label={translateContent('crmSchemeEnrolment.label.bookletNumber')} name="bookletNumber">
-                        {/* //rules={[validateRequiredInputField('Booklet Number')]} */}
+                        
                         <Input placeholder={preparePlaceholderText(translateContent('crmSchemeEnrolment.label.bookletNumber'), false)} />
                     </Form.Item>
-                </Col>
+                </Col> */}
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                     <Form.Item label={translateContent('crmSchemeEnrolment.label.enrolledBy')} name="enrolledBy" rules={[validateRequiredInputField(translateContent('crmSchemeEnrolment.label.enrolledBy'))]}>
                         {customSelectBox({ data: typeData[PARAM_MASTER?.ENROLLED_BY?.id], placeholder: preparePlaceholderSelect(translateContent('crmSchemeEnrolment.label.enrolledBy')) })}
