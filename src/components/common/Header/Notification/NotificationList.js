@@ -173,9 +173,18 @@ const NotificationListMaster = (props) => {
                                                         Archive
                                                     </Button>
                                                 )}
-                                                <Button disabled={item?.isRead} onClick={() => handleActionButton(item, NOTIFICATION_STATUS.READ.key)} type="link">
-                                                    Mark as read
-                                                </Button>
+                                                {!item?.isRead && (
+                                                    <Button 
+                                                    // disabled={item?.isRead}
+                                                     onClick={() => handleActionButton(item, NOTIFICATION_STATUS.READ.key)} type="link">
+                                                        Mark as read
+                                                    </Button>
+                                                )}
+                                                {item?.isRead && (
+                                                    <Button  onClick={() => handleActionButton(item, NOTIFICATION_STATUS.UN_READ.key)} type="link">
+                                                        Mark as un-read
+                                                    </Button>
+                                                )}
                                             </Space>
                                         </>
                                     }

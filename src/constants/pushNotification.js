@@ -33,6 +33,10 @@ export const NOTIFICATION_STATUS = {
         id: 9,
         title: 'Update all',
         key: 'Y',
-    }
-
+    },
+    UN_READ: {
+        id: 10,
+        title: 'Un-Read',
+        key: 'UR',
+    },
 };
