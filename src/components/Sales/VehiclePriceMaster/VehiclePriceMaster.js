@@ -182,6 +182,8 @@ export const VehiclePriceMasterBase = (props) => {
 
     const onErrorAction = (res) => {
         showGlobalNotification({ message: res });
+        setShowDataLoading(false);
+
     };
 
     const paramMasterId = 'VH_PRC_SRCH';
@@ -313,6 +315,7 @@ export const VehiclePriceMasterBase = (props) => {
 
     useEffect(() => {
         if (userId) {
+            setShowDataLoading(true);
             fetchVehiclePriceList({ setIsLoading: listVehiclePriceShowLoading, userId, extraParams, customURL, onErrorAction, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -434,6 +437,7 @@ export const VehiclePriceMasterBase = (props) => {
             setEmptyList(false);
             setUploadedFile();
             setFileList([]);
+            setShowDataLoading(true);
 
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
@@ -489,6 +493,9 @@ export const VehiclePriceMasterBase = (props) => {
     };
 
     const handleResetFilter = () => {
+        if (filterString) {
+            setShowDataLoading(true);
+        }
         setFilterString();
         advanceFilterForm.resetFields();
         setShowDataLoading(false);

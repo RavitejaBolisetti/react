@@ -145,7 +145,7 @@
             "cancel": "Cancel",
             "print/download": "Print/Download",
             "replaceImage": "Replace Image",
-            "saveAndNew": "Save and New",
+            "saveAndNew": "Save & New",
             "saveAndAddNew": "Save & Add New",
             "saveAndNext": "Save & Next",
             "next": "Next",
@@ -3834,7 +3834,7 @@
         },
         "gstBranchAccessibleMaster": {
             "heading": {
-                "moduleTitle": " GST Details"
+                "moduleTitle": "GST Details"
             },
             "label": {
                 "branchName": "Branch Name",

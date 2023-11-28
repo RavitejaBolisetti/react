@@ -25,6 +25,7 @@ import { BASE_URL_GST_DOCID_NAME as customURL } from 'constants/routingApi';
 
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
     const {
@@ -36,7 +37,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = translateContent('gstIRNAuthentication.heading.moduleTitle');
+    const moduleTitle = translateContent('gstIRNAuthentication.gstBranchAccessibleMaster.heading.moduleTitle');
     let returnValue = {
         userId,
         accessToken,
@@ -71,7 +72,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const GSTIRNAuthenticationMasterBase = (props) => {
     const { userId, data, showGlobalNotification } = props;
-    const { typeData } = props;
+    const { typeData, moduleTitle } = props;
     const { filterString, setFilterString, listShowLoadingGst, fetchList, dealerGstData } = props;
     const { listShowLoadingGstLogin, fetchListGstLogin, listShowLoading, saveData } = props;
     const { fetchGstDoc, downloadFile } = props;
@@ -262,6 +263,7 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
     };
 
     const containerProps = {
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(moduleTitle),
         record: selectedRecord,
         form,
         formActionType,

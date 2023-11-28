@@ -249,6 +249,7 @@ export const VehicleSalesSchemeMasterBase = (props) => {
     useEffect(() => {
         if (isVehicleSalesSchemeDataLoaded) {
             setFormData(vehicleSalesSchemeDetails);
+            setOrganizationId(vehicleSalesSchemeDetails?.moHierarchyMstId)
             vehicleSalesSchemeDetails && addSchemeForm.setFieldsValue({ ...vehicleSalesSchemeDetails, validityFromDate: formattedCalendarDate(vehicleSalesSchemeDetails?.validityFromDate), validityToDate: formattedCalendarDate(vehicleSalesSchemeDetails?.validityToDate), vehicleInvoiceFromDate: formattedCalendarDate(vehicleSalesSchemeDetails?.vehicleInvoiceFromDate), vehicleInvoiceToDate: formattedCalendarDate(vehicleSalesSchemeDetails?.vehicleInvoiceToDate) });
             setSchemeCategorySelect(vehicleSalesSchemeDetails?.schemeType);
             handleSchemeCategory(vehicleSalesSchemeDetails?.schemeType);
@@ -407,6 +408,7 @@ export const VehicleSalesSchemeMasterBase = (props) => {
 
     useEffect(() => {
         if (userId) {
+            setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -457,6 +459,8 @@ export const VehicleSalesSchemeMasterBase = (props) => {
             setUploadedFile();
             setFileList([]);
             form.resetFields();
+            setShowDataLoading(true);
+
             showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         };
 
@@ -510,6 +514,7 @@ export const VehicleSalesSchemeMasterBase = (props) => {
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
         addSchemeForm.resetFields();
+        setOrganizationId([]);
         setTableDataItem([]);
         if (buttonAction === VIEW_ACTION || buttonAction === EDIT_ACTION) {
             //setFormData([])
@@ -563,6 +568,9 @@ export const VehicleSalesSchemeMasterBase = (props) => {
     };
 
     const handleResetFilter = (e) => {
+        if (filterString) {
+            setShowDataLoading(true);
+        }
         setFilterString((prev) => ({ current: 1, pageSize: prev?.pageSize }));
         setShowDataLoading(false);
         advanceFilterForm.resetFields();
@@ -811,6 +819,7 @@ export const VehicleSalesSchemeMasterBase = (props) => {
         setPage: setFilterString,
         totalRecords,
         dynamicPagination,
+        filterString,
     };
 
     const title = translateContent('vehicleSalesSchemeMaster.heading.title');

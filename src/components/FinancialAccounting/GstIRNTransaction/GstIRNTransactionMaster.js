@@ -189,7 +189,7 @@ export const GstIRNTransactionMain = (props) => {
     };
 
     const handleIRNGeneration = (record) => {
-        const data = { id: record?.id, invoiceNumber: record?.invoiceDocumentNumber };
+        const data = { id: record?.documentId, invoiceNumber: record?.invoiceDocumentNumber };
         const onSuccess = (res) => {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
             showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });

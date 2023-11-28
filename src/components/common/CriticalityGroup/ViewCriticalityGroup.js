@@ -7,7 +7,6 @@ import React from 'react';
 import { Descriptions } from 'antd';
 import { translateContent } from 'utils/translateContent';
 
-
 const ViewCriticalityGroupMain = (props) => {
     const { formData, styles } = props;
 
@@ -19,7 +18,7 @@ const ViewCriticalityGroupMain = (props) => {
     };
 
     return (
-        <div className={styles?.viewContainer}>
+        <div className={styles?.viewDrawerContainer}>
             <>
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label={translateContent('criticalityGroup.label.criticalityGroupId')}>{formData?.criticalityGroupCode}</Descriptions.Item>

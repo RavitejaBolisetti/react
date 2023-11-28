@@ -16,7 +16,6 @@ import { debounce } from 'utils/debounce';
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 
-
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -102,11 +101,10 @@ const AccessibleDealerLocationMain = ({ setCanFormSave, userId, dealerLocations,
     const handleSelect = (value) => {
         let locationDetails = dealerLocations?.find((location) => location?.dealerLocationName === value);
         if (finalFormdata?.accessibleLocation?.findIndex((el) => el?.dealerMasterLocationId === locationDetails?.id) !== -1) {
-            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: translateContent('global.generalMessage.duplicateLocationMessage'), placement: 'bottomRight' });
+            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: translateContent('global.generalMessage.duplicateLocationMessage') });
             return;
         }
-        setFinalFormdata((prev) => ({ ...prev, accessibleLocation: [...finalFormdata?.accessibleLocation, { dealerMasterLocationId: locationDetails?.id, locationName: value, id: '' }] }));
-        // showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: translateContent('global.generalMessage.locationAddedSuccessfully'), placement: 'bottomRight' });
+        setFinalFormdata((prev) => ({ ...prev, accessibleLocation: [...finalFormdata?.accessibleLocation, { dealerMasterLocationId: locationDetails?.id, locationName: value, id: '', status: true }] }));
         setCanFormSave(true);
     };
 
@@ -114,15 +112,20 @@ const AccessibleDealerLocationMain = ({ setCanFormSave, userId, dealerLocations,
         setSearchValue(text?.trim());
     }, 400);
 
-    const handleDeleteLocation = (values) => {
+    const handleDeleteLocation = (locationName, id, dealerMasterLocationId) => {
         setFinalFormdata((prev) => {
             const prevData = prev;
-            const index = prev?.accessibleLocation?.findIndex((el) => el?.locationName === values?.locationName);
-            prevData?.accessibleLocation?.splice(index, 1);
-            return prevData;
+            const index = prev?.accessibleLocation?.findIndex((el) => el?.locationName === locationName);
+            if (id) {
+                prevData?.accessibleLocation?.splice(index, 1, { locationName, id, dealerMasterLocationId, status: false });
+                return prevData;
+            } else {
+                prevData?.accessibleLocation?.splice(index, 1);
+                return prevData;
+            }
         });
-        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationError.delete'), message: translateContent('global.generalMessage.deletedSucessfully').replace('{NAME}', translateContent('applicationMaster.label.location')), placement: 'bottomRight' });
         forceUpdate();
+        setCanFormSave(true);
     };
 
     const handleClearInput = (val) => {
@@ -140,11 +143,7 @@ const AccessibleDealerLocationMain = ({ setCanFormSave, userId, dealerLocations,
                     </AutoComplete>
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    {finalFormdata?.accessibleLocation?.length > 0
-                        ? finalFormdata?.accessibleLocation?.map((location) => {
-                              return <LocationCard key={location?.id} {...location} handleDeleteLocation={handleDeleteLocation} />;
-                          })
-                        : ''}
+                    {finalFormdata?.accessibleLocation?.length > 0 && finalFormdata?.accessibleLocation?.filter((i) => i?.status).map((location) => location?.status && <LocationCard key={location?.id} {...location} handleDeleteLocation={handleDeleteLocation} />)}
                 </Col>
             </Row>
         </>

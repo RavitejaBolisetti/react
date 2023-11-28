@@ -96,7 +96,7 @@ const mapStateToProps = (state) => {
         isLoginDataLoading,
 
         dealerParentsLovList,
-        dealerLocations,
+        dealerLocations: dealerLocations.filter((value) => value?.locationCode && value?.dealerLocationName),
 
         locations,
     };
