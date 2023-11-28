@@ -292,39 +292,17 @@ export const HoPriceMappingMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
-    // useEffect(() => {
-    //     if (isAdvanceSearchVisible && filterString) {
-    //         setSelectedTreeSelectKey(modelCodeName);
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [isAdvanceSearchVisible, filterString]);
+    useEffect(() => {
+        if (isAdvanceSearchVisible && filterString) {
+            setSelectedTreeSelectKey(modelCodeName);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isAdvanceSearchVisible, filterString]);
 
     const handlePricingTypeChange = (key) => {
         setPricingType(key);
         searchForm.resetFields();
     };
-
-    const disableExceptModelsGroup = (node) => {
-        if (node?.attributeType === MODEL_TYPE?.MODAL_GROUP?.key) {
-            node[`disabled`] = false;
-        } else {
-            node[`disabled`] = true;
-        }
-
-        if (node?.subProdct?.length > 0) {
-            node?.subProdct?.forEach((child) => {
-                disableExceptModelsGroup(child);
-            });
-        }
-
-        return node;
-    };
-
-    useEffect(() => {
-        setModelGroupProductData(productHierarchyData?.map((e) => disableExceptModelsGroup(e)));
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [productHierarchyData]);
 
     const handleFilterChange =
         (name, type = 'value') =>
@@ -365,7 +343,7 @@ export const HoPriceMappingMasterBase = (props) => {
     };
 
     const handleSelectTreeClick = (value, name) => {
-        console.log('..', value, name);
+
         let obj = {
             modelCode: value,
         };
@@ -400,7 +378,7 @@ export const HoPriceMappingMasterBase = (props) => {
     };
     const disableExceptModelGroup = (node) => {
         if (node?.attributeType === MODEL_TYPE.MODAL_GROUP.key && (node?.parntProdctCode !== ATTRIBUTE_TYPE.SERVICE.key || node?.parntProdctCode === null)) {
-            node[`selectable`] = false;
+            //node[`selectable`] = false;
             let key = hoPriceDetailData?.modelDealerMapResponse?.find((e) => e?.modelGroupCode === node?.prodctCode);
             if (key && Object.values(key) && key?.status === true) setCheckedKeys((prev) => [...prev, node?.id]);
             setModelGroupArr((prev) => [...prev, node]);
@@ -507,6 +485,7 @@ export const HoPriceMappingMasterBase = (props) => {
 
         advanceFilterForm.resetFields();
         advanceFilterForm.setFieldsValue();
+        setSelectedTreeSelectKey([]);
         setAdvanceSearchVisible(false);
     };
 
@@ -525,6 +504,7 @@ export const HoPriceMappingMasterBase = (props) => {
         form.resetFields();
         advanceFilterForm.resetFields();
         advanceFilterForm.setFieldsValue();
+        setSelectedTreeSelectKey([])
         setAdvanceSearchVisible(false);
     };
 
@@ -548,6 +528,27 @@ export const HoPriceMappingMasterBase = (props) => {
                 break;
         }
     };
+
+    const disableExceptModelsGroup = (node) => {
+        if (node?.attributeType === MODEL_TYPE?.MODAL_GROUP?.key) {
+            node[`disabled`] = false;
+        } else {
+            node[`disabled`] = true;
+        }
+
+        if (node?.subProdct?.length > 0) {
+            node?.subProdct?.forEach((child) => {
+                disableExceptModelsGroup(child);
+            });
+        }
+
+        return node;
+    };
+
+    useEffect(() => {
+        setModelGroupProductData(productHierarchyData?.map((e) => disableExceptModelsGroup(e)));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [productHierarchyData]);
 
     const title = translateContent('hoPriceMapping.heading.title');
     const drawerTitleHeading = translateContent('hoPriceMapping.heading.drawerTitleHeading');

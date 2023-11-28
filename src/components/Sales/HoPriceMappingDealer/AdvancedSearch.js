@@ -17,7 +17,7 @@ import styles from 'assets/sass/app.module.scss';
 const { Option } = Select;
 
 export const AdvancedSearchFrom = (props) => {
-    const { setAdvanceSearchVisible, filteredStateData, filteredCityData, productHierarchyList, handleFilterChange, setFilteredCityData, isStateLoading, selectedTreeSelectKey, modelGroupProductData, handleSelectTreeClick } = props;
+    const { setAdvanceSearchVisible, filteredStateData, filteredCityData, modelCodeName, handleFilterChange, setFilteredCityData, isStateLoading, selectedTreeSelectKey, modelGroupProductData, handleSelectTreeClick } = props;
     const {
         filterString,
         setFilterString,
@@ -35,7 +35,7 @@ export const AdvancedSearchFrom = (props) => {
             cityCode: values?.cityCode,
             cityCodeName: filteredCityData?.find((i) => i?.key === values?.cityCode)?.value,
             modelCode: values?.modelCode,
-            modelCodeName: productHierarchyList?.find((i) => i?.prodctCode === values?.modelCode)?.prodctShrtName,
+            modelCodeName: modelCodeName,
             advanceFilter: true,
         });
         setAdvanceSearchVisible(false);
