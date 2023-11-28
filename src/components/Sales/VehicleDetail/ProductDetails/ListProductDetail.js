@@ -231,6 +231,7 @@ const ProductDetailMasterMain = (props) => {
     useEffect(() => {
         if (typeData) {
             if (typeData[PARAM_MASTER?.VEH_ITEM?.id]) setitemOptions(typeData[PARAM_MASTER?.VEH_ITEM?.id]);
+            if (typeData[PARAM_MASTER?.VEH_MAKE?.id]) setmakeOptions(typeData[PARAM_MASTER?.VEH_MAKE?.id]);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [typeData]);
