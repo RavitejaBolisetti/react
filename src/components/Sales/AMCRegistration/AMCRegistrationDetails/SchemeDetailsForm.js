@@ -5,7 +5,7 @@
  */
 import React from 'react';
 import { Row, Col, Form, DatePicker, Input } from 'antd';
-import { validateRequiredSelectField, validateRequiredInputField, validateOnlyPositiveNumber } from 'utils/validation';
+import { validateRequiredSelectField, validateRequiredInputField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { customSelectBox } from 'utils/customSelectBox';
 import { PARAM_MASTER } from 'constants/paramMaster';
@@ -61,7 +61,7 @@ const SchemeDetailsForm = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item label={translateContent('amcRegistration.label.schemeDiscount')} name="schemeDiscount" rules={[validateRequiredInputField(translateContent('amcRegistration.label.schemeDiscount')), validateOnlyPositiveNumber(translateContent('amcRegistration.label.schemeDiscount')), { validator: (__, value) => isDiscountLessThanAmount(value) }]}>
+                    <Form.Item label={translateContent('amcRegistration.label.schemeDiscount')} name="schemeDiscount" rules={[validateRequiredInputField(translateContent('amcRegistration.label.schemeDiscount')), validateNumberWithTwoDecimalPlaces(translateContent('amcRegistration.label.schemeDiscount')), { validator: (__, value) => isDiscountLessThanAmount(value) }]}>
                         <Input onChange={handleTaxChange} maxLength={50} placeholder={preparePlaceholderText(translateContent('amcRegistration.label.schemeDiscount'))} />
                     </Form.Item>
                 </Col>

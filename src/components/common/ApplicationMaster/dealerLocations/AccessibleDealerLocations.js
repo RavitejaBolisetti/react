@@ -106,7 +106,6 @@ const AccessibleDealerLocationMain = ({ setCanFormSave, userId, dealerLocations,
             return;
         }
         setFinalFormdata((prev) => ({ ...prev, accessibleLocation: [...finalFormdata?.accessibleLocation, { dealerMasterLocationId: locationDetails?.id, locationName: value, id: '', status: true }] }));
-        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: translateContent('global.generalMessage.locationAddedSuccessfully'), placement: 'bottomRight' });
         setCanFormSave(true);
     };
 
