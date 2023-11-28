@@ -26,7 +26,7 @@ import { translateContent } from 'utils/translateContent';
 import { drawerTitle } from 'utils/drawerTitle';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { DisableParent } from 'components/common/ProductHierarchy/ProductHierarchyUtils';
-
+import { MODEL_TYPE } from 'constants/modules/hoPricingMapping/index';
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -35,7 +35,8 @@ const mapStateToProps = (state) => {
             Vehicle: {
                 VehiclePurchaseOrderDetail: { data, filter: filterString },
             },
-            ProductHierarchy: { isFilteredListLoaded: isProductHierarchyDataLoaded = false, productCode = undefined, isLoading: isProductHierarchyLoading, filteredListData: productAttributeData = [], isLoaded: isProductDataLoaded = false, data: productHierarchyData = [] },
+            // ProductHierarchy: { isFilteredListLoaded: isProductHierarchyDataLoaded = false, productCode = undefined, isLoading: isProductHierarchyLoading, filteredListData: productAttributeData = [], isLoaded: isProductDataLoaded = false, data: productHierarchyData = [] },
+            ProductHierarchy: { data: productHierarchyData = [] },
         },
     } = state;
 
@@ -53,14 +54,13 @@ const mapStateToProps = (state) => {
         isLoading: false,
         isDetailLoaded: true,
         filterString,
-        isProductHierarchyDataLoaded,
-
-        isProductHierarchyLoading,
-        productAttributeData,
-        isProductDataLoaded,
-        isProductDataLoading: !isProductDataLoaded,
+        // isProductHierarchyDataLoaded,
+        // isProductHierarchyLoading,
+        // productAttributeData,
+        // isProductDataLoaded,
+        // isProductDataLoading: !isProductDataLoaded,
+        // productCode,
         productHierarchyDataListArray: productHierarchyData,
-        productCode,
     };
     return returnValue;
 };
@@ -77,9 +77,7 @@ const mapDispatchToProps = (dispatch) => ({
 
             fetchProductList: productHierarchyDataActions.fetchList,
             ProductLovCodeLoading: productHierarchyDataActions.listShowLoading,
-            fetchProductDetail: productHierarchyDataActions.fetchDetail,
-            fetchProductLovCode: productHierarchyDataActions.fetchFilteredList,
-
+            
             showGlobalNotification,
         },
         dispatch
@@ -141,10 +139,31 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
     const [isCancelVisible, setIsCancelVisible] = useState(false);
     const [changeView, setChangeView] = useState(false);
 
+    const disableExceptModelsGroup = (node) => {
+        if (node?.attributeType === MODEL_TYPE?.MODAL_GROUP?.key) {
+            node[`disabled`] = false;
+        } else {
+            node[`disabled`] = true;
+        }
+
+        if (node?.subProdct?.length > 0) {
+            node?.subProdct?.forEach((child) => {
+                disableExceptModelsGroup(child);
+            });
+        }
+
+        return node;
+    };
+
     useEffect(() => {
-        setProductHierarchyDataArray(productHierarchyDataListArray?.map((i) => DisableParent(i, 'subProdct')));
+        setProductHierarchyDataArray(productHierarchyDataListArray?.map((e) => disableExceptModelsGroup(e)));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [productHierarchyDataListArray]);
+
+    // useEffect(() => {
+    //     setProductHierarchyDataArray(productHierarchyDataListArray?.map((i) => DisableParent(i, 'subProdct')));
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [productHierarchyDataListArray]);
 
     useEffect(() => {
         if (userId) {
@@ -153,6 +172,10 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
                 {
                     key: 'unit',
                     value: 'Sales',
+                },
+                {
+                    key: 'prodctCode',
+                    value: productHierarchyDataListArray?.modelCode,
                 },
                 {
                     key: 'hierarchyNode',

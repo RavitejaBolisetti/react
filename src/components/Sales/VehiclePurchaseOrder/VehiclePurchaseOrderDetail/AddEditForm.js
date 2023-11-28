@@ -77,6 +77,8 @@ const AddEditFormMain = (props) => {
         // treeDisabled: orderStatus === OTF_STATUS.BOOKED.key ? false : true,
     };
 
+    console.log(`productHierarchyDataArray`, productHierarchyDataArray);
+
     return (
         <Form form={form} layout="vertical" autocomplete="off" colon="false" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBody}>
