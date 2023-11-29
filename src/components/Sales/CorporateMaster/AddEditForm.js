@@ -102,11 +102,6 @@ const AddEditFormMain = (props) => {
                                         <Input placeholder={preparePlaceholderText('Corporate Name' || translateContent('city.placeholder.cityCode'))} maxLength={6} disabled={editMode ? true : false} />
                                     </Form.Item>
                                 </Col>
-                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label={translateContent('city.label.districtName')} initialValue={formData?.districtCode} name="districtCode" rules={[validateRequiredSelectField(translateContent('city.validation.districtName'))]}>
-                                        <Input placeholder={preparePlaceholderText(translateContent('city.placeholder.cityCode'))} maxLength={6} disabled={editMode ? true : false} />
-                                    </Form.Item>
-                                </Col>
 
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item label={'Corporate Category' || translateContent('city.label.cityName')} initialValue={formData?.name} rules={[validateRequiredInputField('Corporate Category' || translateContent('city.validation.cityName'))]} name="name">
