@@ -14,7 +14,7 @@ export const ModalButtons = ({ reset, submit, handleResetFilter, submitName, res
     return (
         <div className={styles.modalFooter}>
             <Row gutter={20}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupLeft}>
+                <Col xs={24} sm={20} md={20} lg={20} xl={20} className={styles.buttonsGroupRight}>
                     <Button disabled={resetDisabled} danger onClick={handleResetFilter} data-testid="reset">
                         {BUTTON_CONSTANTS?.RESET?.name}
                     </Button>
@@ -22,13 +22,13 @@ export const ModalButtons = ({ reset, submit, handleResetFilter, submitName, res
                 {!hideSaveBtn && (
                     <>
                         {htmltype ? (
-                            <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
+                            <Col xs={24} sm={4} md={4} lg={4} xl={4} className={styles.buttonsGroupRight}>
                                 <Button disabled={saveDisabled} htmlType="submit" type="primary" data-testid="apply">
                                     {BUTTON_CONSTANTS?.SUBMIT?.name}
                                 </Button>
                             </Col>
                         ) : (
-                            <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
+                            <Col xs={24} sm={4} md={4} lg={4} xl={4} className={styles.buttonsGroupRight}>
                                 <Button disabled={saveDisabled} onClick={onClickAction} type="primary">
                                     {BUTTON_CONSTANTS?.SUBMIT?.name}
                                 </Button>
