@@ -46,7 +46,7 @@ const AppBase = ({ readFromStorageAndValidateAuth, hideGlobalNotification, notif
     }, [notificationState?.visible]);
 
     const informationModalBox = useCallback(
-        ({ type = 'error', title = translateContent('global.notificationError.title'), message, duration = 3000, placement = 'topRight', showTitle = true }) => {
+        ({ type = 'error', title = translateContent('global.notificationError.title'), message, duration = 3, placement = 'topRight', showTitle = true }) => {
             const checkIcon = {
                 success: <AiOutlineCheckCircle />,
                 warning: <AiOutlineWarning />,

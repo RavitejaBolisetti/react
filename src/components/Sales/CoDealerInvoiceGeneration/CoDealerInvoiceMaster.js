@@ -201,7 +201,17 @@ export const CoDealerInvoiceMasterBase = (props) => {
     useEffect(() => {
         if (typeData && typeData?.[PARAM_MASTER.CO_DEALER_INV_SER.id]?.length) {
             searchForm.setFieldsValue({ searchType: 'indentNumber' });
-            setCoDealerInvoiceStateMaster({ ...CoDealerInvoiceStateMaster, RFRL: typeData?.[PARAM_MASTER.RFRL.id], TAX_CALCLTN_TYPE: typeData?.[PARAM_MASTER.TAX_CALCLTN_TYPE.id], VEHCL_TYPE: typeData?.[PARAM_MASTER.VEHCL_TYPE.id], PRC_TYP: typeData?.[PARAM_MASTER.PRC_TYP.id], SALE_TYPE: typeData?.[PARAM_MASTER.SALE_TYPE.id], TYPE_DATA_INV_SEARCH: typeData?.[PARAM_MASTER.CO_DEALER_INV_SER.id], typeData: typeData?.[PARAM_MASTER.CO_DEALER_INV_SER.id], typeDataFilter: typeData?.[PARAM_MASTER.CO_DEALER_INV_SER.id]?.filter((i) => [SEARCH_PARAM_CONSTANTS?.INDENT_NUMBER?.key]?.includes(i?.key)) });
+            setCoDealerInvoiceStateMaster({
+                ...CoDealerInvoiceStateMaster,
+                RFRL: typeData?.[PARAM_MASTER.RFRL.id],
+                TAX_CALCLTN_TYPE: typeData?.[PARAM_MASTER.TAX_CALCLTN_TYPE.id],
+                VEHCL_TYPE: typeData?.[PARAM_MASTER.VEHCL_TYPE.id],
+                PRC_TYP: typeData?.[PARAM_MASTER.PRC_TYP.id],
+                SALE_TYPE: typeData?.[PARAM_MASTER.SALE_TYPE.id],
+                TYPE_DATA_INV_SEARCH: typeData?.[PARAM_MASTER.CO_DEALER_INV_SER.id]?.filter((item) => ![SEARCH_PARAM_CONSTANTS?.DEALER_PARENT?.key]?.includes(item?.key)),
+                typeData: typeData?.[PARAM_MASTER.CO_DEALER_INV_SER.id],
+                typeDataFilter: typeData?.[PARAM_MASTER.CO_DEALER_INV_SER.id]?.filter((i) => [SEARCH_PARAM_CONSTANTS?.INDENT_NUMBER?.key]?.includes(i?.key)),
+            });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [typeData, typeData?.[PARAM_MASTER.CO_DEALER_INV_SER.id]]);

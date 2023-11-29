@@ -82,7 +82,7 @@ const VehicleDetailsMain = (props) => {
     }, [CoDealerInvoiceStateMaster?.vehicleDetailRequest?.modelCode]);
 
     const handleVehicleDetailChange = ({ modelCode, discountAmount, saleType, priceType }) => {
-        if (modelCode && discountAmount && saleType && priceType) {
+        if (modelCode && saleType && priceType) {
             const extraParams = [
                 {
                     key: 'modelCode',
@@ -90,7 +90,7 @@ const VehicleDetailsMain = (props) => {
                 },
                 {
                     key: 'discountAmount',
-                    value: discountAmount,
+                    value: discountAmount ?? "0",
                 },
 
                 {
@@ -130,7 +130,7 @@ const VehicleDetailsMain = (props) => {
     }, [CoDealerInvoiceStateMaster?.vehicleDetailRequest, form, section?.id]);
 
     useEffect(() => {
-        if (trueDealerDiscount && changeStatus) {
+        if (trueDealerDiscount || changeStatus) {
             handleVehicleDetailChange({ modelCode: form.getFieldValue('modelCode'), discountAmount: form.getFieldValue('discountAmount'), saleType: form.getFieldValue('saleType'), priceType: form.getFieldValue('priceType') });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
