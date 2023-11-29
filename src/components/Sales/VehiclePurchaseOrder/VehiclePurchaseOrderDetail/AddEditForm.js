@@ -73,11 +73,7 @@ const AddEditFormMain = (props) => {
         selectedTreeSelectKey: modelCode,
         handleSelectTreeClick,
         placeholder: preparePlaceholderSelect(translateContent('vehiclePurchaseOrder.label.modal')),
-        // loading: !viewOnly ? isProductDataLoading : false,
-        // treeDisabled: orderStatus === OTF_STATUS.BOOKED.key ? false : true,
     };
-
-    console.log(`productHierarchyDataArray`, productHierarchyDataArray);
 
     return (
         <Form form={form} layout="vertical" autocomplete="off" colon="false" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>

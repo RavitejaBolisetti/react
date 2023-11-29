@@ -26,7 +26,6 @@ import { translateContent } from 'utils/translateContent';
 import { drawerTitle } from 'utils/drawerTitle';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { DisableParent } from 'components/common/ProductHierarchy/ProductHierarchyUtils';
-import { MODEL_TYPE } from 'constants/modules/hoPricingMapping/index';
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -77,7 +76,7 @@ const mapDispatchToProps = (dispatch) => ({
 
             fetchProductList: productHierarchyDataActions.fetchList,
             ProductLovCodeLoading: productHierarchyDataActions.listShowLoading,
-            
+
             showGlobalNotification,
         },
         dispatch
@@ -139,35 +138,13 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
     const [isCancelVisible, setIsCancelVisible] = useState(false);
     const [changeView, setChangeView] = useState(false);
 
-    const disableExceptModelsGroup = (node) => {
-        if (node?.attributeType === MODEL_TYPE?.MODAL_GROUP?.key) {
-            node[`disabled`] = false;
-        } else {
-            node[`disabled`] = true;
-        }
-
-        if (node?.subProdct?.length > 0) {
-            node?.subProdct?.forEach((child) => {
-                disableExceptModelsGroup(child);
-            });
-        }
-
-        return node;
-    };
-
     useEffect(() => {
-        setProductHierarchyDataArray(productHierarchyDataListArray?.map((e) => disableExceptModelsGroup(e)));
+        setProductHierarchyDataArray(productHierarchyDataListArray?.map((i) => DisableParent(i, 'subProdct')));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [productHierarchyDataListArray]);
 
-    // useEffect(() => {
-    //     setProductHierarchyDataArray(productHierarchyDataListArray?.map((i) => DisableParent(i, 'subProdct')));
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [productHierarchyDataListArray]);
-
     useEffect(() => {
-        if (userId) {
-            // && selectedOrder?.modelCode
+        if (userId && productHierarchyDataListArray.length > 0) {
             const extraParams = [
                 {
                     key: 'unit',
@@ -185,7 +162,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
             fetchProductList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
+    }, [userId, productHierarchyDataListArray]);
     const onSuccessAction = () => {
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
