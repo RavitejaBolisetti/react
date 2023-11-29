@@ -424,7 +424,8 @@
         "heading": {
             "mainTitle": "Forgot Your Password",
             "subtitle": "Please enter your user credential",
-            "createNewPassword": "Create New Password"
+            "createNewPassword": "Create New Password",
+            "newPassword": "New Password"
         },
         "label": {
             "userId": "user id",
