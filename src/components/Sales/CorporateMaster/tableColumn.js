@@ -13,25 +13,25 @@ export const tableColumn = (handleButtonClick) => {
     tableColumn.push(
         tblPrepareColumns({
             title: 'Corporate Code'|| `${translateContent('city.title.cityCode')}`,
-            dataIndex: 'code',
+            dataIndex: 'corporateCode',
             width: '15%',
         }),
 
         tblPrepareColumns({
             title: 'Corporate Name' ||`${translateContent('city.title.cityName')}`,
-            dataIndex: 'name',
+            dataIndex: 'corporateName',
             width: '15%',
         }),
 
         tblPrepareColumns({
             title: 'Corporate Category' || `${translateContent('city.title.districtName')}`,
-            dataIndex: 'districtName',
+            dataIndex: 'corporateCategory',
             width: '15%',
         }),
 
         tblPrepareColumns({
             title: 'Corporate Type' || `${translateContent('city.title.districtName')}`,
-            dataIndex: 'stateName',
+            dataIndex: 'type',
             width: '15%',
         }),
         tblPrepareColumns({

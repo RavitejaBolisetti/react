@@ -27,7 +27,8 @@ import { DEALER_CORPORATE_SECTION } from 'constants/modules/DealerCorporateClaim
 import { CLAIM_STATUS_BUTTONS } from 'constants/modules/DealerCorporateClaim/buttons';
 import { formatDateToCalenderDate } from 'utils/formatDateTime';
 import { LANGUAGE_EN } from 'language/en';
-import { QUERY_BUTTONS_CONSTANTS, QueryButtons } from './QueryButtons';
+import AdvanceFilter from './AdvanceFilter';
+import { AddEditForm } from './AddEditForm';
 
 const mapStateToProps = (state) => {
     const {
@@ -36,7 +37,7 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
         },
     } = state;
-    const moduleTitle = 'Corporate Master';
+    const moduleTitle = 'Corporate Scheme';
 
     let returnValue = {
         userId,
@@ -50,12 +51,16 @@ const mapStateToProps = (state) => {
 
 const tabledataOth = [
     {
-        dealerName: 'Test Autos',
-        dealerBranch: 'Greater noida',
-        claimType: 'Test Calim type',
-        clameNo: 'CLM988',
-        modelName: 'XUV700',
-        claimStatus: 'Pending For Approval'
+        zone: 'East',
+        areaOffice: 'Noida',
+        dealerCode: 'DC999',
+        corporateCategory: 'Category',
+        dealerAmount: '990',
+        oeMAmount: '100',
+        totalAmount: '99',
+        validFrom: '',
+        validTo: '',
+        status: ''
     },
 ];
 
@@ -69,7 +74,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const CorporateMasterBase = (props) => {
+export const CorporateSchemeRegistrationBase = (props) => {
     const { userId, data, totalRecords, moduleTitle } = props;
 
     const [listFilterForm] = Form.useForm();
@@ -123,7 +128,6 @@ export const CorporateMasterBase = (props) => {
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
-    const [buttonType, setbuttonType] = useState(QUERY_BUTTONS_CONSTANTS?.PENDING?.key);
 
     const [page, setPage] = useState({ ...pageIntialState });
     const dynamicPagination = true;
@@ -132,17 +136,9 @@ export const CorporateMasterBase = (props) => {
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [actionButtonVisibility, setactionButtonVisibility] = useState({ canEdit: false, canView: false, DeleteIcon: false, canAdd: true });
     const [rules, setrules] = useState({ ...rulesIntialstate });
-    const [claimStatus, setClaimStatus] = useState('PFG');
 
     const extraParams = useMemo(() => {
         return [
-            {
-                key: 'checklistStatus',
-                title: 'checklistStatus',
-                value: buttonType,
-                canRemove: false,
-                filter: false,
-            },
             {
                 key: 'grnNumber',
                 title: 'grnNumber',
@@ -201,7 +197,7 @@ export const CorporateMasterBase = (props) => {
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, page, buttonType]);
+    }, [filterString, page]);
 
     useEffect(() => {
         return () => {
@@ -369,9 +365,24 @@ export const CorporateMasterBase = (props) => {
         }
     };
 
-    const handleQuickFilter = (value) => {
-        setClaimStatus(value?.key);
+    const formProps = {
+        form,
+        formData,
+        formActionType,
+        setFormActionType,
+        onFinish,
+        isVisible: isFormVisible,
+        onCloseAction,
+        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
+        data,
+        ADD_ACTION,
+        EDIT_ACTION,
+        VIEW_ACTION,
+        buttonData,
+        setButtonData,
+        handleButtonClick,
     };
+
 
     const advanceFilterResultProps = {
         extraParams,
@@ -383,7 +394,9 @@ export const CorporateMasterBase = (props) => {
         from: listFilterForm,
         onFinish,
         onFinishFailed,
-        title:<QueryButtons currentItem={claimStatus} items={CLAIM_STATUS_BUTTONS} onClick={handleQuickFilter} />,
+        // title:<QueryButtons currentItem={claimStatus} items={CLAIM_STATUS_BUTTONS} onClick={handleQuickFilter} />,
+        // title: moduleTitle,
+        title: 'Product',
         data,
         otfSearchRules,
         setOtfSearchRules,
@@ -395,58 +408,13 @@ export const CorporateMasterBase = (props) => {
         handleSearchChange,
         handleButtonClick,
         // saveButtonName: !isLastSection && 'Save'
-        saveButtonName:'Save'
+        saveButtonName:'Save',
+        showAddButton: true,
+        addBtnVisible: true,
+        showRefreshBtn: false,
     };
 
-    const containerProps = {
-        record: selectedRecord,
-        form,
-        formActionType,
-        setFormActionType,
-        onFinish,
-        onFinishFailed,
-        setIsFormVisible,
-        isVisible: isFormVisible,
-        onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
-        tableData: data,
-        ADD_ACTION,
-        EDIT_ACTION,
-        VIEW_ACTION,
-        NEXT_ACTION,
-        buttonData,
-
-        setButtonData,
-        handleButtonClick,
-        defaultFormActionType,
-        defaultBtnVisiblity,
-        selectedRecordId,
-        setSelectedRecordId,
-        selectedRecord,
-        setSelectedRecord,
-        section,
-        currentSection,
-        sectionName,
-        setCurrentSection,
-        previousSection,
-        setPreviousSection,
-        formData,
-        setFormData,
-        handleFormValueChange,
-        isLastSection,
-        VehicelReceiptChecklistOnfinish: onFinish,
-        // buttonType: buttonType === QUERY_BUTTONS_CONSTANTS?.COMPLETED?.key ? true : false,
-        checkListDataModified,
-        setcheckListDataModified,
-        addMode: formActionType?.addMode,
-        editMode: formActionType?.editMode,
-        payload,
-        setPayload,
-        deletedUpload,
-        setdeletedUpload,
-        fileList,
-        setFileList,
-    };
+    
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
         titleOverride: 'Advance Filters',
@@ -468,18 +436,17 @@ export const CorporateMasterBase = (props) => {
     return (
         <>
             {/* <AdvanceFilter {...advanceFilterResultProps} /> */}
-            {/* <AdvancedSearch {...advanceFilterProps} /> */}
-
-            {/* <AppliedAdvanceFilter {...advanceFilterResultProps} {...advanceFilterProps} /> */}
+            <AdvancedSearch {...advanceFilterProps} />
+            <AppliedAdvanceFilter {...advanceFilterResultProps} />
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ListDataTable {...tableProps} />
                 </Col>
             </Row>
-            {/* <DealerCorporateClaimMasterMainContainer {...containerProps} /> */}
+            <AddEditForm {...formProps}/>
         </>
     );
 };
 
-export const CorporateMasterMaster = connect(mapStateToProps, mapDispatchToProps)(CorporateMasterBase);
+export const CorporateSchemeRegistrationMaster = connect(mapStateToProps, mapDispatchToProps)(CorporateSchemeRegistrationBase);

@@ -411,7 +411,12 @@ export const CorporateMasterBase = (props) => {
 
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick),
-        tableData: [{}],
+        tableData: [{
+            corporateCode: 'CC999',
+            corporateName: 'Test Corp',
+            corporateCategory: 'Test Category',
+            corporateType: 'Type'
+    }],
     };
 
     const title = moduleTitle || translateContent('city.title.cityName');

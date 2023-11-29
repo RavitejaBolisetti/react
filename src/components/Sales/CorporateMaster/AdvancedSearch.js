@@ -49,7 +49,7 @@ export const AdvancedSearchFrom = (props) => {
                             <Select defaultValue={defaultCountry} showSearch loading={!isDataCountryLoaded} placeholder={'corporate category' || translateContent('city.placeholder.select')} allowClear onChange={handleFilterChange('countryCode')}>
                                 {countryData?.map((item) => (
                                     <Option key={item?.countryCode} value={item?.countryCode}>
-                                        {item?.countryName}
+                                        {item?.countryName?.qw}
                                     </Option>
                                 ))}
                             </Select>
@@ -73,13 +73,13 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                        label={'Claim from Date' || translateContent('vehicleReceiptChecklist.label.advanceFilter.fromDate')}
+                        label={'Valid as on' || translateContent('vehicleReceiptChecklist.label.advanceFilter.fromDate')}
                         name="fromDate"
                         className={styles?.datePicker}
                         //  rules={[{ required: rules?.fromdate, message: translateContent('vehicleReceiptChecklist.advanceFilter.message1') }]}
                     >
                         <DatePicker
-                            placeholder={'Claim From Date' || preparePlaceholderSelect(translateContent('vehicleReceiptChecklist.label.advanceFilter.fromDate'))}
+                            placeholder={'Valid as on' || preparePlaceholderSelect(translateContent('vehicleReceiptChecklist.label.advanceFilter.fromDate'))}
                             format={dateFormat}
                             className={styles.fullWidth}
                             // disabledDate={(current) => current > new Date()}

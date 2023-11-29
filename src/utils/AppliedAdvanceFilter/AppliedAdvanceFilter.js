@@ -16,10 +16,15 @@ import { PlusOutlined } from '@ant-design/icons';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { translateContent } from 'utils/translateContent';
+import TreeSelectField from 'components/common/TreeSelectField';
 
 const { Search } = Input;
 export default function AppliedAdvanceFilter(props) {
     const { tableData = [], showAddButton = true,showRefreshBtn=true, advanceFilter = false, title, filterString, from, onFinish, onFinishFailed, extraParams, removeFilter, handleResetFilter, handleClearInSearch, onSearchHandle, setAdvanceSearchVisible, handleReferesh, handleButtonClick, validator = searchValidator, downloadReport = false, handleDownloadReport = false, showChangeHistoryButton = false, showChangeHistoryList } = props;
+    const { addBtnVisible=false } = props;
+
+    const treeSelectFieldProps = {...props}
+    
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();
     };
@@ -42,7 +47,8 @@ export default function AppliedAdvanceFilter(props) {
                                         ]}
                                         validateTrigger={['onSearch']}
                                     >
-                                        <Search placeholder={translateContent('global.placeholder.search')} allowClear onSearch={onSearchHandle} onChange={handleClearInSearch} />
+                                         <TreeSelectField {...treeSelectFieldProps} />
+                                        {/* <Search placeholder={translateContent('global.placeholder.search')} allowClear onSearch={onSearchHandle} onChange={handleClearInSearch} /> */}
                                     </Form.Item>
                                 </Form>
                             </Col>
@@ -78,7 +84,7 @@ export default function AppliedAdvanceFilter(props) {
                             </Button>
                         )}
 
-                        {tableData?.length > 0 && (
+                        {(tableData?.length > 0 || addBtnVisible)  && (
                             <>
                                 {showRefreshBtn && <Button icon={<TfiReload />} onClick={handleReferesh} data-testid="refreshBtn" danger />}
                                 {showAddButton && (

@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Button, Row, Col, Input, Form } from 'antd';
+import { Button, Row, Col, Input, Form, Typography } from 'antd';
 import { FilterIcon } from 'Icons';
 import { RxCross2 } from 'react-icons/rx';
 import { PlusOutlined } from '@ant-design/icons';
@@ -12,6 +12,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import styles from 'assets/sass/app.module.scss';
 
+// const { Text } = Typography;
 const { Search } = Input;
 
 export default function AdvanceFilter(props) {
@@ -25,7 +26,7 @@ export default function AdvanceFilter(props) {
                             <Form.Item name="Search">
                                 <div className={styles.verticallyCentered}>
                                     {title}
-                                    <Search placeholder="Search Claim Number" allowClear onSearch={handleSearchChange} className={styles.headerSearchField} />
+                                    <Search placeholder="Search " allowClear onSearch={handleSearchChange} className={styles.headerSearchField} />
                                 </div>
                             </Form.Item>
                         </Form>

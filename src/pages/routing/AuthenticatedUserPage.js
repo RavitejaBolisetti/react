@@ -95,6 +95,7 @@ import { DealerCompanyPage } from 'pages/common/Dealer';
 import { VehicleSalesSchemeMasterPage } from 'pages/Sales/VehicleSalesSchemeMaster/VehicleSalesSchemeMasterPage';
 import { UnAuthozisedAccess } from 'components/UnAuthozisedAccess';
 import { withSpinner } from 'components/withSpinner';
+import CorporateSchemeRegistrationMasterPage from 'pages/Sales/CorporateSchemeRegistration';
 
 const mapStateToProps = (state) => {
     const {
@@ -268,6 +269,7 @@ const AuthenticatedUserPageMain = (props) => {
                 <Route path={routing.CO_DEALER_INVOICE} element={<CoDealerInvoiceGenerationPage />} exact />
                 <Route path={routing.ROUTING_DEALER_CORPORATE_CLAIM} element={<DealerCorporateClaimMasterPage />} exact />
                 <Route path={routing.ROUTING_CORPORATE_MASTER} element={<CorporateMasterPage />} exact />
+                <Route path={routing.ROUTING_CORPORATE_SCHEME_REGISTRATION} element={<CorporateSchemeRegistrationMasterPage />} exact />
             </Routes>
         ) : (
             <Routes>
