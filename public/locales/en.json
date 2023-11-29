@@ -438,7 +438,7 @@
             "dealerManagementSystem": "Dealer Management System",
             "otpVerification": "OTP Verification",
             "enterOTP": "Enter OTP",
-            "newPassword": "new password",
+            "newPassword": "New password",
             "confirmPassword": "Confirm password",
             "DidnotReceiveAnOTP": "Didn't receive an OTP"
         },

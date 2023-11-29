@@ -249,7 +249,7 @@ export const VehicleSalesSchemeMasterBase = (props) => {
     useEffect(() => {
         if (isVehicleSalesSchemeDataLoaded) {
             setFormData(vehicleSalesSchemeDetails);
-            setOrganizationId(vehicleSalesSchemeDetails?.moHierarchyMstId)
+            setOrganizationId(vehicleSalesSchemeDetails?.moHierarchyMstId);
             vehicleSalesSchemeDetails && addSchemeForm.setFieldsValue({ ...vehicleSalesSchemeDetails, validityFromDate: formattedCalendarDate(vehicleSalesSchemeDetails?.validityFromDate), validityToDate: formattedCalendarDate(vehicleSalesSchemeDetails?.validityToDate), vehicleInvoiceFromDate: formattedCalendarDate(vehicleSalesSchemeDetails?.vehicleInvoiceFromDate), vehicleInvoiceToDate: formattedCalendarDate(vehicleSalesSchemeDetails?.vehicleInvoiceToDate) });
             setSchemeCategorySelect(vehicleSalesSchemeDetails?.schemeType);
             handleSchemeCategory(vehicleSalesSchemeDetails?.schemeType);
@@ -528,6 +528,14 @@ export const VehicleSalesSchemeMasterBase = (props) => {
             ];
 
             fetchDetail({ setIsLoading: listShowLoading, userId, extraParams, customURL, onErrorAction });
+            if (record?.encash === ENCASH_CONSTANTS.SALES?.key) {
+                setSaleService({ sales: true, service: false });
+            } else if (record?.encash === ENCASH_CONSTANTS.SERVICE?.key) {
+                setSaleService({ sales: false, service: true });
+            }
+            if (record?.encash === ENCASH_CONSTANTS.ALL?.key) {
+                setSaleService({ sales: true, service: true });
+            }
         }
 
         if (buttonAction !== NEXT_ACTION && !(buttonAction === VIEW_ACTION)) {
@@ -550,6 +558,8 @@ export const VehicleSalesSchemeMasterBase = (props) => {
         setIsFormVisible(true);
         setIsViewDetailVisible(true);
     };
+
+    console.log(saleService);
 
     const handleZoneChange = (value) => {
         const extraParams = [
@@ -748,7 +758,7 @@ export const VehicleSalesSchemeMasterBase = (props) => {
         onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(" ").concat(translateContent('vehicleSalesSchemeMaster.heading.moduleTitle')),
+        titleOverride: drawerTitle.concat(' ').concat(translateContent('vehicleSalesSchemeMaster.heading.moduleTitle')),
         buttonData,
         setButtonData,
         handleButtonClick,
