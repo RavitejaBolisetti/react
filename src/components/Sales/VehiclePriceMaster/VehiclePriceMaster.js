@@ -183,7 +183,6 @@ export const VehiclePriceMasterBase = (props) => {
     const onErrorAction = (res) => {
         showGlobalNotification({ message: res });
         setShowDataLoading(false);
-
     };
 
     const paramMasterId = 'VH_PRC_SRCH';
@@ -232,7 +231,7 @@ export const VehiclePriceMasterBase = (props) => {
                 filter: true,
             },
             {
-                key: 'modelValue',
+                key: 'modelCode',
                 title: translateContent('vehiclePriceMaster.label.model'),
                 value: filterString?.model,
                 //name: productHierarchyData?.find((i) => i?.prodctCode === filterString?.model)?.prodctShrtName,
@@ -649,7 +648,7 @@ export const VehiclePriceMasterBase = (props) => {
         handleButtonClick,
     };
     const viewProps = {
-        titleOverride: translateContent('global.drawerTitle.view').concat(" ").concat(moduleTitle),
+        titleOverride: translateContent('global.drawerTitle.view').concat(' ').concat(moduleTitle),
         isVisible: isFormVisible,
         onCloseAction,
         formData,
