@@ -165,7 +165,7 @@ const ForgotPasswordBase = (props) => {
 
                 const onSuccess = (res) => {
                     setCounter(RESEND_OTP_TIME);
-                    showGlobalNotification({ notificationType: 'warning', title: translateContent('global.generalMessage.otpSent'), message: res?.responseMessage });
+                    showGlobalNotification({ notificationType: 'warningBeforeLogin', title: translateContent('global.generalMessage.otpSent'), message: res?.responseMessage });
                     setOTPMessage(res?.data?.message);
                     setCurrentStep(3);
                 };

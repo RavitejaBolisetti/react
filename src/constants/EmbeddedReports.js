@@ -270,8 +270,28 @@ export const EMBEDDED_REPORTS = {
     },
     CO_DEALER_INVOICE_DOCUMENT: {
         id: 39,
-        key: 'Co_Dealer_Invoice_Doument',
+        key: 'Co_Dealer_Invoice_Document',
         title: 'Co Dealer Invoice Document ',
+        type: 'Document',
+    },
+    SO_MAPPING_UNMAPPING_REPORT: {
+        id: 40,
+        key: 'SO_Mapping_Unmapping_Report',
+        title: 'SO Mapping Unmapping Report ',
+        type: 'Report',
+        slug: 'so_mapping_unmapping_report',
+    },
+    Sale_Register_Report: {
+        id: 41,
+        key: 'Sale_Register_Report',
+        title: 'Sale Registe Report ',
+        type: 'Report',
+        slug: 'sale_register_report',
+    },
+    REFERRAL_SCHEME_REGISTRATION_DOCUMENT: {
+        id: 42,
+        key: 'Referral_Scheme_Registration_Document',
+        title: 'Referral Scheme Registration Document ',
         type: 'Document',
     },
 };

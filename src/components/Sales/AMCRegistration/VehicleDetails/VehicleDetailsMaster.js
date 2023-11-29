@@ -95,6 +95,8 @@ const VehicleDetailsMasterBase = (props) => {
     useEffect(() => {
         if (formActionType?.addMode) {
             setLastSection(true);
+
+            setButtonData({ ...buttonData, formBtnActive: true });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [section, formActionType]);
@@ -107,11 +109,11 @@ const VehicleDetailsMasterBase = (props) => {
     );
 
     useEffect(() => {
-        if (!formActionType?.viewMode && requestPayload?.amcVehicleDetails?.length > 0) {
+        if (!formActionType?.viewMode && requestPayload?.amcVehicleDetails?.length > 0 && !(requestPayload?.amcRegistration?.priceType === AMC_CONSTANTS?.MNM_FOC?.key)) {
             setContactData([...requestPayload?.amcVehicleDetails]);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [section, requestPayload?.amcVehicleDetails, formActionType]);
+    }, [section, requestPayload?.amcVehicleDetails, requestPayload?.amcVehicleDetails?.length, formActionType]);
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -130,13 +132,6 @@ const VehicleDetailsMasterBase = (props) => {
                     showGlobalNotification({ title: translateContent('global.notificationSuccess.error'), notificationType: 'error', message: translateContent('amcRegistration.validation.vehicleRegistrationNoMandatory') });
                     return false;
                 } else {
-                    // setContactData((prev) => {
-                    //     if (prev) {
-                    //         return [...prev, value];
-                    //     } else {
-                    //         return [{ value }];
-                    //     }
-                    // });
                     const newArr = [...contactData, value];
                     setRequestPayload({ ...requestPayload, amcVehicleDetails: newArr || { vin: requestPayload?.amcRegistration?.vin } });
                     setContactData(newArr);
@@ -162,11 +157,8 @@ const VehicleDetailsMasterBase = (props) => {
         setShowAddEditForm(true);
     };
 
-    const handleVINChange = (e) => {
-        if (!e?.target?.value) {
-            contactform.resetFields(['vehicleRegistrationNumber', 'orignallyWarrantyStartDate', 'modelGroup', 'modelFamily', 'modelDescription']);
-        }
-        setButtonData({ ...buttonData, formBtnActive: false });
+    const handleVINChange = () => {
+        contactform.resetFields(['vehicleRegistrationNumber', 'orignallyWarrantyStartDate', 'modelGroup', 'modelFamily', 'modelDescription']);
     };
 
     const fnSetData = (data) => {
@@ -174,16 +166,17 @@ const VehicleDetailsMasterBase = (props) => {
     };
 
     const handleVinSearch = (value) => {
-        if (!value && !formActionType?.addMode) {
+        if (!value && formActionType?.addMode && requestPayload?.amcRegistration?.priceType === AMC_CONSTANTS?.PAID?.key) {
             return false;
         }
         const onVehicleSearchSuccessAction = (data) => {
             if (data?.data?.vehicleSearch?.length === 1) {
                 fnSetData(data?.data?.vehicleSearch[0]);
+                if (requestPayload?.amcRegistration?.priceType === AMC_CONSTANTS?.MNM_FOC?.key) {
+                    setRequestPayload({ ...requestPayload, amcVehicleDetails: [{ vin: requestPayload?.amcRegistration?.vin }] });
+                }
             } else if (data?.data?.vehicleSearch?.length > 1) {
                 setVehicleSearchVisible(true);
-            } else if (formActionType?.addMode) {
-                setRequestPayload({ ...requestPayload, amcVehicleDetails: [{ vin: requestPayload?.amcRegistration?.vin }] });
             }
         };
         const vehicleExtraParams = [
@@ -214,6 +207,7 @@ const VehicleDetailsMasterBase = (props) => {
 
     const formProps = {
         requestPayload,
+        setRequestPayload,
         setShowAddEditForm,
         showAddEditForm,
         setContactData,
@@ -240,10 +234,15 @@ const VehicleDetailsMasterBase = (props) => {
         setVehicleSearchVisible,
         vehicleSelectedData: vehicleData?.vehicleSearch,
         fnSetData,
+     
     };
 
     const onFinish = () => {
-        AMConFinish(requestPayload);
+        if (requestPayload?.amcVehicleDetails?.length > 0) {
+            requestPayload?.amcVehicleDetails?.length > 0 && AMConFinish(requestPayload);
+        } else {
+            showGlobalNotification({ message: translateContent('amcRegistration.validation.atLeastOneVehicle') });
+        }
     };
 
     const formSkeleton = (

@@ -112,6 +112,8 @@ const UploadBase = (props) => {
         tempFileName = undefined,
         undefinedType = false,
         draggerDisable,
+        showDownloadIcon = true,
+ 
     } = props;
 
     const [showStatus, setShowStatus] = useState('');
@@ -209,7 +211,7 @@ const UploadBase = (props) => {
         onDownload,
         showUploadList: {
             showRemoveIcon,
-            showDownloadIcon: uploadTime ? false : true,
+            showDownloadIcon,
             removeIcon: removeIcon,
             downloadIcon: <AiOutlineEye className={styles.iconSize} />,
             showProgress,

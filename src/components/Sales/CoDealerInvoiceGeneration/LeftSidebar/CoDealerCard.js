@@ -56,14 +56,14 @@ const CoDealerCard = (props) => {
                         showInfo = true;
                         showIrnGenrationButton = false;
                     } else {
-                        showInfo = true;
+                        showInfo = false;
                         showIrnGenrationButton = false;
                     }
                 }
                 gstInPresent = true;
             }
 
-            return { showCancellation, showIrnGenrationButton, gstInPresent };
+            return { showCancellation, showIrnGenrationButton, gstInPresent, showInfo };
         } else {
             return { showCancellation: false, showIrnDetails: false, showIrnGenration: false, gstInPresent: false, showInfo: false };
         }

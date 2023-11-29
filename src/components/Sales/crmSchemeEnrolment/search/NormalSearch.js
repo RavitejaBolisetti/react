@@ -14,7 +14,7 @@ import styles from 'assets/sass/app.module.scss';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
 export function NormalSearch(props) {
-    const { extraParams, removeFilter, handleResetFilter, typeData, setAdvanceSearchVisible, searchForm, setFilterString, filterString, addFormOpen } = props;
+    const { extraParams, removeFilter, handleResetFilter, typeData, setAdvanceSearchVisible, searchForm, setFilterString, filterString, addFormOpen, title } = props;
     const serachBoxProps = {
         searchForm,
         filterString,
@@ -26,25 +26,27 @@ export function NormalSearch(props) {
             <Row gutter={20}>
                 <Col xs={24} sm={20} md={20} lg={20} xl={20}>
                     <Form autoComplete="off" colon={false} className={styles.masterListSearchForm}>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={10} lg={10} xl={10} className={styles.verticallyCentered}>
-                                <div className={styles.fullWidth}>
-                                    <SearchBox {...serachBoxProps} />
-                                </div>
-                            </Col>
-                            <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.verticallyCentered}>
-                                <Button
-                                    icon={<FilterIcon />}
-                                    type="link"
-                                    className={styles.verticallyCentered}
-                                    onClick={() => {
-                                        setAdvanceSearchVisible(true);
-                                    }}
-                                >
-                                    {translateContent('global.advanceFilter.title')}
-                                </Button>
-                            </Col>
-                        </Row>
+                        <Form.Item label={`${title}`}>
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={10} lg={10} xl={10} className={styles.verticallyCentered}>
+                                    <div className={styles.fullWidth}>
+                                        <SearchBox {...serachBoxProps} />
+                                    </div>
+                                </Col>
+                                <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.verticallyCentered}>
+                                    <Button
+                                        icon={<FilterIcon />}
+                                        type="link"
+                                        className={styles.verticallyCentered}
+                                        onClick={() => {
+                                            setAdvanceSearchVisible(true);
+                                        }}
+                                    >
+                                        {translateContent('global.advanceFilter.title')}
+                                    </Button>
+                                </Col>
+                            </Row>
+                        </Form.Item>
                     </Form>
                 </Col>
                 <Col xs={24} sm={4} md={4} lg={4} xl={4} className={styles.buttonsGroupRight}>

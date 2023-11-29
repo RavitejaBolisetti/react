@@ -14,11 +14,13 @@ import { DATA_TYPE } from 'constants/dataType';
 import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
+import { getCodeValue } from 'utils/getCodeValue';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 const { Text } = Typography;
 
 const ViewDetail = (props) => {
-    const { screenType, formData, userType, selectedOrder, handleCancelRequest, handleMNMApproval, handleMNMRejection, workflowMasterDetails } = props;
+    const { screenType, formData, userType, selectedOrder, handleCancelRequest, handleMNMApproval, handleMNMRejection, workflowMasterDetails, typeData } = props;
 
     const viewProps = {
         bordered: false,
@@ -28,12 +30,12 @@ const ViewDetail = (props) => {
     };
     const RejectionView = (
         <>
-            <Divider className={styles?.marT20} />
+            <Divider className={styles?.marB20} />
             <Descriptions {...viewProps}>
                 <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.approvedRejectedBy')}>{checkAndSetDefaultValue(formData?.approvedByOrRejectedBy)}</Descriptions.Item>
                 <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.userId')}>{checkAndSetDefaultValue(formData?.userId)}</Descriptions.Item>
                 <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.approvedDate')}>{checkAndSetDefaultValue(formData?.approvedDate, false, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                {selectedOrder?.status === QUERY_BUTTONS_CONSTANTS?.REJECTED?.key && <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.reasonForRejection')}>{checkAndSetDefaultValue(formData?.shieldCancelRemarks)}</Descriptions.Item>}
+                {selectedOrder?.status === QUERY_BUTTONS_CONSTANTS?.REJECTED?.key && <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.reasonForRejection')}>{checkAndSetDefaultValue(getCodeValue(typeData?.[PARAM_MASTER.AMC_CANCEL_REASON.id], formData?.reasonForRejection))}</Descriptions.Item>}
             </Descriptions>
         </>
     );
@@ -54,7 +56,7 @@ const ViewDetail = (props) => {
                 <Row type="flex" align="middle" className={selectedOrder?.status === QUERY_BUTTONS_MNM_USER?.PENDING_FOR_CANCELLATION?.key ? '' : styles.marB20}>
                     <Col xs={24} sm={24} md={24} lg={24}>
                         <div className={styles.tableTextColor85}>
-                            {translateContent('amcRegistration.label.requestedOn')}: {convertDateMonthYear(formData?.shieldRegistrationDate)}
+                            {translateContent('amcRegistration.label.requestedOn')}: {convertDateMonthYear(screenType === 'RSA' ? formData?.rsaRegistrationDate : formData?.shieldRegistrationDate)}
                         </div>
                     </Col>
                 </Row>
@@ -68,11 +70,9 @@ const ViewDetail = (props) => {
                                 <Divider className={styles.marB20} />
 
                                 <Descriptions {...viewProps}>
-                                    <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.reasonForCancellationRequest')}>{checkAndSetDefaultValue(formData?.shieldCancelRemarks)}</Descriptions.Item>
+                                    <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.reasonForCancellationRequest')}>{checkAndSetDefaultValue(getCodeValue(typeData?.[PARAM_MASTER.AMC_CANCEL_REASON.id], screenType === 'RSA' ? formData?.rsaCancelRemarks : formData?.shieldCancelRemarks))}</Descriptions.Item>
                                 </Descriptions>
-                                <Descriptions {...viewProps}>
-                                    <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.remarkforCancellation')}>{checkAndSetDefaultValue(formData?.otherReason)}</Descriptions.Item>
-                                </Descriptions>
+                                <Descriptions {...viewProps}>{(screenType === 'RSA' ? formData?.rsaCancelRemarks : formData?.shieldCancelRemarks) === AMC_CONSTANTS?.OTHERS?.key && <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.otherReason')}>{checkAndSetDefaultValue(formData?.otherReason)}</Descriptions.Item>}</Descriptions>
                                 {/* </div> */}
                             </>
                         )}
@@ -107,12 +107,11 @@ const ViewDetail = (props) => {
                                         <Divider className={styles.marB20} />
 
                                         <Descriptions>
-                                            <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.reasonForCancellationRequest')}>{checkAndSetDefaultValue(formData?.shieldCancelRemarks)}</Descriptions.Item>
-                                            <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.remarkforCancellation')}>{checkAndSetDefaultValue(formData?.otherReason)}</Descriptions.Item>
+                                            <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.reasonForCancellationRequest')}>{checkAndSetDefaultValue(getCodeValue(typeData?.[PARAM_MASTER.AMC_CANCEL_REASON.id], screenType === 'RSA' ? formData?.rsaCancelRemarks : formData?.shieldCancelRemarks))}</Descriptions.Item>
+                                            {(screenType === 'RSA' ? formData?.rsaCancelRemarks : formData?.shieldCancelRemarks) === AMC_CONSTANTS?.OTHERS?.key && <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.otherReason')}>{checkAndSetDefaultValue(formData?.otherReason)}</Descriptions.Item>}
                                         </Descriptions>
                                     </>
                                 )}
-                                <Divider />
                                 {selectedOrder?.approvedByOrRejectedBy && RejectionView}
                             </>
                         )}

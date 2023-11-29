@@ -61,7 +61,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const IndentDetailsMain = (props) => {
-    const { CoDealerInvoiceStateMaster, form, handleFormValueChange, section, formActionType } = props;
+    const { CoDealerInvoiceStateMaster, form, handleFormValueChange, section, formActionType, stateData, cityData } = props;
     const [formData, setFormData] = useState();
 
     useEffect(() => {
@@ -75,11 +75,15 @@ const IndentDetailsMain = (props) => {
     }, [CoDealerInvoiceStateMaster?.indentDetails, form, section?.id]);
 
     const formProps = {
+        stateData,
+        cityData,
         formData,
         formActionType,
         form,
     };
     const viewProps = {
+        stateData,
+        cityData,
         formData,
         form,
         styles,

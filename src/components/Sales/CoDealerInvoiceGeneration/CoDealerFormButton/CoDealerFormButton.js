@@ -10,7 +10,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 
-export const CoDealerFormButton = ({ handleInvoicePrint, record, onCloseAction, onCancelDeliveryNote, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection, cancelInvoiceBtnName = translateContent('coDealer.button.cancelInvoice'), PrintButtonName = 'Print Delivery Note' }) => {
+export const CoDealerFormButton = ({ handleInvoicePrint, record, onCloseAction, onCancelDeliveryNote, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection, cancelInvoiceBtnName = translateContent('coDealer.button.cancelInvoice'), PrintButtonName = 'Print Delivery Note', nextBtnName = translateContent('global.buttons.continue') }) => {
     return (
         <div className={styles.formFooter}>
             <Row gutter={20}>
@@ -48,7 +48,7 @@ export const CoDealerFormButton = ({ handleInvoicePrint, record, onCloseAction, 
 
                     {buttonData?.nextBtn && !isLastSection && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
-                            {translateContent('global.buttons.next')}
+                            {nextBtnName}
                         </Button>
                     )}
 

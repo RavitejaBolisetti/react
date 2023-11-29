@@ -145,7 +145,7 @@
             "cancel": "Cancel",
             "print/download": "Print/Download",
             "replaceImage": "Replace Image",
-            "saveAndNew": "Save and New",
+            "saveAndNew": "Save & New",
             "saveAndAddNew": "Save & Add New",
             "saveAndNext": "Save & Next",
             "next": "Next",
@@ -901,7 +901,8 @@
             "duplicateVehicle": "Vehicle is duplicate",
             "vehicleRegistrationNoMandatory": "Please add vehicle registration number to continue",
             "onlyOneVehicleAllowed": "ACM type is comprehensive, Only one vehicle is allowed",
-            "taxValidation": "Please select sale type, scheme and scheme discount"
+            "taxValidation": "Please select sale type, scheme and scheme discount",
+            "atLeastOneVehicle": "Please add atleast one vehicle to continue"
         },
         "label": {
             "amcRegNoDate": "AMC Registration No. & Date",
@@ -2240,7 +2241,7 @@
     "crmSchemeEnrolment": {
         "heading": {
             "drawerTitle": " Scheme Enrolment Details",
-            "title": "CRM Scheme Enrolment Screens",
+            "title": "CRM Scheme Enrolment",
             "moduleTitle": "Dealer List",
             "enrollmentTitle": "Enrolment Number Generated Successfully",
             "enrolmentDetails": "Enrolment Details",
@@ -3286,6 +3287,9 @@
             "mainTitle": "Delivery Note",
             "title": "Vehicle Delivery Note"
         },
+        "cancelTitle": {
+            "challan": "Challan"
+        },
         "buttons": {
             "cancelTitle": "Cancel ",
             "challan": "Challan",
@@ -3295,7 +3299,7 @@
             "printChallan": "Print Challan",
 
             "deliveryNote": "Delivery Note",
-            "deliveryChallan": "Delivery Note"
+            "deliveryChallan": "Delivery Challan"
         },
         "label": {
             "customerName": "Customer Name",
@@ -3830,7 +3834,7 @@
         },
         "gstBranchAccessibleMaster": {
             "heading": {
-                "moduleTitle": " GST Details"
+                "moduleTitle": "GST Details"
             },
             "label": {
                 "branchName": "Branch Name",
@@ -4312,7 +4316,8 @@
             "remarkforCancellation": "Remark for Cancellation",
             "otherReason": "Other Reason",
             "schemeRegNo": "Scheme Reg. No.",
-            "registrationDate": "Registration Date"
+            "registrationDate": "Registration Date",
+            "mobileNo": "Mobile No"
         },
         "buttons": {
             "cancelScheme": "Cancel Scheme",
@@ -4431,6 +4436,13 @@
                 "invoiceNumber": "Invoice Number",
                 "invoiceDate": "Invoice Date",
                 "invoiceStatus": "Invoice Status"
+            },
+            "tableColumn": {
+                "invoiceNumberAndDate": "Invoice No. & Date",
+                "DealerName": "Indent Dealer Name",
+                "ModelDescription": "Model Description",
+                "IndentNumberAndDate": "Indent No. & Date",
+                "IRNStatus": "IRN Status"
             }
         },
         "placeholder": {},

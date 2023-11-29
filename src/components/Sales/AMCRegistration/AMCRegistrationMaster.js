@@ -14,7 +14,7 @@ import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 
 import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
 
-import { QUERY_BUTTONS_CONSTANTS, QUERY_BUTTONS_MNM_USER } from 'components/Sales/CommonScheme/QueryButtons';
+import { QUERY_BUTTONS_CONSTANTS, QUERY_BUTTONS_MNM_USER } from 'components/Sales/CommonScheme/QueryButtons/AMCQueryButtons';
 import { BASE_URL_AMC_REGISTRATION_DATA as customURL } from 'constants/routingApi';
 import { otfDataActions } from 'store/actions/data/otf/otf';
 
@@ -96,7 +96,7 @@ const mapStateToProps = (state) => {
         isLoginDataLoading,
 
         dealerParentsLovList,
-        dealerLocations,
+        dealerLocations: dealerLocations.filter((value) => value?.locationCode && value?.dealerLocationName),
 
         locations,
     };
@@ -225,7 +225,7 @@ export const AMCRegistrationMasterBase = (props) => {
     }, [amcRegistrationDetailData]);
 
     const handleDealerParentChange = (parentGroupCode) => {
-        fetchDealerLocations({ customURL: customLocationURL + '&parentGroupCode=' + parentGroupCode, setIsLoading: locationDataLoding, userId });
+        fetchDealerLocations({ customURL: customLocationURL + '?parentGroupCode=' + parentGroupCode, setIsLoading: locationDataLoding, userId });
     };
 
     const defaultBtnVisiblity = {
@@ -271,6 +271,22 @@ export const AMCRegistrationMasterBase = (props) => {
                 title: 'Value',
                 value: filterString?.searchParam,
                 name: filterString?.searchParam,
+                canRemove: true,
+                filter: true,
+            },
+            {
+                key: 'dealerParent',
+                title: 'Dealer Parent',
+                value: filterString?.dealerParent,
+                name: dealerParentsLovList?.find((i) => i?.key === filterString?.dealerParent)?.value,
+                canRemove: true,
+                filter: true,
+            },
+            {
+                key: 'dealerLocation',
+                title: 'Dealer Location',
+                value: filterString?.dealerLocation,
+                name: dealerLocations?.find((i) => i?.locationId === filterString?.dealerLocation)?.dealerLocationName,
                 canRemove: true,
                 filter: true,
             },

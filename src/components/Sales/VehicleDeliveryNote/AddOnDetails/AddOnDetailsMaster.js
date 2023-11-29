@@ -230,6 +230,7 @@ export const AddOnDetailsMasterMain = (props) => {
         typeData,
         relationshipManagerData,
         schemeDescriptionDatamain,
+        schemeAmcData,
     };
     const formProps = {
         form,

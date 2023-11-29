@@ -36,7 +36,7 @@ const ViewDetailMain = (props) => {
                             </Descriptions>
                             <Divider />
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label={translateContent('receipts.label.receiptDetails.totalApportionAmount')}>{checkAndSetDefaultValue(receiptData?.totalApportionAmount, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('receipts.label.receiptDetails.totalApportionedAmount')}>{checkAndSetDefaultValue(receiptData?.totalApportionAmount, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('receipts.label.receiptDetails.totalReceivedAmount')}>{checkAndSetDefaultValue(receiptData?.totalReceivedAmount, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('receipts.label.receiptDetails.totalWriteOffAmount')}>{checkAndSetDefaultValue(receiptData?.totalWriteOffAmount, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('receipts.placeholder.remarks')}>{checkAndSetDefaultValue(receiptData?.remarks)}</Descriptions.Item>

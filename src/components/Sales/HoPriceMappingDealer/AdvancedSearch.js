@@ -10,13 +10,14 @@ import { withModal } from 'components/withModal';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredSelectField } from 'utils/validation';
 import { translateContent } from 'utils/translateContent';
+import TreeSelectField from 'components/common/TreeSelectField';
 
 import styles from 'assets/sass/app.module.scss';
 
 const { Option } = Select;
 
 export const AdvancedSearchFrom = (props) => {
-    const { setAdvanceSearchVisible, filteredStateData, filteredCityData, productHierarchyList, handleFilterChange, setFilteredCityData, isProductLoading, isStateLoading } = props;
+    const { setAdvanceSearchVisible, filteredStateData, filteredCityData, modelCodeName, handleFilterChange, setFilteredCityData, isStateLoading, selectedTreeSelectKey, modelGroupProductData, handleSelectTreeClick, setSelectedTreeSelectKey } = props;
     const {
         filterString,
         setFilterString,
@@ -34,10 +35,11 @@ export const AdvancedSearchFrom = (props) => {
             cityCode: values?.cityCode,
             cityCodeName: filteredCityData?.find((i) => i?.key === values?.cityCode)?.value,
             modelCode: values?.modelCode,
-            modelCodeName: productHierarchyList?.find((i) => i?.prodctCode === values?.modelCode)?.prodctShrtName,
+            modelCodeName: modelCodeName,
             advanceFilter: true,
         });
         setAdvanceSearchVisible(false);
+        setSelectedTreeSelectKey([]);
         resetFields();
         setFilteredCityData([]);
     };
@@ -46,6 +48,17 @@ export const AdvancedSearchFrom = (props) => {
         optionFilterProp: 'children',
         showSearch: true,
         allowClear: true,
+    };
+
+    const treeFieldNames = { label: 'prodctShrtName', value: 'prodctCode', children: 'subProdct' };
+
+    const treeSelectFieldProps = {
+        treeFieldNames,
+        treeData: modelGroupProductData,
+        handleSelectTreeClick,
+        selectedTreeSelectKey,
+        defaultParent: false,
+        placeholder: preparePlaceholderSelect(translateContent('evrDetailsCapturing.label.productHierarchy')),
     };
 
     return (
@@ -72,15 +85,17 @@ export const AdvancedSearchFrom = (props) => {
             </Row>
 
             <Row gutter={16}>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item initialValue={filterString?.modelCode} label={translateContent('hoPriceMapping.label.productHierarchy')} name="modelCode" rules={[validateRequiredSelectField(translateContent('global.validation.productHierarchy'))]}>
-                        <Select placeholder={preparePlaceholderSelect(translateContent('hoPriceMapping.label.productHierarchy'))} {...selectProps} loading={isProductLoading}>
+                        {/* <Select placeholder={preparePlaceholderSelect(translateContent('hoPriceMapping.label.productHierarchy'))} {...selectProps} loading={isProductLoading}>
                             {productHierarchyList?.map((item) => (
                                 <Option key={'ph' + item.prodctCode} value={item.prodctCode}>
                                     {item.prodctShrtName}
                                 </Option>
                             ))}
-                        </Select>
+                        </Select> */}
+
+                        <TreeSelectField {...treeSelectFieldProps} />
                     </Form.Item>
                 </Col>
             </Row>

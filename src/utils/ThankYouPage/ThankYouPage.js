@@ -10,7 +10,6 @@ import { HiCheck } from 'react-icons/hi';
 
 import styles from 'assets/sass/app.module.scss';
 import { CopytoClipboard } from 'utils/CopytoClipboard';
-import { useMemo } from 'react';
 import { translateContent } from 'utils/translateContent';
 
 const { Title, Text } = Typography;

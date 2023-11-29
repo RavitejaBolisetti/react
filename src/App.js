@@ -8,7 +8,7 @@ import { ConfigProvider, notification } from 'antd';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { AiOutlineCheckCircle, AiOutlineInfoCircle, AiOutlineCloseCircle } from 'react-icons/ai';
+import { AiOutlineCheckCircle, AiOutlineInfoCircle, AiOutlineCloseCircle, AiOutlineWarning } from 'react-icons/ai';
 import { FcCancel } from 'react-icons/fc';
 
 import { MainPage } from './components/MainPage';
@@ -49,9 +49,10 @@ const AppBase = ({ readFromStorageAndValidateAuth, hideGlobalNotification, notif
         ({ type = 'error', title = translateContent('global.notificationError.title'), message, duration = 3, placement = 'topRight', showTitle = true }) => {
             const checkIcon = {
                 success: <AiOutlineCheckCircle />,
-                warning: <AiOutlineInfoCircle />,
+                warning: <AiOutlineWarning />,
                 error: <AiOutlineCloseCircle />,
                 successBeforeLogin: <AiOutlineCheckCircle />,
+                warningBeforeLogin: <AiOutlineWarning />,
                 errorBeforeLogin: <FcCancel />,
             };
 
@@ -60,6 +61,7 @@ const AppBase = ({ readFromStorageAndValidateAuth, hideGlobalNotification, notif
                 warning: styles.warning,
                 error: styles.error,
                 successBeforeLogin: styles.successBeforeLogin,
+                warningBeforeLogin: styles.warningBeforeLogin,
                 errorBeforeLogin: styles.errorBeforeLogin,
             };
 

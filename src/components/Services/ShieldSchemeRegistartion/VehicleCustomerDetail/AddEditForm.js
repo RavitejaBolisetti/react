@@ -163,11 +163,11 @@ const AddEditFormMain = (props) => {
                                         <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.mobileNumber'))} disabled={true} />
                                     </Form.Item>
                                 </Col>
-                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                {/* <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item initialValue={formData?.customerDetails?.gstIn} label={translateContent('shieldSchemeRegistration.label.gstIn')} name="gstIn">
                                         <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.gstIn'))} disabled={true} />
                                     </Form.Item>
-                                </Col>
+                                </Col> */}
                             </Row>
                         </Form>
                     </Panel>

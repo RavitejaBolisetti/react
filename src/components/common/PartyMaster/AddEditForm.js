@@ -135,6 +135,10 @@ const AddEditFormMain = (props) => {
         });
     };
 
+    const handleEnter = (e) => {
+        e.code === 'Enter' && e.preventDefault();
+    };
+
     const viewProps = {
         isVisible: viewMode,
         formData,
@@ -159,7 +163,7 @@ const AddEditFormMain = (props) => {
 
     return (
         <>
-            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>
+            <Form layout="vertical" onKeyDownCapture={handleEnter} autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>
                 <Row gutter={20} className={styles.drawerBody}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         {viewMode ? (

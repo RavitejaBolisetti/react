@@ -15,25 +15,34 @@ import styles from 'assets/sass/app.module.scss';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { translateContent } from 'utils/translateContent';
 import { QueryButtons } from 'components/Sales/VehicleRecieptChecklist/QueryButtons';
+import { RSA_CONSTANTS } from './utils/RSA_CONSTANT';
 
 export default function AdvanceFilter(props) {
-    const { extraParams, handleResetFilter, typeData, rsaStatus, advanceFilter = false, filterString, setFilterString, setResetAdvanceFilter, setAdvanceSearchVisible, searchForm, removeFilter, handleInvoiceTypeChange, handleButtonClick, invoiceStatusList, showAddButton } = props;
+    const { userType, extraParams, handleResetFilter, typeData, rsaStatus, advanceFilter = false, filterString, setFilterString, setResetAdvanceFilter, setAdvanceSearchVisible, searchForm, removeFilter, handleInvoiceTypeChange, handleButtonClick, invoiceStatusList, showAddButton } = props;
 
     useEffect(() => {
         searchForm.resetFields();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [rsaStatus]);
 
+    const searchParameters = () => {
+        if (userType === RSA_CONSTANTS?.DEALER?.key) {
+            return typeData?.[PARAM_MASTER.RSA_SEARCH_TYPE.id]?.filter((value) => {
+                return value?.key !== RSA_CONSTANTS?.CUSTOMER_MOBILE_NO?.key;
+            });
+        } else return typeData?.[PARAM_MASTER.RSA_SEARCH_TYPE.id];
+    };
+
     const searchBoxProps = {
         singleField: false,
         searchForm,
         filterString,
         setFilterString,
-        optionType: typeData?.[PARAM_MASTER.RSA_SEARCH_TYPE.id],
+        optionType: searchParameters(),
         placeholder: translateContent('global.placeholder.search'),
         singleFieldKey: 'searchParam',
         setResetAdvanceFilter,
-        //defaultOption: 'vin',
+        defaultOption: 'rsaRegistrationNumber',
     };
 
     return (

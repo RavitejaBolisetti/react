@@ -12,6 +12,7 @@ import styles from 'assets/sass/app.module.scss';
 import { Tag, Typography } from 'antd';
 import { DATA_TYPE } from 'constants/dataType';
 import { ShowDataBox } from 'utils/showDataBox';
+import { translateContent } from 'utils/translateContent';
 const { Text } = Typography;
 
 const handleTableColumn = (currentQuery) => {
@@ -29,35 +30,35 @@ export const tableColumnCoDealer = ({ handleButtonClick, actionButtonVisiblity, 
     const tableColumn = [
         handleTableColumn(currentQuery)?.invoiceNumber &&
             tblPrepareColumns({
-                title: 'Invoice No. & Date',
+                title: translateContent('coDealer.label.tableColumn.invoiceNumberAndDate'),
                 dataIndex: 'invoiceNumber',
                 width: '14%',
                 render: (_, record) => ShowDataBox(record?.invoiceNumber, record?.invoiceDate, DATA_TYPE?.DATE?.key),
             }),
         handleTableColumn(currentQuery)?.dealerName &&
             tblPrepareColumns({
-                title: 'Dealer Name',
+                title: translateContent('coDealer.label.tableColumn.DealerName'),
                 dataIndex: 'dealerName',
                 width: '18%',
                 render: (_, record) => ShowDataBox(record?.dealerName, record?.location),
             }),
 
-        handleTableColumn(currentQuery)?.modelDescription &&
-            tblPrepareColumns({
-                title: 'Model Description',
-                dataIndex: 'modelDescription',
-                width: '20%',
-            }),
         handleTableColumn(currentQuery)?.indentNumber &&
             tblPrepareColumns({
-                title: 'Indent No. & Date',
+                title: translateContent('coDealer.label.tableColumn.IndentNumberAndDate'),
                 dataIndex: 'indentNumber',
                 width: '14%',
                 render: (_, record) => ShowDataBox(record?.indentNumber, record?.indentDate, DATA_TYPE?.DATE?.key),
             }),
+        handleTableColumn(currentQuery)?.modelDescription &&
+            tblPrepareColumns({
+                title: translateContent('coDealer.label.tableColumn.ModelDescription'),
+                dataIndex: 'modelDescription',
+                width: '20%',
+            }),
         handleTableColumn(currentQuery)?.irnStatus &&
             tblPrepareColumns({
-                title: 'IRN Status',
+                title: translateContent('coDealer.label.tableColumn.IRNStatus'),
                 dataIndex: 'irnStatus',
                 width: '14%',
                 render: (_, record) => <StatusTag>{record?.irnStatus}</StatusTag>,

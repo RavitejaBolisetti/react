@@ -16,7 +16,7 @@ const ViewQualificationListMain = ({ formData, styles }) => {
     };
     return (
         <>
-            <div className={`${styles?.viewContainer} ${styles?.viewOneColProps}`}>
+            <div className={`${styles?.viewDrawerContainer} ${styles?.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
                     <Descriptions.Item label={translateContent('qualificationMaster.label.qualificationCode')}>{formData?.qualificationCode}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('qualificationMaster.label.qualificationName')}>{formData?.qualificationName}</Descriptions.Item>

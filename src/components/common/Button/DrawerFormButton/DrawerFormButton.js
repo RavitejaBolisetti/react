@@ -10,7 +10,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from './DrawerFormButton.module.scss';
 import { translateContent } from 'utils/translateContent';
 
-const DrawerButtons = ({ formData, onCloseAction, buttonData, setButtonData, saveButtonName = translateContent('global.buttons.save'), handleButtonClick, isLoadingOnSave, multipleForm = false }) => {
+const DrawerButtons = ({ formData, onCloseAction, buttonData, setButtonData, saveButtonName = translateContent('global.buttons.save'), handleButtonClick, isLoadingOnSave, multipleForm = false, handlePrintDownload }) => {
     return (
         <Row gutter={20} className={multipleForm ? styles.formFooterNew : ''}>
             <Col xs={24} sm={6} md={6} lg={6} xl={6} className={styles.buttonsGroupLeft}>
@@ -29,7 +29,7 @@ const DrawerButtons = ({ formData, onCloseAction, buttonData, setButtonData, sav
 
             <Col xs={24} sm={18} md={18} lg={18} xl={18} className={styles.buttonsGroupRight}>
                 {buttonData?.printDownloadBtn && (
-                    <Button danger onClick={onCloseAction}>
+                    <Button onClick={() => handlePrintDownload({ record: formData })} danger>
                         {translateContent('global.buttons.print/download')}
                     </Button>
                 )}

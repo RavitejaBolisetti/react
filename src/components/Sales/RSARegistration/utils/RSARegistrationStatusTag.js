@@ -32,3 +32,30 @@ export const RSARegistrationStatusTag = (status) => {
     }
     return tag;
 };
+
+export const RSAStatusValues = (status) => {
+    let value = '';
+    switch (status) {
+        case RSA_REGISTRATION_STATUS.PENDING.key:
+            value = RSA_REGISTRATION_STATUS.PENDING.title;
+            break;
+        case RSA_REGISTRATION_STATUS_MNM_USER.PENDING_FOR_APPROVAL.key:
+            value = RSA_REGISTRATION_STATUS_MNM_USER.PENDING_FOR_APPROVAL.title;
+            break;
+        case RSA_REGISTRATION_STATUS_MNM_USER.PENDING_FOR_CANCELLATION.key:
+            value = RSA_REGISTRATION_STATUS_MNM_USER.PENDING_FOR_CANCELLATION.title;
+            break;
+        case RSA_REGISTRATION_STATUS.APPROVED.key:
+            value = RSA_REGISTRATION_STATUS.APPROVED.title;
+            break;
+        case RSA_REGISTRATION_STATUS.REJECTED.key:
+            value = RSA_REGISTRATION_STATUS.REJECTED.title;
+            break;
+        case RSA_REGISTRATION_STATUS.CANCELLED.key:
+            value = RSA_REGISTRATION_STATUS.CANCELLED.title;
+            break;
+
+        default:
+    }
+    return value;
+};

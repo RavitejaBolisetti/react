@@ -18,10 +18,11 @@ import { getCodeValue } from 'utils/getCodeValue';
 import { prepareCaption } from 'utils/prepareCaption';
 import { translateContent } from 'utils/translateContent';
 import { CollapseOnChange } from 'utils/CollapseOnChange';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 const { Panel } = Collapse;
 export const ViewDetail = (props) => {
-    const { typeData, isLoading, activeKey, toolTipContent, styles, formData, collapseActiveKey, setcollapseActiveKey } = props;
+    const { typeData, isLoading, activeKey, toolTipContent, styles, formData, collapseActiveKey, setcollapseActiveKey} = props;
     const viewProps = {
         bordered: false,
         colon: false,
@@ -36,26 +37,29 @@ export const ViewDetail = (props) => {
                         <Panel header="Vehicle Information" key="1">
                             <Divider />
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Model Description">
+                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.modelDescription')}>
                                     <div className={styles?.tooltipAlign}>
                                         {checkAndSetDefaultValue(formData?.modelDescription, isLoading)}
-                                        {formData?.model && checkAndSetDefaultValue(addToolTip(toolTipContent, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles?.infoIconColor} size={13} />), isLoading)}
+                                        {formData?.modelDescription && checkAndSetDefaultValue(addToolTip(toolTipContent, 'bottom', '#D3EDFE', styles?.toolTip)(<AiOutlineInfoCircle className={styles?.infoIconColor} size={13} />), isLoading)}
                                     </div>
                                 </Descriptions.Item>
-                                <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(formData?.modelCode, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="VIN">{checkAndSetDefaultValue(formData?.vinNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.modelCode')}>{checkAndSetDefaultValue(formData?.modelCode, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.vin')}>{checkAndSetDefaultValue(formData?.vinNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('commonModules.label.bookingDetails.taxCalculation')}>{checkAndSetDefaultValue(getCodeValue(typeData?.[PARAM_MASTER.TAX_CALCLTN_TYPE.id], formData?.taxCalculationType), isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('commonModules.label.bookingDetails.taxPayableOnReverseCharges')}>{checkAndSetDefaultValue(getCodeValue(typeData?.[PARAM_MASTER.RFRL.id], formData?.taxPayableOnReverseCharges), isLoading)}</Descriptions.Item>
                             </Descriptions>
 
                             <Descriptions {...viewProps} title={prepareCaption(translateContent('vehicleInvoiceGeneration.heading.captions.priceInformation'))}>
-                                <Descriptions.Item label="Sale Type">{checkAndSetDefaultValue(getCodeValue(typeData?.SALE_TYPE, formData?.saleType), isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Price Type">{checkAndSetDefaultValue(getCodeValue(typeData?.PRC_TYP, formData?.priceType), isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Vehicle Selling Price">{checkAndSetDefaultValue(formData?.vehicleSellingPrice, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Vehicle Amount">{checkAndSetDefaultValue(formData?.vehicleAmount, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.saleType')}>{checkAndSetDefaultValue(getCodeValue(typeData?.SALE_TYPE, formData?.saleType), isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.priceType')}>{checkAndSetDefaultValue(getCodeValue(typeData?.PRC_TYP, formData?.priceType), isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.vehicleSellingPrice')}>{checkAndSetDefaultValue(formData?.vehicleSellingPrice, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.vehicleAmount')}>{checkAndSetDefaultValue(formData?.vehicleAmount, isLoading)}</Descriptions.Item>
                             </Descriptions>
 
                             <Descriptions {...viewProps} title={prepareCaption(translateContent('vehicleInvoiceGeneration.heading.captions.benefit'))}>
-                                <Descriptions.Item label="Dealer Discount with TAX">{checkAndSetDefaultValue(formData?.discountAmount, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Consumer Scheme with TAX">{checkAndSetDefaultValue(formData?.taxAmount, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.dealerDiscountWithTax')}>{checkAndSetDefaultValue(formData?.discountAmount, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.totalTaxAmount')}>{checkAndSetDefaultValue(formData?.totalTaxAmount, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.tcsAmount')}>{checkAndSetDefaultValue(formData?.tcsAmount, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         </Panel>
                     </Collapse>

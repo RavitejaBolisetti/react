@@ -26,7 +26,7 @@ const { Panel } = Collapse;
 export const AddEditForm = (props) => {
     const { toolTipContent, formData, typeData } = props;
     const { collapseActiveKey, setcollapseActiveKey, CoDealerInvoiceStateMaster, HandleVinList, setDealerDicountValue, isVinLoading } = props;
-    const { isDisabled = true, form, changeStatus, setchangeStatus } = props;
+    const { isDisabled = true, form, setButtonData, setchangeStatus } = props;
     const disabledProps = { disabled: isDisabled };
 
     useEffect(() => {
@@ -34,6 +34,9 @@ export const AddEditForm = (props) => {
             form.setFieldsValue({ ...formData });
             if (formData?.modelCode) {
                 HandleVinList(formData?.modelCode);
+            }
+            if (formData?.vehicleAmount) {
+                setButtonData((prev) => ({ ...prev, formBtnActive: true }));
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -48,12 +51,12 @@ export const AddEditForm = (props) => {
                     <Collapse expandIcon={expandIcon} activeKey={collapseActiveKey} onChange={() => CollapseOnChange(1, collapseActiveKey, setcollapseActiveKey)} expandIconPosition="end" collapsible="icon">
                         <Panel header={translateContent('vehicleInvoiceGeneration.heading.collapse.vehicleInformation')} key="1">
                             <Row gutter={20}>
-                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                     <Form.Item label={translateContent('commonModules.label.vehicleDetails.modelCode')} name="modelCode" data-testid="vehicleVariant" rules={[validateRequiredInputField('Model Code')]}>
                                         <Input {...disabledProps} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.modelCode'))} />
                                     </Form.Item>
                                 </Col>
-                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                     <Form.Item label={translateContent('commonModules.label.vehicleDetails.modelDescription')} name="modelDescription" data-testid="model">
                                         <Input {...disabledProps} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.modelDescription'))} />
                                     </Form.Item>
