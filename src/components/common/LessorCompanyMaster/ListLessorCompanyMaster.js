@@ -19,7 +19,6 @@ import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { filterFunction } from 'utils/filterFunction';
 import { AddEditForm } from './AddEditForm';
 import { translateContent } from 'utils/translateContent';
 import { drawerTitle } from 'utils/drawerTitle';
@@ -59,7 +58,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ListLessorCompanyMasterBase = (props) => {
-    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle, totalRecords } = props;
+    const { data, saveData, fetchList, userId, listShowLoading, showGlobalNotification, moduleTitle, totalRecords } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
     const DEFAULT_PAGINATION = { pageSize: 10, current: 1 };
@@ -201,7 +200,7 @@ export const ListLessorCompanyMasterBase = (props) => {
     };
 
     const onSearchHandle = (value) => {
-        setPage({ ...page, current: 1 });
+        // setPage({ ...page, current: 1 });
         if (value?.trim()?.length >= 3) {
             setFilterString({ ...filterString, advanceFilter: false, companyName: value });
         }

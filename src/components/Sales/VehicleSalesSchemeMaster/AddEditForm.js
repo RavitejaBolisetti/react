@@ -300,6 +300,9 @@ const AddEditFormMain = (props) => {
         handleButtonClick,
     };
 
+    console.log(formData?.encash === "SL" ? true : false, ' checked')
+    console.log(formData, `formData`);
+
     return (
         <Form form={addSchemeForm} data-testid="test" onFinish={onFinish} layout="vertical" autocomplete="off" colon="false">
             {formActionType?.viewMode ? (

@@ -4398,7 +4398,8 @@
             "vehicleInvoiceToDate": "vehicle invoice to date",
             "vehicleInvoiceFromDate": "vehicle invoice from date",
             "zone": "zone",
-            "area": "area"
+            "area": "area",
+            "mobileNumberFound": "Mobile Number already exist. Please use another mobile number."
         },
         "text": {
             "messageText": "Click or drop your file here to upload",

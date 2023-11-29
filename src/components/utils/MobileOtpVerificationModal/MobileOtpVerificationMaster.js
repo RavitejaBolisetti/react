@@ -53,7 +53,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const MobileOtpVerificationBase = (props) => {
-    const { fetchContactMobileNoDetails, listContactMobileNoShowLoading, userId, mobNoVerificationData, sendOTP, validateOTP, showGlobalNotification, formData, selectedCustomer, form, defaultExtraParam, numbValidatedSuccess, setNumbValidatedSuccess } = props;
+    const { fetchContactMobileNoDetails, listContactMobileNoShowLoading, userId, mobNoVerificationData, sendOTP, validateOTP, showGlobalNotification, formData, selectedCustomer, form, defaultExtraParam, numbValidatedSuccess, setNumbValidatedSuccess, resetMobileNumber } = props;
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [inValidOTP, setInValidOTP] = useState(false);
@@ -70,7 +70,11 @@ const MobileOtpVerificationBase = (props) => {
         if (!mobNoVerificationData?.customerMasterDetails?.length && mobileNumber?.length) {
             sendOTPVerificationCode();
             setIsModalOpen(true);
+        } else if (mobNoVerificationData?.customerMasterDetails?.length) {
+            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: translateContent('vehicleSalesSchemeMaster.validation.mobileNumberFound')});
+            setOtpVerified(false);
         }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [mobNoVerificationData]);
 
