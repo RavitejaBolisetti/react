@@ -119,17 +119,6 @@ const mapDispatchToProps = (dispatch) => ({
             fetchCityLovList: geoCityDataActions.fetchFilteredList,
             listCityLoading: geoCityDataActions.listShowLoading,
 
-            // fetchCustomerListData: vehicleDeliveryNoteCustomerDetailDataActions.fetchList,
-            // listCustomerListLoading: vehicleDeliveryNoteCustomerDetailDataActions.listShowLoading,
-
-            // cancelDeliveryNote: cancelVehicleDeliveryNoteDataActions.saveData,
-            // cancelShowLoading: cancelVehicleDeliveryNoteDataActions.listShowLoading,
-            // cancelChallan: challanCancelVehicleDeliveryNoteDataActions.saveData,
-
-            // resetCheckListData: DeliverableChecklistMaindataActions.reset,
-            // resetChallanData: vehicleChallanDetailsDataActions.reset,
-            // resetCustomerdata: vehicleDeliveryNoteCustomerDetailDataActions.reset,
-
             showGlobalNotification,
         },
         dispatch
@@ -137,8 +126,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const CoDealerInvoiceMasterBase = (props) => {
-    const { data, receiptDetailData = {}, userId = undefined, fetchList = () => {}, listShowLoading = () => {}, saveData = () => {} } = props;
-    const { typeData, receiptType = undefined, partySegmentType = undefined, paymentModeType = undefined, documentType = undefined, moduleTitle = '', totalRecords = 0, showGlobalNotification = () => {} } = props;
+    const { data, receiptDetailData = {}, userId = undefined,  saveData = () => {} } = props;
+    const { typeData, receiptType = undefined, partySegmentType = undefined,  moduleTitle = '', totalRecords = 0, showGlobalNotification = () => {} } = props;
     const { filterString, setFilterString, coDealerInvoiceStatusList = Object?.values(CO_DEALER_QUERY_BUTTONS) } = props;
     const { fetchCoDealerInvoice, isCoDealerLoaded, listShowCoDealerLoading } = props;
     const { indentToDealerData, fetchDealerParentsLovList, listShowDealerLoading, fetchCoDealerDetails, resetCoDealerDetailData, listCoDealerDetailShowLoading, CoDealerData, fetchCoDealerProfileData } = props;
@@ -422,7 +411,6 @@ export const CoDealerInvoiceMasterBase = (props) => {
             default:
                 formAction = { addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION };
                 btnVisibilityStatus = btnVisiblity({ defaultBtnVisiblity, buttonAction });
-
                 break;
         }
         return { formAction, btnVisibilityStatus };

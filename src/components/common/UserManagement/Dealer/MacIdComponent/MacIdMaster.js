@@ -196,7 +196,7 @@ const MacIdMasterMain = (props) => {
 
     const buttonProps = {
         ...props,
-        saveButtonName: translateContent('global.buttons.saveCloseBtn'),
+        saveButtonName: translateContent('global.buttons.submit'),
         buttonData,
     };
 
