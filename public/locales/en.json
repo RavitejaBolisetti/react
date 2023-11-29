@@ -371,6 +371,7 @@
         },
         "validation": {
             "mandatoryBookingCustomer": "Please provide booking customer",
+            "mandatoryBillingCustomer": "Please provide Billing customer",
             "modelValidation": "Model selected is not valid",
             "modelChangeConfirmation": "If you proceed with model change, the price will be calculated as per the selected model. Do you wish to continue?"
         }

@@ -60,7 +60,7 @@ const AddEditFormMain = (props) => {
                             <Row gutter={20}>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     {/* <Search placeholder="Search Booking Number" onSearch={handleOtfSearch} className={`${styles.searchField} ${SoStyles.marginBottom}`} /> */}
-                                    <Form.Item label={translateContent('bookingSoMappUnmapp.placeholder.searchOTF')}>
+                                    <Form.Item label={translateContent('bookingSoMappUnmapp.placeholder.search')}>
                                         <Search placeholder={translateContent('bookingSoMappUnmapp.placeholder.search')} onSearch={handleOtfSearch} type="text" allowClear />
                                     </Form.Item>
                                 </Col>
