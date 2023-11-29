@@ -94,7 +94,7 @@
         },
 
         "advanceFilter": {
-            "title": "Advance Filters",
+            "title": "Advance Filter",
             "appliedAdvanceFilter": "Applied Advance Filters :"
         },
         "toolTip": {
@@ -172,7 +172,7 @@
             "unAllot": "Un-Allot",
             "invoice": "Invoice",
             "deliveryNote": " Delivery Note",
-            "advancedFilter": "Advance Filters",
+            "advancedFilter": "Advance Filter",
             "viewHistory": "View History",
             "uploadFile": "Upload File",
             "cancelVehiclePurchaseOrder": "Cancel Vehicle Purchase Order",
@@ -180,7 +180,7 @@
             "addCreditNote": "Add Credit Note",
             "addDebitNote": "Add Dedit Note",
             "printReceipt": "Print Receipt",
-            "applyFilter": "Apply Filter",
+            "applyFilter": "Apply",
             "printForm21": "Print Form 21",
             "printInvoice": "Print Invoice",
             "cancelInvoice": "Cancel Invoice",
@@ -613,7 +613,7 @@
         "heading": {
             "title": "Role Name",
             "pageTitle": "Dealer Role Master",
-            "titleOverride": "Advance Filters"
+            "titleOverride": "Advance Filter"
         },
 
         "tableColHeading": {
@@ -1465,7 +1465,7 @@
         "heading": {
             "mainTitle": "Designation Master",
             "drawerTitle": "Designation",
-            "titleOverride": "Advance Filters",
+            "titleOverride": "Advance Filter",
             "title": "Designation Name "
         },
         "label": {
@@ -1668,7 +1668,7 @@
     "chargerInstallationProcess": {
         "heading": {
             "title": "Charger Installation",
-            "titleOverride": "Advance Filters",
+            "titleOverride": "Advance Filter",
             "mainTitle": "Charger Installation",
             "chargerDetailsTitle": "Charger Installation Details",
             "addressDetailsTitle": "Installation Address Details",
@@ -1951,7 +1951,7 @@
         "heading": {
             "mainTitle": "RSM/ASM Approval",
             "title": "RSM Approval Summary",
-            "titleOverride": "Advance Filters",
+            "titleOverride": "Advance Filter",
             "appliedAdvanceFilters": "Applied Advance Filters :"
         },
         "label": {
@@ -2025,7 +2025,7 @@
     },
     "state": {
         "title": {
-            "advanceFilters": "Advance Filters"
+            "advanceFilters": "Advance Filter"
         },
         "heading": {
             "moduleTitle": "State",
@@ -2088,7 +2088,7 @@
             "state": "State",
             "district": "District",
             "keyword": "keyword",
-            "advanceFilters": "Advance Filters",
+            "advanceFilters": "Advance Filter",
             "cityName": "City Name",
             "cityCode": "City Code",
             "districtName": "District Name",
@@ -2124,7 +2124,7 @@
             "country": "Country",
             "state": "State",
             "district": "District",
-            "titleOverride": "Advance Filters",
+            "titleOverride": "Advance Filter",
             "districtName": "District Name",
             "districtCode": "District Code",
             "stateName": "State Name"
@@ -2322,10 +2322,10 @@
             "pageTitle": "HO Price Upload Mapping for Dealer",
             "title": "HO Price Upload Mapping for Dealer",
             "drawerTitleHeading": "HO Price Upload Mapping",
-            "titleOverride": "Advance Filters",
+            "titleOverride": "Advance Filter",
             "dealerList": "Dealer List",
             "modelDetails": "Model Details",
-            "advancedFilter": "Advanced Filter",
+            "advancedFilter": "Advance Filter",
             "appliedAdvanceFilters": "Applied Advance Filters"
         },
         "label": {
@@ -2395,7 +2395,7 @@
             "pageTitle": "Vehicle Inventory Management",
             "title": "HO Price Upload Mapping for Dealer",
             "drawerTitleHeading": "HO Price Upload Mapping",
-            "titleOverride": "Advance Filters",
+            "titleOverride": "Advance Filter",
             "dealerList": "Dealer List",
             "modelDetails": "Model Details",
             "vehicleDetails": "Vehicle Details",
@@ -2701,7 +2701,7 @@
             "pricingCity": "Pricing City",
             "endDate": "End Date",
             "downloadHere": "Download Here",
-            "advanceFilters": "Advance Filters",
+            "advanceFilters": "Advance Filter",
             "uploadVehicle": "Upload Vehicle Price Master Form",
             "uploadButtonName": "Upload Price Master",
             "messageText": "Click or drop your file here to upload",
