@@ -3,109 +3,41 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState } from 'react';
-import { Col, Input, Form, Row, Select, Switch, DatePicker, Card } from 'antd';
+import React from 'react';
+import { Row, Col, Input, Form, DatePicker, Divider, Card, Space, Switch } from 'antd';
 
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
-import { prepareDatePickerText, preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-
-import { ViewDetail } from './ViewDetail';
-import { withDrawer } from 'components/withDrawer';
-import { DrawerFormButton } from 'components/common/Button';
 import { dateFormat } from 'utils/formatDateTime';
-
+import { prepareDatePickerText, preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
-
-const { Option } = Select;
+import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 
 const AddEditFormMain = (props) => {
-    const { form, formData, onCloseAction, formActionType: { editMode, viewMode, addMode } = undefined, onFinish } = props;
-
-    const { isDataCountryLoaded, countryData, defaultCountry } = props;
-    const { buttonData, setButtonData, handleButtonClick } = props;
-
-    const { stateData, districtData } = props;
-
-    const isReadOnly = false;
-    const [filteredStateData, setFilteredStateData] = useState(stateData?.filter((i) => i?.parentKey === defaultCountry));
-    const [filteredDistrictData, setFilteredDistrictData] = useState(districtData?.filter((i) => i?.parentKey === formData?.stateCode));
-
-    const handleFormValueChange = () => {
-        setButtonData({ ...buttonData, formBtnActive: true });
-    };
-
-    const handleFormFieldChange = () => {
-        setButtonData({ ...buttonData, formBtnActive: true });
-    };
-
-    const handleCountryChange = (countryCode) => {
-        form.setFieldValue('stateCode', undefined);
-        form.setFieldValue('districtCode', undefined);
-
-        setFilteredStateData(stateData?.filter((i) => i?.parentKey === countryCode));
-    };
-
-    const handleStateChange = (state) => {
-        form.setFieldValue('districtCode', undefined);
-        form.setFieldValue('districtCodeDisplay', undefined);
-
-        const stateCode = stateData?.find((i) => i?.code === state)?.code;
-        stateCode && form.setFieldValue('stateCodeDisplay', stateCode);
-
-        setFilteredDistrictData(districtData?.filter((i) => i?.parentKey === state));
-    };
-
-    const handleDistrictChange = (district) => {
-        const districtCode = districtData?.find((i) => i?.code === district)?.code;
-        districtCode && form.setFieldValue('districtCodeDisplay', districtCode);
-    };
-
-    const viewProps = {
-        isVisible: viewMode,
-        formData,
-        styles,
-    };
-
-    const buttonProps = {
-        formData,
-        onCloseAction,
-        buttonData,
-        setButtonData,
-        handleButtonClick,
-    };
-
-    const selectProps = {
-        optionFilterProp: 'children',
-        showSearch: true,
-        allowClear: true,
-        className: styles.headerSelectField,
-    };
+    const { formData } = props;
+    const { isReadOnly = true } = props;
+    const disabledProps = { disabled: isReadOnly };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>
-            <Row gutter={20} className={styles.drawerBody}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    {viewMode ? (
-                        <ViewDetail {...viewProps} />
-                    ) : (
-                        <>
-                            <Card>
-                                <Row gutter={16}>
+        <>
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <Space style={{ display: 'flex' }} size="middle" direction="vertical">
+                        <Card style={{ backgroundColor: '#f2f2f2' }}>
+                            <Row gutter={20} className={styles.drawerBody}>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                         <Form.Item initialValue={formData?.countryCode} label={'Zone' || translateContent('city.label.countryCode')} name="countryCode" placeholder={preparePlaceholderSelect('Zone' || translateContent('city.placeholder.country'))} rules={[validateRequiredInputField(translateContent('city.validation.country'))]}>
-                                            <Input placeholder={preparePlaceholderText('Zone' || translateContent('city.placeholder.cityCode'))} maxLength={6} disabled={editMode ? true : false} />
+                                            <Input placeholder={preparePlaceholderText('Zone' || translateContent('city.placeholder.cityCode'))} maxLength={6}  />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                         <Form.Item label={'Area Office' || translateContent('city.label.stateName')} initialValue={formData?.stateCode} name="stateCode" rules={[validateRequiredSelectField('Area Office' || translateContent('city.validation.stateName'))]}>
-                                            <Input placeholder={preparePlaceholderText('Area Office' || translateContent('city.placeholder.cityCode'))} disabled={editMode ? true : false} />
+                                            <Input placeholder={preparePlaceholderText('Area Office' || translateContent('city.placeholder.cityCode'))}  />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                         <Form.Item label={'Dealer Code' || translateContent('city.label.districtName')} initialValue={formData?.districtCode} name="districtCode" rules={[validateRequiredSelectField('Dealer Code' || translateContent('city.validation.districtName'))]}>
-                                            <Input placeholder={preparePlaceholderText('Dealer Code' || translateContent('city.placeholder.cityCode'))} maxLength={6} disabled={editMode ? true : false} />
+                                            <Input placeholder={preparePlaceholderText('Dealer Code' || translateContent('city.placeholder.cityCode'))} maxLength={6}  />
                                         </Form.Item>
                                     </Col>
 
@@ -149,14 +81,13 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                 </Row>
-                            </Card>
-                        </>
-                    )}
+
+                            {/* <DrawerFormButton {...buttonProps} /> */}
+                        </Card>
+                    </Space>
                 </Col>
             </Row>
-
-            <DrawerFormButton {...buttonProps} />
-        </Form>
+        </>
     );
 };
 

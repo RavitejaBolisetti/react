@@ -4,16 +4,16 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Form, Row, Col, Card } from 'antd';
+import { Form, Row, Col } from 'antd';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import ViewDetail from './ViewDetail';
 
-import { AddEditForm } from './AddEditForm';
 import { MODULE_TYPE_CONSTANTS } from 'constants/modules/vehicleChecklistConstants';
 import styles from 'assets/sass/app.module.scss';
-import ViewDetail from './ViewDetail';
 import { CorporateSchemeRegistrationFormButton } from '../CorporateSchemeRegistrationFormButton/CorporateSchemeRegistrationFormButton';
+import { AddEditForm } from '../AddEditForm';
 
 const mapStateToProps = (state) => {
     const {
@@ -38,11 +38,11 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators({}, dispatch),
 });
 
-const CorporateApprovalRequestMain = (props) => {
+const SchemeDetailsMain = (props) => {
     const { userId, handleButtonClick, selectedRecord } = props;
-    const { isChecklistDataLoading, ChecklistData } = props;
+    const { isChecklistDataLoading } = props;
     const { showGlobalNotification } = props;
-    const { form, selectedCheckListId, section, formActionType, handleFormValueChange, NEXT_ACTION, paginationDataKey, uniqueMatchKey } = props;
+    const { form, selectedCheckListId, section, formActionType, handleFormValueChange, uniqueMatchKey } = props;
 
     const pageIntialState = {
         pageSize: 10,
@@ -90,8 +90,8 @@ const CorporateApprovalRequestMain = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                     </Row>
-                    <ViewDetail {...formProps} />
-                    {/* <AddEditForm {...formProps} /> */}
+                   {formActionType?.viewMode ?   <ViewDetail /> : <AddEditForm {...formProps} />}
+                    {/*  */}
                 </Col>
             </Row>
             <Row>
@@ -102,4 +102,4 @@ const CorporateApprovalRequestMain = (props) => {
         </Form>
     );
 };
-export const CorporateApprovalRequestMaster = connect(mapStateToProps, mapDispatchToProps)(CorporateApprovalRequestMain);
+export const SchemeDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(SchemeDetailsMain);

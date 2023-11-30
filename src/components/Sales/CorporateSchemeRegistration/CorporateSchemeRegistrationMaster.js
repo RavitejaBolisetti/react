@@ -23,12 +23,12 @@ import { validateRequiredInputField } from 'utils/validation';
 
 import { drawerTitle } from 'utils/drawerTitle';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
-import { DEALER_CORPORATE_SECTION } from 'constants/modules/DealerCorporateClaim/dealerClaimSections';
-import { CLAIM_STATUS_BUTTONS } from 'constants/modules/DealerCorporateClaim/buttons';
 import { formatDateToCalenderDate } from 'utils/formatDateTime';
 import { LANGUAGE_EN } from 'language/en';
 import AdvanceFilter from './AdvanceFilter';
 import { AddEditForm } from './AddEditForm';
+import { CorporateSchemeRegistrationMainContainer } from './DealerCorporateClaimMasterMainContainer';
+import { DEALER_CORPORATE_SECTION } from 'constants/modules/CorporateSchemeRegistration/CorporateSchemeSection';
 
 const mapStateToProps = (state) => {
     const {
@@ -268,9 +268,9 @@ export const CorporateSchemeRegistrationBase = (props) => {
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
-
         switch (buttonAction) {
             case ADD_ACTION:
+                setFormActionType({addMode: true, editMode: false, viewMode: false})
                 defaultSection && setCurrentSection(defaultSection);
                 setPreviousSection(1);
                 setSelectedRecord(record);
@@ -280,6 +280,7 @@ export const CorporateSchemeRegistrationBase = (props) => {
                 setFileList([]);
                 break;
             case EDIT_ACTION:
+                setFormActionType({addMode: false, editMode: true, viewMode: false})
                 setSelectedRecord(record);
                 record && setSelectedRecordId(record?.grnNumber ?? '');
                 openDefaultSection && setCurrentSection(defaultSection);
@@ -290,6 +291,7 @@ export const CorporateSchemeRegistrationBase = (props) => {
 
                 break;
             case VIEW_ACTION:
+                setFormActionType({addMode: false, editMode: false, viewMode: true})
                 setSelectedRecord(record);
                 record && setSelectedRecordId(record?.grnNumber ?? '');
                 defaultSection && setCurrentSection(defaultSection);
@@ -365,7 +367,7 @@ export const CorporateSchemeRegistrationBase = (props) => {
         }
     };
 
-    const formProps = {
+    const containerProps = {
         form,
         formData,
         formActionType,
@@ -381,6 +383,34 @@ export const CorporateSchemeRegistrationBase = (props) => {
         buttonData,
         setButtonData,
         handleButtonClick,
+        record: selectedRecord,
+        onFinishFailed,
+        setIsFormVisible,
+        selectedRecordId,
+        setSelectedRecordId,
+        selectedRecord,
+        section,
+        currentSection,
+        sectionName,
+        setCurrentSection,
+        previousSection,
+        setPreviousSection,
+        setFormData,
+        handleFormValueChange,
+        isLastSection,
+        VehicelReceiptChecklistOnfinish: onFinish,
+        // supportingData: ChecklistData,
+        // buttonType: buttonType === QUERY_BUTTONS_CONSTANTS?.COMPLETED?.key ? true : false,
+        checkListDataModified,
+        setcheckListDataModified,
+        addMode: formActionType?.addMode,
+        editMode: formActionType?.editMode,
+        payload,
+        setPayload,
+        deletedUpload,
+        setdeletedUpload,
+        fileList,
+        setFileList,
     };
 
 
@@ -444,7 +474,9 @@ export const CorporateSchemeRegistrationBase = (props) => {
                     <ListDataTable {...tableProps} />
                 </Col>
             </Row>
-            <AddEditForm {...formProps}/>
+            {/* <AddEditForm {...containerProps}/> */}
+            <CorporateSchemeRegistrationMainContainer {...containerProps} />
+
         </>
     );
 };
